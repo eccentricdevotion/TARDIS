@@ -17,12 +17,12 @@
 package me.eccentric_nz.TARDIS.floodgate;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.exterior.TARDISEmergencyRelocation;
 import me.eccentric_nz.TARDIS.database.data.Area;
 import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreas;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.TravelType;
@@ -96,11 +96,12 @@ public class FloodgateAreasForm {
         if (rst.resultSet()) {
             int id = rst.getTardis_id();
             // get current location
-            Current current = TARDISCache.CURRENT.get(id);
-            if (current == null) {
+            ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
+            if (!rsc.resultSet()) {
                 new TARDISEmergencyRelocation(plugin).relocate(id, player);
                 return;
             }
+            Current current = rsc.getCurrent();
             // check the player is not already in the area!
             if (plugin.getTardisArea().isInExistingArea(current.location(), rsa.getArea().areaId())) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "TRAVEL_NO_AREA");

@@ -17,10 +17,10 @@
 package me.eccentric_nz.TARDIS.commands.remote;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.builders.exterior.BuildData;
 import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetBackLocation;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -62,24 +62,23 @@ public class TARDISRemoteBackCommand {
         set.put("direction", rsb.getDirection().toString());
         set.put("submarine", (rsb.isSubmarine()) ? 1 : 0);
         // get current police box location
-        Current current = TARDISCache.CURRENT.get(id);
-        if (current == null) {
+        ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
+        if (!rsc.resultSet()) {
             if (sender instanceof Player) {
                 plugin.getMessenger().send(sender, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
             }
             return true;
         }
+        Current current = rsc.getCurrent();
         // set hidden false
         HashMap<String, Object> sett = new HashMap<>();
         sett.put("hidden", 0);
         HashMap<String, Object> ttid = new HashMap<>();
         ttid.put("tardis_id", id);
         plugin.getQueryFactory().doUpdate("tardis", sett, ttid);
-        TARDISCache.invalidate(id);
         HashMap<String, Object> tid = new HashMap<>();
         tid.put("tardis_id", id);
         plugin.getQueryFactory().doUpdate("current", set, tid);
-        TARDISCache.CURRENT.invalidate(id);
         plugin.getTrackerKeeper().getInVortex().add(id);
         if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
             // destroy the police box

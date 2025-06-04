@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.flight;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
 import me.eccentric_nz.TARDIS.database.data.Throticle;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
@@ -64,7 +63,6 @@ public class TARDISTakeoff {
         HashMap<String, Object> whereh = new HashMap<>();
         whereh.put("tardis_id", id);
         plugin.getQueryFactory().doUpdate("tardis", set, whereh);
-        TARDISCache.invalidate(id);
         plugin.getMessenger().sendStatus(player, "HANDBRAKE_OFF");
         plugin.getTrackerKeeper().getInVortex().add(id);
         // check if we should malfunction
@@ -122,7 +120,6 @@ public class TARDISTakeoff {
             HashMap<String, Object> whereh = new HashMap<>();
             whereh.put("tardis_id", id);
             plugin.getQueryFactory().doUpdate("tardis", set, whereh);
-            TARDISCache.invalidate(id);
             plugin.getMessenger().sendStatus(player, "HANDBRAKE_OFF");
             plugin.getTrackerKeeper().getInVortex().add(id);
             // check if we should malfunction

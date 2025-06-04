@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.update;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.commands.sudo.TARDISSudoTracker;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
@@ -26,6 +25,8 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.Control;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.Updateable;
@@ -137,12 +138,15 @@ public class TARDISUpdateListener implements Listener {
                     block = block.getRelative(BlockFace.DOWN);
                 }
             }
-            Tardis tardis = TARDISCache.BY_UUID.get(tuuid);
-            if (tardis == null) {
+            HashMap<String, Object> where = new HashMap<>();
+            where.put("uuid", uuid);
+            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+            if (!rs.resultSet()) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
                 plugin.getTrackerKeeper().getUpdatePlayers().remove(playerUUID);
                 return;
             }
+            Tardis tardis = rs.getTardis();
             int id = tardis.getTardisId();
             HashMap<String, Object> tid = new HashMap<>();
             HashMap<String, Object> set = new HashMap<>();
@@ -169,7 +173,6 @@ public class TARDISUpdateListener implements Listener {
                 case BEACON -> {
                     set.put("beacon", blockLocStr);
                     plugin.getQueryFactory().doUpdate("tardis", set, tid);
-                    TARDISCache.invalidate(id);
                 }
                 case ALLAY, BAMBOO, BIRDCAGE, FARM, IGLOO, IISTUBIL, HUTCH, LAVA, PEN, STABLE, STALL, VILLAGE -> {
                     set.put(updateable.getName(), blockLocStr);
@@ -190,18 +193,15 @@ public class TARDISUpdateListener implements Listener {
                     blockLocStr = bw.getName() + ":" + bx + ".5:" + by + ":" + bz + ".5";
                     set.put("creeper", blockLocStr);
                     plugin.getQueryFactory().doUpdate("tardis", set, tid);
-                    TARDISCache.invalidate(id);
                 }
                 case EPS -> {
                     blockLocStr = bw.getName() + ":" + bx + ".5:" + (by + 1) + ":" + bz + ".5";
                     set.put("eps", blockLocStr);
                     plugin.getQueryFactory().doUpdate("tardis", set, tid);
-                    TARDISCache.invalidate(id);
                 }
                 case RAIL -> {
                     set.put("rail", blockLocStr);
                     plugin.getQueryFactory().doUpdate("tardis", set, tid);
-                    TARDISCache.invalidate(id);
                 }
                 case CHAMELEON -> {
                     plugin.getQueryFactory().insertControl(id, 31, blockLocStr, secondary ? 1 : 0);
@@ -262,8 +262,9 @@ public class TARDISUpdateListener implements Listener {
                 case BACK -> {
                     plugin.getQueryFactory().insertControl(id, 8, blockLocStr, secondary ? 1 : 0);
                     // insert current into back
-                    Current current = TARDISCache.CURRENT.get(id);
-                    if (current != null) {
+                    ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
+                    if (rsc.resultSet()) {
+                        Current current = rsc.getCurrent();
                         HashMap<String, Object> setb = new HashMap<>();
                         setb.put("world", current.location().getWorld().getName());
                         setb.put("x", current.location().getBlockX());
@@ -321,7 +322,8 @@ public class TARDISUpdateListener implements Listener {
                 case SMELT, FUEL -> new TARDISSmelterCommand(plugin).addDropChest(player, updateable, id, block);
                 case VAULT -> new TARDISVaultCommand(plugin).addDropChest(player, id, block);
                 // GENERATOR, DISPENSER, HANDBRAKE, ZERO, RELATIVITY_DIFFERENTIATOR
-                default ->  plugin.getQueryFactory().insertControl(id, Control.getUPDATE_CONTROLS().get(updateable.getName()), blockLocStr, secondary ? 1 : 0);
+                default ->
+                        plugin.getQueryFactory().insertControl(id, Control.getUPDATE_CONTROLS().get(updateable.getName()), blockLocStr, secondary ? 1 : 0);
             }
             // wax any signs
             if (Tag.SIGNS.isTagged(blockType)) {

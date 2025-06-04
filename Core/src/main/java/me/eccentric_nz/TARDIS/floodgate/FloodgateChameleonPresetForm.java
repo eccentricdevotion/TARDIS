@@ -17,13 +17,12 @@
 package me.eccentric_nz.TARDIS.floodgate;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.chameleon.utils.TARDISChameleonFrame;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.Control;
@@ -77,12 +76,10 @@ public class FloodgateChameleonPresetForm {
         ResultSetTravellers rst = new ResultSetTravellers(plugin, wheres, false);
         if (rst.resultSet()) {
             int id = rst.getTardis_id();
-//            HashMap<String, Object> where = new HashMap<>();
-//            where.put("tardis_id", id);
-//            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-//            if (rs.resultSet()) {
-            Tardis tardis = TARDISCache.BY_ID.get(id);
-            if (tardis != null) {
+            HashMap<String, Object> where = new HashMap<>();
+            where.put("tardis_id", id);
+            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+            if (rs.resultSet()) {
                 // set the Chameleon Circuit sign(s)
                 HashMap<String, Object> wherec = new HashMap<>();
                 wherec.put("tardis_id", id);
@@ -110,7 +107,6 @@ public class FloodgateChameleonPresetForm {
                     HashMap<String, Object> wheret = new HashMap<>();
                     wheret.put("tardis_id", id);
                     plugin.getQueryFactory().doUpdate("tardis", set, wheret);
-                    TARDISCache.invalidate(id);
                     // damage the circuit if configured
                     if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getInt("circuits.uses.chameleon") > 0) {
                         TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);

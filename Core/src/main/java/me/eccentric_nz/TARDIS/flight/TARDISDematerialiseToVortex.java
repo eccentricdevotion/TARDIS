@@ -17,14 +17,15 @@
 package me.eccentric_nz.TARDIS.flight;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.api.event.TARDISDematerialisationEvent;
 import me.eccentric_nz.TARDIS.builders.exterior.TARDISEmergencyRelocation;
 import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.data.Throticle;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetNextLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
@@ -61,15 +62,20 @@ public class TARDISDematerialiseToVortex implements Runnable {
         UUID uuid = player.getUniqueId();
         plugin.getTrackerKeeper().getInVortex().add(id);
         plugin.getTrackerKeeper().getDidDematToVortex().add(id);
-        Tardis tardis = TARDISCache.BY_ID.get(id);
-        if (tardis != null) {
-            Current current = TARDISCache.CURRENT.get(id);
+        HashMap<String, Object> wherei = new HashMap<>();
+        wherei.put("tardis_id", id);
+        ResultSetTardis rs = new ResultSetTardis(plugin, wherei, "", false);
+        if (rs.resultSet()) {
+            Tardis tardis = rs.getTardis();
+            Current current;
             String resetw = "";
-            if (current == null) {
+            ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
+            if (!rsc.resultSet()) {
                 // emergency TARDIS relocation
                 new TARDISEmergencyRelocation(plugin).relocate(id, player);
                 return;
             } else {
+                current = rsc.getCurrent();
                 resetw = current.location().getWorld().getName();
                 // set back to current location
                 HashMap<String, Object> bid = new HashMap<>();
@@ -140,7 +146,6 @@ public class TARDISDematerialiseToVortex implements Runnable {
                 HashMap<String, Object> whereh = new HashMap<>();
                 whereh.put("tardis_id", id);
                 plugin.getQueryFactory().doUpdate("tardis", set, whereh);
-                TARDISCache.invalidate(id);
                 plugin.getPresetDestroyer().removeBlockProtection(id);
             }
         }

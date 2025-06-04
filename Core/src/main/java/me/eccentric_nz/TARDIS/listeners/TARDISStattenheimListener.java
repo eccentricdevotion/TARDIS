@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.api.Parameters;
@@ -30,9 +29,7 @@ import me.eccentric_nz.TARDIS.builders.exterior.TARDISEmergencyRelocation;
 import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.data.Throticle;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetThrottle;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.sensor.PowerSensor;
@@ -119,16 +116,14 @@ public class TARDISStattenheimListener implements Listener {
                 }
                 Action action = event.getAction();
                 // check they are a Time Lord
-//                HashMap<String, Object> where = new HashMap<>();
-//                where.put("uuid", uuid.toString());
-//                ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-//                if (!rs.resultSet()) {
-                Tardis tardis = TARDISCache.BY_UUID.get(uuid);
-                if (tardis == null) {
+                HashMap<String, Object> where = new HashMap<>();
+                where.put("uuid", uuid.toString());
+                ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+                if (!rs.resultSet()) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
                     return;
                 }
-//                Tardis tardis = rs.getTardis();
+                Tardis tardis = rs.getTardis();
                 int id = tardis.getTardisId();
                 if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "SIEGE_NO_CONTROL");
@@ -215,12 +210,13 @@ public class TARDISStattenheimListener implements Listener {
                             return;
                         }
                         // get TARDIS's current location
-                        Current current = TARDISCache.CURRENT.get(id);
-                        if (current == null) {
+                        ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
+                        if (!rsc.resultSet()) {
                             // emergency TARDIS relocation
                             new TARDISEmergencyRelocation(plugin).relocate(id, player);
                             return;
                         }
+                        Current current = rsc.getCurrent();
                         COMPASS d = current.direction();
                         COMPASS player_d = COMPASS.valueOf(TARDISStaticUtils.getPlayersDirection(player, false));
                         TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
@@ -287,7 +283,6 @@ public class TARDISStattenheimListener implements Listener {
                         cset.put("direction", player_d.toString());
                         cset.put("submarine", (sub) ? 1 : 0);
                         plugin.getQueryFactory().doUpdate("current", cset, cid);
-                        TARDISCache.CURRENT.invalidate(id);
                         // update tardis
                         if (hidden) {
                             HashMap<String, Object> tid = new HashMap<>();
@@ -295,7 +290,6 @@ public class TARDISStattenheimListener implements Listener {
                             set.put("hidden", 0);
                             tid.put("tardis_id", id);
                             plugin.getQueryFactory().doUpdate("tardis", set, tid);
-                            TARDISCache.invalidate(id);
                         }
                         plugin.getMessenger().sendStatus(player, "TARDIS_COMING");
                         long delay = 10L;
@@ -337,7 +331,6 @@ public class TARDISStattenheimListener implements Listener {
                         HashMap<String, Object> wheret = new HashMap<>();
                         wheret.put("tardis_id", id);
                         plugin.getQueryFactory().alterEnergyLevel("tardis", -ch, wheret, player);
-                        TARDISCache.invalidate(id);
                         plugin.getTrackerKeeper().getHasDestination().remove(id);
                         plugin.getTrackerKeeper().getRescue().remove(id);
                     } else {
@@ -371,7 +364,6 @@ public class TARDISStattenheimListener implements Listener {
                             new TARDISAdaptiveBoxLampToggler(plugin).toggleLamp(id, true, preset);
                         }
                         plugin.getQueryFactory().doUpdate("tardis", setp, wherep);
-                        TARDISCache.invalidate(id);
                         // toggle power sensor
                         new PowerSensor(plugin, id).toggle();
                     }

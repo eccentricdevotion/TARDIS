@@ -16,52 +16,68 @@
  */
 package me.eccentric_nz.TARDIS.utility;
 
-import com.onarandombox.MultiverseCore.MultiverseCore;
-import com.onarandombox.MultiverseCore.api.MultiverseWorld;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
-import org.bukkit.plugin.Plugin;
+import org.mvplugins.multiverse.core.MultiverseCoreApi;
+import org.mvplugins.multiverse.core.world.LoadedMultiverseWorld;
+import org.mvplugins.multiverse.core.world.MultiverseWorld;
+import org.mvplugins.multiverse.external.vavr.control.Option;
 
 /**
  * @author eccentric_nz
  */
 public class TARDISMultiverseHelper {
 
-    private final MultiverseCore mvc;
-
-    public TARDISMultiverseHelper(Plugin mvplugin) {
-        mvc = (MultiverseCore) mvplugin;
-    }
+    MultiverseCoreApi coreApi = MultiverseCoreApi.get();
 
     public String getAlias(World world) {
-        MultiverseWorld mvw = mvc.getMVWorldManager().getMVWorld(world);
-        return (mvw != null) ? mvw.getAlias() : world.getName();
+        Option<MultiverseWorld> option = coreApi.getWorldManager().getWorld(world);
+        if (option.isDefined()) {
+            MultiverseWorld mvw = option.get();
+            return mvw.getAlias();
+        } else {
+            return world.getName();
+        }
     }
 
     public String getAlias(String world) {
         if (Bukkit.getWorld(world) != null) {
-            MultiverseWorld mvw = mvc.getMVWorldManager().getMVWorld(world);
-            return (mvw != null) ? mvw.getAlias() : world;
-        } else {
-            return world;
+            Option<MultiverseWorld> option = coreApi.getWorldManager().getWorld(world);
+            if (option.isDefined()) {
+                MultiverseWorld mvw = option.get();
+                return mvw.getAlias();
+            } else {
+                return world;
+            }
         }
+        return world;
     }
 
     public boolean isWorldSurvival(World world) {
-        MultiverseWorld mvw = mvc.getMVWorldManager().getMVWorld(world);
-        GameMode gm = (mvw != null) ? mvw.getGameMode() : GameMode.SURVIVAL;
+        GameMode gm;
+        Option<MultiverseWorld> option = coreApi.getWorldManager().getWorld(world);
+        if (option.isDefined()) {
+            MultiverseWorld mvw = option.get();
+            gm = mvw.getGameMode();
+        } else {
+            gm = GameMode.SURVIVAL;
+        }
         return (gm.equals(GameMode.SURVIVAL));
     }
 
     public World getWorld(String w) {
-        MultiverseWorld mvw = mvc.getMVWorldManager().getMVWorld(w);
-        return (mvw != null) ? mvw.getCBWorld() : Bukkit.getServer().getWorld(w);
+        Option<LoadedMultiverseWorld> option = coreApi.getWorldManager().getLoadedWorld(w);
+        if (option.isDefined()) {
+            LoadedMultiverseWorld mvw = option.get();
+            return (mvw.getBukkitWorld().isDefined()) ? mvw.getBukkitWorld().get() : Bukkit.getServer().getWorld(w);
+        }
+        return Bukkit.getServer().getWorld(w);
     }
 
     public void importWorlds(CommandSender sender) {
-        new TARDISMultiverseImporter(TARDIS.plugin, mvc, sender).transfer();
+        new TARDISMultiverseImporter(TARDIS.plugin, sender).transfer();
     }
 }

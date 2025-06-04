@@ -17,8 +17,8 @@
 package me.eccentric_nz.TARDIS.siegemode;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
@@ -47,20 +47,17 @@ public class TARDISSiegeRunnable implements Runnable {
     public void run() {
         plugin.getTrackerKeeper().getInSiegeMode().forEach((id) -> {
             // get current Artron level
-//            HashMap<String, Object> where = new HashMap<>();
-//            where.put("tardis_id", id);
-//            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
-//            if (rs.resultSet()) {
-//                Tardis tardis = rs.getTardis();
-            Tardis tardis = TARDISCache.BY_ID.get(id);
-            if (tardis != null) {
+            HashMap<String, Object> where = new HashMap<>();
+            where.put("tardis_id", id);
+            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+            if (rs.resultSet()) {
+                Tardis tardis = rs.getTardis();
                 int level = tardis.getArtronLevel();
                 if (level > deplete) {
                     // remove some energy
                     HashMap<String, Object> whered = new HashMap<>();
                     whered.put("tardis_id", id);
                     plugin.getQueryFactory().alterEnergyLevel("tardis", deplete, whered, null);
-                    TARDISCache.invalidate(id);
                 } else if (plugin.getConfig().getBoolean("siege.creeper")) {
                     Location l = TARDISStaticLocationGetters.getLocationFromDB(tardis.getCreeper());
                     // spawn an entity so we can check for the creeper
@@ -79,7 +76,6 @@ public class TARDISSiegeRunnable implements Runnable {
                         HashMap<String, Object> wherec = new HashMap<>();
                         wherec.put("tardis_id", id);
                         plugin.getQueryFactory().alterEnergyLevel("tardis", plugin.getArtronConfig().getInt("siege_creeper"), wherec, null);
-                        TARDISCache.invalidate(id);
                     }
                 }
             }

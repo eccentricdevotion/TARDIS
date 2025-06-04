@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.floodgate;
 
 import me.eccentric_nz.TARDIS.ARS.TARDISARSInventory;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISDirectionCommand;
@@ -30,6 +29,8 @@ import me.eccentric_nz.TARDIS.control.actions.LightSwitchAction;
 import me.eccentric_nz.TARDIS.control.actions.SiegeAction;
 import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
@@ -107,13 +108,11 @@ public class FloodgateControlForm {
         ResultSetTravellers rst = new ResultSetTravellers(plugin, wheres, false);
         if (rst.resultSet()) {
             int id = rst.getTardis_id();
-//            HashMap<String, Object> where = new HashMap<>();
-//            where.put("tardis_id", id);
-//            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-//            if (rs.resultSet()) {
-//                Tardis tardis = rs.getTardis();
-            Tardis tardis = TARDISCache.BY_ID.get(id);
-            if (tardis != null) {
+            HashMap<String, Object> where = new HashMap<>();
+            where.put("tardis_id", id);
+            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+            if (rs.resultSet()) {
+                Tardis tardis = rs.getTardis();
                 // check they initialised
                 if (!tardis.isTardisInit()) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "ENERGY_NO_INIT");
@@ -330,8 +329,9 @@ public class FloodgateControlForm {
                             return;
                         }
                         String direction = "EAST";
-                        Current current = TARDISCache.CURRENT.get(id);
-                        if (current != null) {
+                        ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
+                        if (rsc.resultSet()) {
+                            Current current = rsc.getCurrent();
                             direction = current.direction().toString();
                             if (!tardis.getPreset().usesArmourStand()) {
                                 // skip the angled rotations
@@ -385,7 +385,6 @@ public class FloodgateControlForm {
                             HashMap<String, Object> wherez = new HashMap<>();
                             wherez.put("tardis_id", id);
                             plugin.getQueryFactory().alterEnergyLevel("tardis", -zero_amount, wherez, player);
-                            TARDISCache.invalidate(id);
                         } else {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_ZERO");
                         }

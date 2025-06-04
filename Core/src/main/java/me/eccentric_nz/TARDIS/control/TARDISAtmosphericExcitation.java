@@ -17,8 +17,8 @@
 package me.eccentric_nz.TARDIS.control;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.database.data.Current;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
 import org.bukkit.FireworkEffect.Type;
@@ -46,8 +46,9 @@ public class TARDISAtmosphericExcitation {
     }
 
     public void excite(int tid, Player p) {
-        Current current = TARDISCache.CURRENT.get(tid);
-        if (current != null) {
+        ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, tid);
+        if (rsc.resultSet()) {
+            Current current = rsc.getCurrent();
             // not if underwater
             if (current.submarine()) {
                 return;

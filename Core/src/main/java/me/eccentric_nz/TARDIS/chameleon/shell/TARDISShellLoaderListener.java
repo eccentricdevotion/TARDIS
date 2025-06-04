@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.chameleon.shell;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.exterior.TARDISShellBuilder;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonPreset;
@@ -27,6 +26,7 @@ import me.eccentric_nz.TARDIS.chameleon.utils.TARDISChameleonColumn;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetChameleon;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.Adaption;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
@@ -88,8 +88,10 @@ public class TARDISShellLoaderListener extends TARDISMenuListener {
             return;
         }
         int id = rst.getTardis_id();
-        Tardis tardis = TARDISCache.BY_ID.get(id);
-        if (tardis == null) {
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("tardis_id", id);
+        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+        if (!rs.resultSet()) {
             return;
         }
         if (slot == 53) {
@@ -100,6 +102,7 @@ public class TARDISShellLoaderListener extends TARDISMenuListener {
             ChameleonPreset preset;
             int cid = -1;
             if (slot == 50) {
+                Tardis tardis = rs.getTardis();
                 // load current preset
                 preset = tardis.getPreset();
                 if (!tardis.getAdaption().equals(Adaption.OFF)) {

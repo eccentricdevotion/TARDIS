@@ -17,9 +17,9 @@
 package me.eccentric_nz.TARDIS.commands.remote;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.database.data.Current;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisPreset;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
@@ -48,8 +48,8 @@ public class TARDISRemoteHideCommand {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "NOT_IN_VORTEX");
             return true;
         }
-        Current current = TARDISCache.CURRENT.get(id);
-        if (current == null) {
+        ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
+        if (!rsc.resultSet()) {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
             return true;
         }
@@ -58,9 +58,11 @@ public class TARDISRemoteHideCommand {
             olp = (OfflinePlayer) sender;
         } else {
             // get tardis owner
-            Tardis tardis = TARDISCache.BY_ID.get(id);
-            if (tardis != null) {
-                olp = plugin.getServer().getOfflinePlayer(tardis.getUuid());
+            HashMap<String, Object> where = new HashMap<>();
+            where.put("tardis_id", id);
+            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+            if (rs.resultSet()) {
+                olp = plugin.getServer().getOfflinePlayer(rs.getTardis().getUuid());
             }
         }
         ResultSetTardisPreset rs = new ResultSetTardisPreset(plugin);
@@ -69,6 +71,7 @@ public class TARDISRemoteHideCommand {
             return true;
         }
         UUID uuid = olp.getUniqueId();
+        Current current = rsc.getCurrent();
         DestroyData dd = new DestroyData();
         dd.setDirection(current.direction());
         dd.setLocation(current.location());
@@ -86,7 +89,6 @@ public class TARDISRemoteHideCommand {
         HashMap<String, Object> seth = new HashMap<>();
         seth.put("hidden", 1);
         plugin.getQueryFactory().doUpdate("tardis", seth, whereh);
-        TARDISCache.invalidate(id);
         // turn force field off
         if (plugin.getTrackerKeeper().getActiveForceFields().containsKey(uuid)) {
             plugin.getTrackerKeeper().getActiveForceFields().remove(uuid);

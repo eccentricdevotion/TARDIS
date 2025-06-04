@@ -19,12 +19,12 @@ package me.eccentric_nz.TARDIS.desktop;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.builders.interior.TARDISTIPSData;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCondenser;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.rooms.TARDISCondenserData;
@@ -57,13 +57,11 @@ public class TARDISRepair {
     public void restore(boolean clean) {
         UUID uuid = player.getUniqueId();
         TARDISUpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(uuid);
-//        HashMap<String, Object> where = new HashMap<>();
-//        where.put("uuid", uuid.toString());
-//        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
-//        if (rs.resultSet()) {
-//            Tardis tardis = rs.getTardis();
-        Tardis tardis = TARDISCache.BY_UUID.get(uuid);
-        if (tardis != null) {
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("uuid", uuid.toString());
+        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+        if (rs.resultSet()) {
+            Tardis tardis = rs.getTardis();
             String perm = tardis.getSchematic().getPermission();
             boolean hasLava = tud.getPrevious().getPermission().equals("master") || tud.getPrevious().getPermission().equals("delta");
             if (hasLava) {
@@ -107,13 +105,11 @@ public class TARDISRepair {
             int l = dimensions.get("length").getAsInt();
             // get input array
             JsonArray arr = obj.get("input").getAsJsonArray();
-//            HashMap<String, Object> where = new HashMap<>();
-//            where.put("uuid", uuid);
-//            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
-//            if (rs.resultSet()) {
-//                Tardis tardis = rs.getTardis();
-            Tardis tardis = TARDISCache.BY_UUID.get(uuid);
-            if (tardis != null) {
+            HashMap<String, Object> where = new HashMap<>();
+            where.put("uuid", uuid);
+            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+            if (rs.resultSet()) {
+                Tardis tardis = rs.getTardis();
                 int slot = tardis.getTIPS();
                 int id = tardis.getTardisId();
                 int startx, startz;
@@ -251,13 +247,11 @@ public class TARDISRepair {
     private JsonObject getConsole() {
         JsonObject obj = new JsonObject();
         UUID uuid = player.getUniqueId();
-//        HashMap<String, Object> where = new HashMap<>();
-//        where.put("uuid", uuid);
-//        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
-//        if (rs.resultSet()) {
-//            Tardis tardis = rs.getTardis();
-        Tardis tardis = TARDISCache.BY_UUID.get(uuid);
-        if (tardis != null) {
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("uuid", uuid);
+        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+        if (rs.resultSet()) {
+            Tardis tardis = rs.getTardis();
             String perm = tardis.getSchematic().getPermission();
             if (perm.equals("archive")) {
                 // try 1

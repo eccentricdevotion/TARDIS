@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.sonic;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
@@ -178,13 +177,11 @@ public class TARDISSonicDock {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PB_IN_WORLD");
                         return display;
                     }
-//                    HashMap<String, Object> where = new HashMap<>();
-//                    where.put("tardis_id", id);
-//                    ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-//                    if (rs.resultSet()) {
-//                        Tardis tardis = rs.getTardis();
-                    Tardis tardis = TARDISCache.BY_ID.get(id);
-                    if (tardis != null) {
+                    HashMap<String, Object> where = new HashMap<>();
+                    where.put("tardis_id", id);
+                    ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+                    if (rs.resultSet()) {
+                        Tardis tardis = rs.getTardis();
                         if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPoweredOn()) {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "POWER_DOWN");
                             return display;

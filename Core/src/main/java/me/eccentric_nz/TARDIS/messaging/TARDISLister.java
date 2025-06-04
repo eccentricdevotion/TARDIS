@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.messaging;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.companionGUI.TARDISCompanionInventory;
 import me.eccentric_nz.TARDIS.database.data.Area;
@@ -25,6 +24,7 @@ import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreas;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDestinations;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetHomeLocation;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.WorldManager;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
@@ -104,13 +104,11 @@ public class TARDISLister {
                 n++;
             }
         } else {
-//            HashMap<String, Object> where = new HashMap<>();
-//            where.put("uuid", player.getUniqueId().toString());
-//            ResultSetTardis rst = new ResultSetTardis(TARDIS.plugin, where, "", false, 0);
-//            if (rst.resultSet()) {
-//                Tardis tardis = rst.getTardis();
-            Tardis tardis = TARDISCache.BY_UUID.get(player.getUniqueId());
-            if (tardis != null) {
+            HashMap<String, Object> where = new HashMap<>();
+            where.put("uuid", player.getUniqueId().toString());
+            ResultSetTardis rst = new ResultSetTardis(TARDIS.plugin, where, "", false);
+            if (rst.resultSet()) {
+                Tardis tardis = rst.getTardis();
                 int id = tardis.getTardisId();
                 // list TARDIS saves
                 if (list.equalsIgnoreCase("saves")) {

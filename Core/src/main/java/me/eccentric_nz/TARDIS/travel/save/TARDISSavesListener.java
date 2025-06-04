@@ -17,17 +17,11 @@
 package me.eccentric_nz.TARDIS.travel.save;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
-import me.eccentric_nz.TARDIS.database.data.Current;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisArtron;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
@@ -136,9 +130,9 @@ public class TARDISSavesListener extends TARDISMenuListener {
                     event.setCancelled(true);
                     if (slot >= 0 && slot < 45) {
                         Location exterior = null;
-                        Current current = TARDISCache.CURRENT.get(occupiedTardisId);
-                        if (current != null) {
-                            exterior = current.location();
+                        ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, occupiedTardisId);
+                        if (rsc.resultSet()) {
+                            exterior = rsc.getCurrent().location();
                         }
                         ItemStack is = view.getItem(slot);
                         if (is != null) {
@@ -184,9 +178,11 @@ public class TARDISSavesListener extends TARDISMenuListener {
                                         return;
                                     }
                                     String invisibility = tac.getArea().invisibility();
-                                    Tardis tardis = TARDISCache.BY_ID.get(occupiedTardisId);
-                                    if (tardis != null) {
-                                        if (invisibility.equals("DENY") && tardis.getPreset().equals(ChameleonPreset.INVISIBLE)) {
+                                    HashMap<String, Object> wheret = new HashMap<>();
+                                    wheret.put("tardis_id", occupiedTardisId);
+                                    ResultSetTardis resultSetTardis = new ResultSetTardis(plugin, wheret, "", false);
+                                    if (resultSetTardis.resultSet()) {
+                                        if (invisibility.equals("DENY") && resultSetTardis.getTardis().getPreset().equals(ChameleonPreset.INVISIBLE)) {
                                             // check preset
                                             plugin.getMessenger().send(player, TardisModule.TARDIS, "AREA_NO_INVISIBLE");
                                             return;
@@ -200,7 +196,6 @@ public class TARDISSavesListener extends TARDISMenuListener {
                                             // set chameleon adaption to OFF
                                             seti.put("adapti_on", 0);
                                             plugin.getQueryFactory().doSyncUpdate("tardis", seti, wherei);
-                                            TARDISCache.invalidate(occupiedTardisId);
                                         }
                                     }
                                 }
@@ -237,7 +232,6 @@ public class TARDISSavesListener extends TARDISMenuListener {
                                         HashMap<String, Object> wheret = new HashMap<>();
                                         wheret.put("tardis_id", occupiedTardisId);
                                         plugin.getQueryFactory().doSyncUpdate("tardis", sett, wheret);
-                                        TARDISCache.invalidate(occupiedTardisId);
                                     }
                                     HashMap<String, Object> wheret = new HashMap<>();
                                     wheret.put("tardis_id", occupiedTardisId);

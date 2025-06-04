@@ -17,13 +17,13 @@
 package me.eccentric_nz.TARDIS.junk;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.control.actions.FindWithJunkAction;
 import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisPreset;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.*;
@@ -123,11 +123,12 @@ public class TARDISJunkControlListener implements Listener {
                         getDestination(id, player);
                         if (plugin.getGeneralKeeper().getJunkDestination() != null) {
                             // get the current location
-                            Current current = TARDISCache.CURRENT.get(id);
-                            if (current == null) {
+                            ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
+                            if (!rsc.resultSet()) {
                                 plugin.getMessenger().send(player, TardisModule.TARDIS, "JUNK_NOT_FOUND");
                                 return;
                             }
+                            Current current = rsc.getCurrent();
                             Switch lever = (Switch) block.getBlockData();
                             lever.setPowered(!lever.isPowered());
                             block.setBlockData(lever);

@@ -17,15 +17,11 @@
 package me.eccentric_nz.TARDIS.advanced;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetDiskStorage;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisPowered;
+import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
 import me.eccentric_nz.TARDIS.enumeration.GlowstoneCircuit;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -167,13 +163,16 @@ public class TARDISConsoleListener implements Listener {
                 if (im.getPersistentDataContainer().has(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID())) {
                     UUID diskUuid = im.getPersistentDataContainer().get(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID());
                     // is the disk uuid the same as the tardis uuid?
-                    Tardis tardis = TARDISCache.BY_ID.get(id);
-                    if (tardis != null && tardis.getUuid().equals(diskUuid)) {
-                        if (uuid == tardis.getUuid()) {
+                    HashMap<String, Object> where = new HashMap<>();
+                    where.put("tardis_id", id);
+                    ResultSetTardis rst = new ResultSetTardis(plugin, where, "", false);
+                    if (rst.resultSet() && rst.getTardis().getUuid().equals(diskUuid)) {
+                        if (uuid == rst.getTardis().getUuid()) {
                             // time lords can't use their own disks!
                             plugin.getMessenger().send(p, TardisModule.TARDIS, "SECURITY_TIMELORD");
                             return;
                         }
+                        Tardis tardis = rst.getTardis();
                         // process disk
                         TARDISAuthorisedControlDisk tacd = new TARDISAuthorisedControlDisk(plugin, tardis.getUuid(), im.getLore(), id, p, tardis.getEps(), tardis.getCreeper());
                         String processed = tacd.process();

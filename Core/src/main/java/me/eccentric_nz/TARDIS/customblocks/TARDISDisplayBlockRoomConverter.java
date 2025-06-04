@@ -18,8 +18,8 @@ package me.eccentric_nz.TARDIS.customblocks;
 
 import me.eccentric_nz.TARDIS.ARS.TARDISARSSlot;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Material;
@@ -30,6 +30,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
+
+import java.util.HashMap;
 
 /**
  * @author eccentric_nz
@@ -60,13 +62,11 @@ public class TARDISDisplayBlockRoomConverter implements Runnable {
     public void run() {
         // initialise
         if (!running) {
-//            HashMap<String, Object> where = new HashMap<>();
-//            where.put("uuid", owner.getUniqueId().toString());
-//            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-//            if (rs.resultSet()) {
-//                Tardis tardis = rs.getTardis();
-            Tardis tardis = TARDISCache.BY_UUID.get(owner.getUniqueId());
-            if (tardis != null) {
+            HashMap<String, Object> where = new HashMap<>();
+            where.put("uuid", owner.getUniqueId().toString());
+            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+            if (rs.resultSet()) {
+                Tardis tardis = rs.getTardis();
                 world = TARDISStaticLocationGetters.getWorldFromSplitString(tardis.getChunk());
             }
             running = true;

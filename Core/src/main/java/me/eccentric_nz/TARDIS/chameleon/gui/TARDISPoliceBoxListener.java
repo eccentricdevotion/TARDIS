@@ -17,12 +17,12 @@
 package me.eccentric_nz.TARDIS.chameleon.gui;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.chameleon.utils.TARDISChameleonFrame;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.Control;
@@ -82,10 +82,13 @@ public class TARDISPoliceBoxListener extends TARDISMenuListener {
             return;
         }
         int id = rst.getTardis_id();
-        Tardis tardis = TARDISCache.BY_ID.get(id);
-        if (tardis == null) {
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("tardis_id", id);
+        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+        if (!rs.resultSet()) {
             return;
         }
+        Tardis tardis = rs.getTardis();
         HashMap<String, Object> wherec = new HashMap<>();
         wherec.put("tardis_id", id);
         wherec.put("type", Control.CHAMELEON.getId());
@@ -160,7 +163,6 @@ public class TARDISPoliceBoxListener extends TARDISMenuListener {
             HashMap<String, Object> wheret = new HashMap<>();
             wheret.put("tardis_id", id);
             plugin.getQueryFactory().doUpdate("tardis", set, wheret);
-            TARDISCache.invalidate(id);
             // damage the circuit if configured
             if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getInt("circuits.uses.chameleon") > 0) {
                 TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);

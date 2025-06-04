@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.desktop;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.event.TARDISDesktopThemeEvent;
 import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPostioning;
@@ -27,6 +26,7 @@ import me.eccentric_nz.TARDIS.builders.interior.TARDISTIPSData;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
@@ -89,20 +89,17 @@ public class TARDISWallFloorRunnable extends TARDISThemeRunnable {
             w = dimensions.get("width").getAsInt();
             c = dimensions.get("length").getAsInt();
             // calculate startx, starty, startz
-//            HashMap<String, Object> wheret = new HashMap<>();
-//            wheret.put("uuid", uuid.toString());
-//            ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 0);
-//            if (!rs.resultSet()) {
-            Tardis tardis = TARDISCache.BY_UUID.get(uuid);
-            if (tardis == null) {
+            HashMap<String, Object> wheret = new HashMap<>();
+            wheret.put("uuid", uuid.toString());
+            ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false);
+            if (!rs.resultSet()) {
                 // abort and return energy
                 HashMap<String, Object> wherea = new HashMap<>();
                 wherea.put("uuid", uuid.toString());
                 int amount = plugin.getArtronConfig().getInt("upgrades." + tud.getSchematic().getPermission());
                 plugin.getQueryFactory().alterEnergyLevel("tardis", amount, wherea, player);
-                TARDISCache.invalidate(uuid);
             }
-//            Tardis tardis = rs.getTardis();
+            Tardis tardis = rs.getTardis();
             int slot = tardis.getTIPS();
             if (slot != -1000001) { // default world - use TIPS
                 TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);

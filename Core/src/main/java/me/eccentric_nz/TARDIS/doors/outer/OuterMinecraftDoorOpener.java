@@ -17,10 +17,11 @@
 package me.eccentric_nz.TARDIS.doors.outer;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetInnerDoorLocations;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
 import me.eccentric_nz.TARDIS.move.TARDISTeleportLocation;
@@ -35,6 +36,7 @@ import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Openable;
 import org.bukkit.entity.Player;
 
+import java.util.HashMap;
 import java.util.UUID;
 
 public class OuterMinecraftDoorOpener {
@@ -51,12 +53,17 @@ public class OuterMinecraftDoorOpener {
             openable.setOpen(true);
             block.setBlockData(openable, true);
         }
-        Tardis tardis = TARDISCache.BY_ID.get(id);
-        if (tardis != null) {
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("tardis_id", id);
+        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+        if (rs.resultSet()) {
+            Tardis tardis = rs.getTardis();
             ChameleonPreset preset = tardis.getPreset();
             // get locations
             // exterior portal (from current location)
-            Current current = TARDISCache.CURRENT.get(id);
+            ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
+            rsc.resultSet();
+            Current current = rsc.getCurrent();
             Location portal = current.location();
             if (preset != null && preset.equals(ChameleonPreset.SWAMP)) {
                 portal.add(0.0d, 1.0d, 0.0d);

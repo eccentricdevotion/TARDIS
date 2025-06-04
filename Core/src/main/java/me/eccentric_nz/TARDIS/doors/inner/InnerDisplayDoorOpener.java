@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.doors.inner;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.custommodels.keys.BoneDoorVariant;
@@ -25,6 +24,7 @@ import me.eccentric_nz.TARDIS.custommodels.keys.ClassicDoorVariant;
 import me.eccentric_nz.TARDIS.custommodels.keys.TardisDoorVariant;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetOuterPortal;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.doors.Door;
 import me.eccentric_nz.TARDIS.doors.DoorAnimator;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
@@ -37,6 +37,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.HashMap;
 import java.util.UUID;
 
 public class InnerDisplayDoorOpener {
@@ -69,13 +70,11 @@ public class InnerDisplayDoorOpener {
                     new DoorAnimator(plugin, display).animate(false);
                 }
                 if (!plugin.getTrackerKeeper().getWoolToggles().contains(id)) {
-//                    HashMap<String, Object> where = new HashMap<>();
-//                    where.put("tardis_id", id);
-//                    ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
-//                    if (rs.resultSet()) {
-//                        Tardis tardis = rs.getTardis();
-                    Tardis tardis = TARDISCache.BY_ID.get(id);
-                    if (tardis != null) {
+                    HashMap<String, Object> where = new HashMap<>();
+                    where.put("tardis_id", id);
+                    ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+                    if (rs.resultSet()) {
+                        Tardis tardis = rs.getTardis();
                         ChameleonPreset preset = tardis.getPreset();
                         // get portal location
                         Location portal = block.getLocation();

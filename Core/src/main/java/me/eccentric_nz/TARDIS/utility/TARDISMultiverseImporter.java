@@ -16,12 +16,13 @@
  */
 package me.eccentric_nz.TARDIS.utility;
 
-import com.onarandombox.MultiverseCore.MultiverseCore;
-import com.onarandombox.MultiverseCore.api.MultiverseWorld;
-import com.onarandombox.MultiverseCore.enums.AllowedPortalType;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.SpawnCategory;
+import org.mvplugins.multiverse.core.MultiverseCoreApi;
+import org.mvplugins.multiverse.core.world.AllowedPortalType;
+import org.mvplugins.multiverse.core.world.MultiverseWorld;
 
 import java.io.File;
 import java.io.IOException;
@@ -29,12 +30,11 @@ import java.io.IOException;
 public class TARDISMultiverseImporter {
 
     private final TARDIS plugin;
-    private final MultiverseCore mvc;
+    MultiverseCoreApi mvc = MultiverseCoreApi.get();
     private final CommandSender sender;
 
-    public TARDISMultiverseImporter(TARDIS plugin, MultiverseCore mvc, CommandSender sender) {
+    public TARDISMultiverseImporter(TARDIS plugin, CommandSender sender) {
         this.plugin = plugin;
-        this.mvc = mvc;
         this.sender = sender;
     }
 
@@ -43,27 +43,26 @@ public class TARDISMultiverseImporter {
      */
     public void transfer() {
         int i = 0;
-        for (MultiverseWorld mvw : mvc.getMVWorldManager().getMVWorlds()) {
+        for (MultiverseWorld mvw : mvc.getWorldManager().getWorlds()) {
             // only import if the world doesn't have an entry in planets.yml
             if (!plugin.getPlanetsConfig().contains("planets." + mvw.getName())) {
-                plugin.getPlanetsConfig().set("planets." + mvw.getName() + ".enabled", mvw.getAutoLoad());
+                plugin.getPlanetsConfig().set("planets." + mvw.getName() + ".enabled", mvw.isAutoLoad());
                 plugin.getPlanetsConfig().set("planets." + mvw.getName() + ".resource-pack", "default");
                 plugin.getPlanetsConfig().set("planets." + mvw.getName() + ".gamemode", mvw.getGameMode().toString());
                 plugin.getPlanetsConfig().set("planets." + mvw.getName() + ".time_travel", false);
-                plugin.getPlanetsConfig().set("planets." + mvw.getName() + ".world_type", mvw.getWorldType().toString());
                 plugin.getPlanetsConfig().set("planets." + mvw.getName() + ".environment", mvw.getEnvironment().toString());
                 plugin.getPlanetsConfig().set("planets." + mvw.getName() + ".generator", mvw.getGenerator());
-                plugin.getPlanetsConfig().set("planets." + mvw.getName() + ".spawn_chunk_radius", mvw.isKeepingSpawnInMemory() ? 2 : 0);
-                if (!mvw.canAnimalsSpawn() || !mvw.canMonstersSpawn()) {
+                plugin.getPlanetsConfig().set("planets." + mvw.getName() + ".spawn_chunk_radius", mvw.isKeepSpawnInMemory() ? 2 : 0);
+                if (!mvw.getEntitySpawnConfig().getSpawnCategoryConfig(SpawnCategory.ANIMAL).isSpawn() || !mvw.getEntitySpawnConfig().getSpawnCategoryConfig(SpawnCategory.MONSTER).isSpawn()) {
                     plugin.getPlanetsConfig().set("planets." + mvw.getName() + ".gamerules.doMobSpawning", false);
                 }
-                if (!mvw.isWeatherEnabled()) {
+                if (!mvw.isAllowWeather()) {
                     plugin.getPlanetsConfig().set("planets." + mvw.getName() + ".gamerules.doWeatherCycle", false);
                 }
-                if (!mvw.isPVPEnabled()) {
+                if (!mvw.getPvp()) {
                     plugin.getPlanetsConfig().set("planets." + mvw.getName() + ".gamerules.pvp", false);
                 }
-                plugin.getPlanetsConfig().set("planets." + mvw.getName() + ".allow_portals", mvw.getAllowedPortals() != AllowedPortalType.NONE);
+                plugin.getPlanetsConfig().set("planets." + mvw.getName() + ".allow_portals", mvw.getPortalForm() != AllowedPortalType.NONE);
                 plugin.getPlanetsConfig().set("planets." + mvw.getName() + ".alias", mvw.getAlias());
                 plugin.getPlanetsConfig().set("planets." + mvw.getName() + ".helmic_regulator_order", -1);
                 String icon;

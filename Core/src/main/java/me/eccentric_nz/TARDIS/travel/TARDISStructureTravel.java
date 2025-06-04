@@ -17,9 +17,9 @@
 package me.eccentric_nz.TARDIS.travel;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.data.Current;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
@@ -86,8 +86,9 @@ public class TARDISStructureTravel {
 
     public TARDISStructureLocation getRandom(Player p, int id, String[] args) {
         // get world the Police Box is in
-        Current current = TARDISCache.CURRENT.get(id);
-        if (current != null) {
+        ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
+        if (rsc.resultSet()) {
+            Current current = rsc.getCurrent();
             World world = current.location().getWorld();
             Environment env = world.getEnvironment();
             Structure structure = null;

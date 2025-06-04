@@ -17,12 +17,9 @@
 package me.eccentric_nz.TARDIS.advanced;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetDestinations;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetDiskStorage;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
+import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Material;
@@ -82,16 +79,14 @@ public class TARDISDiskWriterCommand {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "SAVE_NAME_NOT_VALID");
                     return false;
                 }
-//                HashMap<String, Object> where = new HashMap<>();
-//                where.put("uuid", player.getUniqueId().toString());
-//                ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-//                if (!rs.resultSet()) {
-                Tardis tardis = TARDISCache.BY_UUID.get(player.getUniqueId());
-                if (tardis != null) {
+                HashMap<String, Object> where = new HashMap<>();
+                where.put("uuid", player.getUniqueId().toString());
+                ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+                if (!rs.resultSet()) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
                     return false;
                 } else {
-//                    Tardis tardis = rs.getTardis();
+                    Tardis tardis = rs.getTardis();
                     int id = tardis.getTardisId();
                     ChameleonPreset preset = tardis.getPreset();
                     // check has unique name - this will always return false in HARD & MEDIUM difficulty
@@ -105,11 +100,12 @@ public class TARDISDiskWriterCommand {
                         return true;
                     }
                     // get current destination
-                    Current current = TARDISCache.CURRENT.get(id);
-                    if (current == null) {
+                    ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
+                    if (!rsc.resultSet()) {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
                         return true;
                     }
+                    Current current = rsc.getCurrent();
                     lore.set(0, args[1]);
                     lore.add(1, current.location().getWorld().getName());
                     lore.add(2, "" + current.location().getBlockX());
@@ -212,12 +208,10 @@ public class TARDISDiskWriterCommand {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "DISK_NO_SAVE");
                     return true;
                 }
-//                HashMap<String, Object> where = new HashMap<>();
-//                where.put("uuid", player.getUniqueId().toString());
-//                ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-//                if (!rs.resultSet()) {
-                Tardis tardis = TARDISCache.BY_UUID.get(player.getUniqueId());
-                if (tardis == null) {
+                HashMap<String, Object> where = new HashMap<>();
+                where.put("uuid", player.getUniqueId().toString());
+                ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+                if (!rs.resultSet()) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
                     return false;
                 } else {

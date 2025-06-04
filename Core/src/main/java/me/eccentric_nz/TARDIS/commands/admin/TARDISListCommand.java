@@ -17,9 +17,9 @@
 package me.eccentric_nz.TARDIS.commands.admin;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.WorldManager;
@@ -57,11 +57,12 @@ class TARDISListCommand {
                     try {
                         try (BufferedWriter bw = new BufferedWriter(new FileWriter(file, false))) {
                             for (Tardis tardis : rsl.getData()) {
-                                Current current = TARDISCache.CURRENT.get(tardis.getTardisId());
-                                if (current == null) {
+                                ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, tardis.getTardisId());
+                                if (!rsc.resultSet()) {
                                     plugin.getMessenger().send(sender, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
                                     return true;
                                 }
+                                Current current = rsc.getCurrent();
                                 String line = "ID: " + tardis.getTardisId() + ", Time Lord: " + tardis.getOwner() + ", Location: " + current.location().getWorld().getName() + ":" + current.location().getBlockX() + ":" + current.location().getBlockY() + ":" + current.location().getBlockZ();
                                 bw.write(line);
                                 bw.newLine();
@@ -103,11 +104,12 @@ class TARDISListCommand {
                 }
                 plugin.getMessenger().message(sender, "");
                 for (Tardis tardis : rsl.getData()) {
-                    Current current = TARDISCache.CURRENT.get(tardis.getTardisId());
-                    if (current == null) {
+                    ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, tardis.getTardisId());
+                    if (!rsc.resultSet()) {
                         plugin.getMessenger().message(sender, ChatColor.GREEN + "" + tardis.getTardisId() + " " + tardis.getOwner() + ChatColor.RESET + " TARDIS is in an unloaded world!");
                         continue;
                     }
+                    Current current = rsc.getCurrent();
                     String world = (!plugin.getPlanetsConfig().getBoolean("planets." + current.location().getWorld().getName() + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMVHelper().getAlias(current.location().getWorld()) : TARDISAliasResolver.getWorldAlias(current.location().getWorld());
                     plugin.getMessenger().sendTARDISForList(sender, tardis, world, current.location().getBlockX(), current.location().getBlockY(), current.location().getBlockZ());
                 }

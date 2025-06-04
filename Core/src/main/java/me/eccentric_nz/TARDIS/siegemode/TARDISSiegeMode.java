@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.siegemode;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.event.TARDISSiegeEvent;
 import me.eccentric_nz.TARDIS.api.event.TARDISSiegeOffEvent;
@@ -25,7 +24,9 @@ import me.eccentric_nz.TARDIS.builders.exterior.BuildData;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
@@ -62,20 +63,19 @@ public class TARDISSiegeMode {
 
     public void toggleViaSwitch(int id, Player p) {
         // get the current siege status
-//        HashMap<String, Object> where = new HashMap<>();
-//        where.put("tardis_id", id);
-//        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
-//        if (!rs.resultSet()) {
-        Tardis tardis = TARDISCache.BY_ID.get(id);
-        if (tardis == null) {
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("tardis_id", id);
+        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+        if (!rs.resultSet()) {
             return;
         }
-//        Tardis tardis = rs.getTardis();
+        Tardis tardis = rs.getTardis();
         // get current location
-        Current current = TARDISCache.CURRENT.get(id);
-        if (current == null) {
+        ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
+        if (!rsc.resultSet()) {
             return;
         }
+        Current current = rsc.getCurrent();
         Block siege = current.location().getBlock();
         HashMap<String, Object> wheres = new HashMap<>();
         wheres.put("tardis_id", id);
@@ -210,7 +210,6 @@ public class TARDISSiegeMode {
         }
         // update the database
         plugin.getQueryFactory().doUpdate("tardis", set, wheres);
-        TARDISCache.invalidate(id);
     }
 
     void changeTextures(String uuid, Schematic schm, Player p, boolean toSiege) {

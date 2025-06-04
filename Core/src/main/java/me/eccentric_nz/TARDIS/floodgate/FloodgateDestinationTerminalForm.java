@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.floodgate;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.api.Parameters;
@@ -25,6 +24,7 @@ import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.exterior.TARDISEmergencyRelocation;
 import me.eccentric_nz.TARDIS.database.data.Current;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
 import me.eccentric_nz.TARDIS.enumeration.Flag;
@@ -105,8 +105,9 @@ public class FloodgateDestinationTerminalForm {
             ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
             if (rst.resultSet()) {
                 int id = rst.getTardis_id();
-                Current current = TARDISCache.CURRENT.get(id);
-                if (current != null) {
+                ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
+                if (rsc.resultSet()) {
+                    Current current = rsc.getCurrent();
                     Location location = null;
                     // check location
                     switch (e) {

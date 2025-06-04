@@ -17,12 +17,12 @@
 package me.eccentric_nz.TARDIS.commands.travel;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISSerializeInventory;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.data.Current;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDiskStorage;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISBiomeReaderListener;
@@ -114,11 +114,12 @@ public class TARDISTravelBiome {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "BIOMES", b);
         } else {
             World w;
-            Current current = TARDISCache.CURRENT.get(id);
-            if (current == null) {
+            ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
+            if (!rsc.resultSet()) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
                 return true;
             }
+            Current current = rsc.getCurrent();
             // have they specified a world argument?
             if (args.length > 2) {
                 // must be in the vortex

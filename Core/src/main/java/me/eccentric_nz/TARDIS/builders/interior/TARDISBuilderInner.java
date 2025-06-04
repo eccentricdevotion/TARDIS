@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.builders.interior;
 import com.google.gson.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.utility.FractalFence;
@@ -335,7 +334,6 @@ public class TARDISBuilderInner implements Runnable {
             });
             // finished processing - update tardis table!
             plugin.getQueryFactory().doUpdate("tardis", set, where);
-            TARDISCache.invalidate(dbID);
             // give kit?
             if (plugin.getKitsConfig().getBoolean("give.create.enabled")) {
                 if (TARDISPermission.hasPermission(player, "tardis.kit.create")) {

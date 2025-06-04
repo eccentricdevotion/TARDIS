@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.planets;
 
-import com.onarandombox.multiverseinventories.MultiverseInventories;
-import com.onarandombox.multiverseinventories.WorldGroup;
+import org.mvplugins.multiverse.inventories.MultiverseInventoriesApi;
+import org.mvplugins.multiverse.inventories.profile.group.WorldGroup;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.InventoryManager;
 import me.eccentric_nz.TARDIS.utility.TARDISGroupManagerHandler;
@@ -65,8 +65,8 @@ public class TARDISSpace {
             String inventory_group = plugin.getConfig().getString("creation.inventory_group");
             if (!"0".equals(inventory_group)) {
                 if (plugin.getInvManager() == InventoryManager.MULTIVERSE) {
-                    MultiverseInventories mi = (MultiverseInventories) plugin.getPM().getPlugin("Multiverse-Inventories");
-                    WorldGroup wgp = mi.getGroupManager().getGroup(inventory_group);
+                    MultiverseInventoriesApi mvi = MultiverseInventoriesApi.get();
+                    WorldGroup wgp = mvi.getWorldGroupManager().getGroup(inventory_group);
                     wgp.addWorld(name);
                 }
             }

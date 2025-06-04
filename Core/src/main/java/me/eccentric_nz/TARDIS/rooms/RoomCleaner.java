@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.rooms;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.database.ClearEyeControls;
 import me.eccentric_nz.TARDIS.rooms.eye.EyeOfHarmonyParticles;
 import org.bukkit.World;
@@ -75,7 +74,6 @@ public class RoomCleaner {
             HashMap<String, Object> where = new HashMap<>();
             where.put("tardis_id", id);
             plugin.getQueryFactory().doUpdate("tardis", setd, where);
-            TARDISCache.invalidate(id);
             // remove WorldGuard protection
             if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
                 plugin.getWorldGuardUtils().removeRoomRegion(world, player.getName(), "renderer");

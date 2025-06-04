@@ -17,10 +17,8 @@
 package me.eccentric_nz.TARDIS.listeners.controls;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
@@ -131,9 +129,9 @@ public class TARDISKeyboardListener implements Listener {
             whereh.put("tardis_id", id);
             ResultSetHomeLocation rsh = new ResultSetHomeLocation(plugin, whereh);
             if (rsh.resultSet()) {
-                Current current = TARDISCache.CURRENT.get(id);
-                if (current != null) {
-                    if (currentIsNotHome(rsh, current.location())) {
+                ResultSetCurrentFromId rscl = new ResultSetCurrentFromId(plugin, id);
+                if (rscl.resultSet()) {
+                    if (currentIsNotHome(rsh, rscl.getCurrent().location())) {
                         p.performCommand("tardistravel home");
                         plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, p.getName() + " issued server command: /tardistravel home");
                     } else {

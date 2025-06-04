@@ -17,14 +17,14 @@
 package me.eccentric_nz.TARDIS.chameleon.gui;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.chameleon.construct.TARDISChameleonConstructorGUI;
 import me.eccentric_nz.TARDIS.chameleon.utils.TARDISChameleonFrame;
-import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
@@ -85,10 +85,13 @@ public class TARDISChameleonListener extends TARDISMenuListener {
             return;
         }
         int id = rst.getTardis_id();
-        Tardis tardis = TARDISCache.BY_ID.get(id);
-        if (tardis == null) {
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("tardis_id", id);
+        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+        if (!rs.resultSet()) {
             return;
         }
+        Tardis tardis = rs.getTardis();
         Adaption adapt = tardis.getAdaption();
         HashMap<String, Object> set = new HashMap<>();
         HashMap<String, Object> wherec = new HashMap<>();
@@ -244,9 +247,9 @@ public class TARDISChameleonListener extends TARDISMenuListener {
                 if (isBiomeAdaptive(view)) {
                     toggleOthers(ChameleonOption.PRESET, view);
                     // get current location's biome
-                    Current current = TARDISCache.CURRENT.get(id);
-                    if (current != null) {
-                        Biome biome = current.location().getBlock().getBiome();
+                    ResultSetCurrentFromId rsl = new ResultSetCurrentFromId(plugin, id);
+                    if (rsl.resultSet()) {
+                        Biome biome = rsl.getCurrent().location().getBlock().getBiome();
                         // get which preset
                         ChameleonPreset which = getAdaption(biome);
                         if (which != null) {
@@ -276,7 +279,6 @@ public class TARDISChameleonListener extends TARDISMenuListener {
         }
         if (!set.isEmpty()) {
             plugin.getQueryFactory().doUpdate("tardis", set, wherec);
-            TARDISCache.invalidate(id);
         }
     }
 

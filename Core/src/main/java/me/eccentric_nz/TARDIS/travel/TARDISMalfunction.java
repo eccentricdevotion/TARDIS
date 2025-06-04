@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.travel;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
@@ -69,8 +68,8 @@ public class TARDISMalfunction {
     public Location getMalfunction(int id, Player p, COMPASS dir, Location handbrake_loc, String eps, String creeper) {
         Location l;
         // get current TARDIS preset location
-        Current current = TARDISCache.CURRENT.get(id);
-        if (current != null) {
+        ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
+        if (rsc.resultSet()) {
             int end = 100 - plugin.getConfig().getInt("preferences.malfunction_end");
             int nether = end - plugin.getConfig().getInt("preferences.malfunction_nether");
             int r = TARDISConstants.RANDOM.nextInt(100);
@@ -78,6 +77,7 @@ public class TARDISMalfunction {
             int x = TARDISConstants.RANDOM.nextInt(4) + 1;
             int z = TARDISConstants.RANDOM.nextInt(4) + 1;
             int y = TARDISConstants.RANDOM.nextInt(4) + 1;
+            Current current = rsc.getCurrent();
             if (r > end) {
                 // get random the_end location
                 l = tt.randomDestination(p, x, z, y, dir, "THE_END", null, true, current.location());

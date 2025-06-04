@@ -17,9 +17,8 @@
 package me.eccentric_nz.TARDIS.floodgate;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.console.telepathic.EnvironmentBiomes;
-import me.eccentric_nz.TARDIS.database.data.Current;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisArtron;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
@@ -53,9 +52,9 @@ public class FloodgateBiomesForm {
         SimpleForm.Builder builder = SimpleForm.builder();
         builder.title("Telepathic Biome Finder");
         // only show biomes for the environment the TARDIS is currently in
-        Current current = TARDISCache.CURRENT.get(id);
-        if (current != null) {
-            World.Environment environment = current.location().getWorld().getEnvironment();
+        ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
+        if (rsc.resultSet()) {
+            World.Environment environment = rsc.getCurrent().location().getWorld().getEnvironment();
             // biome finder
             List<Biome> biomes;
             switch (environment) {

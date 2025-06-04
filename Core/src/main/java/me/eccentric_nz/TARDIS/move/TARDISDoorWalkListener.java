@@ -17,16 +17,12 @@
 package me.eccentric_nz.TARDIS.move;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.exterior.TARDISEmergencyRelocation;
 import me.eccentric_nz.TARDIS.control.TARDISPowerButton;
 import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCompanions;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravelledTo;
+import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.doors.DoorLockAction;
 import me.eccentric_nz.TARDIS.doors.DoorUtility;
 import me.eccentric_nz.TARDIS.doors.inner.*;
@@ -151,13 +147,11 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                             userQuotes = rsp.isQuotesOn();
                             if (rsp.isAutoPowerUp() && plugin.getConfig().getBoolean("allow.power_down")) {
                                 // check TARDIS is not abandoned
-//                                HashMap<String, Object> tid = new HashMap<>();
-//                                tid.put("tardis_id", id);
-//                                ResultSetTardis rs = new ResultSetTardis(plugin, tid, "", false, 2);
-//                                if (rs.resultSet()) {
-                                Tardis tardis = TARDISCache.BY_ID.get(id);
-                                if (tardis != null) {
-                                    canPowerUp = !tardis.isAbandoned();
+                                HashMap<String, Object> tid = new HashMap<>();
+                                tid.put("tardis_id", id);
+                                ResultSetTardis rs = new ResultSetTardis(plugin, tid, "", false);
+                                if (rs.resultSet()) {
+                                    canPowerUp = !rs.getTardis().isAbandoned();
                                 }
                             }
                         } else {
@@ -178,12 +172,11 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                 return;
                             }
                             // handbrake must be on
-//                            HashMap<String, Object> tid = new HashMap<>();
-//                            tid.put("tardis_id", id);
-//                            ResultSetTardis rs = new ResultSetTardis(plugin, tid, "", false, 2);
-//                            if (rs.resultSet()) {
-                            Tardis tardis = TARDISCache.BY_ID.get(id);
-                            if (tardis != null) {
+                            HashMap<String, Object> tid = new HashMap<>();
+                            tid.put("tardis_id", id);
+                            ResultSetTardis rs = new ResultSetTardis(plugin, tid, "", false);
+                            if (rs.resultSet()) {
+                                Tardis tardis = rs.getTardis();
                                 if (!tardis.isHandbrakeOn()) {
                                     plugin.getMessenger().sendStatus(player, "HANDBRAKE_ENGAGE");
                                     return;
@@ -287,13 +280,11 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                 plugin.getMessenger().sendStatus(player, "SIEGE_NO_EXIT");
                                 return;
                             }
-//                            HashMap<String, Object> tid = new HashMap<>();
-//                            tid.put("tardis_id", id);
-//                            ResultSetTardis rs = new ResultSetTardis(plugin, tid, "", false, 2);
-//                            if (rs.resultSet()) {
-//                                Tardis tardis = rs.getTardis();
-                            Tardis tardis = TARDISCache.BY_ID.get(id);
-                            if (tardis != null) {
+                            HashMap<String, Object> tid = new HashMap<>();
+                            tid.put("tardis_id", id);
+                            ResultSetTardis rs = new ResultSetTardis(plugin, tid, "", false);
+                            if (rs.resultSet()) {
+                                Tardis tardis = rs.getTardis();
                                 if (!tardis.isHandbrakeOn()) {
                                     plugin.getMessenger().sendStatus(player, "HANDBRAKE_ENGAGE");
                                     return;
@@ -307,12 +298,13 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                 String companions = tardis.getCompanions();
                                 boolean hb = tardis.isHandbrakeOn();
                                 boolean po = !tardis.isPoweredOn() && !tardis.isAbandoned();
-                                Current current = TARDISCache.CURRENT.get(tardis.getTardisId());
-                                if (current == null) {
+                                ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
+                                if (!rsc.resultSet()) {
                                     // emergency TARDIS relocation
                                     new TARDISEmergencyRelocation(plugin).relocate(id, player);
                                     return;
                                 }
+                                Current current = rsc.getCurrent();
                                 COMPASS d_backup = current.direction();
                                 // get players direction
                                 COMPASS pd = COMPASS.valueOf(TARDISStaticUtils.getPlayersDirection(player, false));
@@ -532,7 +524,6 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                         wheree.put("tardis_id", id);
                                         int cost = (-plugin.getArtronConfig().getInt("backdoor"));
                                         plugin.getQueryFactory().alterEnergyLevel("tardis", cost, wheree, player);
-                                        TARDISCache.invalidate(id);
                                     }
                                     case 3 -> {
                                         if (artron < required) {
@@ -601,7 +592,6 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                         wherea.put("tardis_id", id);
                                         int costa = (-plugin.getArtronConfig().getInt("backdoor"));
                                         plugin.getQueryFactory().alterEnergyLevel("tardis", costa, wherea, player);
-                                        TARDISCache.invalidate(id);
                                     }
                                     default -> {
                                         // do nothing

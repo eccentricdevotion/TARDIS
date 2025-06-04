@@ -20,10 +20,9 @@ import me.eccentric_nz.TARDIS.ARS.TARDISARS;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSMethods;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSSlot;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetARS;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -174,13 +173,11 @@ public class FloodgateMapForm {
     }
 
     private String getConsoleMaterial(int id) {
-//        HashMap<String, Object> where = new HashMap<>();
-//        where.put("tardis_id", id);
-//        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
-//        if (rs.resultSet()) {
-        Tardis tardis = TARDISCache.BY_ID.get(id);
-        if (tardis != null) {
-            Schematic console = tardis.getSchematic();
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("tardis_id", id);
+        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+        if (rs.resultSet()) {
+            Schematic console = rs.getTardis().getSchematic();
             return console.getSeedMaterial().toString();
         }
         return "IRON_BLOCK"; // budget

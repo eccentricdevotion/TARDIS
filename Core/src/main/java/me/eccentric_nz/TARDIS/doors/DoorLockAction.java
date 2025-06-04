@@ -17,9 +17,8 @@
 package me.eccentric_nz.TARDIS.doors;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCompanions;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -74,13 +73,11 @@ public class DoorLockAction {
                 ResultSetCompanions rsc = new ResultSetCompanions(plugin, id);
                 if (rsc.getCompanions().contains(playerUUID)) {
                     // get Time Lord
-//                    HashMap<String, Object> wherett = new HashMap<>();
-//                    wherett.put("tardis_id", id);
-//                    ResultSetTardis rstt = new ResultSetTardis(plugin, wherett, "", false, 2);
-//                    if (rstt.resultSet()) {
-                    Tardis tardis = TARDISCache.BY_ID.get(id);
-                    if (tardis != null) {
-                        UUID tluuid = tardis.getUuid();
+                    HashMap<String, Object> wherett = new HashMap<>();
+                    wherett.put("tardis_id", id);
+                    ResultSetTardis rstt = new ResultSetTardis(plugin, wherett, "", false);
+                    if (rstt.resultSet()) {
+                        UUID tluuid = rstt.getTardis().getUuid();
                         // only if Time Lord is inside
                         HashMap<String, Object> wherev = new HashMap<>();
                         wherev.put("uuid", tluuid.toString());

@@ -17,9 +17,9 @@
 package me.eccentric_nz.TARDIS.artron;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetArtronStorage;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisArtron;
 import me.eccentric_nz.TARDIS.sensor.ChargingSensor;
 import me.eccentric_nz.TARDIS.sensor.SensorTracker;
@@ -68,7 +68,6 @@ class TARDISArtronRunnable implements Runnable {
             HashMap<String, Object> set = new HashMap<>();
             set.put("recharging", 0);
             plugin.getQueryFactory().doUpdate("tardis", set, where);
-            TARDISCache.invalidate(id);
             if (charged) {
                 // toggle charging sensor
                 new ChargingSensor(plugin, id).toggle();
@@ -84,7 +83,6 @@ class TARDISArtronRunnable implements Runnable {
             int onepercent = Math.round(plugin.getArtronConfig().getInt("full_charge") / 100.0F);
             // update TARDIS artron_level
             plugin.getQueryFactory().alterEnergyLevel("tardis", onepercent, where, null);
-            TARDISCache.invalidate(id);
         }
     }
 
@@ -92,10 +90,11 @@ class TARDISArtronRunnable implements Runnable {
      * Checks whether the TARDIS is near a recharge location.
      */
     private boolean isNearCharger(int id) {
-        Current current = TARDISCache.CURRENT.get(id);
-        if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id) || current == null) {
+        ResultSetCurrentFromId rs = new ResultSetCurrentFromId(plugin, id);
+        if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id) || !rs.resultSet()) {
             return false;
         }
+        Current current = rs.getCurrent();
         if (current.location().getWorld() == null) {
             return false;
         }

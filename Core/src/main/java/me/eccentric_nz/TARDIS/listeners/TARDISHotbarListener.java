@@ -17,8 +17,7 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
-import me.eccentric_nz.TARDIS.database.data.Current;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.flight.FlightVisibility;
 import org.bukkit.Location;
@@ -65,11 +64,11 @@ public class TARDISHotbarListener implements Listener {
                     // get TARDIS location
                     ResultSetTardisID rs = new ResultSetTardisID(plugin);
                     if (rs.fromUUID(player.getUniqueId().toString())) {
-                        Current current = TARDISCache.CURRENT.get(rs.getTardisId());
-                        if (current == null) {
+                        ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, rs.getTardisId());
+                        if (!rsc.resultSet()) {
                             return;
                         }
-                        player.setCompassTarget(current.location());
+                        player.setCompassTarget(rsc.getCurrent().location());
                     }
                 } else {
                     Location respawn = player.getRespawnLocation();

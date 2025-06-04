@@ -17,8 +17,7 @@
 package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
-import me.eccentric_nz.TARDIS.database.data.Current;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
@@ -50,13 +49,13 @@ class TARDISCheckLocCommand {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_A_TIMELORD");
             return true;
         }
-        Current current = TARDISCache.CURRENT.get(rs.getTardisId());
-        if (current == null) {
+        ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, rs.getTardisId());
+        if (!rsc.resultSet()) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "DIRECTION_NOT_FOUND");
             return true;
         }
         TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
-        tt.testSafeLocation(eyeLocation, current.direction(), player);
+        tt.testSafeLocation(eyeLocation, rsc.getCurrent().direction(), player);
         return true;
     }
 }

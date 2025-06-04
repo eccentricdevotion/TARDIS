@@ -17,9 +17,8 @@
 package me.eccentric_nz.TARDIS.chameleon.gui;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.chameleon.construct.TARDISChameleonConstructorGUI;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import org.bukkit.ChatColor;
@@ -74,8 +73,10 @@ public class TARDISChameleonHelpListener extends TARDISMenuListener {
             return;
         }
         int id = rst.getTardis_id();
-        Tardis tardis = TARDISCache.BY_ID.get(id);
-        if (tardis == null) {
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("tardis_id", id);
+        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+        if (!rs.resultSet()) {
             return;
         }
         switch (slot) {

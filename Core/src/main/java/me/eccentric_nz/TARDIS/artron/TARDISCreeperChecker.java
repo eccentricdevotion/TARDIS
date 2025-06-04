@@ -17,14 +17,16 @@
 package me.eccentric_nz.TARDIS.artron;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Creeper;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+
+import java.util.HashMap;
 
 /**
  * The Doctor's favorite food - jelly babies have been considered a delicacy by the Doctor ever since his second
@@ -46,13 +48,11 @@ public class TARDISCreeperChecker {
      * Checks the creeper is there and spawns in a new one if not.
      */
     public void checkCreeper() {
-//        HashMap<String, Object> wheret = new HashMap<>();
-//        wheret.put("tardis_id", id);
-//        ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 2);
-//        if (rs.resultSet()) {
-//        Tardis tardis = rs.getTardis();
-        Tardis tardis = TARDISCache.BY_ID.get(id);
-        if (tardis != null) {
+        HashMap<String, Object> wheret = new HashMap<>();
+        wheret.put("tardis_id", id);
+        ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false);
+        if (rs.resultSet()) {
+        Tardis tardis = rs.getTardis();
             // only if there is a saved creeper location
             if (!tardis.getCreeper().isEmpty()) {
                 // only if the TARDIS has been initialised

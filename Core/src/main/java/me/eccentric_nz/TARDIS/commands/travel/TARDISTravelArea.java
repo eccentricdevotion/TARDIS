@@ -17,11 +17,10 @@
 package me.eccentric_nz.TARDIS.commands.travel;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreas;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.TravelType;
@@ -76,7 +75,6 @@ public class TARDISTravelArea {
             // set chameleon adaption to OFF
             seti.put("adapti_on", 0);
             plugin.getQueryFactory().doSyncUpdate("tardis", seti, wherei);
-            TARDISCache.invalidate(id);
         }
         Location l;
         if (rsa.getArea().grid()) {
@@ -98,12 +96,12 @@ public class TARDISTravelArea {
             set.put("direction", rsa.getArea().direction());
         } else {
             // get current direction
-            Current current = TARDISCache.CURRENT.get(id);
-            if (current == null) {
+            ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
+            if (!rsc.resultSet()) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
                 return true;
             }
-            set.put("direction", current.direction().forPreset().toString());
+            set.put("direction", rsc.getCurrent().direction().forPreset().toString());
         }
         set.put("submarine", 0);
         HashMap<String, Object> tid = new HashMap<>();

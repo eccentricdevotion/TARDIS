@@ -17,9 +17,9 @@
 package me.eccentric_nz.TARDIS.control.actions;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.builders.utility.LightLevel;
 import me.eccentric_nz.TARDIS.database.data.Current;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetLamps;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -54,8 +54,9 @@ public class LightLevelAction {
                 }
                 light_level = LightLevel.exterior_level[setLevel];
                 // get current TARDIS location
-                Current current = TARDISCache.CURRENT.get(id);
-                if (current != null) {
+                ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
+                if (rsc.resultSet()) {
+                    Current current = rsc.getCurrent();
                     if (current.location().getWorld() == null) {
                         return;
                     }

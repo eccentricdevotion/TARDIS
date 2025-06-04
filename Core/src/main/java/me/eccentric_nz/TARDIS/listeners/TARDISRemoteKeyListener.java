@@ -17,13 +17,13 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.artron.TARDISAdaptiveBoxLampToggler;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISHideCommand;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISRebuildCommand;
-import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisPreset;
 import me.eccentric_nz.TARDIS.doors.inner.*;
 import me.eccentric_nz.TARDIS.doors.outer.OuterDisplayDoorCloser;
@@ -89,11 +89,15 @@ public class TARDISRemoteKeyListener implements Listener {
         if (is.hasItemMeta()) {
             ItemMeta im = is.getItemMeta();
             if (im.hasDisplayName() && im.getDisplayName().endsWith("TARDIS Remote Key")) {
+                String uuid = player.getUniqueId().toString();
                 // has TARDIS?
-                Tardis tardis = TARDISCache.BY_UUID.get(player.getUniqueId());
-                if (tardis == null) {
+                HashMap<String, Object> where = new HashMap<>();
+                where.put("uuid", uuid);
+                ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+                if (!rs.resultSet()) {
                     return;
                 }
+                Tardis tardis = rs.getTardis();
                 int id = tardis.getTardisId();
                 boolean powered = tardis.isPoweredOn();
                 ChameleonPreset preset = tardis.getPreset();
@@ -108,8 +112,8 @@ public class TARDISRemoteKeyListener implements Listener {
                 boolean hidden = tardis.isHidden();
                 if (action.equals(Action.LEFT_CLICK_AIR)) {
                     // get the TARDIS current location
-                    Current current = TARDISCache.CURRENT.get(id);
-                    if (current == null) {
+                    ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
+                    if (!rsc.resultSet()) {
                         return;
                     }
                     HashMap<String, Object> whered = new HashMap<>();
@@ -127,7 +131,7 @@ public class TARDISRemoteKeyListener implements Listener {
                         String message = (rsd.isLocked()) ? plugin.getLanguage().getString("DOOR_UNLOCK") : plugin.getLanguage().getString("DOOR_DEADLOCK");
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "DOOR_LOCK", message);
                         TARDISAdaptiveBoxLampToggler tpblt = new TARDISAdaptiveBoxLampToggler(plugin);
-                        TARDISSounds.playTARDISSound(current.location(), "tardis_lock");
+                        TARDISSounds.playTARDISSound(rsc.getCurrent().location(), "tardis_lock");
                         tpblt.toggleLamp(id, !powered, preset);
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> tpblt.toggleLamp(id, powered, preset), 6L);
                     }

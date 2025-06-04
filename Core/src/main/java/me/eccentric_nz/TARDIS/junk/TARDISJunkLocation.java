@@ -17,8 +17,7 @@
 package me.eccentric_nz.TARDIS.junk;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
-import me.eccentric_nz.TARDIS.database.data.Current;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetHomeLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import org.bukkit.Location;
@@ -45,8 +44,8 @@ class TARDISJunkLocation {
         if (rs.fromUUID("00000000-aaaa-bbbb-cccc-000000000000")) {
             id = rs.getTardisId();
             // get current location
-            Current current = TARDISCache.CURRENT.get(id);
-            if (current != null) {
+            ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
+            if (rsc.resultSet()) {
                 // get home location
                 HashMap<String, Object> whereh = new HashMap<>();
                 whereh.put("tardis_id", id);
@@ -54,7 +53,7 @@ class TARDISJunkLocation {
                 if (rsh.resultSet()) {
                     home = new Location(rsh.getWorld(), rsh.getX(), rsh.getY(), rsh.getZ());
                     // compare locations
-                    return !current.location().equals(home);
+                    return !rsc.getCurrent().location().equals(home);
                 }
             }
         }

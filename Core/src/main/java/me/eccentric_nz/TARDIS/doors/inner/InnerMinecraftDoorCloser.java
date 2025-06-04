@@ -17,8 +17,8 @@
 package me.eccentric_nz.TARDIS.doors.inner;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.doors.DoorUtility;
 import me.eccentric_nz.TARDIS.move.TARDISTeleportLocation;
 import org.bukkit.Bukkit;
@@ -27,6 +27,7 @@ import org.bukkit.block.Block;
 import org.bukkit.block.data.Openable;
 import org.bukkit.entity.Player;
 
+import java.util.HashMap;
 import java.util.UUID;
 
 public class InnerMinecraftDoorCloser {
@@ -43,12 +44,11 @@ public class InnerMinecraftDoorCloser {
             closeable.setOpen(false);
             block.setBlockData(closeable, true);
         }
-//        HashMap<String, Object> where = new HashMap<>();
-//        where.put("tardis_id", id);
-//        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
-//        if (rs.resultSet()) {
-        Tardis tardis = TARDISCache.BY_ID.get(id);
-        if (tardis != null) {
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("tardis_id", id);
+        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+        if (rs.resultSet()) {
+            Tardis tardis = rs.getTardis();
             // remove portal
             TARDISTeleportLocation removed = plugin.getTrackerKeeper().getPortals().remove(block.getLocation());
             if (removed == null) {

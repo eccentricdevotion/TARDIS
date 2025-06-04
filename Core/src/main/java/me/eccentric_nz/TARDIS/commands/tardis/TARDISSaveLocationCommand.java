@@ -17,12 +17,13 @@
 package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDestinations;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.entity.Player;
 
@@ -43,12 +44,10 @@ class TARDISSaveLocationCommand {
 
     boolean doSave(Player player, String[] args) {
         if (TARDISPermission.hasPermission(player, "tardis.save")) {
-//            HashMap<String, Object> where = new HashMap<>();
-//            where.put("uuid", player.getUniqueId().toString());
-//            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-//            if (!rs.resultSet()) {
-            Tardis tardis = TARDISCache.BY_UUID.get(player.getUniqueId());
-            if (tardis == null) {
+            HashMap<String, Object> where = new HashMap<>();
+            where.put("uuid", player.getUniqueId().toString());
+            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+            if (!rs.resultSet()) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
                 return false;
             }
@@ -63,6 +62,7 @@ class TARDISSaveLocationCommand {
                 plugin.getMessenger().sendColouredCommand(player, "SAVE_RESERVED", "/tardis home", plugin);
                 return false;
             } else {
+                Tardis tardis = rs.getTardis();
                 int id = tardis.getTardisId();
                 // check for memory circuit
                 TARDISCircuitChecker tcc = null;
@@ -85,11 +85,12 @@ class TARDISSaveLocationCommand {
                     return true;
                 }
                 // get current destination
-                Current current = TARDISCache.CURRENT.get(id);
-                if (current == null) {
+                ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
+                if (!rsc.resultSet()) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
                     return true;
                 }
+                Current current = rsc.getCurrent();
                 String w = current.location().getWorld().getName();
                 if (w.startsWith("TARDIS_")) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "SAVE_NO_TARDIS");

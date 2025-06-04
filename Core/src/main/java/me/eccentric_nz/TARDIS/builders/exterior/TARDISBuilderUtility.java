@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.builders.exterior;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.custommodels.keys.ChameleonVariant;
 import me.eccentric_nz.TARDIS.custommodels.keys.ColouredVariant;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetColour;
@@ -196,7 +195,6 @@ public class TARDISBuilderUtility {
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
         TARDIS.plugin.getQueryFactory().doUpdate("tardis", set, where);
-        TARDISCache.invalidate(id);
     }
 
     public static String getCustomModelPath(String type) {

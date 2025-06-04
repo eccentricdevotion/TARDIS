@@ -17,10 +17,10 @@
 package me.eccentric_nz.TARDIS.artron;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.utility.LightLevel;
 import me.eccentric_nz.TARDIS.database.data.Current;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetExteriorLightLevel;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import org.bukkit.Material;
@@ -40,8 +40,9 @@ public class TARDISAdaptiveBoxLampToggler {
     }
 
     public void toggleLamp(int id, boolean on, ChameleonPreset preset) {
-        Current current = TARDISCache.CURRENT.get(id);
-        if (current != null) {
+        ResultSetCurrentFromId rs = new ResultSetCurrentFromId(plugin, id);
+        if (rs.resultSet()) {
+            Current current = rs.getCurrent();
             Block light = current.location().getBlock().getRelative(BlockFace.UP, 2);
             if (preset.usesArmourStand()) {
                 if (on) {

@@ -209,7 +209,6 @@ public class TARDIS extends JavaPlugin {
         versions.put("Multiverse-Inventories", "4.2");
         versions.put("Towny", "0.100");
         versions.put("WorldGuard", "7.0.11");
-        new TARDISCache().init();
     }
 
     public TARDISMessage getMessenger() {
@@ -1621,7 +1620,7 @@ public class TARDIS extends JavaPlugin {
         if (worldManager.equals(WorldManager.MULTIVERSE)) {
             Plugin mvplugin = pm.getPlugin("Multiverse-Core");
             debug("Hooking into Multiverse-Core!");
-            mvHelper = new TARDISMultiverseHelper(mvplugin);
+            mvHelper = new TARDISMultiverseHelper();
         }
     }
 

@@ -17,11 +17,11 @@
 package me.eccentric_nz.TARDIS.commands.travel;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
 import me.eccentric_nz.TARDIS.builders.exterior.BuildData;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetHomeLocation;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.TravelType;
@@ -129,7 +129,6 @@ public class TARDISTravelStop {
                 // set chameleon adaption to OFF
                 setp.put("adapti_on", 0);
                 plugin.getQueryFactory().doSyncUpdate("tardis", setp, wherep);
-                TARDISCache.invalidate(id);
             }
             plugin.getPresetBuilder().buildPreset(bd);
             // engage the handbrake!
@@ -138,7 +137,6 @@ public class TARDISTravelStop {
             HashMap<String, Object> whereh = new HashMap<>();
             whereh.put("tardis_id", id);
             plugin.getQueryFactory().doSyncUpdate("tardis", seth, whereh);
-            TARDISCache.invalidate(id);
             // also set the console handbrake state if there is one
             HashMap<String, Object> setc = new HashMap<>();
             setc.put("state", 1);
@@ -149,13 +147,11 @@ public class TARDISTravelStop {
             plugin.getPM().callEvent(new TARDISTravelEvent(player, null, TravelType.STOP, id));
         }
         // stop time rotor?
-//        HashMap<String, Object> wherei = new HashMap<>();
-//        wherei.put("tardis_id", id);
-//        ResultSetTardis rs = new ResultSetTardis(plugin, wherei, "", false, 2);
-//        if (rs.resultSet()) {
-//            Tardis tardis = rs.getTardis();
-        Tardis tardis = TARDISCache.BY_ID.get(id);
-        if (tardis != null) {
+        HashMap<String, Object> wherei = new HashMap<>();
+        wherei.put("tardis_id", id);
+        ResultSetTardis rs = new ResultSetTardis(plugin, wherei, "", false);
+        if (rs.resultSet()) {
+            Tardis tardis = rs.getTardis();
             if (tardis.getRotor() != null) {
                 ItemFrame itemFrame = TARDISTimeRotor.getItemFrame(tardis.getRotor());
                 if (itemFrame != null) {

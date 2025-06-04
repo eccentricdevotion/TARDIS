@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.artron;
 
 import com.google.common.collect.Multimaps;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.blueprints.BlueprintProcessor;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -89,7 +88,6 @@ public class TARDISCondenserListener implements Listener {
             ResultSetTardis rs;
             boolean isCondenser;
             HashMap<String, Object> where = new HashMap<>();
-            Tardis tardis;
             if (title.equals(ChatColor.DARK_RED + "Artron Condenser")) {
                 if (plugin.getConfig().getBoolean("preferences.no_creative_condense")) {
                     switch (plugin.getWorldManager()) {
@@ -111,14 +109,17 @@ public class TARDISCondenserListener implements Listener {
                 where.put("location", chest_loc);
                 ResultSetControls rsc = new ResultSetControls(plugin, where, false);
                 if (rsc.resultSet()) {
-                    tardis = TARDISCache.BY_ID.get(rsc.getTardis_id());
-                    isCondenser = tardis != null;
+                    HashMap<String, Object> wheret = new HashMap<>();
+                    wheret.put("tardis_id", rsc.getTardis_id());
+                    rs = new ResultSetTardis(plugin, wheret, "", false);
+                    isCondenser = rs.resultSet();
                 } else {
                     return;
                 }
             } else {
-                tardis = TARDISCache.BY_UUID.get(player.getUniqueId());
-                isCondenser = (plugin.getArtronConfig().contains("condenser") && plugin.getArtronConfig().getString("condenser").equals(chest_loc) && tardis != null);
+                where.put("uuid", player.getUniqueId().toString());
+                rs = new ResultSetTardis(plugin, where, "", false);
+                isCondenser = (plugin.getArtronConfig().contains("condenser") && plugin.getArtronConfig().getString("condenser").equals(chest_loc) && rs.resultSet());
             }
             if (!isCondenser) {
                 return;
@@ -229,6 +230,11 @@ public class TARDISCondenserListener implements Listener {
                 player.getWorld().dropItem(player.getLocation(), is);
             }
 //            }
+            Tardis tardis = rs.getTardis();
+            if (tardis == null) {
+                plugin.debug("TARDIS data was null!");
+                return;
+            }
             int id = tardis.getTardisId();
             // process item_counts
             if (plugin.getConfig().getBoolean("growth.rooms_require_blocks") || plugin.getConfig().getBoolean("allow.repair")) {
@@ -267,7 +273,6 @@ public class TARDISCondenserListener implements Listener {
                     HashMap<String, Object> wheret = new HashMap<>();
                     wheret.put("tardis_id", id);
                     plugin.getQueryFactory().alterEnergyLevel("tardis", amount, wheret, player);
-                    TARDISCache.invalidate(id);
                 } else {
                     int toMax = max - current;
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "CAPACITOR_CONDENSE", max);

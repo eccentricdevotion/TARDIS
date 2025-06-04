@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.floodgate;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.exterior.TARDISShellBuilder;
@@ -31,6 +30,7 @@ import me.eccentric_nz.TARDIS.chameleon.utils.TARDISChameleonColumn;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetChameleon;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.Adaption;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
@@ -89,12 +89,11 @@ public class FloodgateShellLoaderForm {
         ResultSetTravellers rst = new ResultSetTravellers(plugin, wheres, false);
         if (rst.resultSet()) {
             int id = rst.getTardis_id();
-//            HashMap<String, Object> where = new HashMap<>();
-//            where.put("tardis_id", id);
-//            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-//            if (rs.resultSet()) {
-            Tardis tardis = TARDISCache.BY_ID.get(id);
-            if (tardis != null) {
+            HashMap<String, Object> where = new HashMap<>();
+            where.put("tardis_id", id);
+            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+            if (rs.resultSet()) {
+                Tardis tardis = rs.getTardis();
                 TARDISChameleonColumn chameleonColumn = null;
                 ChameleonPreset preset;
                 if (label.equals("Current preset")) {

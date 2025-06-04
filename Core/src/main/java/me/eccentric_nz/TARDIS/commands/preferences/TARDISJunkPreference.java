@@ -17,10 +17,10 @@
 package me.eccentric_nz.TARDIS.commands.preferences;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetJunk;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
@@ -44,13 +44,11 @@ class TARDISJunkPreference {
         UUID uuid = player.getUniqueId();
         String ustr = uuid.toString();
         // get TARDIS
-//        HashMap<String, Object> where = new HashMap<>();
-//        where.put("uuid", ustr);
-//        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-//        if (rs.resultSet()) {
-//            Tardis tardis = rs.getTardis();
-        Tardis tardis = TARDISCache.BY_UUID.get(uuid);
-        if (tardis != null) {
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("uuid", ustr);
+        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+        if (rs.resultSet()) {
+            Tardis tardis = rs.getTardis();
             int id = tardis.getTardisId();
             // get current preset
             String current = tardis.getPreset().toString();
@@ -122,7 +120,6 @@ class TARDISJunkPreference {
             HashMap<String, Object> whereu = new HashMap<>();
             whereu.put("uuid", ustr);
             plugin.getQueryFactory().doSyncUpdate("tardis", sett, whereu);
-            TARDISCache.invalidate(id);
             // set the Chameleon Circuit sign
             HashMap<String, Object> whereh = new HashMap<>();
             whereh.put("tardis_id", id);

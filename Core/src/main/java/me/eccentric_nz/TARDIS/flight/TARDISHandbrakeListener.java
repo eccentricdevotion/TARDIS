@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.flight;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
@@ -133,13 +132,11 @@ public class TARDISHandbrakeListener implements Listener {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_WHILE_DISPERSED");
                         return;
                     }
-//                    HashMap<String, Object> wherei = new HashMap<>();
-//                    wherei.put("tardis_id", id);
-//                    ResultSetTardis rs = new ResultSetTardis(plugin, wherei, "", false, 2);
-//                    if (rs.resultSet()) {
-//                        Tardis tardis = rs.getTardis();
-                    Tardis tardis = TARDISCache.BY_ID.get(id);
-                    if (tardis != null) {
+                    HashMap<String, Object> wherei = new HashMap<>();
+                    wherei.put("tardis_id", id);
+                    ResultSetTardis rs = new ResultSetTardis(plugin, wherei, "", false);
+                    if (rs.resultSet()) {
+                        Tardis tardis = rs.getTardis();
                         ChameleonPreset preset = tardis.getPreset();
                         if (preset.equals(ChameleonPreset.JUNK)) {
                             return;
@@ -191,11 +188,12 @@ public class TARDISHandbrakeListener implements Listener {
                                     }
                                     // check the state of the Relativity Differentiator
                                     if (check.isRelativityDifferentiated(id) && TARDISPermission.hasPermission(player, "tardis.fly") && preset.usesArmourStand() && !player.isSneaking()) {
-                                        Current current = TARDISCache.CURRENT.get(id);
-                                        if (current == null) {
+                                        ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
+                                        if (!rsc.resultSet()) {
                                             plugin.debug("No current location");
                                             return;
                                         }
+                                        Current current = rsc.getCurrent();
                                         // check if TARDIS is underground
                                         for (int y = current.location().getBlockY() + 4; y < current.location().getBlockY() + 8; y++) {
                                             if (!current.location().getWorld().getBlockAt(current.location().getBlockX(), y, current.location().getBlockZ()).getType().isAir()) {
@@ -284,7 +282,6 @@ public class TARDISHandbrakeListener implements Listener {
                                         HashMap<String, Object> wheret = new HashMap<>();
                                         wheret.put("tardis_id", id);
                                         plugin.getQueryFactory().alterEnergyLevel("tardis", -amount, wheret, player);
-                                        TARDISCache.invalidate(id);
                                         if (!uuid.equals(ownerUUID)) {
                                             Player ptl = plugin.getServer().getPlayer(ownerUUID);
                                             if (ptl != null) {
@@ -307,7 +304,6 @@ public class TARDISHandbrakeListener implements Listener {
                                     HashMap<String, Object> whereh = new HashMap<>();
                                     whereh.put("tardis_id", id);
                                     plugin.getQueryFactory().doUpdate("tardis", set, whereh);
-                                    TARDISCache.invalidate(id);
                                 } else {
                                     plugin.getMessenger().sendStatus(player, "HANDBRAKE_ON_ERR");
                                 }

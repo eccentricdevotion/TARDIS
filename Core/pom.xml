@@ -39,7 +39,7 @@
         </repository>
         <repository>
             <id>multiverse</id>
-            <url>https://repo.onarandombox.com/content/repositories/multiverse-snapshots/</url>
+            <url>https://repo.onarandombox.com/content/groups/public/</url>
         </repository>
         <repository>
             <id>libsdisguises</id>
@@ -323,9 +323,9 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.onarandombox.multiversecore</groupId>
-            <artifactId>Multiverse-Core</artifactId>
-            <version>4.3.2-SNAPSHOT</version>
+            <groupId>org.mvplugins.multiverse.core</groupId>
+            <artifactId>multiverse-core</artifactId>
+            <version>5.0.1-SNAPSHOT</version>
             <scope>provided</scope>
             <exclusions>
                 <exclusion>
@@ -335,9 +335,9 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>com.onarandombox.multiverseinventories</groupId>
-            <artifactId>Multiverse-Inventories</artifactId>
-            <version>4.2.4-SNAPSHOT</version>
+            <groupId>org.mvplugins.multiverse.inventories</groupId>
+            <artifactId>multiverse-inventories</artifactId>
+            <version>5.0.1-SNAPSHOT</version>
             <scope>provided</scope>
             <exclusions>
                 <exclusion>

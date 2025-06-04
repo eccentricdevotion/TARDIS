@@ -21,12 +21,10 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.commands.sudo.TARDISSudoTracker;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
@@ -538,13 +536,11 @@ public class TARDISARSMethods {
     }
 
     boolean hasRenderer(UUID playerUUID) {
-//        HashMap<String, Object> where = new HashMap<>();
-//        where.put("tardis_id", ids.get(playerUUID));
-//        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-//        if (rs.resultSet()) {
-        Tardis tardis = TARDISCache.BY_UUID.get(playerUUID);
-        if (tardis != null) {
-            return !tardis.getRenderer().isEmpty();
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("tardis_id", ids.get(playerUUID));
+        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+        if (rs.resultSet()) {
+            return !rs.getTardis().getRenderer().isEmpty();
         }
         return false;
     }

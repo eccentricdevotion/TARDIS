@@ -17,9 +17,8 @@
 package me.eccentric_nz.TARDIS.commands.dev;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
-import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.ParticleData;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetParticlePrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetThrottle;
@@ -52,8 +51,8 @@ public class TARDISDevEffectCommand {
             ResultSetTardisID rst = new ResultSetTardisID(plugin);
             if (rst.fromUUID(uuid.toString())) {
                 // get TARDIS location
-                Current current = TARDISCache.CURRENT.get(rst.getTardisId());
-                if (current != null) {
+                ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, rst.getTardisId());
+                if (rsc.resultSet()) {
                     // get throttle setting
                     ResultSetThrottle rs = new ResultSetThrottle(plugin);
                     SpaceTimeThrottle throttle = rs.getSpeedAndParticles(uuid.toString()).throttle();
@@ -62,7 +61,7 @@ public class TARDISDevEffectCommand {
                     if (rspp.fromUUID(uuid.toString())) {
                         ParticleData data = rspp.getData();
                         // display particles
-                        Emitter emitter = new Emitter(plugin, uuid, current.location().clone().add(0.5, 0, 0.5), data, throttle.getFlightTime());
+                        Emitter emitter = new Emitter(plugin, uuid, rsc.getCurrent().location().clone().add(0.5, 0, 0.5), data, throttle.getFlightTime());
                         int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, emitter, 0, data.getShape().getPeriod());
                         emitter.setTaskID(task);
                     }
