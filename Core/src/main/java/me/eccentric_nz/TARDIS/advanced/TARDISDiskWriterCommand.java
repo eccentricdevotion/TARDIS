@@ -17,13 +17,9 @@
 package me.eccentric_nz.TARDIS.advanced;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetDestinations;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetDiskStorage;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
+import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Material;
@@ -104,11 +100,12 @@ public class TARDISDiskWriterCommand {
                         return true;
                     }
                     // get current destination
-                    Current current = TARDISCache.CURRENT.get(id);
-                    if (current == null) {
+                    ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
+                    if (!rsc.resultSet()) {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
                         return true;
                     }
+                    Current current = rsc.getCurrent();
                     lore.set(0, args[1]);
                     lore.add(1, current.location().getWorld().getName());
                     lore.add(2, "" + current.location().getBlockX());

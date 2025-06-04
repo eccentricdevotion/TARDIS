@@ -42,12 +42,6 @@ public class ResultSetCurrentFromId {
     private final TARDIS plugin;
     private final int id;
     private final String prefix;
-    private World world;
-    private int x;
-    private int y;
-    private int z;
-    private COMPASS direction;
-    private boolean submarine;
     private Current current = null;
 
     /**
@@ -72,6 +66,7 @@ public class ResultSetCurrentFromId {
         PreparedStatement statement = null;
         ResultSet rs = null;
         String query = "SELECT * FROM " + prefix + "current WHERE tardis_id = ?";
+        World world;
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);
@@ -80,11 +75,11 @@ public class ResultSetCurrentFromId {
             if (rs.isBeforeFirst()) {
                 rs.next();
                 world = TARDISAliasResolver.getWorldFromAlias(rs.getString("world"));
-                x = rs.getInt("x");
-                y = rs.getInt("y");
-                z = rs.getInt("z");
-                direction = COMPASS.valueOf(rs.getString("direction"));
-                submarine = rs.getBoolean("submarine");
+                int x = rs.getInt("x");
+                int y = rs.getInt("y");
+                int z = rs.getInt("z");
+                COMPASS direction = COMPASS.valueOf(rs.getString("direction"));
+                boolean submarine = rs.getBoolean("submarine");
                 current = new Current(new Location(world, x, y, z), direction, submarine);
             } else {
                 return false;
@@ -105,30 +100,6 @@ public class ResultSetCurrentFromId {
             }
         }
         return world != null;
-    }
-
-    public World getWorld() {
-        return world;
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public int getZ() {
-        return z;
-    }
-
-    public COMPASS getDirection() {
-        return direction;
-    }
-
-    public boolean isSubmarine() {
-        return submarine;
     }
 
     public Current getCurrent() {

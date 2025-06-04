@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.api;
 
 import com.google.common.collect.Multimaps;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.TARDISTrackerInstanceKeeper;
 import me.eccentric_nz.TARDIS.blueprints.*;
 import me.eccentric_nz.TARDIS.builders.exterior.BuildData;
@@ -118,7 +117,7 @@ public class TARDII implements TardisAPI {
     public Location getTARDISCurrentLocation(int id) {
         ResultSetCurrentFromId rs = new ResultSetCurrentFromId(TARDIS.plugin, id);
         if (rs.resultSet()) {
-            return new Location(rs.getWorld(), rs.getX(), rs.getY(), rs.getZ());
+            return rs.getCurrent().location();
         }
         return null;
     }
@@ -609,8 +608,9 @@ public class TARDII implements TardisAPI {
     @Override
     public boolean setDestination(int id, Location location, boolean travel) {
         // get current direction
-        Current current = TARDISCache.CURRENT.get(id);
-        if (current != null) {
+        ResultSetCurrentFromId rs = new ResultSetCurrentFromId(TARDIS.plugin, id);
+        if (rs.resultSet()) {
+            Current current = rs.getCurrent();
             HashMap<String, Object> where = new HashMap<>();
             where.put("tardis_id", id);
             HashMap<String, Object> set = new HashMap<>();

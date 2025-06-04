@@ -18,10 +18,9 @@ package me.eccentric_nz.TARDIS.commands.utils;
 
 import com.google.common.collect.ImmutableList;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
-import me.eccentric_nz.TARDIS.database.data.Current;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.Weather;
 import org.bukkit.Location;
@@ -62,9 +61,9 @@ public class TARDISWeatherCommand extends TARDISCompleter implements CommandExec
                     // get TARDIS player is in
                     int id = plugin.getTardisAPI().getIdOfTARDISPlayerIsIn(player);
                     // get current TARDIS location
-                    Current current = TARDISCache.CURRENT.get(id);
-                    if (current != null) {
-                        world = current.location().getWorld();
+                    ResultSetCurrentFromId rs = new ResultSetCurrentFromId(plugin, id);
+                    if (rs.resultSet()) {
+                        world = rs.getCurrent().location().getWorld();
                     } else {
                         // can't change weather in TARDIS world
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "WEATHER_TARDIS");

@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.autonomous;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
 import me.eccentric_nz.TARDIS.artron.TARDISAdaptiveBoxLampToggler;
@@ -119,11 +118,12 @@ public class TARDISAutonomousDeath {
                             }
                             String death_world = death_loc.getWorld().getName();
                             // where is the TARDIS Police Box?
-                            Current current = TARDISCache.CURRENT.get(id);
-                            if (current == null) {
+                            ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
+                            if (!rsc.resultSet()) {
                                 plugin.debug("Current record not found!");
                                 return;
                             }
+                            Current current = rsc.getCurrent();
                             COMPASS cd = current.direction();
                             // where is home?
                             HashMap<String, Object> wherehl = new HashMap<>();
@@ -295,7 +295,6 @@ public class TARDISAutonomousDeath {
                                 HashMap<String, Object> wherec = new HashMap<>();
                                 wherec.put("tardis_id", id);
                                 plugin.getQueryFactory().doUpdate("current", setc, wherec);
-                                TARDISCache.CURRENT.invalidate(id);
                                 // set back
                                 HashMap<String, Object> setb = new HashMap<>();
                                 setb.put("world", current.location().getWorld().getName());
@@ -332,11 +331,12 @@ public class TARDISAutonomousDeath {
                         } else if (plugin.getConfig().getBoolean("siege.enabled") && rsp.isAutoSiegeOn()) {
                             // enter siege mode
                             // where is the TARDIS Police Box?
-                            Current current = TARDISCache.CURRENT.get(id);
-                            if (current == null) {
+                            ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
+                            if (!rsc.resultSet()) {
                                 plugin.debug("Current record not found!");
                                 return;
                             }
+                            Current current = rsc.getCurrent();
                             Block siege = current.location().getBlock();
                             HashMap<String, Object> wheres = new HashMap<>();
                             wheres.put("tardis_id", id);

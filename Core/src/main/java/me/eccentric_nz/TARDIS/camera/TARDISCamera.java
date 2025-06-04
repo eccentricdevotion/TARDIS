@@ -17,10 +17,9 @@
 package me.eccentric_nz.TARDIS.camera;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.custommodels.keys.ChameleonVariant;
 import me.eccentric_nz.TARDIS.custommodels.keys.ColouredVariant;
-import me.eccentric_nz.TARDIS.database.data.Current;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.ArmorStand;
@@ -50,13 +49,13 @@ public class TARDISCamera {
         TARDISCameraTracker.CAMERA_IN_USE.add(id);
         playerLocation.getChunk().addPluginChunkTicket(plugin);
         // get the TARDIS's current location
-        Current current = TARDISCache.CURRENT.get(id);
-        if (current == null) {
+        ResultSetCurrentFromId rs = new ResultSetCurrentFromId(plugin, id);
+        if (!rs.resultSet()) {
             plugin.debug("No current location");
             return;
         }
         // teleport player to exterior
-        Location location = current.location().clone();
+        Location location = rs.getCurrent().location().clone();
         location.setYaw(player.getLocation().getYaw());
         location.setPitch(player.getLocation().getPitch());
         player.teleport(location);

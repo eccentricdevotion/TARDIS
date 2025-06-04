@@ -17,11 +17,11 @@
 package me.eccentric_nz.TARDIS.artron;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.api.event.TARDISClaimEvent;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISAbandonCommand;
 import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisPreset;
 import me.eccentric_nz.TARDIS.doors.inner.Inner;
 import me.eccentric_nz.TARDIS.doors.inner.InnerDisplayDoorCloser;
@@ -56,8 +56,9 @@ public class ArtronAbandoned {
         if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
             plugin.getWorldGuardUtils().updateRegionForClaim(location, player.getUniqueId());
         }
-        Current current = TARDISCache.CURRENT.get(id);
-        if (current != null) {
+        ResultSetCurrentFromId rs = new ResultSetCurrentFromId(plugin, id);
+        if (rs.resultSet()) {
+            Current current = rs.getCurrent();
             if (pu) {
                 ResultSetTardisPreset rsp = new ResultSetTardisPreset(plugin);
                 if (rsp.fromID(id)) {

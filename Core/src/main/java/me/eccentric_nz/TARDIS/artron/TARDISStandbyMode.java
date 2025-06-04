@@ -17,9 +17,9 @@
 package me.eccentric_nz.TARDIS.artron;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.StandbyData;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetStandby;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -108,10 +108,11 @@ public class TARDISStandbyMode implements Runnable {
      * Checks whether the TARDIS is near a recharge location.
      */
     private boolean isNearCharger(int id) {
-        Current current = TARDISCache.CURRENT.get(id);
-        if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id) || current == null) {
+        ResultSetCurrentFromId rs = new ResultSetCurrentFromId(plugin, id);
+        if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id) || !rs.resultSet()) {
             return false;
         }
+        Current current = rs.getCurrent();
         if (current.location().getWorld() == null) {
             return false;
         }

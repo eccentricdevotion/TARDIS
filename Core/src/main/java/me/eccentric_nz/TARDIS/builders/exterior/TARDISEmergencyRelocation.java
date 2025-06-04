@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.builders.exterior;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
@@ -77,7 +76,6 @@ public class TARDISEmergencyRelocation {
                 setc.put("direction", "EAST");
                 setc.put("submarine", 0);
                 plugin.getQueryFactory().doUpdate("current", setc, wherec);
-                TARDISCache.CURRENT.invalidate(id);
                 HashMap<String, Object> whereb = new HashMap<>();
                 whereb.put("tardis_id", id);
                 HashMap<String, Object> setb = new HashMap<>();
@@ -88,7 +86,6 @@ public class TARDISEmergencyRelocation {
                 setb.put("direction", "EAST");
                 setb.put("submarine", 0);
                 plugin.getQueryFactory().doUpdate("current", setb, whereb);
-                TARDISCache.CURRENT.invalidate(id);
                 plugin.getMessenger().send(p, TardisModule.TARDIS, "EMERGENCY_DONE");
                 HashMap<String, Object> wherea = new HashMap<>();
                 wherea.put("tardis_id", id);
