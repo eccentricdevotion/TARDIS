@@ -17,12 +17,12 @@
 package me.eccentric_nz.TARDIS.move;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.control.TARDISPowerButton;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCompanions;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetVoid;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFarmer;
@@ -203,13 +203,11 @@ public class TARDISMoveListener implements Listener {
                 if (canPowerUp && !exit) {
                     // power up the TARDIS
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-//                        HashMap<String, Object> where = new HashMap<>();
-//                        where.put("tardis_id", id);
-//                        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
-//                        if (rs.resultSet()) {
-//                            Tardis tardis = rs.getTardis();
-                        Tardis tardis = TARDISCache.BY_ID.get(id);
-                        if (tardis != null) {
+                        HashMap<String, Object> where = new HashMap<>();
+                        where.put("tardis_id", id);
+                        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+                        if (rs.resultSet()) {
+                            Tardis tardis = rs.getTardis();
                             if (!tardis.isPoweredOn()) {
                                 new TARDISPowerButton(plugin, id, player, tardis.getPreset(), false, tardis.isHidden(), tardis.isLightsOn(), loc, tardis.getArtronLevel(), tardis.getSchematic().getLights()).clickButton();
                             }

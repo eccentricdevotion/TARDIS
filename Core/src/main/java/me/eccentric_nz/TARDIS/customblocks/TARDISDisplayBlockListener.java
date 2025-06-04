@@ -17,16 +17,12 @@
 package me.eccentric_nz.TARDIS.customblocks;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.commands.sudo.TARDISSudoTracker;
 import me.eccentric_nz.TARDIS.custommodels.keys.BlockBreak;
 import me.eccentric_nz.TARDIS.custommodels.keys.TardisDoorVariant;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetDeadlock;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
+import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.doors.Door;
 import me.eccentric_nz.TARDIS.doors.DoorAnimator;
 import me.eccentric_nz.TARDIS.doors.DoorLockAction;
@@ -324,17 +320,15 @@ public class TARDISDisplayBlockListener implements Listener {
                             Block block = interaction.getLocation().getBlock();
                             UUID playerUUID = player.getUniqueId();
                             UUID uuid = (TARDISSudoTracker.SUDOERS.containsKey(playerUUID)) ? TARDISSudoTracker.SUDOERS.get(playerUUID) : playerUUID;
-//                            HashMap<String, Object> where = new HashMap<>();
-//                            where.put("uuid", uuid);
-//                            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-//                            if (!rs.resultSet()) {
-                            Tardis tardis = TARDISCache.BY_UUID.get(uuid);
-                            if (tardis != null) {
+                            HashMap<String, Object> where = new HashMap<>();
+                            where.put("uuid", uuid);
+                            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+                            if (!rs.resultSet()) {
                                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
                                 plugin.getTrackerKeeper().getUpdatePlayers().remove(playerUUID);
                                 return;
                             }
-//                            Tardis tardis = rs.getTardis();
+                            Tardis tardis = rs.getTardis();
                             int id = tardis.getTardisId();
                             // is the player updating the door?
                             if (plugin.getTrackerKeeper().getUpdatePlayers().containsKey(playerUUID)) {

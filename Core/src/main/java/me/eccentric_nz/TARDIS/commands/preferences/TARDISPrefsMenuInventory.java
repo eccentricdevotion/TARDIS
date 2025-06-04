@@ -17,10 +17,10 @@
 package me.eccentric_nz.TARDIS.commands.preferences;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.custommodels.GUIPlayerPreferences;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.FlightMode;
 import me.eccentric_nz.TARDIS.enumeration.HADS;
@@ -91,9 +91,14 @@ public class TARDISPrefsMenuInventory {
         values.add(rsp.isFarmOn()); // 17
         values.add(rsp.isTelepathyOn()); // 18
         // get TARDIS preset
-        Tardis tardis = TARDISCache.BY_UUID.get(uuid);
-        if (tardis != null) {
-            values.add(tardis.getPreset().equals(ChameleonPreset.JUNK_MODE)); // junk mode - 19
+        Tardis tardis = null;
+        HashMap<String, Object> wherep = new HashMap<>();
+        wherep.put("uuid", uuid.toString());
+        ResultSetTardis rst = new ResultSetTardis(plugin, wherep, "", false);
+        boolean hasTARDIS = rst.resultSet();
+        if (hasTARDIS) {
+            tardis = rst.getTardis();
+            values.add(rst.getTardis().getPreset().equals(ChameleonPreset.JUNK_MODE)); // junk mode - 19
         } else {
             values.add(false); // 19
         }
@@ -101,7 +106,7 @@ public class TARDISPrefsMenuInventory {
         values.add(plugin.getTrackerKeeper().getActiveForceFields().containsKey(uuid)); // 21
         values.add(rsp.isMinecartOn()); // 22
         if (plugin.isWorldGuardOnServer()) {
-            String chunk = tardis.getChunk();
+            String chunk = tardis != null ? rst.getTardis().getChunk() : "TARDIS_TimeVortex:1";
             String[] split = chunk.split(":");
             World world = plugin.getServer().getWorld(split[0]);
             values.add(!plugin.getWorldGuardUtils().queryContainers(world, plugin.getServer().getPlayer(uuid).getName())); // lock containers - 23

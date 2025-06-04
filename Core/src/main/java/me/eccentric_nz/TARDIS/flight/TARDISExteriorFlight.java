@@ -179,7 +179,6 @@ public class TARDISExteriorFlight {
         HashMap<String, Object> whereh = new HashMap<>();
         whereh.put("tardis_id", id);
         plugin.getQueryFactory().doUpdate("tardis", set, whereh);
-        TARDISCache.invalidate(id);
         plugin.getMessenger().sendStatus(player, "HANDBRAKE_OFF");
         plugin.getTrackerKeeper().getInVortex().add(id);
         UUID uuid = player.getUniqueId();

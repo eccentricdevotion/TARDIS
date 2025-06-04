@@ -20,16 +20,11 @@ import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.database.data.Current;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetArtronLevel;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.OfflinePlayer;
 
 import java.util.HashMap;
-import java.util.UUID;
 
 public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
 
@@ -81,18 +76,16 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
         if (player == null) {
             result = "";
         } else {
-            UUID uuid = player.getUniqueId();
-            String unique = uuid.toString();
+            String uuid = player.getUniqueId().toString();
             ResultSetArtronLevel rsl;
-//            ResultSetTardis rst;
+            ResultSetTardis rst;
             HashMap<String, Object> where = new HashMap<>();
-            Tardis tardis;
             ResultSetTardisID rsti;
             Current current;
             if (identifier.startsWith("in")) {
                 // default to false so if all else fails we get a result
                 result = "false";
-                where.put("uuid", unique);
+                where.put("uuid", uuid);
                 ResultSetTravellers rsv = new ResultSetTravellers(plugin, where, false);
                 if (rsv.resultSet()) {
                     /*
@@ -106,20 +99,18 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
                         case "any" -> result = "true";
                         case "own" -> {
                             rsti = new ResultSetTardisID(plugin);
-                            if (rsti.fromUUID(unique) && rsti.getTardisId() == rsv.getTardis_id()) {
+                            if (rsti.fromUUID(uuid) && rsti.getTardisId() == rsv.getTardis_id()) {
                                 result = "true";
                             }
                         }
                         case "whose" -> {
-//                            where.put("tardis_id", rsv.getTardis_id());
-//                            rst = new ResultSetTardis(plugin, where, "", false, 2);
-//                            if (rst.resultSet()) {
-                            tardis = TARDISCache.BY_ID.get(rsv.getTardis_id());
-                            if (tardis != null) {
-                                if (tardis.getTardisId() == rsv.getTardis_id()) {
+                            where.put("tardis_id", rsv.getTardis_id());
+                            rst = new ResultSetTardis(plugin, where, "", false);
+                            if (rst.resultSet()) {
+                                if (rst.getTardis().getTardisId() == rsv.getTardis_id()) {
                                     result = "their own";
                                 } else {
-                                    result = tardis.getOwner() + "'s";
+                                    result = rst.getTardis().getOwner() + "'s";
                                 }
                             }
                         }
@@ -150,7 +141,7 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
                         }
                     }
                     case "artron_amount" -> {
-                        rsl = new ResultSetArtronLevel(plugin, unique);
+                        rsl = new ResultSetArtronLevel(plugin, uuid);
                         if (rsl.resultset()) {
                             result = Integer.toString(rsl.getArtronLevel());
                         } else {
@@ -158,7 +149,7 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
                         }
                     }
                     case "artron_percent" -> {
-                        rsl = new ResultSetArtronLevel(plugin, unique);
+                        rsl = new ResultSetArtronLevel(plugin, uuid);
                         if (rsl.resultset()) {
                             result = String.format("%s%%", Math.round(rsl.getArtronLevel() * 100.0d / plugin.getArtronConfig().getDouble("full_charge")));
                         } else {
@@ -166,30 +157,26 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
                         }
                     }
                     case "console" -> {
-//                        where.put("uuid", uuid);
-//                        rst = new ResultSetTardis(plugin, where, "", false, 2);
-//                        if (rst.resultSet()) {
-                        tardis = TARDISCache.BY_UUID.get(uuid);
-                        if (tardis != null) {
-                            result = TARDISStringUtils.uppercaseFirst(tardis.getSchematic().getPermission());
+                        where.put("uuid", uuid);
+                        rst = new ResultSetTardis(plugin, where, "", false);
+                        if (rst.resultSet()) {
+                            result = TARDISStringUtils.uppercaseFirst(rst.getTardis().getSchematic().getPermission());
                         } else {
                             result = "";
                         }
                     }
                     case "preset" -> {
-//                        where.put("uuid", uuid);
-//                        rst = new ResultSetTardis(plugin, where, "", false, 2);
-//                        if (rst.resultSet()) {
-                        tardis = TARDISCache.BY_UUID.get(uuid);
-                        if (tardis != null) {
-                            result = tardis.getPreset().toString();
+                        where.put("uuid", uuid);
+                        rst = new ResultSetTardis(plugin, where, "", false);
+                        if (rst.resultSet()) {
+                            result = rst.getTardis().getPreset().toString();
                         } else {
                             result = "";
                         }
                     }
                     case "current_location" -> {
                         rsti = new ResultSetTardisID(plugin);
-                        if (rsti.fromUUID(unique)) {
+                        if (rsti.fromUUID(uuid)) {
                             current = TARDISCache.CURRENT.get(rsti.getTardisId());
                             if (current != null) {
                                 result = "TARDIS was left at " + current.location().getWorld().getName() + " at " + "x: " + current.location().getBlockX() + " y: " + current.location().getBlockY() + " z: " + current.location().getBlockZ();
@@ -202,7 +189,7 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
                     }
                     case "current_location_x" -> {
                         rsti = new ResultSetTardisID(plugin);
-                        if (rsti.fromUUID(unique)) {
+                        if (rsti.fromUUID(uuid)) {
                             current = TARDISCache.CURRENT.get(rsti.getTardisId());
                             if (current != null) {
                                 result = Integer.toString(current.location().getBlockX());
@@ -215,7 +202,7 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
                     }
                     case "current_location_y" -> {
                         rsti = new ResultSetTardisID(plugin);
-                        if (rsti.fromUUID(unique)) {
+                        if (rsti.fromUUID(uuid)) {
                             current = TARDISCache.CURRENT.get(rsti.getTardisId());
                             if (current != null) {
                                 result = Integer.toString(current.location().getBlockY());
@@ -228,7 +215,7 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
                     }
                     case "current_location_z" -> {
                         rsti = new ResultSetTardisID(plugin);
-                        if (rsti.fromUUID(unique)) {
+                        if (rsti.fromUUID(uuid)) {
                             current = TARDISCache.CURRENT.get(rsti.getTardisId());
                             if (current != null) {
                                 result = Integer.toString(current.location().getBlockZ());
@@ -241,7 +228,7 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
                     }
                     case "current_location_world" -> {
                         rsti = new ResultSetTardisID(plugin);
-                        if (rsti.fromUUID(unique)) {
+                        if (rsti.fromUUID(uuid)) {
                             current = TARDISCache.CURRENT.get(rsti.getTardisId());
                             if (current != null) {
                                 result = current.location().getWorld().getName();
@@ -254,7 +241,7 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
                     }
                     case "current_location_direction" -> {
                         rsti = new ResultSetTardisID(plugin);
-                        if (rsti.fromUUID(unique)) {
+                        if (rsti.fromUUID(uuid)) {
                             current = TARDISCache.CURRENT.get(rsti.getTardisId());
                             if (current != null) {
                                 result = current.direction().toString();
@@ -267,7 +254,7 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
                     }
                     case "current_location_biome" -> {
                         rsti = new ResultSetTardisID(plugin);
-                        if (rsti.fromUUID(unique)) {
+                        if (rsti.fromUUID(uuid)) {
                             current = TARDISCache.CURRENT.get(rsti.getTardisId());
                             if (current != null) {
                                 // get from current location
@@ -280,7 +267,7 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
                         }
                     }
                     case "timelord_artron_amount" -> {
-                        ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, unique);
+                        ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid);
                         if (rsp.resultSet()) {
                             result = Integer.toString(rsp.getArtronLevel());
                         } else {

@@ -17,14 +17,15 @@
 package me.eccentric_nz.TARDIS.commands.sudo;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.desktop.TARDISRepair;
 import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.entity.Player;
 
+import java.util.HashMap;
 import java.util.UUID;
 
 public class SudoRepair {
@@ -41,16 +42,14 @@ public class SudoRepair {
 
     public boolean repair() {
         Player player = plugin.getServer().getPlayer(uuid);
-//        HashMap<String, Object> where = new HashMap<>();
-//        where.put("uuid", player.getUniqueId().toString());
-//        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-//        if (!rs.resultSet()) {
-        Tardis tardis = TARDISCache.BY_UUID.get(player.getUniqueId());
-        if (tardis == null) {
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("uuid", player.getUniqueId().toString());
+        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+        if (!rs.resultSet()) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
             return false;
         }
-//        Tardis tardis = rs.getTardis();
+        Tardis tardis = rs.getTardis();
         // get player's current console
         Schematic current_console = tardis.getSchematic();
         int level = tardis.getArtronLevel();

@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.custommodels.keys.SwitchVariant;
 import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.move.TARDISBlackWoolToggler;
 import org.bukkit.ChatColor;
@@ -31,6 +32,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -56,6 +58,9 @@ public class TARDISControlInventory {
     private ItemStack[] getItemStack() {
 
         // get tardis options
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("tardis_id", id);
+        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         String siege_onoff = "" ;
         String toggle_openclosed = "" ;
         String power_onoff = "" ;
@@ -65,8 +70,8 @@ public class TARDISControlInventory {
         int delay = 1;
         boolean open = false;
         boolean powered = true;
-        Tardis tardis = TARDISCache.BY_ID.get(id);
-        if (tardis != null) {
+        if (rs.resultSet()) {
+            Tardis tardis = rs.getTardis();
             siege_onoff = (tardis.isSiegeOn()) ? on : off;
             open = new TARDISBlackWoolToggler(plugin).isOpen(tardis.getTardisId());
             toggle_openclosed = (open) ? plugin.getLanguage().getString("SET_OPEN") : plugin.getLanguage().getString("SET_CLOSED");

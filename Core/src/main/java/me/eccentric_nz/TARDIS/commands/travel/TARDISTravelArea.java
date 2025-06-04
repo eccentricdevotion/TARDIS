@@ -76,7 +76,6 @@ public class TARDISTravelArea {
             // set chameleon adaption to OFF
             seti.put("adapti_on", 0);
             plugin.getQueryFactory().doSyncUpdate("tardis", seti, wherei);
-            TARDISCache.invalidate(id);
         }
         Location l;
         if (rsa.getArea().grid()) {

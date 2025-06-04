@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.lights;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.builders.utility.LightLevel;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
@@ -27,6 +26,7 @@ import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetLamps;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetLightLevel;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetLightPrefs;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.TardisLight;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Material;
@@ -61,11 +61,14 @@ public class TARDISLightsInventory {
      */
     private ItemStack[] getItemStack() {
         // get tardis options
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("tardis_id", id);
+        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         String off = plugin.getLanguage().getString("SET_OFF", "OFF");
         String on = plugin.getLanguage().getString("SET_ON", "ON");
         String lights_onoff = on;
-        Tardis tardis = TARDISCache.BY_ID.get(id);
-        if (tardis != null) {
+        if (rs.resultSet()) {
+            Tardis tardis = rs.getTardis();
             lights_onoff = (tardis.isLightsOn()) ? on : off;
         }
         ItemStack[] stacks = new ItemStack[54];

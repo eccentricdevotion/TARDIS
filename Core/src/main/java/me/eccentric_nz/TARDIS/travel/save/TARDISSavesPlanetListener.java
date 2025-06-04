@@ -148,7 +148,6 @@ public class TARDISSavesPlanetListener extends TARDISMenuListener {
                         HashMap<String, Object> wheret = new HashMap<>();
                         wheret.put("tardis_id", id);
                         plugin.getQueryFactory().doSyncUpdate("tardis", sett, wheret);
-                        TARDISCache.invalidate(id);
                     }
                     HashMap<String, Object> wheret = new HashMap<>();
                     wheret.put("tardis_id", id);

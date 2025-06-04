@@ -22,7 +22,6 @@ import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.exterior.BuildData;
 import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.ReplacedBlock;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetBlocks;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
@@ -118,8 +117,10 @@ public class TARDISBlockDamageListener implements Listener {
     }
 
     private void unhide(int id, Player player) {
-        Tardis tardis = TARDISCache.BY_ID.get(id);
-        if (tardis != null && tardis.isHidden()) {
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("tardis_id", id);
+        ResultSetTardis rst = new ResultSetTardis(plugin, where, "", false);
+        if (rst.resultSet() && rst.getTardis().isHidden()) {
             // un-hide this tardis
             Current current = TARDISCache.CURRENT.get(id);
             if (current == null) {
@@ -142,7 +143,6 @@ public class TARDISBlockDamageListener implements Listener {
             HashMap<String, Object> seth = new HashMap<>();
             seth.put("hidden", 0);
             plugin.getQueryFactory().doUpdate("tardis", seth, whereh);
-            TARDISCache.invalidate(id);
         }
     }
 }

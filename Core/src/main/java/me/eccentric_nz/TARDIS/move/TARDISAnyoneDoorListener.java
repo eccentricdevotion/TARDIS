@@ -22,10 +22,7 @@ import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.exterior.TARDISEmergencyRelocation;
 import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCompanions;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravelledTo;
+import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.doors.DoorLockAction;
 import me.eccentric_nz.TARDIS.doors.DoorUtility;
 import me.eccentric_nz.TARDIS.doors.inner.*;
@@ -168,12 +165,11 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                 return;
                             }
                             // handbrake must be on
-//                            HashMap<String, Object> tid = new HashMap<>();
-//                            tid.put("tardis_id", id);
-//                            ResultSetTardis rs = new ResultSetTardis(plugin, tid, "", false, 2);
-//                            if (rs.resultSet()) {
-                            Tardis tardis = TARDISCache.BY_ID.get(id);
-                            if (tardis != null) {
+                            HashMap<String, Object> tid = new HashMap<>();
+                            tid.put("tardis_id", id);
+                            ResultSetTardis rs = new ResultSetTardis(plugin, tid, "", false);
+                            if (rs.resultSet()) {
+                                Tardis tardis = rs.getTardis();
                                 if (!tardis.isHandbrakeOn()) {
                                     plugin.getMessenger().sendStatus(player, "HANDBRAKE_ENGAGE");
                                     return;
@@ -286,13 +282,11 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                 plugin.getMessenger().sendStatus(player, "SIEGE_NO_EXIT");
                                 return;
                             }
-//                            HashMap<String, Object> tid = new HashMap<>();
-//                            tid.put("tardis_id", id);
-//                            ResultSetTardis rs = new ResultSetTardis(plugin, tid, "", false, 2);
-//                            if (rs.resultSet()) {
-//                                Tardis tardis = rs.getTardis();
-                            Tardis tardis = TARDISCache.BY_ID.get(id);
-                            if (tardis != null) {
+                            HashMap<String, Object> tid = new HashMap<>();
+                            tid.put("tardis_id", id);
+                            ResultSetTardis rs = new ResultSetTardis(plugin, tid, "", false);
+                            if (rs.resultSet()) {
+                                Tardis tardis = rs.getTardis();
                                 if (!tardis.isHandbrakeOn()) {
                                     plugin.getMessenger().sendStatus(player, "HANDBRAKE_ENGAGE");
                                     return;
@@ -528,7 +522,6 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                         wheree.put("tardis_id", id);
                                         int cost = (-plugin.getArtronConfig().getInt("backdoor"));
                                         plugin.getQueryFactory().alterEnergyLevel("tardis", cost, wheree, player);
-                                        TARDISCache.invalidate(id);
                                     }
                                     case 3 -> {
                                         if (artron < required) {
@@ -597,7 +590,6 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                         wherea.put("tardis_id", id);
                                         int costa = (-plugin.getArtronConfig().getInt("backdoor"));
                                         plugin.getQueryFactory().alterEnergyLevel("tardis", costa, wherea, player);
-                                        TARDISCache.invalidate(id);
                                     }
                                     default -> {
                                     }

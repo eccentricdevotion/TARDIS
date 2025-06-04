@@ -121,7 +121,6 @@ public class TARDISTravelSave {
                         // set chameleon adaption to OFF
                         seti.put("adapti_on", 0);
                         plugin.getQueryFactory().doSyncUpdate("tardis", seti, wherei);
-                        TARDISCache.invalidate(id);
                     }
                 }
                 HashMap<String, Object> set = new HashMap<>();
@@ -150,7 +149,6 @@ public class TARDISTravelSave {
                     HashMap<String, Object> wherei = new HashMap<>();
                     wherei.put("tardis_id", id);
                     plugin.getQueryFactory().doSyncUpdate("tardis", seti, wherei);
-                    TARDISCache.invalidate(id);
                 }
                 HashMap<String, Object> tid = new HashMap<>();
                 tid.put("tardis_id", id);

@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.exterior.TARDISEmergencyRelocation;
 import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.Flag;
@@ -54,16 +55,14 @@ public class TARDISCallRequestCommand {
 
     public boolean requestComeHere(Player player, Player requested) {
         UUID uuid = requested.getUniqueId();
-//        HashMap<String, Object> where = new HashMap<>();
-//        where.put("uuid", uuid.toString());
-//        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-//        if (!rs.resultSet()) {
-        Tardis tardis = TARDISCache.BY_UUID.get(uuid);
-        if (tardis == null) {
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("uuid", uuid.toString());
+        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+        if (!rs.resultSet()) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "PLAYER_NO_TARDIS");
             return true;
         }
-//        Tardis tardis = rs.getTardis();
+        Tardis tardis = rs.getTardis();
         int id = tardis.getTardisId();
         if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPoweredOn()) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "PLAYER_NOT_POWERED", requested.getName());

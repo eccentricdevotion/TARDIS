@@ -82,7 +82,6 @@ public class TARDISLightningListener implements Listener {
                                 HashMap<String, Object> wheret = new HashMap<>();
                                 wheret.put("tardis_id", id);
                                 plugin.getQueryFactory().doUpdate("tardis", set, wheret);
-                                TARDISCache.invalidate(id);
                             }
                         }
                     }

@@ -118,13 +118,11 @@ public class TARDISHandlesProcessor {
                 if (next != null) {
                     UUID uuid = player.getUniqueId();
                     // get TARDIS
-//                    HashMap<String, Object> where = new HashMap<>();
-//                    where.put("uuid", uuid.toString());
-//                    ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
-//                    if (rs.resultSet()) {
-//                        Tardis tardis = rs.getTardis();
-                    Tardis tardis = TARDISCache.BY_UUID.get(uuid);
-                    if (tardis != null) {
+                    HashMap<String, Object> where = new HashMap<>();
+                    where.put("uuid", uuid.toString());
+                    ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+                    if (rs.resultSet()) {
+                        Tardis tardis = rs.getTardis();
                         int id = tardis.getTardisId();
                         switch (thb) {
                             case DOOR -> {
@@ -343,7 +341,6 @@ public class TARDISHandlesProcessor {
                                                     // set chameleon adaption to OFF
                                                     setp.put("adapti_on", 0);
                                                     plugin.getQueryFactory().doSyncUpdate("tardis", setp, wherep);
-                                                    TARDISCache.invalidate(id);
                                                 }
                                                 travelType = TravelType.HOME;
                                             }
@@ -543,7 +540,6 @@ public class TARDISHandlesProcessor {
                                                     set.put("hidden", 0);
                                                 }
                                                 plugin.getQueryFactory().doUpdate("tardis", set, tid);
-                                                TARDISCache.invalidate(id);
                                             }
                                             BuildData bd = new BuildData(uuid.toString());
                                             bd.setDirection(nextDirection);
@@ -567,7 +563,6 @@ public class TARDISHandlesProcessor {
                                                 HashMap<String, Object> wheret = new HashMap<>();
                                                 wheret.put("tardis_id", id);
                                                 plugin.getQueryFactory().doUpdate("tardis", seth, wheret);
-                                                TARDISCache.invalidate(id);
                                             }, 500L);
                                             // set current
                                             HashMap<String, Object> setc = new HashMap<>();
@@ -596,7 +591,6 @@ public class TARDISHandlesProcessor {
                                             HashMap<String, Object> wherea = new HashMap<>();
                                             wherea.put("tardis_id", id);
                                             plugin.getQueryFactory().alterEnergyLevel("tardis", -travel, wherea, player);
-                                            TARDISCache.invalidate(id);
                                         }
                                     }
                                 }

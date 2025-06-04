@@ -26,6 +26,7 @@ import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetBackLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.destroyers.TARDISDeinstantPreset;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
@@ -101,8 +102,11 @@ public class TARDISVortexPersister {
                 int task = rs.getInt("task");
                 if (task < 0) {
                     // get Time Lord UUID
-                    Tardis tardis = TARDISCache.BY_ID.get(id);
-                    if (tardis != null) {
+                    HashMap<String, Object> where = new HashMap<>();
+                    where.put("tardis_id", id);
+                    ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+                    if (rs.resultSet()) {
+                        Tardis tardis = rs.getTardis();
                         UUID uuid = tardis.getUuid();
                         if (task == -1) {
                             // interrupted dematerialisation

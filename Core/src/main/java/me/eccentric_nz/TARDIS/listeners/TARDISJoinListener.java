@@ -26,10 +26,7 @@ import me.eccentric_nz.TARDIS.camera.CameraLocation;
 import me.eccentric_nz.TARDIS.camera.TARDISCameraTracker;
 import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetAchievements;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCount;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
 import me.eccentric_nz.TARDIS.skins.SkinUtils;
@@ -150,13 +147,11 @@ public class TARDISJoinListener implements Listener {
             }
         }
         // load and remember the players Police Box chunk
-//        HashMap<String, Object> wherep = new HashMap<>();
-//        wherep.put("uuid", uuid);
-//        ResultSetTardis rs = new ResultSetTardis(plugin, wherep, "", false, 0);
-//        if (rs.resultSet()) {
-//            Tardis tardis = rs.getTardis();
-        Tardis tardis = TARDISCache.BY_UUID.get(uuid);
-        if (tardis != null) {
+        HashMap<String, Object> wherep = new HashMap<>();
+        wherep.put("uuid", uuid);
+        ResultSetTardis rs = new ResultSetTardis(plugin, wherep, "", false);
+        if (rs.resultSet()) {
+            Tardis tardis = rs.getTardis();
             int id = tardis.getTardisId();
             String owner = tardis.getOwner();
             String last_known_name = tardis.getLastKnownName();
@@ -195,7 +190,6 @@ public class TARDISJoinListener implements Listener {
             HashMap<String, Object> wherel = new HashMap<>();
             wherel.put("tardis_id", id);
             plugin.getQueryFactory().doUpdate("tardis", set, wherel);
-            TARDISCache.invalidate(id);
         }
         // re-arch the player
         if (plugin.isDisguisesOnServer() && plugin.getConfig().getBoolean("arch.enabled")) {

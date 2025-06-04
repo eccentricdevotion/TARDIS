@@ -17,10 +17,9 @@
 package me.eccentric_nz.TARDIS.database;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.tool.Table;
 import org.bukkit.entity.Player;
 
@@ -376,13 +375,11 @@ public class QueryFactory {
     public boolean claimTARDIS(Player player, int id) {
         PreparedStatement ps = null;
         // check if they have a non-abandoned TARDIS
-//        HashMap<String, Object> where = new HashMap<>();
+        HashMap<String, Object> where = new HashMap<>();
         UUID uuid = player.getUniqueId();
-//        where.put("uuid", uuid);
-//        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-//        if (!rs.resultSet()) {
-        Tardis tardis = TARDISCache.BY_UUID.get(uuid);
-        if (tardis != null) {
+        where.put("uuid", uuid);
+        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+        if (!rs.resultSet()) {
             String query = "UPDATE " + prefix + "tardis SET uuid = ?, owner = ?, last_known_name = ?, abandoned = 0 , tardis_init = 1, powered_on = 1, lastuse = ? WHERE tardis_id = ?";
             try {
                 service.testConnection(connection);

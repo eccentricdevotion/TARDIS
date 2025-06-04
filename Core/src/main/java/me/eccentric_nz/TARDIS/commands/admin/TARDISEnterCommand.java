@@ -17,10 +17,10 @@
 package me.eccentric_nz.TARDIS.commands.admin;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
@@ -63,15 +63,18 @@ class TARDISEnterCommand {
         } catch (NumberFormatException nfe) {
             // do nothing
         }
-        Tardis tardis;
+        HashMap<String, Object> where = new HashMap<>();
         if (tmp == -1) {
             // Look up this player's UUID
             UUID uuid = plugin.getServer().getOfflinePlayer(args[1]).getUniqueId();
-            tardis = TARDISCache.BY_UUID.get(uuid);
+            where.put("uuid", uuid.toString());
+            where.put("abandoned", 0);
         } else {
-            tardis = TARDISCache.BY_ID.get(tmp);
+            where.put("tardis_id", tmp);
         }
-        if (tardis != null) {
+        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+        if (rs.resultSet()) {
+            Tardis tardis = rs.getTardis();
             int id = tardis.getTardisId();
             String owner = tardis.getOwner();
             HashMap<String, Object> wherei = new HashMap<>();

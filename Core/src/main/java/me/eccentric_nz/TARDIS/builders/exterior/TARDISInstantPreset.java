@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.builders.exterior;
 import com.earth2me.essentials.Essentials;
 import com.earth2me.essentials.User;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.chameleon.construct.TARDISConstructColumn;
 import me.eccentric_nz.TARDIS.chameleon.utils.TARDISChameleonColumn;
@@ -28,6 +27,7 @@ import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetConstructSign;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.move.TARDISDoorListener;
@@ -265,13 +265,11 @@ public class TARDISInstantPreset {
                             Sign s = (Sign) sign.getState();
                             SignSide front = s.getSide(Side.FRONT);
                             if (plugin.getConfig().getBoolean("police_box.name_tardis")) {
-//                                HashMap<String, Object> wheret = new HashMap<>();
-//                                wheret.put("tardis_id", bd.getTardisID());
-//                                ResultSetTardis rst = new ResultSetTardis(plugin, wheret, "", false, 0);
-//                                if (rst.resultSet()) {
-//                                    Tardis tardis = rst.getTardis();
-                                Tardis tardis = TARDISCache.BY_ID.get(bd.getTardisID());
-                                if (tardis != null) {
+                                HashMap<String, Object> wheret = new HashMap<>();
+                                wheret.put("tardis_id", bd.getTardisID());
+                                ResultSetTardis rst = new ResultSetTardis(plugin, wheret, "", false);
+                                if (rst.resultSet()) {
+                                    Tardis tardis = rst.getTardis();
                                     String player_name = TARDISStaticUtils.getNick(tardis.getUuid());
                                     if (player_name == null) {
                                         player_name = tardis.getOwner();

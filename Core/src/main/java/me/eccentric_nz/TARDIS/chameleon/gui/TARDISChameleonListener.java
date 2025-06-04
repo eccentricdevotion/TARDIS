@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.chameleon.utils.TARDISChameleonFrame;
 import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
@@ -85,10 +86,13 @@ public class TARDISChameleonListener extends TARDISMenuListener {
             return;
         }
         int id = rst.getTardis_id();
-        Tardis tardis = TARDISCache.BY_ID.get(id);
-        if (tardis == null) {
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("tardis_id", id);
+        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+        if (!rs.resultSet()) {
             return;
         }
+        Tardis tardis = rs.getTardis();
         Adaption adapt = tardis.getAdaption();
         HashMap<String, Object> set = new HashMap<>();
         HashMap<String, Object> wherec = new HashMap<>();
@@ -276,7 +280,6 @@ public class TARDISChameleonListener extends TARDISMenuListener {
         }
         if (!set.isEmpty()) {
             plugin.getQueryFactory().doUpdate("tardis", set, wherec);
-            TARDISCache.invalidate(id);
         }
     }
 

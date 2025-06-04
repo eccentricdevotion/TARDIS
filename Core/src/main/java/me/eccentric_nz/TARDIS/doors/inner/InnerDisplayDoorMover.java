@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -69,8 +70,11 @@ public class InnerDisplayDoorMover {
                 plugin.getMessenger().sendStatus(player, "SIEGE_NO_EXIT");
                 return;
             }
-            Tardis tardis = TARDISCache.BY_ID.get(id);
-            if (tardis != null) {
+            HashMap<String, Object> tid = new HashMap<>();
+            tid.put("tardis_id", id);
+            ResultSetTardis rs = new ResultSetTardis(plugin, tid, "", false);
+            if (rs.resultSet()) {
+                Tardis tardis = rs.getTardis();
                 if (!tardis.isHandbrakeOn()) {
                     plugin.getMessenger().sendStatus(player, "HANDBRAKE_ENGAGE");
                     return;

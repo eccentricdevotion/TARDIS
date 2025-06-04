@@ -26,6 +26,7 @@ import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
 import me.eccentric_nz.TARDIS.enumeration.TravelType;
@@ -54,13 +55,11 @@ class TARDISHandlesLandCommand {
     }
 
     public boolean exitVortex(Player player, int id, String uuid) {
-//        HashMap<String, Object> wherei = new HashMap<>();
-//        wherei.put("tardis_id", id);
-//        ResultSetTardis rs = new ResultSetTardis(plugin, wherei, "", false, 2);
-//        if (rs.resultSet()) {
-//            Tardis tardis = rs.getTardis();
-        Tardis tardis = TARDISCache.BY_ID.get(id);
-        if (tardis != null) {
+        HashMap<String, Object> wherei = new HashMap<>();
+        wherei.put("tardis_id", id);
+        ResultSetTardis rs = new ResultSetTardis(plugin, wherei, "", false);
+        if (rs.resultSet()) {
+            Tardis tardis = rs.getTardis();
             if (tardis.getPreset().equals(ChameleonPreset.JUNK)) {
                 plugin.getMessenger().handlesSend(player, "HANDLES_JUNK");
                 return true;
@@ -125,7 +124,6 @@ class TARDISHandlesLandCommand {
                             HashMap<String, Object> wheret = new HashMap<>();
                             wheret.put("tardis_id", id);
                             plugin.getQueryFactory().alterEnergyLevel("tardis", amount, wheret, player);
-                            TARDISCache.invalidate(id);
                             plugin.getMessenger().sendArtron(player, id, Math.abs(amount));
                             plugin.getTrackerKeeper().getHasDestination().remove(id);
                             if (plugin.getTrackerKeeper().getHasRandomised().contains(id)) {
@@ -144,7 +142,6 @@ class TARDISHandlesLandCommand {
                             HashMap<String, Object> whereb = new HashMap<>();
                             whereb.put("tardis_id", id);
                             plugin.getQueryFactory().doUpdate("tardis", set, whereb);
-                            TARDISCache.invalidate(id);
                         }
                     }, 400L);
                 } else {

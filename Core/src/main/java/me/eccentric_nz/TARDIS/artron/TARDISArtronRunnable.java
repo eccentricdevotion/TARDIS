@@ -68,7 +68,6 @@ class TARDISArtronRunnable implements Runnable {
             HashMap<String, Object> set = new HashMap<>();
             set.put("recharging", 0);
             plugin.getQueryFactory().doUpdate("tardis", set, where);
-            TARDISCache.invalidate(id);
             if (charged) {
                 // toggle charging sensor
                 new ChargingSensor(plugin, id).toggle();
@@ -84,7 +83,6 @@ class TARDISArtronRunnable implements Runnable {
             int onepercent = Math.round(plugin.getArtronConfig().getInt("full_charge") / 100.0F);
             // update TARDIS artron_level
             plugin.getQueryFactory().alterEnergyLevel("tardis", onepercent, where, null);
-            TARDISCache.invalidate(id);
         }
     }
 

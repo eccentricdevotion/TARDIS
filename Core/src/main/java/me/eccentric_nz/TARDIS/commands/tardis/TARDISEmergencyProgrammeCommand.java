@@ -17,9 +17,9 @@
 package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.travel.TARDISEPSRunnable;
@@ -50,16 +50,14 @@ class TARDISEmergencyProgrammeCommand {
             plugin.getMessenger().send(p, TardisModule.TARDIS, "CMD_IN_WORLD");
             return true;
         }
-//        HashMap<String, Object> where = new HashMap<>();
-//        where.put("uuid", p.getUniqueId().toString());
-//        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-//        if (!rs.resultSet()) {
-        Tardis tardis = TARDISCache.BY_UUID.get(p.getUniqueId());
-        if (tardis == null) {
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("uuid", p.getUniqueId().toString());
+        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+        if (!rs.resultSet()) {
             plugin.getMessenger().send(p, TardisModule.TARDIS, "NOT_A_TIMELORD");
             return true;
         }
-//        Tardis tardis = rs.getTardis();
+        Tardis tardis = rs.getTardis();
         int id = tardis.getTardisId();
         String eps = tardis.getEps();
         String creeper = tardis.getCreeper();

@@ -17,11 +17,11 @@
 package me.eccentric_nz.TARDIS.destroyers;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.chameleon.utils.TARDISChameleonCircuit;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.Adaption;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
@@ -56,13 +56,11 @@ public class TARDISPresetDestroyerFactory {
     }
 
     public void destroyPreset(DestroyData dd) {
-//        HashMap<String, Object> where = new HashMap<>();
-//        where.put("tardis_id", dd.getTardisID());
-//        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
-//        if (rs.resultSet()) {
-//            Tardis tardis = rs.getTardis();
-        Tardis tardis = TARDISCache.BY_ID.get(dd.getTardisID());
-        if (tardis != null) {
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("tardis_id", dd.getTardisID());
+        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+        if (rs.resultSet()) {
+            Tardis tardis = rs.getTardis();
             ChameleonPreset demat = tardis.getDemat();
             ChameleonPreset preset = tardis.getPreset();
             // load the chunk if unloaded

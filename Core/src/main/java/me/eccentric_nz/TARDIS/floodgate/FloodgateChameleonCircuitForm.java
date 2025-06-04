@@ -22,8 +22,8 @@ import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.chameleon.utils.TARDISChameleonFrame;
 import me.eccentric_nz.TARDIS.database.data.Current;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.block.Biome;
@@ -174,7 +174,6 @@ public class FloodgateChameleonCircuitForm {
         }
         if (!set.isEmpty()) {
             plugin.getQueryFactory().doUpdate("tardis", set, wherec);
-            TARDISCache.invalidate(id);
         }
     }
 
@@ -185,8 +184,10 @@ public class FloodgateChameleonCircuitForm {
     }
 
     private boolean isBiomeAdaptive(int id) {
-        Tardis tardis = TARDISCache.BY_ID.get(id);
-        return tardis != null && tardis.getAdaption() == Adaption.BIOME;
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("tardis_id", id);
+        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+        return rs.resultSet() && rs.getTardis().getAdaption() == Adaption.BIOME;
     }
 
     private ChameleonPreset getAdaption(Biome biome) {

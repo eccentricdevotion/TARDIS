@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.builders.exterior.TARDISEmergencyRelocation;
 import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetNextLocation;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
@@ -47,8 +48,11 @@ class TARDISRemoteTravelCommand {
     }
 
     boolean doTravel(int id, OfflinePlayer player, CommandSender sender) {
-        Tardis tardis = TARDISCache.BY_ID.get(id);
-        if (tardis != null) {
+        HashMap<String, Object> wherei = new HashMap<>();
+        wherei.put("tardis_id", id);
+        ResultSetTardis rs = new ResultSetTardis(plugin, wherei, "", false);
+        if (rs.resultSet()) {
+            Tardis tardis = rs.getTardis();
             Current current = TARDISCache.CURRENT.get(id);
             String resetw = "";
             if (current == null) {
@@ -147,7 +151,6 @@ class TARDISRemoteTravelCommand {
             whereh.put("tardis_id", id);
             if (!set.isEmpty()) {
                 plugin.getQueryFactory().doUpdate("tardis", set, whereh);
-                TARDISCache.invalidate(id);
             }
             plugin.getQueryFactory().doUpdate("current", setcurrent, wherecurrent);
             TARDISCache.CURRENT.invalidate(id);

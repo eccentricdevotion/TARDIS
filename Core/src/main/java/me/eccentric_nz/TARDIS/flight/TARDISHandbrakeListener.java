@@ -133,13 +133,11 @@ public class TARDISHandbrakeListener implements Listener {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_WHILE_DISPERSED");
                         return;
                     }
-//                    HashMap<String, Object> wherei = new HashMap<>();
-//                    wherei.put("tardis_id", id);
-//                    ResultSetTardis rs = new ResultSetTardis(plugin, wherei, "", false, 2);
-//                    if (rs.resultSet()) {
-//                        Tardis tardis = rs.getTardis();
-                    Tardis tardis = TARDISCache.BY_ID.get(id);
-                    if (tardis != null) {
+                    HashMap<String, Object> wherei = new HashMap<>();
+                    wherei.put("tardis_id", id);
+                    ResultSetTardis rs = new ResultSetTardis(plugin, wherei, "", false);
+                    if (rs.resultSet()) {
+                        Tardis tardis = rs.getTardis();
                         ChameleonPreset preset = tardis.getPreset();
                         if (preset.equals(ChameleonPreset.JUNK)) {
                             return;
@@ -284,7 +282,6 @@ public class TARDISHandbrakeListener implements Listener {
                                         HashMap<String, Object> wheret = new HashMap<>();
                                         wheret.put("tardis_id", id);
                                         plugin.getQueryFactory().alterEnergyLevel("tardis", -amount, wheret, player);
-                                        TARDISCache.invalidate(id);
                                         if (!uuid.equals(ownerUUID)) {
                                             Player ptl = plugin.getServer().getPlayer(ownerUUID);
                                             if (ptl != null) {
@@ -307,7 +304,6 @@ public class TARDISHandbrakeListener implements Listener {
                                     HashMap<String, Object> whereh = new HashMap<>();
                                     whereh.put("tardis_id", id);
                                     plugin.getQueryFactory().doUpdate("tardis", set, whereh);
-                                    TARDISCache.invalidate(id);
                                 } else {
                                     plugin.getMessenger().sendStatus(player, "HANDBRAKE_ON_ERR");
                                 }

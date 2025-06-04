@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.console.interaction;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetArtronLeveID;
@@ -76,7 +75,6 @@ public class SonicConsoleRecharge implements Runnable {
                 HashMap<String, Object> where = new HashMap<>();
                 where.put("tardis_id", id);
                 plugin.getQueryFactory().alterEnergyLevel("tardis", -amount, where, null);
-                TARDISCache.invalidate(id);
             }
             ItemMeta im = is.getItemMeta();
             PersistentDataContainer pdc = im.getPersistentDataContainer();

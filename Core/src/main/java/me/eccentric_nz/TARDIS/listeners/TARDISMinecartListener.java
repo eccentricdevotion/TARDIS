@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
@@ -85,9 +84,11 @@ public class TARDISMinecartListener implements Listener {
                         }
                         // get RAIL room location
                         id = rsd.getTardis_id();
-                        Tardis tardis = TARDISCache.BY_ID.get(id);
-                        if (tardis != null && !plugin.getTrackerKeeper().getMinecart().contains(id)) {
-//                            Tardis tardis = rs.getTardis();
+                        HashMap<String, Object> whereid = new HashMap<>();
+                        whereid.put("tardis_id", id);
+                        ResultSetTardis rs = new ResultSetTardis(plugin, whereid, "", false);
+                        if (rs.resultSet() && !plugin.getTrackerKeeper().getMinecart().contains(id)) {
+                            Tardis tardis = rs.getTardis();
                             data = tardis.getRail().split(":");
                             playerUUID = tardis.getUuid();
                             plugin.getTrackerKeeper().getMinecart().add(id);

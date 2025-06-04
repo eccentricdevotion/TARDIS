@@ -318,7 +318,6 @@ public class TARDISConsoleCloseListener implements Listener {
                             // update tardis
                             where_tardis.put("tardis_id", id);
                             plugin.getQueryFactory().doUpdate("tardis", set_tardis, where_tardis);
-                            TARDISCache.invalidate(id);
                         }
                         plugin.getTrackerKeeper().getRescue().remove(id);
                         if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {

@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.builders.exterior.BuildData;
 import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisPreset;
 import me.eccentric_nz.TARDIS.doors.inner.Inner;
 import me.eccentric_nz.TARDIS.doors.inner.InnerDisplayDoorCloser;
@@ -71,16 +72,14 @@ public class TARDISDirectionCommand {
                 return true;
             }
             UUID uuid = player.getUniqueId();
-//            HashMap<String, Object> where = new HashMap<>();
-//            where.put("uuid", uuid.toString());
-//            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-//            if (!rs.resultSet()) {
-            Tardis tardis = TARDISCache.BY_UUID.get(uuid);
-            if (tardis == null) {
+            HashMap<String, Object> where = new HashMap<>();
+            where.put("uuid", uuid.toString());
+            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+            if (!rs.resultSet()) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
                 return true;
             }
-//            Tardis tardis = rs.getTardis();
+            Tardis tardis = rs.getTardis();
             if (!tardis.getPreset().usesArmourStand()
                     && (args[1].equalsIgnoreCase("north_east") || args[1].equalsIgnoreCase("north_west") || args[1].equalsIgnoreCase("south_west") || args[1].equalsIgnoreCase("south_east"))) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "DIRECTION_PRESET");
@@ -191,7 +190,6 @@ public class TARDISDirectionCommand {
             HashMap<String, Object> wherea = new HashMap<>();
             wherea.put("tardis_id", id);
             plugin.getQueryFactory().alterEnergyLevel("tardis", -amount, wherea, player);
-            TARDISCache.invalidate(id);
             // if they have a Direction Frame, update the rotation
             HashMap<String, Object> wheredf = new HashMap<>();
             wheredf.put("tardis_id", id);

@@ -18,10 +18,10 @@ package me.eccentric_nz.TARDIS.commands.dev;
 
 import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.builders.interior.TARDISTIPSData;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.desktop.TARDISChunkUtils;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
@@ -52,13 +52,11 @@ public class TARDISChunksCommand {
             if (rs.resultSet()) {
                 int id = rs.getTardis_id();
                 // get TARDIS schematic
-//                HashMap<String, Object> wheret = new HashMap<>();
-//                wheret.put("tardis_id", id);
-//                ResultSetTardis rst = new ResultSetTardis(plugin, wheret, "", false, 2);
-//                if (rst.resultSet()) {
-//                    Tardis tardis = rst.getTardis();
-                Tardis tardis = TARDISCache.BY_ID.get(id);
-                if (tardis != null) {
+                HashMap<String, Object> wheret = new HashMap<>();
+                wheret.put("tardis_id", id);
+                ResultSetTardis rst = new ResultSetTardis(plugin, wheret, "", false);
+                if (rst.resultSet()) {
+                    Tardis tardis = rst.getTardis();
                     String[] tc = tardis.getChunk().split(":");
                     int cx = TARDISNumberParsers.parseInt(tc[1]);
                     int cz = TARDISNumberParsers.parseInt(tc[2]);

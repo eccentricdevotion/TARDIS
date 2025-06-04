@@ -17,15 +17,16 @@
 package me.eccentric_nz.TARDIS.travel;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetFlightControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetRepeaters;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.particles.TARDISFirework;
 import me.eccentric_nz.TARDIS.sensor.MalfunctionSensor;
 import org.bukkit.Location;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -57,13 +58,11 @@ public class TARDISMalfunctionExplosion implements Runnable {
     @Override
     public void run() {
         if (!started) {
-//            HashMap<String, Object> where = new HashMap<>();
-//            where.put("tardis_id", id);
-//            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
-//            if (rs.resultSet()) {
-//                Tardis tardis = rs.getTardis();
-            Tardis tardis = TARDISCache.BY_ID.get(id);
-            if (tardis != null) {
+            HashMap<String, Object> where = new HashMap<>();
+            where.put("tardis_id", id);
+            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+            if (rs.resultSet()) {
+                Tardis tardis = rs.getTardis();
                 if (console) {
                     ResultSetFlightControls rsfc = new ResultSetFlightControls(plugin, id);
                     if (rsfc.resultSet()) {

@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.builders.exterior.BuildData;
 import me.eccentric_nz.TARDIS.builders.exterior.TARDISEmergencyRelocation;
 import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
@@ -78,16 +79,14 @@ public class TARDISRemoteComehereCommand {
             return true;
         }
         // check the remote player is a Time Lord
-//        HashMap<String, Object> where = new HashMap<>();
-//        where.put("uuid", uuid.toString());
-//        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-//        if (!rs.resultSet()) {
-        Tardis tardis = TARDISCache.BY_UUID.get(uuid);
-        if (tardis == null) {
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("uuid", uuid.toString());
+        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+        if (!rs.resultSet()) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "PLAYER_NO_TARDIS");
             return true;
         }
-//        Tardis tardis = rs.getTardis();
+        Tardis tardis = rs.getTardis();
         int id = tardis.getTardisId();
         // check they are not in the tardis
         HashMap<String, Object> wherettrav = new HashMap<>();
@@ -175,7 +174,6 @@ public class TARDISRemoteComehereCommand {
             HashMap<String, Object> ttid = new HashMap<>();
             ttid.put("tardis_id", id);
             plugin.getQueryFactory().doUpdate("tardis", sett, ttid);
-            TARDISCache.invalidate(id);
         }
         plugin.getQueryFactory().doUpdate("current", set, tid);
         TARDISCache.CURRENT.invalidate(id);

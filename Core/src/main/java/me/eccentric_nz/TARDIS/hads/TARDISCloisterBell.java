@@ -20,10 +20,13 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+
+import java.util.HashMap;
 
 /**
  * The Cloister Bell is a signal to the crew that a catastrophe that could threaten even a TARDIS is occurring or will
@@ -145,12 +148,11 @@ public class TARDISCloisterBell implements Runnable {
 
     private Location getCentre(int id) {
         // get the location of the centre of the TARDIS
-//        HashMap<String, Object> where = new HashMap<>();
-//        where.put("tardis_id", id);
-//        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
-//        if (rs.resultSet()) {
-        Tardis tardis = TARDISCache.BY_ID.get(id);
-        if (tardis != null) {
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("tardis_id", id);
+        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+        if (rs.resultSet()) {
+            Tardis tardis = rs.getTardis();
             if (!tardis.getCreeper().isEmpty()) {
                 return TARDISStaticLocationGetters.getLocationFromDB(tardis.getCreeper());
             } else if (!tardis.getBeacon().isEmpty()) {
@@ -171,13 +173,11 @@ public class TARDISCloisterBell implements Runnable {
 
     private Player getPlayer(int id) {
         // get Time Lord of this TARDIS
-//        HashMap<String, Object> where = new HashMap<>();
-//        where.put("tardis_id", id);
-//        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
-//        if (rs.resultSet()) {
-        Tardis tardis = TARDISCache.BY_ID.get(id);
-        if (tardis != null) {
-            return plugin.getServer().getPlayer(tardis.getUuid());
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("tardis_id", id);
+        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+        if (rs.resultSet()) {
+            return plugin.getServer().getPlayer(rs.getTardis().getUuid());
         }
         return null;
     }

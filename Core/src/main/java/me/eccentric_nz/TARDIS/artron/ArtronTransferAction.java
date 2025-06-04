@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.artron;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.entity.Player;
 
@@ -57,7 +56,6 @@ public class ArtronTransferAction {
             HashMap<String, Object> whereid = new HashMap<>();
             whereid.put("tardis_id", id);
             plugin.getQueryFactory().doUpdate("tardis", sett, whereid);
-            TARDISCache.invalidate(id);
             int percent = Math.round((new_level * 100F) / fc);
             plugin.getMessenger().send(player, TardisModule.TARDIS, "ENERGY_CHARGED", String.format("%d", percent));
         } else {

@@ -17,13 +17,13 @@
 package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.commands.sudo.TARDISSudoTracker;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.Updateable;
 import me.eccentric_nz.TARDIS.messaging.TARDISUpdateLister;
@@ -43,6 +43,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.UUID;
 
@@ -96,17 +97,15 @@ class TARDISUpdateCommand {
                 }
                 return false;
             }
-//            HashMap<String, Object> where = new HashMap<>();
+            HashMap<String, Object> where = new HashMap<>();
             UUID uuid = (TARDISSudoTracker.SUDOERS.containsKey(playerUUID)) ? TARDISSudoTracker.SUDOERS.get(playerUUID) : playerUUID;
-//            where.put("uuid", uuid);
-//            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-//            if (!rs.resultSet()) {
-            Tardis tardis = TARDISCache.BY_UUID.get(uuid);
-            if (tardis == null) {
+            where.put("uuid", uuid);
+            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+            if (!rs.resultSet()) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_A_TIMELORD");
                 return false;
             }
-//            Tardis tardis = rs.getTardis();
+            Tardis tardis = rs.getTardis();
             String tardis_block = TARDISStringUtils.toScoredUppercase(args[1]);
             Updateable updateable;
             try {

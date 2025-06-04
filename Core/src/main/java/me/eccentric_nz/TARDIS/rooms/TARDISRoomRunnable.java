@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.rooms;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
@@ -752,10 +751,7 @@ public class TARDISRoomRunnable implements Runnable {
                         case "GARDEN" -> {
                             // do nothing here
                         }
-                        case "RENDERER", "ZERO" -> {
-                            plugin.getQueryFactory().doUpdate("tardis", sets, wheres);
-                            TARDISCache.invalidate(tardis_id);
-                        }
+                        case "RENDERER", "ZERO" -> plugin.getQueryFactory().doUpdate("tardis", sets, wheres);
                         case "MAZE" -> {
                             String loc_str = TARDISStaticLocationGetters.makeLocationStr(world, startx, starty + 1, startz);
                             plugin.getQueryFactory().insertControl(tardis_id, 44, loc_str, 0);
@@ -976,7 +972,6 @@ public class TARDISRoomRunnable implements Runnable {
                     HashMap<String, Object> where = new HashMap<>();
                     where.put("tardis_id", tardis_id);
                     plugin.getQueryFactory().doUpdate("tardis", set, where);
-                    TARDISCache.invalidate(tardis_id);
                 }
                 // always replace bedrock (the door space in ARS rooms)
                 if ((type.equals(Material.BEDROCK) && !room.equals("SHELL")) || (type.equals(Material.SOUL_SAND) && room.equals("SHELL"))) {

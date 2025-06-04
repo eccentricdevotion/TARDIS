@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.builders.exterior;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -44,8 +45,10 @@ public class TARDISEmergencyRelocation {
     public void relocate(int id, Player p) {
         plugin.getMessenger().send(p, TardisModule.TARDIS, "EMERGENCY");
         // get the TARDIS
-        Tardis tardis = TARDISCache.BY_ID.get(id);
-        if (tardis != null) {
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("tardis_id", id);
+        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+        if (rs.resultSet()) {
             // get the servers main world
             World w = plugin.getServer().getWorlds().getFirst();
             Location emergency = new TARDISTimeTravel(plugin).randomDestination(p, 4, 4, 4, COMPASS.EAST, "THIS", w, false, w.getSpawnLocation());
@@ -58,6 +61,7 @@ public class TARDISEmergencyRelocation {
                 bd.setMalfunction(false);
                 bd.setSubmarine(false);
                 bd.setThrottle(SpaceTimeThrottle.REBUILD);
+                Tardis tardis = rs.getTardis();
                 if (tardis.getPreset().usesArmourStand()) {
                     new TARDISInstantPoliceBox(plugin, bd, tardis.getPreset()).buildPreset();
                 } else {
@@ -89,7 +93,6 @@ public class TARDISEmergencyRelocation {
                 HashMap<String, Object> wherea = new HashMap<>();
                 wherea.put("tardis_id", id);
                 plugin.getQueryFactory().alterEnergyLevel("tardis", -plugin.getArtronConfig().getInt("travel"), wherea, p);
-                TARDISCache.invalidate(id);
             }
         }
     }

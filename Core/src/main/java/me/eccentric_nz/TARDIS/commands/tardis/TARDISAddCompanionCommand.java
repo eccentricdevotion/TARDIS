@@ -17,11 +17,11 @@
 package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.companionGUI.TARDISCompanionAddInventory;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.Advancement;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
@@ -63,17 +63,18 @@ class TARDISAddCompanionCommand {
 
     boolean doAdd(Player player, String[] args) {
         if (TARDISPermission.hasPermission(player, "tardis.add")) {
+            HashMap<String, Object> where = new HashMap<>();
+            where.put("uuid", player.getUniqueId().toString());
+            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             String comps;
             String data;
             int id;
             String owner;
-//            if (!rs.resultSet()) {
-            Tardis tardis = TARDISCache.BY_UUID.get(player.getUniqueId());
-            if (tardis == null) {
+            if (!rs.resultSet()) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
                 return true;
             } else {
-//                Tardis tardis = rs.getTardis();
+                Tardis tardis = rs.getTardis();
                 id = tardis.getTardisId();
                 comps = tardis.getCompanions();
                 data = tardis.getChunk();
@@ -134,7 +135,6 @@ class TARDISAddCompanionCommand {
                     }
                 }
                 plugin.getQueryFactory().doUpdate("tardis", set, tid);
-                TARDISCache.invalidate(id);
                 if (addAll) {
                     plugin.getMessenger().sendInsertedColour(player, "COMPANIONS_ADD", "everyone", plugin);
                     plugin.getMessenger().sendColouredCommand(player, "COMPANIONS_EVERYONE", "/tardis remove all", plugin);

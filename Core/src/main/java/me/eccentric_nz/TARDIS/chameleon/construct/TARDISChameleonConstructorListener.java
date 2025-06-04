@@ -19,13 +19,13 @@ package me.eccentric_nz.TARDIS.chameleon.construct;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.chameleon.gui.TARDISChameleonHelpGUI;
 import me.eccentric_nz.TARDIS.chameleon.gui.TARDISChameleonInventory;
 import me.eccentric_nz.TARDIS.chameleon.utils.TARDISStainedGlassLookup;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetChameleon;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.Adaption;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
@@ -110,11 +110,14 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener {
                 return;
             }
             int id = rst.getTardis_id();
-            Tardis tardis = TARDISCache.BY_ID.get(id);
-            if (tardis == null) {
+            HashMap<String, Object> where = new HashMap<>();
+            where.put("tardis_id", id);
+            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+            if (!rs.resultSet()) {
                 return;
             }
             UUID uuid = player.getUniqueId();
+            Tardis tardis = rs.getTardis();
             ChameleonPreset preset = tardis.getPreset();
             Adaption adapt = tardis.getAdaption();
             switch (slot) {

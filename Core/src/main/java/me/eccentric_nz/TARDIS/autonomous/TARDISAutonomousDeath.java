@@ -65,9 +65,12 @@ public class TARDISAutonomousDeath {
 
     public void automate(Player player) {
         UUID uuid = player.getUniqueId();
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("uuid", uuid.toString());
+        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         // are they a time lord?
-        Tardis tardis = TARDISCache.BY_UUID.get(uuid);
-        if (tardis != null) {
+        if (rs.resultSet()) {
+            Tardis tardis = rs.getTardis();
             if (tardis.isPoweredOn()) {
                 int id = tardis.getTardisId();
                 String eps = tardis.getEps();
@@ -251,7 +254,6 @@ public class TARDISAutonomousDeath {
                                         set.put("hidden", 0);
                                     }
                                     plugin.getQueryFactory().doUpdate("tardis", set, tid);
-                                    TARDISCache.invalidate(id);
                                 }
                                 BuildData bd = new BuildData(uuid.toString());
                                 bd.setDirection(fd);
@@ -280,7 +282,6 @@ public class TARDISAutonomousDeath {
                                     HashMap<String, Object> wheret = new HashMap<>();
                                     wheret.put("tardis_id", id);
                                     plugin.getQueryFactory().doUpdate("tardis", seth, wheret);
-                                    TARDISCache.invalidate(id);
                                     plugin.getPM().callEvent(new TARDISTravelEvent(player, null, TravelType.AUTONOMOUS, id));
                                 }, 500L);
                                 // set current
@@ -310,7 +311,6 @@ public class TARDISAutonomousDeath {
                                 HashMap<String, Object> wherea = new HashMap<>();
                                 wherea.put("tardis_id", id);
                                 plugin.getQueryFactory().alterEnergyLevel("tardis", -amount, wherea, player);
-                                TARDISCache.invalidate(id);
                                 // power down?
                                 if (plugin.getConfig().getBoolean("allow.power_down")) {
                                     HashMap<String, Object> wherep = new HashMap<>();
@@ -327,7 +327,6 @@ public class TARDISAutonomousDeath {
                                     // if beacon is on turn it off
                                     new TARDISBeaconToggler(plugin).flickSwitch(player.getUniqueId(), id, false);
                                     plugin.getQueryFactory().doUpdate("tardis", setp, wherep);
-                                    TARDISCache.invalidate(id);
                                 }
                             }
                         } else if (plugin.getConfig().getBoolean("siege.enabled") && rsp.isAutoSiegeOn()) {
@@ -401,7 +400,6 @@ public class TARDISAutonomousDeath {
                             }
                             // update the database
                             plugin.getQueryFactory().doUpdate("tardis", set, wheres);
-                            TARDISCache.invalidate(id);
                         } else if (player.isOnline()) {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "ENERGY_NOT_AUTO");
                         }

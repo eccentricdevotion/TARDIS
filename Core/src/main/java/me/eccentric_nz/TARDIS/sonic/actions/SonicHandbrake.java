@@ -13,6 +13,7 @@ import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.data.Throticle;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetThrottle;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
@@ -46,13 +47,11 @@ public class SonicHandbrake {
     }
 
     public void process(int id, Player player, Block block) {
-//        HashMap<String, Object> wherei = new HashMap<>();
-//        wherei.put("tardis_id", id);
-//        ResultSetTardis rs = new ResultSetTardis(plugin, wherei, "", false, 2);
-//        if (rs.resultSet()) {
-//            Tardis tardis = rs.getTardis();
-        Tardis tardis = TARDISCache.BY_ID.get(id);
-        if (tardis != null) {
+        HashMap<String, Object> wherei = new HashMap<>();
+        wherei.put("tardis_id", id);
+        ResultSetTardis rs = new ResultSetTardis(plugin, wherei, "", false);
+        if (rs.resultSet()) {
+            Tardis tardis = rs.getTardis();
             TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
             tcc.getCircuits();
             if (plugin.getConfig().getBoolean("difficulty.circuits") && !plugin.getUtils().inGracePeriod(player, !tardis.isHandbrakeOn()) && !tcc.hasMaterialisation()) {
@@ -207,7 +206,6 @@ public class SonicHandbrake {
                         HashMap<String, Object> wheret = new HashMap<>();
                         wheret.put("tardis_id", id);
                         plugin.getQueryFactory().alterEnergyLevel("tardis", -amount, wheret, player);
-                        TARDISCache.invalidate(id);
                         if (!uuid.equals(ownerUUID)) {
                             Player ptl = plugin.getServer().getPlayer(ownerUUID);
                             if (ptl != null) {
@@ -230,7 +228,6 @@ public class SonicHandbrake {
                     HashMap<String, Object> whereh = new HashMap<>();
                     whereh.put("tardis_id", id);
                     plugin.getQueryFactory().doUpdate("tardis", set, whereh);
-                    TARDISCache.invalidate(id);
                 } else {
                     plugin.getMessenger().sendStatus(player, "HANDBRAKE_ON_ERR");
                 }

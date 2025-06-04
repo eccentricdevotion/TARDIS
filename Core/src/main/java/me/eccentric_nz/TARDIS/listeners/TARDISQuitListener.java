@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.artron.TARDISLampToggler;
 import me.eccentric_nz.TARDIS.camera.TARDISCameraTracker;
 import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import org.bukkit.Chunk;
 import org.bukkit.World;
@@ -71,8 +72,11 @@ public class TARDISQuitListener implements Listener {
         // if player is flying TARDIS exterior stop sound loop
         Optional.ofNullable(plugin.getTrackerKeeper().getFlyingReturnLocation().get(uuid)).ifPresent(value -> plugin.getServer().getScheduler().cancelTask(value.sound()));
         // forget the players Police Box chunk
-        Tardis tardis = TARDISCache.BY_UUID.get(uuid);
-        if (tardis != null) {
+        HashMap<String, Object> wherep = new HashMap<>();
+        wherep.put("uuid", uuid.toString());
+        ResultSetTardis rs = new ResultSetTardis(plugin, wherep, "", false);
+        if (rs.resultSet()) {
+            Tardis tardis = rs.getTardis();
             if (plugin.getConfig().getBoolean("police_box.keep_chunk_force_loaded")) {
                 Current current = TARDISCache.CURRENT.get(tardis.getTardisId());
                 if (current != null) {
@@ -120,7 +124,6 @@ public class TARDISQuitListener implements Listener {
                     HashMap<String, Object> sett = new HashMap<>();
                     sett.put("powered_on", 0);
                     plugin.getQueryFactory().doUpdate("tardis", sett, wheret);
-                    TARDISCache.invalidate(id);
                 }
             }
             // save arched status

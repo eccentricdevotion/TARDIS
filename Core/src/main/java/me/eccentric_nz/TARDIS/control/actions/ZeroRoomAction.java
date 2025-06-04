@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.control.actions;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.api.event.TARDISZeroRoomEnterEvent;
 import me.eccentric_nz.TARDIS.api.event.TARDISZeroRoomExitEvent;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -56,7 +55,6 @@ public class ZeroRoomAction {
             HashMap<String, Object> wherez = new HashMap<>();
             wherez.put("tardis_id", id);
             plugin.getQueryFactory().alterEnergyLevel("tardis", -zero_amount, wherez, player);
-            TARDISCache.invalidate(id);
         } else {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_ZERO");
         }

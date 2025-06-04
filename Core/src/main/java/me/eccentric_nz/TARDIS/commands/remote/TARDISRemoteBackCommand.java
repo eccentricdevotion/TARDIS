@@ -75,7 +75,6 @@ public class TARDISRemoteBackCommand {
         HashMap<String, Object> ttid = new HashMap<>();
         ttid.put("tardis_id", id);
         plugin.getQueryFactory().doUpdate("tardis", sett, ttid);
-        TARDISCache.invalidate(id);
         HashMap<String, Object> tid = new HashMap<>();
         tid.put("tardis_id", id);
         plugin.getQueryFactory().doUpdate("current", set, tid);

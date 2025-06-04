@@ -16,19 +16,29 @@
  */
 package me.eccentric_nz.TARDIS.commands.dev;
 
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.data.Current;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 
+import java.util.HashMap;
 import java.util.UUID;
 
 public class TARDISInteractionCommand {
 
+    private final TARDIS plugin;
+
+    public TARDISInteractionCommand(TARDIS plugin) {
+        this.plugin = plugin;
+    }
+
     public boolean process(UUID uuid) {
-        Tardis tardis = TARDISCache.BY_UUID.get(uuid);
-        if (tardis != null) {
-            int id = tardis.getTardisId();
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("uuid", uuid.toString());
+        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+        if (rs.resultSet()) {
+            int id = rs.getTardis().getTardisId();
             Current current = TARDISCache.CURRENT.get(id);
             if (current != null) {
                 TARDISDisplayItemUtils.setInteraction(current.location().getBlock(), id);

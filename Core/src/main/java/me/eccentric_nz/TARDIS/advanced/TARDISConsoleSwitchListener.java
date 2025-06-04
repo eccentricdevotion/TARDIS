@@ -18,11 +18,11 @@ package me.eccentric_nz.TARDIS.advanced;
 
 import me.eccentric_nz.TARDIS.ARS.TARDISARSInventory;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.chameleon.gui.TARDISChameleonInventory;
 import me.eccentric_nz.TARDIS.console.telepathic.TARDISTelepathicInventory;
 import me.eccentric_nz.TARDIS.control.TARDISScanner;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.travel.TARDISTemporalLocatorInventory;
@@ -105,15 +105,14 @@ public class TARDISConsoleSwitchListener implements Listener {
         if (!gui_circuits.contains(dn)) {
             return;
         }
-//        HashMap<String, Object> where = new HashMap<>();
-//        where.put("uuid", uuid);
-//        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-//        if (rs.resultSet()) {
-        Tardis tardis = TARDISCache.BY_UUID.get(uuid);
-        if (tardis == null) {
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("uuid", uuid);
+        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+        if (!rs.resultSet()) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
             return;
         }
+        Tardis tardis = rs.getTardis();
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             ItemStack[] stack = null;
             Inventory new_inv = null;

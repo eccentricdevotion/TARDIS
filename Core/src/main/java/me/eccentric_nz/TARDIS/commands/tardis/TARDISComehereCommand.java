@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.builders.exterior.TARDISEmergencyRelocation;
 import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.data.Throticle;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetThrottle;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
@@ -67,17 +68,15 @@ class TARDISComehereCommand {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "Stattenheim Remote");
                 return true;
             }
-//            HashMap<String, Object> where = new HashMap<>();
-//            where.put("uuid", uuid.toString());
-//            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-//            if (!rs.resultSet()) {
-            Tardis tardis = TARDISCache.BY_UUID.get(uuid);
-            if (tardis == null) {
+            HashMap<String, Object> where = new HashMap<>();
+            where.put("uuid", uuid.toString());
+            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+            if (!rs.resultSet()) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_A_TIMELORD");
                 return true;
             }
             if (!plugin.getConfig().getBoolean("difficulty.stattenheim_remote") || plugin.getUtils().inGracePeriod(player, true)) {
-//                Tardis tardis = rs.getTardis();
+                Tardis tardis = rs.getTardis();
                 int id = tardis.getTardisId();
                 if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPoweredOn()) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "POWER_DOWN");
@@ -212,7 +211,6 @@ class TARDISComehereCommand {
                     HashMap<String, Object> ttid = new HashMap<>();
                     ttid.put("tardis_id", id);
                     plugin.getQueryFactory().doUpdate("tardis", sett, ttid);
-                    TARDISCache.invalidate(id);
                 }
                 plugin.getQueryFactory().doUpdate("current", set, tid);
                 TARDISCache.CURRENT.invalidate(id);
@@ -256,7 +254,6 @@ class TARDISComehereCommand {
                 HashMap<String, Object> wheret = new HashMap<>();
                 wheret.put("tardis_id", id);
                 plugin.getQueryFactory().alterEnergyLevel("tardis", -ch, wheret, player);
-                TARDISCache.invalidate(id);
                 plugin.getTrackerKeeper().getHasDestination().remove(id);
                 plugin.getTrackerKeeper().getRescue().remove(id);
             } else {

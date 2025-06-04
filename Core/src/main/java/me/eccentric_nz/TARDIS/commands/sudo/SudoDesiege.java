@@ -46,7 +46,6 @@ class SudoDesiege {
         HashMap<String, Object> sets = new HashMap<>();
         sets.put("siege_on", 0);
         plugin.getQueryFactory().doUpdate("tardis", sets, wheres);
-        TARDISCache.invalidate(id);
         // clear trackers
         plugin.getTrackerKeeper().getInSiegeMode().remove(id);
         plugin.getTrackerKeeper().getIsSiegeCube().remove(id);

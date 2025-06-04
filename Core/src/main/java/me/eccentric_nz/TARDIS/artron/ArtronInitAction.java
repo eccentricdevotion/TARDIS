@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.artron;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -73,7 +72,6 @@ public class ArtronInitAction {
         HashMap<String, Object> whereid = new HashMap<>();
         whereid.put("tardis_id", id);
         plugin.getQueryFactory().doUpdate("tardis", set, whereid);
-        TARDISCache.invalidate(id);
         plugin.getMessenger().send(player, TardisModule.TARDIS, "ENERGY_INIT");
     }
 }

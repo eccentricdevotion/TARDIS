@@ -29,6 +29,7 @@ import me.eccentric_nz.TARDIS.database.data.Throticle;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetInteractionCheck;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetNextLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.hads.TARDISCloisterBell;
 import me.eccentric_nz.TARDIS.travel.TARDISMalfunction;
@@ -79,13 +80,11 @@ public class TARDISMaterialseFromVortex implements Runnable {
         Location exit = new Location(rsn.getWorld(), rsn.getX(), rsn.getY(), rsn.getZ());
         boolean is_next_sub = rsn.isSubmarine();
         boolean malfunction = (plugin.getTrackerKeeper().getMalfunction().containsKey(id) && plugin.getTrackerKeeper().getMalfunction().get(id));
-//        HashMap<String, Object> wherei = new HashMap<>();
-//        wherei.put("tardis_id", id);
-//        ResultSetTardis rs = new ResultSetTardis(plugin, wherei, "", false, 2);
-//        if (rs.resultSet()) {
-//            Tardis tardis = rs.getTardis();
-        Tardis tardis = TARDISCache.BY_ID.get(id);
-        if (tardis != null) {
+        HashMap<String, Object> wherei = new HashMap<>();
+        wherei.put("tardis_id", id);
+        ResultSetTardis rs = new ResultSetTardis(plugin, wherei, "", false);
+        if (rs.resultSet()) {
+            Tardis tardis = rs.getTardis();
             // get current location for back
             Current current = TARDISCache.CURRENT.get(id);
             if (current != null) {
@@ -110,7 +109,6 @@ public class TARDISMaterialseFromVortex implements Runnable {
                             HashMap<String, Object> wheret = new HashMap<>();
                             wheret.put("tardis_id", id);
                             plugin.getQueryFactory().alterEnergyLevel("tardis", -amount, wheret, player);
-                            TARDISCache.invalidate(id);
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "Q_FLY");
                             plugin.getTrackerKeeper().getHasDestination().remove(id);
                         }
@@ -294,7 +292,6 @@ public class TARDISMaterialseFromVortex implements Runnable {
                     HashMap<String, Object> whereh = new HashMap<>();
                     whereh.put("tardis_id", id);
                     plugin.getQueryFactory().doUpdate("tardis", set, whereh);
-                    TARDISCache.invalidate(id);
                 }
             }
         }

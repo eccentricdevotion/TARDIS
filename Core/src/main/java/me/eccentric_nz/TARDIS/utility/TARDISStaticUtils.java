@@ -19,11 +19,11 @@ package me.eccentric_nz.TARDIS.utility;
 import com.earth2me.essentials.Essentials;
 import com.earth2me.essentials.User;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.*;
 import org.bukkit.block.Biome;
@@ -36,6 +36,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.HashMap;
 import java.util.UUID;
 
 /**
@@ -99,13 +100,11 @@ public class TARDISStaticUtils {
      *
      */
     public static boolean isOwnerOnline(int id) {
-//        HashMap<String, Object> where = new HashMap<>();
-//        where.put("tardis_id", id);
-//        ResultSetTardis rst = new ResultSetTardis(TARDIS.plugin, where, "", false, 0);
-//        if (rst.resultSet()) {
-//            Tardis tardis = rst.getTardis();
-        Tardis tardis = TARDISCache.BY_ID.get(id);
-        if (tardis != null) {
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("tardis_id", id);
+        ResultSetTardis rst = new ResultSetTardis(TARDIS.plugin, where, "", false);
+        if (rst.resultSet()) {
+            Tardis tardis = rst.getTardis();
             if (!tardis.isTardisInit()) {
                 return false;
             }
@@ -251,8 +250,8 @@ public class TARDISStaticUtils {
 
     public static boolean isInfested(Material material) {
         return switch (material) {
-            case INFESTED_CHISELED_STONE_BRICKS, INFESTED_COBBLESTONE, INFESTED_CRACKED_STONE_BRICKS, INFESTED_MOSSY_STONE_BRICKS, INFESTED_STONE, INFESTED_STONE_BRICKS ->
-                    true;
+            case INFESTED_CHISELED_STONE_BRICKS, INFESTED_COBBLESTONE, INFESTED_CRACKED_STONE_BRICKS,
+                 INFESTED_MOSSY_STONE_BRICKS, INFESTED_STONE, INFESTED_STONE_BRICKS -> true;
             default -> false;
         };
     }

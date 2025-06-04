@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.console.interaction;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.artron.ArtronAbandoned;
 import me.eccentric_nz.TARDIS.artron.ArtronChargeAction;
 import me.eccentric_nz.TARDIS.artron.ArtronInitAction;
@@ -25,11 +24,14 @@ import me.eccentric_nz.TARDIS.artron.ArtronTransferAction;
 import me.eccentric_nz.TARDIS.control.TARDISPowerButton;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+
+import java.util.HashMap;
 
 public class ArtronRightClick {
 
@@ -41,13 +43,11 @@ public class ArtronRightClick {
 
     public void process(int id, Player player, Location location) {
         // get tardis data
-//        HashMap<String, Object> wheret = new HashMap<>();
-//        wheret.put("tardis_id", id);
-//        ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 2);
-//        if (rs.resultSet()) {
-//            Tardis tardis = rs.getTardis();
-        Tardis tardis = TARDISCache.BY_ID.get(id);
-        if (tardis != null) {
+        HashMap<String, Object> wheret = new HashMap<>();
+        wheret.put("tardis_id", id);
+        ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false);
+        if (rs.resultSet()) {
+            Tardis tardis = rs.getTardis();
             if (tardis.getPreset().equals(ChameleonPreset.JUNK)) {
                 return;
             }

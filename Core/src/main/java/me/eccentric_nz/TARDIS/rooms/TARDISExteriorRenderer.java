@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.rooms;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.chameleon.utils.TARDISChameleonColumn;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
@@ -242,7 +241,6 @@ public class TARDISExteriorRenderer {
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
         plugin.getQueryFactory().alterEnergyLevel("tardis", -plugin.getArtronConfig().getInt("render"), where, p);
-        TARDISCache.invalidate(id);
         // tp the player inside the room
         plugin.getTrackerKeeper().getRenderRoomOccupants().add(p.getUniqueId());
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {

@@ -60,7 +60,6 @@ public class TARDISStandbyMode implements Runnable {
                 HashMap<String, Object> where = new HashMap<>();
                 where.put("tardis_id", id);
                 plugin.getQueryFactory().alterEnergyLevel("tardis", -remove, where, null);
-                TARDISCache.invalidate(id);
             } else if (level <= amount) {
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     // power down!
@@ -94,7 +93,6 @@ public class TARDISStandbyMode implements Runnable {
                     new TARDISBeaconToggler(plugin).flickSwitch(standbyData.uuid(), id, false);
                     // update database
                     plugin.getQueryFactory().doUpdate("tardis", setp, wherep);
-                    TARDISCache.invalidate(id);
                     // if force field is on, disable it
                     plugin.getTrackerKeeper().getActiveForceFields().remove(standbyData.uuid());
                 }, 1L);
