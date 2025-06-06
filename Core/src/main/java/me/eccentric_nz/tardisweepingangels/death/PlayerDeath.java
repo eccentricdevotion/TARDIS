@@ -73,6 +73,14 @@ public class PlayerDeath implements Listener {
                             event.setDeathMessage(name + " was slain by an Empty Child");
                             return;
                         }
+                        if (pdc.has(TARDISWeepingAngels.HEAVENLY_HOST, PersistentDataType.INTEGER)) {
+                            event.setDeathMessage(name + " was slain by a Heavenly Host");
+                            return;
+                        }
+                        if (pdc.has(TARDISWeepingAngels.NIMON, PersistentDataType.INTEGER)) {
+                            event.setDeathMessage(name + " was slain by a Nimon");
+                            return;
+                        }
                         if (pdc.has(TARDISWeepingAngels.SCARECROW, PersistentDataType.INTEGER)) {
                             event.setDeathMessage(name + " was slain by a Scarecrow");
                             return;
@@ -174,6 +182,10 @@ public class PlayerDeath implements Listener {
                         }
                     }
                     if (attacker instanceof Drowned) {
+                        if (pdc.has(TARDISWeepingAngels.SATURNYNIAN, PersistentDataType.INTEGER)) {
+                            event.setDeathMessage(name + " was slain by a Saturnynian");
+                            return;
+                        }
                         if (pdc.has(TARDISWeepingAngels.SLITHEEN, PersistentDataType.INTEGER)) {
                             event.setDeathMessage(name + " was slain by a Sea Devil");
                             return;

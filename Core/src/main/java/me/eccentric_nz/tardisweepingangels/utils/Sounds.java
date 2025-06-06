@@ -82,6 +82,9 @@ public class Sounds implements Listener {
                 delay = 100L;
                 which = "hath";
             }
+            if (pdc.has(TARDISWeepingAngels.HEAVENLY_HOST, PersistentDataType.INTEGER)) {
+                which = "heavenly_host";
+            }
             if (pdc.has(TARDISWeepingAngels.MIRE, PersistentDataType.INTEGER)) {
                 delay = 180L;
                 which = "item.trident.thunder";
@@ -89,6 +92,10 @@ public class Sounds implements Listener {
             if (pdc.has(TARDISWeepingAngels.MONK, PersistentDataType.INTEGER)) {
                 delay = 180L;
                 which = "headless_monk";
+            }
+            if (pdc.has(TARDISWeepingAngels.NIMON, PersistentDataType.INTEGER)) {
+                delay = 70L;
+                which = "nimon";
             }
             if (pdc.has(TARDISWeepingAngels.RACNOSS, PersistentDataType.INTEGER)) {
                 delay = 180L;
