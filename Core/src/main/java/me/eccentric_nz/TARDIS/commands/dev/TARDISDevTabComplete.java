@@ -21,6 +21,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
+import me.eccentric_nz.TARDIS.enumeration.Room;
 import me.eccentric_nz.TARDIS.particles.ParticleEffect;
 import me.eccentric_nz.TARDIS.particles.ParticleShape;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
@@ -52,7 +53,7 @@ public class TARDISDevTabComplete extends TARDISCompleter implements TabComplete
             "monster",
             "nms",
             "plurals",
-            "recipe", "regen", "registry",
+            "recipe", "regen", "registry", "rooms",
             "screen", "skin", "snapshot", "stats", "systree",
             "tis", "tips", "tree", "trim",
             "zero"
@@ -72,6 +73,7 @@ public class TARDISDevTabComplete extends TARDISCompleter implements TabComplete
     private final List<String> PRESET_SUBS = new ArrayList<>();
     private final List<String> MONSTER_SUBS = new ArrayList<>();
     private final List<String> EFFECT_SUBS = new ArrayList<>();
+    private final List<String> ROOM_SUBS = new ArrayList<>();
     private final List<String> SHAPE_SUBS = new ArrayList<>();
     private final ImmutableList<String> RECIPE_SUBS = ImmutableList.of("shaped", "shapeless", "chest", "chemistry", "custom");
 
@@ -102,6 +104,9 @@ public class TARDISDevTabComplete extends TARDISCompleter implements TabComplete
         for (ParticleShape s : ParticleShape.values()) {
             SHAPE_SUBS.add(s.toString());
         }
+        for (Room r : Room.values()) {
+            ROOM_SUBS.add(r.toString());
+        }
     }
 
     @Override
@@ -123,6 +128,7 @@ public class TARDISDevTabComplete extends TARDISCompleter implements TabComplete
                     case "displayitem" -> partial(lastArg, DISPLAY_SUBS);
                     case "frame" -> partial(lastArg, FRAME_SUBS);
                     case "recipe" -> partial(lastArg, RECIPE_SUBS);
+                    case "rooms" -> partial(lastArg, ROOM_SUBS);
                     case "effect" -> partial(lastArg, SHAPE_SUBS);
                     case "screen" -> partial(lastArg, SCREEN_SUBS);
                     case "component" -> partial(lastArg, COMPONENT_SUBS);
@@ -130,24 +136,31 @@ public class TARDISDevTabComplete extends TARDISCompleter implements TabComplete
                 };
             }
             case 3 -> {
-                if (sub.equals("box")) {
-                    return partial(lastArg, STATE_SUBS);
-                }
-                if (sub.equals("effect")) {
-                    return partial(lastArg, EFFECT_SUBS);
-                }
+                return switch (sub) {
+                    case "box" -> partial(lastArg, STATE_SUBS);
+                    case "effect" -> partial(lastArg, EFFECT_SUBS);
+                    case "rooms" -> partial(lastArg, ROOM_SUBS);
+                    default -> throw new IllegalStateException("Unexpected value: " + sub);
+                };
             }
             case 4 -> {
                 if (sub.equals("displayitem")) {
                     return partial(lastArg, TRANSFORM_SUBS);
                 }
+                if (sub.equals("rooms")) {
+                    return partial(lastArg, ROOM_SUBS);
+                }
             }
             default -> {
-                return switch (args[1]) {
-                    case "place" -> partial(lastArg, STONE_SUBS);
-                    case "add" -> partial(lastArg, ITEM_SUBS);
-                    default -> partial(lastArg, MAT_SUBS);
-                };
+                if (sub.equals("rooms")) {
+                    return partial(lastArg, ROOM_SUBS);
+                } else {
+                    return switch (args[1]) {
+                        case "place" -> partial(lastArg, STONE_SUBS);
+                        case "add" -> partial(lastArg, ITEM_SUBS);
+                        default -> partial(lastArg, MAT_SUBS);
+                    };
+                }
             }
         }
         return ImmutableList.of();

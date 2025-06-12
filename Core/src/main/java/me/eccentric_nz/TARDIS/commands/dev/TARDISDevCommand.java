@@ -81,7 +81,7 @@ public class TARDISDevCommand implements CommandExecutor {
             "monster",
             "nms",
             "plurals",
-            "recipe", "regen", "registry",
+            "recipe", "regen", "registry", "rooms",
             "screen", "skin", "snapshot", "stats", "systree",
             "tis", "tips", "tree", "trim",
             "zero"
@@ -313,6 +313,9 @@ public class TARDISDevCommand implements CommandExecutor {
                     }
                     case "recipe" -> {
                         return new TARDISWikiRecipeCommand(plugin).write(sender, args);
+                    }
+                    case "rooms" -> {
+                        return new TARDISDevRoomsCommand(plugin).build(sender, args);
                     }
                     case "plurals" -> {
                         for (Material m : Material.values()) {
