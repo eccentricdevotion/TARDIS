@@ -28,20 +28,19 @@ import org.bukkit.entity.Pig;
  *
  * @author eccentric_nz
  */
-class TARDISPig extends TARDISMob {
+public class TARDISPig extends TARDISMob {
 
+    private boolean saddled;
+    private Pig.Variant pigVariant;
     public TARDISPig() {
         super.setType(EntityType.PIG);
     }
 
-    private boolean saddled;
-    private Pig.Variant pigVariant;
-
-    boolean isSaddled() {
+    public boolean isSaddled() {
         return saddled;
     }
 
-    void setSaddled(boolean saddled) {
+    public void setSaddled(boolean saddled) {
         this.saddled = saddled;
     }
 

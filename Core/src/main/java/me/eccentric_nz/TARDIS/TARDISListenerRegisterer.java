@@ -238,7 +238,7 @@ class TARDISListenerRegisterer {
         if (plugin.getConfig().getBoolean("preferences.nerf_pistons.enabled")) {
             plugin.getPM().registerEvents(new TARDISPistonHarvesterListener(plugin), plugin);
         }
-        plugin.getPM().registerEvents(new TARDISHorseListener(plugin), plugin);
+        plugin.getPM().registerEvents(new TARDISRideableMobListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISHotbarListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISHumListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISIceMeltListener(plugin), plugin);

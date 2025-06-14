@@ -181,8 +181,7 @@ public class TARDISEjectListener implements Listener {
                 }
                 ent.remove();
             }
-            case DONKEY, HORSE, MULE, SKELETON_HORSE, ZOMBIE_HORSE ->
-                    plugin.getMessenger().send(player, TardisModule.TARDIS, "EJECT_HORSE");
+            case DONKEY, HORSE, MULE, SKELETON_HORSE, ZOMBIE_HORSE -> plugin.getMessenger().send(player, TardisModule.TARDIS, "EJECT_HORSE");
             case LLAMA -> {
                 event.setCancelled(true);
                 Llama ll = (Llama) ent;

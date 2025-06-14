@@ -993,8 +993,7 @@ public class TARDISFarmer {
                             cria.setDomestication(ll.getDomesticity());
                             cria.setJumpStrength(ll.getJumpStrength());
                             if (ll.hasChest()) {
-                                ChestedHorse ch = (ChestedHorse) llama;
-                                ch.setCarryingChest(true);
+                                cria.setCarryingChest(true);
                             }
                             LlamaInventory inv = cria.getInventory();
                             inv.setContents(ll.getHorseinventory());
