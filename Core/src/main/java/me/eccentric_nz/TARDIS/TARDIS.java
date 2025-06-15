@@ -44,6 +44,7 @@ import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.monitor.SnapshotLoader;
 import me.eccentric_nz.TARDIS.perms.TARDISContexts;
 import me.eccentric_nz.TARDIS.placeholders.TARDISPlaceholderExpansion;
+import me.eccentric_nz.TARDIS.planets.BlueprintMerchantView;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.recipes.*;
 import me.eccentric_nz.TARDIS.rooms.eye.EyeLoader;
@@ -118,6 +119,7 @@ public class TARDIS extends JavaPlugin {
     private TARDISChatGUI<?> jsonKeeper;
     private TARDISUpdateChatGUI updateChatGUI;
     private SkinChanger skinChanger;
+    private BlueprintMerchantView merchantView;
     private ComponentSetter componentSetter;
     private FromRegistry fromRegistry;
     private Calendar afterCal;
@@ -290,6 +292,8 @@ public class TARDIS extends JavaPlugin {
             Class<?> s;
             Class<?> c;
             Class<?> r;
+            Class<?> v;
+            String error = "";
             try {
                 if (PaperLib.isPaper()) {
                     m = Class.forName("me.eccentric_nz.TARDIS.paper.AdventureMessage");
@@ -298,6 +302,7 @@ public class TARDIS extends JavaPlugin {
                     s = Class.forName("me.eccentric_nz.TARDIS.paper.SkinChangerPaper");
                     c = Class.forName("me.eccentric_nz.TARDIS.paper.ComponentSetterPaper");
                     r = Class.forName("me.eccentric_nz.TARDIS.paper.RegistryGetterPaper");
+                    v = Class.forName("me.eccentric_nz.TARDIS.paper.PaperMerchantView");
                 } else {
                     m = Class.forName("me.eccentric_nz.TARDIS.spigot.SpigotMessage");
                     j = Class.forName("me.eccentric_nz.TARDIS.spigot.TARDISChatGUISpigot");
@@ -305,27 +310,38 @@ public class TARDIS extends JavaPlugin {
                     s = Class.forName("me.eccentric_nz.TARDIS.spigot.SkinChangerSpigot");
                     c = Class.forName("me.eccentric_nz.TARDIS.spigot.ComponentSetterSpigot");
                     r = Class.forName("me.eccentric_nz.TARDIS.spigot.RegistryGetterSpigot");
+                    v = Class.forName("me.eccentric_nz.TARDIS.spigot.SpigotMerchantView");
                 }
                 if (TARDISMessage.class.isAssignableFrom(m)) { // Make sure it actually implements TARDISMessage
                     messenger = (TARDISMessage) m.getConstructor().newInstance();
+                    error = "TARDISMessage";
                 }
                 if (TARDISChatGUI.class.isAssignableFrom(j)) { // Make sure it actually implements TARDISChatGUI
                     jsonKeeper = (TARDISChatGUI<?>) j.getConstructor().newInstance();
+                    error = "TARDISChatGUI";
                 }
                 if (TARDISUpdateChatGUI.class.isAssignableFrom(u)) { // Make sure it actually implements TARDISUpdateChatGUI
                     updateChatGUI = (TARDISUpdateChatGUI) u.getConstructor().newInstance();
+                    error = "TARDISUpdateChatGUI";
                 }
                 if (SkinChanger.class.isAssignableFrom(s)) { // Make sure it actually implements SkinChanger
                     skinChanger = (SkinChanger) s.getConstructor().newInstance();
+                    error = "SkinChanger";
                 }
                 if (ComponentSetter.class.isAssignableFrom(c)) { // Make sure it actually implements ComponentSetter
                     componentSetter = (ComponentSetter) c.getConstructor().newInstance();
+                    error = "ComponentSetter";
                 }
                 if (FromRegistry.class.isAssignableFrom(r)) { // Make sure it actually implements FromRegistry
                     fromRegistry = (FromRegistry) r.getConstructor().newInstance();
+                    error = "FromRegistry";
+                }
+                if (BlueprintMerchantView.class.isAssignableFrom(v)) { // Make sure it actually implements BlueprintMerchantView
+                    merchantView = (BlueprintMerchantView) v.getConstructor().newInstance();
+                    error = "BlueprintMerchantView";
                 }
             } catch (final Exception e) {
-                getLogger().severe("Could not find support for this server version.");
+                getLogger().severe("Could not load " + (PaperLib.isPaper() ? "Paper" : "Spigot") + " specific " + error + " support!");
 //                e.printStackTrace();
                 this.setEnabled(false);
                 return;
@@ -990,6 +1006,15 @@ public class TARDIS extends JavaPlugin {
      */
     public FromRegistry getFromRegistry() {
         return fromRegistry;
+    }
+
+    /**
+     * Gets the TARDIS From Registry class
+     *
+     * @return the TARDIS From Registry class
+     */
+    public BlueprintMerchantView getMerchantView() {
+        return merchantView;
     }
 
     /**
