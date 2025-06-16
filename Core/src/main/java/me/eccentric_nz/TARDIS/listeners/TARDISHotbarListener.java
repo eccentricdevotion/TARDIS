@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.listeners;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
+import me.eccentric_nz.TARDIS.display.TARDISDisplayType;
 import me.eccentric_nz.TARDIS.flight.FlightVisibility;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -69,12 +70,21 @@ public class TARDISHotbarListener implements Listener {
                             return;
                         }
                         player.setCompassTarget(rsc.getCurrent().location());
+                        plugin.getTrackerKeeper().getDisplay().put(player.getUniqueId(), TARDISDisplayType.LOCATOR);
+                        plugin.getTrackerKeeper().getLocators().put(player.getUniqueId(), rsc.getCurrent().location());
                     }
                 } else {
                     Location respawn = player.getRespawnLocation();
                     // if player has respawn location set else get world spawn
                     player.setCompassTarget(Objects.requireNonNullElseGet(respawn, () -> player.getWorld().getSpawnLocation()));
+                    if (plugin.getTrackerKeeper().getDisplay().containsKey(player.getUniqueId()) && plugin.getTrackerKeeper().getDisplay().get(player.getUniqueId()) == TARDISDisplayType.LOCATOR) {
+                        plugin.getTrackerKeeper().getDisplay().remove(player.getUniqueId());
+                        plugin.getTrackerKeeper().getLocators().remove(player.getUniqueId());
+                    }
                 }
+            } else if (plugin.getTrackerKeeper().getDisplay().containsKey(player.getUniqueId()) && plugin.getTrackerKeeper().getDisplay().get(player.getUniqueId()) == TARDISDisplayType.LOCATOR) {
+                plugin.getTrackerKeeper().getDisplay().remove(player.getUniqueId());
+                plugin.getTrackerKeeper().getLocators().remove(player.getUniqueId());
             }
             if (plugin.getTrackerKeeper().getFlyingReturnLocation().containsKey(player.getUniqueId())) {
                 // change behaviour of flight
@@ -86,7 +96,7 @@ public class TARDISHotbarListener implements Listener {
                             new FlightVisibility(plugin).hide(stand, player);
                         }
                     }
-                    case ARROW -> {}
+                    case ARROW -> { }
                     default -> {
                         if (plugin.getTrackerKeeper().getHiddenFlight().containsKey(player.getUniqueId())) {
                             // remove entity hiding
@@ -98,6 +108,9 @@ public class TARDISHotbarListener implements Listener {
         } else if (plugin.getTrackerKeeper().getHiddenFlight().containsKey(player.getUniqueId())) {
             // remove entity hiding
             new FlightVisibility(plugin).show(player);
+        } else if (plugin.getTrackerKeeper().getDisplay().containsKey(player.getUniqueId()) && plugin.getTrackerKeeper().getDisplay().get(player.getUniqueId()) == TARDISDisplayType.LOCATOR) {
+            plugin.getTrackerKeeper().getDisplay().remove(player.getUniqueId());
+            plugin.getTrackerKeeper().getLocators().remove(player.getUniqueId());
         }
     }
 }

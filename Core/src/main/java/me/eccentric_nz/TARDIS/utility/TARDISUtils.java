@@ -30,6 +30,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.util.Vector;
 
 import java.util.HashMap;
 import java.util.List;
@@ -45,6 +46,7 @@ import java.util.List;
 public class TARDISUtils {
 
     private final TARDIS plugin;
+    private final String[] CARDINAL = {"E", "NE", "N", "NW", "W", "SW", "S", "SE"};
 
     public TARDISUtils(TARDIS plugin) {
         this.plugin = plugin;
@@ -250,24 +252,73 @@ public class TARDISUtils {
                     .replace("%FACING%", getFacing(player))
                     .replace("%FACING_XZ%", getFacingXZ(player))
             );
+            case LOCATOR -> ChatColor.translateAlternateColorCodes('&', displayType.getFormat()
+                    .replace("%DIRECTIONS%", getDirection(player))
+            );
             case TARGET_BLOCK -> ChatColor.translateAlternateColorCodes('&', displayType.getFormat()
-                    .replace("%TARGET_BLOCK%", player.getTargetBlock(null, 5).getType().toString()));
+                    .replace("%TARGET_BLOCK%", player.getTargetBlock(null, 5).getType().toString())
+            );
             case WORLD -> ChatColor.translateAlternateColorCodes('&', displayType.getFormat()
-                    .replace("%WORLD%", player.getLocation().getWorld().getName()));
-            default -> // ALL
-                    ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("display.all")
-                            .replace("%WORLD%", player.getLocation().getWorld().getName())
-                            .replace("%X%", String.format("%,d", player.getLocation().getBlockX()))
-                            .replace("%Y%", String.format("%,d", player.getLocation().getBlockY()))
-                            .replace("%Z%", String.format("%,d", player.getLocation().getBlockZ()))
-                            .replace("%FACING%", getFacing(player))
-                            .replace("%FACING_XZ%", getFacingXZ(player))
-                            .replace("%YAW%", String.format("%.1f", player.getLocation().getYaw()))
-                            .replace("%PITCH%", String.format("%.1f", player.getLocation().getPitch()))
-                            .replace("%BIOME%", player.getLocation().getBlock().getBiome().toString())
-                            .replace("%TARGET_BLOCK%", player.getTargetBlock(null, 5).getType().toString())
-                    );
+                    .replace("%WORLD%", player.getLocation().getWorld().getName())
+            );
+            // ALL
+            default -> ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("display.all", "&6X&7%X% &6Y&7%Y% &6Z&7%Z% &6F&7%FACING% (%FACING_XZ%) %TARGET_BLOCK%")
+                    .replace("%WORLD%", player.getLocation().getWorld().getName())
+                    .replace("%X%", String.format("%,d", player.getLocation().getBlockX()))
+                    .replace("%Y%", String.format("%,d", player.getLocation().getBlockY()))
+                    .replace("%Z%", String.format("%,d", player.getLocation().getBlockZ()))
+                    .replace("%FACING%", getFacing(player))
+                    .replace("%FACING_XZ%", getFacingXZ(player))
+                    .replace("%YAW%", String.format("%.1f", player.getLocation().getYaw()))
+                    .replace("%PITCH%", String.format("%.1f", player.getLocation().getPitch()))
+                    .replace("%BIOME%", player.getLocation().getBlock().getBiome().toString())
+                    .replace("%TARGET_BLOCK%", player.getTargetBlock(null, 5).getType().toString())
+            );
         };
+    }
+
+    /**
+     * Gets the direction to travel between two locations.
+     *
+     * @param player the player determining the first location
+     * @return a direction to move towards
+     */
+    private String getDirection(Player player) {
+        Location location = player.getLocation();
+        Location tardis = plugin.getTrackerKeeper().getLocators().get(player.getUniqueId());
+        // check same world
+        if (location.getWorld() != tardis.getWorld()) {
+            return "TARDIS is located in " + tardis.getWorld().getName();
+        }
+        Vector playerToEntity = tardis.clone().subtract(location).toVector();
+        Vector playerLooking = location.getDirection();
+        double x1 = playerToEntity.getX();
+        double z1 = playerToEntity.getZ();
+        double x2 = playerLooking.getX();
+        double z2 = playerLooking.getZ();
+        double turn = Math.atan2(x1 * z2 - z1 * x2, x1 * x2 + z1 * z2) * 180 / Math.PI;
+        int compass = (((int) Math.round(Math.atan2(location.getX() - tardis.getX(), location.getZ() - tardis.getZ()) / (2 * Math.PI / 8))) + 8) % 8;
+        String d = CARDINAL[compass];
+        int distance = getHorizontalDistance(location, tardis);
+        if (turn >= -45 && turn < 45) {
+            return "↑ " + distance + " blocks " + d;
+        } else if (turn >= 45 && turn < 135) {
+            return "← " + distance + " blocks " + d;
+        } else if (turn >= 135 && turn <= 180 || turn >= -180 && turn < -135) {
+            return "↓ " + distance + " blocks " + d;
+        } else if (turn >= -135 && turn < -45) {
+            return "→ " + distance + " blocks " + d;
+        }
+        // ↖ ↗ ↘ ↙
+        return d;
+    }
+
+    public int getHorizontalDistance(Location first, Location second) {
+        double fx = first.getX();
+        double fz = first.getZ();
+        double sx = second.getX();
+        double sz = second.getZ();
+        return (int) Math.sqrt(Math.pow(fx - sx, 2) + Math.pow(fz - sz, 2));
     }
 
     public boolean isCustomModel(ItemStack is) {

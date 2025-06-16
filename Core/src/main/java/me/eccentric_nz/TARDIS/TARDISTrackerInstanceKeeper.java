@@ -94,6 +94,7 @@ public class TARDISTrackerInstanceKeeper {
     private final HashMap<UUID, Location> junkRelog = new HashMap<>();
     private final HashMap<UUID, Location> sonicGenerators = new HashMap<>();
     private final HashMap<UUID, Location> startLocation = new HashMap<>();
+    private final HashMap<UUID, Location> locators = new HashMap<>();
     private final HashMap<UUID, Long> brushCooldown = new HashMap<>();
     private final HashMap<UUID, Long> cooldown = new HashMap<>();
     private final HashMap<UUID, Long> hideCooldown = new HashMap<>();
@@ -1187,5 +1188,9 @@ public class TARDISTrackerInstanceKeeper {
      */
     public HashMap<UUID, String> getPlotters() {
         return plotters;
+    }
+
+    public HashMap<UUID, Location> getLocators() {
+        return locators;
     }
 }
