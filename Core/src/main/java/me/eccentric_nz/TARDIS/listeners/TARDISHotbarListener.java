@@ -74,9 +74,8 @@ public class TARDISHotbarListener implements Listener {
                         plugin.getTrackerKeeper().getLocators().put(player.getUniqueId(), rsc.getCurrent().location());
                     }
                 } else {
-                    Location respawn = player.getRespawnLocation();
-                    // if player has respawn location set else get world spawn
-                    player.setCompassTarget(Objects.requireNonNullElseGet(respawn, () -> player.getWorld().getSpawnLocation()));
+                    // rest compass to world spawn location
+                    player.setCompassTarget(player.getWorld().getSpawnLocation());
                     if (plugin.getTrackerKeeper().getDisplay().containsKey(player.getUniqueId()) && plugin.getTrackerKeeper().getDisplay().get(player.getUniqueId()) == TARDISDisplayType.LOCATOR) {
                         plugin.getTrackerKeeper().getDisplay().remove(player.getUniqueId());
                         plugin.getTrackerKeeper().getLocators().remove(player.getUniqueId());

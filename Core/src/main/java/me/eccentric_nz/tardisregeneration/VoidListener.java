@@ -13,6 +13,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 
+import java.util.Objects;
+
 /**
  * @author eccentric_nz
  */
@@ -36,12 +38,7 @@ public class VoidListener implements Listener {
             return;
         }
         Location location = player.getRespawnLocation();
-        if (location == null) {
-            // get the main server world
-            World world = plugin.getServer().getWorlds().getFirst();
-            location = world.getSpawnLocation();
-        }
-        player.teleport(location);
+        player.teleport(Objects.requireNonNullElseGet(location, () -> plugin.getServer().getWorlds().getFirst().getSpawnLocation()));
         // regenerate
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, ()-> new Regenerator().processPlayer(plugin, player), 10L);
     }

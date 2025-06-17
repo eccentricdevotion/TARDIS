@@ -17,10 +17,16 @@
 package me.eccentric_nz.TARDIS.display;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.components.CustomModelDataComponent;
+
+import java.util.List;
 
 public class TARDISDisplayListener implements Listener {
 
@@ -39,7 +45,39 @@ public class TARDISDisplayListener implements Listener {
         if (event.getFrom().getWorld().getName().contains("TARDIS")) {
             return;
         }
-        plugin.getMessenger().sendHeadsUpDisplay(player, plugin);
+        TARDISDisplayType displayType = plugin.getTrackerKeeper().getDisplay().get(player.getUniqueId());
+        String direction = plugin.getMessenger().sendHeadsUpDisplay(player, plugin, displayType);
+        if (!direction.isEmpty() && displayType == TARDISDisplayType.LOCATOR) {
+            // update TARDIS Locator model to point to TARDIS location
+             updateLocator(player, direction);
+        }
+    }
+
+    private void updateLocator(Player player, String direction) {
+        ItemStack is = player.getInventory().getItemInMainHand();
+        if (is.getType() == Material.COMPASS) {
+            ItemMeta im = is.getItemMeta();
+            if (!im.hasDisplayName()) {
+                return;
+            }
+            float model;
+            switch (direction) {
+                case "N" -> model = 101.0f;
+                case "NW" -> model = 102.0f;
+                case "W" -> model = 103.0f;
+                case "SW" -> model = 104.0f;
+                case "S" -> model = 105.0f;
+                case "SE" -> model = 106.0f;
+                case "E" -> model = 107.0f;
+                // NE
+                default -> model = 108.0f;
+            }
+            CustomModelDataComponent component = im.getCustomModelDataComponent();
+            component.setFloats(List.of(model));
+            im.setCustomModelDataComponent(component);
+            is.setItemMeta(im);
+            player.getInventory().setItemInMainHand(is);
+        }
     }
 }
 
