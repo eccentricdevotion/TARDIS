@@ -24,8 +24,8 @@ import net.minecraft.world.item.MapItem;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.saveddata.maps.MapItemSavedData;
 import org.bukkit.World;
-import org.bukkit.craftbukkit.v1_21_R4.CraftWorld;
-import org.bukkit.craftbukkit.v1_21_R4.map.CraftMapView;
+import org.bukkit.craftbukkit.v1_21_R5.CraftWorld;
+import org.bukkit.craftbukkit.v1_21_R5.map.CraftMapView;
 import org.bukkit.map.MapView;
 
 import java.lang.reflect.Field;
@@ -36,8 +36,8 @@ public final class TARDISMapUpdater extends Player {
     public static final UUID ID = UUID.randomUUID();
     public static final String NAME = "_____MapUpdater_____";
 
-    public TARDISMapUpdater(World world, int x, int z) {
-        super(((CraftWorld) world).getHandle(), new BlockPos(x, 64, z), 1.0f, new GameProfile(ID, NAME));
+    public TARDISMapUpdater(World world) {
+        super(((CraftWorld) world).getHandle(), new GameProfile(ID, NAME));
     }
 
     @Override

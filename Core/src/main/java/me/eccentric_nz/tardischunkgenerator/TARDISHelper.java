@@ -53,9 +53,9 @@ import org.apache.logging.log4j.core.Logger;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Directional;
-import org.bukkit.craftbukkit.v1_21_R4.CraftWorld;
-import org.bukkit.craftbukkit.v1_21_R4.block.CraftBlock;
-import org.bukkit.craftbukkit.v1_21_R4.entity.CraftVillager;
+import org.bukkit.craftbukkit.v1_21_R5.CraftWorld;
+import org.bukkit.craftbukkit.v1_21_R5.block.CraftBlock;
+import org.bukkit.craftbukkit.v1_21_R5.entity.CraftVillager;
 import org.bukkit.entity.*;
 import org.bukkit.map.MapView;
 import org.bukkit.util.Vector;
@@ -281,7 +281,7 @@ public class TARDISHelper {
     }
 
     public void updateMap(World world, MapView mapView) {
-        new TARDISMapUpdater(world, mapView.getCenterX(), mapView.getCenterZ()).update(mapView);
+        new TARDISMapUpdater(world).update(mapView);
     }
 
     public void addCustomBiome(String biome) {

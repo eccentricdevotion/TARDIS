@@ -39,10 +39,10 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_21_R4.CraftServer;
-import org.bukkit.craftbukkit.v1_21_R4.CraftWorld;
-import org.bukkit.craftbukkit.v1_21_R4.entity.CraftPlayer;
-import org.bukkit.craftbukkit.v1_21_R4.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.v1_21_R5.CraftServer;
+import org.bukkit.craftbukkit.v1_21_R5.CraftWorld;
+import org.bukkit.craftbukkit.v1_21_R5.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_21_R5.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 
 import java.util.List;
@@ -104,7 +104,7 @@ public class EmergencyProgramOneSpawner {
     }
 
     public void showAll(ServerPlayer npc, Location location) {
-        ServerEntity serverEntity = new ServerEntity(npc.serverLevel(), npc, 0, false, packet -> {
+        ServerEntity serverEntity = new ServerEntity(npc.level(), npc, 0, false, packet -> {
         }, (packet, list) -> {}, Set.of());
         List<Pair<EquipmentSlot, ItemStack>> equipment = List.of(
                 new Pair<>(EquipmentSlot.MAINHAND, npc.getItemBySlot(EquipmentSlot.MAINHAND)),

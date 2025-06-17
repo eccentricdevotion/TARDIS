@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.lazarus.disguise.npc;
 
+import io.netty.channel.ChannelFutureListener;
 import me.eccentric_nz.TARDIS.TARDIS;
 import net.minecraft.network.Connection;
 import net.minecraft.network.PacketListener;
@@ -54,11 +55,11 @@ public class NPCConnection extends Connection {
     }
 
     @Override
-    public void send(Packet<?> packet, PacketSendListener genericfuturelistener) {
+    public void send(Packet<?> packet, ChannelFutureListener channelfuturelistener) {
     }
 
     @Override
-    public void send(Packet<?> packet, PacketSendListener genericfuturelistener, boolean flag) {
+    public void send(Packet<?> packet, ChannelFutureListener channelfuturelistener, boolean flag) {
     }
 
     @Override

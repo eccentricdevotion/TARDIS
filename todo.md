@@ -20,7 +20,7 @@
 
 ## Wiki Documentation
 
-* Version 6.0.x and 6.1.0 changes
+* Version 6.x.x changes
 * Make all images tabbed
 * Vanilla/TARDIS screenshots for TabbedImage views
 * ?

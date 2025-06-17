@@ -43,7 +43,7 @@ public class NPCPlayer extends ServerPlayer {
 
     @Override
     public void startSeenByPlayer(ServerPlayer serverPlayer) {
-        ServerEntity serverEntity = new ServerEntity(serverPlayer.serverLevel(), serverPlayer, 0, false, packet -> {
+        ServerEntity serverEntity = new ServerEntity(serverPlayer.level(), serverPlayer, 0, false, packet -> {
         }, (packet, list) -> {}, Set.of());
         // spawn packets
         this.connection.send(new ClientboundPlayerInfoUpdatePacket(ClientboundPlayerInfoUpdatePacket.Action.ADD_PLAYER, this));

@@ -29,7 +29,7 @@ import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate;
 import net.minecraft.world.level.levelgen.feature.WeepingVinesFeature;
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_21_R4.block.data.CraftBlockData;
+import org.bukkit.craftbukkit.v1_21_R5.block.data.CraftBlockData;
 
 public class TreePlacer {
 
