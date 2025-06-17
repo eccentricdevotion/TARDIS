@@ -300,16 +300,23 @@ public class TARDISUtils {
         int compass = (((int) Math.round(Math.atan2(location.getX() - tardis.getX(), location.getZ() - tardis.getZ()) / (2 * Math.PI / 8))) + 8) % 8;
         String d = CARDINAL[compass];
         int distance = getHorizontalDistance(location, tardis);
-        if (turn >= -45 && turn < 45) {
+        if (turn >= -22.5 && turn < 22.55) {
             return "↑ " + distance + " blocks " + d;
-        } else if (turn >= 45 && turn < 135) {
+        } else if (turn >= 22.5 && turn < 67.5) {
+            return "↖ " + distance + " blocks " + d;
+        } else if (turn >= 67.5 && turn < 112.5) {
             return "← " + distance + " blocks " + d;
-        } else if (turn >= 135 && turn <= 180 || turn >= -180 && turn < -135) {
+        } else if (turn >= 112.5 && turn <= 157.5) {
+            return "↙ " + distance + " blocks " + d;
+        } else if (turn >= 157.5 && turn <= 180 || turn >= -180 && turn < -157.5) {
             return "↓ " + distance + " blocks " + d;
-        } else if (turn >= -135 && turn < -45) {
+        } else if (turn >= -157.5 && turn < -112.5) {
+            return "↘ " + distance + " blocks " + d;
+        } else if (turn >= -112.5 && turn < -67.5) {
             return "→ " + distance + " blocks " + d;
+        } else if (turn >= -67.5 && turn < -22.5) {
+            return "↗ " + distance + " blocks " + d;
         }
-        // ↖ ↗ ↘ ↙
         return d;
     }
 

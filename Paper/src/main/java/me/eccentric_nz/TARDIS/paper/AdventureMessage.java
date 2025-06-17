@@ -22,7 +22,6 @@ import me.eccentric_nz.TARDIS.artron.TARDISArtronIndicator;
 import me.eccentric_nz.TARDIS.database.data.Area;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.data.Transmat;
-import me.eccentric_nz.TARDIS.display.TARDISDisplayType;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.handles.wiki.WikiLink;
 import me.eccentric_nz.TARDIS.messaging.TARDISChatPaginator;
@@ -265,11 +264,9 @@ public class AdventureMessage implements TARDISMessage {
     }
 
     @Override
-    public String sendHeadsUpDisplay(Player player, TARDIS plugin, TARDISDisplayType displayType) {
-        String ret = plugin.getUtils().actionBarFormat(player);
-        TextComponent actionBar = LegacyComponentSerializer.legacyAmpersand().deserialize(ret);
+    public void sendHeadsUpDisplay(Player player, TARDIS plugin) {
+        TextComponent actionBar = LegacyComponentSerializer.legacyAmpersand().deserialize(plugin.getUtils().actionBarFormat(player));
         player.sendActionBar(actionBar);
-        return (TARDISDisplayType.LOCATOR == displayType) ? getDirection(ret) : "";
     }
 
     @Override
@@ -335,11 +332,5 @@ public class AdventureMessage implements TARDISMessage {
             TextComponent textComponent = AdventureComponents.getModule(module).append(Component.text(message, NamedTextColor.WHITE));
             audience.sendMessage(textComponent);
         }
-    }
-
-    public String getDirection(String direction) {
-        // "↑ " + distance + " blocks " + d;
-        String[] split = direction.split(" ");
-        return (split.length > 1) ? split[split.length - 1] : "";
     }
 }
