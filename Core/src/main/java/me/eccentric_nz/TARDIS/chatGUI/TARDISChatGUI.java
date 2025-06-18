@@ -25,13 +25,9 @@ import java.util.List;
 public interface TARDISChatGUI<T> {
 
     List<T> getSections();
-
     List<T> getControls();
-
     List<T> getInterfaces();
-
     List<T> getLocations();
     List<T> getSensors();
-
     List<T> getOthers();
 }

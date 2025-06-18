@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.bStats.ARSRoomCounts;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
+import me.eccentric_nz.TARDIS.dialog.TARDISDialog;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.lazarus.disguise.ArmourTrim;
 import me.eccentric_nz.TARDIS.monitor.MonitorSnapshot;
@@ -35,6 +36,7 @@ import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.tardisregeneration.Regenerator;
 import me.eccentric_nz.tardisweepingangels.equip.MonsterArmour;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
+import net.md_5.bungee.api.dialog.Dialog;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BrushableBlock;
@@ -71,7 +73,7 @@ public class TARDISDevCommand implements CommandExecutor {
             "add_regions", "advancements", "armour",
             "biome", "box", "brushable",
             "chunks", "chunky", "circuit", "component",
-            "dalek", "debug", "dismount", "displayitem",
+            "dalek", "debug", "dialog", "dismount", "displayitem",
             "effect",
             "frame", "furnace",
             "gravity", "give",
@@ -140,6 +142,13 @@ public class TARDISDevCommand implements CommandExecutor {
                                 PotionEffect resistance = new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 360000, 3, false, false);
                                 skeleton.addPotionEffect(resistance);
                             }
+                        }
+                        case "dialog" -> {
+                            if (sender instanceof Player player) {
+                                Dialog dialog = new TARDISDialog().createCategoryDialog();
+                                player.showDialog(dialog);
+                            }
+                            return true;
                         }
                         case "furnace" -> {
                             return new TARDISFurnaceCommand(plugin).list();
