@@ -59,9 +59,9 @@ public class RiftManipulatorRecipe {
         ItemStack rift = new ItemStack(Material.GLOWSTONE_DUST, 1);
         ItemMeta em = rift.getItemMeta();
         em.setDisplayName(ChatColor.WHITE + "Rift Circuit");
-        CustomModelDataComponent component = im.getCustomModelDataComponent();
+        CustomModelDataComponent component = em.getCustomModelDataComponent();
         component.setFloats(CircuitVariant.RIFT.getFloats());
-        im.setCustomModelDataComponent(component);
+        em.setCustomModelDataComponent(component);
         rift.setItemMeta(em);
         ItemStack acid = new ItemStack(Material.NETHER_BRICK, 1);
         ItemMeta aim = acid.getItemMeta();

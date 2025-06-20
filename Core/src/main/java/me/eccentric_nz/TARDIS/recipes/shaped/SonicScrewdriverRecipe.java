@@ -91,7 +91,7 @@ public class SonicScrewdriverRecipe {
             ItemMeta em = exact.getItemMeta();
             em.setDisplayName(ChatColor.WHITE + "Sonic Oscillator");
             CustomModelDataComponent ecomponent = em.getCustomModelDataComponent();
-            ecomponent.setFloats(CircuitVariant.MATERIALISATION.getFloats());
+            ecomponent.setFloats(CircuitVariant.SONIC.getFloats());
             em.setCustomModelDataComponent(ecomponent);
             exact.setItemMeta(em);
             r.setIngredient('O', new RecipeChoice.ExactChoice(exact));

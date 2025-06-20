@@ -62,9 +62,9 @@ public class TARDISLocatorRecipe {
             ItemStack exact = new ItemStack(Material.GLOWSTONE_DUST, 1);
             ItemMeta em = exact.getItemMeta();
             em.setDisplayName(ChatColor.WHITE + "TARDIS Locator Circuit");
-            CustomModelDataComponent component = im.getCustomModelDataComponent();
+            CustomModelDataComponent component = em.getCustomModelDataComponent();
             component.setFloats(CircuitVariant.LOCATOR.getFloats());
-            im.setCustomModelDataComponent(component);
+            em.setCustomModelDataComponent(component);
             exact.setItemMeta(em);
             r.setIngredient('C', new RecipeChoice.ExactChoice(exact));
         } else {

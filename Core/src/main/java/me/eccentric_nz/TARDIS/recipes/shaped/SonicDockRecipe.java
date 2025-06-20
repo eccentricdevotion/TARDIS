@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodels.keys.CircuitVariant;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import org.bukkit.ChatColor;
@@ -26,6 +27,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
 /*
 easy_shape:RGR,GSG,BGB
@@ -66,6 +68,9 @@ public class SonicDockRecipe {
             ItemStack exact = new ItemStack(Material.GLOWSTONE_DUST, 1);
             ItemMeta em = exact.getItemMeta();
             em.setDisplayName(ChatColor.WHITE + "Sonic Oscillator");
+            CustomModelDataComponent component = em.getCustomModelDataComponent();
+            component.setFloats(CircuitVariant.SONIC.getFloats());
+            em.setCustomModelDataComponent(component);
             exact.setItemMeta(em);
             r.setIngredient('S', new RecipeChoice.ExactChoice(exact));
         } else {
