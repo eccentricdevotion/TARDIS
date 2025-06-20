@@ -284,8 +284,6 @@ public class TARDISSonicListener implements Listener {
                 // set to off state
                 CustomModelDataComponent component = im.getCustomModelDataComponent();
                 if (!component.getFloats().isEmpty()) {
-//                    NamespacedKey model = im.getItemModel();
-//                    if (model.getKey().endsWith("_open")) {
                     if (component.getFloats().getFirst() > 200) {
                         component.setFloats(List.of(component.getFloats().getFirst() - 100f));
                         im.setCustomModelDataComponent(component);

@@ -57,9 +57,9 @@ public enum SonicVariant {
     WAR_ON(new NamespacedKey(TARDIS.plugin, "sonic_war_on"), List.of(220f)),
     MASTER_ON(new NamespacedKey(TARDIS.plugin, "sonic_master_on"), List.of(221f)),
     RANI_ON(new NamespacedKey(TARDIS.plugin, "sonic_rani_on"), List.of(226f)),
-    RIVER_SONG_ON(new NamespacedKey(TARDIS.plugin, "sonic_river_song_on"), List.of(222f)),
-    SARAH_JANE_ON(new NamespacedKey(TARDIS.plugin, "sonic_sarah_jane_on"), List.of(223f)),
-    SONIC_PROBE_ON(new NamespacedKey(TARDIS.plugin, "sonic_sonic_probe_on"), List.of(224f)),
+    RIVER_SONG_ON(new NamespacedKey(TARDIS.plugin, "sonic_river_song_on"), List.of(224f)),
+    SARAH_JANE_ON(new NamespacedKey(TARDIS.plugin, "sonic_sarah_jane_on"), List.of(222f)),
+    SONIC_PROBE_ON(new NamespacedKey(TARDIS.plugin, "sonic_sonic_probe_on"), List.of(223f)),
     UMBRELLA_ON(new NamespacedKey(TARDIS.plugin, "sonic_umbrella_on"), List.of(225f)),
     STANDARD_SONIC(new NamespacedKey(TARDIS.plugin, "button_standard_sonic"), List.of());
 
