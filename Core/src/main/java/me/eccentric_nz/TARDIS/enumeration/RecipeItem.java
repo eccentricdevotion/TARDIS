@@ -56,7 +56,7 @@ public enum RecipeItem {
     RIFT_MANIPULATOR(null, RecipeCategory.PLANETS),
     RUST_PLAGUE_SWORD(Whoniverse.RUST_PLAGUE_SWORD.getKey(), RecipeCategory.PLANETS),
     SERVER_ADMIN_CIRCUIT(CircuitVariant.ADMIN.getKey(), RecipeCategory.SONIC_CIRCUITS),
-    SONIC_DOCK(SonicItem.SONIC_DOCK.getKey(), RecipeCategory.SONIC_CIRCUITS),
+    SONIC_DOCK(SonicItem.SONIC_DOCK_OFF.getKey(), RecipeCategory.SONIC_CIRCUITS),
     SONIC_GENERATOR(SonicItem.SONIC_GENERATOR.getKey(), RecipeCategory.ITEM_CIRCUITS),
     SONIC_OSCILLATOR(CircuitVariant.SONIC.getKey(), RecipeCategory.ITEM_CIRCUITS),
     SONIC_SCREWDRIVER(SonicVariant.ELEVENTH.getKey(), RecipeCategory.ITEMS),
