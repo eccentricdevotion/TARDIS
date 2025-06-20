@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.keys.CircuitVariant;
-import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -83,7 +82,6 @@ public class TARDISStattenheimCircuitRecipe {
         CustomModelDataComponent lcomponent = lim.getCustomModelDataComponent();
         lcomponent.setFloats(CircuitVariant.LOCATOR.getFloats());
         lim.setCustomModelDataComponent(lcomponent);
-        lim.setItemModel(RecipeItem.TARDIS_LOCATOR_CIRCUIT.getModel());
         locator.setItemMeta(lim);
         r.shape("LRM", "QQQ");
         r.setIngredient('L', new RecipeChoice.ExactChoice(locator));

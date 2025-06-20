@@ -50,7 +50,6 @@ public class TARDISDisplayItemRecipe {
                 ItemMeta im = is.getItemMeta();
                 im.setDisplayName(ChatColor.WHITE + tdi.getDisplayName());
                 if (tdi.getCustomModel() != null) {
-                    im.setItemModel(tdi.getCustomModel());
                     im.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING, tdi.getCustomModel().getKey());
                 }
                 is.setItemMeta(im);

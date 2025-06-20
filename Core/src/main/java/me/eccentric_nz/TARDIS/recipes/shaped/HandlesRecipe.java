@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
-import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -55,7 +54,6 @@ public class HandlesRecipe {
         ItemStack is = new ItemStack(Material.BIRCH_BUTTON, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "Handles");
-        im.setItemModel(RecipeItem.HANDLES.getModel());
         im.setLore(List.of("Cyberhead from the", "Maldovar Market"));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "handles");
