@@ -71,9 +71,9 @@ public class StattenheimRemoteRecipe {
             ItemStack exact = new ItemStack(Material.GLOWSTONE_DUST, 1);
             ItemMeta em = exact.getItemMeta();
             em.setDisplayName(ChatColor.WHITE + "TARDIS Stattenheim Circuit");
-            CustomModelDataComponent component = im.getCustomModelDataComponent();
+            CustomModelDataComponent component = em.getCustomModelDataComponent();
             component.setFloats(CircuitVariant.STATTENHEIM.getFloats());
-            im.setCustomModelDataComponent(component);
+            em.setCustomModelDataComponent(component);
             exact.setItemMeta(em);
             r.setIngredient('L', new RecipeChoice.ExactChoice(exact));
         } else {
