@@ -54,6 +54,18 @@ public class TARDISItem {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "ARG_MAX");
             return true;
         }
+        if ((item.equals("untempered-schism") || item.equals("elixir-of-life")) && !plugin.getConfig().getBoolean("modules.regeneration")) {
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "RECIPE_REGENERATION");
+            return true;
+        }
+        if ((item.equals("sonic-blaster") || item.equals("blaster-battery") || item.equals("landing-pad")) && !plugin.getConfig().getBoolean("modules.sonic_blaster")) {
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "RECIPE_BLASTER");
+            return true;
+        }
+        if (item.equals("k9") && !plugin.getConfig().getBoolean("modules.weeping_angels")) {
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "RECIPE_K9");
+            return true;
+        }
         String item_to_give = Give.items.get(item);
         RecipeCategory category = RecipeCategory.ITEMS;
         try {

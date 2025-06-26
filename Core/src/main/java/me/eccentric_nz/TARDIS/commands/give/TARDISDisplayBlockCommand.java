@@ -68,7 +68,9 @@ public class TARDISDisplayBlockCommand {
                 ItemStack is = new ItemStack(tdi.getMaterial(), 1);
                 ItemMeta im = is.getItemMeta();
                 im.setDisplayName(tdi.getDisplayName());
-                im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, tdi.getCustomModel().getKey());
+                if (tdi.getCustomModel() != null) {
+                    im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, tdi.getCustomModel().getKey());
+                }
                 is.setItemMeta(im);
                 return is;
             } catch (IllegalArgumentException e) {
