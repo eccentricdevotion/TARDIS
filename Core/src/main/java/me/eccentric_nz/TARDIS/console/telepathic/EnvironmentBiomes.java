@@ -104,7 +104,7 @@ public class EnvironmentBiomes {
 
     static {
         for (Biome biome : Registry.BIOME) {
-            if (!END.contains(biome) && !NETHER.contains(biome) && biome != Biome.THE_VOID) {
+            if (!END.contains(biome) && !NETHER.contains(biome) && biome != Biome.THE_VOID && !TARDIS.plugin.getFromRegistry().getKeysKey(biome).equals("eye_of_harmony")) {
                 OVERWORLD.add(biome);
             }
         }
