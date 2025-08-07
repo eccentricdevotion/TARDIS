@@ -1,0 +1,24 @@
+allow:
+  teleport: true
+  messaging: true
+  lifesigns: true
+  beacon: true
+  multiple: true
+  look_at_block: true
+tachyon_use:
+  max: 1000
+  recharge: 25
+  recharge_interval: 600
+  travel:
+    random: 100
+    world: 150
+    coords: 200
+    saved: 50
+    to_block: 75
+  lifesigns: 15
+  beacon: 1000
+  message: 5
+date_format: dd/MM/YY HH:mm
+lifesign_scan_distance: 16
+max_look_at_distance: 50
+block_travel_malfunction_chance: 0
