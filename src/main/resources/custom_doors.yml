@@ -1,0 +1,34 @@
+# visit https://tardis.pages.dev/custom-doors for more info
+# this entry is the police box door, but centred on a block
+centred:
+  # the material of the door item display - MUST be an unused POTTERY_SHERD, one of:
+  # ANGLER_POTTERY_SHERD, ARCHER_POTTERY_SHERD, ARMS_UP_POTTERY_SHERD, BLADE_POTTERY_SHERD,
+  # BREWER_POTTERY_SHERD, BURN_POTTERY_SHERD, DANGER_POTTERY_SHERD, EXPLORER_POTTERY_SHERD,
+  # FLOW_POTTERY_SHERD, FRIEND_POTTERY_SHERD, GUSTER_POTTERY_SHERD, HEART_POTTERY_SHERD,
+  # HEARTBREAK_POTTERY_SHERD, HOWL_POTTERY_SHERD, MINER_POTTERY_SHERD, MOURNER_POTTERY_SHERD,
+  # PLENTY_POTTERY_SHERD, PRIZE_POTTERY_SHERD, SCRAPE_POTTERY_SHERD, SHEAF_POTTERY_SHERD,
+  # SHELTER_POTTERY_SHERD, SKULL_POTTERY_SHERD, SNORT_POTTERY_SHERD
+  material: ANGLER_POTTERY_SHERD
+  # a comma separated list of frame numbers where the
+  # number is added to the item model's file name
+  # door states will need to be saved as separate JSON model definition files
+  # in assets/tardis/items/ with the following naming scheme (where xxx = the name value above):
+  # open - assets/tardis/items/xxx_open.json - fully open state
+  # closed - assets/tardis/items/xxx_closed.json - fully closed state
+  # animation frames - assets/tardis/items/xxx_[zero-based sequential frame number].json
+  # in this example the open animation would be 0, 1, 2, open
+  # and the closed animation would be 2, 1, 0, closed
+  animation_sequence: 0,1,2
+  # the animation frame rate in ticks
+  frame_rate: 6
+  # whether the door has a third state activated by crouch-right-clicking
+  # e.g. the double police door has one side open, closed, and a third "both sides open" state
+  # the JSON model definition file name for this state should be xxx_extra e.g.:
+  # extra state - assets/tardis/items/centred_extra.json
+  has_extra: true
+  # sfx - if using new custom sounds, you will need to add entries to assets/minecraft/sounds.json
+  # and save .ogg files to assets/tardis/sounds/ in the resource pack
+  # the sound for when the door opens
+  open_sound: tardis_door_open
+  # the sound for when the door closes
+  close_sound: tardis_door_close

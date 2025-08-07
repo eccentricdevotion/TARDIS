@@ -1,0 +1,292 @@
+# config file
+debug: false
+# modules are disabled by default
+# https://tardis.pages.dev/modules
+modules:
+  weeping_angels: false
+  vortex_manipulator: false
+  regeneration: false
+  mapping: false
+  chemistry: false
+  shop: false
+  sonic_blaster: false
+  blueprints: false
+# how the plugin persists data
+# https://tardis.pages.dev/configuration/storage
+storage:
+  database: sqlite
+  mysql:
+    host: localhost
+    port: 3306
+    database: TARDIS
+    user: bukkit
+    password: mysecurepassword
+    prefix: ""
+    useSSL: false
+# inner TARDIS
+# https://tardis.pages.dev/configuration/creation
+creation:
+  create_worlds: false
+  create_worlds_with_perms: false
+  default_world: true
+  default_world_name: TARDIS_TimeVortex
+  tips_limit: 400
+  tips_next: HIGHEST
+  keep_night: true
+  border_radius: 256
+  inventory_group: 0
+  add_perms: true
+  enable_legacy: true
+  use_clay: WOOL
+  count: 0
+  area: none
+  check_for_home: true
+  seed_block:
+    crafting: true
+    legacy: true
+    easy: REDSTONE_TORCH
+    normal: SOUL_LANTERN
+    hard: DRAGON_BREATH
+# outer TARDIS
+# https://tardis.pages.dev/configuration/preset
+police_box:
+  default_preset: FACTORY
+  name_tardis: false
+  use_nick: false
+  view_interior: false
+  view_interior_uses_console_size: false
+  materialise: true
+  sign_colour: WHITE
+  rebuild_cooldown: 10000
+  load_shells: false
+  keep_chunk_force_loaded: true
+  animated_door: true
+# travel settings
+# https://tardis.pages.dev/configuration/travel
+travel:
+  include_default_world: false
+  tp_radius: 500
+  max_distance: 29999983
+  give_key: false
+  the_end: false
+  allow_end_after_visit: false
+  nether: false
+  allow_nether_after_visit: false
+  terminal:
+    redefine: false
+    nether: world
+    the_end: world
+  land_on_water: true
+  timeout: 5
+  timeout_height: 135
+  random_attempts: 30
+  exile: false
+  per_world_perms: false
+  terminal_step: 1
+  manual_flight_delay: 60
+  grace_period: 10
+  random_circuit:
+    x: 5000
+    z: 5000
+  no_destination_malfunctions: true
+# difficulty preferences
+# https://tardis.pages.dev/configuration/difficulty
+difficulty:
+  crafting: easy
+  circuits: false
+  disks: false
+  disk_in_hand_for_write: true
+  biome_reader: true
+  stattenheim_remote: false
+  tardis_locator: false
+  system_upgrades: false
+# eye of harmony preferences
+# https://tardis.pages.dev/configuration/eye-of-harmony
+eye_of_harmony:
+  player_damage: true
+  damage_amount: 0.5
+  damage_period: 20
+  ossified: true
+  particles: true
+# general preferences
+# https://tardis.pages.dev/configuration/prefs
+preferences:
+  clean: true
+  update:
+    notify: true
+    auto_update: false
+  language: en
+  key: GOLD_NUGGET
+  any_key: false
+  open_door_policy: false
+  use_worldguard: true
+  respect_worldguard: build
+  respect_towny: nation
+  respect_worldborder: true
+  respect_chunky_border: true
+  respect_grief_prevention: true
+  sfx_volume: 10
+  strike_lightning: true
+  hads_damage: 10
+  hads_distance: 10
+  malfunction: 3
+  malfunction_end: 3
+  malfunction_nether: 3
+  use_default_condensables: true
+  heal_speed: 200
+  default_key: eleventh
+  nerf_pistons:
+    enabled: false
+    only_tardis_worlds: true
+  render_entities: false
+  spawn_random_monsters: true
+  spawn_limit: 10
+  no_coords: false
+  no_creative_condense: false
+  no_enchanted_condense: true
+  vortex_fall: kill
+  add_server_link: true
+# mapping - dynamp or BlueMap supported
+# https://tardis.pages.dev/modules/mapping#configuration-options
+mapping:
+  provider: dynmap
+  update_period: 30
+  updates_per_tick: 10
+# desktop theme
+# https://tardis.pages.dev/desktop-theme#config-options
+desktop:
+  check_blocks_before_upgrade: false
+  block_change_percent: 25
+  previews: false
+# circuits
+# https://tardis.pages.dev/circuit-use#configuration-options
+circuits:
+  damage: false
+  malfunction_damage: 50
+  uses:
+    ars: 20
+    chameleon: 25
+    input: 50
+    invisibility: 5
+    materialisation: 50
+    memory: 20
+    randomiser: 50
+    scanner: 20
+    telepathic: 20
+    temporal: 20
+    stattenheim: 15
+# restrictions
+# https://tardis.pages.dev/configuration/allow
+allow:
+  mob_farming: true
+  spawn_eggs: true
+  animal_spawners: true
+  emergency_npc: true
+  achievements: true
+  autonomous: true
+  guardians: false
+  hads: true
+  invisibility: true
+  all_blocks: false
+  dynamic_lamps: false
+  add_lights: false
+  sfx: true
+  wg_flag_set: true
+  zero_room: false
+  external_gravity: false
+  power_down: true
+  power_down_on_quit: false
+  3d_doors: false
+  village_travel: false
+  perception_filter: true
+  repair: true
+  weather_set: false
+  force_field: 8
+  admin_bypass: false
+# room related
+# https://tardis.pages.dev/configuration/growth
+growth:
+  gravity_max_distance: 15
+  gravity_max_velocity: 5
+  return_room_seed: true
+  rooms_require_blocks: false
+  rooms_condenser_percent: 100
+  room_speed: 4
+  delay_factor: 1
+  ars_limit: 1
+# chameleon arch
+# https://tardis.pages.dev/chameleon-arch#chameleon-arch-configuration
+arch:
+  enabled: true
+  min_time: 20
+  switch_inventory: true
+  clear_inv_on_death: false
+# siege mode
+# https://tardis.pages.dev/siege-mode#configuration
+siege:
+  enabled: true
+  breeding: 0
+  growth: 0
+  butcher: false
+  creeper: false
+  healing: false
+  texture: false
+# junk TARDIS
+# https://tardis.pages.dev/junk-tardis#configuration-option
+junk:
+  enabled: true
+  return: -1
+  particles: true
+# abandoned TARDISes
+# https://tardis.pages.dev/abandon#config-options
+abandon:
+  enabled: true
+  reduce_count: true
+# console archives
+# https://tardis.pages.dev/archive#config-options
+archive:
+  enabled: true
+  limit: 3
+# recharger list
+rechargers: { }
+# list areas TARDISes can automatically travel to when their time lords die
+autonomous_areas: { }
+# HUD display
+display:
+  all: '&6X&7%X% &6Y&7%Y% &6Z&7%Z% &6F&7%FACING% (%FACING_XZ%) %TARGET_BLOCK%'
+# sonic screwdriver preferences
+# https://tardis.pages.dev/sonic-dock#configuration
+sonic:
+  default_model: eleventh
+  conversion_radius: 1
+  freeze_cooldown: 60
+  charge: false
+  charge_level: 1000
+  charge_interval: 60
+  usage: 10
+# don't touch
+conversions:
+  adv_root: true
+  all_in_one:
+    helper: true
+    shop: true
+    sonic_blaster: true
+    vortex_manipulator: true
+    weeping_angels: true
+  archive_wall_data: true
+  ars_materials: true
+  bind: true
+  block_materials: true
+  block_wall_signs: true
+  condenser_materials: true
+  constructs: true
+  controls: true
+  custom_preset: true
+  eyes: true
+  icons: true
+  interior_door_id: true
+  legacy_budget: true
+  paintings: true
+  exploding: true
+  player_prefs_materials: true
+  short_grass: true

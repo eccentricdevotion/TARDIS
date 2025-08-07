@@ -1,0 +1,17 @@
+# visit https://tardis.pages.dev/custom-rotors for more info
+# this entry is FuzzyLeo's classic time rotor
+classic:
+  # A model definition for the rotor's inventory item must be added as a
+  # "minecraft:custom_name" predicate in `assets/minecraft/items/light_gray_dye.json`
+  #
+  # the material of the animated rotor item
+  # material must be unique for each rotor, the plugin already uses:
+  # BLACK_DYE, ORANGE_DYE, BROWN_DYE, GRAY_DYE, CYAN_DYE, LIGHT_BLUE_DYE, BLUE_DYE, WHITE_DYE
+  animated_material: YELLOW_DYE
+  # a comma separated list of frame numbers to determine the
+  # model definition file names e.g. time_rotor_classic_0.json
+  # animation states will need to be set with model definitions
+  # in the assets/tardis/items/ resource pack folder
+  animation_sequence: 0,1,2,3,4,5,6,7
+  # the animation frame rate in ticks
+  frame_rate: 6

@@ -1,8 +1,0 @@
-{
-  "asset_id": "tardis:cyberman",
-  "decal": false,
-  "description": {
-    "translate": "trim_pattern.tardis.cyberman"
-  },
-  "template_item": "minecraft:iron_ingot"
-}
