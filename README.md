@@ -1,6 +1,6 @@
 # TARDIS
 
-TARDIS is a Spigot / Paper plugin that allows you to create a TARDIS that lets you time travel (teleport) to random
+TARDIS is a PaperMC plugin that allows you to create a TARDIS that lets you time travel (teleport) to random
 locations. It adds a Whovian twist to the typical /sethome and /home commands.
 
 **As a player, you can:**
