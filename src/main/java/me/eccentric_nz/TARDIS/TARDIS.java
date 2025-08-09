@@ -295,9 +295,9 @@ public class TARDIS extends JavaPlugin {
             // load planets config
             tardisCopier.copy("planets.yml");
             planetsConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "planets.yml"));
+            loadCustomConfigs();
             // load TARDISChunkGenerator module
             loadHelper();
-            loadCustomConfigs();
             // load Multiverse
             loadMultiverse();
             // load worldguard
@@ -1407,6 +1407,7 @@ public class TARDIS extends JavaPlugin {
         new TARDISHandlesUpdater(this, handlesConfig).checkHandles();
         adaptiveConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "adaptive.yml"));
         generatorConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "generator.yml"));
+        new TARDISGeneratorUpdater(this, generatorConfig).checkTrees();
         if (getConfig().getBoolean("modules.weeping_angels")) {
             monstersConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "monsters.yml"));
         }

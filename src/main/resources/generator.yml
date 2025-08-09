@@ -27,3 +27,21 @@ plot:
   claim_max: 3
   # whether to create a TARDIS area when the world is first generated
   create_area: true
+# materials to use for gallifrey trees
+gallifrey:
+  # trees that grow on red sand
+  red_sand:
+    wood: STRIPPED_BIRCH_LOG
+    leaves: COBWEB
+    decoration: RED_WOOL
+  # trees that grow on terracotta
+  terracotta:
+    wood: STRIPPED_BIRCH_LOG
+    leaves: COBWEB
+    decoration: RED_WOOL
+# materials to use for gallifrey trees
+skaro:
+  # trees that grow on sand
+  wood: ACACIA_LOG
+  leaves: SLIME_BLOCK
+  decoration: HONEY_BLOCK

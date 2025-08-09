@@ -50,7 +50,6 @@ public class TARDISSysUpsUpdater {
         comments.put("tools", List.of("tools branch"));
         comments.put("navigation", List.of("navigation branch"));
         comments.put("throttle", List.of("throttle branch"));
-
     }
 
     public void checkSystemUpgradesConfig() {
