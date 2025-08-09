@@ -9,7 +9,7 @@ plugins {
 
 group = "me.eccentric_nz"
 val build_number = "-b${System.getenv("BUILD_NUMBER") ?: ".local"}"
-version = "6.2.2${build_number}"
+version = "6.2.3${build_number}"
 
 repositories {
     mavenCentral()
@@ -130,7 +130,7 @@ dependencies {
     compileOnly("io.github.fabiozumbi12.RedProtect:RedProtect-Spigot:8.1.2") {
         isTransitive = false
     }
-    compileOnly("net.coreprotect:coreprotect:22.4") {
+    compileOnly("net.coreprotect:coreprotect:23.0") {
         isTransitive = false
     }
     compileOnly(files("libs/dynmap-api-3.7-beta-10.jar"))
