@@ -45,7 +45,8 @@ jobs:
 
     - name: Upload build artifacts to release
       uses: softprops/action-gh-release@v2
-      if: github.ref_type == '1.21.8'
+      if: github.ref_type == 'tag'
       with:
+        tag_name: '1.21.8'
         files: build/libs/*.jar
         fail_on_unmatched_files: false
