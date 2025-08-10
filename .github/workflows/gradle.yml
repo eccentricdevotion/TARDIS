@@ -47,7 +47,7 @@ jobs:
       uses: softprops/action-gh-release@v2
       # if: github.ref_type == 'branches'
       with:
-        token: ${{ secrets.GITHUB_TOKEN }}
+        token: ${{ secrets.TARDIS_WORKFLOW }}
         tag_name: '1.21.8'
         files: build/libs/*.jar
         fail_on_unmatched_files: false
