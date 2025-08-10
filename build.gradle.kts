@@ -8,8 +8,8 @@ plugins {
 }
 
 group = "me.eccentric_nz"
-val build_number = "-b${System.getenv("BUILD_NUMBER") ?: ".local"}"
-version = "6.2.3${build_number}"
+val buildNumber = "-b${System.getenv("BUILD_NUMBER") ?: ".local"}"
+version = "6.2.3${buildNumber}"
 
 repositories {
     mavenCentral()
@@ -36,10 +36,6 @@ repositories {
     maven {
         name = "multiverse"
         url = uri("https://repo.onarandombox.com/content/groups/public/")
-    }
-    maven {
-        name = "protocollib"
-        url = uri("https://repo.dmulloy2.net/repository/public/")
     }
     maven {
         name = "libsdisguises"
@@ -179,7 +175,7 @@ tasks {
 
 tasks.processResources {
     filesMatching("plugin.yml") {
-        filter<ReplaceTokens>("tokens" to mapOf("buildNumber" to build_number))
+        filter<ReplaceTokens>("tokens" to mapOf("buildNumber" to buildNumber))
     }
 }
 
