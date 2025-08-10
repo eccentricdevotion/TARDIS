@@ -28,6 +28,10 @@ jobs:
         java-version: '21'
         distribution: 'temurin'
 
+    # get short sha
+    - name: Set SHORT_SHA env property
+      run: echo "SHORT_SHA=`git rev-parse --short HEAD`" >> $GITHUB_ENV
+
     # Configure Gradle for optimal use in GitHub Actions, including caching of downloaded dependencies.
     # See: https://github.com/gradle/actions/blob/main/setup-gradle/README.md
     - name: Setup Gradle
