@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.database.resultset;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -44,9 +43,6 @@ public class ResultSetDiskStorage {
     private final TARDIS plugin;
     private final HashMap<String, Object> where;
     private final String prefix;
-    private int id;
-    private int tardis_id;
-    private UUID uuid;
     private String savesOne;
     private String savesTwo;
     private String areas;
@@ -105,13 +101,6 @@ public class ResultSetDiskStorage {
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
-                    id = rs.getInt("storage_id");
-                    tardis_id = rs.getInt("tardis_id");
-                    if (!rs.wasNull()) {
-                        uuid = UUID.fromString(rs.getString("uuid"));
-                    } else {
-                        uuid = TARDISStaticUtils.getZERO_UUID();
-                    }
                     savesOne = rs.getString("saves_one");
                     if (rs.wasNull()) {
                         savesOne = "";
@@ -149,8 +138,8 @@ public class ResultSetDiskStorage {
                         circuits = "";
                     }
                     console = rs.getString("console");
-                    if (rs.wasNull()) {
-                        console = "";
+                    if (rs.wasNull() || console.isEmpty()) {
+                        console = "rO0ABXcEAAAAEnBwcHBwcHBwcHBwcHBwcHBwcA==";
                     }
                     versions = rs.getString("versions");
                     if (rs.wasNull()) {
