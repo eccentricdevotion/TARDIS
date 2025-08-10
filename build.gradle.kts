@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "me.eccentric_nz"
-val buildNumber = "-b${System.getenv("BUILD_NUMBER") ?: ".local"}"
+val buildNumber = "-b${System.getenv("BUILD_NUMBER") ?: (System.getenv("SHORT_SHA") ?: ".local")}"
 version = "6.2.3${buildNumber}"
 
 repositories {
