@@ -70,7 +70,7 @@ public class ParticleColour {
         }
     }
 
-    public static NamedTextColor fromString(Component str) {
+    public static NamedTextColor fromComponent(Component str) {
         String clean = ComponentUtils.stripColour(str);
         switch (clean) {
             case "White" -> { return NamedTextColor.WHITE; }

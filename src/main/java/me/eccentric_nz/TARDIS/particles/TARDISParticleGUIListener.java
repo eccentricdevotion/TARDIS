@@ -139,7 +139,7 @@ public class TARDISParticleGUIListener extends TARDISMenuListener {
         ItemStack is = view.getItem(GUIParticle.COLOUR.slot());
         ItemMeta im = is.getItemMeta();
         Component lore = im.lore().getFirst();
-        NamedTextColor current = ParticleColour.fromString(lore);
+        NamedTextColor current = ParticleColour.fromComponent(lore);
         int index = ParticleColour.colours.indexOf(current) + 1;
         if (index > 15) {
             index = 0;
@@ -160,7 +160,7 @@ public class TARDISParticleGUIListener extends TARDISMenuListener {
         ItemStack is = view.getItem(GUIParticle.BLOCK.slot());
         ItemMeta im = is.getItemMeta();
         Component lore = im.lore().getFirst();
-        int index = ParticleBlock.blocks.indexOf(lore.toString()) + 1;
+        int index = ParticleBlock.blocks.indexOf(ComponentUtils.stripColour(lore)) + 1;
         if (index > ParticleBlock.blocks.size() - 1) {
             index = 0;
         }
