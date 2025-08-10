@@ -47,6 +47,13 @@ jobs:
     - name: Build with Gradle Wrapper
       run: ./gradlew build
 
+    - name: Delete old release assets
+      uses: mknejp/delete-release-assets@v1
+      with:
+        assets: 'TARDIS-*.jar' # Globs or specific names of assets to delete
+        tag: '1.21.8' # The tag of the release to modify
+        token: ${{ secrets.TARDIS_WORKFLOW }} # Required for authentication
+
     - name: Upload build artifacts to release
       uses: softprops/action-gh-release@v2
       # if: github.ref_type == 'branches'
