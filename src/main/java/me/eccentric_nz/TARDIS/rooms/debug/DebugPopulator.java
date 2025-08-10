@@ -25,10 +25,10 @@ import me.eccentric_nz.TARDIS.console.ConsoleBuilder;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.custommodels.GUIKeyPreferences;
-import me.eccentric_nz.TARDIS.custommodels.GUISonicPreferences;
 import me.eccentric_nz.TARDIS.custommodels.keys.*;
 import me.eccentric_nz.TARDIS.doors.Door;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
+import me.eccentric_nz.TARDIS.enumeration.SonicScrewdriver;
 import me.eccentric_nz.TARDIS.rotors.Rotor;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import me.eccentric_nz.tardischemistry.compound.Compound;
@@ -52,16 +52,15 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.Chest;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 import org.bukkit.util.Transformation;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.UUID;
+import java.util.*;
 
 public class DebugPopulator {
 
@@ -69,6 +68,7 @@ public class DebugPopulator {
     private final World world;
     private final int rx = -1552;
     private final int rz = -9744;
+    private final List<ItemStack> stacks = new ArrayList<>();
 
     public DebugPopulator(TARDIS plugin, World world) {
         this.plugin = plugin;
@@ -168,7 +168,8 @@ public class DebugPopulator {
             if (tdi != TARDISDisplayItem.NONE && tdi != TARDISDisplayItem.PANDORICA && tdi != TARDISDisplayItem.UNTEMPERED_SCHISM && tdi.getCustomModel() != null && !tdi.toString().contains("DOOR")) {
                 Location location = new Location(world, rx + x, 65, rz + z);
                 // set display item at location
-                TARDISDisplayItemUtils.set(tdi, world, rx + x, 65, rz + z);
+                // and remember item stack for chest population
+                stacks.add(TARDISDisplayItemUtils.setAndReturnStack(tdi, world, rx + x, 65, rz + z));
                 //labels
                 addLabel(location, Component.text(tdi.getDisplayName()));
                 // loop x z - spaced over 24 x 24 with empty blocks between
@@ -185,11 +186,11 @@ public class DebugPopulator {
         // all sonics and keys
         int x = 28;
         int z = -3;
-        for (GUISonicPreferences sonic : GUISonicPreferences.values()) {
-            if (sonic.getMaterial() == Material.BLAZE_ROD && sonic != GUISonicPreferences.COLOUR) {
+        // all sonics both on and off states
+        for (SonicScrewdriver ss : SonicScrewdriver.values()) {
+            for (int i = 0; i < 2; i++) {
                 Location location = new Location(world, rx + x, 65, rz + z);
-                // set block at location
-                setItemFromMaterial(location, sonic.getMaterial(), sonic.getModel(), Component.text(sonic.getName()));
+                setItemFromMaterial(location, i == 0 ? ss.getModel() : ss.getActive(), Component.text(ss.getName()));
                 x += 2;
                 if (x > 48) {
                     x = 28;
@@ -197,6 +198,7 @@ public class DebugPopulator {
                 }
             }
         }
+        // all keys
         for (GUIKeyPreferences key : GUIKeyPreferences.values()) {
             if (key.getSlot() < 17) {
                 Location location = new Location(world, rx + x, 65, rz + z);
@@ -333,6 +335,8 @@ public class DebugPopulator {
             meta.setItemModel(key);
             head.setItemMeta(meta);
             ee.setHelmet(head);
+            // remember item stack for chest population
+            stacks.add(head);
         }, 2L);
     }
 
@@ -360,6 +364,8 @@ public class DebugPopulator {
                     head.setItemMeta(meta);
                     ee.setHelmet(head);
                     as.setInvisible(true);
+                    // remember item stack for chest population
+                    stacks.add(head);
                 }
                 x -= 4;
                 if (x < -49) {
@@ -389,6 +395,8 @@ public class DebugPopulator {
                 head.setItemMeta(meta);
                 ee.setHelmet(head);
                 as.setInvisible(true);
+                // remember item stack for chest population
+                stacks.add(head);
             }
             x -= 4;
             if (x < -49) {
@@ -421,6 +429,8 @@ public class DebugPopulator {
                 x = 28;
                 z += 4;
             }
+            // remember item stack for chest population
+            stacks.add(is);
         }
     }
 
@@ -460,6 +470,8 @@ public class DebugPopulator {
             ItemMeta im = is.getItemMeta();
             im.setItemModel(new NamespacedKey(plugin, key + "_closed"));
             is.setItemMeta(im);
+            // remember item stack for chest population
+            stacks.add(is);
             c.setItemStack(is);
             x -= 3;
             if (x < -48) {
@@ -474,6 +486,8 @@ public class DebugPopulator {
             im.setItemModel(new NamespacedKey(plugin, key + "_open"));
             ois.setItemMeta(oim);
             o.setItemStack(ois);
+            // remember item stack for chest population
+            stacks.add(ois);
             x -= 3;
             if (x < -48) {
                 x = -27;
@@ -488,6 +502,8 @@ public class DebugPopulator {
                 eim.setItemModel(new NamespacedKey(plugin, key + "_extra"));
                 eis.setItemMeta(eim);
                 e.setItemStack(eis);
+                // remember item stack for chest population
+                stacks.add(eis);
                 x -= 3;
                 if (x < -48) {
                     x = -27;
@@ -541,9 +557,32 @@ public class DebugPopulator {
         display.setInvulnerable(true);
         // label
         addLabel(location, name);
+        // remember item stack for chest population
+        stacks.add(is);
+    }
+
+    private void setItemFromMaterial(Location location, List<Float> floats, Component name) {
+        location.getBlock().setType(Material.WHITE_CONCRETE);
+        ItemStack is = ItemStack.of(Material.BLAZE_ROD, 1);
+        ItemMeta im = is.getItemMeta();
+        CustomModelDataComponent cmd = im.getCustomModelDataComponent();
+        cmd.setFloats(floats);
+        im.setCustomModelDataComponent(cmd);
+        im.displayName(name);
+        is.setItemMeta(im);
+        ItemDisplay display = (ItemDisplay) location.getWorld().spawnEntity(location.clone().add(0.5d, 1.25d, 0.5d), EntityType.ITEM_DISPLAY);
+        display.setItemStack(is);
+        display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.GROUND);
+        display.setInvulnerable(true);
+        // label
+        addLabel(location, name);
+        // remember item stack for chest population
+        stacks.add(is);
     }
 
     private void setItemFromStack(Location location, ItemStack is, Component name) {
+        // remember item stack for chest population
+        stacks.add(is);
         location.getBlock().setType(Material.WHITE_CONCRETE);
         ItemDisplay display = (ItemDisplay) location.getWorld().spawnEntity(location.clone().add(0.5d, 1.25d, 0.5d), EntityType.ITEM_DISPLAY);
         display.setItemStack(is);
@@ -579,6 +618,8 @@ public class DebugPopulator {
             frame.setFixed(true);
             // invisible
             frame.setVisible(false);
+            // remember item stack for chest population
+            stacks.add(is);
             x += 3;
             if (x > 24) {
                 x = 3;
@@ -670,6 +711,8 @@ public class DebugPopulator {
             ItemDisplay display = (ItemDisplay) world.spawnEntity(location, EntityType.ITEM_DISPLAY);
             display.setItemStack(totem);
             display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.HEAD);
+            // remember item stack for chest population
+            stacks.add(totem);
             x += 4;
             if (x > 24) {
                 x = 3;
@@ -705,6 +748,29 @@ public class DebugPopulator {
                 x = 27;
                 z += 2;
             }
+        }
+    }
+
+    public void setChests() {
+        // fill chests with every TARDIS item
+        Location location = new Location(world, rx + 52, 65, rz);
+        int chests = (stacks.size() / 27) + 1;
+        // place some chests
+        for (int i = 0; i < chests; i++) {
+            location.getBlock().getRelative(BlockFace.EAST, i).setType(Material.CHEST);
+        }
+        int count = 0;
+        int chestNum = 0;
+        Chest chest = (Chest) location.getBlock().getState();
+        for (ItemStack is : stacks) {
+            if (count == 27) {
+                // get next chest
+                chestNum++;
+                count = 0;
+                chest = (Chest) location.getBlock().getRelative(BlockFace.EAST, chestNum).getState();
+            }
+            chest.getBlockInventory().addItem(is);
+            count++;
         }
     }
 }

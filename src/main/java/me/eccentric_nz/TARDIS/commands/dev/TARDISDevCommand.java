@@ -158,7 +158,7 @@ public class TARDISDevCommand implements CommandExecutor {
                             }
                             return true;
                         }
-                        case  "empty" -> {
+                        case "empty" -> {
                             return new TARDISFixStorageCommand(plugin).convertStacks();
                         }
                         case "furnace" -> {

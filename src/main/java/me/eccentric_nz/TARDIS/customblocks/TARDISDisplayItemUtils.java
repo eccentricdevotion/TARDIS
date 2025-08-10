@@ -250,6 +250,36 @@ public class TARDISDisplayItemUtils {
      * Spawn an Item Display entity
      *
      * @param tdi   the TARDISDisplayItem to determine the ItemStack to display
+     * @param world the world to spawn the entity in
+     * @param x     the x coordinate
+     * @param y     the y coordinate
+     * @param z     the z coordinate
+     * @return the display items item stack
+     */
+    public static ItemStack setAndReturnStack(TARDISDisplayItem tdi, World world, int x, int y, int z) {
+        // spawn an item display entity
+        ItemStack is = ItemStack.of(tdi.getMaterial(), 1);
+        ItemMeta im = is.getItemMeta();
+        if (tdi.isSeed()) {
+            im.displayName(ComponentUtils.toGold(tdi.getDisplayName()));
+        } else {
+            im.displayName(ComponentUtils.toWhite(tdi.getDisplayName()));
+        }
+        im.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING, tdi.getCustomModel().getKey());
+        is.setItemMeta(im);
+        Location l = new Location(world, x + 0.5d, y + 0.5d, z + 0.5d);
+        ItemDisplay display = (ItemDisplay) world.spawnEntity(l, EntityType.ITEM_DISPLAY);
+        display.setItemStack(is);
+        display.setPersistent(true);
+        display.setInvulnerable(true);
+        display.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING, tdi.getCustomModel().getKey());
+        return is;
+    }
+
+    /**
+     * Spawn an Item Display entity
+     *
+     * @param tdi   the TARDISDisplayItem to determine the ItemStack to display
      * @param block the block location to spawn the entity at
      */
     public static ItemDisplay set(TARDISDisplayItem tdi, Block block, int id) {

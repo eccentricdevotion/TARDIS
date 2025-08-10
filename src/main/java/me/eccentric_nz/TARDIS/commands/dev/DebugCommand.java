@@ -130,6 +130,7 @@ public class DebugCommand {
                 populator.regeneration();
                 populator.handles();
                 populator.lazarus();
+                populator.setChests();
             }
         }
     }
