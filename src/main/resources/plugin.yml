@@ -1199,9 +1199,6 @@ commands:
     undisguise:
       description: Remove a disguise from a player.
       usage: /<command> undisguise [player]
-    update_plugins:
-      description: Download the latest TARDIS plugin from the Jenkins server. Restart the server to update the plugin.
-      usage: /<command> update_plugins
   tardisconfig:
     aliases: tconfig
     description: Set TARDIS configuration options and world inclusion.

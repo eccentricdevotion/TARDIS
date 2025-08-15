@@ -55,8 +55,6 @@ body:
         [TARDIS] CoreProtect version: 20.3
         [TARDIS] Essentials version: 2.19.3-dev+1-05ce11f
         [TARDIS] floodgate version: 2.1.0-SNAPSHOT
-        [TARDIS] Checking for new TARDIS builds...
-        [TARDIS] You are 5 builds behind! Type /tadmin update_plugins to update!
         ```
         
         </details>
