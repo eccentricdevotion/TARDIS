@@ -21,11 +21,8 @@ Plugin documentation can be found here:
 
 [Join the TARDIS Community Discord server](https://discord.gg/sfuPVHh)
 
-Jenkins CI builds can be found here:
-[http://tardisjenkins.duckdns.org:8080/job/TARDIS/](http://tardisjenkins.duckdns.org:8080/job/TARDIS/)
+GitHub continuously integrated builds (updated when changes are pushed to this repositiory) can be found on the [Releases](https://github.com/eccentricdevotion/TARDIS/releases) page.
 
-[![Jenkins status](https://img.shields.io/website?down_message=offline&label=Jenkins&style=for-the-badge&up_message=online&url=http%3A%2F%2Ftardisjenkins.duckdns.org%3A8080%2F)](http://tardisjenkins.duckdns.org:8080/job/TARDIS/)  
-![Build Status](https://img.shields.io/jenkins/build?jobUrl=http://tardisjenkins.duckdns.org:8080/job/TARDIS&style=for-the-badge)
 ![GitHub last commit](https://img.shields.io/github/last-commit/eccentricdevotion/TARDIS?style=for-the-badge)
 
 ![GitHub top language](https://img.shields.io/github/languages/top/eccentricdevotion/TARDIS?style=for-the-badge)
@@ -36,6 +33,7 @@ Jenkins CI builds can be found here:
 ![Spigot downloads](https://img.shields.io/spiget/downloads/45729?label=Spigot%20downloads&style=for-the-badge)
 ![bStats Servers](https://img.shields.io/bstats/servers/11698?style=for-the-badge)
 
+![1.21.8 downloads](https://img.shields.io/github/downloads/eccentricdevotion/TARDIS/1.21.8/total?style=for-the-badge)
 ![1.21.5 downloads](https://img.shields.io/github/downloads/eccentricdevotion/TARDIS/1.21.5/total?style=for-the-badge)
 ![1.21.4 downloads](https://img.shields.io/github/downloads/eccentricdevotion/TARDIS/1.21.4/total?style=for-the-badge)
 ![1.21.3 downloads](https://img.shields.io/github/downloads/eccentricdevotion/TARDIS/1.21.3/total?style=for-the-badge)

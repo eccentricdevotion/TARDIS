@@ -24,7 +24,6 @@ import me.eccentric_nz.TARDIS.database.tool.Converter;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.maze.TARDISMazeBuilder;
 import me.eccentric_nz.TARDIS.maze.TARDISMazeGenerator;
-import me.eccentric_nz.TARDIS.utility.UpdateTARDISPlugins;
 import org.bukkit.Location;
 import org.bukkit.block.BlockFace;
 import org.bukkit.command.Command;
@@ -86,7 +85,6 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsStr.add("set_size");
         firstsStr.add("spawn_abandoned");
         firstsStr.add("undisguise");
-        firstsStr.add("update_plugins");
     }
 
     @Override
@@ -122,13 +120,6 @@ public class TARDISAdminCommands implements CommandExecutor {
                                 plugin.getMessenger().message(sender, "Database conversion failed! " + e.getMessage());
                                 return true;
                             }
-                        }
-                        case "update_plugins" -> {
-                            if (!sender.isOp()) {
-                                plugin.getMessenger().message(sender, "You must be a server operator to run this command!");
-                                return true;
-                            }
-                            return new UpdateTARDISPlugins(plugin).fetchFromJenkins(sender);
                         }
                         case "maze" -> {
                             if (sender instanceof Player p) {

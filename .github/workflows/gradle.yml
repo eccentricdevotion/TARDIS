@@ -1,9 +1,4 @@
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-# This workflow will build a Java project with Gradle and cache/restore any dependencies to improve the workflow execution time
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-gradle
+# This workflow will build a Java project with Gradle
 
 name: Java CI with Gradle
 
@@ -62,3 +57,5 @@ jobs:
         tag_name: '1.21.8'
         files: build/libs/*.jar
         fail_on_unmatched_files: false
+        body: "- ${{ github.event.head_commit.message }}"
+        append_body: true

@@ -53,39 +53,6 @@ public class AdventureComponents {
                 .build();
     }
 
-    public static TextComponent getJenkinsUpdateReady(int current, int latest) {
-        return Component.text("There is a new TARDIS build! You are using ", NamedTextColor.RED)
-                .append(Component.text("#" + current, NamedTextColor.GOLD))
-                .append(Component.text(", the latest build is ", NamedTextColor.RED))
-                .append(Component.text("#" + latest, NamedTextColor.GOLD))
-                .append(Component.text("!", NamedTextColor.RED));
-    }
-
-    public static TextComponent getUpdateCommand() {
-        return Component.text("Visit ", NamedTextColor.GOLD)
-                .append(Component.text("http://tardisjenkins.duckdns.org:8080/job/TARDIS/")
-                        .clickEvent(ClickEvent.openUrl("http://tardisjenkins.duckdns.org:8080/job/TARDIS/"))
-                )
-                .append(Component.text(" or run the "))
-                .append(Component.text("'/tardisadmin update_plugins'")
-                        .color(NamedTextColor.AQUA)
-                        .clickEvent(ClickEvent.suggestCommand("/tardisadmin update_plugins"))
-                )
-                .append(Component.text(" command"));
-    }
-
-    public static TextComponent getBuildsBehind(int behind) {
-        return getModule(TardisModule.TARDIS)
-                .color(NamedTextColor.WHITE)
-                .append(Component.text("You are "))
-                .append(Component.text(behind))
-                .append(Component.text(" builds behind! Type "))
-                .append(Component.text("/tadmin update_plugins", NamedTextColor.AQUA)
-                        .clickEvent(ClickEvent.suggestCommand("/tadmin update_plugins"))
-                )
-                .append(Component.text(" to update!"));
-    }
-
     public static TextComponent getRequestComehereAccept(String key, String command) {
         return Component.text(key, NamedTextColor.AQUA)
                 .hoverEvent(HoverEvent.showText(Component.text("Click me!")))
