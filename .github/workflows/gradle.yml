@@ -75,5 +75,5 @@ jobs:
         version: "${{ env.VERSION }}-b${{ env.SHORT_SHA }}"
         changelog: "- ${{ github.event.head_commit.message }}" # The changelog for this version.
         loaders: '["paper"]' # mod loaders that this version supports
-        game-versions: "[${{ env.RELEASE_TAG }}]" # list of versions of Minecraft that this version supports
-        files: '["build/libs/TARDIS-${{ env.VERSION }}-b${{ env.SHORT_SHA }}.jar"]' # list of file paths to upload
+        game-versions: "['${{ env.RELEASE_TAG }}']" # list of versions of Minecraft that this version supports
+        files: "['build/libs/TARDIS-${{ env.VERSION }}-b${{ env.SHORT_SHA }}.jar']" # list of file paths to upload
