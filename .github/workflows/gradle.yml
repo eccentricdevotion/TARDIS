@@ -23,6 +23,14 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Get all pushed commits
+      run: |
+        GIT_LOG_CONTENT=$(git log --pretty=format:"%H %s" ${{ github.event.before }}..${{ github.event.after }})
+        echo "GIT_COMMITS=$GIT_LOG_CONTENT" >> $GITHUB_ENV
+
     - name: Set up JDK 21
       uses: actions/setup-java@v4
       with:
@@ -42,7 +50,7 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
       
-    # build
+    # build and publish to hangar.papermc.io
     - name: Build with Gradle Wrapper
       env:
         HANGAR_API_TOKEN: ${{ secrets.HANGAR_API_TOKEN }}
@@ -60,9 +68,10 @@ jobs:
       with:
         token: ${{ secrets.TARDIS_WORKFLOW }}
         tag_name: "${{ env.RELEASE_TAG }}"
-        files: build/libs/*.jar
+        files: build/libs/TARDIS-${{ env.VERSION }}-b${{ env.SHORT_SHA }}.jar
         fail_on_unmatched_files: false
-        body: "- ${{ github.event.head_commit.message }}"
+        #body: "- ${{ github.event.head_commit.message }}"
+        body: "- ${{ env.GIT_COMMITS }}"
         append_body: true
 
     - name: Modrinth Publish
@@ -72,7 +81,8 @@ jobs:
         project: 'ymLTIuUH' #  ID of the project this version is for
         name: "TARDIS ${{ env.VERSION }}-b${{ env.SHORT_SHA }}"
         version: "${{ env.VERSION }}-b${{ env.SHORT_SHA }}"
-        changelog: "- ${{ github.event.head_commit.message }}" # The changelog for this version
+        #changelog: "- ${{ github.event.head_commit.message }}" # The changelog for this version
+        changelog: "- ${{ env.GIT_COMMITS }}" # The changelog for this version
         # mod loaders that this version supports
         loaders: |-
           paper
@@ -82,8 +92,3 @@ jobs:
         # list of file paths to upload
         files: |-
           build/libs/TARDIS-${{ env.VERSION }}-b${{ env.SHORT_SHA }}.jar
-
-    - name: GitHub Releases to Discord
-      uses: SethCohen/github-releases-to-discord@v1
-      with:
-        webhook_url: ${{ secrets.DISCORD_WEBHOOK_URL }}
