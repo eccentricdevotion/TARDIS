@@ -1,10 +1,13 @@
+import io.papermc.hangarpublishplugin.model.Platforms
 import org.apache.tools.ant.filters.ReplaceTokens
+import java.io.ByteArrayOutputStream
 
 plugins {
     `java-library`
     id("io.papermc.paperweight.userdev") version "2.0.0-SNAPSHOT"
     id("com.gradleup.shadow") version "9.0.0-rc1"
     id("java")
+    id("io.papermc.hangar-publish-plugin") version "0.1.2"
 }
 
 group = "me.eccentric_nz"
@@ -192,3 +195,56 @@ tasks.shadowJar {
 }
 
 paperweight.reobfArtifactConfiguration = io.papermc.paperweight.userdev.ReobfArtifactConfiguration.MOJANG_PRODUCTION
+
+interface InjectedExecOps {
+    @get:Inject val execOps: ExecOperations
+}
+
+// Helper methods
+fun executeGitCommand(vararg command: String): String {
+    val injected = project.objects.newInstance<InjectedExecOps>()
+    val byteOut = ByteArrayOutputStream()
+    injected.execOps.exec {
+        commandLine = listOf("git", *command)
+        standardOutput = byteOut
+    }
+    return byteOut.toString(Charsets.UTF_8.name()).trim()
+}
+
+fun latestCommitMessage(): String {
+    return executeGitCommand("log", "-1", "--pretty=%B")
+}
+
+val versionString: String = version as String
+val isRelease: Boolean = !versionString.contains('-')
+
+val suffixedVersion: String = if (isRelease) {
+    versionString
+} else {
+    // Give the version a unique name by using the GitHub Actions run number
+    versionString + "+" + System.getenv("GITHUB_RUN_NUMBER")
+}
+
+// Use the commit description for the changelog
+val changelogContent: String = latestCommitMessage()
+
+hangarPublish {
+    publications.register("plugin") {
+        version.set(project.version as String)
+        channel.set("Snapshot") // We're using the 'Snapshot' channel
+        id.set("TARDIS")
+        apiKey.set(System.getenv("HANGAR_API_TOKEN"))
+        platforms {
+            register(Platforms.PAPER) {
+                // Set the JAR file to upload
+                jar.set(tasks.shadowJar.flatMap { it.archiveFile })
+                // Set platform versions from gradle.properties file
+                val versions: List<String> = (property("paperVersion") as String)
+                    .split(",")
+                    .map { it.trim() }
+                platformVersions.set(versions)
+                changelog.set(changelogContent)
+            }
+        }
+    }
+}

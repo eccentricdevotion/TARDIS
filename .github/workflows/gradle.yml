@@ -44,7 +44,9 @@ jobs:
       
     # build
     - name: Build with Gradle Wrapper
-      run: ./gradlew build
+      env:
+        HANGAR_API_TOKEN: ${{ secrets.HANGAR_API_TOKEN }}
+      run: ./gradlew build publishPluginPublicationToHangar
 
     - name: Delete old release assets
       uses: mknejp/delete-release-assets@v1
@@ -57,13 +59,10 @@ jobs:
       uses: softprops/action-gh-release@v2
       with:
         token: ${{ secrets.TARDIS_WORKFLOW }}
-        name: "TARDIS for ${{ env.RELEASE_TAG }}"
         tag_name: "${{ env.RELEASE_TAG }}"
         files: build/libs/*.jar
         fail_on_unmatched_files: false
-        body: 'Latest build from GitHub Actions CI'
-        generate_release_notes: true
-        #body: "- ${{ github.event.head_commit.message }}"
+        body: "- ${{ github.event.head_commit.message }}"
         append_body: true
 
     - name: Modrinth Publish
@@ -83,3 +82,8 @@ jobs:
         # list of file paths to upload
         files: |-
           build/libs/TARDIS-${{ env.VERSION }}-b${{ env.SHORT_SHA }}.jar
+
+    - name: GitHub Releases to Discord
+      uses: SethCohen/github-releases-to-discord@v1
+      with:
+        webhook_url: ${{ secrets.DISCORD_WEBHOOK_URL }}
