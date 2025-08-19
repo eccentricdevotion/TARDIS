@@ -50,15 +50,15 @@ jobs:
       uses: mknejp/delete-release-assets@v1
       with:
         assets: 'TARDIS-*.jar' # filename of asset to delete
-        tag: "$RELEASE_TAG" # the tag of the release to modify
+        tag: "${{ env.RELEASE_TAG }}" # the tag of the release to modify
         token: ${{ secrets.TARDIS_WORKFLOW }} # Required for authentication
 
     - name: Upload build artifacts to release
       uses: softprops/action-gh-release@v2
       with:
         token: ${{ secrets.TARDIS_WORKFLOW }}
-        name: "TARDIS for $RELEASE_TAG"
-        tag_name: "$RELEASE_TAG"
+        name: "TARDIS for ${{ env.RELEASE_TAG }}"
+        tag_name: "${{ env.RELEASE_TAG }}"
         files: build/libs/*.jar
         fail_on_unmatched_files: false
         body: 'Latest build from GitHub Actions CI'
@@ -71,9 +71,9 @@ jobs:
       with:
         token: ${{ secrets.MODRINTH_TOKEN }} # Modrinth API token
         project: 'ymLTIuUH' #  ID of the project this version is for
-        name: "TARDIS $VERSION-b${{ env.SHORT_SHA }}"
-        version: "$VERSION-b${{ env.SHORT_SHA }}"
+        name: "TARDIS ${{ env.VERSION }}-b${{ env.SHORT_SHA }}"
+        version: "${{ env.VERSION }}-b${{ env.SHORT_SHA }}"
         changelog: "- ${{ github.event.head_commit.message }}" # The changelog for this version.
         loaders: '["paper"]' # mod loaders that this version supports
-        game-versions: "[$RELEASE_TAG]" # list of versions of Minecraft that this version supports
-        files: '["build/libs/TARDIS-$VERSION-b${{ env.SHORT_SHA }}.jar"]' # list of file paths to upload
+        game-versions: "[${{ env.RELEASE_TAG }}]" # list of versions of Minecraft that this version supports
+        files: '["build/libs/TARDIS-${{ env.VERSION }}-b${{ env.SHORT_SHA }}.jar"]' # list of file paths to upload
