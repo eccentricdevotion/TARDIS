@@ -2,14 +2,17 @@ package me.eccentric_nz.TARDIS.recipes;
 
 import com.google.common.collect.Multimaps;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodels.keys.CentredDoorVariant;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.*;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class TARDISShowShapedRecipeInventory implements InventoryHolder {
@@ -94,6 +97,17 @@ public class TARDISShowShapedRecipeInventory implements InventoryHolder {
         if (str.equals("Blank Storage Disk") || str.equals("Save Storage Disk") || str.equals("Preset Storage Disk") || str.equals("Biome Storage Disk") || str.equals("Player Storage Disk") || str.equals("Authorised Control Disk")) {
             im.addItemFlags(ItemFlag.values());
             im.setAttributeModifiers(Multimaps.forMap(Map.of()));
+        }
+        if (str.startsWith("Door")) {
+            String r = str.replace("Door ", "").toLowerCase(Locale.ROOT);
+            if (r.equals("door")) {
+                r = "tardis_door";
+            }
+            im.setItemModel(new NamespacedKey(plugin, r + "_closed"));
+        }
+        if (str.startsWith("Time Rotor")) {
+            String r = str.replace("Time Rotor ", "").toLowerCase(Locale.ROOT);
+            im.setItemModel(new NamespacedKey(plugin, "time_rotor_" + r + "_off"));
         }
         result.setAmount(1);
         result.setItemMeta(im);

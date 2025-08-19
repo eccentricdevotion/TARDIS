@@ -211,7 +211,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         return false;
     }
 
-    // Maps still seem to use numeric values
+    // maps still seem to use numeric values
     private void showShapedRecipe(Player player, String str) {
         ShapedRecipe recipe = plugin.getFigura().getShapedRecipes().get(str);
         player.discoverRecipe(recipe.getKey());

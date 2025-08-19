@@ -41,8 +41,8 @@ public class DoorCustomRecipe {
                 ItemStack is = ItemStack.of(material);
                 ItemMeta im = is.getItemMeta();
                 String dn = TARDISStringUtils.capitalise(r);
-                im.displayName(ComponentUtils.toWhite(dn + "Door "));
-                im.setItemModel(new NamespacedKey(plugin, "block/tardis/" + r + "_0"));
+                im.displayName(ComponentUtils.toWhite("Door " + dn));
+                im.setItemModel(new NamespacedKey(plugin, r + "_closed"));
                 is.setItemMeta(im);
                 NamespacedKey key = new NamespacedKey(plugin, "door_" + r);
                 ShapedRecipe recipe = new ShapedRecipe(key, is);
