@@ -348,4 +348,16 @@ public enum TARDISDisplayItem {
             }
         }
     }
+
+    public boolean isDoor() {
+        switch (this) {
+            case DOOR, DOOR_OPEN, DOOR_BOTH_OPEN, BONE_DOOR, BONE_DOOR_OPEN, CLASSIC_DOOR, CLASSIC_DOOR_OPEN,
+                 CUSTOM_DOOR -> {
+                return true;
+            }
+            default -> {
+                return false;
+            }
+        }
+    }
 }

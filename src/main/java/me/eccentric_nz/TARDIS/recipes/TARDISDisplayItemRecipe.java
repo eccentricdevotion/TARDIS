@@ -51,6 +51,9 @@ public class TARDISDisplayItemRecipe {
                 im.displayName(ComponentUtils.toWhite(tdi.getDisplayName()));
                 if (tdi.getCustomModel() != null) {
                     im.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING, tdi.getCustomModel().getKey());
+                    if (tdi.isDoor()) {
+                        im.setItemModel(tdi.getCustomModel());
+                    }
                 }
                 is.setItemMeta(im);
                 NamespacedKey key = new NamespacedKey(plugin, tdi.getName());

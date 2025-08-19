@@ -41,7 +41,7 @@ public class TARDISDisplayBlockCommand {
 
     public ItemStack getStack(String arg) {
         String display = TARDISStringUtils.toEnumUppercase(arg);
-        if (display.startsWith("DOOR_") || display.endsWith("_DOOR")) {
+        if (display.startsWith("DOOR") || display.endsWith("_DOOR")) {
             Door door = Door.byName.get(display);
             ItemStack is = ItemStack.of(door.getMaterial(), 1);
             ItemMeta im = is.getItemMeta();

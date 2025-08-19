@@ -38,6 +38,8 @@ public class TARDISCustomDoorLoader {
         Door bone = new Door("bone_door", Material.BIRCH_DOOR, new int[]{0,1,2,3,4}, 4, false, "classic_door", "classic_door", false);
         Door.byMaterial.put(Material.IRON_DOOR, police_box);
         Door.byName.put("POLICE_BOX_DOOR", police_box);
+        Door.byName.put("DOOR", police_box);
+        Door.byName.put("TARDIS_DOOR", police_box);
         Door.byMaterial.put(Material.CHERRY_DOOR, classic);
         Door.byName.put("CLASSIC_DOOR", classic);
         Door.byMaterial.put(Material.BIRCH_DOOR, bone);
