@@ -28,7 +28,7 @@ jobs:
 
     - name: Get all pushed commits
       run: |
-        MULTI_LINE_CONTENT="`git log --pretty=format:'%h %s' ${{ github.event.before }}..${{ github.event.after }}`"
+        MULTI_LINE_CONTENT="`git log --pretty=format:'- [%h](https://github.com/eccentricdevotion/TARDIS/commit/%H) %s' ${{ github.event.before }}..${{ github.event.after }}`"
         echo "GIT_COMMITS<<EOF" >> $GITHUB_ENV
         echo "$MULTI_LINE_CONTENT" >> $GITHUB_ENV
         echo "EOF" >> $GITHUB_ENV
@@ -74,7 +74,7 @@ jobs:
         files: build/libs/TARDIS-${{ env.VERSION }}-b${{ env.SHORT_SHA }}.jar
         fail_on_unmatched_files: false
         #body: "- ${{ github.event.head_commit.message }}"
-        body: "- ${{ env.GIT_COMMITS }}"
+        body: "${{ env.GIT_COMMITS }}"
         append_body: true
 
     - name: Modrinth Publish
@@ -105,7 +105,7 @@ jobs:
       with:
         webhook_url: ${{ secrets.DISCORD_WEBHOOK_URL }}
         title: TARDIS Plugin Update
-        message: "$TARDIS-{{ env.VERSION }}-b${{ env.SHORT_SHA }} is now available!\nReleased ${{ steps.date.outputs.today }}\n- ${{ env.GIT_COMMITS }}\n[View on GitHub](${{ steps.update_release.outputs.url }})"
+        message: "TARDIS-${{ env.VERSION }}-b${{ env.SHORT_SHA }} is now available!\nReleased ${{ steps.date.outputs.today }}\n${{ env.GIT_COMMITS }}\n[View on GitHub](${{ steps.update_release.outputs.url }})"
         include_image: false
         avatar_url: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
         username: TARDIS GitHub Notifier
