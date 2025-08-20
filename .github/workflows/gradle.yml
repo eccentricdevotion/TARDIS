@@ -28,7 +28,7 @@ jobs:
 
     - name: Get all pushed commits
       run: |
-        MULTI_LINE_CONTENT="`git log --pretty=format:'- [%h](https://github.com/eccentricdevotion/TARDIS/commit/%H) %s' ${{ github.event.before }}..${{ github.event.after }}`"
+        MULTI_LINE_CONTENT="git log --pretty=format:'- [`%h`](https://github.com/eccentricdevotion/TARDIS/commit/%H) %s' ${{ github.event.before }}..${{ github.event.after }}"
         echo "GIT_COMMITS<<EOF" >> $GITHUB_ENV
         echo "$MULTI_LINE_CONTENT" >> $GITHUB_ENV
         echo "EOF" >> $GITHUB_ENV
@@ -73,7 +73,6 @@ jobs:
         tag_name: "${{ env.RELEASE_TAG }}"
         files: build/libs/TARDIS-${{ env.VERSION }}-b${{ env.SHORT_SHA }}.jar
         fail_on_unmatched_files: false
-        #body: "- ${{ github.event.head_commit.message }}"
         body: "${{ env.GIT_COMMITS }}"
         append_body: true
 
@@ -84,8 +83,7 @@ jobs:
         project: 'ymLTIuUH' #  ID of the project this version is for
         name: "TARDIS ${{ env.VERSION }}-b${{ env.SHORT_SHA }}"
         version: "${{ env.VERSION }}-b${{ env.SHORT_SHA }}"
-        #changelog: "- ${{ github.event.head_commit.message }}" # The changelog for this version
-        changelog: "- ${{ env.GIT_COMMITS }}" # The changelog for this version
+        changelog: "${{ env.GIT_COMMITS }}" # The changelog for this version
         # mod loaders that this version supports
         loaders: |-
           paper
@@ -98,7 +96,8 @@ jobs:
 
     - name: Get current date
       id: date
-      run: echo "::set-output name=today::$(date +'%d-%B-%Y %H:%M')"
+      run: |
+        echo "today=$(date +'%d-%B-%Y %H:%M')" >> $GITHUB_OUTPUT
 
     - name: Send Discord notification
       uses: stegzilla/discord-notify@v2
