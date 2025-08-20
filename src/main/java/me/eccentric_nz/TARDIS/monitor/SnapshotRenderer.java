@@ -25,7 +25,6 @@ import org.bukkit.map.MapView;
 import org.bukkit.util.RayTraceResult;
 import org.bukkit.util.Vector;
 
-import java.awt.*;
 import java.awt.Color;
 
 public class SnapshotRenderer extends MapRenderer {
