@@ -167,8 +167,7 @@ allprojects {
 
 tasks {
     compileJava {
-        // Set the release flag. This configures what version bytecode the compiler will emit, as well as what JDK APIs are usable.
-        // See https://openjdk.java.net/jeps/247 for more information.
+        // Set the release flag
         options.release = 21
     }
     javadoc {
@@ -187,6 +186,7 @@ tasks.jar {
         attributes["paperweight-mappings-namespace"] = "mojang"
     }
 }
+
 // if you have shadowJar configured
 tasks.shadowJar {
     manifest {
