@@ -62,6 +62,7 @@ jobs:
         token: ${{ secrets.TARDIS_WORKFLOW }} # Required for authentication
 
     - name: Upload build artifacts to release
+      id: update_release
       uses: softprops/action-gh-release@v2
       with:
         token: ${{ secrets.TARDIS_WORKFLOW }}
@@ -90,3 +91,17 @@ jobs:
         # list of file paths to upload
         files: |-
           build/libs/TARDIS-${{ env.VERSION }}-b${{ env.SHORT_SHA }}.jar
+
+    - name: Get current date
+      id: date
+      run: echo "::set-output name=today::$(date +'%d-%B-%Y %H:%M')"
+
+    - name: Send Discord notification
+      uses: stegzilla/discord-notify@v2
+      with:
+        webhook_url: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        title: TARDIS Plugin Update
+        message: "$TARDIS-{{ env.VERSION }}-b${{ env.SHORT_SHA }} is now available!\nReleased ${{ steps.date.outputs.today }}\n- ${{ env.GIT_COMMITS }}\n[View on GitHub](${{ steps.update_release.outputs.url }})"
+        include_image: false
+        avatar_url: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
+        username: TARDIS GitHub Notifier
