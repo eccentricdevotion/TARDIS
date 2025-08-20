@@ -27,7 +27,7 @@ jobs:
         fetch-depth: 0
 
     - name: Get all pushed commits
-      run: echo "GIT_COMMITS=`git log --pretty=format:"%H %s" ${{ github.event.before }}..${{ github.event.after }}`" >> $GITHUB_ENV
+      run: echo "GIT_COMMITS=`git log --pretty=format:'%h %s' ${{ github.event.before }}..${{ github.event.after }}`" >> $GITHUB_ENV
 
     - name: Set up JDK 21
       uses: actions/setup-java@v4
@@ -42,7 +42,7 @@ jobs:
     # Configure Gradle for optimal use in GitHub Actions, including caching of downloaded dependencies.
     # See: https://github.com/gradle/actions/blob/main/setup-gradle/README.md
     - name: Setup Gradle
-      uses: gradle/actions/setup-gradle@af1da67850ed9a4cedd57bfd976089dd991e2582 # v4.0.0
+      uses: gradle/actions/setup-gradle@v4
     
     # set executable permissions on gradlew
     - name: Grant execute permission for gradlew
