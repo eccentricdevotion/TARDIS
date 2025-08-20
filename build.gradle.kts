@@ -215,16 +215,6 @@ fun latestCommitMessage(): String {
     return executeGitCommand("log", "-1", "--pretty=%B")
 }
 
-val versionString: String = version as String
-val isRelease: Boolean = !versionString.contains('-')
-
-val suffixedVersion: String = if (isRelease) {
-    versionString
-} else {
-    // Give the version a unique name by using the GitHub Actions run number
-    versionString + "+" + System.getenv("GITHUB_RUN_NUMBER")
-}
-
 // Use the commit description for the changelog
 val changelogContent: String = latestCommitMessage()
 
