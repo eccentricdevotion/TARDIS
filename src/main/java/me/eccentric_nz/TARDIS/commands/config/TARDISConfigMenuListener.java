@@ -17,8 +17,8 @@
 package me.eccentric_nz.TARDIS.commands.config;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.playerprefs.TARDISPrefsMenuInventory;
 import me.eccentric_nz.TARDIS.custommodels.GUIConfiguration;
+import me.eccentric_nz.TARDIS.playerprefs.TARDISPrefsMenuInventory;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
