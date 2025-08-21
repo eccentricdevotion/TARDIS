@@ -65,6 +65,11 @@ public class AdventureComponents {
                         .color(NamedTextColor.GREEN)
                         .hoverEvent(HoverEvent.showText(Component.text("Click to enter this TARDIS")))
                         .clickEvent(ClickEvent.runCommand("/tardisadmin enter " + id))
+                )
+                .append(Component.text(" < Delete > ")
+                        .color(NamedTextColor.RED)
+                        .hoverEvent(HoverEvent.showText(Component.text("Click to delete this TARDIS")))
+                        .clickEvent(ClickEvent.runCommand("/tardisadmin delete " + id + " abandoned"))
                 );
     }
 
