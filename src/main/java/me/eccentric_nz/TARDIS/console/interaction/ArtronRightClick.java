@@ -78,16 +78,13 @@ public class ArtronRightClick {
                 // has the TARDIS been initialised?
                 if (!init) {
                     new ArtronInitAction(plugin).powerUp(location, tardis, player, id);
-                } else { // toggle power
-                    if (plugin.getConfig().getBoolean("allow.power_down")) {
-                        boolean pu = true;
-                        if (abandoned) {
-                            // transfer ownership to the player who clicked
-                            pu = new ArtronAbandoned(plugin).claim(player, id, location, tardis);
-                        }
-                        if (pu) {
-                            new TARDISPowerButton(plugin, id, player, tardis.getPreset(), tardis.isPoweredOn(), tardis.isHidden(), lights, player.getLocation(), current_level, tardis.getSchematic().getLights()).clickButton();
-                        }
+                } else {
+                    if (abandoned) {
+                        // transfer ownership to the player who clicked
+                        new ArtronAbandoned(plugin).claim(player, id, location, tardis);
+                    } else if (plugin.getConfig().getBoolean("allow.power_down")) {
+                        // toggle power
+                        new TARDISPowerButton(plugin, id, player, tardis.getPreset(), tardis.isPoweredOn(), tardis.isHidden(), lights, player.getLocation(), current_level, tardis.getSchematic().getLights()).clickButton();
                     }
                 }
             } else if (player.isSneaking()) {
