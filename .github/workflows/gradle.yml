@@ -22,7 +22,7 @@ jobs:
       contents: read
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
       with:
         fetch-depth: 0
 
@@ -97,14 +97,15 @@ jobs:
     - name: Get current date
       id: date
       run: |
-        echo "today=$(date +'%d-%B-%Y %H:%M')" >> $GITHUB_OUTPUT
+        echo "today=$(date +'%d %B %Y %H:%M')" >> $GITHUB_OUTPUT
 
     - name: Send Discord notification
-      uses: stegzilla/discord-notify@v2
+      uses: stegzilla/discord-notify@v4
       with:
         webhook_url: ${{ secrets.DISCORD_WEBHOOK_URL }}
         title: TARDIS Plugin Update
-        message: "TARDIS-${{ env.VERSION }}-b${{ env.SHORT_SHA }} is now available!\nReleased ${{ steps.date.outputs.today }}\n${{ env.GIT_COMMITS }}\n[View on GitHub](${{ steps.update_release.outputs.url }})"
-        include_image: false
+        message: "TARDIS-${{ env.VERSION }}-b${{ env.SHORT_SHA }} is now available!\nReleased ${{ steps.date.outputs.today }}\n${{ env.GIT_COMMITS }}\n[View on GitHub](${{ steps.update_release.outputs.url }})\n[View on Modrinth](https://modrinth.com/plugin/tardis/version/${{ env.VERSION }}-b${{ env.SHORT_SHA }})"
+        include_image: true
+        colour: "#D4AF37"
         avatar_url: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
         username: TARDIS GitHub Notifier
