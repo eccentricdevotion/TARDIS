@@ -92,6 +92,9 @@ public class TARDISDeleteCommand {
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
+            if (player == null) {
+                player = plugin.getServer().getOfflinePlayer(tardis.getUuid());
+            }
             int id = tardis.getTardisId();
             int tips = tardis.getTIPS();
             Schematic schm = tardis.getSchematic();

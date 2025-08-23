@@ -120,5 +120,4 @@ public class TARDISInstantPoliceBox {
         // add an interaction entity
         TARDISDisplayItemUtils.setInteraction(stand, bd.getTardisID());
     }
-
 }
