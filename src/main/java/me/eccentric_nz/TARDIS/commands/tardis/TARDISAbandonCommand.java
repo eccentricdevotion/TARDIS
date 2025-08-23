@@ -19,11 +19,8 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISAbandonEvent;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.builders.exterior.TARDISBuilderUtility;
 import me.eccentric_nz.TARDIS.commands.admin.TARDISAbandonLister;
 import me.eccentric_nz.TARDIS.control.TARDISPowerButton;
-import me.eccentric_nz.TARDIS.custommodels.keys.ChameleonVariant;
-import me.eccentric_nz.TARDIS.custommodels.keys.ColouredVariant;
 import me.eccentric_nz.TARDIS.database.converters.TARDISAbandonUpdate;
 import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
@@ -41,15 +38,19 @@ import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import net.kyori.adventure.text.Component;
-import org.bukkit.*;
+import org.bukkit.Location;
+import org.bukkit.Tag;
+import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.block.sign.Side;
 import org.bukkit.block.sign.SignSide;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.EntityEquipment;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -282,39 +283,32 @@ public class TARDISAbandonCommand {
                         // always clear sign
                         if (preset.usesArmourStand()) {
                             World world = current.location().getWorld();
-                            // remove name from the item frame item
-                            for (Entity e : world.getNearbyEntities(current.location(), 1.0d, 1.0d, 1.0d)) {
-                                if (e instanceof ItemFrame frame) {
-                                    Material dye = TARDISBuilderUtility.getMaterialForArmourStand(preset, id, true);
-                                    ItemStack is = ItemStack.of(dye, 1);
+                            // remove custom name from the armour stand / helmet item
+                            for (Entity e : world.getNearbyEntities(current.location(), 1.1d, 1.1d, 1.1d)) {
+                                if (e instanceof ArmorStand stand) {
+                                    ItemStack is = stand.getItem(EquipmentSlot.HEAD);
                                     ItemMeta im = is.getItemMeta();
-                                    NamespacedKey model = switch (is.getType()) {
-                                        case BLACK_DYE -> ChameleonVariant.BLACK_CLOSED.getKey();
-                                        case BLUE_DYE -> ChameleonVariant.BLUE_CLOSED.getKey();
-                                        case BROWN_DYE -> ChameleonVariant.BROWN_CLOSED.getKey();
-                                        case CYAN_DYE -> ChameleonVariant.CYAN_CLOSED.getKey();
-                                        case GRAY_DYE -> ChameleonVariant.GRAY_CLOSED.getKey();
-                                        case GREEN_DYE -> ChameleonVariant.GREEN_CLOSED.getKey();
-                                        case LIGHT_BLUE_DYE -> ChameleonVariant.LIGHT_BLUE_CLOSED.getKey();
-                                        case LIGHT_GRAY_DYE -> ChameleonVariant.LIGHT_GRAY_CLOSED.getKey();
-                                        case LIME_DYE -> ChameleonVariant.LIME_CLOSED.getKey();
-                                        case MAGENTA_DYE -> ChameleonVariant.MAGENTA_CLOSED.getKey();
-                                        case ORANGE_DYE -> ChameleonVariant.ORANGE_CLOSED.getKey();
-                                        case PINK_DYE -> ChameleonVariant.PINK_CLOSED.getKey();
-                                        case PURPLE_DYE -> ChameleonVariant.PURPLE_CLOSED.getKey();
-                                        case RED_DYE -> ChameleonVariant.RED_CLOSED.getKey();
-                                        case WHITE_DYE -> ChameleonVariant.WHITE_CLOSED.getKey();
-                                        case YELLOW_DYE -> ChameleonVariant.YELLOW_CLOSED.getKey();
-                                        case CYAN_STAINED_GLASS_PANE -> ChameleonVariant.TENNANT_CLOSED.getKey();
-                                        case GRAY_STAINED_GLASS_PANE -> ChameleonVariant.WEEPING_ANGEL_CLOSED.getKey();
-                                        case ENDER_PEARL -> ChameleonVariant.PANDORICA_CLOSED.getKey();
-                                        case LEATHER_HORSE_ARMOR -> ColouredVariant.TINTED_CLOSED.getKey();
-                                        default -> new NamespacedKey(plugin, TARDISBuilderUtility.getCustomModelPath(is.getType().toString()) + "_closed");
-                                    };
-                                    im.setItemModel(model);
-                                    im.displayName(Component.empty());
+                                    String pb = "";
+                                    switch (preset) {
+                                        case WEEPING_ANGEL -> pb = "Weeping Angel";
+                                        case PANDORICA -> pb = "Pandorica";
+                                        case ITEM -> {
+                                            for (String k : plugin.getCustomModelConfig().getConfigurationSection("models").getKeys(false)) {
+                                                if (is.getType().toString().equals(plugin.getCustomModelConfig().getString("models." + k + ".item"))) {
+                                                    pb = k;
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                        default -> pb = "Police Box";
+                                    }
+                                    Component custom = Component.text("Abandoned " + pb);
+                                    im.displayName(custom);
                                     is.setItemMeta(im);
-                                    frame.setItem(is, false);
+                                    EntityEquipment ee = stand.getEquipment();
+                                    ee.setHelmet(is, true);
+                                    stand.customName(custom);
+                                    stand.setCustomNameVisible(true);
                                     break;
                                 }
                             }
