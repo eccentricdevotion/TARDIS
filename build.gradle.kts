@@ -108,7 +108,7 @@ dependencies {
     compileOnly("nl.rutgerkok:blocklocker:1.13") {
         isTransitive = false
     }
-    compileOnly("com.griefcraft:lwc:2.4.0") {
+    compileOnly("com.griefcraft:lwc:2.4.1") {
         isTransitive = false
     }
     compileOnly("com.github.retrooper:packetevents-api:2.9.3") {
