@@ -146,7 +146,7 @@ dependencies {
     }
     compileOnly("org.popcraft:chunky-common:1.4.40")
     compileOnly("org.popcraft:chunky-bukkit:1.4.40")
-    compileOnly("org.popcraft:chunkyborder-common:1.2.26")
+    compileOnly("org.popcraft:chunkyborder-common:1.2.32")
     compileOnly("net.luckperms:api:5.5")
     compileOnly("org.apache.commons:commons-lang3:3.18.0")
     compileOnly(files("libs/TerraformGenerator.jar"))
