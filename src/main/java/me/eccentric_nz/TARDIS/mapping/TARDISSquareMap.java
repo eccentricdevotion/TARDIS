@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.mapping;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.TARDISData;
+import me.eccentric_nz.TARDIS.files.TARDISFileCopier;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.plugin.Plugin;
@@ -65,7 +66,11 @@ public class TARDISSquareMap implements TARDISMapper {
     @Override
     public void activate() {
         try {
-            BufferedImage image = ImageIO.read(new File(plugin.getDataFolder(), "tardis.png"));
+            File icon = new File(plugin.getDataFolder(), "tardis.png");
+            if (!icon.exists()) {
+                TARDISFileCopier.copy("plugins/TARDIS/tardis.png", plugin.getResource("tardis.png"), true);
+            }
+            BufferedImage image = ImageIO.read(icon);
             SquaremapProvider.get().iconRegistry().register(TARDIS_ICON_KEY, image);
         } catch (IOException e) {
             plugin.getLogger().log(Level.WARNING, "Failed to register TARDIS icon", e);
@@ -76,7 +81,7 @@ public class TARDISSquareMap implements TARDISMapper {
     @Override
     public void updateMarkerSet(long period) {
         for (MapWorld world : SquaremapProvider.get().mapWorlds()) {
-            if (!plugin.getPlanetsConfig().getBoolean("planets." + world.identifier() + "time_travel")) {
+            if (!plugin.getPlanetsConfig().getBoolean("planets." + world.identifier().value() + ".time_travel")) {
                 continue;
             }
             SimpleLayerProvider provider = SimpleLayerProvider.builder("TARDIS")
