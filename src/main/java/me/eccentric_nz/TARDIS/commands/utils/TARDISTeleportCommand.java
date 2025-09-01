@@ -26,6 +26,7 @@ import me.eccentric_nz.tardischunkgenerator.worldgen.RoomGenerator;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.World.Environment;
+import org.bukkit.block.BlockFace;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -90,12 +91,16 @@ public class TARDISTeleportCommand extends TARDISCompleter implements CommandExe
                 while (!world.getChunkAt(spawn).isLoaded()) {
                     world.getChunkAt(spawn).load();
                 }
-                int highest = (world.getEnvironment() == Environment.NETHER) ? spawn.getBlockY() - 1 : world.getHighestBlockYAt(spawn);
+                int highest = spawn.getBlockY();
+                // check if there is room for a player
+                if (!spawn.getBlock().getType().isAir() || !spawn.getBlock().getRelative(BlockFace.UP).getType().isAir()) {
+                    highest = (world.getEnvironment() == Environment.NETHER) ? spawn.getBlockY() : world.getHighestBlockYAt(spawn) + 1;
+                }
                 float yaw = player.getLocation().getYaw();
                 float pitch = player.getLocation().getPitch();
                 spawn.setYaw(yaw);
                 spawn.setPitch(pitch);
-                spawn.setY(highest + 1);
+                spawn.setY(highest);
                 player.teleport(spawn);
             } else {
                 plugin.getMessenger().sendColouredCommand(player, "WORLD_NOT_FOUND", "/tardisworld", plugin);

@@ -33,7 +33,7 @@ public class SystemUpgradeChecker {
         if (!rs.fromUUID(uuid)) {
             return false;
         }
-        // get player's artron energy level
+        // does the player have the system upgrade for their TARDIS
         ResultSetSystemUpgrades rsp = new ResultSetSystemUpgrades(plugin, rs.getTardisId(), uuid);
         if (!rsp.resultset()) {
             return false;
