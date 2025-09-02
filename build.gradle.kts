@@ -7,7 +7,7 @@ plugins {
     id("io.papermc.paperweight.userdev") version "2.0.0-SNAPSHOT"
     id("com.gradleup.shadow") version "9.0.0-rc1"
     id("java")
-    id("io.papermc.hangar-publish-plugin") version "0.1.2"
+    id("io.papermc.hangar-publish-plugin") version "0.1.3"
 }
 
 group = "me.eccentric_nz"
