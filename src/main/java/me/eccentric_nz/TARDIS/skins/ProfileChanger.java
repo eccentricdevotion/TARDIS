@@ -60,7 +60,7 @@ public class ProfileChanger {
         for (ServerPlayer player : players) {
             CraftPlayer bukkitPlayer = player.getBukkitEntity();
             if (bukkitPlayer.canSee(cp)) {
-                trackAndShowEntity(bukkitPlayer, self, profile.getId());
+                trackAndShowEntity(bukkitPlayer, self, profile.id());
             }
         }
         // refresh misc player things after sending game profile
@@ -120,7 +120,7 @@ public class ProfileChanger {
         sp.connection.send(new ClientboundRespawnPacket(sp.createCommonSpawnInfo(worldserver), ClientboundRespawnPacket.KEEP_ALL_DATA));
         sp.onUpdateAbilities();
         sp.connection.send(new ClientboundPlayerPositionPacket(0, new PositionMoveRotation(new Vec3(loc.getX(), loc.getY(), loc.getZ()),new Vec3(loc.getX(), loc.getY(), loc.getZ()), loc.getYaw(), loc.getPitch()), Collections.emptySet()));
-        PlayerList playerList = sp.getServer().getPlayerList();
+        PlayerList playerList = sp.level().getServer().getPlayerList();
         playerList.sendPlayerPermissionLevel(sp);
         playerList.sendLevelInfo(sp, worldserver);
         playerList.sendAllPlayerInfo(sp);

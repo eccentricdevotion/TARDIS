@@ -20,8 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
-import me.eccentric_nz.TARDIS.lazarus.disguise.TARDISEPSDisguiser;
-import me.eccentric_nz.TARDIS.lazarus.disguise.npc.EmergencyProgramOneSpawner;
+import me.eccentric_nz.TARDIS.lazarus.disguise.EmergencyProgramOneSpawner;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
@@ -108,7 +107,7 @@ public class TARDISEPSRunnable implements Runnable {
                             plugin.getMessenger().message(pp, TardisModule.EMERGENCY_PROGRAM, plugin.getLanguage().getString("EP1_BYE"));
                         }
                     });
-                    TARDISEPSDisguiser.removeNPC(spawner.getNpc(), location.getWorld());
+                    spawner.getMannequin().remove();
                 }, 1000L);
             } catch (CommandException e) {
                 plugin.debug(e.getMessage());

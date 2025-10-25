@@ -32,7 +32,6 @@ public class CubicMaterial {
             Material.ANDESITE,
             Material.ANDESITE_WALL,
             Material.AZALEA_LEAVES,
-            Material.BAMBOO,
             Material.BARREL,
             Material.BASALT,
             Material.BEEHIVE,
@@ -77,7 +76,6 @@ public class CubicMaterial {
             Material.CALCITE,
             Material.CARVED_PUMPKIN,
             Material.CAULDRON,
-            Material.CHAIN,
             Material.CHISELED_DEEPSLATE,
             Material.CHISELED_NETHER_BRICKS,
             Material.CHISELED_POLISHED_BLACKSTONE,
@@ -187,7 +185,6 @@ public class CubicMaterial {
             Material.HONEY_BLOCK,
             Material.HORN_CORAL_BLOCK,
             Material.ICE,
-            Material.IRON_BARS,
             Material.IRON_BLOCK,
             Material.IRON_ORE,
             Material.JACK_O_LANTERN,
@@ -448,6 +445,8 @@ public class CubicMaterial {
             Material.RESIN_BLOCK,
             Material.RESIN_BRICKS,
             Material.STRIPPED_PALE_OAK_LOG,
-            Material.STRIPPED_PALE_OAK_WOOD
+            Material.STRIPPED_PALE_OAK_WOOD,
+            // 1.21.7
+            Material.DRIED_GHAST
         );
 }

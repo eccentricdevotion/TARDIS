@@ -56,8 +56,8 @@ public class SkinUtils {
 
     public static PlayerProfile getHeadProfile(Skin skin) {
         GameProfile profile = new GameProfile(uuid, "TARDIS_Skin");
-        profile.getProperties().removeAll("textures");
-        profile.getProperties().put("textures", new Property("textures", skin.value(), skin.signature()));
+        profile.properties().removeAll("textures");
+        profile.properties().put("textures", new Property("textures", skin.value(), skin.signature()));
         PlayerProfile playerProfile = new CraftPlayerProfile(profile);
         PlayerTextures textures = playerProfile.getTextures();
 //        PlayerTextures.SkinModel model = (skin.slim()) ? PlayerTextures.SkinModel.SLIM : PlayerTextures.SkinModel.CLASSIC;
@@ -72,7 +72,7 @@ public class SkinUtils {
     public static boolean isAlexSkin(Player player) {
         ServerPlayer sp = ((CraftPlayer) player).getHandle();
         GameProfile profile = sp.getGameProfile();
-        String base64 = profile.getProperties().get("textures").iterator().next().value();
+        String base64 = profile.properties().get("textures").iterator().next().value();
         String decodedValue = new String(Base64.getDecoder().decode(base64));
         JsonObject json = JsonParser.parseString(decodedValue).getAsJsonObject();
         JsonObject skinObject = json.getAsJsonObject("textures").getAsJsonObject("SKIN");
@@ -89,7 +89,7 @@ public class SkinUtils {
     public static void setSkinModel(Player player, boolean slim) {
         ServerPlayer entityPlayer = ((CraftPlayer) player).getHandle();
         GameProfile profile = entityPlayer.getGameProfile();
-        String base64 = profile.getProperties().get("textures").iterator().next().value();
+        String base64 = profile.properties().get("textures").iterator().next().value();
         String decodedValue = new String(Base64.getDecoder().decode(base64));
         JsonObject json = JsonParser.parseString(decodedValue).getAsJsonObject();
         JsonObject textures = json.getAsJsonObject("textures");
@@ -111,8 +111,8 @@ public class SkinUtils {
         String encoded = Base64.getEncoder().encodeToString(value.getBytes(StandardCharsets.UTF_8));
         // will the signature change if a new property is added to the textures object?
         String signature = textures.get("signature").getAsString();
-        profile.getProperties().removeAll("textures");
-        profile.getProperties().put("textures", new Property("textures", encoded, signature));
+        profile.properties().removeAll("textures");
+        profile.properties().put("textures", new Property("textures", encoded, signature));
         // set profile back to player
         ProfileChanger.setPlayerProfile(((CraftPlayer) player), profile);
     }
@@ -120,7 +120,7 @@ public class SkinUtils {
     public static void debug(Player player) {
         ServerPlayer entityPlayer = ((CraftPlayer) player).getHandle();
         GameProfile profile = entityPlayer.getGameProfile();
-        String base64 = profile.getProperties().get("textures").iterator().next().value();
+        String base64 = profile.properties().get("textures").iterator().next().value();
         String decodedValue = new String(Base64.getDecoder().decode(base64));
         TARDIS.plugin.debug(decodedValue);
         /*

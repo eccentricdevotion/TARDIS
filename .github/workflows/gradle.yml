@@ -9,8 +9,8 @@ on:
     branches: [ "master" ]
 
 env:
-  VERSION: '6.2.3'
-  RELEASE_TAG: '1.21.8'
+  VERSION: '6.2.4'
+  RELEASE_TAG: '1.21.10'
 
 jobs:
   build:

@@ -57,7 +57,7 @@ public class TWAFollower extends Husk implements OwnableEntity {
     public void addAdditionalSaveData(ValueOutput tag) {
         super.addAdditionalSaveData(tag);
         if (this.getOwnerUUID() != null) {
-            EntityReference<LivingEntity> entityreference = new EntityReference<>(this.getOwnerUUID());
+            EntityReference<LivingEntity> entityreference = EntityReference.of(this.getOwnerUUID());
             entityreference.store(tag, "Owner");
         }
     }
@@ -70,7 +70,7 @@ public class TWAFollower extends Husk implements OwnableEntity {
             this.setOwnerUUID(entityreference.getUUID());
         } else {
             tag.getString("Owner").ifPresent((s -> {
-                uuid = OldUsersConverter.convertMobOwnerIfNecessary(this.getServer(), s);
+                uuid = OldUsersConverter.convertMobOwnerIfNecessary(this.level().getServer(), s);
                 if (uuid != null) {
                     this.setOwnerUUID(uuid);
                 }
