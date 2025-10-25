@@ -114,7 +114,7 @@ dependencies {
     compileOnly("com.github.retrooper:packetevents-api:2.9.5") {
         isTransitive = false
     }
-    compileOnly("me.libraryaddict.disguises:libsdisguises:11.0.7") {
+    compileOnly("me.libraryaddict.disguises:libsdisguises:11.0.9") {
         isTransitive = false
     }
     compileOnly("net.essentialsx:EssentialsX:2.22.0-SNAPSHOT") {
