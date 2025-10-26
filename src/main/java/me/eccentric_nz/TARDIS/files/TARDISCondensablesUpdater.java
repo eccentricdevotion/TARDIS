@@ -153,7 +153,7 @@ public class TARDISCondensablesUpdater {
             list.put("BLACKSTONE_SLAB", 1);
             list.put("BLACKSTONE_STAIRS", 1);
             list.put("BLACKSTONE_WALL", 1);
-            list.put("CHAIN", 1);
+            list.put("IRON_CHAIN", 1);
             list.put("CHISELED_NETHER_BRICKS", 1);
             list.put("CHISELED_POLISHED_BLACKSTONE", 1);
             list.put("CRACKED_NETHER_BRICKS", 1);
@@ -714,6 +714,68 @@ public class TARDISCondensablesUpdater {
                 plugin.getCondensablesConfig().set("SHORT_DRY_GRASS", 2);
                 plugin.getCondensablesConfig().set("TALL_DRY_GRASS", 2);
                 plugin.getCondensablesConfig().set("WILDFLOWERS", 2);
+                i++;
+            }
+            // 1.21.10
+            if (!plugin.getCondensablesConfig().contains("COPPER_CHAIN")) {
+                plugin.getCondensablesConfig().set("CHAIN", null);
+                plugin.getCondensablesConfig().set("IRON_CHAIN", 28);
+                plugin.getCondensablesConfig().set("COPPER_CHAIN", 24);
+                plugin.getCondensablesConfig().set("EXPOSED_COPPER_CHAIN", 24);
+                plugin.getCondensablesConfig().set("WEATHERED_COPPER_CHAIN", 24);
+                plugin.getCondensablesConfig().set("OXIDIZED_COPPER_CHAIN", 24);
+                plugin.getCondensablesConfig().set("WAXED_COPPER_CHAIN", 24);
+                plugin.getCondensablesConfig().set("WAXED_EXPOSED_COPPER_CHAIN", 24);
+                plugin.getCondensablesConfig().set("WAXED_WEATHERED_COPPER_CHAIN", 24);
+                plugin.getCondensablesConfig().set("WAXED_OXIDIZED_COPPER_CHAIN", 24);
+                plugin.getCondensablesConfig().set("ACACIA_SHELF", 2);
+                plugin.getCondensablesConfig().set("BAMBOO_SHELF", 2);
+                plugin.getCondensablesConfig().set("BIRCH_SHELF", 2);
+                plugin.getCondensablesConfig().set("CHERRY_SHELF", 2);
+                plugin.getCondensablesConfig().set("CRIMSON_SHELF", 2);
+                plugin.getCondensablesConfig().set("DARK_OAK_SHELF", 2);
+                plugin.getCondensablesConfig().set("JUNGLE_SHELF", 2);
+                plugin.getCondensablesConfig().set("MANGROVE_SHELF", 2);
+                plugin.getCondensablesConfig().set("OAK_SHELF", 2);
+                plugin.getCondensablesConfig().set("PALE_OAK_SHELF", 2);
+                plugin.getCondensablesConfig().set("SPRUCE_SHELF", 2);
+                plugin.getCondensablesConfig().set("WARPED_SHELF", 2);
+                plugin.getCondensablesConfig().set("COPPER_TORCH", 4);
+                plugin.getCondensablesConfig().set("COPPER_BARS", 10);
+                plugin.getCondensablesConfig().set("EXPOSED_COPPER_BARS", 10);
+                plugin.getCondensablesConfig().set("WEATHERED_COPPER_BARS", 10);
+                plugin.getCondensablesConfig().set("OXIDIZED_COPPER_BARS", 10);
+                plugin.getCondensablesConfig().set("WAXED_COPPER_BARS", 10);
+                plugin.getCondensablesConfig().set("WAXED_EXPOSED_COPPER_BARS", 10);
+                plugin.getCondensablesConfig().set("WAXED_WEATHERED_COPPER_BARS", 10);
+                plugin.getCondensablesConfig().set("WAXED_OXIDIZED_COPPER_BARS", 10);
+                plugin.getCondensablesConfig().set("EXPOSED_LIGHTNING_ROD", 60);
+                plugin.getCondensablesConfig().set("WEATHERED_LIGHTNING_ROD", 60);
+                plugin.getCondensablesConfig().set("OXIDIZED_LIGHTNING_ROD", 60);
+                plugin.getCondensablesConfig().set("WAXED_LIGHTNING_ROD", 60);
+                plugin.getCondensablesConfig().set("WAXED_EXPOSED_LIGHTNING_ROD", 60);
+                plugin.getCondensablesConfig().set("WAXED_WEATHERED_LIGHTNING_ROD", 60);
+                plugin.getCondensablesConfig().set("WAXED_OXIDIZED_LIGHTNING_ROD", 60);
+                plugin.getCondensablesConfig().set("LIGHTNING_ROD", 60);
+                plugin.getCondensablesConfig().set("COPPER_SWORD", 42);
+                plugin.getCondensablesConfig().set("COPPER_SHOVEL", 24);
+                plugin.getCondensablesConfig().set("COPPER_PICKAXE", 64);
+                plugin.getCondensablesConfig().set("COPPER_AXE", 64);
+                plugin.getCondensablesConfig().set("COPPER_HOE", 44);
+                plugin.getCondensablesConfig().set("COPPER_HELMET", 100);
+                plugin.getCondensablesConfig().set("COPPER_CHESTPLATE", 160);
+                plugin.getCondensablesConfig().set("COPPER_LEGGINGS", 140);
+                plugin.getCondensablesConfig().set("COPPER_BOOTS", 80);
+                plugin.getCondensablesConfig().set("COPPER_HORSE_ARMOR", 120);
+                plugin.getCondensablesConfig().set("COPPER_NUGGET", 2);
+                plugin.getCondensablesConfig().set("COPPER_LANTERN", 20);
+                plugin.getCondensablesConfig().set("EXPOSED_COPPER_LANTERN", 20);
+                plugin.getCondensablesConfig().set("WEATHERED_COPPER_LANTERN", 20);
+                plugin.getCondensablesConfig().set("OXIDIZED_COPPER_LANTERN", 20);
+                plugin.getCondensablesConfig().set("WAXED_COPPER_LANTERN", 20);
+                plugin.getCondensablesConfig().set("WAXED_EXPOSED_COPPER_LANTERN", 20);
+                plugin.getCondensablesConfig().set("WAXED_WEATHERED_COPPER_LANTERN", 20);
+                plugin.getCondensablesConfig().set("WAXED_OXIDIZED_COPPER_LANTERN", 20);
                 i++;
             }
             if (i > 0) {

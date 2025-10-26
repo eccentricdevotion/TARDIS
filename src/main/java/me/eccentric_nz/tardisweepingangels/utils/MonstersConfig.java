@@ -65,7 +65,7 @@ public class MonstersConfig {
         listOptions.put("angels.teleport_worlds", List.of("world"));
         listOptions.put("cybermen.drops", List.of("REDSTONE", "STONE_BUTTON"));
         listOptions.put("daleks.dalek_sec_drops", List.of("VERDANT_FROGLIGHT", "LEATHER_CHESTPLATE"));
-        listOptions.put("daleks.davros_drops", List.of("CHAIN", "CRIMSON_BUTTON"));
+        listOptions.put("daleks.davros_drops", List.of("IRON_CHAIN", "CRIMSON_BUTTON"));
         listOptions.put("daleks.drops", List.of("SLIME_BALL", "ROTTEN_FLESH"));
         listOptions.put("empty_child.drops", List.of("COOKED_BEEF", "SUGAR"));
         listOptions.put("hath.drops", List.of("SALMON", "STONE_PICKAXE"));
@@ -84,7 +84,7 @@ public class MonstersConfig {
         listOptions.put("smilers.drops", List.of("COMPARATOR", "CHERRY_LOG"));
         listOptions.put("sontarans.drops", List.of("POTATO", "POISONOUS_POTATO"));
         listOptions.put("sutekh.drops", List.of("GLOWSTONE_DUST", "LIGHTNING_ROD"));
-        listOptions.put("the_beast.drops", List.of("MAGMA_BLOCK", "CHAIN"));
+        listOptions.put("the_beast.drops", List.of("MAGMA_BLOCK", "IRON_CHAIN"));
         listOptions.put("the_mire.drops", List.of("HONEY_BOTTLE", "POTION"));
         listOptions.put("toclafane.drops", List.of("GUNPOWDER", "HONEYCOMB"));
         listOptions.put("vampires.drops", List.of("TROPICAL_FISH", "FISHING_ROD"));
@@ -150,9 +150,17 @@ public class MonstersConfig {
         // set angels.teleport_locations to world spawn
         if (!config.contains("angels.teleport_locations")) {
             Location location = plugin.getServer().getWorlds().getFirst().getSpawnLocation();
-            String spawn = location.getWorld().getName()+","+location.getBlockX()+","+location.getBlockY()+","+location.getBlockZ();
+            String spawn = location.getWorld().getName() + "," + location.getBlockX() + "," + location.getBlockY() + "," + location.getBlockZ();
             List<String> list = List.of(spawn);
             plugin.getMonstersConfig().set("angels.teleport_locations", list);
+            i++;
+        }
+        // convert CHAIN to IRON_CHAIN - 1.21.10
+        List<String> drops = config.getStringList("daleks.davros_drops");
+        if (!drops.isEmpty() && drops.contains("CHAIN")) {
+            drops.remove("CHAIN");
+            drops.add("IRON_CHAIN");
+            plugin.getMonstersConfig().set("daleks.davros_drops", drops);
             i++;
         }
         if (i > 0) {

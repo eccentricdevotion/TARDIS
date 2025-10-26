@@ -624,7 +624,7 @@ under_door_blocks:
   - CAULDRON
   - CAVE_AIR
   - CAVE_VINES
-  - CHAIN
+  - IRON_CHAIN
   - CHERRY_BUTTON
   - CHERRY_DOOR
   - CHERRY_FENCE

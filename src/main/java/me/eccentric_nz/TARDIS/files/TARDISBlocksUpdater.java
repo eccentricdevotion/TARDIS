@@ -116,7 +116,7 @@ public class TARDISBlocksUpdater {
             under.add("BLACKSTONE_WALL");
             under.add("BRICK_WALL");
             under.add("CAMPFIRE");
-            under.add("CHAIN");
+            under.add("IRON_CHAIN");
             under.add("CRIMSON_BUTTON");
             under.add("CRIMSON_DOOR");
             under.add("CRIMSON_FENCE");

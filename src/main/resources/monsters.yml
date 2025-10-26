@@ -51,7 +51,7 @@ daleks:
     - LEATHER_CHESTPLATE
   davros_chance: 5
   davros_drops:
-    - CHAIN
+    - IRON_CHAIN
     - CRIMSON_BUTTON
 empty_child:
   worlds:
@@ -195,7 +195,7 @@ zygons:
 the_beast:
   drops:
     - MAGMA_BLOCK
-    - CHAIN
+    - COPPER_CHAIN
   worlds:
     world: 1
 sutekh:
