@@ -135,7 +135,9 @@ public class TARDISRoomMap {
             plugin.getMessenger().sendWithColours(plugin.getConsole(), TardisModule.SEVERE, "The invalid data was: ", "#FFFFFF", data, "#00AAAA");
             plugin.getMessenger().message(plugin.getConsole(), TardisModule.SEVERE, "Please remake the room schematic!");
             // invalid data string - could be legacy material or levelled cauldron
-            if (data.contains("cauldron[level")) {
+            if (data.contains("chain[axis")) {
+                bid = "IRON_CHAIN";
+            } else if (data.contains("cauldron[level")) {
                 bid = "WATER_CAULDRON";
             } else {
                 // legacy lookup

@@ -80,7 +80,7 @@ public class TARDISDevCommand implements CommandExecutor {
     private final Set<String> firstsStr = Sets.newHashSet(
             "add_regions", "advancements", "armour",
             "biome", "box", "brushable",
-            "chunks", "chunky", "circuit", "component",
+            "chain", "chunks", "chunky", "circuit", "component",
             "dalek", "debug", "dialog", "dismount", "displayitem",
             "effect", "empty",
             "frame", "furnace",
@@ -123,6 +123,9 @@ public class TARDISDevCommand implements CommandExecutor {
                         }
                         case "biome" -> {
                             return new TARDISBiomeCommand().reset(sender);
+                        }
+                        case "chain" -> {
+                            return new TARDISChainCommand(plugin).checkSchematics();
                         }
                         case "dalek" -> {
                             if (sender instanceof Player player) {

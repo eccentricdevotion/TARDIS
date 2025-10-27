@@ -42,7 +42,7 @@ public class TARDISDevTabComplete extends TARDISCompleter implements TabComplete
     private final ImmutableList<String> ROOT_SUBS = ImmutableList.of(
             "add_regions", "advancements", "armour",
             "biome", "box", "brushable",
-            "chunks", "chunky", "circuit", "component",
+            "chain", "chunks", "chunky", "circuit", "component",
             "dalek", "debug", "dialog", "dismount", "displayitem",
             "effect", "empty",
             "frame", "furnace",
