@@ -163,6 +163,13 @@ public class MonstersConfig {
             plugin.getMonstersConfig().set("daleks.davros_drops", drops);
             i++;
         }
+        List<String> bdrops = config.getStringList("the_beast.drops");
+        if (!bdrops.isEmpty() && bdrops.contains("CHAIN")) {
+            bdrops.remove("CHAIN");
+            bdrops.add("COPPER_CHAIN");
+            plugin.getMonstersConfig().set("the_beast.drops", bdrops);
+            i++;
+        }
         if (i > 0) {
             try {
                 String monstersPath = plugin.getDataFolder() + File.separator + "monsters.yml";
