@@ -44,7 +44,7 @@ import java.util.Locale;
 class TARDISArchiveCommand {
 
     private final TARDIS plugin;
-    private final List<String> subs = List.of("add", "description", "remove", "scan", "update", "y");
+    private final List<String> subs = List.of("add", "description", "remove", "rename", "scan", "update", "y");
 
     TARDISArchiveCommand(TARDIS plugin) {
         this.plugin = plugin;
@@ -275,6 +275,19 @@ class TARDISArchiveCommand {
             whereu.put("name", name);
             plugin.getQueryFactory().doDelete("archive", whereu);
             plugin.getMessenger().send(player, TardisModule.TARDIS, "ARCHIVE_REMOVE", name);
+        }
+        if (sub.equals("rename")) {
+            // get name
+            String rename = args[3];
+            // update name
+            HashMap<String, Object> set = new HashMap<>();
+            set.put("name", rename);
+            HashMap<String, Object> whereu = new HashMap<>();
+            whereu.put("uuid", uuid);
+            whereu.put("name", name);
+            plugin.getQueryFactory().doUpdate("archive", set, whereu);
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "ARCHIVE_RENAME", rename);
+            return true;
         }
         return true;
     }
