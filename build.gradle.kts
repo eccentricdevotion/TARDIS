@@ -89,7 +89,7 @@ repositories {
 dependencies {
     paperweight.paperDevBundle("1.21.10-R0.1-SNAPSHOT")
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.1.0-SNAPSHOT")
-    compileOnly("net.citizensnpcs:citizensapi:2.0.39-SNAPSHOT") {
+    compileOnly("net.citizensnpcs:citizensapi:2.0.40-SNAPSHOT") {
         isTransitive = false
     }
     compileOnly("com.palmergames.bukkit.towny:towny:0.101.2.4") {
