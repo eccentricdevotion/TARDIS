@@ -43,7 +43,7 @@ public class ResultSetArchiveUse {
         prefix = this.plugin.getPrefix();
     }
 
-    public boolean inActive() {
+    public boolean isActive() {
         PreparedStatement ps = null;
         ResultSet rs = null;
         String query = "SELECT use FROM " + prefix + "archive WHERE uuid = ? AND name = ?";

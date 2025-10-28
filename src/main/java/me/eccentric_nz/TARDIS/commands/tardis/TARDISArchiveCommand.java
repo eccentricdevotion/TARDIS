@@ -92,7 +92,7 @@ class TARDISArchiveCommand {
                 if (sub.equals("remove")) {
                     // check archive is not active
                     ResultSetArchiveUse rsu = new ResultSetArchiveUse(plugin, uuid, name);
-                    if (rsu.inActive()) {
+                    if (rsu.isActive()) {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "ARCHIVE_IN_USE");
                         return true;
                     }

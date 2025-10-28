@@ -47,7 +47,7 @@ public class ArchiveReset {
         PreparedStatement statement = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String query = "SELECT archive_id FROM " + prefix + "archive WHERE uuid = ? AND `use` = 2";
+        String query = "SELECT archive_id FROM " + prefix + "archive WHERE uuid = ? AND `use` IN (1,2)";
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);
