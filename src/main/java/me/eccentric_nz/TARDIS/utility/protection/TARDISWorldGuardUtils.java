@@ -314,7 +314,7 @@ public class TARDISWorldGuardUtils {
         try {
             rm.save();
         } catch (StorageException e) {
-            plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Could not create WorldGuard Protection for exterior renderering room! " + e.getMessage());
+            plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Could not create WorldGuard Protection for exterior rendering room! " + e.getMessage());
         }
     }
 
@@ -339,7 +339,7 @@ public class TARDISWorldGuardUtils {
     }
 
     /**
-     * Adds a WorldGuard protected region to exterior renderer room.
+     * Adds a WorldGuard protected region to a claimed plot.
      *
      * @param uuid the name of the player growing the render room
      * @param one  a start location of a cuboid region
@@ -807,9 +807,18 @@ public class TARDISWorldGuardUtils {
             State flag = plugin.getConfig().getBoolean("preferences.open_door_policy") ? State.ALLOW : State.DENY;
             RegionManager rm = wg.getRegionContainer().get(new BukkitWorld(world));
             for (ProtectedRegion region : rm.getRegions().values()) {
+                // don't change the global region
+                if (region.getId().equals("__global__")) {
+                    continue;
+                }
                 Map<Flag<?>, Object> flags = region.getFlags();
-                flags.put(Flags.ENTRY, flag);
-                flags.put(Flags.EXIT, flag);
+                if (region.getId().equals("TARDIS_junk")) {
+                    flags.put(Flags.ENTRY, State.ALLOW);
+                    flags.put(Flags.EXIT, State.DENY);
+                } else {
+                    flags.put(Flags.ENTRY, flag);
+                    flags.put(Flags.EXIT, flag);
+                }
                 region.setFlags(flags);
             }
             try {
