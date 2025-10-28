@@ -115,9 +115,6 @@ public class TARDISThemeMenuListener extends TARDISMenuListener {
                 }
                 // get material of selected console
                 String perm = Consoles.schematicFor(choice.getType()).getPermission();
-                if (!TARDISPermission.hasPermission(player, "tardis." + perm)) {
-                    return;
-                }
                 // remember the upgrade choice
                 Schematic schematic = Consoles.schematicFor(perm);
                 UUID uuid = player.getUniqueId();
@@ -147,6 +144,9 @@ public class TARDISThemeMenuListener extends TARDISMenuListener {
                         close(player);
                     }
                 } else {
+                    if (!TARDISPermission.hasPermission(player, "tardis." + perm)) {
+                        return;
+                    }
                     TARDISUpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(uuid);
                     int upgrade = plugin.getArtronConfig().getInt("upgrades." + perm);
                     int needed = (tud.getPrevious().getPermission().equals(schematic.getPermission())) ? upgrade / 2 : upgrade;
