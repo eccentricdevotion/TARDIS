@@ -233,18 +233,20 @@ public class TARDISSchematicBuilder {
                                 JsonObject stack = new JsonObject();
                                 Material material = display.getItemStack().getType();
                                 ItemMeta im = display.getItemStack().getItemMeta();
-                                NamespacedKey model = im.getItemModel();
                                 stack.addProperty("type", material.toString());
-                                stack.addProperty("cmd", model.getKey());
+                                if (im.hasItemModel()) {
+                                    NamespacedKey model = im.getItemModel();
+                                    stack.addProperty("cmd", model.getKey());
+                                    TARDISDisplayItem tdi = TARDISDisplayItem.getByModel(model);
+                                    if (tdi != null) {
+                                        stack.addProperty("light", tdi.isLight());
+                                        stack.addProperty("lit", tdi.isLit());
+                                    }
+                                }
                                 // save custom name
                                 if (im.hasDisplayName()) {
                                     JsonElement element = ComponentUtils.getJson(im.displayName());
                                     stack.add("name", element);
-                                }
-                                TARDISDisplayItem tdi = TARDISDisplayItem.getByModel(model);
-                                if (tdi != null) {
-                                    stack.addProperty("light", tdi.isLight());
-                                    stack.addProperty("lit", tdi.isLit());
                                 }
                                 item.add("stack", stack);
                                 itemDisplays.add(item);

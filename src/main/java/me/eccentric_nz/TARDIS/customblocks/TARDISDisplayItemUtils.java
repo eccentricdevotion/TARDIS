@@ -53,6 +53,10 @@ public class TARDISDisplayItemUtils {
                 } else {
                     return TARDISDisplayItem.getByModel(im.getItemModel());
                 }
+            } else if (im.getPersistentDataContainer().has(TARDIS.plugin.getCustomBlockKey())) {
+                String str = im.getPersistentDataContainer().get(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING);
+                NamespacedKey nsk = new NamespacedKey(TARDIS.plugin, str);
+                return TARDISDisplayItem.getByModel(nsk);
             }
         }
         return null;
@@ -316,6 +320,9 @@ public class TARDISDisplayItemUtils {
         ItemMeta im = is.getItemMeta();
         im.displayName(ComponentUtils.toWhite(tdi.getDisplayName()));
         im.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING, tdi.getCustomModel().getKey());
+        if (tdi.isDoor()) {
+            im.setItemModel(tdi.getCustomModel());
+        }
         is.setItemMeta(im);
         double ay = (tdi == TARDISDisplayItem.DOOR || tdi == TARDISDisplayItem.CLASSIC_DOOR || tdi == TARDISDisplayItem.BONE_DOOR) ? 0.0d : 0.5d;
         ItemDisplay display = (ItemDisplay) block.getWorld().spawnEntity(block.getLocation().add(0.5d, ay, 0.5d), EntityType.ITEM_DISPLAY);

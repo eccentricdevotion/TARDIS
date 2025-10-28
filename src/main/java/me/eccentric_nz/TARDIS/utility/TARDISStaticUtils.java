@@ -40,6 +40,7 @@ import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -230,7 +231,15 @@ public class TARDISStaticUtils {
     }
 
     private static boolean isCustomDoorOpen(ItemDisplay display) {
-        return display.getItemStack().getItemMeta().getItemModel().getKey().endsWith("_open");
+        ItemMeta im = display.getItemStack().getItemMeta();
+        if (im.hasItemModel()) {
+            return display.getItemStack().getItemMeta().getItemModel().getKey().endsWith("_open");
+        } else if (im.getPersistentDataContainer().has(TARDIS.plugin.getCustomBlockKey())) {
+            String str = im.getPersistentDataContainer().get(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING);
+            return str.endsWith("_open");
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -318,7 +327,7 @@ public class TARDISStaticUtils {
         if (is != null && is.hasItemMeta()) {
             ItemMeta im = is.getItemMeta();
             if (im.hasDisplayName()) {
-                return ComponentUtils.endsWith(im.displayName(),"Sonic Screwdriver");
+                return ComponentUtils.endsWith(im.displayName(), "Sonic Screwdriver");
             }
         }
         return false;
