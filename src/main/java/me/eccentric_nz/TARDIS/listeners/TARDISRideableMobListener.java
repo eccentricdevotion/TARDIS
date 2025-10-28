@@ -116,8 +116,8 @@ public class TARDISRideableMobListener implements Listener {
                         TARDISPig tmpig = null;
                         TARDISMob mob = null;
                         switch (type) {
-                            case CAMEL, DONKEY, HORSE, MULE, SKELETON_HORSE, ZOMBIE_HORSE -> {
-                                Horse horse = (Horse) e;
+                            case DONKEY, HORSE, MULE, SKELETON_HORSE, ZOMBIE_HORSE -> {
+                                AbstractHorse horse = (AbstractHorse) e;
                                 // save horse
                                 tmhor = new TARDISHorse();
                                 tmhor.setType(type);
@@ -194,6 +194,9 @@ public class TARDISRideableMobListener implements Listener {
                                 mob.setAge(strider.getAge());
                                 mob.setBaby(!strider.isAdult());
                                 mob.setName(ComponentUtils.stripColour(e.customName()));
+                            }
+                            case CAMEL -> {
+
                             }
                             default -> { }
                         }
