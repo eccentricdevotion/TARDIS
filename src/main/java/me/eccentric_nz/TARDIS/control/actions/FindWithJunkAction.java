@@ -42,7 +42,7 @@ public class FindWithJunkAction {
         // set destination to a surrounding chunk where the player's TARDIS is located
         ResultSetTardisID rst = new ResultSetTardisID(plugin);
         if (rst.fromUUID(player.getUniqueId().toString())) {
-            ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
+            ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, rst.getTardisId());
             if (rsc.resultSet() && rsc.getCurrent().location().getWorld() != null) {
                 Chunk chunk = getRandomSurroundingChunk(rsc.getCurrent().location().getChunk());
                 // get a random location in the chunk
