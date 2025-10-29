@@ -49,6 +49,7 @@ public class TVMonstersInventory extends TVGUI {
                 SkullMeta im = (SkullMeta) is.getItemMeta();
                 SkinUtils.getHeadProfile(monster).thenAccept(playerProfile -> {
                     is.setData(DataComponentTypes.PROFILE, ResolvableProfile.resolvableProfile(playerProfile));
+                    im.setPlayerProfile(playerProfile);
                     im.displayName(Component.text(monster.name()));
                     is.setItemMeta(im);
                     // cache the item stack

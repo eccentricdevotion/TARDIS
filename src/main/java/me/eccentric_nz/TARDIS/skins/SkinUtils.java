@@ -23,7 +23,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
-import com.mojang.authlib.properties.PropertyMap;
 import io.papermc.paper.datacomponent.item.ResolvableProfile;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.keys.CybermanVariant;
@@ -36,17 +35,13 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.craftbukkit.entity.CraftPlayer;
-import org.bukkit.craftbukkit.profile.CraftPlayerProfile;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
-import org.bukkit.profile.PlayerTextures;
 
-import java.net.MalformedURLException;
-import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.HashMap;
@@ -59,20 +54,16 @@ public class SkinUtils {
     private static final UUID uuid = UUID.fromString("622bb234-0a3e-46d7-9e1d-ed1f03c76011");
 
     public static CompletableFuture<PlayerProfile> getHeadProfile(Skin skin) {
-//        GameProfile profile = new GameProfile(uuid, "TARDIS_Skin");
         ResolvableProfile profile = ResolvableProfile.resolvableProfile()
                 .uuid(uuid)
+                .name("TARDIS_Skin")
                 .addProperty(new ProfileProperty("textures", skin.value(), skin.signature()))
                 .build();
         CompletableFuture<PlayerProfile> futureProfile = profile.resolve();
         return futureProfile.thenApply(playerProfile -> {
-            PlayerTextures textures = playerProfile.getTextures();
+            playerProfile.getProperties().removeIf(profileProperty -> profileProperty.getName().equals("textures"));
+            playerProfile.getProperties().add(new ProfileProperty("textures", skin.value(), skin.signature()));
 //        PlayerTextures.SkinModel model = (skin.slim()) ? PlayerTextures.SkinModel.SLIM : PlayerTextures.SkinModel.CLASSIC;
-            try {
-                textures.setSkin(URI.create(skin.url()).toURL(), PlayerTextures.SkinModel.CLASSIC);
-            } catch (MalformedURLException e) {
-                TARDIS.plugin.debug("Bad URL: " + skin.url());
-            }
             return playerProfile;
         });
     }

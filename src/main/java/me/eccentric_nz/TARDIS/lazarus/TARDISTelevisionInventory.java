@@ -58,12 +58,13 @@ public class TARDISTelevisionInventory implements InventoryHolder {
         if (PlayerHeadCache.DOCTORS.isEmpty()) {
             for (Skin doctor : DoctorSkins.DOCTORS) {
                 ItemStack is = ItemStack.of(Material.PLAYER_HEAD, 1);
-                ItemMeta im = is.getItemMeta();
+                SkullMeta im = (SkullMeta) is.getItemMeta();
                 SkinUtils.getHeadProfile(doctor).thenAccept(playerProfile -> {
                     is.setData(DataComponentTypes.PROFILE, ResolvableProfile.resolvableProfile(playerProfile));
                     String[] name = doctor.name().split(" - ");
                     im.displayName(Component.text(name[0]));
                     im.lore(List.of(Component.text(name[1])));
+                    im.setPlayerProfile(playerProfile);
                     is.setItemMeta(im);
                     // cache the item stack
                     PlayerHeadCache.DOCTORS.add(is);
@@ -84,6 +85,7 @@ public class TARDISTelevisionInventory implements InventoryHolder {
                 SkullMeta im = (SkullMeta) is.getItemMeta();
                 SkinUtils.getHeadProfile(companion).thenAccept(playerProfile -> {
                     is.setData(DataComponentTypes.PROFILE, ResolvableProfile.resolvableProfile(playerProfile));
+                    im.setPlayerProfile(playerProfile);
                     im.displayName(Component.text(companion.name()));
                     is.setItemMeta(im);
                     // cache the item stack
@@ -105,6 +107,7 @@ public class TARDISTelevisionInventory implements InventoryHolder {
                 SkullMeta im = (SkullMeta) is.getItemMeta();
                 SkinUtils.getHeadProfile(character).thenAccept(playerProfile -> {
                     is.setData(DataComponentTypes.PROFILE, ResolvableProfile.resolvableProfile(playerProfile));
+                    im.setPlayerProfile(playerProfile);
                     im.displayName(Component.text(character.name()));
                     is.setItemMeta(im);
                     // cache the item stack

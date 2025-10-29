@@ -49,6 +49,7 @@ public class TVCyberInventory extends TVGUI {
                 SkullMeta im = (SkullMeta) is.getItemMeta();
                 SkinUtils.getHeadProfile(variant).thenAccept(playerProfile -> {
                     is.setData(DataComponentTypes.PROFILE, ResolvableProfile.resolvableProfile(playerProfile));
+                    im.setPlayerProfile(playerProfile);
                     im.displayName(Component.text(variant.name()));
                     is.setItemMeta(im);
                     // cache the item stack

@@ -50,6 +50,7 @@ public class TVCompanionsInventory extends TVGUI {
                 SkullMeta im = (SkullMeta) is.getItemMeta();
                 SkinUtils.getHeadProfile(companion).thenAccept(playerProfile -> {
                     is.setData(DataComponentTypes.PROFILE, ResolvableProfile.resolvableProfile(playerProfile));
+                    im.setPlayerProfile(playerProfile);
                     im.displayName(Component.text(companion.name()));
                     is.setItemMeta(im);
                     // cache the item stack

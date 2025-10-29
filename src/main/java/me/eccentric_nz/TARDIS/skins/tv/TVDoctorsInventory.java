@@ -51,6 +51,7 @@ public class TVDoctorsInventory extends TVGUI {
                 SkullMeta im = (SkullMeta) is.getItemMeta();
                 SkinUtils.getHeadProfile(doctor).thenAccept(playerProfile -> {
                     is.setData(DataComponentTypes.PROFILE, ResolvableProfile.resolvableProfile(playerProfile));
+                    im.setPlayerProfile(playerProfile);
                     String[] name = doctor.name().split(" - ");
                     im.displayName(Component.text(name[0]));
                     im.lore(List.of(Component.text(name[1])));

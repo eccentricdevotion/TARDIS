@@ -31,19 +31,11 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
-import java.util.List;
 import java.util.UUID;
 
 public class TVSkinListener extends TARDISMenuListener {
 
     private final TARDIS plugin;
-    private final List<String> titles = List.of(
-            "Doctor Skins",
-            "Companion Skins",
-            "Character Skins",
-            "Monster Skins",
-            "Cyberman Skins"
-    );
 
     public TVSkinListener(TARDIS plugin) {
         super(plugin);
