@@ -16,7 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.skins.tv;
 
-import com.destroystokyo.paper.profile.PlayerProfile;
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ResolvableProfile;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.skins.DoctorSkins;
 import me.eccentric_nz.TARDIS.skins.Skin;
@@ -48,14 +49,15 @@ public class TVDoctorsInventory extends TVGUI {
             for (Skin doctor : DoctorSkins.DOCTORS) {
                 ItemStack is = ItemStack.of(Material.PLAYER_HEAD, 1);
                 SkullMeta im = (SkullMeta) is.getItemMeta();
-                PlayerProfile profile = SkinUtils.getHeadProfile(doctor);
-                im.setPlayerProfile(profile);
-                String[] name = doctor.name().split(" - ");
-                im.displayName(Component.text(name[0]));
-                im.lore(List.of(Component.text(name[1])));
-                is.setItemMeta(im);
-                // cache the item stack
-                PlayerHeadCache.DOCTORS.add(is);
+                SkinUtils.getHeadProfile(doctor).thenAccept(playerProfile -> {
+                    is.setData(DataComponentTypes.PROFILE, ResolvableProfile.resolvableProfile(playerProfile));
+                    String[] name = doctor.name().split(" - ");
+                    im.displayName(Component.text(name[0]));
+                    im.lore(List.of(Component.text(name[1])));
+                    is.setItemMeta(im);
+                    // cache the item stack
+                    PlayerHeadCache.DOCTORS.add(is);
+                });
                 stack[i] = is;
                 i++;
             }

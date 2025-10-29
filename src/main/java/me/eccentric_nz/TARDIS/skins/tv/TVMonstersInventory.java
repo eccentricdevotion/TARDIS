@@ -16,7 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.skins.tv;
 
-import com.destroystokyo.paper.profile.PlayerProfile;
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ResolvableProfile;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.skins.MonsterSkins;
 import me.eccentric_nz.TARDIS.skins.Skin;
@@ -46,12 +47,13 @@ public class TVMonstersInventory extends TVGUI {
             for (Skin monster : MonsterSkins.MONSTERS) {
                 ItemStack is = ItemStack.of(Material.PLAYER_HEAD, 1);
                 SkullMeta im = (SkullMeta) is.getItemMeta();
-                PlayerProfile profile = SkinUtils.getHeadProfile(monster);
-                im.setPlayerProfile(profile);
-                im.displayName(Component.text(monster.name()));
-                is.setItemMeta(im);
-                // cache the item stack
-                PlayerHeadCache.MONSTERS.add(is);
+                SkinUtils.getHeadProfile(monster).thenAccept(playerProfile -> {
+                    is.setData(DataComponentTypes.PROFILE, ResolvableProfile.resolvableProfile(playerProfile));
+                    im.displayName(Component.text(monster.name()));
+                    is.setItemMeta(im);
+                    // cache the item stack
+                    PlayerHeadCache.MONSTERS.add(is);
+                });
                 stack[i] = is;
                 i++;
             }

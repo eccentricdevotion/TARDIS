@@ -114,6 +114,7 @@ public class TARDISRideableMobListener implements Listener {
                         TARDISHorse tmhor = null;
                         TARDISLlama tmlla = null;
                         TARDISPig tmpig = null;
+                        TARDISHorse tmcamel = null;
                         TARDISMob mob = null;
                         switch (type) {
                             case DONKEY, HORSE, MULE, SKELETON_HORSE, ZOMBIE_HORSE -> {
@@ -196,7 +197,22 @@ public class TARDISRideableMobListener implements Listener {
                                 mob.setName(ComponentUtils.stripColour(e.customName()));
                             }
                             case CAMEL -> {
-
+                                Camel camel = (Camel) e;
+                                // save camel
+                                tmcamel = new TARDISHorse();
+                                tmcamel.setType(type);
+                                tmcamel.setAge(camel.getTicksLived());
+                                tmcamel.setBaby(!camel.isAdult());
+                                tmcamel.setHorseVariant(e.getType());
+                                tmcamel.setName(ComponentUtils.stripColour(camel.customName()));
+                                tmcamel.setTamed(true);
+                                tmcamel.setHorseInventory(camel.getInventory().getContents());
+                                tmcamel.setDomesticity(camel.getDomestication());
+                                tmcamel.setJumpStrength(camel.getJumpStrength());
+                                double mh = camel.getAttribute(Attribute.MAX_HEALTH).getValue();
+                                tmcamel.setHorseHealth(mh);
+                                tmcamel.setHealth(camel.getHealth());
+                                tmcamel.setSpeed(camel.getAttribute(Attribute.MOVEMENT_SPEED).getBaseValue());
                             }
                             default -> { }
                         }
@@ -281,6 +297,24 @@ public class TARDISRideableMobListener implements Listener {
                                 }
                                 pig.setSaddle(true);
                                 pig.setRemoveWhenFarAway(false);
+                            } else if (tmcamel != null) {
+                                ent = world.spawnEntity(l, EntityType.CAMEL);
+                                Camel humped = (Camel) ent;
+                                humped.setAge(tmcamel.getAge());
+                                humped.setDomestication(tmcamel.getDomesticity());
+                                humped.setJumpStrength(tmcamel.getJumpStrength());
+                                String name = tmcamel.getName();
+                                if (!name.isEmpty()) {
+                                    humped.customName(Component.text(name));
+                                }
+                                AttributeInstance attribute = humped.getAttribute(Attribute.MAX_HEALTH);
+                                attribute.setBaseValue(tmcamel.getHorseHealth());
+                                humped.setHealth(tmcamel.getHealth());
+                                Inventory inv = humped.getInventory();
+                                inv.setContents(tmcamel.getHorseinventory());
+                                humped.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(tmcamel.getSpeed());
+                                humped.setTamed(true);
+                                humped.setOwner(p);
                             } else if (mob != null) {
                                 ent = world.spawnEntity(l, EntityType.STRIDER);
                                 Strider strider = (Strider) ent;

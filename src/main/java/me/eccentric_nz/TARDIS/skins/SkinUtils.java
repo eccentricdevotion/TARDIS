@@ -17,11 +17,14 @@
 package me.eccentric_nz.TARDIS.skins;
 
 import com.destroystokyo.paper.profile.PlayerProfile;
+import com.destroystokyo.paper.profile.ProfileProperty;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
+import com.mojang.authlib.properties.PropertyMap;
+import io.papermc.paper.datacomponent.item.ResolvableProfile;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.keys.CybermanVariant;
 import me.eccentric_nz.TARDIS.custommodels.keys.Features;
@@ -48,25 +51,30 @@ import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 
 public class SkinUtils {
 
     public static final HashMap<UUID, Skin> SKINNED = new HashMap<>();
     private static final UUID uuid = UUID.fromString("622bb234-0a3e-46d7-9e1d-ed1f03c76011");
 
-    public static PlayerProfile getHeadProfile(Skin skin) {
-        GameProfile profile = new GameProfile(uuid, "TARDIS_Skin");
-        profile.properties().removeAll("textures");
-        profile.properties().put("textures", new Property("textures", skin.value(), skin.signature()));
-        PlayerProfile playerProfile = new CraftPlayerProfile(profile);
-        PlayerTextures textures = playerProfile.getTextures();
+    public static CompletableFuture<PlayerProfile> getHeadProfile(Skin skin) {
+//        GameProfile profile = new GameProfile(uuid, "TARDIS_Skin");
+        ResolvableProfile profile = ResolvableProfile.resolvableProfile()
+                .uuid(uuid)
+                .addProperty(new ProfileProperty("textures", skin.value(), skin.signature()))
+                .build();
+        CompletableFuture<PlayerProfile> futureProfile = profile.resolve();
+        return futureProfile.thenApply(playerProfile -> {
+            PlayerTextures textures = playerProfile.getTextures();
 //        PlayerTextures.SkinModel model = (skin.slim()) ? PlayerTextures.SkinModel.SLIM : PlayerTextures.SkinModel.CLASSIC;
-        try {
-            textures.setSkin(URI.create(skin.url()).toURL(), PlayerTextures.SkinModel.CLASSIC);
-        } catch (MalformedURLException e) {
-            TARDIS.plugin.debug("Bad URL: " + skin.url());
-        }
-        return playerProfile;
+            try {
+                textures.setSkin(URI.create(skin.url()).toURL(), PlayerTextures.SkinModel.CLASSIC);
+            } catch (MalformedURLException e) {
+                TARDIS.plugin.debug("Bad URL: " + skin.url());
+            }
+            return playerProfile;
+        });
     }
 
     public static boolean isAlexSkin(Player player) {
@@ -427,13 +435,15 @@ public class SkinUtils {
                 player.getInventory().setItem(EquipmentSlot.HEAD, null);
                 player.getAttribute(Attribute.SCALE).setBaseValue(1.0d);
             }
-            case "Mire", "Slitheen", "Rise of the Cyberman", "Cyber Lord", "Moonbase Cyberman", "Invasion Cyberman", "Melanie Bush" -> {
+            case "Mire", "Slitheen", "Rise of the Cyberman", "Cyber Lord", "Moonbase Cyberman", "Invasion Cyberman",
+                 "Melanie Bush" -> {
                 // head & both hands
                 player.getInventory().setItem(EquipmentSlot.HEAD, null);
                 player.getInventory().setItem(EquipmentSlot.HAND, null);
                 player.getInventory().setItem(EquipmentSlot.OFF_HAND, null);
             }
-            case "Ace", "Bannakaffalatta", "Brigadier Lethbridge-Stewart", "Black Cyberman", "Tenth Planet Cyberman", "Earthshock Cyberman", "Cybershade", "Dalek Sec", "Hath", "Ice Warrior",
+            case "Ace", "Bannakaffalatta", "Brigadier Lethbridge-Stewart", "Black Cyberman", "Tenth Planet Cyberman",
+                 "Earthshock Cyberman", "Cybershade", "Dalek Sec", "Hath", "Ice Warrior",
                  "Impossible Astronaut", "Jo Grant", "Judoon", "Martha Jones", "Omega", "Ood", "Racnoss", "Scarecrow",
                  "Saturnynian", "Sea Devil", "Silence", "Silurian", "Sontaran", "Strax", "Sutekh", "Sycorax", "Tegan",
                  "The Beast", "Vampire of Venice", "Weeping Angel", "Zygon", "Nimon", "Roamn Rory", "Heavenly Host" -> {

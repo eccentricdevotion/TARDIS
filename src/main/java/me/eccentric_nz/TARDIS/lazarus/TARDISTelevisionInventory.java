@@ -16,7 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.lazarus;
 
-import com.destroystokyo.paper.profile.PlayerProfile;
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ResolvableProfile;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUIChameleonPoliceBoxes;
 import me.eccentric_nz.TARDIS.custommodels.GUIChameleonPresets;
@@ -57,15 +58,16 @@ public class TARDISTelevisionInventory implements InventoryHolder {
         if (PlayerHeadCache.DOCTORS.isEmpty()) {
             for (Skin doctor : DoctorSkins.DOCTORS) {
                 ItemStack is = ItemStack.of(Material.PLAYER_HEAD, 1);
-                SkullMeta im = (SkullMeta) is.getItemMeta();
-                PlayerProfile profile = SkinUtils.getHeadProfile(doctor);
-                im.setPlayerProfile(profile);
-                String[] name = doctor.name().split(" - ");
-                im.displayName(Component.text(name[0]));
-                im.lore(List.of(Component.text(name[1])));
-                is.setItemMeta(im);
-                // cache the item stack
-                PlayerHeadCache.DOCTORS.add(is);
+                ItemMeta im = is.getItemMeta();
+                SkinUtils.getHeadProfile(doctor).thenAccept(playerProfile -> {
+                    is.setData(DataComponentTypes.PROFILE, ResolvableProfile.resolvableProfile(playerProfile));
+                    String[] name = doctor.name().split(" - ");
+                    im.displayName(Component.text(name[0]));
+                    im.lore(List.of(Component.text(name[1])));
+                    is.setItemMeta(im);
+                    // cache the item stack
+                    PlayerHeadCache.DOCTORS.add(is);
+                });
                 stacks[i] = is;
                 i++;
             }
@@ -80,12 +82,13 @@ public class TARDISTelevisionInventory implements InventoryHolder {
             for (Skin companion : CompanionSkins.COMPANIONS) {
                 ItemStack is = ItemStack.of(Material.PLAYER_HEAD, 1);
                 SkullMeta im = (SkullMeta) is.getItemMeta();
-                PlayerProfile profile = SkinUtils.getHeadProfile(companion);
-                im.setPlayerProfile(profile);
-                im.displayName(Component.text(companion.name()));
-                is.setItemMeta(im);
-                // cache the item stack
-                PlayerHeadCache.COMPANIONS.add(is);
+                SkinUtils.getHeadProfile(companion).thenAccept(playerProfile -> {
+                    is.setData(DataComponentTypes.PROFILE, ResolvableProfile.resolvableProfile(playerProfile));
+                    im.displayName(Component.text(companion.name()));
+                    is.setItemMeta(im);
+                    // cache the item stack
+                    PlayerHeadCache.COMPANIONS.add(is);
+                });
                 stacks[i] = is;
                 i++;
             }
@@ -100,12 +103,13 @@ public class TARDISTelevisionInventory implements InventoryHolder {
             for (Skin character : CharacterSkins.LAZARUS_CHARACTERS) {
                 ItemStack is = ItemStack.of(Material.PLAYER_HEAD, 1);
                 SkullMeta im = (SkullMeta) is.getItemMeta();
-                PlayerProfile profile = SkinUtils.getHeadProfile(character);
-                im.setPlayerProfile(profile);
-                im.displayName(Component.text(character.name()));
-                is.setItemMeta(im);
-                // cache the item stack
-                PlayerHeadCache.LAZARUS_CHARACTERS.add(is);
+                SkinUtils.getHeadProfile(character).thenAccept(playerProfile -> {
+                    is.setData(DataComponentTypes.PROFILE, ResolvableProfile.resolvableProfile(playerProfile));
+                    im.displayName(Component.text(character.name()));
+                    is.setItemMeta(im);
+                    // cache the item stack
+                    PlayerHeadCache.LAZARUS_CHARACTERS.add(is);
+                });
                 stacks[i] = is;
                 i++;
             }
