@@ -26,53 +26,40 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
 /**
  * @author eccentric_nz
  */
-public class ResultSetArchive {
+public class ResultSetArchiveByUse {
 
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
-    private final HashMap<String, Object> where;
     private final String prefix;
+    private final String uuid;
+    private final int use;
     private Archive archive;
 
-    public ResultSetArchive(TARDIS plugin, HashMap<String, Object> where) {
+    public ResultSetArchiveByUse(TARDIS plugin, String uuid, int use) {
         this.plugin = plugin;
-        this.where = where;
+        this.uuid = uuid;
+        this.use = use;
         prefix = this.plugin.getPrefix();
     }
 
     public boolean resultSet() {
         PreparedStatement statement = null;
         ResultSet rs = null;
-        String wheres = "";
-        if (where != null) {
-            StringBuilder sbw = new StringBuilder();
-            where.forEach((key, value) -> sbw.append(key).append(" = ? AND "));
-            wheres = " WHERE " + sbw.substring(0, sbw.length() - 5);
-        }
-        String query = "SELECT * FROM " + prefix + "archive" + wheres;
+        String query = "SELECT " + prefix + "archive.*, " + prefix + "player_prefs.lights FROM "
+                + prefix + "archive, " + prefix + "player_prefs WHERE archive.uuid = ? AND use = ?"
+                + " AND " + prefix + "archive.uuid = " + prefix + "player_prefs.uuid";
+        plugin.debug(query);
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);
-            if (where != null) {
-                int s = 1;
-                for (Map.Entry<String, Object> entry : where.entrySet()) {
-                    if (entry.getValue() instanceof String) {
-                        statement.setString(s, entry.getValue().toString());
-                    } else {
-                        statement.setInt(s, (Integer) entry.getValue());
-                    }
-                    s++;
-                }
-                where.clear();
-            }
+            statement.setString(1, uuid);
+            statement.setInt(2, use);
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {

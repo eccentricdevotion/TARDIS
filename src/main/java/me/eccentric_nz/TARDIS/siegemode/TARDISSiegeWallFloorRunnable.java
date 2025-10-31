@@ -25,7 +25,7 @@ import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.schematic.ResultSetArchive;
+import me.eccentric_nz.TARDIS.schematic.ResultSetArchiveByUse;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
@@ -80,12 +80,9 @@ class TARDISSiegeWallFloorRunnable implements Runnable {
     public void run() {
         // initialise
         if (!running) {
-            // get Archive if nescessary
+            // get archive if necessary
             if (tud.getSchematic().getPermission().equals("archive")) {
-                HashMap<String, Object> wherean = new HashMap<>();
-                wherean.put("uuid", uuid.toString());
-                wherean.put("use", 1);
-                ResultSetArchive rs = new ResultSetArchive(plugin, wherean);
+                ResultSetArchiveByUse rs = new ResultSetArchiveByUse(plugin, uuid.toString(), 1);
                 if (rs.resultSet()) {
                     archive = rs.getArchive();
                 } else {

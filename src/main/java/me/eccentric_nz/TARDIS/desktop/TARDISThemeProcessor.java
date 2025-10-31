@@ -28,7 +28,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.schematic.ArchiveReset;
-import me.eccentric_nz.TARDIS.schematic.ResultSetArchive;
+import me.eccentric_nz.TARDIS.schematic.ResultSetArchiveByUse;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import org.bukkit.entity.Player;
 
@@ -70,15 +70,16 @@ public class TARDISThemeProcessor {
                 return;
             }
         }
-        // get Archive if necessary
+        // get archive if necessary
         ConsoleSize size_next;
         int nextHeight;
         int nextWidth;
+        if (tud.getPrevious().getPermission().equals("archive")) {
+            // set use as 2
+            new ArchiveReset(plugin, uuid.toString(), 1, 2).resetUse();
+        }
         if (tud.getSchematic().getPermission().equals("archive")) {
-            HashMap<String, Object> where = new HashMap<>();
-            where.put("uuid", uuid.toString());
-            where.put("use", 1);
-            ResultSetArchive rs = new ResultSetArchive(plugin, where);
+            ResultSetArchiveByUse rs = new ResultSetArchiveByUse(plugin, uuid.toString(), 1);
             if (rs.resultSet()) {
                 archive_next = rs.getArchive();
                 JsonObject dimensions = archive_next.getJSON().get("dimensions").getAsJsonObject();
@@ -90,10 +91,10 @@ public class TARDISThemeProcessor {
                 Player cp = plugin.getServer().getPlayer(uuid);
                 plugin.getMessenger().send(cp, TardisModule.TARDIS, "ARCHIVE_NOT_FOUND");
                 // reset next archive back to 0
-
+                new ArchiveReset(plugin, uuid.toString(), 1, 0).resetUse();
                 if (tud.getPrevious().getPermission().equals("archive")) {
                     // reset previous back to 1
-
+                    new ArchiveReset(plugin, uuid.toString(), 2, 1).resetUse();
                 }
                 return;
             }
@@ -113,10 +114,7 @@ public class TARDISThemeProcessor {
         int previousHeight;
         int previousWidth;
         if (tud.getPrevious().getPermission().equals("archive")) {
-            HashMap<String, Object> where = new HashMap<>();
-            where.put("uuid", uuid.toString());
-            where.put("use", 2);
-            ResultSetArchive rs = new ResultSetArchive(plugin, where);
+            ResultSetArchiveByUse rs = new ResultSetArchiveByUse(plugin, uuid.toString(), 2);
             if (rs.resultSet()) {
                 JsonObject dimensions = rs.getArchive().getJSON().get("dimensions").getAsJsonObject();
                 previousHeight = dimensions.get("height").getAsInt();
@@ -128,10 +126,10 @@ public class TARDISThemeProcessor {
                 plugin.getMessenger().send(cp, TardisModule.TARDIS, "ARCHIVE_NOT_FOUND");
                 if (tud.getSchematic().getPermission().equals("archive")) {
                     // reset next back to 0
-
+                    new ArchiveReset(plugin, uuid.toString(), 1, 0).resetUse();
                 }
                 // reset previous archive back to 1
-
+                new ArchiveReset(plugin, uuid.toString(), 2, 1).resetUse();
                 return;
             }
         } else {
@@ -176,11 +174,11 @@ public class TARDISThemeProcessor {
                 plugin.getTrackerKeeper().getUpgrades().remove(uuid);
                 if (tud.getSchematic().getPermission().equals("archive")) {
                     // reset next archive back to 0
-                    new ArchiveReset(plugin, uuid.toString(), 1,0).resetUse();
+                    new ArchiveReset(plugin, uuid.toString(), 1, 0).resetUse();
                 }
                 if (tud.getPrevious().getPermission().equals("archive")) {
                     // reset previous back to 1
-                    new ArchiveReset(plugin, uuid.toString(), 2,1).resetUse();
+                    new ArchiveReset(plugin, uuid.toString(), 2, 1).resetUse();
                 }
                 return;
             }

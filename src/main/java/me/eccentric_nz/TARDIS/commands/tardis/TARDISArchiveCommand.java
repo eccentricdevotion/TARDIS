@@ -132,10 +132,7 @@ class TARDISArchiveCommand {
                     // get the schematic start location, width, length and height
                     JsonObject obj = null;
                     if (current.getPermission().equals("archive")) {
-                        HashMap<String, Object> wherean = new HashMap<>();
-                        wherean.put("uuid", uuid);
-                        wherean.put("name", name);
-                        ResultSetArchive rsa = new ResultSetArchive(plugin, wherean);
+                        ResultSetArchiveByName rsa = new ResultSetArchiveByName(plugin, uuid, name);
                         if (rsa.resultSet()) {
                             Archive archive = rsa.getArchive();
                             obj = archive.getJSON();

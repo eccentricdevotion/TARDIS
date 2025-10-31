@@ -27,8 +27,8 @@ import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.schematic.ArchiveUpdate;
-import me.eccentric_nz.TARDIS.schematic.ResultSetArchive;
 import me.eccentric_nz.TARDIS.schematic.ResultSetArchiveButtons;
+import me.eccentric_nz.TARDIS.schematic.ResultSetArchiveByName;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -39,7 +39,6 @@ import org.geysermc.cumulus.util.FormImage;
 import org.geysermc.floodgate.api.FloodgateApi;
 import org.geysermc.floodgate.api.player.FloodgatePlayer;
 
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.UUID;
 
@@ -121,10 +120,7 @@ public class FloodgateDesktopArchiveForm {
                 // remember the upgrade choice
                 Schematic schm = Consoles.schematicFor("archive");
                 TARDISUpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(uuid);
-                HashMap<String, Object> where = new HashMap<>();
-                where.put("uuid", uuid.toString());
-                where.put("name", label);
-                ResultSetArchive rsa = new ResultSetArchive(plugin, where);
+                ResultSetArchiveByName rsa = new ResultSetArchiveByName(plugin, uuid.toString(), label);
                 if (rsa.resultSet()) {
                     Archive a = rsa.getArchive();
                     if (a.getUse() == 1) {

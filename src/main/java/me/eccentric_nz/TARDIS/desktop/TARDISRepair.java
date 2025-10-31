@@ -29,7 +29,7 @@ import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.rooms.TARDISCondenserData;
 import me.eccentric_nz.TARDIS.schematic.ArchiveUpdate;
-import me.eccentric_nz.TARDIS.schematic.ResultSetArchive;
+import me.eccentric_nz.TARDIS.schematic.ResultSetArchiveByUse;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Material;
@@ -255,28 +255,19 @@ public class TARDISRepair {
             String perm = tardis.getSchematic().getPermission();
             if (perm.equals("archive")) {
                 // try 1
-                HashMap<String, Object> wherea = new HashMap<>();
-                wherea.put("uuid", uuid);
-                wherea.put("use", 1);
-                ResultSetArchive rsa = new ResultSetArchive(plugin, wherea);
+                ResultSetArchiveByUse rsa = new ResultSetArchiveByUse(plugin, uuid.toString(), 1);
                 if (rsa.resultSet()) {
                     obj = rsa.getArchive().getJSON();
                 } else {
                     // try 2
-                    HashMap<String, Object> wherea2 = new HashMap<>();
-                    wherea2.put("uuid", uuid);
-                    wherea2.put("use", 2);
-                    ResultSetArchive rsa2 = new ResultSetArchive(plugin, wherea2);
+                    ResultSetArchiveByUse rsa2 = new ResultSetArchiveByUse(plugin, uuid.toString(), 2);
                     if (rsa2.resultSet()) {
                         obj = rsa2.getArchive().getJSON();
                         // set as active
                         new ArchiveUpdate(plugin, uuid.toString(), rsa2.getArchive().getName()).setInUse();
                     } else {
                         // try 3
-                        HashMap<String, Object> wherea3 = new HashMap<>();
-                        wherea3.put("uuid", uuid);
-                        wherea3.put("use", 0);
-                        ResultSetArchive rsa3 = new ResultSetArchive(plugin, wherea3);
+                        ResultSetArchiveByUse rsa3 = new ResultSetArchiveByUse(plugin, uuid.toString(), 0);
                         if (rsa3.resultSet()) {
                             obj = rsa2.getArchive().getJSON();
                             // set as active
@@ -295,26 +286,17 @@ public class TARDISRepair {
     private String getArchiveName() {
         String uuid = player.getUniqueId().toString();
         // try 1
-        HashMap<String, Object> wherea = new HashMap<>();
-        wherea.put("uuid", uuid);
-        wherea.put("use", 1);
-        ResultSetArchive rsa = new ResultSetArchive(plugin, wherea);
+        ResultSetArchiveByUse rsa = new ResultSetArchiveByUse(plugin, uuid, 1);
         if (rsa.resultSet()) {
             return rsa.getArchive().getName();
         } else {
             // try 2
-            HashMap<String, Object> wherea2 = new HashMap<>();
-            wherea2.put("uuid", uuid);
-            wherea2.put("use", 2);
-            ResultSetArchive rsa2 = new ResultSetArchive(plugin, wherea2);
+            ResultSetArchiveByUse rsa2 = new ResultSetArchiveByUse(plugin, uuid, 2);
             if (rsa2.resultSet()) {
                 return rsa2.getArchive().getName();
             } else {
                 // try 3
-                HashMap<String, Object> wherea3 = new HashMap<>();
-                wherea3.put("uuid", uuid);
-                wherea3.put("use", 0);
-                ResultSetArchive rsa3 = new ResultSetArchive(plugin, wherea3);
+                ResultSetArchiveByUse rsa3 = new ResultSetArchiveByUse(plugin, uuid, 0);
                 if (rsa3.resultSet()) {
                     return rsa3.getArchive().getName();
                 }

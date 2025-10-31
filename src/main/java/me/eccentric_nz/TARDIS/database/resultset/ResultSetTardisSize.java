@@ -20,13 +20,12 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
-import me.eccentric_nz.TARDIS.schematic.ResultSetArchive;
+import me.eccentric_nz.TARDIS.schematic.ResultSetArchiveByUse;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
 
 /**
  * Many facts, figures, and formulas are contained within the Matrix, including... the locations of the TARDIS vaults.
@@ -74,10 +73,7 @@ public class ResultSetTardisSize {
                 rs.next();
                 if (rs.getString("size").equals("ARCHIVE")) {
                     // get archive
-                    HashMap<String, Object> where = new HashMap<>();
-                    where.put("uuid", uuid);
-                    where.put("use", 1);
-                    ResultSetArchive rsa = new ResultSetArchive(plugin, where);
+                    ResultSetArchiveByUse rsa = new ResultSetArchiveByUse(plugin, uuid, 1);
                     if (rsa.resultSet()) {
                         consoleSize = rsa.getArchive().getConsoleSize();
                     }

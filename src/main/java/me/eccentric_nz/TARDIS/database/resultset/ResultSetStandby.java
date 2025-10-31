@@ -22,7 +22,7 @@ import me.eccentric_nz.TARDIS.database.data.StandbyData;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.enumeration.TardisLight;
-import me.eccentric_nz.TARDIS.schematic.ResultSetArchive;
+import me.eccentric_nz.TARDIS.schematic.ResultSetArchiveByUse;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -73,10 +73,7 @@ public class ResultSetStandby {
                     switch (rs.getString("size")) {
                         case "JUNK" -> sd = new StandbyData(Integer.MAX_VALUE, UUID.fromString(rs.getString("uuid")), false, false, ChameleonPreset.JUNK, TardisLight.TENTH);
                         case "ARCHIVE" -> {
-                            HashMap<String, Object> wherea = new HashMap<>();
-                            wherea.put("uuid", rs.getString("uuid"));
-                            wherea.put("use", 1);
-                            ResultSetArchive rsa = new ResultSetArchive(plugin, wherea);
+                            ResultSetArchiveByUse rsa = new ResultSetArchiveByUse(plugin, rs.getString("uuid"), 1);
                             TardisLight lightType = TardisLight.LAMP;
                             if (rsa.resultSet()) {
                                 lightType = rsa.getArchive().getLight();

@@ -42,8 +42,7 @@ import me.eccentric_nz.TARDIS.mobfarming.TARDISFollowerSpawner;
 import me.eccentric_nz.TARDIS.rooms.TARDISCondenserData;
 import me.eccentric_nz.TARDIS.rooms.TARDISPainting;
 import me.eccentric_nz.TARDIS.rotors.TARDISTimeRotor;
-import me.eccentric_nz.TARDIS.schematic.ArchiveReset;
-import me.eccentric_nz.TARDIS.schematic.ResultSetArchive;
+import me.eccentric_nz.TARDIS.schematic.ResultSetArchiveByUse;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import me.eccentric_nz.TARDIS.schematic.getters.DataPackPainting;
 import me.eccentric_nz.TARDIS.schematic.setters.*;
@@ -126,12 +125,9 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
     public void run() {
         // initialise
         if (!running) {
-            // get Archive if necessary
+            // get archive if necessary
             if (tud.getSchematic().getPermission().equals("archive")) {
-                HashMap<String, Object> wherean = new HashMap<>();
-                wherean.put("uuid", uuid.toString());
-                wherean.put("use", 1);
-                ResultSetArchive rs = new ResultSetArchive(plugin, wherean);
+                ResultSetArchiveByUse rs = new ResultSetArchiveByUse(plugin, uuid.toString(), 1);
                 if (rs.resultSet()) {
                     archive = rs.getArchive();
                 } else {
