@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.lazarus.disguise;
 
+import io.papermc.paper.world.WeatheringCopperState;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -36,6 +37,7 @@ import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.WeatheringCopper;
 import net.minecraft.world.level.block.state.BlockState;
 import org.bukkit.World;
 import org.bukkit.craftbukkit.CraftWorld;
@@ -43,6 +45,7 @@ import org.bukkit.craftbukkit.entity.*;
 import org.bukkit.craftbukkit.inventory.CraftItemStack;
 import org.bukkit.craftbukkit.util.CraftNamespacedKey;
 import org.bukkit.entity.Axolotl;
+import net.minecraft.world.entity.animal.coppergolem.CopperGolem;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Frog;
 
@@ -82,6 +85,10 @@ public record TARDISDisguise(EntityType entityType, Object[] options) {
                 packagePath += "monster.breeze.";
                 hasEntityStr = false;
             }
+            case COPPER_GOLEM -> {
+                str = "CopperGolem";
+                packagePath += "animal.coppergolem";
+                hasEntityStr = false;            }
             case CREAKING -> {
                 str = "Creaking";
                 packagePath += "monster.creaking.";
@@ -227,6 +234,10 @@ public record TARDISDisguise(EntityType entityType, Object[] options) {
                     if (disguise.entityType().equals(EntityType.RABBIT) && o instanceof org.bukkit.entity.Rabbit.Type rt) {
                         Rabbit rabbit = (Rabbit) entity;
                         rabbit.setVariant(Rabbit.Variant.byId(rt.ordinal()));
+                    }
+                    if (disguise.entityType().equals(EntityType.COPPER_GOLEM) && o instanceof WeatheringCopperState wcs) {
+                        CopperGolem golem = (CopperGolem) entity;
+                        golem.setWeatherState(WeatheringCopper.WeatherState.valueOf(wcs.toString()));
                     }
                     if (disguise.entityType().equals(EntityType.PANDA) && o instanceof GENE g) {
                         Panda panda = (Panda) entity;

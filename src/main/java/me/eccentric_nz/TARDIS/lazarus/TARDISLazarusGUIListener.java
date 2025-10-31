@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.lazarus;
 
+import io.papermc.paper.world.WeatheringCopperState;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISGeneticManipulatorDisguiseEvent;
 import me.eccentric_nz.TARDIS.api.event.TARDISGeneticManipulatorUndisguiseEvent;
@@ -65,6 +66,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
     private final HashMap<UUID, Integer> foxes = new HashMap<>();
     private final HashMap<UUID, Integer> frogs = new HashMap<>();
     private final HashMap<UUID, Integer> genes = new HashMap<>();
+    private final HashMap<UUID, Integer> golems = new HashMap<>();
     private final HashMap<UUID, Integer> horses = new HashMap<>();
     private final HashMap<UUID, Integer> llamas = new HashMap<>();
     private final HashMap<UUID, Integer> moos = new HashMap<>();
@@ -325,6 +327,13 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
                                             options = new Object[]{getCatType(view), getBoolean(view), AGE.getFromBoolean(getBaby(view))};
                                         }
                                     }
+                                    case COPPER_GOLEM -> {
+                                        if (plugin.isDisguisesOnServer()) {
+                                            new TARDISLazarusLibs(player, disguise, getGolemState(view), getBoolean(view), getBaby(view)).createDisguise();
+                                        } else {
+                                            options = new Object[]{getGolemState(view), getBoolean(view), AGE.getFromBoolean(getBaby(view))};
+                                        }
+                                    }
                                     case PANDA -> {
                                         if (plugin.isDisguisesOnServer()) {
                                             new TARDISLazarusLibs(player, disguise, getGene(view), false, getBaby(view)).createDisguise();
@@ -561,6 +570,15 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
                 }
                 t = Axolotl.Variant.values()[o].toString();
                 axolotls.put(uuid, o);
+            }
+            case "COPPER_GOLEM" -> {
+                if (golems.containsKey(uuid)) {
+                    o = (golems.get(uuid) + 1 < 4) ? golems.get(uuid) + 1 : 0;
+                } else {
+                    o = 0;
+                }
+                t = WeatheringCopperState.values()[o].toString();
+                golems.put(uuid, o);
             }
             case "SNOWMAN" -> {
                 boolean derp;
@@ -803,6 +821,16 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
             return Panda.Gene.valueOf(ComponentUtils.stripColour(im.lore().getFirst()));
         } catch (IllegalArgumentException e) {
             return Panda.Gene.NORMAL;
+        }
+    }
+
+    private WeatheringCopperState getGolemState(InventoryView i) {
+        ItemStack is = i.getItem(48);
+        ItemMeta im = is.getItemMeta();
+        try {
+            return WeatheringCopperState.valueOf(ComponentUtils.stripColour(im.lore().getFirst()));
+        } catch (IllegalArgumentException e) {
+            return WeatheringCopperState.UNAFFECTED;
         }
     }
 

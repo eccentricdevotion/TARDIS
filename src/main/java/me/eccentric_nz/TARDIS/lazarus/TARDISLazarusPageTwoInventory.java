@@ -90,6 +90,7 @@ class TARDISLazarusPageTwoInventory implements InventoryHolder {
         disguises.add(Material.WITHER_SPAWN_EGG);
         // unused
         disguises.add(Material.ZOMBIE_HORSE_SPAWN_EGG);
+        disguises.add(Material.COPPER_GOLEM_SPAWN_EGG);
 
         this.inventory = plugin.getServer().createInventory(this, 54, Component.text("Genetic Manipulator", NamedTextColor.DARK_RED));
         this.inventory.setContents(getItemStack());

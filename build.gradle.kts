@@ -42,7 +42,7 @@ repositories {
     }
     maven {
         name = "libsdisguises"
-        url = uri("https://repo.md-5.net/content/repositories/public/")
+        url = uri("https://mvn.lib.co.nz/public/")
     }
     maven {
         name = "placeholderapi"
@@ -111,10 +111,10 @@ dependencies {
     compileOnly("com.griefcraft:lwc:2.4.1") {
         isTransitive = false
     }
-    compileOnly("com.github.retrooper:packetevents-api:2.9.5") {
+    compileOnly("com.github.retrooper:packetevents-api:2.10.0") {
         isTransitive = false
     }
-    compileOnly("me.libraryaddict.disguises:libsdisguises:11.0.9") {
+    compileOnly("me.libraryaddict.disguises:libsdisguises:11.0.11") {
         isTransitive = false
     }
     compileOnly("net.essentialsx:EssentialsX:2.22.0-SNAPSHOT") {

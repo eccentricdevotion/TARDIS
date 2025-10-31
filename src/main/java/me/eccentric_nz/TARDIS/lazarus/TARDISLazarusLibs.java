@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.lazarus;
 
+import com.github.retrooper.packetevents.protocol.entity.data.struct.WeatheringCopperState;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.libraryaddict.disguise.DisguiseAPI;
@@ -88,6 +89,10 @@ public class TARDISLazarusLibs {
                         catWatcher.setTamed(true);
                     }
                     catWatcher.setBaby(isBaby);
+                }
+                case COPPER_GOLEM -> {
+                    CopperGolemWatcher golemWatcher = (CopperGolemWatcher) livingWatcher;
+                    golemWatcher.setOxidation((WeatheringCopperState) choice);
                 }
                 case FROG -> {
                     FrogWatcher frogWatcher = (FrogWatcher) livingWatcher;
