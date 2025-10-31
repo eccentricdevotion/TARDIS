@@ -14,77 +14,94 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.schematic;
+package me.eccentric_nz.TARDIS.schematic.archive;
 
+import com.google.gson.JsonParser;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
+import me.eccentric_nz.TARDIS.database.data.Archive;
+import me.eccentric_nz.TARDIS.enumeration.TardisLight;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.UUID;
 
 /**
  * @author eccentric_nz
  */
-public class ArchiveUpdate {
+public class ResultSetArchiveByUse {
 
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
-    private final String uuid;
-    private final String name;
     private final String prefix;
+    private final String uuid;
+    private final int use;
+    private Archive archive;
 
-    public ArchiveUpdate(TARDIS plugin, String uuid, String name) {
+    public ResultSetArchiveByUse(TARDIS plugin, String uuid, int use) {
         this.plugin = plugin;
         this.uuid = uuid;
-        this.name = name;
+        this.use = use;
         prefix = this.plugin.getPrefix();
     }
 
-    public void setInUse() {
+    public boolean resultSet() {
         PreparedStatement statement = null;
-        PreparedStatement ps = null;
         ResultSet rs = null;
-        String query = "SELECT archive_id, name, use FROM " + prefix + "archive WHERE uuid = ?";
+        String query = "SELECT " + prefix + "archive.*, " + prefix + "player_prefs.lights FROM "
+                + prefix + "archive, " + prefix + "player_prefs WHERE archive.uuid = ? AND use = ?"
+                + " AND " + prefix + "archive.uuid = " + prefix + "player_prefs.uuid";
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);
             statement.setString(1, uuid);
+            statement.setInt(2, use);
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
-                String update = "UPDATE " + prefix + "archive SET use = ? WHERE archive_id = ?";
-                ps = connection.prepareStatement(update);
                 while (rs.next()) {
-                    int i = 0;
-                    if (rs.getString("name").equals(name)) {
-                        i = 1;
+                    TardisLight light;
+                    try {
+                        light = TardisLight.valueOf(rs.getString("lights"));
+                    } catch (IllegalArgumentException e) {
+                        light = TardisLight.LAMP;
                     }
-                    if (rs.getInt("use") == 1) {
-                        i = 2;
-                    }
-                    ps.setInt(1, i);
-                    ps.setInt(2, rs.getInt("archive_id"));
-                    ps.executeUpdate();
+                    archive = new Archive(
+                            UUID.fromString(rs.getString("uuid")),
+                            rs.getString("name"),
+                            rs.getString("console_size"),
+                            rs.getBoolean("beacon"),
+                            light,
+                            rs.getInt("use"),
+                            rs.getInt("y"),
+                            JsonParser.parseString(rs.getString("data")).getAsJsonObject(),
+                            rs.getString("description")
+                    );
                 }
+            } else {
+                return false;
             }
         } catch (SQLException e) {
-            plugin.debug("ResultSet error for archive update! " + e.getMessage());
+            plugin.debug("ResultSet error for archive! " + e.getMessage());
+            return false;
         } finally {
             try {
                 if (rs != null) {
                     rs.close();
                 }
-                if (ps != null) {
-                    ps.close();
-                }
                 if (statement != null) {
                     statement.close();
                 }
             } catch (SQLException e) {
-                plugin.debug("Error closing archive update! " + e.getMessage());
+                plugin.debug("Error closing archive! " + e.getMessage());
             }
         }
+        return true;
+    }
+
+    public Archive getArchive() {
+        return archive;
     }
 }

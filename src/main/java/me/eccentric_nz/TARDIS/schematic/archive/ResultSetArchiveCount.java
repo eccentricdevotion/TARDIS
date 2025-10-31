@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.schematic;
+package me.eccentric_nz.TARDIS.schematic.archive;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
@@ -27,40 +27,37 @@ import java.sql.SQLException;
 /**
  * @author eccentric_nz
  */
-public class ResultSetArchiveUse {
+public class ResultSetArchiveCount {
 
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final String uuid;
-    private final String name;
     private final String prefix;
 
-    public ResultSetArchiveUse(TARDIS plugin, String uuid, String name) {
+    public ResultSetArchiveCount(TARDIS plugin, String uuid) {
         this.plugin = plugin;
         this.uuid = uuid;
-        this.name = name;
         prefix = this.plugin.getPrefix();
     }
 
-    public boolean isActive() {
+    public int count() {
+        int count = 0;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String query = "SELECT use FROM " + prefix + "archive WHERE uuid = ? AND name = ?";
+        String query = "SELECT COUNT(*) FROM " + prefix + "archive WHERE uuid = ?";
         try {
             service.testConnection(connection);
             ps = connection.prepareStatement(query);
             ps.setString(1, uuid);
-            ps.setString(2, name);
             rs = ps.executeQuery();
-            if (rs.isBeforeFirst()) {
-                rs.next();
-                return rs.getInt("use") == 1;
+            while (rs.next()) {
+                count = rs.getInt(1);
             }
-            return true;
+            return count;
         } catch (SQLException e) {
-            plugin.debug("ResultSet error for archive in use! " + e.getMessage());
-            return false;
+            plugin.debug("ResultSet error for archive count! " + e.getMessage());
+            return 0;
         } finally {
             try {
                 if (rs != null) {
@@ -70,7 +67,7 @@ public class ResultSetArchiveUse {
                     ps.close();
                 }
             } catch (SQLException e) {
-                plugin.debug("Error closing archive in use! " + e.getMessage());
+                plugin.debug("Error closing archive count! " + e.getMessage());
             }
         }
     }

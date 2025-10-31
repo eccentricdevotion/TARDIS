@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.schematic;
+package me.eccentric_nz.TARDIS.schematic.archive;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
@@ -27,46 +27,40 @@ import java.sql.SQLException;
 /**
  * @author eccentric_nz
  */
-public class ArchiveReset {
+public class ResultSetArchiveUse {
 
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final String uuid;
-    private final int from;
-    private final int to;
+    private final String name;
     private final String prefix;
 
-    public ArchiveReset(TARDIS plugin, String uuid, int from, int to) {
+    public ResultSetArchiveUse(TARDIS plugin, String uuid, String name) {
         this.plugin = plugin;
         this.uuid = uuid;
-        this.from = from;
-        this.to = to;
+        this.name = name;
         prefix = this.plugin.getPrefix();
     }
 
-    public void resetUse() {
-        PreparedStatement statement = null;
+    public boolean isActive() {
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String query = "SELECT archive_id FROM " + prefix + "archive WHERE uuid = ? AND `use` = ?";
+        String query = "SELECT use FROM " + prefix + "archive WHERE uuid = ? AND name = ?";
         try {
             service.testConnection(connection);
-            statement = connection.prepareStatement(query);
-            statement.setString(1, uuid);
-            statement.setInt(2, from);
-            rs = statement.executeQuery();
+            ps = connection.prepareStatement(query);
+            ps.setString(1, uuid);
+            ps.setString(2, name);
+            rs = ps.executeQuery();
             if (rs.isBeforeFirst()) {
-                String update = "UPDATE " + prefix + "archive SET `use` = ? WHERE archive_id = ?";
-                ps = connection.prepareStatement(update);
-                while (rs.next()) {
-                    ps.setInt(1, to);
-                    ps.setInt(2, rs.getInt("archive_id"));
-                    ps.executeUpdate();
-                }
+                rs.next();
+                return rs.getInt("use") == 1;
             }
+            return true;
         } catch (SQLException e) {
-            plugin.debug("ResultSet error for archive reset! " + e.getMessage());
+            plugin.debug("ResultSet error for archive in use! " + e.getMessage());
+            return false;
         } finally {
             try {
                 if (rs != null) {
@@ -75,11 +69,8 @@ public class ArchiveReset {
                 if (ps != null) {
                     ps.close();
                 }
-                if (statement != null) {
-                    statement.close();
-                }
             } catch (SQLException e) {
-                plugin.debug("Error closing archive reset! " + e.getMessage());
+                plugin.debug("Error closing archive in use! " + e.getMessage());
             }
         }
     }

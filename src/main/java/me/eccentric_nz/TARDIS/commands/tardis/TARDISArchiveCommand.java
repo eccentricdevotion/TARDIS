@@ -29,8 +29,13 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.schematic.*;
+import me.eccentric_nz.TARDIS.schematic.TARDISSchematicBuilder;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicBuilder.ArchiveData;
+import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
+import me.eccentric_nz.TARDIS.schematic.archive.ResultSetArchiveByName;
+import me.eccentric_nz.TARDIS.schematic.archive.ResultSetArchiveCount;
+import me.eccentric_nz.TARDIS.schematic.archive.ResultSetArchiveName;
+import me.eccentric_nz.TARDIS.schematic.archive.ResultSetArchiveUse;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.entity.Player;
 

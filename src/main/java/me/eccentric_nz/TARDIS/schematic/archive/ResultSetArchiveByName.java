@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.schematic;
+package me.eccentric_nz.TARDIS.schematic.archive;
 
 import com.google.gson.JsonParser;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -54,7 +54,6 @@ public class ResultSetArchiveByName {
         String query = "SELECT " + prefix + "archive.*, " + prefix + "player_prefs.lights FROM "
                 + prefix + "archive, " + prefix + "player_prefs WHERE archive.uuid = ? AND name = ?"
                 + " AND " + prefix + "archive.uuid = " + prefix + "player_prefs.uuid";
-        plugin.debug(query);
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);

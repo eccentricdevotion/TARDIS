@@ -20,7 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
-import me.eccentric_nz.TARDIS.schematic.ResultSetArchiveByUse;
+import me.eccentric_nz.TARDIS.schematic.archive.ResultSetArchiveByUse;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

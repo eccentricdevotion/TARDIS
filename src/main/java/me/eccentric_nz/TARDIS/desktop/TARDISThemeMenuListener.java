@@ -26,7 +26,7 @@ import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
-import me.eccentric_nz.TARDIS.schematic.ArchiveUpdate;
+import me.eccentric_nz.TARDIS.schematic.archive.ArchiveUpdate;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Sound;
