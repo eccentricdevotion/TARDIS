@@ -29,6 +29,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.ambient.Bat;
 import net.minecraft.world.entity.animal.*;
+import net.minecraft.world.entity.animal.coppergolem.CopperGolem;
 import net.minecraft.world.entity.animal.horse.*;
 import net.minecraft.world.entity.animal.sheep.Sheep;
 import net.minecraft.world.entity.animal.wolf.Wolf;
@@ -45,7 +46,6 @@ import org.bukkit.craftbukkit.entity.*;
 import org.bukkit.craftbukkit.inventory.CraftItemStack;
 import org.bukkit.craftbukkit.util.CraftNamespacedKey;
 import org.bukkit.entity.Axolotl;
-import net.minecraft.world.entity.animal.coppergolem.CopperGolem;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Frog;
 
@@ -87,7 +87,7 @@ public record TARDISDisguise(EntityType entityType, Object[] options) {
             }
             case COPPER_GOLEM -> {
                 str = "CopperGolem";
-                packagePath += "animal.coppergolem";
+                packagePath += "animal.coppergolem.";
                 hasEntityStr = false;            }
             case CREAKING -> {
                 str = "Creaking";
