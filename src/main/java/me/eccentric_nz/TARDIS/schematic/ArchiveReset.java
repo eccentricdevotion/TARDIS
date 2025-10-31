@@ -33,13 +33,15 @@ public class ArchiveReset {
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final String uuid;
-    private final int use;
+    private final int from;
+    private final int to;
     private final String prefix;
 
-    public ArchiveReset(TARDIS plugin, String uuid, int use) {
+    public ArchiveReset(TARDIS plugin, String uuid, int from, int to) {
         this.plugin = plugin;
         this.uuid = uuid;
-        this.use = use;
+        this.from = from;
+        this.to = to;
         prefix = this.plugin.getPrefix();
     }
 
@@ -47,17 +49,18 @@ public class ArchiveReset {
         PreparedStatement statement = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String query = "SELECT archive_id FROM " + prefix + "archive WHERE uuid = ? AND `use` IN (1,2)";
+        String query = "SELECT archive_id FROM " + prefix + "archive WHERE uuid = ? AND `use` = ?";
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);
             statement.setString(1, uuid);
+            statement.setInt(2, from);
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
                 String update = "UPDATE " + prefix + "archive SET `use` = ? WHERE archive_id = ?";
                 ps = connection.prepareStatement(update);
                 while (rs.next()) {
-                    ps.setInt(1, use);
+                    ps.setInt(1, to);
                     ps.setInt(2, rs.getInt("archive_id"));
                     ps.executeUpdate();
                 }

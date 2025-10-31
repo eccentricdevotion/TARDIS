@@ -147,6 +147,12 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                     // abort
                     Player cp = plugin.getServer().getPlayer(uuid);
                     plugin.getMessenger().send(cp, TardisModule.TARDIS, "ARCHIVE_NOT_FOUND");
+                    // reset next archive back to 0
+                    new ArchiveReset(plugin, uuid.toString(), 1,0).resetUse();
+                    if (tud.getPrevious().getPermission().equals("archive")) {
+                        // reset previous back to 1
+                        new ArchiveReset(plugin, uuid.toString(), 2,1).resetUse();
+                    }
                     // cancel task
                     plugin.getServer().getScheduler().cancelTask(taskID);
                     return;
@@ -163,6 +169,12 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                     // abort
                     Player cp = plugin.getServer().getPlayer(uuid);
                     plugin.getMessenger().send(cp, TardisModule.TARDIS, "ARCHIVE_NOT_FOUND");
+                    if (tud.getSchematic().getPermission().equals("archive")) {
+                        // reset next back to 0
+                        new ArchiveReset(plugin, uuid.toString(), 1,0).resetUse();
+                    }
+                    // reset previous archive back to 1
+                    new ArchiveReset(plugin, uuid.toString(), 2,1).resetUse();
                     // cancel task
                     plugin.getServer().getScheduler().cancelTask(taskID);
                     return;
@@ -218,6 +230,14 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 wherea.put("uuid", uuid.toString());
                 int amount = plugin.getArtronConfig().getInt("upgrades." + tud.getSchematic().getPermission());
                 plugin.getQueryFactory().alterEnergyLevel("tardis", amount, wherea, player);
+                if (tud.getSchematic().getPermission().equals("archive")) {
+                    // reset next archive back to 0
+                    new ArchiveReset(plugin, uuid.toString(), 1,0).resetUse();
+                }
+                if (tud.getPrevious().getPermission().equals("archive")) {
+                    // reset previous back to 1
+                    new ArchiveReset(plugin, uuid.toString(), 2,1).resetUse();
+                }
             }
             Tardis tardis = rs.getTardis();
             slot = tardis.getTIPS();
@@ -477,9 +497,9 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 where.put("tardis_id", id);
                 plugin.getQueryFactory().doUpdate("tardis", set, where);
             }
-            if (!tud.getSchematic().getPermission().equals("archive")) {
-                // reset archive use back to 0
-                new ArchiveReset(plugin, uuid.toString(), 0).resetUse();
+            // reset archive use back to 0
+            if (tud.getPrevious().getPermission().equals("archive") && !tud.getSchematic().getPermission().equals("archive")) {
+                new ArchiveReset(plugin, uuid.toString(), 1, 0).resetUse();
             }
             // jettison blocks if downgrading to smaller size
             if (downgrade) {

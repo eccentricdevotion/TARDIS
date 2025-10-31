@@ -376,10 +376,6 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                 where.put("tardis_id", id);
                 plugin.getQueryFactory().doUpdate("tardis", set, where);
             }
-            if (!tud.getSchematic().getPermission().equals("archive")) {
-                // reset archive use back to 0
-                new ArchiveReset(plugin, uuid.toString(), 0).resetUse();
-            }
             if (tud.getSchematic().getPermission().equals("coral") && tud.getPrevious().getConsoleSize().equals(ConsoleSize.TALL)) {
                 // clean up space above coral console
                 int tidy = starty + h;

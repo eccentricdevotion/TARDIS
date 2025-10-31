@@ -89,6 +89,12 @@ public class TARDISThemeProcessor {
                 // abort
                 Player cp = plugin.getServer().getPlayer(uuid);
                 plugin.getMessenger().send(cp, TardisModule.TARDIS, "ARCHIVE_NOT_FOUND");
+                // reset next archive back to 0
+
+                if (tud.getPrevious().getPermission().equals("archive")) {
+                    // reset previous back to 1
+
+                }
                 return;
             }
         } else {
@@ -120,6 +126,12 @@ public class TARDISThemeProcessor {
                 // abort
                 Player cp = plugin.getServer().getPlayer(uuid);
                 plugin.getMessenger().send(cp, TardisModule.TARDIS, "ARCHIVE_NOT_FOUND");
+                if (tud.getSchematic().getPermission().equals("archive")) {
+                    // reset next back to 0
+
+                }
+                // reset previous archive back to 1
+
                 return;
             }
         } else {
@@ -147,7 +159,11 @@ public class TARDISThemeProcessor {
                 plugin.getMessenger().send(cp, TardisModule.TARDIS, "UPGRADE_PERCENT_REASON");
                 if (tud.getPrevious().getPermission().equals("archive")) {
                     // reset archive use back to 1
-                    new ArchiveReset(plugin, uuid.toString(), 1).resetUse();
+                    if (tud.getSchematic().getPermission().equals("archive")) {
+                        // reset next back to 0
+                        new ArchiveReset(plugin, uuid.toString(), 1, 0).resetUse();
+                    }
+                    new ArchiveReset(plugin, uuid.toString(), 2, 1).resetUse();
                 }
                 return;
             }
@@ -158,9 +174,13 @@ public class TARDISThemeProcessor {
             if (checkARSGrid(size_prev, size_next, uuid)) {
                 plugin.getMessenger().send(plugin.getServer().getPlayer(uuid), TardisModule.TARDIS, "UPGRADE_ABORT_SPACE");
                 plugin.getTrackerKeeper().getUpgrades().remove(uuid);
+                if (tud.getSchematic().getPermission().equals("archive")) {
+                    // reset next archive back to 0
+                    new ArchiveReset(plugin, uuid.toString(), 1,0).resetUse();
+                }
                 if (tud.getPrevious().getPermission().equals("archive")) {
-                    // reset archive use back to 1
-                    new ArchiveReset(plugin, uuid.toString(), 1).resetUse();
+                    // reset previous back to 1
+                    new ArchiveReset(plugin, uuid.toString(), 2,1).resetUse();
                 }
                 return;
             }
