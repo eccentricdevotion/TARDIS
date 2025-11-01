@@ -97,7 +97,11 @@ public class Damage implements Listener {
                     } else {
                         l = getRandomLocation(t.getWorld());
                     }
-                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> p.teleport(l), 1L);
+                    if (l != null) {
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> p.teleport(l), 1L);
+                    } else {
+                        plugin.getMessenger().message(p, TardisModule.MONSTERS, "NO_CONFIGURED_WORLDS");
+                    }
                     p.addPotionEffect(new PotionEffect(PotionEffectType.NAUSEA, 300, 5, true, false));
                     if (TARDISWeepingAngels.angelsCanSteal()) {
                         stealKey(p);
@@ -111,14 +115,17 @@ public class Damage implements Listener {
         // is this world an allowable world? - we don't want Nether or TARDIS worlds
         if (!angel_tp_worlds.contains(w)) {
             // get a random teleport world
-            w = angel_tp_worlds.get(TARDISConstants.RANDOM.nextInt(angel_tp_worlds.size()));
+            w = !angel_tp_worlds.isEmpty() ? angel_tp_worlds.get(TARDISConstants.RANDOM.nextInt(angel_tp_worlds.size())) : null;
         }
-        Chunk[] chunks = w.getLoadedChunks();
-        Chunk c = chunks[TARDISConstants.RANDOM.nextInt(chunks.length)];
-        int x = c.getX() * 16 + TARDISConstants.RANDOM.nextInt(16);
-        int z = c.getZ() * 16 + TARDISConstants.RANDOM.nextInt(16);
-        int y = w.getHighestBlockYAt(x, z);
-        return new Location(w, x, y + 1, z).add(0.5d, 0, 0.5d);
+        if (w != null) {
+            Chunk[] chunks = w.getLoadedChunks();
+            Chunk c = chunks[TARDISConstants.RANDOM.nextInt(chunks.length)];
+            int x = c.getX() * 16 + TARDISConstants.RANDOM.nextInt(16);
+            int z = c.getZ() * 16 + TARDISConstants.RANDOM.nextInt(16);
+            int y = w.getHighestBlockYAt(x, z);
+            return new Location(w, x, y + 1, z).add(0.5d, 0, 0.5d);
+        }
+        return null;
     }
 
     private Location getSpecificLocation() {
