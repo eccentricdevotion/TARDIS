@@ -49,7 +49,7 @@ public class TARDISVaultChecker implements Runnable {
     public void run() {
         Statement statement = null;
         ResultSet rs = null;
-        String query = "SELECT * FROM " + prefix + "vaults";
+        String query = "SELECT * FROM " + prefix + "vaults WHERE chest_type = 'DROP'";
         int i = 0;
         try {
             service.testConnection(connection);

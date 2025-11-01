@@ -108,6 +108,55 @@ public class ResultSetVault {
      * Retrieves an SQL ResultSet from the vaults table. This method builds an SQL query string from the parameters
      * supplied and then executes the query. Use the getters to retrieve the results.
      *
+     * @param where the location of the drop chest.
+     * @param chestType the type of chest to get the record for.
+     * @return true or false depending on whether any data matches the query.
+     */
+    public boolean fromLocationAndChestType(String where, SmelterChest chestType) {
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+        String query = "SELECT * FROM " + prefix + "vaults WHERE location = ? AND chest_type = ?";
+        try {
+            service.testConnection(connection);
+            statement = connection.prepareStatement(query);
+            statement.setString(1, where);
+            statement.setString(2, chestType.toString());
+            rs = statement.executeQuery();
+            if (rs.isBeforeFirst()) {
+                while (rs.next()) {
+                    vault_id = rs.getInt("v_id");
+                    tardis_id = rs.getInt("tardis_id");
+                    location = rs.getString("location");
+                    this.chestType = chestType;
+                    x = rs.getInt("x");
+                    y = rs.getInt("y");
+                    z = rs.getInt("z");
+                }
+            } else {
+                return false;
+            }
+        } catch (SQLException e) {
+            plugin.debug("ResultSet error for vaults table! " + e.getMessage());
+            return false;
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (statement != null) {
+                    statement.close();
+                }
+            } catch (SQLException e) {
+                plugin.debug("Error closing vaults table! " + e.getMessage());
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Retrieves an SQL ResultSet from the vaults table. This method builds an SQL query string from the parameters
+     * supplied and then executes the query. Use the getters to retrieve the results.
+     *
      * @param id the tardis_id of the player updating the drop chest.
      * @return true or false depending on whether any data matches the query.
      */
@@ -174,7 +223,7 @@ public class ResultSetVault {
                     vault_id = rs.getInt("v_id");
                     tardis_id = rs.getInt("tardis_id");
                     location = rs.getString("location");
-                    chestType = SmelterChest.valueOf(rs.getString("chest_type"));
+                    this.chestType = chestType;
                     x = rs.getInt("x");
                     y = rs.getInt("y");
                     z = rs.getInt("z");

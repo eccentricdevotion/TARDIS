@@ -43,6 +43,7 @@ public class TARDISVaultListener implements Listener {
 
     private final TARDIS plugin;
     private final Set<Material> containers = new HashSet<>();
+//    private Block drop = null;
     private Block leftover = null;
 
     public TARDISVaultListener(TARDIS plugin) {
@@ -55,7 +56,6 @@ public class TARDISVaultListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.NORMAL)
-
     public void onVaultDropChestClose(InventoryCloseEvent event) {
         Inventory inv = event.getInventory();
         InventoryHolder holder = inv.getHolder(false);
@@ -67,9 +67,10 @@ public class TARDISVaultListener implements Listener {
             String loc = l.toString();
             // check is drop chest
             ResultSetVault rs = new ResultSetVault(plugin);
-            if (!rs.fromLocation(loc)) {
+            if (!rs.fromLocationAndChestType(loc, SmelterChest.DROP)) {
                 return;
             }
+//            drop = l.getBlock();
             // make a list of container locations
             Set<String> containerLocations = new HashSet<>();
             containerLocations.add(loc);
@@ -162,12 +163,18 @@ public class TARDISVaultListener implements Listener {
             }
             // put remaining item stacks into the leftover chest
             if (leftover != null) {
-                ItemStack[] stacks = inv.getContents();
+                ItemStack[] stacks = Arrays.stream(holder.getInventory().getContents())
+                        .filter(Objects::nonNull)
+                        .toArray(ItemStack[]::new);
                 Container c = (Container) leftover.getState();
                 HashMap<Integer, ItemStack> cannotFit = c.getInventory().addItem(stacks);
-                inv.clear();
-                ItemStack[] remainingItems = cannotFit.values().toArray(new ItemStack[0]);
-                inv.addItem(remainingItems);
+                holder.getInventory().clear();
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                    ItemStack[] remainingItems = cannotFit.values().toArray(new ItemStack[0]);
+                    if (remainingItems.length > 0) {
+                        holder.getInventory().addItem(remainingItems);
+                    }
+                }, 2L);
             }
         }
     }
