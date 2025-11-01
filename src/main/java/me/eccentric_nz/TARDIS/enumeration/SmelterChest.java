@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.enumeration;
 public enum SmelterChest {
 
     DROP, // VAULT
+    UNSORTED, // VAULT
     FUEL, // SMELTER
     SMELT, // SMELTER
     LIBRARY

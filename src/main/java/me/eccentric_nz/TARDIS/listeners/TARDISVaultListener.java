@@ -18,7 +18,9 @@ package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetVault;
+import me.eccentric_nz.TARDIS.enumeration.SmelterChest;
 import me.eccentric_nz.TARDIS.sonic.TARDISSonicSorterListener;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Tag;
@@ -35,15 +37,13 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class TARDISVaultListener implements Listener {
 
     private final TARDIS plugin;
     private final Set<Material> containers = new HashSet<>();
+    private Block leftover = null;
 
     public TARDISVaultListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -51,6 +51,7 @@ public class TARDISVaultListener implements Listener {
         containers.add(Material.CHEST);
         containers.add(Material.TRAPPED_CHEST);
         containers.addAll(Tag.SHULKER_BOXES.getValues());
+        containers.addAll(Tag.COPPER_CHESTS.getValues());
     }
 
     @EventHandler(priority = EventPriority.NORMAL)
@@ -65,13 +66,22 @@ public class TARDISVaultListener implements Listener {
             }
             String loc = l.toString();
             // check is drop chest
-            ResultSetVault rs = new ResultSetVault(plugin, loc);
-            if (!rs.resultSet()) {
+            ResultSetVault rs = new ResultSetVault(plugin);
+            if (!rs.fromLocation(loc)) {
                 return;
             }
             // make a list of container locations
             Set<String> containerLocations = new HashSet<>();
             containerLocations.add(loc);
+            // get the leftover chest if there is one
+            ResultSetVault rsl = new ResultSetVault(plugin);
+            if (rsl.fromIdAndChestType(rs.getTardis_id(), SmelterChest.UNSORTED)) {
+                containerLocations.add(rsl.getLocation());
+                Location left = TARDISStaticLocationGetters.getLocationFromBukkitString(rsl.getLocation());
+                if (left != null) {
+                    leftover = left.getBlock();
+                }
+            }
             // sort contents
             TARDISSonicSorterListener.sortInventory(inv);
             World w = container.getWorld();
@@ -149,6 +159,15 @@ public class TARDISVaultListener implements Listener {
                         }
                     }
                 }
+            }
+            // put remaining item stacks into the leftover chest
+            if (leftover != null) {
+                ItemStack[] stacks = inv.getContents();
+                Container c = (Container) leftover.getState();
+                HashMap<Integer, ItemStack> cannotFit = c.getInventory().addItem(stacks);
+                inv.clear();
+                ItemStack[] remainingItems = cannotFit.values().toArray(new ItemStack[0]);
+                inv.addItem(remainingItems);
             }
         }
     }

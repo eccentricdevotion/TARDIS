@@ -28,6 +28,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.Control;
+import me.eccentric_nz.TARDIS.enumeration.SmelterChest;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.Updateable;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
@@ -321,7 +322,8 @@ public class TARDISUpdateListener implements Listener {
                     }, 2L);
                 }
                 case SMELT, FUEL -> new TARDISSmelterCommand(plugin).addDropChest(player, updateable, id, block);
-                case VAULT -> new TARDISVaultCommand(plugin).addDropChest(player, id, block);
+                case UNSORTED -> new TARDISVaultCommand(plugin).addDropChest(player, id, block, SmelterChest.UNSORTED);
+                case VAULT -> new TARDISVaultCommand(plugin).addDropChest(player, id, block, SmelterChest.DROP);
                 // GENERATOR, DISPENSER, HANDBRAKE, ZERO, RELATIVITY_DIFFERENTIATOR
                 default ->
                         plugin.getQueryFactory().insertControl(id, Control.getUPDATE_CONTROLS().get(updateable.getName()), blockLocStr, secondary ? 1 : 0);

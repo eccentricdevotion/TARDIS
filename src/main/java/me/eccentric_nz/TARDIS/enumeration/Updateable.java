@@ -92,6 +92,7 @@ public enum Updateable {
     TERMINAL(true, true, Tag.SIGNS.getValues(), TARDISUpdateableCategory.INTERFACES, "Destination Terminal"),
     THROTTLE(true, true, Set.of(Material.REPEATER), TARDISUpdateableCategory.CONTROLS, "Space Time Throttle"),
     TOGGLE_WOOL(true, true, TARDISUpdateableCategory.OTHERS, "Toggle Black Wool behind door"),
+    UNSORTED(false, false, Tag.COPPER_CHESTS.getValues(), TARDISUpdateableCategory.LOCATIONS, "Vault room unsorted chest"),
     VAULT(false, false, Set.of(Material.CHEST, Material.TRAPPED_CHEST, Material.BARREL), TARDISUpdateableCategory.LOCATIONS, "Vault room drop chest"),
     VILLAGE(false, false, true, TARDISUpdateableCategory.LOCATIONS, "Village room"),
     WEATHER(true, true, TARDISUpdateableCategory.INTERFACES, "TARDIS Weather Menu"),

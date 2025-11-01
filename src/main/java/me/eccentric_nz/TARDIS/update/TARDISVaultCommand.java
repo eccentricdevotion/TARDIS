@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.update;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetVault;
+import me.eccentric_nz.TARDIS.enumeration.SmelterChest;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -37,7 +38,7 @@ class TARDISVaultCommand {
         this.plugin = plugin;
     }
 
-    void addDropChest(Player player, int id, Block b) {
+    void addDropChest(Player player, int id, Block b, SmelterChest chestType) {
         // player is in their own TARDIS
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", player.getUniqueId().toString());
@@ -63,12 +64,13 @@ class TARDISVaultCommand {
         HashMap<String, Object> set = new HashMap<>();
         set.put("tardis_id", id);
         set.put("location", pos);
+        set.put("chest_type", chestType.toString());
         set.put("x", x);
         set.put("y", y);
         set.put("z", z);
         // is there an existing drop chest record?
-        ResultSetVault rsv = new ResultSetVault(plugin, id);
-        if (rsv.resultSet()) {
+        ResultSetVault rsv = new ResultSetVault(plugin);
+        if (rsv.fromIdAndChestType(id, chestType)) {
             HashMap<String, Object> whereVault = new HashMap<>();
             whereVault.put("v_id", rsv.getVault_id());
             plugin.getQueryFactory().doUpdate("vaults", set, whereVault);
