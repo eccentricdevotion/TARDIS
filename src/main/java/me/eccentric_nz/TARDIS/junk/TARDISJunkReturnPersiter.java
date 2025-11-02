@@ -60,9 +60,9 @@ public class TARDISJunkReturnPersiter {
 
     public void setJunkTime() {
         try {
-            ps = connection.prepareStatement("UPDATE " + prefix + "tardis SET lastuse =  ? WHERE uuid = '00000000-aaaa-bbbb-cccc-000000000000'");
+            ps = connection.prepareStatement("UPDATE " + prefix + "tardis SET lastuse = ? WHERE uuid = '00000000-aaaa-bbbb-cccc-000000000000'");
             ps.setLong(1, System.currentTimeMillis());
-            ps.executeQuery();
+            ps.executeUpdate();
         } catch (SQLException e) {
             plugin.debug("Update error for junk return persistence: " + e.getMessage());
         } finally {
