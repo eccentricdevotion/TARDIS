@@ -812,7 +812,7 @@ public class TARDISWorldGuardUtils {
                     continue;
                 }
                 Map<Flag<?>, Object> flags = region.getFlags();
-                if (region.getId().equals("TARDIS_junk")) {
+                if (region.getId().equals("tardis_junk")) {
                     flags.put(Flags.ENTRY, State.ALLOW);
                     flags.put(Flags.EXIT, State.DENY);
                 } else {
