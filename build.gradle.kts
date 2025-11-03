@@ -139,7 +139,7 @@ dependencies {
         isTransitive = false
     }
     compileOnly(files("libs/VaultAPI.jar"))
-    compileOnly("org.geysermc.floodgate:api:2.2.4-SNAPSHOT")
+    compileOnly("org.geysermc.floodgate:api:2.2.5-SNAPSHOT")
     compileOnly("org.geysermc.geyser:api:2.9.0-SNAPSHOT")
     compileOnly("org.jsoup:jsoup:1.21.2") {
         isTransitive = false
