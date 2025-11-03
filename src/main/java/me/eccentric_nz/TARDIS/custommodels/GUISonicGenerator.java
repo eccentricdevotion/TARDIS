@@ -108,7 +108,7 @@ public enum GUISonicGenerator {
 
     public String getName() {
         String s = toString();
-        return TARDISStringUtils.capitalise(s);
+        return this == BIO_SCANNER_UPGRADE ? "Bio-scanner Upgrade" : TARDISStringUtils.capitalise(s);
     }
 
     public String getLore() {

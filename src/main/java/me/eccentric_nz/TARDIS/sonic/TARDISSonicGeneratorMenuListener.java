@@ -202,9 +202,7 @@ public class TARDISSonicGeneratorMenuListener extends TARDISMenuListener {
                     generate(p, sonic, getCost(view));
                 }
             }
-            case 53 ->
-                // close
-                    close(p);
+            case 53 -> close(p); // close
             default -> {
             }
         }
@@ -217,7 +215,10 @@ public class TARDISSonicGeneratorMenuListener extends TARDISMenuListener {
         where.put("uuid", p.getUniqueId().toString());
         where.put("activated", 1);
         ItemMeta im = is.getItemMeta();
-        String split = im.getItemModel().getKey().replace("sonic/", "");
+        CustomModelDataComponent component = im.getCustomModelDataComponent();
+        List<Float> floats = component.getFloats();
+        Float model = floats.getFirst();
+        String split = SonicVariant.getByFloat(model).toString().toLowerCase(Locale.ROOT);
         set.put("model", split);
         if (im.hasLore()) {
             List<Component> lore = im.lore();

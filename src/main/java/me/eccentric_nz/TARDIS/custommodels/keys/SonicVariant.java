@@ -78,4 +78,13 @@ public enum SonicVariant {
     public List<Float> getFloats() {
         return floats;
     }
+
+    public static SonicVariant getByFloat(Float f) {
+        for (SonicVariant variant : values()) {
+            if (!variant.getFloats().isEmpty() && f.equals(variant.getFloats().getFirst())) {
+                return variant;
+            }
+        }
+        return ELEVENTH;
+    }
 }
