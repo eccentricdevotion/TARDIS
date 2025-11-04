@@ -34,6 +34,7 @@ import org.bukkit.block.BlockFace;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * The Wibbly Lever was a part of The Doctor's TARDIS console. The lever had at least two functions: opening and closing
@@ -198,7 +199,7 @@ public class TARDISPresetBuilderFactory {
             return ChameleonPreset.ADAPTIVE;
         } else {
             try {
-                return ChameleonPreset.valueOf(plugin.getAdaptiveConfig().getString(biome.toString()));
+                return ChameleonPreset.valueOf(plugin.getAdaptiveConfig().getString(biome.key().value().toUpperCase(Locale.ROOT)));
             } catch (IllegalArgumentException e) {
                 return ChameleonPreset.FACTORY;
             }
