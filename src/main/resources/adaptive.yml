@@ -29,6 +29,8 @@ STONY_PEAKS: *hills
 BIRCH_FOREST: &forest FOREST
 FOREST: *forest
 OLD_GROWTH_BIRCH_FOREST: *forest
+PALE_GARDEN: *forest
+CHERRY_GROVE: *forest
 # nether biomes
 NETHER_WASTES: &nether NETHER
 SOUL_SAND_VALLEY: *nether

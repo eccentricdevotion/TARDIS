@@ -1406,6 +1406,7 @@ public class TARDIS extends JavaPlugin {
         handlesConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "handles.yml"));
         new TARDISHandlesUpdater(this, handlesConfig).checkHandles();
         adaptiveConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "adaptive.yml"));
+        new TARDISAdaptiveUpdater(this).checkBiomesConfig();
         generatorConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "generator.yml"));
         new TARDISGeneratorUpdater(this, generatorConfig).checkTrees();
         if (getConfig().getBoolean("modules.weeping_angels")) {
