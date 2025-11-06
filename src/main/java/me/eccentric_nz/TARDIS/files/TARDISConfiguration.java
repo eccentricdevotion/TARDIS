@@ -102,7 +102,6 @@ public class TARDISConfiguration {
         booleanOptions.put("conversions.exploding", false);
         booleanOptions.put("conversions.player_prefs_materials", false);
         booleanOptions.put("conversions.short_grass", false);
-        booleanOptions.put("creation.add_perms", true);
         booleanOptions.put("creation.check_for_home", true);
         booleanOptions.put("creation.create_worlds", false);
         booleanOptions.put("creation.create_worlds_with_perms", false);
@@ -480,6 +479,11 @@ public class TARDISConfiguration {
         // remove walk_in_tardis
         if (config.contains("preferences.walk_in_tardis")) {
             plugin.getConfig().set("preferences.walk_in_tardis", null);
+            i++;
+        }
+        // remove add_perms
+        if (config.contains("creation.add_perms")) {
+            plugin.getConfig().set("creation.add_perms", null);
             i++;
         }
         // switch chemistry to a module

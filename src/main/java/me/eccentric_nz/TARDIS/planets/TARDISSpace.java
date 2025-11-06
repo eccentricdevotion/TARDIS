@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.planets;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.InventoryManager;
-import me.eccentric_nz.TARDIS.utility.TARDISGroupManagerHandler;
 import org.bukkit.GameRule;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
@@ -73,13 +72,6 @@ public class TARDISSpace {
             if (plugin.getPM().isPluginEnabled("WorldBorder")) {
                 // wb <world> set <radius> <x> <z>
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "wb " + name + " set " + plugin.getConfig().getInt("creation.border_radius") + " 0 0");
-            }
-            if (plugin.getConfig().getBoolean("creation.add_perms")) {
-                if (plugin.getPM().isPluginEnabled("GroupManager")) {
-                    TARDISGroupManagerHandler tgmh = new TARDISGroupManagerHandler(plugin);
-                    String player = name.substring(13);
-                    tgmh.addPerms(player);
-                }
             }
         }
         tardisWorld.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);

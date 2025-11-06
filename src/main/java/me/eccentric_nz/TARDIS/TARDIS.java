@@ -375,7 +375,6 @@ public class TARDIS extends JavaPlugin {
             if (worldGuardOnServer && getConfig().getBoolean("allow.wg_flag_set")) {
                 bl.loadAntiBuild();
             }
-            loadPerms();
             loadBooks();
             // copy advancements to tardis datapack
             new TARDISChecker(this).checkDataPack();
@@ -1513,20 +1512,6 @@ public class TARDIS extends JavaPlugin {
         pluginRespect.loadChunkyBorder();
         pluginRespect.loadGriefPrevention();
         pluginRespect.checkWorldGuardEntry();
-    }
-
-    /**
-     * Loads the permissions handler for TARDIS worlds if the relevant permissions plugin is enabled. Currently only
-     * supports GroupManager and bPermissions (as they have per world config files).
-     */
-    private void loadPerms() {
-        if (pm.getPlugin("GroupManager") != null || pm.getPlugin("bPermissions") != null) {
-            // copy default permissions file if not present
-            if (getConfig().getBoolean("creation.create_worlds")) {
-                tardisCopier.copy("permissions.txt");
-                getMessenger().message(console, TardisModule.TARDIS, "World specific permissions plugin detected please edit plugins/TARDIS/permissions.txt");
-            }
-        }
     }
 
     /**
