@@ -17,11 +17,17 @@
 package me.eccentric_nz.TARDIS.utility.protection;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import org.bukkit.entity.Player;
 import org.popcraft.chunky.platform.BukkitPlayer;
 import org.popcraft.chunky.platform.BukkitWorld;
 import org.popcraft.chunky.platform.util.Location;
+import org.popcraft.chunky.shape.Shape;
+import org.popcraft.chunkyborder.BorderData;
 import org.popcraft.chunkyborder.ChunkyBorder;
 import org.popcraft.chunkyborder.event.server.BlockPlaceEvent;
+
+import java.util.Optional;
+
 /**
  * The TARDIS grants its passengers the ability to understand and speak other languages. This is due to the TARDIS's
  * telepathic field.
@@ -43,16 +49,20 @@ public class TARDISChunkyChecker {
      * @param l the location to check.
      * @return true or false depending on whether the location is outside the border
      */
-    public boolean isOutsideBorder(org.bukkit.entity.Player p, org.bukkit.Location l) {
+    public boolean isOutsideBorder(Player p, org.bukkit.Location l) {
         boolean bool = false;
         if (chunky != null) {
-            final BukkitWorld world = new BukkitWorld(l.getWorld());
-            final Location location = new Location(world, l.getX(), l.getY(), l.getZ());
-            final BukkitPlayer player = new BukkitPlayer(p);
-            final BlockPlaceEvent blockPlaceEvent = new BlockPlaceEvent(player, location);
-            chunky.getChunky().getEventBus().call(blockPlaceEvent);
-            if (blockPlaceEvent.isCancelled()) {
-                return true;
+            Optional<BorderData> borderData = chunky.getBorder(l.getWorld().getName());
+            if (borderData.isPresent()) {
+                Shape border = borderData.get().getBorder();
+                bool = !border.isBounding(l.getX(), l.getZ());
+            } else {
+                final BukkitWorld world = new BukkitWorld(l.getWorld());
+                final Location location = new Location(world, l.getX(), l.getY(), l.getZ());
+                final BukkitPlayer player = new BukkitPlayer(p);
+                final BlockPlaceEvent blockPlaceEvent = new BlockPlaceEvent(player, location);
+                chunky.getChunky().getEventBus().call(blockPlaceEvent);
+                bool = blockPlaceEvent.isCancelled();
             }
         }
         return bool;
