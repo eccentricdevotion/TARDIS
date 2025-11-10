@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.custommodels.GUIChameleonPoliceBoxes;
 import me.eccentric_nz.TARDIS.custommodels.keys.ChameleonVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.ColouredVariant;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -130,8 +131,6 @@ public class TARDISPoliceBoxInventory implements InventoryHolder {
             boxes[i] = pan;
             i++;
         }
-        // colour picker police boxes broken in 1.21.4
-        /*
         if (TARDISPermission.hasPermission(player, "tardis.preset.police_box_tinted")) {
             ItemStack any = ItemStack.of(Material.LEATHER_HORSE_ARMOR, 1);
             ItemMeta colour = any.getItemMeta();
@@ -141,7 +140,6 @@ public class TARDISPoliceBoxInventory implements InventoryHolder {
             boxes[i] = any;
             i++;
         }
-         */
         for (String custom : plugin.getCustomModelConfig().getConfigurationSection("models").getKeys(false)) {
             if (i < 50) {
                 try {
