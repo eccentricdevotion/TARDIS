@@ -92,7 +92,7 @@ dependencies {
     compileOnly("net.citizensnpcs:citizensapi:2.0.40-SNAPSHOT") {
         isTransitive = false
     }
-    compileOnly("com.palmergames.bukkit.towny:towny:0.101.2.4") {
+    compileOnly("com.palmergames.bukkit.towny:towny:0.101.2.7") {
         isTransitive = false
     }
     compileOnly("org.mvplugins.multiverse.core:multiverse-core:5.3.3") {
