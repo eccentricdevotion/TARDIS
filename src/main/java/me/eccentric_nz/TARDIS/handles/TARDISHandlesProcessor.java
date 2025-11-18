@@ -396,7 +396,7 @@ public class TARDISHandlesProcessor {
                                                     plugin.getMessenger().handlesSend(player, "TRAVEL_NO_PERM_BIOME");
                                                     continue;
                                                 }
-                                                if (current.location().getBlock().getBiome().toString().equals(first)) {
+                                                if (current.location().getBlock().getBiome().getKey().value().toUpperCase(Locale.ROOT).equals(first)) {
                                                     continue;
                                                 }
                                                 Biome biome;

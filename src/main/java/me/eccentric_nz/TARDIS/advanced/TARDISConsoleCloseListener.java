@@ -186,7 +186,7 @@ public class TARDISConsoleCloseListener implements Listener {
                                     plugin.getMessenger().send(p, TardisModule.TARDIS, "TRAVEL_NO_PERM_BIOME");
                                     continue;
                                 }
-                                if (current.location().getBlock().getBiome().toString().equals(first)) {
+                                if (current.location().getBlock().getBiome().getKey().value().toUpperCase(Locale.ROOT).equals(first)) {
                                     continue;
                                 }
                                 Biome biome;

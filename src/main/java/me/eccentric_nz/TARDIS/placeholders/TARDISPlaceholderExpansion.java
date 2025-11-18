@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.OfflinePlayer;
 
 import java.util.HashMap;
+import java.util.Locale;
 
 public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
 
@@ -258,7 +259,7 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
                             rsc = new ResultSetCurrentFromId(plugin, rsti.getTardisId());
                             if (rsc.resultSet()) {
                                 // get from current location
-                                result = rsc.getCurrent().location().getBlock().getBiome().toString();
+                                result = rsc.getCurrent().location().getBlock().getBiome().getKey().value().toUpperCase(Locale.ROOT);
                             } else {
                                 result = "";
                             }

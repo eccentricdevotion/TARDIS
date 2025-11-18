@@ -38,6 +38,7 @@ import org.bukkit.util.Vector;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Various utility methods.
@@ -245,7 +246,7 @@ public class TARDISUtils {
         TARDISDisplayType displayType = plugin.getTrackerKeeper().getDisplay().get(player.getUniqueId());
         return switch (displayType) {
             case BIOME -> displayType.getFormat()
-                    .replace("%BIOME%", player.getLocation().getBlock().getBiome().toString());
+                    .replace("%BIOME%", player.getLocation().getBlock().getBiome().getKey().value().toUpperCase(Locale.ROOT));
             case COORDS -> displayType.getFormat()
                     .replace("%X%", String.format("%,d", player.getLocation().getBlockX()))
                     .replace("%Y%", String.format("%,d", player.getLocation().getBlockY()))
@@ -269,7 +270,7 @@ public class TARDISUtils {
                     .replace("%FACING_XZ%", getFacingXZ(player))
                     .replace("%YAW%", String.format("%.1f", player.getLocation().getYaw()))
                     .replace("%PITCH%", String.format("%.1f", player.getLocation().getPitch()))
-                    .replace("%BIOME%", player.getLocation().getBlock().getBiome().toString())
+                    .replace("%BIOME%", player.getLocation().getBlock().getBiome().getKey().value().toUpperCase(Locale.ROOT))
                     .replace("%TARGET_BLOCK%", player.getTargetBlock(null, 5).getType().toString());
         };
     }
