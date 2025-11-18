@@ -148,7 +148,7 @@ public class TARDISPowerButton {
             Location location = TARDISStaticLocationGetters.getLocationFromBukkitString(rslls.getLocation());
             ItemFrame frame = getFrame(location.getBlock());
             if (frame != null) {
-                setFrame(frame, powered, Control.LIGHT_LEVEL);
+                setFrame(frame, !powered, Control.LIGHT_LEVEL);
             }
         }
         // exterior
@@ -157,7 +157,7 @@ public class TARDISPowerButton {
             Location location = TARDISStaticLocationGetters.getLocationFromBukkitString(rsllx.getLocation());
             ItemFrame frame = getFrame(location.getBlock());
             if (frame != null) {
-                setFrame(frame, powered, Control.EXTERIOR_LAMP);
+                setFrame(frame, !powered, Control.EXTERIOR_LAMP);
             }
         }
     }
