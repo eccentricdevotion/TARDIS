@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.lights;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.builders.utility.LightLevel;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.customblocks.VariableLight;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetLamps;
@@ -47,7 +48,7 @@ public class TARDISLightSequence {
         ResultSetLightLevel lightLevel = new ResultSetLightLevel(plugin);
         if (lightLevel.fromTypeAndID(50, id)) {
             plugin.getTrackerKeeper().getLightChangers().add(uuid);
-            int currentLevel = lightLevel.getLevel();
+            int currentLevel = LightLevel.interior_level[lightLevel.getLevel()];
             // get light sequence + delays + levels , current light type
             ResultSetLightPrefs rs = new ResultSetLightPrefs(plugin);
             if (rs.fromID(id)) {
