@@ -43,10 +43,10 @@ public class TARDISLightSequence {
     }
 
     public void play() {
-        plugin.getTrackerKeeper().getLightChangers().add(uuid);
         // get current light level
         ResultSetLightLevel lightLevel = new ResultSetLightLevel(plugin);
         if (lightLevel.fromTypeAndID(50, id)) {
+            plugin.getTrackerKeeper().getLightChangers().add(uuid);
             int currentLevel = lightLevel.getLevel();
             // get light sequence + delays + levels , current light type
             ResultSetLightPrefs rs = new ResultSetLightPrefs(plugin);
