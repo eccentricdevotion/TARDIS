@@ -92,10 +92,10 @@ dependencies {
     compileOnly("net.citizensnpcs:citizensapi:2.0.40-SNAPSHOT") {
         isTransitive = false
     }
-    compileOnly("com.palmergames.bukkit.towny:towny:0.101.2.7") {
+    compileOnly("com.palmergames.bukkit.towny:towny:0.102.0.0") {
         isTransitive = false
     }
-    compileOnly("org.mvplugins.multiverse.core:multiverse-core:5.3.3") {
+    compileOnly("org.mvplugins.multiverse.core:multiverse-core:5.3.4") {
         isTransitive = false
     }
     compileOnly("org.mvplugins.multiverse.inventories:multiverse-inventories:5.2.0") {
@@ -114,7 +114,7 @@ dependencies {
     compileOnly("com.github.retrooper:packetevents-api:2.10.1") {
         isTransitive = false
     }
-    compileOnly("me.libraryaddict.disguises:libsdisguises:11.0.11") {
+    compileOnly("me.libraryaddict.disguises:libsdisguises:11.0.13") {
         isTransitive = false
     }
     compileOnly("net.essentialsx:EssentialsX:2.22.0-SNAPSHOT") {
@@ -148,7 +148,7 @@ dependencies {
     compileOnly("org.popcraft:chunky-bukkit:1.4.51")
     compileOnly("org.popcraft:chunkyborder-common:1.2.33")
     compileOnly("net.luckperms:api:5.5")
-    compileOnly("org.apache.commons:commons-lang3:3.19.0")
+    compileOnly("org.apache.commons:commons-lang3:3.20.0")
     compileOnly(files("libs/TerraformGenerator.jar"))
     compileOnly("com.formdev:flatlaf:3.6.2") {
         isTransitive = false
