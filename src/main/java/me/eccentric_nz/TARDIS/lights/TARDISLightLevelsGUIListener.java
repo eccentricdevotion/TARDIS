@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.lights;
 
-import com.mojang.datafixers.util.Pair;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.utility.LightLevel;
 import me.eccentric_nz.TARDIS.control.actions.ConsoleLampAction;
@@ -39,6 +38,18 @@ import java.util.List;
 import java.util.UUID;
 
 public class TARDISLightLevelsGUIListener extends TARDISMenuListener {
+
+    private static class StateResult {
+        Boolean success;
+        Integer strength;
+        Integer level;
+
+        public StateResult(Boolean success, Integer strength, Integer level) {
+            this.success = success;
+            this.strength = strength;
+            this.level = level;
+        }
+    }
 
     private final TARDIS plugin;
 
@@ -76,67 +87,67 @@ public class TARDISLightLevelsGUIListener extends TARDISMenuListener {
                 switch (slot) {
                     case 9 -> {
                         // interior minus
-                        Pair<Boolean, Integer> setLevel = getNewState(view, 10, false);
-                        if (setLevel.getFirst()) {
+                        StateResult setLevel = getNewState(view, 10, false);
+                        if (setLevel.success) {
                             // update indicator
-                            setState(view, 10, setLevel.getSecond());
+                            setState(view, 10, setLevel.strength);
                             // set light level
-                            setLightLevel(setLevel.getSecond(), 50, id);
+                            setLightLevel(setLevel.level, 50, id);
                             // TODO update control?
                         }
                     }
                     case 11 -> {
                         // interior plus
-                        Pair<Boolean, Integer> setLevel = getNewState(view, 10, true);
-                        if (setLevel.getFirst()) {
+                        StateResult setLevel = getNewState(view, 10, true);
+                        if (setLevel.success) {
                             // update indicator
-                            setState(view, 10, setLevel.getSecond());
+                            setState(view, 10, setLevel.strength);
                             // set light level
-                            setLightLevel(setLevel.getSecond(), 50, id);
+                            setLightLevel(setLevel.level, 50, id);
                             // TODO update control?
                         }
                     }
                     case 15 -> {
                         // exterior minus
-                        Pair<Boolean, Integer> setLevel = getNewState(view, 16, false);
-                        if (setLevel.getFirst()) {
+                        StateResult setLevel = getNewState(view, 16, false);
+                        if (setLevel.success) {
                             // update indicator
-                            setState(view, 16, setLevel.getSecond());
+                            setState(view, 16, setLevel.strength);
                             // set light level
-                            setLightLevel(setLevel.getSecond(), 49, id);
+                            setLightLevel(setLevel.level, 49, id);
                             // TODO update control?
                         }
                     }
                     case 17 -> {
                         // exterior plus
-                        Pair<Boolean, Integer> setLevel = getNewState(view, 16, true);
-                        if (setLevel .getFirst()) {
+                        StateResult setLevel = getNewState(view, 16, true);
+                        if (setLevel.success) {
                             // update indicator
-                            setState(view, 16, setLevel.getSecond());
+                            setState(view, 16, setLevel.strength);
                             // set light level
-                            setLightLevel(setLevel.getSecond(), 49, id);
+                            setLightLevel(setLevel.level, 49, id);
                             // TODO update control?
                         }
                     }
                     case 30 -> {
                         // console minus
-                        Pair<Boolean, Integer> setLevel = getNewState(view, 31, false);
-                        if (setLevel.getFirst()) {
+                        StateResult setLevel = getNewState(view, 31, false);
+                        if (setLevel.success) {
                             // update indicator
-                            setState(view, 31, setLevel.getSecond());
+                            setState(view, 31, setLevel.strength);
                             // set light level
-                            setLightLevel(setLevel.getSecond(), 56, id);
+                            setLightLevel(setLevel.level, 56, id);
                             // TODO update control?
                         }
                     }
                     case 32 -> {
                         // console plus
-                        Pair<Boolean, Integer> setLevel = getNewState(view, 31, true);
-                        if (setLevel.getFirst()) {
+                        StateResult setLevel = getNewState(view, 31, true);
+                        if (setLevel.success) {
                             // update indicator
-                            setState(view, 31, setLevel.getSecond());
+                            setState(view, 31, setLevel.strength);
                             // set light level
-                            setLightLevel(setLevel.getSecond(), 56, id);
+                            setLightLevel(setLevel.level, 56, id);
                             // TODO update control?
                         }
                     }
@@ -147,35 +158,35 @@ public class TARDISLightLevelsGUIListener extends TARDISMenuListener {
         }
     }
 
-    private Pair<Boolean, Integer> getNewState(InventoryView view, int slot, boolean next) {
+    private StateResult getNewState(InventoryView view, int slot, boolean next) {
         ItemStack is = view.getItem(slot);
         ItemMeta im = is.getItemMeta();
         String lore = ComponentUtils.stripColour(im.lore().getFirst());
-        int state = TARDISNumberParsers.parseInt(lore);
+        int currentStrength = TARDISNumberParsers.parseInt(lore);
         int index;
         if (slot == 16) {
-            index = ArrayUtils.indexOf(LightLevel.exterior_level, state);
+            index = ArrayUtils.indexOf(LightLevel.exterior_level, currentStrength);
             if (next && index - 1 >= 0) {
-                return new Pair<>(true, LightLevel.exterior_level[index - 1]);
-            } else if (index + 1 < LightLevel.exterior_level.length) {
-                return new Pair<>(true, LightLevel.exterior_level[index + 1]);
+                return new StateResult(true, LightLevel.exterior_level[index - 1], index - 1);
+            } else if (!next && index + 1 < LightLevel.exterior_level.length) {
+                return new StateResult(true, LightLevel.exterior_level[index + 1], index + 1);
             }
         } else {
-            index = ArrayUtils.indexOf(LightLevel.interior_level, state);
+            index = ArrayUtils.indexOf(LightLevel.interior_level, currentStrength);
             if (next && index - 1 >= 0) {
-                return new Pair<>(true, LightLevel.interior_level[index - 1]);
-            } else if (index + 1 < LightLevel.interior_level.length) {
-                return new Pair<>(true, LightLevel.interior_level[index + 1]);
+                return new StateResult(true, LightLevel.interior_level[index - 1], index - 1);
+            } else if (!next && index + 1 < LightLevel.interior_level.length) {
+                return new StateResult(true, LightLevel.interior_level[index + 1], index + 1);
             }
         }
-        return new Pair<>(false, state);
+        return new StateResult(false, currentStrength, 0);
     }
 
-    private void setState(InventoryView view, int slot, int level) {
+    private void setState(InventoryView view, int slot, int strength) {
         ItemStack is = view.getItem(slot);
         ItemMeta im = is.getItemMeta();
         List<Component> lore = im.lore();
-        lore.set(0, Component.text(level));
+        lore.set(0, Component.text(strength));
         im.lore(lore);
         is.setItemMeta(im);
     }
