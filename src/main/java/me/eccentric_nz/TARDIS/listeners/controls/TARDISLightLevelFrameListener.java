@@ -59,7 +59,7 @@ public class TARDISLightLevelFrameListener implements Listener {
                     boolean isOff = current.endsWith("_off");
                     String[] split = current.replace("_off", "").split("_");
                     String num = split[split.length - 1];
-                    int which = TARDISNumberParsers.parseInt(num);
+                    int which = rs.getLevel();
                     int cmd = which + 1;
                     if (cmd > 7) {
                         cmd = start;
