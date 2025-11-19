@@ -77,8 +77,6 @@ public class TARDISLampToggler {
                 Levelled levelled = TARDISConstants.LIGHT;
                 ItemDisplay display = TARDISDisplayItemUtils.getFromBoundingBox(b);
                 if (on) {
-                    levelled.setLevel(0);
-                    b.setBlockData(levelled);
                     if (b.getType().equals(Material.SEA_LANTERN) || (b.getType().equals(Material.REDSTONE_LAMP))) {
                         // convert to light display item
                         TARDISDisplayItemUtils.set(light.getOff(), b, id);
@@ -99,6 +97,8 @@ public class TARDISLampToggler {
                             display.setItemStack(is);
                         }
                     }
+                    levelled.setLevel(0);
+                    b.setBlockData(levelled);
                 } else {
                     // set light level from light level switch preference
                     ResultSetInteriorLightLevel rsill = new ResultSetInteriorLightLevel(plugin, id);
