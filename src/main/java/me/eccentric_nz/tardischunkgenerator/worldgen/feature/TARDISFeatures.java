@@ -29,6 +29,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class TARDISFeatures {
 
     public static final TARDISGrassData GRASS;
+    public static final TARDISGrassData VASTIAL;
     public static final TARDISTreeData SKARO_TREE;
     public static final TARDISTreeData GALLIFREY_TREE_RED_SAND;
     public static final TARDISTreeData GALLIFREY_TREE_TERRACOTTA;
@@ -67,6 +68,7 @@ public class TARDISFeatures {
             gallifrey_terracotta_decor = Material.RED_WOOL;
         }
         GRASS = new TARDISGrassData(RuleBasedBlockStateProvider.simple(Blocks.GRASS_BLOCK), BlockPredicate.matchesBlocks(Blocks.TERRACOTTA, Blocks.RED_SAND), UniformInt.of(2, 8), 2);
+        VASTIAL = new TARDISGrassData(RuleBasedBlockStateProvider.simple(Blocks.WHITE_CONCRETE_POWDER), BlockPredicate.matchesBlocks(Blocks.STONE, Blocks.GRASS_BLOCK), UniformInt.of(2, 8), 2);
         SKARO_TREE = new TARDISTreeData(Material.SAND, skaro_wood, skaro_leaves, skaro_decor, true);
         GALLIFREY_TREE_RED_SAND = new TARDISTreeData(Material.RED_SAND, gallifrey_sand_wood, gallifrey_sand_leaves, gallifrey_sand_decor, true);
         GALLIFREY_TREE_TERRACOTTA = new TARDISTreeData(Material.TERRACOTTA, gallifrey_terracotta_wood, gallifrey_terracotta_leaves, gallifrey_terracotta_decor, true);

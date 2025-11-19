@@ -48,7 +48,6 @@ public final class TARDISSiluriaSpawnListener implements Listener {
             return;
         }
         if (spawnReason == SpawnReason.SPAWNER) {
-
             if (!event.getEntity().getType().equals(EntityType.SKELETON)) {
                 return;
             }

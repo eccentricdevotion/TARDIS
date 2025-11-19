@@ -24,12 +24,14 @@ import me.eccentric_nz.tardischunkgenerator.worldgen.utils.IslandSpiral;
 import me.eccentric_nz.tardischunkgenerator.worldgen.utils.SkaroStructureUtility;
 import me.eccentric_nz.tardischunkgenerator.worldgen.utils.TARDISLootTables;
 import me.eccentric_nz.tardischunkgenerator.worldgen.utils.WaterCircle;
+import me.eccentric_nz.tardisweepingangels.equip.MonsterEquipment;
 import me.eccentric_nz.tardisweepingangels.monsters.daleks.DalekEquipment;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.levelgen.structure.placement.RandomSpreadStructurePlacement;
 import net.minecraft.world.level.levelgen.structure.placement.RandomSpreadType;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Tag;
 import org.bukkit.block.Chest;
 import org.bukkit.block.CreatureSpawner;
 import org.bukkit.block.data.BlockData;
@@ -45,12 +47,12 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Random;
 
-public class SkaroStructurePopulator extends BlockPopulator {
+public class TelosStructurePopulator extends BlockPopulator {
 
     private final TARDIS plugin;
     private final List<EntityType> animals = List.of(EntityType.SHEEP, EntityType.COW, EntityType.PIG, EntityType.CHICKEN, EntityType.HORSE, EntityType.GOAT);
 
-    public SkaroStructurePopulator(TARDIS plugin) {
+    public TelosStructurePopulator(TARDIS plugin) {
         this.plugin = plugin;
     }
 
@@ -62,14 +64,14 @@ public class SkaroStructurePopulator extends BlockPopulator {
             int y = 128;
             int zz = z * 16;
             for (int i = 128; i > 60; i--) {
-                if (!limitedRegion.getType(xx, y, zz).equals(Material.SAND) && !limitedRegion.getType(xx, y, zz).equals(Material.WATER)) {
+                if (limitedRegion.getType(xx, y, zz).isAir()) {
                     y--;
                 } else {
                     break;
                 }
             }
             if (limitedRegion.isInRegion(xx, y, zz)) {
-                if (limitedRegion.getType(xx, y - 1, zz).equals(Material.WATER)) { // TODO should be just y (not block below)
+                if (Tag.ICE.isTagged(limitedRegion.getType(xx, y - 1, zz))) { // TODO should be just y (not block below)
                     // build an island
                     // get a spiral
                     IslandSpiral spiral = new IslandSpiral();
@@ -77,8 +79,8 @@ public class SkaroStructurePopulator extends BlockPopulator {
                     // create a blob
                     boolean[][] blob = WaterCircle.makeBlob();
                     // loop through the chunk coords and set blocks
-                    // top four layers SAND
-                    // the rest SANDSTONE
+                    // top four layers SNOW_BLOCK
+                    // the rest STONE
                     for (int r = 1; r < 15; r++) {
                         for (int c = 1; c < 15; c++) {
                             if (blob[r][c]) {
@@ -92,9 +94,9 @@ public class SkaroStructurePopulator extends BlockPopulator {
                                     if (limitedRegion.isInRegion(wx, wy, wz)) {
                                         Material material;
                                         if (h > top - 3) {
-                                            material = Material.SAND;
+                                            material = Material.SNOW_BLOCK;
                                         } else {
-                                            material = Material.SANDSTONE;
+                                            material = Material.STONE;
                                         }
                                         limitedRegion.setType(wx, wy, wz, material);
                                     }
@@ -107,9 +109,9 @@ public class SkaroStructurePopulator extends BlockPopulator {
                     // spawn a dalek or three?
                     if (plugin.getConfig().getBoolean("modules.weeping_angels")) {
                         for (int i = 0; i < random.nextInt(3) + 1; i++) {
-                            LivingEntity le = (LivingEntity) limitedRegion.spawnEntity(new Location(null, xx + 8, y + 3, zz + 8), EntityType.SKELETON);
+                            LivingEntity le = (LivingEntity) limitedRegion.spawnEntity(new Location(null, xx + 8, y + 3, zz + 8), EntityType.ZOMBIE);
                             if (plugin.getConfig().getBoolean("modules.weeping_angels")) {
-                                DalekEquipment.set(le, false);
+                                plugin.getTardisAPI().setCyberEquipment(le, false);
                             }
                         }
                     }
@@ -161,7 +163,7 @@ public class SkaroStructurePopulator extends BlockPopulator {
                 startY = 129;
                 // set startY to the highest block Y at x, z
                 for (int i = 128; i > 60; i--) {
-                    if (!limitedRegion.getType(startX, startY, startZ).equals(Material.SAND) && !limitedRegion.getType(startX, startY, startZ).equals(Material.WATER)) {
+                    if (!limitedRegion.getType(startX, startY, startZ).equals(Material.SNOW) && !limitedRegion.getType(startX, startY, startZ).equals(Material.SNOW_BLOCK)) {
                         startY--;
                     } else {
                         break;
@@ -201,7 +203,7 @@ public class SkaroStructurePopulator extends BlockPopulator {
                             case SPAWNER -> {
                                 limitedRegion.setBlockData(x, y, z, data);
                                 CreatureSpawner cs = (CreatureSpawner) limitedRegion.getBlockState(x, y, z);
-                                cs.setSpawnedType(EntityType.SKELETON);
+                                cs.setSpawnedType(EntityType.ZOMBIE);
                                 cs.update();
                             }
                             case SOUL_SAND -> {

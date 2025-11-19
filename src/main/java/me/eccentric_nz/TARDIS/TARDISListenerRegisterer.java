@@ -125,6 +125,7 @@ import me.eccentric_nz.tardischemistry.product.GlowStickListener;
 import me.eccentric_nz.tardischemistry.product.ProductGUIListener;
 import me.eccentric_nz.tardischemistry.product.SparklerListener;
 import me.eccentric_nz.tardischemistry.reducer.ReducerGUIListener;
+import org.bukkit.World;
 
 /**
  * Registers all the listeners for the various events required to use the TARDIS.
@@ -361,6 +362,20 @@ class TARDISListenerRegisterer {
         plugin.getPM().registerEvents(new TelepathicGUIListener(plugin), plugin);
         plugin.getPM().registerEvents(new TelepathicBiomeListener(plugin), plugin);
         plugin.getPM().registerEvents(new TelepathicStructureListener(plugin), plugin);
+        if (plugin.getPlanetsConfig().getBoolean("planets.telos.enabled")) {
+            plugin.debug("Telos enabled, registering planet event listeners");
+            if (plugin.getPlanetsConfig().getBoolean("planets.telos.vastial.enabled")) {
+                plugin.getPM().registerEvents(new TARDISVastialListener(plugin), plugin);
+            }
+            if (plugin.getConfig().getBoolean("modules.weeping_angels")) {
+                plugin.getPM().registerEvents(new TARDISTelosSpawnListener(plugin), plugin);
+            }
+            // set world time to twilight
+            World telos = plugin.getServer().getWorld("telos");
+            if (telos!= null) {
+                telos.setTime(13000L);
+            }
+        }
         if (plugin.getPlanetsConfig().getBoolean("planets.skaro.enabled")) {
             plugin.debug("Skaro enabled, registering planet event listeners");
             if (plugin.getPlanetsConfig().getBoolean("planets.skaro.acid")) {

@@ -16,7 +16,6 @@ planets:
       doWeatherCycle: false
       doDaylightCycle: false
       doWardenSpawning: false
-    spawn_chunk_radius: 0
     allow_portals: false
     alias: TimeVortex
     icon: CRYING_OBSIDIAN
@@ -35,7 +34,6 @@ planets:
       doDaylightCycle: false
       announceAdvancements: false
       doWardenSpawning: false
-    spawn_chunk_radius: 0
     allow_portals: false
     alias: ZeroRoom
     icon: PINK_WOOL
@@ -55,7 +53,6 @@ planets:
     world_type: NORMAL
     environment: NORMAL
     generator: TARDIS:skaro
-    spawn_chunk_radius: 0
     spawn_other_mobs: true
     gamerules:
       doTraderSpawning: false
@@ -72,7 +69,6 @@ planets:
     world_type: NORMAL
     environment: NORMAL
     generator: TARDIS:siluria
-    spawn_chunk_radius: 0
     spawn_other_mobs: true
     gamerules:
       doTraderSpawning: false
@@ -89,7 +85,6 @@ planets:
     world_type: NORMAL
     environment: NORMAL
     generator: TARDIS:gallifrey
-    spawn_chunk_radius: 0
     spawn_other_mobs: true
     gamerules:
       doTraderSpawning: false
@@ -103,6 +98,26 @@ planets:
       uses: 1
       chance: 20
     helmic_regulator_order: -1
+  telos:
+    enabled: false
+    resource_pack: default
+    vastial:
+      enabled: true
+      gunpowder_chance: 30
+    gamemode: SURVIVAL
+    time_travel: true
+    world_type: NORMAL
+    environment: NORMAL
+    generator: TARDIS:telos
+    spawn_other_mobs: true
+    gamerules:
+      doTraderSpawning: false
+      doPatrolSpawning: false
+      doDaylightCycle: false
+    allow_portals: false
+    alias: Telos
+    icon: PACKED_ICE
+    helmic_regulator_order: -1
   rooms:
     enabled: false
     resource_pack: default
@@ -111,7 +126,6 @@ planets:
     world_type: FLAT
     environment: NORMAL
     generator: TARDIS:rooms
-    spawn_chunk_radius: 0
     spawn_other_mobs: false
     gamerules:
       doWeatherCycle: false
