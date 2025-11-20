@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.travel;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.customblocks.TARDISBlockDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.enumeration.TardisLight;
@@ -67,7 +68,7 @@ class TARDISLampsRunnable implements Runnable {
                 ItemDisplay display = TARDISDisplayItemUtils.get(b);
                 // switch the item stack
                 if (display != null) {
-                    if (light.getCloister() == TARDISDisplayItem.NONE) {
+                    if (light.getCloister() == TARDISBlockDisplayItem.NONE) {
                         levelled.setLevel((lights_on) ? level : 0);
                         b.setBlockData(levelled);
                     } else {
@@ -95,13 +96,13 @@ class TARDISLampsRunnable implements Runnable {
                     if (display != null) {
                         // switch the item stack
                         TARDISDisplayItem tdi = light.getCloister();
-                        if (i == 0 && tdi != TARDISDisplayItem.NONE) {
+                        if (i == 0 && tdi != TARDISBlockDisplayItem.NONE) {
                             ItemMeta im = display.getItemStack().getItemMeta();
                             im.setItemModel(tdi.getCustomModel());
                             ItemStack sub = ItemStack.of(tdi.getMaterial());
                             sub.setItemMeta(im);
                             display.setItemStack(sub);
-                        } else if (tdi == TARDISDisplayItem.NONE) {
+                        } else if (tdi == TARDISBlockDisplayItem.NONE) {
                             // if tdi == TARDISDisplay.NONE, flash the lights instead
                             boolean off = (i % 2 == 0);
                             levelled.setLevel(off ? 0 : level);

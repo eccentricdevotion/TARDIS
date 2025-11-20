@@ -23,7 +23,7 @@ import me.eccentric_nz.TARDIS.artron.TARDISAdaptiveBoxLampToggler;
 import me.eccentric_nz.TARDIS.artron.TARDISBeaconToggler;
 import me.eccentric_nz.TARDIS.artron.TARDISLampToggler;
 import me.eccentric_nz.TARDIS.builders.exterior.BuildData;
-import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
+import me.eccentric_nz.TARDIS.customblocks.TARDISBlockDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -360,7 +360,7 @@ public class TARDISAutonomousDeath {
                             // place siege block
                             siege.setBlockData(TARDISConstants.BARRIER);
                             TARDISDisplayItemUtils.remove(siege);
-                            TARDISDisplayItemUtils.set(TARDISDisplayItem.SIEGE_CUBE, siege, id);
+                            TARDISDisplayItemUtils.set(TARDISBlockDisplayItem.SIEGE_CUBE, siege, id);
                             // track this siege block
                             plugin.getTrackerKeeper().getInSiegeMode().add(id);
                             set.put("siege_on", 1);

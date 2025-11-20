@@ -24,7 +24,7 @@ import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.utility.FractalFence;
 import me.eccentric_nz.TARDIS.console.ConsoleBuilder;
-import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
+import me.eccentric_nz.TARDIS.customblocks.TARDISBlockDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.desktop.TARDISChunkUtils;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
@@ -315,7 +315,7 @@ class TARDISBuildAbandoned implements Runnable {
                 // set block data to correct BARRIER
                 data = TARDISConstants.BARRIER;
                 // spawn an item display entity
-                TARDISDisplayItemUtils.set(TARDISDisplayItem.DISK_STORAGE, world, x, y, z);
+                TARDISDisplayItemUtils.set(TARDISBlockDisplayItem.DISK_STORAGE, world, x, y, z);
             }
             if (Tag.WOOL.isTagged(type)) {
                 switch (type) {
@@ -327,7 +327,7 @@ class TARDISBuildAbandoned implements Runnable {
                                 default -> {
                                     data = TARDISConstants.BARRIER;
                                     // spawn an item display entity
-                                    TARDISDisplayItemUtils.set(TARDISDisplayItem.HEXAGON, world, x, y, z);
+                                    TARDISDisplayItemUtils.set(TARDISBlockDisplayItem.HEXAGON, world, x, y, z);
                                 }
                             }
                         } else {
@@ -368,7 +368,7 @@ class TARDISBuildAbandoned implements Runnable {
                             default -> {
                                 data = TARDISConstants.BARRIER;
                                 // spawn an item display entity
-                                TARDISDisplayItemUtils.set(TARDISDisplayItem.BLUE_BOX, world, x, y, z);
+                                TARDISDisplayItemUtils.set(TARDISBlockDisplayItem.BLUE_BOX, world, x, y, z);
                             }
                         }
                     }
@@ -405,11 +405,11 @@ class TARDISBuildAbandoned implements Runnable {
             }
             if (type.equals(Material.WHITE_STAINED_GLASS) && schm.getPermission().equals("war")) {
                 data = TARDISConstants.BARRIER;
-                TARDISDisplayItemUtils.set(TARDISDisplayItem.ROUNDEL, world, x, y, z);
+                TARDISDisplayItemUtils.set(TARDISBlockDisplayItem.ROUNDEL, world, x, y, z);
             }
             if (type.equals(Material.WHITE_TERRACOTTA) && schm.getPermission().equals("war")) {
                 data = TARDISConstants.BARRIER;
-                TARDISDisplayItemUtils.set(TARDISDisplayItem.ROUNDEL_OFFSET, world, x, y, z);
+                TARDISDisplayItemUtils.set(TARDISBlockDisplayItem.ROUNDEL_OFFSET, world, x, y, z);
             }
             if (type.equals(Material.SPAWNER)) { // scanner button
                 /*
@@ -448,7 +448,7 @@ class TARDISBuildAbandoned implements Runnable {
                 // set block data to correct BARRIER + Item Display
                 data = TARDISConstants.BARRIER;
                 // spawn an item display entity
-                TARDISDisplayItemUtils.set(TARDISDisplayItem.ADVANCED_CONSOLE, world, x, y, z);
+                TARDISDisplayItemUtils.set(TARDISBlockDisplayItem.ADVANCED_CONSOLE, world, x, y, z);
             }
             if (type.equals(Material.CAKE) && !schm.getPermission().equals("junk")) {
                 /*

@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.update;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.commands.sudo.TARDISSudoTracker;
+import me.eccentric_nz.TARDIS.customblocks.TARDISBlockDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
@@ -296,7 +297,7 @@ public class TARDISUpdateListener implements Listener {
                     plugin.getUtils().updateStorageId(uuid, id);
                     // always set the block type
                     block.setBlockData(TARDISConstants.BARRIER);
-                    TARDISDisplayItem tdi = (updateable.equals(Updateable.ADVANCED)) ? TARDISDisplayItem.ADVANCED_CONSOLE : TARDISDisplayItem.DISK_STORAGE;
+                    TARDISDisplayItem tdi = (updateable.equals(Updateable.ADVANCED)) ? TARDISBlockDisplayItem.ADVANCED_CONSOLE : TARDISBlockDisplayItem.DISK_STORAGE;
                     TARDISDisplayItemUtils.remove(block);
                     TARDISDisplayItemUtils.set(tdi, block, id);
                 }

@@ -22,7 +22,9 @@ import me.eccentric_nz.TARDIS.builders.exterior.TARDISBuilderUtility;
 import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.builders.interior.TARDISTIPSData;
 import me.eccentric_nz.TARDIS.console.ConsoleBuilder;
+import me.eccentric_nz.TARDIS.customblocks.TARDISBlockDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemRegistry;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.custommodels.GUIKeyPreferences;
 import me.eccentric_nz.TARDIS.custommodels.keys.*;
@@ -163,9 +165,9 @@ public class DebugPopulator {
     public void blocks() {
         int x = 2;
         int z = 2;
-        for (TARDISDisplayItem tdi : TARDISDisplayItem.values()) {
+        for (TARDISDisplayItem tdi : TARDISDisplayItemRegistry.values()) {
             // 122 blocks - surgery room x-ray
-            if (tdi != TARDISDisplayItem.NONE && tdi != TARDISDisplayItem.PANDORICA && tdi != TARDISDisplayItem.UNTEMPERED_SCHISM && tdi.getCustomModel() != null && !tdi.toString().contains("DOOR")) {
+            if (tdi != TARDISBlockDisplayItem.NONE && tdi != TARDISBlockDisplayItem.PANDORICA && tdi != TARDISBlockDisplayItem.UNTEMPERED_SCHISM && tdi.getCustomModel() != null && !tdi.toString().contains("DOOR")) {
                 Location location = new Location(world, rx + x, 65, rz + z);
                 // set display item at location
                 // and remember item stack for chest population
@@ -438,8 +440,8 @@ public class DebugPopulator {
         // all states
         int x = -27;
         int z = 2;
-        for (TARDISDisplayItem tdi : TARDISDisplayItem.values()) {
-            if (tdi.toString().contains("DOOR") && tdi != TARDISDisplayItem.CUSTOM_DOOR) {
+        for (TARDISDisplayItem tdi : TARDISDisplayItemRegistry.values()) {
+            if (tdi.toString().contains("DOOR") && tdi != TARDISBlockDisplayItem.CUSTOM_DOOR) {
                 // set display item at location
                 Location location = new Location(world, rx + x + 0.5d, 65.5d, rz + z + 0.5d);
                 ItemDisplay display = (ItemDisplay) world.spawnEntity(location, EntityType.ITEM_DISPLAY);
@@ -697,7 +699,7 @@ public class DebugPopulator {
         setItemFromStack(loc, elixir, Component.text("Elixir of Life"));
         x += 5;
         Block block = world.getBlockAt(rx + x, 65, rz + z);
-        TARDISDisplayItemUtils.set(TARDISDisplayItem.UNTEMPERED_SCHISM, block, -1);
+        TARDISDisplayItemUtils.set(TARDISBlockDisplayItem.UNTEMPERED_SCHISM, block, -1);
         x += 5;
         // regeneration poses
         for (RegenerationVariant t : RegenerationVariant.values()) {

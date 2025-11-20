@@ -23,7 +23,7 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.event.TARDISDesktopThemeEvent;
 import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.builders.interior.TARDISTIPSData;
-import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
+import me.eccentric_nz.TARDIS.customblocks.TARDISBlockDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
@@ -145,7 +145,7 @@ public class TARDISWallFloorRunnable extends TARDISThemeRunnable {
                     if (wall_type == Material.ORANGE_WOOL) {
                         if (!TARDISFloodgate.isFloodgateEnabled() || !TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) {
                             data = TARDISConstants.BARRIER;
-                            TARDISDisplayItemUtils.set(TARDISDisplayItem.HEXAGON, world, x, y, z);
+                            TARDISDisplayItemUtils.set(TARDISBlockDisplayItem.HEXAGON, world, x, y, z);
                         }
                     } else {
                         data = wall_type.createBlockData();
@@ -159,7 +159,7 @@ public class TARDISWallFloorRunnable extends TARDISThemeRunnable {
                 if (type.equals(Material.BLUE_WOOL)) {
                     if (!TARDISFloodgate.isFloodgateEnabled() || !TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) {
                         data = TARDISConstants.BARRIER;
-                        TARDISDisplayItemUtils.set(TARDISDisplayItem.BLUE_BOX, world, x, y, z);
+                        TARDISDisplayItemUtils.set(TARDISBlockDisplayItem.BLUE_BOX, world, x, y, z);
                     }
                     TARDISBlockSetters.setBlock(world, x, y, z, data);
                 }

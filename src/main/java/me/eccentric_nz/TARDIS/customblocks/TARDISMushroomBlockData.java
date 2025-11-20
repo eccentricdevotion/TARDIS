@@ -175,23 +175,23 @@ public class TARDISMushroomBlockData {
             case MUSHROOM_STEM -> {
                 for (HashMap.Entry<Integer, String> stem : MUSHROOM_STEM_DATA.entrySet()) {
                     if (s.equals(stem.getValue())) {
-                        return TARDISDisplayItem.getBY_MUSHROOM_STEM().get(stem.getKey());
+                        return TARDISDisplayItemRegistry.getBY_MUSHROOM_STEM().get(stem.getKey());
                     }
                 }
             }
             case BROWN_MUSHROOM_BLOCK -> {
                 if (s.equals("minecraft:brown_mushroom_block[down=false,east=false,north=false,south=false,up=false,west=true]")) {
-                    return TARDISDisplayItem.THE_MOMENT;
+                    return TARDISBlockDisplayItem.THE_MOMENT;
                 }
                 if (s.equals("minecraft:brown_mushroom_block[down=false,east=false,north=false,south=true,up=false,west=false]")) {
-                    return TARDISDisplayItem.SIEGE_CUBE;
+                    return TARDISBlockDisplayItem.SIEGE_CUBE;
                 }
             }
             default -> {
                 // RED_MUSHROOM_BLOCK
                 for (HashMap.Entry<Integer, String> red : RED_MUSHROOM_DATA.entrySet()) {
                     if (s.equals(red.getValue())) {
-                        return TARDISDisplayItem.getBY_RED_MUSHROOM().get(red.getKey());
+                        return TARDISDisplayItemRegistry.getBY_RED_MUSHROOM().get(red.getKey());
                     }
                 }
             }

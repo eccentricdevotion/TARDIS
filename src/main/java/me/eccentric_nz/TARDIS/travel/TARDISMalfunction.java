@@ -22,7 +22,9 @@ import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.builders.utility.LightLevel;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemRegistry;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
+import me.eccentric_nz.TARDIS.customblocks.TARDISLightDisplayItem;
 import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
@@ -216,10 +218,10 @@ public class TARDISMalfunction {
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, EPS_runnable, 220L);
                 }
                 TardisLight light = TardisLight.TENTH;
-                TARDISDisplayItem tdi = TARDISDisplayItem.LIGHT_TENTH_ON;
+                TARDISDisplayItem tdi = TARDISLightDisplayItem.LIGHT_TENTH_ON;
                 ItemDisplay display = TARDISDisplayItemUtils.get(rsl.getData().getFirst());
                 if (display != null) {
-                    tdi = TARDISDisplayItem.getByItemDisplay(display);
+                    tdi = TARDISDisplayItemRegistry.getByItemDisplay(display);
                     light = TardisLight.getFromDisplayItem(tdi);
                 }
                 ResultSetInteriorLightLevel rs = new ResultSetInteriorLightLevel(plugin, id);

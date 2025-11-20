@@ -18,6 +18,8 @@ package me.eccentric_nz.TARDIS.commands.dev;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemRegistry;
+import me.eccentric_nz.TARDIS.customblocks.TARDISSeedDisplayItem;
 import me.eccentric_nz.TARDIS.enumeration.RecipeCategory;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
@@ -61,17 +63,17 @@ class TARDISRecipesLister {
             }
             if (plugin.getConfig().getBoolean("creation.seed_block.crafting")) {
                 for (Map.Entry<Schematic, ShapedRecipe> seed : plugin.getObstructionum().getSeedRecipes().entrySet()) {
-                    NamespacedKey model = TARDISDisplayItem.CUSTOM.getCustomModel();
+                    NamespacedKey model = TARDISSeedDisplayItem.CUSTOM.getCustomModel();
                     String material;
                     if (seed.getKey().isCustom()) {
                         material = seed.getKey().getSeedMaterial().toString();
                     } else {
                         try {
-                            TARDISDisplayItem tdi = TARDISDisplayItem.valueOf(seed.getKey().getPermission().toUpperCase(Locale.ROOT));
+                            TARDISDisplayItem tdi = TARDISDisplayItemRegistry.valueOf(seed.getKey().getPermission().toUpperCase(Locale.ROOT));
                             model = tdi.getCustomModel();
                             material = tdi.getMaterial().toString();
                         } catch (IllegalArgumentException e) {
-                            material = TARDISDisplayItem.CUSTOM.getMaterial().toString();
+                            material = TARDISSeedDisplayItem.CUSTOM.getMaterial().toString();
                         }
                     }
                     sender.sendMessage(seed.getKey().getPermission().toUpperCase(Locale.ROOT) + "_SEED(\"" + seed.getKey().getPermission() + "\", Material." + material + ", " + model + "),");

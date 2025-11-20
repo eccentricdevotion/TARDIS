@@ -18,6 +18,8 @@ package me.eccentric_nz.TARDIS.recipes;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemRegistry;
+import me.eccentric_nz.TARDIS.customblocks.TARDISSeedDisplayItem;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
@@ -57,17 +59,17 @@ public class TARDISSeedRecipe {
     private ShapedRecipe makeSeedRecipe(Schematic s) {
         ItemStack is;
         // catch custom consoles, archives, templates not being in model data list
-        NamespacedKey model = TARDISDisplayItem.CUSTOM.getCustomModel();
+        NamespacedKey model = TARDISSeedDisplayItem.CUSTOM.getCustomModel();
         if (s.isCustom()) {
             is = ItemStack.of(s.getSeedMaterial(), 1);
         } else {
             try {
-                TARDISDisplayItem tdi = TARDISDisplayItem.valueOf(s.getPermission().toUpperCase(Locale.ROOT));
+                TARDISDisplayItem tdi = TARDISDisplayItemRegistry.valueOf(s.getPermission().toUpperCase(Locale.ROOT));
                 model = tdi.getCustomModel();
                 is = ItemStack.of(tdi.getMaterial(), 1);
             } catch (IllegalArgumentException e) {
                 plugin.debug("Could not get display item for console! " + e.getMessage());
-                is = ItemStack.of(TARDISDisplayItem.CUSTOM.getMaterial(), 1);
+                is = ItemStack.of(TARDISSeedDisplayItem.CUSTOM.getMaterial(), 1);
             }
         }
         ItemMeta im = is.getItemMeta();

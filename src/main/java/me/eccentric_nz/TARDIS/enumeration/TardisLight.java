@@ -16,32 +16,38 @@
  */
 package me.eccentric_nz.TARDIS.enumeration;
 
+import me.eccentric_nz.TARDIS.customblocks.TARDISBlockDisplayItem;
+import me.eccentric_nz.TARDIS.customblocks.TARDISChemistryDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
+import me.eccentric_nz.TARDIS.customblocks.TARDISLightDisplayItem;
 import org.bukkit.Material;
+
+import static me.eccentric_nz.TARDIS.customblocks.TARDISChemistryDisplayItem.*;
+import static me.eccentric_nz.TARDIS.customblocks.TARDISLightDisplayItem.*;
 
 public enum TardisLight {
 
-    BULB(TARDISDisplayItem.LIGHT_BULB_ON, TARDISDisplayItem.LIGHT_BULB, TARDISDisplayItem.LIGHT_BULB_CLOISTER),
-    CLASSIC(TARDISDisplayItem.LIGHT_CLASSIC_ON, TARDISDisplayItem.LIGHT_CLASSIC, TARDISDisplayItem.LIGHT_CLASSIC_CLOISTER),
-    CLASSIC_OFFSET(TARDISDisplayItem.LIGHT_CLASSIC_OFFSET_ON, TARDISDisplayItem.LIGHT_CLASSIC_OFFSET, TARDISDisplayItem.LIGHT_CLASSIC_OFFSET_CLOISTER),
-    TENTH(Material.REDSTONE_LAMP, TARDISDisplayItem.LIGHT_TENTH_ON, TARDISDisplayItem.LIGHT_TENTH, TARDISDisplayItem.LIGHT_TENTH_CLOISTER),
-    ELEVENTH(TARDISDisplayItem.LIGHT_ELEVENTH_ON, TARDISDisplayItem.LIGHT_ELEVENTH, TARDISDisplayItem.LIGHT_ELEVENTH_CLOISTER),
-    TWELFTH(TARDISDisplayItem.LIGHT_TWELFTH_ON, TARDISDisplayItem.LIGHT_TWELFTH, TARDISDisplayItem.LIGHT_TWELFTH_CLOISTER),
-    THIRTEENTH(TARDISDisplayItem.LIGHT_THIRTEENTH_ON, TARDISDisplayItem.LIGHT_THIRTEENTH, TARDISDisplayItem.LIGHT_THIRTEENTH_CLOISTER),
-    LAMP(Material.REDSTONE_LAMP, TARDISDisplayItem.LIGHT_LAMP_ON, TARDISDisplayItem.LIGHT_LAMP),
-    LANTERN(TARDISDisplayItem.LIGHT_LANTERN_ON, TARDISDisplayItem.LIGHT_LANTERN),
-    BLUE_LAMP(TARDISDisplayItem.BLUE_LAMP_ON, TARDISDisplayItem.BLUE_LAMP),
-    GREEN_LAMP(TARDISDisplayItem.GREEN_LAMP_ON, TARDISDisplayItem.GREEN_LAMP),
-    PURPLE_LAMP(TARDISDisplayItem.PURPLE_LAMP_ON, TARDISDisplayItem.PURPLE_LAMP),
-    RED_LAMP(TARDISDisplayItem.RED_LAMP_ON, TARDISDisplayItem.RED_LAMP),
-    VARIABLE(TARDISDisplayItem.LIGHT_VARIABLE_ON, TARDISDisplayItem.LIGHT_VARIABLE),
-    VARIABLE_BLUE(TARDISDisplayItem.LIGHT_VARIABLE_BLUE_ON, TARDISDisplayItem.LIGHT_VARIABLE_BLUE),
-    VARIABLE_GREEN(TARDISDisplayItem.LIGHT_VARIABLE_GREEN_ON, TARDISDisplayItem.LIGHT_VARIABLE_GREEN),
-    VARIABLE_ORANGE(TARDISDisplayItem.LIGHT_VARIABLE_ORANGE_ON, TARDISDisplayItem.LIGHT_VARIABLE_ORANGE),
-    VARIABLE_PINK(TARDISDisplayItem.LIGHT_VARIABLE_PINK_ON, TARDISDisplayItem.LIGHT_VARIABLE_PINK),
-    VARIABLE_PURPLE(TARDISDisplayItem.LIGHT_VARIABLE_PURPLE_ON, TARDISDisplayItem.LIGHT_VARIABLE_PURPLE),
-    VARIABLE_RED(TARDISDisplayItem.LIGHT_VARIABLE_CLOISTER, TARDISDisplayItem.LIGHT_VARIABLE),
-    VARIABLE_YELLOW(TARDISDisplayItem.LIGHT_VARIABLE_YELLOW_ON, TARDISDisplayItem.LIGHT_VARIABLE_YELLOW);
+    BULB(TARDISLightDisplayItem.LIGHT_BULB_ON, TARDISLightDisplayItem.LIGHT_BULB, TARDISLightDisplayItem.LIGHT_BULB_CLOISTER),
+    CLASSIC(TARDISLightDisplayItem.LIGHT_CLASSIC_ON, TARDISLightDisplayItem.LIGHT_CLASSIC, TARDISLightDisplayItem.LIGHT_CLASSIC_CLOISTER),
+    CLASSIC_OFFSET(TARDISLightDisplayItem.LIGHT_CLASSIC_OFFSET_ON, TARDISLightDisplayItem.LIGHT_CLASSIC_OFFSET, TARDISLightDisplayItem.LIGHT_CLASSIC_OFFSET_CLOISTER),
+    TENTH(Material.REDSTONE_LAMP, TARDISLightDisplayItem.LIGHT_TENTH_ON, TARDISLightDisplayItem.LIGHT_TENTH, TARDISLightDisplayItem.LIGHT_TENTH_CLOISTER),
+    ELEVENTH(TARDISLightDisplayItem.LIGHT_ELEVENTH_ON, TARDISLightDisplayItem.LIGHT_ELEVENTH, TARDISLightDisplayItem.LIGHT_ELEVENTH_CLOISTER),
+    TWELFTH(TARDISLightDisplayItem.LIGHT_TWELFTH_ON, TARDISLightDisplayItem.LIGHT_TWELFTH, TARDISLightDisplayItem.LIGHT_TWELFTH_CLOISTER),
+    THIRTEENTH(TARDISLightDisplayItem.LIGHT_THIRTEENTH_ON, TARDISLightDisplayItem.LIGHT_THIRTEENTH, TARDISLightDisplayItem.LIGHT_THIRTEENTH_CLOISTER),
+    LAMP(Material.REDSTONE_LAMP, TARDISLightDisplayItem.LIGHT_LAMP_ON, TARDISLightDisplayItem.LIGHT_LAMP),
+    LANTERN(TARDISLightDisplayItem.LIGHT_LANTERN_ON, TARDISLightDisplayItem.LIGHT_LANTERN),
+    BLUE_LAMP(TARDISChemistryDisplayItem.BLUE_LAMP_ON, TARDISChemistryDisplayItem.BLUE_LAMP),
+    GREEN_LAMP(TARDISChemistryDisplayItem.GREEN_LAMP_ON, TARDISChemistryDisplayItem.GREEN_LAMP),
+    PURPLE_LAMP(TARDISChemistryDisplayItem.PURPLE_LAMP_ON, TARDISChemistryDisplayItem.PURPLE_LAMP),
+    RED_LAMP(TARDISChemistryDisplayItem.RED_LAMP_ON, TARDISChemistryDisplayItem.RED_LAMP),
+    VARIABLE(TARDISLightDisplayItem.LIGHT_VARIABLE_ON, TARDISLightDisplayItem.LIGHT_VARIABLE),
+    VARIABLE_BLUE(TARDISLightDisplayItem.LIGHT_VARIABLE_BLUE_ON, TARDISLightDisplayItem.LIGHT_VARIABLE_BLUE),
+    VARIABLE_GREEN(TARDISLightDisplayItem.LIGHT_VARIABLE_GREEN_ON, TARDISLightDisplayItem.LIGHT_VARIABLE_GREEN),
+    VARIABLE_ORANGE(TARDISLightDisplayItem.LIGHT_VARIABLE_ORANGE_ON, TARDISLightDisplayItem.LIGHT_VARIABLE_ORANGE),
+    VARIABLE_PINK(TARDISLightDisplayItem.LIGHT_VARIABLE_PINK_ON, TARDISLightDisplayItem.LIGHT_VARIABLE_PINK),
+    VARIABLE_PURPLE(TARDISLightDisplayItem.LIGHT_VARIABLE_PURPLE_ON, TARDISLightDisplayItem.LIGHT_VARIABLE_PURPLE),
+    VARIABLE_RED(TARDISLightDisplayItem.LIGHT_VARIABLE_CLOISTER, TARDISLightDisplayItem.LIGHT_VARIABLE),
+    VARIABLE_YELLOW(TARDISLightDisplayItem.LIGHT_VARIABLE_YELLOW_ON, TARDISLightDisplayItem.LIGHT_VARIABLE_YELLOW);
 
     private final Material material;
     private final TARDISDisplayItem on;
@@ -59,14 +65,14 @@ public enum TardisLight {
         this.material = Material.SEA_LANTERN;
         this.on = on;
         this.off = off;
-        this.cloister = TARDISDisplayItem.NONE;
+        this.cloister = TARDISBlockDisplayItem.NONE;
     }
 
     TardisLight(Material material, TARDISDisplayItem on, TARDISDisplayItem off) {
         this.material = material;
         this.on = on;
         this.off = off;
-        this.cloister = TARDISDisplayItem.NONE;
+        this.cloister = TARDISBlockDisplayItem.NONE;
     }
 
     TardisLight(Material material, TARDISDisplayItem on, TARDISDisplayItem off, TARDISDisplayItem cloister) {
@@ -91,7 +97,8 @@ public enum TardisLight {
     public static TardisLight getFromDisplayItem(TARDISDisplayItem tdi) {
         String s = tdi.toString();
         return switch (tdi) {
-            case RED_LAMP, GREEN_LAMP, PURPLE_LAMP, BLUE_LAMP -> TardisLight.valueOf(s);
+            case TARDISChemistryDisplayItem.RED_LAMP, TARDISChemistryDisplayItem.GREEN_LAMP,
+                 TARDISChemistryDisplayItem.PURPLE_LAMP, TARDISChemistryDisplayItem.BLUE_LAMP -> TardisLight.valueOf(s);
             // remove _ON
             case RED_LAMP_ON, GREEN_LAMP_ON, PURPLE_LAMP_ON, BLUE_LAMP_ON -> TardisLight.valueOf(s.substring(0, s.length() - 3));
             // remove LIGHT_

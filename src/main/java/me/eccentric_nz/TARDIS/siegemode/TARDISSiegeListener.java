@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.siegemode;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.exterior.BuildData;
-import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
+import me.eccentric_nz.TARDIS.customblocks.TARDISBlockDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.customblocks.TARDISMushroomBlockData;
 import me.eccentric_nz.TARDIS.custommodels.keys.Whoniverse;
@@ -130,10 +130,10 @@ public class TARDISSiegeListener implements Listener {
             }
         }
         String tl = tardis.getOwner();
-        ItemStack is = ItemStack.of(TARDISDisplayItem.SIEGE_CUBE.getMaterial(), 1);
+        ItemStack is = ItemStack.of(TARDISBlockDisplayItem.SIEGE_CUBE.getMaterial(), 1);
         ItemMeta im = is.getItemMeta();
         im.displayName(ComponentUtils.toWhite("TARDIS Siege Cube"));
-        im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, TARDISDisplayItem.SIEGE_CUBE.getCustomModel().getKey());
+        im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, TARDISBlockDisplayItem.SIEGE_CUBE.getCustomModel().getKey());
         List<Component> lore = new ArrayList<>();
         lore.add(Component.text("Time Lord: " + tl));
         lore.add(Component.text("ID: " + id));
@@ -209,7 +209,7 @@ public class TARDISSiegeListener implements Listener {
             // turn the drop into a block
             item.remove();
             Block siege = loc.getBlock();
-            TARDISDisplayItemUtils.set(TARDISDisplayItem.SIEGE_CUBE, siege, id);
+            TARDISDisplayItemUtils.set(TARDISBlockDisplayItem.SIEGE_CUBE, siege, id);
             // remove trackers
             plugin.getTrackerKeeper().getIsSiegeCube().remove(id);
             plugin.getTrackerKeeper().getSiegeCarrying().remove(uuid);

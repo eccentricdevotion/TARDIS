@@ -24,7 +24,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.utility.FractalFence;
 import me.eccentric_nz.TARDIS.console.ConsoleBuilder;
-import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
+import me.eccentric_nz.TARDIS.customblocks.TARDISBlockDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.rooms.TARDISPainting;
@@ -252,17 +252,17 @@ public class TARDISBuilderPreview implements Runnable {
                 // set block data to BARRIER
                 data = TARDISConstants.BARRIER;
                 // spawn an item display entity
-                TARDISDisplayItemUtils.set(TARDISDisplayItem.DISK_STORAGE, world, x, y, z);
+                TARDISDisplayItemUtils.set(TARDISBlockDisplayItem.DISK_STORAGE, world, x, y, z);
             }
             if (type.equals(Material.ORANGE_WOOL)) {
                 data = TARDISConstants.BARRIER;
                 // spawn an item display entity
-                TARDISDisplayItemUtils.set(TARDISDisplayItem.HEXAGON, world, x, y, z);
+                TARDISDisplayItemUtils.set(TARDISBlockDisplayItem.HEXAGON, world, x, y, z);
             }
             if (type.equals(Material.BLUE_WOOL)) {
                 data = TARDISConstants.BARRIER;
                 // spawn an item display entity
-                TARDISDisplayItemUtils.set(TARDISDisplayItem.BLUE_BOX, world, x, y, z);
+                TARDISDisplayItemUtils.set(TARDISBlockDisplayItem.BLUE_BOX, world, x, y, z);
             }
             if ((type.equals(Material.WARPED_FENCE) || type.equals(Material.CRIMSON_FENCE)) && schm.getPermission().equals("delta")) {
                 fractalBlocks.add(world.getBlockAt(x, y, z));
@@ -277,12 +277,12 @@ public class TARDISBuilderPreview implements Runnable {
             if (type.equals(Material.WHITE_STAINED_GLASS) && schm.getPermission().equals("war")) {
                 data = TARDISConstants.BARRIER;
                 // spawn an item display entity
-                TARDISDisplayItemUtils.set(TARDISDisplayItem.ROUNDEL, world, x, y, z);
+                TARDISDisplayItemUtils.set(TARDISBlockDisplayItem.ROUNDEL, world, x, y, z);
             }
             if (type.equals(Material.WHITE_TERRACOTTA) && schm.getPermission().equals("war")) {
                 data = TARDISConstants.BARRIER;
                 // spawn an item display entity
-                TARDISDisplayItemUtils.set(TARDISDisplayItem.ROUNDEL_OFFSET, world, x, y, z);
+                TARDISDisplayItemUtils.set(TARDISBlockDisplayItem.ROUNDEL_OFFSET, world, x, y, z);
             }
             if (type.equals(Material.IRON_DOOR)) {
                 Bisected bisected = (Bisected) data;
@@ -302,7 +302,7 @@ public class TARDISBuilderPreview implements Runnable {
                 // set block data to correct BARRIER + Item Display
                 data = TARDISConstants.BARRIER;
                 // spawn an item display entity
-                TARDISDisplayItemUtils.set(TARDISDisplayItem.ADVANCED_CONSOLE, world, x, y, z);
+                TARDISDisplayItemUtils.set(TARDISBlockDisplayItem.ADVANCED_CONSOLE, world, x, y, z);
             }
             if (type.equals(Material.COMMAND_BLOCK) || ((schm.getPermission().equals("bigger") || schm.getPermission().equals("coral") || schm.getPermission().equals("deluxe") || schm.getPermission().equals("twelfth")) && type.equals(Material.BEACON))) {
                 if (type.equals(Material.COMMAND_BLOCK)) {

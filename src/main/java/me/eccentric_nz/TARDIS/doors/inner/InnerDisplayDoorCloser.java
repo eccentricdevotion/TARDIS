@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.doors.inner;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.customblocks.TARDISBlockDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.custommodels.keys.BoneDoorVariant;
@@ -55,7 +56,7 @@ public class InnerDisplayDoorCloser {
                 if (outside) {
                     ItemStack itemStack = display.getItemStack();
                     ItemMeta im = itemStack.getItemMeta();
-                    if ((tdi.toString().endsWith("OPEN") || tdi == TARDISDisplayItem.CUSTOM_DOOR)) {
+                    if ((tdi.toString().endsWith("OPEN") || tdi == TARDISBlockDisplayItem.CUSTOM_DOOR)) {
                         switch (tdi.getMaterial()) {
                             case IRON_DOOR -> im.setItemModel(TardisDoorVariant.TARDIS_DOOR_CLOSED.getKey());
                             case BIRCH_DOOR -> im.setItemModel(BoneDoorVariant.BONE_DOOR_CLOSED.getKey());

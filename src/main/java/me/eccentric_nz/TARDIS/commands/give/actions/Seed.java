@@ -18,6 +18,8 @@ package me.eccentric_nz.TARDIS.commands.give.actions;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemRegistry;
+import me.eccentric_nz.TARDIS.customblocks.TARDISSeedDisplayItem;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -80,12 +82,12 @@ public class Seed {
             if (Consoles.getBY_NAMES().containsKey(type)) {
                 Schematic schm = Consoles.getBY_NAMES().get(type);
                 ItemStack is;
-                NamespacedKey model = TARDISDisplayItem.CUSTOM.getCustomModel();
+                NamespacedKey model = TARDISSeedDisplayItem.CUSTOM.getCustomModel();
                 if (schm.isCustom()) {
                     is = ItemStack.of(schm.getSeedMaterial(), 1);
                 } else {
                     try {
-                        TARDISDisplayItem tdi = TARDISDisplayItem.valueOf(type);
+                        TARDISDisplayItem tdi = TARDISDisplayItemRegistry.valueOf(type);
                         is = ItemStack.of(tdi.getMaterial(), 1);
                         model = tdi.getCustomModel();
                     } catch (IllegalArgumentException e) {

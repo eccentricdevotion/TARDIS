@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.sonic;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
+import me.eccentric_nz.TARDIS.customblocks.TARDISBlockDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.custommodels.keys.SonicItem;
 import me.eccentric_nz.TARDIS.database.data.Sonic;
@@ -231,7 +231,7 @@ public class TARDISSonicGeneratorListener implements Listener {
             Player p = event.getPlayer();
             String uuid = p.getUniqueId().toString();
             Block block = event.getBlock();
-            TARDISDisplayItemUtils.set(TARDISDisplayItem.SONIC_GENERATOR, block, -1);
+            TARDISDisplayItemUtils.set(TARDISBlockDisplayItem.SONIC_GENERATOR, block, -1);
             String l = block.getLocation().toString();
             // generator was crafted
             // get tardis player is in

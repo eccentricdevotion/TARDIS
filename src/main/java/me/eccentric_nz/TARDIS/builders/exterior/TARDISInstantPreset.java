@@ -22,7 +22,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.chameleon.construct.TARDISConstructColumn;
 import me.eccentric_nz.TARDIS.chameleon.utils.TARDISChameleonColumn;
-import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
+import me.eccentric_nz.TARDIS.customblocks.TARDISBlockDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetConstructSign;
@@ -412,7 +412,7 @@ public class TARDISInstantPreset {
                             }
                             if ((preset.equals(ChameleonPreset.JUNK_MODE) || preset.equals(ChameleonPreset.JUNK)) && mat.equals(Material.ORANGE_WOOL)) {
                                 TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, TARDISConstants.BARRIER, bd.getTardisID());
-                                TARDISDisplayItemUtils.set(TARDISDisplayItem.HEXAGON, world, xx, (y + yy), zz);
+                                TARDISDisplayItemUtils.set(TARDISBlockDisplayItem.HEXAGON, world, xx, (y + yy), zz);
                             }
                         }
                         case TORCH, GLOWSTONE, REDSTONE_LAMP -> { // lamps, glowstone and torches

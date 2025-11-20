@@ -19,6 +19,7 @@ package me.eccentric_nz.tardischemistry.block;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
+import me.eccentric_nz.TARDIS.customblocks.TARDISChemistryDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.customblocks.TARDISMushroomBlock;
@@ -166,7 +167,7 @@ public class ChemistryBlockListener implements Listener {
                 is.setItemMeta(im);
                 block.setBlockData(TARDISConstants.AIR);
                 block.getWorld().dropItemNaturally(event.getPlayer().getLocation(), is);
-                if (tdi == TARDISDisplayItem.HEAT_BLOCK) {
+                if (tdi == TARDISChemistryDisplayItem.HEAT_BLOCK) {
                     plugin.getTrackerKeeper().getHeatBlocks().remove(block.getLocation().toString());
                 }
             }

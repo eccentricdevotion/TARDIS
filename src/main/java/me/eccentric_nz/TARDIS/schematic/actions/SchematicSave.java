@@ -19,7 +19,9 @@ package me.eccentric_nz.TARDIS.schematic.actions;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.customblocks.TARDISBlockDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemRegistry;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import me.eccentric_nz.TARDIS.schematic.getters.DataPackPainting;
@@ -227,11 +229,11 @@ public class SchematicSave {
                                     stack.addProperty("cmd", model.getKey());
                                 }
                                 stack.addProperty("type", material.toString());
-                                TARDISDisplayItem tdi = TARDISDisplayItem.getByModel(model);
+                                TARDISDisplayItem tdi = TARDISDisplayItemRegistry.getByModel(model);
                                 if (tdi != null) {
                                     stack.addProperty("light", tdi.isLight());
                                     stack.addProperty("lit", tdi.isLit());
-                                    if (tdi == TARDISDisplayItem.DOOR || tdi == TARDISDisplayItem.CLASSIC_DOOR || tdi == TARDISDisplayItem.BONE_DOOR) {
+                                    if (tdi == TARDISBlockDisplayItem.DOOR || tdi == TARDISBlockDisplayItem.CLASSIC_DOOR || tdi == TARDISBlockDisplayItem.BONE_DOOR) {
                                         stack.addProperty("door", true);
                                     }
                                 }

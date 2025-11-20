@@ -20,7 +20,9 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISUpdateBlocksCommand;
 import me.eccentric_nz.TARDIS.console.ConsoleBuilder;
+import me.eccentric_nz.TARDIS.customblocks.TARDISBlockDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemRegistry;
 import me.eccentric_nz.TARDIS.custommodels.keys.ChameleonVariant;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -135,7 +137,7 @@ public class TARDISDisplayItemCommand {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
                     return true;
                 }
-                TARDISDisplayItem tdi = TARDISDisplayItem.getBY_NAME().get(args[2]);
+                TARDISDisplayItem tdi = TARDISDisplayItemRegistry.getBY_NAME().get(args[2]);
                 if (tdi != null) {
                     ItemStack is = ItemStack.of(tdi.getMaterial());
                     ItemMeta im = is.getItemMeta();
@@ -144,7 +146,7 @@ public class TARDISDisplayItemCommand {
                     im.displayName(Component.text(TARDISStringUtils.capitalise(args[2])));
                     is.setItemMeta(im);
                     Block up = block.getRelative(BlockFace.UP);
-                    if (tdi == TARDISDisplayItem.DOOR || tdi == TARDISDisplayItem.CLASSIC_DOOR || tdi == TARDISDisplayItem.BONE_DOOR || tdi.isLight()) {
+                    if (tdi == TARDISBlockDisplayItem.DOOR || tdi == TARDISBlockDisplayItem.CLASSIC_DOOR || tdi == TARDISBlockDisplayItem.BONE_DOOR || tdi.isLight()) {
                         // also set an interaction entity
                         Interaction interaction = (Interaction) block.getWorld().spawnEntity(up.getLocation().clone().add(0.5d, 0, 0.5d), EntityType.INTERACTION);
                         interaction.setResponsive(true);
@@ -156,26 +158,26 @@ public class TARDISDisplayItemCommand {
                             light.setLevel(level);
                             up.setBlockData(light);
                         }
-                        if (tdi == TARDISDisplayItem.DOOR || tdi == TARDISDisplayItem.CLASSIC_DOOR || tdi == TARDISDisplayItem.BONE_DOOR) {
+                        if (tdi == TARDISBlockDisplayItem.DOOR || tdi == TARDISBlockDisplayItem.CLASSIC_DOOR || tdi == TARDISBlockDisplayItem.BONE_DOOR) {
                             // set size
                             interaction.setInteractionHeight(2.0f);
                             interaction.setInteractionWidth(1.0f);
                         }
                     } else {
-                        up.setType((tdi == TARDISDisplayItem.ARTRON_FURNACE) ? Material.FURNACE : Material.BARRIER);
+                        up.setType((tdi == TARDISBlockDisplayItem.ARTRON_FURNACE) ? Material.FURNACE : Material.BARRIER);
                     }
-                    double ay = (tdi == TARDISDisplayItem.DOOR || tdi == TARDISDisplayItem.CLASSIC_DOOR || tdi == TARDISDisplayItem.BONE_DOOR) ? 0.0d : 0.5d;
+                    double ay = (tdi == TARDISBlockDisplayItem.DOOR || tdi == TARDISBlockDisplayItem.CLASSIC_DOOR || tdi == TARDISBlockDisplayItem.BONE_DOOR) ? 0.0d : 0.5d;
                     ItemDisplay display = (ItemDisplay) block.getWorld().spawnEntity(up.getLocation().add(0.5d, ay, 0.5d), EntityType.ITEM_DISPLAY);
                     display.setItemStack(is);
                     display.setPersistent(true);
                     display.setInvulnerable(true);
-                    if (tdi == TARDISDisplayItem.DOOR || tdi == TARDISDisplayItem.CLASSIC_DOOR || tdi == TARDISDisplayItem.BONE_DOOR || tdi == TARDISDisplayItem.UNTEMPERED_SCHISM) {
+                    if (tdi == TARDISBlockDisplayItem.DOOR || tdi == TARDISBlockDisplayItem.CLASSIC_DOOR || tdi == TARDISBlockDisplayItem.BONE_DOOR || tdi == TARDISBlockDisplayItem.UNTEMPERED_SCHISM) {
                         display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.FIXED);
                     }
                     if (tdi.getMaterial() == Material.AMETHYST_SHARD) {
                         display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.HEAD);
                     }
-                    if (tdi == TARDISDisplayItem.ARTRON_FURNACE) {
+                    if (tdi == TARDISBlockDisplayItem.ARTRON_FURNACE) {
                         display.setBrightness(new Display.Brightness(15, 15));
                     }
                 }

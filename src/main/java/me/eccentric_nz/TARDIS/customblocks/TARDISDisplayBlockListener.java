@@ -99,15 +99,15 @@ public class TARDISDisplayBlockListener implements Listener {
         }
         String key = im.getPersistentDataContainer().get(plugin.getCustomBlockKey(), PersistentDataType.STRING);
         NamespacedKey model = new NamespacedKey(plugin, key);
-        TARDISDisplayItem which = TARDISDisplayItem.getByModel(model);
+        TARDISDisplayItem which = TARDISDisplayItemRegistry.getByModel(model);
         if (which == null) {
             return;
         }
         Location location = event.getBlock().getLocation();
         event.setCancelled(true);
         BlockData data;
-        if (which.isLight() || which == TARDISDisplayItem.DOOR || which == TARDISDisplayItem.CLASSIC_DOOR || which == TARDISDisplayItem.BONE_DOOR || which == TARDISDisplayItem.CONSOLE_LAMP) {
-            if (which.isLight() || which == TARDISDisplayItem.CONSOLE_LAMP) {
+        if (which.isLight() || which == TARDISBlockDisplayItem.DOOR || which == TARDISBlockDisplayItem.CLASSIC_DOOR || which == TARDISBlockDisplayItem.BONE_DOOR || which == TARDISLightDisplayItem.CONSOLE_LAMP) {
+            if (which.isLight() || which == TARDISLightDisplayItem.CONSOLE_LAMP) {
                 Levelled light = TARDISConstants.LIGHT;
                 light.setLevel((which.isLit() ? 15 : 0));
                 data = light;
@@ -115,29 +115,29 @@ public class TARDISDisplayBlockListener implements Listener {
                 data = null;
             }
             // set an Interaction entity
-            TARDISDisplayItemUtils.set(location, model.getKey(), which == TARDISDisplayItem.DOOR || which == TARDISDisplayItem.CLASSIC_DOOR || which == TARDISDisplayItem.BONE_DOOR);
+            TARDISDisplayItemUtils.set(location, model.getKey(), which == TARDISBlockDisplayItem.DOOR || which == TARDISBlockDisplayItem.CLASSIC_DOOR || which == TARDISBlockDisplayItem.BONE_DOOR);
         } else {
             data = TARDISConstants.BARRIER;
         }
         if (data != null) {
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> location.getBlock().setBlockData(data), 1L);
         }
-        double ay = (which == TARDISDisplayItem.DOOR || which == TARDISDisplayItem.CLASSIC_DOOR || which == TARDISDisplayItem.BONE_DOOR) ? 0.0d : 0.5d;
+        double ay = (which == TARDISBlockDisplayItem.DOOR || which == TARDISBlockDisplayItem.CLASSIC_DOOR || which == TARDISBlockDisplayItem.BONE_DOOR) ? 0.0d : 0.5d;
         // set an ItemDisplay entity
         ItemDisplay display = (ItemDisplay) location.getWorld().spawnEntity(location.add(0.5d, ay, 0.5d), EntityType.ITEM_DISPLAY);
         display.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, which.getCustomModel().getKey());
         display.setItemStack(single);
         display.setPersistent(true);
         display.setInvulnerable(true);
-        if (which == TARDISDisplayItem.DOOR || which == TARDISDisplayItem.CLASSIC_DOOR || which == TARDISDisplayItem.BONE_DOOR || which == TARDISDisplayItem.TELEVISION) {
-            if (which != TARDISDisplayItem.TELEVISION) {
+        if (which == TARDISBlockDisplayItem.DOOR || which == TARDISBlockDisplayItem.CLASSIC_DOOR || which == TARDISBlockDisplayItem.BONE_DOOR || which == TARDISBlockDisplayItem.TELEVISION) {
+            if (which != TARDISBlockDisplayItem.TELEVISION) {
                 display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.FIXED);
             }
             float yaw = DoorUtility.getLookAtYaw(player);
             // set display rotation
             display.setRotation(yaw, 0);
         }
-        if (which == TARDISDisplayItem.ARTRON_CAPACITOR_STORAGE) {
+        if (which == TARDISBlockDisplayItem.ARTRON_CAPACITOR_STORAGE) {
             // is there an Artron Furnace in the surrounding blocks?
             Block furnace = ArtronFurnaceUtils.find(event.getBlock(), plugin);
             if (furnace != null) {
@@ -145,7 +145,7 @@ public class TARDISDisplayBlockListener implements Listener {
                 ArtronFurnaceUtils.register(furnace.getLocation().toString(), player, plugin);
             }
         }
-        if (which == TARDISDisplayItem.CONSOLE_LAMP) {
+        if (which == TARDISLightDisplayItem.CONSOLE_LAMP) {
             // get player's tardis
             ResultSetTardisID rst = new ResultSetTardisID(plugin);
             if (rst.fromUUID(player.getUniqueId().toString())) {
@@ -311,10 +311,10 @@ public class TARDISDisplayBlockListener implements Listener {
                     TARDISDisplayItem tdi = TARDISDisplayItemUtils.get(display);
                     if (tdi != null) {
                         // is it an inner door?
-                        if (tdi == TARDISDisplayItem.CUSTOM_DOOR || tdi == TARDISDisplayItem.DOOR_BOTH_OPEN
-                                || tdi == TARDISDisplayItem.DOOR || tdi == TARDISDisplayItem.DOOR_OPEN
-                                || tdi == TARDISDisplayItem.CLASSIC_DOOR || tdi == TARDISDisplayItem.CLASSIC_DOOR_OPEN
-                                || tdi == TARDISDisplayItem.BONE_DOOR || tdi == TARDISDisplayItem.BONE_DOOR_OPEN
+                        if (tdi == TARDISBlockDisplayItem.CUSTOM_DOOR || tdi == TARDISBlockDisplayItem.DOOR_BOTH_OPEN
+                                || tdi == TARDISBlockDisplayItem.DOOR || tdi == TARDISBlockDisplayItem.DOOR_OPEN
+                                || tdi == TARDISBlockDisplayItem.CLASSIC_DOOR || tdi == TARDISBlockDisplayItem.CLASSIC_DOOR_OPEN
+                                || tdi == TARDISBlockDisplayItem.BONE_DOOR || tdi == TARDISBlockDisplayItem.BONE_DOOR_OPEN
                         ) {
                             if (!player.isOp() && !plugin.getUtils().inTARDISWorld(player)) {
                                 return;
@@ -342,18 +342,18 @@ public class TARDISDisplayBlockListener implements Listener {
                             }
                             // should we just teleport out?
                             if (player.isSneaking()) {
-                                if (tdi == TARDISDisplayItem.DOOR || tdi == TARDISDisplayItem.CLASSIC_DOOR || tdi == TARDISDisplayItem.BONE_DOOR || (tdi == TARDISDisplayItem.CUSTOM_DOOR && isCustomClosed(display))) {
+                                if (tdi == TARDISBlockDisplayItem.DOOR || tdi == TARDISBlockDisplayItem.CLASSIC_DOOR || tdi == TARDISBlockDisplayItem.BONE_DOOR || (tdi == TARDISBlockDisplayItem.CUSTOM_DOOR && isCustomClosed(display))) {
                                     // move to outside
                                     new InnerDisplayDoorMover(plugin).exit(player, block);
                                     return;
                                 }
-                                if (tdi == TARDISDisplayItem.DOOR_OPEN || (tdi == TARDISDisplayItem.CUSTOM_DOOR && !isCustomClosed(display))) {
+                                if (tdi == TARDISBlockDisplayItem.DOOR_OPEN || (tdi == TARDISBlockDisplayItem.CUSTOM_DOOR && !isCustomClosed(display))) {
                                     // open right hand door as well
                                     ItemStack itemStack = display.getItemStack();
                                     if (itemStack != null) {
                                         ItemMeta im = itemStack.getItemMeta();
                                         // get custom model data
-                                        NamespacedKey cmd = tdi == TARDISDisplayItem.DOOR_OPEN ? TardisDoorVariant.TARDIS_DOOR_OPEN.getKey() : Door.getExtraModel(itemStack.getType());
+                                        NamespacedKey cmd = tdi == TARDISBlockDisplayItem.DOOR_OPEN ? TardisDoorVariant.TARDIS_DOOR_OPEN.getKey() : Door.getExtraModel(itemStack.getType());
                                         if (cmd != null) {
                                             im.setItemModel(cmd);
                                             itemStack.setItemMeta(im);

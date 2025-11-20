@@ -21,6 +21,7 @@ import com.earth2me.essentials.User;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.customblocks.TARDISBlockDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -221,10 +222,10 @@ public class TARDISStaticUtils {
         if (display != null) {
             TARDISDisplayItem tdi = TARDISDisplayItemUtils.get(display);
             // need to cater for all doors including custom
-            return tdi == TARDISDisplayItem.DOOR_OPEN
-                    || tdi == TARDISDisplayItem.DOOR_BOTH_OPEN
-                    || tdi == TARDISDisplayItem.BONE_DOOR_OPEN
-                    || tdi == TARDISDisplayItem.CLASSIC_DOOR_OPEN
+            return tdi == TARDISBlockDisplayItem.DOOR_OPEN
+                    || tdi == TARDISBlockDisplayItem.DOOR_BOTH_OPEN
+                    || tdi == TARDISBlockDisplayItem.BONE_DOOR_OPEN
+                    || tdi == TARDISBlockDisplayItem.CLASSIC_DOOR_OPEN
                     || isCustomDoorOpen(display);
         }
         return false;

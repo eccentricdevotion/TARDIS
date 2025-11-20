@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.commands.give;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemRegistry;
 import me.eccentric_nz.TARDIS.custommodels.keys.BoneDoorVariant;
 import me.eccentric_nz.TARDIS.custommodels.keys.ClassicDoorVariant;
 import me.eccentric_nz.TARDIS.custommodels.keys.TardisDoorVariant;
@@ -67,7 +68,7 @@ public class TARDISDisplayBlockCommand {
             return is;
         } else {
             try {
-                TARDISDisplayItem tdi = TARDISDisplayItem.valueOf(display);
+                TARDISDisplayItem tdi = TARDISDisplayItemRegistry.valueOf(display);
                 ItemStack is = ItemStack.of(tdi.getMaterial(), 1);
                 ItemMeta im = is.getItemMeta();
                 im.displayName(ComponentUtils.toWhite(tdi.getDisplayName()));

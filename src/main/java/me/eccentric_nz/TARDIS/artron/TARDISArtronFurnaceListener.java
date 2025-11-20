@@ -20,7 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.customblocks.ArtronFurnaceUtils;
-import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
+import me.eccentric_nz.TARDIS.customblocks.TARDISBlockDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.custommodels.keys.Whoniverse;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -169,7 +169,7 @@ public class TARDISArtronFurnaceListener implements Listener {
             }
             plugin.getTardisHelper().nameFurnaceGUI(b, "TARDIS Artron Furnace");
             // set Item Display
-            TARDISDisplayItemUtils.set(TARDISDisplayItem.ARTRON_FURNACE, b, -1);
+            TARDISDisplayItemUtils.set(TARDISBlockDisplayItem.ARTRON_FURNACE, b, -1);
         } else {
             event.setCancelled(true);
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERM_FURNACE");

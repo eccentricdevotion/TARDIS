@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.advanced;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
+import me.eccentric_nz.TARDIS.customblocks.TARDISBlockDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
@@ -95,7 +95,7 @@ public class TARDISConsoleListener implements Listener {
             // update block if it's not a display item entity
             if (block.getType().equals(Material.JUKEBOX) || block.getType().equals(Material.MUSHROOM_STEM)) {
                 block.setType(Material.BARRIER);
-                TARDISDisplayItemUtils.set(TARDISDisplayItem.ADVANCED_CONSOLE, block, rsc.getTardis_id());
+                TARDISDisplayItemUtils.set(TARDISBlockDisplayItem.ADVANCED_CONSOLE, block, rsc.getTardis_id());
             }
         }
         int id = rsc.getTardis_id();

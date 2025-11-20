@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.commands.dev.wiki;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemRegistry;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 
 public class CustomPageBuilder extends PageBuilder {
@@ -31,7 +32,7 @@ public class CustomPageBuilder extends PageBuilder {
 
     public boolean compile() {
         // custom display item blocks
-        for (TARDISDisplayItem tdi : TARDISDisplayItem.values()) {
+        for (TARDISDisplayItem tdi : TARDISDisplayItemRegistry.values()) {
             if (tdi.getCraftMaterial() != null) {
                 plugin.debug(tdi.toString());
                 String data = formatCustom(tdi);
