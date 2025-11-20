@@ -47,13 +47,23 @@ public class TARDISDisplayItemUtils {
         ItemStack is = display.getItemStack();
         if (is != null) {
             ItemMeta im = is.getItemMeta();
+            // Try to get by model
             if (im.hasItemModel()) {
                 if (Tag.ITEMS_DECORATED_POT_SHERDS.isTagged(is.getType())) {
                     return TARDISDisplayItem.CUSTOM_DOOR;
                 } else {
                     return TARDISDisplayItem.getByModel(im.getItemModel());
                 }
-            } else if (im.getPersistentDataContainer().has(TARDIS.plugin.getCustomBlockKey())) {
+            }
+            // Try to get by Display Name
+            if (im.hasDisplayName()) {
+                TARDISDisplayItem displayItem = TARDISDisplayItem.getByDisplayName(im.displayName());
+                if (displayItem != null) {
+                    return displayItem;
+                }
+            }
+            // Try to get by Block key
+            if (im.getPersistentDataContainer().has(TARDIS.plugin.getCustomBlockKey())) {
                 String str = im.getPersistentDataContainer().get(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING);
                 NamespacedKey nsk = new NamespacedKey(TARDIS.plugin, str);
                 return TARDISDisplayItem.getByModel(nsk);

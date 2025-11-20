@@ -236,7 +236,7 @@ public enum TARDISDisplayItem {
 
     public static TARDISDisplayItem getByDisplayName(Component name) {
         for (TARDISDisplayItem tdi : values()) {
-            if (tdi.getCustomModel() != null && ComponentUtils.stripColour(name).equals(tdi.getDisplayName())) {
+            if (ComponentUtils.stripColour(name).equals(tdi.getDisplayName())) {
                 return tdi;
             }
         }
