@@ -288,11 +288,15 @@ public class TARDISDisplayItemUtils {
      */
     public static ItemDisplay set(TARDISDisplayItem tdi, Block block, int id) {
         // spawn an item display entity
+        NamespacedKey namespacedKey = tdi.getCustomModel();
+        if (namespacedKey == null) {
+            namespacedKey = tdi.getMaterial().getKey();
+        }
         if (tdi == TARDISDisplayItem.DOOR || tdi == TARDISDisplayItem.CLASSIC_DOOR || tdi == TARDISDisplayItem.BONE_DOOR || tdi.isLight()) {
             // also set an interaction entity
             Interaction interaction = (Interaction) block.getWorld().spawnEntity(block.getLocation().clone().add(0.5d, 0, 0.5d), EntityType.INTERACTION);
             interaction.setResponsive(true);
-            interaction.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING, tdi.getCustomModel().getKey());
+            interaction.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING, namespacedKey.getKey());
             interaction.setPersistent(true);
             if (tdi == TARDISDisplayItem.DOOR) {
                 // set size
@@ -319,7 +323,7 @@ public class TARDISDisplayItemUtils {
         ItemStack is = ItemStack.of(material, 1);
         ItemMeta im = is.getItemMeta();
         im.displayName(ComponentUtils.toWhite(tdi.getDisplayName()));
-        im.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING, tdi.getCustomModel().getKey());
+        im.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING, namespacedKey.getKey());
         if (tdi.isDoor()) {
             im.setItemModel(tdi.getCustomModel());
         }
