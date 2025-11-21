@@ -93,7 +93,7 @@ public class SQL {
 
             "CREATE TABLE IF NOT EXISTS %sjunk (id int(11) NOT NULL AUTO_INCREMENT, uuid varchar(48) DEFAULT '', tardis_id int(11) DEFAULT '0', save_sign varchar(512) DEFAULT '', handbrake varchar(512) DEFAULT '', wall varchar(64) DEFAULT 'ORANGE_WOOL', floor varchar(64) DEFAULT 'LIGHT_GRAY_WOOL', preset varchar(32) DEFAULT '', PRIMARY KEY (id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
-            "CREATE TABLE IF NOT EXISTS %slamps (l_id int(11) NOT NULL AUTO_INCREMENT, tardis_id int(11) DEFAULT '0', location varchar(512) DEFAULT '', PRIMARY KEY (l_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
+            "CREATE TABLE IF NOT EXISTS %slamps (l_id int(11) NOT NULL AUTO_INCREMENT, tardis_id int(11) DEFAULT '0', location varchar(512) DEFAULT '', material_on varchar(64) DEFAULT '', material_off varchar(64) DEFAULT '', percentage float DEFAULT '1.0', PRIMARY KEY (l_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
             "CREATE TABLE IF NOT EXISTS %slight_prefs (lp_id int(11) NOT NULL AUTO_INCREMENT, tardis_id int(11) DEFAULT '0', light varchar(32) DEFAULT '', material varchar(64) DEFAULT '', pattern varchar(512) DEFAULT 'BLUE:GREEN:ORANGE:PINK:PURPLE:YELLOW:RED:WHITE:BLACK', delays varchar(64) DEFAULT '20:20:20:20:20:20:20:20:20', levels varchar(64) DEFAULT '15:15:15:15:15:15:15:15:15', PRIMARY KEY (lp_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
@@ -237,7 +237,7 @@ public class SQL {
 
             "(%s, '%s', %s, '%s', '%s', '%s', '%s', '%s')",
 
-            "(%s, %s, '%s')",
+            "(%s, %s, '%s', '%s', %s, %s)",
 
             "(%s, %s, '%s', '%s', '%s', '%s', '%s')",
 
@@ -381,7 +381,7 @@ public class SQL {
 
             "INSERT INTO `%sjunk` (`id`, `uuid`, `tardis_id`, `save_sign`, `handbrake`, `wall`, `floor`, `preset`) VALUES ",
 
-            "INSERT INTO `%slamps` (`l_id`, `tardis_id`, `location`) VALUES ",
+            "INSERT INTO `%slamps` (`l_id`, `tardis_id`, `location`, `material_on`, `material_off`, `percentage`) VALUES ",
 
             "INSERT INTO `%slight_prefs` (`lp_id`, `tardis_id`, `light`, `material`, `pattern`, `delays`, `levels`) VALUES ",
 

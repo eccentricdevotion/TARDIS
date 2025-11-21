@@ -219,7 +219,7 @@ public class TARDISMalfunction {
                 }
                 TardisLight light = TardisLight.TENTH;
                 TARDISDisplayItem tdi = TARDISLightDisplayItem.LIGHT_TENTH_ON;
-                ItemDisplay display = TARDISDisplayItemUtils.get(rsl.getData().getFirst());
+                ItemDisplay display = TARDISDisplayItemUtils.get(rsl.getData().getFirst().block());
                 if (display != null) {
                     tdi = TARDISDisplayItemRegistry.getByItemDisplay(display);
                     light = TardisLight.getFromDisplayItem(tdi);

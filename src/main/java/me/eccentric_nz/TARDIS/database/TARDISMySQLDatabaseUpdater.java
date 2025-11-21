@@ -48,6 +48,7 @@ class TARDISMySQLDatabaseUpdater {
     private final List<String> sonicupdates = new ArrayList<>();
     private final List<String> flightupdates = new ArrayList<>();
     private final List<String> systemupdates = new ArrayList<>();
+    private final List<String> lampsupdates = new ArrayList<>();
     private final List<String> particleupdates = new ArrayList<>();
     private final HashMap<String, String> uuidUpdates = new HashMap<>();
     private final Statement statement;
@@ -152,6 +153,9 @@ class TARDISMySQLDatabaseUpdater {
         systemupdates.add("rapid int(1) DEFAULT '0'");
         systemupdates.add("warp int(1) DEFAULT '0'");
         systemupdates.add("flight int(1) DEFAULT '0'");
+        lampsupdates.add("material_on varchar(64) DEFAULT ''");
+        lampsupdates.add("material_off varchar(64) DEFAULT ''");
+        lampsupdates.add("percentage float DEFAULT '1.0'");
     }
 
     /**
@@ -296,6 +300,16 @@ class TARDISMySQLDatabaseUpdater {
                 if (!tem.next()) {
                     i++;
                     String sys_alter = "ALTER TABLE " + prefix + "system_upgrades ADD " + sys;
+                    statement.executeUpdate(sys_alter);
+                }
+            }
+            for (String l : lampsupdates) {
+                String[] lsplit = l.split(" ");
+                String sys_query = "SHOW COLUMNS FROM " + prefix + "lamps LIKE '" + lsplit[0] + "'";
+                ResultSet l_alter = statement.executeQuery(sys_query);
+                if (!l_alter.next()) {
+                    i++;
+                    String sys_alter = "ALTER TABLE " + prefix + "lamps ADD " + l;
                     statement.executeUpdate(sys_alter);
                 }
             }

@@ -18,6 +18,8 @@ package me.eccentric_nz.TARDIS.customblocks;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.database.data.Lamp;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetLamps;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.*;
@@ -29,6 +31,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.BoundingBox;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -323,7 +326,15 @@ public class TARDISDisplayItemUtils {
             if (tdi.isLight()) {
                 // set a light block
                 Levelled light = TARDISConstants.LIGHT;
-                light.setLevel(tdi.isLit() ? 15 : 0);
+                HashMap<String, Object> whereLight = new HashMap<>();
+                whereLight.put("location", block.getLocation());
+                ResultSetLamps rsl = new ResultSetLamps(TARDIS.plugin, whereLight, false);
+                if (rsl.getLamp() != null) {
+                    Lamp l = rsl.getLamp();
+                    light.setLevel(tdi.isLit() ? Math.round(15 * l.percentage()) : 0);
+                } else {
+                    light.setLevel(tdi.isLit() ? 15 : 0);
+                }
                 block.setBlockData(light);
             }
         } else if (tdi != TARDISBlockDisplayItem.ARTRON_FURNACE && tdi != TARDISBlockDisplayItem.SONIC_GENERATOR) {

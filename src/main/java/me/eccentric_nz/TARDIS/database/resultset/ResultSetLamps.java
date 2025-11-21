@@ -18,9 +18,10 @@ package me.eccentric_nz.TARDIS.database.resultset;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
+import me.eccentric_nz.TARDIS.database.data.Lamp;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
-import org.bukkit.block.Block;
+import org.bukkit.Material;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -45,7 +46,8 @@ public class ResultSetLamps {
     private final TARDIS plugin;
     private final HashMap<String, Object> where;
     private final boolean multiple;
-    private final List<Block> data = new ArrayList<>();
+    private final List<Lamp> data = new ArrayList<>();
+    private Lamp lamp = null;
     private final String prefix;
 
     /**
@@ -95,12 +97,30 @@ public class ResultSetLamps {
             }
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
-                if (multiple) {
-                    while (rs.next()) {
-                        Location loc = TARDISStaticLocationGetters.getLocationFromDB(rs.getString("location"));
-                        if (loc != null) {
-                            data.add(loc.getBlock());
+                while (rs.next()) {
+                    Location loc = TARDISStaticLocationGetters.getLocationFromDB(rs.getString("location"));
+                    if (loc != null) {
+                        String materialOnStr = rs.getString("material_on");
+                        Material materialOn = null;
+                        if (!materialOnStr.isEmpty()) {
+                            try {
+                                materialOn = Material.valueOf(materialOnStr);
+                            } catch (IllegalArgumentException ignored) {
+                            }
                         }
+                        String materialOffStr = rs.getString("material_off");
+                        Material materialOff = null;
+                        if (!materialOffStr.isEmpty()) {
+                            try {
+                                materialOff = Material.valueOf(materialOffStr);
+                            } catch (IllegalArgumentException ignored) {
+                            }
+                        }
+                        float percentage = Math.clamp(rs.getFloat("percentage"), 0.0f, 1.0f);
+                        if (multiple) {
+                            data.add(new Lamp(loc.getBlock(), materialOn, materialOff, percentage));
+                        }
+                        lamp = new Lamp(loc.getBlock(), materialOn, materialOff, percentage);
                     }
                 }
             } else {
@@ -124,7 +144,9 @@ public class ResultSetLamps {
         return true;
     }
 
-    public List<Block> getData() {
+    public List<Lamp> getData() {
         return data;
     }
+
+    public Lamp getLamp() { return lamp; }
 }

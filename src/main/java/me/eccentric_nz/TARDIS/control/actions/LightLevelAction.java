@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.control.actions;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.utility.LightLevel;
 import me.eccentric_nz.TARDIS.database.data.Current;
+import me.eccentric_nz.TARDIS.database.data.Lamp;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetLamps;
 import org.bukkit.Location;
@@ -78,9 +79,10 @@ public class LightLevelAction {
                 whereLight.put("tardis_id", id);
                 ResultSetLamps rsl = new ResultSetLamps(plugin, whereLight, true);
                 if (rsl.resultSet()) {
-                    for (Block block : rsl.getData()) {
+                    for (Lamp lamp : rsl.getData()) {
+                        Block block = lamp.block();
                         if (block.getBlockData() instanceof Levelled levelled) {
-                            levelled.setLevel(light_level);
+                            levelled.setLevel(Math.round(light_level * lamp.percentage()));
                             block.setBlockData(levelled);
                         }
                     }

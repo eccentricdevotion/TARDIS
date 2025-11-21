@@ -258,7 +258,7 @@ public class TARDISLightsInventory implements InventoryHolder {
         where.put("tardis_id", id);
         ResultSetLamps rsl = new ResultSetLamps(plugin, where, true);
         if (rsl.resultSet()) {
-            Block block = rsl.getData().getFirst();
+            Block block = rsl.getData().getFirst().block();
             ItemDisplay display = TARDISDisplayItemUtils.get(block);
             if (display != null) {
                 TARDISDisplayItem tdi = TARDISDisplayItemUtils.get(display);

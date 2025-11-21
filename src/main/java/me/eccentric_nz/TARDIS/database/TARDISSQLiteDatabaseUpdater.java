@@ -49,6 +49,7 @@ class TARDISSQLiteDatabaseUpdater {
     private final List<String> flightupdates = new ArrayList<>();
     private final List<String> systemupdates = new ArrayList<>();
     private final List<String> particleupdates = new ArrayList<>();
+    private final List<String> lampsupdates = new ArrayList<>();
     private final List<String> uuidUpdates = List.of("achievements", "ars", "player_prefs", "storage", "t_count", "tardis", "travellers");
     private final Statement statement;
     private final TARDIS plugin;
@@ -180,6 +181,9 @@ class TARDISSQLiteDatabaseUpdater {
         systemupdates.add("rapid INTEGER DEFAULT 0");
         systemupdates.add("warp INTEGER DEFAULT 0");
         systemupdates.add("flight INTEGER DEFAULT 0");
+        lampsupdates.add("material_on TEXT DEFAULT ''");
+        lampsupdates.add("material_off TEXT DEFAULT ''");
+        lampsupdates.add("percentage REAL DEFAULT 1.0");
     }
 
     /**
@@ -359,6 +363,16 @@ class TARDISSQLiteDatabaseUpdater {
                     i++;
                     String sys_alter = "ALTER TABLE " + prefix + "system_upgrades ADD " + sys;
                     statement.executeUpdate(sys_alter);
+                }
+            }
+            for (String l : lampsupdates) {
+                String[] lsplit = l.split(" ");
+                String s_query = "SELECT sql FROM sqlite_master WHERE tbl_name = '" + prefix + "lamps' AND sql LIKE '%" + lsplit[0] + "%'";
+                ResultSet rsl = statement.executeQuery(s_query);
+                if (!rsl.next()) {
+                    i++;
+                    String l_alter = "ALTER TABLE " + prefix + "lamps ADD " + l;
+                    statement.executeUpdate(l_alter);
                 }
             }
             // add tardis_id to previewers
