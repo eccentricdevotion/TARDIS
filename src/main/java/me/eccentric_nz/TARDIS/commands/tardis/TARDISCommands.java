@@ -199,7 +199,7 @@ public class TARDISCommands implements CommandExecutor {
                     return new TARDISJettisonCommand(plugin).startJettison(player, args);
                 }
                 case lamps -> {
-                    return new TARDISLampsCommand(plugin).addLampBlocks(player);
+                    return new TARDISLampsCommand(plugin).zip(player, args);
                 }
                 case list -> {
                     return new TARDISListCommand(plugin).doList(player, args);

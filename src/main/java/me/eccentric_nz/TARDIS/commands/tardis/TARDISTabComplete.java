@@ -46,6 +46,8 @@ public class TARDISTabComplete extends TARDISCompleter implements TabCompleter {
     private final List<String> ITEM_SUBS = ImmutableList.of("hand", "inventory", "cell");
     private final List<String> DIR_SUBS = ImmutableList.of("north", "west", "south", "east", "north_east", "north_west", "south_west", "south_east");
     private final List<String> LIST_SUBS = ImmutableList.of("companions", "saves", "areas", "rechargers");
+    private final List<String> LAMP_SUBS = ImmutableList.of("auto", "list", "set");
+    private final List<String> ALLOWED_LAMP_MATERIALS = new ArrayList<>();
     private final List<String> ARCHIVE_SUBS = ImmutableList.of("add", "description", "remove", "scan", "update", "y");
     private final List<String> EXTRA_SUBS = ImmutableList.of("blocks", "unlock");
     private final List<String> Y_SUBS = ImmutableList.of("64", "65");
@@ -89,6 +91,15 @@ public class TARDISTabComplete extends TARDISCompleter implements TabCompleter {
         for (TARDISUpdateableCategory c : TARDISUpdateableCategory.values()) {
             SECTION_SUBS.add(c.getName().toLowerCase(Locale.ROOT));
         }
+
+        List<?> lampAllowList = plugin.getLampsConfig().getList("lamp_blocks");
+        if (lampAllowList != null) {
+            for (Object allow : lampAllowList) {
+                if (allow instanceof String s) {
+                    ALLOWED_LAMP_MATERIALS.add(s);
+                }
+            }
+        }
     }
 
     @Override
@@ -130,6 +141,9 @@ public class TARDISTabComplete extends TARDISCompleter implements TabCompleter {
                 case "room", "jettison" -> {
                     return partial(lastArg, plugin.getRoomsConfig().getConfigurationSection("rooms").getKeys(false));
                 }
+                case "lamps" -> {
+                    return partial(lastArg, LAMP_SUBS);
+                }
                 case "monsters" -> {
                     return partial(lastArg, MONSTERS_SUBS);
                 }
@@ -153,17 +167,6 @@ public class TARDISTabComplete extends TARDISCompleter implements TabCompleter {
             }
         } else if (args.length == 3) {
             String sub = args[1].toLowerCase(Locale.ROOT);
-            switch (sub) {
-                case "rechargers" -> {
-                    return partial(lastArg, RECHARGER_SUBS);
-                }
-                case "scan" -> {
-                    return partial(lastArg, CONSOLE_SIZE_SUBS);
-                }
-                case "set" -> {
-                    return partial(lastArg, PRESET_SUBS);
-                }
-            }
             switch (args[0]) {
                 case "update" -> {
                     if (sub.equals("handles")) {
@@ -175,6 +178,20 @@ public class TARDISTabComplete extends TARDISCompleter implements TabCompleter {
                 case "saveicon" -> {
                     return partial(lastArg, MAT_SUBS);
                 }
+                case "lamps" -> {
+                    return ImmutableList.of();
+                }
+            }
+            switch (sub) {
+                case "rechargers" -> {
+                    return partial(lastArg, RECHARGER_SUBS);
+                }
+                case "scan" -> {
+                    return partial(lastArg, CONSOLE_SIZE_SUBS);
+                }
+                case "set" -> {
+                    return partial(lastArg, PRESET_SUBS);
+                }
             }
         } else if (args.length == 4) {
             String sub = args[1].toLowerCase(Locale.ROOT);
@@ -183,6 +200,11 @@ public class TARDISTabComplete extends TARDISCompleter implements TabCompleter {
             }
             if (sub.equals("y")) {
                 return partial(lastArg, Y_SUBS);
+            }
+        } else if (args.length == 6 || args.length == 7) {
+            String sub = args[0].toLowerCase(Locale.ROOT);
+            if (sub.equals("lamps")) {
+                return partial(lastArg, ALLOWED_LAMP_MATERIALS);
             }
         }
         return ImmutableList.of();

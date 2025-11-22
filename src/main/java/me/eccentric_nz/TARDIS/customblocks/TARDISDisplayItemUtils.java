@@ -350,6 +350,7 @@ public class TARDISDisplayItemUtils {
         }
         is.setItemMeta(im);
         double ay = (tdi == TARDISBlockDisplayItem.DOOR || tdi == TARDISBlockDisplayItem.CLASSIC_DOOR || tdi == TARDISBlockDisplayItem.BONE_DOOR) ? 0.0d : 0.5d;
+        // TODO any TARDISDisplayItems that dont have a custom model are better off as a BlockDisplay
         ItemDisplay display = (ItemDisplay) block.getWorld().spawnEntity(block.getLocation().add(0.5d, ay, 0.5d), EntityType.ITEM_DISPLAY);
         display.setItemStack(is);
         if (tdi == TARDISBlockDisplayItem.DOOR || tdi == TARDISBlockDisplayItem.CLASSIC_DOOR || tdi == TARDISBlockDisplayItem.BONE_DOOR || tdi == TARDISBlockDisplayItem.UNTEMPERED_SCHISM) {

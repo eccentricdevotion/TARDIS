@@ -127,6 +127,7 @@ public class TARDIS extends JavaPlugin {
     private FileConfiguration customRotorsConfig;
     private FileConfiguration kitsConfig;
     private FileConfiguration language;
+    private FileConfiguration lampsConfig;
     private FileConfiguration signs;
     private FileConfiguration chameleonGuis;
     private FileConfiguration roomsConfig;
@@ -670,6 +671,13 @@ public class TARDIS extends JavaPlugin {
     public FileConfiguration getRegenerationConfig() {
         return regenerationConfig;
     }
+
+    /**
+     * Gets the lamps configuration
+     *
+     * @return the lamps configuration
+     */
+    public FileConfiguration getLampsConfig() { return lampsConfig; }
 
     /**
      * Gets the language configuration
@@ -1375,6 +1383,7 @@ public class TARDIS extends JavaPlugin {
                 "handles.yml",
                 "items.yml",
                 "kits.yml",
+                "lamps.yml",
                 "monsters.yml",
                 "regeneration.yml", "rooms.yml",
                 "shop.yml", "system_upgrades.yml",
@@ -1408,6 +1417,7 @@ public class TARDIS extends JavaPlugin {
         new TARDISAdaptiveUpdater(this).checkBiomesConfig();
         generatorConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "generator.yml"));
         new TARDISGeneratorUpdater(this, generatorConfig).checkTrees();
+        lampsConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "lamps.yml"));
         if (getConfig().getBoolean("modules.weeping_angels")) {
             monstersConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "monsters.yml"));
         }

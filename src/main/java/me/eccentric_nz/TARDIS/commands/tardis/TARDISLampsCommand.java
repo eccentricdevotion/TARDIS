@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
+import me.eccentric_nz.TARDIS.database.data.Lamp;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetLamps;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
@@ -31,9 +32,12 @@ import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * The TARDIS scanner was the main method for the occupants of the vessel to
@@ -45,9 +49,25 @@ import java.util.HashMap;
 class TARDISLampsCommand {
 
     private final TARDIS plugin;
+    private final List<String> subs = List.of("auto", "list", "set");
 
     TARDISLampsCommand(TARDIS plugin) {
         this.plugin = plugin;
+    }
+
+    private boolean valid_material(String mat) {
+        List<?> allowList = plugin.getLampsConfig().getList("lamp_blocks");
+        if (allowList == null) {
+            return false;
+        }
+        for (Object allow : allowList) {
+            if (allow instanceof String) {
+                if (((String) allow).equalsIgnoreCase(mat)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     /**
@@ -58,11 +78,6 @@ class TARDISLampsCommand {
      * @return true if the TARDIS has not been updated, otherwise false
      */
     boolean addLampBlocks(Player owner) {
-        // check they have permission
-        if (!TARDISPermission.hasPermission(owner, "tardis.update")) {
-            plugin.getMessenger().send(owner, TardisModule.TARDIS, "NO_PERMS");
-            return false;
-        }
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", owner.getUniqueId().toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
@@ -123,5 +138,126 @@ class TARDISLampsCommand {
             plugin.getMessenger().send(owner, TardisModule.TARDIS, "NOT_A_TIMELORD");
             return false;
         }
+    }
+
+    boolean listLampBlocks(Player owner) {
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("uuid", owner.getUniqueId().toString());
+        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+        if (rs.resultSet()) {
+            Tardis tardis = rs.getTardis();
+            int id = tardis.getTardisId();
+            HashMap<String, Object> wherel = new HashMap<>();
+            wherel.put("tardis_id", id);
+            ResultSetLamps rsl = new ResultSetLamps(plugin, wherel, true);
+            if (rsl.resultSet()) {
+                for (Lamp l : rsl.getData()) {
+                    Block b = l.block();
+                    plugin.getMessenger().send(owner, TardisModule.TARDIS, "LAMP_LIST", (b.getX() + ":" + b.getY() + ":" + b.getZ()));
+                }
+            }
+        }
+        return true;
+    }
+
+    boolean setLampBlock(Player player, String[] args) {
+        if (args.length < 6) {
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "LAMP_SET_USAGE");
+            return false;
+        }
+        int x;
+        int y;
+        int z;
+        try {
+            x = Integer.parseInt(args[2]);
+            y = Integer.parseInt(args[3]);
+            z = Integer.parseInt(args[4]);
+        } catch (NumberFormatException ignored) {
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "LAMP_SET_USAGE");
+            return false;
+        }
+        // First material override isn't optional
+        String materialOn = null;
+        materialOn = args[5];
+        if (materialOn.equals("_")) {
+            materialOn = "";
+        } else {
+            if (!valid_material(materialOn)) {
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "LAMP_BAD_MATERIAL");
+                return false;
+            }
+        }
+        // Get optional material override arguments
+        String materialOff = null;
+        if (args.length >= 7) {
+            materialOff = args[6];
+            if (materialOff.equals("_")) {
+                materialOff = "";
+            } else {
+                if (!valid_material(materialOff)) {
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "LAMP_BAD_MATERIAL");
+                    return false;
+                }
+            }
+        }
+        Float percentage = null;
+        try {
+            if (args.length >= 8) {
+                percentage = Math.clamp(Float.parseFloat(args[7]), 0, 1);
+            }
+        } catch (NumberFormatException ignored) {
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "LAMP_SET_USAGE");
+            return false;
+        }
+
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("uuid", player.getUniqueId().toString());
+        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+        if (rs.resultSet()) {
+            Tardis tardis = rs.getTardis();
+            String dimension = rs.getTardis().getChunk().split(":")[0];
+            int id = tardis.getTardisId();
+            HashMap<String, Object> wherel = new HashMap<>();
+            wherel.put("tardis_id", id);
+            wherel.put("location", (dimension + ":" + x + ":" + y + ":" + z));
+
+            HashMap<String, Object> set = new HashMap<>();
+            set.put("material_on", materialOn);
+            if (materialOff != null) {
+                set.put("material_off", materialOff);
+            }
+            if (percentage != null) {
+                set.put("percentage", percentage);
+            }
+
+            plugin.getQueryFactory().doUpdate("lamps", set, wherel);
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "LAMP_SET_SUCCESS", wherel.get("location"));
+        }
+
+        return true;
+    }
+
+    boolean zip(Player player, String[] args) {
+        if (!TARDISPermission.hasPermission(player, "tardis.update")) {
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
+            return false;
+        }
+
+        if (args.length < 2) {
+            return false;
+        }
+
+        String sub = args[1].toLowerCase(Locale.ROOT);
+        if (!subs.contains(sub)) {
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "ARG_NOT_VALID");
+            return true;
+        }
+
+        return switch (sub) {
+            case "auto" -> addLampBlocks(player);
+            case "list" -> listLampBlocks(player);
+            case "set" -> setLampBlock(player, args);
+            default -> true;
+        };
     }
 }
