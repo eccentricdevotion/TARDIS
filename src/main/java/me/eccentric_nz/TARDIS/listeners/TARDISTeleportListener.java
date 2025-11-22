@@ -74,7 +74,7 @@ public class TARDISTeleportListener implements Listener {
         String world_from = event.getFrom().getWorld().getName();
         if (plugin.getTrackerKeeper().getFlyingReturnLocation().containsKey(player.getUniqueId())) {
             if (plugin.getTrackerKeeper().getStillFlyingNotReturning().contains(player.getUniqueId())) {
-                if (world_to.contains("TARDIS") || world_from.contains("TARDIS") || cause == TeleportCause.UNKNOWN) {
+                if (world_to.contains("TARDIS") || world_from.contains("TARDIS") || cause == TeleportCause.UNKNOWN || cause == TeleportCause.DISMOUNT) {
                     return;
                 } else {
                     // teleport them back to the interior
