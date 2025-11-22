@@ -38,7 +38,7 @@ public class VehicleUtility {
     public static boolean isNotFlightReady(Location location) {
         for (Entity e : location.getWorld().getNearbyEntities(location, 1.5d, 1.5d, 1.5d, (s) -> s.getType() == EntityType.ARMOR_STAND)) {
             if (e instanceof ArmorStand as) {
-                TARDIS.plugin.debug("Found armour stand");
+//                TARDIS.plugin.debug("Found armour stand");
                 if (((CraftArmorStand) as).getHandle() instanceof TARDISArmourStand) {
                     TARDIS.plugin.debug("Found TARDISArmourStand");
                 } else {
@@ -108,6 +108,7 @@ public class VehicleUtility {
                 TARDISConstants.AXIS_ANGLE_ZERO
         );
         player.addPassenger(display);
+        display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.FIXED);
         display.setTransformation(initial);
         return display;
     }

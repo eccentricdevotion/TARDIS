@@ -188,7 +188,7 @@ public class TARDISExteriorFlight {
             player.teleport(current.clone().add(0.5, 0.25, 0.5));
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                 // get the armour stand
-                for (Entity e : current.getWorld().getNearbyEntities(current, 1.5d, 1.5d, 1.5d, (s) -> s.getType() == EntityType.ARMOR_STAND)) {
+                for (Entity e : current.getWorld().getNearbyEntities(current, 1d, 1d, 1d, (s) -> s.getType() == EntityType.ARMOR_STAND)) {
                     if (e instanceof ArmorStand stand) {
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new FlyingInit(stand).run(), 3L);
