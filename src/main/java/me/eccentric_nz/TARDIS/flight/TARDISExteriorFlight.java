@@ -35,6 +35,7 @@ import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Levelled;
@@ -66,6 +67,7 @@ public class TARDISExteriorFlight {
         if (player.hasPotionEffect(PotionEffectType.INVISIBILITY)) {
             player.removePotionEffect(PotionEffectType.INVISIBILITY);
         }
+        player.getAttribute(Attribute.CAMERA_DISTANCE).setBaseValue(4.0d);
         UUID uuid = player.getUniqueId();
         plugin.getTrackerKeeper().getHiddenFlight().remove(uuid);
         Location location = stand.getLocation();
@@ -198,7 +200,7 @@ public class TARDISExteriorFlight {
                                 case GRAY_STAINED_GLASS_PANE -> 1.66f;
                                 default -> 1.75f;
                             });
-                            int animation = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new InterpolatedAnimation(display, 40), 5L, 40L);
+                            int animation = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new InterpolatedAnimation(display, 40), 20L, 40L);
                             int sound = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, () -> TARDISSounds.playTARDISSound(player.getLocation(), "time_rotor_flying", 4f), 5L, 33L);
                             player.getPersistentDataContainer().set(plugin.getLoopKey(), PersistentDataType.INTEGER, sound);
                             stand.addPassenger(player);
@@ -208,6 +210,7 @@ public class TARDISExteriorFlight {
                             player.setInvulnerable(true);
                             player.setAllowFlight(true);
                             player.setFlying(true);
+                            player.getAttribute(Attribute.CAMERA_DISTANCE).setBaseValue(8.0d);
                             // remove the light
                             current.getBlock().getRelative(BlockFace.UP, 2).setBlockData(TARDISConstants.AIR);
                             // save player's current location, so we can teleport them back to it when they finish flying

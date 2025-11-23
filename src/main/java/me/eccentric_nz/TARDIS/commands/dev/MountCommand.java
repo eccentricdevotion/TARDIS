@@ -59,6 +59,8 @@ public class MountCommand {
                 e.eject();
                 e.remove();
             }
+            Entity vehicle = player.getVehicle();
+            vehicle.eject();
             plugin.getServer().getScheduler().cancelTask(plugin.getTrackerKeeper().getAnimateTask());
         }
         return true;

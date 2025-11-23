@@ -107,8 +107,11 @@ public class VehicleUtility {
                 size,
                 TARDISConstants.AXIS_ANGLE_ZERO
         );
+        if (!player.getPassengers().isEmpty()) {
+            player.getPassengers().getFirst().remove();
+        }
         player.addPassenger(display);
-        display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.FIXED);
+        display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.NONE);
         display.setTransformation(initial);
         return display;
     }

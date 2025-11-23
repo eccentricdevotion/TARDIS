@@ -78,6 +78,5 @@ public class FlightVisibility {
             // remove tracker
             plugin.getTrackerKeeper().getHiddenFlight().remove(player.getUniqueId());
         }
-
     }
 }
