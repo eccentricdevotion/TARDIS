@@ -73,7 +73,7 @@ public class TARDISTelepathicBiome implements InventoryHolder {
                 if (material != null) {
                     ItemStack is = ItemStack.of(material, 1);
                     ItemMeta im = is.getItemMeta();
-                    im.displayName(Component.text(TARDISStringUtils.capitalise(biome.toString())));
+                    im.displayName(Component.text(TARDISStringUtils.capitalise(biome.getKey().getKey())));
                     is.setItemMeta(im);
                     stack[i] = is;
                     if (i % 9 == 7) {

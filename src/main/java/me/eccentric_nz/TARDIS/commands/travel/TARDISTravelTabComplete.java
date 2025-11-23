@@ -40,9 +40,9 @@ public class TARDISTravelTabComplete extends TARDISCompleter implements TabCompl
     private final List<String> STRUCTURE_SUBS;
 
     public TARDISTravelTabComplete(TARDIS plugin) {
-        for (Biome bi : RegistryAccess.registryAccess().getRegistry(RegistryKey.BIOME)) {
-            if (!bi.equals(Biome.THE_VOID)) {
-                BIOME_SUBS.add(bi.toString());
+        for (Biome biome : RegistryAccess.registryAccess().getRegistry(RegistryKey.BIOME)) {
+            if (!biome.equals(Biome.THE_VOID)) {
+                BIOME_SUBS.add(biome.getKey().getKey().toUpperCase(Locale.ROOT));
             }
         }
         if (TARDIS.plugin.getServer().getPluginManager().isPluginEnabled("TerraformGenerator")) {

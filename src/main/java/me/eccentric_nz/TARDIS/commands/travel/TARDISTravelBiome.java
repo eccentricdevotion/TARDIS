@@ -106,9 +106,9 @@ public class TARDISTravelBiome {
         }
         if (upper.equals("LIST")) {
             StringBuilder buf = new StringBuilder();
-            for (Biome bi : RegistryAccess.registryAccess().getRegistry(RegistryKey.BIOME)) {
-                if (!bi.equals(Biome.THE_VOID)) {
-                    buf.append(bi).append(", ");
+            for (Biome biome : RegistryAccess.registryAccess().getRegistry(RegistryKey.BIOME)) {
+                if (!biome.equals(Biome.THE_VOID)) {
+                    buf.append(biome.getKey().getKey().toUpperCase(Locale.ROOT)).append(", ");
                 }
             }
             String b = buf.substring(0, buf.length() - 2);

@@ -43,6 +43,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 
 /**
  * @author eccentric_nz
@@ -318,7 +319,7 @@ public class TARDISChameleonListener extends TARDISMenuListener {
 
     private ChameleonPreset getAdaption(Biome biome) {
         try {
-            return ChameleonPreset.valueOf(plugin.getAdaptiveConfig().getString(biome.toString()));
+            return ChameleonPreset.valueOf(plugin.getAdaptiveConfig().getString(biome.getKey().getKey().toUpperCase(Locale.ROOT)));
         } catch (IllegalArgumentException e) {
             return null;
         }

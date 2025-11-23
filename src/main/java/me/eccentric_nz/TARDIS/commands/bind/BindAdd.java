@@ -106,7 +106,7 @@ class BindAdd {
                     biome = RegistryAccess.registryAccess().getRegistry(RegistryKey.BIOME).get(new NamespacedKey("minecraft", which.toLowerCase(Locale.ROOT)));
                     if (biome != null && !biome.equals(Biome.THE_VOID)) {
                         set.put("type", 4);
-                        set.put("name", biome.toString());
+                        set.put("name", biome.getKey().getKey().toUpperCase(Locale.ROOT));
                         bind_id = plugin.getQueryFactory().doSyncInsert("bind", set);
                     } else {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "BIOME_NOT_VALID");

@@ -28,6 +28,7 @@ import org.bukkit.command.TabCompleter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * TabCompleter for /tardisbind command
@@ -45,8 +46,8 @@ public class TARDISBindTabComplete extends TARDISCompleter implements TabComplet
         for (ChameleonPreset p : ChameleonPreset.values()) {
             CHAM_SUBS.add(p.toString());
         }
-        for (Biome b : RegistryAccess.registryAccess().getRegistry(RegistryKey.BIOME)) {
-            BIOME_SUBS.add(b.toString());
+        for (Biome biome : RegistryAccess.registryAccess().getRegistry(RegistryKey.BIOME)) {
+            BIOME_SUBS.add(biome.getKey().getKey().toUpperCase(Locale.ROOT));
         }
     }
 

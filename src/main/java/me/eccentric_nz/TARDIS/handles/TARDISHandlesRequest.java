@@ -41,10 +41,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -316,7 +313,7 @@ public class TARDISHandlesRequest {
                             String gb = (groups.getFirst() == null || groups.getFirst().isEmpty()) ? groups.get(1) : groups.getFirst();
                             // cycle through biomes
                             for (Biome biome : RegistryAccess.registryAccess().getRegistry(RegistryKey.BIOME)) {
-                                String b = biome.toString();
+                                String b = biome.getKey().getKey().toUpperCase(Locale.ROOT);
                                 if (gb.equalsIgnoreCase(b)) {
                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.performCommand("tardistravel biome " + b + " kzsbtr1h2"), 1L);
                                     return;
