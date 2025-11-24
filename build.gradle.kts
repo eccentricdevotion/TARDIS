@@ -98,7 +98,7 @@ dependencies {
     compileOnly("org.mvplugins.multiverse.core:multiverse-core:5.3.4") {
         isTransitive = false
     }
-    compileOnly("org.mvplugins.multiverse.inventories:multiverse-inventories:5.2.0") {
+    compileOnly("org.mvplugins.multiverse.inventories:multiverse-inventories:5.2.1") {
         isTransitive = false
     }
     compileOnly("dev.kitteh:factionsuuid:0.7.0") {
