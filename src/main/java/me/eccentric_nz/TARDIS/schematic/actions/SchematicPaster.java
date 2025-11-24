@@ -22,6 +22,7 @@ import io.papermc.paper.registry.RegistryAccess;
 import io.papermc.paper.registry.RegistryKey;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.rooms.TARDISPainting;
 import me.eccentric_nz.TARDIS.schematic.getters.DataPackPainting;
@@ -34,9 +35,12 @@ import org.bukkit.block.data.BlockData;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
+import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Painting;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -129,6 +133,32 @@ public class SchematicPaster implements Runnable {
                 }
             }
             setBanners(postBanners);
+            // armour stands
+            if (obj.has("armour_stands")) {
+                JsonArray stands = obj.get("armour_stands").getAsJsonArray();
+                for (int i = 0; i < stands.size(); i++) {
+                    JsonObject stand = stands.get(i).getAsJsonObject();
+                    JsonObject rel = stand.get("rel_location").getAsJsonObject();
+                    int asx = rel.get("x").getAsInt();
+                    int asy = rel.get("y").getAsInt();
+                    int asz = rel.get("z").getAsInt();
+                    COMPASS facing = COMPASS.valueOf(BlockFace.valueOf(stand.get("facing").getAsString()).getOppositeFace().toString());
+                    Location asl = new Location(world, x + asx + 0.5d, y + asy, z + asz + 0.5d);
+                    ArmorStand as = (ArmorStand) world.spawnEntity(asl, EntityType.ARMOR_STAND);
+                    as.setRotation(facing.getYaw(), 0);
+                    as.setVisible(stand.get("invisible").getAsBoolean());
+                    if (stand.has("head")) {
+                        JsonObject head = stand.get("head").getAsJsonObject();
+                        Material material = Material.valueOf(head.get("material").getAsString());
+                        NamespacedKey nsk = NamespacedKey.fromString(head.get("model").getAsString());
+                        ItemStack is = ItemStack.of(material);
+                        ItemMeta im = is.getItemMeta();
+                        im.setItemModel(nsk);
+                        is.setItemMeta(im);
+                        as.getEquipment().setHelmet(is);
+                    }
+                }
+            }
             // paintings
             if (obj.has("paintings")) {
                 JsonArray paintings = obj.get("paintings").getAsJsonArray();

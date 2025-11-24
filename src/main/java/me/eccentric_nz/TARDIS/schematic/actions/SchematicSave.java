@@ -122,7 +122,7 @@ public class SchematicSave {
             return true;
         }
         JsonArray paintings = new JsonArray();
-        JsonArray pots = new JsonArray();
+        JsonArray armourStands = new JsonArray();
         JsonArray itemFrames = new JsonArray();
         JsonArray itemDisplays = new JsonArray();
         JsonArray interactions = new JsonArray();
@@ -141,14 +141,38 @@ public class SchematicSave {
                     Location location = b.getLocation();
                     BoundingBox box = new BoundingBox(location.getBlockX(), location.getBlockY(), location.getBlockZ(), location.getBlockX() + 1, location.getBlockY() + 1, location.getBlockZ() + 1).expand(0.1d);
                     for (Entity entity : b.getLocation().getWorld().getNearbyEntities(box)) {
-                        Location eloc = entity.getLocation();
+                        Location entityLocation = entity.getLocation();
+                        if (entity instanceof ArmorStand stand) {
+                            if (!entities.contains(entity)) {
+                                JsonObject as = new JsonObject();
+                                JsonObject loc = new JsonObject();
+                                loc.addProperty("x", entityLocation.getBlockX() - minx);
+                                loc.addProperty("y", entityLocation.getBlockY() - miny);
+                                loc.addProperty("z", entityLocation.getBlockZ() - minz);
+                                as.add("rel_location", loc);
+                                as.addProperty("facing", stand.getFacing().toString());
+                                as.addProperty("invisible", stand.isVisible());
+                                JsonObject head = new JsonObject();
+                                ItemStack helmet = stand.getEquipment().getHelmet();
+                                if (helmet != null) {
+                                    ItemMeta im = helmet.getItemMeta();
+                                    if (im.hasItemModel()) {
+                                        head.addProperty("model", im.getItemModel().toString());
+                                        head.addProperty("material", helmet.getType().toString());
+                                        as.add("head", head);
+                                    }
+                                }
+                                armourStands.add(as);
+                                entities.add(entity);
+                            }
+                        }
                         if (entity instanceof Painting art) {
                             if (!entities.contains(entity)) {
                                 JsonObject painting = new JsonObject();
                                 JsonObject loc = new JsonObject();
-                                loc.addProperty("x", eloc.getBlockX() - minx);
-                                loc.addProperty("y", eloc.getBlockY() - miny);
-                                loc.addProperty("z", eloc.getBlockZ() - minz);
+                                loc.addProperty("x", entityLocation.getBlockX() - minx);
+                                loc.addProperty("y", entityLocation.getBlockY() - miny);
+                                loc.addProperty("z", entityLocation.getBlockZ() - minz);
                                 painting.add("rel_location", loc);
                                 try {
                                     painting.addProperty("art", art.getArt().toString());
@@ -165,9 +189,9 @@ public class SchematicSave {
                             if (!entities.contains(entity)) {
                                 JsonObject frame = new JsonObject();
                                 JsonObject loc = new JsonObject();
-                                loc.addProperty("x", eloc.getBlockX() - minx);
-                                loc.addProperty("y", eloc.getBlockY() - miny);
-                                loc.addProperty("z", eloc.getBlockZ() - minz);
+                                loc.addProperty("x", entityLocation.getBlockX() - minx);
+                                loc.addProperty("y", entityLocation.getBlockY() - miny);
+                                loc.addProperty("z", entityLocation.getBlockZ() - minz);
                                 frame.add("rel_location", loc);
                                 frame.addProperty("facing", f.getFacing().toString());
                                 ItemStack item = f.getItem();
@@ -213,9 +237,9 @@ public class SchematicSave {
                             if (!entities.contains(entity)) {
                                 JsonObject item = new JsonObject();
                                 JsonObject loc = new JsonObject();
-                                loc.addProperty("x", eloc.getBlockX() - minx);
-                                loc.addProperty("y", eloc.getBlockY() - miny);
-                                loc.addProperty("z", eloc.getBlockZ() - minz);
+                                loc.addProperty("x", entityLocation.getBlockX() - minx);
+                                loc.addProperty("y", entityLocation.getBlockY() - miny);
+                                loc.addProperty("z", entityLocation.getBlockZ() - minz);
                                 item.add("rel_location", loc);
                                 JsonObject stack = new JsonObject();
                                 Material material = display.getItemStack().getType();
@@ -305,6 +329,9 @@ public class SchematicSave {
         schematic.add("relative", relative);
         schematic.add("dimensions", dimensions);
         schematic.add("input", levels);
+        if (!armourStands.isEmpty()) {
+            schematic.add("armour_stands", armourStands);
+        }
         if (!paintings.isEmpty()) {
             schematic.add("paintings", paintings);
         }
