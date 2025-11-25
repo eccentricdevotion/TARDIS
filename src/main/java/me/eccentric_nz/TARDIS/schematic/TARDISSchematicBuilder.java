@@ -21,6 +21,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemRegistry;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.schematic.actions.SchematicSave;
@@ -237,7 +238,7 @@ public class TARDISSchematicBuilder {
                                 if (im.hasItemModel()) {
                                     NamespacedKey model = im.getItemModel();
                                     stack.addProperty("cmd", model.getKey());
-                                    TARDISDisplayItem tdi = TARDISDisplayItem.getByModel(model);
+                                    TARDISDisplayItem tdi = TARDISDisplayItemRegistry.getByModel(model);
                                     if (tdi != null) {
                                         stack.addProperty("light", tdi.isLight());
                                         stack.addProperty("lit", tdi.isLit());

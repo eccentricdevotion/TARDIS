@@ -1,0 +1,20 @@
+# Blocks allowed to be used as material overrides for lamps
+# /tardis lamp set x y z [materialOn | _] [materialOff | _] [percentage]
+# materialOn and materialOff must be present in this list to be accepted.
+lamp_blocks:
+  - BEACON
+  - CONDUIT
+  - PEARLESCENT_FROGLIGHT
+  - VERDANT_FROGLIGHT
+  - OCHRE_FROGLIGHT
+  - GLOWSTONE
+  - JACK_O_LANTERN
+  - REDSTONE_LAMP
+  - SEA_LANTERN
+  - SHROOMLIGHT
+  - COPPER_BULB
+  - EXPOSED_COPPER_BULB
+  - WEATHERED_COPPER_BULB
+  - OXIDIZED_COPPER_BULB
+  - MAGMA_BLOCK
+  - BONE_BLOCK

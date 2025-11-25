@@ -21,9 +21,7 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.interior.TARDISBuildData;
 import me.eccentric_nz.TARDIS.builders.utility.TARDISSeedBlockProcessor;
 import me.eccentric_nz.TARDIS.console.ConsoleBuilder;
-import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
-import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
-import me.eccentric_nz.TARDIS.customblocks.VariableLight;
+import me.eccentric_nz.TARDIS.customblocks.*;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetInteractionCheck;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
@@ -87,9 +85,9 @@ public class TARDISSeedBlockListener implements Listener {
                 String key = im.getPersistentDataContainer().get(plugin.getCustomBlockKey(), PersistentDataType.STRING);
                 NamespacedKey which = new NamespacedKey(plugin, key);
                 block.setBlockData(TARDISConstants.BARRIER);
-                TARDISDisplayItem tdi = TARDISDisplayItem.getByModel(which);
+                TARDISDisplayItem tdi = TARDISDisplayItemRegistry.getByModel(which);
                 if (tdi == null) {
-                    tdi = TARDISDisplayItem.CUSTOM;
+                    tdi = TARDISSeedDisplayItem.CUSTOM;
                 }
                 TARDISDisplayItemUtils.setSeed(tdi, block, im);
             }
@@ -156,13 +154,13 @@ public class TARDISSeedBlockListener implements Listener {
                 World w = l.getWorld();
                 // give back a new display item
                 String console = data.getSchematic().getPermission().toUpperCase(Locale.ROOT);
-                NamespacedKey model = TARDISDisplayItem.CUSTOM.getCustomModel();
+                NamespacedKey model = TARDISSeedDisplayItem.CUSTOM.getCustomModel();
                 ItemStack is;
                 if (data.getSchematic().isCustom()) {
                     is = ItemStack.of(data.getSchematic().getSeedMaterial(), 1);
                 } else {
                     try {
-                        TARDISDisplayItem tdi = TARDISDisplayItem.valueOf(console);
+                        TARDISDisplayItem tdi = TARDISDisplayItemRegistry.valueOf(console);
                         is = ItemStack.of(tdi.getMaterial(), 1);
                         model = tdi.getCustomModel();
                     } catch (IllegalArgumentException e) {
@@ -232,7 +230,7 @@ public class TARDISSeedBlockListener implements Listener {
                         Block block = event.getClickedBlock();
                         TARDISDisplayItemUtils.remove(block);
                         block.setBlockData(TARDISConstants.BARRIER);
-                        TARDISDisplayItemUtils.set(TARDISDisplayItem.GROW, block, -1);
+                        TARDISDisplayItemUtils.set(TARDISSeedDisplayItem.GROW, block, -1);
                         // send fake block change for bedrock players
                         if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) {
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.sendBlockChange(l, Material.LIGHT_GRAY_TERRACOTTA.createBlockData()), 3L);

@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.utility.LightLevel;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.customblocks.VariableLight;
+import me.eccentric_nz.TARDIS.database.data.Lamp;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetLamps;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetLightLevel;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetLightPrefs;
@@ -72,7 +73,8 @@ public class TARDISLightSequence {
                         // schedule delayed task
                         int remove = i;
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                            for (Block block : rsl.getData()) {
+                            for (Lamp lamp : rsl.getData()) {
+                                Block block = lamp.block();
                                 if (block.getBlockData() instanceof Levelled) {
                                     // remove the current light only on first loop
                                     if (remove == 0) {
@@ -91,13 +93,14 @@ public class TARDISLightSequence {
                     }
                     // reset lights back to original light and level
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                        for (Block block : rsl.getData()) {
+                        for (Lamp lamp : rsl.getData()) {
+                            Block block = lamp.block();
                             // remove the current light
                             TARDISDisplayItemUtils.remove(block);
                             // set new light - delay as interaction may be removed by the above
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                                 if (currentLight.getOn().isVariable()) {
-                                    new VariableLight(rs.getMaterial(), block.getLocation().add(0.5, 0.5, 0.5)).set(currentLight.getOn().getCustomModel(), currentLevel);
+                                    new VariableLight(rs.getMaterial(), block.getLocation().add(0.5, 0.5, 0.5)).set(currentLight.getOn().getCustomModel(), Math.round(currentLevel * lamp.percentage()));
                                 } else {
                                     TARDISDisplayItemUtils.set(currentLight.getOn(), block, -1);
                                 }

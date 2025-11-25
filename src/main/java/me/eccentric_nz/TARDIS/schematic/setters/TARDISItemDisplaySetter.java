@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.schematic.setters;
 import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemRegistry;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
@@ -100,7 +101,7 @@ public class TARDISItemDisplaySetter {
                 }
             }
             Material material = Material.valueOf(stack.get("type").getAsString());
-            TARDISDisplayItem tdi = model != null ? TARDISDisplayItem.getByModel(model): null;
+            TARDISDisplayItem tdi = model != null ? TARDISDisplayItemRegistry.getByModel(model) : null;
             if (tdi != null) {
                 ItemDisplay display = TARDISDisplayItemUtils.set(tdi, block, id);
                 if (json.has("name")) {

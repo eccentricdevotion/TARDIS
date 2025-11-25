@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.destroyers;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.exterior.MaterialisationData;
-import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
+import me.eccentric_nz.TARDIS.customblocks.TARDISBlockDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetBlocks;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisPreset;
@@ -228,7 +228,7 @@ public class TARDISDeinstantPreset {
             Block siege = dd.getLocation().getBlock();
             siege.setBlockData(TARDISConstants.BARRIER);
             TARDISDisplayItemUtils.remove(siege);
-            TARDISDisplayItemUtils.set(TARDISDisplayItem.SIEGE_CUBE, siege, id);
+            TARDISDisplayItemUtils.set(TARDISBlockDisplayItem.SIEGE_CUBE, siege, id);
         }
         plugin.getTrackerKeeper().getDematerialising().removeAll(Collections.singleton(id));
         plugin.getTrackerKeeper().getInVortex().removeAll(Collections.singleton(id));

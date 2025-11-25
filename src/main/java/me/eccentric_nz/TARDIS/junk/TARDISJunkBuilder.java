@@ -22,7 +22,7 @@ import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.exterior.BuildData;
-import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
+import me.eccentric_nz.TARDIS.customblocks.TARDISBlockDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.particles.TARDISParticles;
@@ -188,7 +188,7 @@ public class TARDISJunkBuilder implements Runnable {
                                             BlockData wall;
                                             if (wall_type.equals(Material.ORANGE_WOOL)) {
                                                 wall = TARDISConstants.BARRIER;
-                                                TARDISDisplayItemUtils.set(TARDISDisplayItem.HEXAGON, world, x, y, z);
+                                                TARDISDisplayItemUtils.set(TARDISBlockDisplayItem.HEXAGON, world, x, y, z);
                                             } else {
                                                 wall = wall_type.createBlockData();
                                             }

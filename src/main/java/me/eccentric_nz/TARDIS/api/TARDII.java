@@ -23,6 +23,8 @@ import me.eccentric_nz.TARDIS.blueprints.*;
 import me.eccentric_nz.TARDIS.builders.exterior.BuildData;
 import me.eccentric_nz.TARDIS.builders.interior.TARDISAbandoned;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemRegistry;
+import me.eccentric_nz.TARDIS.customblocks.TARDISSeedDisplayItem;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -487,17 +489,17 @@ public class TARDII implements TardisAPI {
         if (Consoles.getBY_NAMES().containsKey(schematic)) {
             Schematic s = Consoles.getBY_NAMES().get(schematic);
             ItemStack is;
-            NamespacedKey model = TARDISDisplayItem.CUSTOM.getCustomModel();
+            NamespacedKey model = TARDISSeedDisplayItem.CUSTOM.getCustomModel();
             if (s.isCustom()) {
                 is = ItemStack.of(s.getSeedMaterial(), 1);
             } else {
                 try {
-                    TARDISDisplayItem tdi = TARDISDisplayItem.valueOf(s.getPermission().toUpperCase(Locale.ROOT));
+                    TARDISDisplayItem tdi = TARDISDisplayItemRegistry.valueOf(s.getPermission().toUpperCase(Locale.ROOT));
                     model = tdi.getCustomModel();
                     is = ItemStack.of(tdi.getMaterial(), 1);
                 } catch (IllegalArgumentException e) {
                     TARDIS.plugin.debug("Could not get display item for console! " + e.getMessage());
-                    is = ItemStack.of(TARDISDisplayItem.CUSTOM.getMaterial(), 1);
+                    is = ItemStack.of(TARDISSeedDisplayItem.CUSTOM.getMaterial(), 1);
                 }
             }
             ItemMeta im = is.getItemMeta();

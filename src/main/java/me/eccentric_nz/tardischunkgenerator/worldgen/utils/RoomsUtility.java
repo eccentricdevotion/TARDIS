@@ -23,6 +23,7 @@ import io.papermc.paper.registry.RegistryAccess;
 import io.papermc.paper.registry.RegistryKey;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemRegistry;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.rooms.TARDISPainting;
 import me.eccentric_nz.TARDIS.schematic.getters.DataPackPainting;
@@ -57,7 +58,7 @@ public class RoomsUtility {
                 model = new NamespacedKey(TARDIS.plugin, key);
             }
             Material material = Material.valueOf(stack.get("type").getAsString());
-            TARDISDisplayItem tdi = TARDISDisplayItem.getByModel(model);
+            TARDISDisplayItem tdi = TARDISDisplayItemRegistry.getByModel(model);
             if (tdi != null) {
                 set(region, x + 0.5d, y + 0.5d, z + 0.5d, tdi.getMaterial(), tdi.getCustomModel(), false);
             } else {

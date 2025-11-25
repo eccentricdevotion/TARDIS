@@ -21,7 +21,7 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.advanced.TARDISSerializeInventory;
 import me.eccentric_nz.TARDIS.advanced.TARDISStorageConverter;
 import me.eccentric_nz.TARDIS.advanced.TARDISStorageInventory;
-import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
+import me.eccentric_nz.TARDIS.customblocks.TARDISBlockDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDiskStorage;
 import me.eccentric_nz.TARDIS.enumeration.Storage;
@@ -95,7 +95,7 @@ public class DiskStorageAction {
         if (!TARDISFloodgate.isFloodgateEnabled() || !TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) {
             if (block.getType().equals(Material.NOTE_BLOCK) || block.getType().equals(Material.MUSHROOM_STEM)) {
                 block.setBlockData(TARDISConstants.BARRIER, true);
-                TARDISDisplayItemUtils.set(TARDISDisplayItem.DISK_STORAGE, block, id);
+                TARDISDisplayItemUtils.set(TARDISBlockDisplayItem.DISK_STORAGE, block, id);
             }
         }
     }

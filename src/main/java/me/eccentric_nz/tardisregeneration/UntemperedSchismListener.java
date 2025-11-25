@@ -17,6 +17,7 @@
 package me.eccentric_nz.tardisregeneration;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.customblocks.TARDISBlockDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetRegenerations;
@@ -86,7 +87,7 @@ public class UntemperedSchismListener implements Listener {
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             block.setType(Material.AIR);
             // make a schism
-            ItemDisplay display = TARDISDisplayItemUtils.set(TARDISDisplayItem.UNTEMPERED_SCHISM, block, -1);
+            ItemDisplay display = TARDISDisplayItemUtils.set(TARDISBlockDisplayItem.UNTEMPERED_SCHISM, block, -1);
             float yaw = DoorUtility.getLookAtYaw(player);
             // set display rotation
             display.setRotation(yaw, 0);

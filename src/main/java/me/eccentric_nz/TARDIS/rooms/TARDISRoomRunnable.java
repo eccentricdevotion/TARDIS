@@ -23,7 +23,7 @@ import io.papermc.paper.registry.RegistryKey;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
+import me.eccentric_nz.TARDIS.customblocks.TARDISBlockDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetFarming;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetHappy;
@@ -1017,7 +1017,7 @@ public class TARDISRoomRunnable implements Runnable {
                             if (!TARDISFloodgate.isFloodgateEnabled() || (player != null && !TARDISFloodgate.isBedrockPlayer(player.getUniqueId()))) {
                                 data = TARDISConstants.BARRIER;
                                 // set hexagon item display
-                                TARDISDisplayItemUtils.set(TARDISDisplayItem.HEXAGON, world, startx, starty, startz);
+                                TARDISDisplayItemUtils.set(TARDISBlockDisplayItem.HEXAGON, world, startx, starty, startz);
                             }
                         } else {
                             data = (wall_type.equals(Material.ORANGE_WOOL)) ? ow.createBlockData() : wall_type.createBlockData();

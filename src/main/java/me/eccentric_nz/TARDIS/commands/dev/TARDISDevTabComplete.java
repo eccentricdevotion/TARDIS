@@ -20,6 +20,7 @@ import com.google.common.collect.ImmutableList;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemRegistry;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.Room;
 import me.eccentric_nz.TARDIS.particles.ParticleEffect;
@@ -80,7 +81,7 @@ public class TARDISDevTabComplete extends TARDISCompleter implements TabComplete
 
     public TARDISDevTabComplete(TARDIS plugin) {
         plugin.getTardisHelper().getTreeMaterials().forEach((m) -> MAT_SUBS.add(m.toString()));
-        for (TARDISDisplayItem d : TARDISDisplayItem.values()) {
+        for (TARDISDisplayItem d : TARDISDisplayItemRegistry.values()) {
             STONE_SUBS.add(d.getName());
         }
         for (ItemDisplay.ItemDisplayTransform t : ItemDisplay.ItemDisplayTransform.values()) {

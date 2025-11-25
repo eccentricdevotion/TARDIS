@@ -18,8 +18,11 @@ package me.eccentric_nz.TARDIS.travel;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.customblocks.TARDISBlockDisplayItem;
+import me.eccentric_nz.TARDIS.customblocks.TARDISCustomLightDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
+import me.eccentric_nz.TARDIS.database.data.Lamp;
 import me.eccentric_nz.TARDIS.enumeration.TardisLight;
 import org.bukkit.Effect;
 import org.bukkit.Location;
@@ -41,7 +44,7 @@ class TARDISLampsRunnable implements Runnable {
 
     final Levelled levelled = TARDISConstants.LIGHT;
     private final TARDIS plugin;
-    private final List<Block> lamps;
+    private final List<Lamp> lamps;
     private final long end;
     private final TardisLight light;
     private final boolean lights_on;
@@ -50,7 +53,7 @@ class TARDISLampsRunnable implements Runnable {
     private int task;
     private Location handbrake_loc;
 
-    TARDISLampsRunnable(TARDIS plugin, List<Block> lamps, long end, TardisLight light, boolean lights_on, int level) {
+    TARDISLampsRunnable(TARDIS plugin, List<Lamp> lamps, long end, TardisLight light, boolean lights_on, int level) {
         this.plugin = plugin;
         this.lamps = lamps;
         this.end = end;
@@ -63,15 +66,24 @@ class TARDISLampsRunnable implements Runnable {
     public void run() {
         if (System.currentTimeMillis() > end) {
             // set all lamps back to whatever they were when the malfunction happened
-            lamps.forEach((b) -> {
+            lamps.forEach((l) -> {
+                Block b = l.block();
                 ItemDisplay display = TARDISDisplayItemUtils.get(b);
                 // switch the item stack
                 if (display != null) {
-                    if (light.getCloister() == TARDISDisplayItem.NONE) {
-                        levelled.setLevel((lights_on) ? level : 0);
+                    if (light.getCloister() == TARDISBlockDisplayItem.NONE) {
+                        levelled.setLevel((lights_on) ? Math.round(level * l.percentage()) : 0);
                         b.setBlockData(levelled);
                     } else {
-                        TARDISDisplayItem tdi = (lights_on) ? light.getOn() : light.getOff();
+                        TARDISDisplayItem on = light.getOn();
+                        TARDISDisplayItem off = light.getOff();
+                        if (l.materialOn() != null) {
+                            on = new TARDISCustomLightDisplayItem(l.materialOn(), true);
+                        }
+                        if (l.materialOff() != null) {
+                            off = new TARDISCustomLightDisplayItem(l.materialOff(), false);
+                        }
+                        TARDISDisplayItem tdi = (lights_on) ? on : off;
                         ItemMeta im = display.getItemStack().getItemMeta();
                         im.setItemModel(tdi.getCustomModel());
                         ItemStack sub = ItemStack.of(tdi.getMaterial());
@@ -86,7 +98,8 @@ class TARDISLampsRunnable implements Runnable {
             for (int j = 0; j < 9; j++) {
                 handbrake_loc.getWorld().playEffect(handbrake_loc, Effect.SMOKE, j);
             }
-            lamps.forEach((b) -> {
+            lamps.forEach((l) -> {
+                Block b = l.block();
                 if (i == 0 && (b.getType().equals(Material.SEA_LANTERN) || (b.getType().equals(Material.REDSTONE_LAMP)))) {
                     // convert to light display item
                     TARDISDisplayItemUtils.set(light.getCloister(), b, -1);
@@ -95,13 +108,13 @@ class TARDISLampsRunnable implements Runnable {
                     if (display != null) {
                         // switch the item stack
                         TARDISDisplayItem tdi = light.getCloister();
-                        if (i == 0 && tdi != TARDISDisplayItem.NONE) {
+                        if (i == 0 && tdi != TARDISBlockDisplayItem.NONE) {
                             ItemMeta im = display.getItemStack().getItemMeta();
                             im.setItemModel(tdi.getCustomModel());
                             ItemStack sub = ItemStack.of(tdi.getMaterial());
                             sub.setItemMeta(im);
                             display.setItemStack(sub);
-                        } else if (tdi == TARDISDisplayItem.NONE) {
+                        } else if (tdi == TARDISBlockDisplayItem.NONE) {
                             // if tdi == TARDISDisplay.NONE, flash the lights instead
                             boolean off = (i % 2 == 0);
                             levelled.setLevel(off ? 0 : level);

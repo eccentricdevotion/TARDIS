@@ -113,7 +113,7 @@ public class TARDISDisplayBlockRoomConverter implements Runnable {
                 }
                 // look up the name to get the TDI
                 try {
-                    TARDISDisplayItem tdi = TARDISDisplayItem.valueOf(name);
+                    TARDISDisplayItem tdi = TARDISDisplayItemRegistry.valueOf(name);
                     // set the displayname
                     im.displayName(ComponentUtils.toWhite(tdi.getDisplayName()));
                     if (name.toLowerCase(Locale.ROOT).contains("door")) {

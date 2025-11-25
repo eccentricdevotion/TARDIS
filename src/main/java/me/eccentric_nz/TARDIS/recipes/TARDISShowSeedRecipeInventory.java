@@ -18,6 +18,8 @@ package me.eccentric_nz.TARDIS.recipes;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemRegistry;
+import me.eccentric_nz.TARDIS.customblocks.TARDISSeedDisplayItem;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
@@ -77,16 +79,16 @@ public class TARDISShowSeedRecipeInventory implements InventoryHolder {
         // tardis type
         Schematic schm = Consoles.getBY_NAMES().get(type);
         ItemStack tardis;
-        NamespacedKey model = TARDISDisplayItem.CUSTOM.getCustomModel();
+        NamespacedKey model = TARDISSeedDisplayItem.CUSTOM.getCustomModel();
         if (schm.isCustom()) {
             tardis = ItemStack.of(schm.getSeedMaterial(), 1);
         } else {
             try {
-                TARDISDisplayItem tdi = TARDISDisplayItem.valueOf(type);
+                TARDISDisplayItem tdi = TARDISDisplayItemRegistry.valueOf(type);
                 tardis = ItemStack.of(tdi.getMaterial(), 1);
                 model = tdi.getCustomModel();
             } catch (IllegalArgumentException e) {
-                tardis = ItemStack.of(TARDISDisplayItem.CUSTOM.getMaterial(), 1);
+                tardis = ItemStack.of(TARDISSeedDisplayItem.CUSTOM.getMaterial(), 1);
             }
         }
         ItemMeta seed = tardis.getItemMeta();

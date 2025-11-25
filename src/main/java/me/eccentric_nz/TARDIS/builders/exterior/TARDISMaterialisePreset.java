@@ -21,7 +21,7 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.chameleon.construct.TARDISConstructColumn;
 import me.eccentric_nz.TARDIS.chameleon.utils.TARDISChameleonColumn;
 import me.eccentric_nz.TARDIS.chameleon.utils.TARDISStainedGlassLookup;
-import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
+import me.eccentric_nz.TARDIS.customblocks.TARDISBlockDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.data.ParticleData;
 import me.eccentric_nz.TARDIS.database.data.ReplacedBlock;
@@ -709,7 +709,7 @@ public class TARDISMaterialisePreset implements Runnable {
                             default -> {
                                 if (isJunk && mat.equals(Material.ORANGE_WOOL) && i == loops) {
                                     TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, TARDISConstants.BARRIER);
-                                    TARDISDisplayItemUtils.set(TARDISDisplayItem.HEXAGON, world, xx, (y + yy), zz);
+                                    TARDISDisplayItemUtils.set(TARDISBlockDisplayItem.HEXAGON, world, xx, (y + yy), zz);
                                 } else {
                                     TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, coldatas[yy]);
                                 }

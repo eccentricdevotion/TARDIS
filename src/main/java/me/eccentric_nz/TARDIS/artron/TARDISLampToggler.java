@@ -19,7 +19,10 @@ package me.eccentric_nz.TARDIS.artron;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.utility.LightLevel;
+import me.eccentric_nz.TARDIS.customblocks.TARDISCustomLightDisplayItem;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
+import me.eccentric_nz.TARDIS.database.data.Lamp;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.TardisLight;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
@@ -70,51 +73,73 @@ public class TARDISLampToggler {
                     }
                 }
             }
-            for (Block b : rsl.getData()) {
+            for (Lamp l : rsl.getData()) {
+                Block b = l.block();
                 while (!b.getChunk().isLoaded()) {
                     b.getChunk().load();
                 }
                 Levelled levelled = TARDISConstants.LIGHT;
                 ItemDisplay display = TARDISDisplayItemUtils.getFromBoundingBox(b);
                 if (on) {
-                    levelled.setLevel(0);
-                    b.setBlockData(levelled);
                     if (b.getType().equals(Material.SEA_LANTERN) || (b.getType().equals(Material.REDSTONE_LAMP))) {
                         // convert to light display item
-                        TARDISDisplayItemUtils.set(light.getOff(), b, id);
+                        if (l.materialOff() == null) {
+                            TARDISDisplayItemUtils.set(light.getOff(), b, id);
+                        } else { // Lamp has an off material override
+                            TARDISDisplayItem customLamp = new TARDISCustomLightDisplayItem(l.materialOff(), false);
+                            TARDISDisplayItemUtils.set(customLamp, b, id);
+                        }
                     } else {
                         // switch the itemstack
                         if (display != null) {
-                            ItemStack is = ItemStack.of(light.getOff().getMaterial());
+                            Material material = light.getOff().getMaterial();
+                            // Use material defined on lamp if available
+                            if (l.materialOff() != null) {
+                                material = l.materialOff();
+                            }
+                            ItemStack is = ItemStack.of(material);
                             ItemMeta im = is.getItemMeta();
                             im.displayName(ComponentUtils.toWhite(light.getOff().getDisplayName()));
-                            NamespacedKey model = light.getOff().getCustomModel();
-                            if (model != null) {
-                                im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, model.getKey());
-                                if (light.getOff().getDisplayName().contains("Variable")) {
-                                    im.setItemModel(model);
+                            // If the lamp has a material don't use the custom light model.
+                            if (l.materialOff() == null) {
+                                NamespacedKey model = light.getOff().getCustomModel();
+                                if (model != null) {
+                                    im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, model.getKey());
+                                    if (light.getOff().getDisplayName().contains("Variable")) {
+                                        im.setItemModel(model);
+                                    }
                                 }
                             }
                             is.setItemMeta(im);
                             display.setItemStack(is);
                         }
                     }
+                    levelled.setLevel(0);
+                    b.setBlockData(levelled);
                 } else {
                     // set light level from light level switch preference
                     ResultSetInteriorLightLevel rsill = new ResultSetInteriorLightLevel(plugin, id);
                     int level = (rsill.resultSet()) ? LightLevel.interior_level[rsill.getLevel()] : 15;
-                    levelled.setLevel(level);
+                    levelled.setLevel(Math.round(level * l.percentage()));
                     b.setBlockData(levelled);
                     // switch the itemstack
                     if (display != null) {
-                        ItemStack is = ItemStack.of(light.getOn().getMaterial());
+                        Material material = light.getOn().getMaterial();
+                        // Use material defined on lamp if available
+                        if (l.materialOn() != null) {
+                            material = l.materialOn();
+                        }
+                        ItemStack is = ItemStack.of(material);
                         ItemMeta im = is.getItemMeta();
                         im.displayName(ComponentUtils.toWhite(light.getOn().getDisplayName()));
-                        NamespacedKey model = light.getOn().getCustomModel();
-                        if (model != null) {
-                            im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, model.getKey());
-                            if (light.getOn().getDisplayName().contains("Variable")) {
-                                im.setItemModel(model);
+                        // If the lamp has a material don't use the custom light model.
+                        if (l.materialOn() == null) {
+                            NamespacedKey model = light.getOn().getCustomModel();
+                            if (model != null) {
+                                im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, model.getKey());
+                                if (light.getOn().getDisplayName().contains("Variable")) {
+                                    im.setItemModel(model);
+                                }
                             }
                         }
                         is.setItemMeta(im);

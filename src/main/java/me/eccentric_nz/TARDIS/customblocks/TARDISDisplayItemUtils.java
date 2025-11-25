@@ -18,6 +18,8 @@ package me.eccentric_nz.TARDIS.customblocks;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.database.data.Lamp;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetLamps;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.*;
@@ -29,6 +31,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.BoundingBox;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -47,16 +50,26 @@ public class TARDISDisplayItemUtils {
         ItemStack is = display.getItemStack();
         if (is != null) {
             ItemMeta im = is.getItemMeta();
+            // Try to get by model
             if (im.hasItemModel()) {
                 if (Tag.ITEMS_DECORATED_POT_SHERDS.isTagged(is.getType())) {
-                    return TARDISDisplayItem.CUSTOM_DOOR;
+                    return TARDISBlockDisplayItem.CUSTOM_DOOR;
                 } else {
-                    return TARDISDisplayItem.getByModel(im.getItemModel());
+                    return TARDISDisplayItemRegistry.getByModel(im.getItemModel());
                 }
-            } else if (im.getPersistentDataContainer().has(TARDIS.plugin.getCustomBlockKey())) {
+            }
+            // Try to get by Display Name
+            if (im.hasDisplayName()) {
+                TARDISDisplayItem displayItem = TARDISDisplayItemRegistry.getByDisplayName(im.displayName());
+                if (displayItem != null) {
+                    return displayItem;
+                }
+            }
+            // Try to get by Block key
+            if (im.getPersistentDataContainer().has(TARDIS.plugin.getCustomBlockKey())) {
                 String str = im.getPersistentDataContainer().get(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING);
                 NamespacedKey nsk = new NamespacedKey(TARDIS.plugin, str);
-                return TARDISDisplayItem.getByModel(nsk);
+                return TARDISDisplayItemRegistry.getByModel(nsk);
             }
         }
         return null;
@@ -288,19 +301,23 @@ public class TARDISDisplayItemUtils {
      */
     public static ItemDisplay set(TARDISDisplayItem tdi, Block block, int id) {
         // spawn an item display entity
-        if (tdi == TARDISDisplayItem.DOOR || tdi == TARDISDisplayItem.CLASSIC_DOOR || tdi == TARDISDisplayItem.BONE_DOOR || tdi.isLight()) {
+        NamespacedKey namespacedKey = tdi.getCustomModel();
+        if (namespacedKey == null) {
+            namespacedKey = tdi.getMaterial().getKey();
+        }
+        if (tdi == TARDISBlockDisplayItem.DOOR || tdi == TARDISBlockDisplayItem.CLASSIC_DOOR || tdi == TARDISBlockDisplayItem.BONE_DOOR || tdi.isLight()) {
             // also set an interaction entity
             Interaction interaction = (Interaction) block.getWorld().spawnEntity(block.getLocation().clone().add(0.5d, 0, 0.5d), EntityType.INTERACTION);
             interaction.setResponsive(true);
-            interaction.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING, tdi.getCustomModel().getKey());
+            interaction.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING, namespacedKey.getKey());
             interaction.setPersistent(true);
-            if (tdi == TARDISDisplayItem.DOOR) {
+            if (tdi == TARDISBlockDisplayItem.DOOR) {
                 // set size
                 interaction.setInteractionHeight(2.0f);
                 interaction.setInteractionWidth(1.0f);
                 interaction.getPersistentDataContainer().set(TARDIS.plugin.getTardisIdKey(), PersistentDataType.INTEGER, id);
             }
-            if (tdi == TARDISDisplayItem.CLASSIC_DOOR || tdi == TARDISDisplayItem.BONE_DOOR) {
+            if (tdi == TARDISBlockDisplayItem.CLASSIC_DOOR || tdi == TARDISBlockDisplayItem.BONE_DOOR) {
                 // set size
                 interaction.setInteractionHeight(3.0f);
                 interaction.setInteractionWidth(1.0f);
@@ -309,31 +326,40 @@ public class TARDISDisplayItemUtils {
             if (tdi.isLight()) {
                 // set a light block
                 Levelled light = TARDISConstants.LIGHT;
-                light.setLevel(tdi.isLit() ? 15 : 0);
+                HashMap<String, Object> whereLight = new HashMap<>();
+                whereLight.put("location", block.getLocation());
+                ResultSetLamps rsl = new ResultSetLamps(TARDIS.plugin, whereLight, false);
+                if (rsl.getLamp() != null) {
+                    Lamp l = rsl.getLamp();
+                    light.setLevel(tdi.isLit() ? Math.round(15 * l.percentage()) : 0);
+                } else {
+                    light.setLevel(tdi.isLit() ? 15 : 0);
+                }
                 block.setBlockData(light);
             }
-        } else if (tdi != TARDISDisplayItem.ARTRON_FURNACE && tdi != TARDISDisplayItem.SONIC_GENERATOR) {
+        } else if (tdi != TARDISBlockDisplayItem.ARTRON_FURNACE && tdi != TARDISBlockDisplayItem.SONIC_GENERATOR) {
             block.setBlockData(TARDISConstants.BARRIER);
         }
-        Material material = (tdi == TARDISDisplayItem.CLASSIC_DOOR || tdi == TARDISDisplayItem.BONE_DOOR) ? tdi.getCraftMaterial() : tdi.getMaterial();
+        Material material = (tdi == TARDISBlockDisplayItem.CLASSIC_DOOR || tdi == TARDISBlockDisplayItem.BONE_DOOR) ? tdi.getCraftMaterial() : tdi.getMaterial();
         ItemStack is = ItemStack.of(material, 1);
         ItemMeta im = is.getItemMeta();
         im.displayName(ComponentUtils.toWhite(tdi.getDisplayName()));
-        im.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING, tdi.getCustomModel().getKey());
+        im.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING, namespacedKey.getKey());
         if (tdi.isDoor()) {
             im.setItemModel(tdi.getCustomModel());
         }
         is.setItemMeta(im);
-        double ay = (tdi == TARDISDisplayItem.DOOR || tdi == TARDISDisplayItem.CLASSIC_DOOR || tdi == TARDISDisplayItem.BONE_DOOR) ? 0.0d : 0.5d;
+        double ay = (tdi == TARDISBlockDisplayItem.DOOR || tdi == TARDISBlockDisplayItem.CLASSIC_DOOR || tdi == TARDISBlockDisplayItem.BONE_DOOR) ? 0.0d : 0.5d;
+        // TODO any TARDISDisplayItems that dont have a custom model are better off as a BlockDisplay
         ItemDisplay display = (ItemDisplay) block.getWorld().spawnEntity(block.getLocation().add(0.5d, ay, 0.5d), EntityType.ITEM_DISPLAY);
         display.setItemStack(is);
-        if (tdi == TARDISDisplayItem.DOOR || tdi == TARDISDisplayItem.CLASSIC_DOOR || tdi == TARDISDisplayItem.BONE_DOOR || tdi == TARDISDisplayItem.UNTEMPERED_SCHISM) {
+        if (tdi == TARDISBlockDisplayItem.DOOR || tdi == TARDISBlockDisplayItem.CLASSIC_DOOR || tdi == TARDISBlockDisplayItem.BONE_DOOR || tdi == TARDISBlockDisplayItem.UNTEMPERED_SCHISM) {
             display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.FIXED);
         }
         display.setPersistent(true);
         display.setInvulnerable(true);
         display.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING, tdi.getCustomModel().getKey());
-        if (tdi == TARDISDisplayItem.ARTRON_FURNACE) {
+        if (tdi == TARDISBlockDisplayItem.ARTRON_FURNACE) {
             display.setBrightness(new Display.Brightness(15, 15));
         }
         return display;

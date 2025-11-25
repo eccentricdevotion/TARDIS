@@ -19,10 +19,7 @@ package me.eccentric_nz.TARDIS.listeners;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.customblocks.LampToggler;
-import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
-import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
-import me.eccentric_nz.TARDIS.customblocks.TARDISMushroomBlockData;
+import me.eccentric_nz.TARDIS.customblocks.*;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.rooms.eye.TARDISSpaceHelmetListener;
@@ -91,7 +88,7 @@ public class TARDISBlockPlaceListener implements Listener {
                 if (im.getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.INTEGER)) {
                     TARDISDisplayItem tdi = TARDISMushroomBlockData.getTARDISBlock(block.getBlockData());
                     if (tdi != null) {
-                        if (tdi == TARDISDisplayItem.HEAT_BLOCK) {
+                        if (tdi == TARDISChemistryDisplayItem.HEAT_BLOCK) {
                             // remember heat block location
                             plugin.getTrackerKeeper().getHeatBlocks().add(blockStr);
                         }

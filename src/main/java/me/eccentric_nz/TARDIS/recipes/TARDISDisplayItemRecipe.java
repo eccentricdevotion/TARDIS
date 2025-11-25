@@ -17,7 +17,9 @@
 package me.eccentric_nz.TARDIS.recipes;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.customblocks.TARDISBlockDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemRegistry;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import org.bukkit.Material;
@@ -39,10 +41,10 @@ public class TARDISDisplayItemRecipe {
     }
 
     public void addDisplayItemRecipes() {
-        for (TARDISDisplayItem tdi : TARDISDisplayItem.values()) {
+        for (TARDISDisplayItem tdi : TARDISDisplayItemRegistry.values()) {
             if (tdi.getCraftMaterial() != null) {
                 ItemStack is;
-                if (tdi == TARDISDisplayItem.CLASSIC_DOOR || tdi == TARDISDisplayItem.BONE_DOOR) {
+                if (tdi == TARDISBlockDisplayItem.CLASSIC_DOOR || tdi == TARDISBlockDisplayItem.BONE_DOOR) {
                     is = ItemStack.of(tdi.getCraftMaterial(), 1);
                 } else {
                     is = ItemStack.of(tdi.getMaterial(), 1);
