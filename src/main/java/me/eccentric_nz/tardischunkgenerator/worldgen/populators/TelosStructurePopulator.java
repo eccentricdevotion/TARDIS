@@ -22,47 +22,37 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
-import me.eccentric_nz.tardischunkgenerator.worldgen.utils.IslandSpiral;
-import me.eccentric_nz.tardischunkgenerator.worldgen.utils.SkaroStructureUtility;
 import me.eccentric_nz.tardischunkgenerator.worldgen.utils.TARDISLootTables;
-import me.eccentric_nz.tardischunkgenerator.worldgen.utils.WaterCircle;
-import me.eccentric_nz.tardisweepingangels.equip.MonsterEquipment;
-import me.eccentric_nz.tardisweepingangels.monsters.daleks.DalekEquipment;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.levelgen.structure.placement.RandomSpreadStructurePlacement;
 import net.minecraft.world.level.levelgen.structure.placement.RandomSpreadType;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
-import org.bukkit.Tag;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.Chest;
 import org.bukkit.block.CreatureSpawner;
 import org.bukkit.block.data.BlockData;
-import org.bukkit.entity.Ageable;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.generator.BlockPopulator;
 import org.bukkit.generator.LimitedRegion;
 import org.bukkit.generator.WorldInfo;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.util.BlockVector;
 
 import java.io.InputStream;
-import java.util.List;
 import java.util.Random;
 
 public class TelosStructurePopulator extends BlockPopulator {
 
     private final TARDIS plugin;
     private final IslandBlockPopulator.WeightedChoice<Material> STONES = new IslandBlockPopulator.WeightedChoice<Material>()
-            .add(60, Material.STONE)
+            .add(70, Material.STONE)
             .add(10, Material.ANDESITE)
             .add(10, Material.DIORITE)
             .add(10, Material.GRANITE)
-            .add(10, Material.COAL_ORE);
+            .add(5, Material.COAL_ORE);
 
     public TelosStructurePopulator(TARDIS plugin) {
         this.plugin = plugin;
@@ -73,7 +63,7 @@ public class TelosStructurePopulator extends BlockPopulator {
         // get a chunk position
         if (isFeatureChunk(worldInfo.getSeed(), x, z)) {
             int xx = x * 16;
-            int y = 35 + TARDISConstants.RANDOM.nextInt(20);
+            int y = 24 + TARDISConstants.RANDOM.nextInt(20);
             int zz = z * 16;
             if (limitedRegion.isInRegion(xx, y, zz) && limitedRegion.getBuffer() > 15) {
                 // have we got a 48 x 48 block buffer zone?
@@ -89,7 +79,7 @@ public class TelosStructurePopulator extends BlockPopulator {
     }
 
     private void build(LimitedRegion limitedRegion, int startX, int startY, int startZ, Random random) {
-        TARDIS.plugin.debug("x = " + startX + ", y = " + startY + ", z = " + startZ);
+        plugin.debug("x = " + startX + ", y = " + startY + ", z = " + startZ);
         String path = "schematics/cryo_chamber.tschm";
         // Get inputStream
         InputStream stream = plugin.getResource(path);
@@ -118,18 +108,16 @@ public class TelosStructurePopulator extends BlockPopulator {
                     Material type = data.getMaterial();
                     if (limitedRegion.isInRegion(x, y, z)) {
                         switch (type) {
-                            case WAXED_WEATHERED_COPPER_CHEST -> {
+                            case WAXED_OXIDIZED_COPPER_CHEST -> {
                                 limitedRegion.setBlockData(x, y, z, data);
-                                if (limitedRegion.getType(x, y, z).equals(Material.WAXED_WEATHERED_COPPER_CHEST)) {
+                                if (limitedRegion.getType(x, y, z).equals(Material.WAXED_OXIDIZED_COPPER_CHEST)) {
                                     // set chest contents
                                     Chest container = (Chest) limitedRegion.getBlockState(x, y, z);
                                     container.setLootTable(TARDISLootTables.LOOT.get(random.nextInt(11)));
                                     container.update();
                                 }
                             }
-                            case SPONGE -> {
-                                continue;
-                            }
+                            case SPONGE -> { }
                             case SOUL_SAND -> {
                                 limitedRegion.setType(x, y, z, Material.SPAWNER);
                                 // change to zombie spawner
@@ -178,6 +166,6 @@ public class TelosStructurePopulator extends BlockPopulator {
                     }
                 }
             }
-         }
+        }
     }
 }
