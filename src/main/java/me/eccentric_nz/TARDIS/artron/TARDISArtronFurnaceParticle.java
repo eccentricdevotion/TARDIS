@@ -35,16 +35,18 @@ public class TARDISArtronFurnaceParticle {
 
         plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, () -> plugin.getServer().getOnlinePlayers().forEach((player) -> {
             Location loc = player.getLocation();
-            int sx = loc.getBlockX() - 8;
-            int sy = loc.getBlockY() - 4;
-            int sz = loc.getBlockZ() - 8;
-            World world = loc.getWorld();
-            for (int y = 0; y < 8; y++) {
-                for (int x = 0; x < 16; x++) {
-                    for (int z = 0; z < 16; z++) {
-                        Block block = world.getBlockAt(sx + x, sy + y, sz + z);
-                        if (isArtronFurnace(block)) {
-                            player.spawnParticle(Particle.SPLASH, block.getLocation().add(0.5d, 1.0d, 0.5d), 10);
+            if (loc.getChunk().isLoaded()) {
+                int sx = loc.getBlockX() - 8;
+                int sy = loc.getBlockY() - 4;
+                int sz = loc.getBlockZ() - 8;
+                World world = loc.getWorld();
+                for (int y = 0; y < 8; y++) {
+                    for (int x = 0; x < 16; x++) {
+                        for (int z = 0; z < 16; z++) {
+                            Block block = world.getBlockAt(sx + x, sy + y, sz + z);
+                            if (isArtronFurnace(block)) {
+                                player.spawnParticle(Particle.SPLASH, block.getLocation().add(0.5d, 1.0d, 0.5d), 10);
+                            }
                         }
                     }
                 }

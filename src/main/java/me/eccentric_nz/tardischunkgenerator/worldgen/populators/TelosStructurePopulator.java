@@ -19,6 +19,8 @@ package me.eccentric_nz.tardischunkgenerator.worldgen.populators;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import me.eccentric_nz.tardischunkgenerator.worldgen.utils.IslandSpiral;
 import me.eccentric_nz.tardischunkgenerator.worldgen.utils.SkaroStructureUtility;
@@ -31,16 +33,21 @@ import net.minecraft.world.level.levelgen.structure.placement.RandomSpreadStruct
 import net.minecraft.world.level.levelgen.structure.placement.RandomSpreadType;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.Tag;
+import org.bukkit.block.BlockFace;
 import org.bukkit.block.Chest;
 import org.bukkit.block.CreatureSpawner;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Ageable;
+import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.generator.BlockPopulator;
 import org.bukkit.generator.LimitedRegion;
 import org.bukkit.generator.WorldInfo;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.BlockVector;
 
 import java.io.InputStream;
@@ -50,7 +57,12 @@ import java.util.Random;
 public class TelosStructurePopulator extends BlockPopulator {
 
     private final TARDIS plugin;
-    private final List<EntityType> animals = List.of(EntityType.SHEEP, EntityType.COW, EntityType.PIG, EntityType.CHICKEN, EntityType.HORSE, EntityType.GOAT);
+    private final IslandBlockPopulator.WeightedChoice<Material> STONES = new IslandBlockPopulator.WeightedChoice<Material>()
+            .add(60, Material.STONE)
+            .add(10, Material.ANDESITE)
+            .add(10, Material.DIORITE)
+            .add(10, Material.GRANITE)
+            .add(10, Material.COAL_ORE);
 
     public TelosStructurePopulator(TARDIS plugin) {
         this.plugin = plugin;
@@ -61,80 +73,11 @@ public class TelosStructurePopulator extends BlockPopulator {
         // get a chunk position
         if (isFeatureChunk(worldInfo.getSeed(), x, z)) {
             int xx = x * 16;
-            int y = 128;
+            int y = 35 + TARDISConstants.RANDOM.nextInt(20);
             int zz = z * 16;
-            for (int i = 128; i > 60; i--) {
-                if (limitedRegion.getType(xx, y, zz).isAir()) {
-                    y--;
-                } else {
-                    break;
-                }
-            }
-            if (limitedRegion.isInRegion(xx, y, zz)) {
-                if (Tag.ICE.isTagged(limitedRegion.getType(xx, y - 1, zz))) { // TODO should be just y (not block below)
-                    // build an island
-                    // get a spiral
-                    IslandSpiral spiral = new IslandSpiral();
-                    double[][] island = spiral.createMatrix(16, 16, random, 0.01);
-                    // create a blob
-                    boolean[][] blob = WaterCircle.makeBlob();
-                    // loop through the chunk coords and set blocks
-                    // top four layers SNOW_BLOCK
-                    // the rest STONE
-                    for (int r = 1; r < 15; r++) {
-                        for (int c = 1; c < 15; c++) {
-                            if (blob[r][c]) {
-                                double n = island[r][c];
-                                int top = (n > 0) ? (int) (n * 6) : 0;
-                                int bottom = -6 - (int) (n * 40);
-                                for (int h = top; h >= bottom; h--) {
-                                    int wx = xx + r;
-                                    int wy = y + h;
-                                    int wz = zz + c;
-                                    if (limitedRegion.isInRegion(wx, wy, wz)) {
-                                        Material material;
-                                        if (h > top - 3) {
-                                            material = Material.SNOW_BLOCK;
-                                        } else {
-                                            material = Material.STONE;
-                                        }
-                                        limitedRegion.setType(wx, wy, wz, material);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    // build a small dalek structure
-                    build(limitedRegion, xx + 2, y + 2, zz + 3, random, "small");
-                    // spawn a dalek or three?
-                    if (plugin.getConfig().getBoolean("modules.weeping_angels")) {
-                        for (int i = 0; i < random.nextInt(3) + 1; i++) {
-                            LivingEntity le = (LivingEntity) limitedRegion.spawnEntity(new Location(null, xx + 8, y + 3, zz + 8), EntityType.ZOMBIE);
-                            if (plugin.getConfig().getBoolean("modules.weeping_angels")) {
-                                plugin.getTardisAPI().setCyberEquipment(le, false);
-                            }
-                        }
-                    }
-                } else {
-                    build(limitedRegion, xx, y, zz, random, "large");
-                    // have we got a 48 x 48 block buffer zone?
-                    if (limitedRegion.getBuffer() > 15) {
-                        List<BlockVector> grid;
-                        // choose a random direction
-                        int dir = random.nextInt(4);
-                        switch (dir) {
-                            case 0 -> grid = SkaroStructureUtility.vectorLeft;
-                            case 1 -> grid = SkaroStructureUtility.vectorUp;
-                            case 2 -> grid = SkaroStructureUtility.vectorRight;
-                            default -> grid = SkaroStructureUtility.vectorDown;
-                        }
-                        int i = 0;
-                        for (BlockVector vector : grid) {
-                            build(limitedRegion, xx + vector.getBlockX(), (i == 0) ? y : -99, zz + vector.getBlockZ(), random, SkaroStructureUtility.structures.get(i));
-                            i++;
-                        }
-                    }
-                }
+            if (limitedRegion.isInRegion(xx, y, zz) && limitedRegion.getBuffer() > 15) {
+                // have we got a 48 x 48 block buffer zone?
+                build(limitedRegion, xx, y, zz, random);
             }
         }
     }
@@ -145,8 +88,9 @@ public class TelosStructurePopulator extends BlockPopulator {
         return chunkPos.x == x && chunkPos.z == z;
     }
 
-    private void build(LimitedRegion limitedRegion, int startX, int startY, int startZ, Random random, String which) {
-        String path = "schematics/dalek_" + which + ".tschm";
+    private void build(LimitedRegion limitedRegion, int startX, int startY, int startZ, Random random) {
+        TARDIS.plugin.debug("x = " + startX + ", y = " + startY + ", z = " + startZ);
+        String path = "schematics/cryo_chamber.tschm";
         // Get inputStream
         InputStream stream = plugin.getResource(path);
         if (stream != null) {
@@ -159,18 +103,6 @@ public class TelosStructurePopulator extends BlockPopulator {
             int d = dimensions.get("length").getAsInt() - 1;
             int level = 0;
             int row = 0;
-            if (startY == -99) {
-                startY = 129;
-                // set startY to the highest block Y at x, z
-                for (int i = 128; i > 60; i--) {
-                    if (!limitedRegion.getType(startX, startY, startZ).equals(Material.SNOW) && !limitedRegion.getType(startX, startY, startZ).equals(Material.SNOW_BLOCK)) {
-                        startY--;
-                    } else {
-                        break;
-                    }
-                }
-                startY += 1;
-            }
             // get input array
             JsonArray arr = obj.get("input").getAsJsonArray();
             while (level <= h && row < w) {
@@ -186,9 +118,9 @@ public class TelosStructurePopulator extends BlockPopulator {
                     Material type = data.getMaterial();
                     if (limitedRegion.isInRegion(x, y, z)) {
                         switch (type) {
-                            case CHEST -> {
+                            case WAXED_WEATHERED_COPPER_CHEST -> {
                                 limitedRegion.setBlockData(x, y, z, data);
-                                if (limitedRegion.getType(x, y, z).equals(Material.CHEST)) {
+                                if (limitedRegion.getType(x, y, z).equals(Material.WAXED_WEATHERED_COPPER_CHEST)) {
                                     // set chest contents
                                     Chest container = (Chest) limitedRegion.getBlockState(x, y, z);
                                     container.setLootTable(TARDISLootTables.LOOT.get(random.nextInt(11)));
@@ -196,41 +128,20 @@ public class TelosStructurePopulator extends BlockPopulator {
                                 }
                             }
                             case SPONGE -> {
-                                if (!limitedRegion.getType(x, y, z).isOccluding()) {
-                                    limitedRegion.setType(x, y, z, Material.AIR);
-                                }
+                                continue;
                             }
-                            case SPAWNER -> {
-                                limitedRegion.setBlockData(x, y, z, data);
+                            case SOUL_SAND -> {
+                                limitedRegion.setType(x, y, z, Material.SPAWNER);
+                                // change to zombie spawner
                                 CreatureSpawner cs = (CreatureSpawner) limitedRegion.getBlockState(x, y, z);
                                 cs.setSpawnedType(EntityType.ZOMBIE);
                                 cs.update();
                             }
-                            case SOUL_SAND -> {
-                                limitedRegion.setType(x, y, z, Material.GRASS_BLOCK);
-                                // spawn an animal or three at this location
-                                EntityType entityType = animals.get(random.nextInt(animals.size()));
-                                for (int i = 0; i < random.nextInt(3) + 1; i++) {
-                                    LivingEntity le = (LivingEntity) limitedRegion.spawnEntity(new Location(null, x, y + 1, z), entityType);
-                                    le.setRemoveWhenFarAway(false);
-                                    le.setPersistent(true);
-                                    // if more than one, make a baby
-                                    if (i > 0) {
-                                        ((Ageable) le).setBaby();
-                                    }
-                                }
+                            case STONE -> {
+                                Material stone = STONES.next();
+                                limitedRegion.setType(x, y, z, stone);
                             }
-                            default -> {
-                                limitedRegion.setBlockData(x, y, z, data);
-                                if (level == 0) {
-                                    // place sand under block if it is not AIR
-                                    int yy = y - 1;
-                                    while (limitedRegion.getType(x, yy, z).isAir() || limitedRegion.getType(x, yy, z).equals(Material.WATER)) {
-                                        limitedRegion.setType(x, yy, z, Material.SAND);
-                                        yy--;
-                                    }
-                                }
-                            }
+                            default -> limitedRegion.setBlockData(x, y, z, data);
                         }
                     }
                     if (col == d && row < w) {
@@ -242,6 +153,31 @@ public class TelosStructurePopulator extends BlockPopulator {
                     }
                 }
             }
-        }
+            if (obj.has("armour_stands")) {
+                JsonArray stands = obj.get("armour_stands").getAsJsonArray();
+                for (int i = 0; i < stands.size(); i++) {
+                    JsonObject stand = stands.get(i).getAsJsonObject();
+                    JsonObject rel = stand.get("rel_location").getAsJsonObject();
+                    int asx = rel.get("x").getAsInt();
+                    int asy = rel.get("y").getAsInt();
+                    int asz = rel.get("z").getAsInt();
+                    COMPASS facing = COMPASS.valueOf(BlockFace.valueOf(stand.get("facing").getAsString()).getOppositeFace().toString());
+                    Location asl = new Location(limitedRegion.getWorld(), startX + asx + 0.5d, startY + asy, startZ + asz + 0.5d);
+                    ArmorStand as = (ArmorStand) limitedRegion.spawnEntity(asl, EntityType.ARMOR_STAND);
+                    as.setRotation(facing.getYaw(), 0);
+                    as.setVisible(stand.get("invisible").getAsBoolean());
+                    if (stand.has("head")) {
+                        JsonObject head = stand.get("head").getAsJsonObject();
+                        Material material = Material.valueOf(head.get("material").getAsString());
+                        NamespacedKey nsk = NamespacedKey.fromString(head.get("model").getAsString());
+                        ItemStack is = ItemStack.of(material);
+                        ItemMeta im = is.getItemMeta();
+                        im.setItemModel(nsk);
+                        is.setItemMeta(im);
+                        as.getEquipment().setHelmet(is);
+                    }
+                }
+            }
+         }
     }
 }
