@@ -110,7 +110,7 @@ public class WorldProcessor implements Runnable {
                 i++;
             }
             if (!config.contains("nimon.worlds." + n, true)) {
-                plugin.getMonstersConfig().set("nimon.worlds." + n, true);
+                plugin.getMonstersConfig().set("nimon.worlds." + n, m);
                 i++;
             }
             if (!config.contains("omega.worlds." + n, true)) {
