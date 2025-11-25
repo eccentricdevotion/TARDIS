@@ -20,7 +20,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.control.actions.ConsoleLampAction;
 import me.eccentric_nz.TARDIS.control.actions.LightLevelAction;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetLightLevel;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.ItemFrame;
@@ -59,7 +58,7 @@ public class TARDISLightLevelFrameListener implements Listener {
                     boolean isOff = current.endsWith("_off");
                     String[] split = current.replace("_off", "").split("_");
                     String num = split[split.length - 1];
-                    int which = TARDISNumberParsers.parseInt(num);
+                    int which = rs.getLevel();
                     int cmd = which + 1;
                     if (cmd > 7) {
                         cmd = start;
