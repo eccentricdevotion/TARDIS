@@ -36,6 +36,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * @author eccentric_nz
@@ -88,7 +89,7 @@ public class TARDISDiskCraftListener implements Listener {
                 Material lookup = items.getFirst().getType();
                 Biome biome = BiomeLookup.MATERIALS.get(lookup);
                 if (biome != null) {
-                    disk_lore.add(Component.text(biome.toString()));
+                    disk_lore.add(Component.text(biome.getKey().getKey().toUpperCase(Locale.ROOT)));
                 }
                 if (disk_lore.isEmpty()) {
                     return;

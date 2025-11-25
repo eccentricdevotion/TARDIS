@@ -531,7 +531,7 @@ public class TARDISConstants {
      */
     public static boolean isTARDISPlanetExact(String world) {
         String w = world.toLowerCase(Locale.ROOT);
-        return w.equals("gallifrey") || w.equals("siluria") || w.equals("skaro") || w.equals("rooms");
+        return w.equals("gallifrey") || w.equals("siluria") || w.equals("skaro") || w.equals("telos") || w.equals("rooms");
     }
 
     /**

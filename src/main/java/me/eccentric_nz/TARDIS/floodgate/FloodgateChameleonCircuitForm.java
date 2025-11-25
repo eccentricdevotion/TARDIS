@@ -35,6 +35,7 @@ import org.geysermc.floodgate.api.player.FloodgatePlayer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.UUID;
 
 public class FloodgateChameleonCircuitForm {
@@ -191,7 +192,7 @@ public class FloodgateChameleonCircuitForm {
 
     private ChameleonPreset getAdaption(Biome biome) {
         try {
-            return ChameleonPreset.valueOf(plugin.getAdaptiveConfig().getString(biome.toString()));
+            return ChameleonPreset.valueOf(plugin.getAdaptiveConfig().getString(biome.getKey().getKey().toUpperCase(Locale.ROOT)));
         } catch (IllegalArgumentException e) {
             return null;
         }

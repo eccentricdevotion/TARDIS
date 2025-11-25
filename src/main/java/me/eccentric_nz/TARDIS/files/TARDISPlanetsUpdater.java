@@ -77,7 +77,6 @@ public class TARDISPlanetsUpdater {
                 planets_config.set("planets.TARDIS_Zero_Room.difficulty", "NORMAL");
                 planets_config.set("planets.TARDIS_Zero_Room.generator", "TARDIS:void");
                 planets_config.set("planets.TARDIS_Zero_Room.void", true);
-                planets_config.set("planets.TARDIS_Zero_Room.spawn_chunk_radius", 0);
                 planets_config.set("planets.TARDIS_Zero_Room.gamerules.doWeatherCycle", false);
                 planets_config.set("planets.TARDIS_Zero_Room.gamerules.doDaylightCycle", false);
                 planets_config.set("planets.TARDIS_Zero_Room.gamerules.announceAdvancements", false);
@@ -99,7 +98,6 @@ public class TARDISPlanetsUpdater {
             planets_config.set("planets." + dn + ".void", true);
             planets_config.set("planets." + dn + ".gamerules.doWeatherCycle", false);
             planets_config.set("planets." + dn + ".gamerules.doDaylightCycle", false);
-            planets_config.set("planets." + dn + ".spawn_chunk_radius", 0);
             planets_config.set("planets." + dn + ".allow_portals", false);
             planets_config.set("planets." + dn + ".alias", "TimeVortex");
             planets_config.set("planets." + dn + ".icon", "CRYING_OBSIDIAN");
@@ -112,10 +110,12 @@ public class TARDISPlanetsUpdater {
             save++;
         }
         Set<String> worlds = planets_config.getConfigurationSection("planets").getKeys(false);
-        // check there is a `spawn_chunk_radius` config option for all worlds
+        // remove `spawn_chunk_radius` and `keep_spawn_in_memory` config options for all worlds
         for (String w : worlds) {
-            if (!planets_config.contains("planets." + w + ".spawn_chunk_radius")) {
-                planets_config.set("planets." + w + ".spawn_chunk_radius", planets_config.getBoolean("planets." + dn + ".keep_spawn_in_memory") ? 2 : 0);
+            if (planets_config.contains("planets." + w + ".spawn_chunk_radius")) {
+                planets_config.set("planets." + w + ".spawn_chunk_radius", null);
+            }
+            if (planets_config.contains("planets." + w + ".keep_spawn_in_memory")) {
                 planets_config.set("planets." + w + ".keep_spawn_in_memory", null);
             }
         }
@@ -261,6 +261,26 @@ public class TARDISPlanetsUpdater {
             planets_config.set("planets.skaro.generator", "TARDIS:skaro");
             save++;
         }
+        if (!planets_config.contains("planets.telos")) {
+            // Telos
+            planets_config.set("planets.telos.enabled", false);
+            planets_config.set("planets.telos.resource_pack", "default");
+            planets_config.set("planets.telos.vastial.enabled", true);
+            planets_config.set("planets.telos.vastial.gunpowder_chance", 30);
+            planets_config.set("planets.telos.twilight", true);
+            planets_config.set("planets.telos.gamemode", "SURVIVAL");
+            planets_config.set("planets.telos.time_travel", true);
+            planets_config.set("planets.telos.world_type", "NORMAL");
+            planets_config.set("planets.telos.environment", "NORMAL");
+            planets_config.set("planets.telos.generator", "TARDIS:telos");
+            planets_config.set("planets.telos.spawn_other_mobs", true);
+            planets_config.set("planets.telos.gamerules.doTraderSpawning", false);
+            planets_config.set("planets.telos.gamerules.doPatrolSpawning", false);
+            planets_config.set("planets.telos.allow_portals", false);
+            planets_config.set("planets.telos.alias", "Telos");
+            planets_config.set("planets.telos.icon", "PACKED_ICE");
+            planets_config.set("planets.telos.helmic_regulator_order", -1);
+        }
         if (!planets_config.contains("planets.rooms")) {
             planets_config.set("planets.rooms.enabled", false);
             planets_config.set("planets.rooms.resource_pack", "default");
@@ -269,7 +289,6 @@ public class TARDISPlanetsUpdater {
             planets_config.set("planets.rooms.world_type", "FLAT");
             planets_config.set("planets.rooms.environment", "NORMAL");
             planets_config.set("planets.rooms.generator", "TARDIS:rooms");
-            planets_config.set("planets.rooms.spawn_chunk_radius", 0);
             planets_config.set("planets.rooms.spawn_other_mobs", false);
             planets_config.set("planets.rooms.gamerules.doWeatherCycle", false);
             planets_config.set("planets.rooms.gamerules.doDaylightCycle", false);

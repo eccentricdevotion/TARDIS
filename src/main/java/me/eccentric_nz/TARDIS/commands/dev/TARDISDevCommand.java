@@ -88,12 +88,13 @@ public class TARDISDevCommand implements CommandExecutor {
             "happy", "head",
             "interaction",
             "label", "leather", "list",
-            "monster",
+            "monster", "mount",
             "ntc", "nms",
             "plurals",
             "recipe", "regen", "registry", "rooms",
             "screen", "skin", "snapshot", "stats", "systree",
             "tis", "tips", "tree",
+            "unmount",
             "zero"
     );
     private final TARDIS plugin;
@@ -118,6 +119,12 @@ public class TARDISDevCommand implements CommandExecutor {
                 }
                 if (args.length == 1) {
                     switch (first) {
+                        case "mount", "unmount" -> {
+                            if (sender instanceof Player player) {
+                                return new MountCommand(plugin).test(player, first.equals("mount"));
+                            }
+                            return true;
+                        }
                         case "add_regions" -> {
                             return new TARDISAddRegionsCommand(plugin).doCheck(sender);
                         }

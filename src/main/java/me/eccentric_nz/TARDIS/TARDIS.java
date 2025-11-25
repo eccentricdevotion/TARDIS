@@ -436,6 +436,9 @@ public class TARDIS extends JavaPlugin {
             if (id.equalsIgnoreCase("skaro")) {
                 return new SkaroGenerator(this);
             }
+            if (id.equalsIgnoreCase("telos")) {
+                return new TelosGenerator(this);
+            }
             if (id.equalsIgnoreCase("rooms")) {
                 return new RoomGenerator(this);
             }

@@ -103,7 +103,7 @@ public class IslandBlockPopulator extends BlockPopulator {
         }
     }
 
-    private static class WeightedChoice<E> {
+    public static class WeightedChoice<E> {
 
         private final NavigableMap<Double, E> map = new TreeMap<>();
         private double total = 0;

@@ -20,11 +20,14 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.display.TARDISDisplayType;
+import me.eccentric_nz.TARDIS.flight.FlightReturnData;
 import me.eccentric_nz.TARDIS.flight.FlightVisibility;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Material;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -93,10 +96,21 @@ public class TARDISHotbarListener implements Listener {
                             new FlightVisibility(plugin).hide(stand, player);
                         }
                     }
-                    case ARROW -> { }
+                    case BLAZE_ROD -> {
+                        if (TARDISStaticUtils.isSonic(is) && !player.getPassengers().isEmpty()) {
+                            ItemDisplay display = (ItemDisplay) player.getPassengers().getFirst();
+                            // get the item stack and save it
+                            ItemStack box = display.getItemStack();
+                            plugin.getTrackerKeeper().getHiddenFlight().put(player.getUniqueId(), box);
+                            FlightReturnData frd = plugin.getTrackerKeeper().getFlyingReturnLocation().get(player.getUniqueId());
+                            plugin.getServer().getScheduler().cancelTask(frd.animation());
+                        }
+                    }
+                    case ARROW -> {
+                    }
                     default -> {
                         if (plugin.getTrackerKeeper().getHiddenFlight().containsKey(player.getUniqueId())) {
-                            // remove entity hiding
+                            // remove entity hiding / restart flying animation
                             new FlightVisibility(plugin).show(player);
                         }
                     }

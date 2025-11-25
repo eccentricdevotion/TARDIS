@@ -27,6 +27,7 @@ import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.entity.*;
@@ -178,11 +179,26 @@ public class TARDISSonicListener implements Listener {
                     if (TARDISPermission.hasPermission(player, "tardis.sonic.standard")) {
                         TARDISSonic.standardSonic(plugin, player, now);
                         if (plugin.getTrackerKeeper().getFlyingReturnLocation().containsKey(uuid)) {
-                            // toggle door open / closed
-                            if (plugin.getTrackerKeeper().getSonicDoorToggle().contains(uuid)) {
-                                plugin.getTrackerKeeper().getSonicDoorToggle().remove(uuid);
-                            } else {
-                                plugin.getTrackerKeeper().getSonicDoorToggle().add(uuid);
+                            ItemDisplay display = (ItemDisplay) player.getPassengers().getFirst();
+                            if (display != null) {
+                                ItemStack box = display.getItemStack();
+                                ItemMeta meta = box.getItemMeta();
+                                NamespacedKey model = meta.getItemModel();
+                                String value = model.getKey();
+                                // toggle door open / closed
+                                if (plugin.getTrackerKeeper().getSonicDoorToggle().contains(uuid)) {
+                                    plugin.getTrackerKeeper().getSonicDoorToggle().remove(uuid);
+                                    // close door
+                                    NamespacedKey closed = NamespacedKey.fromString(value.replace("open", "closed"), plugin);
+                                    meta.setItemModel(closed);
+                                } else {
+                                    plugin.getTrackerKeeper().getSonicDoorToggle().add(uuid);
+                                    // open door
+                                    NamespacedKey open = NamespacedKey.fromString(value.replace("closed", "open"), plugin);
+                                    meta.setItemModel(open);
+                                }
+                                box.setItemMeta(meta);
+                                display.setItemStack(box);
                             }
                         }
                         return;

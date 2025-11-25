@@ -64,7 +64,7 @@ public class FloodgateBiomesForm {
             }
             for (Biome biome : biomes) {
                 String path = FloodgateBiomes.BIOME_BLOCKS.get(biome);
-                builder.button(TARDISStringUtils.capitalise(biome.toString()), FormImage.Type.PATH, String.format("textures/%s", path));
+                builder.button(TARDISStringUtils.capitalise(biome.getKey().getKey()), FormImage.Type.PATH, String.format("textures/%s", path));
             }
         }
         builder.validResultHandler(this::handleResponse);

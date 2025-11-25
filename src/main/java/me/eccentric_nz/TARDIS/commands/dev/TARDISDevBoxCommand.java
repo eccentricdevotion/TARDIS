@@ -73,7 +73,7 @@ public class TARDISDevBoxCommand {
                     }
                 }
                 if (as == null) {
-                    plugin.getMessenger().send(sender, TardisModule.MONSTERS, "WA_STAND");
+                    plugin.getMessenger().send(sender, TardisModule.TARDIS, "WA_STAND");
                     return true;
                 }
                 Material dye = TARDISBuilderUtility.getMaterialForArmourStand(preset, -1, true);

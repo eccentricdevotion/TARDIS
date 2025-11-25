@@ -35,6 +35,8 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -53,7 +55,7 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
     private final List<String> TYPE_SUBS = new ArrayList<>();
     private final List<String> ENV_SUBS = new ArrayList<>();
     private final List<String> GM_SUBS = new ArrayList<>();
-    private final List<String> PLANET_SUBS = List.of("gallifrey", "siluria", "skaro");
+    private final List<String> PLANET_SUBS = List.of("gallifrey", "siluria", "skaro", "telos");
 
     public TARDISWorldCommand(TARDIS plugin) {
         this.plugin = plugin;
@@ -227,8 +229,7 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
                                     plugin.getPM().registerEvents(new TARDISSiluriaSpawnListener(plugin), plugin);
                                 }
                             }
-                            default -> {
-                                // skaro
+                            case "skaro" -> {
                                 plugin.debug("Skaro enabled, registering planet event listeners");
                                 if (plugin.getPlanetsConfig().getBoolean("planets.skaro.acid")) {
                                     plugin.getPM().registerEvents(new TARDISAcidWater(plugin), plugin);
@@ -237,6 +238,33 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
                                     plugin.getPM().registerEvents(new TARDISSkaroSpawnListener(plugin), plugin);
                                 }
                                 plugin.getTardisHelper().addCustomBiome("skaro");
+                            }
+                            default -> {
+                                // telos
+                                plugin.debug("Telos enabled, registering planet event listeners");
+                                if (plugin.getPlanetsConfig().getBoolean("planets.telos.vastial.enabled")) {
+                                    plugin.getPM().registerEvents(new TARDISVastialListener(plugin), plugin);
+                                }
+                                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                                    if (plugin.getPlanetsConfig().getBoolean("planets.telos.twilight")) {
+                                        World telos = plugin.getServer().getWorld("telos");
+                                        if (telos != null) {
+                                            telos.setTime(13000);
+                                            telos.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
+                                            plugin.getPlanetsConfig().set("planets.telos.gamerules.doDaylightCycle", false);
+                                        }
+                                    } else {
+                                        plugin.getPlanetsConfig().set("planets.telos.gamerules.doDaylightCycle", true);
+                                    }
+                                    String planetsPath = plugin.getDataFolder() + File.separator + "planets.yml";
+                                    try {
+                                        plugin.getPlanetsConfig().save(new File(planetsPath));
+                                    } catch (IOException ignored) {
+                                    }
+                                }, 300L);
+                                if (plugin.getConfig().getBoolean("modules.weeping_angels")) {
+                                    plugin.getPM().registerEvents(new TARDISTelosSpawnListener(plugin), plugin);
+                                }
                             }
                         }
                     }

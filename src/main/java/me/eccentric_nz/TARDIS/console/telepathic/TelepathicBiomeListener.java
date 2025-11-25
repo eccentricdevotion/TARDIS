@@ -146,7 +146,7 @@ public class TelepathicBiomeListener extends TARDISMenuListener {
             if (material != null) {
                 ItemStack is = ItemStack.of(material, 1);
                 ItemMeta im = is.getItemMeta();
-                im.displayName(Component.text(TARDISStringUtils.capitalise(biome.toString())));
+                im.displayName(Component.text(TARDISStringUtils.capitalise(biome.getKey().getKey())));
                 is.setItemMeta(im);
                 stacks[r][c] = is;
                 c++;
