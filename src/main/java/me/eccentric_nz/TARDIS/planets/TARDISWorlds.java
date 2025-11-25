@@ -21,9 +21,11 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import me.eccentric_nz.tardischunkgenerator.helpers.TARDISPlanetData;
+import org.bukkit.GameRule;
 import org.bukkit.World;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 
@@ -73,6 +75,25 @@ public class TARDISWorlds {
                 if (worldFolderExists(cw) && plugin.getPlanetsConfig().getBoolean("planets." + cw + ".enabled")) {
                     plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Attempting to load world: '" + cw + "'");
                     new WorldLoader(plugin).loadWorld(cw);
+                    if (cw.equals("telos")) {
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                            if (plugin.getPlanetsConfig().getBoolean("planets.telos.twilight")) {
+                                World telos = plugin.getServer().getWorld("telos");
+                                if (telos != null) {
+                                    telos.setTime(13000);
+                                    telos.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
+                                    plugin.getPlanetsConfig().set("planets.telos.gamerules.doDaylightCycle", false);
+                                }
+                            } else {
+                                plugin.getPlanetsConfig().set("planets.telos.gamerules.doDaylightCycle", true);
+                            }
+                            String planetsPath = plugin.getDataFolder() + File.separator + "planets.yml";
+                            try {
+                                plugin.getPlanetsConfig().save(new File(planetsPath));
+                            } catch (IOException ignored) {
+                            }
+                        }, 300L);
+                    }
                 }
             } else {
                 if (!TARDISConstants.isTARDISPlanet(cw) && !cw.equals("TARDIS_Zero_Room") && !cw.equals("TARDIS_TimeVortex") && !worldFolderExists(cw)) {

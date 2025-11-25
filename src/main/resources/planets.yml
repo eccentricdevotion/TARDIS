@@ -104,6 +104,7 @@ planets:
     vastial:
       enabled: true
       gunpowder_chance: 30
+    twilight: true
     gamemode: SURVIVAL
     time_travel: true
     world_type: NORMAL
