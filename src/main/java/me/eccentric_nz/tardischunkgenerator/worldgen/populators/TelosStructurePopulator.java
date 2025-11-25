@@ -79,7 +79,6 @@ public class TelosStructurePopulator extends BlockPopulator {
     }
 
     private void build(LimitedRegion limitedRegion, int startX, int startY, int startZ, Random random) {
-        plugin.debug("x = " + startX + ", y = " + startY + ", z = " + startZ);
         String path = "schematics/cryo_chamber.tschm";
         // Get inputStream
         InputStream stream = plugin.getResource(path);
