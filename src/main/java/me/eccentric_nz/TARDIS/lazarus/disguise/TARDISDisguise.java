@@ -20,6 +20,7 @@ import io.papermc.paper.world.WeatheringCopperState;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.utility.CaseUtils;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
@@ -28,16 +29,15 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.ambient.Bat;
-import net.minecraft.world.entity.animal.*;
 import net.minecraft.world.entity.animal.chicken.Chicken;
 import net.minecraft.world.entity.animal.cow.Cow;
 import net.minecraft.world.entity.animal.cow.MushroomCow;
+import net.minecraft.world.entity.animal.equine.*;
 import net.minecraft.world.entity.animal.feline.Cat;
 import net.minecraft.world.entity.animal.fish.Pufferfish;
 import net.minecraft.world.entity.animal.fish.TropicalFish;
 import net.minecraft.world.entity.animal.fox.Fox;
 import net.minecraft.world.entity.animal.golem.CopperGolem;
-import net.minecraft.world.entity.animal.equine.*;
 import net.minecraft.world.entity.animal.golem.SnowGolem;
 import net.minecraft.world.entity.animal.panda.Panda;
 import net.minecraft.world.entity.animal.parrot.Parrot;
@@ -45,7 +45,10 @@ import net.minecraft.world.entity.animal.pig.Pig;
 import net.minecraft.world.entity.animal.rabbit.Rabbit;
 import net.minecraft.world.entity.animal.sheep.Sheep;
 import net.minecraft.world.entity.animal.wolf.Wolf;
-import net.minecraft.world.entity.monster.*;
+import net.minecraft.world.entity.monster.Creeper;
+import net.minecraft.world.entity.monster.EnderMan;
+import net.minecraft.world.entity.monster.MagmaCube;
+import net.minecraft.world.entity.monster.Slime;
 import net.minecraft.world.entity.monster.illager.Pillager;
 import net.minecraft.world.entity.monster.zombie.ZombieVillager;
 import net.minecraft.world.entity.npc.villager.Villager;
@@ -65,6 +68,7 @@ import org.bukkit.entity.Frog;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Locale;
 import java.util.concurrent.ThreadLocalRandom;
 
 public record TARDISDisguise(EntityType entityType, Object[] options) {
@@ -72,125 +76,87 @@ public record TARDISDisguise(EntityType entityType, Object[] options) {
     public static Entity createMobDisguise(TARDISDisguise disguise, World w) {
         String str;
         String packagePath = "net.minecraft.world.entity.";
-        boolean hasEntityStr = true;
-        // TODO most package paths have changed so check all!
         switch (disguise.entityType()) {
-            case ARMADILLO -> {
-                str = "Armadillo";
-                packagePath += "animal.armadillo.";
-                hasEntityStr = false;
-            }
-            case AXOLOTL -> {
-                str = "Axolotl";
-                packagePath += "animal.axolotl.";
-                hasEntityStr = false;
-            }
-            case ALLAY -> {
-                str = "Allay";
-                packagePath += "animal.allay.";
-                hasEntityStr = false;
-            }
-            case BOGGED -> {
-                str = "Bogged";
-                packagePath += "monster.";
-                hasEntityStr = false;
-            }
             case BREEZE -> {
                 str = "Breeze";
                 packagePath += "monster.breeze.";
-                hasEntityStr = false;
             }
-            case COPPER_GOLEM -> {
-                str = "CopperGolem";
+            case COPPER_GOLEM, IRON_GOLEM, SNOW_GOLEM -> {
+                str = CaseUtils.toCamelCase(disguise.entityType().toString(), true, '_');
                 packagePath += "animal.golem.";
-                hasEntityStr = false;
             }
             case CREAKING -> {
                 str = "Creaking";
                 packagePath += "monster.creaking.";
-                hasEntityStr = false;
             }
-            case FROG, TADPOLE -> {
+            case TADPOLE -> {
                 str = TARDISStringUtils.uppercaseFirst(disguise.entityType().toString());
                 packagePath += "animal.frog.";
-                hasEntityStr = false;
             }
             case WARDEN -> {
                 str = "Warden";
                 packagePath += "monster.warden.";
-                hasEntityStr = false;
             }
             case BAT -> {
                 str = "Bat";
                 packagePath += "ambient.";
             }
-            case CAMEL -> {
-                str = "Camel";
+            case CAMEL_HUSK -> {
+                str = "CamelHusk";
                 packagePath += "animal.camel.";
-                hasEntityStr = false;
             }
-            case GOAT -> {
-                str = "Goat";
-                packagePath += "animal.goat.";
-                hasEntityStr = false;
+            case ZOMBIE_NAUTILUS -> {
+                str = "ZombieNautilus";
+                packagePath += "animal.nautilus.";
             }
-            case ZOMBIE_HORSE, SKELETON_HORSE, TRADER_LLAMA -> {
-                str = switchAndCapitalise(disguise.entityType().toString());
+            case DONKEY, HORSE, LLAMA, MULE, SKELETON_HORSE, TRADER_LLAMA, ZOMBIE_HORSE -> {
+                str = CaseUtils.toCamelCase(disguise.entityType().toString(), true, '_');
                 packagePath += "animal.equine.";
-            }
-            case ELDER_GUARDIAN, WITHER_SKELETON -> {
-                str = switchAndCapitalise(disguise.entityType().toString());
-                packagePath += "monster.";
             }
             case WANDERING_TRADER -> {
-                str = "VillagerTrader";
-                packagePath += "npc.";
+                str = "WanderingTrader";
+                packagePath += "npc.wanderingtrader.";
             }
-            case HUSK -> {
-                str = "ZombieHusk";
-                packagePath += "monster.";
+            case DROWNED, HUSK, ZOMBIE, ZOMBIE_VILLAGER, ZOMBIFIED_PIGLIN -> {
+                str = CaseUtils.toCamelCase(disguise.entityType().toString(), true, '_');
+                packagePath += "monster.zombie.";
             }
-            case STRAY -> {
-                str = "SkeletonStray";
-                packagePath += "monster.";
+            case BOGGED, PARCHED, SKELETON, STRAY, WITHER_SKELETON -> {
+                str = CaseUtils.toCamelCase(disguise.entityType().toString(), true, '_');
+                packagePath += "monster.skeleton.";
             }
-            case PUFFERFISH -> {
-                str = "PufferFish";
-                packagePath += "animal.";
+            case OCELOT -> {
+                str = "Ocelot";
+                packagePath += "animal.feline.";
             }
-            case ILLUSIONER -> {
-                str = "IllagerIllusioner";
-                packagePath += "monster.";
+            case MOOSHROOM -> {
+                str = "MushroomCow";
+                packagePath += "animal.cow.";
             }
-            case GIANT -> {
-                str = "GiantZombie";
-                packagePath += "monster.";
+            case COD, PUFFERFISH, SALMON, TROPICAL_FISH -> {
+                str = CaseUtils.toCamelCase(disguise.entityType().toString(), true, '_');
+                packagePath += "animal.fish.";
             }
-            case HORSE, LLAMA -> {
+            case EVOKER, ILLUSIONER, PILLAGER, VINDICATOR -> {
                 str = TARDISStringUtils.capitalise(disguise.entityType().toString());
-                packagePath += "animal.equine.";
-            }
-            case DONKEY, MULE -> {
-                str = "Horse" + TARDISStringUtils.capitalise(disguise.entityType().toString());
-                packagePath += "animal.equine.";
+                packagePath += "monster.illager.";
             }
             case VILLAGER -> {
                 str = "Villager";
                 packagePath += "npc.villager.";
             }
-            case ZOMBIFIED_PIGLIN -> {
-                str = "PigZombie";
+            case ENDERMAN -> { // special case
+                str = "EnderMan"; // camel case but no underscore...
                 packagePath += "monster.";
             }
-            case BLAZE, CREEPER, DROWNED, ENDERMAN, ENDERMITE, EVOKER, GHAST, GUARDIAN, MAGMA_CUBE,
-                 PHANTOM, PILLAGER, RAVAGER, SHULKER, SILVERFISH, SKELETON, SLIME, SPIDER, STRIDER, VEX, VINDICATOR,
-                 WITCH, ZOGLIN, ZOMBIE -> {
-                str = TARDISStringUtils.capitalise(disguise.entityType().toString());
+            case BLAZE, CREEPER, ELDER_GUARDIAN, ENDERMITE, GHAST, GIANT, GUARDIAN, MAGMA_CUBE,
+                 PHANTOM, RAVAGER, SHULKER, SILVERFISH, SLIME, STRIDER, VEX, WITCH, ZOGLIN -> {
+                str = CaseUtils.toCamelCase(disguise.entityType().toString(), true, '_');
                 packagePath += "monster.";
             }
-            case CAVE_SPIDER, ZOMBIE_VILLAGER -> {
-                str = TARDISStringUtils.capitalise(disguise.entityType().toString()).replace(" ", "");
-                packagePath += "monster.";
+            case CAVE_SPIDER, SPIDER -> {
+                str = CaseUtils.toCamelCase(disguise.entityType().toString(), true, '_');
+                packagePath += "monster.spider.";
             }
             case HOGLIN -> {
                 str = "Hoglin";
@@ -201,7 +167,7 @@ public record TARDISDisguise(EntityType entityType, Object[] options) {
                 packagePath += "boss.enderdragon.";
             }
             case WITHER -> {
-                str = "Wither";
+                str = "WitherBoss";
                 packagePath += "boss.wither.";
             }
             case PIGLIN, PIGLIN_BRUTE -> {
@@ -210,22 +176,16 @@ public record TARDISDisguise(EntityType entityType, Object[] options) {
             }
             case GLOW_SQUID -> {
                 str = "GlowSquid";
-                hasEntityStr = false;
-            }
-            case SNIFFER -> {
-                str = "Sniffer";
-                packagePath += "animal.sniffer.";
-                hasEntityStr = false;
+                packagePath += "animal.squid.";
             }
             default -> {
-                str = TARDISStringUtils.capitalise(disguise.entityType().toString());
-                packagePath += "animal." + disguise.entityType().getKey().getKey() + ".";
+                str = CaseUtils.toCamelCase(disguise.entityType().toString(), true, '_');
+                packagePath += "animal." + disguise.entityType().toString().toLowerCase(Locale.ROOT).replace(" ","") + ".";
             }
         }
         try {
-            String entityPackage = packagePath + ((hasEntityStr) ? "Entity" : "") + str;
+            String entityPackage = packagePath + str;
             Class<?> entityClass = Class.forName(entityPackage);
-//            Class<?> entityClass = disguise.entityType.getEntityClass();
             Constructor<?> constructor = entityClass.getConstructor(net.minecraft.world.entity.EntityType.class, net.minecraft.world.level.Level.class);
             net.minecraft.world.entity.EntityType<?> type = BuiltInRegistries.ENTITY_TYPE.get(CraftNamespacedKey.toMinecraft(disguise.entityType().getKey())).get().value();
             net.minecraft.world.level.Level world = ((CraftWorld) w).getHandle();
@@ -412,10 +372,5 @@ public record TARDISDisguise(EntityType entityType, Object[] options) {
 
     static int packVariant(TropicalFish.Pattern var0, DyeColor var1, DyeColor var2) {
         return var0.getPackedId() & '\uffff' | (var1.getId() & 255) << 16 | (var2.getId() & 255) << 24;
-    }
-
-    private static String switchAndCapitalise(String s) {
-        String[] split = s.split("_");
-        return TARDISStringUtils.uppercaseFirst(split[1]) + TARDISStringUtils.uppercaseFirst(split[0]);
     }
 }
