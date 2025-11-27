@@ -96,7 +96,7 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
                 plugin.getMessenger().message(player, "Difficulty -> " + world.getDifficulty());
                 plugin.getMessenger().message(player, "Gamerules -> ");
                 for (String s : world.getGameRules()) {
-                    GameRule rule = GameRule.getByName(s);
+                    GameRule rule = Registry.GAME_RULE.getOrThrow(NamespacedKey.minecraft(s.toLowerCase(Locale.ROOT)));
                     if (rule != null) {
                         plugin.getMessenger().message(player, "     " + s + " -> " + world.getGameRuleValue(rule));
                     }
@@ -250,7 +250,7 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
                                         World telos = plugin.getServer().getWorld("telos");
                                         if (telos != null) {
                                             telos.setTime(13000);
-                                            telos.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
+                                            telos.setGameRule(GameRules.ADVANCE_TIME, false);
                                             plugin.getPlanetsConfig().set("planets.telos.gamerules.doDaylightCycle", false);
                                         }
                                     } else {

@@ -24,10 +24,13 @@ import net.minecraft.core.MappedRegistry;
 import net.minecraft.core.RegistrationInfo;
 import net.minecraft.core.WritableRegistry;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.level.biome.*;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.BiomeGenerationSettings;
+import net.minecraft.world.level.biome.BiomeSpecialEffects;
+import net.minecraft.world.level.biome.MobSpawnSettings;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -61,19 +64,21 @@ public class CustomBiome {
         newBiome.downfall(data.downfall());
         newBiome.temperatureAdjustment(data.frozen() ? Biome.TemperatureModifier.NONE : Biome.TemperatureModifier.FROZEN);
         // set the custom biome colours
-        BiomeSpecialEffects.Builder newFog = new BiomeSpecialEffects.Builder();
-        newFog.grassColorModifier(BiomeSpecialEffects.GrassColorModifier.NONE);
-        newFog.fogColor(data.fogColour());
-        newFog.waterColor(data.waterColour());
-        newFog.waterFogColor(data.waterFogColour());
-        newFog.skyColor(data.skyColour());
-        newFog.foliageColorOverride(data.foliageColour());
-        newFog.grassColorOverride(data.grassColour());
+        BiomeSpecialEffects.Builder specialEffects = new BiomeSpecialEffects.Builder();
+        specialEffects.grassColorModifier(BiomeSpecialEffects.GrassColorModifier.NONE);
+        // TODO set fog colours
+//        specialEffects.fogColor(data.fogColour());
+        specialEffects.waterColor(data.waterColour());
+//        specialEffects.waterFogColor(data.waterFogColour());
+//        specialEffects.skyColor(data.skyColour());
+        specialEffects.foliageColorOverride(data.foliageColour());
+        specialEffects.grassColorOverride(data.grassColour());
+        // TODO set ambient particles
         // add ambient particles
-        if (data.particle() != null) {
-            newFog.ambientParticle(new AmbientParticleSettings(data.particle(), data.ambience()));
-        }
-        newBiome.specialEffects(newFog.build());
+//        if (data.particle() != null) {
+//            specialEffects.ambientParticle(new AmbientParticleSettings(data.particle(), data.ambience()));
+//        }
+        newBiome.specialEffects(specialEffects.build());
         Biome biome = newBiome.build();
 
         try {
