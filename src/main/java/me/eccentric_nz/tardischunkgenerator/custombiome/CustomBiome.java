@@ -27,6 +27,8 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.attribute.AmbientParticle;
+import net.minecraft.world.attribute.EnvironmentAttributes;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeGenerationSettings;
 import net.minecraft.world.level.biome.BiomeSpecialEffects;
@@ -66,19 +68,17 @@ public class CustomBiome {
         // set the custom biome colours
         BiomeSpecialEffects.Builder specialEffects = new BiomeSpecialEffects.Builder();
         specialEffects.grassColorModifier(BiomeSpecialEffects.GrassColorModifier.NONE);
-        // TODO set fog colours
-//        specialEffects.fogColor(data.fogColour());
         specialEffects.waterColor(data.waterColour());
-//        specialEffects.waterFogColor(data.waterFogColour());
-//        specialEffects.skyColor(data.skyColour());
         specialEffects.foliageColorOverride(data.foliageColour());
         specialEffects.grassColorOverride(data.grassColour());
-        // TODO set ambient particles
-        // add ambient particles
-//        if (data.particle() != null) {
-//            specialEffects.ambientParticle(new AmbientParticleSettings(data.particle(), data.ambience()));
-//        }
         newBiome.specialEffects(specialEffects.build());
+        // set sky colour
+        newBiome.setAttribute(EnvironmentAttributes.SKY_COLOR, data.skyColour());
+        // set fog colours
+        newBiome.setAttribute(EnvironmentAttributes.FOG_COLOR, data.fogColour());
+        newBiome.setAttribute(EnvironmentAttributes.WATER_FOG_COLOR, data.waterFogColour());
+        // add ambient particles
+        newBiome.setAttribute(EnvironmentAttributes.AMBIENT_PARTICLES, AmbientParticle.of(data.particle(), data.ambience()));
         Biome biome = newBiome.build();
 
         try {
