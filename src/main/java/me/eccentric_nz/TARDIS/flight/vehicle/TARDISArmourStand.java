@@ -24,7 +24,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.datafix.DataFixers;
 import net.minecraft.util.datafix.fixes.References;
 import net.minecraft.world.entity.EntityType;
@@ -57,13 +57,13 @@ public class TARDISArmourStand extends ArmorStand {
         this.persist = true;
     }
 
-    public static void injectEntity(ResourceLocation mcKey) throws NoSuchFieldException, IllegalAccessException {
+    public static void injectEntity(Identifier mcKey) throws NoSuchFieldException, IllegalAccessException {
         Registry<EntityType<?>> entityReg = ((CraftServer) Bukkit.getServer()).getServer().registryAccess().lookup(Registries.ENTITY_TYPE).orElseThrow(NoSuchFieldException::new);
         EntityRegistry.unfreeze();
         @SuppressWarnings("unchecked")
         Map<String, Type<?>> types = (Map<String, Type<?>>) DataFixers.getDataFixer().getSchema(DataFixUtils.makeKey(SharedConstants.getCurrentVersion().dataVersion().version())).findChoiceType(References.ENTITY).types();
         types.put(mcKey.toString(), types.get(BuiltInRegistries.ENTITY_TYPE.getKey(EntityType.ARMOR_STAND).toString()));
-        ResourceKey<EntityType<?>> resourceKey = ResourceKey.create(Registries.ENTITY_TYPE, ResourceLocation.withDefaultNamespace(entityId));
+        ResourceKey<EntityType<?>> resourceKey = ResourceKey.create(Registries.ENTITY_TYPE, Identifier.withDefaultNamespace(entityId));
         EntityType<?> type = EntityType.Builder.of(TARDISArmourStand::new, MobCategory.MISC).noSummon().build(resourceKey);
         entityReg.createIntrusiveHolder(type);
         Registry.register(entityReg, entityId, type);

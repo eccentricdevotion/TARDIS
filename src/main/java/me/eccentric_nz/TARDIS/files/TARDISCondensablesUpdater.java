@@ -778,6 +778,23 @@ public class TARDISCondensablesUpdater {
                 plugin.getCondensablesConfig().set("WAXED_OXIDIZED_COPPER_LANTERN", 20);
                 i++;
             }
+            // 1.21.11
+            if (!plugin.getCondensablesConfig().contains("COPPER_NAUTILUS_ARMOR")) {
+                plugin.getCondensablesConfig().set("COPPER_NAUTILUS_ARMOR", 2);
+                plugin.getCondensablesConfig().set("COPPER_SPEAR", 20);
+                plugin.getCondensablesConfig().set("DIAMOND_NAUTILUS_ARMOR", 200);
+                plugin.getCondensablesConfig().set("DIAMOND_SPEAR", 200);
+                plugin.getCondensablesConfig().set("GOLDEN_NAUTILUS_ARMOR", 12);
+                plugin.getCondensablesConfig().set("GOLDEN_SPEAR", 110);
+                plugin.getCondensablesConfig().set("IRON_NAUTILUS_ARMOR", 3);
+                plugin.getCondensablesConfig().set("IRON_SPEAR", 25);
+                plugin.getCondensablesConfig().set("NETHERITE_HORSE_ARMOR", 2500);
+                plugin.getCondensablesConfig().set("NETHERITE_NAUTILUS_ARMOR", 1000);
+                plugin.getCondensablesConfig().set("NETHERITE_SPEAR", 1220);
+                plugin.getCondensablesConfig().set("STONE_SPEAR", 3);
+                plugin.getCondensablesConfig().set("WOODEN_SPEAR", 1);
+                i++;
+            }
             if (i > 0) {
                 try {
                     String listPath = plugin.getDataFolder() + File.separator + "condensables.yml";

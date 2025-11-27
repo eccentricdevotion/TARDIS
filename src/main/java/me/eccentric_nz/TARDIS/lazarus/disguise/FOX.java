@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.lazarus.disguise;
 
-import net.minecraft.world.entity.animal.Fox;
+import net.minecraft.world.entity.animal.fox.Fox;
 
 public enum FOX {
 

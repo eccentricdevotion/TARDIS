@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.lazarus.disguise;
 
-import net.minecraft.world.entity.animal.Panda;
+import net.minecraft.world.entity.animal.panda.Panda;
 
 public enum GENE {
 

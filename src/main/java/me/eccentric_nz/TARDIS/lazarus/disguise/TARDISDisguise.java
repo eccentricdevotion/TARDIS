@@ -29,12 +29,26 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.ambient.Bat;
 import net.minecraft.world.entity.animal.*;
-import net.minecraft.world.entity.animal.coppergolem.CopperGolem;
-import net.minecraft.world.entity.animal.horse.*;
+import net.minecraft.world.entity.animal.chicken.Chicken;
+import net.minecraft.world.entity.animal.cow.Cow;
+import net.minecraft.world.entity.animal.cow.MushroomCow;
+import net.minecraft.world.entity.animal.feline.Cat;
+import net.minecraft.world.entity.animal.fish.Pufferfish;
+import net.minecraft.world.entity.animal.fish.TropicalFish;
+import net.minecraft.world.entity.animal.fox.Fox;
+import net.minecraft.world.entity.animal.golem.CopperGolem;
+import net.minecraft.world.entity.animal.equine.*;
+import net.minecraft.world.entity.animal.golem.SnowGolem;
+import net.minecraft.world.entity.animal.panda.Panda;
+import net.minecraft.world.entity.animal.parrot.Parrot;
+import net.minecraft.world.entity.animal.pig.Pig;
+import net.minecraft.world.entity.animal.rabbit.Rabbit;
 import net.minecraft.world.entity.animal.sheep.Sheep;
 import net.minecraft.world.entity.animal.wolf.Wolf;
 import net.minecraft.world.entity.monster.*;
-import net.minecraft.world.entity.npc.Villager;
+import net.minecraft.world.entity.monster.illager.Pillager;
+import net.minecraft.world.entity.monster.zombie.ZombieVillager;
+import net.minecraft.world.entity.npc.villager.Villager;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Blocks;
@@ -59,6 +73,7 @@ public record TARDISDisguise(EntityType entityType, Object[] options) {
         String str;
         String packagePath = "net.minecraft.world.entity.";
         boolean hasEntityStr = true;
+        // TODO most package paths have changed so check all!
         switch (disguise.entityType()) {
             case ARMADILLO -> {
                 str = "Armadillo";
@@ -87,8 +102,9 @@ public record TARDISDisguise(EntityType entityType, Object[] options) {
             }
             case COPPER_GOLEM -> {
                 str = "CopperGolem";
-                packagePath += "animal.coppergolem.";
-                hasEntityStr = false;            }
+                packagePath += "animal.golem.";
+                hasEntityStr = false;
+            }
             case CREAKING -> {
                 str = "Creaking";
                 packagePath += "monster.creaking.";
@@ -120,7 +136,7 @@ public record TARDISDisguise(EntityType entityType, Object[] options) {
             }
             case ZOMBIE_HORSE, SKELETON_HORSE, TRADER_LLAMA -> {
                 str = switchAndCapitalise(disguise.entityType().toString());
-                packagePath += "animal.horse.";
+                packagePath += "animal.equine.";
             }
             case ELDER_GUARDIAN, WITHER_SKELETON -> {
                 str = switchAndCapitalise(disguise.entityType().toString());
@@ -152,15 +168,15 @@ public record TARDISDisguise(EntityType entityType, Object[] options) {
             }
             case HORSE, LLAMA -> {
                 str = TARDISStringUtils.capitalise(disguise.entityType().toString());
-                packagePath += "animal.horse.";
+                packagePath += "animal.equine.";
             }
             case DONKEY, MULE -> {
                 str = "Horse" + TARDISStringUtils.capitalise(disguise.entityType().toString());
-                packagePath += "animal.horse.";
+                packagePath += "animal.equine.";
             }
             case VILLAGER -> {
                 str = "Villager";
-                packagePath += "npc.";
+                packagePath += "npc.villager.";
             }
             case ZOMBIFIED_PIGLIN -> {
                 str = "PigZombie";
@@ -203,12 +219,13 @@ public record TARDISDisguise(EntityType entityType, Object[] options) {
             }
             default -> {
                 str = TARDISStringUtils.capitalise(disguise.entityType().toString());
-                packagePath += "animal.";
+                packagePath += "animal." + disguise.entityType().getKey().getKey() + ".";
             }
         }
         try {
             String entityPackage = packagePath + ((hasEntityStr) ? "Entity" : "") + str;
             Class<?> entityClass = Class.forName(entityPackage);
+//            Class<?> entityClass = disguise.entityType.getEntityClass();
             Constructor<?> constructor = entityClass.getConstructor(net.minecraft.world.entity.EntityType.class, net.minecraft.world.level.Level.class);
             net.minecraft.world.entity.EntityType<?> type = BuiltInRegistries.ENTITY_TYPE.get(CraftNamespacedKey.toMinecraft(disguise.entityType().getKey())).get().value();
             net.minecraft.world.level.Level world = ((CraftWorld) w).getHandle();

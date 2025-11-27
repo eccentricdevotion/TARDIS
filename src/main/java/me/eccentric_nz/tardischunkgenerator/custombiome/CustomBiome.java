@@ -25,7 +25,7 @@ import net.minecraft.core.RegistrationInfo;
 import net.minecraft.core.WritableRegistry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.biome.*;
 
@@ -41,9 +41,9 @@ public class CustomBiome {
 
     public static void addCustomBiome(CustomBiomeData data) {
         // get the key for the biome this custom biome is based on - minecraft:xxxx
-        ResourceKey<Biome> minecraftKey = ResourceKey.create(Registries.BIOME, ResourceLocation.withDefaultNamespace(data.minecraftName()));
+        ResourceKey<Biome> minecraftKey = ResourceKey.create(Registries.BIOME, Identifier.withDefaultNamespace(data.minecraftName()));
         // create a key for the custom biome - tardis:xxxx
-        ResourceKey<Biome> customKey = ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("tardis", data.customName()));
+        ResourceKey<Biome> customKey = ResourceKey.create(Registries.BIOME, Identifier.fromNamespaceAndPath("tardis", data.customName()));
         // get the biome registry
         WritableRegistry<Biome> registrywritable = (WritableRegistry<Biome>) BiomeHelper.getRegistry();
         // get the minecraft biome
