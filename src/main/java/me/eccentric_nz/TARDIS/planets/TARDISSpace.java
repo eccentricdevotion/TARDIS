@@ -58,8 +58,8 @@ public class TARDISSpace {
             plugin.getPlanetsConfig().set("planets." + name + ".environment", "NORMAL");
             plugin.getPlanetsConfig().set("planets." + name + ".void", true);
             plugin.getPlanetsConfig().set("planets." + name + ".generator", "TARDIS:void");
-            plugin.getPlanetsConfig().set("planets." + name + ".gamerules.doWeatherCycle", false);
-            plugin.getPlanetsConfig().set("planets." + name + ".gamerules.doDaylightCycle", false);
+            plugin.getPlanetsConfig().set("planets." + name + ".gamerules.advance_weather", false);
+            plugin.getPlanetsConfig().set("planets." + name + ".gamerules.advance_time", false);
             plugin.savePlanetsConfig();
             String inventory_group = plugin.getConfig().getString("creation.inventory_group");
             if (!"0".equals(inventory_group)) {

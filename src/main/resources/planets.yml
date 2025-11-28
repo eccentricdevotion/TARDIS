@@ -13,9 +13,9 @@ planets:
     void: true
     generator: TARDIS:void
     gamerules:
-      doWeatherCycle: false
-      doDaylightCycle: false
-      doWardenSpawning: false
+      advance_weather: false
+      advance_time: false
+      spawn_wardens: false
     allow_portals: false
     alias: TimeVortex
     icon: CRYING_OBSIDIAN
@@ -30,10 +30,10 @@ planets:
     void: true
     generator: TARDIS:void
     gamerules:
-      doWeatherCycle: false
-      doDaylightCycle: false
-      announceAdvancements: false
-      doWardenSpawning: false
+      advance_weather: false
+      advance_time: false
+      show_advancement_messages: false
+      spawn_wardens: false
     allow_portals: false
     alias: ZeroRoom
     icon: PINK_WOOL
@@ -55,8 +55,8 @@ planets:
     generator: TARDIS:skaro
     spawn_other_mobs: true
     gamerules:
-      doTraderSpawning: false
-      doPatrolSpawning: false
+      spawn_wandering_traders: false
+      spawn_patrols: false
     allow_portals: false
     alias: Skaro
     icon: FIRE_CORAL_BLOCK
@@ -71,8 +71,8 @@ planets:
     generator: TARDIS:siluria
     spawn_other_mobs: true
     gamerules:
-      doTraderSpawning: false
-      doPatrolSpawning: false
+      spawn_wandering_traders: false
+      spawn_patrols: false
     allow_portals: false
     alias: Siluria
     icon: BAMBOO_MOSAIC
@@ -87,8 +87,8 @@ planets:
     generator: TARDIS:gallifrey
     spawn_other_mobs: true
     gamerules:
-      doTraderSpawning: false
-      doPatrolSpawning: false
+      spawn_wandering_traders: false
+      spawn_patrols: false
     allow_portals: false
     alias: Gallifrey
     icon: RED_SAND
@@ -112,9 +112,9 @@ planets:
     generator: TARDIS:telos
     spawn_other_mobs: true
     gamerules:
-      doTraderSpawning: false
-      doPatrolSpawning: false
-      doDaylightCycle: false
+      spawn_wandering_traders: false
+      spawn_patrols: false
+      advance_time: false
     allow_portals: false
     alias: Telos
     icon: PACKED_ICE
@@ -129,12 +129,12 @@ planets:
     generator: TARDIS:rooms
     spawn_other_mobs: false
     gamerules:
-      doWeatherCycle: false
-      doDaylightCycle: false
-      doMobSpawning: false
-      doTraderSpawning: false
-      doPatrolSpawning: false
-      doWardenSpawning: false
+      advance_weather: false
+      advance_time: false
+      spawn_mobs: false
+      spawn_wandering_traders: false
+      spawn_patrols: false
+      spawn_wardens: false
     allow_portals: false
     alias: Roomy
     icon: BOOKSHELF

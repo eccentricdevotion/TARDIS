@@ -54,10 +54,10 @@ public class TARDISMultiverseImporter {
                 plugin.getPlanetsConfig().set("planets." + mvw.getName() + ".generator", mvw.getGenerator());
                 plugin.getPlanetsConfig().set("planets." + mvw.getName() + ".spawn_chunk_radius", mvw.isKeepSpawnInMemory() ? 2 : 0);
                 if (!mvw.getEntitySpawnConfig().getSpawnCategoryConfig(SpawnCategory.ANIMAL).isSpawn() || !mvw.getEntitySpawnConfig().getSpawnCategoryConfig(SpawnCategory.MONSTER).isSpawn()) {
-                    plugin.getPlanetsConfig().set("planets." + mvw.getName() + ".gamerules.doMobSpawning", false);
+                    plugin.getPlanetsConfig().set("planets." + mvw.getName() + ".gamerules.spawn_mobs", false);
                 }
                 if (!mvw.isAllowWeather()) {
-                    plugin.getPlanetsConfig().set("planets." + mvw.getName() + ".gamerules.doWeatherCycle", false);
+                    plugin.getPlanetsConfig().set("planets." + mvw.getName() + ".gamerules.advance_weather", false);
                 }
                 if (!mvw.getPvp()) {
                     plugin.getPlanetsConfig().set("planets." + mvw.getName() + ".gamerules.pvp", false);

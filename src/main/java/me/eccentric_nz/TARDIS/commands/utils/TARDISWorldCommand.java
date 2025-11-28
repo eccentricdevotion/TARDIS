@@ -251,10 +251,10 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
                                         if (telos != null) {
                                             telos.setTime(13000);
                                             telos.setGameRule(GameRules.ADVANCE_TIME, false);
-                                            plugin.getPlanetsConfig().set("planets.telos.gamerules.doDaylightCycle", false);
+                                            plugin.getPlanetsConfig().set("planets.telos.gamerules.advance_time", false);
                                         }
                                     } else {
-                                        plugin.getPlanetsConfig().set("planets.telos.gamerules.doDaylightCycle", true);
+                                        plugin.getPlanetsConfig().set("planets.telos.gamerules.advance_time", true);
                                     }
                                     String planetsPath = plugin.getDataFolder() + File.separator + "planets.yml";
                                     try {
