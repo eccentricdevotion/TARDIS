@@ -48,7 +48,17 @@ public class ElytraListener implements Listener {
         if (player.isOp()) {
             return;
         }
+        // only in TARDIS worlds
         if (!plugin.getUtils().inTARDISWorld(player)) {
+            return;
+        }
+        // flying allowed in separate TARDIS worlds
+        if (plugin.getConfig().getBoolean("creation.create_worlds")) {
+            return;
+        }
+        String world = player.getWorld().getName();
+        // create_worlds_with_perms may be true so check for shared TIPS world
+        if (!world.equals(plugin.getConfig().getString("creation.default_world_name"))) {
             return;
         }
         event.setCancelled(true);
