@@ -164,15 +164,6 @@ public class TARDISPlanetsUpdater {
                 planets_config.set("planets." + w + ".icon", getIcon(w, planets_config.getString("planets." + w + ".environment")));
             }
         }
-        // set gamerules for TARDIS worlds
-        if (!planets_config.contains("planets.TARDIS_Zero_Room.gamerules.advance_weather")) {
-            planets_config.set("planets." + dn + ".gamerules.advance_weather", false);
-            planets_config.set("planets." + dn + ".gamerules.advance_time", false);
-            planets_config.set("planets.TARDIS_Zero_Room.gamerules.advance_weather", false);
-            planets_config.set("planets.TARDIS_Zero_Room.gamerules.advance_time", false);
-            planets_config.set("planets.TARDIS_Zero_Room.gamerules.show_advancement_messages", false);
-            save++;
-        }
         // check there is a `helmic_regulator_order` config option for all worlds
         for (String w : worlds) {
             if (!planets_config.contains("planets." + w + ".helmic_regulator_order")) {
@@ -310,11 +301,6 @@ public class TARDISPlanetsUpdater {
             planets_config.set("planets.TARDIS_Zero_Room.generator", "TARDIS:void");
             save++;
         }
-        if (!planets_config.contains("planets.TARDIS_TimeVortex.gamerules.spawn_wardens")) {
-            planets_config.set("planets.TARDIS_TimeVortex.gamerules.spawn_wardens", false);
-            planets_config.set("planets.TARDIS_Zero_Room.gamerules.spawn_wardens", false);
-            save++;
-        }
         if (planets_config.getString("planets.TARDIS_TimeVortex.generator").equals("TARDISChunkGenerator:void")) {
             for (String w : worlds) {
                 String gen = planets_config.getString("planets." + w + ".generator");
@@ -351,9 +337,10 @@ public class TARDISPlanetsUpdater {
         // convert game rules to 1.21.11+
         if (planets_config.contains("planets.TARDIS_TimeVortex.gamerules.doWardenSpawning")) {
             for (String w : worlds) {
-                if (planets_config.contains("planets." + w + ".gamerules")) {
+                if (planets_config.contains("planets." + w + ".gamerules") && planets_config.getConfigurationSection("planets." + w + ".gamerules") != null) {
                     for (String rule : planets_config.getConfigurationSection("planets." + w + ".gamerules").getKeys(false)) {
                         String r = GameRuleConverter.OLD_TO_NEW.get(rule);
+                        plugin.debug(r);
                         planets_config.set("planets." + w + ".gamerules." + r, planets_config.getBoolean("planets." + w + ".gamerules." + rule));
                         planets_config.set("planets." + w + ".gamerules." + rule, null);
                     }
