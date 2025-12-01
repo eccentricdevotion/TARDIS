@@ -17,16 +17,20 @@
 package me.eccentric_nz.TARDIS.lazarus;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.api.event.TARDISGeneticManipulatorUndisguiseEvent;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.skins.Skin;
 import me.eccentric_nz.TARDIS.skins.SkinUtils;
+import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -43,7 +47,10 @@ public class TARDISLazarusSkinsListener extends TARDISMenuListener {
 
     @EventHandler
     public void onSkinInventoryClick(InventoryClickEvent event) {
-        if (!(event.getInventory().getHolder(false) instanceof TARDISTelevisionInventory)) {
+        InventoryHolder holder = event.getInventory().getHolder(false);
+        if (!(holder instanceof TARDISLazarusDoctorInventory)
+                && !(holder instanceof TARDISLazarusCompanionInventory)
+                && !(holder instanceof TARDISLazarusCharacterInventory)) {
             return;
         }
         event.setCancelled(true);
@@ -54,8 +61,7 @@ public class TARDISLazarusSkinsListener extends TARDISMenuListener {
             return;
         }
         int slot = event.getRawSlot();
-        int max_slot = 47;
-        if (slot >= 0 && slot <= max_slot) {
+        if (slot >= 0 && slot <= ((LazarusGUI) holder).getMaxSlot()) {
             // get selection
             ItemStack is = event.getView().getItem(slot);
             if (is != null) {
@@ -64,24 +70,48 @@ public class TARDISLazarusSkinsListener extends TARDISMenuListener {
             }
         } else {
             switch (slot) {
-                case 48 -> {
+                // previous / next
+                case 36, 44 -> {
                     LazarusUtils.pagers.add(uuid);
-                    // go to page one
-                    player.openInventory(new TARDISLazarusInventory(plugin).getInventory());
+                    ItemStack pageButton = event.getView().getItem(slot);
+                    ItemMeta pageMeta = pageButton.getItemMeta();
+                    // check the lore
+                    String which = ComponentUtils.stripColour(pageMeta.lore().getFirst());
+                    InventoryHolder ih;
+                    switch (which) {
+                        case "Passive Mobs" -> ih = new TARDISLazarusPassiveInventory(plugin);
+                        case "Neutral Mobs" -> ih = new TARDISLazarusNeutralInventory(plugin);
+                        case "Hostile Mobs" -> ih = new TARDISLazarusHostileInventory(plugin);
+                        case "Hostile Adjacent Mobs" -> ih = new TARDISLazarusAdjacentInventory(plugin);
+                        case "Doctors" -> ih = new TARDISLazarusDoctorInventory(plugin);
+                        case "Companions" -> ih = new TARDISLazarusCompanionInventory(plugin);
+                        case "Characters" -> ih = new TARDISLazarusCharacterInventory(plugin);
+                        case "TARDIS Monsters" -> ih = new TARDISLazarusMonstersInventory(plugin);
+                        default -> ih = new TARDISLazarusInventory(plugin);
+                    }
+                    player.openInventory(ih.getInventory());
                 }
-                case 49 -> {
-                    LazarusUtils.pagers.add(uuid);
-                    // go to page two
-                    player.openInventory(new TARDISLazarusPageTwoInventory(plugin).getInventory());
-                }
-                case 50 -> {
+                // back
+                case 40 -> {
                     LazarusUtils.pagers.add(uuid);
                     // go to monsters
-                    player.openInventory(new TARDISWeepingAngelsMonstersInventory(plugin).getInventory());
+                    player.openInventory(new TARDISLazarusInventory(plugin).getInventory());
                 }
                 case 51 -> {
-                    // remove disguise
                     close(player);
+                    // if the Master Switch is ON turn it off and restore all players
+                    if (!plugin.getTrackerKeeper().getImmortalityGate().isEmpty()) {
+                        plugin.getServer().getOnlinePlayers().forEach((p) -> {
+                            if (plugin.isDisguisesOnServer()) {
+                                TARDISLazarusLibs.removeDisguise(p);
+                            } else {
+                                TARDISLazarusDisguise.removeDisguise(p);
+                            }
+                        });
+                        plugin.getTrackerKeeper().setImmortalityGate("");
+                        plugin.getPM().callEvent(new TARDISGeneticManipulatorUndisguiseEvent(player));
+                    }
+                    // remove disguise
                     // animate the manipulator walls
                     TARDISLazarusRunnable runnable = new TARDISLazarusRunnable(plugin, b);
                     int taskId = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 6L, 6L);
@@ -130,10 +160,22 @@ public class TARDISLazarusSkinsListener extends TARDISMenuListener {
                 case 53 -> {
                     close(player);
                     LazarusUtils.openDoor(b);
+                    untrack(player.getUniqueId(), false);
                 }
                 default -> { // do nothing
                 }
             }
         }
+    }
+
+    private void untrack(UUID uuid, boolean remove) {
+        if (!LazarusUtils.pagers.contains(uuid)) {
+            // stop tracking player
+            plugin.getTrackerKeeper().getLazarus().remove(uuid);
+        }
+        if (remove) {
+            plugin.getTrackerKeeper().getDisguises().remove(uuid);
+        }
+        plugin.getTrackerKeeper().getGeneticManipulation().remove(uuid);
     }
 }

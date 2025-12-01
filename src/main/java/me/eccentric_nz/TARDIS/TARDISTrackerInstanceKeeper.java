@@ -71,6 +71,7 @@ public class TARDISTrackerInstanceKeeper {
     private final HashMap<UUID, Bind> bindRemoval = new HashMap<>();
     private final HashMap<UUID, Block> invisibleDoors = new HashMap<>();
     private final HashMap<UUID, Block> lazarus = new HashMap<>();
+    private final HashMap<UUID, String> disguises = new HashMap<>();
     private final HashMap<UUID, BuildData> flightData = new HashMap<>();
     private final HashMap<UUID, CastData> casters = new HashMap<>();
     private final HashMap<UUID, ComehereRequest> comehereRequests = new HashMap<>();
@@ -370,6 +371,15 @@ public class TARDISTrackerInstanceKeeper {
      */
     public HashMap<UUID, Block> getLazarus() {
         return lazarus;
+    }
+
+    /**
+     * Tracks the lazarus disguise a player is wearing
+     *
+     * @return a Map of player UUIDs and the disguise they are currently using
+     */
+    public HashMap<UUID, String> getDisguises() {
+        return disguises;
     }
 
     /**
