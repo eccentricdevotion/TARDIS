@@ -208,13 +208,7 @@ public class TARDISLazarusChoiceListener extends TARDISMenuListener {
                 TARDISSounds.playTARDISSound(player.getLocation(), "lazarus_machine");
                 // undisguise the player
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                    if (twaMonsters.contains(plugin.getTrackerKeeper().getDisguises().get(uuid))) {
-                        LazarusUtils.twaOff(player);
-                    } else if (plugin.isDisguisesOnServer()) {
-                        TARDISLazarusLibs.removeDisguise(player);
-                    } else {
-                        TARDISLazarusDisguise.removeDisguise(player);
-                    }
+                    LazarusUtils.geneticModificationOff(player);
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "GENETICS_RESTORED");
                     plugin.getPM().callEvent(new TARDISGeneticManipulatorUndisguiseEvent(player));
                 }, 80L);

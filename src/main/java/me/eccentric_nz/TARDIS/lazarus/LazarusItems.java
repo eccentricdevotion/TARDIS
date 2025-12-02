@@ -21,7 +21,7 @@ public class LazarusItems {
         String nextLore = "";
         switch (current) {
             case 1 -> { // passive
-                previousLore = "TARDIS Monsters";
+                previousLore = "Monsters";
                 nextLore = "Neutral Mobs";
             }
             case 2 -> { // neutral
@@ -46,7 +46,7 @@ public class LazarusItems {
             }
             case 7 -> { // characters
                 previousLore = "Companions";
-                nextLore = "TARDIS Monsters";
+                nextLore = "Monsters";
             }
             case 8 -> { // monsters
                 previousLore = "Characters";

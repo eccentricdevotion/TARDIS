@@ -109,6 +109,6 @@ public class TARDISLazarusMonstersInventory extends LazarusItems implements Inve
 
     @Override
     public int getMaxSlot() {
-        return MonsterSkins.MONSTERS.size() + CyberSkins.LAZARUS_CYBERS.size() + CharacterSkins.LAZARUS_MONSTERS.size() + 2;
+        return MonsterSkins.MONSTERS.size() + CyberSkins.LAZARUS_CYBERS.size() + CharacterSkins.LAZARUS_MONSTERS.size();
     }
 }

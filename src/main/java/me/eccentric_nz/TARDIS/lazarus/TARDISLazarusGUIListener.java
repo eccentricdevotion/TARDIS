@@ -29,8 +29,6 @@ import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
-import me.eccentric_nz.tardisweepingangels.equip.RemoveEquipment;
-import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.DyeColor;
@@ -44,7 +42,6 @@ import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -76,15 +73,10 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
     private final HashMap<UUID, Integer> wolves = new HashMap<>();
     private final List<Integer> slimeSizes = List.of(1, 2, 4);
     private final List<Integer> pufferStates = List.of(0, 1, 2);
-    private final List<String> twaMonsters = new ArrayList<>();
-    private final List<String> twaOnly = List.of("DALEK", "DAVROS", "K9", "SATURNYNIAN", "TOCLAFANE");
 
     public TARDISLazarusGUIListener(TARDIS plugin) {
         super(plugin);
         this.plugin = plugin;
-        for (Monster m : Monster.values()) {
-            twaMonsters.add(m.toString());
-        }
     }
 
     /**
@@ -117,17 +109,9 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
             if (is != null) {
                 ItemMeta im = is.getItemMeta();
                 // remember selection
-                String display = ComponentUtils.stripColour(im.displayName());
-                if (twaOnly.contains(display) && !plugin.getConfig().getBoolean("modules.weeping_angels")) {
-                    im.lore(List.of(Component.text("Genetic modification not available!")));
-                    is.setItemMeta(im);
-                } else {
-                    if (is.getType() == Material.PLAYER_HEAD) {
-                        display = "PLAYER";
-                    }
-                    plugin.getTrackerKeeper().getDisguises().put(uuid, display);
-                    setSlotFortyEight(view, display, uuid);
-                }
+                String display = (is.getType() == Material.PLAYER_HEAD) ? "PLAYER" : ComponentUtils.stripColour(im.displayName());
+                plugin.getTrackerKeeper().getDisguises().put(uuid, display);
+                setSlotFortyEight(view, display, uuid);
             } else {
                 plugin.getTrackerKeeper().getDisguises().put(uuid, "PLAYER");
             }
@@ -150,7 +134,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
                         case "Doctors" -> ih = new TARDISLazarusDoctorInventory(plugin);
                         case "Companions" -> ih = new TARDISLazarusCompanionInventory(plugin);
                         case "Characters" -> ih = new TARDISLazarusCharacterInventory(plugin);
-                        case "TARDIS Monsters" -> ih = new TARDISLazarusMonstersInventory(plugin);
+                        case "Monsters" -> ih = new TARDISLazarusMonstersInventory(plugin);
                         default -> ih = new TARDISLazarusInventory(plugin);
                     }
                     player.openInventory(ih.getInventory());
@@ -186,8 +170,8 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
                     LazarusUtils.pagers.remove(uuid);
                     plugin.getTrackerKeeper().getGeneticManipulation().add(uuid);
                     close(player);
-                    // remove TWA disguise
-                    RemoveEquipment.set(player);
+                    // remove skin/TWA disguise
+                    LazarusUtils.geneticModificationOff(player);
                     // if the Master Switch is ON turn it off and restore all players
                     if (!plugin.getTrackerKeeper().getImmortalityGate().isEmpty()) {
                         plugin.getServer().getOnlinePlayers().forEach((p) -> {
@@ -207,13 +191,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
                     TARDISSounds.playTARDISSound(player.getLocation(), "lazarus_machine");
                     // undisguise the player
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                        if (twaMonsters.contains(plugin.getTrackerKeeper().getDisguises().get(uuid))) {
-                            LazarusUtils.twaOff(player);
-                        } else if (plugin.isDisguisesOnServer()) {
-                            TARDISLazarusLibs.removeDisguise(player);
-                        } else {
-                            TARDISLazarusDisguise.removeDisguise(player);
-                        }
+                        LazarusUtils.geneticModificationOff(player);
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "GENETICS_RESTORED");
                         plugin.getPM().callEvent(new TARDISGeneticManipulatorUndisguiseEvent(player));
                     }, 80L);
@@ -235,15 +213,12 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
                     TARDISSounds.playTARDISSound(player.getLocation(), "lazarus_machine");
                     // disguise the player
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                        if (plugin.isDisguisesOnServer()) {
-                            TARDISLazarusLibs.removeDisguise(player);
-                        } else {
-                            TARDISLazarusDisguise.removeDisguise(player);
-                        }
+                        // remove skin/TWA disguise
+                        LazarusUtils.geneticModificationOff(player);
                         if (plugin.getTrackerKeeper().getDisguises().containsKey(uuid)) {
                             String disguise = plugin.getTrackerKeeper().getDisguises().get(uuid);
                             // undisguise first
-                            LazarusUtils.twaOff(player);
+                            LazarusUtils.geneticModificationOff(player);
                             EntityType dt = EntityType.valueOf(disguise);
                             Object[] options = null;
                             switch (dt) {

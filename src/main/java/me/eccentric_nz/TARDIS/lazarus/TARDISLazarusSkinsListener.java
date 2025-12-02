@@ -78,19 +78,17 @@ public class TARDISLazarusSkinsListener extends TARDISMenuListener {
                     ItemMeta pageMeta = pageButton.getItemMeta();
                     // check the lore
                     String which = ComponentUtils.stripColour(pageMeta.lore().getFirst());
-//                    plugin.debug(which);
-                    InventoryHolder ih;
-                    switch (which) {
-                        case "Passive Mobs" -> ih = new TARDISLazarusPassiveInventory(plugin);
-                        case "Neutral Mobs" -> ih = new TARDISLazarusNeutralInventory(plugin);
-                        case "Hostile Mobs" -> ih = new TARDISLazarusHostileInventory(plugin);
-                        case "Hostile Adjacent Mobs" -> ih = new TARDISLazarusAdjacentInventory(plugin);
-                        case "Doctors" -> ih = new TARDISLazarusDoctorInventory(plugin);
-                        case "Companions" -> ih = new TARDISLazarusCompanionInventory(plugin);
-                        case "Characters" -> ih = new TARDISLazarusCharacterInventory(plugin);
-                        case "TARDIS Monsters" -> ih = new TARDISLazarusMonstersInventory(plugin);
-                        default -> ih = new TARDISLazarusInventory(plugin);
-                    }
+                    InventoryHolder ih = switch (which) {
+                        case "Passive Mobs" -> new TARDISLazarusPassiveInventory(plugin);
+                        case "Neutral Mobs" -> new TARDISLazarusNeutralInventory(plugin);
+                        case "Hostile Mobs" -> new TARDISLazarusHostileInventory(plugin);
+                        case "Hostile Adjacent Mobs" -> new TARDISLazarusAdjacentInventory(plugin);
+                        case "Doctors" -> new TARDISLazarusDoctorInventory(plugin);
+                        case "Companions" -> new TARDISLazarusCompanionInventory(plugin);
+                        case "Characters" -> new TARDISLazarusCharacterInventory(plugin);
+                        case "Monsters" -> new TARDISLazarusMonstersInventory(plugin);
+                        default -> new TARDISLazarusInventory(plugin);
+                    };
                     player.openInventory(ih.getInventory());
                 }
                 // back
@@ -121,12 +119,7 @@ public class TARDISLazarusSkinsListener extends TARDISMenuListener {
                     // undisguise the player
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                         // remove skin
-                        Skin skin = SkinUtils.SKINNED.get(uuid);
-                        if (skin != null) {
-                            plugin.getSkinChanger().remove(player);
-                            SkinUtils.removeExtras(player, skin);
-                            SkinUtils.SKINNED.remove(uuid);
-                        }
+                        LazarusUtils.geneticModificationOff(player);
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "GENETICS_RESTORED");
                     }, 80L);
                     // open the door
@@ -141,11 +134,7 @@ public class TARDISLazarusSkinsListener extends TARDISMenuListener {
                     TARDISSounds.playTARDISSound(player.getLocation(), "lazarus_machine");
                     // disguise the player
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                        Skin previous = SkinUtils.SKINNED.get(uuid);
-                        if (previous != null) {
-                            plugin.getSkinChanger().remove(player);
-                            SkinUtils.removeExtras(player, previous);
-                        }
+                        LazarusUtils.geneticModificationOff(player);
                         int rememberedSlot = skins.get(uuid);
                         // put on a skin
                         Skin skin = LazarusUtils.skinForSlot(rememberedSlot, getSkinType(holder));
