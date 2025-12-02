@@ -67,7 +67,7 @@ public class LazarusItems {
         back.setItemMeta(backItemMeta);
         stacks[GUIGeneticManipulator.BUTTON_BACK.slot()] = back;
         // next
-        ItemStack next = ItemStack.of(GUIGeneticManipulator.BUTTON_TWA.material(), 1);
+        ItemStack next = ItemStack.of(GUIGeneticManipulator.BUTTON_NEXT.material(), 1);
         ItemMeta nextItemMeta = next.getItemMeta();
         nextItemMeta.displayName(Component.text("Next page"));
         nextItemMeta.lore(List.of(Component.text(nextLore)));

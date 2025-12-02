@@ -79,6 +79,6 @@ public class TARDISLazarusCompanionInventory extends LazarusItems implements Inv
 
     @Override
     public int getMaxSlot() {
-        return 19;
+        return CompanionSkins.COMPANIONS.size();
     }
 }

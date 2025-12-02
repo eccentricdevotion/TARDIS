@@ -59,14 +59,21 @@ public class LazarusUtils {
         }
     }
 
-    public static Skin skinForSlot(int slot) {
+    public static Skin skinForSlot(int slot, int type) {
         Skin skin;
-        if (slot >= 0 && slot < 16) {
-            skin = DoctorSkins.DOCTORS.get(slot);
-        } else if (slot >= 16 && slot < 35) {
-            skin = CompanionSkins.COMPANIONS.get(slot - 16);
-        } else {
-            skin = CharacterSkins.LAZARUS_CHARACTERS.get(slot - 35);
+        switch (type) {
+            case 0 -> skin = DoctorSkins.DOCTORS.get(slot);
+            case 1 -> skin = CompanionSkins.COMPANIONS.get(slot);
+            case 2 -> skin = CharacterSkins.LAZARUS_CHARACTERS.get(slot);
+            default -> {
+                if (slot < MonsterSkins.MONSTERS.size()) {
+                    skin = MonsterSkins.MONSTERS.get(slot);
+                } else if (slot < MonsterSkins.MONSTERS.size() + CyberSkins.LAZARUS_CYBERS.size()) {
+                    skin = CyberSkins.LAZARUS_CYBERS.get(slot - MonsterSkins.MONSTERS.size());
+                } else {
+                    skin = CharacterSkins.LAZARUS_MONSTERS.get(slot - MonsterSkins.MONSTERS.size() - CyberSkins.LAZARUS_CYBERS.size());
+                }
+            }
         }
         return skin;
     }

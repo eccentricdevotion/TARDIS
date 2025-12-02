@@ -104,7 +104,7 @@ class TARDISLazarusInventory implements InventoryHolder {
         // TARDISWeepingAngels monsters
         ItemStack monsters = ItemStack.of(GUIGeneticManipulator.BUTTON_TWA.material(), 1);
         ItemMeta monstersItemMeta = monsters.getItemMeta();
-        monstersItemMeta.displayName(Component.text("TARDIS Monsters"));
+        monstersItemMeta.displayName(Component.text("Monsters"));
         monsters.setItemMeta(monstersItemMeta);
         stacks[GUIGeneticManipulator.BUTTON_TWA.slot()] = monsters;
         // master

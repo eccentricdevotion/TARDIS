@@ -83,6 +83,6 @@ public class TARDISLazarusDoctorInventory extends LazarusItems implements Invent
 
     @Override
     public int getMaxSlot() {
-        return 16;
+        return DoctorSkins.DOCTORS.size();
     }
 }

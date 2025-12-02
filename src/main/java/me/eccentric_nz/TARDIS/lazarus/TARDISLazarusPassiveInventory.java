@@ -64,6 +64,7 @@ class TARDISLazarusPassiveInventory extends LazarusItems implements InventoryHol
         passive.add(Material.HORSE_SPAWN_EGG);
         passive.add(Material.MOOSHROOM_SPAWN_EGG);
         passive.add(Material.MULE_SPAWN_EGG);
+        passive.add(Material.NAUTILUS_SPAWN_EGG);
         passive.add(Material.OCELOT_SPAWN_EGG);
         passive.add(Material.PARROT_SPAWN_EGG);
         passive.add(Material.PIG_SPAWN_EGG);

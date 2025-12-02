@@ -30,7 +30,7 @@ public record GUIGeneticManipulator() {
     public static final GUIData BUTTON_DOCTORS = new GUIData(Button.DOCTOR.getKey(), 9, Material.BROWN_STAINED_GLASS_PANE);
     public static final GUIData BUTTON_COMPANIONS = new GUIData(Button.COMPANION.getKey(), 11, Material.BROWN_STAINED_GLASS_PANE);
     public static final GUIData BUTTON_CHARACTERS = new GUIData(Button.CHARACTER.getKey(), 13, Material.BROWN_STAINED_GLASS_PANE);
-    public static final GUIData BUTTON_TWA = new GUIData(Button.TWA.getKey(), 15, Material.BOWL);
+    public static final GUIData BUTTON_TWA = new GUIData(Button.MONSTER.getKey(), 15, Material.BROWN_STAINED_GLASS_PANE);
     public static final GUIData BUTTON_MASTER = new GUIData(Button.MASTER_OFF.getKey(), 17, Material.REPEATER);
     public static final GUIData BUTTON_AGE = new GUIData(Button.AGE.getKey(), 47, Material.HOPPER);
     public static final GUIData BUTTON_TYPE = new GUIData(Button.TYPE.getKey(), 48, Material.CYAN_DYE);

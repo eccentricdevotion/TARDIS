@@ -79,6 +79,6 @@ public class TARDISLazarusCharacterInventory extends LazarusItems implements Inv
 
     @Override
     public int getMaxSlot() {
-        return 13;
+        return CharacterSkins.LAZARUS_CHARACTERS.size();
     }
 }

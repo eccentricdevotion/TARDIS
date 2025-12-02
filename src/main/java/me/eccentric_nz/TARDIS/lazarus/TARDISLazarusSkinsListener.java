@@ -50,7 +50,8 @@ public class TARDISLazarusSkinsListener extends TARDISMenuListener {
         InventoryHolder holder = event.getInventory().getHolder(false);
         if (!(holder instanceof TARDISLazarusDoctorInventory)
                 && !(holder instanceof TARDISLazarusCompanionInventory)
-                && !(holder instanceof TARDISLazarusCharacterInventory)) {
+                && !(holder instanceof TARDISLazarusCharacterInventory)
+                && !(holder instanceof TARDISLazarusMonstersInventory)) {
             return;
         }
         event.setCancelled(true);
@@ -61,7 +62,7 @@ public class TARDISLazarusSkinsListener extends TARDISMenuListener {
             return;
         }
         int slot = event.getRawSlot();
-        if (slot >= 0 && slot <= ((LazarusGUI) holder).getMaxSlot()) {
+        if (slot >= 0 && slot < ((LazarusGUI) holder).getMaxSlot()) {
             // get selection
             ItemStack is = event.getView().getItem(slot);
             if (is != null) {
@@ -77,6 +78,7 @@ public class TARDISLazarusSkinsListener extends TARDISMenuListener {
                     ItemMeta pageMeta = pageButton.getItemMeta();
                     // check the lore
                     String which = ComponentUtils.stripColour(pageMeta.lore().getFirst());
+//                    plugin.debug(which);
                     InventoryHolder ih;
                     switch (which) {
                         case "Passive Mobs" -> ih = new TARDISLazarusPassiveInventory(plugin);
@@ -94,7 +96,6 @@ public class TARDISLazarusSkinsListener extends TARDISMenuListener {
                 // back
                 case 40 -> {
                     LazarusUtils.pagers.add(uuid);
-                    // go to monsters
                     player.openInventory(new TARDISLazarusInventory(plugin).getInventory());
                 }
                 case 51 -> {
@@ -147,7 +148,7 @@ public class TARDISLazarusSkinsListener extends TARDISMenuListener {
                         }
                         int rememberedSlot = skins.get(uuid);
                         // put on a skin
-                        Skin skin = LazarusUtils.skinForSlot(rememberedSlot);
+                        Skin skin = LazarusUtils.skinForSlot(rememberedSlot, getSkinType(holder));
                         if (skin != null) {
                             plugin.getSkinChanger().set(player, skin);
                             SkinUtils.setExtras(player, skin);
@@ -166,6 +167,19 @@ public class TARDISLazarusSkinsListener extends TARDISMenuListener {
                 }
             }
         }
+    }
+
+    private int getSkinType(InventoryHolder holder) {
+        if (holder instanceof TARDISLazarusDoctorInventory) {
+            return 0;
+        } else if (holder instanceof TARDISLazarusCompanionInventory) {
+            return 1;
+        } else if (holder instanceof TARDISLazarusCharacterInventory) {
+            return 2;
+        } else if (holder instanceof TARDISLazarusMonstersInventory) {
+            return 3;
+        }
+        return 0;
     }
 
     private void untrack(UUID uuid, boolean remove) {

@@ -16,18 +16,18 @@
  */
 package me.eccentric_nz.TARDIS.lazarus;
 
-import com.google.common.collect.Multimaps;
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ResolvableProfile;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.tardisweepingangels.utils.Monster;
+import me.eccentric_nz.TARDIS.skins.*;
+import me.eccentric_nz.TARDIS.skins.tv.PlayerHeadCache;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
+import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.Map;
+import org.bukkit.inventory.meta.SkullMeta;
 
 public class TARDISLazarusMonstersInventory extends LazarusItems implements InventoryHolder, LazarusGUI {
 
@@ -37,8 +37,6 @@ public class TARDISLazarusMonstersInventory extends LazarusItems implements Inve
 
     public TARDISLazarusMonstersInventory(TARDIS plugin) {
         this.plugin = plugin;
-        maxSlot = Monster.values().length - 1;
-        plugin.debug("maxslot = " + maxSlot);
         this.inventory = plugin.getServer().createInventory(this, 54, Component.text("Genetic Manipulator", NamedTextColor.DARK_RED));
         this.inventory.setContents(getItemStack());
     }
@@ -56,17 +54,52 @@ public class TARDISLazarusMonstersInventory extends LazarusItems implements Inve
     private ItemStack[] getItemStack() {
         ItemStack[] stacks = new ItemStack[54];
         int i = 0;
-        for (Monster monster : Monster.values()) {
-            if (!monster.equals(Monster.TOCLAFANE)) {
-                ItemStack mon = ItemStack.of(monster.getMaterial(), 1);
-                ItemMeta ster = mon.getItemMeta();
-                ster.displayName(Component.text(monster.getName()));
-                ster.addItemFlags(ItemFlag.values());
-                ster.setAttributeModifiers(Multimaps.forMap(Map.of()));
-                mon.setItemMeta(ster);
-                stacks[i] = mon;
+        if (PlayerHeadCache.MONSTERS.isEmpty()) {
+            for (Skin monster : MonsterSkins.MONSTERS) {
+                ItemStack is = ItemStack.of(Material.PLAYER_HEAD, 1);
+                SkullMeta im = (SkullMeta) is.getItemMeta();
+                SkinUtils.getHeadProfile(monster).thenAccept(playerProfile -> {
+                    is.setData(DataComponentTypes.PROFILE, ResolvableProfile.resolvableProfile(playerProfile));
+                    im.setPlayerProfile(playerProfile);
+                    im.displayName(Component.text(monster.name()));
+                    is.setItemMeta(im);
+                    // cache the item stack
+                    PlayerHeadCache.MONSTERS.add(is);
+                });
+                stacks[i] = is;
                 i++;
             }
+        } else {
+            for (ItemStack is : PlayerHeadCache.MONSTERS) {
+                stacks[i] = is;
+                i++;
+            }
+        }
+        // add cyberman and cybershade
+        for (Skin monster : CyberSkins.LAZARUS_CYBERS) {
+            ItemStack is = ItemStack.of(Material.PLAYER_HEAD, 1);
+            SkullMeta im = (SkullMeta) is.getItemMeta();
+            SkinUtils.getHeadProfile(monster).thenAccept(playerProfile -> {
+                is.setData(DataComponentTypes.PROFILE, ResolvableProfile.resolvableProfile(playerProfile));
+                im.setPlayerProfile(playerProfile);
+                im.displayName(Component.text(monster.name()));
+                is.setItemMeta(im);
+            });
+            stacks[i] = is;
+            i++;
+        }
+        // add adjacent characters
+        for (Skin monster : CharacterSkins.LAZARUS_MONSTERS) {
+            ItemStack is = ItemStack.of(Material.PLAYER_HEAD, 1);
+            SkullMeta im = (SkullMeta) is.getItemMeta();
+            SkinUtils.getHeadProfile(monster).thenAccept(playerProfile -> {
+                is.setData(DataComponentTypes.PROFILE, ResolvableProfile.resolvableProfile(playerProfile));
+                im.setPlayerProfile(playerProfile);
+                im.displayName(Component.text(monster.name()));
+                is.setItemMeta(im);
+            });
+            stacks[i] = is;
+            i++;
         }
         // add standard buttons
         addItems(plugin, stacks, 8);
@@ -76,6 +109,6 @@ public class TARDISLazarusMonstersInventory extends LazarusItems implements Inve
 
     @Override
     public int getMaxSlot() {
-        return maxSlot;
+        return MonsterSkins.MONSTERS.size() + CyberSkins.LAZARUS_CYBERS.size() + CharacterSkins.LAZARUS_MONSTERS.size() + 2;
     }
 }
