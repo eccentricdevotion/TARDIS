@@ -119,6 +119,7 @@ public class ResetMonster {
         entity.remove();
         // set ood / judoon / k9 equipment
         if (monster.isFollower()) {
+            TeamAdder.joinTeam(a);
             Husk husk = (Husk) a;
             switch (monster) {
                 case K9 -> K9Equipment.set(player, a, false);

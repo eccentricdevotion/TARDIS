@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.Follower;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
+import me.eccentric_nz.tardisweepingangels.utils.TeamAdder;
 import net.minecraft.server.level.ServerLevel;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.CraftWorld;
@@ -41,6 +42,7 @@ public class MonsterSpawner {
             case JUDOON -> new TWAJudoon(world);
             default -> new TWAK9(world);
         };
+        TeamAdder.joinTeam(entity.getBukkitEntity());
         entity.setPosRaw(location.getX(), location.getY(), location.getZ());
         entity.setPersistenceRequired();
         world.addFreshEntity(entity, CreatureSpawnEvent.SpawnReason.CUSTOM);
