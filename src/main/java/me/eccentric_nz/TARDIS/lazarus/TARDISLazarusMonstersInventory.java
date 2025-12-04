@@ -54,6 +54,7 @@ public class TARDISLazarusMonstersInventory extends LazarusItems implements Inve
     private ItemStack[] getItemStack() {
         ItemStack[] stacks = new ItemStack[54];
         int i = 0;
+        // 27 monsters
         if (PlayerHeadCache.MONSTERS.isEmpty()) {
             for (Skin monster : MonsterSkins.MONSTERS) {
                 ItemStack is = ItemStack.of(Material.PLAYER_HEAD, 1);
