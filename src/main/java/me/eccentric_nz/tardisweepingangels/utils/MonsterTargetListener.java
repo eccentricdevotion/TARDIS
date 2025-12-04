@@ -197,7 +197,6 @@ public class MonsterTargetListener implements Listener {
                     ignore = isWearingMonsterHead(player, Monster.RACNOSS.getMaterial());
                 }
             }
-
             default -> {
             }
         }

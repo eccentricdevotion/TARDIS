@@ -198,6 +198,7 @@ public class TARDISWeepingAngels {
         plugin.getPM().registerEvents(new ArmourStandListener(), plugin);
         plugin.getPM().registerEvents(new MonsterTranformListener(plugin), plugin);
         plugin.getPM().registerEvents(new MonsterTargetListener(), plugin);
+        plugin.getPM().registerEvents(new MonsterSpawnListener(), plugin);
         plugin.getPM().registerEvents(new MonsterHeadEquipListener(plugin), plugin);
         if (plugin.getMonstersConfig().getInt("ood.spawn_from_villager") > 0) {
             plugin.getPM().registerEvents(new VillagerSpawnListener(plugin), plugin);
