@@ -70,6 +70,9 @@ public class TARDISWeepingAngelsCommand implements CommandExecutor {
                 case "give" -> {
                     return new GiveCommand(plugin).give(sender, args);
                 }
+                case "team" -> {
+                    return new TeamCommand(plugin).join(sender);
+                }
                 case "teleport" -> {
                     return new TeleportCommand(plugin).add(sender, args);
                 }

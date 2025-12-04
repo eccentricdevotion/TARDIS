@@ -33,7 +33,7 @@ import java.util.List;
  */
 public class TabComplete extends TARDISCompleter implements TabCompleter {
 
-    final ImmutableList<String> CMD_SUBS = ImmutableList.of("spawn", "equip", "disguise", "kill", "count", "follow", "stay", "remove", "set", "give", "teleport");
+    final ImmutableList<String> CMD_SUBS = ImmutableList.of("spawn", "equip", "disguise", "kill", "count", "follow", "stay", "remove", "set", "give", "team", "teleport");
     private final ImmutableList<String> ONOFF_SUBS = ImmutableList.of("on", "off");
     private final ImmutableList<String> TP_SUBS = ImmutableList.of("replace", "true", "false");
     private final ImmutableList<String> WORLD_SUBS;
