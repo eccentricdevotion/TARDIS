@@ -87,7 +87,7 @@ repositories {
 }
 
 dependencies {
-    paperweight.paperDevBundle("1.21.11-rc1-R0.1-SNAPSHOT")
+    paperweight.paperDevBundle("1.21.11-rc3-R0.1-SNAPSHOT")
     compileOnly("com.sk89q.worldedit:worldedit-core:7.4.0-SNAPSHOT") {
         isTransitive = false
     }
