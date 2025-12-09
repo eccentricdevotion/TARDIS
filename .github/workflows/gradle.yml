@@ -10,7 +10,7 @@ on:
 
 env:
   VERSION: '6.3.0'
-  RELEASE_TAG: '1.21.11-rc3'
+  RELEASE_TAG: '1.21.11'
 
 jobs:
   build:
