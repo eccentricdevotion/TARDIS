@@ -266,7 +266,7 @@ public class TARDIS extends JavaPlugin {
         persistentDataTypeUUID = new TARDISUUIDDataType();
         console = getServer().getConsoleSender();
         ModuleDescriptor.Version serverVersion = getServerVersion(getServer().getVersion());
-        ModuleDescriptor.Version minVersion = ModuleDescriptor.Version.parse("1.21.10");
+        ModuleDescriptor.Version minVersion = ModuleDescriptor.Version.parse("1.21.11");
         // check server version
         if (serverVersion.compareTo(minVersion) >= 0) {
             // don't start if TARDISChunkGenerator is present
@@ -1480,7 +1480,7 @@ public class TARDIS extends JavaPlugin {
     }
 
     /**
-     * If the LuckPerms plugin is available, load a custom permissions context.
+     * If the LuckPerms plugin is available, load a custom permission context.
      */
     private void loadLuckPerms() {
         if (pm.getPlugin("LuckPerms") != null) {

@@ -21,7 +21,7 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import me.eccentric_nz.tardischunkgenerator.helpers.TARDISPlanetData;
-import org.bukkit.GameRule;
+import org.bukkit.GameRules;
 import org.bukkit.World;
 
 import java.io.File;
@@ -81,11 +81,11 @@ public class TARDISWorlds {
                                 World telos = plugin.getServer().getWorld("telos");
                                 if (telos != null) {
                                     telos.setTime(13000);
-                                    telos.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
-                                    plugin.getPlanetsConfig().set("planets.telos.gamerules.doDaylightCycle", false);
+                                    telos.setGameRule(GameRules.ADVANCE_TIME, false);
+                                    plugin.getPlanetsConfig().set("planets.telos.gamerules.advance_time", false);
                                 }
                             } else {
-                                plugin.getPlanetsConfig().set("planets.telos.gamerules.doDaylightCycle", true);
+                                plugin.getPlanetsConfig().set("planets.telos.gamerules.advance_time", true);
                             }
                             String planetsPath = plugin.getDataFolder() + File.separator + "planets.yml";
                             try {

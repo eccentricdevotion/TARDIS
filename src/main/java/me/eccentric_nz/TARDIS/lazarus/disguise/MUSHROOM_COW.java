@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.lazarus.disguise;
 
-import net.minecraft.world.entity.animal.MushroomCow;
+import net.minecraft.world.entity.animal.cow.MushroomCow;
 
 public enum MUSHROOM_COW {
 

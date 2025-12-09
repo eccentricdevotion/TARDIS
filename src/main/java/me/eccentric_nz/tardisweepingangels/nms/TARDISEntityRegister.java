@@ -19,14 +19,14 @@ package me.eccentric_nz.tardisweepingangels.nms;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class TARDISEntityRegister {
 
     public void inject() {
-        ResourceLocation oodKey = ResourceLocation.parse("ood");
-        ResourceLocation judoonKey = ResourceLocation.parse("judoon");
-        ResourceLocation k9Key = ResourceLocation.parse("k9");
+        Identifier oodKey = Identifier.parse("ood");
+        Identifier judoonKey = Identifier.parse("judoon");
+        Identifier k9Key = Identifier.parse("k9");
         try {
             if (BuiltInRegistries.ENTITY_TYPE.getOptional(oodKey).isEmpty()) {
                 TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.MONSTERS, "Injecting Ood into ENTITY_TYPE registry.");

@@ -16,10 +16,7 @@
  */
 package me.eccentric_nz.tardisweepingangels.equip;
 
-import me.eccentric_nz.TARDIS.custommodels.keys.ArmourVariant;
-import me.eccentric_nz.TARDIS.custommodels.keys.CybermanVariant;
-import me.eccentric_nz.TARDIS.custommodels.keys.DroidVariant;
-import me.eccentric_nz.TARDIS.custommodels.keys.EmptyChildVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.*;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.monsters.cybermen.CyberType;
@@ -53,6 +50,7 @@ public class ArmourEquipper {
         switch (monster) {
             case CLOCKWORK_DROID -> headModel = (armour.equals(ArmourVariant.CLOCKWORK_DROID.getKey())) ? monster.getHeadModel() : DroidVariant.CLOCKWORK_DROID_FEMALE_HEAD.getKey();
             case CYBERMAN -> headModel = CyberType.CYBER_HEADS.getOrDefault(armour, CybermanVariant.CYBERMAN_HEAD.getKey());
+            case DAVROS -> headModel = DavrosVariant.DAVROS.getKey();
             default -> headModel = monster.getHeadModel();
         }
         headMeta.setItemModel(headModel);

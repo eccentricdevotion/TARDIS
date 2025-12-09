@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.files;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.utility.GameRuleConverter;
 import me.eccentric_nz.tardischunkgenerator.helpers.TARDISPlanetData;
 import org.bukkit.configuration.file.FileConfiguration;
 
@@ -77,10 +78,10 @@ public class TARDISPlanetsUpdater {
                 planets_config.set("planets.TARDIS_Zero_Room.difficulty", "NORMAL");
                 planets_config.set("planets.TARDIS_Zero_Room.generator", "TARDIS:void");
                 planets_config.set("planets.TARDIS_Zero_Room.void", true);
-                planets_config.set("planets.TARDIS_Zero_Room.gamerules.doWeatherCycle", false);
-                planets_config.set("planets.TARDIS_Zero_Room.gamerules.doDaylightCycle", false);
-                planets_config.set("planets.TARDIS_Zero_Room.gamerules.announceAdvancements", false);
-                planets_config.set("planets.TARDIS_Zero_Room.gamerules.doWardenSpawning", false);
+                planets_config.set("planets.TARDIS_Zero_Room.gamerules.advance_weather", false);
+                planets_config.set("planets.TARDIS_Zero_Room.gamerules.advance_time", false);
+                planets_config.set("planets.TARDIS_Zero_Room.gamerules.show_advancement_messages", false);
+                planets_config.set("planets.TARDIS_Zero_Room.gamerules.spawn_wardens", false);
                 planets_config.set("planets.TARDIS_Zero_Room.allow_portals", false);
                 planets_config.set("planets.TARDIS_Zero_Room.alias", "ZeroRoom");
                 planets_config.set("planets.TARDIS_Zero_Room.icon", "PINK_WOOL");
@@ -96,8 +97,8 @@ public class TARDISPlanetsUpdater {
             planets_config.set("planets." + dn + ".difficulty", "NORMAL");
             planets_config.set("planets." + dn + ".generator", "TARDIS:void");
             planets_config.set("planets." + dn + ".void", true);
-            planets_config.set("planets." + dn + ".gamerules.doWeatherCycle", false);
-            planets_config.set("planets." + dn + ".gamerules.doDaylightCycle", false);
+            planets_config.set("planets." + dn + ".gamerules.advance_weather", false);
+            planets_config.set("planets." + dn + ".gamerules.advance_time", false);
             planets_config.set("planets." + dn + ".allow_portals", false);
             planets_config.set("planets." + dn + ".alias", "TimeVortex");
             planets_config.set("planets." + dn + ".icon", "CRYING_OBSIDIAN");
@@ -163,15 +164,6 @@ public class TARDISPlanetsUpdater {
                 planets_config.set("planets." + w + ".icon", getIcon(w, planets_config.getString("planets." + w + ".environment")));
             }
         }
-        // set gamerules for TARDIS worlds
-        if (!planets_config.contains("planets.TARDIS_Zero_Room.gamerules.doWeatherCycle")) {
-            planets_config.set("planets." + dn + ".gamerules.doWeatherCycle", false);
-            planets_config.set("planets." + dn + ".gamerules.doDaylightCycle", false);
-            planets_config.set("planets.TARDIS_Zero_Room.gamerules.doWeatherCycle", false);
-            planets_config.set("planets.TARDIS_Zero_Room.gamerules.doDaylightCycle", false);
-            planets_config.set("planets.TARDIS_Zero_Room.gamerules.announceAdvancements", false);
-            save++;
-        }
         // check there is a `helmic_regulator_order` config option for all worlds
         for (String w : worlds) {
             if (!planets_config.contains("planets." + w + ".helmic_regulator_order")) {
@@ -206,8 +198,8 @@ public class TARDISPlanetsUpdater {
             planets_config.set("planets.skaro.generator", "TARDIS:skaro");
             planets_config.set("planets.skaro.spawn_chunk_radius", 0);
             planets_config.set("planets.skaro.spawn_other_mobs", true);
-            planets_config.set("planets.skaro.gamerules.doTraderSpawning", false);
-            planets_config.set("planets.skaro.gamerules.doPatrolSpawning", false);
+            planets_config.set("planets.skaro.gamerules.spawn_wandering_traders", false);
+            planets_config.set("planets.skaro.gamerules.spawn_patrols", false);
             planets_config.set("planets.skaro.allow_portals", false);
             planets_config.set("planets.skaro.alias", "Skaro");
             planets_config.set("planets.skaro.icon", "FIRE_CORAL_BLOCK");
@@ -222,8 +214,8 @@ public class TARDISPlanetsUpdater {
             planets_config.set("planets.siluria.generator", "TARDIS:siluria");
             planets_config.set("planets.siluria.spawn_chunk_radius", 0);
             planets_config.set("planets.siluria.spawn_other_mobs", true);
-            planets_config.set("planets.siluria.gamerules.doTraderSpawning", false);
-            planets_config.set("planets.siluria.gamerules.doPatrolSpawning", false);
+            planets_config.set("planets.siluria.gamerules.spawn_wandering_traders", false);
+            planets_config.set("planets.siluria.gamerules.spawn_patrols", false);
             planets_config.set("planets.siluria.allow_portals", false);
             planets_config.set("planets.siluria.alias", "Siluria");
             planets_config.set("planets.siluria.icon", "BAMBOO_MOSAIC");
@@ -238,8 +230,8 @@ public class TARDISPlanetsUpdater {
             planets_config.set("planets.gallifrey.generator", "TARDIS:gallifrey");
             planets_config.set("planets.gallifrey.spawn_chunk_radius", 0);
             planets_config.set("planets.gallifrey.spawn_other_mobs", true);
-            planets_config.set("planets.gallifrey.gamerules.doTraderSpawning", false);
-            planets_config.set("planets.gallifrey.gamerules.doPatrolSpawning", false);
+            planets_config.set("planets.gallifrey.gamerules.spawn_wandering_traders", false);
+            planets_config.set("planets.gallifrey.gamerules.spawn_patrols", false);
             planets_config.set("planets.gallifrey.allow_portals", false);
             planets_config.set("planets.gallifrey.alias", "Gallifrey");
             planets_config.set("planets.gallifrey.icon", "RED_SAND");
@@ -274,8 +266,8 @@ public class TARDISPlanetsUpdater {
             planets_config.set("planets.telos.environment", "NORMAL");
             planets_config.set("planets.telos.generator", "TARDIS:telos");
             planets_config.set("planets.telos.spawn_other_mobs", true);
-            planets_config.set("planets.telos.gamerules.doTraderSpawning", false);
-            planets_config.set("planets.telos.gamerules.doPatrolSpawning", false);
+            planets_config.set("planets.telos.gamerules.spawn_wandering_traders", false);
+            planets_config.set("planets.telos.gamerules.spawn_patrols", false);
             planets_config.set("planets.telos.allow_portals", false);
             planets_config.set("planets.telos.alias", "Telos");
             planets_config.set("planets.telos.icon", "PACKED_ICE");
@@ -290,12 +282,12 @@ public class TARDISPlanetsUpdater {
             planets_config.set("planets.rooms.environment", "NORMAL");
             planets_config.set("planets.rooms.generator", "TARDIS:rooms");
             planets_config.set("planets.rooms.spawn_other_mobs", false);
-            planets_config.set("planets.rooms.gamerules.doWeatherCycle", false);
-            planets_config.set("planets.rooms.gamerules.doDaylightCycle", false);
-            planets_config.set("planets.rooms.gamerules.doMobSpawning", false);
-            planets_config.set("planets.rooms.gamerules.doTraderSpawning", false);
-            planets_config.set("planets.rooms.gamerules.doPatrolSpawning", false);
-            planets_config.set("planets.rooms.gamerules.doWardenSpawning", false);
+            planets_config.set("planets.rooms.gamerules.advance_weather", false);
+            planets_config.set("planets.rooms.gamerules.advance_time", false);
+            planets_config.set("planets.rooms.gamerules.spawn_mobs", false);
+            planets_config.set("planets.rooms.gamerules.spawn_wandering_traders", false);
+            planets_config.set("planets.rooms.gamerules.spawn_patrols", false);
+            planets_config.set("planets.rooms.gamerules.spawn_wardens", false);
             planets_config.set("planets.rooms.allow_portals", false);
             planets_config.set("planets.rooms.alias", "TARDISRooms");
             planets_config.set("planets.rooms.icon", "BOOKSHELF");
@@ -307,11 +299,6 @@ public class TARDISPlanetsUpdater {
         if (planets_config.getString("planets.TARDIS_TimeVortex.generator").equals("TARDISChunkGenerator")) {
             planets_config.set("planets.TARDIS_TimeVortex.generator", "TARDIS:void");
             planets_config.set("planets.TARDIS_Zero_Room.generator", "TARDIS:void");
-            save++;
-        }
-        if (!planets_config.contains("planets.TARDIS_TimeVortex.gamerules.doWardenSpawning")) {
-            planets_config.set("planets.TARDIS_TimeVortex.gamerules.doWardenSpawning", false);
-            planets_config.set("planets.TARDIS_Zero_Room.gamerules.doWardenSpawning", false);
             save++;
         }
         if (planets_config.getString("planets.TARDIS_TimeVortex.generator").equals("TARDISChunkGenerator:void")) {
@@ -345,6 +332,20 @@ public class TARDISPlanetsUpdater {
         }
         if (planets_config.contains("planets." + levelName + "_tardis_skaro")) {
             planets_config.set("planets." + levelName + "_tardis_skaro", null);
+            save++;
+        }
+        // convert game rules to 1.21.11+
+        if (planets_config.contains("planets.TARDIS_TimeVortex.gamerules.doWardenSpawning")) {
+            for (String w : worlds) {
+                if (planets_config.contains("planets." + w + ".gamerules") && planets_config.getConfigurationSection("planets." + w + ".gamerules") != null) {
+                    for (String rule : planets_config.getConfigurationSection("planets." + w + ".gamerules").getKeys(false)) {
+                        String r = GameRuleConverter.OLD_TO_NEW.get(rule);
+                        plugin.debug(r);
+                        planets_config.set("planets." + w + ".gamerules." + r, planets_config.getBoolean("planets." + w + ".gamerules." + rule));
+                        planets_config.set("planets." + w + ".gamerules." + rule, null);
+                    }
+                }
+            }
             save++;
         }
         if (save > 0) {

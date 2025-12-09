@@ -22,7 +22,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.core.WritableRegistry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.dedicated.DedicatedServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
@@ -60,11 +60,11 @@ public class BiomeHelper {
      */
     public void setCustomBiome(String newBiomeName, Chunk chunk, int startY) {
         WritableRegistry<Biome> registryWritable = (WritableRegistry<Biome>) getRegistry();
-        ResourceKey<Biome> key = ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("tardis", newBiomeName.toLowerCase(Locale.ROOT)));
+        ResourceKey<Biome> key = ResourceKey.create(Registries.BIOME, Identifier.fromNamespaceAndPath("tardis", newBiomeName.toLowerCase(Locale.ROOT)));
         Biome base = registryWritable.getValueOrThrow(key);
         if (base == null) {
             if (newBiomeName.contains(":")) {
-                ResourceKey<Biome> newKey = ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath(newBiomeName.split(":")[0].toLowerCase(Locale.ROOT), newBiomeName.split(":")[1].toLowerCase(Locale.ROOT)));
+                ResourceKey<Biome> newKey = ResourceKey.create(Registries.BIOME, Identifier.fromNamespaceAndPath(newBiomeName.split(":")[0].toLowerCase(Locale.ROOT), newBiomeName.split(":")[1].toLowerCase(Locale.ROOT)));
                 base = registryWritable.getValueOrThrow(newKey);
                 if (base == null) {
                     return;
@@ -97,11 +97,11 @@ public class BiomeHelper {
     public boolean setCustomBiome(String newBiomeName, Location location) {
         Biome base;
         WritableRegistry<Biome> registrywritable = (WritableRegistry<Biome>) getRegistry();
-        ResourceKey<Biome> key = ResourceKey.create(Registries.BIOME, ResourceLocation.withDefaultNamespace(newBiomeName.toLowerCase(Locale.ROOT)));
+        ResourceKey<Biome> key = ResourceKey.create(Registries.BIOME, Identifier.withDefaultNamespace(newBiomeName.toLowerCase(Locale.ROOT)));
         base = registrywritable.getValueOrThrow(key);
         if (base == null) {
             if (newBiomeName.contains(":")) {
-                ResourceKey<Biome> newKey = ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath(newBiomeName.split(":")[0].toLowerCase(Locale.ROOT), newBiomeName.split(":")[1].toLowerCase(Locale.ROOT)));
+                ResourceKey<Biome> newKey = ResourceKey.create(Registries.BIOME, Identifier.fromNamespaceAndPath(newBiomeName.split(":")[0].toLowerCase(Locale.ROOT), newBiomeName.split(":")[1].toLowerCase(Locale.ROOT)));
                 base = registrywritable.getValueOrThrow(newKey);
                 if (base == null) {
                     return false;

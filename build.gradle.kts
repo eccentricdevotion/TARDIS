@@ -5,14 +5,14 @@ import java.io.ByteArrayOutputStream
 plugins {
     `java-library`
     id("io.papermc.paperweight.userdev") version "2.0.0-SNAPSHOT"
-    id("com.gradleup.shadow") version "9.2.2"
+    id("com.gradleup.shadow") version "9.3.0"
     id("java")
     id("io.papermc.hangar-publish-plugin") version "0.1.3"
 }
 
 group = "me.eccentric_nz"
 val buildNumber = "-b${System.getenv("BUILD_NUMBER") ?: (System.getenv("SHORT_SHA") ?: ".local")}"
-version = "6.2.4${buildNumber}"
+version = "6.3.0${buildNumber}"
 
 repositories {
     mavenCentral()
@@ -87,18 +87,29 @@ repositories {
 }
 
 dependencies {
-    paperweight.paperDevBundle("1.21.10-R0.1-SNAPSHOT")
-    compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.1.0-SNAPSHOT")
+    paperweight.paperDevBundle("1.21.11-R0.1-SNAPSHOT")
+    compileOnly("com.sk89q.worldedit:worldedit-core:7.4.0-SNAPSHOT") {
+        isTransitive = false
+    }
+    compileOnly("com.sk89q.worldedit:worldedit-bukkit:7.4.0-SNAPSHOT") {
+        isTransitive = false
+    }
+    compileOnly("com.sk89q.worldguard:worldguard-core:7.1.0-SNAPSHOT") {
+        isTransitive = false
+    }
+    compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.1.0-SNAPSHOT") {
+        isTransitive = false
+    }
     compileOnly("net.citizensnpcs:citizensapi:2.0.40-SNAPSHOT") {
         isTransitive = false
     }
-    compileOnly("com.palmergames.bukkit.towny:towny:0.102.0.0") {
+    compileOnly("com.palmergames.bukkit.towny:towny:0.102.0.1") {
         isTransitive = false
     }
     compileOnly("org.mvplugins.multiverse.core:multiverse-core:5.3.4") {
         isTransitive = false
     }
-    compileOnly("org.mvplugins.multiverse.inventories:multiverse-inventories:5.2.1") {
+    compileOnly("org.mvplugins.multiverse.inventories:multiverse-inventories:5.2.2") {
         isTransitive = false
     }
     compileOnly("dev.kitteh:factionsuuid:0.7.0") {
@@ -150,7 +161,7 @@ dependencies {
     compileOnly("net.luckperms:api:5.5")
     compileOnly("org.apache.commons:commons-lang3:3.20.0")
     compileOnly(files("libs/TerraformGenerator.jar"))
-    compileOnly("com.formdev:flatlaf:3.6.2") {
+    compileOnly("com.formdev:flatlaf:3.7") {
         isTransitive = false
     }
     compileOnly("org.swinglabs:swing-layout:1.0.3") {

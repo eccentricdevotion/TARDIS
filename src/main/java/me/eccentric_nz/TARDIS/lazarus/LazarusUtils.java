@@ -18,12 +18,15 @@ package me.eccentric_nz.TARDIS.lazarus;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.skins.*;
-import me.eccentric_nz.TARDIS.utility.ComponentUtils;
+import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
+import me.eccentric_nz.tardisweepingangels.equip.RemoveEquipment;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.util.HashSet;
 import java.util.List;
@@ -40,7 +43,12 @@ public class LazarusUtils {
         b.getRelative(BlockFace.SOUTH).getRelative(BlockFace.UP).setType(Material.AIR);
     }
 
-    public static void twaOff(Player player) {
+    public static void geneticModificationOff(Player player) {
+        if (TARDIS.plugin.isDisguisesOnServer()) {
+            TARDISLazarusLibs.removeDisguise(player);
+        } else {
+            TARDISLazarusDisguise.removeDisguise(player);
+        }
         UUID uuid = player.getUniqueId();
         if (SkinUtils.SKINNED.containsKey(uuid)) {
             // remove skin
@@ -48,25 +56,32 @@ public class LazarusUtils {
             Skin skin = SkinUtils.SKINNED.get(uuid);
             SkinUtils.removeExtras(player, skin);
             SkinUtils.SKINNED.remove(uuid);
-        } else {
+        } else if (TARDIS.plugin.getConfig().getBoolean("modules.weeping_angels")) {
             ItemStack helmet = player.getInventory().getHelmet();
-            if (helmet != null && helmet.hasItemMeta() && helmet.getItemMeta().hasDisplayName()) {
-                String metaName = ComponentUtils.stripColour(helmet.getItemMeta().displayName());
-                if (twaHelmets.contains(metaName)) {
-                    TARDIS.plugin.getServer().dispatchCommand(TARDIS.plugin.getConsole(), "twa disguise WEEPING_ANGEL off " + uuid);
+            if (helmet != null && helmet.hasItemMeta()) {
+                ItemMeta im = helmet.getItemMeta();
+                if (im.getPersistentDataContainer().has(TARDISWeepingAngels.MONSTER_HEAD, PersistentDataType.INTEGER)) {
+                    RemoveEquipment.set(player);
                 }
             }
         }
     }
 
-    public static Skin skinForSlot(int slot) {
+    public static Skin skinForSlot(int slot, int type) {
         Skin skin;
-        if (slot >= 0 && slot < 16) {
-            skin = DoctorSkins.DOCTORS.get(slot);
-        } else if (slot >= 16 && slot < 35) {
-            skin = CompanionSkins.COMPANIONS.get(slot - 16);
-        } else {
-            skin = CharacterSkins.LAZARUS_CHARACTERS.get(slot - 35);
+        switch (type) {
+            case 0 -> skin = DoctorSkins.DOCTORS.get(slot);
+            case 1 -> skin = CompanionSkins.COMPANIONS.get(slot);
+            case 2 -> skin = CharacterSkins.LAZARUS_CHARACTERS.get(slot);
+            default -> {
+                if (slot < MonsterSkins.MONSTERS.size()) {
+                    skin = MonsterSkins.MONSTERS.get(slot);
+                } else if (slot < MonsterSkins.MONSTERS.size() + CyberSkins.LAZARUS_CYBERS.size()) {
+                    skin = CyberSkins.LAZARUS_CYBERS.get(slot - MonsterSkins.MONSTERS.size());
+                } else {
+                    skin = CharacterSkins.LAZARUS_MONSTERS.get(slot - MonsterSkins.MONSTERS.size() - CyberSkins.LAZARUS_CYBERS.size());
+                }
+            }
         }
         return skin;
     }

@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.planets;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.InventoryManager;
-import org.bukkit.GameRule;
+import org.bukkit.GameRules;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
 import org.bukkit.WorldType;
@@ -58,8 +58,8 @@ public class TARDISSpace {
             plugin.getPlanetsConfig().set("planets." + name + ".environment", "NORMAL");
             plugin.getPlanetsConfig().set("planets." + name + ".void", true);
             plugin.getPlanetsConfig().set("planets." + name + ".generator", "TARDIS:void");
-            plugin.getPlanetsConfig().set("planets." + name + ".gamerules.doWeatherCycle", false);
-            plugin.getPlanetsConfig().set("planets." + name + ".gamerules.doDaylightCycle", false);
+            plugin.getPlanetsConfig().set("planets." + name + ".gamerules.advance_weather", false);
+            plugin.getPlanetsConfig().set("planets." + name + ".gamerules.advance_time", false);
             plugin.savePlanetsConfig();
             String inventory_group = plugin.getConfig().getString("creation.inventory_group");
             if (!"0".equals(inventory_group)) {
@@ -74,8 +74,8 @@ public class TARDISSpace {
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "wb " + name + " set " + plugin.getConfig().getInt("creation.border_radius") + " 0 0");
             }
         }
-        tardisWorld.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
-        tardisWorld.setGameRule(GameRule.DO_WEATHER_CYCLE, false);
+        tardisWorld.setGameRule(GameRules.ADVANCE_TIME, false);
+        tardisWorld.setGameRule(GameRules.ADVANCE_WEATHER, false);
         // set the time to night
         tardisWorld.setTime(14000L);
         return tardisWorld;

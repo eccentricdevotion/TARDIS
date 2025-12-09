@@ -84,7 +84,7 @@ public class WorldLoader {
                 }
                 if (plugin.getPlanetsConfig().contains("planets." + world + ".gamerules") && plugin.getPlanetsConfig().getConfigurationSection("planets." + world + ".gamerules") != null) {
                     for (String rule : plugin.getPlanetsConfig().getConfigurationSection("planets." + world + ".gamerules").getKeys(false)) {
-                        GameRule gameRule = GameRule.getByName(rule);
+                        GameRule gameRule = Registry.GAME_RULE.get(NamespacedKey.minecraft(rule.toLowerCase(Locale.ROOT)));
                         if (gameRule != null) {
                             w.setGameRule(gameRule, plugin.getPlanetsConfig().getBoolean("planets." + world + ".gamerules." + rule));
                         } else {

@@ -24,10 +24,15 @@ import net.minecraft.core.MappedRegistry;
 import net.minecraft.core.RegistrationInfo;
 import net.minecraft.core.WritableRegistry;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.level.biome.*;
+import net.minecraft.world.attribute.AmbientParticle;
+import net.minecraft.world.attribute.EnvironmentAttributes;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.BiomeGenerationSettings;
+import net.minecraft.world.level.biome.BiomeSpecialEffects;
+import net.minecraft.world.level.biome.MobSpawnSettings;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -41,9 +46,9 @@ public class CustomBiome {
 
     public static void addCustomBiome(CustomBiomeData data) {
         // get the key for the biome this custom biome is based on - minecraft:xxxx
-        ResourceKey<Biome> minecraftKey = ResourceKey.create(Registries.BIOME, ResourceLocation.withDefaultNamespace(data.minecraftName()));
+        ResourceKey<Biome> minecraftKey = ResourceKey.create(Registries.BIOME, Identifier.withDefaultNamespace(data.minecraftName()));
         // create a key for the custom biome - tardis:xxxx
-        ResourceKey<Biome> customKey = ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("tardis", data.customName()));
+        ResourceKey<Biome> customKey = ResourceKey.create(Registries.BIOME, Identifier.fromNamespaceAndPath("tardis", data.customName()));
         // get the biome registry
         WritableRegistry<Biome> registrywritable = (WritableRegistry<Biome>) BiomeHelper.getRegistry();
         // get the minecraft biome
@@ -61,19 +66,19 @@ public class CustomBiome {
         newBiome.downfall(data.downfall());
         newBiome.temperatureAdjustment(data.frozen() ? Biome.TemperatureModifier.NONE : Biome.TemperatureModifier.FROZEN);
         // set the custom biome colours
-        BiomeSpecialEffects.Builder newFog = new BiomeSpecialEffects.Builder();
-        newFog.grassColorModifier(BiomeSpecialEffects.GrassColorModifier.NONE);
-        newFog.fogColor(data.fogColour());
-        newFog.waterColor(data.waterColour());
-        newFog.waterFogColor(data.waterFogColour());
-        newFog.skyColor(data.skyColour());
-        newFog.foliageColorOverride(data.foliageColour());
-        newFog.grassColorOverride(data.grassColour());
+        BiomeSpecialEffects.Builder specialEffects = new BiomeSpecialEffects.Builder();
+        specialEffects.grassColorModifier(BiomeSpecialEffects.GrassColorModifier.NONE);
+        specialEffects.waterColor(data.waterColour());
+        specialEffects.foliageColorOverride(data.foliageColour());
+        specialEffects.grassColorOverride(data.grassColour());
+        newBiome.specialEffects(specialEffects.build());
+        // set sky colour
+        newBiome.setAttribute(EnvironmentAttributes.SKY_COLOR, data.skyColour());
+        // set fog colours
+        newBiome.setAttribute(EnvironmentAttributes.FOG_COLOR, data.fogColour());
+        newBiome.setAttribute(EnvironmentAttributes.WATER_FOG_COLOR, data.waterFogColour());
         // add ambient particles
-        if (data.particle() != null) {
-            newFog.ambientParticle(new AmbientParticleSettings(data.particle(), data.ambience()));
-        }
-        newBiome.specialEffects(newFog.build());
+        newBiome.setAttribute(EnvironmentAttributes.AMBIENT_PARTICLES, AmbientParticle.of(data.particle(), data.ambience()));
         Biome biome = newBiome.build();
 
         try {

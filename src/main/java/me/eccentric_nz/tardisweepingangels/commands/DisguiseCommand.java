@@ -75,7 +75,9 @@ public class DisguiseCommand {
             return true;
         }
         PlayerInventory inv = player.getInventory();
-        if (args[2].equalsIgnoreCase("on") && (inv.getBoots() != null || inv.getChestplate() != null || inv.getHelmet() != null || inv.getLeggings() != null)) {
+        if (args[2].equalsIgnoreCase("on")
+                && (!inv.getBoots().getType().isAir() || !inv.getChestplate().getType().isAir()
+                || !inv.getHelmet().getType().isAir() || !inv.getLeggings().getType().isAir())) {
             plugin.getMessenger().send(player, TardisModule.MONSTERS, "WA_ARMOUR");
             return true;
         }

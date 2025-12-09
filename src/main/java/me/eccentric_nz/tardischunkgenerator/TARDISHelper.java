@@ -333,7 +333,7 @@ public class TARDISHelper {
     }
 
     public int[] getReputation(Villager villager, UUID uuid) {
-        net.minecraft.world.entity.npc.Villager v = ((CraftVillager) villager).getHandle();
+        net.minecraft.world.entity.npc.villager.Villager v = ((CraftVillager) villager).getHandle();
         GossipContainer entries = v.getGossips();
         int[] reputation = new int[5];
         reputation[GossipType.MAJOR_NEGATIVE.ordinal()] = entries.getReputation(uuid, gossipType -> gossipType == GossipType.MAJOR_NEGATIVE);
@@ -345,7 +345,7 @@ public class TARDISHelper {
     }
 
     public void setReputation(Villager villager, UUID uuid, int[] reputation) {
-        net.minecraft.world.entity.npc.Villager v = ((CraftVillager) villager).getHandle();
+        net.minecraft.world.entity.npc.villager.Villager v = ((CraftVillager) villager).getHandle();
         GossipContainer entries = v.getGossips();
         entries.add(uuid, GossipType.MAJOR_NEGATIVE, reputation[GossipType.MAJOR_NEGATIVE.ordinal()]);
         entries.add(uuid, GossipType.MINOR_NEGATIVE, reputation[GossipType.MINOR_NEGATIVE.ordinal()]);
