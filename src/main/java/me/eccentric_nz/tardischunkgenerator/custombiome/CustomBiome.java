@@ -78,7 +78,9 @@ public class CustomBiome {
         newBiome.setAttribute(EnvironmentAttributes.FOG_COLOR, data.fogColour());
         newBiome.setAttribute(EnvironmentAttributes.WATER_FOG_COLOR, data.waterFogColour());
         // add ambient particles
-        newBiome.setAttribute(EnvironmentAttributes.AMBIENT_PARTICLES, AmbientParticle.of(data.particle(), data.ambience()));
+        if (data.particle() != null) {
+            newBiome.setAttribute(EnvironmentAttributes.AMBIENT_PARTICLES, AmbientParticle.of(data.particle(), data.ambience()));
+        }
         Biome biome = newBiome.build();
 
         try {
