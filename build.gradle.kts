@@ -140,7 +140,7 @@ dependencies {
     compileOnly("io.github.fabiozumbi12.RedProtect:RedProtect-Spigot:8.1.2") {
         isTransitive = false
     }
-    compileOnly("net.coreprotect:coreprotect:23.0") {
+    compileOnly("net.coreprotect:coreprotect:23.1") {
         isTransitive = false
     }
     compileOnly(files("libs/dynmap-api-3.7-beta-10.jar"))
