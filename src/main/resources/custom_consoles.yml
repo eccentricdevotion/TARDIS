@@ -2,6 +2,8 @@
 # Don't forget to add the upgrade cost to artron.yml
 CUSTOM:
   enabled: false
+  # schematic name below should be a lowercase version of the key above
+  # this also determines the filename found in 'user_schematics' - e.g. custom.tschm
   schematic: custom
   seed: OBSIDIAN
   has_beacon: true
