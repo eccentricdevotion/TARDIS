@@ -22,10 +22,11 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 
 import java.util.HashMap;
+import java.util.TreeMap;
 
 public class ColourType {
 
-    public static final HashMap<Material, NamespacedKey> LOOKUP = new HashMap<>();
+    public static final TreeMap<Material, NamespacedKey> LOOKUP = new TreeMap<>();
     public static final HashMap<NamespacedKey, String> COLOURS = new HashMap<>();
 
     static {

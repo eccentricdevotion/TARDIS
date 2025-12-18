@@ -1,20 +1,26 @@
 package me.eccentric_nz.TARDIS.console;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.console.models.ColourType;
 import me.eccentric_nz.TARDIS.custommodels.GUIArs;
-import me.eccentric_nz.TARDIS.custommodels.GUIChameleonConstructor;
 import me.eccentric_nz.TARDIS.custommodels.GUICompanion;
 import me.eccentric_nz.TARDIS.rotors.Rotor;
+import me.eccentric_nz.TARDIS.utility.ComponentUtils;
+import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 public class ConsoleRotorInventory implements InventoryHolder {
 
@@ -39,10 +45,10 @@ public class ConsoleRotorInventory implements InventoryHolder {
         ItemMeta info_im = info.getItemMeta();
         info_im.displayName(Component.text("Instructions"));
         info_im.lore(List.of(
-                Component.text("Put your Sonic Screwdriver"),
-                Component.text("in the bottom left most slot"),
-                Component.text("and then click on the"),
-                Component.text("Sonic of your choice.")
+                Component.text("Choose your desired time rotor"),
+                Component.text("Choose your desired console"),
+                Component.text("Click on the Save button"),
+                Component.text("to apply your choices.")
         ));
         info.setItemMeta(info_im);
         consoles[0] = info;
@@ -74,8 +80,17 @@ public class ConsoleRotorInventory implements InventoryHolder {
         consoles[26] = scroll_right;
         // consoles
         int c = 27;
-        for (DyeColor color : DyeColor.values()) {
-
+        for (Map.Entry<Material, NamespacedKey> colour : ColourType.LOOKUP.entrySet()) {
+            // get colour name
+            String name = colour.getKey().toString().replace("_CONCRETE_POWDER", "");
+            Material material = Material.valueOf(name + "_CONCRETE");
+            ItemStack is = ItemStack.of(material, 1);
+            ItemMeta im = is.getItemMeta();
+            String dn = TARDISStringUtils.capitalise(name) + " Console";
+            im.displayName(ComponentUtils.toWhite(dn));
+            im.lore(List.of(Component.text("Integration with interaction")));
+            im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, colour.getValue().getKey());
+            is.setItemMeta(im);
             c++;
             if (c > 35) {
                 break;
@@ -86,9 +101,9 @@ public class ConsoleRotorInventory implements InventoryHolder {
         // scroll right
         consoles[44] = scroll_right;
         // save
-        ItemStack save = ItemStack.of(GUIChameleonConstructor.SAVE_CONSTRUCT.material(), 1);
+        ItemStack save = ItemStack.of(Material.BOWL, 1);
         ItemMeta se = save.getItemMeta();
-        se.displayName(Component.text(plugin.getChameleonGuis().getString("SAVE", "Save construct")));
+        se.displayName(Component.text("Save"));
         save.setItemMeta(se);
         consoles[49] = save;
         // close
