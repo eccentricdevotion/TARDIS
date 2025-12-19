@@ -104,6 +104,7 @@ public class TARDISMenuListener implements Listener {
         map.put(Component.text("Chameleon Template", NamedTextColor.DARK_RED), 54);
         map.put(Component.text("Colour Picker", NamedTextColor.DARK_RED), 54);
         map.put(Component.text("Companions", NamedTextColor.DARK_RED), 54);
+        map.put(Component.text("Customise Console", NamedTextColor.DARK_RED), 54);
         map.put(Component.text("Destination Terminal", NamedTextColor.DARK_RED), 54);
         map.put(Component.text("Chemical compounds", NamedTextColor.DARK_RED), 27);
         map.put(Component.text("Element constructor", NamedTextColor.DARK_RED), 27);

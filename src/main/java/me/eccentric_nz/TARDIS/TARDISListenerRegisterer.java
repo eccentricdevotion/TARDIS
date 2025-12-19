@@ -38,6 +38,7 @@ import me.eccentric_nz.TARDIS.commands.utils.TARDISWeatherListener;
 import me.eccentric_nz.TARDIS.companionGUI.TARDISCompanionAddGUIListener;
 import me.eccentric_nz.TARDIS.companionGUI.TARDISCompanionGUIListener;
 import me.eccentric_nz.TARDIS.console.ConsoleInteractionListener;
+import me.eccentric_nz.TARDIS.console.CustomiseConsoleListener;
 import me.eccentric_nz.TARDIS.console.telepathic.TelepathicBiomeListener;
 import me.eccentric_nz.TARDIS.console.telepathic.TelepathicGUIListener;
 import me.eccentric_nz.TARDIS.console.telepathic.TelepathicStructureListener;
@@ -210,6 +211,7 @@ class TARDISListenerRegisterer {
         plugin.getPM().registerEvents(new TARDISControlMenuListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISCraftListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISCreeperDeathListener(plugin), plugin);
+        plugin.getPM().registerEvents(new CustomiseConsoleListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISDiskCraftListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISDismountListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISDisplayBlockListener(plugin), plugin);

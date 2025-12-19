@@ -9,27 +9,24 @@ import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
-import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.persistence.PersistentDataType;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
-public class ConsoleRotorInventory implements InventoryHolder {
+public class CustomiseConsoleInventory implements InventoryHolder {
 
     private final TARDIS plugin;
     private final Inventory inventory;
 
-    public ConsoleRotorInventory(TARDIS plugin) {
+    public CustomiseConsoleInventory(TARDIS plugin) {
         this.plugin = plugin;
-        this.inventory = plugin.getServer().createInventory(this, 54, Component.text("3D Consoles", NamedTextColor.DARK_RED));
+        this.inventory = plugin.getServer().createInventory(this, 54, Component.text("Customise Console", NamedTextColor.DARK_RED));
         this.inventory.setContents(getItemStack());
     }
 
@@ -54,10 +51,11 @@ public class ConsoleRotorInventory implements InventoryHolder {
         consoles[0] = info;
         // rotors
         int r = 9;
-        for (Rotor rotor: Rotor.byCustomModel.values()) {
+        for (Map.Entry<String,Rotor> rotor: Rotor.byName.entrySet()) {
             ItemStack is = ItemStack.of(Material.LIGHT_GRAY_DYE);
             ItemMeta im = is.getItemMeta();
-            im.setItemModel(rotor.offModel());
+            im.setItemModel(rotor.getValue().offModel());
+            im.displayName(Component.text(TARDISStringUtils.capitalise(rotor.getKey())));
             is.setItemMeta(im);
             consoles[r] = is;
             r++;
@@ -80,17 +78,16 @@ public class ConsoleRotorInventory implements InventoryHolder {
         consoles[26] = scroll_right;
         // consoles
         int c = 27;
-        for (Map.Entry<Material, NamespacedKey> colour : ColourType.LOOKUP.entrySet()) {
+        for (Map.Entry<Material, NamespacedKey> colour : ColourType.BY_MATERIAL.entrySet()) {
             // get colour name
-            String name = colour.getKey().toString().replace("_CONCRETE_POWDER", "");
-            Material material = Material.valueOf(name + "_CONCRETE");
-            ItemStack is = ItemStack.of(material, 1);
+            String key = colour.getKey().toString();
+            String name = key.contains("CONCRETE") ? key.replace("_CONCRETE", "") : "RUSTIC";
+            ItemStack is = ItemStack.of(colour.getKey(), 1);
             ItemMeta im = is.getItemMeta();
             String dn = TARDISStringUtils.capitalise(name) + " Console";
             im.displayName(ComponentUtils.toWhite(dn));
-            im.lore(List.of(Component.text("Integration with interaction")));
-            im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, colour.getValue().getKey());
             is.setItemMeta(im);
+            consoles[c] = is;
             c++;
             if (c > 35) {
                 break;

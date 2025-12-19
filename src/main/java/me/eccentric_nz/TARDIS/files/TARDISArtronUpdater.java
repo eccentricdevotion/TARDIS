@@ -56,6 +56,8 @@ public class TARDISArtronUpdater {
         integerOptions.put("comehere", 400);
         integerOptions.put("creeper_recharge", 150);
         integerOptions.put("custard_cream", 25);
+        integerOptions.put("customise.console", 500);
+        integerOptions.put("customise.time_rotor", 150);
         integerOptions.put("full_charge", 5000);
         integerOptions.put("hide", 500);
         integerOptions.put("jettison", 75);

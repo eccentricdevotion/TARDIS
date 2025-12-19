@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.desktop;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
+import me.eccentric_nz.TARDIS.console.CustomiseConsoleInventory;
 import me.eccentric_nz.TARDIS.custommodels.GUIChameleonPresets;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCount;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTransmat;
@@ -66,7 +67,6 @@ public class TARDISThemeMenuListener extends TARDISMenuListener {
         ClickType click = event.getClick();
         if (slot < 0 || slot > 53) {
             if (click.equals(ClickType.SHIFT_RIGHT) || click.equals(ClickType.SHIFT_LEFT) || click.equals(ClickType.DOUBLE_CLICK)) {
-                plugin.debug("TARDISThemeMenuListener");
                 event.setCancelled(true);
             }
             return;
@@ -93,6 +93,11 @@ public class TARDISThemeMenuListener extends TARDISMenuListener {
                 if (choice != null && plugin.getConfig().getBoolean("allow.repair")) {
                     clean(player);
                 }
+            }
+            case 49 -> {
+                // customise console
+                InventoryHolder customise = new CustomiseConsoleInventory(plugin);
+                player.openInventory(customise.getInventory());
             }
             case 51 -> {
                 // get player upgrade data

@@ -20,6 +20,7 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 
 import java.util.HashMap;
+import java.util.TreeMap;
 
 /**
  * The time rotor, sometimes called the time column is a component in the central column of the TARDIS console. While
@@ -33,7 +34,7 @@ public record Rotor(String name, NamespacedKey offModel, Material material, int[
 
     public static final HashMap<Material, Rotor> byMaterial = new HashMap<>();
     public static final HashMap<NamespacedKey, Rotor> byCustomModel = new HashMap<>();
-    public static final HashMap<String, Rotor> byName = new HashMap<>();
+    public static final TreeMap<String, Rotor> byName = new TreeMap<>();
 
     public static Rotor getByModel(NamespacedKey key) {
         return byCustomModel.get(key);

@@ -68,7 +68,6 @@ public class TARDISArchiveMenuListener extends TARDISMenuListener {
         if (slot < 0 || slot > 26) {
             ClickType click = event.getClick();
             if (click.equals(ClickType.SHIFT_RIGHT) || click.equals(ClickType.SHIFT_LEFT) || click.equals(ClickType.DOUBLE_CLICK)) {
-                plugin.debug("TARDISArchiveMenuListener");
                 event.setCancelled(true);
             }
             return;

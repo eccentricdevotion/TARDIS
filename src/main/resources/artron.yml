@@ -109,3 +109,7 @@ sonic_generator:
 shell: 500
 custard_cream: 25
 backdoor: 100
+# customisation
+customise:
+  console: 500
+  time_rotor: 150

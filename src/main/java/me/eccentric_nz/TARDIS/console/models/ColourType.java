@@ -26,7 +26,8 @@ import java.util.TreeMap;
 
 public class ColourType {
 
-    public static final TreeMap<Material, NamespacedKey> LOOKUP = new TreeMap<>();
+    public static final HashMap<Material, NamespacedKey> LOOKUP = new HashMap<>();
+    public static final TreeMap<Material, NamespacedKey> BY_MATERIAL = new TreeMap<>();
     public static final HashMap<NamespacedKey, String> COLOURS = new HashMap<>();
 
     static {
@@ -46,6 +47,23 @@ public class ColourType {
         LOOKUP.put(Material.MAGENTA_CONCRETE_POWDER, ConsoleVariant.CONSOLE_MAGENTA.getKey());
         LOOKUP.put(Material.PINK_CONCRETE_POWDER, ConsoleVariant.CONSOLE_PINK.getKey());
         LOOKUP.put(Material.BROWN_CONCRETE_POWDER, ConsoleVariant.CONSOLE_BROWN.getKey());
+        BY_MATERIAL.put(Material.LIGHT_GRAY_CONCRETE, ConsoleVariant.CONSOLE_LIGHT_GRAY.getKey());
+        BY_MATERIAL.put(Material.GRAY_CONCRETE, ConsoleVariant.CONSOLE_GRAY.getKey());
+        BY_MATERIAL.put(Material.BLACK_CONCRETE, ConsoleVariant.CONSOLE_BLACK.getKey());
+        BY_MATERIAL.put(Material.WHITE_CONCRETE, ConsoleVariant.CONSOLE_WHITE.getKey());
+        BY_MATERIAL.put(Material.RED_CONCRETE, ConsoleVariant.CONSOLE_RED.getKey());
+        BY_MATERIAL.put(Material.ORANGE_CONCRETE, ConsoleVariant.CONSOLE_ORANGE.getKey());
+        BY_MATERIAL.put(Material.YELLOW_CONCRETE, ConsoleVariant.CONSOLE_YELLOW.getKey());
+        BY_MATERIAL.put(Material.LIME_CONCRETE, ConsoleVariant.CONSOLE_LIME.getKey());
+        BY_MATERIAL.put(Material.GREEN_CONCRETE, ConsoleVariant.CONSOLE_GREEN.getKey());
+        BY_MATERIAL.put(Material.CYAN_CONCRETE, ConsoleVariant.CONSOLE_CYAN.getKey());
+        BY_MATERIAL.put(Material.LIGHT_BLUE_CONCRETE, ConsoleVariant.CONSOLE_LIGHT_BLUE.getKey());
+        BY_MATERIAL.put(Material.BLUE_CONCRETE, ConsoleVariant.CONSOLE_BLUE.getKey());
+        BY_MATERIAL.put(Material.PURPLE_CONCRETE, ConsoleVariant.CONSOLE_PURPLE.getKey());
+        BY_MATERIAL.put(Material.MAGENTA_CONCRETE, ConsoleVariant.CONSOLE_MAGENTA.getKey());
+        BY_MATERIAL.put(Material.PINK_CONCRETE, ConsoleVariant.CONSOLE_PINK.getKey());
+        BY_MATERIAL.put(Material.BROWN_CONCRETE, ConsoleVariant.CONSOLE_BROWN.getKey());
+        BY_MATERIAL.put(Material.WAXED_OXIDIZED_COPPER, ConsoleVariant.CONSOLE_RUSTIC.getKey());
         COLOURS.put(ConsolePart.CONSOLE_LIGHT_GRAY.getKey(), "LIGHT_GRAY");
         COLOURS.put(ConsolePart.CONSOLE_GRAY.getKey(), "GRAY");
         COLOURS.put(ConsolePart.CONSOLE_BLACK.getKey(), "BLACK");

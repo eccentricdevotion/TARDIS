@@ -114,6 +114,12 @@ public class TARDISPluginThemeInventory extends TARDISThemeInventory {
                 stack[GUIUpgrade.CLEAN.slot()] = cle;
             }
         }
+        // customise console
+        ItemStack cons = ItemStack.of(GUIUpgrade.CONSOLE_ROTOR.material(), 1);
+        ItemMeta ole_im = cons.getItemMeta();
+        ole_im.displayName(Component.text("Customise Console"));
+        cons.setItemMeta(ole_im);
+        stack[GUIUpgrade.CONSOLE_ROTOR.slot()] = cons;
         // custom consoles page
         ItemStack custom = ItemStack.of(GUIChameleonPresets.GO_TO_PAGE_2.material(), 1);
         ItemMeta custom_im = custom.getItemMeta();
