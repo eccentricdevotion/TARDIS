@@ -22,7 +22,7 @@ import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemRegistry;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
-import me.eccentric_nz.TARDIS.enumeration.Consoles;
+import me.eccentric_nz.TARDIS.enumeration.Desktops;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
@@ -118,7 +118,7 @@ public class TARDISItemDisplaySetter {
     }
 
     private static String getSchematicName(int id) {
-        for (Schematic schematic : Consoles.getBY_NAMES().values()) {
+        for (Schematic schematic : Desktops.getBY_NAMES().values()) {
             if (schematic.getPreview() == id) {
                 return schematic.getPermission();
             }

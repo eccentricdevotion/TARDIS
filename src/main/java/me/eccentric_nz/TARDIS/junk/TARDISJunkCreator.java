@@ -23,7 +23,7 @@ import me.eccentric_nz.TARDIS.builders.interior.TARDISBuilderInner;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.Consoles;
+import me.eccentric_nz.TARDIS.enumeration.Desktops;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
@@ -119,7 +119,7 @@ class TARDISJunkCreator {
         bd.setTardisID(lastInsertId);
         bd.setThrottle(SpaceTimeThrottle.JUNK);
         // build the TARDIS in the Vortex
-        TARDISBuilderInner builder = new TARDISBuilderInner(plugin, Consoles.schematicFor("junk"), chunkworld, lastInsertId, p, wall_type, floor_type, -99);
+        TARDISBuilderInner builder = new TARDISBuilderInner(plugin, Desktops.schematicFor("junk"), chunkworld, lastInsertId, p, wall_type, floor_type, -99);
         int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, builder, 1L, 3L);
         builder.setTask(task);
         // build the TARDIS in the world

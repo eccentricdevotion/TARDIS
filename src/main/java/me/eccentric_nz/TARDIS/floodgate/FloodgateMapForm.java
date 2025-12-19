@@ -23,7 +23,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetARS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.enumeration.Consoles;
+import me.eccentric_nz.TARDIS.enumeration.Desktops;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.move.TARDISDoorListener;
@@ -113,7 +113,7 @@ public class FloodgateMapForm {
                     materials.removeAll(STONE);
                     for (String material : materials) {
                         // only count if not a console block
-                        if (!Consoles.getBY_MATERIALS().containsKey(material)) {
+                        if (!Desktops.getBY_MATERIALS().containsKey(material)) {
                             String room = TARDISARS.ARSFor(material).toString();
                             if (!room.equals("RENDERER")) {
                                 data.add(room);
@@ -150,7 +150,7 @@ public class FloodgateMapForm {
                 for (int r = 0; r < 9; r++) {
                     for (int c = 0; c < 9; c++) {
                         if (room.equals("Console")) {
-                            if (Consoles.getBY_MATERIALS().containsKey(json[l][r][c])) {
+                            if (Desktops.getBY_MATERIALS().containsKey(json[l][r][c])) {
                                 // get inner door tp location
                                 TARDISDoorLocation idl = TARDISDoorListener.getDoor(1, id);
                                 return idl.getL();

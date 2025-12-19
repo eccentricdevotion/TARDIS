@@ -20,7 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.database.data.StandbyData;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
-import me.eccentric_nz.TARDIS.enumeration.Consoles;
+import me.eccentric_nz.TARDIS.enumeration.Desktops;
 import me.eccentric_nz.TARDIS.enumeration.TardisLight;
 import me.eccentric_nz.TARDIS.schematic.archive.ResultSetArchiveByUse;
 
@@ -87,7 +87,7 @@ public class ResultSetStandby {
                             if (rsp.fromID(rs.getInt("tardis_id"))) {
                                 light = rsp.getLight();
                             } else {
-                                light = Consoles.getBY_NAMES().get(rs.getString("size")).getLights();
+                                light = Desktops.getBY_NAMES().get(rs.getString("size")).getLights();
                             }
                             sd = new StandbyData(rs.getInt("artron_level"), UUID.fromString(rs.getString("uuid")), rs.getBoolean("hidden"), rs.getBoolean("lights_on"), preset, light);
                         }

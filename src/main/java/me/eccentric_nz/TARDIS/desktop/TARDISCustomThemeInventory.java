@@ -20,7 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUIChameleonConstructor;
 import me.eccentric_nz.TARDIS.custommodels.GUIChameleonPoliceBoxes;
 import me.eccentric_nz.TARDIS.custommodels.GUIUpgrade;
-import me.eccentric_nz.TARDIS.enumeration.Consoles;
+import me.eccentric_nz.TARDIS.enumeration.Desktops;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -64,7 +64,7 @@ public class TARDISCustomThemeInventory extends TARDISThemeInventory {
         ItemStack[] stack = new ItemStack[54];
         int i = 0;
         // get custom consoles
-        for (Schematic a : Consoles.getBY_NAMES().values()) {
+        for (Schematic a : Desktops.getBY_NAMES().values()) {
             if (a.isCustom()) {
                 ItemStack is = getConsoleStack(plugin, a, current_console, player, level);
                 if (is != null) {

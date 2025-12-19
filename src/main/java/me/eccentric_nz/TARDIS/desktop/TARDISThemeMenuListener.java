@@ -23,7 +23,7 @@ import me.eccentric_nz.TARDIS.custommodels.GUIChameleonPresets;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCount;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTransmat;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.enumeration.Consoles;
+import me.eccentric_nz.TARDIS.enumeration.Desktops;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
@@ -119,9 +119,9 @@ public class TARDISThemeMenuListener extends TARDISMenuListener {
                     return;
                 }
                 // get material of selected console
-                String perm = Consoles.schematicFor(choice.getType()).getPermission();
+                String perm = Desktops.schematicFor(choice.getType()).getPermission();
                 // remember the upgrade choice
-                Schematic schematic = Consoles.schematicFor(perm);
+                Schematic schematic = Desktops.schematicFor(perm);
                 UUID uuid = player.getUniqueId();
                 if (click.equals(ClickType.SHIFT_LEFT) && plugin.getConfig().getBoolean("desktop.previews")) {
                     // get the transmat location

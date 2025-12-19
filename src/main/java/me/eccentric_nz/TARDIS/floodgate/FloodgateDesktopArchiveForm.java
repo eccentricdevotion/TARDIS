@@ -23,7 +23,7 @@ import me.eccentric_nz.TARDIS.desktop.TARDISRandomArchiveName;
 import me.eccentric_nz.TARDIS.desktop.TARDISThemeProcessor;
 import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
 import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
-import me.eccentric_nz.TARDIS.enumeration.Consoles;
+import me.eccentric_nz.TARDIS.enumeration.Desktops;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.schematic.archive.ArchiveUpdate;
@@ -105,7 +105,7 @@ public class FloodgateDesktopArchiveForm {
                 int upgrade = plugin.getArtronConfig().getInt("upgrades.template." + size);
                 if (tud.getLevel() >= upgrade) {
                     new ArchiveUpdate(plugin, uuid.toString(), label).setInUse();
-                    tud.setSchematic(Consoles.schematicFor(size));
+                    tud.setSchematic(Desktops.schematicFor(size));
                     tud.setWall("ORANGE_WOOL");
                     tud.setFloor("LIGHT_GRAY_WOOL");
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
@@ -118,7 +118,7 @@ public class FloodgateDesktopArchiveForm {
             default -> {
                 // saved archive
                 // remember the upgrade choice
-                Schematic schm = Consoles.schematicFor("archive");
+                Schematic schm = Desktops.schematicFor("archive");
                 TARDISUpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(uuid);
                 ResultSetArchiveByName rsa = new ResultSetArchiveByName(plugin, uuid.toString(), label);
                 if (rsa.resultSet()) {

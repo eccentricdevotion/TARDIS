@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.commands.dev;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.Consoles;
+import me.eccentric_nz.TARDIS.enumeration.Desktops;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 
 public class TIPSPreviewSlotInfo {
@@ -29,7 +29,7 @@ public class TIPSPreviewSlotInfo {
     }
 
     public boolean display() {
-        for (Schematic schematic : Consoles.getBY_NAMES().values()) {
+        for (Schematic schematic : Desktops.getBY_NAMES().values()) {
             if (schematic.getPreview() < 0) {
                 int slot = schematic.getPreview();
                 int row = slot / 20;

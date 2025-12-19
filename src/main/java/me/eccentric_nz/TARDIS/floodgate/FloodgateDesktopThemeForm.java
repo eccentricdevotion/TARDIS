@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.floodgate;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
-import me.eccentric_nz.TARDIS.enumeration.Consoles;
+import me.eccentric_nz.TARDIS.enumeration.Desktops;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.schematic.archive.ArchiveUpdate;
@@ -87,7 +87,7 @@ public class FloodgateDesktopThemeForm {
     public void send() {
         SimpleForm.Builder builder = SimpleForm.builder();
         builder.title("TARDIS Upgrade Menu");
-        for (Map.Entry<String, Schematic> a : Consoles.getBY_NAMES().entrySet()) {
+        for (Map.Entry<String, Schematic> a : Desktops.getBY_NAMES().entrySet()) {
             Material m = a.getValue().getSeedMaterial();
             if (!m.equals(Material.COBBLESTONE)) {
                 builder.button(a.getKey(), FormImage.Type.URL, String.format(path, blocks.get(a.getKey())));
@@ -105,7 +105,7 @@ public class FloodgateDesktopThemeForm {
         if (label.equals("Archive Consoles")) {
             new FloodgateDesktopArchiveForm(plugin, uuid).send();
         } else {
-            Schematic schm = Consoles.getBY_NAMES().get(label);
+            Schematic schm = Desktops.getBY_NAMES().get(label);
             if (schm != null) {
                 Player player = plugin.getServer().getPlayer(uuid);
                 // get permission based on choice

@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.database.resultset;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
-import me.eccentric_nz.TARDIS.enumeration.Consoles;
+import me.eccentric_nz.TARDIS.enumeration.Desktops;
 import me.eccentric_nz.TARDIS.schematic.archive.ResultSetArchiveByUse;
 
 import java.sql.Connection;
@@ -78,7 +78,7 @@ public class ResultSetTardisSize {
                         consoleSize = rsa.getArchive().getConsoleSize();
                     }
                 } else {
-                    consoleSize = Consoles.getBY_NAMES().get(rs.getString("size")).getConsoleSize();
+                    consoleSize = Desktops.getBY_NAMES().get(rs.getString("size")).getConsoleSize();
                 }
                 return true;
             }

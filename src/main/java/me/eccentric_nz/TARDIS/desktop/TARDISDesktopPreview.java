@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.desktop;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.interior.TARDISBuilderPreview;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTransmat;
-import me.eccentric_nz.TARDIS.enumeration.Consoles;
+import me.eccentric_nz.TARDIS.enumeration.Desktops;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.World;
@@ -40,7 +40,7 @@ public class TARDISDesktopPreview {
         String dn = plugin.getConfig().getString("creation.default_world_name", "TARDIS_TimeVortex");
         World world = plugin.getServer().getWorld(dn);
         if (world != null) {
-            for (Schematic schematic : Consoles.getBY_NAMES().values()) {
+            for (Schematic schematic : Desktops.getBY_NAMES().values()) {
                 if (schematic.getPreview() < 0 && !hasPreview(schematic)) {
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                         plugin.getMessenger().send(plugin.getConsole(), TardisModule.TARDIS, "PREVIEW_SCHM", schematic.getPermission());

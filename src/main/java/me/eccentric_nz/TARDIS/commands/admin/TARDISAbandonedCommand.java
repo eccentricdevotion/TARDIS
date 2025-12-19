@@ -56,11 +56,11 @@ class TARDISAbandonedCommand {
             return true;
         }
         String schm = args[1].toUpperCase(Locale.ROOT);
-        if (!Consoles.getBY_NAMES().containsKey(schm)) {
+        if (!Desktops.getBY_NAMES().containsKey(schm)) {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "TOO_FEW_ARGS");
             return true;
         }
-        Schematic s = Consoles.getBY_NAMES().get(schm);
+        Schematic s = Desktops.getBY_NAMES().get(schm);
         ChameleonPreset preset;
         if (plugin.getCustomModelConfig().getConfigurationSection("models").getKeys(false).contains(args[2])) {
             preset = ChameleonPreset.ITEM;

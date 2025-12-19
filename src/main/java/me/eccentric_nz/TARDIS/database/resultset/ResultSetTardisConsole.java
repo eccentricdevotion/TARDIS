@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.database.resultset;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
-import me.eccentric_nz.TARDIS.enumeration.Consoles;
+import me.eccentric_nz.TARDIS.enumeration.Desktops;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import org.bukkit.Material;
 
@@ -41,7 +41,7 @@ public class ResultSetTardisConsole {
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final String prefix;
-    private Schematic schematic = Consoles.schematicFor(Material.IRON_BLOCK);
+    private Schematic schematic = Desktops.schematicFor(Material.IRON_BLOCK);
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet from the vaults table.
@@ -71,7 +71,7 @@ public class ResultSetTardisConsole {
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
                 rs.next();
-                schematic = Consoles.getBY_NAMES().get(rs.getString("size"));
+                schematic = Desktops.getBY_NAMES().get(rs.getString("size"));
                 return true;
             }
             return false;

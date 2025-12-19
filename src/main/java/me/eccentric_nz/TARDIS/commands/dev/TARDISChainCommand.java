@@ -3,7 +3,7 @@ package me.eccentric_nz.TARDIS.commands.dev;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.Consoles;
+import me.eccentric_nz.TARDIS.enumeration.Desktops;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 
@@ -16,7 +16,7 @@ public class TARDISChainCommand {
     }
 
     public boolean checkSchematics() {
-        for (String fileName : Consoles.getBY_PERMS().keySet()) {
+        for (String fileName : Desktops.getBY_PERMS().keySet()) {
             // get JSON
             JsonObject obj = TARDISSchematicGZip.getObject(plugin, "consoles", fileName, false);
             if (obj == null) {

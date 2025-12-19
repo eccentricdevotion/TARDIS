@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.ARS;
 
 import me.eccentric_nz.TARDIS.custommodels.keys.RoomVariant;
-import me.eccentric_nz.TARDIS.enumeration.Consoles;
+import me.eccentric_nz.TARDIS.enumeration.Desktops;
 import org.bukkit.NamespacedKey;
 
 import java.util.HashMap;
@@ -108,7 +108,7 @@ public enum TARDISARS implements ARS {
      * @return ARS if found, or null
      */
     public static ARS ARSFor(String mat) {
-        if (Consoles.getBY_MATERIALS().containsKey(mat)) {
+        if (Desktops.getBY_MATERIALS().containsKey(mat)) {
             return CONSOLE;
         } else {
             return EXTENDED_MATERIAL.getOrDefault(mat, CUSTOM);

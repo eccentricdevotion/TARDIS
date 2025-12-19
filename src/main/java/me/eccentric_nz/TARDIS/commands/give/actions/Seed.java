@@ -20,7 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemRegistry;
 import me.eccentric_nz.TARDIS.customblocks.TARDISSeedDisplayItem;
-import me.eccentric_nz.TARDIS.enumeration.Consoles;
+import me.eccentric_nz.TARDIS.enumeration.Desktops;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
@@ -79,8 +79,8 @@ public class Seed {
                     return;
                 }
             }
-            if (Consoles.getBY_NAMES().containsKey(type)) {
-                Schematic schm = Consoles.getBY_NAMES().get(type);
+            if (Desktops.getBY_NAMES().containsKey(type)) {
+                Schematic schm = Desktops.getBY_NAMES().get(type);
                 ItemStack is;
                 NamespacedKey model = TARDISSeedDisplayItem.CUSTOM.getCustomModel();
                 if (schm.isCustom()) {

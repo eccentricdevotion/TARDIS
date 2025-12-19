@@ -25,7 +25,7 @@ import me.eccentric_nz.TARDIS.customblocks.*;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetInteractionCheck;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
-import me.eccentric_nz.TARDIS.enumeration.Consoles;
+import me.eccentric_nz.TARDIS.enumeration.Desktops;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
@@ -92,7 +92,7 @@ public class TARDISSeedBlockListener implements Listener {
                 TARDISDisplayItemUtils.setSeed(tdi, block, im);
             }
             List<Component> lore = im.lore();
-            Schematic schm = Consoles.getBY_NAMES().get(ComponentUtils.stripColour(lore.getFirst()));
+            Schematic schm = Desktops.getBY_NAMES().get(ComponentUtils.stripColour(lore.getFirst()));
             Material wall = Material.valueOf(TARDISStringUtils.getValuesFromWallString(ComponentUtils.stripColour(lore.get(1))));
             Material floor = Material.valueOf(TARDISStringUtils.getValuesFromWallString(ComponentUtils.stripColour(lore.get(2))));
             TARDISBuildData seed = new TARDISBuildData();

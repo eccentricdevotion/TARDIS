@@ -22,7 +22,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.BlueprintConsole;
 import me.eccentric_nz.TARDIS.blueprints.BlueprintRoom;
-import me.eccentric_nz.TARDIS.enumeration.Consoles;
+import me.eccentric_nz.TARDIS.enumeration.Desktops;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
@@ -78,7 +78,7 @@ public class GallifreyBlueprintTrade {
         MerchantRecipe consoleRecipe = new MerchantRecipe(cis, uses);
         // get the console material for the ingredient from the blueprint
         String perm = bpc.getPermission().split("\\.")[1];
-        Material consoleMaterial = Consoles.getBY_PERMS().get(perm).getSeedMaterial();
+        Material consoleMaterial = Desktops.getBY_PERMS().get(perm).getSeedMaterial();
         // determine the stack size of the ingredient
         int consoleAmount = plugin.getArtronConfig().getInt("upgrades." + perm) / 250;
         // add the ingredient

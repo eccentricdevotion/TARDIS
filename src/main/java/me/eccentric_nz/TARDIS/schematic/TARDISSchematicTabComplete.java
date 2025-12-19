@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.schematic;
 import com.google.common.collect.ImmutableList;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
-import me.eccentric_nz.TARDIS.enumeration.Consoles;
+import me.eccentric_nz.TARDIS.enumeration.Desktops;
 import me.eccentric_nz.TARDIS.enumeration.TardisLight;
 import me.eccentric_nz.tardischunkgenerator.worldgen.utils.GallifeyStructureUtility;
 import me.eccentric_nz.tardischunkgenerator.worldgen.utils.SiluriaStructureUtility;
@@ -42,7 +42,7 @@ public class TARDISSchematicTabComplete extends TARDISCompleter implements TabCo
     private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("load", "paste", "save", "clear", "replace", "convert", "remove", "flowers", "fixliquid");
     private final List<String> LOAD_SUBS = ImmutableList.of("console", "room", "structure", "user");
     private final List<String> LIQUID_SUBS = ImmutableList.of("water", "lava");
-    private final List<String> CONSOLE_SUBS = new ArrayList<>(Consoles.getBY_PERMS().keySet());
+    private final List<String> CONSOLE_SUBS = new ArrayList<>(Desktops.getBY_PERMS().keySet());
     private final List<String> ROOM_SUBS = new ArrayList<>();
     private final List<String> STRUCTURE_SUBS = new ArrayList<>();
     private final List<String> FILE_SUBS = new ArrayList<>();

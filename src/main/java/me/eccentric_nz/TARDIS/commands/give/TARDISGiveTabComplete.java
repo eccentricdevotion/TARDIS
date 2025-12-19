@@ -20,7 +20,7 @@ import com.google.common.collect.ImmutableList;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.*;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
-import me.eccentric_nz.TARDIS.enumeration.Consoles;
+import me.eccentric_nz.TARDIS.enumeration.Desktops;
 import me.eccentric_nz.TARDIS.enumeration.RecipeCategory;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
@@ -88,7 +88,7 @@ public class TARDISGiveTabComplete extends TARDISCompleter implements TabComplet
         for (BlueprintTravel travel : BlueprintTravel.values()) {
             BLUEPRINT_SUBS.add("BLUEPRINT_TRAVEL_" + travel.toString());
         }
-        for (String seed : Consoles.getBY_NAMES().keySet()) {
+        for (String seed : Desktops.getBY_NAMES().keySet()) {
             if (!seed.equals("SMALL") && !seed.equals("MEDIUM") && !seed.equals("TALL") && !seed.equals("ARCHIVE")) {
                 SEED_SUBS.add(seed);
             }

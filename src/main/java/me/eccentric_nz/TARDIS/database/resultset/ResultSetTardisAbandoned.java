@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.database.resultset;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
-import me.eccentric_nz.TARDIS.enumeration.Consoles;
+import me.eccentric_nz.TARDIS.enumeration.Desktops;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 
 import java.sql.Connection;
@@ -82,7 +82,7 @@ public class ResultSetTardisAbandoned {
                 rs.next();
                 tardis_id = rs.getInt("tardis_id");
                 artron_level = rs.getInt("artron_level");
-                schematic = Consoles.schematicFor(rs.getString("size").toLowerCase(Locale.ROOT));
+                schematic = Desktops.schematicFor(rs.getString("size").toLowerCase(Locale.ROOT));
                 String p = rs.getString("chameleon_preset");
                 if (p.startsWith("ITEM:")) {
                     preset = ChameleonPreset.ITEM;
