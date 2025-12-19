@@ -23,7 +23,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.Consoles;
+import me.eccentric_nz.TARDIS.enumeration.Desktops;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.World;
@@ -70,7 +70,7 @@ class TARDISJunkDelete {
             // give the TARDIS time to remove itself as it's not hidden
             if (cw != null) {
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                    plugin.getInteriorDestroyer().destroyInner(Consoles.schematicFor("junk"), id, cw, -999);
+                    plugin.getInteriorDestroyer().destroyInner(Desktops.schematicFor("junk"), id, cw, -999);
                     TARDISDeleteCommand.cleanDatabase(id);
                     plugin.getMessenger().send(sender, TardisModule.TARDIS, "JUNK_DELETED");
                 }, 20L);

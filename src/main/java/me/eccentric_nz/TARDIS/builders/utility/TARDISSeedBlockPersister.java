@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.builders.utility;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.interior.TARDISBuildData;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
-import me.eccentric_nz.TARDIS.enumeration.Consoles;
+import me.eccentric_nz.TARDIS.enumeration.Desktops;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
@@ -90,7 +90,7 @@ public class TARDISSeedBlockPersister {
                         Location location = TARDISStaticLocationGetters.getLocationFromBukkitString(l);
                         if (location != null) {
                             TARDISBuildData data = new TARDISBuildData();
-                            Schematic schm = Consoles.schematicFor(rs.getString("schematic"));
+                            Schematic schm = Desktops.schematicFor(rs.getString("schematic"));
                             Material wall = Material.valueOf(rs.getString("wall"));
                             Material floor = Material.valueOf(rs.getString("floor"));
                             data.setSchematic(schm);

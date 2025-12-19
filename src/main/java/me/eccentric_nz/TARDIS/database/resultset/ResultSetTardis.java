@@ -21,7 +21,7 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
-import me.eccentric_nz.TARDIS.enumeration.Consoles;
+import me.eccentric_nz.TARDIS.enumeration.Desktops;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 
 import java.sql.Connection;
@@ -169,7 +169,7 @@ public class ResultSetTardis {
                             rs.getString("last_known_name"),
                             rs.getString("chunk"),
                             rs.getInt("tips"),
-                            Consoles.schematicFor(rs.getString("size").toLowerCase(Locale.ROOT)),
+                            Desktops.schematicFor(rs.getString("size").toLowerCase(Locale.ROOT)),
                             rs.getBoolean("abandoned"),
                             companions,
                             preset,

@@ -66,8 +66,12 @@ public class TARDISRecipeCommands implements CommandExecutor {
             recipeItems.put("time-rotor-" + r.toLowerCase(Locale.ROOT), "Time Rotor " + TARDISStringUtils.capitalise(r));
         }
         // custom doors
-        for (String r : TARDIS.plugin.getCustomDoorsConfig().getKeys(false)) {
-            recipeItems.put("door-" + r.toLowerCase(Locale.ROOT), "Door " + TARDISStringUtils.capitalise(r));
+        for (String d : TARDIS.plugin.getCustomDoorsConfig().getKeys(false)) {
+            recipeItems.put("door-" + d.toLowerCase(Locale.ROOT), "Door " + TARDISStringUtils.capitalise(d));
+        }
+        // custom consoles
+        for (String c : TARDIS.plugin.getCustomConsolesConfig().getConfigurationSection("consoles").getKeys(false)) {
+            recipeItems.put("console-" + c.toLowerCase(Locale.ROOT), TARDISStringUtils.capitalise(c) + " Console");
         }
         // remove recipes form modules that are not enabled
         if (!plugin.getConfig().getBoolean("modules.vortex_manipulator")) {
@@ -123,9 +127,9 @@ public class TARDISRecipeCommands implements CommandExecutor {
         t.put("LEGACY_ELEVENTH", Material.CYAN_GLAZED_TERRACOTTA);
         t.put("LEGACY_REDSTONE", Material.RED_GLAZED_TERRACOTTA);
         // custom seeds
-        plugin.getCustomConsolesConfig().getKeys(false).forEach((console) -> {
-            if (plugin.getCustomConsolesConfig().getBoolean(console + ".enabled")) {
-                Material cmat = Material.valueOf(plugin.getCustomConsolesConfig().getString(console + ".seed"));
+        plugin.getCustomDesktopsConfig().getKeys(false).forEach((console) -> {
+            if (plugin.getCustomDesktopsConfig().getBoolean(console + ".enabled")) {
+                Material cmat = Material.valueOf(plugin.getCustomDesktopsConfig().getString(console + ".seed"));
                 t.put(console.toUpperCase(Locale.ROOT), cmat);
             }
         });

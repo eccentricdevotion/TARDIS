@@ -20,7 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemRegistry;
 import me.eccentric_nz.TARDIS.customblocks.TARDISSeedDisplayItem;
-import me.eccentric_nz.TARDIS.enumeration.Consoles;
+import me.eccentric_nz.TARDIS.enumeration.Desktops;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
@@ -49,7 +49,7 @@ public class TARDISSeedRecipe {
     }
 
     public void addSeedRecipes() {
-        for (Schematic schematic : Consoles.getBY_MATERIALS().values()) {
+        for (Schematic schematic : Desktops.getBY_MATERIALS().values()) {
             ShapedRecipe recipe = makeSeedRecipe(schematic);
             plugin.getServer().addRecipe(recipe);
             plugin.getFigura().getShapedRecipes().put(TARDISStringUtils.capitalise(schematic.getPermission()), recipe);

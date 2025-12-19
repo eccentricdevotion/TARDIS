@@ -61,11 +61,14 @@ public class TARDISRecipeTabComplete extends TARDISCompleter implements TabCompl
                 ROOT_SUBS.add(recipeItem.toTabCompletionString());
             }
         }
-        for (String r : TARDIS.plugin.getCustomDoorsConfig().getKeys(false)) {
-            ROOT_SUBS.add("door-" + r.toLowerCase(Locale.ROOT));
+        for (String d : TARDIS.plugin.getCustomDoorsConfig().getKeys(false)) {
+            ROOT_SUBS.add("door-" + d.toLowerCase(Locale.ROOT));
         }
         for (String r : TARDIS.plugin.getCustomRotorsConfig().getKeys(false)) {
             ROOT_SUBS.add("time-rotor-" + r.toLowerCase(Locale.ROOT));
+        }
+        for (String c : TARDIS.plugin.getCustomConsolesConfig().getConfigurationSection("consoles").getKeys(false)) {
+            ROOT_SUBS.add("console-" + c.toLowerCase(Locale.ROOT));
         }
     }
 

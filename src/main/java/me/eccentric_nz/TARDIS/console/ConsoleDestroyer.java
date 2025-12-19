@@ -20,11 +20,11 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.console.models.ColourType;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.custommodels.keys.ConsolePart;
-import me.eccentric_nz.TARDIS.custommodels.keys.ConsoleVariant;
 import me.eccentric_nz.TARDIS.database.ClearInteractions;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetConsoleLabel;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetInteractionsFromId;
 import me.eccentric_nz.TARDIS.sonic.SonicLore;
+import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
@@ -37,7 +37,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.UUID;
 
 public class ConsoleDestroyer {
@@ -150,43 +149,22 @@ public class ConsoleDestroyer {
             // remove database records
             new ClearInteractions(plugin).removeRecords(id);
             // build item stack
-            boolean isRustic = model != null && (
-                    model.equals(ConsolePart.CONSOLE_RUSTIC.getKey())
-                            || model.equals(ConsolePart.CONSOLE_CENTRE_RUSTIC.getKey())
-                            || model.equals(ConsolePart.CONSOLE_DIVISION_RUSTIC.getKey())
+            boolean isRustic = model != null
+                    && (model.equals(ConsolePart.CONSOLE_RUSTIC.getKey())
+                    || model.equals(ConsolePart.CONSOLE_CENTRE_RUSTIC.getKey())
+                    || model.equals(ConsolePart.CONSOLE_DIVISION_RUSTIC.getKey())
             );
             Material material = (isRustic) ? Material.WAXED_OXIDIZED_COPPER : Material.valueOf(colour + "_CONCRETE");
-            NamespacedKey key;
-            switch (material) {
-                case WAXED_OXIDIZED_COPPER -> key = ConsoleVariant.CONSOLE_RUSTIC.getKey();
-                case BROWN_CONCRETE -> key = ConsoleVariant.CONSOLE_BROWN.getKey();
-                case PINK_CONCRETE -> key = ConsoleVariant.CONSOLE_PINK.getKey();
-                case MAGENTA_CONCRETE -> key = ConsoleVariant.CONSOLE_MAGENTA.getKey();
-                case PURPLE_CONCRETE -> key = ConsoleVariant.CONSOLE_PURPLE.getKey();
-                case BLUE_CONCRETE -> key = ConsoleVariant.CONSOLE_BLUE.getKey();
-                case LIGHT_BLUE_CONCRETE -> key = ConsoleVariant.CONSOLE_LIGHT_BLUE.getKey();
-                case CYAN_CONCRETE -> key = ConsoleVariant.CONSOLE_CYAN.getKey();
-                case GREEN_CONCRETE -> key = ConsoleVariant.CONSOLE_GREEN.getKey();
-                case LIME_CONCRETE -> key = ConsoleVariant.CONSOLE_LIME.getKey();
-                case YELLOW_CONCRETE -> key = ConsoleVariant.CONSOLE_YELLOW.getKey();
-                case ORANGE_CONCRETE -> key = ConsoleVariant.CONSOLE_ORANGE.getKey();
-                case RED_CONCRETE -> key = ConsoleVariant.CONSOLE_RED.getKey();
-                case WHITE_CONCRETE -> key = ConsoleVariant.CONSOLE_WHITE.getKey();
-                case BLACK_CONCRETE -> key = ConsoleVariant.CONSOLE_BLACK.getKey();
-                case GRAY_CONCRETE -> key = ConsoleVariant.CONSOLE_GRAY.getKey();
-                default -> key = ConsoleVariant.CONSOLE_LIGHT_GRAY.getKey();
-            }
             ItemStack console = ItemStack.of(material, 1);
             ItemMeta im = console.getItemMeta();
             String dn = ((isRustic) ? "Rustic" : TARDISStringUtils.capitalise(colour)) + " Console";
-            im.displayName(Component.text(dn));
+            im.displayName(ComponentUtils.toWhite(dn));
             im.lore(List.of(Component.text("Integration with interaction")));
-            im.setItemModel(key);
             String which = model.getKey()
-                    .replace("tardis/console_division_", "")
-                    .replace("tardis/console_centre_", "")
-                    .replace("tardis/console_", "");
-            im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, which.toUpperCase(Locale.ROOT));
+                    .replace("division_", "")
+                    .replace("centre_", "");
+            plugin.debug(which);
+            im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, which);
             console.setItemMeta(im);
             return console;
         }

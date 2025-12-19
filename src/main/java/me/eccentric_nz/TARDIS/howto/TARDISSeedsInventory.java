@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.howto;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.enumeration.Consoles;
+import me.eccentric_nz.TARDIS.enumeration.Desktops;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -66,7 +66,7 @@ public class TARDISSeedsInventory implements InventoryHolder {
         ItemStack[] stack = new ItemStack[45];
         int i = 0;
         // get consoles
-        for (Schematic a : Consoles.getBY_NAMES().values()) {
+        for (Schematic a : Desktops.getBY_NAMES().values()) {
             if (TARDISPermission.hasPermission(player, "tardis." + a.getPermission()) && !a.getSeedMaterial().equals(Material.COBBLESTONE)) {
                 Material m = Material.getMaterial(a.getSeed());
                 ItemStack is = ItemStack.of(m, 1);

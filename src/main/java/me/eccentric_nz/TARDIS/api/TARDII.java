@@ -486,8 +486,8 @@ public class TARDII implements TardisAPI {
 
     @Override
     public ItemStack getTARDISSeedItem(String schematic) {
-        if (Consoles.getBY_NAMES().containsKey(schematic)) {
-            Schematic s = Consoles.getBY_NAMES().get(schematic);
+        if (Desktops.getBY_NAMES().containsKey(schematic)) {
+            Schematic s = Desktops.getBY_NAMES().get(schematic);
             ItemStack is;
             NamespacedKey model = TARDISSeedDisplayItem.CUSTOM.getCustomModel();
             if (s.isCustom()) {
@@ -761,7 +761,7 @@ public class TARDII implements TardisAPI {
 
     @Override
     public void spawnAbandonedTARDIS(Location location, String type, ChameleonPreset preset, COMPASS direction) throws TARDISException {
-        if (!Consoles.getBY_NAMES().containsKey(type.toUpperCase(Locale.ROOT))) {
+        if (!Desktops.getBY_NAMES().containsKey(type.toUpperCase(Locale.ROOT))) {
             throw new TARDISException("Not a valid Console type");
         }
         if (preset == ChameleonPreset.ITEM) {
@@ -773,7 +773,7 @@ public class TARDII implements TardisAPI {
         if (!TARDIS.plugin.getConfig().getBoolean("creation.default_world")) {
             throw new TARDISException("TARDIS must be configured to create TARDISes in a default world");
         }
-        Schematic schm = Consoles.getBY_NAMES().get(type.toUpperCase(Locale.ROOT));
+        Schematic schm = Desktops.getBY_NAMES().get(type.toUpperCase(Locale.ROOT));
         new TARDISAbandoned(TARDIS.plugin).spawn(location, schm, preset, "", direction, null);
     }
 

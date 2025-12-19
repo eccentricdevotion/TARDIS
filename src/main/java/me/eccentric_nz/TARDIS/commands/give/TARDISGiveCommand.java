@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.commands.give;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.give.actions.*;
-import me.eccentric_nz.TARDIS.enumeration.Consoles;
+import me.eccentric_nz.TARDIS.enumeration.Desktops;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.messaging.TARDISGiveLister;
 import org.bukkit.Bukkit;
@@ -100,7 +100,7 @@ public class TARDISGiveCommand implements CommandExecutor {
                     }
                     case "seed" -> {
                         String seed = args[2].toUpperCase(Locale.ROOT);
-                        if (Consoles.getBY_NAMES().containsKey(seed) && !seed.equals("SMALL") && !seed.equals("MEDIUM") && !seed.equals("TALL") && !seed.equals("ARCHIVE")) {
+                        if (Desktops.getBY_NAMES().containsKey(seed) && !seed.equals("SMALL") && !seed.equals("MEDIUM") && !seed.equals("TALL") && !seed.equals("ARCHIVE")) {
                             if (args.length > 3 && args[3].equalsIgnoreCase("knowledge")) {
                                 Player sp = plugin.getServer().getPlayer(args[0]);
                                 if (sp == null) { // player must be online

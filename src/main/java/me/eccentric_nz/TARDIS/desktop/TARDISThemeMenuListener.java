@@ -18,11 +18,12 @@ package me.eccentric_nz.TARDIS.desktop;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
+import me.eccentric_nz.TARDIS.console.CustomiseConsoleInventory;
 import me.eccentric_nz.TARDIS.custommodels.GUIChameleonPresets;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCount;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTransmat;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.enumeration.Consoles;
+import me.eccentric_nz.TARDIS.enumeration.Desktops;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
@@ -66,7 +67,6 @@ public class TARDISThemeMenuListener extends TARDISMenuListener {
         ClickType click = event.getClick();
         if (slot < 0 || slot > 53) {
             if (click.equals(ClickType.SHIFT_RIGHT) || click.equals(ClickType.SHIFT_LEFT) || click.equals(ClickType.DOUBLE_CLICK)) {
-                plugin.debug("TARDISThemeMenuListener");
                 event.setCancelled(true);
             }
             return;
@@ -94,6 +94,11 @@ public class TARDISThemeMenuListener extends TARDISMenuListener {
                     clean(player);
                 }
             }
+            case 49 -> {
+                // customise console
+                InventoryHolder customise = new CustomiseConsoleInventory(plugin);
+                player.openInventory(customise.getInventory());
+            }
             case 51 -> {
                 // get player upgrade data
                 TARDISUpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(player.getUniqueId());
@@ -114,9 +119,9 @@ public class TARDISThemeMenuListener extends TARDISMenuListener {
                     return;
                 }
                 // get material of selected console
-                String perm = Consoles.schematicFor(choice.getType()).getPermission();
+                String perm = Desktops.schematicFor(choice.getType()).getPermission();
                 // remember the upgrade choice
-                Schematic schematic = Consoles.schematicFor(perm);
+                Schematic schematic = Desktops.schematicFor(perm);
                 UUID uuid = player.getUniqueId();
                 if (click.equals(ClickType.SHIFT_LEFT) && plugin.getConfig().getBoolean("desktop.previews")) {
                     // get the transmat location

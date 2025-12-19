@@ -21,7 +21,7 @@ import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.custommodels.GUIChameleonConstructor;
 import me.eccentric_nz.TARDIS.custommodels.GUIChameleonPresets;
 import me.eccentric_nz.TARDIS.custommodels.GUIUpgrade;
-import me.eccentric_nz.TARDIS.enumeration.Consoles;
+import me.eccentric_nz.TARDIS.enumeration.Desktops;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -65,7 +65,7 @@ public class TARDISPluginThemeInventory extends TARDISThemeInventory {
         ItemStack[] stack = new ItemStack[54];
         int i = 0;
         // get built-in plugin consoles
-        for (Schematic a : Consoles.getBY_NAMES().values()) {
+        for (Schematic a : Desktops.getBY_NAMES().values()) {
             if (!a.isCustom()) {
                 ItemStack is = getConsoleStack(plugin, a, current_console, player, level);
                 if (is != null) {
@@ -114,6 +114,12 @@ public class TARDISPluginThemeInventory extends TARDISThemeInventory {
                 stack[GUIUpgrade.CLEAN.slot()] = cle;
             }
         }
+        // customise console
+        ItemStack cons = ItemStack.of(GUIUpgrade.CONSOLE_ROTOR.material(), 1);
+        ItemMeta ole_im = cons.getItemMeta();
+        ole_im.displayName(Component.text("Customise Console"));
+        cons.setItemMeta(ole_im);
+        stack[GUIUpgrade.CONSOLE_ROTOR.slot()] = cons;
         // custom consoles page
         ItemStack custom = ItemStack.of(GUIChameleonPresets.GO_TO_PAGE_2.material(), 1);
         ItemMeta custom_im = custom.getItemMeta();

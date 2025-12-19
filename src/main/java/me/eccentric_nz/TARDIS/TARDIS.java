@@ -78,6 +78,9 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.lang.module.ModuleDescriptor;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.*;
 import java.util.logging.Level;
@@ -123,6 +126,7 @@ public class TARDIS extends JavaPlugin {
     private FileConfiguration blocksConfig;
     private FileConfiguration condensablesConfig;
     private FileConfiguration customConsolesConfig;
+    private FileConfiguration customDesktopsConfig;
     private FileConfiguration customDoorsConfig;
     private FileConfiguration customRotorsConfig;
     private FileConfiguration kitsConfig;
@@ -289,6 +293,19 @@ public class TARDIS extends JavaPlugin {
                     return;
                 }
             }
+            // rename custom_consoles -> custom_desktops
+            File cc = new File(getDataFolder() + File.separator + "custom_desktops.yml");
+            if (!cc.exists()) {
+                Path source = Paths.get(getDataFolder() + File.separator + "custom_consoles.yml");
+                try {
+                    Files.move(source, source.resolveSibling("custom_desktops.yml"));
+                } catch (IOException e) {
+                    getLogger().log(Level.SEVERE, "Failed to rename 'custom_consoles.yml' to 'custom_desktops.yml', disabling...");
+                    hasVersion = false;
+                    pm.disablePlugin(this);
+                    return;
+                }
+            }
             hasVersion = true;
             worldManager = WorldManager.getWorldManager();
             saveDefaultConfig();
@@ -325,7 +342,7 @@ public class TARDIS extends JavaPlugin {
             if (getConfig().getBoolean("preferences.add_server_link")) {
                 new HandlesWikiServerLink(this).addServerLink();
             }
-            new TARDISConsoleLoader(this).addSchematics();
+            new TARDISDesktopLoader(this).addSchematics();
             new TARDISCustomRotorLoader(this).addRotors();
             new TARDISCustomDoorLoader(this).addDoors();
             loadFiles();
@@ -574,6 +591,15 @@ public class TARDIS extends JavaPlugin {
      */
     public FileConfiguration getCustomConsolesConfig() {
         return customConsolesConfig;
+    }
+
+    /**
+     * Gets the custom desktops configuration
+     *
+     * @return the custom desktops configuration
+     */
+    public FileConfiguration getCustomDesktopsConfig() {
+        return customDesktopsConfig;
     }
 
     /**
@@ -1381,7 +1407,7 @@ public class TARDIS extends JavaPlugin {
         List<String> files = List.of(
                 "achievements.yml", "adaptive.yml", "artron.yml",
                 "blaster.yml", "blocks.yml",
-                "condensables.yml", "custom_consoles.yml", "custom_models.yml", "custom_doors.yml", "custom_time_rotors.yml",
+                "condensables.yml", "custom_consoles.yml", "custom_desktops.yml", "custom_models.yml", "custom_doors.yml", "custom_time_rotors.yml",
                 "generator.yml",
                 "handles.yml",
                 "items.yml",
@@ -1408,6 +1434,7 @@ public class TARDIS extends JavaPlugin {
         condensablesConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "condensables.yml"));
         new TARDISCondensablesUpdater(this).checkCondensables();
         customConsolesConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "custom_consoles.yml"));
+        customDesktopsConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "custom_desktops.yml"));
         customDoorsConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "custom_doors.yml"));
         customRotorsConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "custom_time_rotors.yml"));
         kitsConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "kits.yml"));

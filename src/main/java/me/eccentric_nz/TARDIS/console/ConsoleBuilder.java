@@ -85,7 +85,11 @@ public class ConsoleBuilder {
                 case "console_white" -> im.setItemModel(ConsolePart.CONSOLE_WHITE.getKey());
                 case "console_black" -> im.setItemModel(ConsolePart.CONSOLE_BLACK.getKey());
                 case "console_gray" -> im.setItemModel(ConsolePart.CONSOLE_GRAY.getKey());
-                default -> im.setItemModel(ConsolePart.CONSOLE_LIGHT_GRAY.getKey());
+                default -> {
+                    // custom console side
+                    NamespacedKey side = new NamespacedKey(plugin, colour.replace("_", "_side_"));
+                    im.setItemModel(side);
+                }
             }
             im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, i);
             shard.setItemMeta(im);
@@ -122,7 +126,11 @@ public class ConsoleBuilder {
                 case "console_white" -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_WHITE.getKey());
                 case "console_black" -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_BLACK.getKey());
                 case "console_gray" -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_GRAY.getKey());
-                default -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_LIGHT_GRAY.getKey());
+                default -> {
+                    // custom console division
+                    NamespacedKey division = new NamespacedKey(plugin, colour.replace("_", "_division_"));
+                    im.setItemModel(division);
+                }
             }
             im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, i);
             shard.setItemMeta(im);
@@ -191,7 +199,7 @@ public class ConsoleBuilder {
         NamespacedKey key = interaction.getCustomModel();
         if (interaction == ConsoleInteraction.DIRECTION && id > 0) {
             ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
-            key = (rsc.resultSet()) ? getKey(rsc.getCurrent().direction()): DirectionVariant.DIRECTION_NORTH.getKey();
+            key = (rsc.resultSet()) ? getKey(rsc.getCurrent().direction()) : DirectionVariant.DIRECTION_NORTH.getKey();
         }
         if (interaction == ConsoleInteraction.THROTTLE || interaction == ConsoleInteraction.RELATIVITY_DIFFERENTIATOR) {
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, playerUuid);
@@ -260,7 +268,10 @@ public class ConsoleBuilder {
             case "console_white" -> model = ConsolePart.CONSOLE_CENTRE_WHITE.getKey();
             case "console_black" -> model = ConsolePart.CONSOLE_CENTRE_BLACK.getKey();
             case "console_gray" -> model = ConsolePart.CONSOLE_CENTRE_GRAY.getKey();
-            default -> model = ConsolePart.CONSOLE_CENTRE_LIGHT_GRAY.getKey();
+            default -> {
+                // custom console centre
+                model = new NamespacedKey(plugin, type.replace("_", "_centre_"));
+            }
         }
         im.setItemModel(model);
         im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, model.getKey());

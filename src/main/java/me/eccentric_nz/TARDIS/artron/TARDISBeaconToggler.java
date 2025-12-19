@@ -23,7 +23,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.desktop.TARDISBlockScannerData;
 import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeBlockScanner;
 import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
-import me.eccentric_nz.TARDIS.enumeration.Consoles;
+import me.eccentric_nz.TARDIS.enumeration.Desktops;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
@@ -50,7 +50,7 @@ public class TARDISBeaconToggler {
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
             Schematic schm = tardis.getSchematic();
-            if (Consoles.getNO_BEACON().contains(schm)) {
+            if (Desktops.getNO_BEACON().contains(schm)) {
                 // doesn't have a beacon!
                 return;
             }

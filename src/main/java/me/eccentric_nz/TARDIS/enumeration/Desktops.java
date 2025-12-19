@@ -26,7 +26,7 @@ import java.util.TreeMap;
 /**
  * @author eccentric_nz
  */
-public class Consoles {
+public class Desktops {
 
     private final static TreeMap<String, Schematic> BY_NAMES = new TreeMap<>();
     private final static HashMap<String, Schematic> BY_PERMS = new HashMap<>();

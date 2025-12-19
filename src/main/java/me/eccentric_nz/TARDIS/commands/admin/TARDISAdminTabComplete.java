@@ -21,7 +21,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.BlueprintType;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
-import me.eccentric_nz.TARDIS.enumeration.Consoles;
+import me.eccentric_nz.TARDIS.enumeration.Desktops;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -45,7 +45,7 @@ public class TARDISAdminTabComplete extends TARDISCompleter implements TabComple
     private final ImmutableList<String> ENTITY_SUBS;
     private final ImmutableList<String> LIST_SUBS = ImmutableList.of("abandoned", "portals", "save", "preset_perms", "perms", "recipes", "blueprints");
     private final ImmutableList<String> PRESETS;
-    private final ImmutableList<String> SEED_SUBS = ImmutableList.copyOf(Consoles.getBY_NAMES().keySet());
+    private final ImmutableList<String> SEED_SUBS = ImmutableList.copyOf(Desktops.getBY_NAMES().keySet());
     private final ImmutableList<String> WORLD_SUBS;
     private final List<String> BLUEPRINT_SUBS = new ArrayList<>();
     private final List<String> BLUEPRINT_TYPE_SUBS = new ArrayList<>();

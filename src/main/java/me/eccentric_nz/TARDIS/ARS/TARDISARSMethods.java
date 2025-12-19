@@ -26,7 +26,7 @@ import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.commands.sudo.TARDISSudoTracker;
 import me.eccentric_nz.TARDIS.database.resultset.*;
-import me.eccentric_nz.TARDIS.enumeration.Consoles;
+import me.eccentric_nz.TARDIS.enumeration.Desktops;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.rooms.RoomRequiredLister;
@@ -55,7 +55,7 @@ public class TARDISARSMethods {
     final HashMap<UUID, Integer> selected_slot = new HashMap<>();
     final HashMap<UUID, TARDISARSSaveData> save_map_data = new HashMap<>();
     final HashMap<UUID, TARDISARSMapData> map_data = new HashMap<>();
-    final Set<String> consoleBlocks = Consoles.getBY_MATERIALS().keySet();
+    final Set<String> consoleBlocks = Desktops.getBY_MATERIALS().keySet();
     final HashMap<UUID, Integer> ids = new HashMap<>();
     final List<UUID> hasLoadedMap = new ArrayList<>();
     private final String[] levels = new String[]{"Bottom level", "Main level", "Top level"};

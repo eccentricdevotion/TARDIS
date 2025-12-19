@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.bStats;
 import me.eccentric_nz.TARDIS.ARS.TARDISARS;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
-import me.eccentric_nz.TARDIS.enumeration.Consoles;
+import me.eccentric_nz.TARDIS.enumeration.Desktops;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -60,7 +60,7 @@ public class ARSRoomCounts {
                     materials.removeAll(STONE);
                     for (String material : materials) {
                         // only count if not a console block
-                        if (!Consoles.getBY_MATERIALS().containsKey(material)) {
+                        if (!Desktops.getBY_MATERIALS().containsKey(material)) {
                             num += 1.0;
                             String room = TARDISARS.ARSFor(material).toString();
                             int count = (data.containsKey(room)) ? data.get(room) + 1 : 1;

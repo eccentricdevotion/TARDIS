@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.commands.dev;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.BlueprintConsole;
-import me.eccentric_nz.TARDIS.enumeration.Consoles;
+import me.eccentric_nz.TARDIS.enumeration.Desktops;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
@@ -68,7 +68,7 @@ class TARDISDevListCommand {
             } else if (args[1].equalsIgnoreCase("consoles")) {
                 for (BlueprintConsole bpc : BlueprintConsole.values()) {
                     String perm = bpc.getPermission().split("\\.")[1];
-                    Schematic console = Consoles.getBY_PERMS().get(perm);
+                    Schematic console = Desktops.getBY_PERMS().get(perm);
                     if (console == null) {
                         plugin.debug("Schematic by perm {" + perm + "} was null");
                     } else {

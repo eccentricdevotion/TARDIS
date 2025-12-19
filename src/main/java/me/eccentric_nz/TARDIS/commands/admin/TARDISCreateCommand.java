@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.commands.admin;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.interior.TARDISBuildData;
 import me.eccentric_nz.TARDIS.builders.utility.TARDISSeedBlockProcessor;
-import me.eccentric_nz.TARDIS.enumeration.Consoles;
+import me.eccentric_nz.TARDIS.enumeration.Desktops;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
@@ -54,8 +54,8 @@ public class TARDISCreateCommand {
             }
             // args[2] schematic
             String seed = args[2].toUpperCase(Locale.ROOT);
-            if (Consoles.getBY_NAMES().containsKey(seed) && !seed.equals("SMALL") && !seed.equals("MEDIUM") && !seed.equals("TALL") && !seed.equals("ARCHIVE")) {
-                Schematic schematic = Consoles.getBY_NAMES().get(seed);
+            if (Desktops.getBY_NAMES().containsKey(seed) && !seed.equals("SMALL") && !seed.equals("MEDIUM") && !seed.equals("TALL") && !seed.equals("ARCHIVE")) {
+                Schematic schematic = Desktops.getBY_NAMES().get(seed);
                 Material wallMaterial = Material.ORANGE_WOOL;
                 Material floorMaterial = Material.LIGHT_GRAY_WOOL;
                 // args[3] wall

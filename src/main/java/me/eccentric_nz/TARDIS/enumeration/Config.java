@@ -26,6 +26,7 @@ public enum Config {
     chameleon_guis,
     condensables,
     custom_consoles,
+    custom_desktops,
     generator,
     handles,
     items,

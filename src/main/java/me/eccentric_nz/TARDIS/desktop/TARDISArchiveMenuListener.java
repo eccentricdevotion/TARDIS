@@ -21,7 +21,7 @@ import me.eccentric_nz.TARDIS.control.TARDISThemeButton;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
-import me.eccentric_nz.TARDIS.enumeration.Consoles;
+import me.eccentric_nz.TARDIS.enumeration.Desktops;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
@@ -68,7 +68,6 @@ public class TARDISArchiveMenuListener extends TARDISMenuListener {
         if (slot < 0 || slot > 26) {
             ClickType click = event.getClick();
             if (click.equals(ClickType.SHIFT_RIGHT) || click.equals(ClickType.SHIFT_LEFT) || click.equals(ClickType.DOUBLE_CLICK)) {
-                plugin.debug("TARDISArchiveMenuListener");
                 event.setCancelled(true);
             }
             return;
@@ -121,7 +120,7 @@ public class TARDISArchiveMenuListener extends TARDISMenuListener {
                     int upgrade = plugin.getArtronConfig().getInt("upgrades.template." + size);
                     if (tud.getLevel() >= upgrade) {
                         new ArchiveUpdate(plugin, uuid.toString(), dn).setInUse();
-                        tud.setSchematic(Consoles.schematicFor(size));
+                        tud.setSchematic(Desktops.schematicFor(size));
                         tud.setWall("ORANGE_WOOL");
                         tud.setFloor("LIGHT_GRAY_WOOL");
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
@@ -139,7 +138,7 @@ public class TARDISArchiveMenuListener extends TARDISMenuListener {
                 ItemStack choice = view.getItem(slot);
                 if (choice != null) {
                     // remember the upgrade choice
-                    Schematic schm = Consoles.schematicFor("archive");
+                    Schematic schm = Desktops.schematicFor("archive");
                     UUID uuid = p.getUniqueId();
                     TARDISUpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(uuid);
                     ItemMeta im = choice.getItemMeta();

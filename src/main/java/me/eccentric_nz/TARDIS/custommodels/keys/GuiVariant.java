@@ -41,6 +41,7 @@ public enum GuiVariant {
     COMPUTER(new NamespacedKey(TARDIS.plugin, "button_computer")),
     CONFIGURED(new NamespacedKey(TARDIS.plugin, "button_configured")),
     CONTROL(new NamespacedKey(TARDIS.plugin, "button_control")),
+    CONSOLE(new NamespacedKey(TARDIS.plugin, "button_console")),
     COPPER(new NamespacedKey(TARDIS.plugin, "button_copper")),
     CORAL(new NamespacedKey(TARDIS.plugin, "button_coral")),
     CRAFT(new NamespacedKey(TARDIS.plugin, "button_craft")),

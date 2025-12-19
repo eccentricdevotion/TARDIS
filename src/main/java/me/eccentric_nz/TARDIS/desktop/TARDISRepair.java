@@ -25,7 +25,7 @@ import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCondenser;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.enumeration.Consoles;
+import me.eccentric_nz.TARDIS.enumeration.Desktops;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.rooms.TARDISCondenserData;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
@@ -71,7 +71,7 @@ public class TARDISRepair {
             String floor = "LIGHT_GRAY_WOOL";
             if (perm.equals("archive")) {
                 new ArchiveUpdate(plugin, uuid.toString(), getArchiveName()).setInUse();
-                tud.setSchematic(Consoles.schematicFor("archive"));
+                tud.setSchematic(Desktops.schematicFor("archive"));
             } else {
                 tud.setSchematic(tud.getPrevious());
                 // get player prefs
