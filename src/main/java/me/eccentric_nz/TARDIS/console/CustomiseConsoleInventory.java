@@ -80,8 +80,7 @@ public class CustomiseConsoleInventory implements InventoryHolder {
         int c = 27;
         for (Map.Entry<Material, NamespacedKey> colour : ColourType.BY_MATERIAL.entrySet()) {
             // get colour name
-            String key = colour.getKey().toString();
-            String name = key.contains("CONCRETE") ? key.replace("_CONCRETE", "") : "RUSTIC";
+            String name = colour.getValue().getKey().replace("console_", "");
             ItemStack is = ItemStack.of(colour.getKey(), 1);
             ItemMeta im = is.getItemMeta();
             String dn = TARDISStringUtils.capitalise(name) + " Console";

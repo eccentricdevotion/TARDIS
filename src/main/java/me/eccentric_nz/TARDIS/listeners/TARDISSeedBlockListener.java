@@ -107,7 +107,7 @@ public class TARDISSeedBlockListener implements Listener {
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.sendBlockChange(l, is.getType().createBlockData()), 3L);
             }
             // now the player has to click the block with the TARDIS key
-        } else if (dn.endsWith(" Console") && (is.getType().toString().endsWith("_CONCRETE") || is.getType() == Material.WAXED_OXIDIZED_COPPER)) {
+        } else if (dn.endsWith(" Console") && im.getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.STRING)) {
             // must be in TARDIS world
             if (!plugin.getUtils().inTARDISWorld(player)) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_IN_WORLD");

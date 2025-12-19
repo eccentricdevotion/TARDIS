@@ -205,7 +205,7 @@ public class CustomiseConsoleListener extends TARDISMenuListener {
         int slot = selectedConsoles.get(playerUUID);
         ItemStack is = view.getItem(slot);
         Material material = is.getType();
-        return (material == Material.WAXED_OXIDIZED_COPPER) ? "rustic" : material.toString().toLowerCase(Locale.ROOT).replace("_concrete", "");
+        return ColourType.BY_MATERIAL.get(material).getKey().replace("console_", "");
     }
 
     void setRotorSlot(InventoryView view, int slot, Map.Entry<String, Rotor> rotor) {
@@ -218,8 +218,7 @@ public class CustomiseConsoleListener extends TARDISMenuListener {
     }
 
     void setConsoleSlot(InventoryView view, int slot, Map.Entry<Material, NamespacedKey> colour) {
-        String key = colour.getKey().toString();
-        String name = key.contains("CONCRETE") ? key.replace("_CONCRETE", "") : "RUSTIC";
+        String name = colour.getValue().getKey().replace("console_", "");
         ItemStack is = ItemStack.of(colour.getKey(), 1);
         ItemMeta im = is.getItemMeta();
         String dn = TARDISStringUtils.capitalise(name) + " Console";

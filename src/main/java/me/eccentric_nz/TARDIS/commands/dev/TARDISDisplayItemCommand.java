@@ -215,8 +215,8 @@ public class TARDISDisplayItemCommand {
                     return true;
                 }
                 String colour = args[2].toLowerCase(Locale.ROOT);
-                if (TARDISConstants.COLOURS.contains(colour)) {
-                    plugin.getMessenger().message(player, "Must be a valid concrete powder colour!");
+                if (!TARDISConstants.COLOURS.contains(colour)) {
+                    plugin.getMessenger().message(player, "Must be a valid console type!");
                     return true;
                 }
                 // get TARDIS id

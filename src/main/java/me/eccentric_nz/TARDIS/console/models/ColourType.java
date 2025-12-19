@@ -27,8 +27,8 @@ import java.util.TreeMap;
 public class ColourType {
 
     public static final HashMap<Material, NamespacedKey> LOOKUP = new HashMap<>();
-    public static final TreeMap<Material, NamespacedKey> BY_MATERIAL = new TreeMap<>();
     public static final HashMap<NamespacedKey, String> COLOURS = new HashMap<>();
+    public static TreeMap<Material, NamespacedKey> BY_MATERIAL = new TreeMap<>();
 
     static {
         LOOKUP.put(Material.LIGHT_GRAY_CONCRETE_POWDER, ConsoleVariant.CONSOLE_LIGHT_GRAY.getKey());

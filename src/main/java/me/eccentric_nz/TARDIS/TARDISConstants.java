@@ -54,7 +54,7 @@ public class TARDISConstants {
     /**
      * Modelled console colours
      */
-    public static final Set<String> COLOURS = Set.of("console_rustic", "console_brown", "console_pink", "console_magenta",
+    public static final Set<String> COLOURS = Set.of("console_netherite", "console_rustic", "console_brown", "console_pink", "console_magenta",
             "console_purple", "console_blue", "console_light_blue", "console_cyan", "console_green", "console_lime", "console_yellow",
             "console_orange", "console_red", "console_white", "console_black", "console_gray", "console_light_gray");
 
