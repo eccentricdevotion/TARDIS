@@ -179,7 +179,7 @@ allprojects {
 tasks {
     compileJava {
         // Set the release flag
-        options.release = 21
+        options.release = 25
     }
     javadoc {
         options.encoding = Charsets.UTF_8.name() // We want UTF-8 for everything
