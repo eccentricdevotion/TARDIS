@@ -9,7 +9,9 @@
 #
 # a list of custom console names to load into the plugin
 consoles:
+  # the name of the console
   netherite:
+    # material used in crafting recipe and the crafted item
     # must be a placeable block
     # the resource pack will need an item definition for this material
     # in assets/minecraft/items/xxxxx.json e.g. netherite_block.json
