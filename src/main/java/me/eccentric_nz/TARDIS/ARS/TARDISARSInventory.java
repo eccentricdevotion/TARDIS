@@ -101,7 +101,7 @@ public class TARDISARSInventory implements InventoryHolder {
         // set
         ItemStack s = ItemStack.of(GUIArs.BUTTON_RECON.material(), 1);
         ItemMeta sim = s.getItemMeta();
-        sim.displayName(Component.text(plugin.getLanguage().getString("BUTTON_RECON")));
+        sim.displayName(Component.text(plugin.getLanguage().getString("BUTTON_RECON", "Reconfigure!")));
         s.setItemMeta(sim);
         is[GUIArs.BUTTON_RECON.slot()] = s;
         // direction pad down
@@ -149,7 +149,7 @@ public class TARDISARSInventory implements InventoryHolder {
         // jettison
         ItemStack jettison = ItemStack.of(GUIArs.BUTTON_JETT.material(), 1);
         ItemMeta tnt = jettison.getItemMeta();
-        tnt.displayName(Component.text(plugin.getLanguage().getString("BUTTON_JETT")));
+        tnt.displayName(Component.text(plugin.getLanguage().getString("BUTTON_JETT", "Jettison")));
         jettison.setItemMeta(tnt);
         is[GUIArs.BUTTON_JETT.slot()] = jettison;
 

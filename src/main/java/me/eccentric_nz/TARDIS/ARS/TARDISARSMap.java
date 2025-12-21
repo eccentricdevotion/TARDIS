@@ -112,7 +112,7 @@ public class TARDISARSMap implements InventoryHolder {
         // where am I?
         ItemStack where = ItemStack.of(GUIMap.BUTTON_WHERE.material(), 1);
         ItemMeta ami = where.getItemMeta();
-        ami.displayName(Component.text(plugin.getLanguage().getString("BUTTON_WHERE")));
+        ami.displayName(Component.text(plugin.getLanguage().getString("BUTTON_WHERE", "Where am I?")));
         where.setItemMeta(ami);
 
         return new ItemStack[]{

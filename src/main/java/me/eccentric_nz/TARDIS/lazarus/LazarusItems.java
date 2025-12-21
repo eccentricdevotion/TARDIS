@@ -94,7 +94,8 @@ public class LazarusItems {
             ItemMeta tf = tamed.getItemMeta();
             tf.displayName(Component.text(plugin.getLanguage().getString("BUTTON_OPTS", "Disguise Options")));
             List<Component> opts = new ArrayList<>();
-            for (String o : plugin.getLanguage().getString("BUTTON_OPTS_LIST").split("/")) {
+            for (String o : plugin.getLanguage().getString("BUTTON_OPTS_LIST", "Tamed/Flying/Blazing/Powered/Beaming/Aggressive/Chest carrying/Decorated")
+                    .split("/")) {
                 opts.add(Component.text(o).decorate(TextDecoration.ITALIC));
             }
             opts.add(Component.text("FALSE", NamedTextColor.RED));

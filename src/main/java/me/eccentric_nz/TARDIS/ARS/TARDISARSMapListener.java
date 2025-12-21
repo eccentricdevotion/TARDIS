@@ -107,7 +107,7 @@ public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
                     if (!selectedLocation.containsKey(playerUUID)) {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "TRANSMAT_SELECT");
                     } else if (selectedLocation.get(playerUUID).equals("TERRACOTTA")) {
-                        setLore(view, slot, plugin.getLanguage().getString("TRANSMAT_RENDER"));
+                        setLore(view, slot, plugin.getLanguage().getString("TRANSMAT_RENDER", "You can't transmat to the Renderer Room!"));
                     } else {
                         Location tp_loc = getRoomLocation(player);
                         if (tp_loc != null) {
@@ -172,7 +172,7 @@ public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
                 int row = (int) (4 + (Math.floor((pz - tz) / 16.0d)));
                 if (col < 0 || col > 8 || row < 0 || row > 8) {
                     // outside ARS grid
-                    setLore(view, 47, plugin.getLanguage().getString("ARS_MAP_OUTSIDE"));
+                    setLore(view, 47, plugin.getLanguage().getString("ARS_MAP_OUTSIDE", "You are outside of the ARS grid!"));
                     return;
                 }
                 int east = getOffset(col);

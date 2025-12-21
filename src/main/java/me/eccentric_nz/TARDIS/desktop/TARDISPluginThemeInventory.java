@@ -123,7 +123,7 @@ public class TARDISPluginThemeInventory extends TARDISThemeInventory {
         // custom consoles page
         ItemStack custom = ItemStack.of(GUIChameleonPresets.GO_TO_PAGE_2.material(), 1);
         ItemMeta custom_im = custom.getItemMeta();
-        custom_im.displayName(Component.text(plugin.getLanguage().getString("BUTTON_PAGE_2")));
+        custom_im.displayName(Component.text(plugin.getLanguage().getString("BUTTON_PAGE_2", "Go to page 2")));
         custom.setItemMeta(custom_im);
         stack[51] = custom;
         // close

@@ -113,7 +113,7 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
                 if (selected_slot.containsKey(playerUUID)) {
                     // check whether original loaded slot was a room - as it will need to be jettisoned, not reset
                     if (checkSavedGrid(playerUUID, selected_slot.get(playerUUID), 0)) {
-                        setLore(view, slot, plugin.getLanguage().getString("ARS_RESET_SLOT"));
+                        setLore(view, slot, plugin.getLanguage().getString("ARS_RESET_SLOT", "You cannot reset the selected slot!"));
                     } else {
                         ItemStack stone = ItemStack.of(Material.STONE, 1);
                         ItemMeta s1 = stone.getItemMeta();
@@ -191,12 +191,12 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
                         if (room.equals("GRAVITY") || room.equals("ANTIGRAVITY")) {
                             int updown = (room.equals("GRAVITY")) ? -1 : 1;
                             if (checkSavedGrid(playerUUID, selected_slot.get(playerUUID), updown)) {
-                                setLore(view, slot, plugin.getLanguage().getString("ARS_GRAVITY"));
+                                setLore(view, slot, plugin.getLanguage().getString("ARS_GRAVITY", "Using a gravity well here would overwrite an existing room!"));
                                 break;
                             }
                         }
                         if (room.equals("RENDERER") && hasRenderer(playerUUID)) {
-                            setLore(view, slot, plugin.getLanguage().getString("ARS_HAS_RENDERER"));
+                            setLore(view, slot, plugin.getLanguage().getString("ARS_HAS_RENDERER", "You already have one of these!"));
                             break;
                         }
                         // setSlot(Inventory inv, int slot, ItemStack is, String player, boolean update)

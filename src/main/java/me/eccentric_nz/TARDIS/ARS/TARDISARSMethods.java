@@ -383,7 +383,7 @@ public class TARDISARSMethods {
      */
     void loadMap(InventoryView view, UUID playerUUID) {
         if (view.getItem(10).getItemMeta().hasLore()) {
-            setLore(view, 10, plugin.getLanguage().getString("ARS_MAP_ERROR"));
+            setLore(view, 10, plugin.getLanguage().getString("ARS_MAP_ERROR", "Map already loaded!"));
             return;
         }
         setLore(view, 10, "Loading...");
@@ -407,7 +407,7 @@ public class TARDISARSMethods {
             setMap(rs.getLayer(), rs.getEast(), rs.getSouth(), playerUUID, view);
             saveAll(playerUUID);
             hasLoadedMap.add(playerUUID);
-            setLore(view, 10, plugin.getLanguage().getString("ARS_MAP_LOADED"));
+            setLore(view, 10, plugin.getLanguage().getString("ARS_MAP_LOADED", "Map LOADED"));
             switchLevel(view, (27 + rs.getLayer()), playerUUID);
         }
     }
