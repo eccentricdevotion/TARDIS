@@ -17,8 +17,7 @@
 package me.eccentric_nz.TARDIS.floodgate;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
-import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
+import me.eccentric_nz.TARDIS.advanced.DamageUtility;
 import me.eccentric_nz.TARDIS.custommodels.GUITemporalLocator;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -62,14 +61,7 @@ public class FloodgateTemporalForm {
         plugin.getTrackerKeeper().getSetTime().put(player.getUniqueId(), ticks);
         plugin.getMessenger().send(player, TardisModule.TARDIS, "TEMPORAL_SET", String.format("%d", ticks));
         // damage the circuit if configured
-        if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getInt("circuits.uses.temporal") > 0) {
-            int id = plugin.getTardisAPI().getIdOfTARDISPlayerIsIn(player.getUniqueId());
-            TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
-            tcc.getCircuits();
-            // decrement uses
-            int uses_left = tcc.getTemporalUses();
-            new TARDISCircuitDamager(plugin, DiskCircuit.TEMPORAL, uses_left, id, player).damage();
-        }
+        DamageUtility.run(plugin, DiskCircuit.TEMPORAL, plugin.getTardisAPI().getIdOfTARDISPlayerIsIn(player.getUniqueId()), player);
     }
 
     private long getTime(String label) {

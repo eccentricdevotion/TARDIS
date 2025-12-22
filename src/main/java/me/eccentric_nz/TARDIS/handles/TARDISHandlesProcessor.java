@@ -19,8 +19,7 @@ package me.eccentric_nz.TARDIS.handles;
 import io.papermc.paper.registry.RegistryAccess;
 import io.papermc.paper.registry.RegistryKey;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
-import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
+import me.eccentric_nz.TARDIS.advanced.DamageUtility;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.artron.TARDISLampToggler;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
@@ -509,13 +508,9 @@ public class TARDISHandlesProcessor {
                                         if (goto_loc != null) {
                                             plugin.getTrackerKeeper().getHasDestination().put(id, new TravelCostAndType(travel, travelType));
                                             plugin.getTrackerKeeper().getRescue().remove(id);
-                                            if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getInt("circuits.uses.memory") > 0 && !plugin.getTrackerKeeper().getHasNotClickedHandbrake().contains(id)) {
+                                            if (!plugin.getTrackerKeeper().getHasNotClickedHandbrake().contains(id)) {
                                                 plugin.getTrackerKeeper().getHasNotClickedHandbrake().add(id);
-                                                TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
-                                                tcc.getCircuits();
-                                                // decrement uses
-                                                int uses_left = tcc.getMemoryUses();
-                                                new TARDISCircuitDamager(plugin, DiskCircuit.MEMORY, uses_left, id, player).damage();
+                                                DamageUtility.run(plugin, DiskCircuit.MEMORY, id, player);
                                             }
                                             if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
                                                 // destroy police box

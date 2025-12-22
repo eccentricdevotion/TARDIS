@@ -17,8 +17,7 @@
 package me.eccentric_nz.TARDIS.floodgate;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
-import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
+import me.eccentric_nz.TARDIS.advanced.DamageUtility;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
@@ -197,13 +196,7 @@ public class FloodgateDestinationTerminalForm {
                             plugin.getPM().callEvent(new TARDISTravelEvent(player, null, TravelType.TERMINAL, id));
                         }
                         // damage the circuit if configured
-                        if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getInt("circuits.uses.input") > 0) {
-                            TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
-                            tcc.getCircuits();
-                            // decrement uses
-                            int uses_left = tcc.getInputUses();
-                            new TARDISCircuitDamager(plugin, DiskCircuit.INPUT, uses_left, id, player).damage();
-                        }
+                        DamageUtility.run(plugin, DiskCircuit.INPUT, id, player);
                     }
                 } else {
                     // emergency TARDIS relocation

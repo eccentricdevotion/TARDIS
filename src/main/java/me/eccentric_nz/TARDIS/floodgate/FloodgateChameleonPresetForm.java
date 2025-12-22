@@ -17,8 +17,7 @@
 package me.eccentric_nz.TARDIS.floodgate;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
-import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
+import me.eccentric_nz.TARDIS.advanced.DamageUtility;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.chameleon.utils.TARDISChameleonFrame;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
@@ -108,13 +107,7 @@ public class FloodgateChameleonPresetForm {
                     wheret.put("tardis_id", id);
                     plugin.getQueryFactory().doUpdate("tardis", set, wheret);
                     // damage the circuit if configured
-                    if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getInt("circuits.uses.chameleon") > 0) {
-                        TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
-                        tcc.getCircuits();
-                        // decrement uses
-                        int uses_left = tcc.getChameleonUses();
-                        new TARDISCircuitDamager(plugin, DiskCircuit.CHAMELEON, uses_left, id, player).damage();
-                    }
+                    DamageUtility.run(plugin, DiskCircuit.CHAMELEON, id, player);
                 }
             }
         }

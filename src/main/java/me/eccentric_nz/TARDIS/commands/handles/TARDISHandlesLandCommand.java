@@ -17,8 +17,7 @@
 package me.eccentric_nz.TARDIS.commands.handles;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
-import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
+import me.eccentric_nz.TARDIS.advanced.DamageUtility;
 import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronLevels;
 import me.eccentric_nz.TARDIS.database.data.Current;
@@ -131,13 +130,7 @@ class TARDISHandlesLandCommand {
                                 plugin.getTrackerKeeper().getHasRandomised().removeAll(Collections.singleton(id));
                             }
                             // damage the circuit if configured
-                            if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getInt("circuits.uses.materialisation") > 0) {
-                                TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
-                                tcc.getCircuits();
-                                // decrement uses
-                                int uses_left = tcc.getMaterialisationUses();
-                                new TARDISCircuitDamager(plugin, DiskCircuit.MATERIALISATION, uses_left, id, player).damage();
-                            }
+                            DamageUtility.run(plugin, DiskCircuit.MATERIALISATION, id, player);
                             HashMap<String, Object> set = new HashMap<>();
                             set.put("handbrake_on", 1);
                             HashMap<String, Object> whereb = new HashMap<>();

@@ -17,8 +17,7 @@
 package me.eccentric_nz.TARDIS.travel.save;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
-import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
+import me.eccentric_nz.TARDIS.advanced.DamageUtility;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
 import me.eccentric_nz.TARDIS.database.resultset.*;
@@ -201,13 +200,7 @@ public class TARDISSavesListener extends TARDISMenuListener {
                                 }
                                 if (!save_dest.equals(exterior) || plugin.getTrackerKeeper().getDestinationVortex().containsKey(occupiedTardisId)) {
                                     // damage circuit if configured
-                                    if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getInt("circuits.uses.materialisation") > 0) {
-                                        TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, occupiedTardisId);
-                                        tcc.getCircuits();
-                                        // decrement uses
-                                        int uses_left = tcc.getMemoryUses();
-                                        new TARDISCircuitDamager(plugin, DiskCircuit.MEMORY, uses_left, occupiedTardisId, player).damage();
-                                    }
+                                    DamageUtility.run(plugin, DiskCircuit.MEMORY, occupiedTardisId, player);
                                     HashMap<String, Object> set = new HashMap<>();
                                     set.put("world", ComponentUtils.stripColour(lore.getFirst()));
                                     set.put("x", TARDISNumberParsers.parseInt(ComponentUtils.stripColour(lore.get(1))));

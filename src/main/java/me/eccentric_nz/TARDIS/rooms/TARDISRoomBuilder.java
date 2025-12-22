@@ -18,8 +18,7 @@ package me.eccentric_nz.TARDIS.rooms;
 
 import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
-import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
+import me.eccentric_nz.TARDIS.advanced.DamageUtility;
 import me.eccentric_nz.TARDIS.api.event.TARDISRoomGrowEvent;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
@@ -122,14 +121,7 @@ public class TARDISRoomBuilder {
             plugin.getTrackerKeeper().getRoomTasks().put(taskID, roomData);
             plugin.getMessenger().send(player, TardisModule.TARDIS, "ROOM_CANCEL", String.format("%d", taskID));
             // damage the ARS circuit if configured
-            if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getInt("circuits.uses.ars") > 0) {
-                // get the id of the TARDIS this player is in
-                TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, rs.getTardisId());
-                tcc.getCircuits();
-                // decrement uses
-                int uses_left = tcc.getArsUses();
-                new TARDISCircuitDamager(plugin, DiskCircuit.ARS, uses_left, rs.getTardisId(), player).damage();
-            }
+            DamageUtility.run(plugin, DiskCircuit.ARS, rs.getTardisId(), player);
         }
         return true;
     }

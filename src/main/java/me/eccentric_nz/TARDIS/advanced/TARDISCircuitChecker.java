@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.advanced;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDiskStorage;
+import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import net.kyori.adventure.text.Component;
@@ -245,5 +246,43 @@ public class TARDISCircuitChecker {
             }
         }
         return uses;
+    }
+
+    public int getUses(DiskCircuit circuit) {
+        switch (circuit) {
+            case ARS -> {
+                return arsUses;
+            }
+            case CHAMELEON -> {
+                return chameleonUses;
+            }
+            case INPUT -> {
+                return inputUses;
+            }
+            case INVISIBILITY -> {
+                return invisibilityUses;
+            }
+            case MATERIALISATION -> {
+                return materialisationUses;
+            }
+            case MEMORY -> {
+                return memoryUses;
+            }
+            case RANDOMISER -> {
+                return randomiserUses;
+            }
+            case SCANNER -> {
+                return scannerUses;
+            }
+            case TELEPATHIC -> {
+                return telepathicUses;
+            }
+            case TEMPORAL -> {
+                return temporalUses;
+            }
+            default -> {
+                return 1;
+            }
+        }
     }
 }

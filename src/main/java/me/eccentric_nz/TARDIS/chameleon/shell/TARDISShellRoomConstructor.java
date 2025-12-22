@@ -18,8 +18,7 @@ package me.eccentric_nz.TARDIS.chameleon.shell;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
-import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
+import me.eccentric_nz.TARDIS.advanced.DamageUtility;
 import me.eccentric_nz.TARDIS.chameleon.utils.TARDISChameleonFrame;
 import me.eccentric_nz.TARDIS.chameleon.utils.TARDISStainedGlassLookup;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
@@ -223,12 +222,6 @@ public class TARDISShellRoomConstructor {
         // rebuild
         player.performCommand("tardis rebuild");
         // damage the circuit if configured
-        if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getInt("circuits.uses.chameleon") > 0) {
-            TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
-            tcc.getCircuits();
-            // decrement uses
-            int uses_left = tcc.getChameleonUses();
-            new TARDISCircuitDamager(plugin, DiskCircuit.CHAMELEON, uses_left, id, player).damage();
-        }
+        DamageUtility.run(plugin, DiskCircuit.CHAMELEON, id, player);
     }
 }

@@ -18,8 +18,7 @@ package me.eccentric_nz.TARDIS.commands.handles;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
-import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
+import me.eccentric_nz.TARDIS.advanced.DamageUtility;
 import me.eccentric_nz.TARDIS.control.TARDISScanner;
 import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
@@ -230,13 +229,7 @@ class TARDISHandlesScanCommand {
                 plugin.getMessenger().handlesSend(player, "SCAN_NONE");
             }
             // damage the circuit if configured
-            if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getInt("circuits.uses.scanner") > 0) {
-                TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
-                tcc.getCircuits();
-                // decrement uses
-                int uses_left = tcc.getScannerUses();
-                new TARDISCircuitDamager(plugin, DiskCircuit.SCANNER, uses_left, id, player).damage();
-            }
+            DamageUtility.run(plugin, DiskCircuit.SCANNER, id, player);
         }, 140L);
         return true;
     }
