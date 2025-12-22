@@ -95,7 +95,7 @@ public class TARDISArchiveMenuListener extends TARDISMenuListener {
                 String b;
                 int s;
                 int o = ConsoleSize.valueOf(ComponentUtils.stripColour(lores.getFirst())).ordinal();
-                s = (o < 2) ? o + 1 : 0;
+                s = (o < 3) ? o + 1 : 0;
                 t = ConsoleSize.values()[s].toString();
                 b = ConsoleSize.values()[s].getBlocks();
                 if (t != null) {
