@@ -21,14 +21,13 @@ import com.earth2me.essentials.User;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.chameleon.construct.TARDISConstructColumn;
+import me.eccentric_nz.TARDIS.chameleon.utils.CustomPreset;
 import me.eccentric_nz.TARDIS.chameleon.utils.TARDISChameleonColumn;
+import me.eccentric_nz.TARDIS.chameleon.utils.TARDISCustomPreset;
 import me.eccentric_nz.TARDIS.customblocks.TARDISBlockDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetConstructSign;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.move.TARDISDoorListener;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
@@ -297,8 +296,12 @@ public class TARDISInstantPreset {
                             String line1;
                             String line2;
                             if (preset.equals(ChameleonPreset.CUSTOM)) {
-                                line1 = plugin.getPresets().custom.getFirstLine();
-                                line2 = plugin.getPresets().custom.getSecondLine();
+                                // get custom key from db
+                                ResultSetCustomPreset rscp = new ResultSetCustomPreset(plugin);
+                                String key = rscp.fromId(bd.getTardisID()) ? rscp.getPreset() : "custom";
+                                CustomPreset custom = TARDISCustomPreset.CUSTOM_PRESETS.get(key);
+                                line1 = custom.lines().get(0);
+                                line2 = custom.lines().get(1);
                             } else {
                                 line1 = preset.getFirstLine();
                                 line2 = preset.getSecondLine();

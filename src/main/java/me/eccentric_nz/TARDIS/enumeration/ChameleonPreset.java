@@ -121,7 +121,7 @@ public enum ChameleonPreset {
 
     ITEM(Material.BARRIER, -1, "", "", false, true, "Item");
 
-    public final static List<Material> NOT_THESE = List.of(Material.BARRIER, Material.BEDROCK, Material.IRON_INGOT, Material.FIRE);
+    public final static List<Material> NOT_THESE = List.of(Material.BARRIER, Material.BEDROCK, Material.ENDER_CHEST, Material.IRON_INGOT, Material.FIRE);
     private final static Map<Material, ChameleonPreset> BY_MATERIAL = Maps.newHashMap();
     private final static Map<Integer, ChameleonPreset> BY_SLOT = Maps.newHashMap();
     private final static Map<Integer, ChameleonPreset> IF_BY_SLOT = Maps.newHashMap();

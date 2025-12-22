@@ -275,6 +275,7 @@ class TARDISListenerRegisterer {
         plugin.getPM().registerEvents(new TARDISPrefsMenuListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISGeneralPrefsListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISPresetListener(plugin), plugin);
+        plugin.getPM().registerEvents(new TARDISCustomPresetListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISQuitListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISRecipeListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISRecipeInventoryListener(plugin), plugin);

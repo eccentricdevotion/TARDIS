@@ -120,8 +120,12 @@ public class TARDISSQLiteDatabase {
             statement.executeUpdate(queryControls);
 
             // Table structure for table 'current'
-            String queryCurrents = "CREATE TABLE IF NOT EXISTS " + prefix + "current (current_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, world TEXT COLLATE NOCASE DEFAULT '', x INTEGER, y INTEGER, z INTEGER, direction TEXT DEFAULT '', submarine INTEGER DEFAULT 0, biome TEXT DEFAULT '')";
-            statement.executeUpdate(queryCurrents);
+            String queryCurrent = "CREATE TABLE IF NOT EXISTS " + prefix + "current (current_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, world TEXT COLLATE NOCASE DEFAULT '', x INTEGER, y INTEGER, z INTEGER, direction TEXT DEFAULT '', submarine INTEGER DEFAULT 0, biome TEXT DEFAULT '')";
+            statement.executeUpdate(queryCurrent);
+
+            // Table structure for table 'custom_preset'
+            String queryCustom = "CREATE TABLE IF NOT EXISTS " + prefix + "custom_preset (custom_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, preset TEXT COLLATE NOCASE DEFAULT 'custom')";
+            statement.executeUpdate(queryCustom);
 
             // Table structure for table 'deaths'
             String queryDeaths = "CREATE TABLE IF NOT EXISTS " + prefix + "deaths (uuid TEXT PRIMARY KEY NOT NULL, world TEXT COLLATE NOCASE DEFAULT '', x INTEGER, y INTEGER, z INTEGER, direction TEXT DEFAULT '', submarine INTEGER DEFAULT 0)";

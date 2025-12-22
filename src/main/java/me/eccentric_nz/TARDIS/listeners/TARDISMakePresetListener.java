@@ -16,9 +16,19 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.stream.JsonReader;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonPreset;
+import me.eccentric_nz.TARDIS.chameleon.utils.CustomPreset;
+import me.eccentric_nz.TARDIS.chameleon.utils.TARDISChameleonColumn;
+import me.eccentric_nz.TARDIS.chameleon.utils.TARDISCustomPreset;
 import me.eccentric_nz.TARDIS.chameleon.utils.TARDISStainedGlassLookup;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import org.bukkit.Location;
@@ -33,10 +43,12 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 
-import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.EnumMap;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -51,7 +63,7 @@ public class TARDISMakePresetListener implements Listener {
     private final TARDIS plugin;
     private final int[] orderx;
     private final int[] orderz;
-    private final String GLASS = addQuotes(TARDISConstants.GLASS.getAsString());
+    private final String GLASS = TARDISConstants.GLASS.getAsString();
 
     public TARDISMakePresetListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -76,98 +88,72 @@ public class TARDISMakePresetListener implements Listener {
         if (block != null) {
             if (plugin.getTrackerKeeper().getPreset().containsKey(uuid)) {
                 String name = plugin.getTrackerKeeper().getPreset().get(uuid);
+                JsonArray blueprint = new JsonArray();
+                JsonArray stained = new JsonArray();
+                JsonArray glass = new JsonArray();
                 Location block_loc = block.getLocation();
                 World w = block_loc.getWorld();
                 int fx = block_loc.getBlockX();
                 int fy = block_loc.getBlockY();
                 int fz = block_loc.getBlockZ();
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "PRESET_SCAN");
-                StringBuilder sb_blue_data = new StringBuilder("[");
-                StringBuilder sb_stain_data = new StringBuilder("[");
-                StringBuilder sb_glass_data = new StringBuilder("[");
                 for (int c = 0; c < 10; c++) {
-                    sb_blue_data.append("[");
-                    sb_stain_data.append("[");
-                    sb_glass_data.append("[");
+                    JsonArray b = new JsonArray();
+                    JsonArray s = new JsonArray();
+                    JsonArray g = new JsonArray();
                     for (int y = fy; y < (fy + 4); y++) {
-                        Block b = w.getBlockAt(fx + orderx[c], y, fz + orderz[c]);
-                        Material material = b.getType();
-                        BlockData data = b.getBlockData();
-                        String dataStr = addQuotes(data.getAsString());
-                        if (y == (fy + 3)) {
-                            sb_blue_data.append(addQuotes(data.getAsString()));
-                            if (TARDISMaterials.not_glass.contains(material)) {
-                                sb_stain_data.append(dataStr);
-                                sb_glass_data.append(dataStr);
-                            } else {
-                                Material colour = TARDISStainedGlassLookup.stainedGlassFromMaterial(w, material);
-                                sb_stain_data.append(addQuotes(colour.createBlockData().getAsString()));
-                                sb_glass_data.append(GLASS);
-                            }
+                        Block at = w.getBlockAt(fx + orderx[c], y, fz + orderz[c]);
+                        Material material = at.getType();
+                        BlockData data = at.getBlockData();
+                        String dataStr = data.getAsString();
+                        b.add(dataStr);
+                        if (TARDISMaterials.not_glass.contains(material)) {
+                            s.add(dataStr);
+                            g.add(dataStr);
                         } else {
-                            sb_blue_data.append(addQuotes(data.getAsString())).append(",");
-                            if (TARDISMaterials.not_glass.contains(material)) {
-                                sb_stain_data.append(dataStr).append(",");
-                                sb_glass_data.append(dataStr).append(",");
-                            } else {
-                                Material colour = TARDISStainedGlassLookup.stainedGlassFromMaterial(w, material);
-                                sb_stain_data.append(addQuotes(colour.createBlockData().getAsString())).append(",");
-                                sb_glass_data.append(GLASS).append(",");
-                            }
+                            Material colour = TARDISStainedGlassLookup.stainedGlassFromMaterial(w, material);
+                            s.add(colour.createBlockData().getAsString());
+                            g.add(GLASS);
                         }
                     }
-                    if (c == 9) {
-                        sb_blue_data.append("]");
-                        sb_stain_data.append("]");
-                        sb_glass_data.append("]");
-                    } else {
-                        sb_blue_data.append("],");
-                        sb_stain_data.append("],");
-                        sb_glass_data.append("],");
-                    }
+                    blueprint.add(b);
+                    stained.add(s);
+                    glass.add(g);
                 }
-                sb_blue_data.append("]");
-                sb_stain_data.append("]");
-                sb_glass_data.append("]");
-                String jsonBlue = sb_blue_data.toString();
-                String jsonStain = sb_stain_data.toString();
-                String jsonGlass = sb_glass_data.toString();
-                String filename = "custom_preset_" + name + ".txt";
-                String file = plugin.getDataFolder() + File.separator + filename;
-                try {
-                    BufferedWriter bw = new BufferedWriter(new FileWriter(file, false));
-                    bw.write("##start custom blueprint");
-                    bw.newLine();
-                    bw.write(jsonBlue);
-                    bw.newLine();
-                    bw.write("##start custom stain");
-                    bw.newLine();
-                    bw.write(jsonStain);
-                    bw.newLine();
-                    bw.write("##start custom glass");
-                    bw.newLine();
-                    bw.write(jsonGlass);
-                    bw.newLine();
-                    bw.write("##sign text - first line is player's name");
-                    bw.newLine();
-                    bw.write("#second line");
-                    bw.newLine();
-                    bw.write(name);
-                    bw.newLine();
-                    bw.write("#third line");
-                    bw.newLine();
-                    bw.write("PRESET");
-                    bw.close();
-                } catch (IOException e) {
-                    plugin.debug("Could not create and write to " + filename + "! " + e.getMessage());
-                }
+                JsonObject custom = new JsonObject();
+                custom.add("blueprint", blueprint);
+                custom.add("stained", stained);
+                custom.add("glass", glass);
+                JsonArray sign = new JsonArray();
+                sign.add(" ");
+                sign.add(" ");
+                custom.add("sign", sign);
+                custom.addProperty("icon", "ENDER_CHEST");
                 plugin.getTrackerKeeper().getPreset().remove(uuid);
-                plugin.getMessenger().send(player, TardisModule.TARDIS, "PRESET_DONE", filename);
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "PRESET_DONE", "custom_presets.json");
+                // write to the custom presets json file
+                File file = new File(TARDIS.plugin.getDataFolder() + File.separator + "custom_presets.json");
+                try (FileReader reader = new FileReader(file)) {
+                    JsonObject root = JsonParser.parseReader(new JsonReader(reader)).getAsJsonObject();
+                    root.add(name, custom);
+                    // write to file
+                    try (FileWriter writer = new FileWriter(file)) {
+                        new GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create().toJson(root, writer);
+                        // load custom preset in game
+                        EnumMap<COMPASS, TARDISChameleonColumn> blueprints = new EnumMap<>(COMPASS.class);
+                        EnumMap<COMPASS, TARDISChameleonColumn> stains = new EnumMap<>(COMPASS.class);
+                        EnumMap<COMPASS, TARDISChameleonColumn> glasses = new EnumMap<>(COMPASS.class);
+                        for (COMPASS d : COMPASS.values()) {
+                            blueprints.put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(d, blueprint));
+                            stains.put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(d, stained));
+                            glasses.put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(d, glass));
+                        }
+                        TARDISCustomPreset.CUSTOM_PRESETS.put(name, new CustomPreset(blueprints, stains, glasses, List.of(" ", " "), Material.ENDER_CHEST));
+                    }
+                } catch (IOException io) {
+                    TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.WARNING, "Could not read custom presets file! " + io.getMessage());
+                }
             }
         }
-    }
-
-    private String addQuotes(String s) {
-        return "\"" + s + "\"";
     }
 }

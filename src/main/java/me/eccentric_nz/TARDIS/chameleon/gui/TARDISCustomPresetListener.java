@@ -27,23 +27,26 @@ import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.Control;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
+import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 
 /**
  * @author eccentric_nz
  */
-public class TARDISPresetListener extends TARDISMenuListener {
+public class TARDISCustomPresetListener extends TARDISMenuListener {
 
     private final TARDIS plugin;
 
-    public TARDISPresetListener(TARDIS plugin) {
+    public TARDISCustomPresetListener(TARDIS plugin) {
         super(plugin);
         this.plugin = plugin;
     }
@@ -55,8 +58,8 @@ public class TARDISPresetListener extends TARDISMenuListener {
      * @param event a player clicking an inventory slot
      */
     @EventHandler(ignoreCancelled = true)
-    public void onChameleonPresetClick(InventoryClickEvent event) {
-        if (!(event.getInventory().getHolder(false) instanceof TARDISPresetInventory)) {
+    public void onChameleonCustomClick(InventoryClickEvent event) {
+        if (!(event.getInventory().getHolder(false) instanceof TARDISCustomPresetInventory)) {
             return;
         }
         event.setCancelled(true);
@@ -98,50 +101,39 @@ public class TARDISPresetListener extends TARDISMenuListener {
         // set the Chameleon Circuit sign(s)
         HashMap<String, Object> set = new HashMap<>();
         switch (slot) {
-            case 45, 46, 47, 49, 50 -> {
+            case 45, 46, 47, 48, 49 -> {
                 // do nothing
             }
-            // go to custom presets
-            case 48 -> plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () ->
-                    player.openInventory(new TARDISCustomPresetInventory(plugin, player).getInventory()), 2L);
-//            case 48 -> {
-//                // custom
-//                set.put("chameleon_preset", "CUSTOM");
-//                if (hasSign) {
-//                    updateChameleonSign(rsf.getData(), "CUSTOM", player);
-//                }
-//                if (hasFrame) {
-//                    new TARDISChameleonFrame().updateChameleonFrame(ChameleonPreset.CUSTOM, rsf.getLocation());
-//                }
-//                plugin.getMessenger().sendInsertedColour(player, "CHAM_SET", "Server's Custom", plugin);
-//            }
             // return to Chameleon Circuit GUI
-            case 51 -> plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () ->
+            case 50 -> plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () ->
                     player.openInventory(new TARDISChameleonInventory(plugin, tardis.getAdaption(), tardis.getPreset(), tardis.getItemPreset()).getInventory()), 2L);
+            // go to page one (regular presets)
+            case 51 -> plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () ->
+                    player.openInventory(new TARDISPresetInventory(plugin, player).getInventory()), 2L);
             // go to page two (coloured police boxes)
             case 52 -> plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () ->
                     player.openInventory(new TARDISPoliceBoxInventory(plugin, player).getInventory()), 2L);
             case 53 -> close(player);
             default -> {
-                ChameleonPreset selected = ChameleonPreset.getPresetBySlot(slot);
-                set.put("chameleon_preset", selected.toString());
+                ItemMeta selected = is.getItemMeta();
+                set.put("chameleon_preset", "CUSTOM");
+                set.put("adapti_on", 0);
+                HashMap<String, Object> wheret = new HashMap<>();
+                wheret.put("tardis_id", id);
+                plugin.getQueryFactory().doUpdate("tardis", set, wheret);
+                // update the custom_preset table
+                String name = ComponentUtils.stripColour(selected.displayName()).toLowerCase(Locale.ROOT);
+                plugin.getQueryFactory().upsertCustomPreset(tardis.getTardisId(), name);
+                // damage the circuit if configured
+                DamageUtility.run(plugin, DiskCircuit.CHAMELEON, id, player);
                 if (hasSign) {
-                    updateChameleonSign(rsf.getData(), selected.toString(), player);
+                    updateChameleonSign(rsf.getData(), "CUSTOM", player);
                 }
                 if (hasFrame) {
-                    new TARDISChameleonFrame().updateChameleonFrame(selected, rsf.getLocation());
+                    new TARDISChameleonFrame().updateChameleonFrame(ChameleonPreset.CUSTOM, rsf.getLocation());
                 }
-                plugin.getMessenger().sendInsertedColour(player, "CHAM_SET", selected.getDisplayName(), plugin);
+                plugin.getMessenger().sendInsertedColour(player, "CHAM_SET", name, plugin);
             }
-
-        }
-        if (!set.isEmpty()) {
-            set.put("adapti_on", 0);
-            HashMap<String, Object> wheret = new HashMap<>();
-            wheret.put("tardis_id", id);
-            plugin.getQueryFactory().doUpdate("tardis", set, wheret);
-            // damage the circuit if configured
-            DamageUtility.run(plugin, DiskCircuit.CHAMELEON, id, player);
         }
     }
 

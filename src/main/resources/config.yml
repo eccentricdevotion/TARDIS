@@ -280,7 +280,7 @@ conversions:
   condenser_materials: true
   constructs: true
   controls: true
-  custom_preset: true
+  custom_presets: true
   eyes: true
   icons: true
   interior_door_id: true

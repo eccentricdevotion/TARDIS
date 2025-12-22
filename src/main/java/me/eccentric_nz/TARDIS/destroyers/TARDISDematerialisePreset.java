@@ -18,10 +18,13 @@ package me.eccentric_nz.TARDIS.destroyers;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.chameleon.construct.TARDISConstructColumn;
+import me.eccentric_nz.TARDIS.chameleon.utils.CustomPreset;
 import me.eccentric_nz.TARDIS.chameleon.utils.TARDISChameleonColumn;
+import me.eccentric_nz.TARDIS.chameleon.utils.TARDISCustomPreset;
 import me.eccentric_nz.TARDIS.chameleon.utils.TARDISStainedGlassLookup;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.data.ParticleData;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCustomPreset;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetParticlePrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
@@ -82,6 +85,14 @@ class TARDISDematerialisePreset implements Runnable {
             column = new TARDISConstructColumn(plugin, dd.getTardisID(), "blueprintData", dd.getDirection().forPreset()).getColumn();
             stained_column = new TARDISConstructColumn(plugin, dd.getTardisID(), "stainData", dd.getDirection().forPreset()).getColumn();
             glass_column = new TARDISConstructColumn(plugin, dd.getTardisID(), "glassData", dd.getDirection().forPreset()).getColumn();
+        } else if (this.preset.equals(ChameleonPreset.CUSTOM)) {
+            // get custom key from db
+            ResultSetCustomPreset rscp = new ResultSetCustomPreset(plugin);
+            String key = rscp.fromId(dd.getTardisID()) ? rscp.getPreset() : "custom";
+            CustomPreset custom = TARDISCustomPreset.CUSTOM_PRESETS.get(key);
+            column = custom.blueprint().get(dd.getDirection().forPreset());
+            stained_column = custom.stained().get(dd.getDirection().forPreset());
+            glass_column = custom.glass().get(dd.getDirection().forPreset());
         } else {
             column = plugin.getPresets().getColumn(preset, dd.getDirection().forPreset());
             stained_column = plugin.getPresets().getStained(preset, dd.getDirection().forPreset());

@@ -206,6 +206,10 @@ public class Main {
                                         str = String.format(SQL.VALUES.get(i), rs.getInt("current_id"), rs.getInt("tardis_id"), rs.getString("world"), rs.getInt("x"), rs.getInt("y"), rs.getInt("z"), rs.getString("direction"), rs.getInt("submarine"), rs.getString("biome")) + end;
                                         bw.write(str);
                                     }
+                                    case custom_preset -> {
+                                        str = String.format(SQL.VALUES.get(i), rs.getInt("custom_id"), rs.getInt("tardis_id"), rs.getString("preset")) + end;
+                                        bw.write(str);
+                                    }
                                     case deaths -> {
                                         str = String.format(SQL.VALUES.get(i), rs.getString("uuid"), rs.getString("world"), rs.getInt("x"), rs.getInt("y"), rs.getInt("z"), rs.getString("direction"), rs.getInt("submarine")) + end;
                                         bw.write(str);

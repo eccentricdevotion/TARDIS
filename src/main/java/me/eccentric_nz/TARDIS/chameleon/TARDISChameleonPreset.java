@@ -196,6 +196,17 @@ public class TARDISChameleonPreset {
         return tcc;
     }
 
+    public static TARDISChameleonColumn buildTARDISChameleonColumn(COMPASS d, JsonArray json) {
+        TARDISChameleonColumn tcc;
+        BlockData[][] blockDataArr = getStringArrayFromJSON(json);
+        if (d.equals(COMPASS.EAST)) {
+            tcc = new TARDISChameleonColumn(blockDataArr);
+        } else {
+            tcc = new TARDISChameleonColumn(convertData(rotate2DArray(blockDataArr, d), d));
+        }
+        return tcc;
+    }
+
     /**
      * Converts a 2D String array to a 2D BlockData array.
      *
@@ -221,6 +232,23 @@ public class TARDISChameleonPreset {
     private static BlockData[][] getStringArrayFromJSON(String js) {
         BlockData[][] preset = new BlockData[10][4];
         JsonArray json = JsonParser.parseString(js).getAsJsonArray();
+        for (int col = 0; col < 10; col++) {
+            JsonArray jsoncol = json.get(col).getAsJsonArray();
+            for (int block = 0; block < 4; block++) {
+                preset[col][block] = Bukkit.createBlockData(jsoncol.get(block).getAsString());
+            }
+        }
+        return preset;
+    }
+
+    /**
+     * Converts a JSON array to a 2D array.
+     *
+     * @param json a JSON array
+     * @return a 2D array of strings
+     */
+    private static BlockData[][] getStringArrayFromJSON(JsonArray json) {
+        BlockData[][] preset = new BlockData[10][4];
         for (int col = 0; col < 10; col++) {
             JsonArray jsoncol = json.get(col).getAsJsonArray();
             for (int block = 0; block < 4; block++) {
@@ -510,9 +538,9 @@ public class TARDISChameleonPreset {
             case YELLOW -> {
                 return yellow.getBlueprint().get(d);
             }
-            case CUSTOM -> {
-                return custom.getBlueprint().get(d);
-            }
+//            case CUSTOM -> {
+//                return custom.getBlueprint().get(d);
+//            }
             case EXTREME_HILLS -> {
                 return extreme.getBlueprint().get(d);
             }
@@ -711,9 +739,9 @@ public class TARDISChameleonPreset {
             case YELLOW -> {
                 return yellow.getGlass().get(d);
             }
-            case CUSTOM -> {
-                return custom.getGlass().get(d);
-            }
+//            case CUSTOM -> {
+//                return custom.getGlass().get(d);
+//            }
             case EXTREME_HILLS -> {
                 return extreme.getGlass().get(d);
             }
@@ -912,9 +940,9 @@ public class TARDISChameleonPreset {
             case YELLOW -> {
                 return yellow.getStained().get(d);
             }
-            case CUSTOM -> {
-                return custom.getStained().get(d);
-            }
+//            case CUSTOM -> {
+//                return custom.getStained().get(d);
+//            }
             case EXTREME_HILLS -> {
                 return extreme.getStained().get(d);
             }

@@ -19,7 +19,9 @@ package me.eccentric_nz.TARDIS.builders.exterior;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.chameleon.construct.TARDISConstructColumn;
+import me.eccentric_nz.TARDIS.chameleon.utils.CustomPreset;
 import me.eccentric_nz.TARDIS.chameleon.utils.TARDISChameleonColumn;
+import me.eccentric_nz.TARDIS.chameleon.utils.TARDISCustomPreset;
 import me.eccentric_nz.TARDIS.chameleon.utils.TARDISStainedGlassLookup;
 import me.eccentric_nz.TARDIS.customblocks.TARDISBlockDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
@@ -111,6 +113,14 @@ public class TARDISMaterialisePreset implements Runnable {
             column = new TARDISConstructColumn(plugin, bd.getTardisID(), "blueprintData", bd.getDirection().forPreset()).getColumn();
             stained_column = new TARDISConstructColumn(plugin, bd.getTardisID(), "stainData", bd.getDirection().forPreset()).getColumn();
             glass_column = new TARDISConstructColumn(plugin, bd.getTardisID(), "glassData", bd.getDirection().forPreset()).getColumn();
+        } else if (this.preset.equals(ChameleonPreset.CUSTOM)) {
+            // get custom key from db
+            ResultSetCustomPreset rscp = new ResultSetCustomPreset(plugin);
+            String key = rscp.fromId(bd.getTardisID()) ? rscp.getPreset() : "custom";
+            CustomPreset custom = TARDISCustomPreset.CUSTOM_PRESETS.get(key);
+            column = custom.blueprint().get(bd.getDirection().forPreset());
+            stained_column = custom.stained().get(bd.getDirection().forPreset());
+            glass_column = custom.glass().get(bd.getDirection().forPreset());
         } else {
             column = plugin.getPresets().getColumn(preset, bd.getDirection().forPreset());
             stained_column = plugin.getPresets().getStained(preset, bd.getDirection().forPreset());
@@ -383,8 +393,12 @@ public class TARDISMaterialisePreset implements Runnable {
                                         String line1;
                                         String line2;
                                         if (preset.equals(ChameleonPreset.CUSTOM)) {
-                                            line1 = plugin.getPresets().custom.getFirstLine();
-                                            line2 = plugin.getPresets().custom.getSecondLine();
+                                            // get custom key from db
+                                            ResultSetCustomPreset rscp = new ResultSetCustomPreset(plugin);
+                                            String key = rscp.fromId(bd.getTardisID()) ? rscp.getPreset() : "custom";
+                                            CustomPreset custom = TARDISCustomPreset.CUSTOM_PRESETS.get(key);
+                                            line1 = custom.lines().get(0);
+                                            line2 = custom.lines().get(1);
                                         } else {
                                             line1 = preset.getFirstLine();
                                             line2 = preset.getSecondLine();

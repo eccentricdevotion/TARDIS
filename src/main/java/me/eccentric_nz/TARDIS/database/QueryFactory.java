@@ -243,6 +243,17 @@ public class QueryFactory {
     /**
      * Inserts or updates data in a database table. This method executes the SQL in a separate thread.
      *
+     * @param id       the TARDIS id.
+     * @param preset the custom preset name
+     */
+    public void upsertCustomPreset(int id, String preset) {
+        TARDISSQLUpsertCustomPreset custom = new TARDISSQLUpsertCustomPreset(plugin, id, preset);
+        plugin.getServer().getScheduler().runTaskAsynchronously(plugin, custom);
+    }
+
+    /**
+     * Inserts or updates data in a database table. This method executes the SQL in a separate thread.
+     *
      * @param id        the TARDIS id.
      * @param type      the type of control to insert.
      * @param location  the string location of the control

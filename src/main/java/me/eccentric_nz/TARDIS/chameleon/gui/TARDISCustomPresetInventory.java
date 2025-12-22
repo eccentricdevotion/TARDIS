@@ -18,8 +18,11 @@ package me.eccentric_nz.TARDIS.chameleon.gui;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
+import me.eccentric_nz.TARDIS.chameleon.utils.CustomPreset;
+import me.eccentric_nz.TARDIS.chameleon.utils.TARDISCustomPreset;
+import me.eccentric_nz.TARDIS.custommodels.GUIChameleonPoliceBoxes;
 import me.eccentric_nz.TARDIS.custommodels.GUIChameleonPresets;
-import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
+import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
@@ -29,6 +32,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * Time travel is, as the name suggests, the (usually controlled) process of travelling through time, even in a
@@ -37,16 +41,16 @@ import java.util.Locale;
  *
  * @author eccentric_nz
  */
-public class TARDISPresetInventory implements InventoryHolder {
+public class TARDISCustomPresetInventory implements InventoryHolder {
 
     private final TARDIS plugin;
     private final Player player;
     private final Inventory inventory;
 
-    public TARDISPresetInventory(TARDIS plugin, Player player) {
+    public TARDISCustomPresetInventory(TARDIS plugin, Player player) {
         this.plugin = plugin;
         this.player = player;
-        this.inventory = plugin.getServer().createInventory(this, 54, Component.text("Chameleon Presets", NamedTextColor.DARK_RED));
+        this.inventory = plugin.getServer().createInventory(this, 54, Component.text("Custom Chameleon Presets", NamedTextColor.DARK_RED));
         this.inventory.setContents(getItemStack());
     }
 
@@ -62,16 +66,15 @@ public class TARDISPresetInventory implements InventoryHolder {
      */
     private ItemStack[] getItemStack() {
         ItemStack[] stacks = new ItemStack[54];
-
-        for (ChameleonPreset preset : ChameleonPreset.values()) {
-            if (!ChameleonPreset.NOT_THESE.contains(preset.getCraftMaterial()) && !preset.usesArmourStand()) {
-                if (TARDISPermission.hasPermission(player, "tardis.preset." + preset.toString().toLowerCase(Locale.ROOT))) {
-                    ItemStack is = ItemStack.of(preset.getGuiDisplay(), 1);
-                    ItemMeta im = is.getItemMeta();
-                    im.displayName(Component.text(preset.getDisplayName()));
-                    is.setItemMeta(im);
-                    stacks[preset.getSlot()] = is;
-                }
+        int i = 0;
+        for (Map.Entry<String, CustomPreset> preset : TARDISCustomPreset.CUSTOM_PRESETS.entrySet()) {
+            if (TARDISPermission.hasPermission(player, "tardis.preset." + preset.toString().toLowerCase(Locale.ROOT))) {
+                ItemStack is = ItemStack.of(preset.getValue().icon(), 1);
+                ItemMeta im = is.getItemMeta();
+                im.displayName(Component.text(TARDISStringUtils.capitalise(preset.getKey())));
+                is.setItemMeta(im);
+                stacks[i] = is;
+                i++;
             }
         }
         // back
@@ -79,13 +82,13 @@ public class TARDISPresetInventory implements InventoryHolder {
         ItemMeta but = back.getItemMeta();
         but.displayName(Component.text("Back"));
         back.setItemMeta(but);
-        stacks[GUIChameleonPresets.BACK.slot()] = back;
-        // custom page
-        ItemStack custom = ItemStack.of(GUIChameleonPresets.CUSTOM.material(), 1);
-        ItemMeta customMeta = custom.getItemMeta();
-        customMeta.displayName(Component.text("Custom presets"));
-        custom.setItemMeta(customMeta);
-        stacks[GUIChameleonPresets.CUSTOM.slot()] = custom;
+        stacks[50] = back;
+        // page one
+        ItemStack page1 = ItemStack.of(GUIChameleonPoliceBoxes.GO_TO_PAGE_1.material(), 1);
+        ItemMeta one = page1.getItemMeta();
+        one.displayName(Component.text(plugin.getLanguage().getString("BUTTON_PAGE_1")));
+        page1.setItemMeta(one);
+        stacks[GUIChameleonPoliceBoxes.GO_TO_PAGE_1.slot()] = page1;
         // page two
         ItemStack page = ItemStack.of(GUIChameleonPresets.GO_TO_PAGE_2.material(), 1);
         ItemMeta two = page.getItemMeta();

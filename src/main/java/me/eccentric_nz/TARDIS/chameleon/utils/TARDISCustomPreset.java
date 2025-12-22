@@ -16,17 +16,21 @@
  */
 package me.eccentric_nz.TARDIS.chameleon.utils;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.stream.JsonReader;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.files.TARDISFileCopier;
+import org.bukkit.Material;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.EnumMap;
+import java.util.*;
 
 /**
  * A chameleon conversion is a repair procedure that technicians perform on TARDIS chameleon circuits. The Fourth Doctor
@@ -37,78 +41,41 @@ import java.util.EnumMap;
  */
 public class TARDISCustomPreset {
 
-    private final EnumMap<COMPASS, TARDISChameleonColumn> blueprint = new EnumMap<>(COMPASS.class);
-    private final EnumMap<COMPASS, TARDISChameleonColumn> stained = new EnumMap<>(COMPASS.class);
-    private final EnumMap<COMPASS, TARDISChameleonColumn> glass = new EnumMap<>(COMPASS.class);
-    private String firstLine;
-    private String secondLine;
+    public static HashMap<String, CustomPreset> CUSTOM_PRESETS = new HashMap<>();
 
     public void makePresets() {
-        // get the custom preset file and read the contents
-        // ignore lines that start with a #
-        String[] custom_data = new String[6];
-        File custom_file;
-        if (!TARDIS.plugin.getConfig().getBoolean("conversions.custom_preset")) {
-            custom_file = TARDISFileCopier.copy(TARDIS.plugin.getDataFolder() + File.separator + "custom_preset.txt", TARDIS.plugin.getResource("custom_preset.txt"), true);
-            TARDIS.plugin.getConfig().set("conversions.custom_preset", true);
-            TARDIS.plugin.saveConfig();
-        } else {
-            custom_file = TARDIS.plugin.getTardisCopier().copy("custom_preset.txt");
-        }
-        BufferedReader bufRdr = null;
-        int i = 0;
-        try {
-            bufRdr = new BufferedReader(new FileReader(custom_file));
-            String line;
-            // read each line of text file
-            while ((line = bufRdr.readLine()) != null) {
-                if (!line.startsWith("#")) {
-                    custom_data[i] = line;
-                    i++;
+        // get the custom presets file and read the contents to json
+        File file = new File(TARDIS.plugin.getDataFolder() + File.separator + "custom_presets.json");
+        try (FileReader reader = new FileReader(file)) {
+            JsonObject rootObject = JsonParser.parseReader(new JsonReader(reader)).getAsJsonObject();
+            for (Map.Entry<String, JsonElement> entry : rootObject.entrySet()) {
+                TARDIS.plugin.debug("Adding custom chameleon preset: " + entry.getKey());
+                EnumMap<COMPASS, TARDISChameleonColumn> blueprint = new EnumMap<>(COMPASS.class);
+                EnumMap<COMPASS, TARDISChameleonColumn> stained = new EnumMap<>(COMPASS.class);
+                EnumMap<COMPASS, TARDISChameleonColumn> glass = new EnumMap<>(COMPASS.class);
+                List<String> lines = new ArrayList<>();
+                JsonObject custom = entry.getValue().getAsJsonObject();
+                JsonArray b = custom.get("blueprint").getAsJsonArray();
+                JsonArray s = custom.get("stained").getAsJsonArray();
+                JsonArray g = custom.get("glass").getAsJsonArray();
+                for (COMPASS d : COMPASS.values()) {
+                    blueprint.put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(d, b));
+                    stained.put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(d, s));
+                    glass.put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(d, g));
                 }
+                for (JsonElement l : custom.get("sign").getAsJsonArray()) {
+                    lines.add(l.getAsString());
+                }
+                Material icon;
+                try {
+                    icon = Material.valueOf(custom.get("icon").getAsString());
+                } catch (IllegalArgumentException e) {
+                    icon = Material.ENDER_CHEST;
+                }
+                CUSTOM_PRESETS.put(entry.getKey(), new CustomPreset(blueprint, stained, glass, lines, icon));
             }
         } catch (IOException io) {
-            TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.WARNING, "Could not read custom preset file! " + io.getMessage());
-        } finally {
-            if (bufRdr != null) {
-                try {
-                    bufRdr.close();
-                } catch (IOException e) {
-                    TARDIS.plugin.debug("Error closing custom preset reader! " + e.getMessage());
-                }
-            }
+            TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.WARNING, "Could not read custom presets file! " + io.getMessage());
         }
-        for (COMPASS d : COMPASS.values()) {
-            blueprint.put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(d, custom_data[0]));
-            stained.put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(d, custom_data[1]));
-            glass.put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(d, custom_data[2]));
-        }
-        if (custom_data[3] != null && !custom_data[3].isEmpty()) {
-            firstLine = custom_data[3];
-            secondLine = custom_data[4];
-        } else {
-            firstLine = "CUSTOM TEXT";
-            secondLine = "GOES HERE";
-        }
-    }
-
-    public EnumMap<COMPASS, TARDISChameleonColumn> getBlueprint() {
-        return blueprint;
-    }
-
-    public EnumMap<COMPASS, TARDISChameleonColumn> getStained() {
-        return stained;
-    }
-
-    public EnumMap<COMPASS, TARDISChameleonColumn> getGlass() {
-        return glass;
-    }
-
-    public String getFirstLine() {
-        return firstLine;
-    }
-
-    public String getSecondLine() {
-        return secondLine;
     }
 }

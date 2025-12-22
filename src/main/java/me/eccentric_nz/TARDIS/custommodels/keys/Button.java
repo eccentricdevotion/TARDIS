@@ -38,6 +38,7 @@ public enum Button {
     COMPANION_ALL(new NamespacedKey(TARDIS.plugin, "button_companion_all")),
     COMPANION_LIST(new NamespacedKey(TARDIS.plugin, "button_companion_list")),
     CONSTRUCT(new NamespacedKey(TARDIS.plugin, "button_construct")),
+    CUSTOM(new NamespacedKey(TARDIS.plugin, "button_custom")),
     DEACTIVATE(new NamespacedKey(TARDIS.plugin, "button_deactivate")),
     DEATH(new NamespacedKey(TARDIS.plugin, "button_death")),
     DELETE(new NamespacedKey(TARDIS.plugin, "button_delete")),

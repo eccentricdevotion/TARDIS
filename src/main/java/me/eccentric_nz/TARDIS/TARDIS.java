@@ -310,6 +310,11 @@ public class TARDIS extends JavaPlugin {
             worldManager = WorldManager.getWorldManager();
             saveDefaultConfig();
             reloadConfig();
+            if (!getConfig().getBoolean("conversions.custom_presets")) {
+                new TARDISCustomPresetConverter(this).toJson();
+            } else {
+                tardisCopier.copy("custom_presets.json");
+            }
             // load planets config
             tardisCopier.copy("planets.yml");
             planetsConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "planets.yml"));
@@ -1407,7 +1412,7 @@ public class TARDIS extends JavaPlugin {
         List<String> files = List.of(
                 "achievements.yml", "adaptive.yml", "artron.yml",
                 "blaster.yml", "blocks.yml",
-                "condensables.yml", "custom_consoles.yml", "custom_desktops.yml", "custom_models.yml", "custom_doors.yml", "custom_time_rotors.yml",
+                "condensables.yml", "custom_consoles.yml", "custom_desktops.yml", "custom_doors.yml", "custom_models.yml", "custom_presets.json", "custom_time_rotors.yml",
                 "generator.yml",
                 "handles.yml",
                 "items.yml",

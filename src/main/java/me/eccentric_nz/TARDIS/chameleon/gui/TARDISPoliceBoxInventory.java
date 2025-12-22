@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.chameleon.gui;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.custommodels.GUIChameleonPoliceBoxes;
+import me.eccentric_nz.TARDIS.custommodels.GUIChameleonPresets;
 import me.eccentric_nz.TARDIS.custommodels.keys.ChameleonVariant;
 import me.eccentric_nz.TARDIS.custommodels.keys.ColouredVariant;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
@@ -157,6 +158,12 @@ public class TARDISPoliceBoxInventory implements InventoryHolder {
                 }
             }
         }
+        // custom page
+        ItemStack custom = ItemStack.of(GUIChameleonPresets.CUSTOM.material(), 1);
+        ItemMeta customMeta = custom.getItemMeta();
+        customMeta.displayName(Component.text("Custom presets"));
+        custom.setItemMeta(customMeta);
+        boxes[GUIChameleonPresets.CUSTOM.slot()] = custom;
         // page one
         ItemStack page = ItemStack.of(GUIChameleonPoliceBoxes.GO_TO_PAGE_1.material(), 1);
         ItemMeta one = page.getItemMeta();
