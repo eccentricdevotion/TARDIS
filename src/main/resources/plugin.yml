@@ -8,7 +8,7 @@ loadbefore: [ Citizens ]
 website: http://tardis.pages.dev/
 dev-url: http://github.com/eccentricdevotion/TARDIS/
 url: http://tardis.pages.dev/
-version: 6.3.1@buildNumber@
+version: 6.3.2@buildNumber@
 api-version: '1.21.11'
 libraries:
   - org.jsoup:jsoup:1.21.1
@@ -1155,7 +1155,7 @@ commands:
       usage: /<command> list [page no.|save|portals|abandoned]
     make_preset:
       description: Create a custom chameleon preset file.
-      usage: /<command> make_preset [name] [asymmetric:true|false]
+      usage: /<command> make_preset [name]
     maze:
       description: Create a 11 x 11 block maze starting at the targeted block.
       usage: /<command> maze
