@@ -251,10 +251,12 @@ blueprint_feature_none: 33.00
 blueprint_preset_andesite: 33.00
 blueprint_preset_angel: 33.00
 blueprint_preset_apperture: 33.00
+blueprint_preset_bad_wolf: 33.00
 blueprint_preset_cake: 33.00
 blueprint_preset_candy: 33.00
 blueprint_preset_chalice: 33.00
 blueprint_preset_chorus: 33.00
+blueprint_preset_coloured: 33.00
 blueprint_preset_creepy: 33.00
 blueprint_preset_custom: 33.00
 blueprint_preset_desert: 33.00
@@ -294,9 +296,6 @@ blueprint_preset_police_box_pink: 33.00
 blueprint_preset_police_box_purple: 33.00
 blueprint_preset_police_box_red: 33.00
 blueprint_preset_police_box_tennant: 33.00
-blueprint_preset_coloured: 33.00
-blueprint_preset_bad_wolf: 33.00
-blueprint_preset_type_40: 33.00
 blueprint_preset_police_box_white: 33.00
 blueprint_preset_police_box_yellow: 33.00
 blueprint_preset_portal: 33.00
@@ -304,6 +303,7 @@ blueprint_preset_prismarine: 33.00
 blueprint_preset_punked: 33.00
 blueprint_preset_robot: 33.00
 blueprint_preset_shroom: 33.00
+blueprint_preset_sidrat: 33.00
 blueprint_preset_snowman: 33.00
 blueprint_preset_stone: 33.00
 blueprint_preset_submerged: 33.00
@@ -312,6 +312,7 @@ blueprint_preset_telephone: 33.00
 blueprint_preset_toilet: 33.00
 blueprint_preset_topsyturvey: 33.00
 blueprint_preset_torch: 33.00
+blueprint_preset_type_40: 33.00
 blueprint_preset_village: 33.00
 blueprint_preset_well: 33.00
 blueprint_preset_windmill: 33.00

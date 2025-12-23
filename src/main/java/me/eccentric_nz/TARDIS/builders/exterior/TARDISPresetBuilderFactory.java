@@ -61,7 +61,6 @@ public class TARDISPresetBuilderFactory {
         no_block_under_door.add(ChameleonPreset.GAZEBO);
         no_block_under_door.add(ChameleonPreset.HELIX);
         no_block_under_door.add(ChameleonPreset.LIBRARY);
-        no_block_under_door.add(ChameleonPreset.PANDORICA);
         no_block_under_door.add(ChameleonPreset.ROBOT);
         no_block_under_door.add(ChameleonPreset.SWAMP);
         no_block_under_door.add(ChameleonPreset.TORCH);

@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.doors.outer;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.chameleon.utils.PandoricaOpens;
+import me.eccentric_nz.TARDIS.chameleon.utils.SidratOpens;
 import me.eccentric_nz.TARDIS.custommodels.keys.ChameleonVariant;
 import me.eccentric_nz.TARDIS.custommodels.keys.ColouredVariant;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -67,6 +68,9 @@ public class OuterDisplayDoorOpener {
             if (dye.getType() == Material.ENDER_PEARL) {
                 // animate pandorica opening
                 new PandoricaOpens(plugin).animate(stand, true);
+            } else if (dye.getType() == Material.GREEN_STAINED_GLASS_PANE) {
+                // animate SIDRAT opening
+                new SidratOpens(plugin).animate(stand, true);
             } else {
                 switch (dye.getType()) {
                     case CYAN_STAINED_GLASS_PANE -> dim.setItemModel(ChameleonVariant.TENNANT_OPEN.getKey());

@@ -86,7 +86,8 @@ public class TARDISCamera {
                         case CYAN_STAINED_GLASS_PANE -> ChameleonVariant.TENNANT_CAMERA.getKey();
                         case LEATHER_HORSE_ARMOR -> ColouredVariant.TINTED_CAMERA.getKey();
                         case WOLF_SPAWN_EGG -> ChameleonVariant.BAD_WOLF_CAMERA.getKey();
-                        default -> null; // don't change for PANDORICA, WEEPING_ANGEL or CUSTOM
+                        // TODO check this for SIDRAT
+                        default -> null; // don't change for PANDORICA, SIDRAT, WEEPING_ANGEL or CUSTOM
                     };
                     if (viewing != null) {
                         im.setItemModel(viewing);
@@ -131,7 +132,8 @@ public class TARDISCamera {
                 case CYAN_STAINED_GLASS_PANE -> ChameleonVariant.TENNANT_CLOSED.getKey();
                 case LEATHER_HORSE_ARMOR -> ColouredVariant.TINTED_CLOSED.getKey();
                 case WOLF_SPAWN_EGG -> ChameleonVariant.BAD_WOLF_CLOSED.getKey();
-                default -> null; // don't change for PANDORICA, WEEPING_ANGEL or CUSTOM
+                // TODO check this for SIDRAT
+                default -> null; // don't change for `PANDORICA, SIDRAT, WEEPING_ANGEL or CUSTOM
             };
             if (notviewing != null) {
                 im.setItemModel(notviewing);

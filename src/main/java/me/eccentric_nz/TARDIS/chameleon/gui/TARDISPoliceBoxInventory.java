@@ -132,6 +132,16 @@ public class TARDISPoliceBoxInventory implements InventoryHolder {
             boxes[i] = pan;
             i++;
         }
+        // SIDRAT
+        if (TARDISPermission.hasPermission(player, "tardis.preset.sidrat")) {
+            ItemStack sid = ItemStack.of(Material.GREEN_STAINED_GLASS_PANE, 1);
+            ItemMeta rat = sid.getItemMeta();
+            rat.displayName(Component.text("SIDRAT"));
+            rat.setItemModel(ChameleonVariant.SIDRAT_CLOSED.getKey());
+            sid.setItemMeta(rat);
+            boxes[i] = sid;
+            i++;
+        }
         if (TARDISPermission.hasPermission(player, "tardis.preset.police_box_tinted")) {
             ItemStack any = ItemStack.of(Material.LEATHER_HORSE_ARMOR, 1);
             ItemMeta colour = any.getItemMeta();

@@ -98,8 +98,8 @@ public class TARDISPoliceBoxListener extends TARDISMenuListener {
         // set the Chameleon Circuit sign(s)
         HashMap<String, Object> set = new HashMap<>();
         switch (slot) {
-            case 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19 -> {
-                // item frame preset
+            case 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20 -> {
+                // armour stand preset
                 ChameleonPreset selected = ChameleonPreset.getItemFramePresetBySlot(slot);
                 set.put("chameleon_preset", selected.toString());
                 if (hasSign) {
@@ -109,7 +109,7 @@ public class TARDISPoliceBoxListener extends TARDISMenuListener {
                     new TARDISChameleonFrame().updateChameleonFrame(selected, rsf.getLocation());
                 }
                 plugin.getMessenger().sendInsertedColour(player, "CHAM_SET", selected.getDisplayName(), plugin);
-                if (slot == 19) {
+                if (slot == 20) {
                     // any colour - open the colour picker
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () ->
                             player.openInventory(new TARDISColourPickerGUI(plugin).getInventory()), 2L);

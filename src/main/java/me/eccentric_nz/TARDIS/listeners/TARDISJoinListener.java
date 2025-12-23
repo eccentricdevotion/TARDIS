@@ -207,38 +207,6 @@ public class TARDISJoinListener implements Listener {
         if (SkinUtils.SKINNED.containsKey(player.getUniqueId())) {
             plugin.getSkinChanger().set(player, SkinUtils.SKINNED.get(player.getUniqueId()));
         }
-//        // recreate custom flying chicken if player was flying the TARDIS exterior
-//        if (plugin.getTrackerKeeper().getFlyingReturnLocation().containsKey(player.getUniqueId())) {
-//            // get the chicken
-//            Entity vehicle = player.getVehicle();
-//            if (vehicle instanceof ArmorStand stand) {
-//                Entity flyer = stand.getVehicle();
-//                if (flyer != null) {
-//                    FlightReturnData data = plugin.getTrackerKeeper().getFlyingReturnLocation().get(player.getUniqueId());
-//                    // get exterior preset
-//                    boolean pandorica = false;
-//                    ResultSetTardisPreset rsp = new ResultSetTardisPreset(plugin);
-//                    if (rsp.fromID(data.getId())) {
-//                        pandorica = (rsp.getPreset() == ChameleonPreset.PANDORICA);
-//                    }
-//                    // stop current flying tasks
-//                    plugin.getServer().getScheduler().cancelTask(data.getAnimation());
-//                    plugin.getServer().getScheduler().cancelTask(data.getSound());
-//                    // restart animation and sound
-//                    int animation = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new FlyingAnimation(plugin, stand, player, pandorica), 5L, 3L);
-//                    int sound = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
-//                        TARDISSounds.playTARDISSound(player.getLocation(), "time_rotor", 100f);
-//                    }, 5L, 280L);
-//                    // spawn a new TARDISChicken
-//                    stand.removePassenger(player);
-//                    flyer.removePassenger(stand);
-//                    stand.addPassenger(player);
-//                    stand.setGravity(false);
-//                    // re-save flight data
-//                    plugin.getTrackerKeeper().getFlyingReturnLocation().put(player.getUniqueId(), new FlightReturnData(data.getId(), data.getLocation(), sound, animation, stand.getUniqueId()));
-//                }
-//            }
-//        }
         // teleport players that rejoined after logging out while in Junk TARDIS or using external camera
         if (plugin.getTrackerKeeper().getJunkRelog().containsKey(player.getUniqueId())) {
             Location location = plugin.getTrackerKeeper().getJunkRelog().remove(player.getUniqueId());

@@ -69,7 +69,6 @@ public class TARDISChameleonPreset {
     private final TARDISMineshaftPreset mine;
     private final TARDISMushroomPreset shroom;
     private final TARDISNetherPreset nether;
-    private final TARDISPandoricaPreset pandorica;
     private final TARDISPartyPreset party;
     private final TARDISPeanutButterPreset peanut;
     private final TARDISPineTreePreset pine;
@@ -136,7 +135,6 @@ public class TARDISChameleonPreset {
         lighthouse = new TARDISLighthousePreset();
         mine = new TARDISMineshaftPreset();
         nether = new TARDISNetherPreset();
-        pandorica = new TARDISPandoricaPreset();
         party = new TARDISPartyPreset();
         peanut = new TARDISPeanutButterPreset();
         pine = new TARDISPineTreePreset();
@@ -344,7 +342,6 @@ public class TARDISChameleonPreset {
         lighthouse.makePresets();
         mine.makePresets();
         nether.makePresets();
-        pandorica.makePresets();
         party.makePresets();
         peanut.makePresets();
         pine.makePresets();
@@ -468,9 +465,6 @@ public class TARDISChameleonPreset {
             }
             case NETHER -> {
                 return nether.getBlueprint().get(d);
-            }
-            case PANDORICA -> {
-                return pandorica.getBlueprint().get(d);
             }
             case PARTY -> {
                 return party.getBlueprint().get(d);
@@ -670,9 +664,6 @@ public class TARDISChameleonPreset {
             case NETHER -> {
                 return nether.getGlass().get(d);
             }
-            case PANDORICA -> {
-                return pandorica.getGlass().get(d);
-            }
             case PARTY -> {
                 return party.getGlass().get(d);
             }
@@ -870,9 +861,6 @@ public class TARDISChameleonPreset {
             }
             case NETHER -> {
                 return nether.getStained().get(d);
-            }
-            case PANDORICA -> {
-                return pandorica.getStained().get(d);
             }
             case PARTY -> {
                 return party.getStained().get(d);

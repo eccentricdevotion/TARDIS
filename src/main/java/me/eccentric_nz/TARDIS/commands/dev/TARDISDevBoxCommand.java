@@ -261,6 +261,14 @@ public class TARDISDevBoxCommand {
                                 default -> model = ChameleonVariant.PANDORICA_CLOSED.getKey();
                             }
                         }
+                        case GREEN_STAINED_GLASS_PANE -> {
+                            switch (args[2]) {
+                                case "open" -> model = ChameleonVariant.SIDRAT_OPEN.getKey();
+                                case "stained" -> model = ChameleonVariant.SIDRAT_STAINED.getKey();
+                                case "glass" -> model = ChameleonVariant.SIDRAT_GLASS.getKey();
+                                default -> model = ChameleonVariant.SIDRAT_CLOSED.getKey();
+                            }
+                        }
                     }
                 }
                 im.setItemModel(model);
@@ -268,7 +276,7 @@ public class TARDISDevBoxCommand {
                 ArmorStand stand = as;
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     EntityEquipment ee = stand.getEquipment();
-                    ee.setItemInMainHand(is);
+                    ee.setHelmet(is);
                     stand.setInvisible(true);
                     stand.setInvulnerable(true);
                     if (args[2].equals("camera")) {

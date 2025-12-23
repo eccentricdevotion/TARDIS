@@ -198,6 +198,7 @@ public class TARDISExteriorFlight {
                             ItemDisplay display = VehicleUtility.getItemDisplay(player, box, switch (box.getType()) {
                                 case ENDER_PEARL -> 1.5f;
                                 case GRAY_STAINED_GLASS_PANE -> 1.66f;
+                                case GREEN_STAINED_GLASS_PANE -> 2.0f;
                                 default -> 1.75f;
                             });
                             int animation = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new InterpolatedAnimation(display, 40), 20L, 40L);

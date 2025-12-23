@@ -54,7 +54,7 @@ public class TARDISConstants {
     /**
      * Modelled console colours
      */
-    public static final Set<String> COLOURS = Set.of("console_netherite", "console_rustic", "console_brown", "console_pink", "console_magenta",
+    public static final Set<String> COLOURS = Set.of("console_war", "console_netherite", "console_rustic", "console_brown", "console_pink", "console_magenta",
             "console_purple", "console_blue", "console_light_blue", "console_cyan", "console_green", "console_lime", "console_yellow",
             "console_orange", "console_red", "console_white", "console_black", "console_gray", "console_light_gray");
 
@@ -257,7 +257,7 @@ public class TARDISConstants {
             Material.CYAN_STAINED_GLASS_PANE, Material.GRAY_STAINED_GLASS_PANE, Material.WHITE_DYE, Material.ORANGE_DYE, Material.MAGENTA_DYE,
             Material.LIGHT_BLUE_DYE, Material.YELLOW_DYE, Material.LIME_DYE, Material.PINK_DYE, Material.GRAY_DYE, Material.LIGHT_GRAY_DYE,
             Material.CYAN_DYE, Material.PURPLE_DYE, Material.BLUE_DYE, Material.BROWN_DYE, Material.GREEN_DYE, Material.RED_DYE, Material.BLACK_DYE,
-            Material.LEATHER_HORSE_ARMOR, Material.ENDER_PEARL
+            Material.LEATHER_HORSE_ARMOR, Material.ENDER_PEARL, Material.GREEN_STAINED_GLASS_PANE
     );
     public static final UUID UUID_ZERO = new UUID(0, 0);
 

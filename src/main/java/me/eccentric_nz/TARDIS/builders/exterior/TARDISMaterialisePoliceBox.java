@@ -102,6 +102,7 @@ public class TARDISMaterialisePoliceBox implements Runnable {
                     case YELLOW_DYE -> ChameleonVariant.YELLOW_STAINED.getKey();
                     case CYAN_STAINED_GLASS_PANE -> ChameleonVariant.TENNANT_STAINED.getKey();
                     case GRAY_STAINED_GLASS_PANE -> ChameleonVariant.WEEPING_ANGEL_STAINED.getKey();
+                    case GREEN_STAINED_GLASS_PANE -> ChameleonVariant.SIDRAT_STAINED.getKey();
                     case ENDER_PEARL -> ChameleonVariant.PANDORICA_STAINED.getKey();
                     case LEATHER_HORSE_ARMOR -> ColouredVariant.TINTED_STAINED.getKey();
                     default -> new NamespacedKey(plugin, TARDISBuilderUtility.getCustomModelPath(dye.toString()) + "_stained");
@@ -115,6 +116,7 @@ public class TARDISMaterialisePoliceBox implements Runnable {
                          PINK_DYE, PURPLE_DYE, RED_DYE, WHITE_DYE,
                          YELLOW_DYE, LEATHER_HORSE_ARMOR, CYAN_STAINED_GLASS_PANE -> ChameleonVariant.GLASS.getKey();
                     case GRAY_STAINED_GLASS_PANE -> ChameleonVariant.WEEPING_ANGEL_STAINED.getKey();
+                    case GREEN_STAINED_GLASS_PANE -> ChameleonVariant.SIDRAT_STAINED.getKey();
                     case ENDER_PEARL -> ChameleonVariant.PANDORICA_STAINED.getKey();
                     default -> new NamespacedKey(plugin, TARDISBuilderUtility.getCustomModelPath(dye.toString()) + "_glass");
                 };
@@ -139,6 +141,7 @@ public class TARDISMaterialisePoliceBox implements Runnable {
                     case YELLOW_DYE -> ChameleonVariant.YELLOW_CLOSED.getKey();
                     case CYAN_STAINED_GLASS_PANE -> ChameleonVariant.TENNANT_CLOSED.getKey();
                     case GRAY_STAINED_GLASS_PANE -> ChameleonVariant.WEEPING_ANGEL_CLOSED.getKey();
+                    case GREEN_STAINED_GLASS_PANE -> ChameleonVariant.SIDRAT_CLOSED.getKey();
                     case ENDER_PEARL -> ChameleonVariant.PANDORICA_CLOSED.getKey();
                     case LEATHER_HORSE_ARMOR -> ColouredVariant.TINTED_CLOSED.getKey();
                     default -> new NamespacedKey(plugin, TARDISBuilderUtility.getCustomModelPath(dye.toString()) + "_closed");
@@ -208,6 +211,7 @@ public class TARDISMaterialisePoliceBox implements Runnable {
                 switch (preset) {
                     case WEEPING_ANGEL -> pb = "Weeping Angel";
                     case PANDORICA -> pb = "Pandorica";
+                    case SIDRAT -> pb = "SIDRAT";
                     case ITEM -> {
                         for (String k : plugin.getCustomModelConfig().getConfigurationSection("models").getKeys(false)) {
                             if (dye.toString().equals(plugin.getCustomModelConfig().getString("models." + k + ".item"))) {

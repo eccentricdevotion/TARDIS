@@ -117,7 +117,8 @@ public enum ChameleonPreset {
     POLICE_BOX_TENNANT(Material.CYAN_CONCRETE, 16, "", "", false, true, "Tennant Era Police Box"),
     WEEPING_ANGEL(Material.GRAY_CONCRETE, 17, "", "", false, false, "Weeping Angel"),
     PANDORICA(Material.BLACK_CONCRETE, 18, "", "", false, true, "Pandorica"),
-    COLOURED(Material.LEATHER_HORSE_ARMOR, 19, "", "", false, true, "Pick a colour"),
+    SIDRAT(Material.GREEN_CONCRETE, 19, "", "", false, true, "SIDRAT"),
+    COLOURED(Material.LEATHER_HORSE_ARMOR, 20, "", "", false, true, "Pick a colour"),
 
     ITEM(Material.BARRIER, -1, "", "", false, true, "Item");
 
@@ -241,7 +242,7 @@ public enum ChameleonPreset {
             case POLICE_BOX_BLUE, POLICE_BOX_WHITE, POLICE_BOX_ORANGE, POLICE_BOX_MAGENTA, POLICE_BOX_LIGHT_BLUE,
                 POLICE_BOX_YELLOW, POLICE_BOX_LIME, POLICE_BOX_PINK, POLICE_BOX_GRAY, POLICE_BOX_LIGHT_GRAY,
                 POLICE_BOX_CYAN, POLICE_BOX_PURPLE, POLICE_BOX_BROWN, POLICE_BOX_GREEN, POLICE_BOX_RED,
-                POLICE_BOX_BLACK, POLICE_BOX_TENNANT, WEEPING_ANGEL, COLOURED, PANDORICA, ITEM -> true;
+                POLICE_BOX_BLACK, POLICE_BOX_TENNANT, WEEPING_ANGEL, COLOURED, PANDORICA, SIDRAT, ITEM -> true;
             default -> false;
         };
     }
@@ -279,6 +280,7 @@ public enum ChameleonPreset {
             case WEEPING_ANGEL -> { return ChameleonVariant.WEEPING_ANGEL_CLOSED.getKey(); }
             case COLOURED -> { return ColouredVariant.TINTED_CLOSED.getKey(); }
             case PANDORICA -> { return ChameleonVariant.PANDORICA_CLOSED.getKey(); }
+            case SIDRAT -> { return ChameleonVariant.SIDRAT_CLOSED.getKey(); }
         }
         return null;
     }
