@@ -157,6 +157,7 @@ public enum RecipeItem {
     DOOR(TardisDoorVariant.TARDIS_DOOR_CLOSED.getKey(), RecipeCategory.CUSTOM_BLOCKS),
     BONE_DOOR(BoneDoorVariant.BONE_DOOR_CLOSED.getKey(), RecipeCategory.CUSTOM_BLOCKS),
     CLASSIC_DOOR(ClassicDoorVariant.CLASSIC_DOOR_CLOSED.getKey(), RecipeCategory.CUSTOM_BLOCKS),
+    SIDRAT_DOOR(SidratDoorVariant.SIDRAT_DOOR_CLOSED.getKey(), RecipeCategory.CUSTOM_BLOCKS),
 //    HANDBRAKE(1001, RecipeCategory.CUSTOM_BLOCKS),
 //    THROTTLE(1001, RecipeCategory.CUSTOM_BLOCKS),
     // unshaped recipes start here
@@ -264,7 +265,7 @@ public enum RecipeItem {
             case BOWL_OF_CUSTARD -> "Bowl of Custard";
             case ELIXIR_OF_LIFE -> "Elixir of Life";
             case TARDIS_ARS_CIRCUIT -> "TARDIS ARS Circuit";
-            default -> TARDISStringUtils.capitalise(toString()).replace("Tardis", "TARDIS");
+            default -> TARDISStringUtils.capitalise(toString()).replace("Tardis", "TARDIS").replace("Sidrat", "SIDRAT");
         };
     }
 

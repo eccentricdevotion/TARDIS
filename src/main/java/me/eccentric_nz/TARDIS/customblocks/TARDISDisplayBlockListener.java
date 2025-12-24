@@ -106,7 +106,7 @@ public class TARDISDisplayBlockListener implements Listener {
         Location location = event.getBlock().getLocation();
         event.setCancelled(true);
         BlockData data;
-        if (which.isLight() || which == TARDISBlockDisplayItem.DOOR || which == TARDISBlockDisplayItem.CLASSIC_DOOR || which == TARDISBlockDisplayItem.BONE_DOOR || which == TARDISLightDisplayItem.CONSOLE_LAMP) {
+        if (which.isLight() || which.isClosedDoor() || which == TARDISLightDisplayItem.CONSOLE_LAMP) {
             if (which.isLight() || which == TARDISLightDisplayItem.CONSOLE_LAMP) {
                 Levelled light = TARDISConstants.LIGHT;
                 light.setLevel((which.isLit() ? 15 : 0));
@@ -115,21 +115,21 @@ public class TARDISDisplayBlockListener implements Listener {
                 data = null;
             }
             // set an Interaction entity
-            TARDISDisplayItemUtils.set(location, model.getKey(), which == TARDISBlockDisplayItem.DOOR || which == TARDISBlockDisplayItem.CLASSIC_DOOR || which == TARDISBlockDisplayItem.BONE_DOOR);
+            TARDISDisplayItemUtils.set(location, model.getKey(), which.isClosedDoor());
         } else {
             data = TARDISConstants.BARRIER;
         }
         if (data != null) {
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> location.getBlock().setBlockData(data), 1L);
         }
-        double ay = (which == TARDISBlockDisplayItem.DOOR || which == TARDISBlockDisplayItem.CLASSIC_DOOR || which == TARDISBlockDisplayItem.BONE_DOOR) ? 0.0d : 0.5d;
+        double ay = (which.isClosedDoor()) ? 0.0d : 0.5d;
         // set an ItemDisplay entity
         ItemDisplay display = (ItemDisplay) location.getWorld().spawnEntity(location.add(0.5d, ay, 0.5d), EntityType.ITEM_DISPLAY);
         display.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, which.getCustomModel().getKey());
         display.setItemStack(single);
         display.setPersistent(true);
         display.setInvulnerable(true);
-        if (which == TARDISBlockDisplayItem.DOOR || which == TARDISBlockDisplayItem.CLASSIC_DOOR || which == TARDISBlockDisplayItem.BONE_DOOR || which == TARDISBlockDisplayItem.TELEVISION) {
+        if (which.isClosedDoor() || which == TARDISBlockDisplayItem.TELEVISION) {
             if (which != TARDISBlockDisplayItem.TELEVISION) {
                 display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.FIXED);
             }
@@ -311,11 +311,7 @@ public class TARDISDisplayBlockListener implements Listener {
                     TARDISDisplayItem tdi = TARDISDisplayItemUtils.get(display);
                     if (tdi != null) {
                         // is it an inner door?
-                        if (tdi == TARDISBlockDisplayItem.CUSTOM_DOOR || tdi == TARDISBlockDisplayItem.DOOR_BOTH_OPEN
-                                || tdi == TARDISBlockDisplayItem.DOOR || tdi == TARDISBlockDisplayItem.DOOR_OPEN
-                                || tdi == TARDISBlockDisplayItem.CLASSIC_DOOR || tdi == TARDISBlockDisplayItem.CLASSIC_DOOR_OPEN
-                                || tdi == TARDISBlockDisplayItem.BONE_DOOR || tdi == TARDISBlockDisplayItem.BONE_DOOR_OPEN
-                        ) {
+                        if (tdi.isDoor()) {
                             if (!player.isOp() && !plugin.getUtils().inTARDISWorld(player)) {
                                 return;
                             }
@@ -342,7 +338,7 @@ public class TARDISDisplayBlockListener implements Listener {
                             }
                             // should we just teleport out?
                             if (player.isSneaking()) {
-                                if (tdi == TARDISBlockDisplayItem.DOOR || tdi == TARDISBlockDisplayItem.CLASSIC_DOOR || tdi == TARDISBlockDisplayItem.BONE_DOOR || (tdi == TARDISBlockDisplayItem.CUSTOM_DOOR && isCustomClosed(display))) {
+                                if (tdi.isClosedDoor() || (tdi == TARDISBlockDisplayItem.CUSTOM_DOOR && isCustomClosed(display))) {
                                     // move to outside
                                     new InnerDisplayDoorMover(plugin).exit(player, block);
                                     return;

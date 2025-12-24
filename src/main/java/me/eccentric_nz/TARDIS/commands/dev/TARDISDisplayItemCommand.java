@@ -28,10 +28,13 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.flight.vehicle.InterpolatedAnimation;
 import me.eccentric_nz.TARDIS.flight.vehicle.VehicleUtility;
+import me.eccentric_nz.TARDIS.sonic.actions.TARDISSonicFreeze;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
+import me.eccentric_nz.TARDIS.utility.TARDISVector3D;
 import me.eccentric_nz.tardisshop.ShopItem;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Chunk;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -121,6 +124,31 @@ public class TARDISDisplayItemCommand {
                     plugin.getServer().getScheduler().cancelTask(plugin.getTrackerKeeper().getAnimateTask());
                 }
             }
+            case "door" -> {
+                // get the armour stand the player is looking at
+                Location observerPos = player.getEyeLocation();
+                TARDISVector3D observerDir = new TARDISVector3D(observerPos.getDirection());
+                TARDISVector3D observerStart = new TARDISVector3D(observerPos);
+                TARDISVector3D observerEnd = observerStart.add(observerDir.multiply(16));
+                ItemDisplay display = null;
+                // Get nearby entities
+                for (Entity target : player.getNearbyEntities(8.0d, 8.0d, 8.0d)) {
+                    // Bounding box of the given player
+                    TARDISVector3D targetPos = new TARDISVector3D(target.getLocation());
+                    TARDISVector3D minimum = targetPos.add(-0.5, 0, -0.5);
+                    TARDISVector3D maximum = targetPos.add(0.5, 1.67, 0.5);
+                    if (target.getType().equals(EntityType.ITEM_DISPLAY) && TARDISSonicFreeze.hasIntersection(observerStart, observerEnd, minimum, maximum)) {
+                        if (display == null || display.getLocation().distanceSquared(observerPos) > target.getLocation().distanceSquared(observerPos)) {
+                            display = (ItemDisplay) target;
+                        }
+                    }
+                }
+                if (display != null) {
+                    ItemStack is = display.getItemStack();
+                    plugin.getMessenger().message(player, is.getType().toString());
+                    return true;
+                }
+            }
             case "remove" -> {
                 BoundingBox box = new BoundingBox(block.getX(), block.getY(), block.getZ(), block.getX() + 1, block.getY() + 2.5, block.getZ() + 1);
                 for (Entity e : block.getWorld().getNearbyEntities(box)) {
@@ -146,7 +174,7 @@ public class TARDISDisplayItemCommand {
                     im.displayName(Component.text(TARDISStringUtils.capitalise(args[2])));
                     is.setItemMeta(im);
                     Block up = block.getRelative(BlockFace.UP);
-                    if (tdi == TARDISBlockDisplayItem.DOOR || tdi == TARDISBlockDisplayItem.CLASSIC_DOOR || tdi == TARDISBlockDisplayItem.BONE_DOOR || tdi.isLight()) {
+                    if (tdi.isClosedDoor() || tdi.isLight()) {
                         // also set an interaction entity
                         Interaction interaction = (Interaction) block.getWorld().spawnEntity(up.getLocation().clone().add(0.5d, 0, 0.5d), EntityType.INTERACTION);
                         interaction.setResponsive(true);
@@ -158,7 +186,7 @@ public class TARDISDisplayItemCommand {
                             light.setLevel(level);
                             up.setBlockData(light);
                         }
-                        if (tdi == TARDISBlockDisplayItem.DOOR || tdi == TARDISBlockDisplayItem.CLASSIC_DOOR || tdi == TARDISBlockDisplayItem.BONE_DOOR) {
+                        if (tdi.isClosedDoor()) {
                             // set size
                             interaction.setInteractionHeight(2.0f);
                             interaction.setInteractionWidth(1.0f);
@@ -166,12 +194,12 @@ public class TARDISDisplayItemCommand {
                     } else {
                         up.setType((tdi == TARDISBlockDisplayItem.ARTRON_FURNACE) ? Material.FURNACE : Material.BARRIER);
                     }
-                    double ay = (tdi == TARDISBlockDisplayItem.DOOR || tdi == TARDISBlockDisplayItem.CLASSIC_DOOR || tdi == TARDISBlockDisplayItem.BONE_DOOR) ? 0.0d : 0.5d;
+                    double ay = (tdi.isClosedDoor()) ? 0.0d : 0.5d;
                     ItemDisplay display = (ItemDisplay) block.getWorld().spawnEntity(up.getLocation().add(0.5d, ay, 0.5d), EntityType.ITEM_DISPLAY);
                     display.setItemStack(is);
                     display.setPersistent(true);
                     display.setInvulnerable(true);
-                    if (tdi == TARDISBlockDisplayItem.DOOR || tdi == TARDISBlockDisplayItem.CLASSIC_DOOR || tdi == TARDISBlockDisplayItem.BONE_DOOR || tdi == TARDISBlockDisplayItem.UNTEMPERED_SCHISM) {
+                    if (tdi.isClosedDoor() || tdi == TARDISBlockDisplayItem.UNTEMPERED_SCHISM) {
                         display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.FIXED);
                     }
                     if (tdi.getMaterial() == Material.AMETHYST_SHARD) {

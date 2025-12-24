@@ -28,6 +28,8 @@ public enum TARDISBlockDisplayItem implements TARDISDisplayItem {
     BONE_DOOR_OPEN(BoneDoorVariant.BONE_DOOR_OPEN.getKey(), Material.BIRCH_DOOR),
     CLASSIC_DOOR(ClassicDoorVariant.CLASSIC_DOOR_CLOSED.getKey(), Material.IRON_DOOR, Material.CHERRY_DOOR),
     CLASSIC_DOOR_OPEN(ClassicDoorVariant.CLASSIC_DOOR_OPEN.getKey(), Material.CHERRY_DOOR),
+    SIDRAT_DOOR(SidratDoorVariant.SIDRAT_DOOR_CLOSED.getKey(), Material.IRON_DOOR, Material.PALE_OAK_DOOR),
+    SIDRAT_DOOR_OPEN(SidratDoorVariant.SIDRAT_DOOR_OPEN.getKey(), Material.PALE_OAK_DOOR),
     CUSTOM_DOOR(null, Material.IRON_DOOR),
     SONIC_DOCK(SonicItem.SONIC_DOCK_OFF.getKey(), Material.FLOWER_POT),
     SONIC_GENERATOR(SonicItem.SONIC_GENERATOR.getKey(), Material.FLOWER_POT),
@@ -66,7 +68,7 @@ public enum TARDISBlockDisplayItem implements TARDISDisplayItem {
     @Override
     public boolean isLight() {
         switch (this) {
-            case UNTEMPERED_SCHISM -> {
+            case ARTRON_FURNACE_LIT, UNTEMPERED_SCHISM -> {
                 return true;
             }
             default -> {
@@ -78,7 +80,7 @@ public enum TARDISBlockDisplayItem implements TARDISDisplayItem {
     @Override
     public boolean isLit() {
         switch (this) {
-            case UNTEMPERED_SCHISM -> {
+            case ARTRON_FURNACE_LIT, UNTEMPERED_SCHISM -> {
                 return true;
             }
             default -> {
@@ -101,7 +103,19 @@ public enum TARDISBlockDisplayItem implements TARDISDisplayItem {
     public boolean isDoor() {
         switch (this) {
             case DOOR, DOOR_OPEN, DOOR_BOTH_OPEN, BONE_DOOR, BONE_DOOR_OPEN, CLASSIC_DOOR, CLASSIC_DOOR_OPEN,
-                 CUSTOM_DOOR -> {
+                 SIDRAT_DOOR, SIDRAT_DOOR_OPEN, CUSTOM_DOOR -> {
+                return true;
+            }
+            default -> {
+                return false;
+            }
+        }
+    }
+
+    @Override
+    public boolean isClosedDoor() {
+        switch (this) {
+            case DOOR, BONE_DOOR, CLASSIC_DOOR, SIDRAT_DOOR -> {
                 return true;
             }
             default -> {

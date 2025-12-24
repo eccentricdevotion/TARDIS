@@ -226,6 +226,7 @@ public class TARDISStaticUtils {
                     || tdi == TARDISBlockDisplayItem.DOOR_BOTH_OPEN
                     || tdi == TARDISBlockDisplayItem.BONE_DOOR_OPEN
                     || tdi == TARDISBlockDisplayItem.CLASSIC_DOOR_OPEN
+                    || tdi == TARDISBlockDisplayItem.SIDRAT_DOOR_OPEN
                     || isCustomDoorOpen(display);
         }
         return false;

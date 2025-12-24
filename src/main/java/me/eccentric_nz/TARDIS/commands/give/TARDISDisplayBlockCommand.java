@@ -21,6 +21,7 @@ import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemRegistry;
 import me.eccentric_nz.TARDIS.custommodels.keys.BoneDoorVariant;
 import me.eccentric_nz.TARDIS.custommodels.keys.ClassicDoorVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.SidratDoorVariant;
 import me.eccentric_nz.TARDIS.custommodels.keys.TardisDoorVariant;
 import me.eccentric_nz.TARDIS.doors.Door;
 import me.eccentric_nz.TARDIS.rotors.Rotor;
@@ -51,6 +52,7 @@ public class TARDISDisplayBlockCommand {
                 case IRON_DOOR -> TardisDoorVariant.TARDIS_DOOR_CLOSED.getKey();
                 case BIRCH_DOOR -> BoneDoorVariant.BONE_DOOR_CLOSED.getKey();
                 case CHERRY_DOOR -> ClassicDoorVariant.CLASSIC_DOOR_CLOSED.getKey();
+                case PALE_OAK_DOOR -> SidratDoorVariant.SIDRAT_DOOR_CLOSED.getKey();
                 default -> Door.getClosedModel(door.getMaterial());
             };
             im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, key.getKey());

@@ -53,7 +53,7 @@ public class TARDISStringUtils {
         if (s.equalsIgnoreCase("ii") || s.equalsIgnoreCase("iii") || s.equalsIgnoreCase("iv")) {
             return s.toUpperCase(Locale.ROOT);
         }
-        return s.substring(0, 1).toUpperCase(Locale.ROOT) + s.substring(1).toLowerCase(Locale.ROOT).replace("tardis", "TARDIS");
+        return s.substring(0, 1).toUpperCase(Locale.ROOT) + s.substring(1).toLowerCase(Locale.ROOT).replace("ardis", "ARDIS").replace("idrat", "IDRAT");
     }
 
     public static String titleCase(String s) {

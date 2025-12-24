@@ -155,8 +155,8 @@ public class TARDISDisplayItemUtils {
      * @param block the block to use as the search location
      */
     public static void remove(Block block) {
-        for (Entity e : block.getWorld().getNearbyEntities(block.getLocation().add(0.5d, 0.5d, 0.5d), 0.55d, 0.55d, 0.55d, (d) -> d.getType() == EntityType.INTERACTION || d.getType() == EntityType.ITEM_DISPLAY || d.getType() == EntityType.TEXT_DISPLAY || d.getType() == EntityType.ITEM_FRAME || d.getType() == EntityType.GLOW_ITEM_FRAME)) {
-            if (e instanceof Interaction || e instanceof ItemDisplay || e instanceof TextDisplay || e instanceof ItemFrame) {
+        for (Entity e : block.getWorld().getNearbyEntities(block.getLocation().add(0.5d, 0.5d, 0.5d), 0.55d, 0.55d, 0.55d, (d) -> d.getType() == EntityType.INTERACTION || d.getType() == EntityType.ITEM_DISPLAY || d.getType() == EntityType.TEXT_DISPLAY || d.getType() == EntityType.ITEM_FRAME || d.getType() == EntityType.GLOW_ITEM_FRAME || d.getType() == EntityType.MANNEQUIN)) {
+            if (e instanceof Interaction || e instanceof ItemDisplay || e instanceof TextDisplay || e instanceof ItemFrame || e instanceof Mannequin) {
                 e.remove();
             }
         }
@@ -305,7 +305,7 @@ public class TARDISDisplayItemUtils {
         if (namespacedKey == null) {
             namespacedKey = tdi.getMaterial().getKey();
         }
-        if (tdi == TARDISBlockDisplayItem.DOOR || tdi == TARDISBlockDisplayItem.CLASSIC_DOOR || tdi == TARDISBlockDisplayItem.BONE_DOOR || tdi.isLight()) {
+        if (tdi.isClosedDoor() || tdi.isLight()) {
             // also set an interaction entity
             Interaction interaction = (Interaction) block.getWorld().spawnEntity(block.getLocation().clone().add(0.5d, 0, 0.5d), EntityType.INTERACTION);
             interaction.setResponsive(true);
@@ -317,7 +317,7 @@ public class TARDISDisplayItemUtils {
                 interaction.setInteractionWidth(1.0f);
                 interaction.getPersistentDataContainer().set(TARDIS.plugin.getTardisIdKey(), PersistentDataType.INTEGER, id);
             }
-            if (tdi == TARDISBlockDisplayItem.CLASSIC_DOOR || tdi == TARDISBlockDisplayItem.BONE_DOOR) {
+            if (tdi == TARDISBlockDisplayItem.CLASSIC_DOOR || tdi == TARDISBlockDisplayItem.BONE_DOOR || tdi == TARDISBlockDisplayItem.SIDRAT_DOOR) {
                 // set size
                 interaction.setInteractionHeight(3.0f);
                 interaction.setInteractionWidth(1.0f);
@@ -340,7 +340,7 @@ public class TARDISDisplayItemUtils {
         } else if (tdi != TARDISBlockDisplayItem.ARTRON_FURNACE && tdi != TARDISBlockDisplayItem.SONIC_GENERATOR) {
             block.setBlockData(TARDISConstants.BARRIER);
         }
-        Material material = (tdi == TARDISBlockDisplayItem.CLASSIC_DOOR || tdi == TARDISBlockDisplayItem.BONE_DOOR) ? tdi.getCraftMaterial() : tdi.getMaterial();
+        Material material = (tdi == TARDISBlockDisplayItem.CLASSIC_DOOR || tdi == TARDISBlockDisplayItem.BONE_DOOR || tdi == TARDISBlockDisplayItem.SIDRAT_DOOR) ? tdi.getCraftMaterial() : tdi.getMaterial();
         ItemStack is = ItemStack.of(material, 1);
         ItemMeta im = is.getItemMeta();
         im.displayName(ComponentUtils.toWhite(tdi.getDisplayName()));
@@ -349,11 +349,11 @@ public class TARDISDisplayItemUtils {
             im.setItemModel(tdi.getCustomModel());
         }
         is.setItemMeta(im);
-        double ay = (tdi == TARDISBlockDisplayItem.DOOR || tdi == TARDISBlockDisplayItem.CLASSIC_DOOR || tdi == TARDISBlockDisplayItem.BONE_DOOR) ? 0.0d : 0.5d;
+        double ay = (tdi.isClosedDoor()) ? 0.0d : 0.5d;
         // TODO any TARDISDisplayItems that dont have a custom model are better off as a BlockDisplay
         ItemDisplay display = (ItemDisplay) block.getWorld().spawnEntity(block.getLocation().add(0.5d, ay, 0.5d), EntityType.ITEM_DISPLAY);
         display.setItemStack(is);
-        if (tdi == TARDISBlockDisplayItem.DOOR || tdi == TARDISBlockDisplayItem.CLASSIC_DOOR || tdi == TARDISBlockDisplayItem.BONE_DOOR || tdi == TARDISBlockDisplayItem.UNTEMPERED_SCHISM) {
+        if (tdi.isClosedDoor() || tdi == TARDISBlockDisplayItem.UNTEMPERED_SCHISM) {
             display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.FIXED);
         }
         display.setPersistent(true);
@@ -450,8 +450,8 @@ public class TARDISDisplayItemUtils {
      */
     public static void removeDisplaysInChunk(Chunk chunk, int lower, int upper) {
         for (Entity entity : chunk.getEntities()) {
-            // TARDIS item display and interaction entities + item frames
-            if (((entity instanceof ItemDisplay || entity instanceof Interaction) && entity.getPersistentDataContainer().has(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.INTEGER)) || entity instanceof ItemFrame) {
+            // TARDIS item display and interaction entities + item frames + mannequins
+            if (entity instanceof ItemDisplay || entity instanceof Interaction || entity instanceof ItemFrame || entity instanceof Mannequin) {
                 int y = entity.getLocation().getBlockY();
                 if (y >= lower && y <= upper) {
                     entity.remove();

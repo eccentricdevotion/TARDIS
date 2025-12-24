@@ -36,6 +36,7 @@ public class TARDISCustomDoorLoader {
         Door police_box = new Door("tardis_door", Material.IRON_DOOR, new int[]{0,1,2}, 6, true, "tardis_door_open", "tardis_door_close", false);
         Door classic = new Door("classic_door", Material.CHERRY_DOOR, new int[]{0,1,2,3,4}, 4, false, "classic_door", "classic_door", false);
         Door bone = new Door("bone_door", Material.BIRCH_DOOR, new int[]{0,1,2,3,4}, 4, false, "classic_door", "classic_door", false);
+        Door sidrat = new Door("sidrat_door", Material.PALE_OAK_DOOR, new int[]{0,1,2}, 4, false, "sidrat_open", "sidrat_close", false);
         Door.byMaterial.put(Material.IRON_DOOR, police_box);
         Door.byName.put("POLICE_BOX_DOOR", police_box);
         Door.byName.put("DOOR", police_box);
@@ -44,6 +45,8 @@ public class TARDISCustomDoorLoader {
         Door.byName.put("CLASSIC_DOOR", classic);
         Door.byMaterial.put(Material.BIRCH_DOOR, bone);
         Door.byName.put("BONE_DOOR", bone);
+        Door.byMaterial.put(Material.PALE_OAK_DOOR, sidrat);
+        Door.byName.put("SIDRAT_DOOR", sidrat);
         for (String r : plugin.getCustomDoorsConfig().getKeys(false)) {
             try {
                 Material material = Material.valueOf(plugin.getCustomDoorsConfig().getString(r + ".material"));

@@ -81,7 +81,6 @@ public class InnerDisplayDoorMover {
                 }
                 ChameleonPreset preset = tardis.getPreset();
                 float yaw = player.getLocation().getYaw();
-                float pitch = player.getLocation().getPitch();
                 boolean hb = tardis.isHandbrakeOn();
                 ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
                 if (!rsc.resultSet()) {

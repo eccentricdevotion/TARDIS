@@ -51,4 +51,9 @@ public class TARDISCustomLightDisplayItem implements TARDISDisplayItem {
     public boolean isDoor() {
         return false;
     }
+
+    @Override
+    public boolean isClosedDoor() {
+        return false;
+    }
 }
