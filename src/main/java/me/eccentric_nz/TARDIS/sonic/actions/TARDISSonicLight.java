@@ -82,7 +82,7 @@ public class TARDISSonicLight {
         plugin.getQueryFactory().doDelete("lamps", where);
         // also remove the blocks record
         HashMap<String, Object> whereb = new HashMap<>();
-        where.put("location", light.getLocation().toString());
+        whereb.put("location", light.getLocation().toString());
         plugin.getQueryFactory().doDelete("blocks", whereb);
         plugin.getMessenger().send(player, TardisModule.TARDIS, "LAMP_REMOVE");
     }
