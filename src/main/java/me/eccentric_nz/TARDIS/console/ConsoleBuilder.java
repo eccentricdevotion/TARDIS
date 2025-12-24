@@ -76,6 +76,7 @@ public class ConsoleBuilder {
                 case "console_purple" -> im.setItemModel(ConsolePart.CONSOLE_PURPLE.getKey());
                 case "console_blue" -> im.setItemModel(ConsolePart.CONSOLE_BLUE.getKey());
                 case "console_light_blue" -> im.setItemModel(ConsolePart.CONSOLE_LIGHT_BLUE.getKey());
+                case "console_light_gray" -> im.setItemModel(ConsolePart.CONSOLE_LIGHT_GRAY.getKey());
                 case "console_cyan" -> im.setItemModel(ConsolePart.CONSOLE_CYAN.getKey());
                 case "console_green" -> im.setItemModel(ConsolePart.CONSOLE_GREEN.getKey());
                 case "console_lime" -> im.setItemModel(ConsolePart.CONSOLE_LIME.getKey());
@@ -117,6 +118,7 @@ public class ConsoleBuilder {
                 case "console_purple" -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_PURPLE.getKey());
                 case "console_blue" -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_BLUE.getKey());
                 case "console_light_blue" -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_LIGHT_BLUE.getKey());
+                case "console_light_gray" -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_LIGHT_GRAY.getKey());
                 case "console_cyan" -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_CYAN.getKey());
                 case "console_green" -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_GREEN.getKey());
                 case "console_lime" -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_LIME.getKey());
@@ -259,6 +261,7 @@ public class ConsoleBuilder {
             case "console_purple" -> model = ConsolePart.CONSOLE_CENTRE_PURPLE.getKey();
             case "console_blue" -> model = ConsolePart.CONSOLE_CENTRE_BLUE.getKey();
             case "console_light_blue" -> model = ConsolePart.CONSOLE_CENTRE_LIGHT_BLUE.getKey();
+            case "console_light_gray" -> model = ConsolePart.CONSOLE_CENTRE_LIGHT_GRAY.getKey();
             case "console_cyan" -> model = ConsolePart.CONSOLE_CENTRE_CYAN.getKey();
             case "console_green" -> model = ConsolePart.CONSOLE_CENTRE_GREEN.getKey();
             case "console_lime" -> model = ConsolePart.CONSOLE_CENTRE_LIME.getKey();
@@ -268,10 +271,8 @@ public class ConsoleBuilder {
             case "console_white" -> model = ConsolePart.CONSOLE_CENTRE_WHITE.getKey();
             case "console_black" -> model = ConsolePart.CONSOLE_CENTRE_BLACK.getKey();
             case "console_gray" -> model = ConsolePart.CONSOLE_CENTRE_GRAY.getKey();
-            default -> {
-                // custom console centre
-                model = new NamespacedKey(plugin, type.replace("_", "_centre_"));
-            }
+            // custom console centre
+            default -> model = new NamespacedKey(plugin, type.replace("_", "_centre_"));
         }
         im.setItemModel(model);
         im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, model.getKey());
