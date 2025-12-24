@@ -39,8 +39,10 @@ public class TARDISCustomPresetConverter {
                         case 1 -> stained = JsonParser.parseString(line).getAsJsonArray();
                         case 2 -> glass = JsonParser.parseString(line).getAsJsonArray();
                         default -> {
-                            lines[l] = line;
-                            l++;
+                            if (l < 2) {
+                                lines[l] = line;
+                                l++;
+                            }
                         }
                     }
                     i++;
