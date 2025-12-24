@@ -8,7 +8,7 @@ loadbefore: [ Citizens ]
 website: http://tardis.pages.dev/
 dev-url: http://github.com/eccentricdevotion/TARDIS/
 url: http://tardis.pages.dev/
-version: 6.3.3@buildNumber@
+version: 6.3.4@buildNumber@
 api-version: '1.21.11'
 libraries:
   - org.jsoup:jsoup:1.21.1
@@ -301,6 +301,7 @@ permissions:
       tardis.redstone: true
       tardis.rotor: true
       tardis.rustic: true
+      tardis.sidrat: true
       tardis.steampunk: true
       tardis.thirteenth: true
       tardis.tom: true
@@ -373,6 +374,9 @@ permissions:
     default: op
   tardis.rustic:
     description: Allow players to build the Rustic TARDIS.
+    default: op
+  tardis.sidrat:
+    description: Allow players to build the 'SIDRAT' TARDIS.
     default: op
   tardis.steampunk:
     description: Allow players to build the 'steampunk' TARDIS.
