@@ -116,6 +116,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         t.put("REDSTONE", Material.REDSTONE_BLOCK); // redstone
         t.put("ROTOR", Material.HONEYCOMB_BLOCK); // rotor
         t.put("RUSTIC", Material.COPPER_BULB); // rustic
+        t.put("SIDRAT", Material.GREEN_CONCRETE); // sidrat
         t.put("STEAMPUNK", Material.COAL_BLOCK); // steampunk
         t.put("THIRTEENTH", Material.ORANGE_CONCRETE); // thirteenth designed by Razihel
         t.put("TOM", Material.LAPIS_BLOCK); // tom baker
@@ -218,10 +219,14 @@ public class TARDISRecipeCommands implements CommandExecutor {
     // maps still seem to use numeric values
     private void showShapedRecipe(Player player, String str) {
         ShapedRecipe recipe = plugin.getFigura().getShapedRecipes().get(str);
-        player.discoverRecipe(recipe.getKey());
-        player.closeInventory();
-        plugin.getTrackerKeeper().getRecipeViewers().add(player.getUniqueId());
-        player.openInventory(new TARDISShowShapedRecipeInventory(plugin, recipe, str).getInventory());
+        if (recipe == null) {
+            plugin.debug(str);
+        } else {
+            player.discoverRecipe(recipe.getKey());
+            player.closeInventory();
+            plugin.getTrackerKeeper().getRecipeViewers().add(player.getUniqueId());
+            player.openInventory(new TARDISShowShapedRecipeInventory(plugin, recipe, str).getInventory());
+        }
     }
 
     private void showShapelessRecipe(Player player, String str) {

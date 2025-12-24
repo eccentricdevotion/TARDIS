@@ -32,6 +32,7 @@ public enum TARDISSeedDisplayItem implements TARDISDisplayItem {
     REDSTONE(SeedBlock.REDSTONE.getKey(), Material.REDSTONE_BLOCK),
     ROTOR(SeedBlock.ROTOR.getKey(), Material.HONEYCOMB_BLOCK),
     RUSTIC(SeedBlock.RUSTIC.getKey(), Material.COPPER_BULB),
+    SIDRAT(SeedBlock.SIDRAT.getKey(), Material.GREEN_CONCRETE),
     STEAMPUNK(SeedBlock.STEAMPUNK.getKey(), Material.COAL_BLOCK),
     THIRTEENTH(SeedBlock.THIRTEENTH.getKey(), Material.HORN_CORAL_BLOCK),
     TOM(SeedBlock.TOM.getKey(), Material.LAPIS_BLOCK),
@@ -103,6 +104,11 @@ public enum TARDISSeedDisplayItem implements TARDISDisplayItem {
 
     @Override
     public boolean isDoor() {
+        return false;
+    }
+
+    @Override
+    public boolean isClosedDoor() {
         return false;
     }
 }

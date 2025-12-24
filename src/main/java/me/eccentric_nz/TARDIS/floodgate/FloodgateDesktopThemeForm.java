@@ -76,6 +76,7 @@ public class FloodgateDesktopThemeForm {
         blocks.put("REDSTONE", "redstone");
         blocks.put("ROTOR", "honeycomb_block");
         blocks.put("RUSTIC", "copper_bulb");
+        blocks.put("SIDRAT", "green_concrete");
         blocks.put("STEAMPUNK", "coal");
         blocks.put("THIRTEENTH", "orange_concrete");
         blocks.put("TOM", "lapis");

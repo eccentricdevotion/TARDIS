@@ -39,7 +39,7 @@ public class ArmourStandEquipment {
         setHelmetOnly(as, head);
     }
 
-    private void setHelmetOnly(ArmorStand as, ItemStack is) {
+    public static void setHelmetOnly(ArmorStand as, ItemStack is) {
         EntityEquipment ee = as.getEquipment();
         ee.setChestplate(null);
         ee.setLeggings(null);

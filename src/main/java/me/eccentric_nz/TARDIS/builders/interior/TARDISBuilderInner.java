@@ -47,10 +47,8 @@ import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.block.data.Bisected;
-import org.bukkit.block.data.BlockData;
-import org.bukkit.block.data.Directional;
-import org.bukkit.block.data.Levelled;
+import org.bukkit.block.data.*;
+import org.bukkit.block.data.type.Switch;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
@@ -119,7 +117,7 @@ public class TARDISBuilderInner implements Runnable {
      * @param plugin     an instance of the main TARDIS plugin class
      * @param schm       the name of the schematic file to use can be ANCIENT, ARS, BIGGER, BONE, BUDGET, CAVE, COPPER,
      *                   CORAL, CURSED, CUSTOM, DELTA, DELUXE, DIVISION, ELEVENTH, ENDER, FACTORY, FIFTEENTH, FUGITIVE,
-     *                   HOSPITAL, MASTER, MECHANICAL, ORIGINAL, PLANK, PYRAMID, REDSTONE, ROTOR, RUSTIC, STEAMPUNK,
+     *                   HOSPITAL, MASTER, MECHANICAL, ORIGINAL, PLANK, PYRAMID, REDSTONE, ROTOR, RUSTIC, SIDRAT, STEAMPUNK,
      *                   THIRTEENTH, TOM, TWELFTH, WAR, WEATHERED, WOOD, LEGACY_BIGGER, LEGACY_DELUXE, LEGACY_ELEVENTH,
      *                   LEGACY_REDSTONE or a CUSTOM name.
      * @param world      the world where the TARDIS is to be built.
@@ -557,6 +555,14 @@ public class TARDISBuilderInner implements Runnable {
                     String handbrakeLocation = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
                     plugin.getQueryFactory().insertSyncControl(dbID, 0, handbrakeLocation, 0);
                 }
+                if (schm.getPermission().equals("sidrat")) {
+                    // cake -> handbrake
+                    BlockData blockData = Material.LEVER.createBlockData();
+                    Switch lever = (Switch) blockData;
+                    lever.setAttachedFace(FaceAttachable.AttachedFace.WALL);
+                    lever.setFacing(BlockFace.WEST);
+                    data = lever;
+                }
                 // create default json for ARS
                 String[][][] empty = new String[3][9][9];
                 for (int ars_y = 0; ars_y < 3; ars_y++) {
@@ -652,6 +658,7 @@ public class TARDISBuilderInner implements Runnable {
                         case "delta", "cursed" -> Material.BLACKSTONE.createBlockData();
                         case "ancient", "bone", "fugitive" -> Material.GRAY_WOOL.createBlockData();
                         case "hospital" -> Material.LIGHT_GRAY_WOOL.createBlockData();
+                        case "sidrat" -> Material.RED_CONCRETE.createBlockData();
                         default -> Material.STONE_BRICKS.createBlockData();
                     };
                 }

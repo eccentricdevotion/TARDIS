@@ -88,10 +88,10 @@ public class TARDISDevCommand implements CommandExecutor {
             "happy", "head",
             "interaction",
             "label", "leather", "list",
-            "monster", "mount",
+            "mannequin", "monster", "mount",
             "ntc", "nms",
             "plurals",
-            "recipe", "regen", "registry", "rooms",
+            "recipe", "regen", "registry", "roman", "rooms",
             "screen", "skin", "snapshot", "stats", "systree",
             "tis", "tips", "tree",
             "unmount",
@@ -357,6 +357,18 @@ public class TARDISDevCommand implements CommandExecutor {
                     }
                     case "rooms" -> {
                         return new TARDISDevRoomsCommand(plugin).build(sender, args);
+                    }
+                    case "roman" -> {
+                        if (sender instanceof Player player) {
+                            new RomanCommand().equip(player, args[1]);
+                        }
+                        return true;
+                    }
+                    case "mannequin" -> {
+                        if (sender instanceof Player player) {
+                            new MannequinCommand().equip(player, args[1]);
+                        }
+                        return true;
                     }
                     case "plurals" -> {
                         for (Material m : Material.values()) {

@@ -17,8 +17,10 @@
 package me.eccentric_nz.TARDIS.desktop;
 
 import com.destroystokyo.paper.MaterialTags;
+import com.destroystokyo.paper.profile.ProfileProperty;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import io.papermc.paper.datacomponent.item.ResolvableProfile;
 import io.papermc.paper.registry.RegistryAccess;
 import io.papermc.paper.registry.RegistryKey;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -46,11 +48,14 @@ import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import me.eccentric_nz.TARDIS.schematic.archive.ResultSetArchiveByUse;
 import me.eccentric_nz.TARDIS.schematic.getters.DataPackPainting;
 import me.eccentric_nz.TARDIS.schematic.setters.*;
+import me.eccentric_nz.TARDIS.skins.MannequinSkins;
+import me.eccentric_nz.TARDIS.skins.Skin;
 import me.eccentric_nz.TARDIS.utility.TARDISBannerData;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import me.eccentric_nz.TARDIS.utility.protection.TARDISProtectionRemover;
+import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -60,6 +65,8 @@ import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Directional;
 import org.bukkit.block.data.Levelled;
 import org.bukkit.entity.*;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.MainHand;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.*;
@@ -322,6 +329,33 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                 Entity ender_crystal = world.spawnEntity(ender, EntityType.END_CRYSTAL);
                 ((EnderCrystal) ender_crystal).setShowingBottom(false);
             }
+            // mannequins
+            if (obj.has("mannequins")) {
+                JsonArray mannequins = obj.get("mannequins").getAsJsonArray();
+                for (int i = 0; i < mannequins.size(); i++) {
+                    JsonObject mannequin = mannequins.get(i).getAsJsonObject();
+                    JsonObject rel = mannequin.get("rel_location").getAsJsonObject();
+                    int mx = rel.get("x").getAsInt();
+                    int my = rel.get("y").getAsInt();
+                    int mz = rel.get("z").getAsInt();
+                    Location ml = new Location(world, resetx + mx + 0.5d, starty + my, resetz + mz + 0.5d);
+                    Mannequin m = (Mannequin) world.spawnEntity(ml, EntityType.MANNEQUIN);
+                    m.setRotation(mannequin.get("rotation").getAsFloat(), 0);
+                    m.setBodyYaw(mannequin.get("yaw").getAsFloat());
+                    String which = mannequin.get("type").getAsString();
+                    m.getPersistentDataContainer().set(TARDISWeepingAngels.MONSTER_HEAD, PersistentDataType.STRING, which);
+                    Skin skin = MannequinSkins.getByName.getOrDefault(which, MannequinSkins.ROMAN);
+                    m.setProfile(ResolvableProfile.resolvableProfile().name("").uuid(UUID.randomUUID()).addProperty(new ProfileProperty("textures", skin.value(), skin.signature())).build());
+                    m.setSilent(true);
+                    m.setAI(false);
+                    m.setImmovable(true);
+                    if (mannequin.has("hand")) {
+                        m.setMainHand(mannequin.get("hand").getAsString().equals("left") ? MainHand.LEFT : MainHand.RIGHT);
+                        m.getEquipment().setItemInMainHand(ItemStack.of(mannequin.get("item").getAsString().equals("IRON_SWORD") ? Material.IRON_SWORD : Material.IRON_SPEAR));
+                    }
+                }
+            }
+            // paintings
             if (obj.has("paintings")) {
                 JsonArray paintings = (JsonArray) obj.get("paintings");
                 for (int i = 0; i < paintings.size(); i++) {
@@ -561,6 +595,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                             case "delta", "cursed" -> Material.BLACKSTONE.createBlockData();
                             case "ancient", "bone", "fugitive" -> Material.GRAY_WOOL.createBlockData();
                             case "hospital" -> Material.LIGHT_GRAY_WOOL.createBlockData();
+                            case "sidrat" -> Material.RED_CONCRETE.createBlockData();
                             default -> Material.STONE_BRICKS.createBlockData();
                         };
                     }

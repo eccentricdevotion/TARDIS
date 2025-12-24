@@ -47,6 +47,7 @@ public enum SeedBlock {
     REDSTONE(new NamespacedKey(TARDIS.plugin, "seed_redstone")),
     ROTOR(new NamespacedKey(TARDIS.plugin, "seed_rotor")),
     RUSTIC(new NamespacedKey(TARDIS.plugin, "seed_rustic")),
+    SIDRAT(new NamespacedKey(TARDIS.plugin, "seed_sidrat")),
     STEAMPUNK(new NamespacedKey(TARDIS.plugin, "seed_steampunk")),
     THIRTEENTH(new NamespacedKey(TARDIS.plugin, "seed_thirteenth")),
     TOM(new NamespacedKey(TARDIS.plugin, "seed_tom")),

@@ -76,7 +76,6 @@ public final class TARDISDisplayItemRegistry {
     public static void register(TARDISDisplayItem displayItem) {
         BY_ID.put(displayItem.getId(), displayItem);
         BY_NAME.put(displayItem.getName().toLowerCase(Locale.ROOT), displayItem);
-
         NamespacedKey customModel = displayItem.getCustomModel();
         if (customModel != null) {
             BY_MODEL.put(customModel, displayItem);

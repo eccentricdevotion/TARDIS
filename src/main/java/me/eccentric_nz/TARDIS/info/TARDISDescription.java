@@ -164,6 +164,7 @@ public enum TARDISDescription {
     HOSPITAL("St John's Hospital TARDIS; for when you just need some rest."),
     REDSTONE("This one has some redstone in it - console design by killeratnight & L0rd Rahl."),
     STEAMPUNK("Small, but steamy."),
+    SIDRAT("Space and Inter-time Dimensional Robot All-purpose Transporter."),
     PLANK("A wood based interior."),
     TOM("The 4th Doctor's TARDIS."),
     ARS("The Architectural Reconfiguration System TARDIS - console design by killeratnight & L0rd Rahl."),

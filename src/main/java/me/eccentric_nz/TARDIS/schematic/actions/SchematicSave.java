@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.schematic.actions;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.customblocks.TARDISBlockDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemRegistry;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -27,6 +26,7 @@ import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import me.eccentric_nz.TARDIS.schematic.getters.DataPackPainting;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import net.kyori.adventure.text.Component;
 import org.bukkit.*;
 import org.bukkit.block.*;
@@ -34,6 +34,7 @@ import org.bukkit.block.sign.Side;
 import org.bukkit.block.sign.SignSide;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.MainHand;
 import org.bukkit.inventory.meta.BlockStateMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
@@ -128,6 +129,7 @@ public class SchematicSave {
         JsonArray itemFrames = new JsonArray();
         JsonArray itemDisplays = new JsonArray();
         JsonArray interactions = new JsonArray();
+        JsonArray mannequins = new JsonArray();
         List<Entity> entities = new ArrayList<>();
         // create JSON arrays for block data
         JsonArray levels = new JsonArray();
@@ -144,6 +146,26 @@ public class SchematicSave {
                     BoundingBox box = new BoundingBox(location.getBlockX(), location.getBlockY(), location.getBlockZ(), location.getBlockX() + 1, location.getBlockY() + 1, location.getBlockZ() + 1).expand(0.1d);
                     for (Entity entity : b.getLocation().getWorld().getNearbyEntities(box)) {
                         Location entityLocation = entity.getLocation();
+                        if (entity instanceof Mannequin mannequin) {
+                            if (!entities.contains(entity)) {
+                                JsonObject soldier = new JsonObject();
+                                JsonObject loc = new JsonObject();
+                                loc.addProperty("x", entityLocation.getBlockX() - minx);
+                                loc.addProperty("y", entityLocation.getBlockY() - miny);
+                                loc.addProperty("z", entityLocation.getBlockZ() - minz);
+                                soldier.add("rel_location", loc);
+                                soldier.addProperty("rotation", mannequin.getYaw());
+                                soldier.addProperty("yaw", mannequin.getBodyYaw());
+                                String type = mannequin.getPersistentDataContainer().getOrDefault(TARDISWeepingAngels.MONSTER_HEAD, PersistentDataType.STRING, "roman");
+                                soldier.addProperty("type", type);
+                                if (!mannequin.getEquipment().getItemInMainHand().getType().isAir()) {
+                                    soldier.addProperty("hand", mannequin.getMainHand() == MainHand.LEFT ? "left" : "right");
+                                    soldier.addProperty("item", mannequin.getEquipment().getItemInMainHand().getType().toString());
+                                }
+                                mannequins.add(soldier);
+                                entities.add(entity);
+                            }
+                        }
                         if (entity instanceof ArmorStand stand) {
                             if (!entities.contains(entity)) {
                                 JsonObject as = new JsonObject();
@@ -257,7 +279,7 @@ public class SchematicSave {
                                 if (tdi != null) {
                                     stack.addProperty("light", tdi.isLight());
                                     stack.addProperty("lit", tdi.isLit());
-                                    if (tdi == TARDISBlockDisplayItem.DOOR || tdi == TARDISBlockDisplayItem.CLASSIC_DOOR || tdi == TARDISBlockDisplayItem.BONE_DOOR) {
+                                    if (tdi.isClosedDoor()) {
                                         stack.addProperty("door", true);
                                     }
                                 }
@@ -331,6 +353,9 @@ public class SchematicSave {
         schematic.add("relative", relative);
         schematic.add("dimensions", dimensions);
         schematic.add("input", levels);
+        if (!mannequins.isEmpty()) {
+            schematic.add("mannequins", mannequins);
+        }
         if (!armourStands.isEmpty()) {
             schematic.add("armour_stands", armourStands);
         }

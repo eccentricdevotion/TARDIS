@@ -80,6 +80,7 @@ public class TARDISDesktopLoader {
         Desktops.getBY_NAMES().put("REDSTONE", new Schematic("REDSTONE_BLOCK", "redstone", "Redstone Console", ConsoleSize.MEDIUM, true, TardisLight.TENTH, 65, false, -33));
         Desktops.getBY_NAMES().put("ROTOR", new Schematic("HONEYCOMB_BLOCK", "rotor", "Time Rotor Console", ConsoleSize.SMALL, false, TardisLight.TENTH, false, -34));
         Desktops.getBY_NAMES().put("RUSTIC", new Schematic("COPPER_BULB", "rustic", "Rustic Console", ConsoleSize.MEDIUM, false, TardisLight.BULB, false, -35));
+        Desktops.getBY_NAMES().put("SIDRAT", new Schematic("GREEN_CONCRETE", "sidrat", "SIDRAT Console", ConsoleSize.MEDIUM, false, TardisLight.CLASSIC, false, -60));
         Desktops.getBY_NAMES().put("STEAMPUNK", new Schematic("COAL_BLOCK", "steampunk", "Steampunk Console", ConsoleSize.SMALL, true, TardisLight.LAMP, false, -36));
         // THIRTEENTH designed by Razihel
         Desktops.getBY_NAMES().put("THIRTEENTH", new Schematic("HORN_CORAL_BLOCK", "thirteenth", "13th Doctor's Console", ConsoleSize.MEDIUM, false, TardisLight.THIRTEENTH, 65, false, -37));

@@ -100,6 +100,7 @@ rustic_seed: 250.00
 rust_plague_sword: 25.00
 save_storage_disk: 5.00
 sea_devil_head: 75.00
+sidrat_seed: 250.00
 silent_head: 75.00
 silurian_head: 75.00
 slitheen_head: 75.00
@@ -195,6 +196,7 @@ blueprint_console_plank: 33.00
 blueprint_console_pyramid: 33.00
 blueprint_console_redstone: 33.00
 blueprint_console_rotor: 33.00
+blueprint_console_sidrat: 33.00
 blueprint_console_steampunk: 33.00
 blueprint_console_thirteenth: 33.00
 blueprint_console_tom: 33.00

@@ -753,6 +753,9 @@ public class TARDISInformationSystemListener implements Listener {
                 if (chat.equalsIgnoreCase("$")) {
                     new TISInfo(plugin).show(p, TARDISInfoMenu.RUSTIC);
                 }
+                if (chat.equalsIgnoreCase("@")) {
+                    new TISInfo(plugin).show(p, TARDISInfoMenu.SIDRAT);
+                }
                 if (chat.equalsIgnoreCase("S")) {
                     new TISInfo(plugin).show(p, TARDISInfoMenu.STEAMPUNK);
                 }

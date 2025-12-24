@@ -47,7 +47,7 @@ public class TARDISRecipeTabComplete extends TARDISCompleter implements TabCompl
             "original",
             "plank", "pyramid",
             "redstone", "rotor", "rustic",
-            "steampunk",
+            "sidrat", "steampunk",
             "thirteenth", "tom", "twelfth",
             "war", "weathered", "wood",
             "legacy_bigger", "legacy_deluxe", "legacy_eleventh", "legacy_redstone"
