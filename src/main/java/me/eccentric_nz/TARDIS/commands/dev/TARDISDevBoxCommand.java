@@ -269,6 +269,14 @@ public class TARDISDevBoxCommand {
                                 default -> model = ChameleonVariant.SIDRAT_CLOSED.getKey();
                             }
                         }
+                        case RED_STAINED_GLASS_PANE -> {
+                            switch (args[2]) {
+                                case "open" -> model = ChameleonVariant.BATTLE_OPEN.getKey();
+                                case "stained" -> model = ChameleonVariant.BATTLE_STAINED.getKey();
+                                case "glass" -> model = ChameleonVariant.BATTLE_GLASS.getKey();
+                                default -> model = ChameleonVariant.BATTLE_CLOSED.getKey();
+                            }
+                        }
                     }
                 }
                 im.setItemModel(model);

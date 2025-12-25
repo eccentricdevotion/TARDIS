@@ -118,6 +118,7 @@ public class TARDISBuilderUtility {
             case COLOURED -> { return Material.LEATHER_HORSE_ARMOR; }
             case PANDORICA -> { return Material.ENDER_PEARL; }
             case SIDRAT -> { return Material.GREEN_STAINED_GLASS_PANE; }
+            case BATTLE -> { return Material.RED_STAINED_GLASS_PANE; }
             default -> {
                 String split = preset.toString().replace("POLICE_BOX_", "");
                 String dye = split + "_DYE";
@@ -153,6 +154,7 @@ public class TARDISBuilderUtility {
             case ENDER_PEARL -> im.setItemModel(ChameleonVariant.PANDORICA_CLOSED.getKey());
             case GREEN_STAINED_GLASS_PANE -> im.setItemModel(ChameleonVariant.SIDRAT_CLOSED.getKey());
             case GRAY_STAINED_GLASS_PANE -> im.setItemModel(ChameleonVariant.WEEPING_ANGEL_CLOSED.getKey());
+            case RED_STAINED_GLASS_PANE -> im.setItemModel(ChameleonVariant.BATTLE_CLOSED.getKey());
             // CUSTOM
             default -> im.setItemModel(new NamespacedKey(plugin, getCustomModelPath(dye.toString()) + "_closed"));
         }
@@ -162,6 +164,7 @@ public class TARDISBuilderUtility {
                 case WEEPING_ANGEL -> pb = "Weeping Angel";
                 case PANDORICA -> pb = "Pandorica";
                 case SIDRAT -> pb = "SIDRAT";
+                case BATTLE -> pb = "Battle TARDIS";
                 case ITEM -> {
                     for (String k : plugin.getCustomModelConfig().getConfigurationSection("models").getKeys(false)) {
                         if (plugin.getCustomModelConfig().getString("models." + k + ".item").equals(dye.toString())) {

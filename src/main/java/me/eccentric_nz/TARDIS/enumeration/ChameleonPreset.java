@@ -118,7 +118,8 @@ public enum ChameleonPreset {
     WEEPING_ANGEL(Material.GRAY_CONCRETE, 17, "", "", false, false, "Weeping Angel"),
     PANDORICA(Material.BLACK_CONCRETE, 18, "", "", false, true, "Pandorica"),
     SIDRAT(Material.GREEN_CONCRETE, 19, "", "", false, true, "SIDRAT"),
-    COLOURED(Material.LEATHER_HORSE_ARMOR, 20, "", "", false, true, "Pick a colour"),
+    BATTLE(Material.RED_CONCRETE, 20, "", "", false, true, "Battle TARDIS"),
+    COLOURED(Material.LEATHER_HORSE_ARMOR, 21, "", "", false, true, "Pick a colour"),
 
     ITEM(Material.BARRIER, -1, "", "", false, true, "Item");
 
@@ -242,7 +243,7 @@ public enum ChameleonPreset {
             case POLICE_BOX_BLUE, POLICE_BOX_WHITE, POLICE_BOX_ORANGE, POLICE_BOX_MAGENTA, POLICE_BOX_LIGHT_BLUE,
                 POLICE_BOX_YELLOW, POLICE_BOX_LIME, POLICE_BOX_PINK, POLICE_BOX_GRAY, POLICE_BOX_LIGHT_GRAY,
                 POLICE_BOX_CYAN, POLICE_BOX_PURPLE, POLICE_BOX_BROWN, POLICE_BOX_GREEN, POLICE_BOX_RED,
-                POLICE_BOX_BLACK, POLICE_BOX_TENNANT, WEEPING_ANGEL, COLOURED, PANDORICA, SIDRAT, ITEM -> true;
+                POLICE_BOX_BLACK, POLICE_BOX_TENNANT, WEEPING_ANGEL, COLOURED, PANDORICA, SIDRAT, BATTLE, ITEM -> true;
             default -> false;
         };
     }
@@ -281,6 +282,7 @@ public enum ChameleonPreset {
             case COLOURED -> { return ColouredVariant.TINTED_CLOSED.getKey(); }
             case PANDORICA -> { return ChameleonVariant.PANDORICA_CLOSED.getKey(); }
             case SIDRAT -> { return ChameleonVariant.SIDRAT_CLOSED.getKey(); }
+            case BATTLE -> { return ChameleonVariant.BATTLE_CLOSED.getKey(); }
         }
         return null;
     }
@@ -307,6 +309,8 @@ public enum ChameleonPreset {
             case WEEPING_ANGEL -> { return ChameleonVariant.WEEPING_ANGEL_OPEN.getKey(); }
             case COLOURED -> { return ColouredVariant.TINTED_OPEN.getKey(); }
             case PANDORICA -> { return ChameleonVariant.PANDORICA_OPEN.getKey(); }
+            case SIDRAT -> { return ChameleonVariant.SIDRAT_OPEN.getKey(); }
+            case BATTLE -> { return ChameleonVariant.BATTLE_OPEN.getKey(); }
         }
         return null;
     }
@@ -333,6 +337,8 @@ public enum ChameleonPreset {
             case WEEPING_ANGEL -> { return ChameleonVariant.WEEPING_ANGEL_STAINED.getKey(); }
             case COLOURED -> { return ColouredVariant.TINTED_STAINED.getKey(); }
             case PANDORICA -> { return ChameleonVariant.PANDORICA_STAINED.getKey(); }
+            case SIDRAT -> { return ChameleonVariant.SIDRAT_STAINED.getKey(); }
+            case BATTLE -> { return ChameleonVariant.BATTLE_STAINED.getKey(); }
         }
         return null;
     }
@@ -345,6 +351,8 @@ public enum ChameleonPreset {
                  POLICE_BOX_TENNANT, COLOURED -> { return ChameleonVariant.GLASS.getKey(); }
             case WEEPING_ANGEL -> { return ChameleonVariant.WEEPING_ANGEL_GLASS.getKey(); }
             case PANDORICA -> { return ChameleonVariant.PANDORICA_GLASS.getKey(); }
+            case SIDRAT -> { return ChameleonVariant.SIDRAT_GLASS.getKey(); }
+            case BATTLE -> { return ChameleonVariant.BATTLE_GLASS.getKey(); }
         }
         return null;
     }

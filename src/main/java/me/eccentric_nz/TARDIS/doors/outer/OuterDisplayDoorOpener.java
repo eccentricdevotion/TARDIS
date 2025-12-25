@@ -75,6 +75,7 @@ public class OuterDisplayDoorOpener {
                 switch (dye.getType()) {
                     case CYAN_STAINED_GLASS_PANE -> dim.setItemModel(ChameleonVariant.TENNANT_OPEN.getKey());
                     case GRAY_STAINED_GLASS_PANE -> dim.setItemModel(ChameleonVariant.WEEPING_ANGEL_OPEN.getKey());
+                    case RED_STAINED_GLASS_PANE -> dim.setItemModel(ChameleonVariant.BATTLE_OPEN.getKey());
                     case WHITE_DYE -> dim.setItemModel(ChameleonVariant.WHITE_OPEN.getKey());
                     case ORANGE_DYE -> dim.setItemModel(ChameleonVariant.ORANGE_OPEN.getKey());
                     case MAGENTA_DYE -> dim.setItemModel(ChameleonVariant.MAGENTA_OPEN.getKey());

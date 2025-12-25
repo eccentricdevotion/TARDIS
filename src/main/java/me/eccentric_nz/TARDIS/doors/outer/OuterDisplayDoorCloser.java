@@ -73,6 +73,7 @@ public class OuterDisplayDoorCloser {
                 switch (dye.getType()) {
                     case CYAN_STAINED_GLASS_PANE -> dim.setItemModel(ChameleonVariant.TENNANT_CLOSED.getKey());
                     case GRAY_STAINED_GLASS_PANE -> dim.setItemModel(ChameleonVariant.WEEPING_ANGEL_CLOSED.getKey());
+                    case RED_STAINED_GLASS_PANE -> dim.setItemModel(ChameleonVariant.BATTLE_CLOSED.getKey());
                     case WHITE_DYE -> dim.setItemModel(ChameleonVariant.WHITE_CLOSED.getKey());
                     case ORANGE_DYE -> dim.setItemModel(ChameleonVariant.ORANGE_CLOSED.getKey());
                     case MAGENTA_DYE -> dim.setItemModel(ChameleonVariant.MAGENTA_CLOSED.getKey());

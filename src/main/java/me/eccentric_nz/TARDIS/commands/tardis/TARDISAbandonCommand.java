@@ -293,6 +293,7 @@ public class TARDISAbandonCommand {
                                         case WEEPING_ANGEL -> pb = "Weeping Angel";
                                         case PANDORICA -> pb = "Pandorica";
                                         case SIDRAT -> pb = "SIDRAT";
+                                        case BATTLE -> pb = "Battle TARDIS";
                                         case ITEM -> {
                                             for (String k : plugin.getCustomModelConfig().getConfigurationSection("models").getKeys(false)) {
                                                 if (is.getType().toString().equals(plugin.getCustomModelConfig().getString("models." + k + ".item"))) {

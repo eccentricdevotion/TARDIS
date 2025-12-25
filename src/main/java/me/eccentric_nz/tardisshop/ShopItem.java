@@ -288,6 +288,7 @@ public enum ShopItem {
     BLUEPRINT_PRESET_ANGEL("Blueprint Angel", Material.MUSIC_DISC_MELLOHI, DiskVariant.BLUEPRINT_DISK.getKey(), ShopItemRecipe.BLUEPRINT),
     BLUEPRINT_PRESET_APPERTURE("Blueprint Apperture", Material.MUSIC_DISC_MELLOHI, DiskVariant.BLUEPRINT_DISK.getKey(), ShopItemRecipe.BLUEPRINT),
     BLUEPRINT_PRESET_CAKE("Blueprint Cake", Material.MUSIC_DISC_MELLOHI, DiskVariant.BLUEPRINT_DISK.getKey(), ShopItemRecipe.BLUEPRINT),
+    BLUEPRINT_PRESET_BATTLE("Blueprint Battle TARDIS", Material.MUSIC_DISC_MELLOHI, DiskVariant.BLUEPRINT_DISK.getKey(), ShopItemRecipe.BLUEPRINT),
     BLUEPRINT_PRESET_CANDY("Blueprint Candy", Material.MUSIC_DISC_MELLOHI, DiskVariant.BLUEPRINT_DISK.getKey(), ShopItemRecipe.BLUEPRINT),
     BLUEPRINT_PRESET_CHALICE("Blueprint Chalice", Material.MUSIC_DISC_MELLOHI, DiskVariant.BLUEPRINT_DISK.getKey(), ShopItemRecipe.BLUEPRINT),
     BLUEPRINT_PRESET_CHORUS("Blueprint Chorus", Material.MUSIC_DISC_MELLOHI, DiskVariant.BLUEPRINT_DISK.getKey(), ShopItemRecipe.BLUEPRINT),

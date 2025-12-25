@@ -22,6 +22,7 @@ public enum BlueprintPreset {
     ANDESITE("tardis.preset.andesite"),
     ANGEL("tardis.preset.angel"),
     APPERTURE("tardis.preset.apperture"),
+    BATTLE("tardis.preset.battle"),
     CAKE("tardis.preset.cake"),
     CANDY("tardis.preset.candy"),
     CHALICE("tardis.preset.chalice"),
