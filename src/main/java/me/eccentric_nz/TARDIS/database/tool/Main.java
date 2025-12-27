@@ -271,7 +271,7 @@ public class Main {
                                         bw.write(str);
                                     }
                                     case lamps -> {
-                                        str = String.format(SQL.VALUES.get(i), rs.getInt("l_id"), rs.getInt("tardis_id"), rs.getString("location")) + end;
+                                        str = String.format(SQL.VALUES.get(i), rs.getInt("l_id"), rs.getInt("tardis_id"), rs.getString("location"), rs.getString("material_on"), rs.getString("material_off"), rs.getFloat("percentage")) + end;
                                         bw.write(str);
                                     }
                                     case light_prefs -> {

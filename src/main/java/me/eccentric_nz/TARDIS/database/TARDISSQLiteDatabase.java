@@ -192,7 +192,7 @@ public class TARDISSQLiteDatabase {
             statement.executeUpdate(queryJunk);
 
             // Table structure for table 'lamps'
-            String queryLamps = "CREATE TABLE IF NOT EXISTS " + prefix + "lamps (l_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, location TEXT COLLATE NOCASE DEFAULT '')";
+            String queryLamps = "CREATE TABLE IF NOT EXISTS " + prefix + "lamps (l_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, location TEXT COLLATE NOCASE DEFAULT '', material_on TEXT DEFAULT '', material_off, percentage REAL DEFAULT 1.0)";
             statement.executeUpdate(queryLamps);
 
             // Table structure for table 'light_prefs'
