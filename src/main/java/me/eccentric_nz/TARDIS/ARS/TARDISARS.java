@@ -56,6 +56,7 @@ public enum TARDISARS implements ARS {
     MANGROVE("MUDDY_MANGROVE_ROOTS", "Mangrove", 1, RoomVariant.MANGROVE.getKey()),
     MAZE("LODESTONE", "Maze", 1, RoomVariant.MAZE.getKey()),
     MUSHROOM("GRAVEL", "Mycellium", 1, RoomVariant.MUSHROOM.getKey()),
+    NAUTILUS("DEAD_HORN_CORAL_BLOCK", "Nautilus Tank", 1, RoomVariant.NAUTILUS.getKey()),
     NETHER("BLACKSTONE", "Nether", 1, RoomVariant.NETHER.getKey()),
     OBSERVATORY("POLISHED_BLACKSTONE_BRICKS", "Astronomical Observatory", 1, RoomVariant.OBSERVATORY.getKey()),
     PASSAGE("CLAY", "Passage", 1, RoomVariant.PASSAGE.getKey()),

@@ -464,6 +464,7 @@ permissions:
       tardis.room.mangrove: true
       tardis.room.maze: true
       tardis.room.mushroom: true
+      tardis.room.nautilus: true
       tardis.room.nether: true
       tardis.room.observatory: true
       tardis.room.passage: true

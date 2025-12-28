@@ -381,6 +381,7 @@ public enum ShopItem {
     BLUEPRINT_ROOM_MANGROVE("Blueprint Mangrove", Material.MUSIC_DISC_MELLOHI, DiskVariant.BLUEPRINT_DISK.getKey(), ShopItemRecipe.BLUEPRINT),
     BLUEPRINT_ROOM_MAZE("Blueprint Maze", Material.MUSIC_DISC_MELLOHI, DiskVariant.BLUEPRINT_DISK.getKey(), ShopItemRecipe.BLUEPRINT),
     BLUEPRINT_ROOM_MUSHROOM("Blueprint Mushroom", Material.MUSIC_DISC_MELLOHI, DiskVariant.BLUEPRINT_DISK.getKey(), ShopItemRecipe.BLUEPRINT),
+    BLUEPRINT_ROOM_NAUTILUS("Blueprint Nautilus", Material.MUSIC_DISC_MELLOHI, DiskVariant.BLUEPRINT_DISK.getKey(), ShopItemRecipe.BLUEPRINT),
     BLUEPRINT_ROOM_NETHER("Blueprint Nether", Material.MUSIC_DISC_MELLOHI, DiskVariant.BLUEPRINT_DISK.getKey(), ShopItemRecipe.BLUEPRINT),
     BLUEPRINT_ROOM_PASSAGE("Blueprint Passage", Material.MUSIC_DISC_MELLOHI, DiskVariant.BLUEPRINT_DISK.getKey(), ShopItemRecipe.BLUEPRINT),
     BLUEPRINT_ROOM_PEN("Blueprint Pen", Material.MUSIC_DISC_MELLOHI, DiskVariant.BLUEPRINT_DISK.getKey(), ShopItemRecipe.BLUEPRINT),

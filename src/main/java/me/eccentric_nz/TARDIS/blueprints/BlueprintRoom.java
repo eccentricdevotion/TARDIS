@@ -54,6 +54,7 @@ public enum BlueprintRoom {
     LIBRARY("tardis.room.library"),
     MAZE("tardis.room.maze"),
     MUSHROOM("tardis.room.mushroom"),
+    NAUTILUS("tardis.room.nautilus"),
     NETHER("tardis.room.nether"),
     OBSERVATORY("tardis.room.observatory"),
     PASSAGE("tardis.room.passage"),

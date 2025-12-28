@@ -36,13 +36,14 @@ public class FarmPrefs {
     private final boolean igloo;
     private final boolean iistubil;
     private final boolean mangrove;
+    private final boolean nautilis;
     private final boolean lava;
     private final boolean pen;
     private final boolean stable;
     private final boolean stall;
     private final boolean village;
 
-    public FarmPrefs(UUID uuid, boolean allay, boolean apiary, boolean aquarium, boolean bamboo, boolean birdcage, boolean farm, boolean geode, boolean happy, boolean hutch, boolean igloo, boolean iistubil, boolean lava, boolean mangrove, boolean pen, boolean stable, boolean stall, boolean village) {
+    public FarmPrefs(UUID uuid, boolean allay, boolean apiary, boolean aquarium, boolean bamboo, boolean birdcage, boolean farm, boolean geode, boolean happy, boolean hutch, boolean igloo, boolean iistubil, boolean lava, boolean mangrove, boolean nautilus, boolean pen, boolean stable, boolean stall, boolean village) {
         this.uuid = uuid;
         this.apiary = apiary;
         this.allay = allay;
@@ -57,6 +58,7 @@ public class FarmPrefs {
         this.iistubil = iistubil;
         this.lava = lava;
         this.mangrove = mangrove;
+        this.nautilis = nautilus;
         this.pen = pen;
         this.stable = stable;
         this.stall = stall;
@@ -187,6 +189,15 @@ public class FarmPrefs {
      */
     public boolean shouldFarmFrogs() {
         return mangrove;
+    }
+
+    /**
+     * Returns if the player wants to farm into the Nautilus room.
+     *
+     * @return true or false
+     */
+    public boolean shouldFarmNautili() {
+        return nautilis;
     }
 
     /**

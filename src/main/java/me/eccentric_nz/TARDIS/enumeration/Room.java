@@ -50,6 +50,7 @@ public enum Room {
     MANGROVE,
     MAZE,
     MUSHROOM,
+    NAUTILUS,
     NETHER,
     OBSERVATORY,
     PASSAGE,

@@ -85,6 +85,7 @@ public class ResultSetFarming {
                         rs.getString("iistubil"),
                         rs.getString("lava"),
                         rs.getString("mangrove"),
+                        rs.getString("nautilus"),
                         rs.getString("pen"),
                         rs.getString("stable"),
                         rs.getString("stall"),

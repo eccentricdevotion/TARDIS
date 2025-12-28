@@ -268,6 +268,7 @@ public enum TARDISInfoMenu {
     MANGROVE("TIS|Rooms 2|Mangrove", "ROOMS_2", "ng"),
     MAZE("TIS|Rooms 2|Maze", "ROOMS_2", "ze"),
     MUSHROOM("TIS|Rooms 2|Mushroom", "ROOMS_2", "M"),
+    NAUTILUS("TIS|Rooms 2|Nautilus", "ROOMS_2", "u"),
     NETHER("TIS|Rooms 2|Nether", "ROOMS_2", "th"),
     OBSERVATORY("TIS|Rooms 2|Observatory", "ROOMS_2", "y"),
     PASSAGE("TIS|Rooms 2|Passage", "ROOMS_2", "P"),
@@ -667,10 +668,11 @@ public enum TARDISInfoMenu {
 
     public boolean isRoom() {
         switch (this) {
-            case ALLAY, ANTIGRAVITY, APIARY, AQUARIUM, ARBORETUM, BAKER, BAMBOO, BEDROOM, BIRDCAGE, CHEMISTRY, EMPTY, EYE,
-                    FARM, GARDEN, GEODE, GRAVITY, GREENHOUSE, HAPPY, HARMONY, HUTCH, IGLOO, IISTUBIL, KITCHEN, LAZARUS, LAVA,
-                    LIBRARY, MANGROVE, MAZE, MUSHROOM, NETHER, OBSERVATORY, PASSAGE, PEN, POOL, RAIL, RENDERER, SHELL, SMELTER, STABLE,
-                    STALL, SURGERY, TRENZALORE, VAULT, VILLAGE, WOOD, WORKSHOP, ZERO -> {
+            case ALLAY, ANTIGRAVITY, APIARY, AQUARIUM, ARBORETUM, BAKER, BAMBOO, BEDROOM, BIRDCAGE, CHEMISTRY, EMPTY,
+                 EYE, FARM, GARDEN, GEODE, GRAVITY, GREENHOUSE, HAPPY, HARMONY, HUTCH, IGLOO, IISTUBIL, KITCHEN,
+                 LAZARUS, LAVA, LIBRARY, MANGROVE, MAZE, MUSHROOM, NAUTILUS, NETHER, OBSERVATORY, PASSAGE, PEN, POOL,
+                 RAIL, RENDERER, SHELL, SMELTER, STABLE, STALL, SURGERY, TRENZALORE, VAULT, VILLAGE, WOOD, WORKSHOP,
+                 ZERO -> {
                 return true;
             }
             default -> {

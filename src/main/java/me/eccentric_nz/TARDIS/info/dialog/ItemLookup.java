@@ -76,6 +76,7 @@ public class ItemLookup {
         ITEMS.put(TARDISInfoMenu.MANGROVE, new InfoIcon(Material.MUDDY_MANGROVE_ROOTS, "Mangrove", RoomVariant.MANGROVE.getKey()));
         ITEMS.put(TARDISInfoMenu.MAZE, new InfoIcon(Material.LODESTONE, "Maze", RoomVariant.MAZE.getKey()));
         ITEMS.put(TARDISInfoMenu.MUSHROOM, new InfoIcon(Material.GRAVEL, "Mycellium", RoomVariant.MUSHROOM.getKey()));
+        ITEMS.put(TARDISInfoMenu.NAUTILUS, new InfoIcon(Material.DEAD_HORN_CORAL_BLOCK, "Nautilus", RoomVariant.NAUTILUS.getKey()));
         ITEMS.put(TARDISInfoMenu.NETHER, new InfoIcon(Material.BLACKSTONE, "Nether", RoomVariant.NETHER.getKey()));
         ITEMS.put(TARDISInfoMenu.OBSERVATORY, new InfoIcon(Material.POLISHED_BLACKSTONE_BRICKS, "Astronomical Observatory", RoomVariant.OBSERVATORY.getKey()));
         ITEMS.put(TARDISInfoMenu.PASSAGE, new InfoIcon(Material.CLAY, "Passage", RoomVariant.PASSAGE.getKey()));

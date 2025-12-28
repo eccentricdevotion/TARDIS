@@ -38,13 +38,14 @@ public enum GUIFarming {
     IISTUBIL(RoomVariant.IISTUBIL.getKey(), 19, Material.WHITE_GLAZED_TERRACOTTA, "Camel"),
     LAVA(RoomVariant.LAVA.getKey(), 20, Material.MAGMA_BLOCK, "Strider"),
     MANGROVE(RoomVariant.MANGROVE.getKey(), 21, Material.MUDDY_MANGROVE_ROOTS, "Frog"),
-    PEN(RoomVariant.PEN.getKey(), 22, Material.MOSS_BLOCK, "Sniffer"),
-    STABLE(RoomVariant.STABLE.getKey(), 23, Material.HAY_BLOCK, "Horse"),
-    STALL(RoomVariant.STALL.getKey(), 24, Material.BROWN_GLAZED_TERRACOTTA, "Llama"),
-    VILLAGE(RoomVariant.VILLAGE.getKey(), 25, Material.OAK_LOG, "Villager"),
+    NAUTILUS(RoomVariant.NAUTILUS.getKey(), 22, Material.DEAD_HORN_CORAL_BLOCK, "Nautilus"),
+    PEN(RoomVariant.PEN.getKey(), 23, Material.MOSS_BLOCK, "Sniffer"),
+    STABLE(RoomVariant.STABLE.getKey(), 24, Material.HAY_BLOCK, "Horse"),
+    STALL(RoomVariant.STALL.getKey(), 25, Material.BROWN_GLAZED_TERRACOTTA, "Llama"),
+    VILLAGE(RoomVariant.VILLAGE.getKey(), 26, Material.OAK_LOG, "Villager"),
     ON(null, -1, Material.LIME_WOOL, "On"),
     OFF(null, -1, Material.RED_WOOL, "Off"),
-    CLOSE(GuiVariant.CLOSE.getKey(), 35, Material.BOWL, "Close");
+    CLOSE(GuiVariant.CLOSE.getKey(), 53, Material.BOWL, "Close");
 
     private final NamespacedKey model;
     private final int slot;

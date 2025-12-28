@@ -25,7 +25,6 @@ import io.papermc.paper.registry.RegistryKey;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.customblocks.TARDISBlockDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetFarming;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetHappy;
@@ -35,7 +34,6 @@ import me.eccentric_nz.TARDIS.enumeration.Room;
 import me.eccentric_nz.TARDIS.enumeration.TardisLight;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.UseClay;
-import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
 import me.eccentric_nz.TARDIS.rooms.eye.EyeOfHarmonyParticles;
 import me.eccentric_nz.TARDIS.rooms.library.LibraryCatalogue;
 import me.eccentric_nz.TARDIS.schematic.getters.DataPackPainting;
@@ -108,6 +106,7 @@ public class TARDISRoomRunnable implements Runnable {
     private final HashMap<Block, BlockData> torchblocks = new HashMap<>();
     private final HashMap<Block, BlockData> trapdoorblocks = new HashMap<>();
     private final HashMap<Block, BlockFace> mushroomblocks = new HashMap<>();
+    private final HashMap<Block, BlockData> magmaBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> eyeBlocks = new HashMap<>();
     private final HashMap<Block, JsonObject> postSignBlocks = new HashMap<>();
     private final HashMap<Block, JsonObject> pots = new HashMap<>();
@@ -491,6 +490,16 @@ public class TARDISRoomRunnable implements Runnable {
                         TARDISItemDisplaySetter.fakeBlock(displays.get(i).getAsJsonObject(), start, tardis_id);
                     }
                 }
+                if (room.equals("NAUTILUS")) {
+                    magmaBlocks.forEach((key, value) -> {
+                        key.setBlockData(value, true);
+                        // also add some random sea grass
+                        Block meal = key.getRelative(BlockFace.NORTH);
+                        meal.applyBoneMeal(BlockFace.UP);
+                        world.spawnEntity(meal.getLocation().add(0.5d, 1d, 0.5d), EntityType.PUFFERFISH);
+                    });
+                    magmaBlocks.clear();
+                }
                 if (room.equals("EYE")) {
                     eyeBlocks.forEach((key, value) -> key.setBlockData(value, true));
                     eyeBlocks.clear();
@@ -681,6 +690,16 @@ public class TARDISRoomRunnable implements Runnable {
                     plugin.getQueryFactory().doInsert("vaults", setl);
                     library = pos.clone().add(-8, -4, -8);
                 }
+                // nautilis magma blocks
+                if (type.equals(Material.RED_SAND) && room.equals("NAUTILUS")) {
+                    Block magma = world.getBlockAt(startx, starty, startz);
+                    magmaBlocks.put(magma, TARDISConstants.MAGMA);
+                }
+                // nautilis water blocks
+                if (type.equals(Material.DEAD_BUBBLE_CORAL_BLOCK) && room.equals("NAUTILUS")) {
+                    Block water = world.getBlockAt(startx, starty, startz);
+                    iceblocks.add(water);
+                }
                 // eye of harmony wall
                 if (type.equals(Material.RED_SANDSTONE_WALL) && room.equals("EYE")) {
                     Block wall = world.getBlockAt(startx, starty, startz);
@@ -773,14 +792,7 @@ public class TARDISRoomRunnable implements Runnable {
                     plugin.getQueryFactory().insertControl(tardis_id, 19, plate, 0);
                 }
                 // set stable
-                if (type.equals(Material.SOUL_SAND)
-                        && (room.equals("STABLE") || room.equals("VILLAGE") || room.equals("RENDERER")
-                        || room.equals("LAVA") || room.equals("ALLAY") || room.equals("ZERO")
-                        || room.equals("GEODE") || room.equals("HUTCH") || room.equals("IGLOO")
-                        || room.equals("IISTUBIL") || room.equals("MANGROVE") || room.equals("PEN")
-                        || room.equals("STALL") || room.equals("BAMBOO") || room.equals("BIRDCAGE")
-                        || room.equals("MAZE") || room.equals("GARDEN") || room.equals("HAPPY"))
-                ) {
+                if (type.equals(Material.SOUL_SAND) && (room.equals("STABLE") || room.equals("VILLAGE") || room.equals("RENDERER") || room.equals("LAVA") || room.equals("ALLAY") || room.equals("ZERO") || room.equals("GEODE") || room.equals("HUTCH") || room.equals("IGLOO") || room.equals("IISTUBIL") || room.equals("MANGROVE") || room.equals("PEN") || room.equals("STALL") || room.equals("BAMBOO") || room.equals("BIRDCAGE") || room.equals("MAZE") || room.equals("GARDEN") || room.equals("HAPPY") || room.equals("NAUTILUS"))) {
                     HashMap<String, Object> sets = new HashMap<>();
                     sets.put(room.toLowerCase(Locale.ROOT), world.getName() + ":" + startx + ":" + starty + ":" + startz);
                     HashMap<String, Object> wheres = new HashMap<>();
@@ -817,6 +829,7 @@ public class TARDISRoomRunnable implements Runnable {
                         case IISTUBIL -> data = Material.TERRACOTTA.createBlockData();
                         case LAVA -> data = Material.NETHERRACK.createBlockData();
                         case MANGROVE -> data = TARDISConstants.WATER;
+                        case NAUTILUS -> data = TARDISConstants.GLASS;
                         case PEN -> data = Material.MOSS_BLOCK.createBlockData();
                         case ZERO -> data = Material.PINK_CARPET.createBlockData();
                         case GARDEN -> {
@@ -1043,15 +1056,7 @@ public class TARDISRoomRunnable implements Runnable {
                     if (checkRoomNextDoor(world.getBlockAt(startx, starty, startz))) {
                         data = TARDISConstants.AIR;
                     } else {
-                        if (ow.equals(Material.ORANGE_WOOL) && wall_type.equals(Material.ORANGE_WOOL)) {
-                            if (!TARDISFloodgate.isFloodgateEnabled() || (player != null && !TARDISFloodgate.isBedrockPlayer(player.getUniqueId()))) {
-                                data = TARDISConstants.BARRIER;
-                                // set hexagon item display
-                                TARDISDisplayItemUtils.set(TARDISBlockDisplayItem.HEXAGON, world, startx, starty, startz);
-                            }
-                        } else {
-                            data = (wall_type.equals(Material.ORANGE_WOOL)) ? ow.createBlockData() : wall_type.createBlockData();
-                        }
+                        data = (wall_type.equals(Material.ORANGE_WOOL)) ? ow.createBlockData() : wall_type.createBlockData();
                     }
                 }
                 // always clear the door blocks on the north and west sides of adjacent spaces

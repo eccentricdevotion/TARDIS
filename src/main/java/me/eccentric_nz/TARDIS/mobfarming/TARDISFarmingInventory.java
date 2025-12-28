@@ -50,7 +50,7 @@ public class TARDISFarmingInventory implements InventoryHolder {
         ItemMeta onMeta = on.getItemMeta();
         onMeta.displayName(Component.text("Enabled"));
         on.setItemMeta(onMeta);
-        this.inventory = plugin.getServer().createInventory(this, 36, Component.text("TARDIS Farming Menu", NamedTextColor.DARK_RED));
+        this.inventory = plugin.getServer().createInventory(this, 54, Component.text("TARDIS Farming Menu", NamedTextColor.DARK_RED));
         this.inventory.setContents(getItemStack());
     }
 
@@ -66,7 +66,7 @@ public class TARDISFarmingInventory implements InventoryHolder {
      */
     private ItemStack[] getItemStack() {
 
-        ItemStack[] stack = new ItemStack[36];
+        ItemStack[] stack = new ItemStack[54];
         // allay, apiary, aquarium, bamboo, birdcage, farm, geode, hutch, igloo, iistubil, lava, mangrove, pen, stable, stall, village
         ResultSetFarmingPrefs rs = new ResultSetFarmingPrefs(plugin, uuid.toString());
         // set farming status
@@ -85,10 +85,11 @@ public class TARDISFarmingInventory implements InventoryHolder {
             stack[28] = farmPrefs.shouldFarmCamels() ? on : off;
             stack[29] = farmPrefs.shouldFarmStriders() ? on : off;
             stack[30] = farmPrefs.shouldFarmFrogs() ? on : off;
-            stack[31] = farmPrefs.shouldFarmSniffers() ? on : off;
-            stack[32] = farmPrefs.shouldFarmHorses() ? on : off;
-            stack[33] = farmPrefs.shouldFarmLlamas() ? on : off;
-            stack[34] = farmPrefs.shouldFarmVillagers() ? on : off;
+            stack[31] = farmPrefs.shouldFarmNautili() ? on : off;
+            stack[32] = farmPrefs.shouldFarmSniffers() ? on : off;
+            stack[33] = farmPrefs.shouldFarmHorses() ? on : off;
+            stack[34] = farmPrefs.shouldFarmLlamas() ? on : off;
+            stack[35] = farmPrefs.shouldFarmVillagers() ? on : off;
         } else {
             // insert a new record
             HashMap<String, Object> set = new HashMap<>();

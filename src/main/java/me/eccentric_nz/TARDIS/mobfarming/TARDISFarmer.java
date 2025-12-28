@@ -120,6 +120,7 @@ public class TARDISFarmer {
             List<TARDISParrot> parrots = new ArrayList<>();
             List<TARDISPig> pigs = new ArrayList<>();
             List<TARDISRabbit> rabbits = new ArrayList<>();
+            List<TARDISNautilus> nautili = new ArrayList<>();
             List<TARDISVillager> villagers = new ArrayList<>();
             TARDISFish fish = null;
             // are we doing an achievement?
@@ -147,6 +148,7 @@ public class TARDISFarmer {
                 String iistubil = farming.iistubil();
                 String lava = farming.lava();
                 String mangrove = farming.mangrove();
+                String nautilus = farming.nautilus();
                 String pen = farming.pen();
                 String stable = farming.stable();
                 String stall = farming.stall();
@@ -158,7 +160,7 @@ public class TARDISFarmer {
                     farmPrefs = rsfp.getData();
                 } else {
                     // if not set then default to true
-                    farmPrefs = new FarmPrefs(uuid, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true);
+                    farmPrefs = new FarmPrefs(uuid, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true);
                 }
                 int vacant = (!happy.isEmpty() && farmPrefs.shouldFarmHappyGhasts()) ? HappyGhastUtils.getFreeSlotCount(plugin, id) : 0;
                 // collate the mobs
@@ -358,8 +360,7 @@ public class TARDISFarmer {
                                     thg.setHome(ghast.getMemory(MemoryKey.HOME));
                                     // get/save leashed boats
                                     Leashable leashed = HappyGhastUtils.getLeashed(ghast);
-                                    if (HappyGhastUtils.isDockFree(TARDISStaticLocationGetters.getLocationFromDB(happy))
-                                            && leashed instanceof Boat boat) {
+                                    if (HappyGhastUtils.isDockFree(TARDISStaticLocationGetters.getLocationFromDB(happy)) && leashed instanceof Boat boat) {
                                         TARDISBoat tb = new TARDISBoat();
                                         tb.setType(boat.getType());
                                         if (boat instanceof ChestBoat chested) {
@@ -428,6 +429,26 @@ public class TARDISFarmer {
                                 if (taf != null) {
                                     taf.doAchievement("LLAMA");
                                 }
+                            }
+                        }
+                        case NAUTILUS -> {
+                            if (farmPrefs.shouldFarmNautili() && (!nautilus.isEmpty() || spawnEggs)) {
+                                Nautilus shellfish = (Nautilus) entity;
+                                TARDISNautilus tmn = new TARDISNautilus();
+                                tmn.setAge(shellfish.getAge());
+                                tmn.setBaby(!shellfish.isAdult());
+                                tmn.setName(ComponentUtils.stripColour(entity.customName()));
+                                tmn.setSaddle(shellfish.getInventory().getSaddle());
+                                tmn.setArmour(shellfish.getInventory().getArmor());
+                                tmn.setTamed(shellfish.isTamed());
+                                // eject any passengers
+                                entity.eject();
+                                nautili.add(tmn);
+                                entity.remove();
+                                if (taf != null) {
+                                    taf.doAchievement("NAUTILUS");
+                                }
+                                farmtotal++;
                             }
                         }
                         case PARROT -> {
@@ -659,7 +680,7 @@ public class TARDISFarmer {
                         }
                     }
                 }
-                if (!bees.isEmpty() || farmtotal > 0 || !horses.isEmpty() || !villagers.isEmpty() || !pets.isEmpty() || !polarbears.isEmpty() || !llamas.isEmpty() || !parrots.isEmpty() || !pandas.isEmpty() || !rabbits.isEmpty() || fish != null || !followers.isEmpty() || !axolotls.isEmpty() || !frogs.isEmpty() || !allays.isEmpty() || !sniffers.isEmpty() || !striders.isEmpty() || !camels.isEmpty()) {
+                if (!bees.isEmpty() || farmtotal > 0 || !horses.isEmpty() || !villagers.isEmpty() || !pets.isEmpty() || !polarbears.isEmpty() || !llamas.isEmpty() || !parrots.isEmpty() || !pandas.isEmpty() || !rabbits.isEmpty() || fish != null || !followers.isEmpty() || !axolotls.isEmpty() || !frogs.isEmpty() || !allays.isEmpty() || !sniffers.isEmpty() || !striders.isEmpty() || !camels.isEmpty() || !nautili.isEmpty()) {
                     boolean canfarm = plugin.getInvManager() != InventoryManager.MULTIVERSE || TARDISMultiverseInventoriesChecker.checkWorldsCanShare(from, to);
                     if (!canfarm) {
                         plugin.getMessenger().send(p, TardisModule.TARDIS, "WORLD_NO_FARM");
@@ -1129,6 +1150,40 @@ public class TARDISFarmer {
                         p.updateInventory();
                     } else {
                         plugin.getMessenger().send(p, TardisModule.TARDIS, "FARM_STALL");
+                    }
+                }
+                if (farmPrefs.shouldFarmNautili() && !nautili.isEmpty()) {
+                    if (!nautilus.isEmpty()) {
+                        // get location of natuilus room
+                        World world = TARDISStaticLocationGetters.getWorldFromSplitString(nautilus);
+                        Location tank = TARDISStaticLocationGetters.getSpawnLocationFromDB(nautilus);
+                        while (!world.getChunkAt(tank).isLoaded()) {
+                            world.getChunkAt(tank).load();
+                        }
+                        nautili.forEach((n) -> {
+                            plugin.setTardisSpawn(true);
+                            Nautilus shellfish = (Nautilus) world.spawnEntity(tank, EntityType.NAUTILUS);
+                            shellfish.setTamed(n.isTamed());
+                            shellfish.setAge(n.getAge());
+                            if (n.isBaby()) {
+                                shellfish.setBaby();
+                            }
+                            String name = n.getName();
+                            if (name != null && !name.isEmpty()) {
+                                shellfish.customName(Component.text(name));
+                            }
+                            shellfish.getInventory().setSaddle(n.getSaddle());
+                            shellfish.getInventory().setArmor(n.getArmour());
+                            shellfish.setRemoveWhenFarAway(false);
+                        });
+                    } else if (spawnEggs) {
+                        // give spawn eggs
+                        Inventory inv = p.getInventory();
+                        ItemStack is = ItemStack.of(Material.NAUTILUS_SPAWN_EGG, nautili.size());
+                        inv.addItem(is);
+                        p.updateInventory();
+                    } else {
+                        plugin.getMessenger().send(p, TardisModule.TARDIS, "FARM_NAUTILUS");
                     }
                 }
                 if (farmPrefs.shouldFarmRabbits() && !rabbits.isEmpty()) {

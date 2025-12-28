@@ -246,6 +246,7 @@ public class DebugGUI {
             new GuiPreview(Material.CYAN_WOOL, Wool.LEFT.getKey(), "bowl_left"),
             new GuiPreview(Material.CYAN_WOOL, Wool.RIGHT.getKey(), "bowl_right"),
             new GuiPreview(Material.DEAD_BRAIN_CORAL_BLOCK, RoomVariant.SHELL.getKey(), "room_shell"),
+            new GuiPreview(Material.DEAD_HORN_CORAL_BLOCK, RoomVariant.NAUTILUS.getKey(), "room_nautilus"),
             new GuiPreview(Material.DIRT, RoomVariant.FARM.getKey(), "room_farm"),
             new GuiPreview(Material.DISPENSER, RoomVariant.VAULT.getKey(), "room_vault"),
             new GuiPreview(Material.ELYTRA, Button.FLIGHT_MODE.getKey(), "flight_mode"),

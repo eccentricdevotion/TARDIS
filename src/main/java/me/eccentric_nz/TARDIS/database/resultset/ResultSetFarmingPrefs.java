@@ -86,6 +86,7 @@ public class ResultSetFarmingPrefs {
                         rs.getBoolean("iistubil"),
                         rs.getBoolean("lava"),
                         rs.getBoolean("mangrove"),
+                        rs.getBoolean("nautilus"),
                         rs.getBoolean("pen"),
                         rs.getBoolean("stable"),
                         rs.getBoolean("stall"),

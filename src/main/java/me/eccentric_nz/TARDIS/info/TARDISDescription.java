@@ -213,6 +213,7 @@ public enum TARDISDescription {
     LAZARUS("Modify your genetic makeup."),
     LIBRARY("Plenty to read and shelve in here."),
     MANGROVE("Mud, roots and frogs."),
+    NAUTILUS("A water tank for nautili."),
     MAZE("Can you find your way through the maze?"),
     MUSHROOM("A small Mycellarium."),
     NETHER("Your own personal hell."),

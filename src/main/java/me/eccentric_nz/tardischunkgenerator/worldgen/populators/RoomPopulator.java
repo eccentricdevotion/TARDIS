@@ -44,9 +44,9 @@ public class RoomPopulator extends BlockPopulator {
     private final TARDIS plugin;
     private final List<String> rooms = List.of("ALLAY", "APIARY", "AQUARIUM", "ARBORETUM", "BAKER", "BAMBOO",
             "BEDROOM", "BIRDCAGE", "CHEMISTRY", "EMPTY", "EYE", "FARM", "GARDEN", "GEODE", "GREENHOUSE", "HAPPY", "HARMONY",
-            "HUTCH", "IGLOO", "IISTUBIL", "KITCHEN", "LAVA", "LAZARUS", "LIBRARY", "MANGROVE", "MUSHROOM", "NETHER",
-            "OBSERVATORY", "PASSAGE", "PEN", "POOL", "RAIL", "SHELL", "SMELTER", "STABLE", "STALL", "SURGERY", "TRENZALORE",
-            "VAULT", "VILLAGE", "WOOD", "WORKSHOP");
+            "HUTCH", "IGLOO", "IISTUBIL", "KITCHEN", "LAVA", "LAZARUS", "LIBRARY", "MANGROVE", "MUSHROOM", "NAUTILUS",
+            "NETHER", "OBSERVATORY", "PASSAGE", "PEN", "POOL", "RAIL", "SHELL", "SMELTER", "STABLE", "STALL", "SURGERY",
+            "TRENZALORE", "VAULT", "VILLAGE", "WOOD", "WORKSHOP");
 
     public RoomPopulator(TARDIS plugin) {
         this.plugin = plugin;
@@ -111,7 +111,7 @@ public class RoomPopulator extends BlockPopulator {
                                             || room.equals("ALLAY") || room.equals("GEODE") || room.equals("HUTCH")
                                             || room.equals("IGLOO") || room.equals("IISTUBIL") || room.equals("MANGROVE")
                                             || room.equals("PEN") || room.equals("STALL") || room.equals("BAMBOO")
-                                            || room.equals("BIRDCAGE") || room.equals("GARDEN"))
+                                            || room.equals("BIRDCAGE") || room.equals("GARDEN") || room.equals("NAUTILUS"))
                         ) {
                             // replace with correct block
                             switch (Room.valueOf(room)) {
@@ -125,6 +125,7 @@ public class RoomPopulator extends BlockPopulator {
                                 case IISTUBIL -> data = Material.TERRACOTTA.createBlockData();
                                 case LAVA -> data = Material.NETHERRACK.createBlockData();
                                 case MANGROVE -> data = TARDISConstants.WATER;
+                                case NAUTILUS -> data = TARDISConstants.GLASS;
                                 case PEN -> data = Material.MOSS_BLOCK.createBlockData();
                                 case ZERO -> data = Material.PINK_CARPET.createBlockData();
                                 default -> data = TARDISConstants.BLACK;
@@ -135,6 +136,9 @@ public class RoomPopulator extends BlockPopulator {
                         }
                         if (type.equals(Material.DEAD_HORN_CORAL_BLOCK) && room.equals("AQUARIUM")) {
                             data = Material.LIGHT_GRAY_WOOL.createBlockData();
+                        }
+                        if (type.equals(Material.DEAD_BUBBLE_CORAL_BLOCK) && room.equals("NAUTILUS")) {
+                            data = Material.ICE.createBlockData();
                         }
                         // always replace bedrock (the door space in ARS rooms)
                         // always remove sponge

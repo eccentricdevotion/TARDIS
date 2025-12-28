@@ -16,7 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.mobfarming;
 
+import me.eccentric_nz.TARDIS.ARS.ARSSound;
+import me.eccentric_nz.TARDIS.ARS.TARDISARS;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.Room;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
@@ -28,7 +31,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
-import java.util.UUID;
+import java.util.Locale;
 
 public class TARDISFarmingMenuListener extends TARDISMenuListener {
 
@@ -66,17 +69,19 @@ public class TARDISFarmingMenuListener extends TARDISMenuListener {
         int slot = event.getRawSlot();
         event.setCancelled(true);
         switch (slot) {
-            case 9, 10, 11, 12, 13, 14, 15, 16, 17, 27, 28, 29, 30, 31, 32, 33, 34 -> toggleOption(player.getUniqueId(), event.getView(), slot); // toggle option enabled / disabled
-            case 35 -> close(player);
+            case 9, 10, 11, 12, 13, 14, 15, 16, 17, 27, 28, 29, 30, 31, 32, 33, 34, 35 ->
+                    toggleOption(player, event.getView(), slot); // toggle option enabled / disabled
+            case 53 -> close(player);
             default -> event.setCancelled(true);
         }
     }
 
-    private void toggleOption(UUID uuid, InventoryView view, int slot) {
+    private void toggleOption(Player player, InventoryView view, int slot) {
         ItemStack option = view.getItem(slot);
         ItemMeta im = option.getItemMeta();
         Material material = option.getType();
-        Material m = Material.LIME_WOOL;;
+        Material m = Material.LIME_WOOL;
+        ;
         int onOff = -1;
         switch (material) {
             case LIME_WOOL -> {
@@ -89,12 +94,21 @@ public class TARDISFarmingMenuListener extends TARDISMenuListener {
                 // enable
                 im.displayName(Component.text("Enabled"));
                 onOff = 1;
+                // get item in slot above
+                ItemStack above = view.getItem(slot - 9);
+                if (above != null) {
+                    // play a room sound
+                    Room room = Room.valueOf(TARDISARS.ARSFor(above.getType().toString()).getConfigPath().toUpperCase(Locale.ROOT));
+                    if (ARSSound.ROOM_SOUNDS.containsKey(room)) {
+                        player.playSound(player.getLocation(), ARSSound.ROOM_SOUNDS.get(room), 1.0f, 1.0f);
+                    }
+                }
             }
         }
         ItemStack sub = ItemStack.of(m);
         sub.setItemMeta(im);
         view.setItem(slot, sub);
         // update database
-        plugin.getQueryFactory().updateFarmingPref(uuid, rooms.get(slot), onOff);
+        plugin.getQueryFactory().updateFarmingPref(player.getUniqueId(), rooms.get(slot), onOff);
     }
 }

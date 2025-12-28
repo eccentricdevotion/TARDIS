@@ -190,11 +190,11 @@ public class Converter implements Runnable {
                                         sb.append(str);
                                     }
                                     case farming -> {
-                                        str = String.format(SQL.VALUES.get(i), rs.getInt("farm_id"), rs.getInt("tardis_id"), rs.getString("allay"), rs.getString("apiary"), rs.getString("aquarium"), rs.getString("bamboo"), rs.getString("birdcage"), rs.getString("farm"), rs.getString("geode"), rs.getString("happy"), rs.getString("hutch"), rs.getString("igloo"), rs.getString("iistubil"), rs.getString("lava"), rs.getString("mangrove"), rs.getString("pen"), rs.getString("stable"), rs.getString("stall"), rs.getString("village")) + end;
+                                        str = String.format(SQL.VALUES.get(i), rs.getInt("farm_id"), rs.getInt("tardis_id"), rs.getString("allay"), rs.getString("apiary"), rs.getString("aquarium"), rs.getString("bamboo"), rs.getString("birdcage"), rs.getString("farm"), rs.getString("geode"), rs.getString("happy"), rs.getString("hutch"), rs.getString("igloo"), rs.getString("iistubil"), rs.getString("lava"), rs.getString("mangrove"), rs.getString("nautilus"), rs.getString("pen"), rs.getString("stable"), rs.getString("stall"), rs.getString("village")) + end;
                                         sb.append(str);
                                     }
                                     case farming_prefs -> {
-                                        str = String.format(SQL.VALUES.get(i), rs.getInt("farm_id"), rs.getString("uuid"), rs.getInt("allay"), rs.getInt("apiary"), rs.getInt("aquarium"), rs.getInt("bamboo"), rs.getInt("birdcage"), rs.getInt("farm"), rs.getInt("geode"), rs.getInt("happy"), rs.getInt("hutch"), rs.getInt("igloo"), rs.getInt("iistubil"), rs.getInt("lava"), rs.getInt("mangrove"), rs.getInt("pen"), rs.getInt("stable"), rs.getInt("stall"), rs.getInt("village")) + end;
+                                        str = String.format(SQL.VALUES.get(i), rs.getInt("farm_id"), rs.getString("uuid"), rs.getInt("allay"), rs.getInt("apiary"), rs.getInt("aquarium"), rs.getInt("bamboo"), rs.getInt("birdcage"), rs.getInt("farm"), rs.getInt("geode"), rs.getInt("happy"), rs.getInt("hutch"), rs.getInt("igloo"), rs.getInt("iistubil"), rs.getInt("lava"), rs.getInt("mangrove"), rs.getInt("nautilus"), rs.getInt("nautilus"), rs.getInt("pen"), rs.getInt("stable"), rs.getInt("stall"), rs.getInt("village")) + end;
                                         sb.append(str);
                                     }
                                     case flight -> {

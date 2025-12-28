@@ -45,6 +45,7 @@ class TARDISMySQLDatabaseUpdater {
     private final List<String> inventoryupdates = new ArrayList<>();
     private final List<String> chameleonupdates = new ArrayList<>();
     private final List<String> farmingupdates = new ArrayList<>();
+    private final List<String> farmingprefsupdates = new ArrayList<>();
     private final List<String> sonicupdates = new ArrayList<>();
     private final List<String> flightupdates = new ArrayList<>();
     private final List<String> systemupdates = new ArrayList<>();
@@ -135,6 +136,7 @@ class TARDISMySQLDatabaseUpdater {
         farmingupdates.add("mangrove varchar(512) DEFAULT ''");
         farmingupdates.add("iistubil varchar(512) DEFAULT ''");
         farmingupdates.add("pen varchar(512) DEFAULT ''");
+        farmingupdates.add("nautilus varchar(512) DEFAULT ''");
         sonicupdates.add("arrow int(1) DEFAULT '0'");
         sonicupdates.add("knockback int(1) DEFAULT '0'");
         sonicupdates.add("brush int(1) DEFAULT '0'");
@@ -156,6 +158,8 @@ class TARDISMySQLDatabaseUpdater {
         lampsupdates.add("material_on varchar(64) DEFAULT ''");
         lampsupdates.add("material_off varchar(64) DEFAULT ''");
         lampsupdates.add("percentage float DEFAULT '1.0'");
+        farmingprefsupdates.add("happy int(1) DEFAULT '1'");
+        farmingprefsupdates.add("nautilus int(1) DEFAULT '1'");
     }
 
     /**
@@ -306,11 +310,21 @@ class TARDISMySQLDatabaseUpdater {
             for (String l : lampsupdates) {
                 String[] lsplit = l.split(" ");
                 String sys_query = "SHOW COLUMNS FROM " + prefix + "lamps LIKE '" + lsplit[0] + "'";
-                ResultSet l_alter = statement.executeQuery(sys_query);
-                if (!l_alter.next()) {
+                ResultSet rsl = statement.executeQuery(sys_query);
+                if (!rsl.next()) {
                     i++;
-                    String sys_alter = "ALTER TABLE " + prefix + "lamps ADD " + l;
-                    statement.executeUpdate(sys_alter);
+                    String l_alter = "ALTER TABLE " + prefix + "lamps ADD " + l;
+                    statement.executeUpdate(l_alter);
+                }
+            }
+            for (String fp : farmingprefsupdates) {
+                String[] fpsplit = fp.split(" ");
+                String fp_query = "SHOW COLUMNS FROM " + prefix + "farming_prefs LIKE '" + fpsplit[0] + "'";
+                ResultSet rsfp = statement.executeQuery(fp_query);
+                if (!rsfp.next()) {
+                    i++;
+                    String fp_alter = "ALTER TABLE " + prefix + "farming_prefs ADD " + fp;
+                    statement.executeUpdate(fp_alter);
                 }
             }
             // update data type for `data` in blocks
@@ -321,7 +335,7 @@ class TARDISMySQLDatabaseUpdater {
                 statement.executeUpdate(blockdata_query);
             }
             // update data type for `time` in tag
-            String tagtime_check = "SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = '" + prefix + "blocks' AND COLUMN_NAME = 'data'";
+            String tagtime_check = "SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = '" + prefix + "tag' AND COLUMN_NAME = 'time'";
             ResultSet rsttc = statement.executeQuery(tagtime_check);
             if (rsttc.next() && !rsttc.getString("DATA_TYPE").equalsIgnoreCase("int")) {
                 String tagtime_query = "ALTER TABLE " + prefix + "tag CHANGE `time` `time` BIGINT NULL DEFAULT '0'";
@@ -392,14 +406,6 @@ class TARDISMySQLDatabaseUpdater {
                 i++;
                 String vct_alter = "ALTER TABLE " + prefix + "vaults ADD chest_type varchar(8) DEFAULT 'DROP'";
                 statement.executeUpdate(vct_alter);
-            }
-            // add happy to farming_prefs
-            String happy_query = "SHOW COLUMNS FROM " + prefix + "farming_prefs LIKE 'happy'";
-            ResultSet rshappy = statement.executeQuery(happy_query);
-            if (!rshappy.next()) {
-                i++;
-                String happy_alter = "ALTER TABLE " + prefix + "farming_prefs ADD happy int(1) DEFAULT '1'";
-                statement.executeUpdate(happy_alter);
             }
             // add versions to storage
             String versions_query = "SHOW COLUMNS FROM " + prefix + "storage LIKE 'versions'";

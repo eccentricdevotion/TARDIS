@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.commands.sudo.TARDISSudoTracker;
 import me.eccentric_nz.TARDIS.custommodels.keys.RoomVariant;
+import me.eccentric_nz.TARDIS.enumeration.Room;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
@@ -176,6 +177,14 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
                 }
             }
             case 45, 46, 47, 48, 49, 50, 51, 52, 53 -> {
+                if (event.isShiftClick()) {
+                    // play a room sound
+                    ItemStack ris = view.getItem(slot);
+                    Room room = Room.valueOf(TARDISARS.ARSFor(ris.getType().toString()).getConfigPath().toUpperCase(Locale.ROOT));
+                    if (ARSSound.ROOM_SOUNDS.containsKey(room)) {
+                        player.playSound(player.getLocation(), ARSSound.ROOM_SOUNDS.get(room), 1.0f, 1.0f);
+                    }
+                }
                 // put room in selected slot
                 if (selected_slot.containsKey(playerUUID)) {
                     // check whether original loaded slot was a room - as it will need to be jettisoned, not reset

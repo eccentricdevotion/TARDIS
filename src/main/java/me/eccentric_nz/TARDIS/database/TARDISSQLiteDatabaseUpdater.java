@@ -45,6 +45,7 @@ class TARDISSQLiteDatabaseUpdater {
     private final List<String> inventoryupdates = new ArrayList<>();
     private final List<String> chameleonupdates = new ArrayList<>();
     private final List<String> farmingupdates = new ArrayList<>();
+    private final List<String> farmingprefsupdates = new ArrayList<>();
     private final List<String> sonicupdates = new ArrayList<>();
     private final List<String> flightupdates = new ArrayList<>();
     private final List<String> systemupdates = new ArrayList<>();
@@ -163,6 +164,7 @@ class TARDISSQLiteDatabaseUpdater {
         farmingupdates.add("mangrove TEXT DEFAULT ''");
         farmingupdates.add("iistubil TEXT DEFAULT ''");
         farmingupdates.add("pen TEXT DEFAULT ''");
+        farmingupdates.add("nautilus TEXT DEFAULT ''");
         sonicupdates.add("arrow INTEGER DEFAULT 0");
         sonicupdates.add("knockback INTEGER DEFAULT 0");
         sonicupdates.add("brush INTEGER DEFAULT 0");
@@ -184,6 +186,9 @@ class TARDISSQLiteDatabaseUpdater {
         lampsupdates.add("material_on TEXT DEFAULT ''");
         lampsupdates.add("material_off TEXT DEFAULT ''");
         lampsupdates.add("percentage REAL DEFAULT 1.0");
+        farmingprefsupdates.add("happy INTEGER DEFAULT 1");
+        farmingprefsupdates.add("nautilus INTEGER DEFAULT 1");
+
     }
 
     /**
@@ -372,6 +377,16 @@ class TARDISSQLiteDatabaseUpdater {
                 if (!rsl.next()) {
                     i++;
                     String l_alter = "ALTER TABLE " + prefix + "lamps ADD " + l;
+                    statement.executeUpdate(l_alter);
+                }
+            }
+            for (String fp : farmingprefsupdates) {
+                String[] fpsplit = fp.split(" ");
+                String fp_query = "SELECT sql FROM sqlite_master WHERE tbl_name = '" + prefix + "farming_prefs' AND sql LIKE '%" + fpsplit[0] + "%'";
+                ResultSet rsfp = statement.executeQuery(fp_query);
+                if (!rsfp.next()) {
+                    i++;
+                    String l_alter = "ALTER TABLE " + prefix + "farming_prefs ADD " + fp;
                     statement.executeUpdate(l_alter);
                 }
             }

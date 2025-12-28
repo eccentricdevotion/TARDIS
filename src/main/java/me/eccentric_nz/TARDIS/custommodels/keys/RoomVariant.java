@@ -51,6 +51,7 @@ public enum RoomVariant {
     MANGROVE(new NamespacedKey(TARDIS.plugin, "button_mangrove")),
     MAZE(new NamespacedKey(TARDIS.plugin, "button_maze")),
     MUSHROOM(new NamespacedKey(TARDIS.plugin, "button_mushroom")),
+    NAUTILUS(new NamespacedKey(TARDIS.plugin, "button_nautilus")),
     NETHER(new NamespacedKey(TARDIS.plugin, "button_nether")),
     OBSERVATORY(new NamespacedKey(TARDIS.plugin, "button_observatory")),
     PASSAGE(new NamespacedKey(TARDIS.plugin, "button_passage")),
