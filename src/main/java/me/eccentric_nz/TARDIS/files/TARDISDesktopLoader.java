@@ -44,21 +44,24 @@ public class TARDISDesktopLoader {
     //    new Schematic(String seed, String permission, String description, ConsoleSize size, boolean beacon, TardisLight light, boolean custom, int preview)
     public void addSchematics() {
         Desktops.getBY_NAMES().put("ANCIENT", new Schematic("SCULK", "ancient", "Ancient Console", ConsoleSize.SMALL, false, TardisLight.LAMP, false, -10));
-        // DELUXE, ELEVENTH, TWELFTH, ARS & REDSTONE schematics designed by Lord_Rahl and killeratnight at mcnovus.net
+        // ARS schematic designed by Lord_Rahl and killeratnight at mcnovus.net
         Desktops.getBY_NAMES().put("ARS", new Schematic("QUARTZ_BLOCK", "ars", "ARS Console", ConsoleSize.SMALL, true, TardisLight.TENTH, false, -11));
         Desktops.getBY_NAMES().put("BIGGER", new Schematic("GOLD_BLOCK", "bigger", "A Bigger Console", ConsoleSize.MEDIUM, true, TardisLight.TENTH, false, -12));
         // BONE loosely based on a console by DT10 - https://www.youtube.com/watch?v=Ux4qt0qYm80
         Desktops.getBY_NAMES().put("BONE", new Schematic("WAXED_OXIDIZED_CUT_COPPER", "bone", "An Early Style Console", ConsoleSize.SMALL, true, TardisLight.CLASSIC, false, -13));
         Desktops.getBY_NAMES().put("BUDGET", new Schematic("IRON_BLOCK", "budget", "Default Console", ConsoleSize.SMALL, true, TardisLight.TENTH, false, -14));
         Desktops.getBY_NAMES().put("CAVE", new Schematic("DRIPSTONE_BLOCK", "cave", "Cave Console", ConsoleSize.SMALL, false, TardisLight.LAMP, false, -15));
-        // COPPER & CORAL schematics designed by vistaero
+        // COPPER schematic designed by vistaero
         Desktops.getBY_NAMES().put("COPPER", new Schematic("WARPED_PLANKS", "copper", "11th Doctor's Copper Console", ConsoleSize.MASSIVE, true, TardisLight.ELEVENTH, 65, false, -16));
+        // CORAL schematic designed by vistaero
         Desktops.getBY_NAMES().put("CORAL", new Schematic("NETHER_WART_BLOCK", "coral", "10th Doctor's Console", ConsoleSize.TALL, true, TardisLight.TENTH, false, -17));
         // CURSED schematic designed by airomis (player at thatsnotacreeper.com)
         Desktops.getBY_NAMES().put("CURSED", new Schematic("BLACK_CONCRETE", "cursed", "Cursed Console", ConsoleSize.MASSIVE, true, TardisLight.TENTH, 62, false, -18));
         Desktops.getBY_NAMES().put("DELTA", new Schematic("CRYING_OBSIDIAN", "delta", "Nether Delta Console", ConsoleSize.MEDIUM, false, TardisLight.LAMP, false, -19));
+        // DELUXE schematic designed by Lord_Rahl and killeratnight at mcnovus.net
         Desktops.getBY_NAMES().put("DELUXE", new Schematic("DIAMOND_BLOCK", "deluxe", "Supersized Deluxe Console", ConsoleSize.TALL, true, TardisLight.TENTH, false, -20));
         Desktops.getBY_NAMES().put("DIVISION", new Schematic("PINK_GLAZED_TERRACOTTA", "division", "The Division Interuniverse Console", ConsoleSize.MEDIUM, false, TardisLight.LANTERN, false, -21));
+        // ELEVENTH schematic designed by Lord_Rahl and killeratnight at mcnovus.net
         Desktops.getBY_NAMES().put("ELEVENTH", new Schematic("EMERALD_BLOCK", "eleventh", "11th Doctor's Console", ConsoleSize.TALL, true, TardisLight.TWELFTH, false, -22));
         // ENDER schematic designed by ToppanaFIN (player at thatsnotacreeper.com)
         Desktops.getBY_NAMES().put("ENDER", new Schematic("PURPUR_BLOCK", "ender", "Ender Console", ConsoleSize.SMALL, true, TardisLight.LANTERN, false, -23));
@@ -77,6 +80,7 @@ public class TARDISDesktopLoader {
         Desktops.getBY_NAMES().put("PLANK", new Schematic("BOOKSHELF", "plank", "Wood Console", ConsoleSize.SMALL, false, TardisLight.LAMP, false, -31));
         // PYRAMID schematic designed by airomis (player at thatsnotacreeper.com)
         Desktops.getBY_NAMES().put("PYRAMID", new Schematic("SANDSTONE_STAIRS", "pyramid", "A Sandstone Pyramid Console", ConsoleSize.SMALL, true, TardisLight.LAMP, false, -32));
+        // REDSTONE schematic designed by Lord_Rahl and killeratnight at mcnovus.net
         Desktops.getBY_NAMES().put("REDSTONE", new Schematic("REDSTONE_BLOCK", "redstone", "Redstone Console", ConsoleSize.MEDIUM, true, TardisLight.TENTH, 65, false, -33));
         Desktops.getBY_NAMES().put("ROTOR", new Schematic("HONEYCOMB_BLOCK", "rotor", "Time Rotor Console", ConsoleSize.SMALL, false, TardisLight.TENTH, false, -34));
         Desktops.getBY_NAMES().put("RUSTIC", new Schematic("COPPER_BULB", "rustic", "Rustic Console", ConsoleSize.MEDIUM, false, TardisLight.BULB, false, -35));
@@ -85,6 +89,7 @@ public class TARDISDesktopLoader {
         // THIRTEENTH designed by Razihel
         Desktops.getBY_NAMES().put("THIRTEENTH", new Schematic("HORN_CORAL_BLOCK", "thirteenth", "13th Doctor's Console", ConsoleSize.MEDIUM, false, TardisLight.THIRTEENTH, 65, false, -37));
         Desktops.getBY_NAMES().put("TOM", new Schematic("LAPIS_BLOCK", "tom", "4th Doctor's Console", ConsoleSize.SMALL, false, TardisLight.CLASSIC, false, -38));
+        // TWELFTH schematic designed by Lord_Rahl and killeratnight at mcnovus.net
         Desktops.getBY_NAMES().put("TWELFTH", new Schematic("PRISMARINE", "twelfth", "12th Doctor's Console", ConsoleSize.MEDIUM, true, TardisLight.TWELFTH, false, -39));
         Desktops.getBY_NAMES().put("WAR", new Schematic("WHITE_TERRACOTTA", "war", "War Doctor's Console", ConsoleSize.SMALL, true, TardisLight.CLASSIC, false, -40));
         Desktops.getBY_NAMES().put("WEATHERED", new Schematic("WEATHERED_COPPER", "weathered", "Weathered Copper Console", ConsoleSize.SMALL, true, TardisLight.LANTERN, false, -41));
