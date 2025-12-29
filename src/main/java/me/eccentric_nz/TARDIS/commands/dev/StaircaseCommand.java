@@ -28,7 +28,7 @@ import org.bukkit.util.Vector;
 
 import java.util.List;
 
-public class ZeroCommand {
+public class StaircaseCommand {
 
     private final Slab slab = (Slab) Material.STONE_BRICK_SLAB.createBlockData();
     private final List<Vector> vectors = List.of(
