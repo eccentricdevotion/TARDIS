@@ -28,9 +28,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.flight.vehicle.InterpolatedAnimation;
 import me.eccentric_nz.TARDIS.flight.vehicle.VehicleUtility;
-import me.eccentric_nz.TARDIS.sonic.actions.TARDISSonicFreeze;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
-import me.eccentric_nz.TARDIS.utility.TARDISVector3D;
 import me.eccentric_nz.tardisshop.ShopItem;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Chunk;
@@ -44,6 +42,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.BoundingBox;
+import org.bukkit.util.RayTraceResult;
 import org.bukkit.util.Transformation;
 
 import java.util.Locale;
@@ -125,28 +124,16 @@ public class TARDISDisplayItemCommand {
                 }
             }
             case "door" -> {
-                // get the armour stand the player is looking at
+                // get the item display the player is looking at
                 Location observerPos = player.getEyeLocation();
-                TARDISVector3D observerDir = new TARDISVector3D(observerPos.getDirection());
-                TARDISVector3D observerStart = new TARDISVector3D(observerPos);
-                TARDISVector3D observerEnd = observerStart.add(observerDir.multiply(16));
-                ItemDisplay display = null;
-                // Get nearby entities
-                for (Entity target : player.getNearbyEntities(8.0d, 8.0d, 8.0d)) {
-                    // Bounding box of the given player
-                    TARDISVector3D targetPos = new TARDISVector3D(target.getLocation());
-                    TARDISVector3D minimum = targetPos.add(-0.5, 0, -0.5);
-                    TARDISVector3D maximum = targetPos.add(0.5, 1.67, 0.5);
-                    if (target.getType().equals(EntityType.ITEM_DISPLAY) && TARDISSonicFreeze.hasIntersection(observerStart, observerEnd, minimum, maximum)) {
-                        if (display == null || display.getLocation().distanceSquared(observerPos) > target.getLocation().distanceSquared(observerPos)) {
-                            display = (ItemDisplay) target;
-                        }
+                RayTraceResult result = observerPos.getWorld().rayTraceEntities(observerPos, observerPos.getDirection(), 16.0d, (s) -> s.getType() == EntityType.ITEM_DISPLAY);
+                if (result != null) {
+                    ItemDisplay display = (ItemDisplay) result.getHitEntity();
+                    if (display != null) {
+                        ItemStack is = display.getItemStack();
+                        plugin.getMessenger().message(player, is.getType().toString());
+                        return true;
                     }
-                }
-                if (display != null) {
-                    ItemStack is = display.getItemStack();
-                    plugin.getMessenger().message(player, is.getType().toString());
-                    return true;
                 }
             }
             case "remove" -> {

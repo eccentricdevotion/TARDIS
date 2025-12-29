@@ -18,9 +18,10 @@ package me.eccentric_nz.TARDIS.sonic.actions;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.utility.TARDISVector3D;
 import org.bukkit.Location;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.util.RayTraceResult;
 
 import java.util.UUID;
 
@@ -28,23 +29,8 @@ public class TARDISSonicFreeze {
 
     public static Player getTargetPlayer(Player player) {
         Location observerPos = player.getEyeLocation();
-        TARDISVector3D observerDir = new TARDISVector3D(observerPos.getDirection());
-        TARDISVector3D observerStart = new TARDISVector3D(observerPos);
-        TARDISVector3D observerEnd = observerStart.add(observerDir.multiply(16));
-        Player hit = null;
-        // Get nearby players
-        for (Player target : player.getWorld().getPlayers()) {
-            // Bounding box of the given player
-            TARDISVector3D targetPos = new TARDISVector3D(target.getLocation());
-            TARDISVector3D minimum = targetPos.add(-0.5, 0, -0.5);
-            TARDISVector3D maximum = targetPos.add(0.5, 1.67, 0.5);
-            if (target != player && hasIntersection(observerStart, observerEnd, minimum, maximum)) {
-                if (hit == null || hit.getLocation().distanceSquared(observerPos) > target.getLocation().distanceSquared(observerPos)) {
-                    hit = target;
-                }
-            }
-        }
-        return hit;
+        RayTraceResult result = observerPos.getWorld().rayTraceEntities(observerPos, observerPos.getDirection(), 16.0d, (s) -> s.getType() == EntityType.PLAYER);
+        return result != null ? (Player) result.getHitEntity() : null;
     }
 
     public static void immobilise(TARDIS plugin, Player player, Player target) {
@@ -59,29 +45,5 @@ public class TARDISSonicFreeze {
         } else {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "FREEZE_NO");
         }
-    }
-
-    public static boolean hasIntersection(TARDISVector3D p1, TARDISVector3D p2, TARDISVector3D min, TARDISVector3D max) {
-        double epsilon = 0.0001f;
-        TARDISVector3D d = p2.subtract(p1).multiply(0.5);
-        TARDISVector3D e = max.subtract(min).multiply(0.5);
-        TARDISVector3D c = p1.add(d).subtract(min.add(max).multiply(0.5));
-        TARDISVector3D ad = d.abs();
-        if (Math.abs(c.x) > e.x + ad.x) {
-            return false;
-        }
-        if (Math.abs(c.y) > e.y + ad.y) {
-            return false;
-        }
-        if (Math.abs(c.z) > e.z + ad.z) {
-            return false;
-        }
-        if (Math.abs(d.y * c.z - d.z * c.y) > e.y * ad.z + e.z * ad.y + epsilon) {
-            return false;
-        }
-        if (Math.abs(d.z * c.x - d.x * c.z) > e.z * ad.x + e.x * ad.z + epsilon) {
-            return false;
-        }
-        return Math.abs(d.x * c.y - d.y * c.x) <= e.x * ad.y + e.y * ad.x + epsilon;
     }
 }

@@ -19,8 +19,6 @@ package me.eccentric_nz.tardisweepingangels.commands;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.keys.*;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.sonic.actions.TARDISSonicFreeze;
-import me.eccentric_nz.TARDIS.utility.TARDISVector3D;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.equip.ArmourStandEquipment;
 import me.eccentric_nz.tardisweepingangels.monsters.headless_monks.HeadlessFlameRunnable;
@@ -30,13 +28,13 @@ import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.ArmorStand;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.util.RayTraceResult;
 
 import java.util.Locale;
 
@@ -71,34 +69,23 @@ public class EquipCommand {
         }
         // get the armour stand player is looking at
         Location observerPos = player.getEyeLocation();
-        TARDISVector3D observerDir = new TARDISVector3D(observerPos.getDirection());
-        TARDISVector3D observerStart = new TARDISVector3D(observerPos);
-        TARDISVector3D observerEnd = observerStart.add(observerDir.multiply(16));
-        ArmorStand as = null;
-        // Get nearby entities
-        for (Entity target : player.getNearbyEntities(8.0d, 8.0d, 8.0d)) {
-            // Bounding box of the given player
-            TARDISVector3D targetPos = new TARDISVector3D(target.getLocation());
-            TARDISVector3D minimum = targetPos.add(-0.5, 0, -0.5);
-            TARDISVector3D maximum = targetPos.add(0.5, 1.67, 0.5);
-            if (target.getType().equals(EntityType.ARMOR_STAND) && TARDISSonicFreeze.hasIntersection(observerStart, observerEnd, minimum, maximum)) {
-                if (as == null || as.getLocation().distanceSquared(observerPos) > target.getLocation().distanceSquared(observerPos)) {
-                    as = (ArmorStand) target;
-                }
-            }
+        RayTraceResult result = observerPos.getWorld().rayTraceEntities(observerPos, observerPos.getDirection(), 16.0d, (s) -> s.getType() == EntityType.ARMOR_STAND);
+        if (result == null) {
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "WA_STAND");
+            return true;
         }
+        ArmorStand as = (ArmorStand) result.getHitEntity();
         if (as != null) {
             new ArmourStandEquipment().setStandEquipment(as, monster, (monster == Monster.EMPTY_CHILD));
             if (args.length > 2) {
-                ArmorStand stand = as;
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                    EntityEquipment ee = stand.getEquipment();
+                    EntityEquipment ee = as.getEquipment();
                     ItemStack head = ee.getHelmet();
                     ItemMeta meta = head.getItemMeta();
                     if (monster == Monster.HEADLESS_MONK) {
                         if (args[2].equals("flaming")) {
-                            int flameID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new HeadlessFlameRunnable(stand), 1, 20);
-                            stand.getPersistentDataContainer().set(TARDISWeepingAngels.FLAME_TASK, PersistentDataType.INTEGER, flameID);
+                            int flameID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new HeadlessFlameRunnable(as), 1, 20);
+                            as.getPersistentDataContainer().set(TARDISWeepingAngels.FLAME_TASK, PersistentDataType.INTEGER, flameID);
                             // set helmet to sword version
                             meta.setItemModel(MonkVariant.HEADLESS_MONK_STATIC.getKey());
                         } else {
@@ -152,9 +139,6 @@ public class EquipCommand {
                     ee.setHelmet(head);
                 }, 2L);
             }
-        } else {
-            plugin.getMessenger().send(sender, TardisModule.MONSTERS, "WA_STAND");
-            return true;
         }
         return true;
     }
