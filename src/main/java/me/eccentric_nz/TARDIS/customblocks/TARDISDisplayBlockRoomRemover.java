@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 eccentric_nz
+ * Copyright (C) 2026 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -41,12 +41,12 @@ public class TARDISDisplayBlockRoomRemover implements Runnable {
     private final int c = 16;
     private final int h = 16;
     private final int w = 16;
+    private final BlockData blockData;
     private boolean running;
     private int level = 0;
     private int row = 0;
     private int taskId;
     private World world;
-    private final BlockData blockData;
 
     public TARDISDisplayBlockRoomRemover(TARDIS plugin, Player owner, TARDISARSSlot slot, BlockData blockData) {
         this.plugin = plugin;

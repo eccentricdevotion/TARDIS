@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 eccentric_nz
+ * Copyright (C) 2026 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,8 +23,8 @@ import net.minecraft.SharedConstants;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.datafix.DataFixers;
 import net.minecraft.util.datafix.fixes.References;
 import net.minecraft.world.entity.Entity;
@@ -45,9 +45,6 @@ import java.util.Map;
 public class TWAK9 extends TWAFollower {
 
     private static final String entityId = "k9";
-    protected int i = 0;
-    protected double oldX;
-    protected double oldZ;
     protected final NamespacedKey[] frames = new NamespacedKey[]{
             K9Variant.K9.getKey(),
             K9Variant.K9_1.getKey(),
@@ -58,6 +55,9 @@ public class TWAK9 extends TWAFollower {
             K9Variant.K9_4.getKey(),
             K9Variant.K9_3.getKey()
     };
+    protected int i = 0;
+    protected double oldX;
+    protected double oldZ;
 
     public TWAK9(Level world) {
         super(EntityType.HUSK, world);

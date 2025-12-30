@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 eccentric_nz
+ * Copyright (C) 2026 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -47,8 +47,8 @@ public class ResultSetLamps {
     private final HashMap<String, Object> where;
     private final boolean multiple;
     private final List<Lamp> data = new ArrayList<>();
-    private Lamp lamp = null;
     private final String prefix;
+    private Lamp lamp = null;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet from the lamps table.

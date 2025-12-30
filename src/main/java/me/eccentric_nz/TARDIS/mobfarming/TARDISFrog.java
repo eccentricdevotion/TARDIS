@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 eccentric_nz
+ * Copyright (C) 2026 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,11 +31,11 @@ import org.bukkit.entity.Frog;
  */
 class TARDISFrog extends TARDISMob {
 
+    private Frog.Variant frogVariant;
+
     public TARDISFrog() {
         super.setType(EntityType.FROG);
     }
-
-    private Frog.Variant frogVariant;
 
     public Frog.Variant getFrogVariant() {
         return frogVariant;

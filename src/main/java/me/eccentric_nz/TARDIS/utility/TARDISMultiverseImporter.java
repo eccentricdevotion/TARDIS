@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 eccentric_nz
+ * Copyright (C) 2026 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,8 +30,8 @@ import java.io.IOException;
 public class TARDISMultiverseImporter {
 
     private final TARDIS plugin;
-    MultiverseCoreApi mvc = MultiverseCoreApi.get();
     private final CommandSender sender;
+    private final MultiverseCoreApi mvc = MultiverseCoreApi.get();
 
     public TARDISMultiverseImporter(TARDIS plugin, CommandSender sender) {
         this.plugin = plugin;

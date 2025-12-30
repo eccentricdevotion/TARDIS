@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 eccentric_nz
+ * Copyright (C) 2026 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,18 +25,18 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ResultSetShells {
-    public ResultSetShells(TARDIS plugin, HashMap<String, Object> where) {
-        this.plugin = plugin;
-        this.where = where;
-        prefix = this.plugin.getPrefix();
-    }
-
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final HashMap<String, Object> where;
     private final ArrayList<HashMap<String, String>> data = new ArrayList<>();
     private final String prefix;
+
+    public ResultSetShells(TARDIS plugin, HashMap<String, Object> where) {
+        this.plugin = plugin;
+        this.where = where;
+        prefix = this.plugin.getPrefix();
+    }
 
     /**
      * Retrieves an SQL ResultSet from the chameleon table. This method builds an SQL query string from the parameters

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 eccentric_nz
+ * Copyright (C) 2026 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,13 +24,13 @@ import org.bukkit.entity.Parrot;
  */
 public class TARDISParrot extends TARDISPet {
 
-    public TARDISParrot() {
-        super.setType(EntityType.PARROT);
-    }
-
     private Parrot.Variant parrotVariant;
     private boolean onLeftShoulder;
     private boolean onRightShoulder;
+
+    public TARDISParrot() {
+        super.setType(EntityType.PARROT);
+    }
 
     public Parrot.Variant getParrotVariant() {
         return parrotVariant;

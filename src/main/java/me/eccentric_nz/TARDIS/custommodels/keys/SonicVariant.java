@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 eccentric_nz
+ * Copyright (C) 2026 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -71,14 +71,6 @@ public enum SonicVariant {
         this.floats = floats;
     }
 
-    public NamespacedKey getKey() {
-        return key;
-    }
-
-    public List<Float> getFloats() {
-        return floats;
-    }
-
     public static SonicVariant getByFloat(Float f) {
         for (SonicVariant variant : values()) {
             if (!variant.getFloats().isEmpty() && f.equals(variant.getFloats().getFirst())) {
@@ -86,5 +78,13 @@ public enum SonicVariant {
             }
         }
         return ELEVENTH;
+    }
+
+    public NamespacedKey getKey() {
+        return key;
+    }
+
+    public List<Float> getFloats() {
+        return floats;
     }
 }

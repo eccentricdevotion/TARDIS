@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 eccentric_nz
+ * Copyright (C) 2026 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,10 +34,10 @@ import java.util.List;
 public class TARDISLightLevelsInventory implements InventoryHolder {
 
     private final TARDIS plugin;
+    private final Inventory inventory;
     private String interior_level = "15";
     private String exterior_level = "15";
     private String console_level = "15";
-    private final Inventory inventory;
 
     public TARDISLightLevelsInventory(TARDIS plugin, int id) {
         this.plugin = plugin;
