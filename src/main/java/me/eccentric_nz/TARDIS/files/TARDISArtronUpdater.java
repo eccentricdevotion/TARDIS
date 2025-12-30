@@ -102,6 +102,7 @@ public class TARDISArtronUpdater {
         integerOptions.put("upgrades.cursed", 20000);
         integerOptions.put("upgrades.deluxe", 10000);
         integerOptions.put("upgrades.division", 7500);
+        integerOptions.put("upgrades.eighth", 17500);
         integerOptions.put("upgrades.eleventh", 10000);
         integerOptions.put("upgrades.ender", 5000);
         integerOptions.put("upgrades.factory", 7500);

@@ -155,6 +155,7 @@ public enum TARDISDescription {
     BUDGET("Small, but cosy - good if you don't like walking too far to the console :)"),
     BIGGER("Big enough to swing a cat - console design by killeratnight & L0rd Rahl."),
     DELUXE("Luxury in a box - console design by killeratnight & L0rd Rahl."),
+    EIGHTH("The 8th Doctor's TARDIS - based on design by DT10."),
     ELEVENTH("It's smaller on the outside... - console design by killeratnight & L0rd Rahl."),
     TWELFTH("The 12th Doctor's TARDIS - console design by killeratnight."),
     THIRTEENTH("The 13th Doctor's TARDIS - console design by Razihel."),

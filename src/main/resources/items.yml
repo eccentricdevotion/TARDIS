@@ -35,6 +35,7 @@ deluxe_seed: 250.00
 diamond_disruptor_circuit: 100.00
 division_seed: 250.00
 earl_grey_jelly_baby: 0.50
+eighth_seed: 250.00
 eleventh_seed: 250.00
 emerald_environment_circuit: 100.00
 empty_child_head: 75.00
@@ -180,6 +181,7 @@ blueprint_console_custom: 33.00
 blueprint_console_delta: 33.00
 blueprint_console_deluxe: 33.00
 blueprint_console_division: 33.00
+blueprint_console_eighth: 33.00
 blueprint_console_eleventh: 33.00
 blueprint_console_ender: 33.00
 blueprint_console_factory: 33.00

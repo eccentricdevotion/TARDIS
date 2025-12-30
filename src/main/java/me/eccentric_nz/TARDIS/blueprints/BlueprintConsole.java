@@ -29,6 +29,7 @@ public enum BlueprintConsole {
     DELTA("tardis.delta"),
     DELUXE("tardis.deluxe"),
     DIVISION("tardis.division"),
+    EIGHTH("tardis.eighth"),
     ELEVENTH("tardis.eleventh"),
     ENDER("tardis.ender"),
     FACTORY("tardis.factory"),
