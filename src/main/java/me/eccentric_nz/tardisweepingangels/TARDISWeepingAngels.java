@@ -349,7 +349,7 @@ public class TARDISWeepingAngels {
         PDC_KEYS.put(Monster.ICE_WARRIOR, WARRIOR);
         ZYGON = new NamespacedKey(plugin, "zygon");
         PDC_KEYS.put(Monster.ZYGON, ZYGON);
-        MONSTER_HEAD = new NamespacedKey(plugin, "monster_head");
+//        MONSTER_HEAD = new NamespacedKey(plugin, "monster_head");
         PersistentDataTypeUUID = new UUIDDataType();
     }
 }

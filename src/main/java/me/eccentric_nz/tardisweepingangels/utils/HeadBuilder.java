@@ -16,12 +16,12 @@
  */
 package me.eccentric_nz.tardisweepingangels.utils;
 
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.keys.DalekVariant;
 import me.eccentric_nz.TARDIS.custommodels.keys.EmptyChildVariant;
 import me.eccentric_nz.TARDIS.custommodels.keys.K9Variant;
 import me.eccentric_nz.TARDIS.custommodels.keys.VampireOfVeniceVariant;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
-import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.EquipmentSlot;
@@ -47,7 +47,7 @@ public class HeadBuilder {
         }
         ItemStack is = ItemStack.of(material, 1);
         ItemMeta im = is.getItemMeta();
-        im.getPersistentDataContainer().set(TARDISWeepingAngels.MONSTER_HEAD, PersistentDataType.INTEGER, 99);
+        im.getPersistentDataContainer().set(TARDIS.plugin.getHeadBlockKey(), PersistentDataType.INTEGER, 99);
         String head = switch (monster) {
             case HEADLESS_MONK -> "Headless Monk Hood";
             case MIRE -> "Mire Helmet";

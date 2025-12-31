@@ -43,7 +43,7 @@ public class RemoveCommand {
             UUID uuid = player.getUniqueId();
             // monster equipped armour stands
             ArmorStand stand = (ArmorStand) FollowerFinder.getEntity(player, EntityType.ARMOR_STAND);
-            if (stand != null && stand.getPersistentDataContainer().has(TARDISWeepingAngels.MONSTER_HEAD, PersistentDataType.INTEGER)) {
+            if (stand != null && stand.getPersistentDataContainer().has(plugin.getHeadBlockKey(), PersistentDataType.INTEGER)) {
                 stand.remove();
                 return true;
             }

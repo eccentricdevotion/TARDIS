@@ -19,7 +19,6 @@ package me.eccentric_nz.tardisweepingangels.equip;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
-import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -40,7 +39,7 @@ public class PlayerUndisguise implements Listener {
                 if (is != null) {
                     if (is.hasItemMeta()) {
                         ItemMeta im = is.getItemMeta();
-                        if (!im.getPersistentDataContainer().has(TARDISWeepingAngels.MONSTER_HEAD, PersistentDataType.INTEGER)) {
+                        if (!im.getPersistentDataContainer().has(TARDIS.plugin.getHeadBlockKey(), PersistentDataType.INTEGER)) {
                             if (im.hasDisplayName() && (
                                     ComponentUtils.startsWith(im.displayName(), "Weeping Angel")
                                     || ComponentUtils.startsWith(im.displayName(), "Angel Of Liberty")

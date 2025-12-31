@@ -171,6 +171,7 @@ public class TARDIS extends JavaPlugin {
     private String prefix;
     private CraftingDifficulty craftingDifficulty;
     private WorldManager worldManager;
+    private NamespacedKey headBlockKey;
     private NamespacedKey oldBlockKey;
     private NamespacedKey customBlockKey;
     private NamespacedKey destroyKey;
@@ -253,6 +254,7 @@ public class TARDIS extends JavaPlugin {
     public void onEnable() {
         pm = getServer().getPluginManager();
         plugin = this;
+        headBlockKey = new NamespacedKey(this, "monster_head");
         oldBlockKey = new NamespacedKey(this, "customBlock");
         customBlockKey = new NamespacedKey(this, "custom_block");
         destroyKey = new NamespacedKey(this, "destroy");
@@ -1088,6 +1090,15 @@ public class TARDIS extends JavaPlugin {
      */
     public NamespacedKey getOldBlockKey() {
         return oldBlockKey;
+    }
+
+    /**
+     * Gets the TARDIS Head Block NamespacedKey
+     *
+     * @return the TARDIS Head Block NamespacedKey
+     */
+    public NamespacedKey getHeadBlockKey() {
+        return headBlockKey;
     }
 
     /**

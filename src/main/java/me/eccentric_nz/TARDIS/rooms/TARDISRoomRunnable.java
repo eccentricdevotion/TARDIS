@@ -42,7 +42,6 @@ import me.eccentric_nz.TARDIS.skins.MannequinSkins;
 import me.eccentric_nz.TARDIS.skins.Skin;
 import me.eccentric_nz.TARDIS.utility.*;
 import me.eccentric_nz.tardischunkgenerator.custombiome.BiomeHelper;
-import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import net.kyori.adventure.text.Component;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -431,7 +430,7 @@ public class TARDISRoomRunnable implements Runnable {
                         m.setRotation(mannequin.get("rotation").getAsFloat(), 0);
                         m.setBodyYaw(mannequin.get("yaw").getAsFloat());
                         String which = mannequin.get("type").getAsString();
-                        m.getPersistentDataContainer().set(TARDISWeepingAngels.MONSTER_HEAD, PersistentDataType.STRING, which);
+                        m.getPersistentDataContainer().set(plugin.getHeadBlockKey(), PersistentDataType.STRING, which);
                         Skin skin = MannequinSkins.getByName.getOrDefault(which, MannequinSkins.ROMAN);
                         m.setProfile(ResolvableProfile.resolvableProfile().name("").uuid(UUID.randomUUID()).addProperty(new ProfileProperty("textures", skin.value(), skin.signature())).build());
                         m.setSilent(true);

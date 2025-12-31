@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.lazarus;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.skins.*;
-import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.equip.RemoveEquipment;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -60,7 +59,7 @@ public class LazarusUtils {
             ItemStack helmet = player.getInventory().getHelmet();
             if (helmet != null && helmet.hasItemMeta()) {
                 ItemMeta im = helmet.getItemMeta();
-                if (im.getPersistentDataContainer().has(TARDISWeepingAngels.MONSTER_HEAD, PersistentDataType.INTEGER)) {
+                if (im.getPersistentDataContainer().has(TARDIS.plugin.getHeadBlockKey(), PersistentDataType.INTEGER)) {
                     RemoveEquipment.set(player);
                 }
             }

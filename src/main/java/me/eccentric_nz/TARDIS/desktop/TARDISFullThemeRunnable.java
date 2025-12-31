@@ -60,7 +60,6 @@ import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import me.eccentric_nz.TARDIS.utility.protection.TARDISProtectionRemover;
-import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import org.bukkit.*;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
@@ -455,7 +454,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                     m.setRotation(mannequin.get("rotation").getAsFloat(), 0);
                     m.setBodyYaw(mannequin.get("yaw").getAsFloat());
                     String which = mannequin.get("type").getAsString();
-                    m.getPersistentDataContainer().set(TARDISWeepingAngels.MONSTER_HEAD, PersistentDataType.STRING, which);
+                    m.getPersistentDataContainer().set(plugin.getHeadBlockKey(), PersistentDataType.STRING, which);
                     Skin skin = MannequinSkins.getByName.getOrDefault(which, MannequinSkins.ROMAN);
                     m.setProfile(ResolvableProfile.resolvableProfile().name("").uuid(UUID.randomUUID()).addProperty(new ProfileProperty("textures", skin.value(), skin.signature())).build());
                     m.setSilent(true);
