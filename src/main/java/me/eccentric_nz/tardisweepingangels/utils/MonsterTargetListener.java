@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.tardisweepingangels.utils;
 
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.keys.SmilerVariant;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import org.bukkit.Location;
@@ -38,7 +39,7 @@ public class MonsterTargetListener implements Listener {
     private static boolean isWearingMonsterHead(Player player, Material material) {
         ItemStack is = player.getInventory().getHelmet();
         if (is != null && is.getType().equals(material) && is.hasItemMeta()) {
-            return is.getItemMeta().getPersistentDataContainer().has(TARDISWeepingAngels.MONSTER_HEAD, PersistentDataType.INTEGER);
+            return is.getItemMeta().getPersistentDataContainer().has(TARDIS.plugin.getHeadBlockKey(), PersistentDataType.INTEGER);
         }
         return false;
     }

@@ -2,10 +2,10 @@ package me.eccentric_nz.TARDIS.commands.dev;
 
 import com.destroystokyo.paper.profile.ProfileProperty;
 import io.papermc.paper.datacomponent.item.ResolvableProfile;
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.skins.MannequinSkins;
 import me.eccentric_nz.TARDIS.skins.Skin;
-import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
@@ -27,7 +27,7 @@ public class MannequinCommand {
         float yaw = player.getYaw() + 180f;
         mannequin.setRotation(yaw, 0f);
         mannequin.setBodyYaw(yaw);
-        mannequin.getPersistentDataContainer().set(TARDISWeepingAngels.MONSTER_HEAD, PersistentDataType.STRING, which);
+        mannequin.getPersistentDataContainer().set(TARDIS.plugin.getHeadBlockKey(), PersistentDataType.STRING, which);
         mannequin.setProfile(ResolvableProfile.resolvableProfile().name("").uuid(UUID.randomUUID()).addProperty(new ProfileProperty("textures", skin.value(), skin.signature())).build());
         mannequin.setSilent(true);
         mannequin.setAI(false);

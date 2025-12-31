@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.tardisweepingangels.equip;
 
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.keys.*;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
-import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.monsters.cybermen.CyberType;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import net.kyori.adventure.text.Component;
@@ -42,7 +42,7 @@ public class ArmourEquipper {
         // helmet
         ItemStack head = ItemStack.of(monster.getMaterial());
         ItemMeta headMeta = head.getItemMeta();
-        headMeta.getPersistentDataContainer().set(TARDISWeepingAngels.MONSTER_HEAD, PersistentDataType.INTEGER, 99);
+        headMeta.getPersistentDataContainer().set(TARDIS.plugin.getHeadBlockKey(), PersistentDataType.INTEGER, 99);
         // get armour key once, so random variants (OOD, CLOCKWORK_DROIDS, CYBERMEN) have the same chestplate and leggings
         NamespacedKey armour = monster.getArmourKey();
         // get head variant (CLOCKWORK_DROIDS, CYBERMEN)
@@ -81,7 +81,7 @@ public class ArmourEquipper {
         bodyComponent.setSlot(EquipmentSlot.CHEST);
         bodyComponent.setModel(armour);
         bodyMeta.setEquippable(bodyComponent);
-        bodyMeta.getPersistentDataContainer().set(TARDISWeepingAngels.MONSTER_HEAD, PersistentDataType.INTEGER, 99);
+        bodyMeta.getPersistentDataContainer().set(TARDIS.plugin.getHeadBlockKey(), PersistentDataType.INTEGER, 99);
         body.setItemMeta(bodyMeta);
         entity.getEquipment().setChestplate(body);
         // leggings
@@ -95,7 +95,7 @@ public class ArmourEquipper {
         legsComponent.setSlot(EquipmentSlot.LEGS);
         legsComponent.setModel(armour);
         legsMeta.setEquippable(legsComponent);
-        legsMeta.getPersistentDataContainer().set(TARDISWeepingAngels.MONSTER_HEAD, PersistentDataType.INTEGER, 99);
+        legsMeta.getPersistentDataContainer().set(TARDIS.plugin.getHeadBlockKey(), PersistentDataType.INTEGER, 99);
         legs.setItemMeta(legsMeta);
         entity.getEquipment().setLeggings(legs);
         if (!(entity instanceof Player)) {

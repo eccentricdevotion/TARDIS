@@ -3,7 +3,6 @@ package me.eccentric_nz.TARDIS.commands.dev;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
-import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.equip.ArmourStandEquipment;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
@@ -30,7 +29,7 @@ public class RomanCommand {
         ArmorStand as = (ArmorStand) result.getHitEntity();
         if (as != null) {
             as.setArms(false);
-            as.getPersistentDataContainer().set(TARDISWeepingAngels.MONSTER_HEAD, PersistentDataType.INTEGER, 1);
+            as.getPersistentDataContainer().set(TARDIS.plugin.getHeadBlockKey(), PersistentDataType.INTEGER, 1);
             ItemStack head = ItemStack.of(Material.DEAD_BRAIN_CORAL_FAN, 1);
             ItemMeta headMeta = head.getItemMeta();
             headMeta.displayName(Component.text(TARDISStringUtils.capitalise(which) + " Soldier Head"));

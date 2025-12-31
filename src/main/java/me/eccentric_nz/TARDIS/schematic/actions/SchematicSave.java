@@ -26,7 +26,6 @@ import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import me.eccentric_nz.TARDIS.schematic.getters.DataPackPainting;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
-import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import net.kyori.adventure.text.Component;
 import org.bukkit.*;
 import org.bukkit.block.*;
@@ -156,7 +155,7 @@ public class SchematicSave {
                                 soldier.add("rel_location", loc);
                                 soldier.addProperty("rotation", mannequin.getYaw());
                                 soldier.addProperty("yaw", mannequin.getBodyYaw());
-                                String type = mannequin.getPersistentDataContainer().getOrDefault(TARDISWeepingAngels.MONSTER_HEAD, PersistentDataType.STRING, "roman");
+                                String type = mannequin.getPersistentDataContainer().getOrDefault(plugin.getHeadBlockKey(), PersistentDataType.STRING, "roman");
                                 soldier.addProperty("type", type);
                                 if (!mannequin.getEquipment().getItemInMainHand().getType().isAir()) {
                                     soldier.addProperty("hand", mannequin.getMainHand() == MainHand.LEFT ? "left" : "right");
