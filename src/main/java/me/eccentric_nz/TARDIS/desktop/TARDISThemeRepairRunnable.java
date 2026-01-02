@@ -257,7 +257,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
             plugin.getQueryFactory().doDelete("lamps", wherel);
             chunks.forEach((c) -> {
                 // remove any display items lamps
-                TARDISDisplayItemUtils.removeDisplaysInChunk(c, starty, starty + h);
+                TARDISDisplayItemUtils.removeEntitiesInChunk(c, starty, starty + h);
             });
             plugin.getPM().callEvent(new TARDISDesktopThemeEvent(player, tardis, tud));
         }

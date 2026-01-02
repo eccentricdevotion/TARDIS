@@ -370,7 +370,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
             plugin.getQueryFactory().doDelete("lamps", whereL);
             previousChunks.forEach((c) -> {
                 // remove any item display or interactions
-                TARDISDisplayItemUtils.removeDisplaysInChunk(c, 62, 64 + previousHeight);
+                TARDISDisplayItemUtils.removeEntitiesInChunk(c, 62, 64 + previousHeight);
             });
             plugin.getPM().callEvent(new TARDISDesktopThemeEvent(player, tardis, tud));
         }
