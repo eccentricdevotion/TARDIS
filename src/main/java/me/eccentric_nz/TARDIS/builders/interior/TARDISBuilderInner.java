@@ -532,18 +532,18 @@ public class TARDISBuilderInner implements Runnable {
                 String button = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
                 plugin.getQueryFactory().insertSyncControl(dbID, 1, button, 0);
             }
-            if (type.equals(Material.JUKEBOX)) {
-                // remember the location of this Advanced Console
-                String advanced = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
-                plugin.getQueryFactory().insertSyncControl(dbID, 15, advanced, 0);
-                // check if player has storage record, and update the tardis_id field
-                plugin.getUtils().updateStorageId(playerUUID, dbID);
-                if (!TARDISFloodgate.isFloodgateEnabled() || !TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) {
-                    // set block data to correct BARRIER + Item Display
-                    data = TARDISConstants.BARRIER;
-                    // spawn an item display entity
-                    TARDISDisplayItemUtils.set(TARDISBlockDisplayItem.ADVANCED_CONSOLE, world, x, y, z);
-                }
+            if (type.equals(Material.JUKEBOX) && !(schm.getPermission().equals("eighth") && world.getBlockAt(x,y,z).getRelative(BlockFace.DOWN).getType() == Material.ANDESITE)) {
+                    // remember the location of this Advanced Console
+                    String advanced = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
+                    plugin.getQueryFactory().insertSyncControl(dbID, 15, advanced, 0);
+                    // check if player has storage record, and update the tardis_id field
+                    plugin.getUtils().updateStorageId(playerUUID, dbID);
+                    if (!TARDISFloodgate.isFloodgateEnabled() || !TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) {
+                        // set block data to correct BARRIER + Item Display
+                        data = TARDISConstants.BARRIER;
+                        // spawn an item display entity
+                        TARDISDisplayItemUtils.set(TARDISBlockDisplayItem.ADVANCED_CONSOLE, world, x, y, z);
+                    }
             }
             if (type.equals(Material.CAKE) && !schm.getPermission().equals("junk")) {
                 /*
