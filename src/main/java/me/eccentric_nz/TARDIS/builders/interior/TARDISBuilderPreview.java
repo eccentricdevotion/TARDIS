@@ -281,7 +281,7 @@ public class TARDISBuilderPreview implements Runnable {
                 lever.setFacing(BlockFace.WEST);
                 data = lever;
             }
-            if (type.equals(Material.JUKEBOX)) {
+            if (type.equals(Material.JUKEBOX) && !(schm.getPermission().equals("eighth") && world.getBlockAt(x,y,z).getRelative(BlockFace.DOWN).getType() == Material.ANDESITE)) {
                 // set block data to correct BARRIER + Item Display
                 data = TARDISConstants.BARRIER;
                 // spawn an item display entity

@@ -733,7 +733,7 @@ public class TARDISBuilderInner implements Runnable {
             } else if (TARDISStaticUtils.isInfested(type)) {
                 // legacy monster egg stone for controls
                 TARDISBlockSetters.setBlock(world, x, y, z, Material.VOID_AIR);
-            } else if (type.equals(Material.MUSHROOM_STEM) || (type.equals(Material.RED_MUSHROOM_BLOCK) && schm.getPermission().equals("eighth"))) { // mushroom stem for repeaters
+            } else if (type.equals(Material.MUSHROOM_STEM)) { // mushroom stem for repeaters
                 // save repeater location
                 if (j < 6) {
                     String repeater = world.getName() + ":" + x + ":" + y + ":" + z;
