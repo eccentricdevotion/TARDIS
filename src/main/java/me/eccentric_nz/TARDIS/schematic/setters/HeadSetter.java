@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 eccentric_nz
+ * Copyright (C) 2026 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,7 +35,7 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-public class TARDISHeadSetter {
+public class HeadSetter {
 
     public static void textureSkull(TARDIS plugin, UUID uuid, JsonObject head, Block block) {
         try {

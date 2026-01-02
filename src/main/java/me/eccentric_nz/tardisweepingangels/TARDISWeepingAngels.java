@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 eccentric_nz
+ * Copyright (C) 2026 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -123,7 +123,6 @@ public class TARDISWeepingAngels {
     public static NamespacedKey VASHTA;
     public static NamespacedKey WARRIOR;
     public static NamespacedKey ZYGON;
-    public static NamespacedKey MONSTER_HEAD;
     public static PersistentDataType<byte[], UUID> PersistentDataTypeUUID;
     private static boolean steal;
     private static boolean citizensEnabled = false;
@@ -349,7 +348,6 @@ public class TARDISWeepingAngels {
         PDC_KEYS.put(Monster.ICE_WARRIOR, WARRIOR);
         ZYGON = new NamespacedKey(plugin, "zygon");
         PDC_KEYS.put(Monster.ZYGON, ZYGON);
-//        MONSTER_HEAD = new NamespacedKey(plugin, "monster_head");
         PersistentDataTypeUUID = new UUIDDataType();
     }
 }

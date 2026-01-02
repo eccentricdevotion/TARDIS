@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 eccentric_nz
+ * Copyright (C) 2026 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,6 +18,8 @@ package me.eccentric_nz.TARDIS.recipes;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.recipes.shaped.*;
+import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
+import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapedRecipe;
 
 import java.util.HashMap;
@@ -33,6 +35,7 @@ public class TARDISShapedRecipe {
     public TARDISShapedRecipe(TARDIS plugin) {
         this.plugin = plugin;
         shapedRecipes = new HashMap<>();
+        RecipeChoice.MaterialChoice init = new RecipeChoice.MaterialChoice(TARDISWalls.BLOCKS);
     }
 
     public void addShapedRecipes() {

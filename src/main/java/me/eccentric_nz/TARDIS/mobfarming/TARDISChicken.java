@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 eccentric_nz
+ * Copyright (C) 2026 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,11 +30,11 @@ import org.bukkit.entity.EntityType;
  */
 class TARDISChicken extends TARDISMob {
 
+    private Chicken.Variant chickenVariant;
+
     public TARDISChicken() {
         super.setType(EntityType.CHICKEN);
     }
-
-    private Chicken.Variant chickenVariant;
 
     public Chicken.Variant getChickenVariant() {
         return chickenVariant;

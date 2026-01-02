@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 eccentric_nz
+ * Copyright (C) 2026 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,12 +21,12 @@ import org.bukkit.entity.Panda;
 
 public class TARDISPanda extends TARDISMob {
 
+    private Panda.Gene mainGene;
+    private Panda.Gene hiddenGene;
+
     public TARDISPanda() {
         super.setType(EntityType.PANDA);
     }
-
-    private Panda.Gene mainGene;
-    private Panda.Gene hiddenGene;
 
     public Panda.Gene getMainGene() {
         return mainGene;

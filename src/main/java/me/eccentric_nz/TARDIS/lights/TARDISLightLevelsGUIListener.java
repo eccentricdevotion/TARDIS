@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 eccentric_nz
+ * Copyright (C) 2026 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,18 +38,6 @@ import java.util.List;
 import java.util.UUID;
 
 public class TARDISLightLevelsGUIListener extends TARDISMenuListener {
-
-    private static class StateResult {
-        Boolean success;
-        Integer strength;
-        Integer level;
-
-        public StateResult(Boolean success, Integer strength, Integer level) {
-            this.success = success;
-            this.strength = strength;
-            this.level = level;
-        }
-    }
 
     private final TARDIS plugin;
 
@@ -200,6 +188,18 @@ public class TARDISLightLevelsGUIListener extends TARDISMenuListener {
             } else {
                 new LightLevelAction(plugin).illuminate(setLevel - 1, rs.getControlId(), rs.isPowered(), which, rs.isPoliceBox(), id, rs.isLightsOn());
             }
+        }
+    }
+
+    private static class StateResult {
+        Boolean success;
+        Integer strength;
+        Integer level;
+
+        public StateResult(Boolean success, Integer strength, Integer level) {
+            this.success = success;
+            this.strength = strength;
+            this.level = level;
         }
     }
 }

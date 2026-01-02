@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 eccentric_nz
+ * Copyright (C) 2026 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,6 @@ package me.eccentric_nz.tardischunkgenerator.worldgen;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.tardischunkgenerator.worldgen.biomeproviders.TelosBiomeProvider;
-import me.eccentric_nz.tardischunkgenerator.worldgen.populators.GallifreyGrassPopulator;
 import me.eccentric_nz.tardischunkgenerator.worldgen.populators.TelosStructurePopulator;
 import me.eccentric_nz.tardischunkgenerator.worldgen.populators.TelosVastialPopulator;
 import org.bukkit.World;

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 eccentric_nz
+ * Copyright (C) 2026 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -124,14 +124,6 @@ public enum DefaultFontInfo {
         this.length = length;
     }
 
-    public char getCharacter() {
-        return this.character;
-    }
-
-    public int getLength() {
-        return this.length;
-    }
-
     public static DefaultFontInfo getDefaultFontInfo(char c) {
         for (DefaultFontInfo info : DefaultFontInfo.values()) {
             if (info.getCharacter() == c) {
@@ -139,5 +131,13 @@ public enum DefaultFontInfo {
             }
         }
         return DefaultFontInfo.DEFAULT;
+    }
+
+    public char getCharacter() {
+        return this.character;
+    }
+
+    public int getLength() {
+        return this.length;
     }
 }

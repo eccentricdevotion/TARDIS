@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 eccentric_nz
+ * Copyright (C) 2026 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -448,10 +448,10 @@ public class TARDISDisplayItemUtils {
      * @param lower a lower y value to limit which entities will be removed
      * @param upper an upper y value to limit which entities will be removed
      */
-    public static void removeDisplaysInChunk(Chunk chunk, int lower, int upper) {
+    public static void removeEntitiesInChunk(Chunk chunk, int lower, int upper) {
         for (Entity entity : chunk.getEntities()) {
             // TARDIS item display and interaction entities + item frames + mannequins
-            if (entity instanceof ItemDisplay || entity instanceof Interaction || entity instanceof ItemFrame || entity instanceof Mannequin) {
+            if (entity instanceof ItemDisplay || entity instanceof Interaction || entity instanceof ItemFrame || entity instanceof Mannequin || entity instanceof ArmorStand) {
                 int y = entity.getLocation().getBlockY();
                 if (y >= lower && y <= upper) {
                     entity.remove();

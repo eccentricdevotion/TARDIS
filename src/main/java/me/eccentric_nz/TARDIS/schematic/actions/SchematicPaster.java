@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 eccentric_nz
+ * Copyright (C) 2026 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,41 +16,27 @@
  */
 package me.eccentric_nz.TARDIS.schematic.actions;
 
-import com.destroystokyo.paper.profile.ProfileProperty;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import io.papermc.paper.datacomponent.item.ResolvableProfile;
-import io.papermc.paper.registry.RegistryAccess;
-import io.papermc.paper.registry.RegistryKey;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.rooms.TARDISPainting;
-import me.eccentric_nz.TARDIS.schematic.getters.DataPackPainting;
 import me.eccentric_nz.TARDIS.schematic.setters.*;
-import me.eccentric_nz.TARDIS.skins.MannequinSkins;
-import me.eccentric_nz.TARDIS.skins.Skin;
 import me.eccentric_nz.TARDIS.utility.TARDISBannerData;
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Tag;
+import org.bukkit.World;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
-import org.bukkit.entity.*;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.MainHand;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.entity.Player;
 
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
-
-import static me.eccentric_nz.TARDIS.schematic.setters.TARDISBannerSetter.setBanners;
 
 /**
  * @author eccentric_nz
@@ -135,108 +121,33 @@ public class SchematicPaster implements Runnable {
                     TARDIS.plugin.getBlockLogger().logPlacement(map.getKey());
                 }
             }
-            setBanners(postBanners);
+            BannerSetter.setBanners(postBanners);
             // mannequins
             if (obj.has("mannequins")) {
                 JsonArray mannequins = obj.get("mannequins").getAsJsonArray();
-                for (int i = 0; i < mannequins.size(); i++) {
-                    JsonObject mannequin = mannequins.get(i).getAsJsonObject();
-                    JsonObject rel = mannequin.get("rel_location").getAsJsonObject();
-                    int mx = rel.get("x").getAsInt();
-                    int my = rel.get("y").getAsInt();
-                    int mz = rel.get("z").getAsInt();
-                    Location ml = new Location(world, x + mx + 0.5d, y + my, z + mz + 0.5d);
-                    Mannequin m = (Mannequin) world.spawnEntity(ml, EntityType.MANNEQUIN);
-                    m.setRotation(mannequin.get("rotation").getAsFloat(), 0);
-                    m.setBodyYaw(mannequin.get("yaw").getAsFloat());
-                    String which = mannequin.get("type").getAsString();
-                    m.getPersistentDataContainer().set(plugin.getHeadBlockKey(), PersistentDataType.STRING, which);
-                    Skin skin = MannequinSkins.getByName.getOrDefault(which, MannequinSkins.ROMAN);
-                    m.setProfile(ResolvableProfile.resolvableProfile().name("").uuid(UUID.randomUUID()).addProperty(new ProfileProperty("textures", skin.value(), skin.signature())).build());
-                    m.setSilent(true);
-                    m.setAI(false);
-                    m.setImmovable(true);
-                    if (mannequin.has("hand")) {
-                        m.setMainHand(mannequin.get("hand").getAsString().equals("left") ? MainHand.LEFT : MainHand.RIGHT);
-                        m.getEquipment().setItemInMainHand(ItemStack.of(mannequin.get("item").getAsString().equals("IRON_SWORD") ? Material.IRON_SWORD : Material.IRON_SPEAR));
-                    }
-                }
+                MannequinSetter.setMannequins(mannequins, world, x, y, z);
             }
             // armour stands
             if (obj.has("armour_stands")) {
                 JsonArray stands = obj.get("armour_stands").getAsJsonArray();
-                for (int i = 0; i < stands.size(); i++) {
-                    JsonObject stand = stands.get(i).getAsJsonObject();
-                    JsonObject rel = stand.get("rel_location").getAsJsonObject();
-                    int asx = rel.get("x").getAsInt();
-                    int asy = rel.get("y").getAsInt();
-                    int asz = rel.get("z").getAsInt();
-                    COMPASS facing = COMPASS.valueOf(BlockFace.valueOf(stand.get("facing").getAsString()).getOppositeFace().toString());
-                    Location asl = new Location(world, x + asx + 0.5d, y + asy, z + asz + 0.5d);
-                    ArmorStand as = (ArmorStand) world.spawnEntity(asl, EntityType.ARMOR_STAND);
-                    as.setRotation(facing.getYaw(), 0);
-                    as.setVisible(stand.get("invisible").getAsBoolean());
-                    if (stand.has("head")) {
-                        JsonObject head = stand.get("head").getAsJsonObject();
-                        Material material = Material.valueOf(head.get("material").getAsString());
-                        NamespacedKey nsk = NamespacedKey.fromString(head.get("model").getAsString());
-                        ItemStack is = ItemStack.of(material);
-                        ItemMeta im = is.getItemMeta();
-                        im.setItemModel(nsk);
-                        is.setItemMeta(im);
-                        as.getEquipment().setHelmet(is);
-                    }
-                }
+                ArmourStandSetter.setStands(stands, world, x, y, z);
             }
             // paintings
             if (obj.has("paintings")) {
-                JsonArray paintings = obj.get("paintings").getAsJsonArray();
-                for (int i = 0; i < paintings.size(); i++) {
-                    JsonObject painting = paintings.get(i).getAsJsonObject();
-                    JsonObject rel = painting.get("rel_location").getAsJsonObject();
-                    int px = rel.get("x").getAsInt();
-                    int py = rel.get("y").getAsInt();
-                    int pz = rel.get("z").getAsInt();
-                    BlockFace facing = BlockFace.valueOf(painting.get("facing").getAsString());
-                    Location pl = null;
-                    String which = painting.get("art").getAsString();
-                    Art art = null;
-                    if (which.contains(":")) {
-                        // custom datapack painting
-                        pl = TARDISPainting.calculatePosition(which.split(":")[1], facing, new Location(world, x + px, y + py, z + pz));
-                    } else {
-                        art = RegistryAccess.registryAccess().getRegistry(RegistryKey.PAINTING_VARIANT).get(new NamespacedKey("minecraft", which.toLowerCase(Locale.ROOT)));
-                        if (art != null) {
-                            pl = TARDISPainting.calculatePosition(art, facing, new Location(world, x + px, y + py, z + pz));
-                        }
-                    }
-                    if (pl != null) {
-                        try {
-                            Painting ent = (Painting) world.spawnEntity(pl, EntityType.PAINTING);
-                            ent.teleport(pl);
-                            ent.setFacingDirection(facing, true);
-                            if (art != null) {
-                                ent.setArt(art, true);
-                            } else {
-                                DataPackPainting.setCustomVariant(ent, which);
-                            }
-                        } catch (IllegalArgumentException e) {
-                            plugin.debug("Invalid painting location!" + pl);
-                        }
-                    }
-                }
+                JsonArray paintings = (JsonArray) obj.get("paintings");
+                PaintingSetter.setArt(paintings, world, x, y, z);
             }
             Location start = new Location(world, x, y, z);
             if (obj.has("item_frames")) {
                 JsonArray frames = obj.get("item_frames").getAsJsonArray();
                 for (int i = 0; i < frames.size(); i++) {
-                    TARDISItemFrameSetter.curate(frames.get(i).getAsJsonObject(), start, -1);
+                    ItemFrameSetter.curate(frames.get(i).getAsJsonObject(), start, -1);
                 }
             }
             if (obj.has("item_displays")) {
                 JsonArray displays = obj.get("item_displays").getAsJsonArray();
                 for (int i = 0; i < displays.size(); i++) {
-                    TARDISItemDisplaySetter.fakeBlock(displays.get(i).getAsJsonObject(), start, -1);
+                    ItemDisplaySetter.fakeBlock(displays.get(i).getAsJsonObject(), start, -1);
                 }
             }
             plugin.getServer().getScheduler().cancelTask(task);
@@ -272,7 +183,7 @@ public class SchematicPaster implements Runnable {
                         if (head.has("uuid")) {
                             UUID uuid = UUID.fromString(head.get("uuid").getAsString());
                             if (uuid != null) {
-                                TARDISHeadSetter.textureSkull(plugin, uuid, head, block);
+                                HeadSetter.textureSkull(plugin, uuid, head, block);
                             }
                         }
                     }
@@ -282,7 +193,7 @@ public class SchematicPaster implements Runnable {
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                         if (col.has("pot")) {
                             JsonObject pot = col.get("pot").getAsJsonObject();
-                            TARDISPotSetter.decorate(plugin, pot, block);
+                            PotSetter.decorate(plugin, pot, block);
                         }
                     }, 1L);
                 }
@@ -297,7 +208,7 @@ public class SchematicPaster implements Runnable {
                         JsonObject state = col.has("sign") ? col.get("sign").getAsJsonObject() : null;
                         if (state != null) {
                             block.setBlockData(data, true);
-                            TARDISSignSetter.setSign(block, state, null, 0);
+                            SignSetter.setSign(block, state, null, 0);
                         }
                     } else {
                         block.setBlockData(data, true);

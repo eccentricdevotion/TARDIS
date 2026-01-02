@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 eccentric_nz
+ * Copyright (C) 2026 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,6 +27,17 @@ import org.bukkit.persistence.PersistentDataType;
 
 public class ArmourStandEquipment {
 
+    public static void setHelmetOnly(ArmorStand as, ItemStack is) {
+        EntityEquipment ee = as.getEquipment();
+        ee.setChestplate(null);
+        ee.setLeggings(null);
+        ee.setBoots(null);
+        ee.setHelmet(is);
+        ee.setItemInMainHand(null);
+        ee.setItemInOffHand(null);
+        as.setVisible(false);
+    }
+
     public void setStandEquipment(ArmorStand as, Monster monster, boolean small) {
         as.setSmall(small);
         as.setArms(false);
@@ -37,16 +48,5 @@ public class ArmourStandEquipment {
         headMeta.setItemModel(monster.getModel());
         head.setItemMeta(headMeta);
         setHelmetOnly(as, head);
-    }
-
-    public static void setHelmetOnly(ArmorStand as, ItemStack is) {
-        EntityEquipment ee = as.getEquipment();
-        ee.setChestplate(null);
-        ee.setLeggings(null);
-        ee.setBoots(null);
-        ee.setHelmet(is);
-        ee.setItemInMainHand(null);
-        ee.setItemInOffHand(null);
-        as.setVisible(false);
     }
 }

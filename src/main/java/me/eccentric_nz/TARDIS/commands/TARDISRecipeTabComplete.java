@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 eccentric_nz
+ * Copyright (C) 2026 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,7 +40,7 @@ public class TARDISRecipeTabComplete extends TARDISCompleter implements TabCompl
             "bigger", "bone", "budget",
             "cave", "copper", "coral", "cursed", "custom",
             "delta", "deluxe", "division",
-            "eleventh", "ender",
+            "eighth", "eleventh", "ender",
             "factory", "fifteenth", "fugitive",
             "hospital",
             "master", "mechanical",

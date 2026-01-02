@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 eccentric_nz
+ * Copyright (C) 2026 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -55,10 +55,9 @@ public class TARDISDevTabComplete extends TARDISCompleter implements TabComplete
             "ntc", "nms",
             "plurals",
             "recipe", "regen", "registry", "roman", "rooms",
-            "screen", "skin", "snapshot", "stats", "systree",
+            "screen", "skin", "snapshot", "staircase", "stats", "systree",
             "tis", "tips", "tree", "trim",
-            "unmount",
-            "zero"
+            "unmount"
     );
     private final ImmutableList<String> LIST_SUBS = ImmutableList.of("preset_perms", "perms", "recipes", "blueprints", "commands", "block_colours", "change", "consoles");
     private final ImmutableList<String> SNAPSHOT_SUBS = ImmutableList.of("in", "out", "c");

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 eccentric_nz
+ * Copyright (C) 2026 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,11 +30,11 @@ import org.bukkit.entity.EntityType;
  */
 class TARDISSheep extends TARDISMob {
 
+    private DyeColor woolColour;
+
     public TARDISSheep() {
         super.setType(EntityType.SHEEP);
     }
-
-    private DyeColor woolColour;
 
     public DyeColor getWoolColour() {
         return woolColour;

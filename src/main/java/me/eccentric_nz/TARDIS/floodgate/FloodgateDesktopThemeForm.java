@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 eccentric_nz
+ * Copyright (C) 2026 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -58,6 +58,7 @@ public class FloodgateDesktopThemeForm {
         blocks.put("DELTA", "crying_obsidian");
         blocks.put("DELUXE", "diamond");
         blocks.put("DIVISION", "pink_glazed");
+        blocks.put("EIGHTH", "chiseled_stone_bricks");
         blocks.put("ELEVENTH", "emerald");
         blocks.put("ENDER", "purpur");
         blocks.put("FACTORY", "yellow_concrete_powder");

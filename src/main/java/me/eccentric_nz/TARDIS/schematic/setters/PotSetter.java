@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 eccentric_nz
+ * Copyright (C) 2026 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,7 +26,7 @@ import org.bukkit.block.DecoratedPot;
 /**
  * @author eccentric_nz
  */
-public class TARDISPotSetter {
+public class PotSetter {
 
     public static void decorate(TARDIS plugin, JsonObject pot, Block block) {
         try {

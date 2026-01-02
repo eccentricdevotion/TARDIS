@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 eccentric_nz
+ * Copyright (C) 2026 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -92,10 +92,9 @@ public class TARDISDevCommand implements CommandExecutor {
             "ntc", "nms",
             "plurals",
             "recipe", "regen", "registry", "roman", "rooms",
-            "screen", "skin", "snapshot", "stats", "systree",
+            "screen", "skin", "snapshot", "staircase", "stats", "systree",
             "tis", "tips", "tree",
-            "unmount",
-            "zero"
+            "unmount"
     );
     private final TARDIS plugin;
 
@@ -170,6 +169,12 @@ public class TARDISDevCommand implements CommandExecutor {
                         }
                         case "empty" -> {
                             return new TARDISFixStorageCommand(plugin).convertStacks();
+                        }
+                        case "staircase" -> {
+                            if (sender instanceof Player player) {
+                                return new StaircaseCommand().spiral(player);
+                            }
+                            return false;
                         }
                         case "furnace" -> {
                             return new TARDISFurnaceCommand(plugin).list();
@@ -282,12 +287,6 @@ public class TARDISDevCommand implements CommandExecutor {
                         }
                         case "tips" -> {
                             return new TIPSPreviewSlotInfo(plugin).display();
-                        }
-                        case "zero" -> {
-                            if (sender instanceof Player player) {
-                                return new ZeroCommand().spiral(player);
-                            }
-                            return false;
                         }
                         default -> {
                         }

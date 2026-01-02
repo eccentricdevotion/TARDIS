@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 eccentric_nz
+ * Copyright (C) 2026 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,6 +29,7 @@ public enum BlueprintConsole {
     DELTA("tardis.delta"),
     DELUXE("tardis.deluxe"),
     DIVISION("tardis.division"),
+    EIGHTH("tardis.eighth"),
     ELEVENTH("tardis.eleventh"),
     ENDER("tardis.ender"),
     FACTORY("tardis.factory"),

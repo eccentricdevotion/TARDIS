@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 eccentric_nz
+ * Copyright (C) 2026 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -722,6 +722,9 @@ public class TARDISInformationSystemListener implements Listener {
                 }
                 if (chat.equalsIgnoreCase("D")) {
                     new TISInfo(plugin).show(p, TARDISInfoMenu.DELUXE);
+                }
+                if (chat.equalsIgnoreCase("8")) {
+                    new TISInfo(plugin).show(p, TARDISInfoMenu.EIGHTH);
                 }
                 if (chat.equalsIgnoreCase("l")) {
                     new TISInfo(plugin).show(p, TARDISInfoMenu.ELEVENTH);

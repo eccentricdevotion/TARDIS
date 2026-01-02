@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 eccentric_nz
+ * Copyright (C) 2026 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,6 +33,7 @@ import java.util.List;
 public class TARDISWalls {
 
     public static final List<Material> BLOCKS = new ArrayList<>();
+    public static RecipeChoice.MaterialChoice CHOICES;
 
     static {
         for (String m : TARDIS.plugin.getBlocksConfig().getStringList("tardis_blocks")) {
@@ -42,7 +43,6 @@ public class TARDISWalls {
                 TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.WARNING, "Invalid material '" + m + "' in tardis_blocks list! " + e.getMessage());
             }
         }
+        CHOICES = new RecipeChoice.MaterialChoice(TARDISWalls.BLOCKS);
     }
-
-    public static final RecipeChoice.MaterialChoice CHOICES = new RecipeChoice.MaterialChoice(TARDISWalls.BLOCKS);
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 eccentric_nz
+ * Copyright (C) 2026 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -64,6 +64,7 @@ public enum ShopItem {
     DIAMOND_DISRUPTOR_CIRCUIT("Diamond Disruptor Circuit", Material.GLOWSTONE_DUST, CircuitVariant.DIAMOND.getKey(), ShopItemRecipe.SHAPED, CircuitVariant.DIAMOND.getFloats()),
     DIVISION_SEED("Division Seed", Material.PINK_GLAZED_TERRACOTTA, SeedBlock.DIVISION.getKey(), ShopItemRecipe.SEED),
     EARL_GREY_JELLY_BABY("Earl Grey Jelly Baby", Material.MELON_SLICE, JellyBabyVariant.JELLY_BABY_GRAY.getKey(), ShopItemRecipe.SHAPELESS),
+    EIGHTH_SEED("Eighth Seed", Material.CHISELED_STONE_BRICKS, SeedBlock.EIGHTH.getKey(), ShopItemRecipe.SEED),
     ELEVENTH_SEED("Eleventh Seed", Material.EMERALD_BLOCK, SeedBlock.ELEVENTH.getKey(), ShopItemRecipe.SEED),
     EMERALD_ENVIRONMENT_CIRCUIT("Emerald Environment Circuit", Material.GLOWSTONE_DUST, CircuitVariant.EMERALD.getKey(), ShopItemRecipe.SHAPED, CircuitVariant.EMERALD.getFloats()),
     EMPTY_CHILD_HEAD("Empty Child Head", Material.SUGAR, EmptyChildVariant.EMPTY_CHILD_HEAD.getKey(), ShopItemRecipe.TWA),
@@ -214,6 +215,7 @@ public enum ShopItem {
     BLUEPRINT_CONSOLE_DELTA("Blueprint Delta", Material.MUSIC_DISC_MELLOHI, DiskVariant.BLUEPRINT_DISK.getKey(), ShopItemRecipe.BLUEPRINT),
     BLUEPRINT_CONSOLE_DELUXE("Blueprint Deluxe", Material.MUSIC_DISC_MELLOHI, DiskVariant.BLUEPRINT_DISK.getKey(), ShopItemRecipe.BLUEPRINT),
     BLUEPRINT_CONSOLE_DIVISION("Blueprint Division", Material.MUSIC_DISC_MELLOHI, DiskVariant.BLUEPRINT_DISK.getKey(), ShopItemRecipe.BLUEPRINT),
+    BLUEPRINT_CONSOLE_EIGHTH("Blueprint Eighth", Material.MUSIC_DISC_MELLOHI, DiskVariant.BLUEPRINT_DISK.getKey(), ShopItemRecipe.BLUEPRINT),
     BLUEPRINT_CONSOLE_ELEVENTH("Blueprint Eleventh", Material.MUSIC_DISC_MELLOHI, DiskVariant.BLUEPRINT_DISK.getKey(), ShopItemRecipe.BLUEPRINT),
     BLUEPRINT_CONSOLE_ENDER("Blueprint Ender", Material.MUSIC_DISC_MELLOHI, DiskVariant.BLUEPRINT_DISK.getKey(), ShopItemRecipe.BLUEPRINT),
     BLUEPRINT_CONSOLE_FACTORY("Blueprint Factory", Material.MUSIC_DISC_MELLOHI, DiskVariant.BLUEPRINT_DISK.getKey(), ShopItemRecipe.BLUEPRINT),

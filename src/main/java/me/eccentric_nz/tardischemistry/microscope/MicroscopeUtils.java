@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 eccentric_nz
+ * Copyright (C) 2026 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,6 +27,8 @@ import java.util.HashMap;
 import java.util.UUID;
 
 class MicroscopeUtils {
+
+    static final HashMap<UUID, ItemStack> STORED_STACKS = new HashMap<>();
 
     static boolean hasItemInHand(ItemStack is, Material type, TARDIS plugin) {
         if (is == null) {
@@ -59,6 +61,4 @@ class MicroscopeUtils {
         }
         player.getInventory().setItemInMainHand(itemStack);
     }
-
-    static final HashMap<UUID, ItemStack> STORED_STACKS = new HashMap<>();
 }

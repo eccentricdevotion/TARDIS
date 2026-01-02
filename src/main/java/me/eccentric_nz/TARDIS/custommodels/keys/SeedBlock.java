@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 eccentric_nz
+ * Copyright (C) 2026 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,6 +33,7 @@ public enum SeedBlock {
     DELTA(new NamespacedKey(TARDIS.plugin, "seed_delta")),
     DELUXE(new NamespacedKey(TARDIS.plugin, "seed_deluxe")),
     DIVISION(new NamespacedKey(TARDIS.plugin, "seed_division")),
+    EIGHTH(new NamespacedKey(TARDIS.plugin, "seed_eighth")),
     ELEVENTH(new NamespacedKey(TARDIS.plugin, "seed_eleventh")),
     ENDER(new NamespacedKey(TARDIS.plugin, "seed_ender")),
     FACTORY(new NamespacedKey(TARDIS.plugin, "seed_factory")),

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 eccentric_nz
+ * Copyright (C) 2026 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,11 +31,11 @@ import org.bukkit.entity.EntityType;
  */
 class TARDISAxolotl extends TARDISMob {
 
+    private Axolotl.Variant axolotlVariant;
+
     public TARDISAxolotl() {
         super.setType(EntityType.AXOLOTL);
     }
-
-    private Axolotl.Variant axolotlVariant;
 
     Axolotl.Variant getAxolotlVariant() {
         return axolotlVariant;

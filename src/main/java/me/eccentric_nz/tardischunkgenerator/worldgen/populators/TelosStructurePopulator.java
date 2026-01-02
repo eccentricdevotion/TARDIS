@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 eccentric_nz
+ * Copyright (C) 2026 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,26 +20,20 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
+import me.eccentric_nz.TARDIS.schematic.setters.ArmourStandSetter;
 import me.eccentric_nz.tardischunkgenerator.worldgen.utils.TARDISLootTables;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.levelgen.structure.placement.RandomSpreadStructurePlacement;
 import net.minecraft.world.level.levelgen.structure.placement.RandomSpreadType;
-import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
-import org.bukkit.block.BlockFace;
 import org.bukkit.block.Chest;
 import org.bukkit.block.CreatureSpawner;
 import org.bukkit.block.data.BlockData;
-import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 import org.bukkit.generator.BlockPopulator;
 import org.bukkit.generator.LimitedRegion;
 import org.bukkit.generator.WorldInfo;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.io.InputStream;
 import java.util.Random;
@@ -116,7 +110,8 @@ public class TelosStructurePopulator extends BlockPopulator {
                                     container.update();
                                 }
                             }
-                            case SPONGE -> { }
+                            case SPONGE -> {
+                            }
                             case SOUL_SAND -> {
                                 limitedRegion.setType(x, y, z, Material.SPAWNER);
                                 // change to zombie spawner
@@ -142,28 +137,7 @@ public class TelosStructurePopulator extends BlockPopulator {
             }
             if (obj.has("armour_stands")) {
                 JsonArray stands = obj.get("armour_stands").getAsJsonArray();
-                for (int i = 0; i < stands.size(); i++) {
-                    JsonObject stand = stands.get(i).getAsJsonObject();
-                    JsonObject rel = stand.get("rel_location").getAsJsonObject();
-                    int asx = rel.get("x").getAsInt();
-                    int asy = rel.get("y").getAsInt();
-                    int asz = rel.get("z").getAsInt();
-                    COMPASS facing = COMPASS.valueOf(BlockFace.valueOf(stand.get("facing").getAsString()).getOppositeFace().toString());
-                    Location asl = new Location(limitedRegion.getWorld(), startX + asx + 0.5d, startY + asy, startZ + asz + 0.5d);
-                    ArmorStand as = (ArmorStand) limitedRegion.spawnEntity(asl, EntityType.ARMOR_STAND);
-                    as.setRotation(facing.getYaw(), 0);
-                    as.setVisible(stand.get("invisible").getAsBoolean());
-                    if (stand.has("head")) {
-                        JsonObject head = stand.get("head").getAsJsonObject();
-                        Material material = Material.valueOf(head.get("material").getAsString());
-                        NamespacedKey nsk = NamespacedKey.fromString(head.get("model").getAsString());
-                        ItemStack is = ItemStack.of(material);
-                        ItemMeta im = is.getItemMeta();
-                        im.setItemModel(nsk);
-                        is.setItemMeta(im);
-                        as.getEquipment().setHelmet(is);
-                    }
-                }
+                ArmourStandSetter.setStands(stands, limitedRegion.getWorld(), startX, startY, startZ);
             }
         }
     }

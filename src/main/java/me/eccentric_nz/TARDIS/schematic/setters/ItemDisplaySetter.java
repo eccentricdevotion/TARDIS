@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 eccentric_nz
+ * Copyright (C) 2026 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -42,7 +42,7 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-public class TARDISItemDisplaySetter {
+public class ItemDisplaySetter {
 
     public static void fakeBlock(JsonObject json, Location start, int id) {
         JsonObject rel = json.get("rel_location").getAsJsonObject();

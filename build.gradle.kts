@@ -12,7 +12,7 @@ plugins {
 
 group = "me.eccentric_nz"
 val buildNumber = "-b${System.getenv("BUILD_NUMBER") ?: (System.getenv("SHORT_SHA") ?: ".local")}"
-version = "6.3.5${buildNumber}"
+version = "6.3.6${buildNumber}"
 
 repositories {
     mavenCentral()
@@ -122,10 +122,10 @@ dependencies {
     compileOnly("com.griefcraft:lwc:2.4.1") {
         isTransitive = false
     }
-    compileOnly("com.github.retrooper:packetevents-api:2.10.1") {
+    compileOnly("com.github.retrooper:packetevents-api:2.11.1") {
         isTransitive = false
     }
-    compileOnly("me.libraryaddict.disguises:libsdisguises:11.0.13") {
+    compileOnly("me.libraryaddict.disguises:libsdisguises:11.0.14") {
         isTransitive = false
     }
     compileOnly("net.essentialsx:EssentialsX:2.22.0-SNAPSHOT") {

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 eccentric_nz
+ * Copyright (C) 2026 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,13 +22,13 @@ import org.bukkit.entity.TropicalFish;
 
 public class TARDISFish extends TARDISMob {
 
-    public TARDISFish() {
-        super.setType(EntityType.TROPICAL_FISH);
-    }
-
     private TropicalFish.Pattern pattern;
     private DyeColor bodyColour;
     private DyeColor patternColour;
+
+    public TARDISFish() {
+        super.setType(EntityType.TROPICAL_FISH);
+    }
 
     public TropicalFish.Pattern getPattern() {
         return pattern;
@@ -46,7 +46,7 @@ public class TARDISFish extends TARDISMob {
         this.bodyColour = bodyColour;
     }
 
-    DyeColor getPatternColour() {
+    public DyeColor getPatternColour() {
         return patternColour;
     }
 

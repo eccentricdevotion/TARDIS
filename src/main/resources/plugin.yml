@@ -8,7 +8,7 @@ loadbefore: [ Citizens ]
 website: http://tardis.pages.dev/
 dev-url: http://github.com/eccentricdevotion/TARDIS/
 url: http://tardis.pages.dev/
-version: 6.3.5@buildNumber@
+version: 6.3.6@buildNumber@
 api-version: '1.21.11'
 libraries:
   - org.jsoup:jsoup:1.21.1
@@ -283,6 +283,7 @@ permissions:
       tardis.delta: true
       tardis.deluxe: true
       tardis.division: true
+      tardis.eighth: true
       tardis.eleventh: true
       tardis.ender: true
       tardis.factory: true
@@ -339,8 +340,11 @@ permissions:
   tardis.division:
     description: Allow players to build the 'division' Spaceship.
     default: op
+  tardis.eighth:
+    description: Allow players to build the Eighth Doctor's TARDIS.
+    default: op
   tardis.eleventh:
-    description: Allow players to build the 'eleventh' TARDIS.
+    description: Allow players to build the Eleventh Doctor's TARDIS.
     default: op
   tardis.ender:
     description: Allow players to build the Ender TARDIS.
@@ -385,13 +389,13 @@ permissions:
     description: Allow players to build the Thirteenth Doctor's TARDIS.
     default: op
   tardis.tom:
-    description: Allow players to build the '4th Doctor's' TARDIS.
+    description: Allow players to build the Fourth Doctor's TARDIS.
     default: op
   tardis.twelfth:
-    description: Allow players to build the 'twelfth' TARDIS.
+    description: Allow players to build the Twelfth Doctor's TARDIS.
     default: op
   tardis.war:
-    description: Allow players to build the 'War Doctor's' TARDIS.
+    description: Allow players to build the War Doctor's TARDIS.
     default: op
   tardis.weathered:
     description: Allow players to build the 'Weathered Copper' TARDIS.

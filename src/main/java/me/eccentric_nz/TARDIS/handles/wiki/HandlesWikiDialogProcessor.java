@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 eccentric_nz
+ * Copyright (C) 2026 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -51,6 +51,29 @@ public class HandlesWikiDialogProcessor {
         this.plugin = plugin;
     }
 
+    private static Set<WikiLink> getWikiLinks(DialogResponseView response) {
+        String query = response.getText("search");
+        Set<WikiLink> results = new HashSet<>();
+        if (query != null) {
+            Pattern pattern = Pattern.compile(query, Pattern.CASE_INSENSITIVE);
+            // <a title="Dev commands" href="/commands/dev">Dev commands</a>
+            try {
+                Document doc = Jsoup.connect("https://tardis.pages.dev/site-map").get();
+                Elements links = doc.select("a");
+                for (Element e : links) {
+                    String linkHref = e.attr("href"); // "/commands/dev"
+                    String linkText = e.text(); // "Dev commands"
+                    Matcher mat = pattern.matcher(linkText);
+                    if (mat.find()) {
+                        results.add(new WikiLink(linkText, linkHref));
+                    }
+                }
+            } catch (IOException ignored) {
+            }
+        }
+        return results;
+    }
+
     public void getLinks(DialogResponseView response, Player player) {
         Set<WikiLink> results = getWikiLinks(response);
         // build a custom results dialog
@@ -84,28 +107,5 @@ public class HandlesWikiDialogProcessor {
         );
         Audience receiver = Audience.audience(player);
         receiver.showDialog(dialog);
-    }
-
-    private static Set<WikiLink> getWikiLinks(DialogResponseView response) {
-        String query = response.getText("search");
-        Set<WikiLink> results = new HashSet<>();
-        if (query != null) {
-            Pattern pattern = Pattern.compile(query, Pattern.CASE_INSENSITIVE);
-            // <a title="Dev commands" href="/commands/dev">Dev commands</a>
-            try {
-                Document doc = Jsoup.connect("https://tardis.pages.dev/site-map").get();
-                Elements links = doc.select("a");
-                for (Element e : links) {
-                    String linkHref = e.attr("href"); // "/commands/dev"
-                    String linkText = e.text(); // "Dev commands"
-                    Matcher mat = pattern.matcher(linkText);
-                    if (mat.find()) {
-                        results.add(new WikiLink(linkText, linkHref));
-                    }
-                }
-            } catch (IOException ignored) {
-            }
-        }
-        return results;
     }
 }
