@@ -16,12 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.builders.interior;
 
-import com.destroystokyo.paper.profile.ProfileProperty;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import io.papermc.paper.datacomponent.item.ResolvableProfile;
-import io.papermc.paper.registry.RegistryAccess;
-import io.papermc.paper.registry.RegistryKey;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.utility.FractalFence;
@@ -29,12 +25,8 @@ import me.eccentric_nz.TARDIS.console.ConsoleBuilder;
 import me.eccentric_nz.TARDIS.customblocks.TARDISBlockDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
-import me.eccentric_nz.TARDIS.rooms.TARDISPainting;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
-import me.eccentric_nz.TARDIS.schematic.getters.DataPackPainting;
 import me.eccentric_nz.TARDIS.schematic.setters.*;
-import me.eccentric_nz.TARDIS.skins.MannequinSkins;
-import me.eccentric_nz.TARDIS.skins.Skin;
 import me.eccentric_nz.TARDIS.utility.TARDISBannerData;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
@@ -43,10 +35,9 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.*;
 import org.bukkit.block.data.type.Switch;
-import org.bukkit.entity.*;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.MainHand;
-import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.entity.EnderCrystal;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 
 import java.util.*;
 
@@ -157,7 +148,7 @@ public class TARDISBuilderPreview implements Runnable {
             postDripstoneBlocks.forEach(Block::setBlockData);
             postLichenBlocks.forEach(Block::setBlockData);
             postSculkVeinBlocks.forEach(Block::setBlockData);
-            TARDISSignSetter.setSigns(postSignBlocks, plugin, -1);
+            SignSetter.setSigns(postSignBlocks, plugin, -1);
             for (Map.Entry<Block, BlockData> carpet : postCarpetBlocks.entrySet()) {
                 Block pcb = carpet.getKey();
                 pcb.setBlockData(carpet.getValue());
@@ -179,7 +170,7 @@ public class TARDISBuilderPreview implements Runnable {
             for (int f = 0; f < fractalBlocks.size(); f++) {
                 FractalFence.grow(fractalBlocks.get(f), f);
             }
-            TARDISBannerSetter.setBanners(postBannerBlocks);
+            BannerSetter.setBanners(postBannerBlocks);
             if (ender != null) {
                 Entity ender_crystal = world.spawnEntity(ender, EntityType.END_CRYSTAL);
                 ((EnderCrystal) ender_crystal).setShowingBottom(false);
@@ -187,72 +178,28 @@ public class TARDISBuilderPreview implements Runnable {
             // mannequins
             if (obj.has("mannequins")) {
                 JsonArray mannequins = obj.get("mannequins").getAsJsonArray();
-                for (int i = 0; i < mannequins.size(); i++) {
-                    JsonObject mannequin = mannequins.get(i).getAsJsonObject();
-                    JsonObject rel = mannequin.get("rel_location").getAsJsonObject();
-                    int mx = rel.get("x").getAsInt();
-                    int my = rel.get("y").getAsInt();
-                    int mz = rel.get("z").getAsInt();
-                    Location ml = new Location(world, resetx + mx + 0.5d, starty + my, resetz + mz + 0.5d);
-                    Mannequin m = (Mannequin) world.spawnEntity(ml, EntityType.MANNEQUIN);
-                    m.setRotation(mannequin.get("rotation").getAsFloat(), 0);
-                    m.setBodyYaw(mannequin.get("yaw").getAsFloat());
-                    String which = mannequin.get("type").getAsString();
-                    m.getPersistentDataContainer().set(plugin.getHeadBlockKey(), PersistentDataType.STRING, which);
-                    Skin skin = MannequinSkins.getByName.getOrDefault(which, MannequinSkins.ROMAN);
-                    m.setProfile(ResolvableProfile.resolvableProfile().name("").uuid(UUID.randomUUID()).addProperty(new ProfileProperty("textures", skin.value(), skin.signature())).build());
-                    m.setSilent(true);
-                    m.setAI(false);
-                    m.setImmovable(true);
-                    if (mannequin.has("hand")) {
-                        m.setMainHand(mannequin.get("hand").getAsString().equals("left") ? MainHand.LEFT : MainHand.RIGHT);
-                        m.getEquipment().setItemInMainHand(ItemStack.of(mannequin.get("item").getAsString().equals("IRON_SWORD") ? Material.IRON_SWORD : Material.IRON_SPEAR));
-                    }
-                }
+                MannequinSetter.setMannequins(mannequins, world, resetx, starty, resetz);
             }
+            // armour stands
+            if (obj.has("armour_stands")) {
+                JsonArray stands = obj.get("armour_stands").getAsJsonArray();
+                ArmourStandSetter.setStands(stands, world, resetx, starty, resetz);
+            }
+            // paintings
             if (obj.has("paintings")) {
                 JsonArray paintings = (JsonArray) obj.get("paintings");
-                for (int i = 0; i < paintings.size(); i++) {
-                    JsonObject painting = paintings.get(i).getAsJsonObject();
-                    JsonObject rel = painting.get("rel_location").getAsJsonObject();
-                    int px = rel.get("x").getAsInt();
-                    int py = rel.get("y").getAsInt();
-                    int pz = rel.get("z").getAsInt();
-                    BlockFace facing = BlockFace.valueOf(painting.get("facing").getAsString());
-                    Location pl;
-                    String which = painting.get("art").getAsString();
-                    Art art = null;
-                    if (which.contains(":")) {
-                        // custom datapack painting
-                        pl = TARDISPainting.calculatePosition(which.split(":")[1], facing, new Location(world, resetx + px, starty + py, resetz + pz));
-                    } else {
-                        art = RegistryAccess.registryAccess().getRegistry(RegistryKey.PAINTING_VARIANT).get(new NamespacedKey("minecraft", which.toLowerCase(Locale.ROOT)));
-                        pl = TARDISPainting.calculatePosition(art, facing, new Location(world, resetx + px, starty + py, resetz + pz));
-                    }
-                    try {
-                        Painting ent = (Painting) world.spawnEntity(pl, EntityType.PAINTING);
-                        ent.teleport(pl);
-                        ent.setFacingDirection(facing, true);
-                        if (art != null) {
-                            ent.setArt(art, true);
-                        } else {
-                            DataPackPainting.setCustomVariant(ent, which);
-                        }
-                    } catch (IllegalArgumentException e) {
-                        plugin.debug("Invalid painting location!" + pl);
-                    }
-                }
+                PaintingSetter.setArt(paintings, world, resetx, starty, resetz);
             }
             if (obj.has("item_frames")) {
                 JsonArray frames = obj.get("item_frames").getAsJsonArray();
                 for (int i = 0; i < frames.size(); i++) {
-                    TARDISItemFrameSetter.curate(frames.get(i).getAsJsonObject(), location, -1);
+                    ItemFrameSetter.curate(frames.get(i).getAsJsonObject(), location, -1);
                 }
             }
             if (obj.has("item_displays")) {
                 JsonArray displays = obj.get("item_displays").getAsJsonArray();
                 for (int i = 0; i < displays.size(); i++) {
-                    TARDISItemDisplaySetter.fakeBlock(displays.get(i).getAsJsonObject(), location, tips);
+                    ItemDisplaySetter.fakeBlock(displays.get(i).getAsJsonObject(), location, tips);
                 }
             }
             plugin.getServer().getScheduler().cancelTask(task);
@@ -400,7 +347,7 @@ public class TARDISBuilderPreview implements Runnable {
                     if (head.has("uuid")) {
                         try {
                             UUID uuid = UUID.fromString(head.get("uuid").getAsString());
-                            TARDISHeadSetter.textureSkull(plugin, uuid, head, world.getBlockAt(x, y, z));
+                            HeadSetter.textureSkull(plugin, uuid, head, world.getBlockAt(x, y, z));
                         } catch (IllegalArgumentException ignored) {
                         }
                     }
@@ -410,7 +357,7 @@ public class TARDISBuilderPreview implements Runnable {
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     if (c.has("pot")) {
                         JsonObject pot = c.get("pot").getAsJsonObject();
-                        TARDISPotSetter.decorate(plugin, pot, world.getBlockAt(x, y, z));
+                        PotSetter.decorate(plugin, pot, world.getBlockAt(x, y, z));
                     }
                 }, 1L);
             } else if (TARDISStaticUtils.isInfested(type)) {

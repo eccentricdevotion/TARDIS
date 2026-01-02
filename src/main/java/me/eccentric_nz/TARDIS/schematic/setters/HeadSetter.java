@@ -35,7 +35,7 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-public class TARDISHeadSetter {
+public class HeadSetter {
 
     public static void textureSkull(TARDIS plugin, UUID uuid, JsonObject head, Block block) {
         try {

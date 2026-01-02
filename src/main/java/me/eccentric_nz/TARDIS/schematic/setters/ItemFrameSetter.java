@@ -47,7 +47,7 @@ import java.util.Locale;
 /**
  * @author eccentric_nz
  */
-public class TARDISItemFrameSetter {
+public class ItemFrameSetter {
 
     public static void curate(JsonObject json, Location start, int id) {
         JsonObject rel = json.get("rel_location").getAsJsonObject();

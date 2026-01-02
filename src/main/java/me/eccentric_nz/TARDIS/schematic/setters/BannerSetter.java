@@ -37,7 +37,7 @@ import java.util.Locale;
 /**
  * @author eccentric_nz
  */
-public class TARDISBannerSetter {
+public class BannerSetter {
 
     public static void setBanners(HashMap<Block, TARDISBannerData> banners) {
         banners.forEach((key, tbd) -> {

@@ -42,7 +42,7 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-public class TARDISItemDisplaySetter {
+public class ItemDisplaySetter {
 
     public static void fakeBlock(JsonObject json, Location start, int id) {
         JsonObject rel = json.get("rel_location").getAsJsonObject();

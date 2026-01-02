@@ -29,7 +29,7 @@ import org.bukkit.block.sign.SignSide;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TARDISSignSetter {
+public class SignSetter {
 
     public static void setSigns(HashMap<Block, JsonObject> postSignBlocks, TARDIS plugin, int id) {
         for (Map.Entry<Block, JsonObject> entry : postSignBlocks.entrySet()) {

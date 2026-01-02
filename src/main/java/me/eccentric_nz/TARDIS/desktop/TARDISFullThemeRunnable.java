@@ -17,11 +17,7 @@
 package me.eccentric_nz.TARDIS.desktop;
 
 import com.destroystokyo.paper.MaterialTags;
-import com.destroystokyo.paper.profile.ProfileProperty;
 import com.google.gson.*;
-import io.papermc.paper.datacomponent.item.ResolvableProfile;
-import io.papermc.paper.registry.RegistryAccess;
-import io.papermc.paper.registry.RegistryKey;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSJettison;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSMethods;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -46,15 +42,11 @@ import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
 import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgateDisplaySetter;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFollowerSpawner;
-import me.eccentric_nz.TARDIS.rooms.TARDISPainting;
 import me.eccentric_nz.TARDIS.rotors.TARDISTimeRotor;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import me.eccentric_nz.TARDIS.schematic.archive.ArchiveReset;
 import me.eccentric_nz.TARDIS.schematic.archive.ResultSetArchiveByUse;
-import me.eccentric_nz.TARDIS.schematic.getters.DataPackPainting;
 import me.eccentric_nz.TARDIS.schematic.setters.*;
-import me.eccentric_nz.TARDIS.skins.MannequinSkins;
-import me.eccentric_nz.TARDIS.skins.Skin;
 import me.eccentric_nz.TARDIS.utility.TARDISBannerData;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
@@ -68,8 +60,6 @@ import org.bukkit.block.BlockState;
 import org.bukkit.block.data.*;
 import org.bukkit.block.data.type.Switch;
 import org.bukkit.entity.*;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.MainHand;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.*;
@@ -98,6 +88,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
     private final HashMap<Block, BlockData> postSculkVeinBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> postStickyPistonBaseBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> postTorchBlocks = new HashMap<>();
+    private final HashMap<Block, BlockData> sidratFenceBlocks = new HashMap<>();
     private final HashMap<Block, JsonObject> postSignBlocks = new HashMap<>();
     private final HashMap<Block, TARDISBannerData> postBannerBlocks = new HashMap<>();
     private final List<Block> fractalBlocks = new ArrayList<>();
@@ -261,7 +252,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 if (itemFrame != null) {
                     if (tud.getPrevious().getPermission().equals("mechanical")) {
                         // remove the engine item frame
-                        ItemFrame engine = TARDISItemFrameSetter.getItemFrameFromLocation(itemFrame.getLocation().add(0, -4, 0));
+                        ItemFrame engine = ItemFrameSetter.getItemFrameFromLocation(itemFrame.getLocation().add(0, -4, 0));
                         if (engine != null) {
                             engine.setItem(null, false);
                             engine.remove();
@@ -408,8 +399,8 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
             postStickyPistonBaseBlocks.forEach(Block::setBlockData);
             postPistonBaseBlocks.forEach(Block::setBlockData);
             postPistonExtensionBlocks.forEach(Block::setBlockData);
-            TARDISSignSetter.setSigns(postSignBlocks, plugin, id);
-            TARDISBannerSetter.setBanners(postBannerBlocks);
+            SignSetter.setSigns(postSignBlocks, plugin, id);
+            BannerSetter.setBanners(postBannerBlocks);
             postLightBlocks.forEach((block) -> {
                 if (block.getType().isAir()) {
                     Levelled levelled = TARDISConstants.LIGHT;
@@ -443,68 +434,23 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
             // mannequins
             if (obj.has("mannequins")) {
                 JsonArray mannequins = obj.get("mannequins").getAsJsonArray();
-                for (int i = 0; i < mannequins.size(); i++) {
-                    JsonObject mannequin = mannequins.get(i).getAsJsonObject();
-                    JsonObject rel = mannequin.get("rel_location").getAsJsonObject();
-                    int mx = rel.get("x").getAsInt();
-                    int my = rel.get("y").getAsInt();
-                    int mz = rel.get("z").getAsInt();
-                    Location ml = new Location(world, resetX + mx + 0.5d, startY + my, resetZ + mz + 0.5d);
-                    Mannequin m = (Mannequin) world.spawnEntity(ml, EntityType.MANNEQUIN);
-                    m.setRotation(mannequin.get("rotation").getAsFloat(), 0);
-                    m.setBodyYaw(mannequin.get("yaw").getAsFloat());
-                    String which = mannequin.get("type").getAsString();
-                    m.getPersistentDataContainer().set(plugin.getHeadBlockKey(), PersistentDataType.STRING, which);
-                    Skin skin = MannequinSkins.getByName.getOrDefault(which, MannequinSkins.ROMAN);
-                    m.setProfile(ResolvableProfile.resolvableProfile().name("").uuid(UUID.randomUUID()).addProperty(new ProfileProperty("textures", skin.value(), skin.signature())).build());
-                    m.setSilent(true);
-                    m.setAI(false);
-                    m.setImmovable(true);
-                    if (mannequin.has("hand")) {
-                        m.setMainHand(mannequin.get("hand").getAsString().equals("left") ? MainHand.LEFT : MainHand.RIGHT);
-                        m.getEquipment().setItemInMainHand(ItemStack.of(mannequin.get("item").getAsString().equals("IRON_SWORD") ? Material.IRON_SWORD : Material.IRON_SPEAR));
-                    }
-                }
+                MannequinSetter.setMannequins(mannequins, world, resetX, startY, resetZ);
+            }
+            // armour stands
+            if (obj.has("armour_stands")) {
+                JsonArray stands = obj.get("armour_stands").getAsJsonArray();
+                ArmourStandSetter.setStands(stands, world, resetX, startY, resetZ);
             }
             // paintings
             if (obj.has("paintings")) {
                 JsonArray paintings = (JsonArray) obj.get("paintings");
-                for (int i = 0; i < paintings.size(); i++) {
-                    JsonObject painting = paintings.get(i).getAsJsonObject();
-                    JsonObject rel = painting.get("rel_location").getAsJsonObject();
-                    int px = rel.get("x").getAsInt();
-                    int py = rel.get("y").getAsInt();
-                    int pz = rel.get("z").getAsInt();
-                    BlockFace facing = BlockFace.valueOf(painting.get("facing").getAsString());
-                    Location pl;
-                    String which = painting.get("art").getAsString();
-                    Art art = null;
-                    if (which.contains(":")) {
-                        // custom datapack painting
-                        pl = TARDISPainting.calculatePosition(which.split(":")[1], facing, new Location(world, resetX + px, startY + py, resetZ + pz));
-                    } else {
-                        art = RegistryAccess.registryAccess().getRegistry(RegistryKey.PAINTING_VARIANT).get(new NamespacedKey("minecraft", which.toLowerCase(Locale.ROOT)));
-                        pl = TARDISPainting.calculatePosition(art, facing, new Location(world, resetX + px, startY + py, resetZ + pz));
-                    }
-                    try {
-                        Painting ent = (Painting) world.spawnEntity(pl, EntityType.PAINTING);
-                        ent.teleport(pl);
-                        ent.setFacingDirection(facing, true);
-                        if (art != null) {
-                            ent.setArt(art, true);
-                        } else {
-                            DataPackPainting.setCustomVariant(ent, which);
-                        }
-                    } catch (IllegalArgumentException e) {
-                        plugin.debug("Invalid painting location!" + pl);
-                    }
-                }
+                PaintingSetter.setArt(paintings, world, resetX, startY, resetZ);
             }
             // item frames
             if (obj.has("item_frames")) {
                 JsonArray frames = obj.get("item_frames").getAsJsonArray();
                 for (int i = 0; i < frames.size(); i++) {
-                    TARDISItemFrameSetter.curate(frames.get(i).getAsJsonObject(), wg1, id);
+                    ItemFrameSetter.curate(frames.get(i).getAsJsonObject(), wg1, id);
                 }
             }
             // item displays
@@ -515,9 +461,13 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                     if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) {
                         TARDISFloodgateDisplaySetter.regularBlock(displays.get(i).getAsJsonObject(), wg1, id);
                     } else {
-                        TARDISItemDisplaySetter.fakeBlock(displays.get(i).getAsJsonObject(), wg1, id);
+                        ItemDisplaySetter.fakeBlock(displays.get(i).getAsJsonObject(), wg1, id);
                     }
                 }
+            }
+            // sidrat fence update
+            if (!sidratFenceBlocks.isEmpty()) {
+                SIDRATFenceSetter.update(sidratFenceBlocks);
             }
             // finished processing - update tardis table!
             if (!set.isEmpty()) {
@@ -881,6 +831,9 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                     plugin.getQueryFactory().doInsert("lamps", setLB);
                 }
                 if (type.equals(Material.ICE) && tud.getSchematic().getPermission().equals("cave")) {
+                    sidratFenceBlocks.put(b, data);
+                }
+                if (type.equals(Material.PALE_OAK_FENCE) && tud.getSchematic().getPermission().equals("sidrat")) {
                     iceBlocks.add(b);
                 }
                 if (type.equals(Material.COMMAND_BLOCK) || ((tud.getSchematic().getPermission().equals("bigger") || tud.getSchematic().getPermission().equals("coral") || tud.getSchematic().getPermission().equals("deluxe") || tud.getSchematic().getPermission().equals("twelfth")) && type.equals(Material.BEACON))) {
@@ -975,7 +928,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                         if (head.has("uuid")) {
                             try {
                                 UUID uuid = UUID.fromString(head.get("uuid").getAsString());
-                                TARDISHeadSetter.textureSkull(plugin, uuid, head, b);
+                                HeadSetter.textureSkull(plugin, uuid, head, b);
                             } catch (IllegalArgumentException ignored) {
                             }
                         }
@@ -985,7 +938,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                         if (bb.has("pot")) {
                             JsonObject pot = bb.get("pot").getAsJsonObject();
-                            TARDISPotSetter.decorate(plugin, pot, b);
+                            PotSetter.decorate(plugin, pot, b);
                         }
                     }, 1L);
                 } else if (MaterialTags.INFESTED_BLOCKS.isTagged(type)) {

@@ -18,28 +18,20 @@ package me.eccentric_nz.TARDIS.commands.dev;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import io.papermc.paper.registry.RegistryAccess;
-import io.papermc.paper.registry.RegistryKey;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.rooms.TARDISPainting;
-import me.eccentric_nz.TARDIS.schematic.getters.DataPackPainting;
 import me.eccentric_nz.TARDIS.schematic.setters.*;
 import me.eccentric_nz.TARDIS.utility.TARDISBannerData;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
-import org.bukkit.*;
+import org.bukkit.Location;
+import org.bukkit.Tag;
+import org.bukkit.World;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.BlockData;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Painting;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
-
-import static me.eccentric_nz.TARDIS.schematic.setters.TARDISBannerSetter.setBanners;
 
 /**
  * @author eccentric_nz
@@ -113,56 +105,33 @@ public class TARDISDevRoomPaster implements Runnable {
                     TARDIS.plugin.getBlockLogger().logPlacement(map.getKey());
                 }
             }
-            setBanners(postBanners);
+            BannerSetter.setBanners(postBanners);
+            // mannequins
+            if (json.has("mannequins")) {
+                JsonArray mannequins = json.get("mannequins").getAsJsonArray();
+                MannequinSetter.setMannequins(mannequins, world, x, y, z);
+            }
+            // armour stands
+            if (json.has("armour_stands")) {
+                JsonArray stands = json.get("armour_stands").getAsJsonArray();
+                ArmourStandSetter.setStands(stands, world, x, y, z);
+            }
             // paintings
             if (json.has("paintings")) {
-                JsonArray paintings = json.get("paintings").getAsJsonArray();
-                for (int i = 0; i < paintings.size(); i++) {
-                    JsonObject painting = paintings.get(i).getAsJsonObject();
-                    JsonObject rel = painting.get("rel_location").getAsJsonObject();
-                    int px = rel.get("x").getAsInt();
-                    int py = rel.get("y").getAsInt();
-                    int pz = rel.get("z").getAsInt();
-                    BlockFace facing = BlockFace.valueOf(painting.get("facing").getAsString());
-                    Location pl = null;
-                    String which = painting.get("art").getAsString();
-                    Art art = null;
-                    if (which.contains(":")) {
-                        // custom datapack painting
-                        pl = TARDISPainting.calculatePosition(which.split(":")[1], facing, new Location(world, x + px, y + py, z + pz));
-                    } else {
-                        art = RegistryAccess.registryAccess().getRegistry(RegistryKey.PAINTING_VARIANT).get(new NamespacedKey("minecraft", which.toLowerCase(Locale.ROOT)));
-                        if (art != null) {
-                            pl = TARDISPainting.calculatePosition(art, facing, new Location(world, x + px, y + py, z + pz));
-                        }
-                    }
-                    if (pl != null) {
-                        try {
-                            Painting ent = (Painting) world.spawnEntity(pl, EntityType.PAINTING);
-                            ent.teleport(pl);
-                            ent.setFacingDirection(facing, true);
-                            if (art != null) {
-                                ent.setArt(art, true);
-                            } else {
-                                DataPackPainting.setCustomVariant(ent, which);
-                            }
-                        } catch (IllegalArgumentException e) {
-                            plugin.debug("Invalid painting location!" + pl);
-                        }
-                    }
-                }
+                JsonArray paintings = (JsonArray) json.get("paintings");
+                PaintingSetter.setArt(paintings, world, x, y, z);
             }
             Location start = new Location(world, x, y, z);
             if (json.has("item_frames")) {
                 JsonArray frames = json.get("item_frames").getAsJsonArray();
                 for (int i = 0; i < frames.size(); i++) {
-                    TARDISItemFrameSetter.curate(frames.get(i).getAsJsonObject(), start, -1);
+                    ItemFrameSetter.curate(frames.get(i).getAsJsonObject(), start, -1);
                 }
             }
             if (json.has("item_displays")) {
                 JsonArray displays = json.get("item_displays").getAsJsonArray();
                 for (int i = 0; i < displays.size(); i++) {
-                    TARDISItemDisplaySetter.fakeBlock(displays.get(i).getAsJsonObject(), start, -1);
+                    ItemDisplaySetter.fakeBlock(displays.get(i).getAsJsonObject(), start, -1);
                 }
             }
             plugin.getServer().getScheduler().cancelTask(task);
@@ -190,7 +159,7 @@ public class TARDISDevRoomPaster implements Runnable {
                         if (head.has("uuid")) {
                             UUID uuid = UUID.fromString(head.get("uuid").getAsString());
                             if (uuid != null) {
-                                TARDISHeadSetter.textureSkull(plugin, uuid, head, block);
+                                HeadSetter.textureSkull(plugin, uuid, head, block);
                             }
                         }
                     }
@@ -200,7 +169,7 @@ public class TARDISDevRoomPaster implements Runnable {
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                         if (col.has("pot")) {
                             JsonObject pot = col.get("pot").getAsJsonObject();
-                            TARDISPotSetter.decorate(plugin, pot, block);
+                            PotSetter.decorate(plugin, pot, block);
                         }
                     }, 1L);
                 }
@@ -215,7 +184,7 @@ public class TARDISDevRoomPaster implements Runnable {
                         JsonObject state = col.has("sign") ? col.get("sign").getAsJsonObject() : null;
                         if (state != null) {
                             block.setBlockData(data, true);
-                            TARDISSignSetter.setSign(block, state, null, 0);
+                            SignSetter.setSign(block, state, null, 0);
                         }
                     } else {
                         block.setBlockData(data, true);

@@ -18,6 +18,8 @@ package me.eccentric_nz.TARDIS.schematic.actions;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import io.papermc.paper.registry.RegistryAccess;
+import io.papermc.paper.registry.RegistryKey;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemRegistry;
@@ -58,7 +60,7 @@ public class SchematicSave {
         if (banner.numberOfPatterns() > 0) {
             banner.getPatterns().forEach((p) -> {
                 JsonObject pattern = new JsonObject();
-                pattern.addProperty("pattern", p.getPattern().toString());
+                pattern.addProperty("pattern", RegistryAccess.registryAccess().getRegistry(RegistryKey.BANNER_PATTERN).getKey(p.getPattern()).getKey());
                 pattern.addProperty("pattern_colour", p.getColor().toString());
                 patterns.add(pattern);
             });
@@ -169,21 +171,22 @@ public class SchematicSave {
                             if (!entities.contains(entity)) {
                                 JsonObject as = new JsonObject();
                                 JsonObject loc = new JsonObject();
-                                loc.addProperty("x", entityLocation.getBlockX() - minx);
-                                loc.addProperty("y", entityLocation.getBlockY() - miny);
-                                loc.addProperty("z", entityLocation.getBlockZ() - minz);
+                                loc.addProperty("x", entityLocation.getX() - minx);
+                                loc.addProperty("y", entityLocation.getY() - miny);
+                                loc.addProperty("z", entityLocation.getZ() - minz);
                                 as.add("rel_location", loc);
                                 as.addProperty("facing", stand.getFacing().toString());
                                 as.addProperty("invisible", stand.isVisible());
+                                as.addProperty("gravity", stand.hasGravity());
                                 JsonObject head = new JsonObject();
                                 ItemStack helmet = stand.getEquipment().getHelmet();
                                 if (helmet != null) {
                                     ItemMeta im = helmet.getItemMeta();
                                     if (im.hasItemModel()) {
                                         head.addProperty("model", im.getItemModel().toString());
-                                        head.addProperty("material", helmet.getType().toString());
-                                        as.add("head", head);
                                     }
+                                    head.addProperty("material", helmet.getType().toString());
+                                    as.add("head", head);
                                 }
                                 armourStands.add(as);
                                 entities.add(entity);

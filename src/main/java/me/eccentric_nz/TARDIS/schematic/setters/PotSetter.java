@@ -26,7 +26,7 @@ import org.bukkit.block.DecoratedPot;
 /**
  * @author eccentric_nz
  */
-public class TARDISPotSetter {
+public class PotSetter {
 
     public static void decorate(TARDIS plugin, JsonObject pot, Block block) {
         try {
