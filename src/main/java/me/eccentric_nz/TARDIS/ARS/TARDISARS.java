@@ -67,7 +67,7 @@ public enum TARDISARS implements ARS {
     SHELL("DEAD_BRAIN_CORAL_BLOCK", "Shell", 1, RoomVariant.SHELL.getKey()),
     SMELTER("CHEST", "Smelter", 1, RoomVariant.SMELTER.getKey()),
     STABLE("HAY_BLOCK", "Horse Stable", 1, RoomVariant.STABLE.getKey()),
-    STAIRCASE("PURPLE_TERRACOTTA", "Endless Staircase", 1, RoomVariant.STAIRCASE.getKey()),
+    STAIRCASE("PURPLE_TERRACOTTA", "Endless Staircase", 0, RoomVariant.STAIRCASE.getKey()),
     STALL("BROWN_GLAZED_TERRACOTTA", "Llama Stall", 1, RoomVariant.STALL.getKey()),
     SURGERY("RED_CONCRETE", "Hospital Surgery", 1, RoomVariant.SURGERY.getKey()),
     TRENZALORE("BRICKS", "Trenzalore", 1, RoomVariant.TRENZALORE.getKey()),
@@ -75,11 +75,11 @@ public enum TARDISARS implements ARS {
     VILLAGE("OAK_LOG", "Village", 1, RoomVariant.VILLAGE.getKey()),
     WOOD("OAK_PLANKS", "Wood Secondary Console", 1, RoomVariant.WOOD.getKey()),
     WORKSHOP("RED_NETHER_BRICKS", "Workshop", 1, RoomVariant.WORKSHOP.getKey()),
-    ZERO("GRASS_BLOCK", "Zero Room", 0, null),
-    JETTISON("TNT", "Jettison", 0, RoomVariant.JETTISON.getKey()),
-    SLOT("STONE", "Empty slot", 0, RoomVariant.SLOT.getKey()),
-    CUSTOM("", "Custom room", 0, null),
-    CONSOLE("", "Console", 0, null);
+    ZERO("GRASS_BLOCK", "Zero Room", 0, null, false),
+    JETTISON("TNT", "Jettison", 0, RoomVariant.JETTISON.getKey(), false),
+    SLOT("STONE", "Empty slot", 0, RoomVariant.SLOT.getKey(), false),
+    CUSTOM("", "Custom room", 0, null, false),
+    CONSOLE("", "Console", 0, null, false);
 
     private final static HashMap<String, ARS> EXTENDED_MATERIAL = new HashMap<>();
 
@@ -94,6 +94,7 @@ public enum TARDISARS implements ARS {
     private final String configPath;
     private final int offset;
     private final NamespacedKey key;
+    private final boolean inGUI;
 
     TARDISARS(String material, String descriptiveName, int offset, NamespacedKey key) {
         this.material = material;
@@ -101,6 +102,16 @@ public enum TARDISARS implements ARS {
         configPath = toString();
         this.offset = offset;
         this.key = key;
+        this.inGUI = true;
+    }
+
+    TARDISARS(String material, String descriptiveName, int offset, NamespacedKey key, boolean inGUI) {
+        this.material = material;
+        this.descriptiveName = descriptiveName;
+        configPath = toString();
+        this.offset = offset;
+        this.key = key;
+        this.inGUI = inGUI;
     }
 
     /**
@@ -171,5 +182,14 @@ public enum TARDISARS implements ARS {
     @Override
     public NamespacedKey getKey() {
         return key;
+    }
+
+    /**
+     * Gets if this room is in the ARS GUI
+     *
+     * @return whether to show this room in the ARS GUI options
+     */
+    public boolean isInGUI() {
+        return inGUI;
     }
 }

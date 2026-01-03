@@ -257,7 +257,7 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
         room_materials = new ArrayList<>();
         room_names = new ArrayList<>();
         for (TARDISARS a : ars) {
-            if (a.getOffset() != 0) {
+            if (a.isInGUI()) {
                 room_materials.add(Material.valueOf(a.getMaterial()));
                 room_names.add(a.getDescriptiveName());
             }
