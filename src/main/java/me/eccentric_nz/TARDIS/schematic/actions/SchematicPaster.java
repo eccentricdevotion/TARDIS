@@ -50,6 +50,7 @@ public class SchematicPaster implements Runnable {
     private final HashMap<Block, BlockData> postRedstoneDust = new HashMap<>();
     private final HashMap<Block, BlockData> postPistons = new HashMap<>();
     private final HashMap<Block, TARDISBannerData> postBanners = new HashMap<>();
+    private final HashMap<Block, BlockData> sidratFenceBlocks = new HashMap<>();
     private int task, l, r, h, w, d, x, y, z;
     private int counter = 0;
     private double div = 1.0d;
@@ -122,6 +123,7 @@ public class SchematicPaster implements Runnable {
                 }
             }
             BannerSetter.setBanners(postBanners);
+            SIDRATFenceSetter.update(sidratFenceBlocks);
             // mannequins
             if (obj.has("mannequins")) {
                 JsonArray mannequins = obj.get("mannequins").getAsJsonArray();
@@ -196,6 +198,10 @@ public class SchematicPaster implements Runnable {
                             PotSetter.decorate(plugin, pot, block);
                         }
                     }, 1L);
+                }
+                case PALE_OAK_FENCE -> {
+                    block.setBlockData(data, false);
+                    sidratFenceBlocks.put(block, data);
                 }
                 default -> {
                     if (Tag.BANNERS.isTagged(data.getMaterial())) {

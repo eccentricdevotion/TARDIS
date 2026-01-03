@@ -85,6 +85,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
     private final HashMap<Block, BlockData> postStickyPistonBaseBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> postTorchBlocks = new HashMap<>();
     private final HashMap<Block, JsonObject> postSignBlocks = new HashMap<>();
+    private final HashMap<Block, BlockData> sidratFenceBlocks = new HashMap<>();
     private final HashMap<Block, TARDISBannerData> postBannerBlocks = new HashMap<>();
     private final List<Block> fractalBlocks = new ArrayList<>();
     private final List<Block> iceBlocks = new ArrayList<>();
@@ -288,6 +289,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
             postPistonExtensionBlocks.forEach(Block::setBlockData);
             SignSetter.setSigns(postSignBlocks, plugin, id);
             BannerSetter.setBanners(postBannerBlocks);
+            SIDRATFenceSetter.update(sidratFenceBlocks);
             postLightBlocks.forEach((block) -> {
                 if (block.getType().isAir()) {
                     Levelled levelled = TARDISConstants.LIGHT;
@@ -341,9 +343,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
             }
             if (obj.has("item_displays")) {
                 JsonArray displays = obj.get("item_displays").getAsJsonArray();
-                for (int i = 0; i < displays.size(); i++) {
-                    ItemDisplaySetter.fakeBlock(displays.get(i).getAsJsonObject(), wg1, id);
-                }
+                ItemDisplaySetter.process(displays, player, wg1, id);
             }
             // finished processing - update tardis table!
             if (!set.isEmpty()) {
@@ -500,7 +500,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                     String button = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
                     plugin.getQueryFactory().insertSyncControl(id, 1, button, 0);
                 }
-                if (type.equals(Material.JUKEBOX) && !(tud.getSchematic().getPermission().equals("eighth") && world.getBlockAt(x,y,z).getRelative(BlockFace.DOWN).getType() == Material.ANDESITE)) {
+                if (type.equals(Material.JUKEBOX) && !(tud.getSchematic().getPermission().equals("eighth") && world.getBlockAt(x, y, z).getRelative(BlockFace.DOWN).getType() == Material.ANDESITE)) {
                     // remember the location of this Advanced Console
                     String advanced = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
                     plugin.getQueryFactory().insertSyncControl(id, 15, advanced, 0);
@@ -631,6 +631,8 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                 } else if (MaterialTags.INFESTED_BLOCKS.isTagged(type)) {
                     // legacy monster egg stone for controls
                     TARDISBlockSetters.setBlock(world, x, y, z, Material.AIR);
+                } else if (type.equals(Material.PALE_OAK_FENCE) && tud.getSchematic().getPermission().equals("sidrat")) {
+                    sidratFenceBlocks.put(world.getBlockAt(x, y, z), data);
                 } else if (type.equals(Material.ICE) && tud.getSchematic().getPermission().equals("cave")) {
                     iceBlocks.add(world.getBlockAt(x, y, z));
                 } else if (type.equals(Material.MUSHROOM_STEM)) { // mushroom stem for repeaters

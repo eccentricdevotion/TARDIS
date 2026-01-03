@@ -10,7 +10,7 @@ public class SIDRATFenceSetter {
 
     public static void update(HashMap<Block, BlockData> fences) {
         for (Map.Entry<Block, BlockData> map : fences.entrySet()) {
-            map.getKey().setBlockData(map.getValue());
+            map.getKey().setBlockData(map.getValue(), false);
         }
     }
 }

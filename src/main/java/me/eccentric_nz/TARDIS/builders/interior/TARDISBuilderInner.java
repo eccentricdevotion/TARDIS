@@ -31,7 +31,6 @@ import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.UseClay;
 import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
-import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgateDisplaySetter;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFollowerSpawner;
 import me.eccentric_nz.TARDIS.rotors.TARDISTimeRotor;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
@@ -83,6 +82,7 @@ public class TARDISBuilderInner implements Runnable {
     private final HashMap<Block, BlockData> postSculkVeinBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> postStickyPistonBaseBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> postTorchBlocks = new HashMap<>();
+    private final HashMap<Block, BlockData> sidratFenceBlocks = new HashMap<>();
     private final HashMap<Block, JsonObject> postSignBlocks = new HashMap<>();
     private final List<Block> fractalBlocks = new ArrayList<>();
     private final List<Block> iceBlocks = new ArrayList<>();
@@ -259,6 +259,7 @@ public class TARDISBuilderInner implements Runnable {
                 FractalFence.grow(fractalBlocks.get(f), f);
             }
             BannerSetter.setBanners(postBannerBlocks);
+            SIDRATFenceSetter.update(sidratFenceBlocks);
             if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
                 if (pos != null) {
                     plugin.getWorldGuardUtils().addWGProtection(player, pos, world, schm.getPermission().equals("junk"));
@@ -295,14 +296,7 @@ public class TARDISBuilderInner implements Runnable {
             // item displays
             if (obj.has("item_displays")) {
                 JsonArray displays = obj.get("item_displays").getAsJsonArray();
-                for (int i = 0; i < displays.size(); i++) {
-                    // set regular blocks for bedrock players
-                    if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) {
-                        TARDISFloodgateDisplaySetter.regularBlock(displays.get(i).getAsJsonObject(), wg1, dbID);
-                    } else {
-                        ItemDisplaySetter.fakeBlock(displays.get(i).getAsJsonObject(), wg1, dbID);
-                    }
-                }
+                ItemDisplaySetter.process(displays, player, wg1, dbID);
             }
             // remove dropped items
             chunkList.forEach((chink) -> {
@@ -674,6 +668,9 @@ public class TARDISBuilderInner implements Runnable {
                 setpb.put("police_box", 0);
                 plugin.getQueryFactory().doInsert("blocks", setpb);
                 plugin.getGeneralKeeper().getProtectBlockMap().put(loc, dbID);
+            }
+            if (type.equals(Material.PALE_OAK_FENCE) && schm.getPermission().equals("sidrat")) {
+                sidratFenceBlocks.put(world.getBlockAt(x, y, z), data);
             }
             if (type.equals(Material.ICE) && schm.getPermission().equals("cave")) {
                 iceBlocks.add(world.getBlockAt(x, y, z));
