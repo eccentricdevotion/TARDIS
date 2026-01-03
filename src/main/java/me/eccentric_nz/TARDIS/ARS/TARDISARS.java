@@ -67,6 +67,7 @@ public enum TARDISARS implements ARS {
     SHELL("DEAD_BRAIN_CORAL_BLOCK", "Shell", 1, RoomVariant.SHELL.getKey()),
     SMELTER("CHEST", "Smelter", 1, RoomVariant.SMELTER.getKey()),
     STABLE("HAY_BLOCK", "Horse Stable", 1, RoomVariant.STABLE.getKey()),
+    STAIRCASE("PURPLE_TERRACOTTA", "Endless Staircase", 1, RoomVariant.STAIRCASE.getKey()),
     STALL("BROWN_GLAZED_TERRACOTTA", "Llama Stall", 1, RoomVariant.STALL.getKey()),
     SURGERY("RED_CONCRETE", "Hospital Surgery", 1, RoomVariant.SURGERY.getKey()),
     TRENZALORE("BRICKS", "Trenzalore", 1, RoomVariant.TRENZALORE.getKey()),

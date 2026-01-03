@@ -393,6 +393,7 @@ public enum ShopItem {
     BLUEPRINT_ROOM_SHELL("Blueprint Shell", Material.MUSIC_DISC_MELLOHI, DiskVariant.BLUEPRINT_DISK.getKey(), ShopItemRecipe.BLUEPRINT),
     BLUEPRINT_ROOM_SMELTER("Blueprint Smelter", Material.MUSIC_DISC_MELLOHI, DiskVariant.BLUEPRINT_DISK.getKey(), ShopItemRecipe.BLUEPRINT),
     BLUEPRINT_ROOM_STABLE("Blueprint Stable", Material.MUSIC_DISC_MELLOHI, DiskVariant.BLUEPRINT_DISK.getKey(), ShopItemRecipe.BLUEPRINT),
+    BLUEPRINT_ROOM_STAIRCASE("Blueprint Staircase", Material.MUSIC_DISC_MELLOHI, DiskVariant.BLUEPRINT_DISK.getKey(), ShopItemRecipe.BLUEPRINT),
     BLUEPRINT_ROOM_STALL("Blueprint Stall", Material.MUSIC_DISC_MELLOHI, DiskVariant.BLUEPRINT_DISK.getKey(), ShopItemRecipe.BLUEPRINT),
     BLUEPRINT_ROOM_TRENZALORE("Blueprint Trenzalore", Material.MUSIC_DISC_MELLOHI, DiskVariant.BLUEPRINT_DISK.getKey(), ShopItemRecipe.BLUEPRINT),
     BLUEPRINT_ROOM_VAULT("Blueprint Vault", Material.MUSIC_DISC_MELLOHI, DiskVariant.BLUEPRINT_DISK.getKey(), ShopItemRecipe.BLUEPRINT),

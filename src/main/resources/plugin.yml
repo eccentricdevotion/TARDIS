@@ -479,6 +479,7 @@ permissions:
       tardis.room.shell: true
       tardis.room.smelter: true
       tardis.room.stable: true
+      tardis.room.staircase: true
       tardis.room.stall: true
       tardis.room.surgery: true
       tardis.room.trenzalore: true

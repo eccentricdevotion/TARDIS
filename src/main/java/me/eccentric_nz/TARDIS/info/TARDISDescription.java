@@ -227,6 +227,7 @@ public enum TARDISDescription {
     SHELL("The room in the TARDIS where the plasmic shells are created."),
     SMELTER("Efficiently smelt your items."),
     STABLE("Giddy-up, here come the horses..."),
+    STAIRCASE("Up or down, these stairs are endless."),
     STALL("Llamas, watch for spit!"),
     SURGERY("In need of medical attention?"),
     TRENZALORE("The final resting place of the Doctor."),

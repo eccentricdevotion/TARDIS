@@ -120,6 +120,8 @@ public class TARDISRoomsUpdater {
         booleanOptions.put("rooms.SMELTER.user", false);
         booleanOptions.put("rooms.STABLE.enabled", true);
         booleanOptions.put("rooms.STABLE.user", false);
+        booleanOptions.put("rooms.STAIRCASE.enabled", true);
+        booleanOptions.put("rooms.STAIRCASE.user", false);
         booleanOptions.put("rooms.STALL.enabled", true);
         booleanOptions.put("rooms.STALL.user", false);
         booleanOptions.put("rooms.SURGERY.enabled", true);
@@ -217,6 +219,8 @@ public class TARDISRoomsUpdater {
         integerOptions.put("rooms.SMELTER.offset", -4);
         integerOptions.put("rooms.STABLE.cost", 350);
         integerOptions.put("rooms.STABLE.offset", -4);
+        integerOptions.put("rooms.STAIRCASE.cost", 350);
+        integerOptions.put("rooms.STAIRCASE.offset", -5);
         integerOptions.put("rooms.STALL.cost", 350);
         integerOptions.put("rooms.STALL.offset", -4);
         integerOptions.put("rooms.SURGERY.cost", 350);
@@ -274,6 +278,7 @@ public class TARDISRoomsUpdater {
         stringOptions.put("rooms.SHELL.seed", "DEAD_BRAIN_CORAL_BLOCK");
         stringOptions.put("rooms.SMELTER.seed", "CHEST");
         stringOptions.put("rooms.STABLE.seed", "HAY_BLOCK");
+        stringOptions.put("rooms.STAIRCASE.seed", "PURPLE_TERRACOTTA");
         stringOptions.put("rooms.STALL.seed", "BROWN_GLAZED_TERRACOTTA");
         stringOptions.put("rooms.SURGERY.seed", "RED_CONCRETE");
         stringOptions.put("rooms.TRENZALORE.seed", "BRICK");

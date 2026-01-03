@@ -240,6 +240,12 @@ rooms:
     offset: -4
     seed: HAY_BLOCK
     user: false
+  STAIRCASE:
+    enabled: true
+    cost: 550
+    offset: -5
+    seed: PURPLE_TERRACOTTA
+    user: false
   STALL:
     enabled: true
     cost: 350

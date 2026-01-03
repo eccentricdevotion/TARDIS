@@ -280,6 +280,7 @@ public enum TARDISInfoMenu {
     SHELL("TIS|Rooms 2|Shell", "ROOMS_2", "Sh"),
     SMELTER("TIS|Rooms 2|Smelter", "ROOMS_2", "lt"),
     STABLE("TIS|Rooms 2|Stable", "ROOMS_2", "S"),
+    STAIRCASE("TIS|Rooms 2|Staircase", "ROOMS_2", "c"),
     STALL("TIS|Rooms 2|Llama Stall", "ROOMS_2", "Ll"),
     SURGERY("TIS|Rooms 2|Surgery", "ROOMS_2", "rg"),
     TRENZALORE("TIS|Rooms 2|Trenzalore", "ROOMS_2", "T"),
@@ -672,7 +673,7 @@ public enum TARDISInfoMenu {
             case ALLAY, ANTIGRAVITY, APIARY, AQUARIUM, ARBORETUM, BAKER, BAMBOO, BEDROOM, BIRDCAGE, CHEMISTRY, EMPTY,
                  EYE, FARM, GARDEN, GEODE, GRAVITY, GREENHOUSE, HAPPY, HARMONY, HUTCH, IGLOO, IISTUBIL, KITCHEN,
                  LAZARUS, LAVA, LIBRARY, MANGROVE, MAZE, MUSHROOM, NAUTILUS, NETHER, OBSERVATORY, PASSAGE, PEN, POOL,
-                 RAIL, RENDERER, SHELL, SMELTER, STABLE, STALL, SURGERY, TRENZALORE, VAULT, VILLAGE, WOOD, WORKSHOP,
+                 RAIL, RENDERER, SHELL, SMELTER, STABLE, STAIRCASE, STALL, SURGERY, TRENZALORE, VAULT, VILLAGE, WOOD, WORKSHOP,
                  ZERO -> {
                 return true;
             }
