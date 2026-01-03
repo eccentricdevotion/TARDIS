@@ -40,7 +40,6 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
-import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgateDisplaySetter;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFollowerSpawner;
 import me.eccentric_nz.TARDIS.rotors.TARDISTimeRotor;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
@@ -401,6 +400,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
             postPistonExtensionBlocks.forEach(Block::setBlockData);
             SignSetter.setSigns(postSignBlocks, plugin, id);
             BannerSetter.setBanners(postBannerBlocks);
+            SIDRATFenceSetter.update(sidratFenceBlocks);
             postLightBlocks.forEach((block) -> {
                 if (block.getType().isAir()) {
                     Levelled levelled = TARDISConstants.LIGHT;
@@ -456,18 +456,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
             // item displays
             if (obj.has("item_displays")) {
                 JsonArray displays = obj.get("item_displays").getAsJsonArray();
-                for (int i = 0; i < displays.size(); i++) {
-                    // set regular blocks for bedrock players
-                    if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) {
-                        TARDISFloodgateDisplaySetter.regularBlock(displays.get(i).getAsJsonObject(), wg1, id);
-                    } else {
-                        ItemDisplaySetter.fakeBlock(displays.get(i).getAsJsonObject(), wg1, id);
-                    }
-                }
-            }
-            // sidrat fence update
-            if (!sidratFenceBlocks.isEmpty()) {
-                SIDRATFenceSetter.update(sidratFenceBlocks);
+                ItemDisplaySetter.process(displays, player, wg1, id);
             }
             // finished processing - update tardis table!
             if (!set.isEmpty()) {
@@ -831,10 +820,10 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                     plugin.getQueryFactory().doInsert("lamps", setLB);
                 }
                 if (type.equals(Material.ICE) && tud.getSchematic().getPermission().equals("cave")) {
-                    sidratFenceBlocks.put(b, data);
+                    iceBlocks.add(b);
                 }
                 if (type.equals(Material.PALE_OAK_FENCE) && tud.getSchematic().getPermission().equals("sidrat")) {
-                    iceBlocks.add(b);
+                    sidratFenceBlocks.put(b, data);
                 }
                 if (type.equals(Material.COMMAND_BLOCK) || ((tud.getSchematic().getPermission().equals("bigger") || tud.getSchematic().getPermission().equals("coral") || tud.getSchematic().getPermission().equals("deluxe") || tud.getSchematic().getPermission().equals("twelfth")) && type.equals(Material.BEACON))) {
                     /*

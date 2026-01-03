@@ -433,9 +433,7 @@ public class TARDISRoomRunnable implements Runnable {
                 }
                 if (obj.has("item_displays")) {
                     JsonArray displays = obj.get("item_displays").getAsJsonArray();
-                    for (int i = 0; i < displays.size(); i++) {
-                        ItemDisplaySetter.fakeBlock(displays.get(i).getAsJsonObject(), start, tardis_id);
-                    }
+                    ItemDisplaySetter.process(displays, player, start, tardis_id);
                 }
                 if (room.equals("NAUTILUS")) {
                     magmaBlocks.forEach((key, value) -> {

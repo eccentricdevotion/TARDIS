@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.schematic.setters;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
@@ -24,6 +25,8 @@ import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
 import me.eccentric_nz.TARDIS.enumeration.Desktops;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
+import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
+import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgateDisplaySetter;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import net.kyori.adventure.text.Component;
@@ -34,6 +37,7 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Display;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.ItemDisplay;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -43,6 +47,17 @@ import java.util.HashMap;
  * @author eccentric_nz
  */
 public class ItemDisplaySetter {
+
+    public static void process(JsonArray displays, Player player, Location location, int id) {
+        for (int i = 0; i < displays.size(); i++) {
+            // set regular blocks for bedrock players
+            if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) {
+                TARDISFloodgateDisplaySetter.regularBlock(displays.get(i).getAsJsonObject(), location, id);
+            } else {
+                fakeBlock(displays.get(i).getAsJsonObject(), location, id);
+            }
+        }
+    }
 
     public static void fakeBlock(JsonObject json, Location start, int id) {
         JsonObject rel = json.get("rel_location").getAsJsonObject();

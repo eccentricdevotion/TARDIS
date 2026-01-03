@@ -68,6 +68,7 @@ public class TARDISBuilderPreview implements Runnable {
     private final HashMap<Block, BlockData> postSculkVeinBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> postStickyPistonBaseBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> postTorchBlocks = new HashMap<>();
+    private final HashMap<Block, BlockData> sidratFenceBlocks = new HashMap<>();
     private final HashMap<Block, JsonObject> postSignBlocks = new HashMap<>();
     private final List<Block> fractalBlocks = new ArrayList<>();
     private final List<Block> iceBlocks = new ArrayList<>();
@@ -171,6 +172,7 @@ public class TARDISBuilderPreview implements Runnable {
                 FractalFence.grow(fractalBlocks.get(f), f);
             }
             BannerSetter.setBanners(postBannerBlocks);
+            SIDRATFenceSetter.update(sidratFenceBlocks);
             if (ender != null) {
                 Entity ender_crystal = world.spawnEntity(ender, EntityType.END_CRYSTAL);
                 ((EnderCrystal) ender_crystal).setShowingBottom(false);
@@ -305,7 +307,9 @@ public class TARDISBuilderPreview implements Runnable {
                  */
                 ender = world.getBlockAt(x, y, z).getLocation().add(0.5d, 4d, 0.5d);
             }
-            if (type.equals(Material.ICE) && schm.getPermission().equals("cave")) {
+            if (type.equals(Material.PALE_OAK_FENCE) && schm.getPermission().equals("sidrat")) {
+                sidratFenceBlocks.put(world.getBlockAt(x, y, z), data);
+            } else if (type.equals(Material.ICE) && schm.getPermission().equals("cave")) {
                 iceBlocks.add(world.getBlockAt(x, y, z));
             } else if (Tag.BEDS.isTagged(type)) {
                 postBedBlocks.put(world.getBlockAt(x, y, z), data);

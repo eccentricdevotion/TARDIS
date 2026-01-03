@@ -84,6 +84,7 @@ class TARDISBuildAbandoned implements Runnable {
     private final HashMap<Block, BlockData> postStickyPistonBaseBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> postTorchBlocks = new HashMap<>();
     private final HashMap<Block, JsonObject> postSignBlocks = new HashMap<>();
+    private final HashMap<Block, BlockData> sidratFenceBlocks = new HashMap<>();
     private final HashMap<Block, TARDISBannerData> postBannerBlocks = new HashMap<>();
     private final List<Block> fractalBlocks = new ArrayList<>();
     private final List<Block> iceBlocks = new ArrayList<>();
@@ -222,6 +223,7 @@ class TARDISBuildAbandoned implements Runnable {
                 FractalFence.grow(fractalBlocks.get(f), f);
             }
             BannerSetter.setBanners(postBannerBlocks);
+            SIDRATFenceSetter.update(sidratFenceBlocks);
             if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
                 UUID randomUUID = UUID.randomUUID();
                 plugin.getWorldGuardUtils().addWGProtection(randomUUID, randomUUID.toString(), pos, world);
@@ -253,9 +255,7 @@ class TARDISBuildAbandoned implements Runnable {
             }
             if (obj.has("item_displays")) {
                 JsonArray displays = obj.get("item_displays").getAsJsonArray();
-                for (int i = 0; i < displays.size(); i++) {
-                    ItemDisplaySetter.fakeBlock(displays.get(i).getAsJsonObject(), cl, dbID);
-                }
+                    ItemDisplaySetter.process(displays, player, cl, dbID);
             }
             // finished processing - update tardis table!
             plugin.getQueryFactory().doUpdate("tardis", set, where);
@@ -521,6 +521,10 @@ class TARDISBuildAbandoned implements Runnable {
                 seta.put("tardis_id", dbID);
                 seta.put("json", json.toString());
                 plugin.getQueryFactory().doInsert("ars", seta);
+            }
+
+            if (type.equals(Material.PALE_OAK_FENCE) && schm.getPermission().equals("sidrat")) {
+                sidratFenceBlocks.put(world.getBlockAt(x, y, z), data);
             }
             if (type.equals(Material.ICE) && schm.getPermission().equals("cave")) {
                 iceBlocks.add(world.getBlockAt(x, y, z));
