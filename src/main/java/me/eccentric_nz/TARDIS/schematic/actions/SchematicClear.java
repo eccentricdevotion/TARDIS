@@ -19,13 +19,19 @@ package me.eccentric_nz.TARDIS.schematic.actions;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import org.bukkit.Chunk;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 public class SchematicClear {
+
+    private final Set<Chunk> CHUNKS = new HashSet<>();
 
     public boolean act(TARDIS plugin, Player player) {
         UUID uuid = player.getUniqueId();
@@ -65,9 +71,18 @@ public class SchematicClear {
                 for (int c = minz; c <= maxz; c++) {
                     Block b = w.getBlockAt(r, l, c);
                     b.setBlockData(TARDISConstants.AIR);
+                    CHUNKS.add(b.getChunk());
                 }
             }
         }
+        for (Chunk chunk : CHUNKS) {
+            for (Entity e : chunk.getEntities()) {
+                if (!(e instanceof Player)) {
+                    e.remove();
+                }
+            }
+        }
+        CHUNKS.clear();
         return true;
     }
 }
