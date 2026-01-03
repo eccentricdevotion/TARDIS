@@ -219,7 +219,7 @@ public class TARDISRoomsUpdater {
         integerOptions.put("rooms.SMELTER.offset", -4);
         integerOptions.put("rooms.STABLE.cost", 350);
         integerOptions.put("rooms.STABLE.offset", -4);
-        integerOptions.put("rooms.STAIRCASE.cost", 350);
+        integerOptions.put("rooms.STAIRCASE.cost", 550);
         integerOptions.put("rooms.STAIRCASE.offset", -5);
         integerOptions.put("rooms.STALL.cost", 350);
         integerOptions.put("rooms.STALL.offset", -4);
