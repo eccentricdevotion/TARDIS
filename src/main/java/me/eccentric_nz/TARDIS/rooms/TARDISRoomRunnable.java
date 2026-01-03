@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
+import me.eccentric_nz.TARDIS.database.data.Transmat;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetFarming;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetHappy;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
@@ -114,6 +115,7 @@ public class TARDISRoomRunnable implements Runnable {
     private World world;
     private JsonArray arr;
     private Location aqua_spawn;
+    private Chunk thisChunk;
 
     public TARDISRoomRunnable(TARDIS plugin, TARDISRoomData roomData, UUID uuid) {
         this.plugin = plugin;
@@ -539,6 +541,11 @@ public class TARDISRoomRunnable implements Runnable {
                 String rname = (room.equals("GRAVITY") || room.equals("ANTIGRAVITY")) ? room + " WELL" : room;
                 if (player != null) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "ROOM_FINISHED", rname);
+                    if (plugin.getUtils().inTARDISWorld(player) && thisChunk != null) {
+                        // get room coords and send message to transmat player to room
+                        Transmat transmat = getTransmat(thisChunk);
+                        plugin.getMessenger().sendRoomTransmat(player, transmat);
+                    }
                 }
                 plugin.getBuildKeeper().getRoomProgress().remove(uuid);
                 plugin.getTrackerKeeper().getIsGrowingRooms().remove(tardis_id);
@@ -1044,7 +1051,7 @@ public class TARDISRoomRunnable implements Runnable {
                         }
                     }
                 }
-                Chunk thisChunk = world.getChunkAt(world.getBlockAt(startx, starty, startz));
+                thisChunk = world.getChunkAt(world.getBlockAt(startx, starty, startz));
                 thisChunk.addPluginChunkTicket(plugin);
                 chunkList.add(thisChunk);
                 if (!notThese.contains(type) && !type.equals(Material.MUSHROOM_STEM)) {
@@ -1192,6 +1199,11 @@ public class TARDISRoomRunnable implements Runnable {
             }
             plugin.debug(message);
         }
+    }
+
+    private Transmat getTransmat(Chunk chunk) {
+        Location location = new Location(chunk.getWorld(), resetx, resety, resetz).add(3.5d, 5.0d, 8.5d);
+        return new Transmat(room, location.getWorld().getName(), (float) location.getX(), (float) location.getY(), (float) location.getZ(), 0.0f);
     }
 
     private void turnOnFarming(Player p) {
