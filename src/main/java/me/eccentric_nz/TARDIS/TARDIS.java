@@ -296,7 +296,7 @@ public class TARDIS extends JavaPlugin {
                 }
             }
             // rename custom_consoles -> custom_desktops
-            File cc = new File(getDataFolder() + File.separator + "custom_desktops.yml");
+            File cc = new File(getDataFolder() + File.separator + "custom_consoles.yml");
             File cd = new File(getDataFolder() + File.separator + "custom_desktops.yml");
             if (cc.exists() && !cd.exists()) {
                 Path source = Paths.get(getDataFolder() + File.separator + "custom_consoles.yml");
