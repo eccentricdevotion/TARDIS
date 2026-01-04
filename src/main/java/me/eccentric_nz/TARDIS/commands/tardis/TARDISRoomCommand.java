@@ -189,7 +189,11 @@ class TARDISRoomCommand {
         ResultSetControls rsc = new ResultSetControls(plugin, wherea, false);
         sd.setARS(rsc.resultSet());
         plugin.getTrackerKeeper().getRoomSeed().put(uuid, sd);
-        plugin.getMessenger().send(player, TardisModule.TARDIS, "ROOM_SEED_INFO", room, plugin.getRoomsConfig().getString("rooms." + room + ".seed"));
+        if (room.equals("STAIRCASE")) {
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "ROOM_SEED_STAIRCASE");
+        } else {
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "ROOM_SEED_INFO", room, plugin.getRoomsConfig().getString("rooms." + room + ".seed"));
+        }
         return true;
     }
 }

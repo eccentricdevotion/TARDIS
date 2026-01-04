@@ -60,7 +60,7 @@ public class TARDISBuilderInstanceKeeper {
     private final HashMap<Location, TARDISBuildData> trackTARDISSeed = new HashMap<>();
     private final HashMap<String, HashMap<String, Integer>> roomBlockCounts = new HashMap<>();
     private final HashMap<UUID, Integer> roomProgress = new HashMap<>();
-    private HashMap<Material, String> seeds;
+    private HashMap<Material, String> roomSeeds;
 
     /**
      * Gets a list of precious blocks to protect
@@ -174,21 +174,21 @@ public class TARDISBuilderInstanceKeeper {
     }
 
     /**
-     * Gets a map of Material and TARDIS seed names
+     * Gets a map of Material and TARDIS room seed names
      *
-     * @return a map of Material and TARDIS seed names
+     * @return a map of Material and TARDIS room seed names
      */
-    public HashMap<Material, String> getSeeds() {
-        return seeds;
+    public HashMap<Material, String> getRoomSeeds() {
+        return roomSeeds;
     }
 
     /**
-     * Sets a map of Material and TARDIS seed names
+     * Sets a map of Material and TARDIS room seed names
      *
-     * @param t_seeds a Map of Material keys and console name values
+     * @param seeds a Map of Material keys and room name values
      */
-    public void setSeeds(HashMap<Material, String> t_seeds) {
-        seeds = t_seeds;
+    public void setRoomSeeds(HashMap<Material, String> seeds) {
+        roomSeeds = seeds;
     }
 
     /**

@@ -263,7 +263,7 @@ public class TARDISRoomCommands implements CommandExecutor {
                             }
                             // add the seed block to plugin.getBuildKeeper().getSeeds()
                             Material m = Material.valueOf(setMaterial);
-                            plugin.getBuildKeeper().getSeeds().put(m, name);
+                            plugin.getBuildKeeper().getRoomSeeds().put(m, name);
                             return true;
                         }
                     }

@@ -90,7 +90,7 @@ public class TARDISZeroRoomBuilder {
             }
             // are we doing an achievement?
             if (plugin.getAchievementConfig().getBoolean("rooms.enabled")) {
-                TARDISAchievementFactory taf = new TARDISAchievementFactory(plugin, p, Advancement.ROOMS, plugin.getBuildKeeper().getSeeds().size());
+                TARDISAchievementFactory taf = new TARDISAchievementFactory(plugin, p, Advancement.ROOMS, plugin.getBuildKeeper().getRoomSeeds().size());
                 taf.doAchievement("ZERO");
             }
         }

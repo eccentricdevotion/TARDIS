@@ -343,7 +343,7 @@ public class TARDIS extends JavaPlugin {
             TARDISAliasResolver.createAliasMap();
             utils = new TARDISUtils(this);
             locationUtils = new TARDISLocationGetters(this);
-            buildKeeper.setSeeds(getSeeds());
+            buildKeeper.setRoomSeeds(getSeeds());
             if (getConfig().getString("creation.tips_next", "HIGHEST").equalsIgnoreCase("FREE")) {
                 new ResultSetTIPS(this).fillUsedSlotList();
             }
@@ -1610,7 +1610,7 @@ public class TARDIS extends JavaPlugin {
             }
             if (getRoomsConfig().getBoolean("rooms." + s + ".enabled")) {
                 try {
-                    Material m = Material.valueOf(getRoomsConfig().getString("rooms." + s + ".seed"));
+                    Material m = s.equals("STAIRCASE") ? Material.STRIPPED_WARPED_STEM : Material.valueOf(getRoomsConfig().getString("rooms." + s + ".seed"));
                     map.put(m, s);
                 } catch (IllegalArgumentException e) {
                     debug("Invalid room seed: " + getRoomsConfig().getString("rooms." + s + ".seed"));
