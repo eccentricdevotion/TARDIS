@@ -582,7 +582,7 @@ public class TARDISRoomRunnable implements Runnable {
                         gw = Material.GRAY_CONCRETE;
                     }
                     default -> {
-                        ow = Material.ORANGE_WOOL;
+                        ow = room.equals("STAIRCASE") ? Material.ORANGE_TERRACOTTA : Material.ORANGE_WOOL;
                         lgw = Material.LIGHT_GRAY_WOOL;
                         gw = Material.GRAY_WOOL;
                     }
