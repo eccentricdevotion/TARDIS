@@ -8,7 +8,7 @@ loadbefore: [ Citizens ]
 website: http://tardis.pages.dev/
 dev-url: http://github.com/eccentricdevotion/TARDIS/
 url: http://tardis.pages.dev/
-version: 6.3.6@buildNumber@
+version: 6.3.7@buildNumber@
 api-version: '1.21.11'
 libraries:
   - org.jsoup:jsoup:1.21.1
@@ -479,6 +479,7 @@ permissions:
       tardis.room.shell: true
       tardis.room.smelter: true
       tardis.room.stable: true
+      tardis.room.staircase: true
       tardis.room.stall: true
       tardis.room.surgery: true
       tardis.room.trenzalore: true

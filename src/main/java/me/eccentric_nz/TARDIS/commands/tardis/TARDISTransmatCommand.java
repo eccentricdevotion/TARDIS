@@ -24,8 +24,10 @@ import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.desktop.PreviewData;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.planets.RoomsWorld;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Location;
 import org.bukkit.Sound;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -98,37 +100,52 @@ class TARDISTransmatCommand {
             return false;
         }
         if (args[1].equalsIgnoreCase("tp")) {
-            // transmat to specified location
-            if (args[2].equalsIgnoreCase("console")) {
-                // get internal door location
-                plugin.getGeneralKeeper().getRendererListener().transmat(player);
-            } else {
-                ResultSetTransmat rsm;
-                boolean isRoomsWorld;
-                if (args[2].startsWith("Rooms") && args.length == 4 && TARDISPermission.hasPermission(player, "tardis.transmat.rooms")) {
-                    rsm = new ResultSetTransmat(plugin, -1, "rooms");
-                    isRoomsWorld = true;
-                } else {
-                    rsm = new ResultSetTransmat(plugin, id, args[2]);
-                    isRoomsWorld = false;
-                }
-                if (rsm.resultSet()) {
-                    if (isRoomsWorld) {
-                        plugin.getTrackerKeeper().getPreviewers().put(player.getUniqueId(), new PreviewData(player.getLocation().clone(), player.getGameMode(), id));
-                    }
+            if (args.length == 6) {
+                World world = plugin.getServer().getWorld(args[2]);
+                if (world != null) {
+                    float x = TARDISNumberParsers.parseFloat(args[3]);
+                    float y = TARDISNumberParsers.parseFloat(args[4]);
+                    float z = TARDISNumberParsers.parseFloat(args[5]);
+                    Location tp_loc = new Location(world, x, y, z);
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "TRANSMAT");
-                    Location tp_loc = rsm.getLocation();
-                    tp_loc.setYaw(rsm.getYaw());
-                    tp_loc.setPitch(player.getLocation().getPitch());
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                         player.playSound(tp_loc, Sound.ENTITY_ENDERMAN_TELEPORT, 1.0f, 1.0f);
                         player.teleport(tp_loc);
-                        if (isRoomsWorld) {
-                            plugin.getMessenger().send(player, TardisModule.TARDIS, "PREVIEW_DONE");
-                        }
                     }, 10L);
+                }
+            } else {
+                // transmat to specified location
+                if (args[2].equalsIgnoreCase("console")) {
+                    // get internal door location
+                    plugin.getGeneralKeeper().getRendererListener().transmat(player);
                 } else {
-                    plugin.getMessenger().send(player, TardisModule.TARDIS, "TRANSMAT_NOT_FOUND");
+                    ResultSetTransmat rsm;
+                    boolean isRoomsWorld;
+                    if (args[2].startsWith("Rooms") && args.length == 4 && TARDISPermission.hasPermission(player, "tardis.transmat.rooms")) {
+                        rsm = new ResultSetTransmat(plugin, -1, "rooms");
+                        isRoomsWorld = true;
+                    } else {
+                        rsm = new ResultSetTransmat(plugin, id, args[2]);
+                        isRoomsWorld = false;
+                    }
+                    if (rsm.resultSet()) {
+                        if (isRoomsWorld) {
+                            plugin.getTrackerKeeper().getPreviewers().put(player.getUniqueId(), new PreviewData(player.getLocation().clone(), player.getGameMode(), id));
+                        }
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "TRANSMAT");
+                        Location tp_loc = rsm.getLocation();
+                        tp_loc.setYaw(rsm.getYaw());
+                        tp_loc.setPitch(player.getLocation().getPitch());
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                            player.playSound(tp_loc, Sound.ENTITY_ENDERMAN_TELEPORT, 1.0f, 1.0f);
+                            player.teleport(tp_loc);
+                            if (isRoomsWorld) {
+                                plugin.getMessenger().send(player, TardisModule.TARDIS, "PREVIEW_DONE");
+                            }
+                        }, 10L);
+                    } else {
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "TRANSMAT_NOT_FOUND");
+                    }
                 }
             }
             return true;

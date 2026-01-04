@@ -78,6 +78,23 @@ class TARDISARSProcessor {
                             }
                         } else {
                             switch (end[l][x][z]) {
+                                case "PURPLE_TERRACOTTA" -> {
+                                    if (l == 0 && start[1][x][z].equals("PURPLE_TERRACOTTA")) {
+                                        plugin.getTrackerKeeper().getIsStackedStaircase().put(id, false);
+                                    } else if (l == 1 && start[0][x][z].equals("PURPLE_TERRACOTTA")) {
+                                        plugin.getTrackerKeeper().getIsStackedStaircase().put(id, true);
+                                    } else if (l == 1 && start[2][x][z].equals("PURPLE_TERRACOTTA")) {
+                                        plugin.getTrackerKeeper().getIsStackedStaircase().put(id, false);
+                                    } else if (l == 2 && start[1][x][z].equals("PURPLE_TERRACOTTA")) {
+                                        plugin.getTrackerKeeper().getIsStackedStaircase().put(id, true);
+                                    }
+                                    TARDISARSSlot slot = new TARDISARSSlot();
+                                    slot.setChunk(c);
+                                    slot.setY(l);
+                                    slot.setX(x);
+                                    slot.setZ(z);
+                                    changed.put(slot, TARDISARS.ARSFor(end[l][x][z]));
+                                }
                                 case "SANDSTONE" -> {
                                     if (l == 0 || (l == 1 && !end[l - 1][x][z].equals("SANDSTONE")) || (l == 2 && !end[l - 1][x][z].equals("SANDSTONE")) || (l == 2 && end[l - 1][x][z].equals("SANDSTONE") && end[l - 2][x][z].equals("SANDSTONE"))) {
                                         // only remember the bottom slot of an antigravity well

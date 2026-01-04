@@ -131,6 +131,10 @@ public class TARDISMessage {
         cs.sendMessage(AdventureComponents.getTransmat(t));
     }
 
+    public void sendRoomTransmat(CommandSender cs, Transmat t) {
+        cs.sendMessage(AdventureComponents.getRoomTransmat(t));
+    }
+
     public void sendTARDISForList(CommandSender cs, Tardis t, String world, int x, int y, int z) {
         cs.sendMessage(AdventureComponents.getTARDISForList(t, world, x, y, z));
     }

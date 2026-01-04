@@ -82,6 +82,15 @@ public class AdventureComponents {
                 );
     }
 
+    public static TextComponent getRoomTransmat(Transmat t) {
+        return Component.text(t.name(), NamedTextColor.GREEN)
+                .append(Component.text("Transmat to this room", NamedTextColor.WHITE))
+                .append(Component.text(" <Transmat> ", NamedTextColor.AQUA)
+                        .hoverEvent(HoverEvent.showText(Component.text("Transmat to this location")))
+                        .clickEvent(ClickEvent.runCommand("/tardis transmat tp " + t.world() + " " + t.x() + " " + t.y() + " " + t.z()))
+                );
+    }
+
     public static TextComponent getTARDISForList(Tardis t, String world, int x, int y, int z) {
         return Component.text(String.format("%s %s", t.getTardisId(), t.getOwner()), NamedTextColor.GREEN)
                 .hoverEvent(HoverEvent.showText(Component.text(String.format("%s %s, %s, %s", world, x, y, z))))

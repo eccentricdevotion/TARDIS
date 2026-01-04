@@ -293,6 +293,22 @@ public class TARDISDevCommand implements CommandExecutor {
                     }
                 }
                 switch (first) {
+                    case "staircase" -> {
+                        if (sender instanceof Player player) {
+                            switch (args[1]) {
+                                case "mark" -> {
+                                    return new StaircaseCommand().mark(player);
+                                }
+                                case "scan" -> {
+                                    return new StaircaseCommand().scan(player);
+                                }
+                                default -> {
+                                    return new StaircaseCommand().smaller(player);
+                                }
+                            }
+                        }
+                        return false;
+                    }
                     case "advancements" -> {
                         TARDISAchievementFactory.checkAdvancement(args[1]);
                         return true;

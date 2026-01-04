@@ -87,6 +87,7 @@ public class ItemLookup {
         ITEMS.put(TARDISInfoMenu.SHELL, new InfoIcon(Material.DEAD_BRAIN_CORAL_BLOCK, "Shell", RoomVariant.SHELL.getKey()));
         ITEMS.put(TARDISInfoMenu.SMELTER, new InfoIcon(Material.CHEST, "Smelter", RoomVariant.SMELTER.getKey()));
         ITEMS.put(TARDISInfoMenu.STABLE, new InfoIcon(Material.HAY_BLOCK, "Horse Stable", RoomVariant.STABLE.getKey()));
+        ITEMS.put(TARDISInfoMenu.STAIRCASE, new InfoIcon(Material.PURPLE_TERRACOTTA, "Emndless Staircase", RoomVariant.STAIRCASE.getKey()));
         ITEMS.put(TARDISInfoMenu.STALL, new InfoIcon(Material.BROWN_GLAZED_TERRACOTTA, "Llama Stall", RoomVariant.STALL.getKey()));
         ITEMS.put(TARDISInfoMenu.SURGERY, new InfoIcon(Material.RED_CONCRETE, "Hospital Surgery", RoomVariant.SURGERY.getKey()));
         ITEMS.put(TARDISInfoMenu.TRENZALORE, new InfoIcon(Material.BRICKS, "Trenzalore", RoomVariant.TRENZALORE.getKey()));

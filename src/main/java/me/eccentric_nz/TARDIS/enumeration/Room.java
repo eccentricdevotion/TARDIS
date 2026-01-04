@@ -61,6 +61,7 @@ public enum Room {
     SHELL,
     SMELTER,
     STABLE,
+    STAIRCASE,
     STALL,
     SURGERY,
     TRENZALORE,

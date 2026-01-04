@@ -65,6 +65,7 @@ public enum BlueprintRoom {
     SHELL("tardis.room.shell"),
     SMELTER("tardis.room.smelter"),
     STABLE("tardis.room.stable", BlueprintFeature.FARM),
+    STAIRCASE("tardis.room.staircase"),
     STALL("tardis.room.stall", BlueprintFeature.FARM),
     TRENZALORE("tardis.room.trenzalore"),
     VAULT("tardis.room.vault", BlueprintFeature.VAULT),

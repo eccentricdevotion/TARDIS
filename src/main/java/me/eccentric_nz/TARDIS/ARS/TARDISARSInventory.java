@@ -155,7 +155,7 @@ public class TARDISARSInventory implements InventoryHolder {
 
         int i = 45;
         for (TARDISARS a : TARDISARS.values()) {
-            if (a.getOffset() != 0 && i < 54) {
+            if (a.isInGUI() && i < 54) {
                 ItemStack room = ItemStack.of(Material.getMaterial(a.getMaterial()), 1);
                 ItemMeta im = room.getItemMeta();
                 im.displayName(Component.text(a.getDescriptiveName()));
