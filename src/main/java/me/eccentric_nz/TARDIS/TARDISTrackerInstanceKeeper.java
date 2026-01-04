@@ -56,6 +56,7 @@ import java.util.*;
 public class TARDISTrackerInstanceKeeper {
 
     private final HashMap<Integer, Boolean> malfunction = new HashMap<>();
+    private final HashMap<Integer, Boolean> isStackedStaircase = new HashMap<>();
     private final HashMap<Integer, Integer> cloisterBells = new HashMap<>();
     private final HashMap<Integer, Integer> destinationVortex = new HashMap<>();
     private final HashMap<Integer, Integer> hadsDamage = new HashMap<>();
@@ -960,6 +961,15 @@ public class TARDISTrackerInstanceKeeper {
      */
     public Set<Integer> getIsGrowingRooms() {
         return isGrowingRooms;
+    }
+
+    /**
+     * Tracks TARDISes that are growing rooms
+     *
+     * @return a collection of TARDIS ids
+     */
+    public HashMap<Integer, Boolean> getIsStackedStaircase() {
+        return isStackedStaircase;
     }
 
     /**

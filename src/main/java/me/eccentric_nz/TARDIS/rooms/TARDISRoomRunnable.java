@@ -530,6 +530,22 @@ public class TARDISRoomRunnable implements Runnable {
                 torchblocks.clear();
                 // set banners
                 BannerSetter.setBanners(bannerblocks);
+                // remove staircase floor/ceiling if necessary
+                if (plugin.getTrackerKeeper().getIsStackedStaircase().containsKey(tardis_id) && room.equals("STAIRCASE")) {
+                    boolean above = plugin.getTrackerKeeper().getIsStackedStaircase().get(tardis_id);
+                    int sy = above ? resety - 1 : starty;
+                    for (int y = sy; y < sy + 2; y++) {
+                        for (int x = resetx; x < resetx + 15; x++) {
+                            for (int z = resetz; z < resetz + 15; z++) {
+                                Block block = world.getBlockAt(x, y, z);
+                                if (block.getType() == Material.WARPED_SLAB) {
+                                    block.setType(Material.AIR);
+                                }
+                            }
+                        }
+                    }
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "ROOM_STAIRCASE");
+                }
                 // remove the chunks, so they can unload as normal again
                 if (!chunkList.isEmpty()) {
                     chunkList.forEach((ch) -> ch.removePluginChunkTicket(plugin));
@@ -549,6 +565,7 @@ public class TARDISRoomRunnable implements Runnable {
                 }
                 plugin.getBuildKeeper().getRoomProgress().remove(uuid);
                 plugin.getTrackerKeeper().getIsGrowingRooms().remove(tardis_id);
+                plugin.getTrackerKeeper().getIsStackedStaircase().remove(tardis_id);
             } else {
                 TARDISRoomData rd = plugin.getTrackerKeeper().getRoomTasks().get(task);
                 // place one block
