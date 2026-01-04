@@ -120,7 +120,7 @@ public class TARDISRoomSeeder implements Listener {
                         }
                     }
                     // check they are not in an ARS chunk
-                    if (sd.hasARS() && checkARSBounds(block.getChunk(), block.getY(), sd)) {
+                    if (checkARSBounds(block.getChunk(), block.getY(), sd)) {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "ROOM_USE_ARS");
                         plugin.getTrackerKeeper().getRoomSeed().remove(uuid);
                         return;
@@ -159,7 +159,7 @@ public class TARDISRoomSeeder implements Listener {
                         return;
                     }
                     // check they are not in an ARS chunk
-                    if (sd.hasARS() && checkARSBounds(c, block.getY(), sd)) {
+                    if (checkARSBounds(c, block.getY(), sd)) {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "ROOM_USE_ARS");
                         plugin.getTrackerKeeper().getRoomSeed().remove(uuid);
                         return;

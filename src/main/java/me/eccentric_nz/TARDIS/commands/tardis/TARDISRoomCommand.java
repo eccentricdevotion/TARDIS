@@ -21,7 +21,10 @@ import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.utility.TARDISZeroRoomBuilder;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.*;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCondenser;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.messaging.TARDISRoomLister;
@@ -182,12 +185,6 @@ class TARDISRoomCommand {
         sd.setRoom(room);
         sd.setSchematic(schm);
         sd.setChunkMinMax(chunk);
-        // check whether they have an ARS sign
-        HashMap<String, Object> wherea = new HashMap<>();
-        wherea.put("tardis_id", id);
-        wherea.put("type", 10);
-        ResultSetControls rsc = new ResultSetControls(plugin, wherea, false);
-        sd.setARS(rsc.resultSet());
         plugin.getTrackerKeeper().getRoomSeed().put(uuid, sd);
         if (room.equals("STAIRCASE")) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "ROOM_SEED_STAIRCASE");
