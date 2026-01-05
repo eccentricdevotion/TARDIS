@@ -16,8 +16,9 @@
  */
 package me.eccentric_nz.TARDIS;
 
-import me.eccentric_nz.TARDIS.ARS.TARDISARSListener;
-import me.eccentric_nz.TARDIS.ARS.TARDISARSMapListener;
+import me.eccentric_nz.TARDIS.ARS.ARSListener;
+import me.eccentric_nz.TARDIS.ARS.ARSMapListener;
+import me.eccentric_nz.TARDIS.ARS.relocator.RoomRelocatorListener;
 import me.eccentric_nz.TARDIS.advanced.*;
 import me.eccentric_nz.TARDIS.arch.*;
 import me.eccentric_nz.TARDIS.areas.TARDISAreaListener;
@@ -170,8 +171,8 @@ class TARDISListenerRegisterer {
         plugin.getGeneralKeeper().setRendererListener(rendererListener);
         TARDISControlListener buttonListener = new TARDISControlListener(plugin);
         plugin.getPM().registerEvents(buttonListener, plugin);
-        plugin.getPM().registerEvents(new TARDISARSListener(plugin), plugin);
-        plugin.getPM().registerEvents(new TARDISARSMapListener(plugin), plugin);
+        plugin.getPM().registerEvents(new ARSListener(plugin), plugin);
+        plugin.getPM().registerEvents(new ARSMapListener(plugin), plugin);
         if (plugin.getConfig().getBoolean("allow.autonomous")) {
             plugin.getPM().registerEvents(new TARDISAutonomousGUIListener(plugin), plugin);
         }
@@ -283,6 +284,7 @@ class TARDISListenerRegisterer {
         plugin.getPM().registerEvents(new TARDISRegulatorListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISRemoteKeyListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISRedstoneListener(plugin), plugin);
+        plugin.getPM().registerEvents(new RoomRelocatorListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISRoomSeeder(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISSavesListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISSavesPlanetListener(plugin), plugin);
