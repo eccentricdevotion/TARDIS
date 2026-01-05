@@ -9,7 +9,7 @@ on:
     branches: [ "master" ]
 
 env:
-  VERSION: '6.3.7'
+  VERSION: '6.3.8'
   RELEASE_TAG: '1.21.11'
 
 jobs:
