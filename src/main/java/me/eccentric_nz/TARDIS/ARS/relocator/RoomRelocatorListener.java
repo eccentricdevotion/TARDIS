@@ -16,13 +16,20 @@
  */
 package me.eccentric_nz.TARDIS.ARS.relocator;
 
-import me.eccentric_nz.TARDIS.ARS.ARSMapData;
-import me.eccentric_nz.TARDIS.ARS.ARSMethods;
+import me.eccentric_nz.TARDIS.ARS.*;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.advanced.DamageUtility;
 import me.eccentric_nz.TARDIS.commands.sudo.TARDISSudoTracker;
+import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.rooms.RoomRequiredLister;
 import net.kyori.adventure.text.Component;
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
+import org.bukkit.block.Block;
+import org.bukkit.entity.Animals;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -32,6 +39,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -127,11 +135,93 @@ public class RoomRelocatorListener extends ARSMethods implements Listener {
 
     private void relocate(Player player) {
         UUID playerUUID = player.getUniqueId();
+        // start relocation
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             selected_slot.remove(playerUUID);
             relocation_slot.remove(playerUUID);
+            hasLoadedMap.remove(playerUUID);
+            if (map_data.containsKey(playerUUID)) {
+                if (playerIsOwner(playerUUID, ids.get(playerUUID))) {
+                    saveAll(playerUUID);
+                    ARSProcessor tap = new ARSProcessor(plugin, ids.get(playerUUID));
+                    boolean changed = tap.compare3DArray(save_map_data.get(playerUUID).getData(), map_data.get(playerUUID).getData());
+                    if (changed && tap.checkCosts(tap.getChanged(), tap.getJettison())) {
+                        if (plugin.getConfig().getBoolean("growth.rooms_require_blocks")) {
+                            if (!TARDISSudoTracker.SUDOERS.containsKey(playerUUID) && !hasCondensables(playerUUID.toString(), tap.getChanged(), ids.get(playerUUID))) {
+                                String message = (tap.getChanged().size() > 1) ? "ARS_CONDENSE_MULTIPLE" : "ARS_CONDENSE";
+                                plugin.getMessenger().send(player, TardisModule.TARDIS, message);
+                                if (tap.getChanged().size() == 1) {
+                                    RoomRequiredLister.listCondensables(plugin, tap.getChanged().entrySet().iterator().next().getValue().toString(), player);
+                                }
+                                revert(playerUUID);
+                                player.closeInventory();
+                                return;
+                            }
+                        }
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "ARS_START");
+                        // there should be only one ARS entry, so get that
+                        Map.Entry<GrowSlot, ARS> ars = tap.getChanged().entrySet().iterator().next();
+                        GrowSlot relocated = ars.getKey();
+                        ARSRunnable ar = new ARSRunnable(plugin, relocated, ars.getValue(), player, ids.get(playerUUID));
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, ar, 20L);
+                        // there should be only one jettison entry, so get that
+                        Map.Entry<JettisonSlot, ARS> entry = tap.getJettison().entrySet().iterator().next();
+                        JettisonSlot jettison = entry.getKey();
+                        int sy = jettison.getY();
+                        int sx = jettison.getX();
+                        int sz = jettison.getZ();
+                        World world = jettison.getChunk().getWorld();
+                        for (int y = sy; y < sy + 16; y++) {
+                            for (int x = sx; x < sx + 16; x++) {
+                                for (int z = sz; z < sz + 16; z++) {
+                                    // remove redstone from the to be jettisoned room
+                                    Block block = world.getBlockAt(x, y, z);
+                                    if (block.getType() == Material.REDSTONE_WIRE) {
+                                        block.setType(Material.AIR);
+                                    }
+                                }
+                            }
+                        }
+                        // move any entities in the room
+                        HashMap<Entity, Location> mobs = new HashMap<>();
+                        for (Entity entity : jettison.getChunk().getEntities()) {
+                            if (entity instanceof Animals animal) {
+                                mobs.put(animal, animal.getLocation());
+                            }
+                        }
+                        // determine new location difference
+                        int ey = relocated.getY();
+                        int ex = relocated.getX();
+                        int ez = relocated.getZ();
+                        int diffy = (ey > sy) ? ey - sy : sy - ey;
+                        int diffx = (ex > sx) ? ex - sx : sx - ex;
+                        int diffz = (ez > sz) ? ez - sz : sz - ez;
+                        long a_long_time = (16 * 16 * 16 * (Math.round(20 / plugin.getConfig().getDouble("growth.room_speed"))));
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                            for (Map.Entry<Entity, Location> e : mobs.entrySet()) {
+                                e.getKey().teleport(e.getValue().add(diffx, diffy, diffz));
+                            }
+                            plugin.getMessenger().send(player, TardisModule.TARDIS, "ROOM_JETT", String.format("%d", tap.getJettison().size()));
+                        }, a_long_time);
+                        // do the jettison last
+                        JettisonRunnable jr = new JettisonRunnable(plugin, jettison, entry.getValue(), ids.get(playerUUID), player);
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, jr, a_long_time + 50);
+                        // damage the circuit if configured
+                        DamageUtility.run(plugin, DiskCircuit.ARS, plugin.getTardisAPI().getIdOfTARDISPlayerIsIn(playerUUID), player);
+                    } else {
+                        // reset map to the previous version
+                        revert(playerUUID);
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, tap.getError());
+                    }
+                } else {
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "ROOM_ONLY_TL");
+                    revert(playerUUID);
+                }
+                map_data.remove(playerUUID);
+                save_map_data.remove(playerUUID);
+                ids.remove(playerUUID);
+            }
             player.closeInventory();
-            // start relocation
         }, 1L);
     }
 
@@ -142,12 +232,13 @@ public class RoomRelocatorListener extends ARSMethods implements Listener {
         ItemMeta im = is.getItemMeta();
         im.setEnchantmentGlintOverride(true);
         is.setItemMeta(im);
+        setSlot(view, to_slot, is, uuid, true);
         view.setItem(to_slot, is);
         ItemStack tnt = ItemStack.of(Material.TNT, 1);
         ItemMeta j = tnt.getItemMeta();
         j.displayName(Component.text("Jettison"));
         tnt.setItemMeta(j);
-        view.setItem(from_slot, tnt);
+        setSlot(view, from_slot, tnt, uuid, true);
     }
 
     private boolean isEmptySlot(InventoryView view, int slot) {
