@@ -90,6 +90,7 @@ public class RoomRelocatorListener extends ARSMethods implements Listener {
             case 3 -> plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () ->
                     player.openInventory(new RoomRelocatorInventory(plugin, player).getInventory()), 2L);
             case 4, 5, 6, 7, 8, 13, 14, 15, 16, 17, 22, 23, 24, 25, 26, 31, 32, 33, 34, 35, 40, 41, 42, 43, 44 -> {
+                // TODO not gravity wells
                 if (!checkSlotForConsole(view, slot) && !selected_slot.containsKey(playerUUID)) {
                     // select room to move
                     selected_slot.put(playerUUID, slot);
@@ -158,6 +159,7 @@ public class RoomRelocatorListener extends ARSMethods implements Listener {
                                 return;
                             }
                         }
+                        // TODO else check they haven't mined room
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "ARS_START");
                         // there should be only one ARS entry, so get that
                         Map.Entry<GrowSlot, ARS> ars = tap.getChanged().entrySet().iterator().next();
@@ -182,7 +184,9 @@ public class RoomRelocatorListener extends ARSMethods implements Listener {
                                 }
                             }
                         }
+                        // TODO put a block in the doorway as doors open when redstone is removed - or some other solution e.g. don't remove all redstone
                         // move any entities in the room
+                        // TODO use farming mob list
                         HashMap<Entity, Location> mobs = new HashMap<>();
                         for (Entity entity : jettison.getChunk().getEntities()) {
                             if (entity instanceof Animals animal) {
@@ -199,6 +203,7 @@ public class RoomRelocatorListener extends ARSMethods implements Listener {
                         long a_long_time = (16 * 16 * 16 * (Math.round(20 / plugin.getConfig().getDouble("growth.room_speed"))));
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                             for (Map.Entry<Entity, Location> e : mobs.entrySet()) {
+                                // TODO debug teleport locations
                                 e.getKey().teleport(e.getValue().add(diffx, diffy, diffz));
                             }
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "ROOM_JETT", String.format("%d", tap.getJettison().size()));
