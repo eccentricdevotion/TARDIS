@@ -42,15 +42,15 @@ import java.util.Map;
  *
  * @author eccentric_nz
  */
-class ARSRunnable implements Runnable {
+public class ARSRunnable implements Runnable {
 
     private final TARDIS plugin;
-    private final ARSSlot slot;
+    private final GrowSlot slot;
     private final ARS room;
     private final Player p;
     private final int tardis_id;
 
-    ARSRunnable(TARDIS plugin, ARSSlot slot, ARS room, Player p, int tardis_id) {
+    public ARSRunnable(TARDIS plugin, GrowSlot slot, ARS room, Player p, int tardis_id) {
         this.plugin = plugin;
         this.slot = slot;
         this.room = room;

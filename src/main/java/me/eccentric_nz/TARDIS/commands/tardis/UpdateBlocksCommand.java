@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.ARS.ARSMethods;
-import me.eccentric_nz.TARDIS.ARS.ARSSlot;
+import me.eccentric_nz.TARDIS.ARS.GrowSlot;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayBlockRoomConverter;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayBlockRoomRemover;
@@ -57,7 +57,7 @@ public class UpdateBlocksCommand {
                         for (int col = 0; col < 9; col++) {
                             if (!json[l][row][col].equalsIgnoreCase("STONE")) {
                                 // get ARS slot
-                                ARSSlot slot = new ARSSlot();
+                                GrowSlot slot = new GrowSlot();
                                 slot.setChunk(c);
                                 slot.setY(l);
                                 slot.setX(row);
@@ -104,7 +104,7 @@ public class UpdateBlocksCommand {
                         for (int col = 0; col < 9; col++) {
                             if (!json[l][row][col].equalsIgnoreCase("STONE") && !json[l][row][col].equalsIgnoreCase(console)) {
                                 // get ARS slot
-                                ARSSlot slot = new ARSSlot();
+                                GrowSlot slot = new GrowSlot();
                                 slot.setChunk(c);
                                 slot.setY(l);
                                 slot.setX(row);

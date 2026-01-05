@@ -39,15 +39,15 @@ import java.util.HashMap;
  *
  * @author eccentric_nz
  */
-class JettisonRunnable implements Runnable {
+public class JettisonRunnable implements Runnable {
 
     private final TARDIS plugin;
-    private final Jettison slot;
+    private final JettisonSlot slot;
     private final ARS room;
     private final int id;
     private final Player player;
 
-    JettisonRunnable(TARDIS plugin, Jettison slot, ARS room, int id, Player player) {
+    public JettisonRunnable(TARDIS plugin, JettisonSlot slot, ARS room, int id, Player player) {
         this.plugin = plugin;
         this.slot = slot;
         this.room = room;
@@ -61,7 +61,7 @@ class JettisonRunnable implements Runnable {
         // remove the room
         World world = slot.getChunk().getWorld();
         int x = slot.getX();
-        int y = slot.getLevel();
+        int y = slot.getY();
         int z = slot.getZ();
         for (int yy = y; yy < (y + 16); yy++) {
             for (int xx = x; xx < (x + 16); xx++) {

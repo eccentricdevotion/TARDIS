@@ -93,7 +93,7 @@ public class ARSMethods {
      *
      * @param playerUUID the UUID of the player who is using the ARS GUI
      */
-    private void saveAll(UUID playerUUID) {
+    public void saveAll(UUID playerUUID) {
         ARSMapData md = map_data.get(playerUUID);
         Gson gson = new GsonBuilder().disableHtmlEscaping().create();
         JsonArray json = JsonParser.parseString(gson.toJson(md.getData())).getAsJsonArray();
@@ -112,7 +112,7 @@ public class ARSMethods {
      *
      * @param playerUUID the UUID of the player who is using the ARS GUI
      */
-    private void revert(UUID playerUUID) {
+    public void revert(UUID playerUUID) {
         ARSSaveData sd = save_map_data.get(playerUUID);
         Gson gson = new GsonBuilder().disableHtmlEscaping().create();
         JsonArray json = JsonParser.parseString(gson.toJson(sd.getData())).getAsJsonArray();
@@ -327,7 +327,7 @@ public class ARSMethods {
                         if (!tap.getJettison().isEmpty()) {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "ROOM_JETT", String.format("%d", tap.getJettison().size()));
                             long del = 5L;
-                            for (Map.Entry<Jettison, ARS> map : tap.getJettison().entrySet()) {
+                            for (Map.Entry<JettisonSlot, ARS> map : tap.getJettison().entrySet()) {
                                 JettisonRunnable jr = new JettisonRunnable(plugin, map.getKey(), map.getValue(), ids.get(playerUUID), player);
                                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, jr, del);
                                 del += 5L;
@@ -336,7 +336,7 @@ public class ARSMethods {
                         // one every 120 seconds at fastest room_speed - reduced by the delay factor
                         long period = (2400L / plugin.getConfig().getLong("growth.delay_factor")) * (Math.round(20 / plugin.getConfig().getDouble("growth.room_speed")));
                         long delay = 20L;
-                        for (Map.Entry<ARSSlot, ARS> map : tap.getChanged().entrySet()) {
+                        for (Map.Entry<GrowSlot, ARS> map : tap.getChanged().entrySet()) {
                             ARSRunnable ar = new ARSRunnable(plugin, map.getKey(), map.getValue(), player, ids.get(playerUUID));
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, ar, delay);
                             delay += period;
@@ -467,7 +467,7 @@ public class ARSMethods {
      * @param id   the TARDIS id
      * @return true or false
      */
-    private boolean hasCondensables(String uuid, HashMap<ARSSlot, ARS> map, int id) {
+    public boolean hasCondensables(String uuid, HashMap<GrowSlot, ARS> map, int id) {
         boolean hasRequired = true;
         String wall = "ORANGE_WOOL";
         String floor = "LIGHT_GRAY_WOOL";
@@ -479,7 +479,7 @@ public class ARSMethods {
             floor = rsp.getFloor();
         }
         HashMap<String, Integer> item_counts = new HashMap<>();
-        for (Map.Entry<ARSSlot, ARS> rooms : map.entrySet()) {
+        for (Map.Entry<GrowSlot, ARS> rooms : map.entrySet()) {
             HashMap<String, Integer> roomBlocks = plugin.getBuildKeeper().getRoomBlockCounts().get(rooms.getValue().toString());
             for (Map.Entry<String, Integer> entry : roomBlocks.entrySet()) {
                 String bid = entry.getKey();
@@ -540,7 +540,7 @@ public class ARSMethods {
         return (consoleBlocks.contains(m.toString()));
     }
 
-    private boolean playerIsOwner(UUID uuid, int id) {
+    public boolean playerIsOwner(UUID uuid, int id) {
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
         where.put("uuid", TARDISSudoTracker.SUDOERS.getOrDefault(uuid, uuid).toString());

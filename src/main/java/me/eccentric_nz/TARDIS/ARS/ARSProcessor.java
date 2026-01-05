@@ -28,14 +28,14 @@ import java.util.Map;
  *
  * @author eccentric_nz
  */
-class ARSProcessor {
+public class ARSProcessor {
 
     private final TARDIS plugin;
     private final int id;
     private final int limit;
     private String error = "ENERGY_NOT_ENOUGH";
-    private HashMap<ARSSlot, ARS> changed;
-    private HashMap<Jettison, ARS> jettison;
+    private HashMap<GrowSlot, ARS> changed;
+    private HashMap<JettisonSlot, ARS> jettison;
 
     public ARSProcessor(TARDIS plugin, int id) {
         this.plugin = plugin;
@@ -53,27 +53,15 @@ class ARSProcessor {
                     if (!start[l][x][z].equals(end[l][x][z])) {
                         if (end[l][x][z].equals("TNT")) {
                             // found TNT in this slot
-                            Jettison slot = new Jettison();
-                            slot.setChunk(c);
-                            slot.setLevel(l);
-                            slot.setX(x);
-                            slot.setZ(z);
+                            JettisonSlot slot = new JettisonSlot(c, l, x, z);
                             jettison.put(slot, TARDISARS.ARSFor(start[l][x][z]));
                             // if it is a gravity well on the top or bottom levels jettison the other half too
                             if (start[l][x][z].equals("SANDSTONE") && l == 2) {
-                                Jettison uslot = new Jettison();
-                                uslot.setChunk(c);
-                                uslot.setLevel(3);
-                                uslot.setX(x);
-                                uslot.setZ(z);
+                                JettisonSlot uslot = new JettisonSlot(c, 3, x, z);
                                 jettison.put(uslot, TARDISARS.ANTIGRAVITY);
                             }
                             if (start[l][x][z].equals("MOSSY_COBBLESTONE") && l == 0) {
-                                Jettison lslot = new Jettison();
-                                lslot.setChunk(c);
-                                lslot.setLevel(-1);
-                                lslot.setX(x);
-                                lslot.setZ(z);
+                                JettisonSlot lslot = new JettisonSlot(c, -1, x, z);
                                 jettison.put(lslot, TARDISARS.GRAVITY);
                             }
                         } else {
@@ -88,7 +76,7 @@ class ARSProcessor {
                                     } else if (l == 2 && start[1][x][z].equals("PURPLE_TERRACOTTA")) {
                                         plugin.getTrackerKeeper().getIsStackedStaircase().put(id, true);
                                     }
-                                    ARSSlot slot = new ARSSlot();
+                                    GrowSlot slot = new GrowSlot();
                                     slot.setChunk(c);
                                     slot.setY(l);
                                     slot.setX(x);
@@ -98,7 +86,7 @@ class ARSProcessor {
                                 case "SANDSTONE" -> {
                                     if (l == 0 || (l == 1 && !end[l - 1][x][z].equals("SANDSTONE")) || (l == 2 && !end[l - 1][x][z].equals("SANDSTONE")) || (l == 2 && end[l - 1][x][z].equals("SANDSTONE") && end[l - 2][x][z].equals("SANDSTONE"))) {
                                         // only remember the bottom slot of an antigravity well
-                                        ARSSlot slot = new ARSSlot();
+                                        GrowSlot slot = new GrowSlot();
                                         slot.setChunk(c);
                                         slot.setY(l);
                                         slot.setX(x);
@@ -109,7 +97,7 @@ class ARSProcessor {
                                 case "MOSSY_COBBLESTONE" -> {
                                     if (l == 2 || (l == 1 && !end[l + 1][x][z].equals("MOSSY_COBBLESTONE")) || (l == 0 && !end[l + 1][x][z].equals("MOSSY_COBBLESTONE")) || (l == 0 && end[l + 1][x][z].equals("MOSSY_COBBLESTONE") && end[l + 2][x][z].equals("MOSSY_COBBLESTONE"))) {
                                         // only remember the top slot of a gravity well
-                                        ARSSlot slot = new ARSSlot();
+                                        GrowSlot slot = new GrowSlot();
                                         slot.setChunk(c);
                                         slot.setY(l - 1);
                                         slot.setX(x);
@@ -118,7 +106,7 @@ class ARSProcessor {
                                     }
                                 }
                                 default -> {
-                                    ARSSlot slot = new ARSSlot();
+                                    GrowSlot slot = new GrowSlot();
                                     slot.setChunk(c);
                                     slot.setY(l);
                                     slot.setX(x);
@@ -138,17 +126,17 @@ class ARSProcessor {
         return !jettison.isEmpty() || (!changed.isEmpty() && !overlimit);
     }
 
-    boolean checkCosts(HashMap<ARSSlot, ARS> changed, HashMap<Jettison, ARS> jettison) {
+    public boolean checkCosts(HashMap<GrowSlot, ARS> changed, HashMap<JettisonSlot, ARS> jettison) {
         if (!changed.isEmpty()) {
             int totalcost = 0;
             int recoveredcost = 0;
             // calculate energy gained by jettisons
-            for (Map.Entry<Jettison, ARS> c : jettison.entrySet()) {
+            for (Map.Entry<JettisonSlot, ARS> c : jettison.entrySet()) {
                 if (c.getValue() != null) {
                     recoveredcost += Math.round((plugin.getArtronConfig().getInt("jettison") / 100F) * plugin.getRoomsConfig().getInt("rooms." + c.getValue().toString() + ".cost"));
                 }
             }
-            for (Map.Entry<ARSSlot, ARS> c : changed.entrySet()) {
+            for (Map.Entry<GrowSlot, ARS> c : changed.entrySet()) {
                 int cost = plugin.getRoomsConfig().getInt("rooms." + c.getValue().toString() + ".cost");
                 totalcost += cost;
             }
@@ -165,11 +153,11 @@ class ARSProcessor {
         return true;
     }
 
-    public HashMap<ARSSlot, ARS> getChanged() {
+    public HashMap<GrowSlot, ARS> getChanged() {
         return changed;
     }
 
-    public HashMap<Jettison, ARS> getJettison() {
+    public HashMap<JettisonSlot, ARS> getJettison() {
         return jettison;
     }
 

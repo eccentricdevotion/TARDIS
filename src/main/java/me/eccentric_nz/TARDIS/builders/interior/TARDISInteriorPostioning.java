@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.builders.interior;
 
 import me.eccentric_nz.TARDIS.ARS.ARSMethods;
-import me.eccentric_nz.TARDIS.ARS.ARSSlot;
+import me.eccentric_nz.TARDIS.ARS.GrowSlot;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
 import me.eccentric_nz.TARDIS.TARDISConstants;
@@ -173,7 +173,7 @@ public class TARDISInteriorPostioning {
                     for (int z = 0; z < 9; z++) {
                         if (!json[l][x][z].equalsIgnoreCase("STONE")) {
                             // get ARS slot
-                            ARSSlot slot = new ARSSlot();
+                            GrowSlot slot = new GrowSlot();
                             slot.setChunk(c);
                             slot.setY(l);
                             slot.setX(x);

@@ -222,7 +222,7 @@ public class ARSMapListener extends ARSMethods implements Listener {
             } else {
                 SelectedSlot selected = selectedSlot.get(uuid);
                 if (selected != null) {
-                    ARSSlot a = new ARSSlot();
+                    GrowSlot a = new GrowSlot();
                     a.setChunk(plugin.getLocationUtils().getTARDISChunk(id));
                     a.setY(selected.level());
                     a.setX(selected.row());

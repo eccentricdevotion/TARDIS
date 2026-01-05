@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.floodgate;
 
-import me.eccentric_nz.TARDIS.ARS.TARDISARS;
 import me.eccentric_nz.TARDIS.ARS.ARSMethods;
-import me.eccentric_nz.TARDIS.ARS.ARSSlot;
+import me.eccentric_nz.TARDIS.ARS.GrowSlot;
+import me.eccentric_nz.TARDIS.ARS.TARDISARS;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetARS;
@@ -158,7 +158,7 @@ public class FloodgateMapForm {
                         }
                         if (json[l][r][c].equals(room)) {
                             // will always get the first room of this type on this level
-                            ARSSlot a = new ARSSlot();
+                            GrowSlot a = new GrowSlot();
                             a.setChunk(plugin.getLocationUtils().getTARDISChunk(id));
                             a.setY(l);
                             a.setX(r);
