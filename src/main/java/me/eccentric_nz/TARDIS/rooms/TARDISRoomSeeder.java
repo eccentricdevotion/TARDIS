@@ -93,7 +93,7 @@ public class TARDISRoomSeeder implements Listener {
                 Location b = block.getLocation();
                 // get room schematic
                 String r = plugin.getBuildKeeper().getRoomSeeds().get(blockType);
-                TARDISSeedData sd = plugin.getTrackerKeeper().getRoomSeed().get(uuid);
+                RoomSeedData sd = plugin.getTrackerKeeper().getRoomSeed().get(uuid);
                 // check that the blockType is the same as the one they ran the /tardis room [type] command for
                 if (!sd.getRoom().equals(r)) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "ROOM_SEED_NOT_VALID", plugin.getTrackerKeeper().getRoomSeed().get(uuid).getRoom());
@@ -181,7 +181,7 @@ public class TARDISRoomSeeder implements Listener {
         }
     }
 
-    private boolean checkARSBounds(Chunk c, int cy, TARDISSeedData sd) {
+    private boolean checkARSBounds(Chunk c, int cy, RoomSeedData sd) {
         int cx = c.getX();
         int cz = c.getZ();
         return (cx >= sd.getMinx() && cx <= sd.getMaxx()) && (cy >= 48 && cy <= 96) && (cz >= sd.getMinz() && cz <= sd.getMaxz());

@@ -70,17 +70,17 @@ public class TARDISTravelCommands implements CommandExecutor {
                 Tardis tardis = rs.getTardis();
                 int id = tardis.getTardisId();
                 if (args[0].equalsIgnoreCase("cancel")) {
-                    return new TARDISTravelCancel(plugin).action(player, id);
+                    return new CancelCommand(plugin).action(player, id);
                 }
                 if (args[0].equalsIgnoreCase("costs")) {
-                    return new TARDISTravelCosts(plugin).action(player);
+                    return new CostsCommand(plugin).action(player);
                 }
                 if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "SIEGE_NO_CMD");
                     return true;
                 }
                 if (args.length == 1 && args[0].equalsIgnoreCase("stop")) {
-                    return new TARDISTravelStop(plugin).action(player, id);
+                    return new StopCommand(plugin).action(player, id);
                 }
                 int level = tardis.getArtronLevel();
                 boolean powered = tardis.isPoweredOn();
@@ -113,86 +113,86 @@ public class TARDISTravelCommands implements CommandExecutor {
                 }
                 if (TARDISPermission.hasPermission(player, "tardis.exile") && plugin.getConfig().getBoolean("travel.exile")) {
                     // get the exile area
-                    return new TARDISTravelExile(plugin).action(player, id);
+                    return new Exile(plugin).action(player, id);
                 }
                 if (isCommunicatorOrInventory) {
                     switch (args[0].toLowerCase(Locale.ROOT)) {
                         case "home" -> {
-                            return new TARDISTravelHome(plugin).action(player, id);
+                            return new HomeCommand(plugin).action(player, id);
                         }
                         case "area" -> {
-                            return new TARDISTravelArea(plugin).action(player, args, id, tardis.getPreset());
+                            return new AreaCommand(plugin).action(player, args, id, tardis.getPreset());
                         }
                         case "cave" -> {
-                            return new TARDISTravelCave(plugin).action(player, id);
+                            return new CaveCommand(plugin).action(player, id);
                         }
                         case "village" -> {
                             return new TARDISTravelGUI(plugin).open(player, id, args[0].toLowerCase(Locale.ROOT));
                         }
                         case "biome" -> {
-                            return new TARDISTravelBiome(plugin).action(player, args, id);
+                            return new BiomeCommand(plugin).action(player, args, id);
                         }
                         case "dest" -> {
-                            return new TARDISTravelSave(plugin).action(player, args, id, tardis.getPreset());
+                            return new SaveCommand(plugin).action(player, args, id, tardis.getPreset());
                         }
                         default -> {
                             // player
-                            return new TARDISTravelPlayer(plugin).action(player, args[0], id);
+                            return new PlayerCommand(plugin).action(player, args[0], id);
                         }
                     }
                 }
                 if (args.length == 1) {
                     switch (args[0].toLowerCase(Locale.ROOT)) {
                         case "cancel" -> {
-                            return new TARDISTravelCancel(plugin).action(player, id);
+                            return new CancelCommand(plugin).action(player, id);
                         }
                         case "costs" -> {
-                            return new TARDISTravelCosts(plugin).action(player);
+                            return new CostsCommand(plugin).action(player);
                         }
                         case "home" -> {
-                            return new TARDISTravelHome(plugin).action(player, id);
+                            return new HomeCommand(plugin).action(player, id);
                         }
                         case "back" -> {
-                            return new TARDISTravelBack(plugin).action(player, id);
+                            return new BackCommand(plugin).action(player, id);
                         }
                         case "cave" -> {
-                            return new TARDISTravelCave(plugin).action(player, id);
+                            return new CaveCommand(plugin).action(player, id);
                         }
                         case "village", "structure", "biome" -> {
                             return new TARDISTravelGUI(plugin).open(player, id, args[0].toLowerCase(Locale.ROOT));
                         }
                         default -> {
-                            return new TARDISTravelPlayer(plugin).action(player, args[0], id);
+                            return new PlayerCommand(plugin).action(player, args[0], id);
                         }
                     }
                 }
                 if (args.length == 2 && (args[0].equalsIgnoreCase("structure") || args[0].equalsIgnoreCase("village"))) {
-                    return new TARDISTravelStructure(plugin).action(player, args, id);
+                    return new StructureCommand(plugin).action(player, args, id);
                 }
                 if (args.length == 2 && args[0].equalsIgnoreCase("player")) {
-                    return new TARDISTravelPlayer(plugin).action(player, args[1], id);
+                    return new PlayerCommand(plugin).action(player, args[1], id);
                 }
                 if (args.length == 2 && (args[1].equals("?") || args[1].equalsIgnoreCase("tpa"))) {
-                    return new TARDISTravelAsk(plugin).action(player, args);
+                    return new AskCommand(plugin).action(player, args);
                 }
                 if (args.length == 2 && args[0].equalsIgnoreCase("biome")) {
                     // we're thinking this is a biome search
-                    return new TARDISTravelBiome(plugin).action(player, args, id);
+                    return new BiomeCommand(plugin).action(player, args, id);
                 }
                 if (args.length == 2 && (args[0].equalsIgnoreCase("dest") || args[0].equalsIgnoreCase("save"))) {
                     // we're thinking this is a saved destination name
-                    return new TARDISTravelSave(plugin).action(player, args, id, tardis.getPreset());
+                    return new SaveCommand(plugin).action(player, args, id, tardis.getPreset());
                 }
                 if (args.length == 2 && args[0].equalsIgnoreCase("area")) {
                     // we're thinking this is admin defined area name
-                    return new TARDISTravelArea(plugin).action(player, args, id, tardis.getPreset());
+                    return new AreaCommand(plugin).action(player, args, id, tardis.getPreset());
                 }
                 if (!TARDISPermission.hasPermission(player, "tardis.timetravel.location")) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "TRAVEL_NO_PERM_COORDS");
                     return true;
                 }
                 // coords of some sort
-                return new TARDISTravelCoords(plugin).action(player, args, id);
+                return new CoordsCommand(plugin).action(player, args, id);
             }
             return false;
         } else {

@@ -20,7 +20,7 @@ import com.google.common.collect.ImmutableList;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
-import me.eccentric_nz.TARDIS.commands.tardis.TARDISSaveIconCommand;
+import me.eccentric_nz.TARDIS.commands.tardis.SaveIconCommand;
 import me.eccentric_nz.TARDIS.database.converters.TARDISWorldNameConverter;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.planets.*;
@@ -84,7 +84,7 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
             }
             // icon
             if (args[0].equalsIgnoreCase("dimensionicon")) {
-                return new TARDISSaveIconCommand(plugin).changeIcon(sender, args);
+                return new SaveIconCommand(plugin).changeIcon(sender, args);
             }
             // info
             if (args[0].equalsIgnoreCase("info") && sender instanceof Player player) {

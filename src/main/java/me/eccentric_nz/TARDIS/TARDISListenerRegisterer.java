@@ -34,7 +34,7 @@ import me.eccentric_nz.TARDIS.chameleon.gui.*;
 import me.eccentric_nz.TARDIS.chameleon.shell.TARDISPlayerShellListener;
 import me.eccentric_nz.TARDIS.chameleon.shell.TARDISShellLoaderListener;
 import me.eccentric_nz.TARDIS.commands.config.TARDISConfigMenuListener;
-import me.eccentric_nz.TARDIS.commands.utils.TARDISWeatherListener;
+import me.eccentric_nz.TARDIS.commands.utils.weather.WeatherListener;
 import me.eccentric_nz.TARDIS.companionGUI.TARDISCompanionAddGUIListener;
 import me.eccentric_nz.TARDIS.companionGUI.TARDISCompanionGUIListener;
 import me.eccentric_nz.TARDIS.console.ConsoleInteractionListener;
@@ -428,6 +428,6 @@ class TARDISListenerRegisterer {
         if (plugin.getConfig().getBoolean("police_box.load_shells")) {
             plugin.getPM().registerEvents(new TARDISShellLoaderListener(plugin), plugin);
         }
-        plugin.getPM().registerEvents(new TARDISWeatherListener(plugin), plugin);
+        plugin.getPM().registerEvents(new WeatherListener(plugin), plugin);
     }
 }

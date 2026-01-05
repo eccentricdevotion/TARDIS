@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.commands.sudo;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.commands.tardis.TARDISHandbrakeCommand;
+import me.eccentric_nz.TARDIS.commands.tardis.HandbrakeCommand;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.command.CommandSender;
@@ -39,7 +39,7 @@ public class SudoHandbrake {
         }
         ResultSetTardisID rs = new ResultSetTardisID(plugin);
         if (rs.fromUUID(uuid.toString())) {
-            return new TARDISHandbrakeCommand(plugin).toggle(null, rs.getTardisId(), args, true);
+            return new HandbrakeCommand(plugin).toggle(null, rs.getTardisId(), args, true);
         }
         return true;
     }

@@ -24,7 +24,7 @@ import me.eccentric_nz.TARDIS.builders.exterior.TARDISShellBuilder;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonPreset;
 import me.eccentric_nz.TARDIS.chameleon.construct.ConstructBuilder;
 import me.eccentric_nz.TARDIS.chameleon.utils.TARDISChameleonColumn;
-import me.eccentric_nz.TARDIS.commands.tardis.TARDISRebuildCommand;
+import me.eccentric_nz.TARDIS.commands.tardis.RebuildCommand;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
@@ -145,7 +145,7 @@ public class TARDISPlayerShellListener extends TARDISMenuListener {
                         wheref.put("tardis_id", id);
                         plugin.getQueryFactory().doSyncUpdate("tardis", setf, wheref);
                         // rebuild
-                        new TARDISRebuildCommand(plugin).rebuildPreset(player);
+                        new RebuildCommand(plugin).rebuildPreset(player);
                     }
                     int cid = getChameleonId(view, selected.get(uuid));
                     HashMap<String, Object> whered = new HashMap<>();

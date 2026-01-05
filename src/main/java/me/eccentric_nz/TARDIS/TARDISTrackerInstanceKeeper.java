@@ -32,7 +32,7 @@ import me.eccentric_nz.TARDIS.move.TARDISMoveSession;
 import me.eccentric_nz.TARDIS.move.TARDISTeleportLocation;
 import me.eccentric_nz.TARDIS.portal.CastData;
 import me.eccentric_nz.TARDIS.rooms.TARDISRoomData;
-import me.eccentric_nz.TARDIS.rooms.TARDISSeedData;
+import me.eccentric_nz.TARDIS.rooms.RoomSeedData;
 import me.eccentric_nz.TARDIS.siegemode.TARDISSiegeArea;
 import me.eccentric_nz.TARDIS.travel.ComehereRequest;
 import me.eccentric_nz.TARDIS.travel.TravelCostAndType;
@@ -118,7 +118,7 @@ public class TARDISTrackerInstanceKeeper {
     private final HashMap<UUID, TARDISInfoMenu> infoMenu = new HashMap<>();
     private final HashMap<UUID, TARDISMoveSession> moveSessions = new HashMap<>();
     private final HashMap<UUID, TARDISRegulatorRunnable> regulating = new HashMap<>();
-    private final HashMap<UUID, TARDISSeedData> roomSeed = new HashMap<>();
+    private final HashMap<UUID, RoomSeedData> roomSeed = new HashMap<>();
     private final HashMap<UUID, TARDISUpgradeData> upgrades = new HashMap<>();
     private final HashMap<UUID, TARDISWatchData> johnSmith = new HashMap<>();
     private final HashMap<UUID, TISCategory> infoGUI = new HashMap<>();
@@ -747,7 +747,7 @@ public class TARDISTrackerInstanceKeeper {
      *
      * @return a Map of player UUIDs and the room seed data
      */
-    public HashMap<UUID, TARDISSeedData> getRoomSeed() {
+    public HashMap<UUID, RoomSeedData> getRoomSeed() {
         return roomSeed;
     }
 

@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.listeners;
 
 import io.papermc.paper.event.player.AsyncChatEvent;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.commands.utils.TARDISAcceptor;
+import me.eccentric_nz.TARDIS.commands.utils.RescueAcceptor;
 import me.eccentric_nz.TARDIS.desktop.PreviewData;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.handles.TARDISHandlesPattern;
@@ -73,7 +73,7 @@ public class TARDISChatListener implements Listener {
             event.setCancelled(true);
             boolean request = (chat.equals("tardis request accept"));
             if (plugin.getTrackerKeeper().getChatRescue().containsKey(chatter)) {
-                new TARDISAcceptor(plugin).doRequest(player, request);
+                new RescueAcceptor(plugin).doRequest(player, request);
             } else {
                 String message = (request) ? "REQUEST_TIMEOUT" : "RESCUE_TIMEOUT";
                 plugin.getMessenger().send(player, TardisModule.TARDIS, message);

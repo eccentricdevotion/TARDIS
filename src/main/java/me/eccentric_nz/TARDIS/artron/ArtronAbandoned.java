@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.artron;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISClaimEvent;
-import me.eccentric_nz.TARDIS.commands.tardis.TARDISAbandonCommand;
+import me.eccentric_nz.TARDIS.commands.tardis.AbandonCommand;
 import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
@@ -84,7 +84,7 @@ public class ArtronAbandoned {
             }
             if (plugin.getConfig().getBoolean("police_box.name_tardis")) {
                 ChameleonPreset preset = tardis.getPreset();
-                Sign sign = TARDISAbandonCommand.getSign(current.location(), current.direction(), preset);
+                Sign sign = AbandonCommand.getSign(current.location(), current.direction(), preset);
                 if (sign != null) {
                     SignSide front = sign.getSide(Side.FRONT);
                     String player_name = TARDISStaticUtils.getNick(player);

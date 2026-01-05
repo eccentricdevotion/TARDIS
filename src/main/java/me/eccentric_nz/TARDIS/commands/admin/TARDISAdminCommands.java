@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.commands.admin;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.arch.TARDISArchCommand;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
-import me.eccentric_nz.TARDIS.commands.dev.TARDISAddRegionsCommand;
+import me.eccentric_nz.TARDIS.commands.dev.AddRegionsCommand;
 import me.eccentric_nz.TARDIS.database.tool.Converter;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.maze.TARDISMazeBuilder;
@@ -104,13 +104,13 @@ public class TARDISAdminCommands implements CommandExecutor {
                 if (args.length == 1) {
                     switch (first) {
                         case "add_regions" -> {
-                            return new TARDISAddRegionsCommand(plugin).doCheck(sender);
+                            return new AddRegionsCommand(plugin).doCheck(sender);
                         }
                         case "clean" -> {
-                            return new TARDISCleanEntitiesCommand(plugin).checkAndRemove(sender);
+                            return new CleanEntitiesCommand(plugin).checkAndRemove(sender);
                         }
                         case "condenser" -> {
-                            return new TARDISCondenserCommand(plugin).set(sender);
+                            return new CondenserCommand(plugin).set(sender);
                         }
                         case "convert_database" -> {
                             try {
@@ -142,22 +142,22 @@ public class TARDISAdminCommands implements CommandExecutor {
                 }
                 switch (first) {
                     case "create" -> {
-                        return new TARDISCreateCommand(plugin).buildTARDIS(sender, args);
+                        return new CreateTARDISCommand(plugin).buildTARDIS(sender, args);
                     }
                     case "find" -> {
-                        return new TARDISFindHiddenCommand().search(plugin, sender, args);
+                        return new FindHiddenCommand().search(plugin, sender, args);
                     }
                     case "remove_protection" -> {
-                        return new TARDISRemoveProtectionCommand(plugin).remove(args);
+                        return new RemoveProtectionCommand(plugin).remove(args);
                     }
                     case "list" -> {
-                        return new TARDISListCommand(plugin).listStuff(sender, args);
+                        return new ListCommand(plugin).listStuff(sender, args);
                     }
                     case "purge_portals" -> {
-                        return new TARDISPortalCommand(plugin).clearAll(sender);
+                        return new PortalCommand(plugin).clearAll(sender);
                     }
                     case "undisguise" -> {
-                        return new TARDISDisguiseCommand(plugin).disguise(sender, args);
+                        return new DisguiseCommand(plugin).disguise(sender, args);
                     }
                 }
                 if (args.length < 2) {
@@ -173,49 +173,49 @@ public class TARDISAdminCommands implements CommandExecutor {
                         }
                     }
                     case "assemble", "dispersed" -> {
-                        return new TARDISDispersedCommand(plugin).assemble(sender, args[1]);
+                        return new DispersedCommand(plugin).assemble(sender, args[1]);
                     }
                     case "set_size" -> {
-                        return new TARDISSetSizeCommand(plugin).overwrite(sender, args);
+                        return new SetSizeCommand(plugin).overwrite(sender, args);
                     }
                     case "spawn_abandoned" -> {
-                        return new TARDISAbandonedCommand(plugin).spawn(sender, args);
+                        return new CreateAbandonedCommand(plugin).spawn(sender, args);
                     }
                     case "make_preset" -> {
-                        return new TARDISMakePresetCommand(plugin).scanBlocks(sender, args);
+                        return new MakePresetCommand(plugin).scanBlocks(sender, args);
                     }
                     case "playercount" -> {
-                        return new TARDISPlayerCountCommand(plugin).countPlayers(sender, args);
+                        return new PlayerCountCommand(plugin).countPlayers(sender, args);
                     }
                     case "prune" -> {
-                        return new TARDISPruneCommand(plugin).startPruning(sender, args);
+                        return new PruneCommand(plugin).startPruning(sender, args);
                     }
                     case "prunelist" -> {
-                        return new TARDISPruneCommand(plugin).listPrunes(sender, args);
+                        return new PruneCommand(plugin).listPrunes(sender, args);
                     }
                     case "purge" -> {
-                        return new TARDISPurgeCommand(plugin).clearAll(sender, args);
+                        return new PurgeCommand(plugin).clearAll(sender, args);
                     }
                     case "recharger" -> {
-                        return new TARDISRechargerCommand(plugin).setRecharger(sender, args);
+                        return new RechargerCommand(plugin).setRecharger(sender, args);
                     }
                     case "decharge" -> {
-                        return new TARDISDechargeCommand(plugin).removeChargerStatus(sender, args);
+                        return new DechargeCommand(plugin).removeChargerStatus(sender, args);
                     }
                     case "disguise" -> {
-                        return new TARDISDisguiseCommand(plugin).disguise(sender, args);
+                        return new DisguiseCommand(plugin).disguise(sender, args);
                     }
                     case "enter" -> {
-                        return new TARDISEnterCommand(plugin).enterTARDIS(sender, args);
+                        return new EnterCommand(plugin).enterTARDIS(sender, args);
                     }
                     case "delete" -> {
-                        return new TARDISDeleteCommand(plugin).deleteTARDIS(sender, args);
+                        return new DeleteTARDISCommand(plugin).deleteTARDIS(sender, args);
                     }
                     case "repair" -> {
-                        return new TARDISRepairCommand(plugin).setFreeCount(sender, args);
+                        return new RepairCommand(plugin).setFreeCount(sender, args);
                     }
                     case "revoke" -> {
-                        return new TARDISRevokeCommand(plugin).removePermission(sender, args);
+                        return new RevokeCommand(plugin).removePermission(sender, args);
                     }
                 }
                 return true;

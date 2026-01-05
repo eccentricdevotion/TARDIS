@@ -20,9 +20,9 @@ import me.eccentric_nz.TARDIS.ARS.TARDISARSInventory;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.commands.tardis.TARDISDirectionCommand;
-import me.eccentric_nz.TARDIS.commands.tardis.TARDISHideCommand;
-import me.eccentric_nz.TARDIS.commands.tardis.TARDISRebuildCommand;
+import me.eccentric_nz.TARDIS.commands.tardis.DirectionCommand;
+import me.eccentric_nz.TARDIS.commands.tardis.HideCommand;
+import me.eccentric_nz.TARDIS.commands.tardis.RebuildCommand;
 import me.eccentric_nz.TARDIS.control.*;
 import me.eccentric_nz.TARDIS.control.actions.FastReturnAction;
 import me.eccentric_nz.TARDIS.control.actions.LightSwitchAction;
@@ -306,14 +306,14 @@ public class FloodgateControlForm {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "SIEGE_NO_CONTROL");
                             return;
                         }
-                        new TARDISHideCommand(plugin).hide(player);
+                        new HideCommand(plugin).hide(player);
                     }
                     case 14 -> { // rebuild
                         if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "SIEGE_NO_CONTROL");
                             return;
                         }
-                        new TARDISRebuildCommand(plugin).rebuildPreset(player);
+                        new RebuildCommand(plugin).rebuildPreset(player);
                     }
                     case 15 -> { // direction
                         if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
@@ -342,7 +342,7 @@ public class FloodgateControlForm {
                             direction = COMPASS.values()[ordinal].toString();
                         }
                         String[] args = new String[]{"direction", direction};
-                        new TARDISDirectionCommand(plugin).changeDirection(player, args);
+                        new DirectionCommand(plugin).changeDirection(player, args);
                     }
                     case 16 -> { // temporal
                         if (!TARDISPermission.hasPermission(player, "tardis.temporal")) {

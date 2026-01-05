@@ -23,8 +23,8 @@ import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.chameleon.gui.TARDISChameleonInventory;
 import me.eccentric_nz.TARDIS.commands.dev.SystemTreeCommand;
-import me.eccentric_nz.TARDIS.commands.tardis.TARDISHideCommand;
-import me.eccentric_nz.TARDIS.commands.tardis.TARDISRebuildCommand;
+import me.eccentric_nz.TARDIS.commands.tardis.HideCommand;
+import me.eccentric_nz.TARDIS.commands.tardis.RebuildCommand;
 import me.eccentric_nz.TARDIS.companionGUI.TARDISCompanionAddInventory;
 import me.eccentric_nz.TARDIS.companionGUI.TARDISCompanionInventory;
 import me.eccentric_nz.TARDIS.control.actions.DirectionAction;
@@ -313,7 +313,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "SIEGE_NO_CONTROL");
                     return;
                 }
-                new TARDISHideCommand(plugin).hide(player);
+                new HideCommand(plugin).hide(player);
             }
             case 24 -> {
                 // TIS
@@ -354,7 +354,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "SIEGE_NO_CONTROL");
                     return;
                 }
-                new TARDISRebuildCommand(plugin).rebuildPreset(player);
+                new RebuildCommand(plugin).rebuildPreset(player);
             }
             // transmat
             case 33 -> player.openInventory(new TARDISTransmatInventory(plugin, id, player).getInventory());

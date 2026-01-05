@@ -57,10 +57,10 @@ public class TARDISHandlesCommand implements CommandExecutor {
                     return true;
                 }
                 case "disk" -> {
-                    return new TARDISHandlesDiskCommand(plugin).renameDisk(player, args);
+                    return new DiskCommand(plugin).renameDisk(player, args);
                 }
                 case "remove" -> {
-                    return new TARDISHandlesRemoveCommand(plugin).purge(player);
+                    return new RemoveCommand(plugin).purge(player);
                 }
                 case "weird" -> {
                     TARDISHandlesWeirdness.say(player);
@@ -81,7 +81,7 @@ public class TARDISHandlesCommand implements CommandExecutor {
                 return true;
             }
             if (args[0].equals("tell")) {
-                return new TARDISHandlesTellCommand(plugin).message(args);
+                return new TellCommand(plugin).message(args);
             }
             UUID uuid;
             try {
@@ -93,32 +93,32 @@ public class TARDISHandlesCommand implements CommandExecutor {
             Player player = plugin.getServer().getPlayer(uuid);
             switch (args[0]) {
                 case "land" -> {
-                    return new TARDISHandlesLandCommand(plugin).exitVortex(player, TARDISNumberParsers.parseInt(args[2]), args[1]);
+                    return new LandCommand(plugin).exitVortex(player, TARDISNumberParsers.parseInt(args[2]), args[1]);
                 }
                 case "lock", "unlock" -> {
-                    return new TARDISHandlesLockUnlockCommand(plugin).toggleLock(player, TARDISNumberParsers.parseInt(args[2]), Boolean.parseBoolean(args[3]));
+                    return new LockUnlockCommand(plugin).toggleLock(player, TARDISNumberParsers.parseInt(args[2]), Boolean.parseBoolean(args[3]));
                 }
                 case "name" -> {
                     plugin.getMessenger().handlesSend(player, "HANDLES_NAME", player.getName());
                     return true;
                 }
                 case "remind" -> {
-                    return new TARDISHandlesRemindCommand(plugin).doReminder(player, args);
+                    return new RemindCommand(plugin).doReminder(player, args);
                 }
                 case "say" -> {
-                    return new TARDISHandlesSayCommand(plugin).say(player, args);
+                    return new SayCommand(plugin).say(player, args);
                 }
                 case "scan" -> {
-                    return new TARDISHandlesScanCommand(plugin, player, TARDISNumberParsers.parseInt(args[2])).sayScan();
+                    return new ScanCommand(plugin, player, TARDISNumberParsers.parseInt(args[2])).sayScan();
                 }
                 case "takeoff" -> {
-                    return new TARDISHandlesTakeoffCommand(plugin).enterVortex(player, args);
+                    return new TakeOffCommand(plugin).enterVortex(player, args);
                 }
                 case "time" -> {
-                    return new TARDISHandlesTimeCommand(plugin).sayTime(player);
+                    return new TimeCommand(plugin).sayTime(player);
                 }
                 case "brake" -> {
-                    return new TARDISHandlesBrakeCommand(plugin).park(player, args);
+                    return new BrakeCommand(plugin).park(player, args);
                 }
             }
         }

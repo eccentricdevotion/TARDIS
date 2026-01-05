@@ -24,7 +24,7 @@ import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.artron.TARDISLampToggler;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.exterior.BuildData;
-import me.eccentric_nz.TARDIS.commands.handles.TARDISHandlesTeleportCommand;
+import me.eccentric_nz.TARDIS.commands.handles.TeleportCommand;
 import me.eccentric_nz.TARDIS.control.TARDISPowerButton;
 import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Program;
@@ -597,7 +597,7 @@ public class TARDISHandlesProcessor {
                             case REBUILD -> player.performCommand("tardis rebuild");
                             case SCAN ->
                                     plugin.getServer().dispatchCommand(plugin.getConsole(), "handles scan " + uuid + " " + id);
-                            case COMEHERE -> new TARDISHandlesTeleportCommand(plugin).beamMeUp(player);
+                            case COMEHERE -> new TeleportCommand(plugin).beamMeUp(player);
                             case TAKE_OFF -> {
                                 // player must be in TARDIS
                                 if (plugin.getUtils().inTARDISWorld(player.getLocation())) {

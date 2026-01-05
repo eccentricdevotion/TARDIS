@@ -21,8 +21,8 @@ import io.papermc.paper.registry.RegistryKey;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.commands.TARDISRecipeTabComplete;
-import me.eccentric_nz.TARDIS.commands.handles.TARDISHandlesTeleportCommand;
-import me.eccentric_nz.TARDIS.commands.handles.TARDISHandlesTransmatCommand;
+import me.eccentric_nz.TARDIS.commands.handles.TeleportCommand;
+import me.eccentric_nz.TARDIS.commands.handles.TransmatCommand;
 import me.eccentric_nz.TARDIS.control.TARDISPowerButton;
 import me.eccentric_nz.TARDIS.control.TARDISRandomButton;
 import me.eccentric_nz.TARDIS.control.actions.LightSwitchAction;
@@ -348,7 +348,7 @@ public class TARDISHandlesRequest {
                     case "scan" ->
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getServer().dispatchCommand(plugin.getConsole(), "handles scan " + uuid + " " + id), 1L);
                     case "teleport" ->
-                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISHandlesTeleportCommand(plugin).beamMeUp(player), 1L);
+                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TeleportCommand(plugin).beamMeUp(player), 1L);
                     case "transmat" -> {
                         if (groups != null) {
                             if (!TARDISPermission.hasPermission(player, "tardis.transmat")) {
@@ -363,7 +363,7 @@ public class TARDISHandlesRequest {
                             }
                             ResultSetHandlesTransmat rst = new ResultSetHandlesTransmat(plugin, id);
                             if (rst.findSite(groups.getFirst())) {
-                                new TARDISHandlesTransmatCommand(plugin).siteToSiteTransport(player, rst.getLocation());
+                                new TransmatCommand(plugin).siteToSiteTransport(player, rst.getLocation());
                             } else {
                                 plugin.getMessenger().handlesSend(player, "HANDLES_NO_TRANSMAT");
                             }

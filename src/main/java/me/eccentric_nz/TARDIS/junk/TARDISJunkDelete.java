@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.junk;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.commands.admin.TARDISDeleteCommand;
+import me.eccentric_nz.TARDIS.commands.admin.DeleteTARDISCommand;
 import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
@@ -71,7 +71,7 @@ class TARDISJunkDelete {
             if (cw != null) {
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     plugin.getInteriorDestroyer().destroyInner(Desktops.schematicFor("junk"), id, cw, -999);
-                    TARDISDeleteCommand.cleanDatabase(id);
+                    DeleteTARDISCommand.cleanDatabase(id);
                     plugin.getMessenger().send(sender, TardisModule.TARDIS, "JUNK_DELETED");
                 }, 20L);
             }

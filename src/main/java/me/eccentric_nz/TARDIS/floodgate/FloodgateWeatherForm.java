@@ -18,14 +18,13 @@ package me.eccentric_nz.TARDIS.floodgate;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.commands.utils.TARDISWeather;
+import me.eccentric_nz.TARDIS.commands.utils.weather.Weather;
 import me.eccentric_nz.TARDIS.control.TARDISAtmosphericExcitation;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.enumeration.Weather;
 import org.bukkit.entity.Player;
 import org.geysermc.cumulus.form.SimpleForm;
 import org.geysermc.cumulus.response.SimpleFormResponse;
@@ -106,12 +105,12 @@ public class FloodgateWeatherForm {
                     plugin.getTrackerKeeper().getExcitation().add(player.getUniqueId());
                 } else {
                     // change weather
-                    Weather weather = Weather.fromString(label);
+                    me.eccentric_nz.TARDIS.enumeration.Weather weather = me.eccentric_nz.TARDIS.enumeration.Weather.fromString(label);
                     String perm = weather.toString().toLowerCase(Locale.ROOT);
                     if (!TARDISPermission.hasPermission(player, "tardis.weather." + perm)) {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
                     }
-                    TARDISWeather.setWeather(rsc.getCurrent().location().getWorld(), weather);
+                    Weather.setWeather(rsc.getCurrent().location().getWorld(), weather);
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "WEATHER_SET", perm);
                 }
             }

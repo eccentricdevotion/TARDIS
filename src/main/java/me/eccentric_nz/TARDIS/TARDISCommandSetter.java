@@ -42,6 +42,7 @@ import me.eccentric_nz.TARDIS.commands.tardis.TARDISTabComplete;
 import me.eccentric_nz.TARDIS.commands.travel.TARDISTravelCommands;
 import me.eccentric_nz.TARDIS.commands.travel.TARDISTravelTabComplete;
 import me.eccentric_nz.TARDIS.commands.utils.*;
+import me.eccentric_nz.TARDIS.commands.utils.weather.TARDISWeatherCommand;
 import me.eccentric_nz.TARDIS.display.TARDISDisplayCommand;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.info.TARDISInformationSystemCommand;
@@ -119,9 +120,6 @@ class TARDISCommandSetter {
         TARDISTeleportCommand tardisTP = new TARDISTeleportCommand(plugin);
         plugin.getCommand("tardisteleport").setExecutor(tardisTP);
         plugin.getCommand("tardisteleport").setTabCompleter(tardisTP);
-        TARDISMushroomFixerCommand tardisMush = new TARDISMushroomFixerCommand(plugin);
-        plugin.getCommand("tardismushroom").setExecutor(tardisMush);
-        plugin.getCommand("tardismushroom").setTabCompleter(tardisMush);
         TARDISWorldCommand tardisWorldCommand = new TARDISWorldCommand(plugin);
         plugin.getCommand("tardisworld").setExecutor(tardisWorldCommand);
         plugin.getCommand("tardisworld").setTabCompleter(tardisWorldCommand);

@@ -19,9 +19,9 @@ package me.eccentric_nz.TARDIS.playerprefs;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.artron.TARDISBeaconToggler;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.commands.preferences.TARDISBuildCommand;
-import me.eccentric_nz.TARDIS.commands.preferences.TARDISIsomorphicCommand;
-import me.eccentric_nz.TARDIS.commands.preferences.TARDISLabelsCommand;
+import me.eccentric_nz.TARDIS.commands.preferences.BuildCommand;
+import me.eccentric_nz.TARDIS.commands.preferences.IsomorphicCommand;
+import me.eccentric_nz.TARDIS.commands.preferences.LabelsCommand;
 import me.eccentric_nz.TARDIS.custommodels.GUIPlayerPreferences;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
@@ -158,12 +158,12 @@ public class TARDISGeneralPrefsListener extends TARDISMenuListener {
         switch (which) {
             case "Console Labels" -> {
                 String[] args = new String[]{"console_labels", bool ? "off" : "on"};
-                new TARDISLabelsCommand(plugin).toggle(player, args);
+                new LabelsCommand(plugin).toggle(player, args);
                 return;
             }
             case "Isometric" -> {
                 if (tardis!=null && (tardis.isIsomorphicOn() && !bool || !tardis.isIsomorphicOn() && bool)) {
-                    new TARDISIsomorphicCommand(plugin).toggleIsomorphicControls(player);
+                    new IsomorphicCommand(plugin).toggleIsomorphicControls(player);
                 }
             }
             case "Junk TARDIS" -> {
@@ -256,7 +256,7 @@ public class TARDISGeneralPrefsListener extends TARDISMenuListener {
                 String[] args = new String[2];
                 args[0] = "";
                 args[1] = value;
-                new TARDISBuildCommand(plugin).toggleCompanionBuilding(player, args);
+                new BuildCommand(plugin).toggleCompanionBuilding(player, args);
             }
             case "Lock Containers" -> {
                 if (bool) {

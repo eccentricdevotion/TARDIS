@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.commands.give.actions;
 import com.google.common.collect.Multimaps;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.give.Give;
-import me.eccentric_nz.TARDIS.commands.give.TARDISDisplayBlockCommand;
+import me.eccentric_nz.TARDIS.commands.give.DisplayBlockCommand;
 import me.eccentric_nz.TARDIS.enumeration.RecipeCategory;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -118,7 +118,7 @@ public class TARDISItem {
             } else if (item.equals("save-storage-disk") || item.equals("preset-storage-disk") || item.equals("biome-storage-disk") || item.equals("player-storage-disk") || item.equals("bowl-of-custard") || item.equals("jelly-baby") || item.equals("schematic-wand") || item.equals("judoon-ammunition")) {
                 result = plugin.getIncomposita().getShapelessRecipes().get(item_to_give).getResult();
             } else if (Give.custom.contains(item)) {
-                result = new TARDISDisplayBlockCommand(plugin).getStack(item);
+                result = new DisplayBlockCommand(plugin).getStack(item);
             } else {
                 result = plugin.getFigura().getShapedRecipes().get(item_to_give).getResult();
             }

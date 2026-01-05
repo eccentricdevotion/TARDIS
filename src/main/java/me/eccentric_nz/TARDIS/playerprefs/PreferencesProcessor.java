@@ -20,8 +20,8 @@ import io.papermc.paper.dialog.DialogResponseView;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.artron.TARDISBeaconToggler;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.commands.preferences.TARDISBuildCommand;
-import me.eccentric_nz.TARDIS.commands.preferences.TARDISJunkPreference;
+import me.eccentric_nz.TARDIS.commands.preferences.BuildCommand;
+import me.eccentric_nz.TARDIS.commands.preferences.JunkPreference;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetArtronLevel;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
@@ -97,7 +97,7 @@ public class PreferencesProcessor {
                     case "build" -> {
                         if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("allow.wg_flag_set")) {
                             String onoff = colon[1].equals("1b") ? "on" : "off";
-                            new TARDISBuildCommand(plugin).toggleCompanionBuilding(player, new String[]{"", onoff});
+                            new BuildCommand(plugin).toggleCompanionBuilding(player, new String[]{"", onoff});
                         }
                     }
                     case "flight" -> {
@@ -129,7 +129,7 @@ public class PreferencesProcessor {
                     case "junk_mode" -> {
                         if ((tardis.getPreset().equals(ChameleonPreset.JUNK_MODE) && colon[1].equals("0b"))
                                 || (!tardis.getPreset().equals(ChameleonPreset.JUNK_MODE) && colon[1].equals("1b"))) {
-                            new TARDISJunkPreference(plugin).toggle(player, colon[1].equals("1b") ? "off" : "on");
+                            new JunkPreference(plugin).toggle(player, colon[1].equals("1b") ? "off" : "on");
                         }
                     }
                     case "hads_type", "eps_message" -> set.put(colon[0], StringUtils.strip(colon[1], "\""));
