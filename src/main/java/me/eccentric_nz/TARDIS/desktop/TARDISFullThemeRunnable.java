@@ -18,8 +18,8 @@ package me.eccentric_nz.TARDIS.desktop;
 
 import com.destroystokyo.paper.MaterialTags;
 import com.google.gson.*;
-import me.eccentric_nz.TARDIS.ARS.TARDISARSJettison;
-import me.eccentric_nz.TARDIS.ARS.TARDISARSMethods;
+import me.eccentric_nz.TARDIS.ARS.Jettison;
+import me.eccentric_nz.TARDIS.ARS.ARSMethods;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
 import me.eccentric_nz.TARDIS.TARDISConstants;
@@ -485,7 +485,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                     }
                 }
                 int minusY = (tud.getPrevious().getPermission().equals("mechanical")) ? 2 : 0;
-                List<TARDISARSJettison> jettisons = getJettisons(size_next, size_prev, chunk);
+                List<Jettison> jettisons = getJettisons(size_next, size_prev, chunk);
                 jettisons.forEach((jet) -> {
                     // remove the room
                     setAir(jet.getX(), jet.getLevel(), jet.getZ(), jet.getChunk().getWorld(), minusY, 16);
@@ -709,7 +709,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                     whereR.put("tardis_id", id);
                     ResultSetARS rsa = new ResultSetARS(plugin, whereR);
                     if (rsa.resultSet()) {
-                        String[][][] existing = TARDISARSMethods.getGridFromJSON(rsa.getJson());
+                        String[][][] existing = ARSMethods.getGridFromJSON(rsa.getJson());
                         if (downgrade) {
                             // reset slots to stone
                             switch (size_prev) {
@@ -995,75 +995,75 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
         }
     }
 
-    private List<TARDISARSJettison> getJettisons(ConsoleSize next, ConsoleSize prev, Chunk chunk) {
-        List<TARDISARSJettison> list = new ArrayList<>();
+    private List<Jettison> getJettisons(ConsoleSize next, ConsoleSize prev, Chunk chunk) {
+        List<Jettison> list = new ArrayList<>();
         switch (prev) {
             case MASSIVE -> {
                 switch (next) {
                     case TALL -> {
                         // the 5 chunks on the same level &
-                        list.add(new TARDISARSJettison(chunk, 1, 4, 6));
-                        list.add(new TARDISARSJettison(chunk, 1, 5, 6));
-                        list.add(new TARDISARSJettison(chunk, 1, 6, 4));
-                        list.add(new TARDISARSJettison(chunk, 1, 6, 5));
-                        list.add(new TARDISARSJettison(chunk, 1, 6, 6));
+                        list.add(new Jettison(chunk, 1, 4, 6));
+                        list.add(new Jettison(chunk, 1, 5, 6));
+                        list.add(new Jettison(chunk, 1, 6, 4));
+                        list.add(new Jettison(chunk, 1, 6, 5));
+                        list.add(new Jettison(chunk, 1, 6, 6));
                         // the 5 chunks on the level above
-                        list.add(new TARDISARSJettison(chunk, 2, 4, 6));
-                        list.add(new TARDISARSJettison(chunk, 2, 5, 6));
-                        list.add(new TARDISARSJettison(chunk, 2, 6, 4));
-                        list.add(new TARDISARSJettison(chunk, 2, 6, 5));
-                        list.add(new TARDISARSJettison(chunk, 2, 6, 6));
+                        list.add(new Jettison(chunk, 2, 4, 6));
+                        list.add(new Jettison(chunk, 2, 5, 6));
+                        list.add(new Jettison(chunk, 2, 6, 4));
+                        list.add(new Jettison(chunk, 2, 6, 5));
+                        list.add(new Jettison(chunk, 2, 6, 6));
                     }
                     case MEDIUM -> {
                         // the 5 chunks on the same level &
-                        list.add(new TARDISARSJettison(chunk, 1, 4, 6));
-                        list.add(new TARDISARSJettison(chunk, 1, 5, 6));
-                        list.add(new TARDISARSJettison(chunk, 1, 6, 4));
-                        list.add(new TARDISARSJettison(chunk, 1, 6, 5));
-                        list.add(new TARDISARSJettison(chunk, 1, 6, 6));
+                        list.add(new Jettison(chunk, 1, 4, 6));
+                        list.add(new Jettison(chunk, 1, 5, 6));
+                        list.add(new Jettison(chunk, 1, 6, 4));
+                        list.add(new Jettison(chunk, 1, 6, 5));
+                        list.add(new Jettison(chunk, 1, 6, 6));
                         // the 9 chunks on the level above
-                        list.add(new TARDISARSJettison(chunk, 2, 4, 4));
-                        list.add(new TARDISARSJettison(chunk, 2, 4, 5));
-                        list.add(new TARDISARSJettison(chunk, 2, 4, 6));
-                        list.add(new TARDISARSJettison(chunk, 2, 5, 4));
-                        list.add(new TARDISARSJettison(chunk, 2, 5, 5));
-                        list.add(new TARDISARSJettison(chunk, 2, 5, 6));
-                        list.add(new TARDISARSJettison(chunk, 2, 6, 4));
-                        list.add(new TARDISARSJettison(chunk, 2, 6, 5));
-                        list.add(new TARDISARSJettison(chunk, 2, 6, 6));
+                        list.add(new Jettison(chunk, 2, 4, 4));
+                        list.add(new Jettison(chunk, 2, 4, 5));
+                        list.add(new Jettison(chunk, 2, 4, 6));
+                        list.add(new Jettison(chunk, 2, 5, 4));
+                        list.add(new Jettison(chunk, 2, 5, 5));
+                        list.add(new Jettison(chunk, 2, 5, 6));
+                        list.add(new Jettison(chunk, 2, 6, 4));
+                        list.add(new Jettison(chunk, 2, 6, 5));
+                        list.add(new Jettison(chunk, 2, 6, 6));
                     }
                     case SMALL -> {
                         // the 8 chunks on the same level &
-                        list.add(new TARDISARSJettison(chunk, 1, 4, 5));
-                        list.add(new TARDISARSJettison(chunk, 1, 4, 6));
-                        list.add(new TARDISARSJettison(chunk, 1, 5, 4));
-                        list.add(new TARDISARSJettison(chunk, 1, 5, 5));
-                        list.add(new TARDISARSJettison(chunk, 1, 5, 6));
-                        list.add(new TARDISARSJettison(chunk, 1, 6, 4));
-                        list.add(new TARDISARSJettison(chunk, 1, 6, 5));
-                        list.add(new TARDISARSJettison(chunk, 1, 6, 6));
+                        list.add(new Jettison(chunk, 1, 4, 5));
+                        list.add(new Jettison(chunk, 1, 4, 6));
+                        list.add(new Jettison(chunk, 1, 5, 4));
+                        list.add(new Jettison(chunk, 1, 5, 5));
+                        list.add(new Jettison(chunk, 1, 5, 6));
+                        list.add(new Jettison(chunk, 1, 6, 4));
+                        list.add(new Jettison(chunk, 1, 6, 5));
+                        list.add(new Jettison(chunk, 1, 6, 6));
                         // the 9 chunks on the level above
-                        list.add(new TARDISARSJettison(chunk, 2, 4, 4));
-                        list.add(new TARDISARSJettison(chunk, 2, 4, 5));
-                        list.add(new TARDISARSJettison(chunk, 2, 4, 6));
-                        list.add(new TARDISARSJettison(chunk, 2, 5, 4));
-                        list.add(new TARDISARSJettison(chunk, 2, 5, 5));
-                        list.add(new TARDISARSJettison(chunk, 2, 5, 6));
-                        list.add(new TARDISARSJettison(chunk, 2, 6, 4));
-                        list.add(new TARDISARSJettison(chunk, 2, 6, 5));
-                        list.add(new TARDISARSJettison(chunk, 2, 6, 6));
+                        list.add(new Jettison(chunk, 2, 4, 4));
+                        list.add(new Jettison(chunk, 2, 4, 5));
+                        list.add(new Jettison(chunk, 2, 4, 6));
+                        list.add(new Jettison(chunk, 2, 5, 4));
+                        list.add(new Jettison(chunk, 2, 5, 5));
+                        list.add(new Jettison(chunk, 2, 5, 6));
+                        list.add(new Jettison(chunk, 2, 6, 4));
+                        list.add(new Jettison(chunk, 2, 6, 5));
+                        list.add(new Jettison(chunk, 2, 6, 6));
                     }
                     case WIDE -> {
                         // the 9 chunks on the level above
-                        list.add(new TARDISARSJettison(chunk, 2, 4, 4));
-                        list.add(new TARDISARSJettison(chunk, 2, 4, 5));
-                        list.add(new TARDISARSJettison(chunk, 2, 4, 6));
-                        list.add(new TARDISARSJettison(chunk, 2, 5, 4));
-                        list.add(new TARDISARSJettison(chunk, 2, 5, 5));
-                        list.add(new TARDISARSJettison(chunk, 2, 5, 6));
-                        list.add(new TARDISARSJettison(chunk, 2, 6, 4));
-                        list.add(new TARDISARSJettison(chunk, 2, 6, 5));
-                        list.add(new TARDISARSJettison(chunk, 2, 6, 6));
+                        list.add(new Jettison(chunk, 2, 4, 4));
+                        list.add(new Jettison(chunk, 2, 4, 5));
+                        list.add(new Jettison(chunk, 2, 4, 6));
+                        list.add(new Jettison(chunk, 2, 5, 4));
+                        list.add(new Jettison(chunk, 2, 5, 5));
+                        list.add(new Jettison(chunk, 2, 5, 6));
+                        list.add(new Jettison(chunk, 2, 6, 4));
+                        list.add(new Jettison(chunk, 2, 6, 5));
+                        list.add(new Jettison(chunk, 2, 6, 6));
                     }
                     default -> {
                     } // same size do nothing
@@ -1073,21 +1073,21 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 switch (next) {
                     case MEDIUM, WIDE -> {
                         // the 4 chunks on the level above
-                        list.add(new TARDISARSJettison(chunk, 2, 4, 4));
-                        list.add(new TARDISARSJettison(chunk, 2, 4, 5));
-                        list.add(new TARDISARSJettison(chunk, 2, 5, 4));
-                        list.add(new TARDISARSJettison(chunk, 2, 5, 5));
+                        list.add(new Jettison(chunk, 2, 4, 4));
+                        list.add(new Jettison(chunk, 2, 4, 5));
+                        list.add(new Jettison(chunk, 2, 5, 4));
+                        list.add(new Jettison(chunk, 2, 5, 5));
                     }
                     case SMALL -> {
                         // the 3 chunks on the same level &
-                        list.add(new TARDISARSJettison(chunk, 1, 4, 5));
-                        list.add(new TARDISARSJettison(chunk, 1, 5, 4));
-                        list.add(new TARDISARSJettison(chunk, 1, 5, 5));
+                        list.add(new Jettison(chunk, 1, 4, 5));
+                        list.add(new Jettison(chunk, 1, 5, 4));
+                        list.add(new Jettison(chunk, 1, 5, 5));
                         // the 4 chunks on the level above
-                        list.add(new TARDISARSJettison(chunk, 2, 4, 4));
-                        list.add(new TARDISARSJettison(chunk, 2, 4, 5));
-                        list.add(new TARDISARSJettison(chunk, 2, 5, 4));
-                        list.add(new TARDISARSJettison(chunk, 2, 5, 5));
+                        list.add(new Jettison(chunk, 2, 4, 4));
+                        list.add(new Jettison(chunk, 2, 4, 5));
+                        list.add(new Jettison(chunk, 2, 5, 4));
+                        list.add(new Jettison(chunk, 2, 5, 5));
                     }
                     default -> {
                     } // same size or bigger do nothing
@@ -1097,22 +1097,22 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 switch (next) {
                     case TALL, MEDIUM -> {
                         // the 5 chunks on the same level
-                        list.add(new TARDISARSJettison(chunk, 1, 4, 6));
-                        list.add(new TARDISARSJettison(chunk, 1, 5, 6));
-                        list.add(new TARDISARSJettison(chunk, 1, 6, 4));
-                        list.add(new TARDISARSJettison(chunk, 1, 6, 5));
-                        list.add(new TARDISARSJettison(chunk, 1, 6, 6));
+                        list.add(new Jettison(chunk, 1, 4, 6));
+                        list.add(new Jettison(chunk, 1, 5, 6));
+                        list.add(new Jettison(chunk, 1, 6, 4));
+                        list.add(new Jettison(chunk, 1, 6, 5));
+                        list.add(new Jettison(chunk, 1, 6, 6));
                     }
                     case SMALL -> {
                         // the 8 chunks on the same level
-                        list.add(new TARDISARSJettison(chunk, 1, 4, 5));
-                        list.add(new TARDISARSJettison(chunk, 1, 4, 6));
-                        list.add(new TARDISARSJettison(chunk, 1, 5, 4));
-                        list.add(new TARDISARSJettison(chunk, 1, 5, 5));
-                        list.add(new TARDISARSJettison(chunk, 1, 5, 6));
-                        list.add(new TARDISARSJettison(chunk, 1, 6, 4));
-                        list.add(new TARDISARSJettison(chunk, 1, 6, 5));
-                        list.add(new TARDISARSJettison(chunk, 1, 6, 6));
+                        list.add(new Jettison(chunk, 1, 4, 5));
+                        list.add(new Jettison(chunk, 1, 4, 6));
+                        list.add(new Jettison(chunk, 1, 5, 4));
+                        list.add(new Jettison(chunk, 1, 5, 5));
+                        list.add(new Jettison(chunk, 1, 5, 6));
+                        list.add(new Jettison(chunk, 1, 6, 4));
+                        list.add(new Jettison(chunk, 1, 6, 5));
+                        list.add(new Jettison(chunk, 1, 6, 6));
                     }
                     default -> {
                     } // same size or bigger do nothing
@@ -1121,9 +1121,9 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
             case MEDIUM -> {
                 // the 3 chunks on the same level
                 if (next == ConsoleSize.SMALL) {// the 3 chunks on the same level
-                    list.add(new TARDISARSJettison(chunk, 1, 4, 5));
-                    list.add(new TARDISARSJettison(chunk, 1, 5, 4));
-                    list.add(new TARDISARSJettison(chunk, 1, 5, 5));
+                    list.add(new Jettison(chunk, 1, 4, 5));
+                    list.add(new Jettison(chunk, 1, 5, 4));
+                    list.add(new Jettison(chunk, 1, 5, 5));
                 }
             }
             default -> {

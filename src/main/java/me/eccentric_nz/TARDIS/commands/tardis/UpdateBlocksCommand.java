@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.commands.tardis;
 
-import me.eccentric_nz.TARDIS.ARS.TARDISARSMethods;
-import me.eccentric_nz.TARDIS.ARS.TARDISARSSlot;
+import me.eccentric_nz.TARDIS.ARS.ARSMethods;
+import me.eccentric_nz.TARDIS.ARS.ARSSlot;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayBlockRoomConverter;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayBlockRoomRemover;
@@ -50,14 +50,14 @@ public class UpdateBlocksCommand {
             where.put("tardis_id", id);
             ResultSetARS rsa = new ResultSetARS(plugin, where);
             if (rsa.resultSet()) {
-                String[][][] json = TARDISARSMethods.getGridFromJSON(rsa.getJson());
+                String[][][] json = ARSMethods.getGridFromJSON(rsa.getJson());
                 Chunk c = plugin.getLocationUtils().getTARDISChunk(id);
                 for (int l = 0; l < 3; l++) {
                     for (int row = 0; row < 9; row++) {
                         for (int col = 0; col < 9; col++) {
                             if (!json[l][row][col].equalsIgnoreCase("STONE")) {
                                 // get ARS slot
-                                TARDISARSSlot slot = new TARDISARSSlot();
+                                ARSSlot slot = new ARSSlot();
                                 slot.setChunk(c);
                                 slot.setY(l);
                                 slot.setX(row);
@@ -97,14 +97,14 @@ public class UpdateBlocksCommand {
             whereid.put("tardis_id", id);
             ResultSetARS rsa = new ResultSetARS(plugin, whereid);
             if (rsa.resultSet()) {
-                String[][][] json = TARDISARSMethods.getGridFromJSON(rsa.getJson());
+                String[][][] json = ARSMethods.getGridFromJSON(rsa.getJson());
                 Chunk c = plugin.getLocationUtils().getTARDISChunk(id);
                 for (int l = 0; l < 3; l++) {
                     for (int row = 0; row < 9; row++) {
                         for (int col = 0; col < 9; col++) {
                             if (!json[l][row][col].equalsIgnoreCase("STONE") && !json[l][row][col].equalsIgnoreCase(console)) {
                                 // get ARS slot
-                                TARDISARSSlot slot = new TARDISARSSlot();
+                                ARSSlot slot = new ARSSlot();
                                 slot.setChunk(c);
                                 slot.setY(l);
                                 slot.setX(row);

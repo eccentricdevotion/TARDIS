@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.desktop;
 
 import com.google.gson.JsonObject;
-import me.eccentric_nz.TARDIS.ARS.TARDISARSMethods;
+import me.eccentric_nz.TARDIS.ARS.ARSMethods;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.data.Archive;
@@ -231,7 +231,7 @@ public class TARDISThemeProcessor {
         ResultSetARS rs = new ResultSetARS(plugin, where);
         if (rs.resultSet()) {
             String json = rs.getJson();
-            String[][][] grid = TARDISARSMethods.getGridFromJSON(json);
+            String[][][] grid = ARSMethods.getGridFromJSON(json);
             switch (prev) {
                 case SMALL -> {
                     switch (next) {

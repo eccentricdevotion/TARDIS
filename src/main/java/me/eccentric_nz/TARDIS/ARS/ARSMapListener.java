@@ -50,12 +50,12 @@ import java.util.UUID;
  *
  * @author eccentric_nz
  */
-public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
+public class ARSMapListener extends ARSMethods implements Listener {
 
     private final HashMap<UUID, String> selectedLocation = new HashMap<>();
     private final HashMap<UUID, SelectedSlot> selectedSlot = new HashMap<>();
 
-    public TARDISARSMapListener(TARDIS plugin) {
+    public ARSMapListener(TARDIS plugin) {
         super(plugin);
     }
 
@@ -68,7 +68,7 @@ public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onARSMapClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        if (!(event.getInventory().getHolder(false) instanceof TARDISARSMap)) {
+        if (!(event.getInventory().getHolder(false) instanceof ARSMapInventory)) {
             return;
         }
         event.setCancelled(true);
@@ -87,14 +87,14 @@ public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
         }
         switch (slot) {
             case 1, 9, 11, 19 -> moveMap(playerUUID, view, slot); // up, left, right, down
-            case 10 -> loadMap(view, playerUUID); // load map
+            case 10 -> loadMap(view, playerUUID, true); // load map
             case 45 -> close(player); // close
             case 47 -> findPlayer(player, view); // where am I?
             case 27, 28, 29 -> {
                 // change levels
                 if (map_data.containsKey(playerUUID)) {
                     switchLevel(view, slot, playerUUID);
-                    TARDISARSMapData md = map_data.get(playerUUID);
+                    ARSMapData md = map_data.get(playerUUID);
                     setMap(md.getY(), md.getE(), md.getS(), playerUUID, view);
                     setLore(view, slot, null);
                 } else {
@@ -125,7 +125,7 @@ public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
             }
             default -> {
                 if (map_data.containsKey(playerUUID)) {
-                    TARDISARSMapData md = map_data.get(playerUUID);
+                    ARSMapData md = map_data.get(playerUUID);
                     ItemStack is = view.getItem(slot);
                     if (is != null) {
                         ItemMeta im = is.getItemMeta();
@@ -187,7 +187,7 @@ public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
                 }
                 // set map
                 switchLevel(view, level, playerUUID);
-                TARDISARSMapData md = map_data.get(playerUUID);
+                ARSMapData md = map_data.get(playerUUID);
                 md.setY(level - 27);
                 md.setE(east);
                 md.setS(south);
@@ -222,7 +222,7 @@ public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
             } else {
                 SelectedSlot selected = selectedSlot.get(uuid);
                 if (selected != null) {
-                    TARDISARSSlot a = new TARDISARSSlot();
+                    ARSSlot a = new ARSSlot();
                     a.setChunk(plugin.getLocationUtils().getTARDISChunk(id));
                     a.setY(selected.level());
                     a.setX(selected.row());

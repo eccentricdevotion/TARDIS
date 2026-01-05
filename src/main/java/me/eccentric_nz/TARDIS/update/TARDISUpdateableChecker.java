@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.update;
 
 import com.google.common.collect.Sets;
-import me.eccentric_nz.TARDIS.ARS.TARDISARSMethods;
+import me.eccentric_nz.TARDIS.ARS.ARSMethods;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.data.Farm;
@@ -119,7 +119,7 @@ public class TARDISUpdateableChecker {
             ResultSetARS rsa = new ResultSetARS(plugin, wherea);
             if (rsa.resultSet()) {
                 // check for rooms
-                String[][][] json = TARDISARSMethods.getGridFromJSON(rsa.getJson());
+                String[][][] json = ARSMethods.getGridFromJSON(rsa.getJson());
                 for (String[][] level : json) {
                     for (String[] row : level) {
                         for (String col : row) {

@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.move;
 
-import me.eccentric_nz.TARDIS.ARS.TARDISARSMethods;
+import me.eccentric_nz.TARDIS.ARS.ARSMethods;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPostioning;
@@ -250,7 +250,7 @@ public class TARDISMonsterRunnable implements Runnable {
             if (rsa.resultSet()) {
                 int l = 0, r = 0, c = 0;
                 // check there is a pool
-                String[][][] json = TARDISARSMethods.getGridFromJSON(rsa.getJson());
+                String[][][] json = ARSMethods.getGridFromJSON(rsa.getJson());
                 for (String[][] level : json) {
                     for (String[] row : level) {
                         for (String col : row) {

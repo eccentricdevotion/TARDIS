@@ -28,16 +28,16 @@ import java.util.Map;
  *
  * @author eccentric_nz
  */
-class TARDISARSProcessor {
+class ARSProcessor {
 
     private final TARDIS plugin;
     private final int id;
     private final int limit;
     private String error = "ENERGY_NOT_ENOUGH";
-    private HashMap<TARDISARSSlot, ARS> changed;
-    private HashMap<TARDISARSJettison, ARS> jettison;
+    private HashMap<ARSSlot, ARS> changed;
+    private HashMap<Jettison, ARS> jettison;
 
-    public TARDISARSProcessor(TARDIS plugin, int id) {
+    public ARSProcessor(TARDIS plugin, int id) {
         this.plugin = plugin;
         this.id = id;
         limit = this.plugin.getConfig().getInt("growth.ars_limit");
@@ -53,7 +53,7 @@ class TARDISARSProcessor {
                     if (!start[l][x][z].equals(end[l][x][z])) {
                         if (end[l][x][z].equals("TNT")) {
                             // found TNT in this slot
-                            TARDISARSJettison slot = new TARDISARSJettison();
+                            Jettison slot = new Jettison();
                             slot.setChunk(c);
                             slot.setLevel(l);
                             slot.setX(x);
@@ -61,7 +61,7 @@ class TARDISARSProcessor {
                             jettison.put(slot, TARDISARS.ARSFor(start[l][x][z]));
                             // if it is a gravity well on the top or bottom levels jettison the other half too
                             if (start[l][x][z].equals("SANDSTONE") && l == 2) {
-                                TARDISARSJettison uslot = new TARDISARSJettison();
+                                Jettison uslot = new Jettison();
                                 uslot.setChunk(c);
                                 uslot.setLevel(3);
                                 uslot.setX(x);
@@ -69,7 +69,7 @@ class TARDISARSProcessor {
                                 jettison.put(uslot, TARDISARS.ANTIGRAVITY);
                             }
                             if (start[l][x][z].equals("MOSSY_COBBLESTONE") && l == 0) {
-                                TARDISARSJettison lslot = new TARDISARSJettison();
+                                Jettison lslot = new Jettison();
                                 lslot.setChunk(c);
                                 lslot.setLevel(-1);
                                 lslot.setX(x);
@@ -88,7 +88,7 @@ class TARDISARSProcessor {
                                     } else if (l == 2 && start[1][x][z].equals("PURPLE_TERRACOTTA")) {
                                         plugin.getTrackerKeeper().getIsStackedStaircase().put(id, true);
                                     }
-                                    TARDISARSSlot slot = new TARDISARSSlot();
+                                    ARSSlot slot = new ARSSlot();
                                     slot.setChunk(c);
                                     slot.setY(l);
                                     slot.setX(x);
@@ -98,7 +98,7 @@ class TARDISARSProcessor {
                                 case "SANDSTONE" -> {
                                     if (l == 0 || (l == 1 && !end[l - 1][x][z].equals("SANDSTONE")) || (l == 2 && !end[l - 1][x][z].equals("SANDSTONE")) || (l == 2 && end[l - 1][x][z].equals("SANDSTONE") && end[l - 2][x][z].equals("SANDSTONE"))) {
                                         // only remember the bottom slot of an antigravity well
-                                        TARDISARSSlot slot = new TARDISARSSlot();
+                                        ARSSlot slot = new ARSSlot();
                                         slot.setChunk(c);
                                         slot.setY(l);
                                         slot.setX(x);
@@ -109,7 +109,7 @@ class TARDISARSProcessor {
                                 case "MOSSY_COBBLESTONE" -> {
                                     if (l == 2 || (l == 1 && !end[l + 1][x][z].equals("MOSSY_COBBLESTONE")) || (l == 0 && !end[l + 1][x][z].equals("MOSSY_COBBLESTONE")) || (l == 0 && end[l + 1][x][z].equals("MOSSY_COBBLESTONE") && end[l + 2][x][z].equals("MOSSY_COBBLESTONE"))) {
                                         // only remember the top slot of a gravity well
-                                        TARDISARSSlot slot = new TARDISARSSlot();
+                                        ARSSlot slot = new ARSSlot();
                                         slot.setChunk(c);
                                         slot.setY(l - 1);
                                         slot.setX(x);
@@ -118,7 +118,7 @@ class TARDISARSProcessor {
                                     }
                                 }
                                 default -> {
-                                    TARDISARSSlot slot = new TARDISARSSlot();
+                                    ARSSlot slot = new ARSSlot();
                                     slot.setChunk(c);
                                     slot.setY(l);
                                     slot.setX(x);
@@ -138,17 +138,17 @@ class TARDISARSProcessor {
         return !jettison.isEmpty() || (!changed.isEmpty() && !overlimit);
     }
 
-    boolean checkCosts(HashMap<TARDISARSSlot, ARS> changed, HashMap<TARDISARSJettison, ARS> jettison) {
+    boolean checkCosts(HashMap<ARSSlot, ARS> changed, HashMap<Jettison, ARS> jettison) {
         if (!changed.isEmpty()) {
             int totalcost = 0;
             int recoveredcost = 0;
             // calculate energy gained by jettisons
-            for (Map.Entry<TARDISARSJettison, ARS> c : jettison.entrySet()) {
+            for (Map.Entry<Jettison, ARS> c : jettison.entrySet()) {
                 if (c.getValue() != null) {
                     recoveredcost += Math.round((plugin.getArtronConfig().getInt("jettison") / 100F) * plugin.getRoomsConfig().getInt("rooms." + c.getValue().toString() + ".cost"));
                 }
             }
-            for (Map.Entry<TARDISARSSlot, ARS> c : changed.entrySet()) {
+            for (Map.Entry<ARSSlot, ARS> c : changed.entrySet()) {
                 int cost = plugin.getRoomsConfig().getInt("rooms." + c.getValue().toString() + ".cost");
                 totalcost += cost;
             }
@@ -165,11 +165,11 @@ class TARDISARSProcessor {
         return true;
     }
 
-    public HashMap<TARDISARSSlot, ARS> getChanged() {
+    public HashMap<ARSSlot, ARS> getChanged() {
         return changed;
     }
 
-    public HashMap<TARDISARSJettison, ARS> getJettison() {
+    public HashMap<Jettison, ARS> getJettison() {
         return jettison;
     }
 

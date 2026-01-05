@@ -39,12 +39,12 @@ import java.util.Locale;
  *
  * @author eccentric_nz
  */
-public class TARDISARSInventory implements InventoryHolder {
+public class ARSInventory implements InventoryHolder {
 
     private final TARDIS plugin;
     private final Inventory inventory;
 
-    public TARDISARSInventory(TARDIS plugin, Player player) {
+    public ARSInventory(TARDIS plugin, Player player) {
         this.plugin = plugin;
         this.inventory = plugin.getServer().createInventory(this, 54, Component.text("Architectural Reconfiguration", NamedTextColor.DARK_RED));
         this.inventory.setContents(getItemStack(player));
@@ -69,6 +69,12 @@ public class TARDISARSInventory implements InventoryHolder {
         up.displayName(Component.text(plugin.getLanguage().getString("BUTTON_UP", "Up")));
         pad_up.setItemMeta(up);
         is[GUIArs.BUTTON_UP.slot()] = pad_up;
+        // room relocator
+        ItemStack relocator = ItemStack.of(GUIArs.BUTTON_RELOCATE.material(), 1);
+        ItemMeta rim = relocator.getItemMeta();
+        rim.displayName(Component.text("Room Relocator"));
+        relocator.setItemMeta(rim);
+        is[GUIArs.BUTTON_RELOCATE.slot()] = relocator;
         // black wool
         ItemStack black = ItemStack.of(GUIArs.BUTTON_MAP_ON.material(), 1);
         ItemMeta wool = black.getItemMeta();

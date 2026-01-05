@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.ARS;
 
+import me.eccentric_nz.TARDIS.ARS.relocator.RoomRelocatorInventory;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.commands.sudo.TARDISSudoTracker;
@@ -45,12 +46,12 @@ import java.util.*;
  *
  * @author eccentric_nz
  */
-public class TARDISARSListener extends TARDISARSMethods implements Listener {
+public class ARSListener extends ARSMethods implements Listener {
 
     private List<Material> room_materials;
     private List<String> room_names;
 
-    public TARDISARSListener(TARDIS plugin) {
+    public ARSListener(TARDIS plugin) {
         super(plugin);
         getRoomIdAndNames();
     }
@@ -63,7 +64,7 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
      */
     @EventHandler(ignoreCancelled = true)
     public void onARSTerminalClick(InventoryClickEvent event) {
-        if (!(event.getInventory().getHolder(false) instanceof TARDISARSInventory)) {
+        if (!(event.getInventory().getHolder(false) instanceof ARSInventory)) {
             return;
         }
         event.setCancelled(true);
@@ -73,23 +74,26 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
         uuid = TARDISSudoTracker.SUDOERS.getOrDefault(playerUUID, playerUUID);
         ids.put(playerUUID, getTardisId(uuid.toString()));
         int slot = event.getRawSlot();
-        if (slot != 10 && !hasLoadedMap.contains(playerUUID)) {
-            plugin.getMessenger().send(player, TardisModule.TARDIS, "ARS_LOAD");
+        if (slot < 0 || slot > 53) {
             return;
         }
-        if (slot < 0 || slot > 53) {
+        if (slot != 3 && slot != 10 && !hasLoadedMap.contains(playerUUID)) {
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "ARS_LOAD");
             return;
         }
         InventoryView view = event.getView();
         switch (slot) {
             case 1, 9, 11, 19 -> moveMap(playerUUID, view, slot); // up, left, right, down
+            // open room relocator GUI
+            case 3 -> plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () ->
+                    player.openInventory(new RoomRelocatorInventory(plugin, player).getInventory()), 2L);
             case 4, 5, 6, 7, 8, 13, 14, 15, 16, 17, 22, 23, 24, 25, 26, 31, 32, 33, 34, 35, 40, 41, 42, 43, 44 -> {
                 if (!checkSlotForConsole(view, slot)) {
                     // select slot
                     selected_slot.put(playerUUID, slot);
                 }
             }
-            case 10 ->loadMap(view, playerUUID); // load map
+            case 10 ->loadMap(view, playerUUID, true); // load map
             case 12 -> {
                 // reconfigure
                 if (!plugin.getBuildKeeper().getRoomProgress().containsKey(player.getUniqueId())) {
@@ -102,7 +106,7 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
                 // switch level
                 if (map_data.containsKey(playerUUID)) {
                     switchLevel(view, slot, playerUUID);
-                    TARDISARSMapData md = map_data.get(playerUUID);
+                    ARSMapData md = map_data.get(playerUUID);
                     setMap(md.getY(), md.getE(), md.getS(), playerUUID, view);
                     setLore(view, slot, null);
                 } else {
@@ -229,8 +233,8 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
      * @return true or false
      */
     private boolean checkSavedGrid(UUID playerUUID, int slot, int updown) {
-        TARDISARSMapData md = map_data.get(playerUUID);
-        TARDISARSSaveData sd = save_map_data.get(playerUUID);
+        ARSMapData md = map_data.get(playerUUID);
+        ARSSaveData sd = save_map_data.get(playerUUID);
         String[][][] grid = sd.getData();
         int yy = md.getY() + updown;
         // avoid ArrayIndexOutOfBoundsException if gravity well extends beyond ARS area

@@ -39,15 +39,15 @@ import java.util.HashMap;
  *
  * @author eccentric_nz
  */
-class TARDISARSJettisonRunnable implements Runnable {
+class JettisonRunnable implements Runnable {
 
     private final TARDIS plugin;
-    private final TARDISARSJettison slot;
+    private final Jettison slot;
     private final ARS room;
     private final int id;
     private final Player player;
 
-    TARDISARSJettisonRunnable(TARDIS plugin, TARDISARSJettison slot, ARS room, int id, Player player) {
+    JettisonRunnable(TARDIS plugin, Jettison slot, ARS room, int id, Player player) {
         this.plugin = plugin;
         this.slot = slot;
         this.room = room;

@@ -31,12 +31,12 @@ import org.bukkit.inventory.meta.ItemMeta;
  *
  * @author eccentric_nz
  */
-public class TARDISARSMap implements InventoryHolder {
+public class ARSMapInventory implements InventoryHolder {
 
     private final TARDIS plugin;
     private final Inventory inventory;
 
-    public TARDISARSMap(TARDIS plugin) {
+    public ARSMapInventory(TARDIS plugin) {
         this.plugin = plugin;
         this.inventory = plugin.getServer().createInventory(this, 54, Component.text("TARDIS Map", NamedTextColor.DARK_RED));
         this.inventory.setContents(getItemStack());

@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.floodgate;
 
-import me.eccentric_nz.TARDIS.ARS.TARDISARSInventory;
+import me.eccentric_nz.TARDIS.ARS.ARSInventory;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
@@ -229,7 +229,7 @@ public class FloodgateControlForm {
                             return;
                         }
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "ARS_USE_CMD");
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.openInventory(new TARDISARSInventory(plugin, player).getInventory()), 100);
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.openInventory(new ARSInventory(plugin, player).getInventory()), 100);
                     }
                     case 6 -> { // desktop theme
                         if (plugin.getConfig().getBoolean("difficulty.system_upgrades") && !new SystemUpgradeChecker(plugin).has(uuid.toString(), SystemTree.DESKTOP_THEME)) {

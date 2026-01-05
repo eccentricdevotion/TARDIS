@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.builders.interior;
 
-import me.eccentric_nz.TARDIS.ARS.TARDISARSMethods;
-import me.eccentric_nz.TARDIS.ARS.TARDISARSSlot;
+import me.eccentric_nz.TARDIS.ARS.ARSMethods;
+import me.eccentric_nz.TARDIS.ARS.ARSSlot;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
 import me.eccentric_nz.TARDIS.TARDISConstants;
@@ -147,7 +147,7 @@ public class TARDISInteriorPostioning {
             // get the exit location
             TARDISDoorLocation dl = TARDISDoorListener.getDoor(0, id);
             Location exitLocation = dl.getL();
-            String[][][] json = TARDISARSMethods.getGridFromJSON(rs.getJson());
+            String[][][] json = ARSMethods.getGridFromJSON(rs.getJson());
             Chunk c = plugin.getLocationUtils().getTARDISChunk(id);
             List<Chunk> chunks = TARDISChunkUtils.getConsoleChunks(c, s);
             chunks.forEach((u) -> {
@@ -173,7 +173,7 @@ public class TARDISInteriorPostioning {
                     for (int z = 0; z < 9; z++) {
                         if (!json[l][x][z].equalsIgnoreCase("STONE")) {
                             // get ARS slot
-                            TARDISARSSlot slot = new TARDISARSSlot();
+                            ARSSlot slot = new ARSSlot();
                             slot.setChunk(c);
                             slot.setY(l);
                             slot.setX(x);

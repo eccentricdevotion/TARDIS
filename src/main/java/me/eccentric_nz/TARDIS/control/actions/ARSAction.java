@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.control.actions;
 
-import me.eccentric_nz.TARDIS.ARS.TARDISARSInventory;
+import me.eccentric_nz.TARDIS.ARS.ARSInventory;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
@@ -70,7 +70,7 @@ public class ARSAction {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "ARS_MISSING");
                 return;
             }
-            player.openInventory(new TARDISARSInventory(plugin, player).getInventory());
+            player.openInventory(new ARSInventory(plugin, player).getInventory());
         }
     }
 }

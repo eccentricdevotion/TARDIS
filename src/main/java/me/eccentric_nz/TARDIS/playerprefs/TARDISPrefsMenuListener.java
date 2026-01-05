@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.playerprefs;
 
-import me.eccentric_nz.TARDIS.ARS.TARDISARSMap;
+import me.eccentric_nz.TARDIS.ARS.ARSMapInventory;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.DamageUtility;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronLevels;
@@ -193,7 +193,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener {
                         // close inventory
                         player.closeInventory();
                         // open new inventory
-                        player.openInventory(new TARDISARSMap(plugin).getInventory());
+                        player.openInventory(new ARSMapInventory(plugin).getInventory());
                     }
                 }, 1L);
             } else {

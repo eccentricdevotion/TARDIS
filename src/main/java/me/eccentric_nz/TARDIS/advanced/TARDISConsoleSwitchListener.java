@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.advanced;
 
-import me.eccentric_nz.TARDIS.ARS.TARDISARSInventory;
+import me.eccentric_nz.TARDIS.ARS.ARSInventory;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.chameleon.gui.TARDISChameleonInventory;
 import me.eccentric_nz.TARDIS.console.telepathic.TARDISTelepathicInventory;
@@ -119,7 +119,7 @@ public class TARDISConsoleSwitchListener implements Listener {
             }
             // ARS circuit
             if (dn.contains("ARS")) {
-                holder = new TARDISARSInventory(plugin, player);
+                holder = new ARSInventory(plugin, player);
             }
             // Telepathic circuit
             if (dn.contains("Telepathic")) {

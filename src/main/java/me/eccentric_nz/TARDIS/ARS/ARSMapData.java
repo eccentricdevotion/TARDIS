@@ -22,9 +22,12 @@ package me.eccentric_nz.TARDIS.ARS;
  *
  * @author eccentric_nz
  */
-class TARDISARSSaveData {
+public class ARSMapData {
 
     private String[][][] data;
+    private int e;
+    private int s;
+    private int y;
     private int id;
 
     public String[][][] getData() {
@@ -33,6 +36,30 @@ class TARDISARSSaveData {
 
     public void setData(String[][][] data) {
         this.data = data;
+    }
+
+    public int getE() {
+        return e;
+    }
+
+    public void setE(int e) {
+        this.e = e;
+    }
+
+    public int getS() {
+        return s;
+    }
+
+    public void setS(int s) {
+        this.s = s;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
     }
 
     public int getId() {

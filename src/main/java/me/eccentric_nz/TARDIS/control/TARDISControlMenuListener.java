@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.control;
 
-import me.eccentric_nz.TARDIS.ARS.TARDISARSInventory;
-import me.eccentric_nz.TARDIS.ARS.TARDISARSMap;
+import me.eccentric_nz.TARDIS.ARS.ARSInventory;
+import me.eccentric_nz.TARDIS.ARS.ARSMapInventory;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
@@ -181,7 +181,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "ARS_MISSING");
                     return;
                 }
-                player.openInventory(new TARDISARSInventory(plugin, player).getInventory());
+                player.openInventory(new ARSInventory(plugin, player).getInventory());
             }
             case 4 -> {
                 // chameleon circuit
@@ -416,7 +416,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener {
                 }
             }
             // tardis map
-            case 47 -> player.openInventory(new TARDISARSMap(plugin).getInventory());
+            case 47 -> player.openInventory(new ARSMapInventory(plugin).getInventory());
             case 49 -> {
                 // temporal
                 if (!TARDISPermission.hasPermission(player, "tardis.temporal")) {

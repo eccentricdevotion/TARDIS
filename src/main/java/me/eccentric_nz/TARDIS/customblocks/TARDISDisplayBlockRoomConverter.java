@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.customblocks;
 
-import me.eccentric_nz.TARDIS.ARS.TARDISARSSlot;
+import me.eccentric_nz.TARDIS.ARS.ARSSlot;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
@@ -52,7 +52,7 @@ public class TARDISDisplayBlockRoomConverter implements Runnable {
     private int taskId;
     private World world;
 
-    public TARDISDisplayBlockRoomConverter(TARDIS plugin, Player owner, TARDISARSSlot slot) {
+    public TARDISDisplayBlockRoomConverter(TARDIS plugin, Player owner, ARSSlot slot) {
         this.plugin = plugin;
         this.owner = owner;
         this.startX = slot.getX();

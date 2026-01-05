@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.commands.sudo;
 
-import me.eccentric_nz.TARDIS.ARS.TARDISARSInventory;
+import me.eccentric_nz.TARDIS.ARS.ARSInventory;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.entity.Player;
 
@@ -38,7 +38,7 @@ class SudoARS {
 
     boolean showARS(Player player, UUID uuid) {
         TARDISSudoTracker.SUDOERS.put(player.getUniqueId(), uuid);
-        player.openInventory(new TARDISARSInventory(plugin, player).getInventory());
+        player.openInventory(new ARSInventory(plugin, player).getInventory());
         return true;
     }
 }
