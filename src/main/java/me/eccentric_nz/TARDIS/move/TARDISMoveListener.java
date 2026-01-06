@@ -26,8 +26,8 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetVoid;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFarmer;
-import me.eccentric_nz.TARDIS.mobfarming.TARDISFollowerSpawner;
-import me.eccentric_nz.TARDIS.mobfarming.TARDISPetsAndFollowers;
+import me.eccentric_nz.TARDIS.mobfarming.FollowerSpawner;
+import me.eccentric_nz.TARDIS.mobfarming.PetsAndFollowers;
 import me.eccentric_nz.TARDIS.portal.Capture;
 import me.eccentric_nz.TARDIS.portal.Cast;
 import me.eccentric_nz.TARDIS.portal.CastData;
@@ -169,7 +169,7 @@ public class TARDISMoveListener implements Listener {
                 boolean willFarm = (hasPrefs) && rsp.isFarmOn();
                 boolean canPowerUp = (hasPrefs) && (rsp.isAutoPowerUp() && !tpl.isAbandoned());
                 // check for entities near the police box
-                TARDISPetsAndFollowers petsAndFollowers = null;
+                PetsAndFollowers petsAndFollowers = null;
                 if (plugin.getConfig().getBoolean("allow.mob_farming") && TARDISPermission.hasPermission(player, "tardis.farm") && !plugin.getTrackerKeeper().getFarming().contains(uuid) && willFarm) {
                     plugin.getTrackerKeeper().getFarming().add(uuid);
                     TARDISFarmer tf = new TARDISFarmer(plugin);
@@ -197,7 +197,7 @@ public class TARDISMoveListener implements Listener {
                         plugin.getGeneralKeeper().getDoorListener().movePets(petsAndFollowers.getPets(), tpl.getLocation(), player, d, true);
                     }
                     if (!petsAndFollowers.getFollowers().isEmpty()) {
-                        new TARDISFollowerSpawner(plugin).spawn(petsAndFollowers.getFollowers(), tpl.getLocation(), player, d, true);
+                        new FollowerSpawner(plugin).spawn(petsAndFollowers.getFollowers(), tpl.getLocation(), player, d, true);
                     }
                 }
                 if (canPowerUp && !exit) {

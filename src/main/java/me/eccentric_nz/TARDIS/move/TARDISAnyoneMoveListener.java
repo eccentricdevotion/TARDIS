@@ -23,8 +23,8 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFarmer;
-import me.eccentric_nz.TARDIS.mobfarming.TARDISFollowerSpawner;
-import me.eccentric_nz.TARDIS.mobfarming.TARDISPetsAndFollowers;
+import me.eccentric_nz.TARDIS.mobfarming.FollowerSpawner;
+import me.eccentric_nz.TARDIS.mobfarming.PetsAndFollowers;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -94,7 +94,7 @@ public class TARDISAnyoneMoveListener implements Listener {
             boolean userQuotes = (hasPrefs) && rsp.isQuotesOn();
             boolean willFarm = (hasPrefs) && rsp.isFarmOn();
             // check for entities near the police box
-            TARDISPetsAndFollowers petsAndFollowers = null;
+            PetsAndFollowers petsAndFollowers = null;
             if (plugin.getConfig().getBoolean("allow.mob_farming") && TARDISPermission.hasPermission(player, "tardis.farm") && !plugin.getTrackerKeeper().getFarming().contains(uuid) && willFarm) {
                 plugin.getTrackerKeeper().getFarming().add(uuid);
                 TARDISFarmer tf = new TARDISFarmer(plugin);
@@ -126,7 +126,7 @@ public class TARDISAnyoneMoveListener implements Listener {
                     plugin.getGeneralKeeper().getDoorListener().movePets(petsAndFollowers.getPets(), tpl.getLocation(), player, d, true);
                 }
                 if (!petsAndFollowers.getFollowers().isEmpty()) {
-                    new TARDISFollowerSpawner(plugin).spawn(petsAndFollowers.getFollowers(), tpl.getLocation(), player, d, true);
+                    new FollowerSpawner(plugin).spawn(petsAndFollowers.getFollowers(), tpl.getLocation(), player, d, true);
                 }
             }
             if (userQuotes) {

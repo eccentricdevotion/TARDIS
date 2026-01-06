@@ -1,4 +1,4 @@
-package me.eccentric_nz.TARDIS.mobfarming;
+package me.eccentric_nz.TARDIS.mobfarming.types;
 
 import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;

@@ -14,10 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.mobfarming;
+package me.eccentric_nz.TARDIS.mobfarming.types;
 
 import org.bukkit.DyeColor;
-import org.bukkit.entity.Cat;
 import org.bukkit.entity.EntityType;
 
 /**
@@ -25,32 +24,23 @@ import org.bukkit.entity.EntityType;
  * practice which is not familiar. When referring to entities, it is used for sentient and non-sentient organic
  * creatures, as well as robots.
  * <p>
- * Data storage class for TARDIS cat.
+ * Data storage class for TARDIS sheep.
  *
  * @author eccentric_nz
  */
-public class TARDISCat extends TARDISPet {
+public class TARDISSheep extends TARDISMob {
 
-    private Cat.Type catType;
-    private DyeColor collarColour;
+    private DyeColor woolColour;
 
-    public TARDISCat() {
-        super.setType(EntityType.CAT);
+    public TARDISSheep() {
+        super.setType(EntityType.SHEEP);
     }
 
-    public Cat.Type getCatType() {
-        return catType;
+    public DyeColor getWoolColour() {
+        return woolColour;
     }
 
-    public void setCatType(Cat.Type catType) {
-        this.catType = catType;
-    }
-
-    public DyeColor getCollarColour() {
-        return collarColour;
-    }
-
-    public void setCollarColour(DyeColor collarColour) {
-        this.collarColour = collarColour;
+    public void setWoolColour(DyeColor woolColour) {
+        this.woolColour = woolColour;
     }
 }

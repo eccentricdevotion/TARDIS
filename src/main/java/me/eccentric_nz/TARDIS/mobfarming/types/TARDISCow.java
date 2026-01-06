@@ -14,55 +14,33 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.mobfarming;
+package me.eccentric_nz.TARDIS.mobfarming.types;
 
+import org.bukkit.entity.Cow;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Llama;
-import org.bukkit.inventory.ItemStack;
 
 /**
  * Alien is a broad, subjective term. It can be applied as a noun or an adjective for any entity, object, place or
  * practice which is not familiar. When referring to entities, it is used for sentient and non-sentient organic
  * creatures, as well as robots.
  * <p>
- * Data storage class for TARDIS llama.
+ * Data storage class for TARDIS cow.
  *
  * @author eccentric_nz
  */
-public class TARDISLlama extends TARDISHorse {
+public class TARDISCow extends TARDISMob {
 
-    private Llama.Color llamacolor;
-    private int strength;
-    private ItemStack decor;
+    private Cow.Variant cowVariant;
 
-    /**
-     * Data storage class for TARDIS Llama.
-     */
-    public TARDISLlama() {
-        super.setType(EntityType.LLAMA);
+    public TARDISCow() {
+        super.setType(EntityType.COW);
     }
 
-    public Llama.Color getLlamacolor() {
-        return llamacolor;
+    public Cow.Variant getCowVariant() {
+        return cowVariant;
     }
 
-    public void setLlamacolor(Llama.Color llamacolor) {
-        this.llamacolor = llamacolor;
-    }
-
-    public int getStrength() {
-        return strength;
-    }
-
-    public void setStrength(int strength) {
-        this.strength = strength;
-    }
-
-    public ItemStack getDecor() {
-        return decor;
-    }
-
-    public void setDecor(ItemStack decor) {
-        this.decor = decor;
+    public void setCowVariant(Cow.Variant cowVariant) {
+        this.cowVariant = cowVariant;
     }
 }

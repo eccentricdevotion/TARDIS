@@ -31,7 +31,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
-public class TARDISFarmingInventory implements InventoryHolder {
+public class FarmingInventory implements InventoryHolder {
 
     private final TARDIS plugin;
     private final UUID uuid;
@@ -39,7 +39,7 @@ public class TARDISFarmingInventory implements InventoryHolder {
     private final ItemStack off;
     private final Inventory inventory;
 
-    public TARDISFarmingInventory(TARDIS plugin, UUID uuid) {
+    public FarmingInventory(TARDIS plugin, UUID uuid) {
         this.plugin = plugin;
         this.uuid = uuid;
         off = ItemStack.of(GUIFarming.OFF.getMaterial(), 1);

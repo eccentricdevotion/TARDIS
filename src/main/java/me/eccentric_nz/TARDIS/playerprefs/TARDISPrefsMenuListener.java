@@ -34,7 +34,7 @@ import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.floodgate.FloodgateMapForm;
 import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
-import me.eccentric_nz.TARDIS.mobfarming.TARDISFarmingInventory;
+import me.eccentric_nz.TARDIS.mobfarming.FarmingInventory;
 import me.eccentric_nz.TARDIS.particles.TARDISParticleInventory;
 import me.eccentric_nz.TARDIS.sonic.TARDISSonicConfiguratorInventory;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
@@ -217,7 +217,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener {
                 // close inventory
                 player.closeInventory();
                 // open new inventory
-                player.openInventory(new TARDISFarmingInventory(plugin, uuid).getInventory());
+                player.openInventory(new FarmingInventory(plugin, uuid).getInventory());
             }, 1L);
             return;
         }

@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.mobfarming;
+package me.eccentric_nz.TARDIS.mobfarming.types;
 
 import org.bukkit.entity.EntityType;
 
@@ -34,23 +34,23 @@ public class TARDISBee extends TARDISMob {
     /**
      * Data storage class for TARDIS bee.
      */
-    TARDISBee() {
+    public TARDISBee() {
         super.setType(EntityType.BEE);
     }
 
-    boolean hasNectar() {
+    public boolean hasNectar() {
         return nectar;
     }
 
-    void setHasNectar(boolean nectar) {
+    public void setHasNectar(boolean nectar) {
         this.nectar = nectar;
     }
 
-    boolean hasStung() {
+    public boolean hasStung() {
         return stung;
     }
 
-    void setHasStung(boolean stung) {
+    public void setHasStung(boolean stung) {
         this.stung = stung;
     }
 

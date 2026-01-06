@@ -30,8 +30,8 @@ import me.eccentric_nz.TARDIS.doors.inner.*;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFarmer;
-import me.eccentric_nz.TARDIS.mobfarming.TARDISFollowerSpawner;
-import me.eccentric_nz.TARDIS.mobfarming.TARDISPetsAndFollowers;
+import me.eccentric_nz.TARDIS.mobfarming.FollowerSpawner;
+import me.eccentric_nz.TARDIS.mobfarming.PetsAndFollowers;
 import me.eccentric_nz.TARDIS.move.TARDISDoorListener;
 import me.eccentric_nz.TARDIS.sonic.actions.TARDISSonicSound;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
@@ -130,7 +130,7 @@ public class OuterDisplayDoorAction extends TARDISDoorListener {
                                                 COMPASS pd = COMPASS.valueOf(TARDISStaticUtils.getPlayersDirection(player, false));
                                                 World playerWorld = location.getWorld();
                                                 // check for entities near the police box
-                                                TARDISPetsAndFollowers petsAndFollowers = null;
+                                                PetsAndFollowers petsAndFollowers = null;
                                                 if (plugin.getConfig().getBoolean("allow.mob_farming") && TARDISPermission.hasPermission(player, "tardis.farm") && !plugin.getTrackerKeeper().getFarming().contains(uuid) && willFarm) {
                                                     plugin.getTrackerKeeper().getFarming().add(uuid);
                                                     TARDISFarmer tf = new TARDISFarmer(plugin);
@@ -155,7 +155,7 @@ public class OuterDisplayDoorAction extends TARDISDoorListener {
                                                         movePets(petsAndFollowers.getPets(), tardis_loc, player, d, true);
                                                     }
                                                     if (!petsAndFollowers.getFollowers().isEmpty()) {
-                                                        new TARDISFollowerSpawner(plugin).spawn(petsAndFollowers.getFollowers(), tardis_loc, player, d, true);
+                                                        new FollowerSpawner(plugin).spawn(petsAndFollowers.getFollowers(), tardis_loc, player, d, true);
                                                     }
                                                 }
                                                 if (canPowerUp && !tardis.isPoweredOn() && !tardis.isAbandoned()) {

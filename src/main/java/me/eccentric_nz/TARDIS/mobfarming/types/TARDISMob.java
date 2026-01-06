@@ -14,9 +14,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.mobfarming;
+package me.eccentric_nz.TARDIS.mobfarming.types;
 
-import org.bukkit.entity.Chicken;
 import org.bukkit.entity.EntityType;
 
 /**
@@ -24,23 +23,64 @@ import org.bukkit.entity.EntityType;
  * practice which is not familiar. When referring to entities, it is used for sentient and non-sentient organic
  * creatures, as well as robots.
  * <p>
- * Data storage class for TARDIS chicken.
+ * Data storage class for TARDIS mobs.
  *
  * @author eccentric_nz
  */
-class TARDISChicken extends TARDISMob {
+public class TARDISMob {
 
-    private Chicken.Variant chickenVariant;
+    private EntityType type;
+    private int age;
+    private double health;
+    private boolean baby;
+    private boolean tamed;
+    private String name;
 
-    public TARDISChicken() {
-        super.setType(EntityType.CHICKEN);
+    public EntityType getType() {
+        return type;
     }
 
-    public Chicken.Variant getChickenVariant() {
-        return chickenVariant;
+    public void setType(EntityType type) {
+        this.type = type;
     }
 
-    public void setChickenVariant(Chicken.Variant chickenVariant) {
-        this.chickenVariant = chickenVariant;
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public double getHealth() {
+        return health;
+    }
+
+    public void setHealth(double health) {
+        this.health = health;
+    }
+
+    public boolean isBaby() {
+        return baby;
+    }
+
+    public void setBaby(boolean baby) {
+        this.baby = baby;
+    }
+
+    public boolean isTamed() {
+        return tamed;
+    }
+
+    public void setTamed(boolean tamed) {
+        this.tamed = tamed;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

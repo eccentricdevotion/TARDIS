@@ -14,33 +14,44 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.mobfarming;
+package me.eccentric_nz.TARDIS.mobfarming.types;
 
-import org.bukkit.entity.Cow;
+import me.eccentric_nz.TARDIS.mobfarming.TARDISPet;
+import org.bukkit.DyeColor;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Wolf;
 
 /**
  * Alien is a broad, subjective term. It can be applied as a noun or an adjective for any entity, object, place or
  * practice which is not familiar. When referring to entities, it is used for sentient and non-sentient organic
  * creatures, as well as robots.
  * <p>
- * Data storage class for TARDIS cow.
+ * Data storage class for TARDIS wolf.
  *
  * @author eccentric_nz
  */
-class TARDISCow extends TARDISMob {
+public class TARDISWolf extends TARDISPet {
 
-    private Cow.Variant cowVariant;
+    private Wolf.Variant wolfVariant;
+    private DyeColor collarColour;
 
-    public TARDISCow() {
-        super.setType(EntityType.COW);
+    public TARDISWolf() {
+        super.setType(EntityType.WOLF);
     }
 
-    public Cow.Variant getCowVariant() {
-        return cowVariant;
+    public Wolf.Variant getWolfVariant() {
+        return wolfVariant;
     }
 
-    public void setCowVariant(Cow.Variant cowVariant) {
-        this.cowVariant = cowVariant;
+    public void setWolfVariant(Wolf.Variant wolfVariant) {
+        this.wolfVariant = wolfVariant;
+    }
+
+    public DyeColor getCollarColour() {
+        return collarColour;
+    }
+
+    public void setCollarColour(DyeColor collarColour) {
+        this.collarColour = collarColour;
     }
 }

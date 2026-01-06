@@ -14,12 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.mobfarming;
+package me.eccentric_nz.TARDIS.mobfarming.types;
 
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.MushroomCow;
 
-class TARDISMooshroom extends TARDISMob {
+public class TARDISMooshroom extends TARDISMob {
 
     private MushroomCow.Variant mushroomVariant;
 
@@ -27,11 +27,11 @@ class TARDISMooshroom extends TARDISMob {
         super.setType(EntityType.MOOSHROOM);
     }
 
-    MushroomCow.Variant getMushroomVariant() {
+    public MushroomCow.Variant getMushroomVariant() {
         return mushroomVariant;
     }
 
-    void setMushroomVariant(MushroomCow.Variant mushroomVariant) {
+    public void setMushroomVariant(MushroomCow.Variant mushroomVariant) {
         this.mushroomVariant = mushroomVariant;
     }
 }

@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.mobfarming;
+package me.eccentric_nz.TARDIS.mobfarming.types;
 
 import org.bukkit.entity.Axolotl;
 import org.bukkit.entity.EntityType;
@@ -29,7 +29,7 @@ import org.bukkit.entity.EntityType;
  *
  * @author eccentric_nz
  */
-class TARDISAxolotl extends TARDISMob {
+public class TARDISAxolotl extends TARDISMob {
 
     private Axolotl.Variant axolotlVariant;
 
@@ -37,11 +37,11 @@ class TARDISAxolotl extends TARDISMob {
         super.setType(EntityType.AXOLOTL);
     }
 
-    Axolotl.Variant getAxolotlVariant() {
+    public Axolotl.Variant getAxolotlVariant() {
         return axolotlVariant;
     }
 
-    void setAxolotlVariant(Axolotl.Variant axolotl) {
+    public void setAxolotlVariant(Axolotl.Variant axolotl) {
         axolotlVariant = axolotl;
     }
 }

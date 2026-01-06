@@ -76,7 +76,7 @@ import me.eccentric_nz.TARDIS.lazarus.TARDISLazarusSkinsListener;
 import me.eccentric_nz.TARDIS.lights.*;
 import me.eccentric_nz.TARDIS.listeners.*;
 import me.eccentric_nz.TARDIS.listeners.controls.*;
-import me.eccentric_nz.TARDIS.mobfarming.TARDISFarmingMenuListener;
+import me.eccentric_nz.TARDIS.mobfarming.FarmingMenuListener;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISLeashListener;
 import me.eccentric_nz.TARDIS.move.TARDISAnyoneDoorListener;
 import me.eccentric_nz.TARDIS.move.TARDISAnyoneMoveListener;
@@ -176,7 +176,7 @@ class TARDISListenerRegisterer {
         if (plugin.getConfig().getBoolean("allow.autonomous")) {
             plugin.getPM().registerEvents(new TARDISAutonomousGUIListener(plugin), plugin);
         }
-        plugin.getPM().registerEvents(new TARDISFarmingMenuListener(plugin), plugin);
+        plugin.getPM().registerEvents(new FarmingMenuListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISConfigMenuListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISAnvilListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISAreaListener(plugin), plugin);

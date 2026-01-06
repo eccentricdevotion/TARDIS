@@ -14,33 +14,41 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.mobfarming;
+package me.eccentric_nz.TARDIS.mobfarming.types;
 
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Rabbit;
+import org.bukkit.entity.Pig;
 
 /**
  * Alien is a broad, subjective term. It can be applied as a noun or an adjective for any entity, object, place or
  * practice which is not familiar. When referring to entities, it is used for sentient and non-sentient organic
  * creatures, as well as robots.
  * <p>
- * Data storage class for TARDIS rabbit.
+ * Data storage class for TARDIS pig.
  *
  * @author eccentric_nz
  */
-class TARDISRabbit extends TARDISMob {
+public class TARDISPig extends TARDISMob {
 
-    private Rabbit.Type bunnyType;
-
-    public TARDISRabbit() {
-        super.setType(EntityType.RABBIT);
+    private boolean saddled;
+    private Pig.Variant pigVariant;
+    public TARDISPig() {
+        super.setType(EntityType.PIG);
     }
 
-    Rabbit.Type getBunnyType() {
-        return bunnyType;
+    public boolean isSaddled() {
+        return saddled;
     }
 
-    void setBunnyType(Rabbit.Type bunnyType) {
-        this.bunnyType = bunnyType;
+    public void setSaddled(boolean saddled) {
+        this.saddled = saddled;
+    }
+
+    public Pig.Variant getPigVariant() {
+        return pigVariant;
+    }
+
+    public void setPigVariant(Pig.Variant pigVariant) {
+        this.pigVariant = pigVariant;
     }
 }

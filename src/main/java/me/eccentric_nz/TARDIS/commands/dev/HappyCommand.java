@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.commands.dev;
 
 import com.mojang.datafixers.util.Pair;
 import me.eccentric_nz.TARDIS.mobfarming.HappyGhastUtils;
-import me.eccentric_nz.TARDIS.mobfarming.TARDISHappyGhast;
+import me.eccentric_nz.TARDIS.mobfarming.types.TARDISHappyGhast;
 import me.eccentric_nz.TARDIS.rooms.happy.HappyLocations;
 import org.bukkit.Location;
 import org.bukkit.Material;

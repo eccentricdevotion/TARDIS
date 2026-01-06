@@ -14,8 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.mobfarming;
+package me.eccentric_nz.TARDIS.mobfarming.types;
 
+import me.eccentric_nz.TARDIS.mobfarming.TARDISPet;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Parrot;
 
@@ -36,7 +37,7 @@ public class TARDISParrot extends TARDISPet {
         return parrotVariant;
     }
 
-    void setParrotVariant(Parrot.Variant parrotVariant) {
+    public void setParrotVariant(Parrot.Variant parrotVariant) {
         this.parrotVariant = parrotVariant;
     }
 
@@ -44,7 +45,7 @@ public class TARDISParrot extends TARDISPet {
         return onLeftShoulder;
     }
 
-    void setOnLeftShoulder(boolean onLeftShoulder) {
+    public void setOnLeftShoulder(boolean onLeftShoulder) {
         this.onLeftShoulder = onLeftShoulder;
     }
 
@@ -52,7 +53,7 @@ public class TARDISParrot extends TARDISPet {
         return onRightShoulder;
     }
 
-    void setOnRightShoulder(boolean onRightShoulder) {
+    public void setOnRightShoulder(boolean onRightShoulder) {
         this.onRightShoulder = onRightShoulder;
     }
 }

@@ -14,27 +14,33 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.mobfarming;
+package me.eccentric_nz.TARDIS.mobfarming.types;
 
-import me.eccentric_nz.TARDIS.database.data.Follower;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Panda;
 
-import java.util.List;
+public class TARDISPanda extends TARDISMob {
 
-public class TARDISPetsAndFollowers {
+    private Panda.Gene mainGene;
+    private Panda.Gene hiddenGene;
 
-    private final List<TARDISPet> pets;
-    private final List<Follower> followers;
-
-    TARDISPetsAndFollowers(List<TARDISPet> pets, List<Follower> followers) {
-        this.pets = pets;
-        this.followers = followers;
+    public TARDISPanda() {
+        super.setType(EntityType.PANDA);
     }
 
-    public List<TARDISPet> getPets() {
-        return pets;
+    public Panda.Gene getMainGene() {
+        return mainGene;
     }
 
-    public List<Follower> getFollowers() {
-        return followers;
+    public void setMainGene(Panda.Gene mainGene) {
+        this.mainGene = mainGene;
+    }
+
+    public Panda.Gene getHiddenGene() {
+        return hiddenGene;
+    }
+
+    public void setHiddenGene(Panda.Gene hiddenGene) {
+        this.hiddenGene = hiddenGene;
     }
 }

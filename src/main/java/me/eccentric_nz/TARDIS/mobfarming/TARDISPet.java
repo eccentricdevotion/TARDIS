@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.mobfarming;
 
+import me.eccentric_nz.TARDIS.mobfarming.types.TARDISMob;
+
 import java.util.UUID;
 
 /**
@@ -38,7 +40,7 @@ public class TARDISPet extends TARDISMob {
         return sitting;
     }
 
-    void setSitting(boolean sitting) {
+    public void setSitting(boolean sitting) {
         this.sitting = sitting;
     }
 }

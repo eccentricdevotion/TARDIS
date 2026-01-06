@@ -16,17 +16,25 @@
  */
 package me.eccentric_nz.TARDIS.mobfarming;
 
-import org.bukkit.inventory.ItemStack;
+import me.eccentric_nz.TARDIS.database.data.Follower;
 
-public class TARDISBoat extends TARDISMob {
+import java.util.List;
 
-    private ItemStack[] items;
+public class PetsAndFollowers {
 
-    public ItemStack[] getItems() {
-        return items;
+    private final List<TARDISPet> pets;
+    private final List<Follower> followers;
+
+    PetsAndFollowers(List<TARDISPet> pets, List<Follower> followers) {
+        this.pets = pets;
+        this.followers = followers;
     }
 
-    public void setItems(ItemStack[] items) {
-        this.items = items;
+    public List<TARDISPet> getPets() {
+        return pets;
+    }
+
+    public List<Follower> getFollowers() {
+        return followers;
     }
 }

@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.mobfarming;
+package me.eccentric_nz.TARDIS.mobfarming.types;
 
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Villager;
@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * @author eccentric_nz
  */
-class TARDISVillager extends TARDISMob {
+public class TARDISVillager extends TARDISMob {
 
     private Villager.Profession profession;
     private List<MerchantRecipe> trades;
@@ -43,35 +43,35 @@ class TARDISVillager extends TARDISMob {
      */
 
 
-    Villager.Profession getProfession() {
+    public Villager.Profession getProfession() {
         return profession;
     }
 
-    void setProfession(Villager.Profession profession) {
+    public void setProfession(Villager.Profession profession) {
         this.profession = profession;
     }
 
-    List<MerchantRecipe> getTrades() {
+    public List<MerchantRecipe> getTrades() {
         return trades;
     }
 
-    void setTrades(List<MerchantRecipe> trades) {
+    public void setTrades(List<MerchantRecipe> trades) {
         this.trades = trades;
     }
 
-    int getLevel() {
+    public int getLevel() {
         return level;
     }
 
-    void setLevel(int level) {
+    public void setLevel(int level) {
         this.level = level;
     }
 
-    Villager.Type getVillagerType() {
+    public Villager.Type getVillagerType() {
         return villagerType;
     }
 
-    void setVillagerType(Villager.Type villagerType) {
+    public void setVillagerType(Villager.Type villagerType) {
         this.villagerType = villagerType;
     }
 

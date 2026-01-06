@@ -35,11 +35,11 @@ import org.bukkit.entity.Player;
 import java.util.List;
 import java.util.UUID;
 
-public class TARDISFollowerSpawner {
+public class FollowerSpawner {
 
     private final TARDIS plugin;
 
-    public TARDISFollowerSpawner(TARDIS plugin) {
+    public FollowerSpawner(TARDIS plugin) {
         this.plugin = plugin;
     }
 

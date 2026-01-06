@@ -14,73 +14,55 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.mobfarming;
+package me.eccentric_nz.TARDIS.mobfarming.types;
 
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Llama;
+import org.bukkit.inventory.ItemStack;
 
 /**
  * Alien is a broad, subjective term. It can be applied as a noun or an adjective for any entity, object, place or
  * practice which is not familiar. When referring to entities, it is used for sentient and non-sentient organic
  * creatures, as well as robots.
  * <p>
- * Data storage class for TARDIS mobs.
+ * Data storage class for TARDIS llama.
  *
  * @author eccentric_nz
  */
-public class TARDISMob {
+public class TARDISLlama extends TARDISHorse {
 
-    private EntityType type;
-    private int age;
-    private double health;
-    private boolean baby;
-    private boolean tamed;
-    private String name;
+    private Llama.Color llamacolor;
+    private int strength;
+    private ItemStack decor;
 
-    public EntityType getType() {
-        return type;
+    /**
+     * Data storage class for TARDIS Llama.
+     */
+    public TARDISLlama() {
+        super.setType(EntityType.LLAMA);
     }
 
-    public void setType(EntityType type) {
-        this.type = type;
+    public Llama.Color getLlamacolor() {
+        return llamacolor;
     }
 
-    public int getAge() {
-        return age;
+    public void setLlamacolor(Llama.Color llamacolor) {
+        this.llamacolor = llamacolor;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public int getStrength() {
+        return strength;
     }
 
-    public double getHealth() {
-        return health;
+    public void setStrength(int strength) {
+        this.strength = strength;
     }
 
-    public void setHealth(double health) {
-        this.health = health;
+    public ItemStack getDecor() {
+        return decor;
     }
 
-    public boolean isBaby() {
-        return baby;
-    }
-
-    public void setBaby(boolean baby) {
-        this.baby = baby;
-    }
-
-    public boolean isTamed() {
-        return tamed;
-    }
-
-    public void setTamed(boolean tamed) {
-        this.tamed = tamed;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public void setDecor(ItemStack decor) {
+        this.decor = decor;
     }
 }

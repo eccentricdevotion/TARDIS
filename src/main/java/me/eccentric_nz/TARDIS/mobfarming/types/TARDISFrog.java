@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.mobfarming;
+package me.eccentric_nz.TARDIS.mobfarming.types;
 
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Frog;
@@ -29,7 +29,7 @@ import org.bukkit.entity.Frog;
  *
  * @author eccentric_nz
  */
-class TARDISFrog extends TARDISMob {
+public class TARDISFrog extends TARDISMob {
 
     private Frog.Variant frogVariant;
 

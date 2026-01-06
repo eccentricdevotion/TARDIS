@@ -32,8 +32,8 @@ import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.flight.TARDISTakeoff;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFarmer;
-import me.eccentric_nz.TARDIS.mobfarming.TARDISFollowerSpawner;
-import me.eccentric_nz.TARDIS.mobfarming.TARDISPetsAndFollowers;
+import me.eccentric_nz.TARDIS.mobfarming.FollowerSpawner;
+import me.eccentric_nz.TARDIS.mobfarming.PetsAndFollowers;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
@@ -398,13 +398,13 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                             movePlayer(player, exitLoc, true, playerWorld, userQuotes, 2, minecart, false);
                                             if (plugin.getConfig().getBoolean("allow.mob_farming") && TARDISPermission.hasPermission(player, "tardis.farm")) {
                                                 TARDISFarmer tf = new TARDISFarmer(plugin);
-                                                TARDISPetsAndFollowers petsAndFollowers = tf.exitPets(player);
+                                                PetsAndFollowers petsAndFollowers = tf.exitPets(player);
                                                 if (petsAndFollowers != null) {
                                                     if (!petsAndFollowers.getPets().isEmpty()) {
                                                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> movePets(petsAndFollowers.getPets(), exitLoc, player, d, false), 10L);
                                                     }
                                                     if (!petsAndFollowers.getFollowers().isEmpty()) {
-                                                        new TARDISFollowerSpawner(plugin).spawn(petsAndFollowers.getFollowers(), exitLoc, player, d, false);
+                                                        new FollowerSpawner(plugin).spawn(petsAndFollowers.getFollowers(), exitLoc, player, d, false);
                                                     }
                                                 }
                                             }
@@ -444,7 +444,7 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                             World cw = idl.getW();
                                             COMPASS innerD = idl.getD();
                                             // check for entities near the police box
-                                            TARDISPetsAndFollowers petsAndFollowers = null;
+                                            PetsAndFollowers petsAndFollowers = null;
                                             if (plugin.getConfig().getBoolean("allow.mob_farming") && TARDISPermission.hasPermission(player, "tardis.farm") && !plugin.getTrackerKeeper().getFarming().contains(playerUUID) && willFarm) {
                                                 plugin.getTrackerKeeper().getFarming().add(playerUUID);
                                                 TARDISFarmer tf = new TARDISFarmer(plugin);
@@ -468,7 +468,7 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                                     movePets(petsAndFollowers.getPets(), tardis_loc, player, d, true);
                                                 }
                                                 if (!petsAndFollowers.getFollowers().isEmpty()) {
-                                                    new TARDISFollowerSpawner(plugin).spawn(petsAndFollowers.getFollowers(), tardis_loc, player, d, true);
+                                                    new FollowerSpawner(plugin).spawn(petsAndFollowers.getFollowers(), tardis_loc, player, d, true);
                                                 }
                                             }
                                             if (canPowerUp && po) {

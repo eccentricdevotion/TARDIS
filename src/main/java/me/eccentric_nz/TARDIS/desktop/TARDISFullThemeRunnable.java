@@ -40,7 +40,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
-import me.eccentric_nz.TARDIS.mobfarming.TARDISFollowerSpawner;
+import me.eccentric_nz.TARDIS.mobfarming.FollowerSpawner;
 import me.eccentric_nz.TARDIS.rotors.TARDISTimeRotor;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import me.eccentric_nz.TARDIS.schematic.archive.ArchiveReset;
@@ -281,7 +281,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 Location creeper = TARDISStaticLocationGetters.getLocationFromDB(tardis.getCreeper());
                 if (tud.getPrevious().getPermission().equals("division") || tud.getPrevious().getPermission().equals("hospital")) {
                     // remove ood
-                    new TARDISFollowerSpawner(plugin).removeDivisionOod(creeper);
+                    new FollowerSpawner(plugin).removeDivisionOod(creeper);
                 }
                 // remove the charged creeper
                 Entity ent = creeper.getWorld().spawnEntity(creeper, EntityType.EGG);
@@ -420,7 +420,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
             }
             if (postOod != null) {
                 // spawn Ood
-                new TARDISFollowerSpawner(plugin).spawnDivisionOod(postOod);
+                new FollowerSpawner(plugin).spawnDivisionOod(postOod);
             }
             if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
                 if (slot == -1) {

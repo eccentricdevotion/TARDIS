@@ -33,12 +33,12 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.HashMap;
 import java.util.Locale;
 
-public class TARDISFarmingMenuListener extends TARDISMenuListener {
+public class FarmingMenuListener extends TARDISMenuListener {
 
     private final TARDIS plugin;
     private final HashMap<Integer, String> rooms = new HashMap<>();
 
-    public TARDISFarmingMenuListener(TARDIS plugin) {
+    public FarmingMenuListener(TARDIS plugin) {
         super(plugin);
         this.plugin = plugin;
         rooms.put(9, "allay");
@@ -62,7 +62,7 @@ public class TARDISFarmingMenuListener extends TARDISMenuListener {
 
     @EventHandler(ignoreCancelled = true)
     public void onFarmingMenuClick(InventoryClickEvent event) {
-        if (!(event.getInventory().getHolder(false) instanceof TARDISFarmingInventory)) {
+        if (!(event.getInventory().getHolder(false) instanceof FarmingInventory)) {
             return;
         }
         Player player = (Player) event.getWhoClicked();

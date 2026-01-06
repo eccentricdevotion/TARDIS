@@ -31,7 +31,7 @@ import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.UseClay;
 import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
-import me.eccentric_nz.TARDIS.mobfarming.TARDISFollowerSpawner;
+import me.eccentric_nz.TARDIS.mobfarming.FollowerSpawner;
 import me.eccentric_nz.TARDIS.rotors.TARDISTimeRotor;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import me.eccentric_nz.TARDIS.schematic.setters.*;
@@ -241,7 +241,7 @@ public class TARDISBuilderInner implements Runnable {
             }
             if (postOod != null) {
                 // spawn Ood
-                TARDISFollowerSpawner spawner = new TARDISFollowerSpawner(plugin);
+                FollowerSpawner spawner = new FollowerSpawner(plugin);
                 spawner.spawnDivisionOod(postOod);
             }
             postLightBlocks.forEach((block) -> {

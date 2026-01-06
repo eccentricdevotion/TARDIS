@@ -14,33 +14,19 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.mobfarming;
+package me.eccentric_nz.TARDIS.mobfarming.types;
 
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Panda;
+import org.bukkit.inventory.ItemStack;
 
-public class TARDISPanda extends TARDISMob {
+public class TARDISBoat extends TARDISMob {
 
-    private Panda.Gene mainGene;
-    private Panda.Gene hiddenGene;
+    private ItemStack[] items;
 
-    public TARDISPanda() {
-        super.setType(EntityType.PANDA);
+    public ItemStack[] getItems() {
+        return items;
     }
 
-    public Panda.Gene getMainGene() {
-        return mainGene;
-    }
-
-    public void setMainGene(Panda.Gene mainGene) {
-        this.mainGene = mainGene;
-    }
-
-    public Panda.Gene getHiddenGene() {
-        return hiddenGene;
-    }
-
-    public void setHiddenGene(Panda.Gene hiddenGene) {
-        this.hiddenGene = hiddenGene;
+    public void setItems(ItemStack[] items) {
+        this.items = items;
     }
 }

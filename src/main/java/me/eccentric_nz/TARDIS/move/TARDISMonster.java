@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.move;
 
-import me.eccentric_nz.TARDIS.mobfarming.TARDISMob;
+import me.eccentric_nz.TARDIS.mobfarming.types.TARDISMob;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Villager.Profession;
