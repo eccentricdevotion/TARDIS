@@ -16,19 +16,24 @@
  */
 package me.eccentric_nz.TARDIS.ARS.relocator;
 
+import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.ARS.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.DamageUtility;
 import me.eccentric_nz.TARDIS.commands.sudo.TARDISSudoTracker;
+import me.eccentric_nz.TARDIS.desktop.BlockScannerData;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.rooms.RoomRequiredLister;
+import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
+import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import net.kyori.adventure.text.Component;
+import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
-import org.bukkit.entity.Animals;
+import org.bukkit.entity.Breedable;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -39,6 +44,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 
@@ -90,7 +96,11 @@ public class RoomRelocatorListener extends ARSMethods implements Listener {
             case 3 -> plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () ->
                     player.openInventory(new RoomRelocatorInventory(plugin, player).getInventory()), 2L);
             case 4, 5, 6, 7, 8, 13, 14, 15, 16, 17, 22, 23, 24, 25, 26, 31, 32, 33, 34, 35, 40, 41, 42, 43, 44 -> {
-                // TODO not gravity wells
+                // not gravity wells
+                if (isGravity(view, slot)) {
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "RELOCATOR_GRAVITY");
+                    return;
+                }
                 if (!checkSlotForConsole(view, slot) && !selected_slot.containsKey(playerUUID)) {
                     // select room to move
                     selected_slot.put(playerUUID, slot);
@@ -105,9 +115,13 @@ public class RoomRelocatorListener extends ARSMethods implements Listener {
             }
             case 10 -> loadMap(view, playerUUID, true); // load map
             case 12 -> {
+                if (!selected_slot.containsKey(playerUUID) || !relocation_slot.containsKey(playerUUID)) {
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "RELOCATOR_SELECT");
+                    return;
+                }
                 // reconfigure
                 if (!plugin.getBuildKeeper().getRoomProgress().containsKey(player.getUniqueId())) {
-                    relocate(player);
+                    relocate(player, view, relocation_slot.get(playerUUID));
                 } else {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "ARS_ACTIVE");
                 }
@@ -134,7 +148,12 @@ public class RoomRelocatorListener extends ARSMethods implements Listener {
         }
     }
 
-    private void relocate(Player player) {
+    private boolean isGravity(InventoryView view, int slot) {
+        ItemStack is = view.getItem(slot);
+        return is != null && (is.getType() == Material.SANDSTONE || is.getType() == Material.MOSSY_COBBLESTONE);
+    }
+
+    private void relocate(Player player, InventoryView view, int slot) {
         UUID playerUUID = player.getUniqueId();
         // start relocation
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
@@ -147,6 +166,10 @@ public class RoomRelocatorListener extends ARSMethods implements Listener {
                     ARSProcessor tap = new ARSProcessor(plugin, ids.get(playerUUID));
                     boolean changed = tap.compare3DArray(save_map_data.get(playerUUID).getData(), map_data.get(playerUUID).getData());
                     if (changed && tap.checkCosts(tap.getChanged(), tap.getJettison())) {
+                        // there should be only one jettison entry, so get that
+                        Map.Entry<JettisonSlot, ARS> entry = tap.getJettison().entrySet().iterator().next();
+                        JettisonSlot jettison = entry.getKey();
+                        String room = getRoomName(view, slot);
                         if (plugin.getConfig().getBoolean("growth.rooms_require_blocks")) {
                             if (!TARDISSudoTracker.SUDOERS.containsKey(playerUUID) && !hasCondensables(playerUUID.toString(), tap.getChanged(), ids.get(playerUUID))) {
                                 String message = (tap.getChanged().size() > 1) ? "ARS_CONDENSE_MULTIPLE" : "ARS_CONDENSE";
@@ -158,17 +181,24 @@ public class RoomRelocatorListener extends ARSMethods implements Listener {
                                 player.closeInventory();
                                 return;
                             }
+                        } else {
+                            // check they haven't mined room
+                            if (!room.isEmpty()) {
+                                RoomBlockScanner brs = new RoomBlockScanner(plugin, room, jettison, playerUUID);
+                                BlockScannerData check = brs.check();
+                                if (!check.allow()) {
+                                    plugin.getMessenger().send(player, TardisModule.TARDIS, "RELOCATOR_PERCENT_BLOCKS", plugin.getConfig().getInt("desktop.block_change_percent") + "");
+                                    plugin.getMessenger().send(player, TardisModule.TARDIS, "UPGRADE_PERCENT_EXPLAIN", check.count() + "", check.volume() + "", check.changed() + "");
+                                    return;
+                                }
+                            }
                         }
-                        // TODO else check they haven't mined room
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "ARS_START");
                         // there should be only one ARS entry, so get that
                         Map.Entry<GrowSlot, ARS> ars = tap.getChanged().entrySet().iterator().next();
                         GrowSlot relocated = ars.getKey();
                         ARSRunnable ar = new ARSRunnable(plugin, relocated, ars.getValue(), player, ids.get(playerUUID));
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, ar, 20L);
-                        // there should be only one jettison entry, so get that
-                        Map.Entry<JettisonSlot, ARS> entry = tap.getJettison().entrySet().iterator().next();
-                        JettisonSlot jettison = entry.getKey();
                         int sy = jettison.getY();
                         int sx = jettison.getX();
                         int sz = jettison.getZ();
@@ -184,12 +214,13 @@ public class RoomRelocatorListener extends ARSMethods implements Listener {
                                 }
                             }
                         }
-                        // TODO put a block in the doorway as doors open when redstone is removed - or some other solution e.g. don't remove all redstone
+                        // TODO put a block in the doorway as doors open when redstone is removed
+                        // TODO or some other solution e.g. don't remove all redstone
                         // move any entities in the room
-                        // TODO use farming mob list
                         HashMap<Entity, Location> mobs = new HashMap<>();
-                        for (Entity entity : jettison.getChunk().getEntities()) {
-                            if (entity instanceof Animals animal) {
+                        Chunk roomChunk = world.getBlockAt(sx, sy, sz).getChunk();
+                        for (Entity entity : roomChunk.getEntities()) {
+                            if (entity instanceof Breedable animal) {
                                 mobs.put(animal, animal.getLocation());
                             }
                         }
@@ -197,14 +228,16 @@ public class RoomRelocatorListener extends ARSMethods implements Listener {
                         int ey = relocated.getY();
                         int ex = relocated.getX();
                         int ez = relocated.getZ();
-                        int diffy = (ey > sy) ? ey - sy : sy - ey;
-                        int diffx = (ex > sx) ? ex - sx : sx - ex;
-                        int diffz = (ez > sz) ? ez - sz : sz - ez;
-                        long a_long_time = (16 * 16 * 16 * (Math.round(20 / plugin.getConfig().getDouble("growth.room_speed"))));
+                        int diffy = ey - sy;
+                        int diffx = ex - sx;
+                        int diffz = ez - sz;
+                        // get the height of the schematic
+                        int height = getSchematicHeight(room);
+                        long a_long_time = (16 * 16 * height * (Math.round(20 / plugin.getConfig().getDouble("growth.room_speed"))));
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                             for (Map.Entry<Entity, Location> e : mobs.entrySet()) {
-                                // TODO debug teleport locations
-                                e.getKey().teleport(e.getValue().add(diffx, diffy, diffz));
+                                Location tp = e.getValue().add(diffx, diffy, diffz);
+                                e.getKey().teleport(tp);
                             }
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "ROOM_JETT", String.format("%d", tap.getJettison().size()));
                         }, a_long_time);
@@ -228,6 +261,30 @@ public class RoomRelocatorListener extends ARSMethods implements Listener {
             }
             player.closeInventory();
         }, 1L);
+    }
+
+    private int getSchematicHeight(String room) {
+        JsonObject obj = TARDISSchematicGZip.getObject(plugin, "rooms", room.toLowerCase(Locale.ROOT), false);
+        if (obj == null) {
+            return 16;
+        }
+        // get dimensions
+        JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
+        return dimensions.get("height").getAsInt();
+    }
+
+    private String getRoomName(InventoryView view, int slot) {
+        ItemStack is = view.getItem(slot);
+        if (is != null) {
+            ItemMeta im = is.getItemMeta();
+            String name = ComponentUtils.stripColour(im.displayName());
+            for (TARDISARS ars : TARDISARS.values()) {
+                if (name.equals(ars.getDescriptiveName())) {
+                    return ars.toString();
+                }
+            }
+        }
+        return "";
     }
 
     private void setRelocationSlots(InventoryView view, UUID uuid) {
