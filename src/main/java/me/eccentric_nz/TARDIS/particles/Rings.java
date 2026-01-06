@@ -22,7 +22,7 @@ import org.bukkit.Location;
 
 import java.util.UUID;
 
-public class Rings extends TARDISParticleRunnable {
+public class Rings extends ParticleRunnable {
 
     private final ParticleData data;
     private final Location location;

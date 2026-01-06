@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.floodgate;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.DamageUtility;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.chameleon.utils.TARDISChameleonFrame;
+import me.eccentric_nz.TARDIS.chameleon.utils.ChameleonFrame;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
@@ -98,7 +98,7 @@ public class FloodgateChameleonPresetForm {
                     updateChameleonSign(rsf.getData(), selected.toString(), player);
                 }
                 if (hasFrame) {
-                    new TARDISChameleonFrame().updateChameleonFrame(selected, rsf.getLocation());
+                    new ChameleonFrame().updateChameleonFrame(selected, rsf.getLocation());
                 }
                 plugin.getMessenger().sendInsertedColour(player, "CHAM_SET", selected.getDisplayName(), plugin);
                 if (!set.isEmpty()) {

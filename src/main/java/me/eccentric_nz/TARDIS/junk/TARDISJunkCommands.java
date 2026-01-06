@@ -52,7 +52,7 @@ public class TARDISJunkCommands implements CommandExecutor {
         if (cmd.getName().equalsIgnoreCase("tardisjunk")) {
             if (args.length == 0) {
                 // find Junk TARDIS
-                return new TARDISJunkFind(plugin).find(sender);
+                return new JunkFind(plugin).find(sender);
             }
             String first = args[0].toLowerCase(Locale.ROOT);
             if (args.length == 1 && firstArgs.contains(first)) {
@@ -66,25 +66,25 @@ public class TARDISJunkCommands implements CommandExecutor {
                             plugin.getMessenger().send(sender, TardisModule.TARDIS, "CMD_PLAYER");
                             return false;
                         }
-                        return new TARDISJunkCreator(plugin, p).createJunkTARDIS();
+                        return new JunkCreator(plugin, p).createJunkTARDIS();
                     }
                     case "find" -> {
-                        return new TARDISJunkFind(plugin).find(sender);
+                        return new JunkFind(plugin).find(sender);
                     }
                     case "time" -> {
-                        return new TARDISJunkTime(plugin).elapsed(sender);
+                        return new JunkTime(plugin).elapsed(sender);
                     }
                     case "return" -> {
-                        return new TARDISJunkReturn(plugin).recall(sender, false);
+                        return new JunkReturn(plugin).recall(sender, false);
                     }
                     case "delete" -> {
-                        return new TARDISJunkDelete(plugin).delete(sender);
+                        return new JunkDelete(plugin).delete(sender);
                     }
                 }
                 return true;
             }
             if (args.length == 2 && first.equals("floor") || first.equals("wall")) {
-                return new TARDISJunkFloorWall(plugin).setJunkWallOrFloor(sender, args);
+                return new JunkFloorWall(plugin).setJunkWallOrFloor(sender, args);
             }
         }
         return false;

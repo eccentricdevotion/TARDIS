@@ -21,7 +21,7 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.junk.TARDISJunkControlListener;
+import me.eccentric_nz.TARDIS.junk.JunkControlListener;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Chunk;
 import org.bukkit.block.BlockFace;
@@ -48,7 +48,7 @@ public class FindWithJunkAction {
                 // get a random location in the chunk
                 int x = TARDISConstants.RANDOM.nextInt(16) + (chunk.getX() * 16);
                 int z = TARDISConstants.RANDOM.nextInt(16) + (chunk.getZ() * 16);
-                Sign sign = TARDISJunkControlListener.getDestinationSign(id);
+                Sign sign = JunkControlListener.getDestinationSign(id);
                 sign.getSide(Side.FRONT).line(1, Component.text(chunk.getWorld().getName()));
                 sign.getSide(Side.FRONT).line(2, Component.text(x));
                 sign.getSide(Side.FRONT).line(3, Component.text(z));

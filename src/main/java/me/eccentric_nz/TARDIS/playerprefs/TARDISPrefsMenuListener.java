@@ -16,11 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.playerprefs;
 
-import me.eccentric_nz.TARDIS.ARS.TARDISARSMap;
+import me.eccentric_nz.TARDIS.ARS.ARSMapInventory;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.DamageUtility;
-import me.eccentric_nz.TARDIS.artron.TARDISArtronLevels;
-import me.eccentric_nz.TARDIS.autonomous.TARDISAutonomousInventory;
+import me.eccentric_nz.TARDIS.artron.ArtronLevels;
+import me.eccentric_nz.TARDIS.autonomous.AutonomousInventory;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.commands.config.ConfigDialog;
 import me.eccentric_nz.TARDIS.commands.config.TARDISConfigMenuInventory;
@@ -34,9 +34,9 @@ import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.floodgate.FloodgateMapForm;
 import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
-import me.eccentric_nz.TARDIS.mobfarming.TARDISFarmingInventory;
-import me.eccentric_nz.TARDIS.particles.TARDISParticleInventory;
-import me.eccentric_nz.TARDIS.sonic.TARDISSonicConfiguratorInventory;
+import me.eccentric_nz.TARDIS.mobfarming.FarmingInventory;
+import me.eccentric_nz.TARDIS.particles.ParticleInventory;
+import me.eccentric_nz.TARDIS.sonic.SonicConfiguratorInventory;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
@@ -152,7 +152,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener {
                         im.lore(List.of(Component.text(plugin.getLanguage().getString("SET_ON", "ON"))));
                         is.setItemMeta(im);
                         // Check if it's at a recharge point
-                        TARDISArtronLevels tal = new TARDISArtronLevels(plugin);
+                        ArtronLevels tal = new ArtronLevels(plugin);
                         tal.recharge(id);
                         // Remove energy from TARDIS and sets database
                         plugin.getMessenger().sendStatus(player, "HANDBRAKE_ON");
@@ -193,7 +193,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener {
                         // close inventory
                         player.closeInventory();
                         // open new inventory
-                        player.openInventory(new TARDISARSMap(plugin).getInventory());
+                        player.openInventory(new ARSMapInventory(plugin).getInventory());
                     }
                 }, 1L);
             } else {
@@ -207,7 +207,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener {
                 // close inventory
                 player.closeInventory();
                 // open new inventory
-                player.openInventory(new TARDISAutonomousInventory(plugin, uuid).getInventory());
+                player.openInventory(new AutonomousInventory(plugin, uuid).getInventory());
             }, 1L);
             return;
         }
@@ -217,7 +217,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener {
                 // close inventory
                 player.closeInventory();
                 // open new inventory
-                player.openInventory(new TARDISFarmingInventory(plugin, uuid).getInventory());
+                player.openInventory(new FarmingInventory(plugin, uuid).getInventory());
             }, 1L);
             return;
         }
@@ -227,7 +227,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener {
                 // close inventory
                 player.closeInventory();
                 // open new inventory
-                player.openInventory(new TARDISSonicConfiguratorInventory(plugin).getInventory());
+                player.openInventory(new SonicConfiguratorInventory(plugin).getInventory());
             }, 1L);
             return;
         }
@@ -237,7 +237,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener {
                 // close inventory
                 player.closeInventory();
                 // open new inventory
-                player.openInventory(new TARDISParticleInventory(plugin, uuid.toString()).getInventory());
+                player.openInventory(new ParticleInventory(plugin, uuid.toString()).getInventory());
             }, 1L);
             return;
         }

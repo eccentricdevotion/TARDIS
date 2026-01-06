@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.listeners;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetVault;
 import me.eccentric_nz.TARDIS.enumeration.SmelterChest;
-import me.eccentric_nz.TARDIS.sonic.TARDISSonicSorterListener;
+import me.eccentric_nz.TARDIS.sonic.SonicSorterListener;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -84,7 +84,7 @@ public class TARDISVaultListener implements Listener {
                 }
             }
             // sort contents
-            TARDISSonicSorterListener.sortInventory(inv);
+            SonicSorterListener.sortInventory(inv);
             World w = container.getWorld();
             // get vault dimensions
             int sx = rs.getX();
@@ -150,7 +150,7 @@ public class TARDISVaultListener implements Listener {
                                             // put it in the container
                                             cinv.setItem(cinv.firstEmpty(), get);
                                             // sort the container
-                                            TARDISSonicSorterListener.sortInventory(cinv);
+                                            SonicSorterListener.sortInventory(cinv);
                                             // get any other stacks
                                             slot = inv.first(m);
                                         }

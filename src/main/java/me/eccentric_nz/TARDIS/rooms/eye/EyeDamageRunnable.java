@@ -46,6 +46,6 @@ public class EyeDamageRunnable implements Runnable {
     private boolean hasSpaceHelmet(Player player) {
         PlayerInventory inventory = player.getInventory();
         ItemStack helmet = inventory.getHelmet();
-        return TARDISSpaceHelmetListener.isSpaceHelmet(helmet);
+        return SpaceHelmetListener.isSpaceHelmet(helmet);
     }
 }

@@ -40,7 +40,7 @@ public class TelepathicStructureListener extends TARDISMenuListener {
 
     @EventHandler(ignoreCancelled = true)
     public void onStructureMenuClick(InventoryClickEvent event) {
-        if (!(event.getInventory().getHolder(false) instanceof TARDISTelepathicStructure)) {
+        if (!(event.getInventory().getHolder(false) instanceof TelepathicStructure)) {
             return;
         }
         Player player = (Player) event.getWhoClicked();

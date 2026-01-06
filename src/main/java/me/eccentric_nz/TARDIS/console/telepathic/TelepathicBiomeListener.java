@@ -54,7 +54,7 @@ public class TelepathicBiomeListener extends TARDISMenuListener {
 
     @EventHandler
     public void onWallMenuOpen(InventoryOpenEvent event) {
-        if (event.getInventory().getHolder(false) instanceof TARDISTelepathicBiome) {
+        if (event.getInventory().getHolder(false) instanceof TelepathicBiome) {
             Player p = (Player) event.getPlayer();
             scroll.put(p.getUniqueId(), 0);
         }
@@ -62,7 +62,7 @@ public class TelepathicBiomeListener extends TARDISMenuListener {
 
     @EventHandler(ignoreCancelled = true)
     public void onBiomeMenuClick(InventoryClickEvent event) {
-        if (!(event.getInventory().getHolder(false) instanceof TARDISTelepathicBiome)) {
+        if (!(event.getInventory().getHolder(false) instanceof TelepathicBiome)) {
             return;
         }
         Player player = (Player) event.getWhoClicked();

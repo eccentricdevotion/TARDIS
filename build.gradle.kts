@@ -12,7 +12,7 @@ plugins {
 
 group = "me.eccentric_nz"
 val buildNumber = "-b${System.getenv("BUILD_NUMBER") ?: (System.getenv("SHORT_SHA") ?: ".local")}"
-version = "6.3.7${buildNumber}"
+version = "6.3.8${buildNumber}"
 
 repositories {
     mavenCentral()
@@ -152,7 +152,7 @@ dependencies {
     compileOnly(files("libs/VaultAPI.jar"))
     compileOnly("org.geysermc.floodgate:api:2.2.5-SNAPSHOT")
     compileOnly("org.geysermc.geyser:api:2.9.2-SNAPSHOT")
-    compileOnly("org.jsoup:jsoup:1.21.2") {
+    compileOnly("org.jsoup:jsoup:1.22.1") {
         isTransitive = false
     }
     compileOnly("org.popcraft:chunky-common:1.4.55")

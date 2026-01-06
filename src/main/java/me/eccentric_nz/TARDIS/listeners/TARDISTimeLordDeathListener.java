@@ -17,9 +17,9 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.arch.TARDISArchInventory;
-import me.eccentric_nz.TARDIS.arch.TARDISArchPersister;
-import me.eccentric_nz.TARDIS.autonomous.TARDISAutonomousDeath;
+import me.eccentric_nz.TARDIS.arch.ArchInventory;
+import me.eccentric_nz.TARDIS.arch.ArchPersister;
+import me.eccentric_nz.TARDIS.autonomous.AutonomousDeath;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.flight.FlightReturnData;
 import me.eccentric_nz.TARDIS.travel.save.TARDISDeathLocation;
@@ -65,7 +65,7 @@ public class TARDISTimeLordDeathListener implements Listener {
         Player player = event.getEntity();
         UUID uuid = player.getUniqueId();
         if (plugin.getConfig().getBoolean("allow.autonomous") && TARDISPermission.hasPermission(player, "tardis.autonomous")) {
-            new TARDISAutonomousDeath(plugin).automate(player);
+            new AutonomousDeath(plugin).automate(player);
         }
         if (TARDISPermission.hasPermission(player, "tardis.save.death")) {
             TARDISDeathLocation death = new TARDISDeathLocation(plugin);
@@ -88,10 +88,10 @@ public class TARDISTimeLordDeathListener implements Listener {
         plugin.getTrackerKeeper().getEyeDamage().remove(uuid);
         // save arched status
         if (plugin.isDisguisesOnServer() && plugin.getConfig().getBoolean("arch.enabled") && plugin.getTrackerKeeper().getJohnSmith().containsKey(uuid)) {
-            new TARDISArchPersister(plugin).save(uuid);
+            new ArchPersister(plugin).save(uuid);
             if (plugin.getConfig().getBoolean("arch.clear_inv_on_death")) {
                 // clear inventories
-                new TARDISArchInventory().clear(uuid);
+                new ArchInventory().clear(uuid);
             }
         }
         // stop looping sounds

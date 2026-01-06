@@ -23,7 +23,7 @@ import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetArtronLevel;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.forcefield.TARDISForceField;
+import me.eccentric_nz.TARDIS.forcefield.ForceField;
 import me.eccentric_nz.TARDIS.playerprefs.TARDISKeyMenuInventory;
 import me.eccentric_nz.TARDIS.playerprefs.TARDISSonicMenuInventory;
 import org.bukkit.command.Command;
@@ -122,37 +122,37 @@ public class TARDISPrefsCommands implements CommandExecutor {
                 }
                 switch (pref) {
                     case "console_labels" -> {
-                        return new TARDISLabelsCommand(plugin).toggle(player, args);
+                        return new LabelsCommand(plugin).toggle(player, args);
                     }
                     case "eps_message" -> {
-                        return new TARDISEPSMessageCommand(plugin).setMessage(player, args);
+                        return new EPSMessageCommand(plugin).setMessage(player, args);
                     }
                     case "flight" -> {
-                        return new TARDISSetFlightCommand(plugin).setMode(player, args);
+                        return new SetFlightCommand(plugin).setMode(player, args);
                     }
                     case "hads_type" -> {
-                        return new TARDISHadsTypeCommand(plugin).setHadsPref(player, args);
+                        return new HadsTypeCommand(plugin).setHadsPref(player, args);
                     }
                     case "hum" -> {
-                        return new TARDISHumCommand(plugin).setHumPref(player, args);
+                        return new HumCommand(plugin).setHumPref(player, args);
                     }
                     case "isomorphic" -> {
-                        return new TARDISIsomorphicCommand(plugin).toggleIsomorphicControls(player);
+                        return new IsomorphicCommand(plugin).toggleIsomorphicControls(player);
                     }
                     case "key" -> {
-                        return new TARDISSetKeyCommand(plugin).setKeyPref(player, args);
+                        return new SetKeyCommand(plugin).setKeyPref(player, args);
                     }
                     case "language", "translate" -> {
-                        return new TARDISSetLanguageCommand(plugin).setLanguagePref(player, args);
+                        return new SetLanguageCommand(plugin).setLanguagePref(player, args);
                     }
                     case "lights" -> {
-                        return new TARDISLightsCommand(plugin).setLightsPref(player, args);
+                        return new LightsCommand(plugin).setLightsPref(player, args);
                     }
                     case "wall", "floor", "siege_wall", "siege_floor" -> {
-                        return new TARDISFloorCommand(plugin).setFloorOrWallBlock(player, args);
+                        return new FloorCommand(plugin).setFloorOrWallBlock(player, args);
                     }
                     case "effect", "shape", "speed" -> {
-                        return new TARDISParticlePrefsCommand(plugin).setPartclePref(player, args);
+                        return new ParticlePrefsCommand(plugin).setPartclePref(player, args);
                     }
                     default -> {
                         if (args.length < 2 || (!args[1].equalsIgnoreCase("on") && !args[1].equalsIgnoreCase("off"))) {
@@ -169,7 +169,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
                                         plugin.getMessenger().send(player, TardisModule.TARDIS, "POWER_LOW");
                                         return true;
                                     }
-                                    if (TARDISForceField.addToTracker(player)) {
+                                    if (ForceField.addToTracker(player)) {
                                         plugin.getMessenger().send(player, TardisModule.TARDIS, "PREF_WAS_ON", "The TARDIS force field");
                                     }
                                 } else {
@@ -183,9 +183,9 @@ public class TARDISPrefsCommands implements CommandExecutor {
                             return true;
                         }
                         return switch (pref) {
-                            case "build" -> new TARDISBuildCommand(plugin).toggleCompanionBuilding(player, args);
-                            case "junk" -> new TARDISJunkPreference(plugin).toggle(player, args[1]);
-                            default -> new TARDISToggleOnOffCommand(plugin).toggle(player, args);
+                            case "build" -> new BuildCommand(plugin).toggleCompanionBuilding(player, args);
+                            case "junk" -> new JunkPreference(plugin).toggle(player, args[1]);
+                            default -> new ToggleOnOffCommand(plugin).toggle(player, args);
                         };
                     }
                 }

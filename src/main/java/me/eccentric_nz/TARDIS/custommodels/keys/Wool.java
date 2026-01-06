@@ -42,6 +42,7 @@ public enum Wool {
     ENABLED(new NamespacedKey(TARDIS.plugin, "sonic_enabled")),
     HEXAGON(new NamespacedKey(TARDIS.plugin, "hexagon")),
     RECONFIGURE(new NamespacedKey(TARDIS.plugin, "map_reconfigure")),
+    RELOCATOR(new NamespacedKey(TARDIS.plugin, "map_relocator")),
     SCROLL_LEFT(new NamespacedKey(TARDIS.plugin, "map_scroll_left")),
     DISABLED(new NamespacedKey(TARDIS.plugin, "sonic_disabled")),
     LEVEL_BOTTOM(new NamespacedKey(TARDIS.plugin, "map_level_bottom")),

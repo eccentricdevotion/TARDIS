@@ -18,10 +18,10 @@ package me.eccentric_nz.TARDIS.playerprefs;
 
 import io.papermc.paper.dialog.DialogResponseView;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.artron.TARDISBeaconToggler;
+import me.eccentric_nz.TARDIS.artron.BeaconToggler;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.commands.preferences.TARDISBuildCommand;
-import me.eccentric_nz.TARDIS.commands.preferences.TARDISJunkPreference;
+import me.eccentric_nz.TARDIS.commands.preferences.BuildCommand;
+import me.eccentric_nz.TARDIS.commands.preferences.JunkPreference;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetArtronLevel;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
@@ -30,7 +30,7 @@ import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.FlightMode;
 import me.eccentric_nz.TARDIS.enumeration.Hum;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.forcefield.TARDISForceField;
+import me.eccentric_nz.TARDIS.forcefield.ForceField;
 import org.apache.commons.lang3.StringUtils;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -90,14 +90,14 @@ public class PreferencesProcessor {
                         // get tardis id
                         ResultSetTardisID rsi = new ResultSetTardisID(plugin);
                         if (rsi.fromUUID(player.getUniqueId().toString())) {
-                            new TARDISBeaconToggler(plugin).flickSwitch(player.getUniqueId(), rsi.getTardisId(), colon[1].equals("1b"));
+                            new BeaconToggler(plugin).flickSwitch(player.getUniqueId(), rsi.getTardisId(), colon[1].equals("1b"));
                             set.put("beacon_on", colon[1].equals("1b") ? 1 : 0);
                         }
                     }
                     case "build" -> {
                         if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("allow.wg_flag_set")) {
                             String onoff = colon[1].equals("1b") ? "on" : "off";
-                            new TARDISBuildCommand(plugin).toggleCompanionBuilding(player, new String[]{"", onoff});
+                            new BuildCommand(plugin).toggleCompanionBuilding(player, new String[]{"", onoff});
                         }
                     }
                     case "flight" -> {
@@ -115,7 +115,7 @@ public class PreferencesProcessor {
                             if (rsal.resultset()) {
                                 if (rsal.getArtronLevel() <= plugin.getArtronConfig().getInt("standby")) {
                                     plugin.getMessenger().send(player, TardisModule.TARDIS, "POWER_LOW");
-                                } else if (TARDISForceField.addToTracker(player)) {
+                                } else if (ForceField.addToTracker(player)) {
                                     plugin.getMessenger().send(player, TardisModule.TARDIS, "PREF_WAS_ON", "The TARDIS force field");
                                 }
                             } else {
@@ -129,7 +129,7 @@ public class PreferencesProcessor {
                     case "junk_mode" -> {
                         if ((tardis.getPreset().equals(ChameleonPreset.JUNK_MODE) && colon[1].equals("0b"))
                                 || (!tardis.getPreset().equals(ChameleonPreset.JUNK_MODE) && colon[1].equals("1b"))) {
-                            new TARDISJunkPreference(plugin).toggle(player, colon[1].equals("1b") ? "off" : "on");
+                            new JunkPreference(plugin).toggle(player, colon[1].equals("1b") ? "off" : "on");
                         }
                     }
                     case "hads_type", "eps_message" -> set.put(colon[0], StringUtils.strip(colon[1], "\""));

@@ -26,7 +26,7 @@ import org.bukkit.util.Vector;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Regeneration extends TARDISParticleRunnable implements Runnable {
+public class Regeneration extends ParticleRunnable implements Runnable {
 
     private final Location location;
     private final float yaw;

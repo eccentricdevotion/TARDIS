@@ -94,6 +94,7 @@ public class TARDISMenuListener implements Listener {
         map.put(Component.text("Add Companion", NamedTextColor.DARK_RED), 54);
         map.put(Component.text("Admin Config Menu", NamedTextColor.DARK_RED), 54);
         map.put(Component.text("Architectural Reconfiguration", NamedTextColor.DARK_RED), 54);
+        map.put(Component.text("Room Relocator", NamedTextColor.DARK_RED), 54);
         map.put(Component.text("Area Locations", NamedTextColor.DARK_RED), 54);
         map.put(Component.text("Artron Capacitor Storage", NamedTextColor.DARK_RED), 9);
         map.put(Component.text("Chameleon Circuit", NamedTextColor.DARK_RED), 27);

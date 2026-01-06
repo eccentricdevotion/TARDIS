@@ -16,11 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.move;
 
-import me.eccentric_nz.TARDIS.ARS.TARDISARSMethods;
+import me.eccentric_nz.TARDIS.ARS.ARSMethods;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPostioning;
-import me.eccentric_nz.TARDIS.builders.interior.TARDISTIPSData;
+import me.eccentric_nz.TARDIS.builders.interior.TIPSData;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.lazarus.LazarusVariants;
@@ -54,6 +54,7 @@ public class TARDISMonsterRunnable implements Runnable {
         monsters.add(EntityType.ENDERMITE);
         monsters.add(EntityType.HOGLIN);
         monsters.add(EntityType.HUSK);
+        monsters.add(EntityType.PARCHED);
         monsters.add(EntityType.PIGLIN);
         monsters.add(EntityType.PILLAGER);
         monsters.add(EntityType.SILVERFISH);
@@ -250,7 +251,7 @@ public class TARDISMonsterRunnable implements Runnable {
             if (rsa.resultSet()) {
                 int l = 0, r = 0, c = 0;
                 // check there is a pool
-                String[][][] json = TARDISARSMethods.getGridFromJSON(rsa.getJson());
+                String[][][] json = ARSMethods.getGridFromJSON(rsa.getJson());
                 for (String[][] level : json) {
                     for (String[] row : level) {
                         for (String col : row) {
@@ -265,7 +266,7 @@ public class TARDISMonsterRunnable implements Runnable {
                                     if (pos != -1) {
                                         // tips slot
                                         TARDISInteriorPostioning tips = new TARDISInteriorPostioning(plugin);
-                                        TARDISTIPSData coords = tips.getTIPSData(pos);
+                                        TIPSData coords = tips.getTIPSData(pos);
                                         tx = coords.getCentreX();
                                         tz = coords.getCentreZ();
                                     }
@@ -359,7 +360,7 @@ public class TARDISMonsterRunnable implements Runnable {
                         es.setItemInMainHand(m.getEquipment().getItemInMainHand());
                         if (plugin.getConfig().getBoolean("modules.weeping_angels") && skeleton instanceof Skeleton skelly) {
                             if (isDalek(skelly)) {
-                                TARDISDalekDisguiser.dalekanium(skelly);
+                                DalekDisguiser.dalekanium(skelly);
                             }
                         }
                     }

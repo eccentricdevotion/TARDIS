@@ -17,16 +17,16 @@
 package me.eccentric_nz.TARDIS.playerprefs;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.artron.TARDISBeaconToggler;
+import me.eccentric_nz.TARDIS.artron.BeaconToggler;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.commands.preferences.TARDISBuildCommand;
-import me.eccentric_nz.TARDIS.commands.preferences.TARDISIsomorphicCommand;
-import me.eccentric_nz.TARDIS.commands.preferences.TARDISLabelsCommand;
+import me.eccentric_nz.TARDIS.commands.preferences.BuildCommand;
+import me.eccentric_nz.TARDIS.commands.preferences.IsomorphicCommand;
+import me.eccentric_nz.TARDIS.commands.preferences.LabelsCommand;
 import me.eccentric_nz.TARDIS.custommodels.GUIPlayerPreferences;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.forcefield.TARDISForceField;
+import me.eccentric_nz.TARDIS.forcefield.ForceField;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.upgrades.SystemTree;
 import me.eccentric_nz.TARDIS.upgrades.SystemUpgradeChecker;
@@ -125,7 +125,7 @@ public class TARDISGeneralPrefsListener extends TARDISMenuListener {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "POWER_LOW");
                             return;
                         }
-                        if (TARDISForceField.addToTracker(player)) {
+                        if (ForceField.addToTracker(player)) {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "PREF_WAS_ON", "The TARDIS force field");
                         }
                     } else {
@@ -158,12 +158,12 @@ public class TARDISGeneralPrefsListener extends TARDISMenuListener {
         switch (which) {
             case "Console Labels" -> {
                 String[] args = new String[]{"console_labels", bool ? "off" : "on"};
-                new TARDISLabelsCommand(plugin).toggle(player, args);
+                new LabelsCommand(plugin).toggle(player, args);
                 return;
             }
             case "Isometric" -> {
                 if (tardis!=null && (tardis.isIsomorphicOn() && !bool || !tardis.isIsomorphicOn() && bool)) {
-                    new TARDISIsomorphicCommand(plugin).toggleIsomorphicControls(player);
+                    new IsomorphicCommand(plugin).toggleIsomorphicControls(player);
                 }
             }
             case "Junk TARDIS" -> {
@@ -256,7 +256,7 @@ public class TARDISGeneralPrefsListener extends TARDISMenuListener {
                 String[] args = new String[2];
                 args[0] = "";
                 args[1] = value;
-                new TARDISBuildCommand(plugin).toggleCompanionBuilding(player, args);
+                new BuildCommand(plugin).toggleCompanionBuilding(player, args);
             }
             case "Lock Containers" -> {
                 if (bool) {
@@ -289,7 +289,7 @@ public class TARDISGeneralPrefsListener extends TARDISMenuListener {
             // get tardis id
             ResultSetTardisID rsi = new ResultSetTardisID(plugin);
             if (rsi.fromUUID(uuid.toString())) {
-                new TARDISBeaconToggler(plugin).flickSwitch(uuid, rsi.getTardisId(), !bool);
+                new BeaconToggler(plugin).flickSwitch(uuid, rsi.getTardisId(), !bool);
             }
         }
     }

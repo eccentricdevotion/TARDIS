@@ -30,6 +30,7 @@ import me.eccentric_nz.TARDIS.enumeration.Advancement;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.InventoryManager;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.mobfarming.types.*;
 import me.eccentric_nz.TARDIS.rooms.happy.HappyLocations;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
@@ -86,7 +87,7 @@ public class TARDISFarmer {
      * @param from the world from
      * @return a List of the player's pets (if any are nearby)
      */
-    public TARDISPetsAndFollowers farmAnimals(Location l, COMPASS d, int id, Player p, String to, String from) {
+    public PetsAndFollowers farmAnimals(Location l, COMPASS d, int id, Player p, String to, String from) {
 
         switch (d) {
             case NORTH -> l.setZ(l.getZ() - 1);
@@ -1449,10 +1450,10 @@ public class TARDISFarmer {
             }
         }
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getTrackerKeeper().getFarming().remove(uuid), 20L);
-        return new TARDISPetsAndFollowers(pets, followers);
+        return new PetsAndFollowers(pets, followers);
     }
 
-    public TARDISPetsAndFollowers exitPets(Player player) {
+    public PetsAndFollowers exitPets(Player player) {
         List<TARDISPet> pets = new ArrayList<>();
         List<Follower> followers = new ArrayList<>();
         List<Entity> mobs = player.getNearbyEntities(3.5D, 3.5D, 3.5D);
@@ -1517,6 +1518,6 @@ public class TARDISFarmer {
                 }
             }
         }
-        return new TARDISPetsAndFollowers(pets, followers);
+        return new PetsAndFollowers(pets, followers);
     }
 }

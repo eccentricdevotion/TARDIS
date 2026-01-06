@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.console.interaction;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.console.telepathic.TARDISTelepathicInventory;
+import me.eccentric_nz.TARDIS.console.telepathic.TelepathicInventory;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import org.bukkit.entity.Player;
 
@@ -54,7 +54,7 @@ public class TelepathicCircuitInteraction {
             // cave finder
             // structure finder
             // biome finder
-            player.openInventory(new TARDISTelepathicInventory(plugin, player).getInventory());
+            player.openInventory(new TelepathicInventory(plugin, player).getInventory());
         }
     }
 }

@@ -18,8 +18,8 @@ package me.eccentric_nz.TARDIS.travel;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
-import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
+import me.eccentric_nz.TARDIS.advanced.CircuitChecker;
+import me.eccentric_nz.TARDIS.advanced.CircuitDamager;
 import me.eccentric_nz.TARDIS.builders.utility.LightLevel;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemRegistry;
@@ -110,7 +110,7 @@ public class TARDISMalfunction {
                 // choose a random circuit
                 DiskCircuit circuit = DiskCircuit.getTardisCircuits().get(TARDISConstants.RANDOM.nextInt(DiskCircuit.getTardisCircuits().size()));
                 // is the circuit in the advanced console?
-                TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
+                CircuitChecker tcc = new CircuitChecker(plugin, id);
                 tcc.getCircuits();
                 int damage;
                 int usesLeft;
@@ -244,7 +244,7 @@ public class TARDISMalfunction {
     }
 
     private void damage(DiskCircuit circuit, int uses_left, int id, Player p) {
-        TARDISCircuitDamager tcd = new TARDISCircuitDamager(plugin, circuit, uses_left, id, p);
+        CircuitDamager tcd = new CircuitDamager(plugin, circuit, uses_left, id, p);
         tcd.damage();
     }
 }

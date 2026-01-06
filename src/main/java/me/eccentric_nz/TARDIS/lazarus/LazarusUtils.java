@@ -44,9 +44,9 @@ public class LazarusUtils {
 
     public static void geneticModificationOff(Player player) {
         if (TARDIS.plugin.isDisguisesOnServer()) {
-            TARDISLazarusLibs.removeDisguise(player);
+            LazarusLibsDisguises.removeDisguise(player);
         } else {
-            TARDISLazarusDisguise.removeDisguise(player);
+            LazarusDisguise.removeDisguise(player);
         }
         UUID uuid = player.getUniqueId();
         if (SkinUtils.SKINNED.containsKey(uuid)) {

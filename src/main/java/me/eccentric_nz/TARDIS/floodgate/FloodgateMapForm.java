@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.floodgate;
 
+import me.eccentric_nz.TARDIS.ARS.ARSMethods;
+import me.eccentric_nz.TARDIS.ARS.GrowSlot;
 import me.eccentric_nz.TARDIS.ARS.TARDISARS;
-import me.eccentric_nz.TARDIS.ARS.TARDISARSMethods;
-import me.eccentric_nz.TARDIS.ARS.TARDISARSSlot;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetARS;
@@ -26,7 +26,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.Desktops;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.move.TARDISDoorListener;
+import me.eccentric_nz.TARDIS.move.DoorListener;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import org.bukkit.Location;
 import org.bukkit.Sound;
@@ -145,20 +145,20 @@ public class FloodgateMapForm {
         where.put("tardis_id", id);
         ResultSetARS rs = new ResultSetARS(plugin, where);
         if (rs.resultSet()) {
-            String[][][] json = TARDISARSMethods.getGridFromJSON(rs.getJson());
+            String[][][] json = ARSMethods.getGridFromJSON(rs.getJson());
             for (int l = 0; l < 3; l++) {
                 for (int r = 0; r < 9; r++) {
                     for (int c = 0; c < 9; c++) {
                         if (room.equals("Console")) {
                             if (Desktops.getBY_MATERIALS().containsKey(json[l][r][c])) {
                                 // get inner door tp location
-                                TARDISDoorLocation idl = TARDISDoorListener.getDoor(1, id);
+                                TARDISDoorLocation idl = DoorListener.getDoor(1, id);
                                 return idl.getL();
                             }
                         }
                         if (json[l][r][c].equals(room)) {
                             // will always get the first room of this type on this level
-                            TARDISARSSlot a = new TARDISARSSlot();
+                            GrowSlot a = new GrowSlot();
                             a.setChunk(plugin.getLocationUtils().getTARDISChunk(id));
                             a.setY(l);
                             a.setX(r);

@@ -22,7 +22,7 @@ import org.bukkit.Location;
 
 import java.util.UUID;
 
-public class Helix extends TARDISParticleRunnable {
+public class Helix extends ParticleRunnable {
 
     private final ParticleData data;
     private final Location location;

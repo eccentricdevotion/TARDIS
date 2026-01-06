@@ -23,7 +23,7 @@ import org.bukkit.util.Vector;
 
 import java.util.UUID;
 
-public class Beam extends TARDISParticleRunnable {
+public class Beam extends ParticleRunnable {
 
     private final ParticleData data;
     private final Location location;

@@ -25,7 +25,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
-public class Falling extends TARDISParticleRunnable {
+public class Falling extends ParticleRunnable {
 
     public final Set<Vector> coords = new HashSet<>();
     private final ParticleData data;

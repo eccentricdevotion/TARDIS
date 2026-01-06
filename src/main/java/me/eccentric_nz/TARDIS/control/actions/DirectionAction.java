@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.control.actions;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.commands.tardis.TARDISDirectionCommand;
+import me.eccentric_nz.TARDIS.commands.tardis.DirectionCommand;
 import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
@@ -66,7 +66,7 @@ public class DirectionAction {
                 direction = COMPASS.values()[ordinal].toString();
             }
             String[] args = new String[]{"direction", direction};
-            new TARDISDirectionCommand(plugin).changeDirection(player, args);
+            new DirectionCommand(plugin).changeDirection(player, args);
             return direction;
         }
         return "";

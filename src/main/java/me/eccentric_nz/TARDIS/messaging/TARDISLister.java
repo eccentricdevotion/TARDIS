@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.messaging;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.companionGUI.TARDISCompanionInventory;
+import me.eccentric_nz.TARDIS.companionGUI.CompanionInventory;
 import me.eccentric_nz.TARDIS.database.data.Area;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreas;
@@ -139,7 +139,7 @@ public class TARDISLister {
                     String comps = tardis.getCompanions();
                     if (comps != null && !comps.isEmpty()) {
                         String[] companionData = comps.split(":");
-                        player.openInventory(new TARDISCompanionInventory(plugin, companionData).getInventory());
+                        player.openInventory(new CompanionInventory(plugin, companionData).getInventory());
                     } else {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "COMPANIONS_NONE");
                     }

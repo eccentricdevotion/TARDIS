@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.commands.sudo;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.commands.remote.TARDISRemoteRebuildCommand;
+import me.eccentric_nz.TARDIS.commands.remote.RebuildCommand;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.OfflinePlayer;
@@ -67,7 +67,7 @@ public class SudoChameleon {
             plugin.getQueryFactory().doUpdate("tardis", set, where);
             plugin.getMessenger().sendInsertedColour(sender, "CHAM_SET", chameleon, plugin);
             // perform rebuild
-            return new TARDISRemoteRebuildCommand(plugin).doRemoteRebuild(sender, id, offlinePlayer, true);
+            return new RebuildCommand(plugin).doRemoteRebuild(sender, id, offlinePlayer, true);
         }
         return true;
     }

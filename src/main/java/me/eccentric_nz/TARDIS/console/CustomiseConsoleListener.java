@@ -8,7 +8,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.rotors.Rotor;
-import me.eccentric_nz.TARDIS.rotors.TARDISTimeRotor;
+import me.eccentric_nz.TARDIS.rotors.TimeRotor;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import net.kyori.adventure.text.Component;
@@ -153,13 +153,13 @@ public class CustomiseConsoleListener extends TARDISMenuListener {
                     }
                     if (selectedRotors.containsKey(playerUUID)) {
                         // must have an existing rotor
-                        ItemFrame itemFrame = TARDISTimeRotor.getItemFrame(rs.getTardis().getRotor());
+                        ItemFrame itemFrame = TimeRotor.getItemFrame(rs.getTardis().getRotor());
                         // only if entity still exists
                         if (itemFrame != null) {
                             // change rotor
                             Rotor rotor = getRotorType(view, playerUUID);
                             if (rotor != null) {
-                                TARDISTimeRotor.setRotor(rotor.offModel(), itemFrame);
+                                TimeRotor.setRotor(rotor.offModel(), itemFrame);
                             }
                         }
                     }

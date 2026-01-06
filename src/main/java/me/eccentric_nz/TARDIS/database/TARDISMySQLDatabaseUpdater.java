@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.database;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.converters.DispersalUpdater;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 
 import java.sql.ResultSet;
@@ -373,7 +374,7 @@ class TARDISMySQLDatabaseUpdater {
                 String dispersed_alter = "ALTER TABLE " + prefix + "dispersed ADD tardis_id int(11)";
                 statement.executeUpdate(dispersed_alter);
                 // update tardis_id column for existing records
-                new TARDISDispersalUpdater(plugin).updateTardis_ids();
+                new DispersalUpdater(plugin).updateTardis_ids();
             }
             // add repair to t_count
             String rep_query = "SHOW COLUMNS FROM " + prefix + "t_count LIKE 'repair'";

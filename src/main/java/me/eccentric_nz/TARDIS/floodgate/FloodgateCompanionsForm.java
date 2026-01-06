@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.floodgate;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.companionGUI.TARDISCompanionGUIListener;
+import me.eccentric_nz.TARDIS.companionGUI.CompanionGUIListener;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -89,11 +89,11 @@ public class FloodgateCompanionsForm {
                 OfflinePlayer op = plugin.getServer().getOfflinePlayer(label);
                 if (op != null) {
                     UUID u = op.getUniqueId();
-                    TARDISCompanionGUIListener.removeCompanion(id, comps, u.toString(), player);
+                    CompanionGUIListener.removeCompanion(id, comps, u.toString(), player);
                     if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
                         if (!comps.equalsIgnoreCase("everyone")) {
                             String[] data = tardis.getChunk().split(":");
-                            TARDISCompanionGUIListener.removeFromRegion(data[0], tardis.getOwner(), u);
+                            CompanionGUIListener.removeFromRegion(data[0], tardis.getOwner(), u);
                         }
                     }
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "COMPANIONS_REMOVE_ONE", label);

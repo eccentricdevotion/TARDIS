@@ -17,8 +17,8 @@
 package me.eccentric_nz.TARDIS.floodgate;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.desktop.TARDISThemeProcessor;
-import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
+import me.eccentric_nz.TARDIS.desktop.DesktopThemeProcessor;
+import me.eccentric_nz.TARDIS.desktop.UpgradeData;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import org.bukkit.Material;
 import org.geysermc.cumulus.form.CustomForm;
@@ -59,7 +59,7 @@ public class FloodgateWallFloorForm {
 
     private void handleResponse(CustomFormResponse response) {
         // save block
-        TARDISUpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(uuid);
+        UpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(uuid);
         String m = blocks.get(response.asDropdown(0));
         if (m.equals("Default")) {
             m = (which.equals("Wall")) ? "ORANGE_WOOL" : "LIGHT_GRAY_WOOL";
@@ -71,7 +71,7 @@ public class FloodgateWallFloorForm {
         } else {
             tud.setFloor(m);
             // run desktop change
-            new TARDISThemeProcessor(plugin, uuid).changeDesktop();
+            new DesktopThemeProcessor(plugin, uuid).changeDesktop();
         }
     }
 }

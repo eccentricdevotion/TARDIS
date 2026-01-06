@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.control.actions;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.artron.TARDISArtronLevels;
+import me.eccentric_nz.TARDIS.artron.ArtronLevels;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import org.bukkit.Location;
@@ -52,8 +52,8 @@ public class CustardCreamAction {
             return;
         }
         // check artron energy level
-        TARDISArtronLevels tardisArtronLevels = new TARDISArtronLevels(plugin);
-        if (tardisArtronLevels.checkLevel(id, plugin.getArtronConfig().getInt("custard_cream"), player)) {
+        ArtronLevels artronLevels = new ArtronLevels(plugin);
+        if (artronLevels.checkLevel(id, plugin.getArtronConfig().getInt("custard_cream"), player)) {
             ItemStack cookie = ItemStack.of(Material.COOKIE, 1);
             ItemMeta im = cookie.getItemMeta();
             im.displayName(ComponentUtils.toWhite("Custard Cream"));

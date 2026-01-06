@@ -45,8 +45,8 @@ public class TARDISCamera {
 
     public void viewExterior(Player player, int id) {
         Location playerLocation = player.getLocation();
-        TARDISCameraTracker.SPECTATING.put(player.getUniqueId(), new CameraLocation(playerLocation, id, playerLocation.getChunk().isForceLoaded()));
-        TARDISCameraTracker.CAMERA_IN_USE.add(id);
+        CameraTracker.SPECTATING.put(player.getUniqueId(), new CameraLocation(playerLocation, id, playerLocation.getChunk().isForceLoaded()));
+        CameraTracker.CAMERA_IN_USE.add(id);
         playerLocation.getChunk().addPluginChunkTicket(plugin);
         // get the TARDIS's current location
         ResultSetCurrentFromId rs = new ResultSetCurrentFromId(plugin, id);
@@ -104,7 +104,7 @@ public class TARDISCamera {
 
     public void stopViewing(Player player, ArmorStand stand) {
         UUID uuid = player.getUniqueId();
-        CameraLocation data = TARDISCameraTracker.SPECTATING.get(uuid);
+        CameraLocation data = CameraTracker.SPECTATING.get(uuid);
         if (data != null) {
             // stop force loading chunk
             player.getLocation().getChunk().removePluginChunkTicket(plugin);
@@ -155,8 +155,8 @@ public class TARDISCamera {
             sett.put("tardis_id", data.id());
             sett.put("uuid", uuid.toString());
             plugin.getQueryFactory().doSyncInsert("travellers", sett);
-            TARDISCameraTracker.SPECTATING.remove(uuid);
-            TARDISCameraTracker.CAMERA_IN_USE.remove(data.id());
+            CameraTracker.SPECTATING.remove(uuid);
+            CameraTracker.CAMERA_IN_USE.remove(data.id());
             if (data.forceLoaded()) {
                 interior.getChunk().addPluginChunkTicket(plugin);
             } else {

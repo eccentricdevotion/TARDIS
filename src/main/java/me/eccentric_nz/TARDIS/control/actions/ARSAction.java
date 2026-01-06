@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.control.actions;
 
-import me.eccentric_nz.TARDIS.ARS.TARDISARSInventory;
+import me.eccentric_nz.TARDIS.ARS.ARSInventory;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
+import me.eccentric_nz.TARDIS.advanced.CircuitChecker;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.control.TARDISThemeButton;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -34,7 +34,7 @@ public class ARSAction {
         this.plugin = plugin;
     }
 
-    public void openGUI(Player player, Tardis tardis, TARDISCircuitChecker tcc, int id) {
+    public void openGUI(Player player, Tardis tardis, CircuitChecker tcc, int id) {
         if (plugin.getConfig().getBoolean("difficulty.system_upgrades") && !new SystemUpgradeChecker(plugin).has(player.getUniqueId().toString(), SystemTree.ROOM_GROWING)) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "Room Growing");
             return;
@@ -70,7 +70,7 @@ public class ARSAction {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "ARS_MISSING");
                 return;
             }
-            player.openInventory(new TARDISARSInventory(plugin, player).getInventory());
+            player.openInventory(new ARSInventory(plugin, player).getInventory());
         }
     }
 }

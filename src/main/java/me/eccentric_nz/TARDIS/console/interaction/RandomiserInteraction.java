@@ -17,9 +17,9 @@
 package me.eccentric_nz.TARDIS.console.interaction;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
+import me.eccentric_nz.TARDIS.advanced.CircuitChecker;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.builders.exterior.TARDISEmergencyRelocation;
+import me.eccentric_nz.TARDIS.builders.exterior.EmergencyRelocation;
 import me.eccentric_nz.TARDIS.console.ConsoleInteraction;
 import me.eccentric_nz.TARDIS.console.models.ButtonModel;
 import me.eccentric_nz.TARDIS.control.actions.ExileAction;
@@ -58,9 +58,9 @@ public class RandomiserInteraction {
             return;
         }
         // get circuit checker
-        TARDISCircuitChecker tcc = null;
+        CircuitChecker tcc = null;
         if (plugin.getConfig().getBoolean("difficulty.circuits")) {
-            tcc = new TARDISCircuitChecker(plugin, id);
+            tcc = new CircuitChecker(plugin, id);
             tcc.getCircuits();
         }
         if (tcc != null && !tcc.hasInput() && !plugin.getUtils().inGracePeriod(player, false)) {
@@ -83,7 +83,7 @@ public class RandomiserInteraction {
         ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
         if (!rsc.resultSet()) {
             // emergency TARDIS relocation
-            new TARDISEmergencyRelocation(plugin).relocate(id, player);
+            new EmergencyRelocation(plugin).relocate(id, player);
             return;
         }
         // set custom model data for random button item display

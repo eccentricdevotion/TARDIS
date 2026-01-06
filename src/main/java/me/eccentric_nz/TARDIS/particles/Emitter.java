@@ -22,7 +22,7 @@ import org.bukkit.Location;
 
 import java.util.UUID;
 
-public class Emitter extends TARDISParticleRunnable implements Runnable {
+public class Emitter extends ParticleRunnable implements Runnable {
 
     private final TARDIS plugin;
     private final UUID uuid;
@@ -42,7 +42,7 @@ public class Emitter extends TARDISParticleRunnable implements Runnable {
     @Override
     public void run() {
         if (t < loops) {
-            TARDISParticleRunnable runnable;
+            ParticleRunnable runnable;
             switch (data.getShape()) {
                 case BEAM -> runnable = new Beam(plugin, uuid, data, location);
                 case HELIX -> runnable = new Helix(plugin, uuid, data, location);

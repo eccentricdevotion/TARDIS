@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.commands.dev;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.advanced.TARDISSerializeInventory;
+import me.eccentric_nz.TARDIS.advanced.SerializeInventory;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDiskStorage;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -42,7 +42,7 @@ public class StorageContents {
             return;
         }
         try {
-            for (ItemStack stack : TARDISSerializeInventory.itemStacksFromString(rs.getSavesOne())) {
+            for (ItemStack stack : SerializeInventory.itemStacksFromString(rs.getSavesOne())) {
                 if (stack != null) {
                     player.getInventory().addItem(stack);
                 }

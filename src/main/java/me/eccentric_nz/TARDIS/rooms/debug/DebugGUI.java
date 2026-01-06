@@ -293,6 +293,7 @@ public class DebugGUI {
             new GuiPreview(Material.PINK_WOOL, Wool.RECONFIGURE.getKey(), "map_reconfigure"),
             new GuiPreview(Material.PUMPKIN, RoomVariant.KITCHEN.getKey(), "room_kitchen"),
             new GuiPreview(Material.PURPLE_TERRACOTTA, RoomVariant.STAIRCASE.getKey(), "room_staircase"),
+            new GuiPreview(Material.PURPLE_WOOL, Wool.RELOCATOR.getKey(), "map_relocator"),
             new GuiPreview(Material.RED_CONCRETE, RoomVariant.SURGERY.getKey(), "room_surgery"),
             new GuiPreview(Material.RED_NETHER_BRICKS, RoomVariant.WORKSHOP.getKey(), "room_workshop"),
             new GuiPreview(Material.RED_WOOL, Wool.SCROLL_LEFT.getKey(), "map_scroll_left"),

@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.control;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.builders.exterior.TARDISEmergencyRelocation;
+import me.eccentric_nz.TARDIS.builders.exterior.EmergencyRelocation;
 import me.eccentric_nz.TARDIS.control.actions.ExileAction;
 import me.eccentric_nz.TARDIS.control.actions.RandomDestinationAction;
 import me.eccentric_nz.TARDIS.database.data.Current;
@@ -63,7 +63,7 @@ public class TARDISRandomButton {
         ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
         if (!rsc.resultSet()) {
             // emergency TARDIS relocation
-            new TARDISEmergencyRelocation(plugin).relocate(id, player);
+            new EmergencyRelocation(plugin).relocate(id, player);
             return;
         }
         Current current = rsc.getCurrent();

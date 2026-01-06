@@ -24,7 +24,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemRegistry;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
+import me.eccentric_nz.TARDIS.schematic.SchematicGZip;
 import me.eccentric_nz.TARDIS.schematic.getters.DataPackPainting;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
@@ -379,7 +379,7 @@ public class SchematicSave {
             try (BufferedWriter bw = new BufferedWriter(new FileWriter(file), 16 * 1024)) {
                 bw.write(schematic.toString());
             }
-            TARDISSchematicGZip.zip(output, plugin.getDataFolder() + File.separator + "user_schematics" + File.separator + which + ".tschm");
+            SchematicGZip.zip(output, plugin.getDataFolder() + File.separator + "user_schematics" + File.separator + which + ".tschm");
             file.delete();
             plugin.getMessenger().send(player, TardisModule.TARDIS, "SCHM_SAVED", which);
         } catch (IOException e) {

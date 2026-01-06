@@ -46,7 +46,7 @@ public class ArtronCapacitorStorageListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onCapacitorStorageClose(InventoryCloseEvent event) {
         InventoryView view = event.getView();
-        if (!(event.getInventory().getHolder(false) instanceof TARDISEyeStorage)) {
+        if (!(event.getInventory().getHolder(false) instanceof EyeStorage)) {
             return;
         }
         UUID uuid = event.getPlayer().getUniqueId();
@@ -108,7 +108,7 @@ public class ArtronCapacitorStorageListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onCapacitorStorageInteract(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        if (!(event.getInventory().getHolder(false) instanceof TARDISEyeStorage)) {
+        if (!(event.getInventory().getHolder(false) instanceof EyeStorage)) {
             return;
         }
         int slot = event.getRawSlot();

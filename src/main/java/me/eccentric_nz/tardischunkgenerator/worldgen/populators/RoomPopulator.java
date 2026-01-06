@@ -22,7 +22,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.enumeration.Room;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
-import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
+import me.eccentric_nz.TARDIS.schematic.SchematicGZip;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import me.eccentric_nz.tardischunkgenerator.worldgen.utils.RoomsUtility;
 import org.bukkit.Material;
@@ -55,7 +55,7 @@ public class RoomPopulator extends BlockPopulator {
     @Override
     public void populate(WorldInfo worldInfo, Random random, int x, int z, LimitedRegion limitedRegion) {
         String room = rooms.get(random.nextInt(rooms.size()));
-        JsonObject obj = TARDISSchematicGZip.getObject(plugin, "rooms", room.toLowerCase(Locale.ROOT), false);
+        JsonObject obj = SchematicGZip.getObject(plugin, "rooms", room.toLowerCase(Locale.ROOT), false);
         if (obj != null) {
             // initialise
             int level = 0;

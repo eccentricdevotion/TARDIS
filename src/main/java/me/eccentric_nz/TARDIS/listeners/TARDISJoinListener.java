@@ -18,11 +18,11 @@ package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISBook;
-import me.eccentric_nz.TARDIS.arch.TARDISArchPersister;
+import me.eccentric_nz.TARDIS.arch.ArchPersister;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.camera.CameraLocation;
-import me.eccentric_nz.TARDIS.camera.TARDISCameraTracker;
+import me.eccentric_nz.TARDIS.camera.CameraTracker;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -191,7 +191,7 @@ public class TARDISJoinListener implements Listener {
         }
         // re-arch the player
         if (plugin.isDisguisesOnServer() && plugin.getConfig().getBoolean("arch.enabled")) {
-            new TARDISArchPersister(plugin).reArch(player.getUniqueId());
+            new ArchPersister(plugin).reArch(player.getUniqueId());
         }
         // add to perception filter team
         if (plugin.getConfig().getBoolean("allow.perception_filter")) {
@@ -232,10 +232,10 @@ public class TARDISJoinListener implements Listener {
                 wherei.put("tardis_id", id);
                 wherei.put("uuid", player.getUniqueId().toString());
                 plugin.getQueryFactory().doInsert("travellers", wherei);
-                CameraLocation cl = TARDISCameraTracker.SPECTATING.get(player.getUniqueId());
+                CameraLocation cl = CameraTracker.SPECTATING.get(player.getUniqueId());
                 if (cl != null) {
-                    TARDISCameraTracker.CAMERA_IN_USE.remove(cl.id());
-                    TARDISCameraTracker.SPECTATING.remove(player.getUniqueId());
+                    CameraTracker.CAMERA_IN_USE.remove(cl.id());
+                    CameraTracker.SPECTATING.remove(player.getUniqueId());
                 }
             }, 2L);
         }

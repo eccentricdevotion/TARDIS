@@ -34,7 +34,7 @@ import me.eccentric_nz.TARDIS.doors.inner.InnerDisplayDoorOpener;
 import me.eccentric_nz.TARDIS.doors.outer.*;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.Updateable;
-import me.eccentric_nz.TARDIS.sonic.actions.TARDISSonicLight;
+import me.eccentric_nz.TARDIS.sonic.actions.SonicLight;
 import me.eccentric_nz.TARDIS.update.UpdateDoor;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import net.kyori.adventure.text.Component;
@@ -285,7 +285,7 @@ public class TARDISDisplayBlockListener implements Listener {
                 Player player = event.getPlayer();
                 ItemStack inHand = player.getInventory().getItemInMainHand();
                 if (isRedstoneSonic(inHand)) {
-                    TARDISSonicLight tsl = new TARDISSonicLight(plugin);
+                    SonicLight tsl = new SonicLight(plugin);
                     if (player.isSneaking() && plugin.getConfig().getBoolean("allow.add_lights")) {
                         // add the light to the lamps table
                         tsl.addLamp(interaction.getLocation().getBlock(), player);
@@ -494,7 +494,7 @@ public class TARDISDisplayBlockListener implements Listener {
             TARDISDisplayItem tdi = TARDISDisplayItemUtils.get(fake);
             if (tdi != null) {
                 if (tdi.isLight()) {
-                    new TARDISSonicLight(plugin).removeLamp(block, player);
+                    new SonicLight(plugin).removeLamp(block, player);
                 }
                 if (tdi.isVariable()) {
                     // remove all item displays
@@ -541,7 +541,7 @@ public class TARDISDisplayBlockListener implements Listener {
                     // remove lamp/block records if light
                     if (tdi != null) {
                         if (tdi.isLight()) {
-                            new TARDISSonicLight(plugin).removeLamp(block, player);
+                            new SonicLight(plugin).removeLamp(block, player);
                         }
                         if (tdi.isVariable()) {
                             // remove all item displays

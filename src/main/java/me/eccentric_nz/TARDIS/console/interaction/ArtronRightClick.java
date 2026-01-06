@@ -18,9 +18,9 @@ package me.eccentric_nz.TARDIS.console.interaction;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.artron.ArtronAbandoned;
-import me.eccentric_nz.TARDIS.artron.ArtronChargeAction;
-import me.eccentric_nz.TARDIS.artron.ArtronInitAction;
-import me.eccentric_nz.TARDIS.artron.ArtronTransferAction;
+import me.eccentric_nz.TARDIS.artron.actions.ArtronChargeAction;
+import me.eccentric_nz.TARDIS.artron.actions.ArtronInitAction;
+import me.eccentric_nz.TARDIS.artron.actions.ArtronTransferAction;
 import me.eccentric_nz.TARDIS.control.TARDISPowerButton;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;

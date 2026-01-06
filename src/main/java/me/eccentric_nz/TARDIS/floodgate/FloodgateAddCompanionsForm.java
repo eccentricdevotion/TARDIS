@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.floodgate;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.companionGUI.TARDISCompanionAddGUIListener;
+import me.eccentric_nz.TARDIS.companionGUI.CompanionAddGUIListener;
 import me.eccentric_nz.TARDIS.companionGUI.VanishChecker;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
@@ -84,7 +84,7 @@ public class FloodgateAddCompanionsForm {
             int id = tardis.getTardisId();
             String comps = tardis.getCompanions();
             if (label.equals("Everyone")) {
-                TARDISCompanionAddGUIListener.addCompanion(id, comps, "everyone");
+                CompanionAddGUIListener.addCompanion(id, comps, "everyone");
                 if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
                     // remove all members
                     String[] data = tardis.getChunk().split(":");
@@ -98,10 +98,10 @@ public class FloodgateAddCompanionsForm {
                 OfflinePlayer op = plugin.getServer().getOfflinePlayer(label);
                 if (op != null) {
                     String u = op.getUniqueId().toString();
-                    TARDISCompanionAddGUIListener.addCompanion(id, comps, u);
+                    CompanionAddGUIListener.addCompanion(id, comps, u);
                     if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
                         String[] data = tardis.getChunk().split(":");
-                        TARDISCompanionAddGUIListener.addToRegion(data[0], tardis.getOwner(), label);
+                        CompanionAddGUIListener.addToRegion(data[0], tardis.getOwner(), label);
                         // set entry and exit flags to deny
                         plugin.getWorldGuardUtils().setEntryExitFlags(data[0], label, false);
                     }

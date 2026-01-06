@@ -22,7 +22,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetSystemUpgrades;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.upgrades.TARDISSystemTreeGUI;
+import me.eccentric_nz.TARDIS.upgrades.SystemTreeInventory;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -61,7 +61,7 @@ public class SystemTreeCommand {
             return true;
         }
         SystemUpgrade current = rsp.getData();
-        player.openInventory(new TARDISSystemTreeGUI(plugin, current).getInventory());
+        player.openInventory(new SystemTreeInventory(plugin, current).getInventory());
         return true;
     }
 }

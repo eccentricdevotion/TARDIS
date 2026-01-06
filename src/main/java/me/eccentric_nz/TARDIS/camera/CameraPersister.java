@@ -56,7 +56,7 @@ public class CameraPersister {
                 ps.setString(2, map.getValue().toString());
                 count += ps.executeUpdate();
             }
-            for (Map.Entry<UUID, CameraLocation> map : TARDISCameraTracker.SPECTATING.entrySet()) {
+            for (Map.Entry<UUID, CameraLocation> map : CameraTracker.SPECTATING.entrySet()) {
                 ps.setString(1, map.getKey().toString());
                 ps.setString(2, map.getValue().location().toString());
                 count += ps.executeUpdate();

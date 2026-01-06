@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.bStats.ARSRoomCounts;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
+import me.eccentric_nz.TARDIS.commands.dev.wiki.WikiRecipeCommand;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.monitor.MonitorSnapshot;
 import me.eccentric_nz.TARDIS.move.TARDISTeleportLocation;
@@ -125,13 +126,13 @@ public class TARDISDevCommand implements CommandExecutor {
                             return true;
                         }
                         case "add_regions" -> {
-                            return new TARDISAddRegionsCommand(plugin).doCheck(sender);
+                            return new AddRegionsCommand(plugin).doCheck(sender);
                         }
                         case "biome" -> {
-                            return new TARDISBiomeCommand().reset(sender);
+                            return new BiomeCommand().reset(sender);
                         }
                         case "chain" -> {
-                            return new TARDISChainCommand(plugin).checkSchematics();
+                            return new ChainCommand(plugin).checkSchematics();
                         }
                         case "dalek" -> {
                             if (sender instanceof Player player) {
@@ -168,7 +169,7 @@ public class TARDISDevCommand implements CommandExecutor {
                             return true;
                         }
                         case "empty" -> {
-                            return new TARDISFixStorageCommand(plugin).convertStacks();
+                            return new FixStorageCommand(plugin).convertStacks();
                         }
                         case "staircase" -> {
                             if (sender instanceof Player player) {
@@ -177,7 +178,7 @@ public class TARDISDevCommand implements CommandExecutor {
                             return false;
                         }
                         case "furnace" -> {
-                            return new TARDISFurnaceCommand(plugin).list();
+                            return new FurnaceCommand(plugin).list();
                         }
                         case "gravity" -> {
                             if (sender instanceof Player player) {
@@ -205,7 +206,7 @@ public class TARDISDevCommand implements CommandExecutor {
                         }
                         case "interaction" -> {
                             if (sender instanceof Player player) {
-                                return new TARDISInteractionCommand(plugin).process(player.getUniqueId());
+                                return new InteractionCommand(plugin).process(player.getUniqueId());
                             }
                             return false;
                         }
@@ -329,10 +330,10 @@ public class TARDISDevCommand implements CommandExecutor {
                         return true;
                     }
                     case "biome" -> {
-                        return new TARDISBiomeCommand().getName(sender);
+                        return new BiomeCommand().getName(sender);
                     }
                     case "box" -> {
-                        return new TARDISDevBoxCommand(plugin).setPreset(sender, args);
+                        return new BoxCommand(plugin).setPreset(sender, args);
                     }
                     case "component" -> {
                         switch (args[1].toLowerCase(Locale.ROOT)) {
@@ -350,28 +351,28 @@ public class TARDISDevCommand implements CommandExecutor {
                         return new DebugCommand(plugin).process(sender, args);
                     }
                     case "label" -> {
-                        return new TARDISDevLabelCommand(plugin).catalog(sender);
+                        return new LabelCommand(plugin).catalog(sender);
                     }
                     case "nms" -> {
-                        return new TARDISDevNMSCommand(plugin).spawn(sender, args);
+                        return new NMSCommand(plugin).spawn(sender, args);
                     }
                     case "circuit" -> {
-                        return new TARDISDevCircuitCommand(plugin).give(sender);
+                        return new CircuitCommand(plugin).give(sender);
                     }
                     case "tis" -> {
-                        return new TARDISDevInfoCommand(plugin).test(sender);
+                        return new InfoCommand(plugin).test(sender);
                     }
                     case "list" -> {
-                        return new TARDISDevListCommand(plugin).listStuff(sender, args);
+                        return new ListCommand(plugin).listStuff(sender, args);
                     }
                     case "tree" -> {
-                        return new TARDISTreeCommand(plugin).grow(sender, args);
+                        return new TreeCommand(plugin).grow(sender, args);
                     }
                     case "recipe" -> {
-                        return new TARDISWikiRecipeCommand(plugin).write(sender, args);
+                        return new WikiRecipeCommand(plugin).write(sender, args);
                     }
                     case "rooms" -> {
-                        return new TARDISDevRoomsCommand(plugin).build(sender, args);
+                        return new RoomsCommand(plugin).build(sender, args);
                     }
                     case "roman" -> {
                         if (sender instanceof Player player) {
@@ -393,7 +394,7 @@ public class TARDISDevCommand implements CommandExecutor {
                         return true;
                     }
                     case "chunks" -> {
-                        return new TARDISChunksCommand(plugin).list(sender);
+                        return new ChunksCommand(plugin).list(sender);
                     }
                     case "chunky" -> {
                         if (!plugin.getPM().isPluginEnabled("Chunky")) {
@@ -456,7 +457,7 @@ public class TARDISDevCommand implements CommandExecutor {
                     }
                     case "displayitem" -> {
                         if (sender instanceof Player player) {
-                            return new TARDISDisplayItemCommand(plugin).display(player, args);
+                            return new DisplayItemCommand(plugin).display(player, args);
                         } else {
                             plugin.getMessenger().send(sender, TardisModule.TARDIS, "CMD_PLAYER");
                             return true;
@@ -464,7 +465,7 @@ public class TARDISDevCommand implements CommandExecutor {
                     }
                     case "frame" -> {
                         if (sender instanceof Player player) {
-                            return new TARDISFrameCommand(plugin).toggle(player, args[1].equalsIgnoreCase("lock"), args.length == 3);
+                            return new FrameCommand(plugin).toggle(player, args[1].equalsIgnoreCase("lock"), args.length == 3);
                         } else {
                             plugin.getMessenger().send(sender, TardisModule.TARDIS, "CMD_PLAYER");
                             return true;
@@ -498,7 +499,7 @@ public class TARDISDevCommand implements CommandExecutor {
                     }
                     case "effect" -> {
                         if (sender instanceof Player player) {
-                            return new TARDISDevEffectCommand(plugin).show(player, args);
+                            return new EffectCommand(plugin).show(player, args);
                         }
                     }
                 }

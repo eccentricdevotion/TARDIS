@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.listeners;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.interior.TARDISBuildData;
-import me.eccentric_nz.TARDIS.builders.utility.TARDISSeedBlockProcessor;
+import me.eccentric_nz.TARDIS.builders.utility.SeedBlockProcessor;
 import me.eccentric_nz.TARDIS.console.ConsoleBuilder;
 import me.eccentric_nz.TARDIS.customblocks.*;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetInteractionCheck;
@@ -223,7 +223,7 @@ public class TARDISSeedBlockListener implements Listener {
                     // grow a TARDIS
                     TARDISBuildData seed = plugin.getBuildKeeper().getTrackTARDISSeed().get(l);
                     // process seed data
-                    if (new TARDISSeedBlockProcessor(plugin).processBlock(seed, l, player)) {
+                    if (new SeedBlockProcessor(plugin).processBlock(seed, l, player)) {
                         // remove seed data
                         plugin.getBuildKeeper().getTrackTARDISSeed().remove(l);
                         // replace seed block with animated grow block

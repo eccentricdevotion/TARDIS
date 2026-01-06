@@ -19,8 +19,8 @@ package me.eccentric_nz.TARDIS.commands.sudo;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.desktop.TARDISRepair;
-import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
+import me.eccentric_nz.TARDIS.desktop.DesktopRepair;
+import me.eccentric_nz.TARDIS.desktop.UpgradeData;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.entity.Player;
@@ -53,11 +53,11 @@ public class SudoRepair {
         // get player's current console
         Schematic current_console = tardis.getSchematic();
         int level = tardis.getArtronLevel();
-        TARDISUpgradeData tud = new TARDISUpgradeData();
+        UpgradeData tud = new UpgradeData();
         tud.setPrevious(current_console);
         tud.setLevel(level);
         plugin.getTrackerKeeper().getUpgrades().put(player.getUniqueId(), tud);
-        TARDISRepair tr = new TARDISRepair(plugin, player);
+        DesktopRepair tr = new DesktopRepair(plugin, player);
         tr.restore(clean);
         return true;
     }

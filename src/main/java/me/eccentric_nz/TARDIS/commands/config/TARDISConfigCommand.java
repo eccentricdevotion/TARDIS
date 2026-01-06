@@ -255,7 +255,7 @@ public class TARDISConfigCommand implements CommandExecutor {
                     return false;
                 }
                 if (args.length == 1 && first.equals("reload")) {
-                    return new TARDISReloadCommand(plugin).reloadConfig(sender);
+                    return new ReloadCommand(plugin).reloadConfig(sender);
                 }
                 if (args.length < 2) {
                     // get the option path
@@ -289,22 +289,22 @@ public class TARDISConfigCommand implements CommandExecutor {
                     plugin.getConfig().set("mapping.provider", provider);
                 }
                 if (first.equals("reload")) {
-                    return new TARDISReloadCommand(plugin).reloadOtherConfig(sender, args);
+                    return new ReloadCommand(plugin).reloadOtherConfig(sender, args);
                 }
                 if (first.equals("area")) {
                     plugin.getConfig().set("creation.area", args[1]);
                 }
                 if (first.equals("autonomous_area")) {
-                    return new TARDISAutonomousAreaCommand(plugin).processArea(sender, args);
+                    return new AutonomousAreaCommand(plugin).processArea(sender, args);
                 }
                 if (first.equals("options")) {
-                    return new TARDISConfigOptionsCommand(plugin).showConfigOptions(sender, args);
+                    return new OptionsCommand(plugin).showConfigOptions(sender, args);
                 }
                 if (first.equals("language")) {
-                    return new TARDISLanguageCommand(plugin).setLanguage(sender, args);
+                    return new LanguageCommand(plugin).setLanguage(sender, args);
                 }
                 if (first.equals("power_down")) {
-                    return new TARDISPowerDownCommand(plugin).togglePowerDown(sender, args);
+                    return new PowerDownCommand(plugin).togglePowerDown(sender, args);
                 }
                 if (first.equals("database")) {
                     String dbtype = args[1].toLowerCase(Locale.ROOT);
@@ -315,31 +315,31 @@ public class TARDISConfigCommand implements CommandExecutor {
                     plugin.getConfig().set("database", dbtype);
                 }
                 if (first.equals("include") || first.equals("exclude")) {
-                    return new TARDISSetWorldInclusionCommand(plugin).setWorldStatus(sender, args);
+                    return new SetWorldInclusionCommand(plugin).setWorldStatus(sender, args);
                 }
                 if (first.equals("siege")) {
-                    return new TARDISSiegeCommand(plugin).setOption(sender, args);
+                    return new SiegeCommand(plugin).setOption(sender, args);
                 }
                 if (first.equals("sign_colour")) {
-                    return new TARDISSignColourCommand(plugin).setColour(sender, args);
+                    return new SignColourCommand(plugin).setColour(sender, args);
                 }
                 if (first.equals("key")) {
-                    return new TARDISSetMaterialCommand(plugin).setConfigMaterial(sender, args, firstsStr.get(first));
+                    return new SetMaterialCommand(plugin).setConfigMaterial(sender, args, firstsStr.get(first));
                 }
                 if (first.equals("full_charge_item") || first.equals("jettison_seed")) {
-                    return new TARDISSetMaterialCommand(plugin).setConfigMaterial(sender, args);
+                    return new SetMaterialCommand(plugin).setConfigMaterial(sender, args);
                 }
                 if (first.equals("default_key") || first.equals("default_model")) {
-                    return new TARDISDefaultCommand(plugin).setDefaultItem(sender, args);
+                    return new DefaultCommand(plugin).setDefaultItem(sender, args);
                 }
                 if (first.equals("default_world_name")) {
-                    return new TARDISDefaultWorldNameCommand(plugin).setName(sender, args);
+                    return new DefaultWorldNameCommand(plugin).setName(sender, args);
                 }
                 if (first.equals("respect_towny")) {
-                    return new TARDISSetRespectCommand(plugin).setRegion(sender, args);
+                    return new SetRespectCommand(plugin).setRegion(sender, args);
                 }
                 if (first.equals("respect_worldguard")) {
-                    return new TARDISSetRespectCommand(plugin).setFlag(sender, args);
+                    return new SetRespectCommand(plugin).setFlag(sender, args);
                 }
                 if (first.equals("crafting")) {
                     if (!args[1].equalsIgnoreCase("easy") && !args[1].equalsIgnoreCase("hard")) {
@@ -384,21 +384,21 @@ public class TARDISConfigCommand implements CommandExecutor {
                 // checks if it's a boolean config option
                 if (firstsBool.containsKey(first)) {
                     if (first.equals("zero_room")) {
-                        return new TARDISSetZeroRoomCommand(plugin).setConfigZero(sender, args);
+                        return new SetZeroRoomCommand(plugin).setConfigZero(sender, args);
                     } else {
-                        return new TARDISSetBooleanCommand(plugin).setConfigBool(sender, args, firstsBool.get(first));
+                        return new SetBooleanCommand(plugin).setConfigBool(sender, args, firstsBool.get(first));
                     }
                 }
                 // checks if it's a number config option
                 if (firstsInt.containsKey(first)) {
                     if (first.startsWith("random_circuit.")) {
-                        return new TARDISSetIntegerCommand(plugin).setRandomInt(sender, args);
+                        return new SetIntegerCommand(plugin).setRandomInt(sender, args);
                     } else {
-                        return new TARDISSetIntegerCommand(plugin).setConfigInt(sender, args, firstsInt.get(first));
+                        return new SetIntegerCommand(plugin).setConfigInt(sender, args, firstsInt.get(first));
                     }
                 }
                 if (firstsIntArtron.contains(first)) {
-                    return new TARDISSetIntegerCommand(plugin).setConfigInt(sender, args);
+                    return new SetIntegerCommand(plugin).setConfigInt(sender, args);
                 }
                 plugin.saveConfig();
                 plugin.getMessenger().send(sender, TardisModule.TARDIS, "CONFIG_UPDATED", first);

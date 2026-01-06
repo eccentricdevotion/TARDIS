@@ -18,8 +18,8 @@ package me.eccentric_nz.TARDIS.control.actions;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
-import me.eccentric_nz.TARDIS.maze.TARDISMazeBuilder;
-import me.eccentric_nz.TARDIS.maze.TARDISMazeGenerator;
+import me.eccentric_nz.TARDIS.maze.MazeBuilder;
+import me.eccentric_nz.TARDIS.maze.MazeGenerator;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -85,9 +85,9 @@ public class MazeAction {
         if (rsc.resultSet()) {
             Location location = TARDISStaticLocationGetters.getLocationFromBukkitString(rsc.getLocation());
             if (location != null) {
-                TARDISMazeGenerator generator = new TARDISMazeGenerator();
+                MazeGenerator generator = new MazeGenerator();
                 generator.makeMaze();
-                TARDISMazeBuilder builder = new TARDISMazeBuilder(generator.getMaze(), location);
+                MazeBuilder builder = new MazeBuilder(generator.getMaze(), location);
                 builder.build(true);
             }
         }

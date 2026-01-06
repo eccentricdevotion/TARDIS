@@ -17,23 +17,23 @@
 package me.eccentric_nz.TARDIS;
 
 import me.eccentric_nz.TARDIS.api.TARDII;
-import me.eccentric_nz.TARDIS.artron.TARDISCondensables;
+import me.eccentric_nz.TARDIS.artron.ArtronCondensables;
 import me.eccentric_nz.TARDIS.bStats.TARDISStats;
-import me.eccentric_nz.TARDIS.builders.exterior.TARDISPresetBuilderFactory;
+import me.eccentric_nz.TARDIS.builders.exterior.PresetBuilderFactory;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonPreset;
-import me.eccentric_nz.TARDIS.chatGUI.TARDISChatGUI;
+import me.eccentric_nz.TARDIS.chatGUI.ChatGUI;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.database.TARDISMySQLDatabase;
 import me.eccentric_nz.TARDIS.database.TARDISSQLiteDatabase;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTIPS;
-import me.eccentric_nz.TARDIS.destroyers.TARDISDestroyerInner;
-import me.eccentric_nz.TARDIS.destroyers.TARDISPresetDestroyerFactory;
-import me.eccentric_nz.TARDIS.doors.TARDISCustomDoorLoader;
+import me.eccentric_nz.TARDIS.destroyers.InteriorDestroyer;
+import me.eccentric_nz.TARDIS.destroyers.PresetDestroyerFactory;
+import me.eccentric_nz.TARDIS.doors.CustomDoorLoader;
 import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.files.*;
 import me.eccentric_nz.TARDIS.flight.vehicle.VehicleLoader;
-import me.eccentric_nz.TARDIS.handles.TARDISHandlesUpdater;
+import me.eccentric_nz.TARDIS.handles.HandlesConfigUpdater;
 import me.eccentric_nz.TARDIS.handles.wiki.HandlesWikiServerLink;
 import me.eccentric_nz.TARDIS.mapping.TARDISBlueMap;
 import me.eccentric_nz.TARDIS.mapping.TARDISDynmap;
@@ -46,7 +46,7 @@ import me.eccentric_nz.TARDIS.placeholders.TARDISPlaceholderExpansion;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.recipes.*;
 import me.eccentric_nz.TARDIS.rooms.eye.EyeLoader;
-import me.eccentric_nz.TARDIS.rotors.TARDISCustomRotorLoader;
+import me.eccentric_nz.TARDIS.rotors.CustomTimeRotorLoader;
 import me.eccentric_nz.TARDIS.sensor.SensorTracker;
 import me.eccentric_nz.TARDIS.skins.SkinChanger;
 import me.eccentric_nz.TARDIS.travel.TARDISArea;
@@ -105,17 +105,17 @@ public class TARDIS extends JavaPlugin {
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final TARDISArea tardisArea = new TARDISArea(this);
     private final TARDISBuilderInstanceKeeper buildKeeper = new TARDISBuilderInstanceKeeper();
-    private final TARDISDestroyerInner interiorDestroyer = new TARDISDestroyerInner(this);
-    private final TARDISFileCopier tardisCopier = new TARDISFileCopier(this);
-    private final TARDISPresetBuilderFactory presetBuilder = new TARDISPresetBuilderFactory(this);
-    private final TARDISPresetDestroyerFactory presetDestroyer = new TARDISPresetDestroyerFactory(this);
+    private final InteriorDestroyer interiorDestroyer = new InteriorDestroyer(this);
+    private final FileCopier tardisCopier = new FileCopier(this);
+    private final PresetBuilderFactory presetBuilder = new PresetBuilderFactory(this);
+    private final PresetDestroyerFactory presetDestroyer = new PresetDestroyerFactory(this);
     private final TARDISTrackerInstanceKeeper trackerKeeper = new TARDISTrackerInstanceKeeper();
     private final List<String> cleanUpWorlds = new ArrayList<>();
     private final HashMap<String, String> versions = new HashMap<>();
     private final String versionRegex = "(\\d+[.])+\\d+";
     private final Pattern versionPattern = Pattern.compile(versionRegex);
     private TARDISMessage messenger;
-    private TARDISChatGUI jsonKeeper;
+    private ChatGUI jsonKeeper;
     private SkinChanger skinChanger;
     private Calendar afterCal;
     private Calendar beforeCal;
@@ -151,7 +151,7 @@ public class TARDIS extends JavaPlugin {
     private HashMap<String, Integer> condensables;
     private BukkitTask standbyTask;
     private TARDISChameleonPreset presets;
-    private TARDISPerceptionFilter filter;
+    private PerceptionFilter filter;
     private TARDISPluginRespect pluginRespect;
     private TARDISSeedRecipe obstructionum;
     private TARDISShapedRecipe figura;
@@ -232,7 +232,7 @@ public class TARDIS extends JavaPlugin {
             // only try to persist data if the plugin was enabled properly
             boolean hasDatabase = TARDISDatabaseConnection.getINSTANCE().connection != null;
             if (hasDatabase) {
-                TARDISPerceptionFilter.removePerceptionFilter();
+                PerceptionFilter.removePerceptionFilter();
                 debug("Perception Filters removed");
                 new TARDISPersister(this).save();
             }
@@ -283,7 +283,7 @@ public class TARDIS extends JavaPlugin {
                 return;
             }
             messenger = new TARDISMessage();
-            jsonKeeper = new TARDISChatGUI();
+            jsonKeeper = new ChatGUI();
             skinChanger = new SkinChanger();
             // send banner
             messenger.sendStartBanner(console);
@@ -314,7 +314,7 @@ public class TARDIS extends JavaPlugin {
             saveDefaultConfig();
             reloadConfig();
             if (!getConfig().getBoolean("conversions.custom_presets")) {
-                new TARDISCustomPresetConverter(this).toJson();
+                new CustomPresetConverter(this).toJson();
             } else {
                 tardisCopier.copy("custom_presets.json");
             }
@@ -350,9 +350,9 @@ public class TARDIS extends JavaPlugin {
             if (getConfig().getBoolean("preferences.add_server_link")) {
                 new HandlesWikiServerLink(this).addServerLink();
             }
-            new TARDISDesktopLoader(this).addSchematics();
-            new TARDISCustomRotorLoader(this).addRotors();
-            new TARDISCustomDoorLoader(this).addDoors();
+            new DesktopThemeLoader(this).addSchematics();
+            new CustomTimeRotorLoader(this).addRotors();
+            new CustomDoorLoader(this).addDoors();
             loadFiles();
             disguisesOnServer = pm.isPluginEnabled("LibsDisguises");
             generalKeeper = new TARDISGeneralInstanceKeeper(this);
@@ -418,10 +418,10 @@ public class TARDIS extends JavaPlugin {
             new TARDISPersister(this).load();
             setDates();
             if (getConfig().getBoolean("allow.perception_filter")) {
-                filter = new TARDISPerceptionFilter(this);
+                filter = new PerceptionFilter(this);
                 filter.createPerceptionFilter();
             }
-            TARDISCondensables cond = new TARDISCondensables(this);
+            ArtronCondensables cond = new ArtronCondensables(this);
             cond.makeCondensables();
             condensables = cond.getCondensables();
             // start runnable tasks
@@ -802,7 +802,7 @@ public class TARDIS extends JavaPlugin {
      *
      * @return the TARDIS Preset Builder
      */
-    public TARDISPresetBuilderFactory getPresetBuilder() {
+    public PresetBuilderFactory getPresetBuilder() {
         return presetBuilder;
     }
 
@@ -811,7 +811,7 @@ public class TARDIS extends JavaPlugin {
      *
      * @return the TARDIS Interior Destroyer
      */
-    public TARDISDestroyerInner getInteriorDestroyer() {
+    public InteriorDestroyer getInteriorDestroyer() {
         return interiorDestroyer;
     }
 
@@ -820,7 +820,7 @@ public class TARDIS extends JavaPlugin {
      *
      * @return the TARDIS Preset Destroyer Factory
      */
-    public TARDISPresetDestroyerFactory getPresetDestroyer() {
+    public PresetDestroyerFactory getPresetDestroyer() {
         return presetDestroyer;
     }
 
@@ -883,7 +883,7 @@ public class TARDIS extends JavaPlugin {
      *
      * @return the TARDIS Perception Filter
      */
-    public TARDISPerceptionFilter getFilter() {
+    public PerceptionFilter getFilter() {
         return filter;
     }
 
@@ -946,7 +946,7 @@ public class TARDIS extends JavaPlugin {
      *
      * @return the TARDIS Chat GUI JSON class
      */
-    public TARDISChatGUI getJsonKeeper() {
+    public ChatGUI getJsonKeeper() {
         return jsonKeeper;
     }
 
@@ -1018,7 +1018,7 @@ public class TARDIS extends JavaPlugin {
      *
      * @return the TARDIS File Copier
      */
-    public TARDISFileCopier getTardisCopier() {
+    public FileCopier getTardisCopier() {
         return tardisCopier;
     }
 
@@ -1363,9 +1363,9 @@ public class TARDIS extends JavaPlugin {
             }
         }
         // always copy English default
-        TARDISFileCopier.copy(getDataFolder() + File.separator + "language" + File.separator + "en.yml", getResource("en.yml"), true);
+        FileCopier.copy(getDataFolder() + File.separator + "language" + File.separator + "en.yml", getResource("en.yml"), true);
         // only copy ru.yml if it doesn't exist
-        TARDISFileCopier.copy(getDataFolder() + File.separator + "language" + File.separator + "ru.yml", getResource("ru.yml"), false);
+        FileCopier.copy(getDataFolder() + File.separator + "language" + File.separator + "ru.yml", getResource("ru.yml"), false);
         // get configured language
         String lang = getConfig().getString("preferences.language");
         // check file exists
@@ -1380,7 +1380,7 @@ public class TARDIS extends JavaPlugin {
         getMessenger().message(console, TardisModule.TARDIS, "Loading language: " + Language.valueOf(lang).getLang());
         language = YamlConfiguration.loadConfiguration(file);
         // update the language configuration
-        new TARDISLanguageUpdater(this).update();
+        new LanguageConfigUpdater(this).update();
     }
 
     /**
@@ -1392,12 +1392,12 @@ public class TARDIS extends JavaPlugin {
         file = new File(getDataFolder() + File.separator + "language" + File.separator + "signs.yml");
         if (!file.exists()) {
             // copy sign file
-            TARDISFileCopier.copy(getDataFolder() + File.separator + "language" + File.separator + "signs.yml", getResource("signs.yml"), true);
+            FileCopier.copy(getDataFolder() + File.separator + "language" + File.separator + "signs.yml", getResource("signs.yml"), true);
             file = new File(getDataFolder() + File.separator + "language" + File.separator + "signs.yml");
         }
         // load the language
         signs = YamlConfiguration.loadConfiguration(file);
-        new TARDISSignsUpdater(plugin, signs).checkSignsConfig();
+        new SignsConfigUpdater(plugin, signs).checkSignsConfig();
     }
 
     /**
@@ -1409,12 +1409,12 @@ public class TARDIS extends JavaPlugin {
         file = new File(getDataFolder() + File.separator + "language" + File.separator + "chameleon_guis.yml");
         if (!file.exists()) {
             // copy sign file
-            TARDISFileCopier.copy(getDataFolder() + File.separator + "language" + File.separator + "chameleon_guis.yml", getResource("chameleon_guis.yml"), true);
+            FileCopier.copy(getDataFolder() + File.separator + "language" + File.separator + "chameleon_guis.yml", getResource("chameleon_guis.yml"), true);
             file = new File(getDataFolder() + File.separator + "language" + File.separator + "chameleon_guis.yml");
         }
         // load the language
         chameleonGuis = YamlConfiguration.loadConfiguration(file);
-        new TARDISChameleonGuiUpdater(plugin, chameleonGuis).checkChameleonConfig();
+        new ChameleonGuiConfigUpdater(plugin, chameleonGuis).checkChameleonConfig();
     }
 
     /**
@@ -1441,29 +1441,29 @@ public class TARDIS extends JavaPlugin {
             tardisCopier.copy(f);
             tardisCopier.copy(f);
         }
-        new TARDISPlanetsUpdater(this, planetsConfig).checkPlanetsConfig();
+        new PlanetsConfigUpdater(this, planetsConfig).checkPlanetsConfig();
         roomsConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "rooms.yml"));
-        new TARDISRoomsUpdater(this, roomsConfig).checkRoomsConfig();
+        new RoomsConfigUpdater(this, roomsConfig).checkRoomsConfig();
         artronConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "artron.yml"));
-        new TARDISArtronUpdater(this).checkArtronConfig();
+        new ArtronConfigUpdater(this).checkArtronConfig();
         blocksConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "blocks.yml"));
-        new TARDISBlocksUpdater(this, blocksConfig).checkBlocksConfig();
+        new BlocksConfigUpdater(this, blocksConfig).checkBlocksConfig();
         condensablesConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "condensables.yml"));
-        new TARDISCondensablesUpdater(this).checkCondensables();
+        new CondensablesConfigUpdater(this).checkCondensables();
         customConsolesConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "custom_consoles.yml"));
         customDesktopsConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "custom_desktops.yml"));
         customDoorsConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "custom_doors.yml"));
         customRotorsConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "custom_time_rotors.yml"));
         kitsConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "kits.yml"));
-        new TARDISKitsUpdater(this, kitsConfig).checkKits();
+        new KitsConfigUpdater(this, kitsConfig).checkKits();
         achievementConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "achievements.yml"));
         tagConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "tag.yml"));
         handlesConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "handles.yml"));
-        new TARDISHandlesUpdater(this, handlesConfig).checkHandles();
+        new HandlesConfigUpdater(this, handlesConfig).checkHandles();
         adaptiveConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "adaptive.yml"));
-        new TARDISAdaptiveUpdater(this).checkBiomesConfig();
+        new AdaptiveConfigUpdater(this).checkBiomesConfig();
         generatorConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "generator.yml"));
-        new TARDISGeneratorUpdater(this, generatorConfig).checkTrees();
+        new GeneratorConfigUpdater(this, generatorConfig).checkTrees();
         lampsConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "lamps.yml"));
         if (getConfig().getBoolean("modules.weeping_angels")) {
             monstersConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "monsters.yml"));
@@ -1480,7 +1480,7 @@ public class TARDIS extends JavaPlugin {
         }
         customModelConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "custom_models.yml"));
         systemUpgradesConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "system_upgrades.yml"));
-        new TARDISSysUpsUpdater(this).checkSystemUpgradesConfig();
+        new SystemUpgradesConfigUpdater(this).checkSystemUpgradesConfig();
         if (getConfig().getBoolean("modules.regeneration")) {
             regenerationConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "regeneration.yml"));
             new TARDISRegenerationUpdater(this).checkConfig();
@@ -1509,7 +1509,7 @@ public class TARDIS extends JavaPlugin {
             }
         }
         Set<String> bookNames = achievementConfig.getKeys(false);
-        bookNames.forEach((b) -> TARDISFileCopier.copy(getDataFolder() + File.separator + "books" + File.separator + b + ".txt", getResource("books/" + b + ".txt"), false));
+        bookNames.forEach((b) -> FileCopier.copy(getDataFolder() + File.separator + "books" + File.separator + b + ".txt", getResource("books/" + b + ".txt"), false));
     }
 
     /**

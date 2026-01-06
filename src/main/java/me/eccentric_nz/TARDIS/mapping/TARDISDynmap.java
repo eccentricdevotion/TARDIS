@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.mapping;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.TARDISData;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.files.TARDISFileCopier;
+import me.eccentric_nz.TARDIS.files.FileCopier;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.plugin.Plugin;
@@ -111,7 +111,7 @@ public class TARDISDynmap implements TARDISMapper {
         String path = "plugins/dynmap/web/tiles/_markers_/tardis.png";
         File icon = new File(path);
         if (!icon.exists()) {
-            TARDISFileCopier.copy(path, plugin.getResource("tardis.png"), true);
+            FileCopier.copy(path, plugin.getResource("tardis.png"), true);
             plugin.getServer().dispatchCommand(plugin.getConsole(), "dmarker addicon id:tardis newlabel:tardis file:plugins/dynmap/web/tiles/_markers_/tardis.png");
         }
     }

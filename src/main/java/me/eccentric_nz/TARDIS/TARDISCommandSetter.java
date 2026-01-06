@@ -16,13 +16,13 @@
  */
 package me.eccentric_nz.TARDIS;
 
-import me.eccentric_nz.TARDIS.artron.TARDISArtronStorageCommand;
-import me.eccentric_nz.TARDIS.artron.TARDISArtronTabComplete;
 import me.eccentric_nz.TARDIS.commands.*;
 import me.eccentric_nz.TARDIS.commands.admin.TARDISAdminCommands;
 import me.eccentric_nz.TARDIS.commands.admin.TARDISAdminTabComplete;
 import me.eccentric_nz.TARDIS.commands.areas.TARDISAreaCommands;
 import me.eccentric_nz.TARDIS.commands.areas.TARDISAreaTabComplete;
+import me.eccentric_nz.TARDIS.commands.artron.TARDISArtronStorageCommand;
+import me.eccentric_nz.TARDIS.commands.artron.TARDISArtronTabComplete;
 import me.eccentric_nz.TARDIS.commands.bind.TARDISBindCommands;
 import me.eccentric_nz.TARDIS.commands.bind.TARDISBindTabComplete;
 import me.eccentric_nz.TARDIS.commands.config.TARDISConfigCommand;
@@ -42,6 +42,7 @@ import me.eccentric_nz.TARDIS.commands.tardis.TARDISTabComplete;
 import me.eccentric_nz.TARDIS.commands.travel.TARDISTravelCommands;
 import me.eccentric_nz.TARDIS.commands.travel.TARDISTravelTabComplete;
 import me.eccentric_nz.TARDIS.commands.utils.*;
+import me.eccentric_nz.TARDIS.commands.utils.weather.TARDISWeatherCommand;
 import me.eccentric_nz.TARDIS.display.TARDISDisplayCommand;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.info.TARDISInformationSystemCommand;
@@ -119,9 +120,6 @@ class TARDISCommandSetter {
         TARDISTeleportCommand tardisTP = new TARDISTeleportCommand(plugin);
         plugin.getCommand("tardisteleport").setExecutor(tardisTP);
         plugin.getCommand("tardisteleport").setTabCompleter(tardisTP);
-        TARDISMushroomFixerCommand tardisMush = new TARDISMushroomFixerCommand(plugin);
-        plugin.getCommand("tardismushroom").setExecutor(tardisMush);
-        plugin.getCommand("tardismushroom").setTabCompleter(tardisMush);
         TARDISWorldCommand tardisWorldCommand = new TARDISWorldCommand(plugin);
         plugin.getCommand("tardisworld").setExecutor(tardisWorldCommand);
         plugin.getCommand("tardisworld").setTabCompleter(tardisWorldCommand);

@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.control.actions;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.control.TARDISControlInventory;
+import me.eccentric_nz.TARDIS.control.ControlInventory;
 import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
 import org.bukkit.entity.Player;
 
@@ -40,7 +40,7 @@ public class ControlMenuAction {
             if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(playerUUID)) {
                 TARDISFloodgate.sendControlForm(playerUUID);
             } else {
-                TARDISControlInventory controls = new TARDISControlInventory(plugin, id);
+                ControlInventory controls = new ControlInventory(plugin, id);
                 player.openInventory(controls.getInventory());
             }
         }

@@ -80,25 +80,25 @@ public class TARDISArchCommand {
         UUID uuid = player.getUniqueId();
         boolean inv = plugin.getConfig().getBoolean("arch.switch_inventory");
         if (!plugin.getTrackerKeeper().getJohnSmith().containsKey(uuid)) {
-            String name = TARDISRandomName.name();
+            String name = RandomArchName.name();
             long time = System.currentTimeMillis() + plugin.getConfig().getLong("arch.min_time") * 60000L;
-            TARDISWatchData twd = new TARDISWatchData(name, time);
+            FobWatchData twd = new FobWatchData(name, time);
             plugin.getTrackerKeeper().getJohnSmith().put(uuid, twd);
             if (plugin.isDisguisesOnServer()) {
-                TARDISArchLibsDisguise.undisguise(player);
+                ArchLibsDisguise.undisguise(player);
             } else {
-                TARDISArchDisguise.undisguise(player);
+                ArchDisguise.undisguise(player);
             }
             player.getWorld().strikeLightningEffect(player.getLocation());
             double mh = player.getAttribute(Attribute.MAX_HEALTH).getValue();
             player.setHealth(mh / 10.0d);
             if (inv) {
-                new TARDISArchInventory().switchInventories(player, 0);
+                new ArchInventory().switchInventories(player, 0);
             }
             if (plugin.isDisguisesOnServer()) {
-                TARDISArchLibsDisguise.disguise(player, name);
+                ArchLibsDisguise.disguise(player, name);
             } else {
-                TARDISArchDisguise.disguise(player, name);
+                ArchDisguise.disguise(player, name);
             }
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                 Component component = Component.text(name);
@@ -107,12 +107,12 @@ public class TARDISArchCommand {
             }, 5L);
         } else {
             if (plugin.isDisguisesOnServer()) {
-                TARDISArchLibsDisguise.undisguise(player);
+                ArchLibsDisguise.undisguise(player);
             } else {
-                TARDISArchDisguise.undisguise(player);
+                ArchDisguise.undisguise(player);
             }
             if (inv) {
-                new TARDISArchInventory().switchInventories(player, 1);
+                new ArchInventory().switchInventories(player, 1);
             }
             player.getWorld().strikeLightningEffect(player.getLocation());
             plugin.getTrackerKeeper().getJohnSmith().remove(uuid);
@@ -121,7 +121,7 @@ public class TARDISArchCommand {
                 player.displayName(component);
                 player.playerListName(component);
             }, 5L);            // remove player from arched table
-            new TARDISArchPersister(plugin).removeArch(uuid);
+            new ArchPersister(plugin).removeArch(uuid);
         }
         return true;
     }

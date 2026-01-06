@@ -23,7 +23,7 @@ import io.papermc.paper.registry.RegistryAccess;
 import io.papermc.paper.registry.RegistryKey;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.rotors.TARDISTimeRotor;
+import me.eccentric_nz.TARDIS.rotors.TimeRotor;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import net.kyori.adventure.text.Component;
 import org.bukkit.*;
@@ -116,7 +116,7 @@ public class ItemFrameSetter {
         if (json.has("rotor") && id != -1) {
             frame.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING, cmd);
             // update rotor record
-            TARDISTimeRotor.updateRotorRecord(id, frame.getUniqueId().toString());
+            TimeRotor.updateRotorRecord(id, frame.getUniqueId().toString());
         }
         // check whether it is Lab Equipment
         if (json.has("microscope")) {

@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.mobfarming;
 import io.papermc.paper.entity.Leashable;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetHappy;
+import me.eccentric_nz.TARDIS.mobfarming.types.TARDISHappyGhast;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Color;
 import org.bukkit.Location;

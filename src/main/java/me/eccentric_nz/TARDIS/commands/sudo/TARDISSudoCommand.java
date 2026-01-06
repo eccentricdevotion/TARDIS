@@ -23,11 +23,11 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
-import me.eccentric_nz.TARDIS.commands.preferences.TARDISIsomorphicCommand;
-import me.eccentric_nz.TARDIS.commands.remote.TARDISRemoteBackCommand;
-import me.eccentric_nz.TARDIS.commands.remote.TARDISRemoteComehereCommand;
-import me.eccentric_nz.TARDIS.commands.remote.TARDISRemoteHideCommand;
-import me.eccentric_nz.TARDIS.commands.remote.TARDISRemoteRebuildCommand;
+import me.eccentric_nz.TARDIS.commands.preferences.IsomorphicCommand;
+import me.eccentric_nz.TARDIS.commands.remote.BackCommand;
+import me.eccentric_nz.TARDIS.commands.remote.ComehereCommand;
+import me.eccentric_nz.TARDIS.commands.remote.HideCommand;
+import me.eccentric_nz.TARDIS.commands.remote.RebuildCommand;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetARS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreas;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisConsole;
@@ -142,7 +142,7 @@ public class TARDISSudoCommand extends TARDISCompleter implements CommandExecuto
                             return new SudoAssemble(plugin).restore(sender, uuid, offlinePlayer.getName());
                         }
                         case "back" -> {
-                            return new TARDISRemoteBackCommand(plugin).sendBack(sender, rs.getTardisId(), offlinePlayer);
+                            return new BackCommand(plugin).sendBack(sender, rs.getTardisId(), offlinePlayer);
                         }
                         case "chameleon" -> {
                             return new SudoChameleon(plugin).setPreset(sender, rs.getTardisId(), args, offlinePlayer);
@@ -155,7 +155,7 @@ public class TARDISSudoCommand extends TARDISCompleter implements CommandExecuto
                                 plugin.getMessenger().send(sender, TardisModule.TARDIS, "CMD_NO_CONSOLE");
                                 return true;
                             }
-                            return new TARDISRemoteComehereCommand(plugin).doRemoteComeHere((Player) sender, uuid);
+                            return new ComehereCommand(plugin).doRemoteComeHere((Player) sender, uuid);
                         }
                         case "deadlock" -> {
                             // toggle door deadlocks
@@ -173,14 +173,14 @@ public class TARDISSudoCommand extends TARDISCompleter implements CommandExecuto
                             return new SudoHandbrake(plugin).toggle(sender, args, uuid);
                         }
                         case "hide" -> {
-                            return new TARDISRemoteHideCommand(plugin).doRemoteHide(sender, rs.getTardisId());
+                            return new HideCommand(plugin).doRemoteHide(sender, rs.getTardisId());
                         }
                         case "isomorphic" -> {
                             // toggle isomorphic
-                            return new TARDISIsomorphicCommand(plugin).toggleIsomorphicControls(uuid, sender);
+                            return new IsomorphicCommand(plugin).toggleIsomorphicControls(uuid, sender);
                         }
                         case "rebuild" -> {
-                            return new TARDISRemoteRebuildCommand(plugin).doRemoteRebuild(sender, rs.getTardisId(), offlinePlayer, true);
+                            return new RebuildCommand(plugin).doRemoteRebuild(sender, rs.getTardisId(), offlinePlayer, true);
                         }
                         case "repair" -> {
                             return new SudoRepair(plugin, uuid, false).repair();

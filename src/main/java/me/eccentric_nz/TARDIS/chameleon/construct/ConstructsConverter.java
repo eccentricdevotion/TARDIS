@@ -21,7 +21,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.chameleon.utils.TARDISStainedGlassLookup;
+import me.eccentric_nz.TARDIS.chameleon.utils.StainedGlassLookup;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.database.converters.lookup.LegacyColourTable;
 import me.eccentric_nz.TARDIS.database.converters.lookup.LegacyIdTable;
@@ -103,7 +103,7 @@ public class ConstructsConverter {
                                         String implode = sb.toString();
                                         material = Material.valueOf(implode);
                                         bpGrid[y][x] = material.createBlockData().getAsString();
-                                        stGrid[y][x] = TARDISStainedGlassLookup.stainedGlassFromMaterial(null, material).createBlockData().getAsString();
+                                        stGrid[y][x] = StainedGlassLookup.stainedGlassFromMaterial(null, material).createBlockData().getAsString();
                                     }
                                     case ACACIA_DOOR, BAMBOO_DOOR, BIRCH_DOOR, CHERRY_DOOR, CRIMSON_DOOR, DARK_OAK_DOOR, IRON_DOOR, JUNGLE_DOOR, MANGROVE_DOOR, OAK_DOOR, SPRUCE_DOOR, WARPED_DOOR -> {
                                         BlockData dbd = material.createBlockData();
@@ -127,7 +127,7 @@ public class ConstructsConverter {
                                             stGrid[y][x] = LegacyIdTable.LOOKUP.get(bpIDX.get(x).getAsInt()).createBlockData().getAsString();
                                     default -> {
                                         try {
-                                            stGrid[y][x] = TARDISStainedGlassLookup.stainedGlassFromMaterial(null, material).createBlockData().getAsString();
+                                            stGrid[y][x] = StainedGlassLookup.stainedGlassFromMaterial(null, material).createBlockData().getAsString();
                                         } catch (NullPointerException ex) {
                                             plugin.debug(material.toString());
                                         }

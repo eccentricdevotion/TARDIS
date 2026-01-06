@@ -49,7 +49,7 @@ public class TerminalDialog {
         );
         DialogAction action = DialogAction.customClick((response, audience) -> {
                     Player player = audience instanceof Player ? (Player) audience : null;
-                    new TARDISTerminalDialogProcessor(TARDIS.plugin, player).process(response);
+                    new TerminalDialogProcessor(TARDIS.plugin, player).process(response);
                 },
                 ClickCallback.Options.builder().build()
         );

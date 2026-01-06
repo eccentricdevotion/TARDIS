@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.console.interaction;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
+import me.eccentric_nz.TARDIS.advanced.CircuitChecker;
 import me.eccentric_nz.TARDIS.console.ConsoleInteraction;
 import me.eccentric_nz.TARDIS.console.models.ButtonModel;
 import me.eccentric_nz.TARDIS.control.actions.FastReturnAction;
@@ -46,9 +46,9 @@ public class FastReturnInteraction {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "SIEGE_NO_CONTROL");
             return;
         }
-        TARDISCircuitChecker tcc = null;
+        CircuitChecker tcc = null;
         if (plugin.getConfig().getBoolean("difficulty.circuits")) {
-            tcc = new TARDISCircuitChecker(plugin, id);
+            tcc = new CircuitChecker(plugin, id);
             tcc.getCircuits();
         }
         if (tcc != null && !tcc.hasInput() && !plugin.getUtils().inGracePeriod(player, false)) {

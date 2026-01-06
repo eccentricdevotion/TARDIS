@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.control.actions;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.artron.TARDISLampToggler;
+import me.eccentric_nz.TARDIS.artron.PresetLampToggler;
 import me.eccentric_nz.TARDIS.enumeration.TardisLight;
 import org.bukkit.entity.Player;
 
@@ -46,7 +46,7 @@ public class LightSwitchAction {
         HashMap<String, Object> wherel = new HashMap<>();
         wherel.put("tardis_id", id);
         HashMap<String, Object> setl = new HashMap<>();
-        new TARDISLampToggler(plugin).flickSwitch(id, player.getUniqueId(), on, light);
+        new PresetLampToggler(plugin).flickSwitch(id, player.getUniqueId(), on, light);
         setl.put("lights_on", (on) ? 0 : 1);
         plugin.getQueryFactory().doUpdate("tardis", setl, wherel);
     }

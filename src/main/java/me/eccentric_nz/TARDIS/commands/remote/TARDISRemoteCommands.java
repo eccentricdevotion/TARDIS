@@ -18,14 +18,14 @@ package me.eccentric_nz.TARDIS.commands.remote;
 
 import com.google.common.collect.ImmutableList;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
-import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
+import me.eccentric_nz.TARDIS.advanced.CircuitChecker;
+import me.eccentric_nz.TARDIS.advanced.CircuitDamager;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
-import me.eccentric_nz.TARDIS.commands.tardis.TARDISHideCommand;
-import me.eccentric_nz.TARDIS.commands.tardis.TARDISRebuildCommand;
+import me.eccentric_nz.TARDIS.commands.tardis.HideCommand;
+import me.eccentric_nz.TARDIS.commands.tardis.RebuildCommand;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreas;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
@@ -107,7 +107,7 @@ public class TARDISRemoteCommands extends TARDISCompleter implements CommandExec
                         return true;
                     }
                     // must have circuits
-                    TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
+                    CircuitChecker tcc = new CircuitChecker(plugin, id);
                     tcc.getCircuits();
                     if (plugin.getConfig().getBoolean("difficulty.circuits") && !tcc.hasMaterialisation()) {
                         plugin.getMessenger().send(sender, TardisModule.TARDIS, "NO_MAT_CIRCUIT");
@@ -117,7 +117,7 @@ public class TARDISRemoteCommands extends TARDISCompleter implements CommandExec
                     if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getInt("circuits.uses.materialisation") > 0) {
                         // decrement uses
                         int uses_left = tcc.getMaterialisationUses();
-                        new TARDISCircuitDamager(plugin, DiskCircuit.MATERIALISATION, uses_left, id, player).damage();
+                        new CircuitDamager(plugin, DiskCircuit.MATERIALISATION, uses_left, id, player).damage();
                     }
                 }
                 // what are we going to do?
@@ -133,24 +133,24 @@ public class TARDISRemoteCommands extends TARDISCompleter implements CommandExec
                             // if it's a non-admin player or command block running the command
                             // check the usual requirements (circuits/energy) - else just do it
                             if ((sender instanceof Player && !sender.hasPermission("tardis.admin")) || sender instanceof BlockCommandSender) {
-                                return new TARDISHideCommand(plugin).hide(p);
+                                return new HideCommand(plugin).hide(p);
                             } else {
-                                return new TARDISRemoteHideCommand(plugin).doRemoteHide(sender, id);
+                                return new me.eccentric_nz.TARDIS.commands.remote.HideCommand(plugin).doRemoteHide(sender, id);
                             }
                         }
                         case REBUILD -> {
                             // if it's a non-admin player or command block running the command
                             // check the usual requirements (circuits/energy) - else just do it
                             if ((sender instanceof Player && !sender.hasPermission("tardis.admin")) || sender instanceof BlockCommandSender) {
-                                return new TARDISRebuildCommand(plugin).rebuildPreset(p);
+                                return new RebuildCommand(plugin).rebuildPreset(p);
                             } else {
-                                return new TARDISRemoteRebuildCommand(plugin).doRemoteRebuild(sender, id, p, hidden);
+                                return new me.eccentric_nz.TARDIS.commands.remote.RebuildCommand(plugin).doRemoteRebuild(sender, id, p, hidden);
                             }
                         }
                         case COMEHERE -> {
                             // NOT non-admin players, command blocks or the console
                             if (sender instanceof Player player && sender.hasPermission("tardis.admin")) {
-                                return new TARDISRemoteComehereCommand(plugin).doRemoteComeHere(player, uuid);
+                                return new ComehereCommand(plugin).doRemoteComeHere(player, uuid);
                             } else {
                                 plugin.getMessenger().send(sender, TardisModule.TARDIS, "NO_PERMS");
                                 return true;
@@ -163,7 +163,7 @@ public class TARDISRemoteCommands extends TARDISCompleter implements CommandExec
                                     plugin.getMessenger().send(sender, TardisModule.TARDIS, "NOT_WHILE_TRAVELLING");
                                     return true;
                                 }
-                                return new TARDISRemoteBackCommand(plugin).sendBack(sender, id, p);
+                                return new BackCommand(plugin).sendBack(sender, id, p);
                             } else {
                                 plugin.getMessenger().send(sender, TardisModule.TARDIS, "NO_PERMS");
                                 return true;
@@ -359,7 +359,7 @@ public class TARDISRemoteCommands extends TARDISCompleter implements CommandExec
                             plugin.getQueryFactory().doUpdate("next", set, wheret);
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                                 OfflinePlayer offlinePlayer = plugin.getServer().getOfflinePlayer(uuid);
-                                String success = (new TARDISRemoteTravelCommand(plugin).doTravel(id, offlinePlayer, sender)) ? plugin.getLanguage().getString("SUCCESS_Y") : plugin.getLanguage().getString("SUCCESS_N");
+                                String success = (new TravelCommand(plugin).doTravel(id, offlinePlayer, sender)) ? plugin.getLanguage().getString("SUCCESS_Y") : plugin.getLanguage().getString("SUCCESS_N");
                                 plugin.getMessenger().send(sender, TardisModule.TARDIS, "REMOTE_SUCCESS", success);
                             }, 5L);
                             return true;

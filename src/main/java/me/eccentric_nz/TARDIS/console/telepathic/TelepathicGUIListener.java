@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.console.telepathic;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
+import me.eccentric_nz.TARDIS.advanced.CircuitChecker;
 import me.eccentric_nz.TARDIS.custommodels.keys.SwitchVariant;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -46,7 +46,7 @@ public class TelepathicGUIListener extends TARDISMenuListener {
 
     @EventHandler(ignoreCancelled = true)
     public void onTelepathicMenuClick(InventoryClickEvent event) {
-        if (!(event.getInventory().getHolder(false) instanceof TARDISTelepathicInventory)) {
+        if (!(event.getInventory().getHolder(false) instanceof TelepathicInventory)) {
             return;
         }
         Player player = (Player) event.getWhoClicked();
@@ -57,9 +57,9 @@ public class TelepathicGUIListener extends TARDISMenuListener {
         ResultSetTravellers rs = new ResultSetTravellers(plugin, where, false);
         if (rs.resultSet()) {
             // check for telepathic circuit
-            TARDISCircuitChecker tcc = null;
+            CircuitChecker tcc = null;
             if (plugin.getConfig().getBoolean("difficulty.circuits") && !plugin.getUtils().inGracePeriod(player, true)) {
-                tcc = new TARDISCircuitChecker(plugin, rs.getTardis_id());
+                tcc = new CircuitChecker(plugin, rs.getTardis_id());
                 tcc.getCircuits();
             }
             if (tcc != null && !tcc.hasTelepathic()) {
@@ -110,13 +110,13 @@ public class TelepathicGUIListener extends TARDISMenuListener {
                 // structure finder
                 case 4 -> {
                     if (choice != null) {
-                        player.openInventory(new TARDISTelepathicStructure(plugin).getInventory());
+                        player.openInventory(new TelepathicStructure(plugin).getInventory());
                     }
                 }
                 // biome finder
                 case 6 -> {
                     if (choice != null) {
-                        player.openInventory(new TARDISTelepathicBiome(plugin, rs.getTardis_id()).getInventory());
+                        player.openInventory(new TelepathicBiome(plugin, rs.getTardis_id()).getInventory());
                     }
                 }
                 // close

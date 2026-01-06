@@ -17,9 +17,9 @@
 package me.eccentric_nz.TARDIS.control;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.artron.TARDISAdaptiveBoxLampToggler;
-import me.eccentric_nz.TARDIS.artron.TARDISBeaconToggler;
-import me.eccentric_nz.TARDIS.artron.TARDISLampToggler;
+import me.eccentric_nz.TARDIS.artron.AdaptiveBoxLampToggler;
+import me.eccentric_nz.TARDIS.artron.BeaconToggler;
+import me.eccentric_nz.TARDIS.artron.PresetLampToggler;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetLightLevelLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
@@ -96,14 +96,14 @@ public class TARDISPowerButton {
             }
             // police box lamp, delay it incase the TARDIS needs rebuilding
             if (isAdaptive || preset.usesArmourStand()) {
-                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISAdaptiveBoxLampToggler(plugin).toggleLamp(id, false, preset), delay);
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new AdaptiveBoxLampToggler(plugin).toggleLamp(id, false, preset), delay);
             }
             // if lights are on, turn them off
             if (lights) {
-                new TARDISLampToggler(plugin).flickSwitch(id, uuid, true, light);
+                new PresetLampToggler(plugin).flickSwitch(id, uuid, true, light);
             }
             // if beacon is on turn it off
-            new TARDISBeaconToggler(plugin).flickSwitch(uuid, id, false);
+            new BeaconToggler(plugin).flickSwitch(uuid, id, false);
             // turn force field off
             if (plugin.getTrackerKeeper().getActiveForceFields().containsKey(uuid)) {
                 plugin.getTrackerKeeper().getActiveForceFields().remove(uuid);
@@ -121,7 +121,7 @@ public class TARDISPowerButton {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "POWER_ON");
             // if lights are off, turn them on
             if (lights) {
-                new TARDISLampToggler(plugin).flickSwitch(id, uuid, false, light);
+                new PresetLampToggler(plugin).flickSwitch(id, uuid, false, light);
             }
             // determine beacon prefs
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid.toString());
@@ -131,11 +131,11 @@ public class TARDISPowerButton {
             }
             // if beacon is off turn it on
             if (beacon_on) {
-                new TARDISBeaconToggler(plugin).flickSwitch(uuid, id, true);
+                new BeaconToggler(plugin).flickSwitch(uuid, id, true);
             }
             // police box lamp
             if (isAdaptive || preset.usesArmourStand()) {
-                new TARDISAdaptiveBoxLampToggler(plugin).toggleLamp(id, true, preset);
+                new AdaptiveBoxLampToggler(plugin).toggleLamp(id, true, preset);
             }
         }
         // toggle the power sensor

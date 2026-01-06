@@ -17,9 +17,9 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.artron.TARDISAdaptiveBoxLampToggler;
-import me.eccentric_nz.TARDIS.commands.tardis.TARDISHideCommand;
-import me.eccentric_nz.TARDIS.commands.tardis.TARDISRebuildCommand;
+import me.eccentric_nz.TARDIS.artron.AdaptiveBoxLampToggler;
+import me.eccentric_nz.TARDIS.commands.tardis.HideCommand;
+import me.eccentric_nz.TARDIS.commands.tardis.RebuildCommand;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
@@ -131,7 +131,7 @@ public class TARDISRemoteKeyListener implements Listener {
                         plugin.getQueryFactory().doUpdate("doors", setl, wherel);
                         String message = (rsd.isLocked()) ? plugin.getLanguage().getString("DOOR_UNLOCK") : plugin.getLanguage().getString("DOOR_DEADLOCK");
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "DOOR_LOCK", message);
-                        TARDISAdaptiveBoxLampToggler tpblt = new TARDISAdaptiveBoxLampToggler(plugin);
+                        AdaptiveBoxLampToggler tpblt = new AdaptiveBoxLampToggler(plugin);
                         TARDISSounds.playTARDISSound(rsc.getCurrent().location(), "tardis_lock");
                         tpblt.toggleLamp(id, !powered, preset);
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> tpblt.toggleLamp(id, powered, preset), 6L);
@@ -200,10 +200,10 @@ public class TARDISRemoteKeyListener implements Listener {
                     }
                     if (hidden) {
                         // rebuild
-                        new TARDISRebuildCommand(plugin).rebuildPreset(player);
+                        new RebuildCommand(plugin).rebuildPreset(player);
                     } else {
                         // hide
-                        new TARDISHideCommand(plugin).hide(player);
+                        new HideCommand(plugin).hide(player);
                     }
                 }
             }

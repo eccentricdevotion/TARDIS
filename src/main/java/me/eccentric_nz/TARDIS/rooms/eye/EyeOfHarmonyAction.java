@@ -28,6 +28,6 @@ public class EyeOfHarmonyAction {
     }
 
     public void openGUI(int id, Player player) {
-        player.openInventory(new TARDISEyeStorage(plugin, id).getInventory());
+        player.openInventory(new EyeStorage(plugin, id).getInventory());
     }
 }

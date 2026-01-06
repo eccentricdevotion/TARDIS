@@ -6,9 +6,9 @@ import org.bukkit.Material;
 import java.util.EnumMap;
 import java.util.List;
 
-public record CustomPreset(EnumMap<COMPASS, TARDISChameleonColumn> blueprint,
-                           EnumMap<COMPASS, TARDISChameleonColumn> stained,
-                           EnumMap<COMPASS, TARDISChameleonColumn> glass,
+public record CustomPreset(EnumMap<COMPASS, ChameleonColumn> blueprint,
+                           EnumMap<COMPASS, ChameleonColumn> stained,
+                           EnumMap<COMPASS, ChameleonColumn> glass,
                            List<String> lines,
                            Material icon) {
 }

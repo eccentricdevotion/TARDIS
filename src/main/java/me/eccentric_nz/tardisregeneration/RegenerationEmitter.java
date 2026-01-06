@@ -18,7 +18,7 @@ package me.eccentric_nz.tardisregeneration;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.particles.Regeneration;
-import me.eccentric_nz.TARDIS.particles.TARDISParticleRunnable;
+import me.eccentric_nz.TARDIS.particles.ParticleRunnable;
 import org.bukkit.Location;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Entity;
@@ -26,7 +26,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-public class RegenerationEmitter extends TARDISParticleRunnable implements Runnable {
+public class RegenerationEmitter extends ParticleRunnable implements Runnable {
 
     private final TARDIS plugin;
     private final Player player;
@@ -94,7 +94,7 @@ public class RegenerationEmitter extends TARDISParticleRunnable implements Runna
     @Override
     public void run() {
         if (t < 20) {
-            TARDISParticleRunnable runnable = new Regeneration(plugin, player, location, yaw);
+            ParticleRunnable runnable = new Regeneration(plugin, player, location, yaw);
             int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 0, 1L);
             runnable.setTaskID(task);
             t++;

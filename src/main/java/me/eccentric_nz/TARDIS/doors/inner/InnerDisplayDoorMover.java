@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.doors.inner;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.builders.exterior.TARDISEmergencyRelocation;
+import me.eccentric_nz.TARDIS.builders.exterior.EmergencyRelocation;
 import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
@@ -28,9 +28,9 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.mobfarming.FollowerSpawner;
+import me.eccentric_nz.TARDIS.mobfarming.PetsAndFollowers;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFarmer;
-import me.eccentric_nz.TARDIS.mobfarming.TARDISFollowerSpawner;
-import me.eccentric_nz.TARDIS.mobfarming.TARDISPetsAndFollowers;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Location;
@@ -85,7 +85,7 @@ public class InnerDisplayDoorMover {
                 ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
                 if (!rsc.resultSet()) {
                     // emergency TARDIS relocation
-                    new TARDISEmergencyRelocation(plugin).relocate(id, player);
+                    new EmergencyRelocation(plugin).relocate(id, player);
                     return;
                 }
                 // get quotes player prefs
@@ -165,13 +165,13 @@ public class InnerDisplayDoorMover {
                     plugin.getGeneralKeeper().getDoorListener().movePlayer(player, exitLoc, true, block.getWorld(), userQuotes, 2, minecart, false);
                     if (plugin.getConfig().getBoolean("allow.mob_farming") && TARDISPermission.hasPermission(player, "tardis.farm")) {
                         TARDISFarmer tf = new TARDISFarmer(plugin);
-                        TARDISPetsAndFollowers petsAndFollowers = tf.exitPets(player);
+                        PetsAndFollowers petsAndFollowers = tf.exitPets(player);
                         if (petsAndFollowers != null) {
                             if (!petsAndFollowers.getPets().isEmpty()) {
                                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getGeneralKeeper().getDoorListener().movePets(petsAndFollowers.getPets(), exitLoc, player, exitDirection, false), 10L);
                             }
                             if (!petsAndFollowers.getFollowers().isEmpty()) {
-                                new TARDISFollowerSpawner(plugin).spawn(petsAndFollowers.getFollowers(), exitLoc, player, exitDirection, false);
+                                new FollowerSpawner(plugin).spawn(petsAndFollowers.getFollowers(), exitLoc, player, exitDirection, false);
                             }
                         }
                     }

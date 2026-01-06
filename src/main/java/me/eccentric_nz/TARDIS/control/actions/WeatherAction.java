@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.control.actions;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.commands.utils.TARDISWeatherInventory;
+import me.eccentric_nz.TARDIS.commands.utils.weather.WeatherInventory;
 import me.eccentric_nz.TARDIS.floodgate.FloodgateWeatherForm;
 import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
 import org.bukkit.entity.Player;
@@ -37,7 +37,7 @@ public class WeatherAction {
         if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(playerUUID)) {
             new FloodgateWeatherForm(plugin, playerUUID).send();
         } else {
-            player.openInventory(new TARDISWeatherInventory(plugin).getInventory());
+            player.openInventory(new WeatherInventory(plugin).getInventory());
         }
     }
 }

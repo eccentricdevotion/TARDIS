@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.utility.TARDISVoidFall;
+import me.eccentric_nz.TARDIS.utility.VoidFall;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
 import org.bukkit.damage.DamageSource;
@@ -48,7 +48,7 @@ public class TARDISPlayerKickListener implements Listener {
             if (plugin.getConfig().getString("preferences.vortex_fall").equals("kill")) {
                 player.damage(Float.MAX_VALUE, DamageSource.builder(DamageType.GENERIC_KILL).build());
             } else {
-                new TARDISVoidFall(plugin).teleport(player);
+                new VoidFall(plugin).teleport(player);
             }
         }
     }

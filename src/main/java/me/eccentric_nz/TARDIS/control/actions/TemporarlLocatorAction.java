@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.control.actions;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
+import me.eccentric_nz.TARDIS.advanced.CircuitChecker;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.floodgate.FloodgateTemporalForm;
@@ -35,7 +35,7 @@ public class TemporarlLocatorAction {
         this.plugin = plugin;
     }
 
-    public void openGUI(Player player, TARDISCircuitChecker tcc) {
+    public void openGUI(Player player, CircuitChecker tcc) {
         if (!TARDISPermission.hasPermission(player, "tardis.temporal")) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERM_TEMPORAL");
             return;

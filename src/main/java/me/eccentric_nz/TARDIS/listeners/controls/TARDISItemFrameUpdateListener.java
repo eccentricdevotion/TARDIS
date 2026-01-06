@@ -27,7 +27,7 @@ import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.monitor.MonitorSnapshot;
 import me.eccentric_nz.TARDIS.monitor.MonitorUtils;
 import me.eccentric_nz.TARDIS.monitor.Snapshot;
-import me.eccentric_nz.TARDIS.rotors.TARDISTimeRotor;
+import me.eccentric_nz.TARDIS.rotors.TimeRotor;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
@@ -90,7 +90,7 @@ public class TARDISItemFrameUpdateListener implements Listener {
                     int id = rst.getTardisId();
                     if (control == Control.ROTOR) {
                         UUID rotorId = frame.getUniqueId();
-                        TARDISTimeRotor.updateRotorRecord(id, rotorId.toString());
+                        TimeRotor.updateRotorRecord(id, rotorId.toString());
                         plugin.getGeneralKeeper().getTimeRotors().add(rotorId);
                         // set fixed and invisible
                         frame.setFixed(true);

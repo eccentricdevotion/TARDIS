@@ -18,9 +18,9 @@ package me.eccentric_nz.TARDIS.rooms.debug;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.builders.exterior.TARDISBuilderUtility;
+import me.eccentric_nz.TARDIS.builders.exterior.BuilderUtility;
 import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPostioning;
-import me.eccentric_nz.TARDIS.builders.interior.TARDISTIPSData;
+import me.eccentric_nz.TARDIS.builders.interior.TIPSData;
 import me.eccentric_nz.TARDIS.console.ConsoleBuilder;
 import me.eccentric_nz.TARDIS.customblocks.TARDISBlockDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
@@ -79,7 +79,7 @@ public class DebugPopulator {
 
     public void createBase(boolean clear) {
         // TIPS slot -50
-        TARDISTIPSData tipsData = new TARDISInteriorPostioning(plugin).getTIPSData(-50);
+        TIPSData tipsData = new TARDISInteriorPostioning(plugin).getTIPSData(-50);
         int x = tipsData.getCentreX();
         int z = tipsData.getCentreZ();
         plugin.debug("Debug Preview spawn => x" + x + ", y65, z" + z);
@@ -353,7 +353,7 @@ public class DebugPopulator {
                     Location loc = new Location(world, rx + x + 0.5d, 65, rz + z + 0.5d);
                     ArmorStand as = (ArmorStand) world.spawnEntity(loc, EntityType.ARMOR_STAND);
                     EntityEquipment ee = as.getEquipment();
-                    Material dye = TARDISBuilderUtility.getMaterialForArmourStand(preset, -1, true);
+                    Material dye = BuilderUtility.getMaterialForArmourStand(preset, -1, true);
                     ItemStack head = ItemStack.of(dye, 1);
                     ItemMeta meta = head.getItemMeta();
                     switch (z) {

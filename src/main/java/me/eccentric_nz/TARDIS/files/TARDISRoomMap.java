@@ -21,7 +21,7 @@ import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.converters.lookup.LegacyTypeTable;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
+import me.eccentric_nz.TARDIS.schematic.SchematicGZip;
 import org.bukkit.block.data.BlockData;
 
 import java.io.File;
@@ -79,7 +79,7 @@ public class TARDISRoomMap {
     public boolean makeRoomMap(String fileName, String s, boolean user) {
         HashMap<String, Integer> blockTypes = new HashMap<>();
         // get JSON
-        JsonObject obj = TARDISSchematicGZip.getObject(plugin, "rooms", fileName, user);
+        JsonObject obj = SchematicGZip.getObject(plugin, "rooms", fileName, user);
         if (obj == null) {
             plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "The supplied file [" + fileName + ".tschm] is not a TARDIS JSON schematic!");
             return false;

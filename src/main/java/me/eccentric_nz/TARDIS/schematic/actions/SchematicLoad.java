@@ -20,7 +20,7 @@ import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.Load;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
+import me.eccentric_nz.TARDIS.schematic.SchematicGZip;
 import org.bukkit.entity.Player;
 
 import java.io.File;
@@ -49,7 +49,7 @@ public class SchematicLoad {
                 return true;
             }
         }
-        JsonObject sch = TARDISSchematicGZip.getObject(plugin, load.getPath(), args[2], !load.isFromJar());
+        JsonObject sch = SchematicGZip.getObject(plugin, load.getPath(), args[2], !load.isFromJar());
         UUID uuid = player.getUniqueId();
         plugin.getTrackerKeeper().getPastes().put(uuid, sch);
         plugin.getMessenger().sendColouredCommand(player, "SCHM_LOADED", "/ts paste", plugin);

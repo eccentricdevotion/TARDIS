@@ -18,15 +18,15 @@ package me.eccentric_nz.TARDIS.listeners;
 
 import com.destroystokyo.paper.MaterialTags;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
-import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
+import me.eccentric_nz.TARDIS.advanced.CircuitChecker;
+import me.eccentric_nz.TARDIS.advanced.CircuitDamager;
 import me.eccentric_nz.TARDIS.api.Parameters;
-import me.eccentric_nz.TARDIS.artron.TARDISAdaptiveBoxLampToggler;
-import me.eccentric_nz.TARDIS.artron.TARDISBeaconToggler;
-import me.eccentric_nz.TARDIS.artron.TARDISLampToggler;
+import me.eccentric_nz.TARDIS.artron.AdaptiveBoxLampToggler;
+import me.eccentric_nz.TARDIS.artron.BeaconToggler;
+import me.eccentric_nz.TARDIS.artron.PresetLampToggler;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.exterior.BuildData;
-import me.eccentric_nz.TARDIS.builders.exterior.TARDISEmergencyRelocation;
+import me.eccentric_nz.TARDIS.builders.exterior.EmergencyRelocation;
 import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.data.Throticle;
@@ -183,7 +183,7 @@ public class TARDISStattenheimListener implements Listener {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "POWER_DOWN");
                             return;
                         }
-                        TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
+                        CircuitChecker tcc = new CircuitChecker(plugin, id);
                         tcc.getCircuits();
                         if (plugin.getConfig().getBoolean("difficulty.circuits") && !plugin.getUtils().inGracePeriod(player, true) && !tcc.hasMaterialisation()) {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_MAT_CIRCUIT");
@@ -193,7 +193,7 @@ public class TARDISStattenheimListener implements Listener {
                         if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getInt("circuits.uses.materialisation") > 0) {
                             // decrement uses
                             int uses_left = tcc.getMaterialisationUses();
-                            new TARDISCircuitDamager(plugin, DiskCircuit.MATERIALISATION, uses_left, id, player).damage();
+                            new CircuitDamager(plugin, DiskCircuit.MATERIALISATION, uses_left, id, player).damage();
                         }
                         // decrement uses
                         int decremented = uses - 1;
@@ -225,7 +225,7 @@ public class TARDISStattenheimListener implements Listener {
                         ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
                         if (!rsc.resultSet()) {
                             // emergency TARDIS relocation
-                            new TARDISEmergencyRelocation(plugin).relocate(id, player);
+                            new EmergencyRelocation(plugin).relocate(id, player);
                             return;
                         }
                         Current current = rsc.getCurrent();
@@ -365,15 +365,15 @@ public class TARDISStattenheimListener implements Listener {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "POWER_ON");
                         // if lights are off, turn them on
                         if (tardis.isLightsOn()) {
-                            new TARDISLampToggler(plugin).flickSwitch(id, uuid, false, tardis.getSchematic().getLights());
+                            new PresetLampToggler(plugin).flickSwitch(id, uuid, false, tardis.getSchematic().getLights());
                         }
                         // if beacon is off turn it on
                         if (beacon_on) {
-                            new TARDISBeaconToggler(plugin).flickSwitch(uuid, id, true);
+                            new BeaconToggler(plugin).flickSwitch(uuid, id, true);
                         }
                         // police box lamp
                         if (preset.equals(ChameleonPreset.ADAPTIVE) || preset.usesArmourStand()) {
-                            new TARDISAdaptiveBoxLampToggler(plugin).toggleLamp(id, true, preset);
+                            new AdaptiveBoxLampToggler(plugin).toggleLamp(id, true, preset);
                         }
                         plugin.getQueryFactory().doUpdate("tardis", setp, wherep);
                         // toggle power sensor

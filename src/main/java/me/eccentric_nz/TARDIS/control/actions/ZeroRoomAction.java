@@ -22,7 +22,7 @@ import me.eccentric_nz.TARDIS.api.event.TARDISZeroRoomExitEvent;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.rooms.TARDISExteriorRenderer;
+import me.eccentric_nz.TARDIS.rooms.ExteriorRenderer;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -48,7 +48,7 @@ public class ZeroRoomAction {
         if (zero != null) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "ZERO_READY");
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                new TARDISExteriorRenderer(plugin).transmat(player, COMPASS.SOUTH, zero);
+                new ExteriorRenderer(plugin).transmat(player, COMPASS.SOUTH, zero);
                 plugin.getPM().callEvent(new TARDISZeroRoomEnterEvent(player, id));
             }, 20L);
             plugin.getTrackerKeeper().getZeroRoomOccupants().add(player.getUniqueId());
