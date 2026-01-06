@@ -33,6 +33,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Breedable;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -203,19 +204,21 @@ public class RoomRelocatorListener extends ARSMethods implements Listener {
                         int sx = jettison.getX();
                         int sz = jettison.getZ();
                         World world = jettison.getChunk().getWorld();
-                        for (int y = sy; y < sy + 16; y++) {
-                            for (int x = sx; x < sx + 16; x++) {
-                                for (int z = sz; z < sz + 16; z++) {
-                                    // remove redstone from the to be jettisoned room
-                                    Block block = world.getBlockAt(x, y, z);
-                                    if (block.getType() == Material.REDSTONE_WIRE) {
-                                        block.setType(Material.AIR);
-                                    }
-                                }
-                            }
-                        }
-                        // TODO put a block in the doorway as doors open when redstone is removed
-                        // TODO or some other solution e.g. don't remove all redstone
+                        // put REINFORCED_DEEPSLATE blocks in the doorways
+                        // as they can't be moved by pistons and are hard to break
+                        int sy_offset = sy + Math.abs(plugin.getRoomsConfig().getInt("rooms." + room + ".offset")) + 1;
+                        Block westDoor = world.getBlockAt(sx, sy_offset, sz + 8);
+                        Block northDoor = world.getBlockAt(sx + 8, sy_offset, sz);
+                        Block eastDoor = world.getBlockAt(sx + 15, sy_offset, sz + 8);
+                        Block southDoor = world.getBlockAt(sx + 8, sy_offset, sz + 15);
+                        westDoor.setType(Material.REINFORCED_DEEPSLATE);
+                        northDoor.setType(Material.REINFORCED_DEEPSLATE);
+                        eastDoor.setType(Material.REINFORCED_DEEPSLATE);
+                        southDoor.setType(Material.REINFORCED_DEEPSLATE);
+                        westDoor.getRelative(BlockFace.UP).setType(Material.REINFORCED_DEEPSLATE);
+                        northDoor.getRelative(BlockFace.UP).setType(Material.REINFORCED_DEEPSLATE);
+                        eastDoor.getRelative(BlockFace.UP).setType(Material.REINFORCED_DEEPSLATE);
+                        southDoor.getRelative(BlockFace.UP).setType(Material.REINFORCED_DEEPSLATE);
                         // move any entities in the room
                         HashMap<Entity, Location> mobs = new HashMap<>();
                         Chunk roomChunk = world.getBlockAt(sx, sy, sz).getChunk();
