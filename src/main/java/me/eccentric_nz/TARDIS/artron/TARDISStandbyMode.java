@@ -90,7 +90,7 @@ public class TARDISStandbyMode implements Runnable {
                         new TARDISLampToggler(plugin).flickSwitch(id, standbyData.uuid(), true, standbyData.lightType());
                     }
                     // if beacon is on turn it off
-                    new TARDISBeaconToggler(plugin).flickSwitch(standbyData.uuid(), id, false);
+                    new BeaconToggler(plugin).flickSwitch(standbyData.uuid(), id, false);
                     // update database
                     plugin.getQueryFactory().doUpdate("tardis", setp, wherep);
                     // if force field is on, disable it

@@ -146,14 +146,14 @@ public class TARDISThemeProcessor {
         }
         // if configured check whether there are still any blocks left
         if (plugin.getConfig().getBoolean("desktop.check_blocks_before_upgrade")) {
-            TARDISUpgradeBlockScanner scanner = new TARDISUpgradeBlockScanner(plugin, tud, uuid);
-            TARDISBlockScannerData check = scanner.check();
+            UpgradeBlockScanner scanner = new UpgradeBlockScanner(plugin, tud, uuid);
+            BlockScannerData check = scanner.check();
             if (check == null) {
                 return;
             } else if (!check.allow()) {
                 Player cp = plugin.getServer().getPlayer(uuid);
                 plugin.getMessenger().send(cp, TardisModule.TARDIS, "UPGRADE_PERCENT_BLOCKS", plugin.getConfig().getInt("desktop.block_change_percent") + "");
-                plugin.getMessenger().send(cp, TardisModule.TARDIS, "UPGRADE_PERCENT_EXPLAIN", check.getCount() + "", check.getVolume() + "", check.getChanged() + "");
+                plugin.getMessenger().send(cp, TardisModule.TARDIS, "UPGRADE_PERCENT_EXPLAIN", check.count() + "", check.volume() + "", check.changed() + "");
                 plugin.getMessenger().send(cp, TardisModule.TARDIS, "UPGRADE_PERCENT_REASON");
                 if (tud.getPrevious().getPermission().equals("archive")) {
                     // reset archive use back to 1

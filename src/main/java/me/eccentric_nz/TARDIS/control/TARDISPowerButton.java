@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.control;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.artron.TARDISAdaptiveBoxLampToggler;
-import me.eccentric_nz.TARDIS.artron.TARDISBeaconToggler;
+import me.eccentric_nz.TARDIS.artron.BeaconToggler;
 import me.eccentric_nz.TARDIS.artron.TARDISLampToggler;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetLightLevelLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
@@ -103,7 +103,7 @@ public class TARDISPowerButton {
                 new TARDISLampToggler(plugin).flickSwitch(id, uuid, true, light);
             }
             // if beacon is on turn it off
-            new TARDISBeaconToggler(plugin).flickSwitch(uuid, id, false);
+            new BeaconToggler(plugin).flickSwitch(uuid, id, false);
             // turn force field off
             if (plugin.getTrackerKeeper().getActiveForceFields().containsKey(uuid)) {
                 plugin.getTrackerKeeper().getActiveForceFields().remove(uuid);
@@ -131,7 +131,7 @@ public class TARDISPowerButton {
             }
             // if beacon is off turn it on
             if (beacon_on) {
-                new TARDISBeaconToggler(plugin).flickSwitch(uuid, id, true);
+                new BeaconToggler(plugin).flickSwitch(uuid, id, true);
             }
             // police box lamp
             if (isAdaptive || preset.usesArmourStand()) {

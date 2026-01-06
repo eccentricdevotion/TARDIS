@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.listeners;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.arch.TARDISArchPersister;
 import me.eccentric_nz.TARDIS.artron.TARDISAdaptiveBoxLampToggler;
-import me.eccentric_nz.TARDIS.artron.TARDISBeaconToggler;
+import me.eccentric_nz.TARDIS.artron.BeaconToggler;
 import me.eccentric_nz.TARDIS.artron.TARDISLampToggler;
 import me.eccentric_nz.TARDIS.camera.TARDISCameraTracker;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -114,7 +114,7 @@ public class TARDISQuitListener implements Listener {
                         new TARDISLampToggler(plugin).flickSwitch(id, uuid, true, tardis.getSchematic().getLights());
                     }
                     // if beacon is on turn it off
-                    new TARDISBeaconToggler(plugin).flickSwitch(uuid, id, false);
+                    new BeaconToggler(plugin).flickSwitch(uuid, id, false);
                     // turn force field off
                     plugin.getTrackerKeeper().getActiveForceFields().remove(uuid);
                     // update database

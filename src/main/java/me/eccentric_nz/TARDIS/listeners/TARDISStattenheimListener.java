@@ -22,7 +22,7 @@ import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.artron.TARDISAdaptiveBoxLampToggler;
-import me.eccentric_nz.TARDIS.artron.TARDISBeaconToggler;
+import me.eccentric_nz.TARDIS.artron.BeaconToggler;
 import me.eccentric_nz.TARDIS.artron.TARDISLampToggler;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.exterior.BuildData;
@@ -369,7 +369,7 @@ public class TARDISStattenheimListener implements Listener {
                         }
                         // if beacon is off turn it on
                         if (beacon_on) {
-                            new TARDISBeaconToggler(plugin).flickSwitch(uuid, id, true);
+                            new BeaconToggler(plugin).flickSwitch(uuid, id, true);
                         }
                         // police box lamp
                         if (preset.equals(ChameleonPreset.ADAPTIVE) || preset.usesArmourStand()) {

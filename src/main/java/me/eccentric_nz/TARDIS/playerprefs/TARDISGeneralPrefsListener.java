@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.playerprefs;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.artron.TARDISBeaconToggler;
+import me.eccentric_nz.TARDIS.artron.BeaconToggler;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.commands.preferences.BuildCommand;
 import me.eccentric_nz.TARDIS.commands.preferences.IsomorphicCommand;
@@ -289,7 +289,7 @@ public class TARDISGeneralPrefsListener extends TARDISMenuListener {
             // get tardis id
             ResultSetTardisID rsi = new ResultSetTardisID(plugin);
             if (rsi.fromUUID(uuid.toString())) {
-                new TARDISBeaconToggler(plugin).flickSwitch(uuid, rsi.getTardisId(), !bool);
+                new BeaconToggler(plugin).flickSwitch(uuid, rsi.getTardisId(), !bool);
             }
         }
     }

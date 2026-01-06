@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.playerprefs;
 
 import io.papermc.paper.dialog.DialogResponseView;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.artron.TARDISBeaconToggler;
+import me.eccentric_nz.TARDIS.artron.BeaconToggler;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.commands.preferences.BuildCommand;
 import me.eccentric_nz.TARDIS.commands.preferences.JunkPreference;
@@ -90,7 +90,7 @@ public class PreferencesProcessor {
                         // get tardis id
                         ResultSetTardisID rsi = new ResultSetTardisID(plugin);
                         if (rsi.fromUUID(player.getUniqueId().toString())) {
-                            new TARDISBeaconToggler(plugin).flickSwitch(player.getUniqueId(), rsi.getTardisId(), colon[1].equals("1b"));
+                            new BeaconToggler(plugin).flickSwitch(player.getUniqueId(), rsi.getTardisId(), colon[1].equals("1b"));
                             set.put("beacon_on", colon[1].equals("1b") ? 1 : 0);
                         }
                     }

@@ -20,8 +20,8 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.desktop.TARDISBlockScannerData;
-import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeBlockScanner;
+import me.eccentric_nz.TARDIS.desktop.BlockScannerData;
+import me.eccentric_nz.TARDIS.desktop.UpgradeBlockScanner;
 import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
 import me.eccentric_nz.TARDIS.enumeration.Desktops;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
@@ -35,11 +35,11 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-public class TARDISBeaconToggler {
+public class BeaconToggler {
 
     private final TARDIS plugin;
 
-    public TARDISBeaconToggler(TARDIS plugin) {
+    public BeaconToggler(TARDIS plugin) {
         this.plugin = plugin;
     }
 
@@ -84,11 +84,11 @@ public class TARDISBeaconToggler {
         tud.setPrevious(schm);
         tud.setWall("ORANGE_WOOL");
         tud.setFloor("LIGHT_GRAY_WOOL");
-        TARDISUpgradeBlockScanner scanner = new TARDISUpgradeBlockScanner(plugin, tud, uuid);
-        TARDISBlockScannerData check = scanner.check();
-        if (!check.getBeacon().isEmpty()) {
+        UpgradeBlockScanner scanner = new UpgradeBlockScanner(plugin, tud, uuid);
+        BlockScannerData check = scanner.check();
+        if (!check.beacon().isEmpty()) {
             HashMap<String, Object> set = new HashMap<>();
-            set.put("beacon", check.getBeacon());
+            set.put("beacon", check.beacon());
             HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", uuid.toString());
             plugin.getQueryFactory().doUpdate("tardis", set, where);

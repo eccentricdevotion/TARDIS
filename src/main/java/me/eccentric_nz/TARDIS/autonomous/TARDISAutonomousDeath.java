@@ -20,7 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
 import me.eccentric_nz.TARDIS.artron.TARDISAdaptiveBoxLampToggler;
-import me.eccentric_nz.TARDIS.artron.TARDISBeaconToggler;
+import me.eccentric_nz.TARDIS.artron.BeaconToggler;
 import me.eccentric_nz.TARDIS.artron.TARDISLampToggler;
 import me.eccentric_nz.TARDIS.builders.exterior.BuildData;
 import me.eccentric_nz.TARDIS.customblocks.TARDISBlockDisplayItem;
@@ -324,7 +324,7 @@ public class TARDISAutonomousDeath {
                                     // if lights are on, turn them off
                                     new TARDISLampToggler(plugin).flickSwitch(id, player.getUniqueId(), true, tardis.getSchematic().getLights());
                                     // if beacon is on turn it off
-                                    new TARDISBeaconToggler(plugin).flickSwitch(player.getUniqueId(), id, false);
+                                    new BeaconToggler(plugin).flickSwitch(player.getUniqueId(), id, false);
                                     plugin.getQueryFactory().doUpdate("tardis", setp, wherep);
                                 }
                             }
