@@ -76,34 +76,34 @@ public class RoomRunnable implements Runnable {
     private final Player player;
     private final UUID uuid;
     private final List<Chunk> chunkList = new ArrayList<>();
-    private final List<Block> caneblocks = new ArrayList<>();
-    private final List<Block> carrotblocks = new ArrayList<>();
-    private final List<Block> farmlandblocks = new ArrayList<>();
-    private final List<Block> iceblocks = new ArrayList<>();
-    private final List<Block> lavablocks = new ArrayList<>();
-    private final List<Block> lampblocks = new ArrayList<>();
-    private final List<Block> melonblocks = new ArrayList<>();
-    private final List<Block> potatoblocks = new ArrayList<>();
-    private final List<Block> pumpkinblocks = new ArrayList<>();
-    private final List<Block> wheatblocks = new ArrayList<>();
+    private final List<Block> caneBlocks = new ArrayList<>();
+    private final List<Block> carrotBlocks = new ArrayList<>();
+    private final List<Block> farmlandBlocks = new ArrayList<>();
+    private final List<Block> iceBlocks = new ArrayList<>();
+    private final List<Block> lavaBlocks = new ArrayList<>();
+    private final List<Block> lampBlocks = new ArrayList<>();
+    private final List<Block> melonBlocks = new ArrayList<>();
+    private final List<Block> potatoBlocks = new ArrayList<>();
+    private final List<Block> pumpkinBlocks = new ArrayList<>();
+    private final List<Block> wheatBlocks = new ArrayList<>();
     private final List<Material> notThese = new ArrayList<>();
     private final List<BlockData> flora = new ArrayList<>();
-    private final HashMap<Block, BlockData> cocoablocks = new HashMap<>();
-    private final HashMap<Block, BlockData> doorblocks = new HashMap<>();
-    private final HashMap<Block, BlockData> dripleafblocks = new HashMap<>();
-    private final HashMap<Block, BlockData> leverblocks = new HashMap<>();
+    private final HashMap<Block, BlockData> cocoaBlocks = new HashMap<>();
+    private final HashMap<Block, BlockData> doorBlocks = new HashMap<>();
+    private final HashMap<Block, BlockData> dripLeafBlocks = new HashMap<>();
+    private final HashMap<Block, BlockData> leverBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> propagules = new HashMap<>();
-    private final HashMap<Block, BlockData> redstoneTorchblocks = new HashMap<>();
+    private final HashMap<Block, BlockData> redstoneTorchBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> seagrass = new HashMap<>();
-    private final HashMap<Block, BlockData> signblocks = new HashMap<>();
-    private final HashMap<Block, BlockData> torchblocks = new HashMap<>();
-    private final HashMap<Block, BlockData> trapdoorblocks = new HashMap<>();
-    private final HashMap<Block, BlockFace> mushroomblocks = new HashMap<>();
+    private final HashMap<Block, BlockData> signBlocks = new HashMap<>();
+    private final HashMap<Block, BlockData> torchBlocks = new HashMap<>();
+    private final HashMap<Block, BlockData> trapdoorBlocks = new HashMap<>();
+    private final HashMap<Block, BlockFace> mushroomBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> magmaBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> eyeBlocks = new HashMap<>();
     private final HashMap<Block, JsonObject> postSignBlocks = new HashMap<>();
     private final HashMap<Block, JsonObject> pots = new HashMap<>();
-    private final HashMap<Block, TARDISBannerData> bannerblocks = new HashMap<>();
+    private final HashMap<Block, TARDISBannerData> bannerBlocks = new HashMap<>();
     private final BlockFace[] repeaterData = new BlockFace[6];
     private final HashMap<Integer, Integer> repeaterOrder = new HashMap<>();
     private final boolean wasResumed;
@@ -203,28 +203,28 @@ public class RoomRunnable implements Runnable {
                             Block postBlock = world.getBlockAt(location);
                             BlockData postData = plugin.getServer().createBlockData(split[1]);
                             switch (postData.getMaterial()) {
-                                case ICE -> iceblocks.add(postBlock);
-                                case LAVA -> lavablocks.add(postBlock);
-                                case BIG_DRIPLEAF, BIG_DRIPLEAF_STEM -> dripleafblocks.put(postBlock, postData);
-                                case REDSTONE_LAMP -> lampblocks.add(postBlock);
-                                case TORCH -> torchblocks.put(postBlock, postData);
-                                case REDSTONE_TORCH -> redstoneTorchblocks.put(postBlock, postData);
-                                case COCOA -> cocoablocks.put(postBlock, postData);
-                                case SUGAR_CANE -> caneblocks.add(postBlock);
+                                case ICE -> iceBlocks.add(postBlock);
+                                case LAVA -> lavaBlocks.add(postBlock);
+                                case BIG_DRIPLEAF, BIG_DRIPLEAF_STEM -> dripLeafBlocks.put(postBlock, postData);
+                                case REDSTONE_LAMP -> lampBlocks.add(postBlock);
+                                case TORCH -> torchBlocks.put(postBlock, postData);
+                                case REDSTONE_TORCH -> redstoneTorchBlocks.put(postBlock, postData);
+                                case COCOA -> cocoaBlocks.put(postBlock, postData);
+                                case SUGAR_CANE -> caneBlocks.add(postBlock);
                                 case MANGROVE_PROPAGULE -> propagules.put(postBlock, postData);
                                 case SEAGRASS -> seagrass.put(postBlock, postData);
-                                case MELON_STEM -> melonblocks.add(postBlock);
-                                case POTATOES -> potatoblocks.add(postBlock);
-                                case CARROTS -> carrotblocks.add(postBlock);
-                                case PUMPKIN_STEM -> pumpkinblocks.add(postBlock);
-                                case WHEAT -> wheatblocks.add(postBlock);
-                                case FARMLAND -> farmlandblocks.add(postBlock);
-                                case OAK_DOOR -> doorblocks.put(postBlock, postData);
-                                case LEVER -> leverblocks.put(postBlock, postData);
-                                case IRON_TRAPDOOR -> trapdoorblocks.put(postBlock, postData);
+                                case MELON_STEM -> melonBlocks.add(postBlock);
+                                case POTATOES -> potatoBlocks.add(postBlock);
+                                case CARROTS -> carrotBlocks.add(postBlock);
+                                case PUMPKIN_STEM -> pumpkinBlocks.add(postBlock);
+                                case WHEAT -> wheatBlocks.add(postBlock);
+                                case FARMLAND -> farmlandBlocks.add(postBlock);
+                                case OAK_DOOR -> doorBlocks.put(postBlock, postData);
+                                case LEVER -> leverBlocks.put(postBlock, postData);
+                                case IRON_TRAPDOOR -> trapdoorBlocks.put(postBlock, postData);
                                 default -> {
                                     if (Tag.ALL_SIGNS.isTagged(postData.getMaterial())) {
-                                        signblocks.put(postBlock, postData);
+                                        signBlocks.put(postBlock, postData);
                                     }
                                 }
                             }
@@ -250,21 +250,21 @@ public class RoomRunnable implements Runnable {
             }
             if (level == h && row == w && col == (c - 1)) {
                 // the entire schematic has been read :)
-                if (!iceblocks.isEmpty()) {
+                if (!iceBlocks.isEmpty()) {
                     if (player != null) {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "ICE");
                     }
                     // set all the ice to water
-                    iceblocks.forEach((ice) -> ice.setBlockData(TARDISConstants.WATER));
-                    iceblocks.clear();
+                    iceBlocks.forEach((ice) -> ice.setBlockData(TARDISConstants.WATER));
+                    iceBlocks.clear();
                 }
-                if (!lavablocks.isEmpty()) {
+                if (!lavaBlocks.isEmpty()) {
                     if (player != null) {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "LAVA");
                     }
                     // set all the blocks to lava
-                    lavablocks.forEach((ice) -> ice.setBlockData(TARDISConstants.LAVA));
-                    lavablocks.clear();
+                    lavaBlocks.forEach((ice) -> ice.setBlockData(TARDISConstants.LAVA));
+                    lavaBlocks.clear();
                 }
                 if (!postSignBlocks.isEmpty()) {
                     SignSetter.setSigns(postSignBlocks, plugin, 0);
@@ -279,18 +279,18 @@ public class RoomRunnable implements Runnable {
                         prop.getKey().setBlockData(prop.getValue());
                     }
                 }
-                if (!dripleafblocks.isEmpty()) {
-                    for (Map.Entry<Block, BlockData> prop : dripleafblocks.entrySet()) {
+                if (!dripLeafBlocks.isEmpty()) {
+                    for (Map.Entry<Block, BlockData> prop : dripLeafBlocks.entrySet()) {
                         prop.getKey().setBlockData(prop.getValue());
                     }
                 }
-                if (!signblocks.isEmpty()) {
-                    for (Map.Entry<Block, BlockData> sign : signblocks.entrySet()) {
+                if (!signBlocks.isEmpty()) {
+                    for (Map.Entry<Block, BlockData> sign : signBlocks.entrySet()) {
                         sign.getKey().setBlockData(sign.getValue());
                     }
                 }
-                if (!trapdoorblocks.isEmpty()) {
-                    for (Map.Entry<Block, BlockData> trap : trapdoorblocks.entrySet()) {
+                if (!trapdoorBlocks.isEmpty()) {
+                    for (Map.Entry<Block, BlockData> trap : trapdoorBlocks.entrySet()) {
                         trap.getKey().setBlockData(trap.getValue());
                     }
                 }
@@ -440,7 +440,7 @@ public class RoomRunnable implements Runnable {
                 if (room.equals("NAUTILUS")) {
                     magmaBlocks.forEach((key, value) -> {
                         key.setBlockData(value, true);
-                        // also add some random sea grass
+                        // also add some random seagrass
                         Block meal = key.getRelative(BlockFace.NORTH);
                         meal.applyBoneMeal(BlockFace.UP);
                         world.spawnEntity(meal.getLocation().add(0.5d, 1d, 0.5d), EntityType.PUFFERFISH);
@@ -453,58 +453,58 @@ public class RoomRunnable implements Runnable {
                 }
                 if (room.equals("BAKER") || room.equals("WOOD")) {
                     // set the repeaters
-                    mushroomblocks.forEach((key, value) -> {
+                    mushroomBlocks.forEach((key, value) -> {
                         BlockData repeater = Material.REPEATER.createBlockData();
                         Directional directional = (Directional) repeater;
                         directional.setFacing(value);
                         key.setBlockData(directional, true);
                     });
-                    mushroomblocks.clear();
+                    mushroomBlocks.clear();
                 }
                 if (room.equals("ARBORETUM") || room.equals("GREENHOUSE")) {
                     // plant the sugar cane
-                    caneblocks.forEach((cane) -> cane.setBlockData(Material.SUGAR_CANE.createBlockData()));
-                    caneblocks.clear();
+                    caneBlocks.forEach((cane) -> cane.setBlockData(Material.SUGAR_CANE.createBlockData()));
+                    caneBlocks.clear();
                     // attach the cocoa
-                    cocoablocks.forEach((key, value) -> key.setBlockData(value, true));
-                    cocoablocks.clear();
+                    cocoaBlocks.forEach((key, value) -> key.setBlockData(value, true));
+                    cocoaBlocks.clear();
                     // plant the melon
-                    melonblocks.forEach((melon) -> melon.setBlockData(Material.MELON_STEM.createBlockData()));
-                    melonblocks.clear();
+                    melonBlocks.forEach((melon) -> melon.setBlockData(Material.MELON_STEM.createBlockData()));
+                    melonBlocks.clear();
                     // plant the pumpkin
-                    pumpkinblocks.forEach((pumpkin) -> pumpkin.setBlockData(Material.PUMPKIN_STEM.createBlockData()));
-                    pumpkinblocks.clear();
+                    pumpkinBlocks.forEach((pumpkin) -> pumpkin.setBlockData(Material.PUMPKIN_STEM.createBlockData()));
+                    pumpkinBlocks.clear();
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                         // plant the wheat
-                        wheatblocks.forEach((wheat) -> wheat.setBlockData(Material.WHEAT.createBlockData()));
-                        wheatblocks.clear();
+                        wheatBlocks.forEach((wheat) -> wheat.setBlockData(Material.WHEAT.createBlockData()));
+                        wheatBlocks.clear();
                         // plant the carrot
-                        carrotblocks.forEach((carrot) -> carrot.setBlockData(Material.CARROTS.createBlockData()));
-                        carrotblocks.clear();
+                        carrotBlocks.forEach((carrot) -> carrot.setBlockData(Material.CARROTS.createBlockData()));
+                        carrotBlocks.clear();
                         // plant the potato
-                        potatoblocks.forEach((potato) -> potato.setBlockData(Material.POTATOES.createBlockData()));
-                        potatoblocks.clear();
+                        potatoBlocks.forEach((potato) -> potato.setBlockData(Material.POTATOES.createBlockData()));
+                        potatoBlocks.clear();
                     }, 5L);
                 }
                 if (room.equals("VILLAGE") || room.equals("SHELL")) {
                     // put doors on
-                    doorblocks.forEach((key, value) -> key.setBlockData(value, true));
-                    doorblocks.clear();
+                    doorBlocks.forEach((key, value) -> key.setBlockData(value, true));
+                    doorBlocks.clear();
                 }
                 if (room.equals("LIBRARY") && library != null) {
                     // add shelf labels
                     new LibraryCatalogue().label(library);
                 }
                 // water farmland
-                farmlandblocks.forEach((fl) -> {
+                farmlandBlocks.forEach((fl) -> {
                     BlockData farmData = Material.FARMLAND.createBlockData();
                     Farmland farmland = (Farmland) farmData;
                     farmland.setMoisture(farmland.getMaximumMoisture());
                     fl.setBlockData(farmland);
                 });
                 // put levers on
-                leverblocks.forEach((key, value) -> key.setBlockData(value, true));
-                leverblocks.clear();
+                leverBlocks.forEach((key, value) -> key.setBlockData(value, true));
+                leverBlocks.clear();
                 // update lamp block states
                 if (player != null) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "ROOM_POWER");
@@ -514,22 +514,22 @@ public class RoomRunnable implements Runnable {
                     ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid.toString());
                     if (rsp.resultSet() && rsp.isDynamicLightsOn()) {
                         TardisLight light = rsp.getLights();
-                        lampblocks.forEach((lamp) -> TARDISDisplayItemUtils.set(light.getOn(), lamp, tardis_id));
+                        lampBlocks.forEach((lamp) -> TARDISDisplayItemUtils.set(light.getOn(), lamp, tardis_id));
                     } else {
-                        lampblocks.forEach((lamp) -> lamp.setBlockData(TARDISConstants.LAMP));
+                        lampBlocks.forEach((lamp) -> lamp.setBlockData(TARDISConstants.LAMP));
                     }
                 } else {
-                    lampblocks.forEach((lamp) -> lamp.setBlockData(TARDISConstants.LAMP));
+                    lampBlocks.forEach((lamp) -> lamp.setBlockData(TARDISConstants.LAMP));
                 }
-                lampblocks.clear();
+                lampBlocks.clear();
                 // put torches on
-                torchblocks.forEach((key, value) -> key.setBlockData(value, true));
-                torchblocks.clear();
+                torchBlocks.forEach((key, value) -> key.setBlockData(value, true));
+                torchBlocks.clear();
                 // put redstone torches on
-                redstoneTorchblocks.forEach((key, value) -> key.setBlockData(value, true));
-                torchblocks.clear();
+                redstoneTorchBlocks.forEach((key, value) -> key.setBlockData(value, true));
+                torchBlocks.clear();
                 // set banners
-                BannerSetter.setBanners(bannerblocks);
+                BannerSetter.setBanners(bannerBlocks);
                 // remove staircase floor/ceiling if necessary
                 if (plugin.getTrackerKeeper().getIsStackedStaircase().containsKey(tardis_id) && room.equals("STAIRCASE")) {
                     boolean above = plugin.getTrackerKeeper().getIsStackedStaircase().get(tardis_id);
@@ -624,7 +624,7 @@ public class RoomRunnable implements Runnable {
                 if (Tag.ALL_SIGNS.isTagged(type)) {
                     Block sign = world.getBlockAt(startx, starty, startz);
                     postSignBlocks.put(sign, v);
-                    signblocks.put(sign, data);
+                    signBlocks.put(sign, data);
                 }
                 if (type.equals(Material.DECORATED_POT)) {
                     if (v.has("pot")) {
@@ -659,15 +659,15 @@ public class RoomRunnable implements Runnable {
                     plugin.getQueryFactory().doInsert("vaults", setl);
                     library = pos.clone().add(-8, -4, -8);
                 }
-                // nautilis magma blocks
+                // nautilus magma blocks
                 if (type.equals(Material.RED_SAND) && room.equals("NAUTILUS")) {
                     Block magma = world.getBlockAt(startx, starty, startz);
                     magmaBlocks.put(magma, TARDISConstants.MAGMA);
                 }
-                // nautilis water blocks
+                // nautilus water blocks
                 if (type.equals(Material.DEAD_BUBBLE_CORAL_BLOCK) && room.equals("NAUTILUS")) {
                     Block water = world.getBlockAt(startx, starty, startz);
-                    iceblocks.add(water);
+                    iceBlocks.add(water);
                 }
                 // eye of harmony wall
                 if (type.equals(Material.RED_SANDSTONE_WALL) && room.equals("EYE")) {
@@ -866,7 +866,7 @@ public class RoomRunnable implements Runnable {
                     happyLever.setAttachedFace(FaceAttachable.AttachedFace.WALL);
                     happyLever.setFacing(BlockFace.WEST);
                     happyLever.setPowered(true);
-                    leverblocks.put(lever, happyLever);
+                    leverBlocks.put(lever, happyLever);
                 }
                 if ((type.equals(Material.SOUL_SAND) || type.equals(Material.CARVED_PUMPKIN)) && room.equals("SMELTER")) {
                     String pos = new Location(world, startx, starty, startz).toString();
@@ -904,30 +904,30 @@ public class RoomRunnable implements Runnable {
                 // remember village doors
                 if (type.equals(Material.OAK_DOOR) && (room.equals("VILLAGE") || room.equals("SHELL"))) {
                     Block door = world.getBlockAt(startx, starty, startz);
-                    doorblocks.put(door, data);
+                    doorBlocks.put(door, data);
                     rd.getPostBlocks().add(world.getName() + ":" + startx + ":" + starty + ":" + startz + "~" + data.getAsString());
                 }
                 // remember torches
                 if (type.equals(Material.TORCH)) {
                     Block torch = world.getBlockAt(startx, starty, startz);
-                    torchblocks.put(torch, data);
+                    torchBlocks.put(torch, data);
                     rd.getPostBlocks().add(world.getName() + ":" + startx + ":" + starty + ":" + startz + "~" + data.getAsString());
                 }
                 // remember levers
                 if (type.equals(Material.LEVER)) {
                     Block lever = world.getBlockAt(startx, starty, startz);
-                    leverblocks.put(lever, data);
+                    leverBlocks.put(lever, data);
                 }
                 // remember iron trap doors
                 if (type.equals(Material.IRON_TRAPDOOR)) {
                     Block trap = world.getBlockAt(startx, starty, startz);
-                    trapdoorblocks.put(trap, data);
+                    trapdoorBlocks.put(trap, data);
                     rd.getPostBlocks().add(world.getName() + ":" + startx + ":" + starty + ":" + startz + "~" + data.getAsString());
                 }
                 // remember redstone torches
                 if (type.equals(Material.REDSTONE_TORCH)) {
                     Block torch = world.getBlockAt(startx, starty, startz);
-                    redstoneTorchblocks.put(torch, data);
+                    redstoneTorchBlocks.put(torch, data);
                     rd.getPostBlocks().add(world.getName() + ":" + startx + ":" + starty + ":" + startz + "~" + data.getAsString());
                 }
                 // remember banners
@@ -936,67 +936,67 @@ public class RoomRunnable implements Runnable {
                     JsonObject state = v.has("banner") ? v.get("banner").getAsJsonObject() : null;
                     if (state != null) {
                         TARDISBannerData tbd = new TARDISBannerData(data, state);
-                        bannerblocks.put(banner, tbd);
+                        bannerBlocks.put(banner, tbd);
                     }
                 }
                 if (type.equals(Material.FARMLAND)) {
                     Block farmland = world.getBlockAt(startx, starty, startz);
-                    farmlandblocks.add(farmland);
+                    farmlandBlocks.add(farmland);
                     rd.getPostBlocks().add(world.getName() + ":" + startx + ":" + starty + ":" + startz + "~" + Material.FARMLAND.createBlockData().getAsString());
                 }
                 // remember lava
                 if (type.equals(Material.LAVA)) {
                     Block lava = world.getBlockAt(startx, starty, startz);
-                    lavablocks.add(lava);
+                    lavaBlocks.add(lava);
                     rd.getPostBlocks().add(world.getName() + ":" + startx + ":" + starty + ":" + startz + "~" + TARDISConstants.LAVA.getAsString());
                 }
                 if (room.equals("ARBORETUM") || room.equals("GREENHOUSE")) {
                     // remember sugar cane
                     if (type.equals(Material.SUGAR_CANE)) {
                         Block cane = world.getBlockAt(startx, starty, startz);
-                        caneblocks.add(cane);
+                        caneBlocks.add(cane);
                         rd.getPostBlocks().add(world.getName() + ":" + startx + ":" + starty + ":" + startz + "~" + Material.SUGAR_CANE.createBlockData().getAsString());
                     }
                     // remember cocoa
                     if (type.equals(Material.COCOA)) {
                         Block cocoa = world.getBlockAt(startx, starty, startz);
-                        cocoablocks.put(cocoa, data);
+                        cocoaBlocks.put(cocoa, data);
                         rd.getPostBlocks().add(world.getName() + ":" + startx + ":" + starty + ":" + startz + "~" + Material.COCOA.createBlockData().getAsString());
                     }
                     // remember wheat
                     if (type.equals(Material.WHEAT)) {
                         Block crops = world.getBlockAt(startx, starty, startz);
-                        wheatblocks.add(crops);
+                        wheatBlocks.add(crops);
                         rd.getPostBlocks().add(world.getName() + ":" + startx + ":" + starty + ":" + startz + "~" + Material.WHEAT.createBlockData().getAsString());
                     }
                     // remember melon
                     if (type.equals(Material.MELON_STEM)) {
                         Block melon = world.getBlockAt(startx, starty, startz);
-                        melonblocks.add(melon);
+                        melonBlocks.add(melon);
                         rd.getPostBlocks().add(world.getName() + ":" + startx + ":" + starty + ":" + startz + "~" + Material.MELON_STEM.createBlockData().getAsString());
                     }
                     // remember pumpkin
                     if (type.equals(Material.PUMPKIN_STEM)) {
                         Block pumpkin = world.getBlockAt(startx, starty, startz);
-                        pumpkinblocks.add(pumpkin);
+                        pumpkinBlocks.add(pumpkin);
                         rd.getPostBlocks().add(world.getName() + ":" + startx + ":" + starty + ":" + startz + "~" + Material.PUMPKIN_STEM.createBlockData().getAsString());
                     }
                     // remember carrots
                     if (type.equals(Material.CARROTS)) {
                         Block carrot = world.getBlockAt(startx, starty, startz);
-                        carrotblocks.add(carrot);
+                        carrotBlocks.add(carrot);
                         rd.getPostBlocks().add(world.getName() + ":" + startx + ":" + starty + ":" + startz + "~" + Material.CARROTS.createBlockData().getAsString());
                     }
                     // remember potatoes
                     if (type.equals(Material.POTATOES)) {
                         Block potato = world.getBlockAt(startx, starty, startz);
-                        potatoblocks.add(potato);
+                        potatoBlocks.add(potato);
                         rd.getPostBlocks().add(world.getName() + ":" + startx + ":" + starty + ":" + startz + "~" + Material.POTATOES.createBlockData().getAsString());
                     }
                     if (level == 4 && room.equals("GREENHOUSE")) {
                         // set all the ice to water
-                        iceblocks.forEach((ice) -> ice.setBlockData(TARDISConstants.WATER));
-                        iceblocks.clear();
+                        iceBlocks.forEach((ice) -> ice.setBlockData(TARDISConstants.WATER));
+                        iceBlocks.clear();
                     }
                 }
                 if (type.equals(Material.MANGROVE_PROPAGULE)) {
@@ -1004,7 +1004,7 @@ public class RoomRunnable implements Runnable {
                     rd.getPostBlocks().add(world.getName() + ":" + startx + ":" + starty + ":" + startz + "~" + data.getAsString());
                 }
                 if (type.equals(Material.BIG_DRIPLEAF) || type.equals(Material.BIG_DRIPLEAF_STEM)) {
-                    dripleafblocks.put(world.getBlockAt(startx, starty, startz), data);
+                    dripLeafBlocks.put(world.getBlockAt(startx, starty, startz), data);
                     rd.getPostBlocks().add(world.getName() + ":" + startx + ":" + starty + ":" + startz + "~" + data.getAsString());
                 }
                 if (type.equals(Material.SEAGRASS) || type.equals(Material.TALL_SEAGRASS)) {
@@ -1083,13 +1083,13 @@ public class RoomRunnable implements Runnable {
                 // remember ice blocks
                 if ((type.equals(Material.WATER) || type.equals(Material.ICE)) && !room.equals("IGLOO")) {
                     Block icy = world.getBlockAt(startx, starty, startz);
-                    iceblocks.add(icy);
+                    iceBlocks.add(icy);
                     rd.getPostBlocks().add(world.getName() + ":" + startx + ":" + starty + ":" + startz + "~" + TARDISConstants.ICE.getAsString());
                 }
                 // remember lamp blocks
                 if (type.equals(Material.REDSTONE_LAMP)) {
                     Block lamp = world.getBlockAt(startx, starty, startz);
-                    lampblocks.add(lamp);
+                    lampBlocks.add(lamp);
                     if (rd == null) {
                         plugin.debug("Room Data NULL");
                         plugin.getServer().getScheduler().cancelTask(task);
@@ -1155,7 +1155,7 @@ public class RoomRunnable implements Runnable {
                                 control_type = repeaterOrder.get(r);
                                 loc_str = world.getName() + ":" + startx + ":" + starty + ":" + startz;
                                 Block rb = world.getBlockAt(startx, starty, startz);
-                                mushroomblocks.put(rb, repeaterData[r]);
+                                mushroomBlocks.put(rb, repeaterData[r]);
                                 r++;
                             }
                             case OAK_BUTTON -> { // oak button - artron
