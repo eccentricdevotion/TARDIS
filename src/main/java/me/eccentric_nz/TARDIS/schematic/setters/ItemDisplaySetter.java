@@ -25,8 +25,8 @@ import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
 import me.eccentric_nz.TARDIS.enumeration.Desktops;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
+import me.eccentric_nz.TARDIS.floodgate.FloodgateDisplaySetter;
 import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
-import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgateDisplaySetter;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import net.kyori.adventure.text.Component;
@@ -52,7 +52,7 @@ public class ItemDisplaySetter {
         for (int i = 0; i < displays.size(); i++) {
             // set regular blocks for bedrock players
             if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) {
-                TARDISFloodgateDisplaySetter.regularBlock(displays.get(i).getAsJsonObject(), location, id);
+                FloodgateDisplaySetter.regularBlock(displays.get(i).getAsJsonObject(), location, id);
             } else {
                 fakeBlock(displays.get(i).getAsJsonObject(), location, id);
             }

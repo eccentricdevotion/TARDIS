@@ -111,7 +111,7 @@ public class TARDISPruner {
         try {
             statement = connection.createStatement();
             rs = statement.executeQuery(query);
-            TARDISExterminator te = new TARDISExterminator(plugin);
+            Exterminator te = new Exterminator(plugin);
             while (rs.next()) {
                 // double check that this is an unused TARDIS
                 Timestamp lastuse = new Timestamp(rs.getLong("lastuse"));

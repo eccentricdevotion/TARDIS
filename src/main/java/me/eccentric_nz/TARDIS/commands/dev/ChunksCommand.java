@@ -19,13 +19,13 @@ package me.eccentric_nz.TARDIS.commands.dev;
 import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPostioning;
-import me.eccentric_nz.TARDIS.builders.interior.TARDISTIPSData;
+import me.eccentric_nz.TARDIS.builders.interior.TIPSData;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.desktop.TARDISChunkUtils;
+import me.eccentric_nz.TARDIS.desktop.ChunkUtils;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
-import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
+import me.eccentric_nz.TARDIS.schematic.SchematicGZip;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -63,18 +63,18 @@ public class ChunksCommand {
                     World world = player.getLocation().getWorld();
                     Chunk chunk = world.getChunkAt(cx, cz);
                     Schematic schematic = tardis.getSchematic();
-                    for (Chunk c : TARDISChunkUtils.getConsoleChunks(chunk, schematic)) {
+                    for (Chunk c : ChunkUtils.getConsoleChunks(chunk, schematic)) {
                         plugin.debug(c);
                     }
                     plugin.debug("-----");
-                    JsonObject obj = TARDISSchematicGZip.getObject(plugin, "consoles", schematic.getPermission(), schematic.isCustom());
+                    JsonObject obj = SchematicGZip.getObject(plugin, "consoles", schematic.getPermission(), schematic.isCustom());
                     if (obj != null) {
                         // get dimensions
                         JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
                         int w = dimensions.get("width").getAsInt();
                         int d = dimensions.get("length").getAsInt() - 1;
                         Location location = getLocation(schematic, tardis, world);
-                        for (Chunk c : TARDISChunkUtils.getConsoleChunks(world, location.getChunk().getX(), location.getChunk().getZ(), w, d)) {
+                        for (Chunk c : ChunkUtils.getConsoleChunks(world, location.getChunk().getX(), location.getChunk().getZ(), w, d)) {
                             plugin.debug(c);
                         }
                     }
@@ -87,7 +87,7 @@ public class ChunksCommand {
 
     private Location getLocation(Schematic schematic, Tardis tardis, World world) {
         TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
-        TARDISTIPSData pos = tintpos.getTIPSData(tardis.getTIPS());
+        TIPSData pos = tintpos.getTIPSData(tardis.getTIPS());
         int startx = pos.getCentreX();
         int starty = schematic.getStartY();
         int startz = pos.getCentreZ();

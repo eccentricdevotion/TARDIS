@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.commands.dev;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPostioning;
-import me.eccentric_nz.TARDIS.builders.interior.TARDISTIPSData;
+import me.eccentric_nz.TARDIS.builders.interior.TIPSData;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
@@ -90,7 +90,7 @@ public class AddRegionsCommand {
                         String rn = (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(uuid)) ? "TARDIS_" + TARDISFloodgate.sanitisePlayerName(tl) : "TARDIS_" + tl;
                         if (!config.contains("regions." + rn)) {
                             TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
-                            TARDISTIPSData td = tintpos.getTIPSData(t);
+                            TIPSData td = tintpos.getTIPSData(t);
                             plugin.getWorldGuardUtils().addWGProtection(uuid, tl, td, TARDISAliasResolver.getWorldFromAlias(dw));
                         }
                     }

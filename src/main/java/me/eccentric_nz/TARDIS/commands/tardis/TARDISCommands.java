@@ -17,9 +17,9 @@
 package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.advanced.TARDISDiskWriterCommand;
+import me.eccentric_nz.TARDIS.advanced.DiskWriterCommand;
 import me.eccentric_nz.TARDIS.arch.TARDISArchCommand;
-import me.eccentric_nz.TARDIS.chatGUI.TARDISUpdateChatGUI;
+import me.eccentric_nz.TARDIS.chatGUI.UpdateChatGUI;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import me.eccentric_nz.TARDIS.commands.utils.RescueAcceptor;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
@@ -175,7 +175,7 @@ public class TARDISCommands implements CommandExecutor {
                     return new EmergencyProgrammeOneCommand(plugin).showEP1(player);
                 }
                 case erase -> {
-                    return new TARDISDiskWriterCommand(plugin).eraseDisk(player);
+                    return new DiskWriterCommand(plugin).eraseDisk(player);
                 }
                 case find -> {
                     return new FindCommand(plugin).findTARDIS(player);
@@ -246,13 +246,13 @@ public class TARDISCommands implements CommandExecutor {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "DISK_HAND_PLAYER");
                         return true;
                     }
-                    return new TARDISDiskWriterCommand(plugin).writePlayer(player, args);
+                    return new DiskWriterCommand(plugin).writePlayer(player, args);
                 }
                 case secondary -> {
                     return new SecondaryCommand(plugin).startSecondary(player, args);
                 }
                 case section -> {
-                    return new TARDISUpdateChatGUI(plugin).showInterface(player, args);
+                    return new UpdateChatGUI(plugin).showInterface(player, args);
                 }
                 case setdest -> {
                     return new SetDestinationCommand(plugin).doSetDestination(player, args);
@@ -280,14 +280,14 @@ public class TARDISCommands implements CommandExecutor {
                     }
                     ItemStack itemStack = player.getInventory().getItemInMainHand();
                     if (itemStack.getType().equals(Material.MUSIC_DISC_FAR)) {
-                        return new TARDISDiskWriterCommand(plugin).writeSaveToControlDisk(player, args);
+                        return new DiskWriterCommand(plugin).writeSaveToControlDisk(player, args);
                     } else {
                         if (plugin.getConfig().getBoolean("difficulty.disks") && !plugin.getUtils().inGracePeriod(player, true)) {
                             if (plugin.getConfig().getBoolean("difficulty.disk_in_hand_for_write") && heldDiskIsWrong(itemStack, "Save Storage Disk")) {
                                 plugin.getMessenger().send(player, TardisModule.TARDIS, "DISK_HAND_SAVE");
                                 return true;
                             }
-                            return new TARDISDiskWriterCommand(plugin).writeSave(player, args);
+                            return new DiskWriterCommand(plugin).writeSave(player, args);
                         } else {
                             return new SaveLocationCommand(plugin).doSave(player, args);
                         }

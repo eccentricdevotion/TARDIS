@@ -17,8 +17,8 @@
 package me.eccentric_nz.TARDIS.messaging;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.artron.ArtronIndicator;
 import me.eccentric_nz.TARDIS.artron.ArtronIndicatorData;
-import me.eccentric_nz.TARDIS.artron.TARDISArtronIndicator;
 import me.eccentric_nz.TARDIS.database.data.Area;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.data.Transmat;
@@ -257,7 +257,7 @@ public class TARDISMessage {
     }
 
     public void sendArtron(Player player, int id, int used) {
-        ArtronIndicatorData data = new TARDISArtronIndicator(TARDIS.plugin).getLevels(player, id, used);
+        ArtronIndicatorData data = new ArtronIndicator(TARDIS.plugin).getLevels(player, id, used);
         TextComponent actionBar = AdventureComponents.getArtronIndicator(data);
         player.sendActionBar(actionBar);
     }

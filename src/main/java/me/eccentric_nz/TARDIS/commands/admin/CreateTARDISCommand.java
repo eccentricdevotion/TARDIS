@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.commands.admin;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.interior.TARDISBuildData;
-import me.eccentric_nz.TARDIS.builders.utility.TARDISSeedBlockProcessor;
+import me.eccentric_nz.TARDIS.builders.utility.SeedBlockProcessor;
 import me.eccentric_nz.TARDIS.enumeration.Desktops;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -93,7 +93,7 @@ public class CreateTARDISCommand {
                 data.setWallType(wallMaterial);
                 data.setFloorType(floorMaterial);
                 // build a TARDIS
-                return new TARDISSeedBlockProcessor(plugin).processBlock(data, target, player);
+                return new SeedBlockProcessor(plugin).processBlock(data, target, player);
             } else {
                 plugin.getMessenger().send(sender, TardisModule.TARDIS, "ARG_SEED");
                 return true;

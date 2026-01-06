@@ -23,11 +23,11 @@ import me.eccentric_nz.TARDIS.database.data.Lamp;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetLamps;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.desktop.TARDISChunkUtils;
+import me.eccentric_nz.TARDIS.desktop.ChunkUtils;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
-import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
+import me.eccentric_nz.TARDIS.schematic.SchematicGZip;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
@@ -103,7 +103,7 @@ class LampsCommand {
             int starty, endy;
             Schematic schm = tardis.getSchematic();
             // get JSON
-            JsonObject obj = TARDISSchematicGZip.getObject(plugin, "consoles", schm.getPermission(), schm.isCustom());
+            JsonObject obj = SchematicGZip.getObject(plugin, "consoles", schm.getPermission(), schm.isCustom());
             if (obj != null) {
                 // get dimensions
                 JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
@@ -112,7 +112,7 @@ class LampsCommand {
                 endy = starty + h;
                 String w = world.getName();
                 // loop through the chunks
-                for (Chunk chunk : TARDISChunkUtils.getConsoleChunks(startChunk, tardis.getSchematic())) {
+                for (Chunk chunk : ChunkUtils.getConsoleChunks(startChunk, tardis.getSchematic())) {
                     // find the lamps in the chunks
                     int bx = chunk.getX() << 4;
                     int bz = chunk.getZ() << 4;

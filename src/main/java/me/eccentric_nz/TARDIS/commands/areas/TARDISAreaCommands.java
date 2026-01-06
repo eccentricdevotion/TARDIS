@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.commands.areas;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.areas.TARDISEditAreasInventory;
+import me.eccentric_nz.TARDIS.areas.EditAreasInventory;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import me.eccentric_nz.TARDIS.database.data.Area;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreas;
@@ -344,7 +344,7 @@ public class TARDISAreaCommands implements CommandExecutor {
                     }
                     if (first.equals("edit")) {
                         // open edit gui to allow removal of added locations
-                        player.openInventory(new TARDISEditAreasInventory(plugin, rsaId.getArea().areaId()).getInventory());
+                        player.openInventory(new EditAreasInventory(plugin, rsaId.getArea().areaId()).getInventory());
                     } else {
                         // get player's location
                         Location location = player.getLocation();

@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.flight.vehicle;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.flight.TARDISExteriorFlight;
+import me.eccentric_nz.TARDIS.flight.ExteriorFlight;
 import org.bukkit.Bukkit;
 import org.bukkit.Input;
 import org.bukkit.craftbukkit.entity.CraftArmorStand;
@@ -48,7 +48,7 @@ public class PlayerInputListener implements Listener {
                 Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     plugin.getTrackerKeeper().getStillFlyingNotReturning().remove(player.getUniqueId());
                     // teleport player back to the TARDIS interior
-                    new TARDISExteriorFlight(plugin).stopFlying(player, as);
+                    new ExteriorFlight(plugin).stopFlying(player, as);
                     stand.setPlayer(null);
                     player.setFlying(false);
                     player.setAllowFlight(false);

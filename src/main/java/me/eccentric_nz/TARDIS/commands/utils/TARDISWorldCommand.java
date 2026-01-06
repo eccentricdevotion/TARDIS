@@ -21,7 +21,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
 import me.eccentric_nz.TARDIS.commands.tardis.SaveIconCommand;
-import me.eccentric_nz.TARDIS.database.converters.TARDISWorldNameConverter;
+import me.eccentric_nz.TARDIS.database.converters.WorldNameConverter;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.planets.*;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
@@ -118,7 +118,7 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
                     plugin.getMessenger().sendColouredCommand(sender, "WORLD_NOT_FOUND", "/tardisworld load", plugin);
                     return true;
                 }
-                new TARDISWorldNameConverter(plugin, world).update();
+                new WorldNameConverter(plugin, world).update();
                 return true;
             }
             World world = TARDISAliasResolver.getWorldFromAlias(arguments.getArguments().get(1));

@@ -20,7 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.mobfarming.types.TARDISLlama;
-import me.eccentric_nz.TARDIS.move.TARDISDoorListener;
+import me.eccentric_nz.TARDIS.move.DoorListener;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import net.kyori.adventure.text.Component;
@@ -69,7 +69,7 @@ public class TARDISEjectListener implements Listener {
             return;
         }
         // get the exit location
-        TARDISDoorLocation dl = TARDISDoorListener.getDoor(0, plugin.getTrackerKeeper().getEjecting().get(uuid));
+        TARDISDoorLocation dl = DoorListener.getDoor(0, plugin.getTrackerKeeper().getEjecting().get(uuid));
         Location l = dl.getL();
         // set the entity's direction as you would for a player when exiting
         switch (dl.getD()) {

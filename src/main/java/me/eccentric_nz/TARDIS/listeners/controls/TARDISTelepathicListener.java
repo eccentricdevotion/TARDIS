@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.listeners.controls;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.console.telepathic.TARDISTelepathicInventory;
+import me.eccentric_nz.TARDIS.console.telepathic.TelepathicInventory;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
@@ -100,7 +100,7 @@ public class TARDISTelepathicListener implements Listener {
                         new FloodgateTelepathicForm(plugin, uuid, id).send();
                     } else {
                         // open the Telepathic GUI
-                        player.openInventory(new TARDISTelepathicInventory(plugin, player).getInventory());
+                        player.openInventory(new TelepathicInventory(plugin, player).getInventory());
                     }
                 }
             }

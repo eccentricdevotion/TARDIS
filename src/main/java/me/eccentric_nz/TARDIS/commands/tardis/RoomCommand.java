@@ -17,9 +17,9 @@
 package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
+import me.eccentric_nz.TARDIS.advanced.CircuitChecker;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.builders.utility.TARDISZeroRoomBuilder;
+import me.eccentric_nz.TARDIS.builders.utility.ZeroRoomBuilder;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCondenser;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
@@ -28,8 +28,8 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.messaging.TARDISRoomLister;
-import me.eccentric_nz.TARDIS.rooms.TARDISCondenserData;
 import me.eccentric_nz.TARDIS.rooms.RoomSeedData;
+import me.eccentric_nz.TARDIS.rooms.CondenserData;
 import me.eccentric_nz.TARDIS.upgrades.SystemTree;
 import me.eccentric_nz.TARDIS.upgrades.SystemUpgradeChecker;
 import org.bukkit.Material;
@@ -92,9 +92,9 @@ class RoomCommand {
             return true;
         }
         int id = tardis.getTardisId();
-        TARDISCircuitChecker tcc = null;
+        CircuitChecker tcc = null;
         if (plugin.getConfig().getBoolean("difficulty.circuits") && !plugin.getUtils().inGracePeriod(player, true)) {
-            tcc = new TARDISCircuitChecker(plugin, id);
+            tcc = new CircuitChecker(plugin, id);
             tcc.getCircuits();
         }
         if (tcc != null && !tcc.hasARS()) {
@@ -172,13 +172,13 @@ class RoomCommand {
                 plugin.getTrackerKeeper().getRoomSeed().remove(uuid);
                 return true;
             }
-            TARDISCondenserData c_data = new TARDISCondenserData();
+            CondenserData c_data = new CondenserData();
             c_data.setBlockIDCount(item_counts);
             c_data.setTardis_id(id);
             plugin.getGeneralKeeper().getRoomCondenserData().put(uuid, c_data);
         }
         if (room.equals("ZERO")) {
-            return new TARDISZeroRoomBuilder(plugin).build(player, tips, id);
+            return new ZeroRoomBuilder(plugin).build(player, tips, id);
         }
         RoomSeedData sd = new RoomSeedData();
         sd.setId(id);

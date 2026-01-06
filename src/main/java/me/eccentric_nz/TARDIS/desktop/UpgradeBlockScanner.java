@@ -21,12 +21,12 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPostioning;
-import me.eccentric_nz.TARDIS.builders.interior.TARDISTIPSData;
+import me.eccentric_nz.TARDIS.builders.interior.TIPSData;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.UseClay;
-import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
+import me.eccentric_nz.TARDIS.schematic.SchematicGZip;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Material;
 import org.bukkit.Tag;
@@ -43,11 +43,11 @@ import java.util.UUID;
 public class UpgradeBlockScanner {
 
     private final TARDIS plugin;
-    private final TARDISUpgradeData tud;
+    private final UpgradeData tud;
     private final UUID uuid;
     private int count = 0;
 
-    public UpgradeBlockScanner(TARDIS plugin, TARDISUpgradeData tud, UUID uuid) {
+    public UpgradeBlockScanner(TARDIS plugin, UpgradeData tud, UUID uuid) {
         this.plugin = plugin;
         this.tud = tud;
         this.uuid = uuid;
@@ -55,7 +55,7 @@ public class UpgradeBlockScanner {
 
     public BlockScannerData check() {
         // get JSON
-        JsonObject obj = TARDISSchematicGZip.getObject(plugin, "consoles", tud.getPrevious().getPermission(), tud.getPrevious().isCustom());
+        JsonObject obj = SchematicGZip.getObject(plugin, "consoles", tud.getPrevious().getPermission(), tud.getPrevious().isCustom());
         if (obj == null) {
             return null;
         }
@@ -76,7 +76,7 @@ public class UpgradeBlockScanner {
             int startx;
             if (slot != -1000001) { // default world - use TIPS
                 TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
-                TARDISTIPSData pos = tintpos.getTIPSData(slot);
+                TIPSData pos = tintpos.getTIPSData(slot);
                 startx = pos.getCentreX();
                 startz = pos.getCentreZ();
             } else {

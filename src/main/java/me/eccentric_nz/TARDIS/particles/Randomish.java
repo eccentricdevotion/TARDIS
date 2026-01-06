@@ -23,7 +23,7 @@ import org.bukkit.util.Vector;
 
 import java.util.UUID;
 
-public class Randomish extends TARDISParticleRunnable implements Runnable {
+public class Randomish extends ParticleRunnable implements Runnable {
 
     private final ParticleData data;
     private final Location location;

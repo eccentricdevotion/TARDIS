@@ -26,7 +26,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.Desktops;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.move.TARDISDoorListener;
+import me.eccentric_nz.TARDIS.move.DoorListener;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import org.bukkit.Location;
 import org.bukkit.Sound;
@@ -152,7 +152,7 @@ public class FloodgateMapForm {
                         if (room.equals("Console")) {
                             if (Desktops.getBY_MATERIALS().containsKey(json[l][r][c])) {
                                 // get inner door tp location
-                                TARDISDoorLocation idl = TARDISDoorListener.getDoor(1, id);
+                                TARDISDoorLocation idl = DoorListener.getDoor(1, id);
                                 return idl.getL();
                             }
                         }

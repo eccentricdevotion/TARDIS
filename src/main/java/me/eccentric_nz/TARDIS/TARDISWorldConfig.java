@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.TARDIS;
 
-import me.eccentric_nz.TARDIS.database.TARDISWorldRemover;
+import me.eccentric_nz.TARDIS.database.WorldRemover;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.planets.TARDISSpace;
 
@@ -59,7 +59,7 @@ public class TARDISWorldConfig {
             plugin.getLogger().log(Level.SEVERE, "Abandoned TARDISes were disabled as create_worlds_with_perms is true!");
         }
         // clean up worlds
-        plugin.getCleanUpWorlds().forEach((w) -> new TARDISWorldRemover(plugin).cleanWorld(w));
+        plugin.getCleanUpWorlds().forEach((w) -> new WorldRemover(plugin).cleanWorld(w));
         // check default world
         if (!plugin.getConfig().getBoolean("creation.default_world")) {
             return;

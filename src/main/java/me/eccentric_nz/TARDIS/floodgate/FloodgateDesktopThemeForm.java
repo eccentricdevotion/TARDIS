@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.floodgate;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
+import me.eccentric_nz.TARDIS.desktop.UpgradeData;
 import me.eccentric_nz.TARDIS.enumeration.Desktops;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -114,7 +114,7 @@ public class FloodgateDesktopThemeForm {
                 String perm = schm.getPermission();
                 if (TARDISPermission.hasPermission(player, "tardis." + perm)) {
                     // remember the upgrade choice
-                    TARDISUpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(uuid);
+                    UpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(uuid);
                     int upgrade = plugin.getArtronConfig().getInt("upgrades." + perm);
                     int needed = (tud.getPrevious().getPermission().equals(schm.getPermission())) ? upgrade / 2 : upgrade;
                     if (tud.getLevel() >= needed) {

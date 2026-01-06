@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.builders.exterior.TARDISBuilderUtility;
+import me.eccentric_nz.TARDIS.builders.exterior.BuilderUtility;
 import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
@@ -165,7 +165,7 @@ public class TARDISTeleportListener implements Listener {
                 where.put("tardis_id", data.id());
                 plugin.getQueryFactory().doUpdate("current", set, where);
                 // update door location
-                TARDISBuilderUtility.saveDoorLocation(location, data.id(), direction);
+                BuilderUtility.saveDoorLocation(location, data.id(), direction);
                 Block under = location.getBlock().getRelative(BlockFace.DOWN);
                 if (under.getType().isAir()) {
                     // if location is in the air, set under door block

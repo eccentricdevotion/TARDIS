@@ -71,19 +71,19 @@ public class TARDISTakeoff {
             plugin.getTrackerKeeper().getMalfunction().put(id, malfunction);
         }
         // dematerialise
-        new TARDISDematerialiseToVortex(plugin, id, player, handbrake, throticle).run();
+        new DematerialiseToVortex(plugin, id, player, handbrake, throticle).run();
         if (plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
             plugin.getPM().callEvent(new TARDISTravelEvent(player, null, plugin.getTrackerKeeper().getHasDestination().get(id).travelType(), id));
             // materialise
-            new TARDISMaterialseFromVortex(plugin, id, player, handbrake, throticle).run();
+            new MaterialseFromVortex(plugin, id, player, handbrake, throticle).run();
         } else {
             if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
-                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new TARDISLoopingFlightSound(plugin, handbrake, id), throticle.throttle().getFlightTime());
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new LoopingFlightSound(plugin, handbrake, id), throticle.throttle().getFlightTime());
             }
             plugin.getPM().callEvent(new TARDISTravelEvent(player, null, TravelType.VORTEX, id));
         }
         if (bar) {
-            new TARDISTravelBar(plugin, id).showTravelRemaining(player, throticle.throttle().getFlightTime(), true);
+            new TravelBar(plugin, id).showTravelRemaining(player, throticle.throttle().getFlightTime(), true);
         }
     }
 
@@ -126,17 +126,17 @@ public class TARDISTakeoff {
             boolean malfunction = new TARDISMalfunction(plugin).isMalfunction();
             plugin.getTrackerKeeper().getMalfunction().put(id, malfunction);
             // dematerialise
-            new TARDISDematerialiseToVortex(plugin, id, player, handbrake, throticle).run();
+            new DematerialiseToVortex(plugin, id, player, handbrake, throticle).run();
             if (plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
                 // materialise
-                new TARDISMaterialseFromVortex(plugin, id, player, handbrake, throticle).run();
+                new MaterialseFromVortex(plugin, id, player, handbrake, throticle).run();
             } else {
                 if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
-                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new TARDISLoopingFlightSound(plugin, handbrake, id), throticle.throttle().getFlightTime());
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new LoopingFlightSound(plugin, handbrake, id), throticle.throttle().getFlightTime());
                 }
             }
             if (bar) {
-                new TARDISTravelBar(plugin, id).showTravelRemaining(player, throticle.throttle().getFlightTime(), true);
+                new TravelBar(plugin, id).showTravelRemaining(player, throticle.throttle().getFlightTime(), true);
             }
         }
     }

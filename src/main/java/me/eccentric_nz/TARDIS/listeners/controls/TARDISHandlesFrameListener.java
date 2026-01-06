@@ -23,8 +23,8 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetProgram;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.handles.TARDISHandlesProcessor;
-import me.eccentric_nz.TARDIS.handles.TARDISHandlesProgramInventory;
+import me.eccentric_nz.TARDIS.handles.HandlesProcessor;
+import me.eccentric_nz.TARDIS.handles.HandlesProgramInventory;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
@@ -96,7 +96,7 @@ public class TARDISHandlesFrameListener implements Listener {
                     }
                     if (player.isSneaking()) {
                         // open programming GUI
-                        player.openInventory(new TARDISHandlesProgramInventory(plugin, 0).getInventory());
+                        player.openInventory(new HandlesProgramInventory(plugin, 0).getInventory());
                     } else {
                         // check if item in hand is a Handles program disk
                         ItemStack disk = player.getInventory().getItemInMainHand();
@@ -109,7 +109,7 @@ public class TARDISHandlesFrameListener implements Listener {
                                 ResultSetProgram rsp = new ResultSetProgram(plugin, pid);
                                 if (rsp.resultSet()) {
                                     // send program to processor
-                                    new TARDISHandlesProcessor(plugin, rsp.getProgram(), player, pid).processDisk();
+                                    new HandlesProcessor(plugin, rsp.getProgram(), player, pid).processDisk();
                                     // check in the disk
                                     HashMap<String, Object> set = new HashMap<>();
                                     set.put("checked", 0);

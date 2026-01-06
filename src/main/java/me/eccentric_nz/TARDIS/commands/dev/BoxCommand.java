@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.commands.dev;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.builders.exterior.TARDISBuilderUtility;
+import me.eccentric_nz.TARDIS.builders.exterior.BuilderUtility;
 import me.eccentric_nz.TARDIS.custommodels.keys.ChameleonVariant;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -61,7 +61,7 @@ public class BoxCommand {
                 }
                 ArmorStand as = (ArmorStand) result.getHitEntity();
                 if (as != null) {
-                    Material dye = TARDISBuilderUtility.getMaterialForArmourStand(preset, -1, true);
+                    Material dye = BuilderUtility.getMaterialForArmourStand(preset, -1, true);
                     ItemStack is = ItemStack.of(dye, 1);
                     ItemMeta im = is.getItemMeta();
                     NamespacedKey model = ChameleonVariant.BLUE_CLOSED.getKey();

@@ -20,7 +20,7 @@ import me.eccentric_nz.TARDIS.ARS.ARSMethods;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPostioning;
-import me.eccentric_nz.TARDIS.builders.interior.TARDISTIPSData;
+import me.eccentric_nz.TARDIS.builders.interior.TIPSData;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.lazarus.LazarusVariants;
@@ -266,7 +266,7 @@ public class TARDISMonsterRunnable implements Runnable {
                                     if (pos != -1) {
                                         // tips slot
                                         TARDISInteriorPostioning tips = new TARDISInteriorPostioning(plugin);
-                                        TARDISTIPSData coords = tips.getTIPSData(pos);
+                                        TIPSData coords = tips.getTIPSData(pos);
                                         tx = coords.getCentreX();
                                         tz = coords.getCentreZ();
                                     }
@@ -360,7 +360,7 @@ public class TARDISMonsterRunnable implements Runnable {
                         es.setItemInMainHand(m.getEquipment().getItemInMainHand());
                         if (plugin.getConfig().getBoolean("modules.weeping_angels") && skeleton instanceof Skeleton skelly) {
                             if (isDalek(skelly)) {
-                                TARDISDalekDisguiser.dalekanium(skelly);
+                                DalekDisguiser.dalekanium(skelly);
                             }
                         }
                     }

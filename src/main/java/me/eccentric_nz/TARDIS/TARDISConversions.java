@@ -19,9 +19,9 @@ package me.eccentric_nz.TARDIS;
 import me.eccentric_nz.TARDIS.ARS.ARSConverter;
 import me.eccentric_nz.TARDIS.chameleon.construct.ConstructsConverter;
 import me.eccentric_nz.TARDIS.database.converters.*;
-import me.eccentric_nz.TARDIS.doors.TARDISInteractionDoorUpdater;
+import me.eccentric_nz.TARDIS.doors.InteractionDoorUpdater;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.files.TARDISAllInOneConfigConverter;
+import me.eccentric_nz.TARDIS.files.AllInOneConfigConverter;
 import me.eccentric_nz.TARDIS.rooms.eye.EyePopulator;
 
 public class TARDISConversions {
@@ -35,19 +35,19 @@ public class TARDISConversions {
 
     public void convert() {
         if (!plugin.getConfig().getBoolean("conversions.condenser_materials") || !plugin.getConfig().getBoolean("conversions.player_prefs_materials") || !plugin.getConfig().getBoolean("conversions.block_materials")) {
-            TARDISMaterialIDConverter tmic = new TARDISMaterialIDConverter(plugin);
+            MaterialIDConverter tmic = new MaterialIDConverter(plugin);
             tmic.checkCondenserData();
             tmic.checkPlayerPrefsData();
             tmic.checkBlockData();
-            new TARDISFarmingConverter(plugin).update();
+            new FarmingConverter(plugin).update();
         }
         if (!plugin.getConfig().getBoolean("conversions.block_wall_signs")) {
-            new TARDISWallSignConverter(plugin).convertSignBlocks();
+            new WallSignConverter(plugin).convertSignBlocks();
             plugin.getConfig().set("conversions.block_wall_signs", true);
             conversions++;
         }
         if (!plugin.getConfig().getBoolean("conversions.short_grass")) {
-            new TARDISGrassConverter(plugin).checkBlockData();
+            new GrassConverter(plugin).checkBlockData();
             plugin.getConfig().set("conversions.short_grass", true);
             conversions++;
         }
@@ -69,38 +69,38 @@ public class TARDISConversions {
             conversions++;
         }
         if (!plugin.getConfig().getBoolean("conversions.controls")) {
-            new TARDISControlsConverter(plugin).update();
+            new ControlsConverter(plugin).update();
             plugin.getConfig().set("conversions.controls", true);
             conversions++;
         }
         if (!plugin.getConfig().getBoolean("conversions.bind")) {
-            new TARDISBindConverter(plugin).update();
+            new BindConverter(plugin).update();
             plugin.getConfig().set("conversions.bind", true);
             conversions++;
         }
         if (!plugin.getConfig().getBoolean("conversions.icons")) {
-            new TARDISSaveIconUpdate(plugin).addIcons();
+            new SaveIconUpdate(plugin).addIcons();
             plugin.getConfig().set("conversions.icons", true);
             conversions++;
         }
         if (!plugin.getConfig().getBoolean("conversions.archive_wall_data")) {
-            new TARDISWallConverter(plugin).processArchives();
+            new WallConverter(plugin).processArchives();
             plugin.getConfig().set("conversions.archive_wall_data", true);
             conversions++;
         }
         if (!plugin.getConfig().getBoolean("conversions.legacy_default")) {
-            new TARDISLegacyConverter(plugin).setOriginal();
+            new LegacyConverter(plugin).setOriginal();
             plugin.getConfig().set("conversions.legacy_default", true);
             conversions++;
         }
         if (!plugin.getConfig().getBoolean("conversions.all_in_one.helper")) {
-            if (new TARDISAllInOneConfigConverter(plugin).transferConfig(TardisModule.HELPER)) {
+            if (new AllInOneConfigConverter(plugin).transferConfig(TardisModule.HELPER)) {
                 plugin.getConfig().set("conversions.all_in_one.helper", true);
                 conversions++;
             }
         }
         if (!plugin.getConfig().getBoolean("conversions.interior_door_id")) {
-            if (new TARDISInteractionDoorUpdater(plugin).addIds()) {
+            if (new InteractionDoorUpdater(plugin).addIds()) {
                 plugin.getConfig().set("conversions.interior_door_id", true);
                 conversions++;
             }

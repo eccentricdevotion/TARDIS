@@ -17,11 +17,11 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.arch.TARDISArchPersister;
-import me.eccentric_nz.TARDIS.artron.TARDISAdaptiveBoxLampToggler;
+import me.eccentric_nz.TARDIS.arch.ArchPersister;
+import me.eccentric_nz.TARDIS.artron.AdaptiveBoxLampToggler;
 import me.eccentric_nz.TARDIS.artron.BeaconToggler;
-import me.eccentric_nz.TARDIS.artron.TARDISLampToggler;
-import me.eccentric_nz.TARDIS.camera.TARDISCameraTracker;
+import me.eccentric_nz.TARDIS.artron.PresetLampToggler;
+import me.eccentric_nz.TARDIS.camera.CameraTracker;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
@@ -54,10 +54,10 @@ public class TARDISQuitListener implements Listener {
         Player player = event.getPlayer();
         UUID uuid = player.getUniqueId();
         // remove camera viewers
-        if (TARDISCameraTracker.SPECTATING.containsKey(uuid)) {
+        if (CameraTracker.SPECTATING.containsKey(uuid)) {
             // set their location back to the TARDIS interior
-            plugin.getTrackerKeeper().getJunkRelog().put(uuid, TARDISCameraTracker.SPECTATING.get(uuid).location());
-            TARDISCameraTracker.SPECTATING.remove(uuid);
+            plugin.getTrackerKeeper().getJunkRelog().put(uuid, CameraTracker.SPECTATING.get(uuid).location());
+            CameraTracker.SPECTATING.remove(uuid);
         }
         // remove if Junk TARDIS traveller
         if (plugin.getGeneralKeeper().getJunkTravellers().contains(uuid)) {
@@ -107,11 +107,11 @@ public class TARDISQuitListener implements Listener {
                         delay = 20L;
                     }
                     if (preset.equals(ChameleonPreset.ADAPTIVE) || preset.usesArmourStand()) {
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISAdaptiveBoxLampToggler(plugin).toggleLamp(id, false, preset), delay);
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new AdaptiveBoxLampToggler(plugin).toggleLamp(id, false, preset), delay);
                     }
                     // if lights are on, turn them off
                     if (lights) {
-                        new TARDISLampToggler(plugin).flickSwitch(id, uuid, true, tardis.getSchematic().getLights());
+                        new PresetLampToggler(plugin).flickSwitch(id, uuid, true, tardis.getSchematic().getLights());
                     }
                     // if beacon is on turn it off
                     new BeaconToggler(plugin).flickSwitch(uuid, id, false);
@@ -128,7 +128,7 @@ public class TARDISQuitListener implements Listener {
             // save arched status
             if (plugin.isDisguisesOnServer()) {
                 if (plugin.getConfig().getBoolean("arch.enabled") && plugin.getTrackerKeeper().getJohnSmith().containsKey(uuid)) {
-                    new TARDISArchPersister(plugin).save(uuid);
+                    new ArchPersister(plugin).save(uuid);
                 }
                 plugin.getTrackerKeeper().getGeneticallyModified().remove(uuid);
             }

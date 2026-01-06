@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.api.event;
 
 import me.eccentric_nz.TARDIS.ARS.GrowSlot;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.rooms.TARDISRoomData;
+import me.eccentric_nz.TARDIS.rooms.RoomData;
 import org.bukkit.entity.Player;
 
 /**
@@ -27,7 +27,7 @@ import org.bukkit.entity.Player;
 public final class TARDISRoomGrowEvent extends TARDISEvent {
 
     private final GrowSlot slot;
-    private final TARDISRoomData roomData;
+    private final RoomData roomData;
 
     /**
      * A room growing event.
@@ -39,7 +39,7 @@ public final class TARDISRoomGrowEvent extends TARDISEvent {
      *                 #getRoomData()}.getLocation()
      * @param roomData the TARDISRoomData data object
      */
-    public TARDISRoomGrowEvent(Player player, Tardis tardis, GrowSlot slot, TARDISRoomData roomData) {
+    public TARDISRoomGrowEvent(Player player, Tardis tardis, GrowSlot slot, RoomData roomData) {
         super(player, tardis);
         this.slot = slot;
         this.roomData = roomData;
@@ -56,12 +56,12 @@ public final class TARDISRoomGrowEvent extends TARDISEvent {
     }
 
     /**
-     * Returns the room data object. Use the {@link me.eccentric_nz.TARDIS.rooms.TARDISRoomData TARDISRoomData}'s getter
+     * Returns the room data object. Use the {@link RoomData TARDISRoomData}'s getter
      * methods to retrieve the room type, wall and floor materials.
      *
      * @return the TARDISRoomData object
      */
-    private TARDISRoomData getRoomData() {
+    private RoomData getRoomData() {
         return roomData;
     }
 }

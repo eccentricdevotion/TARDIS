@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.sensor;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.artron.TARDISArtronLevels;
+import me.eccentric_nz.TARDIS.artron.ArtronLevels;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCharging;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetSensors;
 import org.bukkit.Material;
@@ -48,7 +48,7 @@ public class SensorTracker {
         ResultSetCharging rsc = new ResultSetCharging(plugin);
         if (rsc.resultSet()) {
             for (int id : rsc.getData()) {
-                new TARDISArtronLevels(plugin).recharge(id);
+                new ArtronLevels(plugin).recharge(id);
             }
         }
     }

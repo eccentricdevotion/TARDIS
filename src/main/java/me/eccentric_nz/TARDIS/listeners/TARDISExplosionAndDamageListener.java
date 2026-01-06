@@ -20,7 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCreeper;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.hads.TARDISHostileAction;
+import me.eccentric_nz.TARDIS.hads.HostileAction;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Location;
@@ -106,7 +106,7 @@ public class TARDISExplosionAndDamageListener implements Listener {
                             && !plugin.getTrackerKeeper().getInVortex().contains(id)
                             && TARDISStaticUtils.isOwnerOnline(id)
                             && !plugin.getTrackerKeeper().getDispersedTARDII().contains(id)) {
-                        new TARDISHostileAction(plugin).processAction(id, p);
+                        new HostileAction(plugin).processAction(id, p);
                     } else if ((limit - damage) >= 0) {
                         plugin.getMessenger().send(p, TardisModule.TARDIS, "HADS_WARNING", String.format("%d", (limit - damage)));
                     }

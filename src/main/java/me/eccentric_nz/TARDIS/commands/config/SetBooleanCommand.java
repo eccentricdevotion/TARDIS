@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.commands.config;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.chameleon.shell.TARDISShellLoaderListener;
+import me.eccentric_nz.TARDIS.chameleon.shell.ShellLoaderListener;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISAntiBuildListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISZeroRoomChatListener;
@@ -121,10 +121,10 @@ class SetBooleanCommand {
                         }
                     }
                     case "load_shells" -> {
-                        if (rls.getListener() instanceof TARDISShellLoaderListener loader) {
+                        if (rls.getListener() instanceof ShellLoaderListener loader) {
                             HandlerList.unregisterAll(loader);
                         } else {
-                            plugin.getPM().registerEvents(new TARDISShellLoaderListener(plugin), plugin);
+                            plugin.getPM().registerEvents(new ShellLoaderListener(plugin), plugin);
                         }
                     }
                     case "mapping" -> {

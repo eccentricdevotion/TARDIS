@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.control.actions;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.hads.TARDISCloisterBell;
+import me.eccentric_nz.TARDIS.hads.CloisterBell;
 
 public class CloisterBellAction {
 
@@ -33,7 +33,7 @@ public class CloisterBellAction {
             plugin.getServer().getScheduler().cancelTask(plugin.getTrackerKeeper().getCloisterBells().get(id));
             plugin.getTrackerKeeper().getCloisterBells().remove(id);
         } else {
-            TARDISCloisterBell bell = new TARDISCloisterBell(plugin, Integer.MAX_VALUE, id, plugin.getServer().getPlayer(tardis.getUuid()));
+            CloisterBell bell = new CloisterBell(plugin, Integer.MAX_VALUE, id, plugin.getServer().getPlayer(tardis.getUuid()));
             int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, bell, 2L, 70L);
             bell.setTask(taskID);
             plugin.getTrackerKeeper().getCloisterBells().put(id, taskID);

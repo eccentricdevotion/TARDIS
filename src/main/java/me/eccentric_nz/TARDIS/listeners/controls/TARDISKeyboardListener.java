@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.listeners.controls;
 import io.papermc.paper.registry.RegistryAccess;
 import io.papermc.paper.registry.RegistryKey;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
+import me.eccentric_nz.TARDIS.advanced.CircuitChecker;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -84,9 +84,9 @@ public class TARDISKeyboardListener implements Listener {
             return;
         }
         Player p = event.getPlayer();
-        TARDISCircuitChecker tcc = null;
+        CircuitChecker tcc = null;
         if (plugin.getConfig().getBoolean("difficulty.circuits") && !plugin.getUtils().inGracePeriod(p, false)) {
-            tcc = new TARDISCircuitChecker(plugin, rsc.getTardis_id());
+            tcc = new CircuitChecker(plugin, rsc.getTardis_id());
             tcc.getCircuits();
         }
         if (tcc != null && !tcc.hasInput()) {

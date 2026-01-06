@@ -17,10 +17,10 @@
 package me.eccentric_nz.TARDIS.floodgate;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.advanced.CircuitChecker;
+import me.eccentric_nz.TARDIS.advanced.CircuitDamager;
 import me.eccentric_nz.TARDIS.advanced.DamageUtility;
-import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
-import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
-import me.eccentric_nz.TARDIS.chameleon.utils.TARDISChameleonFrame;
+import me.eccentric_nz.TARDIS.chameleon.utils.ChameleonFrame;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
@@ -75,7 +75,7 @@ public class FloodgateChameleonCircuitForm {
         HashMap<String, Object> set = new HashMap<>();
         HashMap<String, Object> wherec = new HashMap<>();
         wherec.put("tardis_id", id);
-        TARDISChameleonFrame tcf = new TARDISChameleonFrame();
+        ChameleonFrame tcf = new ChameleonFrame();
         // set the Chameleon Circuit sign(s)
         HashMap<String, Object> whereh = new HashMap<>();
         whereh.put("tardis_id", id);
@@ -116,7 +116,7 @@ public class FloodgateChameleonCircuitForm {
             }
             case "Invisible" -> {
                 // check they have an Invisibility Circuit
-                TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
+                CircuitChecker tcc = new CircuitChecker(plugin, id);
                 tcc.getCircuits();
                 if (plugin.getConfig().getBoolean("difficulty.circuits") && !plugin.getUtils().inGracePeriod(player, false) && !tcc.hasInvisibility()) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "INVISIBILITY_MISSING");
@@ -125,7 +125,7 @@ public class FloodgateChameleonCircuitForm {
                 if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getInt("circuits.uses.invisibility") > 0) {
                     // decrement uses
                     int uses_left = tcc.getInvisibilityUses();
-                    new TARDISCircuitDamager(plugin, DiskCircuit.INVISIBILITY, uses_left, id, player).damage();
+                    new CircuitDamager(plugin, DiskCircuit.INVISIBILITY, uses_left, id, player).damage();
                 }
                 set.put("chameleon_preset", "INVISIBLE");
                 if (hasChameleonSign) {

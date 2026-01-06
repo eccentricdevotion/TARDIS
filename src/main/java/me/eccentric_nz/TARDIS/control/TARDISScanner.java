@@ -18,9 +18,9 @@ package me.eccentric_nz.TARDIS.control;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.advanced.CircuitChecker;
+import me.eccentric_nz.TARDIS.advanced.CircuitDamager;
 import me.eccentric_nz.TARDIS.advanced.DamageUtility;
-import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
-import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
@@ -32,7 +32,7 @@ import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.WorldManager;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
-import me.eccentric_nz.TARDIS.rooms.TARDISExteriorRenderer;
+import me.eccentric_nz.TARDIS.rooms.ExteriorRenderer;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
@@ -286,7 +286,7 @@ public class TARDISScanner {
     }
 
     public void scan(int id, Player player, String renderer, int level) {
-        TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
+        CircuitChecker tcc = new CircuitChecker(plugin, id);
         tcc.getCircuits();
         if (plugin.getConfig().getBoolean("difficulty.circuits") && !plugin.getUtils().inGracePeriod(player, false) && !tcc.hasScanner()) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "SCAN_MISSING");
@@ -300,7 +300,7 @@ public class TARDISScanner {
         if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getInt("circuits.uses.scanner") > 0) {
             // decrement uses
             int uses_left = tcc.getScannerUses();
-            new TARDISCircuitDamager(plugin, DiskCircuit.SCANNER, uses_left, id, player).damage();
+            new CircuitDamager(plugin, DiskCircuit.SCANNER, uses_left, id, player).damage();
         }
         BukkitScheduler scheduler = plugin.getServer().getScheduler();
         TARDISScannerData data = getScannerData(player, id, scheduler);
@@ -315,7 +315,7 @@ public class TARDISScanner {
                 if (level > required) {
                     scheduler.scheduleSyncDelayedTask(plugin, () -> {
                         if (player.isOnline() && plugin.getUtils().inTARDISWorld(player)) {
-                            TARDISExteriorRenderer ter = new TARDISExteriorRenderer(plugin);
+                            ExteriorRenderer ter = new ExteriorRenderer(plugin);
                             ter.render(renderer, data.getScanLocation(), id, player, data.getTardisDirection(), data.getTime(), data.getScannedBiome());
                         }
                     }, 160L);

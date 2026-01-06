@@ -21,8 +21,8 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetGravity;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.rooms.TARDISGravityWellRunnable;
-import me.eccentric_nz.TARDIS.utility.TARDISVoidFall;
+import me.eccentric_nz.TARDIS.rooms.GravityWellRunnable;
+import me.eccentric_nz.TARDIS.utility.VoidFall;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -91,7 +91,7 @@ public class TARDISGravityWellListener implements Listener {
             values = plugin.getGeneralKeeper().getGravityUpList().get(loc);
             end = l.getY() + values[1];
             vel = values[2];
-            TARDISGravityWellRunnable runnable = new TARDISGravityWellRunnable(plugin, player, vel, end, x, z, 1);
+            GravityWellRunnable runnable = new GravityWellRunnable(plugin, player, vel, end, x, z, 1);
             int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 2L, 3L);
             runnable.setTask(task);
             return;
@@ -104,7 +104,7 @@ public class TARDISGravityWellListener implements Listener {
             values = plugin.getGeneralKeeper().getGravityNorthList().get(loc);
             end = l.getZ() - values[1];
             vel = values[2];
-            TARDISGravityWellRunnable runnable = new TARDISGravityWellRunnable(plugin, player, vel, end, x, z, 2);
+            GravityWellRunnable runnable = new GravityWellRunnable(plugin, player, vel, end, x, z, 2);
             int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 2L, 3L);
             runnable.setTask(task);
             return;
@@ -117,7 +117,7 @@ public class TARDISGravityWellListener implements Listener {
             values = plugin.getGeneralKeeper().getGravityWestList().get(loc);
             end = l.getX() - values[1];
             vel = values[2];
-            TARDISGravityWellRunnable runnable = new TARDISGravityWellRunnable(plugin, player, vel, end, x, z, 3);
+            GravityWellRunnable runnable = new GravityWellRunnable(plugin, player, vel, end, x, z, 3);
             int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 2L, 3L);
             runnable.setTask(task);
             return;
@@ -130,7 +130,7 @@ public class TARDISGravityWellListener implements Listener {
             values = plugin.getGeneralKeeper().getGravitySouthList().get(loc);
             end = l.getZ() + values[1];
             vel = values[2];
-            TARDISGravityWellRunnable runnable = new TARDISGravityWellRunnable(plugin, player, vel, end, x, z, 4);
+            GravityWellRunnable runnable = new GravityWellRunnable(plugin, player, vel, end, x, z, 4);
             int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 2L, 3L);
             runnable.setTask(task);
             return;
@@ -143,7 +143,7 @@ public class TARDISGravityWellListener implements Listener {
             values = plugin.getGeneralKeeper().getGravityEastList().get(loc);
             end = l.getX() + values[1];
             vel = values[2];
-            TARDISGravityWellRunnable runnable = new TARDISGravityWellRunnable(plugin, player, vel, end, x, z, 5);
+            GravityWellRunnable runnable = new GravityWellRunnable(plugin, player, vel, end, x, z, 5);
             int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 2L, 3L);
             runnable.setTask(task);
         }
@@ -178,7 +178,7 @@ public class TARDISGravityWellListener implements Listener {
                             p.damage(Float.MAX_VALUE, DamageSource.builder(DamageType.GENERIC_KILL).build());
                         } else {
                             e.setCancelled(true);
-                            new TARDISVoidFall(plugin).teleport(p);
+                            new VoidFall(plugin).teleport(p);
                         }
                     }
                     break;

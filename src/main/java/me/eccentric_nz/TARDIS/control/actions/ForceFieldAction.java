@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.control.actions;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.forcefield.TARDISForceField;
+import me.eccentric_nz.TARDIS.forcefield.ForceField;
 import me.eccentric_nz.TARDIS.upgrades.SystemTree;
 import me.eccentric_nz.TARDIS.upgrades.SystemUpgradeChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
@@ -50,7 +50,7 @@ public class ForceFieldAction {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "POWER_LOW");
                     return;
                 }
-                if (TARDISForceField.addToTracker(player)) {
+                if (ForceField.addToTracker(player)) {
                     TARDISSounds.playTARDISSound(blockLocation, "tardis_force_field_up");
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "FORCE_FIELD", "ON");
                 }

@@ -24,7 +24,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.desktop.BlockScannerData;
 import me.eccentric_nz.TARDIS.enumeration.UseClay;
-import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
+import me.eccentric_nz.TARDIS.schematic.SchematicGZip;
 import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.World;
@@ -54,7 +54,7 @@ public class RoomBlockScanner {
 
     public BlockScannerData check() {
         // get JSON
-        JsonObject obj = TARDISSchematicGZip.getObject(plugin, "rooms", room.toLowerCase(Locale.ROOT), false);
+        JsonObject obj = SchematicGZip.getObject(plugin, "rooms", room.toLowerCase(Locale.ROOT), false);
         if (obj == null) {
             return null;
         }

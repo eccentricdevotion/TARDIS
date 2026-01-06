@@ -5,7 +5,7 @@ import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.Desktops;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
+import me.eccentric_nz.TARDIS.schematic.SchematicGZip;
 
 public class ChainCommand {
 
@@ -18,7 +18,7 @@ public class ChainCommand {
     public boolean checkSchematics() {
         for (String fileName : Desktops.getBY_PERMS().keySet()) {
             // get JSON
-            JsonObject obj = TARDISSchematicGZip.getObject(plugin, "consoles", fileName, false);
+            JsonObject obj = SchematicGZip.getObject(plugin, "consoles", fileName, false);
             if (obj == null) {
                 plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "The supplied file [" + fileName + ".tschm] is not a TARDIS JSON schematic!");
                 return false;

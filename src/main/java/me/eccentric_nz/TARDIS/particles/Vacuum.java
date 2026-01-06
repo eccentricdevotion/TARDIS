@@ -22,7 +22,7 @@ import org.bukkit.Location;
 
 import java.util.UUID;
 
-public class Vacuum extends TARDISParticleRunnable {
+public class Vacuum extends ParticleRunnable {
 
     private final ParticleData data;
     private final Location location;

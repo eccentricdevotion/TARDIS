@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.mapping;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.TARDISData;
-import me.eccentric_nz.TARDIS.files.TARDISFileCopier;
+import me.eccentric_nz.TARDIS.files.FileCopier;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.plugin.Plugin;
@@ -68,7 +68,7 @@ public class TARDISSquareMap implements TARDISMapper {
         try {
             File icon = new File(plugin.getDataFolder(), "tardis.png");
             if (!icon.exists()) {
-                TARDISFileCopier.copy("plugins/TARDIS/tardis.png", plugin.getResource("tardis.png"), true);
+                FileCopier.copy("plugins/TARDIS/tardis.png", plugin.getResource("tardis.png"), true);
             }
             BufferedImage image = ImageIO.read(icon);
             SquaremapProvider.get().iconRegistry().register(TARDIS_ICON_KEY, image);

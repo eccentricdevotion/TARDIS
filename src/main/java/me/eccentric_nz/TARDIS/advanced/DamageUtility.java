@@ -15,10 +15,10 @@ public class DamageUtility {
         if (plugin.getConfig().getInt("circuits.uses." + circuit.toString().toLowerCase(Locale.ROOT)) == 0) {
             return;
         }
-        TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
+        CircuitChecker tcc = new CircuitChecker(plugin, id);
         tcc.getCircuits();
         // decrement uses
         int uses_left = tcc.getUses(circuit);
-        new TARDISCircuitDamager(plugin, circuit, uses_left, id, player).damage();
+        new CircuitDamager(plugin, circuit, uses_left, id, player).damage();
     }
 }

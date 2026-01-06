@@ -18,8 +18,8 @@ package me.eccentric_nz.TARDIS.control.actions;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.chameleon.shell.TARDISShellInventory;
-import me.eccentric_nz.TARDIS.chameleon.shell.TARDISShellPresetInventory;
+import me.eccentric_nz.TARDIS.chameleon.shell.ShellInventory;
+import me.eccentric_nz.TARDIS.chameleon.shell.ShellPresetInventory;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.floodgate.FloodgateShellLoaderForm;
 import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
@@ -52,11 +52,11 @@ public class ShellRoomAction {
             if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(playerUUID)) {
                 new FloodgateShellLoaderForm(plugin, playerUUID).send();
             } else {
-                player.openInventory(new TARDISShellPresetInventory(plugin, player, id).getInventory());
+                player.openInventory(new ShellPresetInventory(plugin, player, id).getInventory());
             }
         } else {
             // load player shells GUI
-            player.openInventory(new TARDISShellInventory(plugin, id).getInventory());
+            player.openInventory(new ShellInventory(plugin, id).getInventory());
         }
     }
 }

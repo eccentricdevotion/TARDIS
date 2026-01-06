@@ -19,7 +19,7 @@ package me.eccentric_nz.tardischunkgenerator.worldgen.populators;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
+import me.eccentric_nz.TARDIS.schematic.SchematicGZip;
 import me.eccentric_nz.tardischunkgenerator.worldgen.utils.GallifeyStructureUtility;
 import me.eccentric_nz.tardischunkgenerator.worldgen.utils.TARDISLootTables;
 import net.minecraft.world.level.ChunkPos;
@@ -93,7 +93,7 @@ public class GallifreyStructurePopulator extends BlockPopulator {
         InputStream stream = plugin.getResource(path);
         if (stream != null) {
             // get JSON
-            JsonObject obj = TARDISSchematicGZip.unzip(stream);
+            JsonObject obj = SchematicGZip.unzip(stream);
             // get dimensions
             JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
             int h = dimensions.get("height").getAsInt() - 1;

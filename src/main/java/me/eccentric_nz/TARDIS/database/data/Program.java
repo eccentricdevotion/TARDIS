@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.database.data;
 
-import me.eccentric_nz.TARDIS.advanced.TARDISSerializeInventory;
+import me.eccentric_nz.TARDIS.advanced.SerializeInventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.io.IOException;
@@ -45,7 +45,7 @@ public class Program {
     private ItemStack[] createInventory(String inventory) {
         ItemStack[] stack;
         try {
-            stack = TARDISSerializeInventory.itemStacksFromString(inventory);
+            stack = SerializeInventory.itemStacksFromString(inventory);
         } catch (IOException ex) {
             stack = new ItemStack[36];
         }

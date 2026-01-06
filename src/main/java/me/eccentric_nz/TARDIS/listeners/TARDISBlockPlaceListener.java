@@ -22,7 +22,7 @@ import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.customblocks.*;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.rooms.eye.TARDISSpaceHelmetListener;
+import me.eccentric_nz.TARDIS.rooms.eye.SpaceHelmetListener;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -77,7 +77,7 @@ public class TARDISBlockPlaceListener implements Listener {
         }
         ItemStack is = event.getItemInHand();
         // if it's a space helmet cancel
-        if (TARDISSpaceHelmetListener.isSpaceHelmet(is)) {
+        if (SpaceHelmetListener.isSpaceHelmet(is)) {
             event.setCancelled(true);
             return;
         }

@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.chameleon;
 
-import me.eccentric_nz.TARDIS.chameleon.utils.TARDISChameleonColumn;
+import me.eccentric_nz.TARDIS.chameleon.utils.ChameleonColumn;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 
 import java.util.EnumMap;
@@ -30,9 +30,9 @@ import java.util.EnumMap;
  */
 public class TARDISPreset {
 
-    private final EnumMap<COMPASS, TARDISChameleonColumn> blueprint = new EnumMap<>(COMPASS.class);
-    private final EnumMap<COMPASS, TARDISChameleonColumn> stained = new EnumMap<>(COMPASS.class);
-    private final EnumMap<COMPASS, TARDISChameleonColumn> glass = new EnumMap<>(COMPASS.class);
+    private final EnumMap<COMPASS, ChameleonColumn> blueprint = new EnumMap<>(COMPASS.class);
+    private final EnumMap<COMPASS, ChameleonColumn> stained = new EnumMap<>(COMPASS.class);
+    private final EnumMap<COMPASS, ChameleonColumn> glass = new EnumMap<>(COMPASS.class);
     private String[][] blueprintData;
     private String[][] stainedData;
     private String[][] glassData;
@@ -45,15 +45,15 @@ public class TARDISPreset {
         }
     }
 
-    public EnumMap<COMPASS, TARDISChameleonColumn> getBlueprint() {
+    public EnumMap<COMPASS, ChameleonColumn> getBlueprint() {
         return blueprint;
     }
 
-    public EnumMap<COMPASS, TARDISChameleonColumn> getStained() {
+    public EnumMap<COMPASS, ChameleonColumn> getStained() {
         return stained;
     }
 
-    public EnumMap<COMPASS, TARDISChameleonColumn> getGlass() {
+    public EnumMap<COMPASS, ChameleonColumn> getGlass() {
         return glass;
     }
 

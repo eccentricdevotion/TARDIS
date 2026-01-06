@@ -17,8 +17,8 @@
 package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
-import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
+import me.eccentric_nz.TARDIS.advanced.CircuitChecker;
+import me.eccentric_nz.TARDIS.advanced.CircuitDamager;
 import me.eccentric_nz.TARDIS.builders.exterior.BuildData;
 import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -77,7 +77,7 @@ class MakeHerBlueCommand {
             return true;
         }
         int id = tardis.getTardisId();
-        TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
+        CircuitChecker tcc = new CircuitChecker(plugin, id);
             tcc.getCircuits();
         if (plugin.getConfig().getBoolean("difficulty.circuits")) {
             if (!tcc.hasInvisibility() && !tardis.getPreset().equals(ChameleonPreset.JUNK_MODE)) {
@@ -94,12 +94,12 @@ class MakeHerBlueCommand {
             if (plugin.getConfig().getInt("circuits.uses.invisibility") > 0) {
                 // decrement uses
                 int uses_left = tcc.getInvisibilityUses();
-                new TARDISCircuitDamager(plugin, DiskCircuit.INVISIBILITY, uses_left, id, player).damage();
+                new CircuitDamager(plugin, DiskCircuit.INVISIBILITY, uses_left, id, player).damage();
             }
             if (plugin.getConfig().getInt("circuits.uses.materialisation") > 0) {
                 // decrement uses
                 int uses_left = tcc.getMaterialisationUses();
-                new TARDISCircuitDamager(plugin, DiskCircuit.MATERIALISATION, uses_left, id, player).damage();
+                new CircuitDamager(plugin, DiskCircuit.MATERIALISATION, uses_left, id, player).damage();
             }
         }
         if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {

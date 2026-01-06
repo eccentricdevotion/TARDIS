@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.flight.vehicle;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.exterior.BuildData;
-import me.eccentric_nz.TARDIS.builders.exterior.TARDISBuilderUtility;
+import me.eccentric_nz.TARDIS.builders.exterior.BuilderUtility;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import net.minecraft.server.level.ServerLevel;
@@ -69,7 +69,7 @@ public class VehicleUtility {
         }
         if (old != null) {
             // set helmet
-            TARDISBuilderUtility.setPoliceBoxHelmet(TARDIS.plugin, preset, data, old);
+            BuilderUtility.setPoliceBoxHelmet(TARDIS.plugin, preset, data, old);
             ArmorStand stand = convertStand(old);
             // get interaction entity at the location
             Interaction interaction = TARDISDisplayItemUtils.getInteraction(location);

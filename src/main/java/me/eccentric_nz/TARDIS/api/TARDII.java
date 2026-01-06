@@ -21,7 +21,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISTrackerInstanceKeeper;
 import me.eccentric_nz.TARDIS.blueprints.*;
 import me.eccentric_nz.TARDIS.builders.exterior.BuildData;
-import me.eccentric_nz.TARDIS.builders.interior.TARDISAbandoned;
+import me.eccentric_nz.TARDIS.builders.interior.AbandonedBuilder;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemRegistry;
 import me.eccentric_nz.TARDIS.customblocks.TARDISSeedDisplayItem;
@@ -29,8 +29,8 @@ import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
-import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
-import me.eccentric_nz.TARDIS.desktop.TARDISWallFloorRunnable;
+import me.eccentric_nz.TARDIS.desktop.UpgradeData;
+import me.eccentric_nz.TARDIS.desktop.WallFloorRunnable;
 import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.flight.TARDISTakeoff;
 import me.eccentric_nz.TARDIS.move.TARDISTeleportLocation;
@@ -774,7 +774,7 @@ public class TARDII implements TardisAPI {
             throw new TARDISException("TARDIS must be configured to create TARDISes in a default world");
         }
         Schematic schm = Desktops.getBY_NAMES().get(type.toUpperCase(Locale.ROOT));
-        new TARDISAbandoned(TARDIS.plugin).spawn(location, schm, preset, "", direction, null);
+        new AbandonedBuilder(TARDIS.plugin).spawn(location, schm, preset, "", direction, null);
     }
 
     @Override
@@ -821,14 +821,14 @@ public class TARDII implements TardisAPI {
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
             Schematic current_console = tardis.getSchematic();
-            TARDISUpgradeData tud = new TARDISUpgradeData();
+            UpgradeData tud = new UpgradeData();
             tud.setSchematic(current_console);
             tud.setPrevious(current_console);
             tud.setLevel(tardis.getArtronLevel());
             tud.setWall(wall);
             tud.setFloor(floor);
             // change the wall and floor
-            TARDISWallFloorRunnable ttr = new TARDISWallFloorRunnable(TARDIS.plugin, uuid, tud);
+            WallFloorRunnable ttr = new WallFloorRunnable(TARDIS.plugin, uuid, tud);
             long delay = Math.round(20 / TARDIS.plugin.getConfig().getDouble("growth.room_speed"));
             int task = TARDIS.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(TARDIS.plugin, ttr, 5L, delay);
             ttr.setTaskID(task);

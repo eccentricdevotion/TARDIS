@@ -50,9 +50,9 @@ public class TARDISCustomPreset {
             JsonObject rootObject = JsonParser.parseReader(new JsonReader(reader)).getAsJsonObject();
             for (Map.Entry<String, JsonElement> entry : rootObject.entrySet()) {
                 TARDIS.plugin.debug("Adding custom chameleon preset: " + entry.getKey());
-                EnumMap<COMPASS, TARDISChameleonColumn> blueprint = new EnumMap<>(COMPASS.class);
-                EnumMap<COMPASS, TARDISChameleonColumn> stained = new EnumMap<>(COMPASS.class);
-                EnumMap<COMPASS, TARDISChameleonColumn> glass = new EnumMap<>(COMPASS.class);
+                EnumMap<COMPASS, ChameleonColumn> blueprint = new EnumMap<>(COMPASS.class);
+                EnumMap<COMPASS, ChameleonColumn> stained = new EnumMap<>(COMPASS.class);
+                EnumMap<COMPASS, ChameleonColumn> glass = new EnumMap<>(COMPASS.class);
                 List<String> lines = new ArrayList<>();
                 JsonObject custom = entry.getValue().getAsJsonObject();
                 JsonArray b = custom.get("blueprint").getAsJsonArray();

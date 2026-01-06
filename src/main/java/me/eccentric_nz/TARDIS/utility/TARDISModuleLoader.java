@@ -17,10 +17,10 @@
 package me.eccentric_nz.TARDIS.utility;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.converters.TARDISShopTransfer;
-import me.eccentric_nz.TARDIS.database.converters.TARDISVortexManipulatorTransfer;
+import me.eccentric_nz.TARDIS.database.converters.ShopTransfer;
+import me.eccentric_nz.TARDIS.database.converters.VortexManipulatorTransfer;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.files.TARDISAllInOneConfigConverter;
+import me.eccentric_nz.TARDIS.files.AllInOneConfigConverter;
 import me.eccentric_nz.tardischemistry.block.ChemistryBlockRecipes;
 import me.eccentric_nz.tardischemistry.lab.BleachRecipe;
 import me.eccentric_nz.tardischemistry.lab.HeatBlockRunnable;
@@ -58,7 +58,7 @@ public class TARDISModuleLoader {
             new TARDISEntityRegister().inject();
             new TARDISWeepingAngels(plugin).enable();
             if (!plugin.getConfig().getBoolean("conversions.all_in_one.weeping_angels")) {
-                if (new TARDISAllInOneConfigConverter(plugin).transferConfig(TardisModule.MONSTERS)) {
+                if (new AllInOneConfigConverter(plugin).transferConfig(TardisModule.MONSTERS)) {
                     plugin.getConfig().set("conversions.all_in_one.weeping_angels", true);
                     conversions++;
                 }
@@ -68,8 +68,8 @@ public class TARDISModuleLoader {
             plugin.getMessenger().message(plugin.getConsole(), TardisModule.VORTEX_MANIPULATOR, "Loading Vortex Manipulator Module");
             new TARDISVortexManipulator(plugin).enable();
             if (!plugin.getConfig().getBoolean("conversions.all_in_one.vortex_manipulator")) {
-                boolean cvm = new TARDISAllInOneConfigConverter(plugin).transferConfig(TardisModule.VORTEX_MANIPULATOR);
-                boolean dvm = new TARDISVortexManipulatorTransfer(plugin).transferData();
+                boolean cvm = new AllInOneConfigConverter(plugin).transferConfig(TardisModule.VORTEX_MANIPULATOR);
+                boolean dvm = new VortexManipulatorTransfer(plugin).transferData();
                 if (cvm && dvm) {
                     plugin.getConfig().set("conversions.all_in_one.vortex_manipulator", true);
                     conversions++;
@@ -84,8 +84,8 @@ public class TARDISModuleLoader {
             plugin.getMessenger().message(plugin.getConsole(), TardisModule.SHOP, "Loading Shop Module");
             new TARDISShop(plugin).enable();
             if (!plugin.getConfig().getBoolean("conversions.all_in_one.shop")) {
-                boolean cs = new TARDISAllInOneConfigConverter(plugin).transferConfig(TardisModule.SHOP);
-                boolean ds = new TARDISShopTransfer(plugin).transferData();
+                boolean cs = new AllInOneConfigConverter(plugin).transferConfig(TardisModule.SHOP);
+                boolean ds = new ShopTransfer(plugin).transferData();
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new TARDISShopDisplayConverter(plugin), 300L);
                 if (cs && ds) {
                     plugin.getConfig().set("conversions.all_in_one.shop", true);
@@ -97,7 +97,7 @@ public class TARDISModuleLoader {
             plugin.getMessenger().message(plugin.getConsole(), TardisModule.BLASTER, "Loading Sonic Blaster Module");
             new TARDISSonicBlaster(plugin).enable();
             if (!plugin.getConfig().getBoolean("conversions.all_in_one.sonic_blaster")) {
-                if (new TARDISAllInOneConfigConverter(plugin).transferConfig(TardisModule.BLASTER)) {
+                if (new AllInOneConfigConverter(plugin).transferConfig(TardisModule.BLASTER)) {
                     plugin.getConfig().set("conversions.all_in_one.sonic_blaster", true);
                     conversions++;
                 }

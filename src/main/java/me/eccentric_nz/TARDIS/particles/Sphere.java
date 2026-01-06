@@ -38,7 +38,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
-public class Sphere extends TARDISParticleRunnable {
+public class Sphere extends ParticleRunnable {
 
     public final Set<Vector> coords = new HashSet<>();
     private final Location location;

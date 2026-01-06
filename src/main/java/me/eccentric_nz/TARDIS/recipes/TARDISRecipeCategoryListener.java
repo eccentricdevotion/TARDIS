@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.recipes;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.RecipeCategory;
-import me.eccentric_nz.TARDIS.howto.TARDISSeedsInventory;
+import me.eccentric_nz.TARDIS.howto.SeedsInventory;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import org.bukkit.entity.Player;
@@ -56,7 +56,7 @@ public class TARDISRecipeCategoryListener extends TARDISMenuListener {
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                 InventoryHolder recipes;
                 if (category == RecipeCategory.SEED_BLOCKS) {
-                    recipes = new TARDISSeedsInventory(plugin, player);
+                    recipes = new SeedsInventory(plugin, player);
                 } else {
                     recipes = new TARDISRecipeInventory(plugin, category);
                 }

@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.floodgate;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.builders.exterior.TARDISEmergencyRelocation;
+import me.eccentric_nz.TARDIS.builders.exterior.EmergencyRelocation;
 import me.eccentric_nz.TARDIS.database.data.Area;
 import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreas;
@@ -98,7 +98,7 @@ public class FloodgateAreasForm {
             // get current location
             ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
             if (!rsc.resultSet()) {
-                new TARDISEmergencyRelocation(plugin).relocate(id, player);
+                new EmergencyRelocation(plugin).relocate(id, player);
                 return;
             }
             Current current = rsc.getCurrent();

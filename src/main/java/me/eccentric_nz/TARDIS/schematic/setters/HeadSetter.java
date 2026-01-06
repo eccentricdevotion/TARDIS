@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.schematic.setters;
 import com.destroystokyo.paper.profile.PlayerProfile;
 import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.desktop.TARDISRandomArchiveName;
+import me.eccentric_nz.TARDIS.desktop.RandomArchiveName;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -43,10 +43,10 @@ public class HeadSetter {
             if (head.has("name")) {
                 name = StringUtils.defaultIfBlank(
                         head.get("name").getAsString(),
-                        TARDISStringUtils.toLowercaseDashed(TARDISRandomArchiveName.getRandomName()).substring(0, 15)
+                        TARDISStringUtils.toLowercaseDashed(RandomArchiveName.getRandomName()).substring(0, 15)
                 );
             } else {
-                name = TARDISStringUtils.toLowercaseDashed(TARDISRandomArchiveName.getRandomName()).substring(0, 15);
+                name = TARDISStringUtils.toLowercaseDashed(RandomArchiveName.getRandomName()).substring(0, 15);
             }
             PlayerProfile profile = plugin.getServer().createProfile(uuid, name);
             PlayerTextures textures = profile.getTextures();

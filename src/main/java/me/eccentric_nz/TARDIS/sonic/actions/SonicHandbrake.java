@@ -18,12 +18,12 @@ package me.eccentric_nz.TARDIS.sonic.actions;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
-import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
-import me.eccentric_nz.TARDIS.artron.TARDISArtronLevels;
+import me.eccentric_nz.TARDIS.advanced.CircuitChecker;
+import me.eccentric_nz.TARDIS.advanced.CircuitDamager;
+import me.eccentric_nz.TARDIS.artron.ArtronLevels;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.builders.utility.TARDISSculkShrieker;
-import me.eccentric_nz.TARDIS.camera.TARDISCameraTracker;
+import me.eccentric_nz.TARDIS.builders.utility.SculkShrieker;
+import me.eccentric_nz.TARDIS.camera.CameraTracker;
 import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.data.Throticle;
@@ -34,12 +34,12 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetThrottle;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.flight.TARDISExteriorFlight;
+import me.eccentric_nz.TARDIS.flight.ExteriorFlight;
 import me.eccentric_nz.TARDIS.flight.TARDISHandbrake;
 import me.eccentric_nz.TARDIS.flight.TARDISTakeoff;
 import me.eccentric_nz.TARDIS.flight.vehicle.VehicleUtility;
 import me.eccentric_nz.TARDIS.rotors.Rotor;
-import me.eccentric_nz.TARDIS.rotors.TARDISTimeRotor;
+import me.eccentric_nz.TARDIS.rotors.TimeRotor;
 import me.eccentric_nz.TARDIS.sensor.BeaconSensor;
 import me.eccentric_nz.TARDIS.sensor.HandbrakeSensor;
 import me.eccentric_nz.TARDIS.utility.Handbrake;
@@ -68,7 +68,7 @@ public class SonicHandbrake {
         ResultSetTardis rs = new ResultSetTardis(plugin, wherei, "", false);
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
-            TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
+            CircuitChecker tcc = new CircuitChecker(plugin, id);
             tcc.getCircuits();
             if (plugin.getConfig().getBoolean("difficulty.circuits") && !plugin.getUtils().inGracePeriod(player, !tardis.isHandbrakeOn()) && !tcc.hasMaterialisation()) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_MAT_CIRCUIT");
@@ -146,7 +146,7 @@ public class SonicHandbrake {
                                 return;
                             }
                         }
-                        if (TARDISCameraTracker.CAMERA_IN_USE.contains(id)) {
+                        if (CameraTracker.CAMERA_IN_USE.contains(id)) {
                             plugin.getMessenger().sendStatus(player, "FLIGHT_CAMERA");
                             return;
                         }
@@ -164,7 +164,7 @@ public class SonicHandbrake {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "FLIGHT_REBUILD");
                             return;
                         } else {
-                            new TARDISExteriorFlight(plugin).startFlying(player, id, block, exterior, beac_on, beacon);
+                            new ExteriorFlight(plugin).startFlying(player, id, block, exterior, beac_on, beacon);
                         }
                     } else {
                         new TARDISTakeoff(plugin).run(id, block, handbrake_loc, player, beac_on, beacon, bar, throticle);
@@ -173,13 +173,13 @@ public class SonicHandbrake {
                     if (tardis.getRotor() != null) {
                         if (tardis.getRotor() == TARDISConstants.UUID_ZERO) {
                             // get sculk shrieker and set shrieking
-                            TARDISSculkShrieker.setRotor(id);
+                            SculkShrieker.setRotor(id);
                         } else {
-                            ItemFrame itemFrame = TARDISTimeRotor.getItemFrame(tardis.getRotor());
+                            ItemFrame itemFrame = TimeRotor.getItemFrame(tardis.getRotor());
                             if (itemFrame != null) {
                                 // get the rotor type
-                                Rotor rotor = Rotor.getByModel(TARDISTimeRotor.getRotorModel(itemFrame));
-                                TARDISTimeRotor.setRotor(rotor, itemFrame);
+                                Rotor rotor = Rotor.getByModel(TimeRotor.getRotorModel(itemFrame));
+                                TimeRotor.setRotor(rotor, itemFrame);
                             }
                         }
                     }
@@ -188,14 +188,14 @@ public class SonicHandbrake {
                     // stop time rotor?
                     if (tardis.getRotor() != null) {
                         if (tardis.getRotor() == TARDISConstants.UUID_ZERO) {
-                            TARDISSculkShrieker.stopRotor(id);
+                            SculkShrieker.stopRotor(id);
                         } else {
-                            ItemFrame itemFrame = TARDISTimeRotor.getItemFrame(tardis.getRotor());
+                            ItemFrame itemFrame = TimeRotor.getItemFrame(tardis.getRotor());
                             if (itemFrame != null) {
                                 // cancel the animation
-                                int task = TARDISTimeRotor.ANIMATED_ROTORS.getOrDefault(itemFrame.getUniqueId(), -1);
+                                int task = TimeRotor.ANIMATED_ROTORS.getOrDefault(itemFrame.getUniqueId(), -1);
                                 plugin.getServer().getScheduler().cancelTask(task);
-                                TARDISTimeRotor.setRotor(TARDISTimeRotor.getRotorOffModel(itemFrame), itemFrame);
+                                TimeRotor.setRotor(TimeRotor.getRotorOffModel(itemFrame), itemFrame);
                             }
                         }
                     }
@@ -211,7 +211,7 @@ public class SonicHandbrake {
                     // Changes the lever to on
                     TARDISHandbrake.setLevers(block, true, true, handbrake_loc.toString(), id, plugin);
                     // Check if it's at a recharge point
-                    new TARDISArtronLevels(plugin).recharge(id);
+                    new ArtronLevels(plugin).recharge(id);
                     if (!beac_on && !beacon.isEmpty()) {
                         new BeaconSensor().toggle(beacon, false);
                     }
@@ -238,7 +238,7 @@ public class SonicHandbrake {
                     if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getInt("circuits.uses.materialisation") > 0) {
                         // decrement uses
                         int uses_left = tcc.getMaterialisationUses();
-                        new TARDISCircuitDamager(plugin, DiskCircuit.MATERIALISATION, uses_left, id, player).damage();
+                        new CircuitDamager(plugin, DiskCircuit.MATERIALISATION, uses_left, id, player).damage();
                     }
                     HashMap<String, Object> set = new HashMap<>();
                     set.put("handbrake_on", 1);

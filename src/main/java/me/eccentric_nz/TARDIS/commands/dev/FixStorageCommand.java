@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.commands.dev;
 
 import com.google.common.collect.Multimaps;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.advanced.TARDISSerializeInventory;
+import me.eccentric_nz.TARDIS.advanced.SerializeInventory;
 import me.eccentric_nz.TARDIS.custommodels.keys.CircuitVariant;
 import me.eccentric_nz.TARDIS.enumeration.Storage;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
@@ -46,7 +46,7 @@ public class FixStorageCommand {
     public boolean convertStacks() {
         try {
             for (Storage storage : Storage.values()) {
-                ItemStack[] stacks = TARDISSerializeInventory.itemStacksFromString(storage.getEmpty());
+                ItemStack[] stacks = SerializeInventory.itemStacksFromString(storage.getEmpty());
                 // convert stacks to component display names
                 for (ItemStack is : stacks) {
                     if (is != null && is.hasItemMeta()) {
@@ -72,7 +72,7 @@ public class FixStorageCommand {
                     }
                 }
                 // rewrite serialised string
-                String out = TARDISSerializeInventory.itemStacksToString(stacks);
+                String out = SerializeInventory.itemStacksToString(stacks);
                 // write the string to file
                 String file = plugin.getDataFolder() + File.separator + "storage_" + storage + ".txt";
                 try (BufferedWriter bw = new BufferedWriter(new FileWriter(file, false))) {

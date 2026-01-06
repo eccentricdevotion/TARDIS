@@ -19,11 +19,11 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPostioning;
-import me.eccentric_nz.TARDIS.builders.interior.TARDISTIPSData;
+import me.eccentric_nz.TARDIS.builders.interior.TIPSData;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.desktop.TARDISPluginThemeInventory;
-import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
+import me.eccentric_nz.TARDIS.desktop.PluginThemeInventory;
+import me.eccentric_nz.TARDIS.desktop.UpgradeData;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.upgrades.SystemTree;
@@ -85,7 +85,7 @@ class UpgradeCommand {
             } else {
                 // get if player is in TIPS area for their TARDIS
                 TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
-                TARDISTIPSData pos = tintpos.getTIPSData(tardis.getTIPS());
+                TIPSData pos = tintpos.getTIPSData(tardis.getTIPS());
                 own = (pl.getBlockX() > pos.getMinX() && pl.getBlockZ() > pos.getMinZ() && pl.getBlockX() < pos.getMaxX() && pl.getBlockZ() < pos.getMaxZ());
             }
         } else {
@@ -98,12 +98,12 @@ class UpgradeCommand {
         // get player's current console
         Schematic current_console = tardis.getSchematic();
         int level = tardis.getArtronLevel();
-        TARDISUpgradeData tud = new TARDISUpgradeData();
+        UpgradeData tud = new UpgradeData();
         tud.setPrevious(current_console);
         tud.setLevel(level);
         plugin.getTrackerKeeper().getUpgrades().put(uuid, tud);
         // open the upgrade menu
-        player.openInventory(new TARDISPluginThemeInventory(plugin, player, current_console.getPermission(), level).getInventory());
+        player.openInventory(new PluginThemeInventory(plugin, player, current_console.getPermission(), level).getInventory());
         return true;
     }
 }

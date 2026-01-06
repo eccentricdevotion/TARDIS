@@ -22,7 +22,7 @@ import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.desktop.BlockScannerData;
 import me.eccentric_nz.TARDIS.desktop.UpgradeBlockScanner;
-import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
+import me.eccentric_nz.TARDIS.desktop.UpgradeData;
 import me.eccentric_nz.TARDIS.enumeration.Desktops;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
@@ -79,7 +79,7 @@ public class BeaconToggler {
 
     private void updateBeacon(Schematic schm, UUID uuid) {
         // determine beacon location and update the tardis table so we don't have to do this again
-        TARDISUpgradeData tud = new TARDISUpgradeData();
+        UpgradeData tud = new UpgradeData();
         tud.setSchematic(schm);
         tud.setPrevious(schm);
         tud.setWall("ORANGE_WOOL");

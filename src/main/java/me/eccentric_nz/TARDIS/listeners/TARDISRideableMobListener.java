@@ -24,7 +24,7 @@ import me.eccentric_nz.TARDIS.mobfarming.types.TARDISHorse;
 import me.eccentric_nz.TARDIS.mobfarming.types.TARDISLlama;
 import me.eccentric_nz.TARDIS.mobfarming.types.TARDISMob;
 import me.eccentric_nz.TARDIS.mobfarming.types.TARDISPig;
-import me.eccentric_nz.TARDIS.move.TARDISDoorListener;
+import me.eccentric_nz.TARDIS.move.DoorListener;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import net.kyori.adventure.text.Component;
@@ -90,7 +90,7 @@ public class TARDISRideableMobListener implements Listener {
                             return;
                         }
                         // get spawn location
-                        TARDISDoorLocation dl = TARDISDoorListener.getDoor(0, id);
+                        TARDISDoorLocation dl = DoorListener.getDoor(0, id);
                         Location l = dl.getL();
                         // set the horse's direction as you would for a player when exiting
                         switch (dl.getD()) {

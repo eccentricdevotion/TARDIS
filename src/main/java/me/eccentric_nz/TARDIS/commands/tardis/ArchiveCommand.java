@@ -20,7 +20,7 @@ import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPostioning;
-import me.eccentric_nz.TARDIS.builders.interior.TARDISTIPSData;
+import me.eccentric_nz.TARDIS.builders.interior.TIPSData;
 import me.eccentric_nz.TARDIS.database.data.Archive;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
@@ -29,9 +29,9 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.schematic.TARDISSchematicBuilder;
-import me.eccentric_nz.TARDIS.schematic.TARDISSchematicBuilder.ArchiveData;
-import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
+import me.eccentric_nz.TARDIS.schematic.SchematicBuilder;
+import me.eccentric_nz.TARDIS.schematic.SchematicBuilder.ArchiveData;
+import me.eccentric_nz.TARDIS.schematic.SchematicGZip;
 import me.eccentric_nz.TARDIS.schematic.archive.ResultSetArchiveByName;
 import me.eccentric_nz.TARDIS.schematic.archive.ResultSetArchiveCount;
 import me.eccentric_nz.TARDIS.schematic.archive.ResultSetArchiveName;
@@ -144,7 +144,7 @@ class ArchiveCommand {
                         }
                     } else {
                         // get JSON
-                        obj = TARDISSchematicGZip.getObject(plugin, "consoles", current.getPermission(), current.isCustom());
+                        obj = SchematicGZip.getObject(plugin, "consoles", current.getPermission(), current.isCustom());
                     }
                     if (obj != null) {
                         // get dimensions
@@ -197,7 +197,7 @@ class ArchiveCommand {
                         int sx, sz;
                         if (slot != -1000001) { // default world - use TIPS
                             TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
-                            TARDISTIPSData pos = tintpos.getTIPSData(slot);
+                            TIPSData pos = tintpos.getTIPSData(slot);
                             sx = pos.getCentreX();
                             sz = pos.getCentreZ();
                         } else {
@@ -206,7 +206,7 @@ class ArchiveCommand {
                             sz = gsl[2];
                         }
                         int sy = current.getStartY();
-                        ArchiveData ad = new TARDISSchematicBuilder(plugin, id, player.getLocation().getWorld(), sx, sx + w, sy, sy + h, sz, sz + c).build();
+                        ArchiveData ad = new SchematicBuilder(plugin, id, player.getLocation().getWorld(), sx, sx + w, sy, sy + h, sz, sz + c).build();
                         if (sub.equals("scan")) {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "ARCHIVE_SCAN");
                             return true;

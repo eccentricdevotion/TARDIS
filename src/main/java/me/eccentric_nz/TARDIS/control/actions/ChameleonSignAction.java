@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.control.actions;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.control.TARDISChameleonControl;
+import me.eccentric_nz.TARDIS.control.ChameleonControl;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.floodgate.FloodgateChameleonCircuitForm;
@@ -45,7 +45,7 @@ public class ChameleonSignAction {
         if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(uuid)) {
             new FloodgateChameleonCircuitForm(plugin, uuid, id, tardis.getPreset()).send();
         } else {
-            new TARDISChameleonControl(plugin).openGUI(player, id, tardis.getAdaption(), tardis.getPreset(), tardis.getItemPreset());
+            new ChameleonControl(plugin).openGUI(player, id, tardis.getAdaption(), tardis.getPreset(), tardis.getItemPreset());
         }
     }
 }

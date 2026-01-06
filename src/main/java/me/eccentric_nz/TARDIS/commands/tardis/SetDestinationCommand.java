@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
+import me.eccentric_nz.TARDIS.advanced.CircuitChecker;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
@@ -69,9 +69,9 @@ class SetDestinationCommand {
                 return false;
             } else {
                 int id = rs.getTardisId();
-                TARDISCircuitChecker tcc = null;
+                CircuitChecker tcc = null;
                 if (plugin.getConfig().getBoolean("difficulty.circuits") && !plugin.getUtils().inGracePeriod(player, true)) {
-                    tcc = new TARDISCircuitChecker(plugin, id);
+                    tcc = new CircuitChecker(plugin, id);
                     tcc.getCircuits();
                 }
                 if (tcc != null && !tcc.hasMemory()) {

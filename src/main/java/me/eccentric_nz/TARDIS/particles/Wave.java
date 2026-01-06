@@ -22,7 +22,7 @@ import org.bukkit.Location;
 
 import java.util.UUID;
 
-public class Wave extends TARDISParticleRunnable implements Runnable {
+public class Wave extends ParticleRunnable implements Runnable {
 
     private final ParticleData data;
     private final Location location;

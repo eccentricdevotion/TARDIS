@@ -17,10 +17,10 @@
 package me.eccentric_nz.TARDIS.control.actions;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
+import me.eccentric_nz.TARDIS.advanced.CircuitChecker;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.siegemode.TARDISSiegeMode;
+import me.eccentric_nz.TARDIS.siegemode.SiegeMode;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -37,7 +37,7 @@ public class SiegeAction {
         this.plugin = plugin;
     }
 
-    public void clickButton(TARDISCircuitChecker tcc, Player player, boolean powered, int id) {
+    public void clickButton(CircuitChecker tcc, Player player, boolean powered, int id) {
         if (tcc != null && !tcc.hasMaterialisation()) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_MAT_CIRCUIT");
             return;
@@ -82,6 +82,6 @@ public class SiegeAction {
         }
         plugin.getTrackerKeeper().getRebuildCooldown().put(uuid, System.currentTimeMillis());
         // toggle siege mode
-        new TARDISSiegeMode(plugin).toggleViaSwitch(id, player);
+        new SiegeMode(plugin).toggleViaSwitch(id, player);
     }
 }

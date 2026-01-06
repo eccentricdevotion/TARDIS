@@ -22,7 +22,7 @@ import me.eccentric_nz.TARDIS.lazarus.disguise.TARDISArmourStandDisguiser;
 import me.eccentric_nz.TARDIS.lazarus.disguise.TARDISDisguiseListener;
 import me.eccentric_nz.TARDIS.lazarus.disguise.TARDISDisguiser;
 import me.eccentric_nz.TARDIS.lazarus.disguise.TARDISPlayerDisguiser;
-import me.eccentric_nz.TARDIS.skins.TARDISChameleonArchDisguiser;
+import me.eccentric_nz.TARDIS.skins.ChameleonArchDisguiser;
 import me.eccentric_nz.tardischunkgenerator.custombiome.CubicMaterial;
 import me.eccentric_nz.tardischunkgenerator.custombiome.CustomBiome;
 import me.eccentric_nz.tardischunkgenerator.custombiome.CustomBiomeData;
@@ -261,7 +261,7 @@ public class TARDISHelper {
     }
 
     public void disguise(Player player, String name) {
-        new TARDISChameleonArchDisguiser(plugin, player).changeSkin(name);
+        new ChameleonArchDisguiser(plugin, player).changeSkin(name);
     }
 
     public void disguise(Player player, UUID uuid) {

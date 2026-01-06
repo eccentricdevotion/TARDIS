@@ -26,7 +26,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.hads.TARDISHostileAction;
+import me.eccentric_nz.TARDIS.hads.HostileAction;
 import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Material;
@@ -93,7 +93,7 @@ public class TARDISBlockDamageListener implements Listener {
                     if (!isDoor && rb.getPolice_box() == 1) {
                         plugin.getTrackerKeeper().getHadsDamage().put(id, damage + 1);
                         if (damage == plugin.getConfig().getInt("preferences.hads_damage")) {
-                            new TARDISHostileAction(plugin).processAction(id, p);
+                            new HostileAction(plugin).processAction(id, p);
                             m = true;
                         }
                         if (!m) {

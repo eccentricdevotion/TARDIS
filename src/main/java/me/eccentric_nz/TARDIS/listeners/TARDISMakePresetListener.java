@@ -25,9 +25,9 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonPreset;
 import me.eccentric_nz.TARDIS.chameleon.utils.CustomPreset;
-import me.eccentric_nz.TARDIS.chameleon.utils.TARDISChameleonColumn;
+import me.eccentric_nz.TARDIS.chameleon.utils.ChameleonColumn;
 import me.eccentric_nz.TARDIS.chameleon.utils.TARDISCustomPreset;
-import me.eccentric_nz.TARDIS.chameleon.utils.TARDISStainedGlassLookup;
+import me.eccentric_nz.TARDIS.chameleon.utils.StainedGlassLookup;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
@@ -111,7 +111,7 @@ public class TARDISMakePresetListener implements Listener {
                             s.add(dataStr);
                             g.add(dataStr);
                         } else {
-                            Material colour = TARDISStainedGlassLookup.stainedGlassFromMaterial(w, material);
+                            Material colour = StainedGlassLookup.stainedGlassFromMaterial(w, material);
                             s.add(colour.createBlockData().getAsString());
                             g.add(GLASS);
                         }
@@ -140,9 +140,9 @@ public class TARDISMakePresetListener implements Listener {
                     try (FileWriter writer = new FileWriter(file)) {
                         new GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create().toJson(root, writer);
                         // load custom preset in game
-                        EnumMap<COMPASS, TARDISChameleonColumn> blueprints = new EnumMap<>(COMPASS.class);
-                        EnumMap<COMPASS, TARDISChameleonColumn> stains = new EnumMap<>(COMPASS.class);
-                        EnumMap<COMPASS, TARDISChameleonColumn> glasses = new EnumMap<>(COMPASS.class);
+                        EnumMap<COMPASS, ChameleonColumn> blueprints = new EnumMap<>(COMPASS.class);
+                        EnumMap<COMPASS, ChameleonColumn> stains = new EnumMap<>(COMPASS.class);
+                        EnumMap<COMPASS, ChameleonColumn> glasses = new EnumMap<>(COMPASS.class);
                         for (COMPASS d : COMPASS.values()) {
                             blueprints.put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(d, blueprint));
                             stains.put(d, TARDISChameleonPreset.buildTARDISChameleonColumn(d, stained));

@@ -20,7 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.console.ConsoleInteraction;
 import me.eccentric_nz.TARDIS.console.models.ButtonModel;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.move.TARDISBlackWoolToggler;
+import me.eccentric_nz.TARDIS.move.BlackWoolToggler;
 import org.bukkit.entity.Interaction;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
@@ -49,6 +49,6 @@ public class DoorToggleInteraction {
             ItemDisplay display = (ItemDisplay) plugin.getServer().getEntity(uuid);
             new ButtonModel().setState(display, plugin, ConsoleInteraction.DOOR_TOGGLE);
         }
-        new TARDISBlackWoolToggler(plugin).toggleBlocks(id, player);
+        new BlackWoolToggler(plugin).toggleBlocks(id, player);
     }
 }

@@ -17,8 +17,8 @@
 package me.eccentric_nz.TARDIS.commands.travel;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
-import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
+import me.eccentric_nz.TARDIS.advanced.CircuitChecker;
+import me.eccentric_nz.TARDIS.advanced.CircuitDamager;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
@@ -66,7 +66,7 @@ public class SaveCommand {
                 return true;
             }
             // check for memory circuit
-            TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
+            CircuitChecker tcc = new CircuitChecker(plugin, id);
             tcc.getCircuits();
             if (plugin.getConfig().getBoolean("difficulty.circuits") && !plugin.getUtils().inGracePeriod(player, false) && !tcc.hasMemory()) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_MEM_CIRCUIT");
@@ -76,7 +76,7 @@ public class SaveCommand {
             if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getInt("circuits.uses.memory") > 0) {
                 // decrement uses
                 int uses_left = tcc.getMaterialisationUses();
-                new TARDISCircuitDamager(plugin, DiskCircuit.MEMORY, uses_left, id, player).damage();
+                new CircuitDamager(plugin, DiskCircuit.MEMORY, uses_left, id, player).damage();
             }
             World w = TARDISAliasResolver.getWorldFromAlias(rsd.getWorld());
             if (w != null) {

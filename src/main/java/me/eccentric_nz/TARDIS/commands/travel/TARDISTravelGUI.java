@@ -17,9 +17,9 @@
 package me.eccentric_nz.TARDIS.commands.travel;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
-import me.eccentric_nz.TARDIS.console.telepathic.TARDISTelepathicBiome;
-import me.eccentric_nz.TARDIS.console.telepathic.TARDISTelepathicStructure;
+import me.eccentric_nz.TARDIS.advanced.CircuitChecker;
+import me.eccentric_nz.TARDIS.console.telepathic.TelepathicBiome;
+import me.eccentric_nz.TARDIS.console.telepathic.TelepathicStructure;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.floodgate.FloodgateBiomesForm;
 import me.eccentric_nz.TARDIS.floodgate.FloodgateStructuresForm;
@@ -37,7 +37,7 @@ public class TARDISTravelGUI {
     public boolean open(Player player, int id, String which) {
         // check for telepathic circuit
         if (plugin.getConfig().getBoolean("difficulty.circuits") && !plugin.getUtils().inGracePeriod(player, true)) {
-            TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
+            CircuitChecker tcc = new CircuitChecker(plugin, id);
             tcc.getCircuits();
             if (!tcc.hasTelepathic()) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TELEPATHIC_CIRCUIT");
@@ -49,14 +49,14 @@ public class TARDISTravelGUI {
             if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) {
                 new FloodgateBiomesForm(plugin, player.getUniqueId(), id).send();
             } else {
-                player.openInventory(new TARDISTelepathicBiome(plugin, id).getInventory());
+                player.openInventory(new TelepathicBiome(plugin, id).getInventory());
             }
         } else {
             // open Structure GUI
             if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) {
                 new FloodgateStructuresForm(plugin, player.getUniqueId(), id).send();
             } else {
-                player.openInventory(new TARDISTelepathicStructure(plugin).getInventory());
+                player.openInventory(new TelepathicStructure(plugin).getInventory());
             }
         }
         return true;

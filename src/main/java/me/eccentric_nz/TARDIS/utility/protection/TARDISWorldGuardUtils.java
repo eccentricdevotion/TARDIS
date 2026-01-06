@@ -34,7 +34,7 @@ import com.sk89q.worldguard.protection.regions.GlobalProtectedRegion;
 import com.sk89q.worldguard.protection.regions.ProtectedCuboidRegion;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.builders.interior.TARDISTIPSData;
+import me.eccentric_nz.TARDIS.builders.interior.TIPSData;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisCompanions;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
@@ -169,7 +169,7 @@ public class TARDISWorldGuardUtils {
      * @param data   a TIPS Data container
      * @param world  the world we are creating the region in
      */
-    public void addWGProtection(Player player, TARDISTIPSData data, World world, boolean junk) {
+    public void addWGProtection(Player player, TIPSData data, World world, boolean junk) {
         RegionManager rm = wg.getRegionContainer().get(new BukkitWorld(world));
         BlockVector3 b1 = BlockVector3.at(data.getMinX(), 0, data.getMinZ());
         BlockVector3 b2 = BlockVector3.at(data.getMaxX(), 256, data.getMaxZ());
@@ -220,7 +220,7 @@ public class TARDISWorldGuardUtils {
      * @param data  a TIPS Data container
      * @param world the world we are creating the region in
      */
-    public void addWGProtection(UUID uuid, String name, TARDISTIPSData data, World world) {
+    public void addWGProtection(UUID uuid, String name, TIPSData data, World world) {
         RegionManager rm = wg.getRegionContainer().get(new BukkitWorld(world));
         BlockVector3 b1 = BlockVector3.at(data.getMinX(), 0, data.getMinZ());
         BlockVector3 b2 = BlockVector3.at(data.getMaxX(), 256, data.getMaxZ());

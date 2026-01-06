@@ -23,7 +23,7 @@ import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetArtronLevel;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.forcefield.TARDISForceField;
+import me.eccentric_nz.TARDIS.forcefield.ForceField;
 import me.eccentric_nz.TARDIS.playerprefs.TARDISKeyMenuInventory;
 import me.eccentric_nz.TARDIS.playerprefs.TARDISSonicMenuInventory;
 import org.bukkit.command.Command;
@@ -169,7 +169,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
                                         plugin.getMessenger().send(player, TardisModule.TARDIS, "POWER_LOW");
                                         return true;
                                     }
-                                    if (TARDISForceField.addToTracker(player)) {
+                                    if (ForceField.addToTracker(player)) {
                                         plugin.getMessenger().send(player, TardisModule.TARDIS, "PREF_WAS_ON", "The TARDIS force field");
                                     }
                                 } else {

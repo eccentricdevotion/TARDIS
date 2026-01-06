@@ -30,7 +30,7 @@ import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.FlightMode;
 import me.eccentric_nz.TARDIS.enumeration.Hum;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.forcefield.TARDISForceField;
+import me.eccentric_nz.TARDIS.forcefield.ForceField;
 import org.apache.commons.lang3.StringUtils;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -115,7 +115,7 @@ public class PreferencesProcessor {
                             if (rsal.resultset()) {
                                 if (rsal.getArtronLevel() <= plugin.getArtronConfig().getInt("standby")) {
                                     plugin.getMessenger().send(player, TardisModule.TARDIS, "POWER_LOW");
-                                } else if (TARDISForceField.addToTracker(player)) {
+                                } else if (ForceField.addToTracker(player)) {
                                     plugin.getMessenger().send(player, TardisModule.TARDIS, "PREF_WAS_ON", "The TARDIS force field");
                                 }
                             } else {

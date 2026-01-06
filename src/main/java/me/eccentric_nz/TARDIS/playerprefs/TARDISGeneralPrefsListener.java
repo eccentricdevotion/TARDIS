@@ -26,7 +26,7 @@ import me.eccentric_nz.TARDIS.custommodels.GUIPlayerPreferences;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.forcefield.TARDISForceField;
+import me.eccentric_nz.TARDIS.forcefield.ForceField;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.upgrades.SystemTree;
 import me.eccentric_nz.TARDIS.upgrades.SystemUpgradeChecker;
@@ -125,7 +125,7 @@ public class TARDISGeneralPrefsListener extends TARDISMenuListener {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "POWER_LOW");
                             return;
                         }
-                        if (TARDISForceField.addToTracker(player)) {
+                        if (ForceField.addToTracker(player)) {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "PREF_WAS_ON", "The TARDIS force field");
                         }
                     } else {

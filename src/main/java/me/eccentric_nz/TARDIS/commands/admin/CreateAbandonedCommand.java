@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.commands.admin;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.builders.interior.TARDISAbandoned;
+import me.eccentric_nz.TARDIS.builders.interior.AbandonedBuilder;
 import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
@@ -102,7 +102,7 @@ class CreateAbandonedCommand {
             }
             l = new Location(w, x, y, z);
         }
-        new TARDISAbandoned(plugin).spawn(l, s, preset, args[2], d, (sender instanceof Player) ? (Player) sender : null);
+        new AbandonedBuilder(plugin).spawn(l, s, preset, args[2], d, (sender instanceof Player) ? (Player) sender : null);
         return true;
     }
 }

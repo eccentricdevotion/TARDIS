@@ -24,9 +24,9 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.rooms.TARDISRoomData;
-import me.eccentric_nz.TARDIS.rooms.TARDISRoomRunnable;
-import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
+import me.eccentric_nz.TARDIS.rooms.RoomData;
+import me.eccentric_nz.TARDIS.rooms.RoomRunnable;
+import me.eccentric_nz.TARDIS.schematic.SchematicGZip;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -69,7 +69,7 @@ public class ARSRunnable implements Runnable {
             plugin.getTrackerKeeper().getIsGrowingRooms().add(tardis.getTardisId());
             World w = TARDISStaticLocationGetters.getWorldFromSplitString(tardis.getChunk());
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, p.getUniqueId().toString());
-            TARDISRoomData roomData = new TARDISRoomData();
+            RoomData roomData = new RoomData();
             roomData.setTardis_id(tardis.getTardisId());
             // get middle data, default to orange wool if not set
             Material wall_type, floor_type;
@@ -91,7 +91,7 @@ public class ARSRunnable implements Runnable {
             Location l = new Location(w, slot.getX(), slot.getY(), slot.getZ());
             roomData.setDirection(COMPASS.SOUTH);
             // get JSON
-            JsonObject obj = TARDISSchematicGZip.getObject(plugin, "rooms", whichroom.toLowerCase(Locale.ROOT), plugin.getRoomsConfig().getBoolean("rooms." + whichroom + ".user"));
+            JsonObject obj = SchematicGZip.getObject(plugin, "rooms", whichroom.toLowerCase(Locale.ROOT), plugin.getRoomsConfig().getBoolean("rooms." + whichroom + ".user"));
             if (obj != null) {
                 // set y offset - this needs to be how many BLOCKS above ground 0 of the 16x16x16 chunk the room starts
                 l.setY(l.getY() + room.getOffset());
@@ -101,7 +101,7 @@ public class ARSRunnable implements Runnable {
                 // determine how often to place a block (in ticks) - `room_speed` is the number of BLOCKS to place in a second (20 ticks)
                 long delay = Math.round(20 / plugin.getConfig().getDouble("growth.room_speed"));
                 plugin.getPM().callEvent(new TARDISRoomGrowEvent(p, tardis, slot, roomData));
-                TARDISRoomRunnable runnable = new TARDISRoomRunnable(plugin, roomData, p.getUniqueId());
+                RoomRunnable runnable = new RoomRunnable(plugin, roomData, p.getUniqueId());
                 int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, delay, delay);
                 runnable.setTask(taskID);
                 plugin.getTrackerKeeper().getRoomTasks().put(taskID, roomData);

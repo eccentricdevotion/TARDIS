@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.database;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.converters.DispersalUpdater;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 
 import java.sql.ResultSet;
@@ -430,7 +431,7 @@ class TARDISSQLiteDatabaseUpdater {
                 String dispersed_alter = "ALTER TABLE " + prefix + "dispersed ADD tardis_id INTEGER";
                 statement.executeUpdate(dispersed_alter);
                 // update tardis_id column for existing records
-                new TARDISDispersalUpdater(plugin).updateTardis_ids();
+                new DispersalUpdater(plugin).updateTardis_ids();
             }
             // transfer `void` data to `thevoid`, then remove `void` table
             String voidQuery = "SELECT name FROM sqlite_master WHERE type='table' AND name='" + prefix + "void'";

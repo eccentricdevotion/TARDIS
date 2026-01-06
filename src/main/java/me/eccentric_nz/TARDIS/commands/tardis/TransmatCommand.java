@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.database.TARDISBoundTransmatRemoval;
+import me.eccentric_nz.TARDIS.database.BoundTransmatRemoval;
 import me.eccentric_nz.TARDIS.database.data.Transmat;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.desktop.PreviewData;
@@ -211,7 +211,7 @@ class TransmatCommand {
                     whered.put("name", args[2]);
                     ResultSetBind rsd = new ResultSetBind(plugin, whered);
                     if (rsd.resultSet()) {
-                        new TARDISBoundTransmatRemoval(plugin, id, args[2]).unbind();
+                        new BoundTransmatRemoval(plugin, id, args[2]).unbind();
                     }
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "TRANSMAT_REMOVED");
                 } else {

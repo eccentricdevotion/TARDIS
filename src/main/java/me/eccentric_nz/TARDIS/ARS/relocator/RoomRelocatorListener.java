@@ -25,7 +25,7 @@ import me.eccentric_nz.TARDIS.desktop.BlockScannerData;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.rooms.RoomRequiredLister;
-import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
+import me.eccentric_nz.TARDIS.schematic.SchematicGZip;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Chunk;
@@ -267,7 +267,7 @@ public class RoomRelocatorListener extends ARSMethods implements Listener {
     }
 
     private int getSchematicHeight(String room) {
-        JsonObject obj = TARDISSchematicGZip.getObject(plugin, "rooms", room.toLowerCase(Locale.ROOT), false);
+        JsonObject obj = SchematicGZip.getObject(plugin, "rooms", room.toLowerCase(Locale.ROOT), false);
         if (obj == null) {
             return 16;
         }

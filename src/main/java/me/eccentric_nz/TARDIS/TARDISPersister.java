@@ -16,21 +16,21 @@
  */
 package me.eccentric_nz.TARDIS;
 
-import me.eccentric_nz.TARDIS.arch.TARDISArchPersister;
-import me.eccentric_nz.TARDIS.builders.utility.TARDISSeedBlockPersister;
+import me.eccentric_nz.TARDIS.arch.ArchPersister;
+import me.eccentric_nz.TARDIS.builders.utility.SeedBlockPersister;
 import me.eccentric_nz.TARDIS.camera.CameraPersister;
-import me.eccentric_nz.TARDIS.database.TARDISTimeRotorLoader;
-import me.eccentric_nz.TARDIS.desktop.TARDISPreviewPersister;
+import me.eccentric_nz.TARDIS.database.TimeRotorLoader;
+import me.eccentric_nz.TARDIS.desktop.PreviewPersister;
 import me.eccentric_nz.TARDIS.flight.FlightPersister;
-import me.eccentric_nz.TARDIS.flight.TARDISVortexPersister;
-import me.eccentric_nz.TARDIS.forcefield.TARDISForceFieldPersister;
-import me.eccentric_nz.TARDIS.hads.TARDISHadsPersister;
-import me.eccentric_nz.TARDIS.move.TARDISPortalPersister;
-import me.eccentric_nz.TARDIS.rooms.TARDISRoomPersister;
+import me.eccentric_nz.TARDIS.flight.VortexPersister;
+import me.eccentric_nz.TARDIS.forcefield.ForceFieldPersister;
+import me.eccentric_nz.TARDIS.hads.HadsPersister;
+import me.eccentric_nz.TARDIS.move.PortalPersister;
+import me.eccentric_nz.TARDIS.rooms.RoomPersister;
 import me.eccentric_nz.TARDIS.sensor.SensorTracker;
-import me.eccentric_nz.TARDIS.siegemode.TARDISSiegePersister;
+import me.eccentric_nz.TARDIS.siegemode.SiegePersister;
 import me.eccentric_nz.TARDIS.skins.SkinPersister;
-import me.eccentric_nz.TARDIS.utility.TARDISJunkPlayerPersister;
+import me.eccentric_nz.TARDIS.utility.JunkPlayerPersister;
 import me.eccentric_nz.tardisweepingangels.nms.FollowerSaver;
 
 public class TARDISPersister {
@@ -42,33 +42,33 @@ public class TARDISPersister {
     }
 
     public void load() {
-        new TARDISPortalPersister(plugin).load();
+        new PortalPersister(plugin).load();
         if (plugin.isDisguisesOnServer() && plugin.getConfig().getBoolean("arch.enabled")) {
-            new TARDISArchPersister(plugin).checkAll();
+            new ArchPersister(plugin).checkAll();
         }
         if (plugin.getConfig().getBoolean("siege.enabled")) {
-            TARDISSiegePersister tsp = new TARDISSiegePersister(plugin);
+            SiegePersister tsp = new SiegePersister(plugin);
             tsp.loadSiege();
             tsp.loadCubes();
         }
         if (plugin.getConfig().getBoolean("allow.hads")) {
-            TARDISHadsPersister thp = new TARDISHadsPersister(plugin);
+            HadsPersister thp = new HadsPersister(plugin);
             thp.load();
         }
         if (plugin.getConfig().getInt("allow.force_field") > 0) {
-            new TARDISForceFieldPersister(plugin).load();
+            new ForceFieldPersister(plugin).load();
         }
         if (plugin.getConfig().getBoolean("desktop.previews")) {
-            new TARDISPreviewPersister(plugin).load();
+            new PreviewPersister(plugin).load();
         }
-        new TARDISTimeRotorLoader(plugin).load();
-        new TARDISVortexPersister(plugin).load();
+        new TimeRotorLoader(plugin).load();
+        new VortexPersister(plugin).load();
         new FlightPersister(plugin).load();
         new CameraPersister(plugin).load();
-        new TARDISJunkPlayerPersister(plugin).load();
-        new TARDISSeedBlockPersister(plugin).load();
+        new JunkPlayerPersister(plugin).load();
+        new SeedBlockPersister(plugin).load();
         // resume any room growing
-        new TARDISRoomPersister(plugin).resume();
+        new RoomPersister(plugin).resume();
         // load skins
         new SkinPersister(plugin).load();
         // resume recharging
@@ -77,27 +77,27 @@ public class TARDISPersister {
 
     public void save() {
         // persist any room growing
-        new TARDISRoomPersister(plugin).saveProgress();
-        new TARDISPortalPersister(plugin).save();
+        new RoomPersister(plugin).saveProgress();
+        new PortalPersister(plugin).save();
         if (plugin.isDisguisesOnServer() && plugin.getConfig().getBoolean("arch.enabled")) {
-            new TARDISArchPersister(plugin).saveAll();
+            new ArchPersister(plugin).saveAll();
         }
         if (plugin.getConfig().getBoolean("siege.enabled")) {
-            new TARDISSiegePersister(plugin).saveCubes();
+            new SiegePersister(plugin).saveCubes();
         }
         if (plugin.getConfig().getBoolean("desktop.previews")) {
-            new TARDISPreviewPersister(plugin).save();
+            new PreviewPersister(plugin).save();
         }
         if (plugin.getConfig().getBoolean("allow.hads")) {
-            new TARDISHadsPersister(plugin).save();
+            new HadsPersister(plugin).save();
         }
-        new TARDISVortexPersister(plugin).save();
+        new VortexPersister(plugin).save();
         new FlightPersister(plugin).save();
         new CameraPersister(plugin).save();
         if (plugin.getConfig().getInt("allow.force_field") > 0) {
-            new TARDISForceFieldPersister(plugin).save();
+            new ForceFieldPersister(plugin).save();
         }
-        new TARDISSeedBlockPersister(plugin).save();
+        new SeedBlockPersister(plugin).save();
         if (plugin.getConfig().getBoolean("modules.weeping_angels")) {
             new FollowerSaver(plugin).persist();
         }

@@ -39,7 +39,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
 
-import static me.eccentric_nz.TARDIS.destroyers.TARDISExterminator.deleteFolder;
+import static me.eccentric_nz.TARDIS.destroyers.Exterminator.deleteFolder;
 
 /**
  * @author eccentric_nz

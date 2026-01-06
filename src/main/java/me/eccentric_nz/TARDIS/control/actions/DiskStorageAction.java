@@ -18,9 +18,9 @@ package me.eccentric_nz.TARDIS.control.actions;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.advanced.TARDISSerializeInventory;
-import me.eccentric_nz.TARDIS.advanced.TARDISStorageConverter;
-import me.eccentric_nz.TARDIS.advanced.TARDISStorageInventory;
+import me.eccentric_nz.TARDIS.advanced.SerializeInventory;
+import me.eccentric_nz.TARDIS.advanced.StorageConverter;
+import me.eccentric_nz.TARDIS.advanced.StorageInventory;
 import me.eccentric_nz.TARDIS.customblocks.TARDISBlockDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDiskStorage;
@@ -66,19 +66,19 @@ public class DiskStorageAction {
                     String[] split = rsStore.getVersions().split(",");
                     if (split[0].equals("0")) {
                         plugin.debug("TARDISStorageConverter.updateDisks");
-                        stack = TARDISStorageConverter.updateDisks(rsStore.getSavesOne());
+                        stack = StorageConverter.updateDisks(rsStore.getSavesOne());
                     } else {
-                        stack = TARDISSerializeInventory.itemStacksFromString(rsStore.getSavesOne());
+                        stack = SerializeInventory.itemStacksFromString(rsStore.getSavesOne());
                     }
                 } else {
-                    stack = TARDISSerializeInventory.itemStacksFromString(Storage.SAVE_1.getEmpty());
+                    stack = SerializeInventory.itemStacksFromString(Storage.SAVE_1.getEmpty());
                 }
             } catch (IOException ex) {
                 plugin.debug("Could not get Storage Inventory: " + ex.getMessage());
             }
         } else {
             try {
-                stack = TARDISSerializeInventory.itemStacksFromString(Storage.SAVE_1.getEmpty());
+                stack = SerializeInventory.itemStacksFromString(Storage.SAVE_1.getEmpty());
             } catch (IOException ex) {
                 plugin.debug("Could not get default Storage Inventory: " + ex.getMessage());
             }
@@ -90,7 +90,7 @@ public class DiskStorageAction {
             set.put("console", "rO0ABXcEAAAAEnBwcHBwcHBwcHBwcHBwcHBwcA==");
             plugin.getQueryFactory().doInsert("storage", set);
         }
-        player.openInventory(new TARDISStorageInventory(plugin, Storage.SAVE_1.getTitle(), stack).getInventory());
+        player.openInventory(new StorageInventory(plugin, Storage.SAVE_1.getTitle(), stack).getInventory());
         // update note block if it's not BARRIER + Item Display
         if (!TARDISFloodgate.isFloodgateEnabled() || !TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) {
             if (block.getType().equals(Material.NOTE_BLOCK) || block.getType().equals(Material.MUSHROOM_STEM)) {

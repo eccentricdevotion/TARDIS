@@ -52,7 +52,7 @@ public class ArtronPoweredRunnable implements Runnable {
                                     // power the furnace
                                     furnace.setBurnTime(burnTime.shortValue());
                                     furnace.update(true);
-                                    TARDISArtronFurnaceListener.setLit(furnace.getBlock(), true);
+                                    ArtronFurnaceListener.setLit(furnace.getBlock(), true);
                                     // drain power from tardis
                                     ArtronFurnaceUtils.drain(loc.getSecond(), plugin);
                                 }

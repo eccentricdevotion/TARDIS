@@ -23,9 +23,9 @@ import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetARS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTIPS;
-import me.eccentric_nz.TARDIS.desktop.TARDISChunkUtils;
+import me.eccentric_nz.TARDIS.desktop.ChunkUtils;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
-import me.eccentric_nz.TARDIS.move.TARDISDoorListener;
+import me.eccentric_nz.TARDIS.move.DoorListener;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -90,8 +90,8 @@ public class TARDISInteriorPostioning {
      * @param slot the slot position in the grid (a number between 0, 399 inclusive)
      * @return a TIPS Data container
      */
-    public TARDISTIPSData getTIPSData(int slot) {
-        TARDISTIPSData data = new TARDISTIPSData();
+    public TIPSData getTIPSData(int slot) {
+        TIPSData data = new TIPSData();
         int factorX = 0;
         int factorZ = 0;
         int subtract = 0;
@@ -125,7 +125,7 @@ public class TARDISInteriorPostioning {
      *
      * @return a TIPS Data container
      */
-    public TARDISTIPSData getTIPSJunkData(int slot) {
+    public TIPSData getTIPSJunkData(int slot) {
         if (slot == -999) {
             // remove division preview record
             HashMap<String, Object> where = new HashMap<>();
@@ -145,11 +145,11 @@ public class TARDISInteriorPostioning {
         ResultSetARS rs = new ResultSetARS(plugin, where);
         if (rs.resultSet()) {
             // get the exit location
-            TARDISDoorLocation dl = TARDISDoorListener.getDoor(0, id);
+            TARDISDoorLocation dl = DoorListener.getDoor(0, id);
             Location exitLocation = dl.getL();
             String[][][] json = ARSMethods.getGridFromJSON(rs.getJson());
             Chunk c = plugin.getLocationUtils().getTARDISChunk(id);
-            List<Chunk> chunks = TARDISChunkUtils.getConsoleChunks(c, s);
+            List<Chunk> chunks = ChunkUtils.getConsoleChunks(c, s);
             chunks.forEach((u) -> {
                 // exit players & remove items
                 for (Entity e : u.getEntities()) {
@@ -223,7 +223,7 @@ public class TARDISInteriorPostioning {
         plugin.getQueryFactory().doDelete("travellers", wheret);
     }
 
-    public void reclaimZeroChunk(World w, TARDISTIPSData data) {
+    public void reclaimZeroChunk(World w, TIPSData data) {
         // get starting chunk
         Location l = new Location(w, data.getMinX(), 0, data.getMinZ());
         Chunk chunk = w.getChunkAt(l);

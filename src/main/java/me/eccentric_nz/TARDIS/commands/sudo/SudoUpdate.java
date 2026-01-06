@@ -26,7 +26,7 @@ import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.Updateable;
 import me.eccentric_nz.TARDIS.messaging.TARDISUpdateLister;
 import me.eccentric_nz.TARDIS.monitor.MonitorUtils;
-import me.eccentric_nz.TARDIS.rotors.TARDISTimeRotor;
+import me.eccentric_nz.TARDIS.rotors.TimeRotor;
 import me.eccentric_nz.TARDIS.update.TARDISUpdateableChecker;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
@@ -115,7 +115,7 @@ class SudoUpdate {
                     // get frame location
                     ItemFrame itemFrame = null;
                     switch (updateable) {
-                        case ROTOR -> itemFrame = TARDISTimeRotor.getItemFrame(tardis.getRotor());
+                        case ROTOR -> itemFrame = TimeRotor.getItemFrame(tardis.getRotor());
                         case MONITOR -> itemFrame = MonitorUtils.getItemFrameFromLocation(tardis.getTardisId(), true);
                         case MONITOR_FRAME -> {
                             itemFrame = MonitorUtils.getItemFrameFromLocation(tardis.getTardisId(), false);
@@ -129,7 +129,7 @@ class SudoUpdate {
                         }
                     }
                     if (itemFrame != null) {
-                        TARDISTimeRotor.unlockItemFrame(itemFrame);
+                        TimeRotor.unlockItemFrame(itemFrame);
                         // also need to remove the item frame protection
                         plugin.getGeneralKeeper().getTimeRotors().remove(itemFrame.getUniqueId());
                         // and block protection

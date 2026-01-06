@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.commands.handles;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.DamageUtility;
 import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
-import me.eccentric_nz.TARDIS.artron.TARDISArtronLevels;
+import me.eccentric_nz.TARDIS.artron.ArtronLevels;
 import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
@@ -107,7 +107,7 @@ class LandCommand {
                             // Changes the lever to on
                             TARDISHandbrake.setLevers(location.getBlock(), true, true, location.toString(), id, plugin);
                             // Check if it's at a recharge point
-                            TARDISArtronLevels tal = new TARDISArtronLevels(plugin);
+                            ArtronLevels tal = new ArtronLevels(plugin);
                             tal.recharge(id);
                             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid);
                             boolean beac_on = true;

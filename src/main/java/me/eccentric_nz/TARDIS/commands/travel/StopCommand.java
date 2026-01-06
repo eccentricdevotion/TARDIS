@@ -25,9 +25,9 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.TravelType;
+import me.eccentric_nz.TARDIS.flight.ExteriorFlight;
 import me.eccentric_nz.TARDIS.flight.FlightReturnData;
-import me.eccentric_nz.TARDIS.flight.TARDISExteriorFlight;
-import me.eccentric_nz.TARDIS.rotors.TARDISTimeRotor;
+import me.eccentric_nz.TARDIS.rotors.TimeRotor;
 import org.bukkit.Location;
 import org.bukkit.entity.*;
 import org.bukkit.util.Vector;
@@ -76,7 +76,7 @@ public class StopCommand {
                 stand.setVelocity(new Vector(0, 0, 0));
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     // teleport player back to the TARDIS interior
-                    new TARDISExteriorFlight(plugin).stopFlying(player, (ArmorStand) stand);
+                    new ExteriorFlight(plugin).stopFlying(player, (ArmorStand) stand);
                 });
             } else {
                 // scan for nearby armour stands in case player teleport fails due to lag
@@ -85,7 +85,7 @@ public class StopCommand {
                         e.setVelocity(new Vector(0, 0, 0));
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                             // teleport player back to the TARDIS interior
-                            new TARDISExteriorFlight(plugin).stopFlying(player, armorStand);
+                            new ExteriorFlight(plugin).stopFlying(player, armorStand);
                         });
                     }
                 }
@@ -153,12 +153,12 @@ public class StopCommand {
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
             if (tardis.getRotor() != null) {
-                ItemFrame itemFrame = TARDISTimeRotor.getItemFrame(tardis.getRotor());
+                ItemFrame itemFrame = TimeRotor.getItemFrame(tardis.getRotor());
                 if (itemFrame != null) {
                     // cancel the animation
-                    int task = TARDISTimeRotor.ANIMATED_ROTORS.getOrDefault(itemFrame.getUniqueId(), -1);
+                    int task = TimeRotor.ANIMATED_ROTORS.getOrDefault(itemFrame.getUniqueId(), -1);
                     plugin.getServer().getScheduler().cancelTask(task);
-                    TARDISTimeRotor.setRotor(TARDISTimeRotor.getRotorOffModel(itemFrame), itemFrame);
+                    TimeRotor.setRotor(TimeRotor.getRotorOffModel(itemFrame), itemFrame);
                 }
             }
         }

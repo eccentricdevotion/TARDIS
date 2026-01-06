@@ -18,12 +18,12 @@ package me.eccentric_nz.TARDIS.ARS;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPostioning;
-import me.eccentric_nz.TARDIS.builders.interior.TARDISTIPSData;
+import me.eccentric_nz.TARDIS.builders.interior.TIPSData;
 import me.eccentric_nz.TARDIS.commands.sudo.TARDISSudoTracker;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.move.TARDISDoorListener;
+import me.eccentric_nz.TARDIS.move.DoorListener;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import net.kyori.adventure.text.Component;
@@ -160,7 +160,7 @@ public class ARSMapListener extends ARSMethods implements Listener {
                 if (pos != -1) {
                     // tips slot
                     TARDISInteriorPostioning tips = new TARDISInteriorPostioning(plugin);
-                    TARDISTIPSData coords = tips.getTIPSData(pos);
+                    TIPSData coords = tips.getTIPSData(pos);
                     tx = coords.getCentreX();
                     tz = coords.getCentreZ();
                 }
@@ -217,7 +217,7 @@ public class ARSMapListener extends ARSMethods implements Listener {
             String room = selectedLocation.get(playerUUID);
             if (consoleBlocks.contains(room)) {
                 // get inner door tp location
-                TARDISDoorLocation idl = TARDISDoorListener.getDoor(1, id);
+                TARDISDoorLocation idl = DoorListener.getDoor(1, id);
                 return idl.getL();
             } else {
                 SelectedSlot selected = selectedSlot.get(uuid);

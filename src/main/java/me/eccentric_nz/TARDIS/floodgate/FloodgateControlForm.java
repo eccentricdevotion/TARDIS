@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.floodgate;
 
 import me.eccentric_nz.TARDIS.ARS.ARSInventory;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
+import me.eccentric_nz.TARDIS.advanced.CircuitChecker;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.commands.tardis.DirectionCommand;
 import me.eccentric_nz.TARDIS.commands.tardis.HideCommand;
@@ -32,11 +32,11 @@ import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
+import me.eccentric_nz.TARDIS.desktop.UpgradeData;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.move.TARDISBlackWoolToggler;
-import me.eccentric_nz.TARDIS.rooms.TARDISExteriorRenderer;
+import me.eccentric_nz.TARDIS.move.BlackWoolToggler;
+import me.eccentric_nz.TARDIS.rooms.ExteriorRenderer;
 import me.eccentric_nz.TARDIS.upgrades.SystemTree;
 import me.eccentric_nz.TARDIS.upgrades.SystemUpgradeChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
@@ -136,9 +136,9 @@ public class FloodgateControlForm {
                 }
                 boolean lights = tardis.isLightsOn();
                 int level = tardis.getArtronLevel();
-                TARDISCircuitChecker tcc = null;
+                CircuitChecker tcc = null;
                 if (plugin.getConfig().getBoolean("difficulty.circuits")) {
-                    tcc = new TARDISCircuitChecker(plugin, id);
+                    tcc = new CircuitChecker(plugin, id);
                     tcc.getCircuits();
                 }
                 switch (buttonId) {
@@ -248,7 +248,7 @@ public class FloodgateControlForm {
                             return;
                         }
                         // get player's current console
-                        TARDISUpgradeData tud = new TARDISUpgradeData();
+                        UpgradeData tud = new UpgradeData();
                         tud.setPrevious(tardis.getSchematic());
                         tud.setLevel(level);
                         plugin.getTrackerKeeper().getUpgrades().put(uuid, tud);
@@ -277,7 +277,7 @@ public class FloodgateControlForm {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "SIEGE_NO_CONTROL");
                             return;
                         }
-                        new TARDISBlackWoolToggler(plugin).toggleBlocks(id, player);
+                        new BlackWoolToggler(plugin).toggleBlocks(id, player);
                     }
                     case 10 -> new FloodgateMapForm(plugin, uuid, id).send(); // map
                     case 11 -> { // chameleon circuit
@@ -372,7 +372,7 @@ public class FloodgateControlForm {
                         Location zero = TARDISStaticLocationGetters.getLocationFromDB(tardis.getZero());
                         if (zero != null) {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "ZERO_READY");
-                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISExteriorRenderer(plugin).transmat(player, COMPASS.SOUTH, zero), 20L);
+                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new ExteriorRenderer(plugin).transmat(player, COMPASS.SOUTH, zero), 20L);
                             plugin.getTrackerKeeper().getZeroRoomOccupants().add(player.getUniqueId());
                             HashMap<String, Object> wherez = new HashMap<>();
                             wherez.put("tardis_id", id);

@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.destroyers.TARDISExterminator;
+import me.eccentric_nz.TARDIS.destroyers.Exterminator;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.floodgate.FloodgateExterminateForm;
 import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
@@ -51,7 +51,7 @@ class ExterminateCommand {
                 }
                 return true;
             } else {
-                return new TARDISExterminator(plugin).playerExterminate(player);
+                return new Exterminator(plugin).playerExterminate(player);
             }
         } else {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERM_DELETE");

@@ -17,8 +17,8 @@
 package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
-import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
+import me.eccentric_nz.TARDIS.advanced.CircuitChecker;
+import me.eccentric_nz.TARDIS.advanced.CircuitDamager;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -77,7 +77,7 @@ public class HideCommand {
                 return true;
             }
             id = tardis.getTardisId();
-            TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
+            CircuitChecker tcc = new CircuitChecker(plugin, id);
             tcc.getCircuits();
             if (plugin.getConfig().getBoolean("difficulty.circuits") && !plugin.getUtils().inGracePeriod(player.getPlayer(), true) && !tcc.hasMaterialisation()) {
                 plugin.getMessenger().send(player.getPlayer(), TardisModule.TARDIS, "NO_MAT_CIRCUIT");
@@ -87,7 +87,7 @@ public class HideCommand {
             if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getInt("circuits.uses.telepathic") > 0) {
                 // decrement uses
                 int uses_left = tcc.getTelepathicUses();
-                new TARDISCircuitDamager(plugin, DiskCircuit.TELEPATHIC, uses_left, id, player.getPlayer()).damage();
+                new CircuitDamager(plugin, DiskCircuit.TELEPATHIC, uses_left, id, player.getPlayer()).damage();
             }
             HashMap<String, Object> wherein = new HashMap<>();
             wherein.put("uuid", uuid.toString());

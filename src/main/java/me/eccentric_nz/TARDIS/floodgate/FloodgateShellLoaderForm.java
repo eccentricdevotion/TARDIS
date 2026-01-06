@@ -21,12 +21,12 @@ import com.google.gson.JsonParser;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.builders.exterior.TARDISShellBuilder;
+import me.eccentric_nz.TARDIS.builders.exterior.ShellBuilder;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonPreset;
 import me.eccentric_nz.TARDIS.chameleon.shell.ShellLoaderProblemBlocks;
-import me.eccentric_nz.TARDIS.chameleon.shell.TARDISShellRoomConstructor;
-import me.eccentric_nz.TARDIS.chameleon.shell.TARDISShellScanner;
-import me.eccentric_nz.TARDIS.chameleon.utils.TARDISChameleonColumn;
+import me.eccentric_nz.TARDIS.chameleon.shell.ShellRoomConstructor;
+import me.eccentric_nz.TARDIS.chameleon.shell.ShellScanner;
+import me.eccentric_nz.TARDIS.chameleon.utils.ChameleonColumn;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetChameleon;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
@@ -94,14 +94,14 @@ public class FloodgateShellLoaderForm {
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             if (rs.resultSet()) {
                 Tardis tardis = rs.getTardis();
-                TARDISChameleonColumn chameleonColumn = null;
+                ChameleonColumn chameleonColumn = null;
                 ChameleonPreset preset;
                 if (label.equals("Current preset")) {
                     // load current preset
                     preset = tardis.getPreset();
                     if (!tardis.getAdaption().equals(Adaption.OFF)) {
                         // get the actual preset blocks being used
-                        chameleonColumn = TARDISShellScanner.scan(plugin, id, preset);
+                        chameleonColumn = ShellScanner.scan(plugin, id, preset);
                     } else {
                         chameleonColumn = plugin.getPresets().getColumn(preset, COMPASS.EAST);
                     }
@@ -150,7 +150,7 @@ public class FloodgateShellLoaderForm {
                         // do problem blocks first
                         for (int c = 0; c < 10; c++) {
                             for (int y = fy; y < fy + 4; y++) {
-                                Block block = w.getBlockAt(fx + TARDISShellRoomConstructor.orderx[c], y, fz + TARDISShellRoomConstructor.orderz[c]);
+                                Block block = w.getBlockAt(fx + ShellRoomConstructor.orderx[c], y, fz + ShellRoomConstructor.orderz[c]);
                                 if (ShellLoaderProblemBlocks.DO_FIRST.contains(block.getType())) {
                                     block.setBlockData(TARDISConstants.AIR);
                                 }
@@ -159,12 +159,12 @@ public class FloodgateShellLoaderForm {
                         // set to AIR
                         for (int c = 0; c < 10; c++) {
                             for (int y = fy; y < fy + 4; y++) {
-                                w.getBlockAt(fx + TARDISShellRoomConstructor.orderx[c], y, fz + TARDISShellRoomConstructor.orderz[c]).setBlockData(TARDISConstants.AIR);
+                                w.getBlockAt(fx + ShellRoomConstructor.orderx[c], y, fz + ShellRoomConstructor.orderz[c]).setBlockData(TARDISConstants.AIR);
                             }
                         }
                         // build shell in the shell room
                         Location centre = button.clone().add(3, 1, 0);
-                        new TARDISShellBuilder(plugin, preset, chameleonColumn, centre, -1).buildPreset();
+                        new ShellBuilder(plugin, preset, chameleonColumn, centre, -1).buildPreset();
                     }
                 }
             }

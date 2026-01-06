@@ -21,7 +21,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.mobfarming.HappyGhastUtils;
 import me.eccentric_nz.TARDIS.mobfarming.types.TARDISBoat;
 import me.eccentric_nz.TARDIS.mobfarming.types.TARDISHappyGhast;
-import me.eccentric_nz.TARDIS.move.TARDISDoorListener;
+import me.eccentric_nz.TARDIS.move.DoorListener;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import net.kyori.adventure.text.Component;
@@ -77,7 +77,7 @@ public class HappyGhastRelease {
                 // get passengers
                 List<Entity> passengers = ghast.getPassengers();
                 // get the exit location
-                TARDISDoorLocation dl = TARDISDoorListener.getDoor(0, id);
+                TARDISDoorLocation dl = DoorListener.getDoor(0, id);
                 Location l = dl.getL();
                 // set the entity's direction as you would for a player when exiting
                 switch (dl.getD()) {

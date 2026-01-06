@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.advanced.TARDISSerializeInventory;
+import me.eccentric_nz.TARDIS.advanced.SerializeInventory;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDiskStorage;
 import me.eccentric_nz.TARDIS.enumeration.Storage;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -93,17 +93,17 @@ public class TARDISBiomeReaderListener implements Listener {
                     try {
                         ItemStack[] disks1;
                         if (!rs.getBiomesOne().isEmpty()) {
-                            disks1 = TARDISSerializeInventory.itemStacksFromString(rs.getBiomesOne());
+                            disks1 = SerializeInventory.itemStacksFromString(rs.getBiomesOne());
                         } else {
-                            disks1 = TARDISSerializeInventory.itemStacksFromString(Storage.BIOME_1.getEmpty());
+                            disks1 = SerializeInventory.itemStacksFromString(Storage.BIOME_1.getEmpty());
                         }
                         String biomeKey = biome.getKey().getKey();
                         if (!hasBiomeDisk(disks1, biomeKey)) {
                             ItemStack[] disks2;
                             if (!rs.getBiomesOne().isEmpty()) {
-                                disks2 = TARDISSerializeInventory.itemStacksFromString(rs.getBiomesTwo());
+                                disks2 = SerializeInventory.itemStacksFromString(rs.getBiomesTwo());
                             } else {
-                                disks2 = TARDISSerializeInventory.itemStacksFromString(Storage.BIOME_2.getEmpty());
+                                disks2 = SerializeInventory.itemStacksFromString(Storage.BIOME_2.getEmpty());
                             }
                             if (!hasBiomeDisk(disks2, biomeKey)) {
                                 ItemStack bd = ItemStack.of(Material.MUSIC_DISC_CAT, 1);
@@ -116,7 +116,7 @@ public class TARDISBiomeReaderListener implements Listener {
                                 int slot = getNextFreeSlot(disks1);
                                 if (slot != -1) {
                                     disks1[slot] = bd;
-                                    String serialized = TARDISSerializeInventory.itemStacksToString(disks1);
+                                    String serialized = SerializeInventory.itemStacksToString(disks1);
                                     HashMap<String, Object> set = new HashMap<>();
                                     set.put("biomes_one", serialized);
                                     HashMap<String, Object> whereu = new HashMap<>();
@@ -127,7 +127,7 @@ public class TARDISBiomeReaderListener implements Listener {
                                     slot = getNextFreeSlot(disks2);
                                     if (slot != -1) {
                                         disks2[slot] = bd;
-                                        String serialized = TARDISSerializeInventory.itemStacksToString(disks2);
+                                        String serialized = SerializeInventory.itemStacksToString(disks2);
                                         HashMap<String, Object> set = new HashMap<>();
                                         set.put("biomes_two", serialized);
                                         HashMap<String, Object> whereu = new HashMap<>();

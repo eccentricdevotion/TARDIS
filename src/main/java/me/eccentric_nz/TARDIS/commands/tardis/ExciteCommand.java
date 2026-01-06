@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.control.TARDISAtmosphericExcitation;
+import me.eccentric_nz.TARDIS.control.AtmosphericExcitation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.entity.Player;
@@ -41,7 +41,7 @@ class ExciteCommand {
         // get TARDIS id
         ResultSetTardisID rs = new ResultSetTardisID(plugin);
         if (rs.fromUUID(player.getUniqueId().toString())) {
-            new TARDISAtmosphericExcitation(plugin).excite(rs.getTardisId(), player);
+            new AtmosphericExcitation(plugin).excite(rs.getTardisId(), player);
             plugin.getTrackerKeeper().getExcitation().add(player.getUniqueId());
             return true;
         }

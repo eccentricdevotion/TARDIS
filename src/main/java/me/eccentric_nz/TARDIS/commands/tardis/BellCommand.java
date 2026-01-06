@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.hads.TARDISCloisterBell;
+import me.eccentric_nz.TARDIS.hads.CloisterBell;
 import org.bukkit.entity.Player;
 
 public class BellCommand {
@@ -63,7 +63,7 @@ public class BellCommand {
     }
 
     private void startCloisterBell(int id) {
-        TARDISCloisterBell bell = new TARDISCloisterBell(plugin, Integer.MAX_VALUE, id);
+        CloisterBell bell = new CloisterBell(plugin, Integer.MAX_VALUE, id);
         int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, bell, 2L, 70L);
         bell.setTask(taskID);
         plugin.getTrackerKeeper().getCloisterBells().put(id, taskID);

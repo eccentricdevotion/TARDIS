@@ -32,8 +32,8 @@ import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFarmer;
 import me.eccentric_nz.TARDIS.mobfarming.FollowerSpawner;
 import me.eccentric_nz.TARDIS.mobfarming.PetsAndFollowers;
-import me.eccentric_nz.TARDIS.move.TARDISDoorListener;
-import me.eccentric_nz.TARDIS.sonic.actions.TARDISSonicSound;
+import me.eccentric_nz.TARDIS.move.DoorListener;
+import me.eccentric_nz.TARDIS.sonic.actions.SonicSound;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
@@ -53,7 +53,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
-public class OuterDisplayDoorAction extends TARDISDoorListener {
+public class OuterDisplayDoorAction extends DoorListener {
 
     public OuterDisplayDoorAction(TARDIS plugin) {
         super(plugin);
@@ -197,7 +197,7 @@ public class OuterDisplayDoorAction extends TARDISDoorListener {
                                                     return;
                                                 }
                                                 long now = System.currentTimeMillis();
-                                                TARDISSonicSound.playSonicSound(plugin, player, now, 600L, "sonic_short");
+                                                SonicSound.playSonicSound(plugin, player, now, 600L, "sonic_short");
                                                 ItemStack sub = ItemStack.of(colour.getType());
                                                 sub.setItemMeta(colour.getItemMeta());
                                                 ee.setHelmet(sub, true);

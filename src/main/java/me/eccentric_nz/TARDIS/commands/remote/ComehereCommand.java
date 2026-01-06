@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.commands.remote;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.builders.exterior.BuildData;
-import me.eccentric_nz.TARDIS.builders.exterior.TARDISEmergencyRelocation;
+import me.eccentric_nz.TARDIS.builders.exterior.EmergencyRelocation;
 import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
@@ -106,7 +106,7 @@ public class ComehereCommand {
         ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
         if (!rsc.resultSet()) {
             // emergency TARDIS relocation
-            new TARDISEmergencyRelocation(plugin).relocate(id, player);
+            new EmergencyRelocation(plugin).relocate(id, player);
             return true;
         }
         Current current = rsc.getCurrent();

@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
-import me.eccentric_nz.TARDIS.move.TARDISDoorListener;
+import me.eccentric_nz.TARDIS.move.DoorListener;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -66,7 +66,7 @@ public class ElytraListener implements Listener {
         ResultSetTardisID rs = new ResultSetTardisID(plugin);
         if (rs.fromUUID(player.getUniqueId().toString())) {
             // teleport player to their TARDIS console
-            Location idl = TARDISDoorListener.getDoor(1, rs.getTardisId()).getL();
+            Location idl = DoorListener.getDoor(1, rs.getTardisId()).getL();
             player.teleport(idl);
         } else {
             Location respawn = player.getRespawnLocation();

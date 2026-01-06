@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.control;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
+import me.eccentric_nz.TARDIS.advanced.CircuitChecker;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.TravelType;
 import me.eccentric_nz.TARDIS.travel.TravelCostAndType;
@@ -47,9 +47,9 @@ class TARDISSaveSign {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "Saves");
             return;
         }
-        TARDISCircuitChecker tcc = null;
+        CircuitChecker tcc = null;
         if (plugin.getConfig().getBoolean("difficulty.circuits") && !plugin.getUtils().inGracePeriod(player, false)) {
-            tcc = new TARDISCircuitChecker(plugin, id);
+            tcc = new CircuitChecker(plugin, id);
             tcc.getCircuits();
         }
         if (tcc != null && !tcc.hasMemory()) {

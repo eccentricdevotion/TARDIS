@@ -20,10 +20,10 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
 import me.eccentric_nz.TARDIS.chameleon.preset.*;
 import me.eccentric_nz.TARDIS.chameleon.preset.biome.*;
-import me.eccentric_nz.TARDIS.chameleon.utils.TARDISBlockDataRotator;
-import me.eccentric_nz.TARDIS.chameleon.utils.TARDISChameleonColumn;
+import me.eccentric_nz.TARDIS.chameleon.utils.BlockDataRotator;
+import me.eccentric_nz.TARDIS.chameleon.utils.ChameleonColumn;
 import me.eccentric_nz.TARDIS.chameleon.utils.TARDISCustomPreset;
-import me.eccentric_nz.TARDIS.chameleon.utils.TARDISRenderPreset;
+import me.eccentric_nz.TARDIS.chameleon.utils.RendererPreset;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import org.bukkit.Bukkit;
@@ -39,168 +39,168 @@ import org.bukkit.block.data.BlockData;
 public class TARDISChameleonPreset {
 
     public final TARDISCustomPreset custom;
-    private final TARDISAndesitePreset andesite;
-    private final TARDISAngelDownPreset angeld;
-    private final TARDISAngelUpPreset angelu;
-    private final TARDISApertureSciencePreset aperture;
-    private final TARDISCakePreset cake;
-    private final TARDISCandyCanePreset candy;
-    private final TARDISCavePreset cave;
-    private final TARDISChalicePreset chalice;
-    private final TARDISChorusPreset chorus;
-    private final TARDISColumnPreset column;
-    private final TARDISCreepyPreset creepy;
-    private final TARDISDesertPreset desert;
-    private final TARDISDioritePreset diorite;
-    private final TARDISDoubleHelixPreset helix;
-    private final TARDISFactoryPreset factory;
-    private final TARDISFencePreset fence;
-    private final TARDISFlowerPreset flower;
-    private final TARDISGazeboPreset gazebo;
-    private final TARDISGranitePreset granite;
-    private final TARDISGravestonePreset gravestone;
-    private final TARDISInvisiblePreset invisible;
-    private final TARDISJailPreset jail;
-    private final TARDISJunglePreset jungle;
-    private final TARDISJunkPreset junk;
-    private final TARDISLampPostPreset lamp;
-    private final TARDISLibraryPreset library;
-    private final TARDISLighthousePreset lighthouse;
-    private final TARDISMineshaftPreset mine;
-    private final TARDISMushroomPreset shroom;
-    private final TARDISNetherPreset nether;
-    private final TARDISPartyPreset party;
-    private final TARDISPeanutButterPreset peanut;
-    private final TARDISPineTreePreset pine;
-    private final TARDISPortalPreset portal;
-    private final TARDISPrismarinePreset prismarine;
-    private final TARDISPunkedPreset punked;
-    private final TARDISRobotPreset robot;
-    private final TARDISRubberDuckPreset duck;
-    private final TARDISSnowmanPreset snowman;
-    private final TARDISSubmergedPreset submerged;
-    private final TARDISSwampPreset swamp;
-    private final TARDISTelephoneBoxPreset telephone;
-    private final TARDISTheEndPreset theend;
-    private final TARDISToiletPreset toilet;
-    private final TARDISTopsyTurveyPreset topsyturvey;
-    private final TARDISTorchPreset torch;
-    private final TARDISVillagePreset village;
-    private final TARDISWellPreset well;
-    private final TARDISWindmillPreset windmill;
-    private final TARDISYellowSubmarinePreset yellow;
+    private final AndesitePreset andesite;
+    private final AngelDownPreset angeld;
+    private final AngelUpPreset angelu;
+    private final ApertureSciencePreset aperture;
+    private final CakePreset cake;
+    private final CandyCanePreset candy;
+    private final CavePreset cave;
+    private final ChalicePreset chalice;
+    private final ChorusPreset chorus;
+    private final ColumnPreset column;
+    private final CreepyPreset creepy;
+    private final DesertPreset desert;
+    private final DioritePreset diorite;
+    private final DoubleHelixPreset helix;
+    private final FactoryPreset factory;
+    private final FencePreset fence;
+    private final FlowerPreset flower;
+    private final GazeboPreset gazebo;
+    private final GranitePreset granite;
+    private final GravestonePreset gravestone;
+    private final InvisiblePreset invisible;
+    private final JailPreset jail;
+    private final JunglePreset jungle;
+    private final JunkPreset junk;
+    private final LampPostPreset lamp;
+    private final LibraryPreset library;
+    private final LighthousePreset lighthouse;
+    private final MineshaftPreset mine;
+    private final MushroomPreset shroom;
+    private final NetherPreset nether;
+    private final PartyPreset party;
+    private final PeanutButterPreset peanut;
+    private final PineTreePreset pine;
+    private final PortalPreset portal;
+    private final PrismarinePreset prismarine;
+    private final PunkedPreset punked;
+    private final RobotPreset robot;
+    private final RubberDuckPreset duck;
+    private final SnowmanPreset snowman;
+    private final SubmergedPreset submerged;
+    private final SwampPreset swamp;
+    private final TelephoneBoxPreset telephone;
+    private final TheEndPreset theend;
+    private final ToiletPreset toilet;
+    private final TopsyTurveyPreset topsyturvey;
+    private final TorchPreset torch;
+    private final VillagePreset village;
+    private final WellPreset well;
+    private final WindmillPreset windmill;
+    private final YellowSubmarinePreset yellow;
     // biome adaptive presets
-    private final TARDISAdaptivePreset adaptive;
-    private final TARDISRenderPreset render;
-    private final TARDISExtremeHillsPreset extreme;
-    private final TARDISForestPreset forest;
-    private final TARDISIcePlainsPreset flats;
-    private final TARDISIcePlainsSpikesPreset spikes;
-    private final TARDISMesaPreset mesa;
-    private final TARDISPlainsPreset plains;
-    private final TARDISRoofedForestPreset roofed;
-    private final TARDISSavannaPreset savanna;
-    private final TARDISTaigaPreset taiga;
-    private final TARDISColdTaigaPreset cold;
-    private final TARDISBoatPreset boat;
+    private final AdaptivePreset adaptive;
+    private final RendererPreset render;
+    private final ExtremeHillsPreset extreme;
+    private final ForestPreset forest;
+    private final IcePlainsPreset flats;
+    private final IcePlainsSpikesPreset spikes;
+    private final MesaPreset mesa;
+    private final PlainsPreset plains;
+    private final RoofedForestPreset roofed;
+    private final SavannaPreset savanna;
+    private final TaigaPreset taiga;
+    private final ColdTaigaPreset cold;
+    private final BoatPreset boat;
     private int r;
 
     public TARDISChameleonPreset() {
-        andesite = new TARDISAndesitePreset();
-        angeld = new TARDISAngelDownPreset();
-        angelu = new TARDISAngelUpPreset();
-        aperture = new TARDISApertureSciencePreset();
-        cake = new TARDISCakePreset();
-        candy = new TARDISCandyCanePreset();
-        chalice = new TARDISChalicePreset();
-        chorus = new TARDISChorusPreset();
-        column = new TARDISColumnPreset();
-        creepy = new TARDISCreepyPreset();
-        desert = new TARDISDesertPreset();
-        diorite = new TARDISDioritePreset();
-        duck = new TARDISRubberDuckPreset();
-        factory = new TARDISFactoryPreset();
-        fence = new TARDISFencePreset();
-        flower = new TARDISFlowerPreset();
-        gazebo = new TARDISGazeboPreset();
-        granite = new TARDISGranitePreset();
-        gravestone = new TARDISGravestonePreset();
-        helix = new TARDISDoubleHelixPreset();
-        invisible = new TARDISInvisiblePreset();
-        jail = new TARDISJailPreset();
-        jungle = new TARDISJunglePreset();
-        junk = new TARDISJunkPreset();
-        lamp = new TARDISLampPostPreset();
-        library = new TARDISLibraryPreset();
-        lighthouse = new TARDISLighthousePreset();
-        mine = new TARDISMineshaftPreset();
-        nether = new TARDISNetherPreset();
-        party = new TARDISPartyPreset();
-        peanut = new TARDISPeanutButterPreset();
-        pine = new TARDISPineTreePreset();
-        portal = new TARDISPortalPreset();
-        prismarine = new TARDISPrismarinePreset();
-        punked = new TARDISPunkedPreset();
-        robot = new TARDISRobotPreset();
-        shroom = new TARDISMushroomPreset();
-        snowman = new TARDISSnowmanPreset();
-        submerged = new TARDISSubmergedPreset();
-        swamp = new TARDISSwampPreset();
-        telephone = new TARDISTelephoneBoxPreset();
-        theend = new TARDISTheEndPreset();
-        toilet = new TARDISToiletPreset();
-        topsyturvey = new TARDISTopsyTurveyPreset();
-        torch = new TARDISTorchPreset();
-        village = new TARDISVillagePreset();
-        well = new TARDISWellPreset();
-        windmill = new TARDISWindmillPreset();
-        yellow = new TARDISYellowSubmarinePreset();
+        andesite = new AndesitePreset();
+        angeld = new AngelDownPreset();
+        angelu = new AngelUpPreset();
+        aperture = new ApertureSciencePreset();
+        cake = new CakePreset();
+        candy = new CandyCanePreset();
+        chalice = new ChalicePreset();
+        chorus = new ChorusPreset();
+        column = new ColumnPreset();
+        creepy = new CreepyPreset();
+        desert = new DesertPreset();
+        diorite = new DioritePreset();
+        duck = new RubberDuckPreset();
+        factory = new FactoryPreset();
+        fence = new FencePreset();
+        flower = new FlowerPreset();
+        gazebo = new GazeboPreset();
+        granite = new GranitePreset();
+        gravestone = new GravestonePreset();
+        helix = new DoubleHelixPreset();
+        invisible = new InvisiblePreset();
+        jail = new JailPreset();
+        jungle = new JunglePreset();
+        junk = new JunkPreset();
+        lamp = new LampPostPreset();
+        library = new LibraryPreset();
+        lighthouse = new LighthousePreset();
+        mine = new MineshaftPreset();
+        nether = new NetherPreset();
+        party = new PartyPreset();
+        peanut = new PeanutButterPreset();
+        pine = new PineTreePreset();
+        portal = new PortalPreset();
+        prismarine = new PrismarinePreset();
+        punked = new PunkedPreset();
+        robot = new RobotPreset();
+        shroom = new MushroomPreset();
+        snowman = new SnowmanPreset();
+        submerged = new SubmergedPreset();
+        swamp = new SwampPreset();
+        telephone = new TelephoneBoxPreset();
+        theend = new TheEndPreset();
+        toilet = new ToiletPreset();
+        topsyturvey = new TopsyTurveyPreset();
+        torch = new TorchPreset();
+        village = new VillagePreset();
+        well = new WellPreset();
+        windmill = new WindmillPreset();
+        yellow = new YellowSubmarinePreset();
         custom = new TARDISCustomPreset();
-        adaptive = new TARDISAdaptivePreset();
-        render = new TARDISRenderPreset();
-        extreme = new TARDISExtremeHillsPreset();
-        forest = new TARDISForestPreset();
-        flats = new TARDISIcePlainsPreset();
-        spikes = new TARDISIcePlainsSpikesPreset();
-        mesa = new TARDISMesaPreset();
-        plains = new TARDISPlainsPreset();
-        roofed = new TARDISRoofedForestPreset();
-        savanna = new TARDISSavannaPreset();
-        taiga = new TARDISTaigaPreset();
-        cold = new TARDISColdTaigaPreset();
-        boat = new TARDISBoatPreset();
-        cave = new TARDISCavePreset();
+        adaptive = new AdaptivePreset();
+        render = new RendererPreset();
+        extreme = new ExtremeHillsPreset();
+        forest = new ForestPreset();
+        flats = new IcePlainsPreset();
+        spikes = new IcePlainsSpikesPreset();
+        mesa = new MesaPreset();
+        plains = new PlainsPreset();
+        roofed = new RoofedForestPreset();
+        savanna = new SavannaPreset();
+        taiga = new TaigaPreset();
+        cold = new ColdTaigaPreset();
+        boat = new BoatPreset();
+        cave = new CavePreset();
     }
 
-    public static TARDISChameleonColumn buildTARDISChameleonColumn(COMPASS d, String[][] strings) {
-        TARDISChameleonColumn tcc;
+    public static ChameleonColumn buildTARDISChameleonColumn(COMPASS d, String[][] strings) {
+        ChameleonColumn tcc;
         BlockData[][] blockDataArr = getBlockDataFromArray(strings);
         if (d.equals(COMPASS.EAST)) {
-            tcc = new TARDISChameleonColumn(blockDataArr);
+            tcc = new ChameleonColumn(blockDataArr);
         } else {
-            tcc = new TARDISChameleonColumn(convertData(rotate2DArray(blockDataArr, d), d));
+            tcc = new ChameleonColumn(convertData(rotate2DArray(blockDataArr, d), d));
         }
         return tcc;
     }
 
-    public static TARDISChameleonColumn buildTARDISChameleonColumn(COMPASS d, String json) {
-        TARDISChameleonColumn tcc;
+    public static ChameleonColumn buildTARDISChameleonColumn(COMPASS d, String json) {
+        ChameleonColumn tcc;
         BlockData[][] blockDataArr = getStringArrayFromJSON(json);
         if (d.equals(COMPASS.EAST)) {
-            tcc = new TARDISChameleonColumn(blockDataArr);
+            tcc = new ChameleonColumn(blockDataArr);
         } else {
-            tcc = new TARDISChameleonColumn(convertData(rotate2DArray(blockDataArr, d), d));
+            tcc = new ChameleonColumn(convertData(rotate2DArray(blockDataArr, d), d));
         }
         return tcc;
     }
 
-    public static TARDISChameleonColumn buildTARDISChameleonColumn(COMPASS d, JsonArray json) {
-        TARDISChameleonColumn tcc;
+    public static ChameleonColumn buildTARDISChameleonColumn(COMPASS d, JsonArray json) {
+        ChameleonColumn tcc;
         BlockData[][] blockDataArr = getStringArrayFromJSON(json);
         if (d.equals(COMPASS.EAST)) {
-            tcc = new TARDISChameleonColumn(blockDataArr);
+            tcc = new ChameleonColumn(blockDataArr);
         } else {
-            tcc = new TARDISChameleonColumn(convertData(rotate2DArray(blockDataArr, d), d));
+            tcc = new ChameleonColumn(convertData(rotate2DArray(blockDataArr, d), d));
         }
         return tcc;
     }
@@ -306,7 +306,7 @@ public class TARDISChameleonPreset {
     private static BlockData[][] convertData(BlockData[][] data, COMPASS d) {
         for (int col = 0; col < 10; col++) {
             for (int block = 0; block < 4; block++) {
-                data[col][block] = TARDISBlockDataRotator.rotate(data[col][block], d);
+                data[col][block] = BlockDataRotator.rotate(data[col][block], d);
             }
         }
         return data;
@@ -379,7 +379,7 @@ public class TARDISChameleonPreset {
         cave.makePresets();
     }
 
-    public TARDISChameleonColumn getColumn(ChameleonPreset p, COMPASS d) {
+    public ChameleonColumn getColumn(ChameleonPreset p, COMPASS d) {
         switch (p) {
             case ANDESITE -> {
                 return andesite.getBlueprint().get(d);
@@ -577,7 +577,7 @@ public class TARDISChameleonPreset {
         }
     }
 
-    public TARDISChameleonColumn getGlass(ChameleonPreset p, COMPASS d) {
+    public ChameleonColumn getGlass(ChameleonPreset p, COMPASS d) {
         switch (p) {
             case ANDESITE -> {
                 return andesite.getGlass().get(d);
@@ -775,7 +775,7 @@ public class TARDISChameleonPreset {
         }
     }
 
-    public TARDISChameleonColumn getStained(ChameleonPreset p, COMPASS d) {
+    public ChameleonColumn getStained(ChameleonPreset p, COMPASS d) {
         switch (p) {
             case ANDESITE -> {
                 return andesite.getStained().get(d);

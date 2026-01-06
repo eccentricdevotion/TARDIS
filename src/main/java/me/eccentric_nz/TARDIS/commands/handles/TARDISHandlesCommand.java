@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.commands.handles;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.handles.TARDISHandlesWeirdness;
+import me.eccentric_nz.TARDIS.handles.HandlesWeirdness;
 import me.eccentric_nz.TARDIS.handles.wiki.HandlesWiki;
 import me.eccentric_nz.TARDIS.handles.wiki.SearchDialog;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
@@ -63,7 +63,7 @@ public class TARDISHandlesCommand implements CommandExecutor {
                     return new RemoveCommand(plugin).purge(player);
                 }
                 case "weird" -> {
-                    TARDISHandlesWeirdness.say(player);
+                    HandlesWeirdness.say(player);
                     return true;
                 }
             }

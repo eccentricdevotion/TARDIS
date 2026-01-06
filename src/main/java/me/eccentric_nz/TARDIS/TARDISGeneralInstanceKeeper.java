@@ -19,9 +19,9 @@ package me.eccentric_nz.TARDIS;
 import me.eccentric_nz.TARDIS.commands.config.TARDISConfigCommand;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.listeners.TARDISRenderRoomListener;
-import me.eccentric_nz.TARDIS.move.TARDISDoorListener;
+import me.eccentric_nz.TARDIS.move.DoorListener;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
-import me.eccentric_nz.TARDIS.rooms.TARDISCondenserData;
+import me.eccentric_nz.TARDIS.rooms.CondenserData;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Tag;
@@ -52,7 +52,7 @@ public class TARDISGeneralInstanceKeeper {
     private final Set<String> gravityDownList = new HashSet<>();
     private final HashMap<String, Integer> protectBlockMap = new HashMap<>();
     private final HashMap<String, String> sign_lookup;
-    private final HashMap<UUID, TARDISCondenserData> roomCondenserData = new HashMap<>();
+    private final HashMap<UUID, CondenserData> roomCondenserData = new HashMap<>();
     private final Set<Material> transparent;
     private final Set<Block> artronFurnaces = new HashSet<>();
     private final List<BlockFace> blockFaces = List.of(BlockFace.UP, BlockFace.DOWN, BlockFace.NORTH, BlockFace.WEST, BlockFace.SOUTH, BlockFace.EAST);
@@ -76,7 +76,7 @@ public class TARDISGeneralInstanceKeeper {
     private final Set<UUID> junkTravellers = new HashSet<>();
     private final Set<UUID> timeRotors = new HashSet<>();
     private final TARDIS plugin;
-    private final TARDISDoorListener doorListener;
+    private final DoorListener doorListener;
     private final YamlConfiguration pluginYAML;
     private boolean junkTravelling = false;
     private List<String> quotes = new ArrayList<>();
@@ -88,7 +88,7 @@ public class TARDISGeneralInstanceKeeper {
         this.plugin = plugin;
         roomArgs = buildRoomArgs();
         transparent = buildTransparent();
-        doorListener = new TARDISDoorListener(plugin);
+        doorListener = new DoorListener(plugin);
         sign_lookup = buildSignLookup();
         setRechargers();
         InputStream is = plugin.getResource("plugin.yml");
@@ -167,7 +167,7 @@ public class TARDISGeneralInstanceKeeper {
         return sign_lookup;
     }
 
-    public HashMap<UUID, TARDISCondenserData> getRoomCondenserData() {
+    public HashMap<UUID, CondenserData> getRoomCondenserData() {
         return roomCondenserData;
     }
 
@@ -183,7 +183,7 @@ public class TARDISGeneralInstanceKeeper {
         this.tardisConfigCommand = tardisConfigCommand;
     }
 
-    public TARDISDoorListener getDoorListener() {
+    public DoorListener getDoorListener() {
         return doorListener;
     }
 

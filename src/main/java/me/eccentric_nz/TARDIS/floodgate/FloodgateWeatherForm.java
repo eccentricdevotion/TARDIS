@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.floodgate;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.commands.utils.weather.Weather;
-import me.eccentric_nz.TARDIS.control.TARDISAtmosphericExcitation;
+import me.eccentric_nz.TARDIS.control.AtmosphericExcitation;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
@@ -101,7 +101,7 @@ public class FloodgateWeatherForm {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "CMD_EXCITE");
                         return;
                     }
-                    new TARDISAtmosphericExcitation(plugin).excite(tardis.getTardisId(), player);
+                    new AtmosphericExcitation(plugin).excite(tardis.getTardisId(), player);
                     plugin.getTrackerKeeper().getExcitation().add(player.getUniqueId());
                 } else {
                     // change weather

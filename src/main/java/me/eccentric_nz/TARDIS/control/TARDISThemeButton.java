@@ -18,8 +18,8 @@ package me.eccentric_nz.TARDIS.control;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
-import me.eccentric_nz.TARDIS.desktop.TARDISPluginThemeInventory;
-import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
+import me.eccentric_nz.TARDIS.desktop.PluginThemeInventory;
+import me.eccentric_nz.TARDIS.desktop.UpgradeData;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.floodgate.FloodgateDestinationTerminalForm;
@@ -76,7 +76,7 @@ public class TARDISThemeButton {
             return;
         }
         // get player's current console
-        TARDISUpgradeData tud = new TARDISUpgradeData();
+        UpgradeData tud = new UpgradeData();
         tud.setPrevious(current_console);
         tud.setLevel(level);
         plugin.getTrackerKeeper().getUpgrades().put(uuid, tud);
@@ -84,7 +84,7 @@ public class TARDISThemeButton {
         if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(uuid)) {
             new FloodgateDestinationTerminalForm(plugin, uuid).send();
         } else {
-            player.openInventory(new TARDISPluginThemeInventory(plugin, player, current_console.getPermission(), level).getInventory());
+            player.openInventory(new PluginThemeInventory(plugin, player, current_console.getPermission(), level).getInventory());
         }
     }
 }

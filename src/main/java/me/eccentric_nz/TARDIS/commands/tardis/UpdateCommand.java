@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.chatGUI.TARDISUpdateChatGUI;
+import me.eccentric_nz.TARDIS.chatGUI.UpdateChatGUI;
 import me.eccentric_nz.TARDIS.commands.sudo.TARDISSudoTracker;
 import me.eccentric_nz.TARDIS.customblocks.TARDISBlockDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
@@ -29,8 +29,8 @@ import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.Updateable;
 import me.eccentric_nz.TARDIS.messaging.TARDISUpdateLister;
 import me.eccentric_nz.TARDIS.monitor.MonitorUtils;
-import me.eccentric_nz.TARDIS.rotors.TARDISTimeRotor;
-import me.eccentric_nz.TARDIS.sonic.TARDISSonicDock;
+import me.eccentric_nz.TARDIS.rotors.TimeRotor;
+import me.eccentric_nz.TARDIS.sonic.SonicDock;
 import me.eccentric_nz.TARDIS.update.TARDISUpdateBlocks;
 import me.eccentric_nz.TARDIS.update.TARDISUpdateableChecker;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
@@ -63,7 +63,7 @@ class UpdateCommand {
     boolean startUpdate(Player player, String[] args) {
         if (TARDISPermission.hasPermission(player, "tardis.update")) {
             if (args.length == 1) {
-                return new TARDISUpdateChatGUI(plugin).showInterface(player, args);
+                return new UpdateChatGUI(plugin).showInterface(player, args);
             } else if (args.length < 2) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
                 return false;
@@ -155,7 +155,7 @@ class UpdateCommand {
                     // get frame location
                     ItemFrame itemFrame = null;
                     switch (updateable) {
-                        case ROTOR -> itemFrame = TARDISTimeRotor.getItemFrame(tardis.getRotor());
+                        case ROTOR -> itemFrame = TimeRotor.getItemFrame(tardis.getRotor());
                         case MONITOR -> itemFrame = MonitorUtils.getItemFrameFromLocation(tardis.getTardisId(), true);
                         case MONITOR_FRAME -> {
                             itemFrame = MonitorUtils.getItemFrameFromLocation(tardis.getTardisId(), false);
@@ -165,10 +165,10 @@ class UpdateCommand {
                             im.displayName(ComponentUtils.toWhite("Monitor Frame"));
                             glass.setItemMeta(im);
                         }
-                        case SONIC_DOCK -> itemFrame = TARDISSonicDock.getItemFrame(tardis.getTardisId());
+                        case SONIC_DOCK -> itemFrame = SonicDock.getItemFrame(tardis.getTardisId());
                     }
                     if (itemFrame != null) {
-                        TARDISTimeRotor.unlockItemFrame(itemFrame);
+                        TimeRotor.unlockItemFrame(itemFrame);
                         // also need to remove the item frame protection
                         plugin.getGeneralKeeper().getTimeRotors().remove(itemFrame.getUniqueId());
                         // and block protection

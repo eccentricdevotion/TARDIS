@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.companionGUI.TARDISCompanionAddInventory;
+import me.eccentric_nz.TARDIS.companionGUI.CompanionAddInventory;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.Advancement;
@@ -48,7 +48,7 @@ class AddCompanionCommand {
 
     boolean doAddGUI(Player player) {
         if (TARDISPermission.hasPermission(player, "tardis.add")) {
-            player.openInventory(new TARDISCompanionAddInventory(plugin, player).getInventory());
+            player.openInventory(new CompanionAddInventory(plugin, player).getInventory());
         } else {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
         }

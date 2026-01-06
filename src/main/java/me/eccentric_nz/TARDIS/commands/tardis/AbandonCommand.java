@@ -21,7 +21,7 @@ import me.eccentric_nz.TARDIS.api.event.TARDISAbandonEvent;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.commands.admin.AbandonedLister;
 import me.eccentric_nz.TARDIS.control.TARDISPowerButton;
-import me.eccentric_nz.TARDIS.database.converters.TARDISAbandonUpdate;
+import me.eccentric_nz.TARDIS.database.converters.AbandonUpdate;
 import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisAbandoned;
@@ -251,7 +251,7 @@ public class AbandonCommand {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_WHILE_MAT");
                         return true;
                     }
-                    new TARDISAbandonUpdate(plugin, id, player.getUniqueId().toString()).run();
+                    new AbandonUpdate(plugin, id, player.getUniqueId().toString()).run();
                     if (rs.isPowered_on()) {
                         // power down TARDIS
                         new TARDISPowerButton(plugin, id, player, rs.getPreset(), rs.isPowered_on(), rs.isHidden(), rs.isLights_on(), player.getLocation(), rs.getArtron_level(), rs.getSchematic().getLights()).clickButton();

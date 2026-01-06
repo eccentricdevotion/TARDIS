@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
+import me.eccentric_nz.TARDIS.advanced.CircuitChecker;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -65,9 +65,9 @@ class SaveLocationCommand {
                 Tardis tardis = rs.getTardis();
                 int id = tardis.getTardisId();
                 // check for memory circuit
-                TARDISCircuitChecker tcc = null;
+                CircuitChecker tcc = null;
                 if (plugin.getConfig().getBoolean("difficulty.circuits") && !plugin.getUtils().inGracePeriod(player, false)) {
-                    tcc = new TARDISCircuitChecker(plugin, id);
+                    tcc = new CircuitChecker(plugin, id);
                     tcc.getCircuits();
                 }
                 if (tcc != null && !tcc.hasMemory()) {

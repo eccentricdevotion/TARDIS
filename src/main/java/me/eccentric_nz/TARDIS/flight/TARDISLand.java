@@ -53,7 +53,7 @@ public class TARDISLand {
         if (rsh.resultSet()) {
             Location handbrake = TARDISStaticLocationGetters.getLocationFromBukkitString(rsh.getLocation());
             // materialise
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new TARDISMaterialseFromVortex(plugin, id, player, handbrake, throticle), 10L);
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new MaterialseFromVortex(plugin, id, player, handbrake, throticle), 10L);
         }
     }
 

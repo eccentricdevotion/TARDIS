@@ -21,7 +21,7 @@ import me.eccentric_nz.TARDIS.advanced.DamageUtility;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.builders.exterior.TARDISEmergencyRelocation;
+import me.eccentric_nz.TARDIS.builders.exterior.EmergencyRelocation;
 import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
@@ -200,7 +200,7 @@ public class FloodgateDestinationTerminalForm {
                     }
                 } else {
                     // emergency TARDIS relocation
-                    new TARDISEmergencyRelocation(plugin).relocate(id, player);
+                    new EmergencyRelocation(plugin).relocate(id, player);
                 }
             }
         }
