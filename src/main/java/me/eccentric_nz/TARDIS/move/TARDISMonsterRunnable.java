@@ -54,6 +54,7 @@ public class TARDISMonsterRunnable implements Runnable {
         monsters.add(EntityType.ENDERMITE);
         monsters.add(EntityType.HOGLIN);
         monsters.add(EntityType.HUSK);
+        monsters.add(EntityType.PARCHED);
         monsters.add(EntityType.PIGLIN);
         monsters.add(EntityType.PILLAGER);
         monsters.add(EntityType.SILVERFISH);
