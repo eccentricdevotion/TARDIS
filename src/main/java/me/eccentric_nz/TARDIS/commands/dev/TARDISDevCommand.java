@@ -88,6 +88,7 @@ public class TARDISDevCommand implements CommandExecutor {
             "gravity", "give",
             "happy", "head",
             "interaction",
+            "json",
             "label", "leather", "list",
             "mannequin", "monster", "mount",
             "ntc", "nms",
@@ -294,6 +295,9 @@ public class TARDISDevCommand implements CommandExecutor {
                     }
                 }
                 switch (first) {
+                    case "json" -> {
+                        return new JsonPropertyRemover(plugin, sender, args[1]).processFiles();
+                    }
                     case "staircase" -> {
                         if (sender instanceof Player player) {
                             switch (args[1]) {
