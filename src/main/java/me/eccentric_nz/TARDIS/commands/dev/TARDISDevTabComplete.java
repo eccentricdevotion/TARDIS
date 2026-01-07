@@ -64,6 +64,7 @@ public class TARDISDevTabComplete extends TARDISCompleter implements TabComplete
     private final ImmutableList<String> STATE_SUBS = ImmutableList.of("closed", "open", "stained", "glass", "fly");
     private final ImmutableList<String> FRAME_SUBS = ImmutableList.of("lock", "unlock");
     private final ImmutableList<String> STAIR_SUBS = ImmutableList.of("mark", "scan");
+    private final ImmutableList<String> TREE_SUBS = ImmutableList.of("delta", "fractal", "worldgen");
     private final ImmutableList<String> SCREEN_SUBS = ImmutableList.of("forward", "backward", "left", "right");
     private final ImmutableList<String> COMPONENT_SUBS = ImmutableList.of("ars", "repeater", "key", "pack", "extra");
     private final ImmutableList<String> DEBUG_SUBS = ImmutableList.of("create", "update", "enter", "exit");
@@ -126,7 +127,7 @@ public class TARDISDevTabComplete extends TARDISCompleter implements TabComplete
                     case "box" -> partial(lastArg, PRESET_SUBS);
                     case "debug" -> partial(lastArg, DEBUG_SUBS);
                     case "nms", "trim" -> partial(lastArg, MONSTER_SUBS);
-                    case "tree" -> partial(lastArg, MAT_SUBS);
+                    case "tree" -> partial(lastArg, TREE_SUBS);
                     case "staircase" -> partial(lastArg, STAIR_SUBS);
                     case "snapshot" -> partial(lastArg, SNAPSHOT_SUBS);
                     case "displayitem" -> partial(lastArg, DISPLAY_SUBS);
@@ -145,6 +146,7 @@ public class TARDISDevTabComplete extends TARDISCompleter implements TabComplete
                     case "box" -> partial(lastArg, STATE_SUBS);
                     case "effect" -> partial(lastArg, EFFECT_SUBS);
                     case "rooms" -> partial(lastArg, ROOM_SUBS);
+                    case "tree" -> partial(lastArg, MAT_SUBS);
                     default -> ImmutableList.of();
                 };
             }
@@ -154,6 +156,9 @@ public class TARDISDevTabComplete extends TARDISCompleter implements TabComplete
                 }
                 if (sub.equals("rooms")) {
                     return partial(lastArg, ROOM_SUBS);
+                }
+                if (sub.equals("tree")) {
+                    return partial(lastArg, MAT_SUBS);
                 }
             }
             default -> {
