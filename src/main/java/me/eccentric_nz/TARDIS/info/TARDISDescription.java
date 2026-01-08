@@ -192,6 +192,7 @@ public enum TARDISDescription {
     APIARY("Bees, make some honey."),
     AQUARIUM("Tanks for your fish."),
     ARBORETUM("A room full of plants."),
+    ARCHITECTURAL("Architectural Reconfiguration System room with a unique fractally generated tree."),
     BAKER("A secondary console room based on the 4th Doctor's TARDIS."),
     BAMBOO("A place for pandas."),
     BEDROOM("A king sized bed for two."),

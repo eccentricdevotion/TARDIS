@@ -26,6 +26,7 @@ public enum RoomVariant {
     APIARY(new NamespacedKey(TARDIS.plugin, "button_apiary")),
     AQUARIUM(new NamespacedKey(TARDIS.plugin, "button_aquarium")),
     ARBORETUM(new NamespacedKey(TARDIS.plugin, "button_arboretum")),
+    ARCHITECTURAL(new NamespacedKey(TARDIS.plugin, "button_architectural")),
     BAKER(new NamespacedKey(TARDIS.plugin, "button_baker")),
     BAMBOO(new NamespacedKey(TARDIS.plugin, "button_bamboo")),
     BEDROOM(new NamespacedKey(TARDIS.plugin, "button_bedroom")),

@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.blueprints;
 
+import java.util.HashMap;
+
 public enum BlueprintRoom {
 
     ARCHITECTURAL("tardis.architectural"), // needed to grow rooms or use ARS
@@ -32,6 +34,7 @@ public enum BlueprintRoom {
     APIARY("tardis.room.apiary", BlueprintFeature.FARM),
     AQUARIUM("tardis.room.aquarium", BlueprintFeature.FARM),
     ARBORETUM("tardis.room.arboretum"),
+    ARCHITECTURAL_ROOM("tardis.room.architectural"),
     BAKER("tardis.room.baker"),
     BAMBOO("tardis.room.bamboo", BlueprintFeature.FARM),
     BEDROOM("tardis.room.bedroom"),
@@ -76,6 +79,7 @@ public enum BlueprintRoom {
 
     private final String permission;
     private final BlueprintFeature feature;
+    public static HashMap<String, BlueprintRoom> PERMS = new HashMap<>();
 
     BlueprintRoom(String permission) {
         this.permission = permission;
@@ -85,6 +89,12 @@ public enum BlueprintRoom {
     BlueprintRoom(String permission, BlueprintFeature feature) {
         this.permission = permission;
         this.feature = feature;
+    }
+
+    static {
+        for (BlueprintRoom room : BlueprintRoom.values()) {
+            PERMS.put(room.permission, room);
+        }
     }
 
     public String getPermission() {

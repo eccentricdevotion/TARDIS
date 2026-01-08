@@ -287,6 +287,7 @@ public class DebugGUI {
             new GuiPreview(Material.NETHER_STAR, Button.PREFERENCES.getKey(), "bowl_button_prefs"),
             new GuiPreview(Material.NETHER_STAR, Button.ADD_COMPANION.getKey(), "add_companion"),
             new GuiPreview(Material.OAK_LEAVES, RoomVariant.ARBORETUM.getKey(), "room_arboretum"),
+            new GuiPreview(Material.WAXED_COPPER_GRATE, RoomVariant.ARCHITECTURAL.getKey(), "room_architectural"),
             new GuiPreview(Material.OAK_LOG, RoomVariant.VILLAGE.getKey(), "room_village"),
             new GuiPreview(Material.OAK_PLANKS, RoomVariant.WOOD.getKey(), "room_wood"),
             new GuiPreview(Material.PACKED_ICE, RoomVariant.IGLOO.getKey(), "room_igloo"),

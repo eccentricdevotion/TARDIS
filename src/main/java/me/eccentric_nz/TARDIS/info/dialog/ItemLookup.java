@@ -52,6 +52,7 @@ public class ItemLookup {
         ITEMS.put(TARDISInfoMenu.APIARY, new InfoIcon(Material.BEE_NEST, "Apiary", RoomVariant.APIARY.getKey()));
         ITEMS.put(TARDISInfoMenu.AQUARIUM, new InfoIcon(Material.TUBE_CORAL_BLOCK, "Aquarium", RoomVariant.AQUARIUM.getKey()));
         ITEMS.put(TARDISInfoMenu.ARBORETUM, new InfoIcon(Material.OAK_LEAVES, "Arboretum", RoomVariant.ARBORETUM.getKey()));
+        ITEMS.put(TARDISInfoMenu.ARCHITECTURAL, new InfoIcon(Material.WAXED_COPPER_GRATE, "Architectural", RoomVariant.ARCHITECTURAL.getKey()));
         ITEMS.put(TARDISInfoMenu.BAKER, new InfoIcon(Material.END_STONE, "4th Doctor's Secondary Console", RoomVariant.BAKER.getKey()));
         ITEMS.put(TARDISInfoMenu.BAMBOO, new InfoIcon(Material.BAMBOO, "Bamboo", RoomVariant.BAMBOO.getKey()));
         ITEMS.put(TARDISInfoMenu.BEDROOM, new InfoIcon(Material.GLOWSTONE, "Bedroom", RoomVariant.BEDROOM.getKey()));

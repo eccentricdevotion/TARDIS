@@ -32,6 +32,7 @@ public enum TARDISARS implements ARS {
     APIARY("BEE_NEST", "Apiary", 1, RoomVariant.APIARY.getKey()),
     AQUARIUM("TUBE_CORAL_BLOCK", "Aquarium", 1, RoomVariant.AQUARIUM.getKey()),
     ARBORETUM("OAK_LEAVES", "Arboretum", 1, RoomVariant.ARBORETUM.getKey()),
+    ARCHITECTURAL("WAXED_COPPER_GRATE", "Architectural Reconfiguration System", 1, RoomVariant.ARCHITECTURAL.getKey()),
     BAKER("END_STONE", "4th Doctor's Secondary Console", 1, RoomVariant.BAKER.getKey()),
     BAMBOO("BAMBOO", "Bamboo", 1, RoomVariant.BAMBOO.getKey()),
     BEDROOM("GLOWSTONE", "Bedroom", 1, RoomVariant.BEDROOM.getKey()),

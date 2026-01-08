@@ -40,8 +40,8 @@ public class TreeBuilder {
         branchMaxLength = 5;
         stemLength = 4;
         growIterations = 25;
-        branchMaterial = List.of(Material.WAXED_COPPER_GRATE, Material.WAXED_EXPOSED_COPPER_GRATE, Material.WAXED_OXIDIZED_COPPER_GRATE, Material.WAXED_WEATHERED_COPPER_GRATE);
-        leafMaterial = List.of(Material.WAXED_COPPER_CHAIN, Material.WAXED_EXPOSED_COPPER_CHAIN, Material.WAXED_OXIDIZED_COPPER_CHAIN, Material.WAXED_WEATHERED_COPPER_CHAIN);
+        branchMaterial = List.of(Material.GRAY_WOOL);
+        leafMaterial = List.of(Material.IRON_CHAIN);
         leafPerBranch = 1;
         branchThickness = 1;
     }
@@ -68,8 +68,10 @@ public class TreeBuilder {
                     int low = 1;
                     int high = branchMaterial.size() + 1;
                     int result = r.nextInt(high - low) + low;
-                    b.setType(branchMaterial.get(result - 1));
-                    blocks.add(b);
+                    if (b.getType().isAir()) {
+                        b.setType(branchMaterial.get(result - 1));
+                        blocks.add(b);
+                    }
                 }
             }
         }
@@ -83,14 +85,14 @@ public class TreeBuilder {
                     int y = branch.getY() - 1 + (int) (Math.random() * 3.0D);
                     int z = branch.getZ() - 1 + (int) (Math.random() * 3.0D);
                     Block b = block.getWorld().getBlockAt(x, y, z);
-                    if (!branchMaterial.contains(b.getType())) {
+                    if (!branchMaterial.contains(b.getType()) && b.getType().isAir()) {
                         Random r = new Random();
                         int low = 1;
                         int high = leafMaterial.size() + 1;
                         int result = r.nextInt(high - low) + low;
                         Material material = leafMaterial.get(result - 1);
                         b.setType(material);
-                        BlockData lantern = getLantern(material);
+                        BlockData lantern = getSoulLantern();
                         Block down = b.getRelative(BlockFace.DOWN);
                         if (down.getType().isAir()) {
                             down.setBlockData(lantern);
@@ -101,14 +103,8 @@ public class TreeBuilder {
         }
     }
 
-    private BlockData getLantern(Material material) {
-        Lantern lantern;
-        try {
-            Material m = Material.valueOf(material.toString().replace("CHAIN", "LANTERN"));
-            lantern = (Lantern) m.createBlockData();
-        } catch (IllegalArgumentException e) {
-            lantern = (Lantern) Material.WAXED_COPPER_LANTERN.createBlockData();
-        }
+    private BlockData getSoulLantern() {
+        Lantern lantern = (Lantern) Material.SOUL_LANTERN.createBlockData();
         lantern.setHanging(true);
         return lantern;
     }

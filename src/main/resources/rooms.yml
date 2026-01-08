@@ -30,6 +30,12 @@ rooms:
     offset: -4
     seed: OAK_LEAVES
     user: false
+  ARCHITECTURAL:
+    enabled: true
+    cost: 600
+    offset: -4
+    seed: WAXED_COPPER_GRATE
+    user: false
   BAKER:
     enabled: true
     cost: 350

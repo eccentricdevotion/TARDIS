@@ -31,6 +31,7 @@ import me.eccentric_nz.TARDIS.enumeration.Room;
 import me.eccentric_nz.TARDIS.enumeration.TardisLight;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.UseClay;
+import me.eccentric_nz.TARDIS.rooms.architectural.tree.TreeBuilder;
 import me.eccentric_nz.TARDIS.rooms.eye.EyeOfHarmonyParticles;
 import me.eccentric_nz.TARDIS.rooms.library.LibraryCatalogue;
 import me.eccentric_nz.TARDIS.schematic.setters.*;
@@ -114,6 +115,7 @@ public class RoomRunnable implements Runnable {
     private boolean running;
     private World world;
     private JsonArray arr;
+    private Block architectural;
     private Location aqua_spawn;
     private Chunk thisChunk;
 
@@ -447,6 +449,11 @@ public class RoomRunnable implements Runnable {
                     });
                     magmaBlocks.clear();
                 }
+                if (room.equals("ARCHITECTURAL") && architectural != null) {
+                    // generate a fractal tree
+                    new TreeBuilder().place(architectural);
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, ()-> architectural.setType(Material.GRAY_SHULKER_BOX), 30L);
+                }
                 if (room.equals("EYE")) {
                     eyeBlocks.forEach((key, value) -> key.setBlockData(value, true));
                     eyeBlocks.clear();
@@ -761,7 +768,7 @@ public class RoomRunnable implements Runnable {
                     plugin.getQueryFactory().insertControl(tardis_id, 19, plate, 0);
                 }
                 // set stable
-                if (type.equals(Material.SOUL_SAND) && (room.equals("STABLE") || room.equals("VILLAGE") || room.equals("RENDERER") || room.equals("LAVA") || room.equals("ALLAY") || room.equals("ZERO") || room.equals("GEODE") || room.equals("HUTCH") || room.equals("IGLOO") || room.equals("IISTUBIL") || room.equals("MANGROVE") || room.equals("PEN") || room.equals("STALL") || room.equals("BAMBOO") || room.equals("BIRDCAGE") || room.equals("MAZE") || room.equals("GARDEN") || room.equals("HAPPY") || room.equals("NAUTILUS"))) {
+                if (type.equals(Material.SOUL_SAND) && (room.equals("ARCHITECTURAL") || room.equals("STABLE") || room.equals("VILLAGE") || room.equals("RENDERER") || room.equals("LAVA") || room.equals("ALLAY") || room.equals("ZERO") || room.equals("GEODE") || room.equals("HUTCH") || room.equals("IGLOO") || room.equals("IISTUBIL") || room.equals("MANGROVE") || room.equals("PEN") || room.equals("STALL") || room.equals("BAMBOO") || room.equals("BIRDCAGE") || room.equals("MAZE") || room.equals("GARDEN") || room.equals("HAPPY") || room.equals("NAUTILUS"))) {
                     HashMap<String, Object> sets = new HashMap<>();
                     sets.put(room.toLowerCase(Locale.ROOT), world.getName() + ":" + startx + ":" + starty + ":" + startz);
                     HashMap<String, Object> wheres = new HashMap<>();
@@ -771,9 +778,10 @@ public class RoomRunnable implements Runnable {
                             // do nothing here
                         }
                         case "RENDERER", "ZERO" -> plugin.getQueryFactory().doUpdate("tardis", sets, wheres);
-                        case "MAZE" -> {
+                        case "ARCHITECTURAL", "MAZE" -> {
                             String loc_str = TARDISStaticLocationGetters.makeLocationStr(world, startx, starty + 1, startz);
-                            plugin.getQueryFactory().insertControl(tardis_id, 44, loc_str, 0);
+                            int control = room.equals("ARCHITECTURAL") ? 59 : 44;
+                            plugin.getQueryFactory().insertControl(tardis_id, control, loc_str, 0);
                         }
                         default -> {
                             ResultSetFarming rsf = new ResultSetFarming(plugin, tardis_id);
@@ -787,21 +795,25 @@ public class RoomRunnable implements Runnable {
                         }
                     }
                     // replace with correct block
-                    switch (Room.valueOf(room)) {
-                        case ALLAY -> data = Material.LIGHT_GRAY_WOOL.createBlockData();
-                        case VILLAGE -> data = Material.COBBLESTONE.createBlockData();
-                        case HUTCH, STABLE, STALL, MAZE -> data = Material.GRASS_BLOCK.createBlockData();
-                        case BAMBOO, BIRDCAGE -> data = Material.PODZOL.createBlockData();
-                        case GEODE -> data = Material.CLAY.createBlockData();
-                        case HAPPY -> data = Material.BLUE_ICE.createBlockData();
-                        case IGLOO -> data = Material.PACKED_ICE.createBlockData();
-                        case IISTUBIL -> data = Material.TERRACOTTA.createBlockData();
-                        case LAVA -> data = Material.NETHERRACK.createBlockData();
-                        case MANGROVE -> data = TARDISConstants.WATER;
-                        case NAUTILUS -> data = TARDISConstants.GLASS;
-                        case PEN -> data = Material.MOSS_BLOCK.createBlockData();
-                        case ZERO -> data = Material.PINK_CARPET.createBlockData();
-                        case GARDEN -> {
+                    switch (room) {
+                        case "ALLAY" -> data = Material.LIGHT_GRAY_WOOL.createBlockData();
+                        case "ARCHITECTURAL" -> {
+                            data = Material.LIGHT_GRAY_WOOL.createBlockData();
+                            architectural = world.getBlockAt(startx, starty + 1, startz);
+                        }
+                        case "VILLAGE" -> data = Material.COBBLESTONE.createBlockData();
+                        case "HUTCH", "STABLE", "STALL", "MAZE" -> data = Material.GRASS_BLOCK.createBlockData();
+                        case "BAMBOO", "BIRDCAGE" -> data = Material.PODZOL.createBlockData();
+                        case "GEODE" -> data = Material.CLAY.createBlockData();
+                        case "HAPPY" -> data = Material.BLUE_ICE.createBlockData();
+                        case "IGLOO" -> data = Material.PACKED_ICE.createBlockData();
+                        case "IISTUBIL" -> data = Material.TERRACOTTA.createBlockData();
+                        case "LAVA" -> data = Material.NETHERRACK.createBlockData();
+                        case "MANGROVE" -> data = TARDISConstants.WATER;
+                        case "NAUTILUS" -> data = TARDISConstants.GLASS;
+                        case "PEN" -> data = Material.MOSS_BLOCK.createBlockData();
+                        case "ZERO" -> data = Material.PINK_CARPET.createBlockData();
+                        case "GARDEN" -> {
                             data = Material.GRASS_BLOCK.createBlockData();
                             // save garden coords
                             HashMap<String, Object> setG = new HashMap<>();
