@@ -2,13 +2,11 @@ package me.eccentric_nz.TARDIS.rooms.architectural;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.BlueprintRoom;
-import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.companionGUI.VanishChecker;
 import me.eccentric_nz.TARDIS.custommodels.GUIArs;
 import me.eccentric_nz.TARDIS.custommodels.GUIChemistry;
 import me.eccentric_nz.TARDIS.custommodels.GUIMap;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetBlueprint;
-import me.eccentric_nz.TARDIS.planets.GallifreyBlueprintTrade;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
@@ -97,12 +95,12 @@ public class ArchitecturalBlueprintsInventory implements InventoryHolder {
         pim.displayName(Component.text(plugin.getLanguage().getString("BUTTON_SCROLL_R", "Scroll right")));
         scroll_right.setItemMeta(pim);
         items[46] = scroll_right;
-        // 49 give
-        ItemStack give = ItemStack.of(GUIArs.BUTTON_SCROLL_R.material(), 1);
+        // give
+        ItemStack give = ItemStack.of(Material.SOUL_LANTERN, 1);
         ItemMeta gim = give.getItemMeta();
         gim.displayName(Component.text("Give blueprint disc"));
         give.setItemMeta(gim);
-        items[46] = give;
+        items[49] = give;
         // close
         ItemStack close = ItemStack.of(GUIMap.BUTTON_CLOSE.material(), 1);
         ItemMeta gui = close.getItemMeta();
