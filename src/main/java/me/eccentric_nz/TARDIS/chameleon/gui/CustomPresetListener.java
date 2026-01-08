@@ -105,14 +105,11 @@ public class CustomPresetListener extends TARDISMenuListener {
                 // do nothing
             }
             // return to Chameleon Circuit GUI
-            case 50 -> plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () ->
-                    player.openInventory(new ChameleonInventory(plugin, tardis.getAdaption(), tardis.getPreset(), tardis.getItemPreset()).getInventory()), 2L);
+            case 50 -> plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.openInventory(new ChameleonInventory(plugin, tardis.getAdaption(), tardis.getPreset(), tardis.getItemPreset()).getInventory()), 2L);
             // go to page one (regular presets)
-            case 51 -> plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () ->
-                    player.openInventory(new BlockPresetInventory(plugin, player).getInventory()), 2L);
+            case 51 -> plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.openInventory(new BlockPresetInventory(plugin, player).getInventory()), 2L);
             // go to page two (coloured police boxes)
-            case 52 -> plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () ->
-                    player.openInventory(new ModelledPresetInventory(plugin, player).getInventory()), 2L);
+            case 52 -> plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.openInventory(new ModelledPresetInventory(plugin, player).getInventory()), 2L);
             case 53 -> close(player);
             default -> {
                 ItemMeta selected = is.getItemMeta();

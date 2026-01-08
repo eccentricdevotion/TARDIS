@@ -111,19 +111,15 @@ public class ModelledPresetListener extends TARDISMenuListener {
                 plugin.getMessenger().sendInsertedColour(player, "CHAM_SET", selected.getDisplayName(), plugin);
                 if (slot == 21) {
                     // any colour - open the colour picker
-                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () ->
-                            player.openInventory(new ColourPickerInventory(plugin).getInventory()), 2L);
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.openInventory(new ColourPickerInventory(plugin).getInventory()), 2L);
                 }
             }
             // go to custom presets
-            case 48 -> plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () ->
-                    player.openInventory(new CustomPresetInventory(plugin, player).getInventory()), 2L);
+            case 48 -> plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.openInventory(new CustomPresetInventory(plugin, player).getInventory()), 2L);
             // go to page one (regular presets)
-            case 51 -> plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () ->
-                    player.openInventory(new BlockPresetInventory(plugin, player).getInventory()), 2L);
+            case 51 -> plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.openInventory(new BlockPresetInventory(plugin, player).getInventory()), 2L);
             // return to Chameleon Circuit GUI
-            case 52 -> plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () ->
-                    player.openInventory(new ChameleonInventory(plugin, tardis.getAdaption(), tardis.getPreset(), tardis.getItemPreset()).getInventory()), 2L);
+            case 52 -> plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.openInventory(new ChameleonInventory(plugin, tardis.getAdaption(), tardis.getPreset(), tardis.getItemPreset()).getInventory()), 2L);
             case 53 -> close(player);
             default -> {
                 // custom model exterior
@@ -137,7 +133,6 @@ public class ModelledPresetListener extends TARDISMenuListener {
                 }
                 plugin.getMessenger().sendInsertedColour(player, "CHAM_SET", custom, plugin);
             }
-
         }
         if (!set.isEmpty()) {
             set.put("adapti_on", 0);
@@ -148,7 +143,6 @@ public class ModelledPresetListener extends TARDISMenuListener {
             DamageUtility.run(plugin, DiskCircuit.CHAMELEON, id, player);
         }
     }
-
 
     private void updateChameleonSign(ArrayList<HashMap<String, String>> map, String preset, Player player) {
         for (HashMap<String, String> entry : map) {

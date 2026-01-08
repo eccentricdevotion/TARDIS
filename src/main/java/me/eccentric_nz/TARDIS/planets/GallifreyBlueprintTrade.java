@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.BlueprintConsole;
 import me.eccentric_nz.TARDIS.blueprints.BlueprintRoom;
 import me.eccentric_nz.TARDIS.enumeration.Desktops;
+import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
@@ -100,7 +101,7 @@ public class GallifreyBlueprintTrade {
         pdc.set(plugin.getBlueprintKey(), PersistentDataType.STRING, perm);
         im.displayName(Component.text("TARDIS Blueprint Disk"));
         List<Component> lore = List.of(
-                Component.text(TARDISStringUtils.capitalise(name)),
+                ComponentUtils.toWhite(TARDISStringUtils.capitalise(name)),
                 Component.text("Valid only for"),
                 Component.text("the trading player")
         );
