@@ -93,6 +93,7 @@ public class TARDISMenuListener implements Listener {
         HashMap<Component, Integer> map = new HashMap<>();
         map.put(Component.text("Add Companion", NamedTextColor.DARK_RED), 54);
         map.put(Component.text("Admin Config Menu", NamedTextColor.DARK_RED), 54);
+        map.put(Component.text("Architectural Blueprints", NamedTextColor.DARK_RED), 54);
         map.put(Component.text("Architectural Reconfiguration", NamedTextColor.DARK_RED), 54);
         map.put(Component.text("Room Relocator", NamedTextColor.DARK_RED), 54);
         map.put(Component.text("Area Locations", NamedTextColor.DARK_RED), 54);

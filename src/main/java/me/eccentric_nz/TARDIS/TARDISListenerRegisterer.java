@@ -89,6 +89,7 @@ import me.eccentric_nz.TARDIS.recipes.TARDISRecipeCategoryListener;
 import me.eccentric_nz.TARDIS.recipes.TARDISRecipeInventoryListener;
 import me.eccentric_nz.TARDIS.rooms.JettisonSeeder;
 import me.eccentric_nz.TARDIS.rooms.RoomSeeder;
+import me.eccentric_nz.TARDIS.rooms.architectural.ArchitecturalBlueprintsListener;
 import me.eccentric_nz.TARDIS.rooms.eye.ArtronCapacitorStorageListener;
 import me.eccentric_nz.TARDIS.rooms.eye.EyeDamageListener;
 import me.eccentric_nz.TARDIS.rooms.eye.SpaceHelmetListener;
@@ -173,6 +174,7 @@ class TARDISListenerRegisterer {
         plugin.getPM().registerEvents(buttonListener, plugin);
         plugin.getPM().registerEvents(new ARSListener(plugin), plugin);
         plugin.getPM().registerEvents(new ARSMapListener(plugin), plugin);
+        plugin.getPM().registerEvents(new ArchitecturalBlueprintsListener(plugin), plugin);
         if (plugin.getConfig().getBoolean("allow.autonomous")) {
             plugin.getPM().registerEvents(new AutonomousGUIListener(plugin), plugin);
         }

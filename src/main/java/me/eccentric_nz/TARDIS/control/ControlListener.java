@@ -235,7 +235,7 @@ public class ControlListener implements Listener {
                                 }
                                 case 55 -> new TelevisionAction(plugin).openGUI(player);
                                 case 58 -> new HappyGhastRelease(plugin).undock(block, id, player);
-                                case 59 -> new ArchitecturalReconfiguration(plugin).open(id, player);
+                                case 59 -> new ArchitecturalReconfiguration(plugin).open(player);
                                 default -> { }
                             }
                         } else if (action.equals(Action.PHYSICAL)) {

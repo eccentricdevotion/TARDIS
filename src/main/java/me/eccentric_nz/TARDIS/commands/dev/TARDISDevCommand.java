@@ -24,6 +24,7 @@ import io.papermc.paper.registry.RegistryKey;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.bStats.ARSRoomCounts;
+import me.eccentric_nz.TARDIS.blueprints.BlueprintRoom;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import me.eccentric_nz.TARDIS.commands.dev.wiki.WikiRecipeCommand;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -80,7 +81,7 @@ public class TARDISDevCommand implements CommandExecutor {
 
     private final Set<String> firstsStr = Sets.newHashSet(
             "add_regions", "advancements", "armour",
-            "biome", "box", "brushable",
+            "biome", "blueprint", "box", "brushable",
             "chain", "chunks", "chunky", "circuit", "component",
             "dalek", "debug", "dialog", "dismount", "displayitem",
             "effect", "empty",
@@ -119,6 +120,18 @@ public class TARDISDevCommand implements CommandExecutor {
                 }
                 if (args.length == 1) {
                     switch (first) {
+                        case "blueprint" -> {
+                            if (sender instanceof Player player) {
+                                String uuid = player.getUniqueId().toString();
+                                for (BlueprintRoom bpr : BlueprintRoom.values()) {
+                                    HashMap<String, Object> set = new HashMap<>();
+                                    set.put("uuid", uuid);
+                                    set.put("permission", bpr.getPermission());
+                                    plugin.getQueryFactory().doInsert("blueprint", set);
+                                }
+                            }
+                            return true;
+                        }
                         case "mount", "unmount" -> {
                             if (sender instanceof Player player) {
                                 return new MountCommand(plugin).test(player, first.equals("mount"));

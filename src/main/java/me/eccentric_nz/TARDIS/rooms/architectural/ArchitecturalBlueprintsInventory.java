@@ -1,7 +1,6 @@
 package me.eccentric_nz.TARDIS.rooms.architectural;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.blueprints.BlueprintRoom;
 import me.eccentric_nz.TARDIS.companionGUI.VanishChecker;
 import me.eccentric_nz.TARDIS.custommodels.GUIArs;
 import me.eccentric_nz.TARDIS.custommodels.GUIChemistry;
@@ -16,6 +15,8 @@ import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.util.List;
 import java.util.UUID;
@@ -25,7 +26,6 @@ public class ArchitecturalBlueprintsInventory implements InventoryHolder {
     private final TARDIS plugin;
     private final Player player;
     private final Inventory inventory;
-    private final List<BlueprintRoom> notThese = List.of(BlueprintRoom.ARCHITECTURAL, BlueprintRoom.JETTISON, BlueprintRoom.ZERO);
 
     public ArchitecturalBlueprintsInventory(TARDIS plugin, Player player) {
         this.plugin = plugin;
@@ -48,11 +48,21 @@ public class ArchitecturalBlueprintsInventory implements InventoryHolder {
         ItemStack[] items = new ItemStack[54];
         int i = 0;
         ResultSetBlueprint rsb = new ResultSetBlueprint(plugin);
-        for (String bp : rsb.getRoomBlueprints(player.getUniqueId().toString())) {
-            BlueprintRoom blueprint = BlueprintRoom.PERMS.get(bp);
-            ItemStack is = plugin.getTardisAPI().getTARDISBlueprintItem("BLUEPRINT_ROOM_" + blueprint.toString(), player);
-            items[i] = is;
-            i++;
+        List<String> perms = rsb.getRoomBlueprints(player.getUniqueId().toString());
+        ItemStack[][] disks = TreeBlueprints.getBlueprints();
+        for (int r = 0; r < 3; r++) {
+            for (int c = 0; c < 9; c++) {
+                ItemStack is = disks[r][c];
+                ItemMeta im = is.getItemMeta();
+                PersistentDataContainer pdc = im.getPersistentDataContainer();
+                String perm = pdc.get(TARDIS.plugin.getBlueprintKey(), PersistentDataType.STRING);
+                if (!perms.contains(perm)) {
+                    items[i] = is.withType(Material.MUSIC_DISC_RELIC);
+                } else {
+                    items[i] = is;
+                }
+                i++;
+            }
         }
         // scroll up
         ItemStack scroll_up = ItemStack.of(GUIChemistry.SCROLL_UP.material(), 1);
@@ -83,6 +93,14 @@ public class ArchitecturalBlueprintsInventory implements InventoryHolder {
                 i++;
             }
         }
+        if (i == 36) {
+            // no players online
+            ItemStack players = ItemStack.of(Material.GRAY_TERRACOTTA, 1);
+            ItemMeta pim = players.getItemMeta();
+            pim.displayName(Component.text("No players online"));
+            players.setItemMeta(pim);
+            items[36] = players;
+        }
         // scroll left
         ItemStack scroll_left = ItemStack.of(GUIArs.BUTTON_SCROLL_L.material(), 1);
         ItemMeta nim = scroll_left.getItemMeta();
@@ -96,7 +114,7 @@ public class ArchitecturalBlueprintsInventory implements InventoryHolder {
         scroll_right.setItemMeta(pim);
         items[46] = scroll_right;
         // give
-        ItemStack give = ItemStack.of(Material.SOUL_LANTERN, 1);
+        ItemStack give = ItemStack.of(Material.GILDED_BLACKSTONE, 1);
         ItemMeta gim = give.getItemMeta();
         gim.displayName(Component.text("Give blueprint disc"));
         give.setItemMeta(gim);
