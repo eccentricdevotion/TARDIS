@@ -27,7 +27,6 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetFarming;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetHappy;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisTimeLordName;
-import me.eccentric_nz.TARDIS.enumeration.Room;
 import me.eccentric_nz.TARDIS.enumeration.TardisLight;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.UseClay;
@@ -1036,6 +1035,8 @@ public class RoomRunnable implements Runnable {
                 if ((type.equals(Material.BEDROCK) && !room.equals("SHELL")) || (type.equals(Material.SOUL_SAND) && room.equals("SHELL"))) {
                     if (checkRoomNextDoor(world.getBlockAt(startx, starty, startz))) {
                         data = TARDISConstants.AIR;
+                    } else if (room.equals("ARCITETURAL")) {
+                        data = gw.createBlockData();
                     } else {
                         data = (wall_type.equals(Material.ORANGE_WOOL)) ? ow.createBlockData() : wall_type.createBlockData();
                     }
