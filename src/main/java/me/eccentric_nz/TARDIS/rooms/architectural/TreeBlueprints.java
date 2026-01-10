@@ -20,7 +20,7 @@ import java.util.UUID;
 public class TreeBlueprints {
 
     static ItemStack[][] getBlueprints() {
-        int rows = BlueprintRoom.PERMS.size() / 9 + 1;
+        int rows = BlueprintRoom.values().length / 9 + 1;
         ItemStack[][] blueprints = new ItemStack[rows][9];
         int r = 0;
         int c = 0;

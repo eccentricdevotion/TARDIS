@@ -175,7 +175,7 @@ public class ArchitecturalBlueprintsListener extends TARDISMenuListener {
     }
 
     private void scrollDisks(InventoryView view, int row, boolean up, UUID uuid) {
-        if ((up && row < (rows - 3)) || (!up && row >= 0)) {
+        if ((up && row < (rows - 2)) || (!up && row >= 0)) {
             scroll.put(uuid, row);
             setDiskSlots(view, row, uuid);
         } else {
@@ -190,13 +190,17 @@ public class ArchitecturalBlueprintsListener extends TARDISMenuListener {
         for (int r = row; r < row + 3; r++) {
             for (int c = 0; c < 9; c++) {
                 ItemStack is = blueprints[r][c];
-                ItemMeta im = is.getItemMeta();
-                PersistentDataContainer pdc = im.getPersistentDataContainer();
-                String perm = pdc.get(TARDIS.plugin.getBlueprintKey(), PersistentDataType.STRING);
-                if (!perms.contains(perm)) {
-                    view.setItem(slot, is.withType(Material.MUSIC_DISC_RELIC));
+                if (is != null) {
+                    ItemMeta im = is.getItemMeta();
+                    PersistentDataContainer pdc = im.getPersistentDataContainer();
+                    String perm = pdc.get(TARDIS.plugin.getBlueprintKey(), PersistentDataType.STRING);
+                    if (!perms.contains(perm)) {
+                        view.setItem(slot, is.withType(Material.MUSIC_DISC_RELIC));
+                    } else {
+                        view.setItem(slot, is);
+                    }
                 } else {
-                    view.setItem(slot, is);
+                    view.setItem(slot, null);
                 }
                 slot++;
             }
