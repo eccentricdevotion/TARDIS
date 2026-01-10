@@ -174,7 +174,9 @@ class TARDISListenerRegisterer {
         plugin.getPM().registerEvents(buttonListener, plugin);
         plugin.getPM().registerEvents(new ARSListener(plugin), plugin);
         plugin.getPM().registerEvents(new ARSMapListener(plugin), plugin);
-        plugin.getPM().registerEvents(new ArchitecturalBlueprintsListener(plugin), plugin);
+        if (plugin.getConfig().getBoolean("modules.blueprints")) {
+            plugin.getPM().registerEvents(new ArchitecturalBlueprintsListener(plugin), plugin);
+        }
         if (plugin.getConfig().getBoolean("allow.autonomous")) {
             plugin.getPM().registerEvents(new AutonomousGUIListener(plugin), plugin);
         }
