@@ -1,5 +1,13 @@
 {
   "asset_id": "tardis:aorta",
   "height": 2,
-  "width": 2
+  "width": 2,
+  "title": {
+    "color": "gray",
+    "text": "Aorta"
+  },
+  "author": {
+    "color": "gray",
+    "text": "eccentric_nz"
+  }
 }

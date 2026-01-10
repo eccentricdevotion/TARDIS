@@ -1,5 +1,13 @@
 {
   "asset_id": "tardis:particles",
   "height": 3,
-  "width": 3
+  "width": 3,
+  "title": {
+    "color": "gray",
+    "text": "Particles"
+  },
+  "author": {
+    "color": "gray",
+    "text": "eccentric_nz"
+  }
 }

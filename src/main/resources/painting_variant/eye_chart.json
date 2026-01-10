@@ -1,5 +1,13 @@
 {
   "asset_id": "tardis:eye_chart",
   "height": 2,
-  "width": 1
+  "width": 1,
+  "title": {
+    "color": "gray",
+    "text": "Eye Chart"
+  },
+  "author": {
+    "color": "gray",
+    "text": "eccentric_nz"
+  }
 }

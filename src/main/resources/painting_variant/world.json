@@ -1,5 +1,13 @@
 {
   "asset_id": "tardis:world",
   "height": 3,
-  "width": 4
+  "width": 4,
+  "title": {
+    "color": "gray",
+    "text": "World"
+  },
+  "author": {
+    "color": "gray",
+    "text": "eccentric_nz"
+  }
 }

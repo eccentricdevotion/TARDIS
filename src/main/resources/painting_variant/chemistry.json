@@ -1,5 +1,13 @@
 {
   "asset_id": "tardis:chemistry",
   "height": 2,
-  "width": 2
+  "width": 2,
+  "title": {
+    "color": "gray",
+    "text": "Chemistry"
+  },
+  "author": {
+    "color": "gray",
+    "text": "eccentric_nz"
+  }
 }
