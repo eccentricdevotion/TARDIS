@@ -84,6 +84,12 @@ rooms:
     offset: -4
     seed: DIRT
     user: false
+  GALLERY:
+    enabled: true
+    cost: 450
+    offset: -4
+    seed: CHISELED_QUARTZ_BLOCK
+    user: false
   GARDEN:
     enabled: true
     cost: 450

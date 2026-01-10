@@ -43,7 +43,7 @@ public class RoomPopulator extends BlockPopulator {
 
     private final TARDIS plugin;
     private final List<String> rooms = List.of("ALLAY", "APIARY", "AQUARIUM", "ARBORETUM", "ARCHITECTURAL", "BAKER", "BAMBOO",
-            "BEDROOM", "BIRDCAGE", "CHEMISTRY", "EMPTY", "EYE", "FARM", "GARDEN", "GEODE", "GREENHOUSE", "HAPPY", "HARMONY",
+            "BEDROOM", "BIRDCAGE", "CHEMISTRY", "EMPTY", "EYE", "FARM", "GALLERY", "GARDEN", "GEODE", "GREENHOUSE", "HAPPY", "HARMONY",
             "HUTCH", "IGLOO", "IISTUBIL", "KITCHEN", "LAVA", "LAZARUS", "LIBRARY", "MANGROVE", "MUSHROOM", "NAUTILUS",
             "NETHER", "OBSERVATORY", "PASSAGE", "PEN", "POOL", "RAIL", "SHELL", "SMELTER", "STABLE", "STALL", "SURGERY",
             "TRENZALORE", "VAULT", "VILLAGE", "WOOD", "WORKSHOP");

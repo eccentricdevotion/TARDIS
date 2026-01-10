@@ -68,6 +68,8 @@ public class RoomsConfigUpdater {
         booleanOptions.put("rooms.EYE.user", false);
         booleanOptions.put("rooms.FARM.enabled", true);
         booleanOptions.put("rooms.FARM.user", false);
+        booleanOptions.put("rooms.GALLERY.enabled", true);
+        booleanOptions.put("rooms.GALLERY.user", false);
         booleanOptions.put("rooms.GARDEN.enabled", true);
         booleanOptions.put("rooms.GARDEN.user", false);
         booleanOptions.put("rooms.GEODE.enabled", true);
@@ -169,6 +171,8 @@ public class RoomsConfigUpdater {
         integerOptions.put("rooms.EYE.offset", -4);
         integerOptions.put("rooms.FARM.cost", 350);
         integerOptions.put("rooms.FARM.offset", -4);
+        integerOptions.put("rooms.GALLERY.cost", 450);
+        integerOptions.put("rooms.GALLERY.offset", -4);
         integerOptions.put("rooms.GARDEN.cost", 450);
         integerOptions.put("rooms.GARDEN.offset", -4);
         integerOptions.put("rooms.GEODE.cost", 650);
@@ -256,6 +260,7 @@ public class RoomsConfigUpdater {
         stringOptions.put("rooms.EMPTY.seed", "GLASS");
         stringOptions.put("rooms.EYE.seed", "SHROOMLIGHT");
         stringOptions.put("rooms.FARM.seed", "DIRT");
+        stringOptions.put("rooms.GALLERY.seed", "CHISELED_QUARTZ_BLOCK");
         stringOptions.put("rooms.GARDEN.seed", "CHERRY_LEAVES");
         stringOptions.put("rooms.GEODE.seed", "AMETHYST_BLOCK");
         stringOptions.put("rooms.GRAVITY.seed", "MOSSY_COBBLESTONE");

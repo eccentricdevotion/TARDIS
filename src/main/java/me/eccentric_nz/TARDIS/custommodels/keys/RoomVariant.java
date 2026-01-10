@@ -35,6 +35,7 @@ public enum RoomVariant {
     EMPTY(new NamespacedKey(TARDIS.plugin, "button_empty")),
     EYE(new NamespacedKey(TARDIS.plugin, "button_eye")),
     FARM(new NamespacedKey(TARDIS.plugin, "button_farm")),
+    GALLERY(new NamespacedKey(TARDIS.plugin, "button_gallery")),
     GARDEN(new NamespacedKey(TARDIS.plugin, "button_garden")),
     GEODE(new NamespacedKey(TARDIS.plugin, "button_geode")),
     GRAVITY(new NamespacedKey(TARDIS.plugin, "button_gravity")),

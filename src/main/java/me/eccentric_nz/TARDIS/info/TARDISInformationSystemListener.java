@@ -576,6 +576,9 @@ public class TARDISInformationSystemListener implements Listener {
                 if (chat.equalsIgnoreCase("he")) {
                     new TISRoomInfo(plugin).show(p, TARDISInfoMenu.CHEMISTRY);
                 }
+                if (chat.equalsIgnoreCase("a")) {
+                    new TISRoomInfo(plugin).show(p, TARDISInfoMenu.GALLERY);
+                }
                 if (chat.equalsIgnoreCase("de")) {
                     new TISRoomInfo(plugin).show(p, TARDISInfoMenu.GARDEN);
                 }
@@ -594,7 +597,7 @@ public class TARDISInformationSystemListener implements Listener {
                 if (chat.equalsIgnoreCase("av")) {
                     new TISRoomInfo(plugin).show(p, TARDISInfoMenu.LAVA);
                 }
-                if (chat.equalsIgnoreCase("A")) {
+                if (chat.equalsIgnoreCase("-")) {
                     new TISRoomInfo(plugin).show(p, TARDISInfoMenu.ANTIGRAVITY);
                 }
                 if (chat.equalsIgnoreCase("q")) {

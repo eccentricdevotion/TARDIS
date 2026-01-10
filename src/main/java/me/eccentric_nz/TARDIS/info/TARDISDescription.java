@@ -201,6 +201,7 @@ public enum TARDISDescription {
     EMPTY("Not much in here."),
     EYE("The Eye of Harmony from the 11th Doctor's TARDIS."),
     FARM("You need this room to bring farm animals into the TARDIS."),
+    GALLERY("An art gallery featuring 'Gallifrey Falls No More', 'Exploding TARDIS', and the Venus de Milo."),
     GARDEN("Flowers, flowers, everywhere."),
     GEODE("Grow some amethyst, catch an axolotl."),
     GRAVITY("Going down..."),

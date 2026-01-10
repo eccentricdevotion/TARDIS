@@ -41,6 +41,7 @@ public enum TARDISARS implements ARS {
     EMPTY("GLASS", "Empty", 1, RoomVariant.EMPTY.getKey()),
     EYE("SHROOMLIGHT", "Eye of Harmony", 1, RoomVariant.EYE.getKey()),
     FARM("DIRT", "Mob Farm", 1, RoomVariant.FARM.getKey()),
+    GALLERY("CHISELED_QUARTZ_BLOCK", "Art Gallery", 1, RoomVariant.GALLERY.getKey()),
     GARDEN("CHERRY_LEAVES", "Flower Garden", 1, RoomVariant.GARDEN.getKey()),
     GEODE("AMETHYST_BLOCK", "Geode", 1, RoomVariant.GEODE.getKey()),
     GRAVITY("MOSSY_COBBLESTONE", "Gravity Well", 1, RoomVariant.GRAVITY.getKey()),

@@ -43,6 +43,8 @@ public enum BlueprintRoom {
     EMPTY("tardis.room.empty"),
     EYE("tardis.room.eye"),
     FARM("tardis.room.farm", BlueprintFeature.FARM),
+    GALLERY("tardis.room.gallery"),
+    GARDEN("tardis.room.garden"),
     GEODE("tardis.room.geode"),
     GRAVITY("tardis.room.gravity"),
     GREENHOUSE("tardis.room.greenhouse"),
@@ -77,9 +79,16 @@ public enum BlueprintRoom {
     WORKSHOP("tardis.room.workshop"),
     ZERO("tardis.room.zero");
 
+    public static HashMap<String, BlueprintRoom> PERMS = new HashMap<>();
+
+    static {
+        for (BlueprintRoom room : BlueprintRoom.values()) {
+            PERMS.put(room.permission, room);
+        }
+    }
+
     private final String permission;
     private final BlueprintFeature feature;
-    public static HashMap<String, BlueprintRoom> PERMS = new HashMap<>();
 
     BlueprintRoom(String permission) {
         this.permission = permission;
@@ -89,12 +98,6 @@ public enum BlueprintRoom {
     BlueprintRoom(String permission, BlueprintFeature feature) {
         this.permission = permission;
         this.feature = feature;
-    }
-
-    static {
-        for (BlueprintRoom room : BlueprintRoom.values()) {
-            PERMS.put(room.permission, room);
-        }
     }
 
     public String getPermission() {

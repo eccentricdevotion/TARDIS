@@ -35,6 +35,7 @@ public enum Room {
     EMPTY,
     EYE,
     FARM,
+    GALLERY,
     GARDEN,
     GEODE,
     GRAVITY,
