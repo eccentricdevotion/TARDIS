@@ -117,6 +117,7 @@ public class RoomRunnable implements Runnable {
     private Block architectural;
     private Location aqua_spawn;
     private Chunk thisChunk;
+    private int r = 2;
 
     public RoomRunnable(TARDIS plugin, RoomData roomData, UUID uuid) {
         this.plugin = plugin;
@@ -430,9 +431,7 @@ public class RoomRunnable implements Runnable {
                 Location start = new Location(world, resetx, resety, resetz);
                 if (obj.has("item_frames")) {
                     JsonArray frames = obj.get("item_frames").getAsJsonArray();
-                    for (int i = 0; i < frames.size(); i++) {
-                        ItemFrameSetter.curate(frames.get(i).getAsJsonObject(), start, tardis_id);
-                    }
+                    ItemFrameSetter.curate(frames, start, tardis_id);
                 }
                 if (obj.has("item_displays")) {
                     JsonArray displays = obj.get("item_displays").getAsJsonArray();
@@ -451,7 +450,7 @@ public class RoomRunnable implements Runnable {
                 if (room.equals("ARCHITECTURAL") && architectural != null) {
                     // generate a fractal tree
                     new TreeBuilder().place(architectural);
-                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, ()-> architectural.setType(Material.GRAY_SHULKER_BOX), 30L);
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> architectural.setType(Material.GRAY_SHULKER_BOX), 30L);
                 }
                 if (room.equals("EYE")) {
                     eyeBlocks.forEach((key, value) -> key.setBlockData(value, true));
@@ -1035,7 +1034,7 @@ public class RoomRunnable implements Runnable {
                 if ((type.equals(Material.BEDROCK) && !room.equals("SHELL")) || (type.equals(Material.SOUL_SAND) && room.equals("SHELL"))) {
                     if (checkRoomNextDoor(world.getBlockAt(startx, starty, startz))) {
                         data = TARDISConstants.AIR;
-                    } else if (room.equals("ARCITETURAL")) {
+                    } else if (room.equals("ARCHITECTURAL")) {
                         data = gw.createBlockData();
                     } else {
                         data = (wall_type.equals(Material.ORANGE_WOOL)) ? ow.createBlockData() : wall_type.createBlockData();
@@ -1154,7 +1153,6 @@ public class RoomRunnable implements Runnable {
                 if (room.equals("BAKER") || room.equals("WOOD")) {
                     // remember the controls
                     int secondary = (room.equals("BAKER")) ? 1 : 2;
-                    int r = 2;
                     int control_type;
                     String loc_str;
                     List<Material> controls = List.of(Material.CAKE, Material.STONE_BUTTON, Material.MUSHROOM_STEM, Material.OAK_BUTTON);

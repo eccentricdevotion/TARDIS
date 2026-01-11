@@ -194,9 +194,7 @@ public class PreviewBuildRunnable implements Runnable {
             }
             if (obj.has("item_frames")) {
                 JsonArray frames = obj.get("item_frames").getAsJsonArray();
-                for (int i = 0; i < frames.size(); i++) {
-                    ItemFrameSetter.curate(frames.get(i).getAsJsonObject(), location, -1);
-                }
+                ItemFrameSetter.curate(frames, location, -1);
             }
             if (obj.has("item_displays")) {
                 JsonArray displays = obj.get("item_displays").getAsJsonArray();

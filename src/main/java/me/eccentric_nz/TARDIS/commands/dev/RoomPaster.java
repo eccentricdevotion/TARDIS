@@ -124,9 +124,7 @@ public class RoomPaster implements Runnable {
             Location start = new Location(world, x, y, z);
             if (json.has("item_frames")) {
                 JsonArray frames = json.get("item_frames").getAsJsonArray();
-                for (int i = 0; i < frames.size(); i++) {
-                    ItemFrameSetter.curate(frames.get(i).getAsJsonObject(), start, -1);
-                }
+                ItemFrameSetter.curate(frames, start, -1);
             }
             if (json.has("item_displays")) {
                 JsonArray displays = json.get("item_displays").getAsJsonArray();
