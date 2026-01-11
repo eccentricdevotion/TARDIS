@@ -38,6 +38,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.MainHand;
 import org.bukkit.inventory.meta.BlockStateMeta;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.BoundingBox;
 
@@ -184,6 +185,9 @@ public class SchematicSave {
                                     ItemMeta im = helmet.getItemMeta();
                                     if (im.hasItemModel()) {
                                         head.addProperty("model", im.getItemModel().toString());
+                                    }
+                                    if (im instanceof SkullMeta skullMeta) {
+                                        skullMeta.getPlayerProfile().getProperties().stream().findFirst().ifPresent(property -> head.addProperty("skull", property.getValue()));
                                     }
                                     head.addProperty("material", helmet.getType().toString());
                                     as.add("head", head);

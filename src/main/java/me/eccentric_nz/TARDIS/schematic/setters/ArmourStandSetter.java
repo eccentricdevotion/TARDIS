@@ -1,7 +1,10 @@
 package me.eccentric_nz.TARDIS.schematic.setters;
 
+import com.destroystokyo.paper.profile.PlayerProfile;
+import com.destroystokyo.paper.profile.ProfileProperty;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -12,6 +15,9 @@ import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.SkullMeta;
+
+import java.util.UUID;
 
 public class ArmourStandSetter {
 
@@ -41,7 +47,15 @@ public class ArmourStandSetter {
                     NamespacedKey nsk = NamespacedKey.fromString(head.get("model").getAsString());
                     im.setItemModel(nsk);
                 }
-                is.setItemMeta(im);
+                if (head.has("skull")) {
+                    SkullMeta skull = (SkullMeta) im;
+                    PlayerProfile skullProfile = TARDIS.plugin.getServer().createProfile(UUID.randomUUID());
+                    skullProfile.setProperty(new ProfileProperty("textures", head.get("skull").getAsString(), null));
+                    skull.setPlayerProfile(skullProfile);
+                    is.setItemMeta(skull);
+                } else {
+                    is.setItemMeta(im);
+                }
                 as.getEquipment().setHelmet(is);
             }
         }

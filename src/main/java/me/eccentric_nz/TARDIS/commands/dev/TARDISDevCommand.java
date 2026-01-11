@@ -307,6 +307,12 @@ public class TARDISDevCommand implements CommandExecutor {
                     }
                 }
                 switch (first) {
+                    case "head" -> {
+                        if (sender instanceof Player player) {
+                            new HeadCommand(plugin).getHeadProperties(player);
+                        }
+                        return true;
+                    }
                     case "staircase" -> {
                         if (sender instanceof Player player) {
                             switch (args[1]) {
