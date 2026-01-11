@@ -36,7 +36,7 @@ public class ArmourStandSetter {
                 as.setVisible(stand.get("invisible").getAsBoolean());
             }
             if (stand.has("gravity")) {
-                as.setVisible(stand.get("gravity").getAsBoolean());
+                as.setGravity(stand.get("gravity").getAsBoolean());
             }
             if (stand.has("head")) {
                 JsonObject head = stand.get("head").getAsJsonObject();
