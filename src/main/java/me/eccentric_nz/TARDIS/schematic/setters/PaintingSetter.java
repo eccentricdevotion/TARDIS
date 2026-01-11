@@ -15,8 +15,6 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Painting;
 
-import java.util.Locale;
-
 public class PaintingSetter {
 
     public static void setArt(JsonArray paintings, World world, int x, int y, int z) {
@@ -27,16 +25,10 @@ public class PaintingSetter {
             int py = rel.get("y").getAsInt();
             int pz = rel.get("z").getAsInt();
             BlockFace facing = BlockFace.valueOf(painting.get("facing").getAsString());
-            Location pl;
             String which = painting.get("art").getAsString();
-            Art art = null;
-            if (which.contains(":")) {
-                // custom datapack painting
-                pl = TARDISPainting.calculatePosition(which.split(":")[1], facing, new Location(world, x + px, y + py, z + pz));
-            } else {
-                art = RegistryAccess.registryAccess().getRegistry(RegistryKey.PAINTING_VARIANT).get(new NamespacedKey("minecraft", which.toLowerCase(Locale.ROOT)));
-                pl = TARDISPainting.calculatePosition(art, facing, new Location(world, x + px, y + py, z + pz));
-            }
+            String[] split = which.split(":");
+            Art art = RegistryAccess.registryAccess().getRegistry(RegistryKey.PAINTING_VARIANT).get(new NamespacedKey(split[0], split[1]));
+            Location pl = TARDISPainting.calculatePosition(art, facing, new Location(world, x + px, y + py, z + pz));;
             try {
                 Painting ent = (Painting) world.spawnEntity(pl, EntityType.PAINTING);
                 ent.teleport(pl);

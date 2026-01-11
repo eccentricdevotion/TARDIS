@@ -92,7 +92,7 @@ public class TARDISDevCommand implements CommandExecutor {
             "label", "leather", "list",
             "mannequin", "monster", "mount",
             "ntc", "nms",
-            "plurals",
+            "painting", "plurals",
             "recipe", "regen", "registry", "roman", "rooms",
             "screen", "skin", "snapshot", "staircase", "stats", "systree",
             "tis", "tips", "tree",
@@ -120,6 +120,12 @@ public class TARDISDevCommand implements CommandExecutor {
                 }
                 if (args.length == 1) {
                     switch (first) {
+                        case "painting" -> {
+                            if (sender instanceof Player player) {
+                                return new PaintingCommand(plugin).getLocation(player);
+                            }
+                            return true;
+                        }
                         case "blueprint" -> {
                             if (sender instanceof Player player) {
                                 String uuid = player.getUniqueId().toString();

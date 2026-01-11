@@ -156,15 +156,10 @@ public class RoomsUtility {
         BlockFace facing = BlockFace.valueOf(painting.get("facing").getAsString());
         Location pl = null;
         String which = painting.get("art").getAsString();
-        Art art = null;
-        if (which.contains(":")) {
-            // custom datapack painting
-            pl = TARDISPainting.calculatePosition(which.split(":")[1], facing, new Location(null, px, py, pz));
-        } else {
-            art = RegistryAccess.registryAccess().getRegistry(RegistryKey.PAINTING_VARIANT).get(new NamespacedKey("minecraft", which.toLowerCase(Locale.ROOT)));
-            if (art != null) {
-                pl = TARDISPainting.calculatePosition(art, facing, new Location(null, px, py, pz));
-            }
+        String[] split = which.split(":");
+        Art art = RegistryAccess.registryAccess().getRegistry(RegistryKey.PAINTING_VARIANT).get(new NamespacedKey(split[0], split[1]));
+        if (art != null) {
+            pl = TARDISPainting.calculatePosition(art, facing, new Location(null, px, py, pz));
         }
         if (pl != null) {
             try {
