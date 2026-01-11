@@ -47,6 +47,7 @@ public enum RoomVariant {
     IISTUBIL(new NamespacedKey(TARDIS.plugin, "button_iistubil")),
     JETTISON(new NamespacedKey(TARDIS.plugin, "button_jettison")),
     KITCHEN(new NamespacedKey(TARDIS.plugin, "button_kitchen")),
+    LAUNDRY(new NamespacedKey(TARDIS.plugin, "button_laundry")),
     LAVA(new NamespacedKey(TARDIS.plugin, "button_lava")),
     LAZARUS(new NamespacedKey(TARDIS.plugin, "button_lazarus")),
     LIBRARY(new NamespacedKey(TARDIS.plugin, "button_library")),

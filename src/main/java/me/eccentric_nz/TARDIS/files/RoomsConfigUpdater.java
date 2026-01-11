@@ -90,6 +90,8 @@ public class RoomsConfigUpdater {
         booleanOptions.put("rooms.IISTUBIL.user", false);
         booleanOptions.put("rooms.KITCHEN.enabled", true);
         booleanOptions.put("rooms.KITCHEN.user", false);
+        booleanOptions.put("rooms.LAUNDRY.enabled", true);
+        booleanOptions.put("rooms.LAUNDRY.user", false);
         booleanOptions.put("rooms.LAVA.enabled", true);
         booleanOptions.put("rooms.LAVA.user", false);
         booleanOptions.put("rooms.LAZARUS.enabled", true);
@@ -193,6 +195,8 @@ public class RoomsConfigUpdater {
         integerOptions.put("rooms.IISTUBIL.offset", -4);
         integerOptions.put("rooms.KITCHEN.cost", 450);
         integerOptions.put("rooms.KITCHEN.offset", -4);
+        integerOptions.put("rooms.LAUNDRY.cost", 450);
+        integerOptions.put("rooms.LAUNDRY.offset", -4);
         integerOptions.put("rooms.LAVA.cost", 550);
         integerOptions.put("rooms.LAVA.offset", -4);
         integerOptions.put("rooms.LAZARUS.cost", 750);
@@ -271,6 +275,7 @@ public class RoomsConfigUpdater {
         stringOptions.put("rooms.IGLOO.seed", "PACKED_ICE");
         stringOptions.put("rooms.IISTUBIL.seed", "WHITE_GLAZED_TERRACOTTA");
         stringOptions.put("rooms.KITCHEN.seed", "PUMPKIN");
+        stringOptions.put("rooms.LAUNDRY.seed", "VERDANT_FROGLIGHT");
         stringOptions.put("rooms.LAVA.seed", "MAGMA_BLOCK");
         stringOptions.put("rooms.LAZARUS.seed", "FURNACE");
         stringOptions.put("rooms.LIBRARY.seed", "ENCHANTMENT_TABLE");

@@ -52,6 +52,7 @@ public enum TARDISARS implements ARS {
     IGLOO("PACKED_ICE", "Igloo", 1, RoomVariant.IGLOO.getKey()),
     IISTUBIL("WHITE_GLAZED_TERRACOTTA", "Camel Stable", 1, RoomVariant.IISTUBIL.getKey()),
     KITCHEN("PUMPKIN", "Kitchen", 1, RoomVariant.KITCHEN.getKey()),
+    LAUNDRY("VERDANT_FROGLIGHT", "Laundry", 1, RoomVariant.LAUNDRY.getKey()),
     LAVA("MAGMA_BLOCK", "Lava", 1, RoomVariant.LAVA.getKey()),
     LAZARUS("FURNACE", "Genetic Manipulator", 1, RoomVariant.LAZARUS.getKey()),
     LIBRARY("ENCHANTING_TABLE", "Library", 1, RoomVariant.LIBRARY.getKey()),

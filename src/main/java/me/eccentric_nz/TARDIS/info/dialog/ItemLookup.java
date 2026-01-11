@@ -72,6 +72,7 @@ public class ItemLookup {
         ITEMS.put(TARDISInfoMenu.IGLOO, new InfoIcon(Material.PACKED_ICE, "Igloo", RoomVariant.IGLOO.getKey()));
         ITEMS.put(TARDISInfoMenu.IISTUBIL, new InfoIcon(Material.WHITE_GLAZED_TERRACOTTA, "Camel Stable", RoomVariant.IISTUBIL.getKey()));
         ITEMS.put(TARDISInfoMenu.KITCHEN, new InfoIcon(Material.PUMPKIN, "Kitchen", RoomVariant.KITCHEN.getKey()));
+        ITEMS.put(TARDISInfoMenu.LAUNDRY, new InfoIcon(Material.VERDANT_FROGLIGHT, "Laundry", RoomVariant.LAUNDRY.getKey()));
         ITEMS.put(TARDISInfoMenu.LAVA, new InfoIcon(Material.MAGMA_BLOCK, "Lava", RoomVariant.LAVA.getKey()));
         ITEMS.put(TARDISInfoMenu.LAZARUS, new InfoIcon(Material.FURNACE, "Genetic Manipulator", RoomVariant.LAZARUS.getKey()));
         ITEMS.put(TARDISInfoMenu.LIBRARY, new InfoIcon(Material.ENCHANTING_TABLE, "Library", RoomVariant.LIBRARY.getKey()));

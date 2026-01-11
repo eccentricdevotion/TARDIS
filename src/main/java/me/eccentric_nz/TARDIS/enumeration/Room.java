@@ -46,6 +46,7 @@ public enum Room {
     IGLOO,
     IISTUBIL,
     KITCHEN,
+    LAUNDRY,
     LAVA,
     LAZARUS,
     LIBRARY,

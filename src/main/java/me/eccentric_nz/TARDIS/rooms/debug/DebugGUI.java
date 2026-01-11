@@ -417,6 +417,7 @@ public class DebugGUI {
             new GuiPreview(Material.TERRACOTTA, RoomVariant.RENDERER.getKey(), "room_renderer"),
             new GuiPreview(Material.TNT, RoomVariant.JETTISON.getKey(), "room_jettison"),
             new GuiPreview(Material.TUBE_CORAL_BLOCK, RoomVariant.AQUARIUM.getKey(), "room_aquarium"),
+            new GuiPreview(Material.VERDANT_FROGLIGHT, RoomVariant.LAUNDRY.getKey(), "room_laundry"),
             new GuiPreview(Material.WATER_BUCKET, Weather.RAIN.getKey(), "rain"),
             new GuiPreview(Material.WHITE_GLAZED_TERRACOTTA, RoomVariant.IISTUBIL.getKey(), "room_iistubil"),
             new GuiPreview(Material.WHITE_WOOL, Wool.LEVEL_BOTTOM.getKey(), "map_level_bottom"),

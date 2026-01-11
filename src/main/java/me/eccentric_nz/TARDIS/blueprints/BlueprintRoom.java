@@ -54,6 +54,7 @@ public enum BlueprintRoom {
     IGLOO("tardis.room.igloo", BlueprintFeature.FARM),
     IISTUBIL("tardis.room.iistubil", BlueprintFeature.FARM),
     KITCHEN("tardis.room.kitchen"),
+    LAUNDRY("tardis.room.laundry"),
     LAVA("tardis.room.lava", BlueprintFeature.FARM),
     LAZARUS("tardis.room.lazarus", BlueprintFeature.LAZARUS),
     LIBRARY("tardis.room.library"),

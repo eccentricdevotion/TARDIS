@@ -212,6 +212,7 @@ public enum TARDISDescription {
     IGLOO("Cold storage for polar bears."),
     IISTUBIL("Bring your camels."),
     KITCHEN("Take a seat, relax, and have some chow."),
+    LAUNDRY("Welcome to the TARDIS's laundrodemat!"),
     LAVA("Stride though the lava pools"),
     LAZARUS("Modify your genetic makeup."),
     LIBRARY("Plenty to read and shelve in here."),
