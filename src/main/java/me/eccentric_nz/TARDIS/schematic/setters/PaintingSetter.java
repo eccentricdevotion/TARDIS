@@ -4,7 +4,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import io.papermc.paper.registry.RegistryAccess;
 import io.papermc.paper.registry.RegistryKey;
-import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.rooms.TARDISPainting;
 import me.eccentric_nz.TARDIS.schematic.getters.DataPackPainting;
 import org.bukkit.Art;
@@ -28,18 +27,13 @@ public class PaintingSetter {
             String which = painting.get("art").getAsString();
             String[] split = which.split(":");
             Art art = RegistryAccess.registryAccess().getRegistry(RegistryKey.PAINTING_VARIANT).get(new NamespacedKey(split[0], split[1]));
-            Location pl = TARDISPainting.calculatePosition(art, facing, new Location(world, x + px, y + py, z + pz));;
-            try {
-                Painting ent = (Painting) world.spawnEntity(pl, EntityType.PAINTING);
-                ent.teleport(pl);
-                ent.setFacingDirection(facing, true);
-                if (art != null) {
-                    ent.setArt(art, true);
-                } else {
-                    DataPackPainting.setCustomVariant(ent, which);
-                }
-            } catch (IllegalArgumentException e) {
-                TARDIS.plugin.debug("Invalid painting location!" + pl);
+            Location pl = TARDISPainting.calculatePosition(art, facing, new Location(world, x + px, y + py, z + pz));
+            Painting ent = (Painting) world.spawnEntity(pl, EntityType.PAINTING);
+            ent.setFacingDirection(facing, true);
+            if (art != null) {
+                ent.setArt(art, true);
+            } else {
+                DataPackPainting.setCustomVariant(ent, which);
             }
         }
     }

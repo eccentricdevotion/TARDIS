@@ -416,17 +416,17 @@ public class RoomRunnable implements Runnable {
                 // mannequins
                 if (obj.has("mannequins")) {
                     JsonArray mannequins = obj.get("mannequins").getAsJsonArray();
-                    MannequinSetter.setMannequins(mannequins, world, resetx, starty, resetz);
+                    MannequinSetter.setMannequins(mannequins, world, resetx, resety, resetz);
                 }
                 // armour stands
                 if (obj.has("armour_stands")) {
                     JsonArray stands = obj.get("armour_stands").getAsJsonArray();
-                    ArmourStandSetter.setStands(stands, world, resetx, starty, resetz);
+                    ArmourStandSetter.setStands(stands, world, resetx, resety, resetz);
                 }
                 // paintings
                 if (obj.has("paintings")) {
                     JsonArray paintings = (JsonArray) obj.get("paintings");
-                    PaintingSetter.setArt(paintings, world, resetx, starty, resetz);
+                    PaintingSetter.setArt(paintings, world, resetx, resety, resetz);
                 }
                 Location start = new Location(world, resetx, resety, resetz);
                 if (obj.has("item_frames")) {
