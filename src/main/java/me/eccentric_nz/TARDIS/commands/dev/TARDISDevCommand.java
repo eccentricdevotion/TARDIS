@@ -81,7 +81,7 @@ public class TARDISDevCommand implements CommandExecutor {
 
     private final Set<String> firstsStr = Sets.newHashSet(
             "add_regions", "advancements", "armour",
-            "biome", "blueprint", "box", "brushable",
+            "biome", "bleach", "blueprint", "box", "brushable",
             "chain", "chunks", "chunky", "circuit", "component",
             "dalek", "debug", "dialog", "dismount", "displayitem",
             "effect", "empty",
@@ -120,6 +120,12 @@ public class TARDISDevCommand implements CommandExecutor {
                 }
                 if (args.length == 1) {
                     switch (first) {
+                        case "bleach" -> {
+                            if (sender instanceof Player player) {
+                                return new BleachCommand(plugin).setDisplay(player);
+                            }
+                            return true;
+                        }
                         case "painting" -> {
                             if (sender instanceof Player player) {
                                 return new PaintingCommand(plugin).getLocation(player);

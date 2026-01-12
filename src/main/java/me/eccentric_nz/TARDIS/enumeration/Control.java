@@ -28,7 +28,7 @@ public enum Control {
     WORLD(2, "world-repeater", false, false),
     X(3, "x-repeater", false, false),
     Z(4, "z-repeater", false, false),
-    MULITPLIER(5, "y-repeater", false, false),
+    MULTIPLIER(5, "y-repeater", false, false),
     ARTRON(6, "artron", false, false),
     KEYBOARD(7, "keyboard", false, false),
     BACK(8, "back", false, true),
@@ -36,7 +36,7 @@ public enum Control {
     ARS(10, "ars", false, true),
     TEMPORAL(11, "temporal", false, false),
     LIGHT_SWITCH(12, "light", false, true),
-    TARDIS_INFOMATION_SYSTEM(13, "info", true, false),
+    TARDIS_INFORMATION_SYSTEM(13, "info", true, false),
     DISK_CIRCUIT_STORAGE(14, "storage", false, false),
     ADVANCED_CONSOLE(15, "advanced", false, false),
     ZERO_ENTRY(16, "zero", false, true),
@@ -82,7 +82,9 @@ public enum Control {
     CONSOLE_LAMP(56, "console-lamp", false, false),
     CONSOLE_LAMP_SWITCH(57, "console-lamp-switch", false, false),
     HAPPY_GHAST_DOCK_LEVER(58, "happy-ghast-dock-lever", false, false),
-    ARCHITECTURAL(59, "", false, false);
+    ARCHITECTURAL(59, "", false, false),
+    NAUTILUS(60, "nautilus", false, true),
+    WASHING_MACHINE(61, "washing-machine", false, false);
 
     private static final HashMap<String, Integer> UPDATE_CONTROLS = new HashMap<>();
     private static final HashMap<Integer, Control> BY_ID = new HashMap<>();

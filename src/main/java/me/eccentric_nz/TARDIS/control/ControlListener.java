@@ -28,6 +28,7 @@ import me.eccentric_nz.TARDIS.enumeration.Control;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.floodgate.FloodgateSavesForm;
 import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
+import me.eccentric_nz.TARDIS.mobfarming.NautilusEjector;
 import me.eccentric_nz.TARDIS.move.BlackWoolToggler;
 import me.eccentric_nz.TARDIS.rooms.architectural.ArchitecturalReconfiguration;
 import me.eccentric_nz.TARDIS.rooms.eye.EyeOfHarmonyAction;
@@ -39,6 +40,7 @@ import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.type.Repeater;
+import org.bukkit.entity.Nautilus;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -60,7 +62,7 @@ public class ControlListener implements Listener {
 
     private final TARDIS plugin;
     private final List<Material> validBlocks = new ArrayList<>();
-    private final List<Integer> onlythese = List.of(1, 2, 3, 4, 5, 8, 9, 10, 11, 12, 13, 14, 16, 17, 20, 21, 22, 25, 26, 28, 29, 30, 31, 32, 33, 35, 38, 39, 40, 41, 42, 43, 47, 54, 55, 58, 59);
+    private final List<Integer> onlythese = List.of(1, 2, 3, 4, 5, 8, 9, 10, 11, 12, 13, 14, 16, 17, 20, 21, 22, 25, 26, 28, 29, 30, 31, 32, 33, 35, 38, 39, 40, 41, 42, 43, 47, 54, 55, 58, 59, 60, 61);
     private final Set<UUID> cooldown = new HashSet<>();
 
     public ControlListener(TARDIS plugin) {
@@ -71,6 +73,7 @@ public class ControlListener implements Listener {
         validBlocks.add(Material.MUSHROOM_STEM);
         validBlocks.add(Material.BARRIER); // new Item Display custom blocks
         validBlocks.add(Material.NOTE_BLOCK);
+        validBlocks.add(Material.QUARTZ_BLOCK);
         validBlocks.add(Material.REPEATER);
         validBlocks.add(Material.STONE_PRESSURE_PLATE);
         validBlocks.add(Material.GRAY_SHULKER_BOX);
@@ -240,6 +243,14 @@ public class ControlListener implements Listener {
                                         new ArchitecturalReconfiguration(plugin).open(player);
                                     }
                                 }
+                                case 60 -> {
+                                    if (player.isInsideVehicle()) {
+                                        if (player.getVehicle() instanceof Nautilus nautilus) {
+                                            new NautilusEjector().transport(plugin, nautilus, id, player);
+                                        }
+                                    }
+                                }
+                                case 61 -> new LaundryAction(plugin).openGUI(player);
                                 default -> { }
                             }
                         } else if (action.equals(Action.PHYSICAL)) {

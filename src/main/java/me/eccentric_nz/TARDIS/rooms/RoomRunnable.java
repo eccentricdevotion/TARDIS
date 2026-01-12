@@ -762,10 +762,21 @@ public class RoomRunnable implements Runnable {
                         turnOnFarming(player);
                     }
                 }
+                // set laundry washing machine
+                if (type.equals(Material.QUARTZ_PILLAR) && room.equals("LAUNDRY")) {
+                    String pillar = (new Location(world, startx, starty, startz)).toString();
+                    plugin.getQueryFactory().insertControl(tardis_id, 61, pillar, 0);
+                    data = Material.QUARTZ_BLOCK.createBlockData();
+                }
                 // set lazarus
                 if (type.equals(Material.OAK_PRESSURE_PLATE) && room.equals("LAZARUS")) {
                     String plate = (new Location(world, startx, starty, startz)).toString();
                     plugin.getQueryFactory().insertControl(tardis_id, 19, plate, 0);
+                }
+                // set nautilus eject button
+                if (type.equals(Material.POLISHED_BLACKSTONE_BUTTON) && room.equals("NAUTILUS")) {
+                    String polished = (new Location(world, startx, starty, startz)).toString();
+                    plugin.getQueryFactory().insertControl(tardis_id, 60, polished, 0);
                 }
                 // set stable
                 if (type.equals(Material.SOUL_SAND) && (room.equals("ARCHITECTURAL") || room.equals("STABLE") || room.equals("VILLAGE") || room.equals("RENDERER") || room.equals("LAVA") || room.equals("ALLAY") || room.equals("ZERO") || room.equals("GEODE") || room.equals("HUTCH") || room.equals("IGLOO") || room.equals("IISTUBIL") || room.equals("MANGROVE") || room.equals("PEN") || room.equals("STALL") || room.equals("BAMBOO") || room.equals("BIRDCAGE") || room.equals("MAZE") || room.equals("GARDEN") || room.equals("HAPPY") || room.equals("NAUTILUS"))) {
