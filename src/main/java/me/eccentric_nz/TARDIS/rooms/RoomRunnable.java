@@ -99,7 +99,7 @@ public class RoomRunnable implements Runnable {
     private final HashMap<Block, BlockData> torchBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> trapdoorBlocks = new HashMap<>();
     private final HashMap<Block, BlockFace> mushroomBlocks = new HashMap<>();
-    private final HashMap<Block, BlockData> magmaBlocks = new HashMap<>();
+    private final HashMap<Block, BlockData> soulSandBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> eyeBlocks = new HashMap<>();
     private final HashMap<Block, JsonObject> postSignBlocks = new HashMap<>();
     private final HashMap<Block, JsonObject> pots = new HashMap<>();
@@ -428,24 +428,26 @@ public class RoomRunnable implements Runnable {
                     JsonArray paintings = (JsonArray) obj.get("paintings");
                     PaintingSetter.setArt(paintings, world, resetx, resety, resetz);
                 }
+                // item frames
                 Location start = new Location(world, resetx, resety, resetz);
                 if (obj.has("item_frames")) {
                     JsonArray frames = obj.get("item_frames").getAsJsonArray();
                     ItemFrameSetter.curate(frames, start, tardis_id);
                 }
+                // item displays
                 if (obj.has("item_displays")) {
                     JsonArray displays = obj.get("item_displays").getAsJsonArray();
                     ItemDisplaySetter.process(displays, player, start, tardis_id);
                 }
                 if (room.equals("NAUTILUS")) {
-                    magmaBlocks.forEach((key, value) -> {
+                    soulSandBlocks.forEach((key, value) -> {
                         key.setBlockData(value, true);
                         // also add some random seagrass
                         Block meal = key.getRelative(BlockFace.NORTH);
                         meal.applyBoneMeal(BlockFace.UP);
                         world.spawnEntity(meal.getLocation().add(0.5d, 1d, 0.5d), EntityType.PUFFERFISH);
                     });
-                    magmaBlocks.clear();
+                    soulSandBlocks.clear();
                 }
                 if (room.equals("ARCHITECTURAL") && architectural != null) {
                     // generate a fractal tree
@@ -664,10 +666,10 @@ public class RoomRunnable implements Runnable {
                     plugin.getQueryFactory().doInsert("vaults", setl);
                     library = pos.clone().add(-8, -4, -8);
                 }
-                // nautilus magma blocks
+                // nautilus soul sand bubble columns
                 if (type.equals(Material.RED_SAND) && room.equals("NAUTILUS")) {
                     Block magma = world.getBlockAt(startx, starty, startz);
-                    magmaBlocks.put(magma, TARDISConstants.MAGMA);
+                    soulSandBlocks.put(magma, TARDISConstants.SOUL_SAND);
                 }
                 // nautilus water blocks
                 if (type.equals(Material.DEAD_BUBBLE_CORAL_BLOCK) && room.equals("NAUTILUS")) {

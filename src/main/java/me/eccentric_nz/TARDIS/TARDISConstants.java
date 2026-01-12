@@ -224,6 +224,10 @@ public class TARDISConstants {
      */
     public static final BlockData MAGMA = Material.MAGMA_BLOCK.createBlockData();
     /**
+     * BlockData for SOUL_SAND
+     */
+    public static final BlockData SOUL_SAND = Material.SOUL_SAND.createBlockData();
+    /**
      * BlockData for police box LIGHT
      */
     public static final Levelled LIGHT = (Levelled) Material.LIGHT.createBlockData();
