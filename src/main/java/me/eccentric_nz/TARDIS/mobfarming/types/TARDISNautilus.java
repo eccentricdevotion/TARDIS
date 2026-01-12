@@ -1,9 +1,10 @@
 package me.eccentric_nz.TARDIS.mobfarming.types;
 
+import me.eccentric_nz.TARDIS.mobfarming.TARDISPet;
 import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 
-public class TARDISNautilus extends TARDISMob {
+public class TARDISNautilus extends TARDISPet {
 
     private ItemStack saddle;
     private ItemStack armour;
