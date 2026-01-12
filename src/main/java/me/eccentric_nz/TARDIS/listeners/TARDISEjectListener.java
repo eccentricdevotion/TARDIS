@@ -126,6 +126,22 @@ public class TARDISEjectListener implements Listener {
                 allay.getInventory().setContents(a.getInventory().getContents());
                 ent.remove();
             }
+            case AXOLOTL -> {
+                event.setCancelled(true);
+                Axolotl a = (Axolotl) ent;
+                Axolotl axolotl = (Axolotl) l.getWorld().spawnEntity(l, EntityType.AXOLOTL);
+                axolotl.setVariant(a.getVariant());
+                axolotl.setAge(a.getTicksLived());
+                if (!a.isAdult()) {
+                    axolotl.setBaby();
+                }
+                axolotl.setHealth(a.getHealth());
+                Component axname = ent.customName();
+                if (axname != null) {
+                    axolotl.customName(axname);
+                }
+                ent.remove();
+            }
             case BEE -> {
                 Bee b = (Bee) ent;
                 Bee bee = (Bee) l.getWorld().spawnEntity(l, EntityType.BEE);
@@ -140,19 +156,6 @@ public class TARDISEjectListener implements Listener {
                 bee.setHasStung(b.hasStung());
                 bee.setHasNectar(b.hasNectar());
                 bee.setAnger(b.getAnger());
-                ent.remove();
-            }
-            case CHICKEN -> {
-                Chicken k = (Chicken) ent;
-                Chicken chicken = (Chicken) l.getWorld().spawnEntity(l, EntityType.CHICKEN);
-                chicken.setTicksLived(k.getTicksLived());
-                if ((!k.isAdult())) {
-                    chicken.setBaby();
-                }
-                Component chickname = ent.customName();
-                if (chickname != null) {
-                    chicken.customName(chickname);
-                }
                 ent.remove();
             }
             case CAMEL -> {
@@ -170,6 +173,40 @@ public class TARDISEjectListener implements Listener {
                 hump.setDomestication(camel.getDomestication());
                 ent.remove();
             }
+            case CAT -> {
+                Tameable otamed = (Tameable) ent;
+                if (otamed.isTamed() && otamed.getOwner().getUniqueId().equals(player.getUniqueId())) {
+                    Cat o = (Cat) ent;
+                    Cat cat = (Cat) l.getWorld().spawnEntity(l, EntityType.CAT);
+                    cat.setTicksLived(o.getTicksLived());
+                    if ((!o.isAdult())) {
+                        cat.setBaby();
+                    }
+                    Component catname = ent.customName();
+                    if (catname != null) {
+                        cat.customName(catname);
+                    }
+                    cat.setSitting(o.isSitting());
+                    cat.setCatType(o.getCatType());
+                    cat.setCollarColor(o.getCollarColor());
+                    double health = Math.min(o.getHealth(), 8D);
+                    cat.setHealth(health);
+                    ent.remove();
+                }
+            }
+            case CHICKEN -> {
+                Chicken k = (Chicken) ent;
+                Chicken chicken = (Chicken) l.getWorld().spawnEntity(l, EntityType.CHICKEN);
+                chicken.setTicksLived(k.getTicksLived());
+                if ((!k.isAdult())) {
+                    chicken.setBaby();
+                }
+                Component chickname = ent.customName();
+                if (chickname != null) {
+                    chicken.customName(chickname);
+                }
+                ent.remove();
+            }
             case COW -> {
                 Cow c = (Cow) ent;
                 Cow cow = (Cow) l.getWorld().spawnEntity(l, EntityType.COW);
@@ -180,6 +217,22 @@ public class TARDISEjectListener implements Listener {
                 Component cowname = ent.customName();
                 if (cowname != null) {
                     cow.customName(cowname);
+                }
+                ent.remove();
+            }
+            case FROG -> {
+                event.setCancelled(true);
+                Frog f = (Frog) ent;
+                Frog frog = (Frog) l.getWorld().spawnEntity(l, EntityType.FROG);
+                frog.setVariant(f.getVariant());
+                frog.setAge(f.getTicksLived());
+                if (!f.isAdult()) {
+                    frog.setBaby();
+                }
+                frog.setHealth(f.getHealth());
+                Component frogname = ent.customName();
+                if (frogname != null) {
+                    frog.customName(frogname);
                 }
                 ent.remove();
             }
@@ -264,6 +317,9 @@ public class TARDISEjectListener implements Listener {
                 }
                 ent.remove();
             }
+            case NAUTILUS -> {
+
+            }
             case PANDA -> {
                 Panda inner_panda = (Panda) ent;
                 Panda outer_panda = (Panda) l.getWorld().spawnEntity(l, EntityType.PANDA);
@@ -321,6 +377,20 @@ public class TARDISEjectListener implements Listener {
                 }
                 ent.remove();
             }
+            case RABBIT -> {
+                Rabbit r = (Rabbit) ent;
+                Rabbit bunny = (Rabbit) l.getWorld().spawnEntity(l, EntityType.RABBIT);
+                bunny.setTicksLived(r.getTicksLived());
+                if ((!r.isAdult())) {
+                    bunny.setBaby();
+                }
+                Component rabbitname = ent.customName();
+                if (rabbitname != null) {
+                    bunny.customName(rabbitname);
+                }
+                bunny.setRabbitType(r.getRabbitType());
+                ent.remove();
+            }
             case SHEEP -> {
                 Sheep s = (Sheep) ent;
                 Sheep sheep = (Sheep) l.getWorld().spawnEntity(l, EntityType.SHEEP);
@@ -361,18 +431,25 @@ public class TARDISEjectListener implements Listener {
                 }
                 ent.remove();
             }
-            case RABBIT -> {
-                Rabbit r = (Rabbit) ent;
-                Rabbit bunny = (Rabbit) l.getWorld().spawnEntity(l, EntityType.RABBIT);
-                bunny.setTicksLived(r.getTicksLived());
-                if ((!r.isAdult())) {
-                    bunny.setBaby();
+            case VILLAGER -> {
+                event.setCancelled(true);
+                Villager v = (Villager) ent;
+                Villager villager = (Villager) l.getWorld().spawnEntity(l, EntityType.VILLAGER);
+                villager.setProfession(v.getProfession());
+                villager.setAge(v.getTicksLived());
+                if (!v.isAdult()) {
+                    villager.setBaby();
                 }
-                Component rabbitname = ent.customName();
-                if (rabbitname != null) {
-                    bunny.customName(rabbitname);
+                villager.setHealth(v.getHealth());
+                villager.setRecipes(v.getRecipes());
+                villager.setVillagerType(v.getVillagerType());
+                villager.setVillagerExperience(v.getVillagerExperience());
+                villager.setVillagerLevel(v.getVillagerLevel());
+                plugin.getTardisHelper().setReputation(villager, uuid, plugin.getTardisHelper().getReputation(v, uuid));
+                Component villagerName = ent.customName();
+                if (villagerName != null) {
+                    villager.customName(villagerName);
                 }
-                bunny.setRabbitType(r.getRabbitType());
                 ent.remove();
             }
             case WOLF -> {
@@ -394,80 +471,6 @@ public class TARDISEjectListener implements Listener {
                     wolf.setHealth(health);
                     ent.remove();
                 }
-            }
-            case CAT -> {
-                Tameable otamed = (Tameable) ent;
-                if (otamed.isTamed() && otamed.getOwner().getUniqueId().equals(player.getUniqueId())) {
-                    Cat o = (Cat) ent;
-                    Cat cat = (Cat) l.getWorld().spawnEntity(l, EntityType.CAT);
-                    cat.setTicksLived(o.getTicksLived());
-                    if ((!o.isAdult())) {
-                        cat.setBaby();
-                    }
-                    Component catname = ent.customName();
-                    if (catname != null) {
-                        cat.customName(catname);
-                    }
-                    cat.setSitting(o.isSitting());
-                    cat.setCatType(o.getCatType());
-                    cat.setCollarColor(o.getCollarColor());
-                    double health = Math.min(o.getHealth(), 8D);
-                    cat.setHealth(health);
-                    ent.remove();
-                }
-            }
-            case VILLAGER -> {
-                event.setCancelled(true);
-                Villager v = (Villager) ent;
-                Villager villager = (Villager) l.getWorld().spawnEntity(l, EntityType.VILLAGER);
-                villager.setProfession(v.getProfession());
-                villager.setAge(v.getTicksLived());
-                if (!v.isAdult()) {
-                    villager.setBaby();
-                }
-                villager.setHealth(v.getHealth());
-                villager.setRecipes(v.getRecipes());
-                villager.setVillagerType(v.getVillagerType());
-                villager.setVillagerExperience(v.getVillagerExperience());
-                villager.setVillagerLevel(v.getVillagerLevel());
-                plugin.getTardisHelper().setReputation(villager, uuid, plugin.getTardisHelper().getReputation(v, uuid));
-                Component vilname = ent.customName();
-                if (vilname != null) {
-                    villager.customName(vilname);
-                }
-                ent.remove();
-            }
-            case FROG -> {
-                event.setCancelled(true);
-                Frog f = (Frog) ent;
-                Frog frog = (Frog) l.getWorld().spawnEntity(l, EntityType.FROG);
-                frog.setVariant(f.getVariant());
-                frog.setAge(f.getTicksLived());
-                if (!f.isAdult()) {
-                    frog.setBaby();
-                }
-                frog.setHealth(f.getHealth());
-                Component frogname = ent.customName();
-                if (frogname != null) {
-                    frog.customName(frogname);
-                }
-                ent.remove();
-            }
-            case AXOLOTL -> {
-                event.setCancelled(true);
-                Axolotl a = (Axolotl) ent;
-                Axolotl axolotl = (Axolotl) l.getWorld().spawnEntity(l, EntityType.AXOLOTL);
-                axolotl.setVariant(a.getVariant());
-                axolotl.setAge(a.getTicksLived());
-                if (!a.isAdult()) {
-                    axolotl.setBaby();
-                }
-                axolotl.setHealth(a.getHealth());
-                Component axname = ent.customName();
-                if (axname != null) {
-                    axolotl.customName(axname);
-                }
-                ent.remove();
             }
             default -> plugin.getMessenger().send(player, TardisModule.TARDIS, "EJECT_NOT_VALID");
         }
