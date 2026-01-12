@@ -95,6 +95,7 @@ public class BleachRecipe {
         carpetRecipe.addIngredient(colouredCarpet);
         plugin.getServer().addRecipe(carpetRecipe);
         plugin.getIncomposita().getShapelessRecipes().put("Bleached Carpet", carpetRecipe);
+        // TODO fix bleached banners
         // banners
         ItemStack banner = ItemStack.of(Material.WHITE_BANNER, 1);
         ShapelessRecipe bannerRecipe = new ShapelessRecipe(bannerKey, banner);
@@ -103,6 +104,7 @@ public class BleachRecipe {
         bannerRecipe.addIngredient(colouredBanners);
         plugin.getServer().addRecipe(bannerRecipe);
         plugin.getIncomposita().getShapelessRecipes().put("Bleached Banner", bannerRecipe);
+        // TODO fix bleached concrete powder
         // concrete powder
         ItemStack powder = ItemStack.of(Material.WHITE_CONCRETE_POWDER, 1);
         ShapelessRecipe powderRecipe = new ShapelessRecipe(powderKey, powder);
@@ -111,6 +113,7 @@ public class BleachRecipe {
         powderRecipe.addIngredient(colouredPowder);
         plugin.getServer().addRecipe(powderRecipe);
         plugin.getIncomposita().getShapelessRecipes().put("Bleached Concrete Powder", powderRecipe);
+        // TODO fix bleached armour - all types just remove the colour altogether rather than making white
         // leather helmet
         ItemStack helmet = ItemStack.of(Material.LEATHER_HELMET, 1);
         LeatherArmorMeta helmetItemMeta = (LeatherArmorMeta) helmet.getItemMeta();
