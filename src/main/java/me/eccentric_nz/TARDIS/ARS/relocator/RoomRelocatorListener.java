@@ -60,6 +60,7 @@ import java.util.UUID;
 public class RoomRelocatorListener extends ARSMethods implements Listener {
 
     public final HashMap<UUID, Integer> relocation_slot = new HashMap<>();
+    public final HashMap<UUID, ItemStack> level_switch = new HashMap<>();
 
     public RoomRelocatorListener(TARDIS plugin) {
         super(plugin);
@@ -102,13 +103,13 @@ public class RoomRelocatorListener extends ARSMethods implements Listener {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "RELOCATOR_GRAVITY");
                     return;
                 }
-                if (!checkSlotForConsole(view, slot) && !selected_slot.containsKey(playerUUID)) {
+                if (!checkSlotForConsole(view, slot) && !level_switch.containsKey(playerUUID)) {
                     // select room to move
-                    selected_slot.put(playerUUID, slot);
-                } else if (!relocation_slot.containsKey(playerUUID) && selected_slot.containsKey(playerUUID) && isEmptySlot(view, slot)) {
+                    setFromSlot(view, uuid, slot);
+                } else if (!relocation_slot.containsKey(playerUUID) && level_switch.containsKey(playerUUID) && isEmptySlot(view, slot)) {
                     relocation_slot.put(playerUUID, slot);
                     // set slot to selected room with glint
-                    setRelocationSlots(view, playerUUID);
+                    setRelocationSlot(view, playerUUID);
                 } else {
                     // need to reset
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "RELOCATOR_RESET");
@@ -116,7 +117,7 @@ public class RoomRelocatorListener extends ARSMethods implements Listener {
             }
             case 10 -> loadMap(view, playerUUID, true); // load map
             case 12 -> {
-                if (!selected_slot.containsKey(playerUUID) || !relocation_slot.containsKey(playerUUID)) {
+                if (!level_switch.containsKey(playerUUID) || !relocation_slot.containsKey(playerUUID)) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "RELOCATOR_SELECT");
                     return;
                 }
@@ -140,8 +141,9 @@ public class RoomRelocatorListener extends ARSMethods implements Listener {
             }
             case 30 -> {
                 // reset
-                selected_slot.remove(playerUUID);
+                level_switch.remove(playerUUID);
                 relocation_slot.remove(playerUUID);
+                level_switch.remove(uuid);
                 loadMap(view, playerUUID, false);
             }
             default -> {
@@ -158,7 +160,7 @@ public class RoomRelocatorListener extends ARSMethods implements Listener {
         UUID playerUUID = player.getUniqueId();
         // start relocation
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-            selected_slot.remove(playerUUID);
+            level_switch.remove(playerUUID);
             relocation_slot.remove(playerUUID);
             hasLoadedMap.remove(playerUUID);
             if (map_data.containsKey(playerUUID)) {
@@ -231,15 +233,15 @@ public class RoomRelocatorListener extends ARSMethods implements Listener {
                         int ey = relocated.getY();
                         int ex = relocated.getX();
                         int ez = relocated.getZ();
-                        int diffy = ey - sy;
-                        int diffx = ex - sx;
-                        int diffz = ez - sz;
+                        int dy = ey - sy;
+                        int dx = ex - sx;
+                        int dz = ez - sz;
                         // get the height of the schematic
                         int height = getSchematicHeight(room);
                         long a_long_time = (16 * 16 * height * (Math.round(20 / plugin.getConfig().getDouble("growth.room_speed"))));
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                             for (Map.Entry<Entity, Location> e : mobs.entrySet()) {
-                                Location tp = e.getValue().add(diffx, diffy, diffz);
+                                Location tp = e.getValue().add(dx, dy, dz);
                                 e.getKey().teleport(tp);
                             }
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "ROOM_JETT", String.format("%d", tap.getJettison().size()));
@@ -290,20 +292,24 @@ public class RoomRelocatorListener extends ARSMethods implements Listener {
         return "";
     }
 
-    private void setRelocationSlots(InventoryView view, UUID uuid) {
-        int from_slot = selected_slot.get(uuid);
+    private void setRelocationSlot(InventoryView view, UUID uuid) {
         int to_slot = relocation_slot.get(uuid);
-        ItemStack is = view.getItem(from_slot).clone();
+        ItemStack is = level_switch.get(uuid).clone();
         ItemMeta im = is.getItemMeta();
         im.setEnchantmentGlintOverride(true);
         is.setItemMeta(im);
         setSlot(view, to_slot, is, uuid, true);
-        view.setItem(to_slot, is);
-        ItemStack tnt = ItemStack.of(Material.TNT, 1);
-        ItemMeta j = tnt.getItemMeta();
-        j.displayName(Component.text("Jettison"));
-        tnt.setItemMeta(j);
-        setSlot(view, from_slot, tnt, uuid, true);
+    }
+
+    private void setFromSlot(InventoryView view, UUID uuid, int slot) {
+        level_switch.put(uuid, view.getItem(slot));
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+            ItemStack tnt = ItemStack.of(Material.TNT, 1);
+            ItemMeta j = tnt.getItemMeta();
+            j.displayName(Component.text("Jettison"));
+            tnt.setItemMeta(j);
+            setSlot(view, slot, tnt, uuid, true);
+        }, 2L);
     }
 
     private boolean isEmptySlot(InventoryView view, int slot) {
