@@ -76,7 +76,6 @@ public class ArtronCondenserListener implements Listener {
      */
     @EventHandler(ignoreCancelled = true)
     public void onCondenserClose(InventoryCloseEvent event) {
-        InventoryView view = event.getView();
         InventoryHolder holder = event.getInventory().getHolder(false);
         if (holder instanceof ArtronCondenserInventory chest) {
             if (!chest.getTitle().equals("Artron Condenser") && !chest.getTitle().equals("Server Condenser")) {
