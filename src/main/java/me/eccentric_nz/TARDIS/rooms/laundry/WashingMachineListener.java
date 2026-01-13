@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ArmorMeta;
@@ -55,7 +56,8 @@ public class WashingMachineListener extends TARDISMenuListener {
             case 21 -> processTrims(view); // wash off trim patterns
             case 23 -> processDyed(view); // remove dye color from leather armour and wool / carpets
             case 26 -> close(player);
-            default -> { }
+            default -> {
+            }
         }
     }
 
@@ -66,14 +68,16 @@ public class WashingMachineListener extends TARDISMenuListener {
                 Material material = armour.getType();
                 if (Tag.ITEMS_TRIMMABLE_ARMOR.isTagged(material)) {
                     ArmorMeta meta = (ArmorMeta) armour.getItemMeta();
-                    ArmorTrim trim = meta.getTrim();
-                    TrimPattern tp = trim.getPattern();
-                    NamespacedKey key = RegistryAccess.registryAccess().getRegistry(RegistryKey.TRIM_PATTERN).getKey(tp);
-                    ItemStack template = ItemStack.of(getTemplate(key));
-                    view.setItem(i + 9, template);
-                    meta.setTrim(null);
-                    armour.setItemMeta(meta);
-                    view.setItem(i, armour);
+                    if (meta.hasTrim()) {
+                        ArmorTrim trim = meta.getTrim();
+                        TrimPattern tp = trim.getPattern();
+                        NamespacedKey key = RegistryAccess.registryAccess().getRegistry(RegistryKey.TRIM_PATTERN).getKey(tp);
+                        ItemStack template = ItemStack.of(getTemplate(key));
+                        view.setItem(i + 9, template);
+                        meta.setTrim(null);
+                        armour.setItemMeta(meta);
+                        view.setItem(i, armour);
+                    }
                 }
             }
         }
@@ -109,6 +113,22 @@ public class WashingMachineListener extends TARDISMenuListener {
                         view.setItem(i, bleached);
                     }
                 }
+            }
+        }
+    }
+
+    @EventHandler
+    public void onWashingMachineClose(InventoryCloseEvent event) {
+        if (!(event.getInventory().getHolder(false) instanceof WashingMachineInventory)) {
+            return;
+        }
+        Player player = ((Player) event.getPlayer());
+        // drop any user placed items in the inventory
+        InventoryView view = event.getView();
+        for (int s = 0; s < 18; s++) {
+            ItemStack userStack = view.getItem(s);
+            if (userStack != null) {
+                player.getWorld().dropItemNaturally(player.getLocation(), userStack);
             }
         }
     }
