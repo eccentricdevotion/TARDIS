@@ -779,9 +779,16 @@ public class RoomRunnable implements Runnable {
                     plugin.getQueryFactory().insertControl(tardis_id, 60, polished, 0);
                 }
                 // set stable
-                if (type.equals(Material.SOUL_SAND) && (room.equals("ARCHITECTURAL") || room.equals("STABLE") || room.equals("VILLAGE") || room.equals("RENDERER") || room.equals("LAVA") || room.equals("ALLAY") || room.equals("ZERO") || room.equals("GEODE") || room.equals("HUTCH") || room.equals("IGLOO") || room.equals("IISTUBIL") || room.equals("MANGROVE") || room.equals("PEN") || room.equals("STALL") || room.equals("BAMBOO") || room.equals("BIRDCAGE") || room.equals("MAZE") || room.equals("GARDEN") || room.equals("HAPPY") || room.equals("NAUTILUS"))) {
+                if (type.equals(Material.SOUL_SAND) && (
+                        room.equals("ARCHITECTURAL") || room.equals("STABLE") || room.equals("VILLAGE")
+                        || room.equals("RENDERER") || room.equals("LAVA") || room.equals("ALLAY")
+                        || room.equals("ZERO") || room.equals("GEODE") || room.equals("HUTCH")
+                        || room.equals("IGLOO") || room.equals("IISTUBIL") || room.equals("MANGROVE")
+                        || room.equals("PEN") || room.equals("STALL") || room.equals("BAMBOO")
+                        || room.equals("BIRDCAGE") || room.equals("MAZE") || room.equals("GARDEN")
+                        || room.equals("HAPPY") || room.equals("NAUTILUS"))) {
                     HashMap<String, Object> sets = new HashMap<>();
-                    sets.put(room.toLowerCase(Locale.ROOT), world.getName() + ":" + startx + ":" + starty + ":" + startz);
+                    sets.put(room.toLowerCase(Locale.ROOT), world.getName() + ":" + (startx + (room.equals("NAUTILUS") ? 1 : 0)) + ":" + starty + ":" + startz);
                     HashMap<String, Object> wheres = new HashMap<>();
                     wheres.put("tardis_id", tardis_id);
                     switch (room) {

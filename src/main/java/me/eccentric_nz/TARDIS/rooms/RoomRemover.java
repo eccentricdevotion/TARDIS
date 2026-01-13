@@ -128,7 +128,11 @@ class RoomRemover {
                 }
             }
         }
-        if (r.equals("FARM") || r.equals("APIARY") || r.equals("HUTCH") || r.equals("IGLOO") || r.equals("RAIL") || r.equals("STABLE") || r.equals("STALL") || r.equals("VILLAGE") || r.equals("BIRDCAGE") || r.equals("AQUARIUM") || r.equals("BAMBOO")) {
+        if (r.equals("ALLAY") || r.equals("APIARY") || r.equals("AQUARIUM") || r.equals("BAMBOO")
+                || r.equals("BIRDCAGE") || r.equals("FARM") || r.equals("GEODE") || r.equals("HAPPY")
+                || r.equals("HUTCH") || r.equals("IGLOO") || r.equals("IISTUBIL") || r.equals("LAVA")
+                || r.equals("MANGROVE") || r.equals("NAUTILUS") || r.equals("PEN") || r.equals("STABLE")
+                || r.equals("STALL") || r.equals("VILLAGE")) {
             // remove stored location from the database
             HashMap<String, Object> set = new HashMap<>();
             set.put(r.toLowerCase(Locale.ROOT), "");
