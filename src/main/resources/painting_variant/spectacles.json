@@ -1,5 +1,13 @@
 {
   "asset_id": "tardis:spectacles",
   "height": 1,
-  "width": 2
+  "width": 2,
+  "title": {
+    "color": "gray",
+    "text": "Spectacles"
+  },
+  "author": {
+    "color": "gray",
+    "text": "eccentric_nz"
+  }
 }

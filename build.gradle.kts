@@ -5,14 +5,14 @@ import java.io.ByteArrayOutputStream
 plugins {
     `java-library`
     id("io.papermc.paperweight.userdev") version "2.0.0-SNAPSHOT"
-    id("com.gradleup.shadow") version "9.3.0"
+    id("com.gradleup.shadow") version "9.3.1"
     id("java")
     id("io.papermc.hangar-publish-plugin") version "0.1.4"
 }
 
 group = "me.eccentric_nz"
 val buildNumber = "-b${System.getenv("BUILD_NUMBER") ?: (System.getenv("SHORT_SHA") ?: ".local")}"
-version = "6.3.8${buildNumber}"
+version = "6.3.9${buildNumber}"
 
 repositories {
     mavenCentral()
@@ -103,13 +103,13 @@ dependencies {
     compileOnly("net.citizensnpcs:citizensapi:2.0.41-SNAPSHOT") {
         isTransitive = false
     }
-    compileOnly("com.palmergames.bukkit.towny:towny:0.102.0.2") {
+    compileOnly("com.palmergames.bukkit.towny:towny:0.102.0.3") {
         isTransitive = false
     }
-    compileOnly("org.mvplugins.multiverse.core:multiverse-core:5.4.0") {
+    compileOnly("org.mvplugins.multiverse.core:multiverse-core:5.5.0") {
         isTransitive = false
     }
-    compileOnly("org.mvplugins.multiverse.inventories:multiverse-inventories:5.3.0") {
+    compileOnly("org.mvplugins.multiverse.inventories:multiverse-inventories:5.3.1") {
         isTransitive = false
     }
     compileOnly("dev.kitteh:factionsuuid:0.7.0") {
@@ -167,7 +167,7 @@ dependencies {
     compileOnly("org.swinglabs:swing-layout:1.0.3") {
         isTransitive = false
     }
-    testImplementation(platform("org.junit:junit-bom:6.0.1"))
+    testImplementation(platform("org.junit:junit-bom:6.0.2"))
     testImplementation("org.junit.jupiter:junit-jupiter")
 }
 

@@ -1,5 +1,13 @@
 {
   "asset_id": "tardis:lava",
   "height": 2,
-  "width": 2
+  "width": 2,
+  "title": {
+    "color": "gray",
+    "text": "Lava"
+  },
+  "author": {
+    "color": "gray",
+    "text": "eccentric_nz"
+  }
 }

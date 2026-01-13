@@ -40,9 +40,11 @@ import java.util.List;
  */
 public class TARDISKeyMenuInventory implements InventoryHolder {
 
+    private final TARDIS plugin;
     private final Inventory inventory;
 
     public TARDISKeyMenuInventory(TARDIS plugin) {
+        this.plugin = plugin;
         this.inventory = plugin.getServer().createInventory(this, 27, Component.text("TARDIS Key Prefs Menu", NamedTextColor.DARK_RED));
         this.inventory.setContents(getItemStack());
     }
@@ -61,7 +63,7 @@ public class TARDISKeyMenuInventory implements InventoryHolder {
         ItemStack[] itemStacks = new ItemStack[27];
         Material material;
         try {
-            material = Material.valueOf(TARDIS.plugin.getConfig().getString("preferences.key"));
+            material = Material.valueOf(plugin.getConfig().getString("preferences.key"));
         } catch (IllegalArgumentException e) {
             material = Material.GOLD_NUGGET;
         }

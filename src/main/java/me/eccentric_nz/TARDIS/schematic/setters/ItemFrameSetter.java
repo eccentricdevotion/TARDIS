@@ -49,83 +49,86 @@ import java.util.Locale;
  */
 public class ItemFrameSetter {
 
-    public static void curate(JsonObject json, Location start, int id) {
-        JsonObject rel = json.get("rel_location").getAsJsonObject();
-        int px = rel.get("x").getAsInt();
-        int py = rel.get("y").getAsInt();
-        int pz = rel.get("z").getAsInt();
-        BlockFace facing = BlockFace.valueOf(json.get("facing").getAsString());
-        Location l = new Location(start.getWorld(), start.getBlockX() + px, start.getBlockY() + py, start.getBlockZ() + pz);
-        ItemFrame frame = (ItemFrame) start.getWorld().spawnEntity(l, (json.get("glowing").getAsBoolean()) ? EntityType.GLOW_ITEM_FRAME : EntityType.ITEM_FRAME);
-        frame.setFacingDirection(facing, true);
-        String cmd = "";
-        if (json.has("item")) {
-            try {
-                Material material = Material.valueOf(json.get("item").getAsString());
-                ItemStack is = ItemStack.of(material);
-                ItemMeta im = is.getItemMeta();
-                // needed for Time Rotors / Doors
-                if (json.has("cmd")) {
-                    cmd = json.get("cmd").getAsString();
-                    if (!cmd.equals("st_johns")) {
-                        NamespacedKey key = new NamespacedKey(TARDIS.plugin, cmd);
-                        im.setItemModel(key);
-                    } else {
-                        im.displayName(Component.text("St John's Logo"));
-                        frame.setCustomNameVisible(false);
-                    }
-                }
-                if (json.has("name")) {
-                    im.displayName(ComponentUtils.fromJson(json.get("name")));
-                }
-                if (json.has("lore")) {
-                    List<Component> lore = new ArrayList<>();
-                    for (JsonElement element : json.get("lore").getAsJsonArray()) {
-                        lore.add(Component.text(element.getAsString()));
-                    }
-                    im.lore(lore);
-                }
-                if (json.has("banner")) {
-                    JsonObject banner = json.get("banner").getAsJsonObject();
-                    DyeColor baseColour = DyeColor.valueOf(banner.get("base_colour").getAsString());
-                    JsonArray patterns = banner.get("patterns").getAsJsonArray();
-                    List<Pattern> plist = new ArrayList<>();
-                    for (int j = 0; j < patterns.size(); j++) {
-                        JsonObject jo = patterns.get(j).getAsJsonObject();
-                        PatternType pt = RegistryAccess.registryAccess().getRegistry(RegistryKey.BANNER_PATTERN).get(
-                                new NamespacedKey("minecraft", jo.get("pattern").getAsString().toLowerCase(Locale.ROOT))
-                        );
-                        if (pt != null) {
-                            DyeColor dc = DyeColor.valueOf(jo.get("pattern_colour").getAsString());
-                            Pattern p = new Pattern(dc, pt);
-                            plist.add(p);
+    public static void curate(JsonArray frames, Location start, int id) {
+        for (int i = 0; i < frames.size(); i++){
+            JsonObject json= frames.get(i).getAsJsonObject();
+            JsonObject rel = json.get("rel_location").getAsJsonObject();
+            int px = rel.get("x").getAsInt();
+            int py = rel.get("y").getAsInt();
+            int pz = rel.get("z").getAsInt();
+            BlockFace facing = BlockFace.valueOf(json.get("facing").getAsString());
+            Location l = new Location(start.getWorld(), start.getBlockX() + px, start.getBlockY() + py, start.getBlockZ() + pz);
+            ItemFrame frame = (ItemFrame) start.getWorld().spawnEntity(l, (json.get("glowing").getAsBoolean()) ? EntityType.GLOW_ITEM_FRAME : EntityType.ITEM_FRAME);
+            frame.setFacingDirection(facing, true);
+            String cmd = "";
+            if (json.has("item")) {
+                try {
+                    Material material = Material.valueOf(json.get("item").getAsString());
+                    ItemStack is = ItemStack.of(material);
+                    ItemMeta im = is.getItemMeta();
+                    // needed for Time Rotors / Doors
+                    if (json.has("cmd")) {
+                        cmd = json.get("cmd").getAsString();
+                        if (!cmd.equals("st_johns")) {
+                            NamespacedKey key = new NamespacedKey(TARDIS.plugin, cmd);
+                            im.setItemModel(key);
+                        } else {
+                            im.displayName(Component.text("St John's Logo"));
+                            frame.setCustomNameVisible(false);
                         }
                     }
-                    BlockStateMeta bsm = (BlockStateMeta) im;
-                    Banner b = (Banner) bsm.getBlockState();
-                    b.setBaseColor(baseColour);
-                    b.setPatterns(plist);
-                    bsm.setBlockState(b);
+                    if (json.has("name")) {
+                        im.displayName(ComponentUtils.fromJson(json.get("name")));
+                    }
+                    if (json.has("lore")) {
+                        List<Component> lore = new ArrayList<>();
+                        for (JsonElement element : json.get("lore").getAsJsonArray()) {
+                            lore.add(Component.text(element.getAsString()));
+                        }
+                        im.lore(lore);
+                    }
+                    if (json.has("banner")) {
+                        JsonObject banner = json.get("banner").getAsJsonObject();
+                        DyeColor baseColour = DyeColor.valueOf(banner.get("base_colour").getAsString());
+                        JsonArray patterns = banner.get("patterns").getAsJsonArray();
+                        List<Pattern> plist = new ArrayList<>();
+                        for (int j = 0; j < patterns.size(); j++) {
+                            JsonObject jo = patterns.get(j).getAsJsonObject();
+                            PatternType pt = RegistryAccess.registryAccess().getRegistry(RegistryKey.BANNER_PATTERN).get(
+                                    new NamespacedKey("minecraft", jo.get("pattern").getAsString().toLowerCase(Locale.ROOT))
+                            );
+                            if (pt != null) {
+                                DyeColor dc = DyeColor.valueOf(jo.get("pattern_colour").getAsString());
+                                Pattern p = new Pattern(dc, pt);
+                                plist.add(p);
+                            }
+                        }
+                        BlockStateMeta bsm = (BlockStateMeta) im;
+                        Banner b = (Banner) bsm.getBlockState();
+                        b.setBaseColor(baseColour);
+                        b.setPatterns(plist);
+                        bsm.setBlockState(b);
+                    }
+                    is.setItemMeta(im);
+                    frame.setItem(is, false);
+                } catch (IllegalArgumentException e) {
+                    TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.WARNING, "Could not create item stack for schematic item frame!");
                 }
-                is.setItemMeta(im);
-                frame.setItem(is, false);
-            } catch (IllegalArgumentException e) {
-                TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.WARNING, "Could not create item stack for schematic item frame!");
             }
+            if (json.has("rotor") && id != -1) {
+                frame.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING, cmd);
+                // update rotor record
+                TimeRotor.updateRotorRecord(id, frame.getUniqueId().toString());
+            }
+            // check whether it is Lab Equipment
+            if (json.has("microscope")) {
+                frame.getPersistentDataContainer().set(TARDIS.plugin.getMicroscopeKey(), PersistentDataType.INTEGER, 10000);
+            }
+            frame.setFixed(json.get("fixed").getAsBoolean());
+            frame.setVisible(json.get("visible").getAsBoolean());
+            Rotation rotation = Rotation.valueOf(json.get("rotation").getAsString());
+            frame.setRotation(rotation);
         }
-        if (json.has("rotor") && id != -1) {
-            frame.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING, cmd);
-            // update rotor record
-            TimeRotor.updateRotorRecord(id, frame.getUniqueId().toString());
-        }
-        // check whether it is Lab Equipment
-        if (json.has("microscope")) {
-            frame.getPersistentDataContainer().set(TARDIS.plugin.getMicroscopeKey(), PersistentDataType.INTEGER, 10000);
-        }
-        frame.setFixed(json.get("fixed").getAsBoolean());
-        frame.setVisible(json.get("visible").getAsBoolean());
-        Rotation rotation = Rotation.valueOf(json.get("rotation").getAsString());
-        frame.setRotation(rotation);
     }
 
     public static ItemFrame getItemFrameFromLocation(Location location) {

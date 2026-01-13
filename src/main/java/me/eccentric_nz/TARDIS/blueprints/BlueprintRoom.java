@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.blueprints;
 
+import java.util.HashMap;
+
 public enum BlueprintRoom {
 
     ARCHITECTURAL("tardis.architectural"), // needed to grow rooms or use ARS
@@ -32,6 +34,7 @@ public enum BlueprintRoom {
     APIARY("tardis.room.apiary", BlueprintFeature.FARM),
     AQUARIUM("tardis.room.aquarium", BlueprintFeature.FARM),
     ARBORETUM("tardis.room.arboretum"),
+    ARCHITECTURAL_ROOM("tardis.room.architectural"),
     BAKER("tardis.room.baker"),
     BAMBOO("tardis.room.bamboo", BlueprintFeature.FARM),
     BEDROOM("tardis.room.bedroom"),
@@ -40,6 +43,8 @@ public enum BlueprintRoom {
     EMPTY("tardis.room.empty"),
     EYE("tardis.room.eye"),
     FARM("tardis.room.farm", BlueprintFeature.FARM),
+    GALLERY("tardis.room.gallery"),
+    GARDEN("tardis.room.garden"),
     GEODE("tardis.room.geode"),
     GRAVITY("tardis.room.gravity"),
     GREENHOUSE("tardis.room.greenhouse"),
@@ -49,6 +54,7 @@ public enum BlueprintRoom {
     IGLOO("tardis.room.igloo", BlueprintFeature.FARM),
     IISTUBIL("tardis.room.iistubil", BlueprintFeature.FARM),
     KITCHEN("tardis.room.kitchen"),
+    LAUNDRY("tardis.room.laundry"),
     LAVA("tardis.room.lava", BlueprintFeature.FARM),
     LAZARUS("tardis.room.lazarus", BlueprintFeature.LAZARUS),
     LIBRARY("tardis.room.library"),
@@ -73,6 +79,14 @@ public enum BlueprintRoom {
     WOOD("tardis.room.wood"),
     WORKSHOP("tardis.room.workshop"),
     ZERO("tardis.room.zero");
+
+    public static HashMap<String, BlueprintRoom> PERMS = new HashMap<>();
+
+    static {
+        for (BlueprintRoom room : BlueprintRoom.values()) {
+            PERMS.put(room.permission, room);
+        }
+    }
 
     private final String permission;
     private final BlueprintFeature feature;

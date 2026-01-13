@@ -22,7 +22,7 @@ import org.bukkit.NamespacedKey;
 
 public enum Lab {
 
-    Bleach("Water,Water,Water,Sodium Hypochlorite,Sodium Hypochlorite,Sodium Hypochlorite", Material.WHITE_DYE, ChemistryEquipment.BLEACH.getKey()),
+    Bleach("Water,Water,Water,Sodium Hypochlorite,Sodium Hypochlorite,Sodium Hypochlorite", Material.WHITE_CANDLE, ChemistryEquipment.BLEACH.getKey()),
     Heat_Block("Iron,Water,CHARCOAL,Salt", Material.RED_CONCRETE, ChemistryEquipment.HEAT_BLOCK.getKey()),
     Ice_Bomb("Sodium Acetate,Sodium Acetate,Sodium Acetate,Sodium Acetate", Material.SNOWBALL, ChemistryEquipment.ICE_BOMB.getKey()),
     Super_Fertiliser("Ammonia,Phosphorus", Material.BONE_MEAL, ChemistryEquipment.SUPER_FERTILISER.getKey());

@@ -30,6 +30,12 @@ rooms:
     offset: -4
     seed: OAK_LEAVES
     user: false
+  ARCHITECTURAL:
+    enabled: true
+    cost: 600
+    offset: -4
+    seed: WAXED_COPPER_GRATE
+    user: false
   BAKER:
     enabled: true
     cost: 350
@@ -77,6 +83,12 @@ rooms:
     cost: 350
     offset: -4
     seed: DIRT
+    user: false
+  GALLERY:
+    enabled: true
+    cost: 450
+    offset: -4
+    seed: CHISELED_QUARTZ_BLOCK
     user: false
   GARDEN:
     enabled: true
@@ -137,6 +149,12 @@ rooms:
     cost: 450
     offset: -4
     seed: PUMPKIN
+    user: false
+  LAUNDRY:
+    enabled: true
+    cost: 450
+    offset: -4
+    seed: VERDANT_FROGLIGHT
     user: false
   LAVA:
     enabled: true

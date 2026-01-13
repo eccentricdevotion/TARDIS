@@ -23,6 +23,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Many facts, figures, and formulas are contained within the Matrix, including... the locations of the TARDIS vaults.
@@ -121,5 +124,47 @@ public class ResultSetBlueprint {
                 plugin.debug("Error closing blueprint table! " + e.getMessage());
             }
         }
+    }
+
+    /**
+     * Gets the room blueprints a player has permission for. This
+     * method builds an SQL query string from the parameters supplied and then executes the query.
+     *
+     * @param uuid the Time Lord uuid to check
+     * @return true or false depending on whether the Time Lord has the permission node
+     */
+    public List<String> getRoomBlueprints(String uuid) {
+        List<String> rooms = new ArrayList<>();
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+        String query = "SELECT permission FROM " + prefix + "blueprint WHERE uuid = ? AND permission LIKE 'tardis.room.%'";
+        try {
+            service.testConnection(connection);
+            statement = connection.prepareStatement(query);
+            statement.setString(1, uuid);
+            rs = statement.executeQuery();
+            if (rs.isBeforeFirst()) {
+                while (rs.next()) {
+                    rooms.add(rs.getString("permission"));
+                }
+            }
+        } catch (SQLException e) {
+            plugin.debug("ResultSet error for blueprint table! " + e.getMessage());
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (statement != null) {
+                    statement.close();
+                }
+            } catch (SQLException e) {
+                plugin.debug("Error closing blueprint table! " + e.getMessage());
+            }
+        }
+        if (rooms.size() > 1) {
+            Collections.sort(rooms);
+        }
+        return rooms;
     }
 }

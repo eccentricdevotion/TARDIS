@@ -76,7 +76,6 @@ public class TARDISGeneralPrefsInventory implements InventoryHolder {
      *
      * @return an Array of itemStacks (an inventory)
      */
-
     private ItemStack[] getItemStack() {
         // get player preferences
         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid.toString());

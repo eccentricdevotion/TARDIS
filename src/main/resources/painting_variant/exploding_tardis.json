@@ -1,5 +1,13 @@
 {
   "asset_id": "tardis:exploding_tardis",
   "height": 2,
-  "width": 3
+  "width": 3,
+  "title": {
+    "color": "gray",
+    "text": "Exploding TARDIS"
+  },
+  "author": {
+    "color": "gray",
+    "text": "FuzzyLeo"
+  }
 }

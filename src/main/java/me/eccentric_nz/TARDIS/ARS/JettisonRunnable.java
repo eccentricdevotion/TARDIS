@@ -46,6 +46,16 @@ public class JettisonRunnable implements Runnable {
     private final ARS room;
     private final int id;
     private final Player player;
+    private final boolean relocate;
+
+    public JettisonRunnable(TARDIS plugin, JettisonSlot slot, ARS room, int id, Player player, boolean relocate) {
+        this.plugin = plugin;
+        this.slot = slot;
+        this.room = room;
+        this.id = id;
+        this.player = player;
+        this.relocate = relocate;
+    }
 
     public JettisonRunnable(TARDIS plugin, JettisonSlot slot, ARS room, int id, Player player) {
         this.plugin = plugin;
@@ -53,6 +63,7 @@ public class JettisonRunnable implements Runnable {
         this.room = room;
         this.id = id;
         this.player = player;
+        this.relocate = false;
     }
 
     @Override
@@ -133,7 +144,9 @@ public class JettisonRunnable implements Runnable {
             if (player.isOnline()) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "ENERGY_RECOVERED", String.format("%d", amount));
             }
-            new RoomCleaner(plugin).removeRecords(r, id, world, player);
+            if (!relocate) {
+                new RoomCleaner(plugin).removeRecords(r, id, world, player);
+            }
         }
     }
 }

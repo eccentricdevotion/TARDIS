@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.commands.dev;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.utility.FractalFence;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.rooms.architectural.tree.TreeBuilder;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -44,7 +45,7 @@ public class TreeCommand {
         if (sender instanceof Player player) {
             Block targetBlock = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 16);
             Block up = targetBlock.getRelative(BlockFace.UP);
-            if (args.length == 1) {
+            if (args[1].equalsIgnoreCase("worldgen")) {
                 if (!targetBlock.getType().equals(Material.GRASS_BLOCK)) {
                     plugin.getMessenger().message(player, TardisModule.TARDIS, "You must be targeting a grass block!");
                     return true;
@@ -52,11 +53,11 @@ public class TreeCommand {
                 plugin.getTardisHelper().growTree("random", up.getLocation());
                 return true;
             }
-            if (args.length == 4) {
+            if (args.length == 5) {
                 try {
-                    Material stem = Material.valueOf(args[1].toUpperCase(Locale.ROOT));
-                    Material hat = Material.valueOf(args[2].toUpperCase(Locale.ROOT));
-                    Material decor = Material.valueOf(args[3].toUpperCase(Locale.ROOT));
+                    Material stem = Material.valueOf(args[2].toUpperCase(Locale.ROOT));
+                    Material hat = Material.valueOf(args[3].toUpperCase(Locale.ROOT));
+                    Material decor = Material.valueOf(args[4].toUpperCase(Locale.ROOT));
                     if (!stem.isBlock() || !hat.isBlock() || !decor.isBlock() || !plugin.getTardisHelper().getTreeMaterials().contains(stem) || !plugin.getTardisHelper().getTreeMaterials().contains(hat) || !plugin.getTardisHelper().getTreeMaterials().contains(decor)) {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "ARG_NOT_BLOCK");
                         return true;
@@ -67,9 +68,12 @@ public class TreeCommand {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "MATERIAL_NOT_VALID");
                     return true;
                 }
-            } else {
-                int which = TARDISNumberParsers.parseInt(args[1]);
+            } else if (args[1].equalsIgnoreCase("delta")) {
+                int which = TARDISNumberParsers.parseInt(args[2]);
                 FractalFence.grow(targetBlock, which);
+                return true;
+            } else {
+                new TreeBuilder().place(targetBlock.getRelative(BlockFace.UP));
                 return true;
             }
         } else {

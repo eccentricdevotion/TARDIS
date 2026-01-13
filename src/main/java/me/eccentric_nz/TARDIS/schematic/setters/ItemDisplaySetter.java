@@ -72,6 +72,9 @@ public class ItemDisplaySetter {
             if (stack.has("cmd")) {
                 String key = stack.get("cmd").getAsString();
                 model = new NamespacedKey(TARDIS.plugin, key);
+            } else if (stack.has("display_name")) {
+                setNamedDisplay(start, json);
+                return;
             }
             if (stack.has("door")) {
                 if (id > 0) {
@@ -156,5 +159,25 @@ public class ItemDisplaySetter {
         }
         display.setItemStack(is);
         display.setInvulnerable(true);
+    }
+
+    private static void setNamedDisplay(Location start, JsonObject json) {
+        if (json.has("stack")) {
+            JsonObject rel = json.get("rel_location").getAsJsonObject();
+            double px = rel.get("x").getAsDouble();
+            double py = rel.get("y").getAsDouble();
+            double pz = rel.get("z").getAsDouble();
+            Location l = new Location(start.getWorld(), start.getX() + px, start.getY() + py, start.getZ() + pz);
+            ItemDisplay display = (ItemDisplay) l.getWorld().spawnEntity(l, EntityType.ITEM_DISPLAY);
+            JsonObject stack = json.get("stack").getAsJsonObject();
+            Material material = Material.valueOf(stack.get("type").getAsString());
+            ItemStack is = ItemStack.of(material);
+            ItemMeta im = is.getItemMeta();
+            im.displayName(Component.text(stack.get("display_name").getAsString()));
+            is.setItemMeta(im);
+            display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.HEAD);
+            display.setItemStack(is);
+            display.setInvulnerable(true);
+        }
     }
 }

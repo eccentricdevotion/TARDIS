@@ -449,9 +449,7 @@ public class FullDesktopThemeRunnable extends DesktopThemeRunnable {
             // item frames
             if (obj.has("item_frames")) {
                 JsonArray frames = obj.get("item_frames").getAsJsonArray();
-                for (int i = 0; i < frames.size(); i++) {
-                    ItemFrameSetter.curate(frames.get(i).getAsJsonObject(), wg1, id);
-                }
+                ItemFrameSetter.curate(frames, wg1, id);
             }
             // item displays
             if (obj.has("item_displays")) {

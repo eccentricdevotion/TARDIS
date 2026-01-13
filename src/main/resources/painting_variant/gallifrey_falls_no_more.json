@@ -1,5 +1,13 @@
 {
   "asset_id": "tardis:gallifrey_falls_no_more",
   "height": 2,
-  "width": 4
+  "width": 4,
+  "title": {
+    "color": "gray",
+    "text": "Gallifrey Fall No More"
+  },
+  "author": {
+    "color": "gray",
+    "text": "FuzzyLeo"
+  }
 }

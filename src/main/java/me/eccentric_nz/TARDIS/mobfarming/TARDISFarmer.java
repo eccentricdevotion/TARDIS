@@ -1164,7 +1164,10 @@ public class TARDISFarmer {
                         nautili.forEach((n) -> {
                             plugin.setTardisSpawn(true);
                             Nautilus shellfish = (Nautilus) world.spawnEntity(tank, EntityType.NAUTILUS);
-                            shellfish.setTamed(n.isTamed());
+                            if (n.isTamed()) {
+                                shellfish.setTamed(true);
+                                shellfish.setOwner(p);
+                            }
                             shellfish.setAge(n.getAge());
                             if (n.isBaby()) {
                                 shellfish.setBaby();

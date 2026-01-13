@@ -38,6 +38,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.MainHand;
 import org.bukkit.inventory.meta.BlockStateMeta;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.BoundingBox;
 
@@ -185,6 +186,9 @@ public class SchematicSave {
                                     if (im.hasItemModel()) {
                                         head.addProperty("model", im.getItemModel().toString());
                                     }
+                                    if (im instanceof SkullMeta skullMeta) {
+                                        skullMeta.getPlayerProfile().getProperties().stream().findFirst().ifPresent(property -> head.addProperty("skull", property.getValue()));
+                                    }
                                     head.addProperty("material", helmet.getType().toString());
                                     as.add("head", head);
                                 }
@@ -201,7 +205,7 @@ public class SchematicSave {
                                 loc.addProperty("z", entityLocation.getBlockZ() - minz);
                                 painting.add("rel_location", loc);
                                 try {
-                                    painting.addProperty("art", art.getArt().toString());
+                                    painting.addProperty("art", art.getArt().assetId().toString());
                                 } catch (IllegalArgumentException | IllegalStateException e) {
                                     // custom datapack painting
                                     painting.addProperty("art", DataPackPainting.getCustomVariant(art));
@@ -263,18 +267,22 @@ public class SchematicSave {
                             if (!entities.contains(entity)) {
                                 JsonObject item = new JsonObject();
                                 JsonObject loc = new JsonObject();
-                                loc.addProperty("x", entityLocation.getBlockX() - minx);
-                                loc.addProperty("y", entityLocation.getBlockY() - miny);
-                                loc.addProperty("z", entityLocation.getBlockZ() - minz);
+                                loc.addProperty("x", entityLocation.getX() - minx);
+                                loc.addProperty("y", entityLocation.getY() - miny);
+                                loc.addProperty("z", entityLocation.getZ() - minz);
                                 item.add("rel_location", loc);
                                 JsonObject stack = new JsonObject();
                                 Material material = display.getItemStack().getType();
                                 NamespacedKey model = null;
                                 if (display.getItemStack().hasItemMeta()) {
                                     ItemMeta im = display.getItemStack().getItemMeta();
-                                    String pdckey = im.getPersistentDataContainer().get(plugin.getCustomBlockKey(), PersistentDataType.STRING);
-                                    model = new NamespacedKey(plugin, pdckey);
-                                    stack.addProperty("cmd", model.getKey());
+                                    if (im.getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.STRING)) {
+                                        String key = im.getPersistentDataContainer().get(plugin.getCustomBlockKey(), PersistentDataType.STRING);
+                                        model = new NamespacedKey(plugin, key);
+                                        stack.addProperty("cmd", model.getKey());
+                                    } else if (im.hasDisplayName()) {
+                                        stack.addProperty("display_name", ComponentUtils.stripColour(im.displayName()));
+                                    }
                                 }
                                 stack.addProperty("type", material.toString());
                                 TARDISDisplayItem tdi = TARDISDisplayItemRegistry.getByModel(model);

@@ -1,5 +1,13 @@
 {
   "asset_id": "tardis:bones",
   "height": 3,
-  "width": 3
+  "width": 3,
+  "title": {
+    "color": "gray",
+    "text": "Bones"
+  },
+  "author": {
+    "color": "gray",
+    "text": "eccentric_nz"
+  }
 }

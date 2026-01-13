@@ -1,5 +1,13 @@
 {
   "asset_id": "tardis:periodic_table",
   "height": 3,
-  "width": 4
+  "width": 4,
+  "title": {
+    "color": "gray",
+    "text": "Periodic Table"
+  },
+  "author": {
+    "color": "gray",
+    "text": "eccentric_nz"
+  }
 }

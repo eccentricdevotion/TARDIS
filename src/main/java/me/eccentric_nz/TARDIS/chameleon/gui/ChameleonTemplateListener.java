@@ -77,13 +77,10 @@ public class ChameleonTemplateListener extends TARDISMenuListener {
         }
         switch (slot) {
             // back
-            case 0 -> plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () ->
-                    player.openInventory(new ChameleonHelpInventory(plugin).getInventory()), 2L);
+            case 0 -> plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.openInventory(new ChameleonHelpInventory(plugin).getInventory()), 2L);
             // construct
-            case 8 -> plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () ->
-                    player.openInventory(new ChameleonConstructorInventory(plugin).getInventory()), 2L);
-            default -> {
-            }
+            case 8 -> plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.openInventory(new ChameleonConstructorInventory(plugin).getInventory()), 2L);
+            default -> { }
         }
     }
 }

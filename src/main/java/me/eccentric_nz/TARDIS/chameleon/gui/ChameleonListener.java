@@ -220,11 +220,9 @@ public class ChameleonListener extends TARDISMenuListener {
                 }
             }
             // presets
-            case 14 -> plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () ->
-                    player.openInventory(new BlockPresetInventory(plugin, player).getInventory()), 2L);
+            case 14 -> plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.openInventory(new BlockPresetInventory(plugin, player).getInventory()), 2L);
             // constructor GUI
-            case 15 -> plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () ->
-                    player.openInventory(new ChameleonConstructorInventory(plugin).getInventory()), 2L);
+            case 15 -> plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.openInventory(new ChameleonConstructorInventory(plugin).getInventory()), 2L);
             case 3 -> {
                 // set the current adaptive preset as shorted out - this
                 // will allow locking in a usually unavailable biome preset
@@ -258,8 +256,7 @@ public class ChameleonListener extends TARDISMenuListener {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "CHAM_LOCK");
                 }
             }
-            case 20, 21, 22, 23, 24 -> {
-            }
+            case 20, 21, 22, 23, 24 -> { }
             default -> close(player);
         }
         if (!set.isEmpty()) {

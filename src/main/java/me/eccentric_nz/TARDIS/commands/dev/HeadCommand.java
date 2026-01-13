@@ -17,7 +17,10 @@
 package me.eccentric_nz.TARDIS.commands.dev;
 
 import com.destroystokyo.paper.profile.PlayerProfile;
+import com.destroystokyo.paper.profile.ProfileProperty;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.skins.WashingMachineSkin;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -59,6 +62,34 @@ public class HeadCommand {
             player.getInventory().addItem(is);
         } catch (IllegalArgumentException | MalformedURLException e) {
             plugin.debug("Bad UUID or URL");
+        }
+    }
+
+    public void getHeadProperties(Player player) {
+        // get the head in the player's hand
+        ItemStack head = player.getInventory().getItemInMainHand();
+        if (head.getType() == Material.PLAYER_HEAD) {
+            SkullMeta meta = (SkullMeta) head.getItemMeta();
+            PlayerProfile profile = meta.getPlayerProfile();
+            for (ProfileProperty property : profile.getProperties()) {
+                plugin.debug("n " + property.getName());
+                plugin.debug("s " + property.getSignature());
+                plugin.debug("v " + property.getValue());
+            }
+            if (profile.getTextures().getSkin() != null) {
+                plugin.debug("u " + profile.getTextures().getSkin().toString());
+            }
+            PlayerProfile washingMachineProfile = plugin.getServer().createProfile(UUID.fromString(WashingMachineSkin.WASHING_MACHINE.signature()));
+            washingMachineProfile.setProperty(new ProfileProperty("textures", WashingMachineSkin.WASHING_MACHINE.value(), null));
+//            try {
+//                washingMachineProfile.getTextures().setSkin(URI.create(WashingMachineSkin.WASHING_MACHINE.url()).toURL());
+//            } catch (MalformedURLException ignored) { }
+            ItemStack washingMachine = ItemStack.of(Material.PLAYER_HEAD);
+            SkullMeta washingMachineMeta = (SkullMeta) washingMachine.getItemMeta();
+            washingMachineMeta.setPlayerProfile(washingMachineProfile);
+            washingMachineMeta.displayName(Component.text("Washing Machine"));
+            washingMachine.setItemMeta(washingMachineMeta);
+            player.give(washingMachine);
         }
     }
 }

@@ -1,5 +1,13 @@
 {
   "asset_id": "tardis:pi",
   "height": 2,
-  "width": 2
+  "width": 2,
+  "title": {
+    "color": "gray",
+    "text": "Pi"
+  },
+  "author": {
+    "color": "gray",
+    "text": "eccentric_nz"
+  }
 }

@@ -249,13 +249,11 @@ class AbandonedBuildRunnable implements Runnable {
             }
             if (obj.has("item_frames")) {
                 JsonArray frames = obj.get("item_frames").getAsJsonArray();
-                for (int i = 0; i < frames.size(); i++) {
-                    ItemFrameSetter.curate(frames.get(i).getAsJsonObject(), cl, dbID);
-                }
+                ItemFrameSetter.curate(frames, cl, dbID);
             }
             if (obj.has("item_displays")) {
                 JsonArray displays = obj.get("item_displays").getAsJsonArray();
-                    ItemDisplaySetter.process(displays, player, cl, dbID);
+                ItemDisplaySetter.process(displays, player, cl, dbID);
             }
             // finished processing - update tardis table!
             plugin.getQueryFactory().doUpdate("tardis", set, where);
@@ -423,7 +421,7 @@ class AbandonedBuildRunnable implements Runnable {
                 String button = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
                 plugin.getQueryFactory().insertSyncControl(dbID, 1, button, 0);
             }
-            if (type.equals(Material.JUKEBOX) && !(schm.getPermission().equals("eighth") && world.getBlockAt(x,y,z).getRelative(BlockFace.DOWN).getType() == Material.ANDESITE)) {
+            if (type.equals(Material.JUKEBOX) && !(schm.getPermission().equals("eighth") && world.getBlockAt(x, y, z).getRelative(BlockFace.DOWN).getType() == Material.ANDESITE)) {
                 // remember the location of this Advanced Console
                 String advanced = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
                 plugin.getQueryFactory().insertSyncControl(dbID, 15, advanced, 0);

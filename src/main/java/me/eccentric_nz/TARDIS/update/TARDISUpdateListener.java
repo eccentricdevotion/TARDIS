@@ -124,7 +124,7 @@ public class TARDISUpdateListener implements Listener {
             return;
         }
         String uuid = TARDISSudoTracker.SUDOERS.containsKey(playerUUID) ? TARDISSudoTracker.SUDOERS.get(playerUUID).toString() : playerUUID.toString();
-        UUID tuuid = TARDISSudoTracker.SUDOERS.containsKey(playerUUID) ? TARDISSudoTracker.SUDOERS.get(playerUUID) : playerUUID;
+//        UUID tuuid = TARDISSudoTracker.SUDOERS.containsKey(playerUUID) ? TARDISSudoTracker.SUDOERS.get(playerUUID) : playerUUID;
         Block block = event.getClickedBlock();
         if (block != null) {
             Material blockType = block.getType();
@@ -326,8 +326,7 @@ public class TARDISUpdateListener implements Listener {
                 case UNSORTED -> new TARDISVaultCommand(plugin).addDropChest(player, id, block, SmelterChest.UNSORTED);
                 case VAULT -> new TARDISVaultCommand(plugin).addDropChest(player, id, block, SmelterChest.DROP);
                 // GENERATOR, DISPENSER, HANDBRAKE, ZERO, RELATIVITY_DIFFERENTIATOR
-                default ->
-                        plugin.getQueryFactory().insertControl(id, Control.getUPDATE_CONTROLS().get(updateable.getName()), blockLocStr, secondary ? 1 : 0);
+                default -> plugin.getQueryFactory().insertControl(id, Control.getUPDATE_CONTROLS().get(updateable.getName()), blockLocStr, secondary ? 1 : 0);
             }
             // wax any signs
             if (Tag.SIGNS.isTagged(blockType)) {

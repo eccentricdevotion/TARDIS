@@ -1,5 +1,13 @@
 {
   "asset_id": "tardis:magnatise",
   "height": 1,
-  "width": 2
+  "width": 2,
+  "title": {
+    "color": "gray",
+    "text": "Magnatise"
+  },
+  "author": {
+    "color": "gray",
+    "text": "eccentric_nz"
+  }
 }

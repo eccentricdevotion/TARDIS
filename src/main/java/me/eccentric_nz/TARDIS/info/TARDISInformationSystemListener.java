@@ -576,6 +576,9 @@ public class TARDISInformationSystemListener implements Listener {
                 if (chat.equalsIgnoreCase("he")) {
                     new TISRoomInfo(plugin).show(p, TARDISInfoMenu.CHEMISTRY);
                 }
+                if (chat.equalsIgnoreCase("a")) {
+                    new TISRoomInfo(plugin).show(p, TARDISInfoMenu.GALLERY);
+                }
                 if (chat.equalsIgnoreCase("de")) {
                     new TISRoomInfo(plugin).show(p, TARDISInfoMenu.GARDEN);
                 }
@@ -591,10 +594,13 @@ public class TARDISInformationSystemListener implements Listener {
                 if (chat.equalsIgnoreCase("Ii")) {
                     new TISRoomInfo(plugin).show(p, TARDISInfoMenu.IISTUBIL);
                 }
+                if (chat.equalsIgnoreCase(".")) {
+                    new TISRoomInfo(plugin).show(p, TARDISInfoMenu.LAUNDRY);
+                }
                 if (chat.equalsIgnoreCase("av")) {
                     new TISRoomInfo(plugin).show(p, TARDISInfoMenu.LAVA);
                 }
-                if (chat.equalsIgnoreCase("A")) {
+                if (chat.equalsIgnoreCase("-")) {
                     new TISRoomInfo(plugin).show(p, TARDISInfoMenu.ANTIGRAVITY);
                 }
                 if (chat.equalsIgnoreCase("q")) {
@@ -602,6 +608,9 @@ public class TARDISInformationSystemListener implements Listener {
                 }
                 if (chat.equalsIgnoreCase("u")) {
                     new TISRoomInfo(plugin).show(p, TARDISInfoMenu.ARBORETUM);
+                }
+                if (chat.equalsIgnoreCase("l")) {
+                    new TISRoomInfo(plugin).show(p, TARDISInfoMenu.ARCHITECTURAL);
                 }
                 if (chat.equalsIgnoreCase("B")) {
                     new TISRoomInfo(plugin).show(p, TARDISInfoMenu.BAKER);
