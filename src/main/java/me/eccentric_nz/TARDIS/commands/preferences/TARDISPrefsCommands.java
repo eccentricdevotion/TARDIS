@@ -62,7 +62,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
             "open_display_door",
             "quotes",
             "regen_block", "renderer",
-            "sfx", "shape", "siege_floor", "siege_wall", "sign", "sonic", "speed", "submarine",
+            "sfx", "shape", "siege_floor", "siege_wall", "sign", "silence_mobs", "sonic", "speed", "submarine",
             "telepathy", "translate", "travelbar",
             "wall"
     );
@@ -153,6 +153,9 @@ public class TARDISPrefsCommands implements CommandExecutor {
                     }
                     case "effect", "shape", "speed" -> {
                         return new ParticlePrefsCommand(plugin).setPartclePref(player, args);
+                    }
+                    case "silence_mobs" -> {
+                        return new SilenceMobsCommand(plugin).toggle(player, args);
                     }
                     default -> {
                         if (args.length < 2 || (!args[1].equalsIgnoreCase("on") && !args[1].equalsIgnoreCase("off"))) {

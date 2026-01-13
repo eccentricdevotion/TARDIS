@@ -234,6 +234,7 @@ permissions:
       tardis.prefs.siege_floor: true
       tardis.prefs.siege_wall: true
       tardis.prefs.sign: true
+      tardis.prefs.silence_mobs: true
       tardis.prefs.sonic: true
       tardis.prefs.speed: true
       tardis.prefs.submarine: true
@@ -1571,6 +1572,10 @@ commands:
       description: Toggle the Police Box 'name' sign on and off.
       permission: tardis.prefs.sign
       usage: /<command> sign [on|off]
+    silence_mobs:
+      description: Toggle whether creatures in the TARDIS are silent.
+      permission: tardis.prefs.silence_mobs
+      usage: /<command> silence_mobs [on|off]
     sonic:
       description: Open the Sonic Screwdriver preferences GUI.
       permission: tardis.prefs.sonic
