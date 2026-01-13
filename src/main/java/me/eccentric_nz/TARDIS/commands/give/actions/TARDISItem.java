@@ -101,6 +101,7 @@ public class TARDISItem {
                     result = ProductBuilder.getProduct(product);
                 } catch (IllegalArgumentException e) {
                     try {
+                        plugin.debug("Giving lab built item...");
                         Lab lab = Lab.valueOf(enumName);
                         result = LabBuilder.getLabProduct(lab);
                     } catch (IllegalArgumentException ignored) {

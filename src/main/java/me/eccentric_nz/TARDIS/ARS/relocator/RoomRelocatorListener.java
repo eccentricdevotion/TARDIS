@@ -247,7 +247,7 @@ public class RoomRelocatorListener extends ARSMethods implements Listener {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "ROOM_JETT", String.format("%d", tap.getJettison().size()));
                         }, a_long_time);
                         // do the jettison last
-                        JettisonRunnable jr = new JettisonRunnable(plugin, jettison, entry.getValue(), ids.get(playerUUID), player);
+                        JettisonRunnable jr = new JettisonRunnable(plugin, jettison, entry.getValue(), ids.get(playerUUID), player, true);
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, jr, a_long_time + 50);
                         // damage the circuit if configured
                         DamageUtility.run(plugin, DiskCircuit.ARS, plugin.getTardisAPI().getIdOfTARDISPlayerIsIn(playerUUID), player);
