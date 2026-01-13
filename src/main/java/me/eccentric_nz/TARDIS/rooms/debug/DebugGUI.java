@@ -195,6 +195,8 @@ public class DebugGUI {
             new GuiPreview(Material.BUCKET, Button.DELETE.getKey(), "bucket_delete"),
             new GuiPreview(Material.BUCKET, Button.DEACTIVATE.getKey(), "bucket_deactivate"),
             new GuiPreview(Material.BUCKET, Button.REMOVE.getKey(), "bucket_remove"),
+            new GuiPreview(Material.CAULDRON, Button.BLEACH.getKey(), "button_bleach"),
+            new GuiPreview(Material.CAULDRON, Button.WASH.getKey(), "button_wash"),
             new GuiPreview(Material.CHERRY_LEAVES, RoomVariant.GARDEN.getKey(), "room_garden"),
             new GuiPreview(Material.CHISELED_QUARTZ_BLOCK, RoomVariant.GALLERY.getKey(), "room_gallery"),
             new GuiPreview(Material.CHEST, RoomVariant.SMELTER.getKey(), "room_smelter"),

@@ -31,6 +31,7 @@ public enum Button {
     ARTRON(new NamespacedKey(TARDIS.plugin, "button_artron")),
     AUTONOMOUS_PREFERENCES(new NamespacedKey(TARDIS.plugin, "button_auto_prefs")),
     BACK(new NamespacedKey(TARDIS.plugin, "button_back")),
+    BLEACH(new NamespacedKey(TARDIS.plugin, "button_bleach")),
     CANCEL(new NamespacedKey(TARDIS.plugin, "button_cancel")),
     CHAMELEON(new NamespacedKey(TARDIS.plugin, "button_chameleon")),
     CHARACTER(new NamespacedKey(TARDIS.plugin, "button_character")),
@@ -82,6 +83,7 @@ public enum Button {
     TRANSMAT(new NamespacedKey(TARDIS.plugin, "button_transmat")),
     TWA(new NamespacedKey(TARDIS.plugin, "button_twa")),
     TYPE(new NamespacedKey(TARDIS.plugin, "button_type")),
+    WASH(new NamespacedKey(TARDIS.plugin, "button_wash")),
     ZERO(new NamespacedKey(TARDIS.plugin, "button_zero"));
 
     private final NamespacedKey key;
