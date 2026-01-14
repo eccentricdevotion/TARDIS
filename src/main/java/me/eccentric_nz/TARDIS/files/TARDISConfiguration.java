@@ -101,6 +101,7 @@ public class TARDISConfiguration {
         booleanOptions.put("conversions.paintings", false);
         booleanOptions.put("conversions.exploding", false);
         booleanOptions.put("conversions.player_prefs_materials", false);
+        booleanOptions.put("conversions.room_costs", false);
         booleanOptions.put("conversions.short_grass", false);
         booleanOptions.put("creation.check_for_home", true);
         booleanOptions.put("creation.create_worlds", false);

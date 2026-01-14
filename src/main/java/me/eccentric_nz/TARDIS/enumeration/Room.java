@@ -32,6 +32,7 @@ public enum Room {
     BEDROOM,
     BIRDCAGE,
     CHEMISTRY,
+    CLOISTER,
     EMPTY,
     EYE,
     FARM,
@@ -70,6 +71,7 @@ public enum Room {
     TRENZALORE,
     VAULT,
     VILLAGE,
+    WARDROBE,
     WOOD,
     WORKSHOP,
     ZERO

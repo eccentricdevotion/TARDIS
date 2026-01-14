@@ -289,3 +289,4 @@ conversions:
   exploding: true
   player_prefs_materials: true
   short_grass: true
+  room_costs: true

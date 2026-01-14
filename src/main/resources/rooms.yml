@@ -2,313 +2,325 @@
 rooms:
   ALLAY:
     enabled: true
-    cost: 575
+    cost: 1225
     offset: -4
     seed: LIGHT_BLUE_CONCRETE
     user: false
   ANTIGRAVITY:
     enabled: true
-    cost: 625
+    cost: 1725
     offset: -4
     seed: SANDSTONE
     user: false
   APIARY:
     enabled: true
-    cost: 450
+    cost: 700
     offset: -4
     seed: BEE_NEST
     user: false
   AQUARIUM:
     enabled: true
-    cost: 450
+    cost: 875
     offset: -4
     seed: TUBE_CORAL_BLOCK
     user: false
   ARBORETUM:
     enabled: true
-    cost: 325
+    cost: 850
     offset: -4
     seed: OAK_LEAVES
     user: false
   ARCHITECTURAL:
     enabled: true
-    cost: 600
+    cost: 775
     offset: -4
     seed: WAXED_COPPER_GRATE
     user: false
   BAKER:
     enabled: true
-    cost: 350
+    cost: 750
     offset: -4
     seed: END_STONE
     user: false
   BAMBOO:
     enabled: true
-    cost: 475
+    cost: 700
     offset: -4
     seed: BAMBOO
     user: false
   BEDROOM:
     enabled: true
-    cost: 475
+    cost: 875
     offset: -4
     seed: GLOWSTONE
     user: false
   BIRDCAGE:
     enabled: true
-    cost: 350
+    cost: 825
     offset: -4
     seed: YELLOW_GLAZED_TERRACOTTA
     user: false
   CHEMISTRY:
     enabled: true
-    cost: 550
+    cost: 700
     offset: -4
     seed: BLAST_FURNACE
     user: false
+  CLOISTER:
+    enabled: true
+    cost: 400
+    offset: -4
+    seed: PALE_MOSS_BLOCK
+    user: false
   EMPTY:
     enabled: true
-    cost: 250
+    cost: 825
     offset: -4
     seed: GLASS
     user: false
   EYE:
     enabled: true
-    cost: 350
+    cost: 625
     offset: -4
     seed: SHROOMLIGHT
     user: false
   FARM:
     enabled: true
-    cost: 350
+    cost: 725
     offset: -4
     seed: DIRT
     user: false
   GALLERY:
     enabled: true
-    cost: 450
+    cost: 1275
     offset: -4
     seed: CHISELED_QUARTZ_BLOCK
     user: false
   GARDEN:
     enabled: true
-    cost: 450
+    cost: 625
     offset: -4
     seed: CHERRY_LEAVES
     user: false
   GEODE:
     enabled: true
-    cost: 650
+    cost: 675
     offset: -4
     seed: AMETHYST_BLOCK
     user: false
   GRAVITY:
     enabled: true
-    cost: 625
+    cost: 1525
     offset: -20
     seed: MOSSY_COBBLESTONE
     user: false
   GREENHOUSE:
     enabled: true
-    cost: 450
+    cost: 750
     offset: -4
     seed: MELON
     user: false
   HAPPY:
     enabled: true
-    cost: 450
+    cost: 950
     offset: -4
     seed: STRIPPED_OAK_LOG
     user: false
   HARMONY:
     enabled: true
-    cost: 450
+    cost: 925
     offset: -4
     seed: STONE_BRICK_STAIRS
     user: false
   HUTCH:
     enabled: true
-    cost: 450
+    cost: 750
     offset: -4
     seed: ACACIA_LOG
     user: false
   IGLOO:
     enabled: true
-    cost: 650
+    cost: 1600
     offset: -4
     seed: PACKED_ICE
     user: false
   IISTUBIL:
     enabled: true
-    cost: 550
+    cost: 425
     offset: -4
     seed: WHITE_GLAZED_TERRACOTTA
     user: false
   KITCHEN:
     enabled: true
-    cost: 450
+    cost: 1525
     offset: -4
     seed: PUMPKIN
     user: false
   LAUNDRY:
     enabled: true
-    cost: 450
+    cost: 975
     offset: -4
     seed: VERDANT_FROGLIGHT
     user: false
   LAVA:
     enabled: true
-    cost: 550
+    cost: 425
     offset: -4
     seed: MAGMA_BLOCK
     user: false
   LAZARUS:
     enabled: true
-    cost: 750
+    cost: 850
     offset: -4
     seed: FURNACE
     user: false
   LIBRARY:
     enabled: true
-    cost: 550
+    cost: 1850
     offset: -4
     seed: ENCHANTING_TABLE
     user: false
   MANGROVE:
     enabled: true
-    cost: 450
+    cost: 525
     offset: -4
     seed: MUDDY_MANGROVE_ROOTS
     user: false
   MAZE:
     enabled: true
-    cost: 650
+    cost: 675
     offset: -4
     seed: LODESTONE
     user: false
   MUSHROOM:
     enabled: true
-    cost: 350
+    cost: 500
     offset: -4
     seed: GRAVEL
     user: false
   NAUTILUS:
     enabled: true
-    cost: 450
+    cost: 925
     offset: -4
     seed: DEAD_HORN_CORAL_BLOCK
     user: false
   NETHER:
     enabled: true
-    cost: 450
+    cost: 275
     offset: -4
     seed: BLACKSTONE
     user: false
   OBSERVATORY:
     enabled: true
-    cost: 550
+    cost: 3950
     offset: -4
     seed: POLISHED_BLACKSTONE_BRICKS
     user: false
   PASSAGE:
     enabled: true
-    cost: 200
+    cost: 500
     offset: -4
     seed: CLAY
     user: false
   PEN:
     enabled: true
-    cost: 550
+    cost: 725
     offset: -4
     seed: MOSS_BLOCK
     user: false
   POOL:
     enabled: true
-    cost: 450
+    cost: 875
     offset: -4
     seed: SNOW_BLOCK
     user: false
   RAIL:
     enabled: true
-    cost: 650
+    cost: 1100
     offset: -4
     seed: HOPPER
     user: false
   RENDERER:
     enabled: true
-    cost: 550
+    cost: 1650
     offset: -4
     seed: TERRACOTTA
     user: false
   SHELL:
     enabled: true
-    cost: 550
+    cost: 1025
     offset: -4
     seed: DEAD_BRAIN_CORAL_BLOCK
     user: false
   SMELTER:
     enabled: true
-    cost: 750
+    cost: 1025
     offset: -4
     seed: CHEST
     user: false
   STABLE:
     enabled: true
-    cost: 350
+    cost: 825
     offset: -4
     seed: HAY_BLOCK
     user: false
   STAIRCASE:
     enabled: true
-    cost: 550
+    cost: 775
     offset: -5
     seed: PURPLE_TERRACOTTA
     user: false
   STALL:
     enabled: true
-    cost: 350
+    cost: 1000
     offset: -4
     seed: BROWN_GLAZED_TERRACOTTA
     user: false
   SURGERY:
     enabled: true
-    cost: 350
+    cost: 1400
     offset: -4
     seed: RED_CONCRETE
     user: false
   TRENZALORE:
     enabled: true
-    cost: 550
+    cost: 775
     offset: -4
     seed: BRICKS
     user: false
   VAULT:
     enabled: true
-    cost: 350
+    cost: 850
     offset: -4
     seed: DISPENSER
     user: false
   VILLAGE:
     enabled: true
-    cost: 550
+    cost: 650
     offset: -4
     seed: OAK_LOG
     user: false
+  WARDROBE:
+    enabled: true
+    cost: 750
+    offset: -4
+    seed: BIRCH_LOG
+    user: false
   WOOD:
     enabled: true
-    cost: 350
+    cost: 450
     offset: -4
     seed: OAK_PLANKS
     user: false
   WORKSHOP:
     enabled: true
-    cost: 400
+    cost: 1175
     offset: -4
     seed: CRAFTING_TABLE
     user: false
   ZERO:
     enabled: true
-    cost: 650
+    cost: 750
     offset: -4
     seed: OAK_BUTTON
     user: false

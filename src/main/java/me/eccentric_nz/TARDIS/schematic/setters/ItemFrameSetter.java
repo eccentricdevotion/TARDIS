@@ -111,6 +111,10 @@ public class ItemFrameSetter {
                     }
                     is.setItemMeta(im);
                     frame.setItem(is, false);
+                    if (json.has("rotation")) {
+                        Rotation rotation = Rotation.valueOf(json.get("rotation").getAsString());
+                        frame.setRotation(rotation);
+                    }
                 } catch (IllegalArgumentException e) {
                     TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.WARNING, "Could not create item stack for schematic item frame!");
                 }

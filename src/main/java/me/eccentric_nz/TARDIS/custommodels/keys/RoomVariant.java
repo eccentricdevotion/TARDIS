@@ -32,6 +32,7 @@ public enum RoomVariant {
     BEDROOM(new NamespacedKey(TARDIS.plugin, "button_bedroom")),
     BIRDCAGE(new NamespacedKey(TARDIS.plugin, "button_birdcage")),
     CHEMISTRY(new NamespacedKey(TARDIS.plugin, "button_chemistry")),
+    CLOISTER(new NamespacedKey(TARDIS.plugin, "button_cloister")),
     EMPTY(new NamespacedKey(TARDIS.plugin, "button_empty")),
     EYE(new NamespacedKey(TARDIS.plugin, "button_eye")),
     FARM(new NamespacedKey(TARDIS.plugin, "button_farm")),
@@ -72,6 +73,7 @@ public enum RoomVariant {
     TRENZALORE(new NamespacedKey(TARDIS.plugin, "button_trenzalore")),
     VAULT(new NamespacedKey(TARDIS.plugin, "button_vault")),
     VILLAGE(new NamespacedKey(TARDIS.plugin, "button_village")),
+    WARDROBE(new NamespacedKey(TARDIS.plugin, "button_wardrobe")),
     WOOD(new NamespacedKey(TARDIS.plugin, "button_wood")),
     WORKSHOP(new NamespacedKey(TARDIS.plugin, "button_workshop")),
     ZERO(new NamespacedKey(TARDIS.plugin, "button_zero_room"));

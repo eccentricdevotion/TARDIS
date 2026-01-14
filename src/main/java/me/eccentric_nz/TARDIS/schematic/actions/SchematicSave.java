@@ -181,7 +181,7 @@ public class SchematicSave {
                                 as.addProperty("gravity", stand.hasGravity());
                                 JsonObject head = new JsonObject();
                                 ItemStack helmet = stand.getEquipment().getHelmet();
-                                if (helmet != null) {
+                                if (helmet != null && helmet.hasItemMeta()) {
                                     ItemMeta im = helmet.getItemMeta();
                                     if (im.hasItemModel()) {
                                         head.addProperty("model", im.getItemModel().toString());
@@ -224,6 +224,7 @@ public class SchematicSave {
                                 loc.addProperty("z", entityLocation.getBlockZ() - minz);
                                 frame.add("rel_location", loc);
                                 frame.addProperty("facing", f.getFacing().toString());
+                                frame.addProperty("rotation", f.getRotation().toString());
                                 ItemStack item = f.getItem();
                                 if (item != null) {
                                     Material type = item.getType();
