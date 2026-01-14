@@ -91,6 +91,7 @@ public class TARDISRoomCommands implements CommandExecutor {
 //                                        int offset = plugin.getRoomsConfig().getInt("rooms." + r + ".offset");
 //                                        String material = plugin.getRoomsConfig().getString("rooms." + r + ".seed");
 //                                        plugin.debug("| " + r + " | " + config_cost + " | " + offset + " | " + material + " |");
+//                                        plugin.debug("| " + TARDISStringUtils.capitalise(r) + " | " + artron_cost + " | " + config_cost + " |");
 //                                        plugin.debug("integerOptions.put(\"rooms." + r + ".cost\", " + config_cost + ");");
 //                                        plugin.debug("integerOptions.put(\"rooms." + r + ".offset\", " + offset + ");");
                                         bw.write("Actual room cost: " + artron_cost);
@@ -101,7 +102,7 @@ public class TARDISRoomCommands implements CommandExecutor {
                                 } catch (IOException e) {
                                     plugin.debug("Could not create and write to " + r + "_block_list.txt! " + e.getMessage());
                                 }
-//                                plugin.getMessenger().send(sender, TardisModule.TARDIS, "ROOM_FILE_SAVED", r);
+                                plugin.getMessenger().send(sender, TardisModule.TARDIS, "ROOM_FILE_SAVED", r);
                             }
                         });
                     } else {
