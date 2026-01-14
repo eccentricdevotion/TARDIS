@@ -294,6 +294,12 @@ rooms:
     offset: -4
     seed: OAK_LOG
     user: false
+  WARDROBE:
+    enabled: true
+    cost: 450
+    offset: -4
+    seed: BIRCH_LOG
+    user: false
   WOOD:
     enabled: true
     cost: 350

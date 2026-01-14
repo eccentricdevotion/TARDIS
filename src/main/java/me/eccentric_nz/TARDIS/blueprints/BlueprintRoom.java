@@ -76,6 +76,7 @@ public enum BlueprintRoom {
     TRENZALORE("tardis.room.trenzalore"),
     VAULT("tardis.room.vault", BlueprintFeature.VAULT),
     VILLAGE("tardis.room.village", BlueprintFeature.FARM),
+    WARDROBE("tardis.room.wardrobe"),
     WOOD("tardis.room.wood"),
     WORKSHOP("tardis.room.workshop"),
     ZERO("tardis.room.zero");

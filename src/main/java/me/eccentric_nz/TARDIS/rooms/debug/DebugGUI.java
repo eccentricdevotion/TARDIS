@@ -39,6 +39,7 @@ public class DebugGUI {
             new GuiPreview(Material.ARROW, ArrowVariant.MORE.getKey(), "arrow_more"),
             new GuiPreview(Material.BAMBOO, RoomVariant.BAMBOO.getKey(), "room_bamboo"),
             new GuiPreview(Material.BEE_NEST, RoomVariant.APIARY.getKey(), "room_apiary"),
+            new GuiPreview(Material.BIRCH_LOG, RoomVariant.WARDROBE.getKey(), "room_wardrobe"),
             new GuiPreview(Material.BLACK_WOOL, Wool.BLANK.getKey(), "map_blank"),
             new GuiPreview(Material.BLACKSTONE, RoomVariant.NETHER.getKey(), "room_nether"),
             new GuiPreview(Material.BLAST_FURNACE, RoomVariant.CHEMISTRY.getKey(), "room_chemistry"),

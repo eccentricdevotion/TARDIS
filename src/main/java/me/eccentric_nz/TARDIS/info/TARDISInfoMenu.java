@@ -289,6 +289,7 @@ public enum TARDISInfoMenu {
     TRENZALORE("TIS|Rooms 2|Trenzalore", "ROOMS_2", "T"),
     VAULT("TIS|Rooms 2|Vault", "ROOMS_2", "V"),
     VILLAGE("TIS|Rooms 2|Village", "ROOMS_2", "i"),
+    WARDROBE("TIS|Rooms 2|Wardrobe", "ROOMS_2", "b"),
     WOOD("TIS|Rooms 2|Wood", "ROOMS_2", "W"),
     WORKSHOP("TIS|Rooms 2|Workshop", "ROOMS_2", "h"),
     ZERO("TIS|Rooms 2|Zero", "ROOMS_2", "er"),

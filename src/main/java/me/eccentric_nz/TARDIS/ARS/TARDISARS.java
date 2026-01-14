@@ -76,6 +76,7 @@ public enum TARDISARS implements ARS {
     TRENZALORE("BRICKS", "Trenzalore", 1, RoomVariant.TRENZALORE.getKey()),
     VAULT("DISPENSER", "Storage Vault", 1, RoomVariant.VAULT.getKey()),
     VILLAGE("OAK_LOG", "Village", 1, RoomVariant.VILLAGE.getKey()),
+    WARDROBE("BIRCH_LOG", "Wardrobe", 1, RoomVariant.WARDROBE.getKey()),
     WOOD("OAK_PLANKS", "Wood Secondary Console", 1, RoomVariant.WOOD.getKey()),
     WORKSHOP("RED_NETHER_BRICKS", "Workshop", 1, RoomVariant.WORKSHOP.getKey()),
     ZERO("GRASS_BLOCK", "Zero Room", 0, null, false),

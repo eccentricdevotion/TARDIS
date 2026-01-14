@@ -46,7 +46,7 @@ public class RoomPopulator extends BlockPopulator {
             "BEDROOM", "BIRDCAGE", "CHEMISTRY", "EMPTY", "EYE", "FARM", "GALLERY", "GARDEN", "GEODE", "GREENHOUSE", "HAPPY", "HARMONY",
             "HUTCH", "IGLOO", "IISTUBIL", "KITCHEN", "LAUNDRY", "LAVA", "LAZARUS", "LIBRARY", "MANGROVE", "MUSHROOM", "NAUTILUS",
             "NETHER", "OBSERVATORY", "PASSAGE", "PEN", "POOL", "RAIL", "SHELL", "SMELTER", "STABLE", "STALL", "SURGERY",
-            "TRENZALORE", "VAULT", "VILLAGE", "WOOD", "WORKSHOP");
+            "TRENZALORE", "VAULT", "VILLAGE", "WARDROBE", "WOOD", "WORKSHOP");
 
     public RoomPopulator(TARDIS plugin) {
         this.plugin = plugin;

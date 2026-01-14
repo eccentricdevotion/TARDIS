@@ -714,6 +714,9 @@ public class TARDISInformationSystemListener implements Listener {
                 if (chat.equalsIgnoreCase("V")) {
                     new TISRoomInfo(plugin).show(p, TARDISInfoMenu.VAULT);
                 }
+                if (chat.equalsIgnoreCase("b")) {
+                    new TISRoomInfo(plugin).show(p, TARDISInfoMenu.WARDROBE);
+                }
                 if (chat.equalsIgnoreCase("W")) {
                     new TISRoomInfo(plugin).show(p, TARDISInfoMenu.WOOD);
                 }

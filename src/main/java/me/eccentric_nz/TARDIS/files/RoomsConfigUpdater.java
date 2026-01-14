@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.files;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import java.io.File;
@@ -138,6 +139,8 @@ public class RoomsConfigUpdater {
         booleanOptions.put("rooms.VAULT.user", false);
         booleanOptions.put("rooms.VILLAGE.enabled", true);
         booleanOptions.put("rooms.VILLAGE.user", false);
+        booleanOptions.put("rooms.WARDROBE.enabled", true);
+        booleanOptions.put("rooms.WARDROBE.user", false);
         booleanOptions.put("rooms.WOOD.enabled", true);
         booleanOptions.put("rooms.WOOD.user", false);
         booleanOptions.put("rooms.WORKSHOP.enabled", true);
@@ -243,6 +246,8 @@ public class RoomsConfigUpdater {
         integerOptions.put("rooms.VAULT.offset", -4);
         integerOptions.put("rooms.VILLAGE.cost", 550);
         integerOptions.put("rooms.VILLAGE.offset", -4);
+        integerOptions.put("rooms.WARDROBE.cost", 450);
+        integerOptions.put("rooms.WARDROBE.offset", -4);
         integerOptions.put("rooms.WOOD.cost", 350);
         integerOptions.put("rooms.WOOD.offset", -4);
         integerOptions.put("rooms.WORKSHOP.cost", 400);
@@ -296,10 +301,11 @@ public class RoomsConfigUpdater {
         stringOptions.put("rooms.STAIRCASE.seed", "PURPLE_TERRACOTTA");
         stringOptions.put("rooms.STALL.seed", "BROWN_GLAZED_TERRACOTTA");
         stringOptions.put("rooms.SURGERY.seed", "RED_CONCRETE");
-        stringOptions.put("rooms.TRENZALORE.seed", "BRICK");
+        stringOptions.put("rooms.TRENZALORE.seed", "BRICKS");
         stringOptions.put("rooms.VAULT.seed", "DISPENSER");
-        stringOptions.put("rooms.VILLAGE.seed", "LOG");
-        stringOptions.put("rooms.WOOD.seed", "WOOD");
+        stringOptions.put("rooms.VILLAGE.seed", "OAK_LOG");
+        stringOptions.put("rooms.WARDROBE.seed", "BIRCH_LOG");
+        stringOptions.put("rooms.WOOD.seed", "OAK_PLANKS");
         stringOptions.put("rooms.WORKSHOP.seed", "WORKBENCH");
         stringOptions.put("rooms.ZERO.seed", "WOOD_BUTTON");
     }

@@ -70,6 +70,7 @@ public enum Room {
     TRENZALORE,
     VAULT,
     VILLAGE,
+    WARDROBE,
     WOOD,
     WORKSHOP,
     ZERO

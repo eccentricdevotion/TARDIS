@@ -96,6 +96,7 @@ public class ItemLookup {
         ITEMS.put(TARDISInfoMenu.TRENZALORE, new InfoIcon(Material.BRICKS, "Trenzalore", RoomVariant.TRENZALORE.getKey()));
         ITEMS.put(TARDISInfoMenu.VAULT, new InfoIcon(Material.DISPENSER, "Storage Vault", RoomVariant.VAULT.getKey()));
         ITEMS.put(TARDISInfoMenu.VILLAGE, new InfoIcon(Material.OAK_LOG, "Village", RoomVariant.VILLAGE.getKey()));
+        ITEMS.put(TARDISInfoMenu.WARDROBE, new InfoIcon(Material.BIRCH_LOG, "Wardrobe", RoomVariant.WARDROBE.getKey()));
         ITEMS.put(TARDISInfoMenu.WOOD, new InfoIcon(Material.OAK_PLANKS, "Wood Secondary Console", RoomVariant.WOOD.getKey()));
         ITEMS.put(TARDISInfoMenu.WORKSHOP, new InfoIcon(Material.RED_NETHER_BRICKS, "Workshop", RoomVariant.WORKSHOP.getKey()));
         ITEMS.put(TARDISInfoMenu.ZERO, new InfoIcon(Material.GRASS_BLOCK, "Zero Room", RoomVariant.ZERO.getKey()));

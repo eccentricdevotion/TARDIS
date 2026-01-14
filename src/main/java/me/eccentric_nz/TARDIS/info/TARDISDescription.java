@@ -236,6 +236,7 @@ public enum TARDISDescription {
     TRENZALORE("The final resting place of the Doctor."),
     VAULT("Some extra storage space."),
     VILLAGE("A home for the weary trader."),
+    WARDROBE("A wardrobe room for storing all your clothes and armour."),
     WOOD("A secondary console room made of wood."),
     WORKSHOP("Craft, smelt, brew, enchant and repair."),
     ZERO("Recover your health in tranquility."),
