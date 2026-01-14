@@ -70,7 +70,7 @@ public class TARDISRoomCommands implements CommandExecutor {
                             return false;
                         }
                         rooms.forEach((r) -> {
-                            if (plugin.getRoomsConfig().getBoolean("rooms." + name + ".enabled")) {
+                            if (plugin.getRoomsConfig().getBoolean("rooms." + r + ".enabled")) {
                                 HashMap<String, Integer> blockIDs = plugin.getBuildKeeper().getRoomBlockCounts().get(r);
                                 String file = plugin.getDataFolder() + File.separator + r + "_block_list.txt";
                                 int cost = 0;
@@ -85,13 +85,23 @@ public class TARDISRoomCommands implements CommandExecutor {
                                                 cost += value;
                                             }
                                         }
-                                        bw.write("Actual room cost: " + Math.round(cost / 2.0F));
+                                        int artron_cost = Math.round(cost / 2.0F);
+                                        float tmp_cost = artron_cost / 10.0f;
+                                        int config_cost = (((int) tmp_cost) / 25) * 25;
+//                                        int offset = plugin.getRoomsConfig().getInt("rooms." + r + ".offset");
+//                                        String material = plugin.getRoomsConfig().getString("rooms." + r + ".seed");
+//                                        plugin.debug("| " + r + " | " + config_cost + " | " + offset + " | " + material + " |");
+//                                        plugin.debug("integerOptions.put(\"rooms." + r + ".cost\", " + config_cost + ");");
+//                                        plugin.debug("integerOptions.put(\"rooms." + r + ".offset\", " + offset + ");");
+                                        bw.write("Actual room cost: " + artron_cost);
+                                        bw.newLine();
+                                        bw.write("Config room cost: " + config_cost);
                                         bw.newLine();
                                     }
                                 } catch (IOException e) {
                                     plugin.debug("Could not create and write to " + r + "_block_list.txt! " + e.getMessage());
                                 }
-                                plugin.getMessenger().send(sender, TardisModule.TARDIS, "ROOM_FILE_SAVED", r);
+//                                plugin.getMessenger().send(sender, TardisModule.TARDIS, "ROOM_FILE_SAVED", r);
                             }
                         });
                     } else {

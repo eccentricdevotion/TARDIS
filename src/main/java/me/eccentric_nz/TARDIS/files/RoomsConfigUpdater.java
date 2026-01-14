@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.files;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import java.io.File;
@@ -101,10 +100,6 @@ public class RoomsConfigUpdater {
         booleanOptions.put("rooms.LIBRARY.user", false);
         booleanOptions.put("rooms.MANGROVE.enabled", true);
         booleanOptions.put("rooms.MANGROVE.user", false);
-        booleanOptions.put("rooms.OBSERVATORY.enabled", true);
-        booleanOptions.put("rooms.OBSERVATORY.user", false);
-        booleanOptions.put("rooms.PEN.enabled", true);
-        booleanOptions.put("rooms.PEN.user", false);
         booleanOptions.put("rooms.MAZE.enabled", true);
         booleanOptions.put("rooms.MAZE.user", false);
         booleanOptions.put("rooms.MUSHROOM.enabled", true);
@@ -113,8 +108,12 @@ public class RoomsConfigUpdater {
         booleanOptions.put("rooms.NAUTILUS.user", false);
         booleanOptions.put("rooms.NETHER.enabled", true);
         booleanOptions.put("rooms.NETHER.user", false);
+        booleanOptions.put("rooms.OBSERVATORY.enabled", true);
+        booleanOptions.put("rooms.OBSERVATORY.user", false);
         booleanOptions.put("rooms.PASSAGE.enabled", true);
         booleanOptions.put("rooms.PASSAGE.user", false);
+        booleanOptions.put("rooms.PEN.enabled", true);
+        booleanOptions.put("rooms.PEN.user", false);
         booleanOptions.put("rooms.POOL.enabled", true);
         booleanOptions.put("rooms.POOL.user", false);
         booleanOptions.put("rooms.RAIL.enabled", true);
@@ -148,111 +147,111 @@ public class RoomsConfigUpdater {
         booleanOptions.put("rooms.ZERO.enabled", true);
         booleanOptions.put("rooms.ZERO.user", false);
         // integer
-        integerOptions.put("rooms.ALLAY.cost", 575);
+        integerOptions.put("rooms.ALLAY.cost", 1225);
         integerOptions.put("rooms.ALLAY.offset", -4);
-        integerOptions.put("rooms.ANTIGRAVITY.cost", 625);
+        integerOptions.put("rooms.ANTIGRAVITY.cost", 1725);
         integerOptions.put("rooms.ANTIGRAVITY.offset", -4);
-        integerOptions.put("rooms.APIARY.cost", 450);
+        integerOptions.put("rooms.APIARY.cost", 700);
         integerOptions.put("rooms.APIARY.offset", -4);
-        integerOptions.put("rooms.AQUARIUM.cost", 450);
+        integerOptions.put("rooms.AQUARIUM.cost", 875);
         integerOptions.put("rooms.AQUARIUM.offset", -4);
-        integerOptions.put("rooms.ARBORETUM.cost", 325);
+        integerOptions.put("rooms.ARBORETUM.cost", 850);
         integerOptions.put("rooms.ARBORETUM.offset", -4);
-        integerOptions.put("rooms.ARCHITECTURAL.cost", 600);
+        integerOptions.put("rooms.ARCHITECTURAL.cost", 775);
         integerOptions.put("rooms.ARCHITECTURAL.offset", -4);
-        integerOptions.put("rooms.BAKER.cost", 350);
+        integerOptions.put("rooms.BAKER.cost", 750);
         integerOptions.put("rooms.BAKER.offset", -4);
-        integerOptions.put("rooms.BAMBOO.cost", 475);
+        integerOptions.put("rooms.BAMBOO.cost", 700);
         integerOptions.put("rooms.BAMBOO.offset", -4);
-        integerOptions.put("rooms.BEDROOM.cost", 475);
+        integerOptions.put("rooms.BEDROOM.cost", 875);
         integerOptions.put("rooms.BEDROOM.offset", -4);
-        integerOptions.put("rooms.BIRDCAGE.cost", 350);
+        integerOptions.put("rooms.BIRDCAGE.cost", 825);
         integerOptions.put("rooms.BIRDCAGE.offset", -4);
-        integerOptions.put("rooms.CHEMISTRY.cost", 550);
+        integerOptions.put("rooms.CHEMISTRY.cost", 700);
         integerOptions.put("rooms.CHEMISTRY.offset", -4);
-        integerOptions.put("rooms.EMPTY.cost", 250);
+        integerOptions.put("rooms.EMPTY.cost", 825);
         integerOptions.put("rooms.EMPTY.offset", -4);
-        integerOptions.put("rooms.EYE.cost", 350);
+        integerOptions.put("rooms.EYE.cost", 625);
         integerOptions.put("rooms.EYE.offset", -4);
-        integerOptions.put("rooms.FARM.cost", 350);
+        integerOptions.put("rooms.FARM.cost", 725);
         integerOptions.put("rooms.FARM.offset", -4);
-        integerOptions.put("rooms.GALLERY.cost", 450);
+        integerOptions.put("rooms.GALLERY.cost", 1275);
         integerOptions.put("rooms.GALLERY.offset", -4);
-        integerOptions.put("rooms.GARDEN.cost", 450);
+        integerOptions.put("rooms.GARDEN.cost", 625);
         integerOptions.put("rooms.GARDEN.offset", -4);
-        integerOptions.put("rooms.GEODE.cost", 650);
+        integerOptions.put("rooms.GEODE.cost", 675);
         integerOptions.put("rooms.GEODE.offset", -4);
-        integerOptions.put("rooms.GRAVITY.cost", 625);
+        integerOptions.put("rooms.GRAVITY.cost", 1525);
         integerOptions.put("rooms.GRAVITY.offset", -20);
-        integerOptions.put("rooms.GREENHOUSE.cost", 450);
+        integerOptions.put("rooms.GREENHOUSE.cost", 750);
         integerOptions.put("rooms.GREENHOUSE.offset", -4);
-        integerOptions.put("rooms.HAPPY.cost", 450);
+        integerOptions.put("rooms.HAPPY.cost", 950);
         integerOptions.put("rooms.HAPPY.offset", -4);
-        integerOptions.put("rooms.HARMONY.cost", 450);
+        integerOptions.put("rooms.HARMONY.cost", 925);
         integerOptions.put("rooms.HARMONY.offset", -4);
-        integerOptions.put("rooms.HUTCH.cost", 450);
+        integerOptions.put("rooms.HUTCH.cost", 750);
         integerOptions.put("rooms.HUTCH.offset", -4);
-        integerOptions.put("rooms.IGLOO.cost", 650);
+        integerOptions.put("rooms.IGLOO.cost", 1600);
         integerOptions.put("rooms.IGLOO.offset", -4);
-        integerOptions.put("rooms.IISTUBIL.cost", 550);
+        integerOptions.put("rooms.IISTUBIL.cost", 425);
         integerOptions.put("rooms.IISTUBIL.offset", -4);
-        integerOptions.put("rooms.KITCHEN.cost", 450);
+        integerOptions.put("rooms.KITCHEN.cost", 1525);
         integerOptions.put("rooms.KITCHEN.offset", -4);
-        integerOptions.put("rooms.LAUNDRY.cost", 450);
+        integerOptions.put("rooms.LAUNDRY.cost", 975);
         integerOptions.put("rooms.LAUNDRY.offset", -4);
-        integerOptions.put("rooms.LAVA.cost", 550);
+        integerOptions.put("rooms.LAVA.cost", 425);
         integerOptions.put("rooms.LAVA.offset", -4);
-        integerOptions.put("rooms.LAZARUS.cost", 750);
+        integerOptions.put("rooms.LAZARUS.cost", 850);
         integerOptions.put("rooms.LAZARUS.offset", -4);
-        integerOptions.put("rooms.LIBRARY.cost", 550);
+        integerOptions.put("rooms.LIBRARY.cost", 1850);
         integerOptions.put("rooms.LIBRARY.offset", -4);
-        integerOptions.put("rooms.MANGROVE.cost", 450);
+        integerOptions.put("rooms.MANGROVE.cost", 525);
         integerOptions.put("rooms.MANGROVE.offset", -4);
-        integerOptions.put("rooms.NAUTILUS.cost", 450);
-        integerOptions.put("rooms.NAUTILUS.offset", -4);
-        integerOptions.put("rooms.OBSERVATORY.cost", 550);
-        integerOptions.put("rooms.OBSERVATORY.offset", -4);
-        integerOptions.put("rooms.PEN.cost", 550);
-        integerOptions.put("rooms.PEN.offset", -4);
-        integerOptions.put("rooms.MAZE.cost", 650);
+        integerOptions.put("rooms.MAZE.cost", 675);
         integerOptions.put("rooms.MAZE.offset", -4);
-        integerOptions.put("rooms.MUSHROOM.cost", 350);
+        integerOptions.put("rooms.MUSHROOM.cost", 500);
         integerOptions.put("rooms.MUSHROOM.offset", -4);
-        integerOptions.put("rooms.NETHER.cost", 450);
+        integerOptions.put("rooms.NAUTILUS.cost", 925);
+        integerOptions.put("rooms.NAUTILUS.offset", -4);
+        integerOptions.put("rooms.NETHER.cost", 275);
         integerOptions.put("rooms.NETHER.offset", -4);
-        integerOptions.put("rooms.PASSAGE.cost", 200);
+        integerOptions.put("rooms.OBSERVATORY.cost", 3950);
+        integerOptions.put("rooms.OBSERVATORY.offset", -4);
+        integerOptions.put("rooms.PASSAGE.cost", 500);
         integerOptions.put("rooms.PASSAGE.offset", -4);
-        integerOptions.put("rooms.POOL.cost", 450);
+        integerOptions.put("rooms.PEN.cost", 725);
+        integerOptions.put("rooms.PEN.offset", -4);
+        integerOptions.put("rooms.POOL.cost", 875);
         integerOptions.put("rooms.POOL.offset", -4);
-        integerOptions.put("rooms.RAIL.cost", 650);
+        integerOptions.put("rooms.RAIL.cost", 1100);
         integerOptions.put("rooms.RAIL.offset", -4);
-        integerOptions.put("rooms.RENDERER.cost", 650);
+        integerOptions.put("rooms.RENDERER.cost", 1650);
         integerOptions.put("rooms.RENDERER.offset", -4);
-        integerOptions.put("rooms.SHELL.cost", 550);
+        integerOptions.put("rooms.SHELL.cost", 1025);
         integerOptions.put("rooms.SHELL.offset", -4);
-        integerOptions.put("rooms.SMELTER.cost", 750);
+        integerOptions.put("rooms.SMELTER.cost", 1025);
         integerOptions.put("rooms.SMELTER.offset", -4);
-        integerOptions.put("rooms.STABLE.cost", 350);
+        integerOptions.put("rooms.STABLE.cost", 825);
         integerOptions.put("rooms.STABLE.offset", -4);
-        integerOptions.put("rooms.STAIRCASE.cost", 550);
+        integerOptions.put("rooms.STAIRCASE.cost", 775);
         integerOptions.put("rooms.STAIRCASE.offset", -5);
-        integerOptions.put("rooms.STALL.cost", 350);
+        integerOptions.put("rooms.STALL.cost", 1000);
         integerOptions.put("rooms.STALL.offset", -4);
-        integerOptions.put("rooms.SURGERY.cost", 350);
+        integerOptions.put("rooms.SURGERY.cost", 1400);
         integerOptions.put("rooms.SURGERY.offset", -4);
-        integerOptions.put("rooms.TRENZALORE.cost", 550);
+        integerOptions.put("rooms.TRENZALORE.cost", 775);
         integerOptions.put("rooms.TRENZALORE.offset", -4);
-        integerOptions.put("rooms.VAULT.cost", 350);
+        integerOptions.put("rooms.VAULT.cost", 850);
         integerOptions.put("rooms.VAULT.offset", -4);
-        integerOptions.put("rooms.VILLAGE.cost", 550);
+        integerOptions.put("rooms.VILLAGE.cost", 650);
         integerOptions.put("rooms.VILLAGE.offset", -4);
-        integerOptions.put("rooms.WARDROBE.cost", 450);
+        integerOptions.put("rooms.WARDROBE.cost", 750);
         integerOptions.put("rooms.WARDROBE.offset", -4);
-        integerOptions.put("rooms.WOOD.cost", 350);
+        integerOptions.put("rooms.WOOD.cost", 450);
         integerOptions.put("rooms.WOOD.offset", -4);
-        integerOptions.put("rooms.WORKSHOP.cost", 400);
+        integerOptions.put("rooms.WORKSHOP.cost", 1175);
         integerOptions.put("rooms.WORKSHOP.offset", -4);
-        integerOptions.put("rooms.ZERO.cost", 650);
+        integerOptions.put("rooms.ZERO.cost", 750);
         integerOptions.put("rooms.ZERO.offset", -4);
         // string
         stringOptions.put("rooms.ALLAY.seed", "LIGHT_BLUE_CONCRETE");
@@ -285,13 +284,13 @@ public class RoomsConfigUpdater {
         stringOptions.put("rooms.LAZARUS.seed", "FURNACE");
         stringOptions.put("rooms.LIBRARY.seed", "ENCHANTMENT_TABLE");
         stringOptions.put("rooms.MANGROVE.seed", "MUDDY_MANGROVE_ROOTS");
-        stringOptions.put("rooms.NAUTILUS.seed", "DEAD_HORN_CORAL_BLOCK");
-        stringOptions.put("rooms.OBSERVATORY.seed", "POLISHED_BLACKSTONE_BRICKS");
-        stringOptions.put("rooms.PEN.seed", "MOSS_BLOCK");
         stringOptions.put("rooms.MAZE.seed", "LODESTONE");
         stringOptions.put("rooms.MUSHROOM.seed", "GRAVEL");
+        stringOptions.put("rooms.NAUTILUS.seed", "DEAD_HORN_CORAL_BLOCK");
         stringOptions.put("rooms.NETHER.seed", "BLACKSTONE");
+        stringOptions.put("rooms.OBSERVATORY.seed", "POLISHED_BLACKSTONE_BRICKS");
         stringOptions.put("rooms.PASSAGE.seed", "CLAY");
+        stringOptions.put("rooms.PEN.seed", "MOSS_BLOCK");
         stringOptions.put("rooms.POOL.seed", "SNOW_BLOCK");
         stringOptions.put("rooms.RAIL.seed", "HOPPER");
         stringOptions.put("rooms.RENDERER.seed", "TERRACOTTA");
@@ -321,7 +320,7 @@ public class RoomsConfigUpdater {
         }
         // int values
         for (Map.Entry<String, Integer> entry : integerOptions.entrySet()) {
-            if (!rooms_config.contains(entry.getKey()) || (entry.getKey().equals("rooms.RAIL.offset")) && rooms_config.getInt("rooms.RAIL.offset") == -2) {
+            if (!rooms_config.contains(entry.getKey()) || (entry.getKey().equals("rooms.RAIL.offset") && rooms_config.getInt("rooms.RAIL.offset") == -2)) {
                 rooms_config.set(entry.getKey(), entry.getValue());
                 i++;
             }
@@ -348,6 +347,17 @@ public class RoomsConfigUpdater {
             rooms_config.set("rooms.WORKSHOP.seed", "CRAFTING_TABLE");
             rooms_config.set("rooms.ZERO.seed", "OAK_BUTTON");
             i++;
+        }
+        // room costs update
+        if (!plugin.getConfig().getBoolean("conversions.room_costs")) {
+            for (Map.Entry<String, Integer> entry : integerOptions.entrySet()) {
+                if (entry.getKey().contains("cost")) {
+                    rooms_config.set(entry.getKey(), entry.getValue());
+                    i++;
+                }
+            }
+            plugin.getConfig().set("conversions.room_costs", true);
+            plugin.saveConfig();
         }
         try {
             rooms_config.save(new File(plugin.getDataFolder(), "rooms.yml"));
