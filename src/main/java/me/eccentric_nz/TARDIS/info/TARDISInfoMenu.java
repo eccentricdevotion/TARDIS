@@ -251,6 +251,7 @@ public enum TARDISInfoMenu {
     BEDROOM("TIS|Rooms|Bedroom", "ROOMS", "d"),
     BIRDCAGE("TIS|Rooms|Bird Cage", "ROOMS", "c"),
     CHEMISTRY("TIS|Rooms|Chemistry", "ROOMS", "he"),
+    CLOISTER("TIS|Rooms|Cloister", "ROOMS", "Cl"),
     EMPTY("TIS|Rooms|Empty", "ROOMS", "y"),
     EYE("TIS|Rooms|Eye*", "ROOMS", "*"),
     FARM("TIS|Rooms|Farm", "ROOMS", "F"),

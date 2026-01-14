@@ -297,6 +297,7 @@ public class DebugGUI {
             new GuiPreview(Material.OAK_LOG, RoomVariant.VILLAGE.getKey(), "room_village"),
             new GuiPreview(Material.OAK_PLANKS, RoomVariant.WOOD.getKey(), "room_wood"),
             new GuiPreview(Material.PACKED_ICE, RoomVariant.IGLOO.getKey(), "room_igloo"),
+            new GuiPreview(Material.PALE_MOSS_BLOCK, RoomVariant.CLOISTER.getKey(), "room_cloister"),
             new GuiPreview(Material.PINK_WOOL, Wool.RECONFIGURE.getKey(), "map_reconfigure"),
             new GuiPreview(Material.PUMPKIN, RoomVariant.KITCHEN.getKey(), "room_kitchen"),
             new GuiPreview(Material.PURPLE_TERRACOTTA, RoomVariant.STAIRCASE.getKey(), "room_staircase"),

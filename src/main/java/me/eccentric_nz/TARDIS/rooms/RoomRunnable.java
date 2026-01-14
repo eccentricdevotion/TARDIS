@@ -44,9 +44,7 @@ import org.bukkit.block.data.Bisected;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Directional;
 import org.bukkit.block.data.FaceAttachable;
-import org.bukkit.block.data.type.Farmland;
-import org.bukkit.block.data.type.SeaPickle;
-import org.bukkit.block.data.type.Switch;
+import org.bukkit.block.data.type.*;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
@@ -101,6 +99,8 @@ public class RoomRunnable implements Runnable {
     private final HashMap<Block, BlockFace> mushroomBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> soulSandBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> eyeBlocks = new HashMap<>();
+    private final HashMap<Block, BlockData> cloisterBlocks = new HashMap<>();
+    private final HashMap<Block, BlockData> lichenBlocks = new HashMap<>();
     private final HashMap<Block, JsonObject> postSignBlocks = new HashMap<>();
     private final HashMap<Block, JsonObject> pots = new HashMap<>();
     private final HashMap<Block, TARDISBannerData> bannerBlocks = new HashMap<>();
@@ -439,6 +439,31 @@ public class RoomRunnable implements Runnable {
                     JsonArray displays = obj.get("item_displays").getAsJsonArray();
                     ItemDisplaySetter.process(displays, player, start, tardis_id);
                 }
+                if (room.equals("CLOISTER")) {
+                    cloisterBlocks.forEach((b, d) -> {
+                        if (d instanceof Stairs) {
+                            b.setType(TARDISConstants.RANDOM.nextBoolean() ? Material.STONE_BRICK_STAIRS : Material.MOSSY_STONE_BRICK_STAIRS);
+                        } else if (d instanceof Slab) {
+                            b.setType(TARDISConstants.RANDOM.nextBoolean() ? Material.STONE_BRICK_SLAB : Material.MOSSY_STONE_BRICK_SLAB);
+                        }
+                    });
+                    cloisterBlocks.forEach((b, d) -> {
+                        BlockData placed = b.getBlockData();
+                        if (placed instanceof Stairs stairs) {
+                            Stairs old = (Stairs) d;
+                            stairs.setWaterlogged(true);
+                            stairs.setShape(old.getShape());
+                            stairs.setFacing(old.getFacing());
+                            stairs.setHalf(old.getHalf());
+                            b.setBlockData(stairs);
+                        } else if (placed instanceof Slab slab) {
+                            slab.setWaterlogged(true);
+                            b.setBlockData(slab);
+                        }
+                    });
+                    cloisterBlocks.clear();
+                    lichenBlocks.forEach(Block::setBlockData);
+                }
                 if (room.equals("NAUTILUS")) {
                     soulSandBlocks.forEach((key, value) -> {
                         key.setBlockData(value, true);
@@ -666,6 +691,17 @@ public class RoomRunnable implements Runnable {
                     plugin.getQueryFactory().doInsert("vaults", setl);
                     library = pos.clone().add(-8, -4, -8);
                 }
+                if (room.equals("CLOISTER")) {
+                    // cloister red sandstone stairs, glow lichen
+                    if (type.equals(Material.SMOOTH_RED_SANDSTONE_STAIRS) || type.equals(Material.RED_SANDSTONE_SLAB)) {
+                        Block cloister = world.getBlockAt(startx, starty, startz);
+                        cloisterBlocks.put(cloister, data);
+                    }
+                    if (type.equals(Material.GLOW_LICHEN)) {
+                        Block lichen = world.getBlockAt(startx, starty, startz);
+                        lichenBlocks.put(lichen, data);
+                    }
+                }
                 // nautilus soul sand bubble columns
                 if (type.equals(Material.RED_SAND) && room.equals("NAUTILUS")) {
                     Block magma = world.getBlockAt(startx, starty, startz);
@@ -779,14 +815,7 @@ public class RoomRunnable implements Runnable {
                     plugin.getQueryFactory().insertControl(tardis_id, 60, polished, 0);
                 }
                 // set stable
-                if (type.equals(Material.SOUL_SAND) && (
-                        room.equals("ARCHITECTURAL") || room.equals("STABLE") || room.equals("VILLAGE")
-                        || room.equals("RENDERER") || room.equals("LAVA") || room.equals("ALLAY")
-                        || room.equals("ZERO") || room.equals("GEODE") || room.equals("HUTCH")
-                        || room.equals("IGLOO") || room.equals("IISTUBIL") || room.equals("MANGROVE")
-                        || room.equals("PEN") || room.equals("STALL") || room.equals("BAMBOO")
-                        || room.equals("BIRDCAGE") || room.equals("MAZE") || room.equals("GARDEN")
-                        || room.equals("HAPPY") || room.equals("NAUTILUS"))) {
+                if (type.equals(Material.SOUL_SAND) && (room.equals("ARCHITECTURAL") || room.equals("STABLE") || room.equals("VILLAGE") || room.equals("RENDERER") || room.equals("LAVA") || room.equals("ALLAY") || room.equals("ZERO") || room.equals("GEODE") || room.equals("HUTCH") || room.equals("IGLOO") || room.equals("IISTUBIL") || room.equals("MANGROVE") || room.equals("PEN") || room.equals("STALL") || room.equals("BAMBOO") || room.equals("BIRDCAGE") || room.equals("MAZE") || room.equals("GARDEN") || room.equals("HAPPY") || room.equals("NAUTILUS"))) {
                     HashMap<String, Object> sets = new HashMap<>();
                     sets.put(room.toLowerCase(Locale.ROOT), world.getName() + ":" + (startx + (room.equals("NAUTILUS") ? 1 : 0)) + ":" + starty + ":" + startz);
                     HashMap<String, Object> wheres = new HashMap<>();
@@ -1054,7 +1083,7 @@ public class RoomRunnable implements Runnable {
                 if ((type.equals(Material.BEDROCK) && !room.equals("SHELL")) || (type.equals(Material.SOUL_SAND) && room.equals("SHELL"))) {
                     if (checkRoomNextDoor(world.getBlockAt(startx, starty, startz))) {
                         data = TARDISConstants.AIR;
-                    } else if (room.equals("ARCHITECTURAL")) {
+                    } else if (room.equals("ARCHITECTURAL") || room.equals("CLOISTER")) {
                         data = gw.createBlockData();
                     } else {
                         data = (wall_type.equals(Material.ORANGE_WOOL)) ? ow.createBlockData() : wall_type.createBlockData();

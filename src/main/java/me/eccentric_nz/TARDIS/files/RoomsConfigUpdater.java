@@ -62,6 +62,8 @@ public class RoomsConfigUpdater {
         booleanOptions.put("rooms.BIRDCAGE.user", false);
         booleanOptions.put("rooms.CHEMISTRY.enabled", true);
         booleanOptions.put("rooms.CHEMISTRY.user", false);
+        booleanOptions.put("rooms.CLOISTER.enabled", true);
+        booleanOptions.put("rooms.CLOISTER.user", false);
         booleanOptions.put("rooms.EMPTY.enabled", true);
         booleanOptions.put("rooms.EMPTY.user", false);
         booleanOptions.put("rooms.EYE.enabled", true);
@@ -169,6 +171,8 @@ public class RoomsConfigUpdater {
         integerOptions.put("rooms.BIRDCAGE.offset", -4);
         integerOptions.put("rooms.CHEMISTRY.cost", 700);
         integerOptions.put("rooms.CHEMISTRY.offset", -4);
+        integerOptions.put("rooms.CLOISTER.cost", 400);
+        integerOptions.put("rooms.CLOISTER.offset", -4);
         integerOptions.put("rooms.EMPTY.cost", 825);
         integerOptions.put("rooms.EMPTY.offset", -4);
         integerOptions.put("rooms.EYE.cost", 625);
@@ -265,6 +269,7 @@ public class RoomsConfigUpdater {
         stringOptions.put("rooms.BEDROOM.seed", "GLOWSTONE");
         stringOptions.put("rooms.BIRDCAGE.seed", "YELLOW_GLAZED_TERRACOTTA");
         stringOptions.put("rooms.CHEMISTRY.seed", "BLAST_FURNACE");
+        stringOptions.put("rooms.CLOISTER.seed", "PALE_MOSS_BLOCK");
         stringOptions.put("rooms.EMPTY.seed", "GLASS");
         stringOptions.put("rooms.EYE.seed", "SHROOMLIGHT");
         stringOptions.put("rooms.FARM.seed", "DIRT");

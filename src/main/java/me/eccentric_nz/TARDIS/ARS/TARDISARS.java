@@ -38,6 +38,7 @@ public enum TARDISARS implements ARS {
     BEDROOM("GLOWSTONE", "Bedroom", 1, RoomVariant.BEDROOM.getKey()),
     BIRDCAGE("YELLOW_GLAZED_TERRACOTTA", "Bird Cage", 1, RoomVariant.BIRDCAGE.getKey()),
     CHEMISTRY("BLAST_FURNACE", "Chemistry Lab", 1, RoomVariant.CHEMISTRY.getKey()),
+    CLOISTER("PALE_MOSS_BLOCK", "Cloister", 1, RoomVariant.CLOISTER.getKey()),
     EMPTY("GLASS", "Empty", 1, RoomVariant.EMPTY.getKey()),
     EYE("SHROOMLIGHT", "Eye of Harmony", 1, RoomVariant.EYE.getKey()),
     FARM("DIRT", "Mob Farm", 1, RoomVariant.FARM.getKey()),

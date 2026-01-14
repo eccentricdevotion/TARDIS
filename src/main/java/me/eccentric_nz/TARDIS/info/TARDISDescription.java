@@ -198,6 +198,7 @@ public enum TARDISDescription {
     BEDROOM("A king sized bed for two."),
     BIRDCAGE("A room for birds. Polly wants a cracker!"),
     CHEMISTRY("A scientific place of learning and making."),
+    CLOISTER("An ancient variant on a typical TARDIS room, with benches on the sides of the room and plants growing on the crumbling pillars."),
     EMPTY("Not much in here."),
     EYE("The Eye of Harmony from the 11th Doctor's TARDIS."),
     FARM("You need this room to bring farm animals into the TARDIS."),

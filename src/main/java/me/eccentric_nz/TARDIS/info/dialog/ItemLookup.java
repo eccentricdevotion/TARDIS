@@ -58,6 +58,7 @@ public class ItemLookup {
         ITEMS.put(TARDISInfoMenu.BEDROOM, new InfoIcon(Material.GLOWSTONE, "Bedroom", RoomVariant.BEDROOM.getKey()));
         ITEMS.put(TARDISInfoMenu.BIRDCAGE, new InfoIcon(Material.YELLOW_GLAZED_TERRACOTTA, "Bird Cage", RoomVariant.BIRDCAGE.getKey()));
         ITEMS.put(TARDISInfoMenu.CHEMISTRY, new InfoIcon(Material.BLAST_FURNACE, "Chemistry Lab", RoomVariant.CHEMISTRY.getKey()));
+        ITEMS.put(TARDISInfoMenu.CLOISTER, new InfoIcon(Material.PALE_MOSS_BLOCK, "Cloister", RoomVariant.CLOISTER.getKey()));
         ITEMS.put(TARDISInfoMenu.EMPTY, new InfoIcon(Material.GLASS, "Empty", RoomVariant.EMPTY.getKey()));
         ITEMS.put(TARDISInfoMenu.EYE, new InfoIcon(Material.SHROOMLIGHT, "Eye of Harmony", RoomVariant.EYE.getKey()));
         ITEMS.put(TARDISInfoMenu.FARM, new InfoIcon(Material.DIRT, "Mob Farm", RoomVariant.FARM.getKey()));

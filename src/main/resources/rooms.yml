@@ -66,6 +66,12 @@ rooms:
     offset: -4
     seed: BLAST_FURNACE
     user: false
+  CLOISTER:
+    enabled: true
+    cost: 400
+    offset: -4
+    seed: PALE_MOSS_BLOCK
+    user: false
   EMPTY:
     enabled: true
     cost: 825

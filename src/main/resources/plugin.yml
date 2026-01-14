@@ -450,6 +450,7 @@ permissions:
       tardis.room.bedroom: true
       tardis.room.birdcage: true
       tardis.room.chemistry: true
+      tardis.room.cloister: true
       tardis.room.empty: true
       tardis.room.eye: true
       tardis.room.farm: true
@@ -463,6 +464,7 @@ permissions:
       tardis.room.igloo: true
       tardis.room.iistubil: true
       tardis.room.kitchen: true
+      tardis.room.laundry: true
       tardis.room.lava: true
       tardis.room.lazarus: true
       tardis.room.library: true
@@ -486,6 +488,7 @@ permissions:
       tardis.room.trenzalore: true
       tardis.room.vault: true
       tardis.room.village: true
+      tardis.room.wardrobe: true
       tardis.room.wood: true
       tardis.room.workshop: true
       tardis.room.zero: true

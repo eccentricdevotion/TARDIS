@@ -32,6 +32,7 @@ public enum Room {
     BEDROOM,
     BIRDCAGE,
     CHEMISTRY,
+    CLOISTER,
     EMPTY,
     EYE,
     FARM,
