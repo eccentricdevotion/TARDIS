@@ -20,7 +20,6 @@ import java.util.HashMap;
 
 public enum BlueprintRoom {
 
-    ARCHITECTURAL("tardis.architectural"), // needed to grow rooms or use ARS
     JETTISON("tardis.jettison"), // jettison a room
 
 //    ROOM("tardis.room"), // all room perms
@@ -34,7 +33,7 @@ public enum BlueprintRoom {
     APIARY("tardis.room.apiary", BlueprintFeature.FARM),
     AQUARIUM("tardis.room.aquarium", BlueprintFeature.FARM),
     ARBORETUM("tardis.room.arboretum"),
-    ARCHITECTURAL_ROOM("tardis.room.architectural"),
+    ARCHITECTURAL("tardis.room.architectural"),
     BAKER("tardis.room.baker"),
     BAMBOO("tardis.room.bamboo", BlueprintFeature.FARM),
     BEDROOM("tardis.room.bedroom"),
