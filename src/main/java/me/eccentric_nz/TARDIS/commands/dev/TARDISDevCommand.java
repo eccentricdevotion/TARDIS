@@ -96,7 +96,7 @@ public class TARDISDevCommand implements CommandExecutor {
             "recipe", "regen", "registry", "roman", "rooms",
             "screen", "shelf", "skin", "snapshot", "staircase", "stats", "systree",
             "tis", "tips", "tree",
-            "unmount"
+            "unmount", "update"
     );
     private final TARDIS plugin;
 
@@ -120,6 +120,12 @@ public class TARDISDevCommand implements CommandExecutor {
                 }
                 if (args.length == 1) {
                     switch (first) {
+                        case "update" -> {
+                            if (sender instanceof Player player) {
+                                return new UpdateBlockStateCommand(plugin).refresh(player);
+                            }
+                            return true;
+                        }
                         case "shelf" -> {
                             if (sender instanceof Player player) {
                                 return new ShelfCommand(plugin).putItems(player);
