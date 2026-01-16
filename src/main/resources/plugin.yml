@@ -454,8 +454,10 @@ permissions:
       tardis.room.empty: true
       tardis.room.eye: true
       tardis.room.farm: true
-      tardis.room.garden: true
+      tardis.room.gallery: true
+      tardis.room.games: true
       tardis.room.geode: true
+      tardis.room.golem: true
       tardis.room.gravity: true
       tardis.room.greenhouse: true
       tardis.room.happy: true

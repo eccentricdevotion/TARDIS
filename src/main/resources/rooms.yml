@@ -96,6 +96,12 @@ rooms:
     offset: -4
     seed: CHISELED_QUARTZ_BLOCK
     user: false
+  GAMES:
+    enabled: true
+    cost: 1275
+    offset: -4
+    seed: DARK_)AK_PLANKS
+    user: false
   GARDEN:
     enabled: true
     cost: 625
@@ -107,6 +113,12 @@ rooms:
     cost: 675
     offset: -4
     seed: AMETHYST_BLOCK
+    user: false
+  GOLEM:
+    enabled: true
+    cost: 1275
+    offset: -4
+    seed: TUFF
     user: false
   GRAVITY:
     enabled: true

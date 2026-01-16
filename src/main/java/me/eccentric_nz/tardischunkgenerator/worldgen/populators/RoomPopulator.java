@@ -23,7 +23,6 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.enumeration.Room;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import me.eccentric_nz.TARDIS.schematic.SchematicGZip;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import me.eccentric_nz.tardischunkgenerator.worldgen.utils.RoomsUtility;
 import org.bukkit.Material;
 import org.bukkit.Tag;
@@ -44,11 +43,11 @@ public class RoomPopulator extends BlockPopulator {
 
     private final TARDIS plugin;
     private final List<String> rooms = List.of("ALLAY", "APIARY", "AQUARIUM", "ARBORETUM", "ARCHITECTURAL",
-            "BAKER", "BAMBOO", "BEDROOM", "BIRDCAGE", "CLOISTER", "CHEMISTRY", "EMPTY", "EYE", "FARM", "GALLERY",
-            "GARDEN", "GEODE", "GREENHOUSE", "HAPPY", "HARMONY", "HUTCH", "IGLOO", "IISTUBIL", "KITCHEN", "LAUNDRY",
-            "LAVA", "LAZARUS", "LIBRARY", "MANGROVE", "MUSHROOM", "NAUTILUS", "NETHER", "OBSERVATORY", "PASSAGE", "PEN",
-            "POOL", "RAIL", "SHELL", "SMELTER", "STABLE", "STALL", "SURGERY", "TRENZALORE", "VAULT", "VILLAGE",
-            "WARDROBE", "WOOD", "WORKSHOP");
+            "BAKER", "BAMBOO", "BEDROOM", "BIRDCAGE", "CLOISTER", "CHEMISTRY", "EMPTY", "EYE", "FARM", "GAMES",
+            "GALLERY", "GARDEN", "GEODE", "GOLEM", "GREENHOUSE", "HAPPY", "HARMONY", "HUTCH", "IGLOO", "IISTUBIL",
+            "KITCHEN", "LAUNDRY", "LAVA", "LAZARUS", "LIBRARY", "MANGROVE", "MUSHROOM", "NAUTILUS", "NETHER",
+            "OBSERVATORY", "PASSAGE", "PEN", "POOL", "RAIL", "SHELL", "SMELTER", "STABLE", "STALL", "SURGERY",
+            "TRENZALORE", "VAULT", "VILLAGE", "WARDROBE", "WOOD", "WORKSHOP");
 
     public RoomPopulator(TARDIS plugin) {
         this.plugin = plugin;

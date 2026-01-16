@@ -582,11 +582,17 @@ public class TARDISInformationSystemListener implements Listener {
                 if (chat.equalsIgnoreCase("a")) {
                     new TISRoomInfo(plugin).show(p, TARDISInfoMenu.GALLERY);
                 }
+                if (chat.equalsIgnoreCase("!")) {
+                    new TISRoomInfo(plugin).show(p, TARDISInfoMenu.GAMES);
+                }
                 if (chat.equalsIgnoreCase("de")) {
                     new TISRoomInfo(plugin).show(p, TARDISInfoMenu.GARDEN);
                 }
                 if (chat.equalsIgnoreCase("eo")) {
                     new TISRoomInfo(plugin).show(p, TARDISInfoMenu.GEODE);
+                }
+                if (chat.equalsIgnoreCase("pp")) {
+                    new TISRoomInfo(plugin).show(p, TARDISInfoMenu.GOLEM);
                 }
                 if (chat.equalsIgnoreCase("ut")) {
                     new TISRoomInfo(plugin).show(p, TARDISInfoMenu.HUTCH);
@@ -621,7 +627,7 @@ public class TARDISInformationSystemListener implements Listener {
                 if (chat.equalsIgnoreCase("d")) {
                     new TISRoomInfo(plugin).show(p, TARDISInfoMenu.BEDROOM);
                 }
-                if (chat.equalsIgnoreCase("c")) {
+                if (chat.equalsIgnoreCase("C")) {
                     new TISRoomInfo(plugin).show(p, TARDISInfoMenu.BIRDCAGE);
                 }
                 if (chat.equalsIgnoreCase("y")) {
