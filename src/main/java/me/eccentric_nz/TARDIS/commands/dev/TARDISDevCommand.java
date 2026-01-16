@@ -94,7 +94,7 @@ public class TARDISDevCommand implements CommandExecutor {
             "ntc", "nms",
             "painting", "plurals",
             "recipe", "regen", "registry", "roman", "rooms",
-            "screen", "skin", "snapshot", "staircase", "stats", "systree",
+            "screen", "shelf", "skin", "snapshot", "staircase", "stats", "systree",
             "tis", "tips", "tree",
             "unmount"
     );
@@ -120,6 +120,12 @@ public class TARDISDevCommand implements CommandExecutor {
                 }
                 if (args.length == 1) {
                     switch (first) {
+                        case "shelf" -> {
+                            if (sender instanceof Player player) {
+                                return new ShelfCommand(plugin).putItems(player);
+                            }
+                            return true;
+                        }
                         case "bleach" -> {
                             if (sender instanceof Player player) {
                                 return new BleachCommand(plugin).setDisplay(player);
@@ -185,6 +191,7 @@ public class TARDISDevCommand implements CommandExecutor {
                                 PotionEffect resistance = new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 360000, 3, false, false);
                                 skeleton.addPotionEffect(resistance);
                             }
+                            return true;
                         }
                         case "dialog" -> {
                             if (sender instanceof Player player) {

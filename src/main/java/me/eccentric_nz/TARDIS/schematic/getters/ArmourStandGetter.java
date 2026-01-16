@@ -86,15 +86,11 @@ public class ArmourStandGetter {
             object.add("boots", ItemStackGetter.getJson(boots));
         }
         // get main hand
-        ItemStack mainhand = equipment.getBoots();
-        if (mainhand != null) {
-            object.add("mainhand", ItemStackGetter.getJson(mainhand));
-        }
+        ItemStack mainhand = equipment.getItemInMainHand();
+        object.add("mainhand", ItemStackGetter.getJson(mainhand));
         // get off hand
-        ItemStack offhand = equipment.getBoots();
-        if (offhand != null) {
-            object.add("offhand", ItemStackGetter.getJson(offhand));
-        }
+        ItemStack offhand = equipment.getItemInOffHand();
+        object.add("offhand", ItemStackGetter.getJson(offhand));
         return object;
     }
 }

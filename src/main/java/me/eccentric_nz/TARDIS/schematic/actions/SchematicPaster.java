@@ -197,13 +197,14 @@ public class SchematicPaster implements Runnable {
                         }
                     }, 1L);
                 }
-                case OAK_SHELF -> {
+                case OAK_SHELF, SPRUCE_SHELF, BIRCH_SHELF, JUNGLE_SHELF, ACACIA_SHELF, DARK_OAK_SHELF, MANGROVE_SHELF,
+                     CHERRY_SHELF, PALE_OAK_SHELF, BAMBOO_SHELF, CRIMSON_SHELF, WARPED_SHELF -> {
                     block.setBlockData(data, true);
                     if (plugin.getBlockLogger().isLogging()) {
                         plugin.getBlockLogger().logPlacement(block);
                     }
                     if (col.has("items")) {
-                        ShelfSetter.stock(block, col.get("items").getAsJsonArray());
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, ()-> ShelfSetter.stock(block, col.get("items").getAsJsonArray()),3L);
                     }
                 }
                 case PALE_OAK_FENCE -> {

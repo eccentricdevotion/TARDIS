@@ -7,8 +7,9 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.BlockStateMeta;
+import org.bukkit.inventory.meta.BannerMeta;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.ShieldMeta;
 
 public class ItemStackGetter {
 
@@ -32,8 +33,12 @@ public class ItemStackGetter {
                     }
                     object.add("lore", lore);
                 }
-                if ((Tag.ITEMS_BANNERS.isTagged(type) || type == Material.SHIELD) && im instanceof BlockStateMeta bsm) {
-                    JsonObject state = BannerGetter.getJson(bsm.getBlockState());
+                if (Tag.ITEMS_BANNERS.isTagged(type) && im instanceof BannerMeta bsm) {
+                    JsonObject state = BannerGetter.getJson(bsm, type);
+                    object.add("banner", state);
+                }
+                if (type == Material.SHIELD && im instanceof ShieldMeta bsm) {
+                    JsonObject state = BannerGetter.getJson(bsm);
                     object.add("banner", state);
                 }
             }
