@@ -51,7 +51,7 @@ public class TVMGUIListener extends TARDISMenuListener {
     final int[] pos;
     final TVMQueryFactory qf;
     private final TARDIS plugin;
-    List<String> components = List.of("", "", "", "", "", "");
+    List<String> components = Arrays.asList("", "", "", "", "", "");
     int which = 0;
     int t2 = 0;
     int t3 = 0;
