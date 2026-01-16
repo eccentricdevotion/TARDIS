@@ -18,17 +18,16 @@ package me.eccentric_nz.TARDIS.schematic.actions;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import io.papermc.paper.registry.RegistryAccess;
-import io.papermc.paper.registry.RegistryKey;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemRegistry;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.schematic.SchematicGZip;
+import me.eccentric_nz.TARDIS.schematic.getters.ArmourStandGetter;
+import me.eccentric_nz.TARDIS.schematic.getters.BannerGetter;
 import me.eccentric_nz.TARDIS.schematic.getters.DataPackPainting;
+import me.eccentric_nz.TARDIS.schematic.getters.ItemStackGetter;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
-import net.kyori.adventure.text.Component;
 import org.bukkit.*;
 import org.bukkit.block.*;
 import org.bukkit.block.sign.Side;
@@ -36,9 +35,7 @@ import org.bukkit.block.sign.SignSide;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.MainHand;
-import org.bukkit.inventory.meta.BlockStateMeta;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.BoundingBox;
 
@@ -52,23 +49,6 @@ import java.util.Map;
 import java.util.UUID;
 
 public class SchematicSave {
-
-    public static JsonObject getBannerJson(BlockState b) {
-        JsonObject state = new JsonObject();
-        Banner banner = (Banner) b;
-        state.addProperty("base_colour", banner.getBaseColor().toString());
-        JsonArray patterns = new JsonArray();
-        if (banner.numberOfPatterns() > 0) {
-            banner.getPatterns().forEach((p) -> {
-                JsonObject pattern = new JsonObject();
-                pattern.addProperty("pattern", RegistryAccess.registryAccess().getRegistry(RegistryKey.BANNER_PATTERN).getKey(p.getPattern()).getKey());
-                pattern.addProperty("pattern_colour", p.getColor().toString());
-                patterns.add(pattern);
-            });
-        }
-        state.add("patterns", patterns);
-        return state;
-    }
 
     public boolean act(TARDIS plugin, Player player, String which) {
         UUID uuid = player.getUniqueId();
@@ -170,28 +150,7 @@ public class SchematicSave {
                         }
                         if (entity instanceof ArmorStand stand) {
                             if (!entities.contains(entity)) {
-                                JsonObject as = new JsonObject();
-                                JsonObject loc = new JsonObject();
-                                loc.addProperty("x", entityLocation.getX() - minx);
-                                loc.addProperty("y", entityLocation.getY() - miny);
-                                loc.addProperty("z", entityLocation.getZ() - minz);
-                                as.add("rel_location", loc);
-                                as.addProperty("facing", stand.getFacing().toString());
-                                as.addProperty("invisible", stand.isVisible());
-                                as.addProperty("gravity", stand.hasGravity());
-                                JsonObject head = new JsonObject();
-                                ItemStack helmet = stand.getEquipment().getHelmet();
-                                if (helmet != null && helmet.hasItemMeta()) {
-                                    ItemMeta im = helmet.getItemMeta();
-                                    if (im.hasItemModel()) {
-                                        head.addProperty("model", im.getItemModel().toString());
-                                    }
-                                    if (im instanceof SkullMeta skullMeta) {
-                                        skullMeta.getPlayerProfile().getProperties().stream().findFirst().ifPresent(property -> head.addProperty("skull", property.getValue()));
-                                    }
-                                    head.addProperty("material", helmet.getType().toString());
-                                    as.add("head", head);
-                                }
+                                JsonObject as = ArmourStandGetter.getJson(stand, minx, miny, minz);
                                 armourStands.add(as);
                                 entities.add(entity);
                             }
@@ -226,29 +185,8 @@ public class SchematicSave {
                                 frame.addProperty("facing", f.getFacing().toString());
                                 frame.addProperty("rotation", f.getRotation().toString());
                                 ItemStack item = f.getItem();
-                                if (item != null) {
-                                    Material type = item.getType();
-                                    frame.addProperty("item", type.toString());
-                                    if (item.hasItemMeta()) {
-                                        ItemMeta im = item.getItemMeta();
-                                        if (im.hasItemModel()) {
-                                            frame.addProperty("cmd", im.getItemModel().getKey());
-                                        }
-                                        if (im.hasDisplayName()) {
-                                            frame.addProperty("name", ComponentUtils.stripColour(im.displayName()));
-                                        }
-                                        if (im.hasLore()) {
-                                            JsonArray lore = new JsonArray();
-                                            for (Component component : im.lore()) {
-                                                lore.add(ComponentUtils.stripColour(component));
-                                            }
-                                            frame.add("lore", lore);
-                                        }
-                                        if ((Tag.ITEMS_BANNERS.isTagged(type) || type == Material.SHIELD) && im instanceof BlockStateMeta bsm) {
-                                            JsonObject state = SchematicSave.getBannerJson(bsm.getBlockState());
-                                            frame.add("banner", state);
-                                        }
-                                    }
+                                if (!item.isEmpty()) {
+                                    frame.add("item", ItemStackGetter.getJson(item));
                                 }
                                 if (f.getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.INTEGER)) {
                                     frame.addProperty("rotor", true);
@@ -303,8 +241,8 @@ public class SchematicSave {
                     String blockData = b.getBlockData().getAsString();
                     obj.addProperty("data", blockData);
                     // banners
-                    if (TARDISStaticUtils.isBanner(b.getType())) {
-                        JsonObject state = getBannerJson(b.getState());
+                    if (Tag.BANNERS.isTagged(b.getType())) {
+                        JsonObject state = BannerGetter.getJson(b.getState());
                         obj.add("banner", state);
                     }
                     // player heads
@@ -353,6 +291,16 @@ public class SchematicSave {
                             text.add("back", side);
                             obj.add("sign", text);
                         }
+                    }
+                    // shelves
+                    if (Tag.WOODEN_SHELVES.isTagged(b.getType())) {
+                        Shelf shelf = (Shelf) b.getState();
+                        JsonArray items = new JsonArray();
+                        ItemStack[] stack = shelf.getInventory().getContents();
+                        for (int i = 0; i < 3; i++) {
+                            items.add(ItemStackGetter.getJson(stack[i]));
+                        }
+                        obj.add("items", items);
                     }
                     columns.add(obj);
                 }
