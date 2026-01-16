@@ -990,7 +990,7 @@ public class RoomRunnable implements Runnable {
                     rd.getPostBlocks().add(world.getName() + ":" + startx + ":" + starty + ":" + startz + "~" + data.getAsString());
                 }
                 // remember banners
-                if (TARDISStaticUtils.isBanner(type)) {
+                if (Tag.BANNERS.isTagged(type)) {
                     Block banner = world.getBlockAt(startx, starty, startz);
                     JsonObject state = v.has("banner") ? v.get("banner").getAsJsonObject() : null;
                     if (state != null) {

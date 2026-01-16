@@ -21,7 +21,6 @@ public enum BlueprintFeature {
     ABANDON("tardis.abandon"),
     ACID_BYPASS("tardis.acid.bypass"),
     ADVANCED("tardis.advanced"),
-    ARCHITECTURAL("tardis.architectural"),
     ARCHIVE("tardis.archive"),
     ATMOSPHERIC("tardis.atmospheric"),
     AUTONOMOUS("tardis.autonomous"),

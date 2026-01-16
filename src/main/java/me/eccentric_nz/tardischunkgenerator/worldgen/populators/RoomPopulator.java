@@ -26,6 +26,7 @@ import me.eccentric_nz.TARDIS.schematic.SchematicGZip;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import me.eccentric_nz.tardischunkgenerator.worldgen.utils.RoomsUtility;
 import org.bukkit.Material;
+import org.bukkit.Tag;
 import org.bukkit.block.Banner;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.BlockData;
@@ -148,7 +149,7 @@ public class RoomPopulator extends BlockPopulator {
                         }
                         limitedRegion.setBlockData(lrX, lrY, lrZ, data);
                         // banners
-                        if (TARDISStaticUtils.isBanner(type)) {
+                        if (Tag.BANNERS.isTagged(type)) {
                             JsonObject state = c.has("banner") ? c.get("banner").getAsJsonObject() : null;
                             if (state != null) {
                                 Banner banner = (Banner) limitedRegion.getBlockState(lrX, lrY, lrZ);

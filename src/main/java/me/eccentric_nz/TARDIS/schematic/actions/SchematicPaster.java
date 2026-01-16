@@ -197,6 +197,15 @@ public class SchematicPaster implements Runnable {
                         }
                     }, 1L);
                 }
+                case OAK_SHELF -> {
+                    block.setBlockData(data, true);
+                    if (plugin.getBlockLogger().isLogging()) {
+                        plugin.getBlockLogger().logPlacement(block);
+                    }
+                    if (col.has("items")) {
+                        ShelfSetter.stock(block, col.get("items").getAsJsonArray());
+                    }
+                }
                 case PALE_OAK_FENCE -> {
                     block.setBlockData(data, false);
                     sidratFenceBlocks.put(block, data);

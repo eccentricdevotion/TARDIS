@@ -699,7 +699,7 @@ public class InteriorBuildRunnable implements Runnable {
                 postSculkVeinBlocks.put(world.getBlockAt(x, y, z), data);
             } else if (type.equals(Material.LANTERN) || type.equals(Material.SOUL_LANTERN)) {
                 postLanternBlocks.put(world.getBlockAt(x, y, z), data);
-            } else if (TARDISStaticUtils.isBanner(type)) {
+            } else if (Tag.BANNERS.isTagged(type)) {
                 JsonObject state = c.has("banner") ? c.get("banner").getAsJsonObject() : null;
                 if (state != null) {
                     TARDISBannerData tbd = new TARDISBannerData(data, state);

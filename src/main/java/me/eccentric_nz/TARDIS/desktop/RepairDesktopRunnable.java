@@ -600,7 +600,7 @@ public class RepairDesktopRunnable extends DesktopThemeRunnable {
                     postLichenBlocks.put(world.getBlockAt(x, y, z), data);
                 } else if (type.equals(Material.SCULK_VEIN)) {
                     postSculkVeinBlocks.put(world.getBlockAt(x, y, z), data);
-                } else if (TARDISStaticUtils.isBanner(type)) {
+                } else if (Tag.BANNERS.isTagged(type)) {
                     JsonObject state = bb.has("banner") ? bb.getAsJsonObject("banner") : null;
                     if (state != null) {
                         TARDISBannerData tbd = new TARDISBannerData(data, state);

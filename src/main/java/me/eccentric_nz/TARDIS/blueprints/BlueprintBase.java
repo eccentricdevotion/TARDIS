@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.blueprints;
 public enum BlueprintBase {
 
     ADD("tardis.add"),
+    ARS("tardis.architectural"),
     BOOK("tardis.book"),
     CREATE("tardis.create"),
     ENTER("tardis.enter"),
