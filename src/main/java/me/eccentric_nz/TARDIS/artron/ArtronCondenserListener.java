@@ -228,7 +228,6 @@ public class ArtronCondenserListener implements Listener {
             for (ItemStack is : didntFit.values()) {
                 player.getWorld().dropItem(player.getLocation(), is);
             }
-//            }
             Tardis tardis = rs.getTardis();
             if (tardis == null) {
                 plugin.debug("TARDIS data was null!");
