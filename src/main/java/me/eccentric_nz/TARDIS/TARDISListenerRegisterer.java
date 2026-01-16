@@ -87,6 +87,7 @@ import me.eccentric_nz.TARDIS.planets.*;
 import me.eccentric_nz.TARDIS.playerprefs.*;
 import me.eccentric_nz.TARDIS.recipes.TARDISRecipeCategoryListener;
 import me.eccentric_nz.TARDIS.recipes.TARDISRecipeInventoryListener;
+import me.eccentric_nz.TARDIS.rooms.CopperGolemListener;
 import me.eccentric_nz.TARDIS.rooms.JettisonSeeder;
 import me.eccentric_nz.TARDIS.rooms.RoomSeeder;
 import me.eccentric_nz.TARDIS.rooms.architectural.ArchitecturalBlueprintsListener;
@@ -210,6 +211,7 @@ class TARDISListenerRegisterer {
         plugin.getPM().registerEvents(new ColourPickerListener(plugin), plugin);
         plugin.getPM().registerEvents(new CompanionGUIListener(plugin), plugin);
         plugin.getPM().registerEvents(new CompanionAddGUIListener(plugin), plugin);
+        plugin.getPM().registerEvents(new CopperGolemListener(plugin), plugin);
         plugin.getPM().registerEvents(new ArtronCondenserListener(plugin), plugin);
         plugin.getPM().registerEvents(new AdvancedConsoleCloseListener(plugin), plugin);
         plugin.getPM().registerEvents(new AdvancedConsoleListener(plugin), plugin);
