@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemRegistry;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.schematic.actions.SchematicSave;
+import me.eccentric_nz.TARDIS.schematic.getters.BannerGetter;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
@@ -210,7 +211,7 @@ public class SchematicBuilder {
                                             frame.add("lore", lore);
                                         }
                                         if ((Tag.ITEMS_BANNERS.isTagged(type) || type == Material.SHIELD) && im instanceof BlockStateMeta bsm) {
-                                            JsonObject state = SchematicSave.getBannerJson(bsm.getBlockState());
+                                            JsonObject state = BannerGetter.getJson(bsm.getBlockState());
                                             frame.add("banner", state);
                                         }
                                     }
@@ -316,8 +317,8 @@ public class SchematicBuilder {
                     }
                     obj.addProperty("data", data.getAsString());
                     // banners
-                    if (TARDISStaticUtils.isBanner(m)) {
-                        JsonObject state = SchematicSave.getBannerJson(b.getState());
+                    if (Tag.BANNERS.isTagged(m)) {
+                        JsonObject state = BannerGetter.getJson(b.getState());
                         obj.add("banner", state);
                     }
                     // player heads

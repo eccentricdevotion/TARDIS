@@ -49,7 +49,6 @@ import me.eccentric_nz.TARDIS.schematic.setters.*;
 import me.eccentric_nz.TARDIS.utility.TARDISBannerData;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import me.eccentric_nz.TARDIS.utility.protection.TARDISProtectionRemover;
 import org.bukkit.*;
 import org.bukkit.block.Biome;
@@ -902,7 +901,7 @@ public class FullDesktopThemeRunnable extends DesktopThemeRunnable {
                     postLanternBlocks.put(b, data);
                 } else if (type.equals(Material.SCULK_VEIN)) {
                     postSculkVeinBlocks.put(b, data);
-                } else if (TARDISStaticUtils.isBanner(type)) {
+                } else if (Tag.BANNERS.isTagged(type)) {
                     JsonObject state = bb.has("banner") ? bb.getAsJsonObject("banner") : null;
                     if (state != null) {
                         TARDISBannerData tbd = new TARDISBannerData(data, state);

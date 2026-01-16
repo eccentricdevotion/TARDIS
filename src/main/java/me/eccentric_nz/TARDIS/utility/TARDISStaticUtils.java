@@ -281,10 +281,6 @@ public class TARDISStaticUtils {
         };
     }
 
-    public static boolean isBanner(Material material) {
-        return Tag.BANNERS.isTagged(material);
-    }
-
     public static String getNick(UUID uuid) {
         if (TARDIS.plugin.getConfig().getBoolean("police_box.use_nick")) {
             Essentials essentials = (Essentials) Bukkit.getServer().getPluginManager().getPlugin("Essentials");
