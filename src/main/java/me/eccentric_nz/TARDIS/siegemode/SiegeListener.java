@@ -384,14 +384,14 @@ public class SiegeListener implements Listener {
         }
     }
 
-    private boolean isSiegeCube(ItemStack is) {
+    public static boolean isSiegeCube(ItemStack is) {
         Material m = is.getType();
         if (!m.equals(Material.BROWN_MUSHROOM_BLOCK) && !m.equals(Material.CYAN_CONCRETE)) {
             return false;
         }
         ItemMeta im = is.getItemMeta();
         if (im != null) {
-            return (im.hasDisplayName() && ComponentUtils.endsWith(im.displayName(), "TARDIS Siege Cube")) || (im.hasItemModel() && Whoniverse.SIEGE_CUBE.getKey().equals(im.getItemModel()));
+            return (im.hasDisplayName() && ComponentUtils.endsWith(im.displayName(), "Siege Cube")) || (im.hasItemModel() && Whoniverse.SIEGE_CUBE.getKey().equals(im.getItemModel()));
         }
         return false;
     }
@@ -404,13 +404,13 @@ public class SiegeListener implements Listener {
                 return mf.getAsString().equals(TARDISMushroomBlockData.BROWN_MUSHROOM_DATA.get(2));
             } else {
                 ItemDisplay tdi = TARDISDisplayItemUtils.get(b);
-                return (tdi != null && tdi.getItemStack() != null && tdi.getItemStack().getType() == Material.CYAN_CONCRETE);
+                return (tdi != null && tdi.getItemStack().getType() == Material.CYAN_CONCRETE);
             }
         }
         return false;
     }
 
     private boolean hasSiegeCubeName(ItemStack is) {
-        return (is.hasItemMeta() && is.getItemMeta().hasDisplayName() && ComponentUtils.endsWith(is.getItemMeta().displayName(), "TARDIS Siege Cube"));
+        return (is.hasItemMeta() && is.getItemMeta().hasDisplayName() && ComponentUtils.endsWith(is.getItemMeta().displayName(), "Siege Cube"));
     }
 }

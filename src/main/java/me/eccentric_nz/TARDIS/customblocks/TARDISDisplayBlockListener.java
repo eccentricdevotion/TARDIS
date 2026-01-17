@@ -34,6 +34,7 @@ import me.eccentric_nz.TARDIS.doors.inner.InnerDisplayDoorOpener;
 import me.eccentric_nz.TARDIS.doors.outer.*;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.Updateable;
+import me.eccentric_nz.TARDIS.siegemode.SiegeListener;
 import me.eccentric_nz.TARDIS.sonic.actions.SonicLight;
 import me.eccentric_nz.TARDIS.update.UpdateDoor;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
@@ -94,7 +95,7 @@ public class TARDISDisplayBlockListener implements Listener {
         if (!im.hasDisplayName() || !im.getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.STRING)) {
             return;
         }
-        if (ComponentUtils.endsWith(im.displayName(), "TARDIS Seed Block") || ComponentUtils.endsWith(im.displayName(), "Console")) {
+        if (ComponentUtils.endsWith(im.displayName(), "TARDIS Seed Block") || ComponentUtils.endsWith(im.displayName(), "Console") || ComponentUtils.endsWith(im.displayName(), "Siege Cube")) {
             return;
         }
         String key = im.getPersistentDataContainer().get(plugin.getCustomBlockKey(), PersistentDataType.STRING);
@@ -485,6 +486,9 @@ public class TARDISDisplayBlockListener implements Listener {
 
     private void processInteraction(ItemDisplay fake, ItemDisplay breaking, Player player, Location l, Block block, Interaction interaction) {
         if (fake != null && player.getGameMode().equals(GameMode.CREATIVE)) {
+            if (SiegeListener.isSiegeCube(fake.getItemStack())){
+                return;
+            }
             fake.remove();
             if (interaction != null) {
                 interaction.remove();
@@ -504,6 +508,7 @@ public class TARDISDisplayBlockListener implements Listener {
             return;
         }
         if (breaking != null && fake != null) {
+            boolean isSiege = SiegeListener.isSiegeCube(fake.getItemStack());
             ItemStack is = breaking.getItemStack();
             if (is != null) {
                 int destroy = is.getItemMeta().getPersistentDataContainer().get(plugin.getDestroyKey(), PersistentDataType.INTEGER);
@@ -530,6 +535,10 @@ public class TARDISDisplayBlockListener implements Listener {
                             }
                         } else {
                             l.getWorld().dropItemNaturally(l, fake.getItemStack());
+                            // process siege cube
+                            if (isSiege) {
+
+                            }
                         }
                     }
                     breaking.remove();
@@ -565,6 +574,10 @@ public class TARDISDisplayBlockListener implements Listener {
                 }
             }
         } else if (breaking == null) {
+            if (SiegeListener.isSiegeCube(fake.getItemStack())) {
+                // check the player can actually break it
+
+            }
             // only one item display entity...
             // so spawn a destroy entity
             ItemStack destroy = ItemStack.of(Material.GRAVEL);

@@ -88,6 +88,9 @@ public class SiegeMode {
                 return;
             }
             plugin.getPM().callEvent(new TARDISSiegeOffEvent(p, tardis));
+            while (!siege.getChunk().isLoaded()) {
+                siege.getChunk().load();
+            }
             // remove siege block
             siege.setBlockData(TARDISConstants.AIR);
             TARDISDisplayItemUtils.remove(siege);
