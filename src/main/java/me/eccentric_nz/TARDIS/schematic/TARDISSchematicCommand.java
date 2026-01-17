@@ -86,6 +86,9 @@ public class TARDISSchematicCommand implements CommandExecutor {
             if (args[0].equalsIgnoreCase("fixliquid")) {
                 return new SchematicLavaAndWater().act(plugin, player, "lava".equals(args[1].toLowerCase(Locale.ROOT)));
             }
+            if (args[0].equalsIgnoreCase("position")) {
+                return new SchematicPosition().teleport(plugin, player);
+            }
             if (args.length < 2) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "SCHM_NAME");
