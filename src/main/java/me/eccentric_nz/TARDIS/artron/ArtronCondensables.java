@@ -1325,10 +1325,12 @@ public class ArtronCondensables {
             condensables.put("WAXED_WEATHERED_COPPER_LANTERN", 20);
             condensables.put("WAXED_OXIDIZED_COPPER_LANTERN", 20);
             // 1.21.11
+            condensables.put("COPPER_GOLEM_STATUE", 236);
             condensables.put("COPPER_NAUTILUS_ARMOR", 2);
             condensables.put("COPPER_SPEAR", 20);
             condensables.put("DIAMOND_NAUTILUS_ARMOR", 200);
             condensables.put("DIAMOND_SPEAR", 200);
+            condensables.put("EXPOSED_COPPER_GOLEM_STATUE", 236);
             condensables.put("GOLDEN_NAUTILUS_ARMOR", 12);
             condensables.put("GOLDEN_SPEAR", 110);
             condensables.put("IRON_NAUTILUS_ARMOR", 3);
@@ -1336,7 +1338,13 @@ public class ArtronCondensables {
             condensables.put("NETHERITE_HORSE_ARMOR", 2500);
             condensables.put("NETHERITE_NAUTILUS_ARMOR", 1000);
             condensables.put("NETHERITE_SPEAR", 1220);
+            condensables.put("OXIDIZED_COPPER_GOLEM_STATUE", 236);
             condensables.put("STONE_SPEAR", 3);
+            condensables.put("WAXED_COPPER_GOLEM_STATUE", 256);
+            condensables.put("WAXED_EXPOSED_COPPER_GOLEM_STATUE", 256);
+            condensables.put("WAXED_OXIDIZED_COPPER_GOLEM_STATUE", 256);
+            condensables.put("WAXED_WEATHERED_COPPER_GOLEM_STATUE", 256);
+            condensables.put("WEATHERED_COPPER_GOLEM_STATUE", 236);
             condensables.put("WOODEN_SPEAR", 1);
         } else {
             Set<String> items = plugin.getCondensablesConfig().getKeys(false);

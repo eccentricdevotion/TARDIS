@@ -795,6 +795,16 @@ public class CondensablesConfigUpdater {
                 plugin.getCondensablesConfig().set("WOODEN_SPEAR", 1);
                 i++;
             }
+            if (!plugin.getCondensablesConfig().contains("COPPER_GOLEM_STATUE")) {
+                plugin.getCondensablesConfig().set("COPPER_GOLEM_STATUE", 236);
+                plugin.getCondensablesConfig().set("EXPOSED_COPPER_GOLEM_STATUE", 236);
+                plugin.getCondensablesConfig().set("OXIDIZED_COPPER_GOLEM_STATUE", 236);
+                plugin.getCondensablesConfig().set("WAXED_COPPER_GOLEM_STATUE", 256);
+                plugin.getCondensablesConfig().set("WAXED_EXPOSED_COPPER_GOLEM_STATUE", 256);
+                plugin.getCondensablesConfig().set("WAXED_OXIDIZED_COPPER_GOLEM_STATUE", 256);
+                plugin.getCondensablesConfig().set("WAXED_WEATHERED_COPPER_GOLEM_STATUE", 256);
+                plugin.getCondensablesConfig().set("WEATHERED_COPPER_GOLEM_STATUE", 236);
+            }
             if (i > 0) {
                 try {
                     String listPath = plugin.getDataFolder() + File.separator + "condensables.yml";

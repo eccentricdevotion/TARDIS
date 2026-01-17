@@ -185,15 +185,13 @@ public class RoomsConfigUpdater {
         integerOptions.put("rooms.FARM.offset", -4);
         integerOptions.put("rooms.GALLERY.cost", 1275);
         integerOptions.put("rooms.GALLERY.offset", -4);
-        // TODO cost
-        integerOptions.put("rooms.GAMES.cost", 625);
+        integerOptions.put("rooms.GAMES.cost", 750);
         integerOptions.put("rooms.GAMES.offset", -4);
         integerOptions.put("rooms.GARDEN.cost", 625);
         integerOptions.put("rooms.GARDEN.offset", -4);
         integerOptions.put("rooms.GEODE.cost", 675);
         integerOptions.put("rooms.GEODE.offset", -4);
-        // TODO cost
-        integerOptions.put("rooms.GOLEM.cost", 625);
+        integerOptions.put("rooms.GOLEM.cost", 1025);
         integerOptions.put("rooms.GOLEM.offset", -4);
         integerOptions.put("rooms.GRAVITY.cost", 1525);
         integerOptions.put("rooms.GRAVITY.offset", -20);

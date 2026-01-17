@@ -98,9 +98,9 @@ rooms:
     user: false
   GAMES:
     enabled: true
-    cost: 1275
+    cost: 750
     offset: -4
-    seed: DARK_)AK_PLANKS
+    seed: DARK_OAK_PLANKS
     user: false
   GARDEN:
     enabled: true
@@ -116,7 +116,7 @@ rooms:
     user: false
   GOLEM:
     enabled: true
-    cost: 1275
+    cost: 1025
     offset: -4
     seed: TUFF
     user: false
