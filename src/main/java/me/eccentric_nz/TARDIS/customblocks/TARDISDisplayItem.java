@@ -39,4 +39,6 @@ public interface TARDISDisplayItem {
     boolean isDoor();
 
     boolean isClosedDoor();
+
+    boolean isPipe();
 }

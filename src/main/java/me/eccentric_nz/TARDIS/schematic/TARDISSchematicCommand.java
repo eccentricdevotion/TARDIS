@@ -78,7 +78,7 @@ public class TARDISSchematicCommand implements CommandExecutor {
                 return new SchematicClear().act(plugin, player);
             }
             if (args[0].equalsIgnoreCase("remove")) {
-                return new SchematicRemoveLights().act(plugin, player);
+                return new SchematicRemove().act(plugin, player, args[1]);
             }
             if (args[0].equalsIgnoreCase("flowers")) {
                 return new SchematicFlowers().act(plugin, player);

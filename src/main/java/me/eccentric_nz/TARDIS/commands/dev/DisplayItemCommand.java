@@ -189,7 +189,7 @@ public class DisplayItemCommand {
                     if (tdi.isClosedDoor() || tdi == TARDISBlockDisplayItem.UNTEMPERED_SCHISM) {
                         display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.FIXED);
                     }
-                    if (tdi.getMaterial() == Material.AMETHYST_SHARD) {
+                    if (tdi.isPipe() || tdi.getMaterial() == Material.AMETHYST_SHARD) {
                         display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.HEAD);
                     }
                     if (tdi == TARDISBlockDisplayItem.ARTRON_FURNACE) {

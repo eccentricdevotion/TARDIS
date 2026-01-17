@@ -215,12 +215,12 @@ public class SchematicSave {
                                 NamespacedKey model = null;
                                 if (display.getItemStack().hasItemMeta()) {
                                     ItemMeta im = display.getItemStack().getItemMeta();
-                                    if (im.getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.STRING)) {
+                                    if (im.hasDisplayName() && !im.hasItemModel()) {
+                                        stack.addProperty("display_name", ComponentUtils.stripColour(im.displayName()));
+                                    } else if (im.getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.STRING)) {
                                         String key = im.getPersistentDataContainer().get(plugin.getCustomBlockKey(), PersistentDataType.STRING);
                                         model = new NamespacedKey(plugin, key);
                                         stack.addProperty("cmd", model.getKey());
-                                    } else if (im.hasDisplayName()) {
-                                        stack.addProperty("display_name", ComponentUtils.stripColour(im.displayName()));
                                     }
                                 }
                                 stack.addProperty("type", material.toString());

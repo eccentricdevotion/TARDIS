@@ -33,6 +33,14 @@ public enum TARDISBlockDisplayItem implements TARDISDisplayItem {
     CUSTOM_DOOR(null, Material.IRON_DOOR),
     SONIC_DOCK(SonicItem.SONIC_DOCK_OFF.getKey(), Material.FLOWER_POT),
     SONIC_GENERATOR(SonicItem.SONIC_GENERATOR.getKey(), Material.FLOWER_POT),
+    PIPE_NORTH(Whoniverse.PIPE_NORTH.getKey(), Material.CONDUIT),
+    PIPE_VARIANT_NORTH(Whoniverse.PIPE_VARIANT_NORTH.getKey(), Material.CONDUIT),
+    PIPE_EAST(Whoniverse.PIPE_EAST.getKey(), Material.CONDUIT),
+    PIPE_VARIANT_EAST(Whoniverse.PIPE_VARIANT_EAST.getKey(), Material.CONDUIT),
+    PIPE_SOUTH(Whoniverse.PIPE_SOUTH.getKey(), Material.CONDUIT),
+    PIPE_VARIANT_SOUTH(Whoniverse.PIPE_VARIANT_SOUTH.getKey(), Material.CONDUIT),
+    PIPE_WEST(Whoniverse.PIPE_WEST.getKey(), Material.CONDUIT),
+    PIPE_VARIANT_WEST(Whoniverse.PIPE_VARIANT_WEST.getKey(), Material.CONDUIT),
     NONE(null, null);
     private final NamespacedKey customModel;
     private final Material material;
@@ -116,6 +124,18 @@ public enum TARDISBlockDisplayItem implements TARDISDisplayItem {
     public boolean isClosedDoor() {
         switch (this) {
             case DOOR, BONE_DOOR, CLASSIC_DOOR, SIDRAT_DOOR -> {
+                return true;
+            }
+            default -> {
+                return false;
+            }
+        }
+    }
+
+    @Override
+    public boolean isPipe() {
+        switch (this) {
+            case PIPE_EAST, PIPE_NORTH, PIPE_SOUTH, PIPE_VARIANT_EAST, PIPE_VARIANT_NORTH, PIPE_VARIANT_SOUTH, PIPE_VARIANT_WEST, PIPE_WEST -> {
                 return true;
             }
             default -> {

@@ -203,7 +203,7 @@ public enum TARDISDescription {
     EYE("The Eye of Harmony from the 11th Doctor's TARDIS."),
     FARM("You need this room to bring farm animals into the TARDIS."),
     GALLERY("An art gallery featuring 'Gallifrey Falls No More', 'Exploding TARDIS', and the Venus de Milo."),
-    GAMES("A games room with air hockey,  darts and a gaming PC."),
+    GAMES("A games room with air hockey, darts and a gaming PC."),
     GARDEN("Flowers, flowers, everywhere."),
     GEODE("Grow some amethyst, catch an axolotl."),
     GOLEM("A copper golem recharging station."),

@@ -112,4 +112,9 @@ public enum TARDISSeedDisplayItem implements TARDISDisplayItem {
     public boolean isClosedDoor() {
         return false;
     }
+
+    @Override
+    public boolean isPipe() {
+        return false;
+    }
 }
