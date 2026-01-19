@@ -28,8 +28,8 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.messaging.TARDISRoomLister;
-import me.eccentric_nz.TARDIS.rooms.RoomSeedData;
 import me.eccentric_nz.TARDIS.rooms.CondenserData;
+import me.eccentric_nz.TARDIS.rooms.RoomSeedData;
 import me.eccentric_nz.TARDIS.upgrades.SystemTree;
 import me.eccentric_nz.TARDIS.upgrades.SystemUpgradeChecker;
 import org.bukkit.Material;
@@ -62,6 +62,10 @@ class RoomCommand {
             return false;
         }
         String room = args[1].toUpperCase(Locale.ROOT);
+        if (room.equals("ARCADE")) {
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "GAME_ARCADE");
+            return true;
+        }
         if (room.equals("HELP") || !plugin.getGeneralKeeper().getRoomArgs().contains(room)) {
             new TARDISRoomLister(plugin, player).list();
             return true;

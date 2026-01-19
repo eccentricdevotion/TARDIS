@@ -336,3 +336,9 @@ rooms:
     offset: -4
     seed: OAK_BUTTON
     user: false
+  ARCADE:
+    enabled: true
+    cost: 250
+    offset: 0
+    seed: STRUCTURE_BLOCK
+    user: false

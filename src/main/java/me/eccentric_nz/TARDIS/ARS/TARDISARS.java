@@ -83,6 +83,7 @@ public enum TARDISARS implements ARS {
     WOOD("OAK_PLANKS", "Wood Secondary Console", 1, RoomVariant.WOOD.getKey()),
     WORKSHOP("RED_NETHER_BRICKS", "Workshop", 1, RoomVariant.WORKSHOP.getKey()),
     ZERO("GRASS_BLOCK", "Zero Room", 0, null, false),
+    ARCADE("STRUCTURE_BLOCK", "Arcade", 0, null, false),
     JETTISON("TNT", "Jettison", 0, RoomVariant.JETTISON.getKey(), false),
     SLOT("STONE", "Empty slot", 0, RoomVariant.SLOT.getKey(), false),
     CUSTOM("", "Custom room", 0, null, false),

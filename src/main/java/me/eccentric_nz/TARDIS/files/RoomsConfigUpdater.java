@@ -50,6 +50,8 @@ public class RoomsConfigUpdater {
         booleanOptions.put("rooms.AQUARIUM.user", false);
         booleanOptions.put("rooms.ARBORETUM.enabled", true);
         booleanOptions.put("rooms.ARBORETUM.user", false);
+        booleanOptions.put("rooms.ARCADE.enabled", true);
+        booleanOptions.put("rooms.ARCADE.user", false);
         booleanOptions.put("rooms.ARCHITECTURAL.enabled", true);
         booleanOptions.put("rooms.ARCHITECTURAL.user", false);
         booleanOptions.put("rooms.BAKER.enabled", true);
@@ -163,6 +165,8 @@ public class RoomsConfigUpdater {
         integerOptions.put("rooms.AQUARIUM.offset", -4);
         integerOptions.put("rooms.ARBORETUM.cost", 850);
         integerOptions.put("rooms.ARBORETUM.offset", -4);
+        integerOptions.put("rooms.ARCADE.cost", 250);
+        integerOptions.put("rooms.ARCADE.offset", 0);
         integerOptions.put("rooms.ARCHITECTURAL.cost", 775);
         integerOptions.put("rooms.ARCHITECTURAL.offset", -4);
         integerOptions.put("rooms.BAKER.cost", 750);
@@ -271,6 +275,7 @@ public class RoomsConfigUpdater {
         stringOptions.put("rooms.APIARY.seed", "BEE_NEST");
         stringOptions.put("rooms.AQUARIUM.seed", "TUBE_CORAL_BLOCK");
         stringOptions.put("rooms.ARBORETUM.seed", "OAK_LEAVES");
+        stringOptions.put("rooms.ARCADE.seed", "STRUCTURE_BLOCK");
         stringOptions.put("rooms.ARCHITECTURAL.seed", "WAXED_COPPER_GRATE");
         stringOptions.put("rooms.BAKER.seed", "END_STONE");
         stringOptions.put("rooms.BAMBOO.seed", "BAMBOO");
