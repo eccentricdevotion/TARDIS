@@ -666,7 +666,7 @@ public class FullDesktopThemeRunnable extends DesktopThemeRunnable {
                     String button = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
                     plugin.getQueryFactory().insertSyncControl(id, 1, button, 0);
                 }
-                if (type.equals(Material.JUKEBOX) && !(tud.getSchematic().getPermission().equals("eighth") && world.getBlockAt(x,y,z).getRelative(BlockFace.DOWN).getType() == Material.ANDESITE)) {
+                if (type.equals(Material.JUKEBOX) && !(tud.getSchematic().getPermission().equals("eighth") && world.getBlockAt(x, y, z).getRelative(BlockFace.DOWN).getType() == Material.ANDESITE)) {
                     // remember the location of this Advanced Console
                     String advanced = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
                     plugin.getQueryFactory().insertSyncControl(id, 15, advanced, 0);
@@ -921,12 +921,14 @@ public class FullDesktopThemeRunnable extends DesktopThemeRunnable {
                     }
                 } else if (type.equals(Material.DECORATED_POT)) {
                     TARDISBlockSetters.setBlock(world, x, y, z, data);
-                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                        if (bb.has("pot")) {
-                            JsonObject pot = bb.get("pot").getAsJsonObject();
-                            PotSetter.decorate(plugin, pot, b);
-                        }
-                    }, 1L);
+                    if (bb.has("pot")) {
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> PotSetter.decorate(plugin, bb.get("pot").getAsJsonObject(), b), 1L);
+                    }
+                } else if (Tag.WOODEN_SHELVES.isTagged(type)) {
+                    TARDISBlockSetters.setBlock(world, x, y, z, data);
+                    if (bb.has("items")) {
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> ShelfSetter.stock(b, bb.get("items").getAsJsonArray()), 3L);
+                    }
                 } else if (MaterialTags.INFESTED_BLOCKS.isTagged(type)) {
                     // legacy monster egg stone for controls
                     TARDISBlockSetters.setBlock(world, x, y, z, Material.AIR);
