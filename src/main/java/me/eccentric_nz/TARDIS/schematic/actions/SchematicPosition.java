@@ -24,7 +24,7 @@ public class SchematicPosition {
             int cx = chunk.getX() * 16;
             int cz = chunk.getZ() * 16;
             x = cx + 15.5d;
-            y = chunk.getWorld().getHighestBlockYAt(cx, cz) + 0.5d;
+            y = chunk.getWorld().getHighestBlockYAt(cx, cz) + 4.5d;
             z = cz + 0.5d;
         }
         Location location = new Location(player.getWorld(), x, y, z, player.getYaw(), 0);

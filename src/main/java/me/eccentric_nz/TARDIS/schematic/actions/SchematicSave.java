@@ -100,9 +100,10 @@ public class SchematicSave {
         dimensions.addProperty("length", length);
         if (width != length) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "SCHM_SQUARE");
+            plugin.getMessenger().message(player, TardisModule.TARDIS, "Dimensions are: (x,z)" + width + ", " + length);
             return true;
         }
-        if (width % 16 != 0 && !which.equals("zero") && !which.equals("junk") && !which.contains("dalek")) {
+        if (width % 16 != 0 && !which.equals("zero") && !which.equals("junk") && !which.equals("arcade") && !which.contains("dalek")) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "SCHM_MULTIPLE");
             return true;
         }
