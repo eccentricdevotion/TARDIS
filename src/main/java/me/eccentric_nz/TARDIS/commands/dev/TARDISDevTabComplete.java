@@ -53,7 +53,7 @@ public class TARDISDevTabComplete extends TARDISCompleter implements TabComplete
             "label", "leather", "list",
             "mannequin", "monster", "mount",
             "ntc", "nms",
-            "painting", "plurals",
+            "painting", "plurals", "pong",
             "recipe", "regen", "registry", "roman", "rooms",
             "screen", "shelf", "skin", "snapshot", "staircase", "stats", "systree",
             "tis", "tips", "tree", "trim",

@@ -31,6 +31,7 @@ import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.monitor.MonitorSnapshot;
 import me.eccentric_nz.TARDIS.move.TARDISTeleportLocation;
 import me.eccentric_nz.TARDIS.playerprefs.PreferencesDialog;
+import me.eccentric_nz.TARDIS.rooms.games.pong.GameDisplay;
 import me.eccentric_nz.TARDIS.skins.ArchSkins;
 import me.eccentric_nz.TARDIS.skins.DoctorSkins;
 import me.eccentric_nz.TARDIS.skins.Skin;
@@ -92,7 +93,7 @@ public class TARDISDevCommand implements CommandExecutor {
             "label", "leather", "list",
             "mannequin", "monster", "mount",
             "ntc", "nms",
-            "painting", "plurals",
+            "painting", "plurals", "pong",
             "recipe", "regen", "registry", "roman", "rooms",
             "screen", "shelf", "skin", "snapshot", "staircase", "stats", "systree",
             "tis", "tips", "tree",
@@ -120,6 +121,14 @@ public class TARDISDevCommand implements CommandExecutor {
                 }
                 if (args.length == 1) {
                     switch (first) {
+                        case "pong" -> {
+                            if (sender instanceof Player player) {
+                                Block targetBlock = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 16);
+                                String uuids = new GameDisplay().create(targetBlock.getLocation().add(0.5d, 2d, 0.5d));
+                                plugin.debug(uuids);
+                            }
+                            return true;
+                        }
                         case "update" -> {
                             if (sender instanceof Player player) {
                                 return new UpdateBlockStateCommand(plugin).refresh(player);
