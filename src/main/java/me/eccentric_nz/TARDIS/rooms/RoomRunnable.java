@@ -904,7 +904,7 @@ public class RoomRunnable implements Runnable {
                             // player spawn location
                             setArcade.put("player_location", TARDISStaticLocationGetters.makeTetrisLocationString(world.getName(), startx + 0.5d, starty + 1d, startz + 0.5d));
                             // pong display location TODO remove this as probably not needed as we have the display UUIDs
-                            setArcade.put("pong_display", TARDISStaticLocationGetters.makeTetrisLocationString(world.getName(), startx + 0.5d, starty + 3.5d, startz - 4.5d));
+                            setArcade.put("pong_display", TARDISStaticLocationGetters.makeTetrisLocationString(world.getName(), startx + 0.5d, starty + 2.5d, startz - 1.5d));
                             // spawn pong text displays
                             String textDisplays = GameDisplay.create(new Location(world, startx + 0.5d, starty + 3.5d, startz - 4.5d));
                             setArcade.put("pong_uuids", textDisplays);

@@ -4,10 +4,10 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 
 public class Lines {
 
-    public static char[][] CANVAS = new char[15][29];
+    public static char[][] CANVAS = new char[16][29];
 
     static {
-        for (int r = 0; r < 15; r++) {
+        for (int r = 0; r < 16; r++) {
             for (int c = 0; c < 29; c++) {
                 CANVAS[r][c] = GameChar.space;
             }

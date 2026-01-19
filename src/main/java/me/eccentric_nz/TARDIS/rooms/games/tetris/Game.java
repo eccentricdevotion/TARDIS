@@ -2,6 +2,8 @@ package me.eccentric_nz.TARDIS.rooms.games.tetris;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetGames;
+import me.eccentric_nz.TARDIS.rooms.games.ArcadeData;
+import me.eccentric_nz.TARDIS.rooms.games.ArcadeTracker;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import net.kyori.adventure.text.Component;
 import org.bukkit.*;
@@ -11,11 +13,9 @@ import org.bukkit.block.sign.Side;
 import org.bukkit.block.sign.SignSide;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -27,7 +27,6 @@ public class Game implements Listener {
     private final NextPiece nextPiece;
     private final int startLevel;
     private final Player player;
-    private final Location backupLoc;
     private final Location boardLocation;
     private final Location playerLocation;
     private final Location signLocation;
@@ -41,11 +40,12 @@ public class Game implements Listener {
     public Game(TARDIS plugin, Player player, int startLevel) {
         this.plugin = plugin;
         this.player = player;
-        backupLoc = player.getLocation();
         player.getInventory().setItem(0, new ItemStack(Material.TRIPWIRE_HOOK));
         player.getInventory().setHeldItemSlot(0);
         world = plugin.getServer().getWorld("TARDIS_Zero_Room");
         GameLocations locations = getRoom(player);
+        ArcadeTracker.PLAYERS.put(player.getUniqueId(), new ArcadeData(player.getLocation(), player.getAllowFlight(), this));
+        player.setAllowFlight(true);
         player.teleport(locations.teleport());
         playerLocation = locations.teleport();
         boardLocation = locations.board();
@@ -89,10 +89,10 @@ public class Game implements Listener {
         // use a sign for scores
         Sign sign = (Sign) signLocation.getBlock().getState();
         SignSide front = sign.getSide(Side.FRONT);
-        front.line(0, Component.text("Classic Tetris"));
-        front.line(1, Component.text("Level: " + level));
-        front.line(2, Component.text("Lines: " + linesClearedTotal));
-        front.line(3, Component.text("Score: " + score));
+        front.line(0, Component.text("Level: " + level));
+        front.line(1, Component.text("Lines: " + linesClearedTotal));
+        front.line(2, Component.text("Score:"));
+        front.line(3, Component.text(score));
         sign.update(true);
     }
 
@@ -171,7 +171,9 @@ public class Game implements Listener {
     }
 
     private void updateCurrent() {
-        if (state == GameState.GAME_OVER) return;
+        if (state == GameState.GAME_OVER) {
+            return;
+        }
         current = nextPiece.getAndUpdate();
         current.reset();
         current.move(board.getWidth() / 2, 0);
@@ -323,6 +325,13 @@ public class Game implements Listener {
             level++;
             updateScoreboard();
             linesClearedLevel = 0;
+            // clear top
+            for (int y = 1; y < 4; y++) {
+                for (int x = 0; x < board.getWidth(); x++) {
+                    Block block = world.getBlockAt(boardLocation.getBlockX() - x, boardLocation.getBlockY() + y, boardLocation.getBlockZ());
+                    block.setType(Material.AIR);
+                }
+            }
         }
     }
 
@@ -376,15 +385,6 @@ public class Game implements Listener {
                 moveDown();
             }
             player.teleport(playerLocation);
-        }
-    }
-
-    @EventHandler
-    public void onSneak(PlayerToggleSneakEvent e) {
-        if (state == GameState.GAME_OVER && e.getPlayer() == player && e.isSneaking()) {
-            player.teleport(backupLoc);
-            player.getInventory().setItem(0, null);
-            HandlerList.unregisterAll(this);
         }
     }
 

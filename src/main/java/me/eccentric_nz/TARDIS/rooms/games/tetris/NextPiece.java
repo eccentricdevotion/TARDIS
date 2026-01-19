@@ -1,10 +1,9 @@
 package me.eccentric_nz.TARDIS.rooms.games.tetris;
 
-import java.util.Random;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 
 public class NextPiece {
 
-    private final Random random = new Random();
     private Pieces next;
 
     NextPiece() {
@@ -12,7 +11,7 @@ public class NextPiece {
     }
 
     private Pieces random() {
-        return Pieces.values()[random.nextInt(Pieces.values().length)];
+        return Pieces.values()[TARDISConstants.RANDOM.nextInt(Pieces.values().length)];
     }
 
     public Pieces getAndUpdate() {

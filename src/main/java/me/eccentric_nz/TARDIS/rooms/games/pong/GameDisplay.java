@@ -13,7 +13,7 @@ public class GameDisplay {
         StringBuilder builder = new StringBuilder();
         for (char[] line : Lines.CANVAS) {
             String joined = new String(line); // char[] line = joined.toCharArray()
-            location.add(0, 0.125d, 0);
+            location.add(0, -0.125d, 0);
             TextDisplay display = spawn(location, Component.text(joined));
             builder.append(display.getUniqueId()).append(":");
         }

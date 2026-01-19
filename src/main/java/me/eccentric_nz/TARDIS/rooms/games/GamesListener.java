@@ -3,13 +3,17 @@ package me.eccentric_nz.TARDIS.rooms.games;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
+import me.eccentric_nz.TARDIS.rooms.games.pong.Pong;
+import me.eccentric_nz.TARDIS.rooms.games.tetris.Game;
 import me.eccentric_nz.TARDIS.rooms.games.tetris.Play;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.HandlerList;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -27,7 +31,7 @@ public class GamesListener extends TARDISMenuListener {
     }
 
     @EventHandler
-    public void onArchitecturalBlueprintClick(InventoryClickEvent event) {
+    public void onGamesGUIClick(InventoryClickEvent event) {
         if (!(event.getInventory().getHolder(false) instanceof GamesInventory)) {
             return;
         }
@@ -44,6 +48,8 @@ public class GamesListener extends TARDISMenuListener {
         switch (slot) {
             case 3 -> {
                 // start pong game
+                close(player);
+                new Pong(plugin).startGame(player);
             }
             case 4 -> {
                 // start tic tac toe game
@@ -74,7 +80,7 @@ public class GamesListener extends TARDISMenuListener {
                 List<Component> lore = sim.lore();
                 int level = (lore != null) ? TARDISNumberParsers.parseInt(ComponentUtils.stripColour(lore.getFirst())) : 0;
                 level++;
-                if (level >30) {
+                if (level > 30) {
                     level = 0;
                 }
                 lore.set(0, Component.text(level));
@@ -84,6 +90,21 @@ public class GamesListener extends TARDISMenuListener {
             }
             case 8 -> close(player);
             default -> { }
+        }
+    }
+
+    @EventHandler
+    public void onGameSneak(PlayerToggleSneakEvent e) {
+        if (ArcadeTracker.PLAYERS.containsKey(e.getPlayer().getUniqueId()) && e.isSneaking()) {
+            ArcadeData data = ArcadeTracker.PLAYERS.get(e.getPlayer().getUniqueId());
+            // teleport player back to games room
+            e.getPlayer().teleport(data.backup());
+            // reset flight status
+            e.getPlayer().setAllowFlight(data.allowFlight());
+            if (data.listener() instanceof Game game) {
+                HandlerList.unregisterAll(game);
+            }
+            ArcadeTracker.PLAYERS.remove(e.getPlayer().getUniqueId());
         }
     }
 }
