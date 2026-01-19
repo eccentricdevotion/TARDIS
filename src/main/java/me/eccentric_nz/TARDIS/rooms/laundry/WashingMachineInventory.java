@@ -6,7 +6,6 @@ import me.eccentric_nz.TARDIS.custommodels.GUIMap;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
@@ -19,7 +18,7 @@ public class WashingMachineInventory implements InventoryHolder {
     private final TARDIS plugin;
     private final Inventory inventory;
 
-    public WashingMachineInventory(TARDIS plugin, Player player) {
+    public WashingMachineInventory(TARDIS plugin) {
         this.plugin = plugin;
         this.inventory = plugin.getServer().createInventory(this, 27, Component.text("TARDIS Washing Machine", NamedTextColor.DARK_RED));
         this.inventory.setContents(getItemStack());
