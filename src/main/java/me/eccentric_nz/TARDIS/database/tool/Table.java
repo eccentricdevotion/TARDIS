@@ -51,6 +51,7 @@ public enum Table {
     farming_prefs("farm_id"),
     flight("f_id"),
     forcefield("uuid"),
+    games("game_id"),
     gardens("garden_id", true),
     gravity_well("g_id", true),
     happy(true),

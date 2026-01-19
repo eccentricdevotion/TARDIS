@@ -20,10 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class ResultSetTIPS {
 
@@ -95,6 +92,38 @@ public class ResultSetTIPS {
                 }
             } catch (SQLException e) {
                 plugin.debug("Error closing tardis table (getting TIPS highest slot)! " + e.getMessage());
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * Get the highest TIPS slot number
+     */
+    public int getSlot(int id) {
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+        String query = "SELECT tips FROM " + prefix + "tardis WHERE tardis_id = ?";
+        try {
+            statement = connection.prepareStatement(query);
+            statement.setInt(1, id);
+            rs = statement.executeQuery();
+            if (rs.isBeforeFirst()) {
+                rs.next();
+                return rs.getInt("tips");
+            }
+        } catch (SQLException e) {
+            plugin.debug("ResultSet error for tardis table (getting TIPS slot)! " + e.getMessage());
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (statement != null) {
+                    statement.close();
+                }
+            } catch (SQLException e) {
+                plugin.debug("Error closing tardis table (getting TIPS slot)! " + e.getMessage());
             }
         }
         return -1;
