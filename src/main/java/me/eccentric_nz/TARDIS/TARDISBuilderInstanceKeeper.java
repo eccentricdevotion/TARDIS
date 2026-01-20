@@ -146,6 +146,7 @@ public class TARDISBuilderInstanceKeeper {
         for (Material pot : Tag.FLOWER_POTS.getValues()) {
             conversions.put(pot.toString(), pot.toString().replace("POTTED_", ""));
         }
+        conversions.put("POTTED_FLOWERING_AZALEA_BUSH", "FLOWERING_AZALEA_LEAVES");
         // all wall signs
         for (Material sign : Tag.WALL_SIGNS.getValues()) {
             conversions.put(sign.toString(), sign.toString().replace("_WALL", ""));

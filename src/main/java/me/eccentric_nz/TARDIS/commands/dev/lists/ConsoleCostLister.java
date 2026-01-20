@@ -67,7 +67,7 @@ public class ConsoleCostLister {
                     bid = plugin.getBuildKeeper().getBlockConversion().get(bid);
                 }
                 if (plugin.getCondensables().containsKey(bid)) {
-                    int value = entry.getValue() * plugin.getCondensables().get(entry.getKey());
+                    int value = entry.getValue() * plugin.getCondensables().get(bid);
                     cost += value;
                 } else {
                     plugin.debug("Not in condensables: " + entry.getKey());

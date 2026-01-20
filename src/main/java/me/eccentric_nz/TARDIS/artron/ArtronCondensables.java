@@ -726,6 +726,7 @@ public class ArtronCondensables {
             condensables.put("PRISMARINE_BRICKS", 72);
             condensables.put("PRISMARINE_CRYSTALS", 16);
             condensables.put("PRISMARINE_SHARD", 8);
+            condensables.put("PRISMARINE_SLAB", 16);
             condensables.put("PRISMARINE_STAIRS", 48);
             condensables.put("PRISMARINE_WALL", 32);
             condensables.put("PUFFERFISH", 5);
