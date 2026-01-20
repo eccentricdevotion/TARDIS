@@ -101,7 +101,7 @@ public class OuterDisplayDoorCloser {
                 }
                 dye.setItemMeta(dim);
                 ee.setHelmet(dye, true);
-                TARDISSounds.playDoorSound(true, portal);
+                TARDISSounds.playDoorSound(false, portal);
             }
             HashMap<String, Object> where = new HashMap<>();
             where.put("tardis_id", id);
