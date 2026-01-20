@@ -822,6 +822,7 @@ public class CondensablesConfigUpdater {
                 plugin.getCondensablesConfig().set("DEEPSLATE_NETHER_QUARTZ_ORE", 15);
                 plugin.getCondensablesConfig().set("DEEPSLATE_REDSTONE_ORE", 32);
                 plugin.getCondensablesConfig().set("PRISMARINE_BRICK_SLAB", 36);
+                plugin.getCondensablesConfig().set("PRISMARINE_SLAB", 16);
                 plugin.getCondensablesConfig().set("PRISMARINE_STAIRS", 48);
                 plugin.getCondensablesConfig().set("PRISMARINE_WALL", 32);
                 plugin.getCondensablesConfig().set("QUARTZ_BRICKS", 60);
