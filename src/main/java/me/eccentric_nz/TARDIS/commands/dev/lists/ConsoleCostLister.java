@@ -62,7 +62,11 @@ public class ConsoleCostLister {
         for (Map.Entry<String, HashMap<String, Integer>> c : consoleBlockCounts.entrySet()) {
             int cost = 0;
             for (Map.Entry<String, Integer> entry : c.getValue().entrySet()) {
-                if (plugin.getCondensables().containsKey(entry.getKey())) {
+                String bid = entry.getKey();
+                if (plugin.getBuildKeeper().getBlockConversion().containsKey(bid)) {
+                    bid = plugin.getBuildKeeper().getBlockConversion().get(bid);
+                }
+                if (plugin.getCondensables().containsKey(bid)) {
                     int value = entry.getValue() * plugin.getCondensables().get(entry.getKey());
                     cost += value;
                 } else {
