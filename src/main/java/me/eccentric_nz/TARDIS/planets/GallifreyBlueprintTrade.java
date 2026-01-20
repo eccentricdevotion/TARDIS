@@ -63,9 +63,9 @@ public class GallifreyBlueprintTrade {
         // single use?
         MerchantRecipe roomRecipe = new MerchantRecipe(ris, uses);
         // get the room material for the ingredient from the blueprint
-        Material roomMaterial = Material.valueOf(TARDISARS.valueOf(bpr.toString()).getMaterial());
+        Material roomMaterial = Material.valueOf(plugin.getTradesConfig().getString("rooms." + bpr + ".material"));
         // determine the stack size of the ingredient
-        int roomAmount = plugin.getRoomsConfig().getInt("rooms." + bpr + ".cost") / 20;
+        int roomAmount = plugin.getTradesConfig().getInt("rooms." + bpr + ".amount");
         roomRecipe.addIngredient(ItemStack.of(roomMaterial, roomAmount));
         return roomRecipe;
     }
@@ -79,9 +79,9 @@ public class GallifreyBlueprintTrade {
         MerchantRecipe consoleRecipe = new MerchantRecipe(cis, uses);
         // get the console material for the ingredient from the blueprint
         String perm = bpc.getPermission().split("\\.")[1];
-        Material consoleMaterial = Desktops.getBY_PERMS().get(perm).getSeedMaterial();
+        Material consoleMaterial = Material.valueOf(plugin.getTradesConfig().getString("consoles." + perm.toUpperCase() + ".material"));
         // determine the stack size of the ingredient
-        int consoleAmount = plugin.getArtronConfig().getInt("upgrades." + perm) / 250;
+        int consoleAmount = plugin.getTradesConfig().getInt("consoles." + perm.toUpperCase() + ".amount");
         // add the ingredient
         consoleRecipe.addIngredient(ItemStack.of(consoleMaterial, consoleAmount));
         return consoleRecipe;
