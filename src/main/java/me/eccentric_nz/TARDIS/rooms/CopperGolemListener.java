@@ -1,9 +1,12 @@
 package me.eccentric_nz.TARDIS.rooms;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetVault;
+import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.SmelterChest;
+import me.eccentric_nz.TARDIS.rooms.library.LibrarySorter;
+import me.eccentric_nz.TARDIS.rooms.smelter.SmelterDrop;
+import me.eccentric_nz.TARDIS.rooms.smelter.SmelterFuel;
+import me.eccentric_nz.TARDIS.rooms.smelter.SmelterOre;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
@@ -15,6 +18,7 @@ import org.bukkit.event.block.BlockRedstoneEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -65,6 +69,7 @@ public class CopperGolemListener implements Listener {
             }
             // check for copper golems
             if (golemIsNear(block)) {
+                ArrayList<ItemStack> returnedItems = new ArrayList<>();
                 HashMap<String, Integer> item_counts = new HashMap<>();
                 int amount = 0;
                 // process chest contents
@@ -88,37 +93,93 @@ public class CopperGolemListener implements Listener {
                                 item_counts.put(block_data, stack_size);
                             }
                         }
-                        inv.remove(is);
+                        plugin.debug("Golem condense " + is.getType());
                         continue;
                     }
-                    plugin.debug("Golem condense " + is.getType());
+                    // not condensable
+                    returnedItems.add(is);
                 }
-                // clear chest contents
-                chest.getInventory().clear();
+                int id = rsc.getTardis_id();
+                // halve it cause 1:1 is too much...
+                amount = Math.round(amount / 2.0F);
+                // check the artron capacitor is not at maximum
+                ResultSetArtronStorageAndLevel rsas = new ResultSetArtronStorageAndLevel(plugin);
+                int full = plugin.getArtronConfig().getInt("full_charge", 5000);
+                if (rsas.fromID(id)) {
+                    int damage = (full / 2) * rsas.getDamageCount();
+                    int max = (full * rsas.getCapacitorCount()) - damage;
+                    int current = rsas.getCurrentLevel();
+                    if (current + amount > max) {
+                        return;
+                    } else {
+                        // clear chest contents
+                        chest.getInventory().clear();
+                        // process item_counts
+                        if (plugin.getConfig().getBoolean("growth.rooms_require_blocks") || plugin.getConfig().getBoolean("allow.repair")) {
+                            item_counts.forEach((key, value) -> {
+                                // check if the tardis has condensed this material before
+                                HashMap<String, Object> wherec = new HashMap<>();
+                                wherec.put("tardis_id", id);
+                                wherec.put("block_data", key);
+                                ResultSetCondenser rscon = new ResultSetCondenser(plugin, wherec);
+                                HashMap<String, Object> setc = new HashMap<>();
+                                if (rscon.resultSet()) {
+                                    int new_stack_size = value + rscon.getBlock_count();
+                                    plugin.getQueryFactory().updateCondensedBlockCount(new_stack_size, id, key);
+                                } else {
+                                    setc.put("tardis_id", id);
+                                    setc.put("block_data", key);
+                                    setc.put("block_count", value);
+                                    plugin.getQueryFactory().doInsert("condenser", setc);
+                                }
+                            });
+                        }
+                        HashMap<String, Object> wheret = new HashMap<>();
+                        wheret.put("tardis_id", id);
+                        plugin.getQueryFactory().alterEnergyLevel("tardis", amount, wheret, null);
+                        // add back non-condensables
+                        for (ItemStack ret : returnedItems) {
+                            chest.getInventory().addItem(ret);
+                        }
+                    }
+                }
             }
         } else {
             // is it a drop chest?
-            ResultSetVault rs = new ResultSetVault(plugin);
-            if (!rs.fromLocation(loc.toString())) {
+            ResultSetVault rsv = new ResultSetVault(plugin);
+            if (!rsv.fromLocation(loc.toString())) {
                 return;
             }
-            SmelterChest type = rs.getChestType();
+            SmelterChest type = rsv.getChestType();
+            List<Chest> fuelChests = null;
+            List<Chest> oreChests = null;
+            if (type == SmelterChest.FUEL || type == SmelterChest.SMELT) {
+                ResultSetSmelter rss = new ResultSetSmelter(plugin, loc.toString());
+                if (!rss.resultSet()) {
+                    return;
+                }
+                fuelChests = rss.getFuelChests();
+                oreChests = rss.getOreChests();
+            }
             switch (type) {
                 case DROP -> {
                     // process vault items
+                    new VaultDrop(plugin).processItems(inv, rsv);
                 }
                 case FUEL -> {
                     // add fuel to furnaces
+                    if (fuelChests != null) {
+                        new SmelterFuel().processItems(inv, fuelChests);
+                    }
                 }
                 case SMELT -> {
                     // add items to furnaces
+                    if (oreChests != null) {
+                        new SmelterOre().processItems(inv, oreChests);
+                    }
                 }
-                case LIBRARY -> {
-                    // sort books into shelves
-                }
-                default -> {
-                    // do nothing
-                }
+                case LIBRARY -> new LibrarySorter(plugin).distribute(inv, loc.add(-8,-4,-8)); // sort books into shelves
+                default -> { } // do nothing
             }
         }
     }
