@@ -92,55 +92,15 @@ public class ArtronConfigUpdater {
         integerOptions.put("the_end_min", 5500);
         integerOptions.put("travel", 100);
         integerOptions.put("zero", 250);
-        // since v6.3.11 upgrade costs are calculated dynamically
-//        integerOptions.put("upgrades.ancient", 5000);
-//        integerOptions.put("upgrades.ars", 5000);
-//        integerOptions.put("upgrades.bigger", 7500);
-//        integerOptions.put("upgrades.bone", 5000);
-//        integerOptions.put("upgrades.budget", 5000);
-//        integerOptions.put("upgrades.cave", 5000);
-//        integerOptions.put("upgrades.copper", 20000);
-//        integerOptions.put("upgrades.coral", 8000);
-//        integerOptions.put("upgrades.cursed", 20000);
-//        integerOptions.put("upgrades.deluxe", 10000);
-//        integerOptions.put("upgrades.division", 7500);
-//        integerOptions.put("upgrades.eighth", 17500);
-//        integerOptions.put("upgrades.eleventh", 10000);
-//        integerOptions.put("upgrades.ender", 5000);
-//        integerOptions.put("upgrades.factory", 7500);
-//        integerOptions.put("upgrades.fifteenth", 20000);
-//        integerOptions.put("upgrades.fugitive", 7500);
-//        integerOptions.put("upgrades.hospital", 5000);
-//        integerOptions.put("upgrades.legacy_bigger", 7500);
-//        integerOptions.put("upgrades.legacy_deluxe", 10000);
-//        integerOptions.put("upgrades.legacy_eleventh", 10000);
-//        integerOptions.put("upgrades.legacy_redstone", 8000);
-//        integerOptions.put("upgrades.master", 10000);
-//        integerOptions.put("upgrades.mechanical", 7500);
-//        integerOptions.put("upgrades.delta", 7500);
-//        integerOptions.put("upgrades.original", 5000);
-//        integerOptions.put("upgrades.plank", 5000);
-//        integerOptions.put("upgrades.pyramid", 5000);
-//        integerOptions.put("upgrades.redstone", 7500);
-//        integerOptions.put("upgrades.rotor", 5000);
-//        integerOptions.put("upgrades.rustic", 8000);
-//        integerOptions.put("upgrades.sidrat", 7500);
-//        integerOptions.put("upgrades.steampunk", 5000);
-//        integerOptions.put("upgrades.tom", 5000);
-//        integerOptions.put("upgrades.twelfth", 7500);
-//        integerOptions.put("upgrades.thirteenth", 8000);
-//        integerOptions.put("upgrades.war", 5000);
-//        integerOptions.put("upgrades.weathered", 5000);
+        // since v6.3.11 desktop upgrade costs are calculated dynamically
         integerOptions.put("upgrades.template.small", 1666);
         integerOptions.put("upgrades.template.medium", 2500);
         integerOptions.put("upgrades.template.tall", 3333);
-//        integerOptions.put("upgrades.custom", 10000);
         integerOptions.put("upgrades.archive.small", 5000);
         integerOptions.put("upgrades.archive.medium", 7500);
         integerOptions.put("upgrades.archive.tall", 10000);
         integerOptions.put("upgrades.archive.wide", 12000);
         integerOptions.put("upgrades.archive.massive", 20000);
-        integerOptions.put("upgrades.cost_factor", 20000);
         // string
         stringOptions.put("jettison_seed", "TNT");
         stringOptions.put("full_charge_item", "NETHER_STAR");
@@ -178,9 +138,16 @@ public class ArtronConfigUpdater {
         }
         if (artron_config.contains("artron_furnace.set_biome")) {
             plugin.getConfig().set("artron_furnace.set_biome", null);
+            i++;
         }
         if (artron_config.contains("upgrades.custom")) {
-            plugin.getConfig().set("upgrades.custom", null);
+            artron_config.set("upgrades.custom", null);
+            i++;
+        }
+        if (!artron_config.contains("upgrades.custom")) {
+            double factor = (artron_config.getInt("full_charge") == 5000) ? 0.85d : 0.425d;
+            artron_config.set("upgrades.cost_factor", factor);
+            i++;
         }
         try {
             artron_config.save(new File(plugin.getDataFolder(), "artron.yml"));

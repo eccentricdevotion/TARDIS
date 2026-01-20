@@ -84,7 +84,7 @@ upgrades:
     small: 1666
     medium: 2500
     tall: 3333
-  cost_factor: 85
+  cost_factor: 0.425
 just_wall_floor: 50
 # artron furnace
 artron_furnace:
