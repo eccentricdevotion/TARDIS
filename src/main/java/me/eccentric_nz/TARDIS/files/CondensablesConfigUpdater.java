@@ -805,6 +805,29 @@ public class CondensablesConfigUpdater {
                 plugin.getCondensablesConfig().set("WAXED_WEATHERED_COPPER_GOLEM_STATUE", 256);
                 plugin.getCondensablesConfig().set("WEATHERED_COPPER_GOLEM_STATUE", 236);
             }
+            // add missing + rebalance some entries
+            if (!plugin.getCondensablesConfig().contains("COPPER_ORE")) {
+                plugin.getCondensablesConfig().set("COPPER_INGOT", 16);
+                plugin.getCondensablesConfig().set("COPPER_ORE", 16);
+                plugin.getCondensablesConfig().set("DARK_PRISMARINE_SLAB", 16);
+                plugin.getCondensablesConfig().set("DARK_PRISMARINE_STAIRS", 48);
+                plugin.getCondensablesConfig().set("DEEPSLATE_COAL_ORE", 15);
+                plugin.getCondensablesConfig().set("DEEPSLATE_COPPER_ORE", 16);
+                plugin.getCondensablesConfig().set("DEEPSLATE_DIAMOND_ORE", 200);
+                plugin.getCondensablesConfig().set("DEEPSLATE_EMERALD_ORE", 200);
+                plugin.getCondensablesConfig().set("DEEPSLATE_GOLD_ORE", 105);
+                plugin.getCondensablesConfig().set("DEEPSLATE_IRON_ORE", 22);
+                plugin.getCondensablesConfig().set("DEEPSLATE_LAPIS_ORE", 30);
+                plugin.getCondensablesConfig().set("DEEPSLATE_NETHER_GOLD_ORE", 105);
+                plugin.getCondensablesConfig().set("DEEPSLATE_NETHER_QUARTZ_ORE", 15);
+                plugin.getCondensablesConfig().set("DEEPSLATE_REDSTONE_ORE", 32);
+                plugin.getCondensablesConfig().set("PRISMARINE_BRICK_SLAB", 36);
+                plugin.getCondensablesConfig().set("PRISMARINE_STAIRS", 48);
+                plugin.getCondensablesConfig().set("PRISMARINE_WALL", 32);
+                plugin.getCondensablesConfig().set("QUARTZ_BRICKS", 60);
+                plugin.getCondensablesConfig().set("QUARTZ_SLAB", 10);
+                i++;
+            }
             if (i > 0) {
                 try {
                     String listPath = plugin.getDataFolder() + File.separator + "condensables.yml";

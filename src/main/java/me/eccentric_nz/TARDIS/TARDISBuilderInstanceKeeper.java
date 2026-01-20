@@ -100,6 +100,7 @@ public class TARDISBuilderInstanceKeeper {
         conversions.put("CYAN_WALL_BANNER", "CYAN_BANNER");
         conversions.put("DIRT_PATH", "DIRT");
         conversions.put("FARMLAND", "DIRT");
+        conversions.put("FIRE", "FLINT_AND_STEEL");
         conversions.put("SHORT_GRASS", "WHEAT_SEEDS");
         conversions.put("GRASS_BLOCK", "DIRT");
         conversions.put("GRAY_WALL_BANNER", "GRAY_BANNER");
