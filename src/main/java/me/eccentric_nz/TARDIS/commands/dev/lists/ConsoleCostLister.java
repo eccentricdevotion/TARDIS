@@ -117,6 +117,8 @@ public class ConsoleCostLister {
             }
             calculated.add(new CostData(TARDISStringUtils.capitalise(c.getKey()), artron_cost, config_cost, current_cost, size));
         }
+        plugin.debug("| Desktop | Condensed Artron | Current cost | Updated cost | Air's formula | Size |");
+        plugin.debug("| ------- | ---------------- | ------------ | ------------ | ------------- | ---- |");
         for (CostData data : calculated) {
             // airomis formula
             int formula_cost = switch (data.size()) {
@@ -126,7 +128,7 @@ public class ConsoleCostLister {
                 case WIDE -> (int) (((float) data.artron() / (float) wide.getSecond()) * 20000);
                 default -> (int) (((float) data.artron() / (float) massive.getSecond()) * 25000);
             };
-            plugin.debug("| " + data.name() + " | " + data.artron() + " | " + data.updated() + " | " + data.current() + " | " + formula_cost + " | " + data.size() + " |");
+            plugin.debug("| " + data.name() + " | " + data.artron() + " | " + data.current() + " | " + data.updated() + " | " + formula_cost + " | " + data.size() + " |");
         }
         plugin.debug("Most expensive:");
         plugin.debug("SMALL " + small.getFirst() + ", " + small.getSecond());
