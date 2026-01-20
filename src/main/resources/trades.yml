@@ -1,0 +1,284 @@
+#consoles
+consoles:
+  ANCIENT:
+    material: SCULK
+    amount: 20
+  ARS:
+    material: QUARTZ_BLOCK
+    amount: 20
+  BIGGER:
+    material: GOLD_BLOCK
+    amount: 30
+  BONE:
+    material: WAXED_OXIDIZED_CUT_COPPER
+    amount: 20
+  BUDGET:
+    material: IRON_BLOCK
+    amount: 20
+  CAVE:
+    material: DRIPSTONE_BLOCK
+    amount: 20
+  COPPER:
+    material: WARPED_PLANKS
+    amount: 80
+  CORAL:
+    material: NETHER_WART_BLOCK
+    amount: 32
+  CURSED:
+    material: BLACK_CONCRETE
+    amount: 80
+  DELTA:
+    material: CRYING_OBSIDIAN
+    amount: 30
+  DELUXE:
+    material: DIAMOND_BLOCK
+    amount: 40
+  DIVISION:
+    material: PINK_GLAZED_TERRACOTTA
+    amount: 30
+  EIGHTH:
+    material: CHISELED_STONE_BRICKS
+    amount: 70
+  ELEVENTH:
+    material: EMERALD_BLOCK
+    amount: 40
+  ENDER:
+    material: PURPUR_BLOCK
+    amount: 20
+  FACTORY:
+    material: YELLOW_CONCRETE_POWDER
+    amount: 30
+  FIFTEENTH:
+    material: OCHRE_FROGLIGHT
+    amount: 80
+  FUGITIVE:
+    material: POLISHED_DEEPSLATE
+    amount: 30
+  HOSPITAL:
+    material: WHITE_CONCRETE
+    amount: 20
+  LEGACY_BIGGER:
+    material: ORANGE_GLAZED_TERRACOTTA
+    amount: 30
+  LEGACY_DELUXE:
+    material: LIME_GLAZED_TERRACOTTA
+    amount: 40
+  LEGACY_ELEVENTH:
+    material: CYAN_GLAZED_TERRACOTTA
+    amount: 40
+  LEGACY_REDSTONE:
+    material: RED_GLAZED_TERRACOTTA
+    amount: 32
+  MASTER:
+    material: NETHER_BRICKS
+    amount: 40
+  MECHANICAL:
+    material: POLISHED_ANDESITE
+    amount: 30
+  ORIGINAL:
+    material: PACKED_MUD
+    amount: 20
+  PLANK:
+    material: BOOKSHELF
+    amount: 20
+  PYRAMID:
+    material: SANDSTONE_STAIRS
+    amount: 20
+  REDSTONE:
+    material: REDSTONE_BLOCK
+    amount: 30
+  ROTOR:
+    material: HONEYCOMB_BLOCK
+    amount: 20
+  RUSTIC:
+    material: COPPER_BULB
+    amount: 32
+  SIDRAT:
+    material: GREEN_CONCRETE
+    amount: 30
+  SMALL:
+  STEAMPUNK:
+    material: COAL_BLOCK
+    amount: 20
+  THIRTEENTH:
+    material: HORN_CORAL_BLOCK
+    amount: 32
+  TOM:
+    material: LAPIS_BLOCK
+    amount: 20
+  TWELFTH:
+    material: PRISMARINE
+    amount: 30
+  WAR:
+    material: WHITE_TERRACOTTA
+    amount: 20
+  WEATHERED:
+    material: WEATHERED_COPPER
+    amount: 20
+#rooms
+rooms:
+  ALLAY:
+    material: LIGHT_BLUE_CONCRETE
+    amount: 61
+  ANTIGRAVITY:
+    material: SANDSTONE
+    amount: 86
+  APIARY:
+    material: BEE_HIVE
+    amount: 35
+  AQUARIUM:
+    material: TUBE_CORAL_BLOCK
+    amount: 43
+  ARBORETUM:
+    material: OAK_LEAVES
+    amount: 42
+  ARCHITECTURAL:
+    material: WAXED_COPPER_GRATE
+    amount: 38
+  BAKER:
+    material: END_STONE
+    amount: 37
+  BAMBOO:
+    material: BAMBOO
+    amount: 35
+  BEDROOM:
+    material: GLOWSTONE
+    amount: 43
+  BIRDCAGE:
+    material: YELLOW_GLAZED_TERRACOTTA
+    amount: 41
+  CHEMISTRY:
+    material: BLAST_FURNACE
+    amount: 35
+  CLOISTER:
+    material: PALE_MOSS_BLOCK
+    amount: 20
+  EMPTY:
+    material: GLASS
+    amount: 41
+  EYE:
+    material: SHROOMLIGHT
+    amount: 31
+  FARM:
+    material: DIRT
+    amount: 36
+  GALLERY:
+    material: CHISELED_QUARTZ_BLOCK
+    amount: 63
+  GAMES:
+    material: DARK_OAK_PLANKS
+    amount: 31
+  GARDEN:
+    material: CHERRY_LEAVES
+    amount: 31
+  GEODE:
+    material: AMETHYST_BLOCK
+    amount: 33
+  GOLEM:
+    material: TUFF
+    amount: 31
+  GRAVITY:
+    material: MOSSY_COBBLESTONE
+    amount: 76
+  GREENHOUSE:
+    material: MELON
+    amount: 37
+  HAPPY:
+    material: STRIPPED_OAK_LOG
+    amount: 47
+  HARMONY:
+    material: STONE_BRICK_STAIRS
+    amount: 46
+  HUTCH:
+    material: ACACIA_LOG
+    amount: 37
+  IGLOO:
+    material: PACKED_ICE
+    amount: 80
+  IISTUBIL:
+    material: WHITE_GLAZED_TERRACOTTA
+    amount: 21
+  KITCHEN:
+    material: PUMPKIN
+    amount: 76
+  LAUNDRY:
+    material: VERDANT_FROGLIGHT
+    amount: 48
+  LAVA:
+    material: MAGMA_BLOCK
+    amount: 21
+  LAZARUS:
+    material: FURNACE
+    amount: 42
+  LIBRARY:
+    material: ENCHANTING_TABLE
+    amount: 92
+  MANGROVE:
+    material: MUDDY_MANGROVE_ROOTS
+    amount: 26
+  MAZE:
+    material: LODESTONE
+    amount: 33
+  MUSHROOM:
+    material: GRAVEL
+    amount: 25
+  NAUTILUS:
+    material: DEAD_HORN_CORAL_BLOCK
+    amount: 46
+  NETHER:
+    material: BLACKSTONE
+    amount: 13
+  OBSERVATORY:
+    material: POLISHED_BLACKSTONE_BRICKS
+    amount: 197
+  PASSAGE:
+    material: CLAY
+    amount: 25
+  PEN:
+    material: MOSS_BLOCK
+    amount: 36
+  POOL:
+    material: SNOW_BLOCK
+    amount: 43
+  RAIL:
+    material: HOPPER
+    amount: 55
+  RENDERER:
+    material: TERRACOTTA
+    amount: 82
+  SHELL:
+    material: DEAD_BRAIN_CORAL_BLOCK
+    amount: 51
+  SMELTER:
+    material: CHEST
+    amount: 51
+  STABLE:
+    material: HAY_BLOCK
+    amount: 41
+  STAIRCASE:
+    material: PURPLE_TERRACOTTA
+    amount: 38
+  STALL:
+    material: BROWN_GLAZED_TERRACOTTA
+    amount: 50
+  SURGERY:
+    material: RED_CONCRETE
+    amount: 70
+  TRENZALORE:
+    material: BRICKS
+    amount: 38
+  VAULT:
+    material: DISPENSER
+    amount: 42
+  VILLAGE:
+    material: OAK_LOG
+    amount: 32
+  WARDROBE:
+    material: BIRCH_LOG
+    amount: 37
+  WOOD:
+    material: OAK_PLANKS
+    amount: 22
+  WORKSHOP:
+    material: CRAFTING_TABLE
+    amount: 58

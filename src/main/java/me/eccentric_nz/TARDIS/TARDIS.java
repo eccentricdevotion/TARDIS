@@ -136,6 +136,7 @@ public class TARDIS extends JavaPlugin {
     private FileConfiguration chameleonGuis;
     private FileConfiguration roomsConfig;
     private FileConfiguration tagConfig;
+    private FileConfiguration tradesConfig;
     private FileConfiguration planetsConfig;
     private FileConfiguration handlesConfig;
     private FileConfiguration adaptiveConfig;
@@ -572,6 +573,15 @@ public class TARDIS extends JavaPlugin {
      */
     public FileConfiguration getTagConfig() {
         return tagConfig;
+    }
+
+    /**
+     * Gets the trades configuration
+     *
+     * @return the trades configuration
+     */
+    public FileConfiguration getTradesConfig() {
+        return tradesConfig;
     }
 
     /**
@@ -1433,7 +1443,7 @@ public class TARDIS extends JavaPlugin {
                 "monsters.yml",
                 "regeneration.yml", "rooms.yml",
                 "shop.yml", "system_upgrades.yml",
-                "tag.yml",
+                "tag.yml", "trades",
                 "vortex_manipulator.yml"
         );
         for (String f : files) {
@@ -1458,6 +1468,7 @@ public class TARDIS extends JavaPlugin {
         new KitsConfigUpdater(this, kitsConfig).checkKits();
         achievementConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "achievements.yml"));
         tagConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "tag.yml"));
+        tradesConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "trades.yml"));
         handlesConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "handles.yml"));
         new HandlesConfigUpdater(this, handlesConfig).checkHandles();
         adaptiveConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "adaptive.yml"));

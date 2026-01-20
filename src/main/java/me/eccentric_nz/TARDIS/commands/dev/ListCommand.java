@@ -19,10 +19,7 @@ package me.eccentric_nz.TARDIS.commands.dev;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.BlueprintConsole;
-import me.eccentric_nz.TARDIS.commands.dev.lists.BlueprintsLister;
-import me.eccentric_nz.TARDIS.commands.dev.lists.CommandsLister;
-import me.eccentric_nz.TARDIS.commands.dev.lists.PermissionLister;
-import me.eccentric_nz.TARDIS.commands.dev.lists.RecipesLister;
+import me.eccentric_nz.TARDIS.commands.dev.lists.*;
 import me.eccentric_nz.TARDIS.enumeration.Desktops;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import org.bukkit.Material;
@@ -40,7 +37,17 @@ class ListCommand {
     }
 
     boolean listStuff(CommandSender sender, String[] args) {
-        if (args.length > 1 && (args[1].equalsIgnoreCase("preset_perms") || args[1].equalsIgnoreCase("perms") || args[1].equalsIgnoreCase("recipes") || args[1].equalsIgnoreCase("blueprints") || args[1].equalsIgnoreCase("commands") || args[1].equalsIgnoreCase("block_colours") || args[1].equalsIgnoreCase("change") || args[1].equalsIgnoreCase("consoles"))) {
+        if (args.length > 1 && (
+                args[1].equalsIgnoreCase("preset_perms") ||
+                args[1].equalsIgnoreCase("perms") ||
+                args[1].equalsIgnoreCase("recipes") ||
+                args[1].equalsIgnoreCase("blueprints") ||
+                args[1].equalsIgnoreCase("commands") ||
+                args[1].equalsIgnoreCase("block_colours") ||
+                args[1].equalsIgnoreCase("change") ||
+                args[1].equalsIgnoreCase("consoles") ||
+                args[1].equalsIgnoreCase("trades")
+        )) {
             if (args[1].equalsIgnoreCase("perms")) {
                 if (args.length > 2) {
                     new PermissionLister(plugin).listPermsHtml(sender);
@@ -50,6 +57,9 @@ class ListCommand {
                 return true;
             } else if (args[1].equalsIgnoreCase("recipes")) {
                 new RecipesLister(plugin).listRecipes(sender, args);
+                return true;
+            } else if (args[1].equalsIgnoreCase("trades")) {
+                new TradesLister(plugin).listConsolesAndRooms();
                 return true;
             } else if (args[1].equalsIgnoreCase("blueprints")) {
                 new BlueprintsLister().listBlueprints(sender);
@@ -70,14 +80,18 @@ class ListCommand {
                 }
                 return true;
             } else if (args[1].equalsIgnoreCase("consoles")) {
-                for (BlueprintConsole bpc : BlueprintConsole.values()) {
-                    String perm = bpc.getPermission().split("\\.")[1];
-                    Schematic console = Desktops.getBY_PERMS().get(perm);
-                    if (console == null) {
-                        plugin.debug("Schematic by perm {" + perm + "} was null");
-                    } else {
-                        plugin.debug("Schematic by perm {" + perm + "} has material " + console.getSeedMaterial());
+                if (args.length == 2) {
+                    for (BlueprintConsole bpc : BlueprintConsole.values()) {
+                        String perm = bpc.getPermission().split("\\.")[1];
+                        Schematic console = Desktops.getBY_PERMS().get(perm);
+                        if (console == null) {
+                            plugin.debug("Schematic by perm {" + perm + "} was null");
+                        } else {
+                            plugin.debug("Schematic by perm {" + perm + "} has material " + console.getSeedMaterial());
+                        }
                     }
+                } else {
+                    new ConsoleCostLister(plugin).actualArtron();
                 }
                 return true;
             } else {
