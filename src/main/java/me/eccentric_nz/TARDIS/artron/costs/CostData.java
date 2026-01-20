@@ -1,4 +1,4 @@
-package me.eccentric_nz.TARDIS.commands.dev.lists;
+package me.eccentric_nz.TARDIS.artron.costs;
 
 import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
 

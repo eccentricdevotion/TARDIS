@@ -149,9 +149,6 @@ public class TARDISRoomMap {
                 }
             }
         }
-        if (plugin.getBuildKeeper().getBlockConversion().containsKey(bid)) {
-            bid = plugin.getBuildKeeper().getBlockConversion().get(bid);
-        }
-        return bid;
+        return plugin.getBuildKeeper().getBlockConversion().getOrDefault(bid, bid);
     }
 }
