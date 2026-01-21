@@ -1047,7 +1047,7 @@ commands:
       permission: tardis.update
       permission-message: You don't have the permission <permission> to use this command
       usage: |
-        /<command> update [advanced|ars|artron|back|backdoor|beacon|bell|button|chameleon|condenser|control|creeper| direction|dispenser|door|eps|farm|flight|forcefield|frame|fuel|generator|handbrake|hinge|igloo|info|keyboard|light| map|monitor|monitor-frame|rail|rotor|save-sign|scanner|siege|smelt|stable|stall|storage|telepathic|temporal| terminal|throttle|toggle-wool|vault|village|weather|world-repeater|x-repeater|y-repeater|z-repeater|zero]
+        /<command> update [advanced|allay|ars|artron|back|backdoor|bamboo|beacon|bell|birdcage|button|chameleon|charging-sensor|condenser|console-lamp-switch|control|creeper|direction|dispenser|door|eps|exterior-lamp|farm|flight|flight-sensor|forcefield|frame|fuel|generator|handbrake|handbrake-sensor|happy|happy-ghast-dock-lever|hinge|hutch|igloo|iistubil|info|keyboard|lava|light|light-level|malfunction-sensor|map|monitor|monitor-frame|mushrooms|nautilus|pen|power-sensor|rail|relativity-differentiator|rotor|save-sign|scanner|siege|smelt|sonic-dock|stable|stall|storage|telepathic|television|temporal|terminal|throttle|toggle-wool|unsorted|vault|village|washing-machine|weather|world-repeater|x-repeater|y-repeater|z-repeater|zero]
     decommission:
       description: Remove previously updated blocks from the TARDIS.
       permission: tardis.update
