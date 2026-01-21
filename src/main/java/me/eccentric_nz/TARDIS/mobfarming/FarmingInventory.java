@@ -67,7 +67,7 @@ public class FarmingInventory implements InventoryHolder {
     private ItemStack[] getItemStack() {
 
         ItemStack[] stack = new ItemStack[54];
-        // allay, apiary, aquarium, bamboo, birdcage, farm, geode, hutch, igloo, iistubil, lava, mangrove, pen, stable, stall, village
+        // allay, apiary, aquarium, bamboo, birdcage, farm, geode, hutch, igloo, iistubil, lava, mangrove, nautilus, pen, stable, stall, village
         ResultSetFarmingPrefs rs = new ResultSetFarmingPrefs(plugin, uuid.toString());
         // set farming status
         if (rs.resultSet()) {
@@ -113,6 +113,7 @@ public class FarmingInventory implements InventoryHolder {
             stack[32] = on;
             stack[33] = on;
             stack[34] = on;
+            stack[35] = on;
         }
         // set GUI buttons
         for (GUIFarming f : GUIFarming.values()) {

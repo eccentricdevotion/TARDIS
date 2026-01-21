@@ -54,10 +54,11 @@ public class FarmingMenuListener extends TARDISMenuListener {
         rooms.put(28, "iistubil");
         rooms.put(29, "lava");
         rooms.put(30, "mangrove");
-        rooms.put(31, "pen");
-        rooms.put(32, "stable");
-        rooms.put(33, "stall");
-        rooms.put(34, "village");
+        rooms.put(31, "nautilus");
+        rooms.put(32, "pen");
+        rooms.put(33, "stable");
+        rooms.put(34, "stall");
+        rooms.put(35, "village");
     }
 
     @EventHandler(ignoreCancelled = true)
@@ -81,7 +82,6 @@ public class FarmingMenuListener extends TARDISMenuListener {
         ItemMeta im = option.getItemMeta();
         Material material = option.getType();
         Material m = Material.LIME_WOOL;
-        ;
         int onOff = -1;
         switch (material) {
             case LIME_WOOL -> {
