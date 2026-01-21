@@ -57,7 +57,7 @@ public class GallifreyBlueprintTrade {
 
     public MerchantRecipe getRoom() {
         // room blueprint index 0 and 1 are not rooms, and the last index is the zero room which can't be grown with ARS
-        BlueprintRoom bpr = BlueprintRoom.values()[TARDISConstants.RANDOM.nextInt(2, BlueprintRoom.values().length - 1)];
+        BlueprintRoom bpr = BlueprintRoom.values()[TARDISConstants.RANDOM.nextInt(1, BlueprintRoom.values().length - 1)];
         // get the blueprint item stack
         ItemStack ris = buildResult(bpr.getPermission(), bpr.toString());
         // single use?
@@ -88,9 +88,11 @@ public class GallifreyBlueprintTrade {
     }
 
     private List<MerchantRecipe> getRandomRecipes() {
-        MerchantRecipe roomRecipe = getRoom();
+        MerchantRecipe room1Recipe = getRoom();
+        MerchantRecipe room2Recipe = getRoom();
+        MerchantRecipe room3Recipe = getRoom();
         MerchantRecipe consoleRecipe = getConsole();
-        return List.of(roomRecipe, consoleRecipe);
+        return List.of(room1Recipe, room2Recipe, room3Recipe, consoleRecipe);
     }
 
     private ItemStack buildResult(String perm, String name) {
