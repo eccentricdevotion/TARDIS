@@ -4,6 +4,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.rooms.games.pong.Pong;
+import me.eccentric_nz.TARDIS.rooms.games.rockpaperscissors.StoneMagmaIceInventory;
 import me.eccentric_nz.TARDIS.rooms.games.tetris.Game;
 import me.eccentric_nz.TARDIS.rooms.games.tetris.Play;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
@@ -46,10 +47,14 @@ public class GamesListener extends TARDISMenuListener {
         }
         Player player = (Player) event.getWhoClicked();
         switch (slot) {
-            case 3 -> {
+            case 2 -> {
                 // start pong game
                 close(player);
                 new Pong(plugin).startGame(player);
+            }
+            case 3 -> {
+                // start Stone Magma Ice game
+                player.openInventory(new StoneMagmaIceInventory(plugin).getInventory());
             }
             case 4 -> {
                 // start tic tac toe game

@@ -56,15 +56,23 @@ public class GamesInventory implements InventoryHolder {
         // pong & tetris require TARDIS_Zero_Room world
         boolean zero = plugin.getConfig().getBoolean("allow.zero_room");
         if (zero) {
-            // 3 pong
+            // 2 pong
             ItemStack pong = ItemStack.of(Material.MUSIC_DISC_OTHERSIDE, 1);
             ItemMeta pim = pong.getItemMeta();
             pim.displayName(Component.text("Pong"));
             pim.addItemFlags(ItemFlag.values());
             pim.setAttributeModifiers(Multimaps.forMap(Map.of()));
             pong.setItemMeta(pim);
-            items[3] = pong;
+            items[2] = pong;
         }
+        // 3 stone magma ice
+        ItemStack stonemagmaice = ItemStack.of(Material.MUSIC_DISC_OTHERSIDE, 1);
+        ItemMeta smiim = stonemagmaice.getItemMeta();
+        smiim.displayName(Component.text("Stone Magma Ice"));
+        smiim.addItemFlags(ItemFlag.values());
+        smiim.setAttributeModifiers(Multimaps.forMap(Map.of()));
+        stonemagmaice.setItemMeta(smiim);
+        items[3] = stonemagmaice;
         // 4 tic tac toe
         ItemStack tictactoe = ItemStack.of(Material.MUSIC_DISC_OTHERSIDE, 1);
         ItemMeta ncim = tictactoe.getItemMeta();

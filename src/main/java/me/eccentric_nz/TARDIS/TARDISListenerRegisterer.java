@@ -95,6 +95,7 @@ import me.eccentric_nz.TARDIS.rooms.eye.ArtronCapacitorStorageListener;
 import me.eccentric_nz.TARDIS.rooms.eye.EyeDamageListener;
 import me.eccentric_nz.TARDIS.rooms.eye.SpaceHelmetListener;
 import me.eccentric_nz.TARDIS.rooms.games.GamesListener;
+import me.eccentric_nz.TARDIS.rooms.games.rockpaperscissors.StoneMagmaIceListener;
 import me.eccentric_nz.TARDIS.rooms.laundry.WashingMachineListener;
 import me.eccentric_nz.TARDIS.rooms.library.LibraryListener;
 import me.eccentric_nz.TARDIS.rooms.smelter.SmelterListener;
@@ -371,6 +372,7 @@ class TARDISListenerRegisterer {
         plugin.getPM().registerEvents(new PlayerShellListener(plugin), plugin);
         plugin.getPM().registerEvents(new WashingMachineListener(plugin), plugin);
         plugin.getPM().registerEvents(new GamesListener(plugin), plugin);
+        plugin.getPM().registerEvents(new StoneMagmaIceListener(plugin), plugin);
         if (plugin.getConfig().getBoolean("allow.wg_flag_set") && plugin.getPM().isPluginEnabled("WorldGuard")) {
             plugin.getPM().registerEvents(new TARDISAntiBuildListener(plugin), plugin);
         }
