@@ -86,9 +86,11 @@ public class GallifreyBlueprintTrade {
     }
 
     private List<MerchantRecipe> getRandomRecipes() {
-        MerchantRecipe roomRecipe = getRoom();
+        MerchantRecipe room1Recipe = getRoom();
+        MerchantRecipe room2Recipe = getRoom();
+        MerchantRecipe room3Recipe = getRoom();
         MerchantRecipe consoleRecipe = getConsole();
-        return List.of(roomRecipe, consoleRecipe);
+        return List.of(room1Recipe, room2Recipe, room3Recipe, consoleRecipe);
     }
 
     private ItemStack buildResult(String perm, String name) {
