@@ -19,322 +19,322 @@ import java.util.Locale;
 
 public class Letters {
 
-    public static ItemStack A() {
-        ItemStack a = ItemStack.of(Material.CYAN_BANNER);
+    public static ItemStack A(Material banner, DyeColor base, DyeColor letter) {
+        ItemStack a = ItemStack.of(banner);
         BannerMeta bm = (BannerMeta) a.getItemMeta();
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_RIGHT));
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_LEFT));
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_MIDDLE));
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_TOP));
-        bm.addPattern(new Pattern(DyeColor.CYAN, PatternType.BORDER));
+        bm.addPattern(new Pattern(letter, PatternType.STRIPE_RIGHT));
+        bm.addPattern(new Pattern(letter, PatternType.STRIPE_LEFT));
+        bm.addPattern(new Pattern(letter, PatternType.STRIPE_MIDDLE));
+        bm.addPattern(new Pattern(letter, PatternType.STRIPE_TOP));
+        bm.addPattern(new Pattern(base, PatternType.BORDER));
         a.setItemMeta(bm);
         return a;
     }
 
-    public static ItemStack B() {
-        ItemStack b = ItemStack.of(Material.CYAN_BANNER);
+    public static ItemStack B(Material banner, DyeColor base, DyeColor letter) {
+        ItemStack b = ItemStack.of(banner);
         BannerMeta bm = (BannerMeta) b.getItemMeta();
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_RIGHT));
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_BOTTOM));
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_TOP));
-        bm.addPattern(new Pattern(DyeColor.CYAN, PatternType.CURLY_BORDER));
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_LEFT));
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_MIDDLE));
-        bm.addPattern(new Pattern(DyeColor.CYAN, PatternType.BORDER));
+        bm.addPattern(new Pattern(letter, PatternType.STRIPE_RIGHT));
+        bm.addPattern(new Pattern(letter, PatternType.STRIPE_BOTTOM));
+        bm.addPattern(new Pattern(letter, PatternType.STRIPE_TOP));
+        bm.addPattern(new Pattern(base, PatternType.CURLY_BORDER));
+        bm.addPattern(new Pattern(letter, PatternType.STRIPE_LEFT));
+        bm.addPattern(new Pattern(letter, PatternType.STRIPE_MIDDLE));
+        bm.addPattern(new Pattern(base, PatternType.BORDER));
         b.setItemMeta(bm);
         return b;
     }
 
-    public static ItemStack C() {
-        ItemStack c = ItemStack.of(Material.CYAN_BANNER);
+    public static ItemStack C(Material banner, DyeColor base, DyeColor letter) {
+        ItemStack c = ItemStack.of(banner);
         BannerMeta bm = (BannerMeta) c.getItemMeta();
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_TOP));
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_BOTTOM));
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_RIGHT));
-        bm.addPattern(new Pattern(DyeColor.CYAN, PatternType.STRIPE_MIDDLE));
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_LEFT));
-        bm.addPattern(new Pattern(DyeColor.CYAN, PatternType.BORDER));
+        bm.addPattern(new Pattern(letter, PatternType.STRIPE_TOP));
+        bm.addPattern(new Pattern(letter, PatternType.STRIPE_BOTTOM));
+        bm.addPattern(new Pattern(letter, PatternType.STRIPE_RIGHT));
+        bm.addPattern(new Pattern(base, PatternType.STRIPE_MIDDLE));
+        bm.addPattern(new Pattern(letter, PatternType.STRIPE_LEFT));
+        bm.addPattern(new Pattern(base, PatternType.BORDER));
         c.setItemMeta(bm);
         return c;
     }
 
-    public static ItemStack D() {
-        ItemStack d = ItemStack.of(Material.CYAN_BANNER);
+    public static ItemStack D(Material banner, DyeColor base, DyeColor letter) {
+        ItemStack d = ItemStack.of(banner);
         BannerMeta bm = (BannerMeta) d.getItemMeta();
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_RIGHT));
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_BOTTOM));
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_TOP));
-        bm.addPattern(new Pattern(DyeColor.CYAN, PatternType.CURLY_BORDER));
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_LEFT));
-        bm.addPattern(new Pattern(DyeColor.CYAN, PatternType.BORDER));
+        bm.addPattern(new Pattern(letter, PatternType.STRIPE_RIGHT));
+        bm.addPattern(new Pattern(letter, PatternType.STRIPE_BOTTOM));
+        bm.addPattern(new Pattern(letter, PatternType.STRIPE_TOP));
+        bm.addPattern(new Pattern(base, PatternType.CURLY_BORDER));
+        bm.addPattern(new Pattern(letter, PatternType.STRIPE_LEFT));
+        bm.addPattern(new Pattern(base, PatternType.BORDER));
         d.setItemMeta(bm);
         return d;
     }
 
-    public static ItemStack E() {
-        ItemStack e = ItemStack.of(Material.CYAN_BANNER);
+    public static ItemStack E(Material banner, DyeColor base, DyeColor letter) {
+        ItemStack e = ItemStack.of(banner);
         BannerMeta bm = (BannerMeta) e.getItemMeta();
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_LEFT));
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_TOP));
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_MIDDLE));
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_BOTTOM));
-        bm.addPattern(new Pattern(DyeColor.CYAN, PatternType.BORDER));
+        bm.addPattern(new Pattern(letter, PatternType.STRIPE_LEFT));
+        bm.addPattern(new Pattern(letter, PatternType.STRIPE_TOP));
+        bm.addPattern(new Pattern(letter, PatternType.STRIPE_MIDDLE));
+        bm.addPattern(new Pattern(letter, PatternType.STRIPE_BOTTOM));
+        bm.addPattern(new Pattern(base, PatternType.BORDER));
         e.setItemMeta(bm);
         return e;
     }
 
-    public static ItemStack F() {
-        ItemStack f = ItemStack.of(Material.CYAN_BANNER);
+    public static ItemStack F(Material banner, DyeColor base, DyeColor letter) {
+        ItemStack f = ItemStack.of(banner);
         BannerMeta bm = (BannerMeta) f.getItemMeta();
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_MIDDLE));
-        bm.addPattern(new Pattern(DyeColor.CYAN, PatternType.STRIPE_RIGHT));
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_TOP));
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_LEFT));
-        bm.addPattern(new Pattern(DyeColor.CYAN, PatternType.BORDER));
+        bm.addPattern(new Pattern(letter, PatternType.STRIPE_MIDDLE));
+        bm.addPattern(new Pattern(base, PatternType.STRIPE_RIGHT));
+        bm.addPattern(new Pattern(letter, PatternType.STRIPE_TOP));
+        bm.addPattern(new Pattern(letter, PatternType.STRIPE_LEFT));
+        bm.addPattern(new Pattern(base, PatternType.BORDER));
         f.setItemMeta(bm);
         return f;
     }
 
-    public static ItemStack G() {
-        ItemStack g = ItemStack.of(Material.CYAN_BANNER);
+    public static ItemStack G(Material banner, DyeColor base, DyeColor letter) {
+        ItemStack g = ItemStack.of(banner);
         BannerMeta bm = (BannerMeta) g.getItemMeta();
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_RIGHT));
-        bm.addPattern(new Pattern(DyeColor.CYAN, PatternType.HALF_HORIZONTAL));
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_BOTTOM));
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_LEFT));
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_TOP));
-        bm.addPattern(new Pattern(DyeColor.CYAN, PatternType.BORDER));
+        bm.addPattern(new Pattern(letter, PatternType.STRIPE_RIGHT));
+        bm.addPattern(new Pattern(base, PatternType.HALF_HORIZONTAL));
+        bm.addPattern(new Pattern(letter, PatternType.STRIPE_BOTTOM));
+        bm.addPattern(new Pattern(letter, PatternType.STRIPE_LEFT));
+        bm.addPattern(new Pattern(letter, PatternType.STRIPE_TOP));
+        bm.addPattern(new Pattern(base, PatternType.BORDER));
         g.setItemMeta(bm);
         return g;
     }
 
-    public static ItemStack H() {
-        ItemStack h = ItemStack.of(Material.CYAN_BANNER);
+    public static ItemStack H(Material banner, DyeColor base, DyeColor letter) {
+        ItemStack h = ItemStack.of(banner);
         BannerMeta bm = (BannerMeta) h.getItemMeta();
-        bm.addPattern(new Pattern(DyeColor.CYAN, PatternType.STRIPE_TOP));
-        bm.addPattern(new Pattern(DyeColor.CYAN, PatternType.STRIPE_BOTTOM));
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_LEFT));
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_RIGHT));
-        bm.addPattern(new Pattern(DyeColor.CYAN, PatternType.BORDER));
+        bm.addPattern(new Pattern(base, PatternType.STRIPE_TOP));
+        bm.addPattern(new Pattern(base, PatternType.STRIPE_BOTTOM));
+        bm.addPattern(new Pattern(letter, PatternType.STRIPE_LEFT));
+        bm.addPattern(new Pattern(letter, PatternType.STRIPE_RIGHT));
+        bm.addPattern(new Pattern(base, PatternType.BORDER));
         h.setItemMeta(bm);
         return h;
     }
 
-    public static ItemStack I() {
-        ItemStack i = ItemStack.of(Material.CYAN_BANNER);
+    public static ItemStack I(Material banner, DyeColor base, DyeColor letter) {
+        ItemStack i = ItemStack.of(banner);
         BannerMeta bm = (BannerMeta) i.getItemMeta();
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_CENTER));
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_TOP));
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_BOTTOM));
-        bm.addPattern(new Pattern(DyeColor.CYAN, PatternType.BORDER));
+        bm.addPattern(new Pattern(letter, PatternType.STRIPE_CENTER));
+        bm.addPattern(new Pattern(letter, PatternType.STRIPE_TOP));
+        bm.addPattern(new Pattern(letter, PatternType.STRIPE_BOTTOM));
+        bm.addPattern(new Pattern(base, PatternType.BORDER));
         i.setItemMeta(bm);
         return i;
     }
 
-    public static ItemStack J() {
-        ItemStack j = ItemStack.of(Material.CYAN_BANNER);
+    public static ItemStack J(Material banner, DyeColor base, DyeColor letter) {
+        ItemStack j = ItemStack.of(banner);
         BannerMeta bm = (BannerMeta) j.getItemMeta();
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_LEFT));
-        bm.addPattern(new Pattern(DyeColor.CYAN, PatternType.HALF_HORIZONTAL));
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_BOTTOM));
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_RIGHT));
-        bm.addPattern(new Pattern(DyeColor.CYAN, PatternType.BORDER));
+        bm.addPattern(new Pattern(letter, PatternType.STRIPE_LEFT));
+        bm.addPattern(new Pattern(base, PatternType.HALF_HORIZONTAL));
+        bm.addPattern(new Pattern(letter, PatternType.STRIPE_BOTTOM));
+        bm.addPattern(new Pattern(letter, PatternType.STRIPE_RIGHT));
+        bm.addPattern(new Pattern(base, PatternType.BORDER));
         j.setItemMeta(bm);
         return j;
     }
 
-    public static ItemStack K() {
-        ItemStack k = ItemStack.of(Material.CYAN_BANNER);
+    public static ItemStack K(Material banner, DyeColor base, DyeColor letter) {
+        ItemStack k = ItemStack.of(banner);
         BannerMeta bm = (BannerMeta) k.getItemMeta();
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_DOWNRIGHT));
-        bm.addPattern(new Pattern(DyeColor.CYAN, PatternType.HALF_HORIZONTAL));
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_DOWNLEFT));
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_LEFT));
-        bm.addPattern(new Pattern(DyeColor.CYAN, PatternType.BORDER));
+        bm.addPattern(new Pattern(letter, PatternType.STRIPE_DOWNRIGHT));
+        bm.addPattern(new Pattern(base, PatternType.HALF_HORIZONTAL));
+        bm.addPattern(new Pattern(letter, PatternType.STRIPE_DOWNLEFT));
+        bm.addPattern(new Pattern(letter, PatternType.STRIPE_LEFT));
+        bm.addPattern(new Pattern(base, PatternType.BORDER));
         k.setItemMeta(bm);
         return k;
     }
 
-    public static ItemStack L() {
-        ItemStack l = ItemStack.of(Material.CYAN_BANNER);
+    public static ItemStack L(Material banner, DyeColor base, DyeColor letter) {
+        ItemStack l = ItemStack.of(banner);
         BannerMeta bm = (BannerMeta) l.getItemMeta();
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_BOTTOM));
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_LEFT));
-        bm.addPattern(new Pattern(DyeColor.CYAN, PatternType.BORDER));
+        bm.addPattern(new Pattern(letter, PatternType.STRIPE_BOTTOM));
+        bm.addPattern(new Pattern(letter, PatternType.STRIPE_LEFT));
+        bm.addPattern(new Pattern(base, PatternType.BORDER));
         l.setItemMeta(bm);
         return l;
     }
 
-    public static ItemStack M() {
-        ItemStack m = ItemStack.of(Material.CYAN_BANNER);
+    public static ItemStack M(Material banner, DyeColor base, DyeColor letter) {
+        ItemStack m = ItemStack.of(banner);
         BannerMeta bm = (BannerMeta) m.getItemMeta();
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.TRIANGLE_TOP));
-        bm.addPattern(new Pattern(DyeColor.CYAN, PatternType.TRIANGLES_TOP));
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_LEFT));
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_RIGHT));
-        bm.addPattern(new Pattern(DyeColor.CYAN, PatternType.BORDER));
+        bm.addPattern(new Pattern(letter, PatternType.TRIANGLE_TOP));
+        bm.addPattern(new Pattern(base, PatternType.TRIANGLES_TOP));
+        bm.addPattern(new Pattern(letter, PatternType.STRIPE_LEFT));
+        bm.addPattern(new Pattern(letter, PatternType.STRIPE_RIGHT));
+        bm.addPattern(new Pattern(base, PatternType.BORDER));
         m.setItemMeta(bm);
         return m;
     }
 
-    public static ItemStack N() {
-        ItemStack n = ItemStack.of(Material.CYAN_BANNER);
+    public static ItemStack N(Material banner, DyeColor base, DyeColor letter) {
+        ItemStack n = ItemStack.of(banner);
         BannerMeta bm = (BannerMeta) n.getItemMeta();
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_LEFT));
-        bm.addPattern(new Pattern(DyeColor.CYAN, PatternType.TRIANGLE_TOP));
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_DOWNRIGHT));
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_RIGHT));
-        bm.addPattern(new Pattern(DyeColor.CYAN, PatternType.BORDER));
+        bm.addPattern(new Pattern(letter, PatternType.STRIPE_LEFT));
+        bm.addPattern(new Pattern(base, PatternType.TRIANGLE_TOP));
+        bm.addPattern(new Pattern(letter, PatternType.STRIPE_DOWNRIGHT));
+        bm.addPattern(new Pattern(letter, PatternType.STRIPE_RIGHT));
+        bm.addPattern(new Pattern(base, PatternType.BORDER));
         n.setItemMeta(bm);
         return n;
     }
 
-    public static ItemStack O() {
-        ItemStack o = ItemStack.of(Material.CYAN_BANNER);
+    public static ItemStack O(Material banner, DyeColor base, DyeColor letter) {
+        ItemStack o = ItemStack.of(banner);
         BannerMeta bm = (BannerMeta) o.getItemMeta();
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_LEFT));
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_RIGHT));
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_BOTTOM));
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_TOP));
-        bm.addPattern(new Pattern(DyeColor.CYAN, PatternType.BORDER));
+        bm.addPattern(new Pattern(letter, PatternType.STRIPE_LEFT));
+        bm.addPattern(new Pattern(letter, PatternType.STRIPE_RIGHT));
+        bm.addPattern(new Pattern(letter, PatternType.STRIPE_BOTTOM));
+        bm.addPattern(new Pattern(letter, PatternType.STRIPE_TOP));
+        bm.addPattern(new Pattern(base, PatternType.BORDER));
         o.setItemMeta(bm);
         return o;
     }
 
-    public static ItemStack P() {
-        ItemStack p = ItemStack.of(Material.CYAN_BANNER);
+    public static ItemStack P(Material banner, DyeColor base, DyeColor letter) {
+        ItemStack p = ItemStack.of(banner);
         BannerMeta bm = (BannerMeta) p.getItemMeta();
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_RIGHT));
-        bm.addPattern(new Pattern(DyeColor.CYAN, PatternType.HALF_HORIZONTAL_BOTTOM));
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_MIDDLE));
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_TOP));
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_LEFT));
-        bm.addPattern(new Pattern(DyeColor.CYAN, PatternType.BORDER));
+        bm.addPattern(new Pattern(letter, PatternType.STRIPE_RIGHT));
+        bm.addPattern(new Pattern(base, PatternType.HALF_HORIZONTAL_BOTTOM));
+        bm.addPattern(new Pattern(letter, PatternType.STRIPE_MIDDLE));
+        bm.addPattern(new Pattern(letter, PatternType.STRIPE_TOP));
+        bm.addPattern(new Pattern(letter, PatternType.STRIPE_LEFT));
+        bm.addPattern(new Pattern(base, PatternType.BORDER));
         p.setItemMeta(bm);
         return p;
     }
 
-    public static ItemStack Q() {
-        ItemStack q = ItemStack.of(Material.CYAN_BANNER);
+    public static ItemStack Q(Material banner, DyeColor base, DyeColor letter) {
+        ItemStack q = ItemStack.of(banner);
         BannerMeta bm = (BannerMeta) q.getItemMeta();
-        bm.addPattern(new Pattern(DyeColor.CYAN, PatternType.RHOMBUS));
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_RIGHT));
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_LEFT));
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.SQUARE_BOTTOM_RIGHT));
-        bm.addPattern(new Pattern(DyeColor.CYAN, PatternType.BORDER));
+        bm.addPattern(new Pattern(base, PatternType.RHOMBUS));
+        bm.addPattern(new Pattern(letter, PatternType.STRIPE_RIGHT));
+        bm.addPattern(new Pattern(letter, PatternType.STRIPE_LEFT));
+        bm.addPattern(new Pattern(letter, PatternType.SQUARE_BOTTOM_RIGHT));
+        bm.addPattern(new Pattern(base, PatternType.BORDER));
         q.setItemMeta(bm);
         return q;
     }
 
-    public static ItemStack R() {
-        ItemStack r = ItemStack.of(Material.CYAN_BANNER);
+    public static ItemStack R(Material banner, DyeColor base, DyeColor letter) {
+        ItemStack r = ItemStack.of(banner);
         BannerMeta bm = (BannerMeta) r.getItemMeta();
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.HALF_HORIZONTAL));
-        bm.addPattern(new Pattern(DyeColor.CYAN, PatternType.STRIPE_CENTER));
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_TOP));
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_LEFT));
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_DOWNRIGHT));
-        bm.addPattern(new Pattern(DyeColor.CYAN, PatternType.BORDER));
+        bm.addPattern(new Pattern(letter, PatternType.HALF_HORIZONTAL));
+        bm.addPattern(new Pattern(base, PatternType.STRIPE_CENTER));
+        bm.addPattern(new Pattern(letter, PatternType.STRIPE_TOP));
+        bm.addPattern(new Pattern(letter, PatternType.STRIPE_LEFT));
+        bm.addPattern(new Pattern(letter, PatternType.STRIPE_DOWNRIGHT));
+        bm.addPattern(new Pattern(base, PatternType.BORDER));
         r.setItemMeta(bm);
         return r;
     }
 
-    public static ItemStack S() {
-        ItemStack s = ItemStack.of(Material.CYAN_BANNER);
+    public static ItemStack S(Material banner, DyeColor base, DyeColor letter) {
+        ItemStack s = ItemStack.of(banner);
         BannerMeta bm = (BannerMeta) s.getItemMeta();
-        bm.addPattern(new Pattern(DyeColor.CYAN, PatternType.RHOMBUS));
-        bm.addPattern(new Pattern(DyeColor.CYAN, PatternType.STRIPE_MIDDLE));
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_DOWNRIGHT));
-        bm.addPattern(new Pattern(DyeColor.CYAN, PatternType.BORDER));
+        bm.addPattern(new Pattern(base, PatternType.RHOMBUS));
+        bm.addPattern(new Pattern(base, PatternType.STRIPE_MIDDLE));
+        bm.addPattern(new Pattern(letter, PatternType.STRIPE_DOWNRIGHT));
+        bm.addPattern(new Pattern(base, PatternType.BORDER));
         s.setItemMeta(bm);
         return s;
     }
 
-    public static ItemStack T() {
-        ItemStack t = ItemStack.of(Material.CYAN_BANNER);
+    public static ItemStack T(Material banner, DyeColor base, DyeColor letter) {
+        ItemStack t = ItemStack.of(banner);
         BannerMeta bm = (BannerMeta) t.getItemMeta();
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_TOP));
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_CENTER));
-        bm.addPattern(new Pattern(DyeColor.CYAN, PatternType.BORDER));
+        bm.addPattern(new Pattern(letter, PatternType.STRIPE_TOP));
+        bm.addPattern(new Pattern(letter, PatternType.STRIPE_CENTER));
+        bm.addPattern(new Pattern(base, PatternType.BORDER));
         t.setItemMeta(bm);
         return t;
     }
 
-    public static ItemStack U() {
-        ItemStack u = ItemStack.of(Material.CYAN_BANNER);
+    public static ItemStack U(Material banner, DyeColor base, DyeColor letter) {
+        ItemStack u = ItemStack.of(banner);
         BannerMeta bm = (BannerMeta) u.getItemMeta();
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_BOTTOM));
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_LEFT));
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_RIGHT));
-        bm.addPattern(new Pattern(DyeColor.CYAN, PatternType.BORDER));
+        bm.addPattern(new Pattern(letter, PatternType.STRIPE_BOTTOM));
+        bm.addPattern(new Pattern(letter, PatternType.STRIPE_LEFT));
+        bm.addPattern(new Pattern(letter, PatternType.STRIPE_RIGHT));
+        bm.addPattern(new Pattern(base, PatternType.BORDER));
         u.setItemMeta(bm);
         return u;
     }
 
-    public static ItemStack V() {
-        ItemStack v = ItemStack.of(Material.CYAN_BANNER);
+    public static ItemStack V(Material banner, DyeColor base, DyeColor letter) {
+        ItemStack v = ItemStack.of(banner);
         BannerMeta bm = (BannerMeta) v.getItemMeta();
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_DOWNLEFT));
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_LEFT));
-        bm.addPattern(new Pattern(DyeColor.CYAN, PatternType.TRIANGLE_BOTTOM));
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_DOWNLEFT));
-        bm.addPattern(new Pattern(DyeColor.CYAN, PatternType.BORDER));
+        bm.addPattern(new Pattern(letter, PatternType.STRIPE_DOWNLEFT));
+        bm.addPattern(new Pattern(letter, PatternType.STRIPE_LEFT));
+        bm.addPattern(new Pattern(base, PatternType.TRIANGLE_BOTTOM));
+        bm.addPattern(new Pattern(letter, PatternType.STRIPE_DOWNLEFT));
+        bm.addPattern(new Pattern(base, PatternType.BORDER));
         v.setItemMeta(bm);
         return v;
     }
 
-    public static ItemStack W() {
-        ItemStack w = ItemStack.of(Material.CYAN_BANNER);
+    public static ItemStack W(Material banner, DyeColor base, DyeColor letter) {
+        ItemStack w = ItemStack.of(banner);
         BannerMeta bm = (BannerMeta) w.getItemMeta();
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.TRIANGLE_BOTTOM));
-        bm.addPattern(new Pattern(DyeColor.CYAN, PatternType.TRIANGLES_BOTTOM));
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_LEFT));
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_RIGHT));
-        bm.addPattern(new Pattern(DyeColor.CYAN, PatternType.BORDER));
+        bm.addPattern(new Pattern(letter, PatternType.TRIANGLE_BOTTOM));
+        bm.addPattern(new Pattern(base, PatternType.TRIANGLES_BOTTOM));
+        bm.addPattern(new Pattern(letter, PatternType.STRIPE_LEFT));
+        bm.addPattern(new Pattern(letter, PatternType.STRIPE_RIGHT));
+        bm.addPattern(new Pattern(base, PatternType.BORDER));
         w.setItemMeta(bm);
         return w;
     }
 
-    public static ItemStack X() {
-        ItemStack x = ItemStack.of(Material.CYAN_BANNER);
+    public static ItemStack X(Material banner, DyeColor base, DyeColor letter) {
+        ItemStack x = ItemStack.of(banner);
         BannerMeta bm = (BannerMeta) x.getItemMeta();
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.CROSS));
-        bm.addPattern(new Pattern(DyeColor.CYAN, PatternType.BORDER));
+        bm.addPattern(new Pattern(letter, PatternType.CROSS));
+        bm.addPattern(new Pattern(base, PatternType.BORDER));
         x.setItemMeta(bm);
         return x;
     }
 
-    public static ItemStack Y() {
-        ItemStack y = ItemStack.of(Material.CYAN_BANNER);
+    public static ItemStack Y(Material banner, DyeColor base, DyeColor letter) {
+        ItemStack y = ItemStack.of(banner);
         BannerMeta bm = (BannerMeta) y.getItemMeta();
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_DOWNRIGHT));
-        bm.addPattern(new Pattern(DyeColor.CYAN, PatternType.HALF_HORIZONTAL_BOTTOM));
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_DOWNLEFT));
-        bm.addPattern(new Pattern(DyeColor.CYAN, PatternType.BORDER));
+        bm.addPattern(new Pattern(letter, PatternType.STRIPE_DOWNRIGHT));
+        bm.addPattern(new Pattern(base, PatternType.HALF_HORIZONTAL_BOTTOM));
+        bm.addPattern(new Pattern(letter, PatternType.STRIPE_DOWNLEFT));
+        bm.addPattern(new Pattern(base, PatternType.BORDER));
         y.setItemMeta(bm);
         return y;
     }
 
-    public static ItemStack Z() {
-        ItemStack z = ItemStack.of(Material.CYAN_BANNER);
+    public static ItemStack Z(Material banner, DyeColor base, DyeColor letter) {
+        ItemStack z = ItemStack.of(banner);
         BannerMeta bm = (BannerMeta) z.getItemMeta();
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_TOP));
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_DOWNLEFT));
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_BOTTOM));
-        bm.addPattern(new Pattern(DyeColor.CYAN, PatternType.BORDER));
+        bm.addPattern(new Pattern(letter, PatternType.STRIPE_TOP));
+        bm.addPattern(new Pattern(letter, PatternType.STRIPE_DOWNLEFT));
+        bm.addPattern(new Pattern(letter, PatternType.STRIPE_BOTTOM));
+        bm.addPattern(new Pattern(base, PatternType.BORDER));
         z.setItemMeta(bm);
         return z;
     }
 
-    public static ItemStack exclamation() {
-        ItemStack ex = ItemStack.of(Material.CYAN_BANNER);
+    public static ItemStack exclamation(Material banner, DyeColor base, DyeColor letter) {
+        ItemStack ex = ItemStack.of(banner);
         BannerMeta bm = (BannerMeta) ex.getItemMeta();
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_CENTER));
-        bm.addPattern(new Pattern(DyeColor.CYAN, PatternType.STRIPE_BOTTOM));
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.TRIANGLES_BOTTOM));
-        bm.addPattern(new Pattern(DyeColor.CYAN, PatternType.STRIPE_LEFT));
-        bm.addPattern(new Pattern(DyeColor.CYAN, PatternType.STRIPE_RIGHT));
-        bm.addPattern(new Pattern(DyeColor.CYAN, PatternType.BORDER));
+        bm.addPattern(new Pattern(letter, PatternType.STRIPE_CENTER));
+        bm.addPattern(new Pattern(base, PatternType.STRIPE_BOTTOM));
+        bm.addPattern(new Pattern(letter, PatternType.TRIANGLES_BOTTOM));
+        bm.addPattern(new Pattern(base, PatternType.STRIPE_LEFT));
+        bm.addPattern(new Pattern(base, PatternType.STRIPE_RIGHT));
+        bm.addPattern(new Pattern(base, PatternType.BORDER));
         ex.setItemMeta(bm);
         return ex;
     }
@@ -355,8 +355,8 @@ public class Letters {
             int i = 0;
             for (ItemStack is : inventory.getContents()) {
                 if (is != null && is.getType() == Material.CYAN_BANNER) {
-                    TARDIS.plugin.debug("public static ItemStack " + upper[i] + "() {");
-                    TARDIS.plugin.debug("ItemStack " + lower[i] + " = ItemStack.of(Material.CYAN_BANNER);");
+                    TARDIS.plugin.debug("public static ItemStack " + upper[i] + "(Material banner, DyeColor base, DyeColor letter) {");
+                    TARDIS.plugin.debug("ItemStack " + lower[i] + " = ItemStack.of(banner);");
                     TARDIS.plugin.debug("BannerMeta bm = (BannerMeta) " + lower[i] + ".getItemMeta();");
                     BannerMeta bm = (BannerMeta) is.getItemMeta();
                     for (Pattern p : bm.getPatterns()) {
@@ -364,7 +364,7 @@ public class Letters {
                         TARDIS.plugin.debug("bm.addPattern(new Pattern(DyeColor." + p.getColor() + ", PatternType." + type + "));");
                     }
                     TARDIS.plugin.debug(lower[i] + ".setItemMeta(bm);");
-                    TARDIS.plugin.debug("return ex;");
+                    TARDIS.plugin.debug("return " + lower[i] + ";");
                     TARDIS.plugin.debug("}");
                     TARDIS.plugin.debug(" ");
                     i++;
