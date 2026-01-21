@@ -17,12 +17,10 @@
 package me.eccentric_nz.TARDIS.planets;
 
 import com.google.common.collect.Multimaps;
-import me.eccentric_nz.TARDIS.ARS.TARDISARS;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.BlueprintConsole;
 import me.eccentric_nz.TARDIS.blueprints.BlueprintRoom;
-import me.eccentric_nz.TARDIS.enumeration.Desktops;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import net.kyori.adventure.text.Component;
@@ -88,9 +86,11 @@ public class GallifreyBlueprintTrade {
     }
 
     private List<MerchantRecipe> getRandomRecipes() {
-        MerchantRecipe roomRecipe = getRoom();
+        MerchantRecipe room1Recipe = getRoom();
+        MerchantRecipe room2Recipe = getRoom();
+        MerchantRecipe room3Recipe = getRoom();
         MerchantRecipe consoleRecipe = getConsole();
-        return List.of(roomRecipe, consoleRecipe);
+        return List.of(room1Recipe, room2Recipe, room3Recipe, consoleRecipe);
     }
 
     private ItemStack buildResult(String perm, String name) {
