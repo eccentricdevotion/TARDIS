@@ -31,6 +31,33 @@ public class Letters {
         return a;
     }
 
+    public static ItemStack B() {
+        ItemStack b = ItemStack.of(Material.CYAN_BANNER);
+        BannerMeta bm = (BannerMeta) b.getItemMeta();
+        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_RIGHT));
+        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_BOTTOM));
+        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_TOP));
+        bm.addPattern(new Pattern(DyeColor.CYAN, PatternType.CURLY_BORDER));
+        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_LEFT));
+        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_MIDDLE));
+        bm.addPattern(new Pattern(DyeColor.CYAN, PatternType.BORDER));
+        b.setItemMeta(bm);
+        return b;
+    }
+
+    public static ItemStack C() {
+        ItemStack c = ItemStack.of(Material.CYAN_BANNER);
+        BannerMeta bm = (BannerMeta) c.getItemMeta();
+        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_TOP));
+        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_BOTTOM));
+        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_RIGHT));
+        bm.addPattern(new Pattern(DyeColor.CYAN, PatternType.STRIPE_MIDDLE));
+        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_LEFT));
+        bm.addPattern(new Pattern(DyeColor.CYAN, PatternType.BORDER));
+        c.setItemMeta(bm);
+        return c;
+    }
+
     public static ItemStack D() {
         ItemStack d = ItemStack.of(Material.CYAN_BANNER);
         BannerMeta bm = (BannerMeta) d.getItemMeta();
@@ -56,6 +83,43 @@ public class Letters {
         return e;
     }
 
+    public static ItemStack F() {
+        ItemStack f = ItemStack.of(Material.CYAN_BANNER);
+        BannerMeta bm = (BannerMeta) f.getItemMeta();
+        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_MIDDLE));
+        bm.addPattern(new Pattern(DyeColor.CYAN, PatternType.STRIPE_RIGHT));
+        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_TOP));
+        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_LEFT));
+        bm.addPattern(new Pattern(DyeColor.CYAN, PatternType.BORDER));
+        f.setItemMeta(bm);
+        return f;
+    }
+
+    public static ItemStack G() {
+        ItemStack g = ItemStack.of(Material.CYAN_BANNER);
+        BannerMeta bm = (BannerMeta) g.getItemMeta();
+        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_RIGHT));
+        bm.addPattern(new Pattern(DyeColor.CYAN, PatternType.HALF_HORIZONTAL));
+        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_BOTTOM));
+        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_LEFT));
+        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_TOP));
+        bm.addPattern(new Pattern(DyeColor.CYAN, PatternType.BORDER));
+        g.setItemMeta(bm);
+        return g;
+    }
+
+    public static ItemStack H() {
+        ItemStack h = ItemStack.of(Material.CYAN_BANNER);
+        BannerMeta bm = (BannerMeta) h.getItemMeta();
+        bm.addPattern(new Pattern(DyeColor.CYAN, PatternType.STRIPE_TOP));
+        bm.addPattern(new Pattern(DyeColor.CYAN, PatternType.STRIPE_BOTTOM));
+        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_LEFT));
+        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_RIGHT));
+        bm.addPattern(new Pattern(DyeColor.CYAN, PatternType.BORDER));
+        h.setItemMeta(bm);
+        return h;
+    }
+
     public static ItemStack I() {
         ItemStack i = ItemStack.of(Material.CYAN_BANNER);
         BannerMeta bm = (BannerMeta) i.getItemMeta();
@@ -67,16 +131,50 @@ public class Letters {
         return i;
     }
 
+    public static ItemStack J() {
+        ItemStack j = ItemStack.of(Material.CYAN_BANNER);
+        BannerMeta bm = (BannerMeta) j.getItemMeta();
+        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_LEFT));
+        bm.addPattern(new Pattern(DyeColor.CYAN, PatternType.HALF_HORIZONTAL));
+        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_BOTTOM));
+        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_RIGHT));
+        bm.addPattern(new Pattern(DyeColor.CYAN, PatternType.BORDER));
+        j.setItemMeta(bm);
+        return j;
+    }
+
+    public static ItemStack K() {
+        ItemStack k = ItemStack.of(Material.CYAN_BANNER);
+        BannerMeta bm = (BannerMeta) k.getItemMeta();
+        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_DOWNRIGHT));
+        bm.addPattern(new Pattern(DyeColor.CYAN, PatternType.HALF_HORIZONTAL));
+        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_DOWNLEFT));
+        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_LEFT));
+        bm.addPattern(new Pattern(DyeColor.CYAN, PatternType.BORDER));
+        k.setItemMeta(bm);
+        return k;
+    }
+
     public static ItemStack L() {
         ItemStack l = ItemStack.of(Material.CYAN_BANNER);
         BannerMeta bm = (BannerMeta) l.getItemMeta();
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_RIGHT));
+        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_BOTTOM));
         bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_LEFT));
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_MIDDLE));
-        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_TOP));
         bm.addPattern(new Pattern(DyeColor.CYAN, PatternType.BORDER));
         l.setItemMeta(bm);
         return l;
+    }
+
+    public static ItemStack M() {
+        ItemStack m = ItemStack.of(Material.CYAN_BANNER);
+        BannerMeta bm = (BannerMeta) m.getItemMeta();
+        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.TRIANGLE_TOP));
+        bm.addPattern(new Pattern(DyeColor.CYAN, PatternType.TRIANGLES_TOP));
+        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_LEFT));
+        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_RIGHT));
+        bm.addPattern(new Pattern(DyeColor.CYAN, PatternType.BORDER));
+        m.setItemMeta(bm);
+        return m;
     }
 
     public static ItemStack N() {
@@ -103,6 +201,31 @@ public class Letters {
         return o;
     }
 
+    public static ItemStack P() {
+        ItemStack p = ItemStack.of(Material.CYAN_BANNER);
+        BannerMeta bm = (BannerMeta) p.getItemMeta();
+        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_RIGHT));
+        bm.addPattern(new Pattern(DyeColor.CYAN, PatternType.HALF_HORIZONTAL_BOTTOM));
+        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_MIDDLE));
+        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_TOP));
+        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_LEFT));
+        bm.addPattern(new Pattern(DyeColor.CYAN, PatternType.BORDER));
+        p.setItemMeta(bm);
+        return p;
+    }
+
+    public static ItemStack Q() {
+        ItemStack q = ItemStack.of(Material.CYAN_BANNER);
+        BannerMeta bm = (BannerMeta) q.getItemMeta();
+        bm.addPattern(new Pattern(DyeColor.CYAN, PatternType.RHOMBUS));
+        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_RIGHT));
+        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_LEFT));
+        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.SQUARE_BOTTOM_RIGHT));
+        bm.addPattern(new Pattern(DyeColor.CYAN, PatternType.BORDER));
+        q.setItemMeta(bm);
+        return q;
+    }
+
     public static ItemStack R() {
         ItemStack r = ItemStack.of(Material.CYAN_BANNER);
         BannerMeta bm = (BannerMeta) r.getItemMeta();
@@ -127,6 +250,16 @@ public class Letters {
         return s;
     }
 
+    public static ItemStack T() {
+        ItemStack t = ItemStack.of(Material.CYAN_BANNER);
+        BannerMeta bm = (BannerMeta) t.getItemMeta();
+        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_TOP));
+        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_CENTER));
+        bm.addPattern(new Pattern(DyeColor.CYAN, PatternType.BORDER));
+        t.setItemMeta(bm);
+        return t;
+    }
+
     public static ItemStack U() {
         ItemStack u = ItemStack.of(Material.CYAN_BANNER);
         BannerMeta bm = (BannerMeta) u.getItemMeta();
@@ -136,6 +269,18 @@ public class Letters {
         bm.addPattern(new Pattern(DyeColor.CYAN, PatternType.BORDER));
         u.setItemMeta(bm);
         return u;
+    }
+
+    public static ItemStack V() {
+        ItemStack v = ItemStack.of(Material.CYAN_BANNER);
+        BannerMeta bm = (BannerMeta) v.getItemMeta();
+        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_DOWNLEFT));
+        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_LEFT));
+        bm.addPattern(new Pattern(DyeColor.CYAN, PatternType.TRIANGLE_BOTTOM));
+        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_DOWNLEFT));
+        bm.addPattern(new Pattern(DyeColor.CYAN, PatternType.BORDER));
+        v.setItemMeta(bm);
+        return v;
     }
 
     public static ItemStack W() {
@@ -148,6 +293,37 @@ public class Letters {
         bm.addPattern(new Pattern(DyeColor.CYAN, PatternType.BORDER));
         w.setItemMeta(bm);
         return w;
+    }
+
+    public static ItemStack X() {
+        ItemStack x = ItemStack.of(Material.CYAN_BANNER);
+        BannerMeta bm = (BannerMeta) x.getItemMeta();
+        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.CROSS));
+        bm.addPattern(new Pattern(DyeColor.CYAN, PatternType.BORDER));
+        x.setItemMeta(bm);
+        return x;
+    }
+
+    public static ItemStack Y() {
+        ItemStack y = ItemStack.of(Material.CYAN_BANNER);
+        BannerMeta bm = (BannerMeta) y.getItemMeta();
+        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_DOWNRIGHT));
+        bm.addPattern(new Pattern(DyeColor.CYAN, PatternType.HALF_HORIZONTAL_BOTTOM));
+        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_DOWNLEFT));
+        bm.addPattern(new Pattern(DyeColor.CYAN, PatternType.BORDER));
+        y.setItemMeta(bm);
+        return y;
+    }
+
+    public static ItemStack Z() {
+        ItemStack z = ItemStack.of(Material.CYAN_BANNER);
+        BannerMeta bm = (BannerMeta) z.getItemMeta();
+        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_TOP));
+        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_DOWNLEFT));
+        bm.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_BOTTOM));
+        bm.addPattern(new Pattern(DyeColor.CYAN, PatternType.BORDER));
+        z.setItemMeta(bm);
+        return z;
     }
 
     public static ItemStack exclamation() {
