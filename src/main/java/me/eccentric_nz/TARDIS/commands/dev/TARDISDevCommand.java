@@ -32,6 +32,7 @@ import me.eccentric_nz.TARDIS.monitor.MonitorSnapshot;
 import me.eccentric_nz.TARDIS.move.TARDISTeleportLocation;
 import me.eccentric_nz.TARDIS.playerprefs.PreferencesDialog;
 import me.eccentric_nz.TARDIS.rooms.games.pong.GameDisplay;
+import me.eccentric_nz.TARDIS.rooms.games.rockpaperscissors.Letters;
 import me.eccentric_nz.TARDIS.skins.ArchSkins;
 import me.eccentric_nz.TARDIS.skins.DoctorSkins;
 import me.eccentric_nz.TARDIS.skins.Skin;
@@ -82,7 +83,7 @@ public class TARDISDevCommand implements CommandExecutor {
 
     private final Set<String> firstsStr = Sets.newHashSet(
             "add_regions", "advancements", "armour",
-            "biome", "bleach", "blueprint", "box", "brushable",
+            "banner", "biome", "bleach", "blueprint", "box", "brushable",
             "chain", "chunks", "chunky", "circuit", "component",
             "dalek", "debug", "dialog", "dismount", "displayitem",
             "effect", "empty",
@@ -121,6 +122,12 @@ public class TARDISDevCommand implements CommandExecutor {
                 }
                 if (args.length == 1) {
                     switch (first) {
+                        case "banner" -> {
+                            if (sender instanceof Player player) {
+                                Letters.giveAll(player);
+                            }
+                            return true;
+                        }
                         case "pong" -> {
                             if (sender instanceof Player player) {
                                 Block targetBlock = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 16);
@@ -341,6 +348,12 @@ public class TARDISDevCommand implements CommandExecutor {
                     }
                 }
                 switch (first) {
+                    case "banner" -> {
+                        if (sender instanceof Player player) {
+                            Letters.makeCode(player);
+                        }
+                        return true;
+                    }
                     case "head" -> {
                         if (sender instanceof Player player) {
                             new HeadCommand(plugin).getHeadProperties(player);
