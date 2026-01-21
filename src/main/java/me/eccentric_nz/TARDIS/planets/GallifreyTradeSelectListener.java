@@ -57,8 +57,8 @@ public class GallifreyTradeSelectListener implements Listener {
             PersistentDataContainer check = im.getPersistentDataContainer();
             if (check.has(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID()) && check.has(plugin.getBlueprintKey(), PersistentDataType.STRING)) {
                 // add a new trade option
-                // index 0 = room, index 3 = console
-                MerchantRecipe trade = index < 3 ? new GallifreyBlueprintTrade(plugin).getRoom() : new GallifreyBlueprintTrade(plugin).getConsole();
+                // index 0 = room, index 1 = console
+                MerchantRecipe trade = index < 1 ? new GallifreyBlueprintTrade(plugin).getRoom() : new GallifreyBlueprintTrade(plugin).getConsole();
                 // add the player's UUID and name
                 ItemMeta meta = trade.getResult().getItemMeta();
                 PersistentDataContainer pdc = meta.getPersistentDataContainer();

@@ -1443,7 +1443,7 @@ public class TARDIS extends JavaPlugin {
                 "monsters.yml",
                 "regeneration.yml", "rooms.yml",
                 "shop.yml", "system_upgrades.yml",
-                "tag.yml", "trades",
+                "tag.yml", "trades.yml",
                 "vortex_manipulator.yml"
         );
         for (String f : files) {
