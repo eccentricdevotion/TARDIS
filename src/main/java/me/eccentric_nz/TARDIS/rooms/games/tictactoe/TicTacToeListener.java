@@ -11,7 +11,7 @@ public class TicTacToeListener implements Listener {
 
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
-        if (!(event.getInventory().getHolder(false) instanceof TicTacToeInventory)) {
+        if (!(event.getInventory().getHolder(false) instanceof NoughtsAndCrossesInventory)) {
             return;
         }
         Player player = (Player) event.getWhoClicked();

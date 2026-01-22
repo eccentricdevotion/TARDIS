@@ -7,6 +7,7 @@ import me.eccentric_nz.TARDIS.rooms.games.pong.Pong;
 import me.eccentric_nz.TARDIS.rooms.games.rockpaperscissors.StoneMagmaIceInventory;
 import me.eccentric_nz.TARDIS.rooms.games.tetris.Game;
 import me.eccentric_nz.TARDIS.rooms.games.tetris.Play;
+import me.eccentric_nz.TARDIS.rooms.games.tictactoe.NoughtsAndCrossesInventory;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import net.kyori.adventure.text.Component;
@@ -52,13 +53,10 @@ public class GamesListener extends TARDISMenuListener {
                 close(player);
                 new Pong(plugin).startGame(player);
             }
-            case 3 -> {
-                // start Stone Magma Ice game
-                player.openInventory(new StoneMagmaIceInventory(plugin).getInventory());
-            }
-            case 4 -> {
-                // start tic tac toe game
-            }
+            // start Stone Magma Ice game
+            case 3 -> player.openInventory(new StoneMagmaIceInventory(plugin).getInventory());
+            // start tic tac toe game
+            case 4 -> player.openInventory(new NoughtsAndCrossesInventory(plugin).getInventory());
             case 5 -> {
                 // check the player has nothing in slot 0
                 PlayerInventory playerInventory = player.getInventory();

@@ -132,6 +132,7 @@ public class TARDISMenuListener implements Listener {
         map.put(Component.text("TARDIS Autonomous Menu", NamedTextColor.DARK_RED), 36);
         map.put(Component.text("TARDIS Console", NamedTextColor.DARK_RED), 18);
         map.put(Component.text("TARDIS Gaming Computer", NamedTextColor.DARK_RED), 9);
+        map.put(Component.text("Tic Tac Toe", NamedTextColor.DARK_RED), 54);
         map.put(Component.text("Stone Magma Ice", NamedTextColor.DARK_RED), 36);
         map.put(Component.text("TARDIS Control Menu", NamedTextColor.DARK_RED), 54);
         map.put(Component.text("TARDIS Farming Menu", NamedTextColor.DARK_RED), 36);

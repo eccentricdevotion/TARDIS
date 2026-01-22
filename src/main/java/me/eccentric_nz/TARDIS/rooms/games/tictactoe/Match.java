@@ -15,11 +15,11 @@ import java.util.Random;
 
 public class Match {
 
-    private final Material firstPlayerItem = Material.WHITE_WOOL;
-    private final Material secondPlayerItem = Material.BLACK_WOOL;
+    private final Material firstPlayerItem = Material.CYAN_GLAZED_TERRACOTTA;
+    private final Material tardisPlayerItem = Material.RED_GLAZED_TERRACOTTA;
     private final int[] field;
     private final Player firstPlayer;
-    private final Player secondPlayer;
+    private final Player tardisPlayer;
     private final boolean broadcastWinEnabled;
     private final boolean broadcastDrawEnabled;
     public TARDIS plugin;
@@ -27,9 +27,9 @@ public class Match {
     private Inventory gui;
     private TicTacToePlayer whoseTurn;
 
-    public Match(Player firstPlayer, Player secondPlayer, TARDIS plugin) {
+    public Match(Player firstPlayer, Player tardisPlayer, TARDIS plugin) {
         this.firstPlayer = firstPlayer;
-        this.secondPlayer = secondPlayer;
+        this.tardisPlayer = tardisPlayer;
         this.plugin = plugin;
         // Getting additional information from the config
         this.broadcastWinEnabled = plugin.getConfig().getBoolean("misc.broadcastWinEnabled");
@@ -58,12 +58,12 @@ public class Match {
         // Setting the value of a field cell with corresponding player index
         field[slotIndex] = player.ordinal();
         MatchState state = getFieldState();
-        if (state == MatchState.FIRST_PLAYER_WON) {
+        if (state == MatchState.PLAYER_WON) {
             whoseTurn = TicTacToePlayer.NONE;
             win(TicTacToePlayer.FIRST);
             return;
         }
-        if (state == MatchState.SECOND_PLAYER_WON) {
+        if (state == MatchState.TARDIS_WON) {
             whoseTurn = TicTacToePlayer.NONE;
             win(TicTacToePlayer.SECOND);
             return;
@@ -96,13 +96,13 @@ public class Match {
             if (whoseTurn == TicTacToePlayer.FIRST) {
                 playerWhoseMove = firstPlayer;
             } else {
-                playerWhoseMove = secondPlayer;
+                playerWhoseMove = tardisPlayer;
             }
             customTitle = String.format("%s's turn!", playerWhoseMove.getDisplayName());
         }
         // Creating new inventory with updated state
 //        gui = Bukkit.createInventory(new TicTacToeInventory(), InventoryType.DROPPER, customTitle);
-        gui = Bukkit.createInventory(new TicTacToeInventory(), InventoryType.DROPPER, Component.text("Tic Tac Toe", NamedTextColor.DARK_RED));
+        gui = Bukkit.createInventory(new NoughtsAndCrossesInventory(plugin), InventoryType.DROPPER, Component.text("Tic Tac Toe", NamedTextColor.DARK_RED));
         // Filling up the inventory with current items
         for (int i = 0; i < field.length; i++) {
             if (field[i] == -1) {
@@ -111,12 +111,12 @@ public class Match {
             if (TicTacToePlayer.values()[field[i]] == TicTacToePlayer.FIRST) {
                 gui.setItem(i, new ItemStack(firstPlayerItem));
             } else if (TicTacToePlayer.values()[field[i]] == TicTacToePlayer.SECOND) {
-                gui.setItem(i, new ItemStack(secondPlayerItem));
+                gui.setItem(i, new ItemStack(tardisPlayerItem));
             }
         }
         // Opening the updated inventory to players
         firstPlayer.openInventory(gui);
-        secondPlayer.openInventory(gui);
+        tardisPlayer.openInventory(gui);
     }
 
     public Inventory getGui() {
@@ -129,9 +129,9 @@ public class Match {
         Player looser;
         if (player == TicTacToePlayer.FIRST) {
             winner = firstPlayer;
-            looser = secondPlayer;
+            looser = tardisPlayer;
         } else {
-            winner = secondPlayer;
+            winner = tardisPlayer;
             looser = firstPlayer;
         }
         if (this.broadcastWinEnabled) {
@@ -149,10 +149,10 @@ public class Match {
     public void draw() {
         String drawMessage = "&#FECB00Game ended draw!";
         firstPlayer.sendMessage(drawMessage);
-        secondPlayer.sendMessage(drawMessage);
+        tardisPlayer.sendMessage(drawMessage);
         updateGui("Draw!");
         if (this.broadcastDrawEnabled) {
-            String winBroadcastMessage = String.format("&#318CE7%s and %s have a draw!", firstPlayer.getDisplayName(), secondPlayer.getDisplayName());
+            String winBroadcastMessage = String.format("&#318CE7%s and %s have a draw!", firstPlayer.getDisplayName(), tardisPlayer.getDisplayName());
             Bukkit.broadcastMessage(winBroadcastMessage);
         }
         this.end();
@@ -161,7 +161,7 @@ public class Match {
     public void end() {
         Matches.matches.remove(this);
         firstPlayer.closeInventory();
-        secondPlayer.closeInventory();
+        tardisPlayer.closeInventory();
     }
 
     public void gameAbortedByPlayer(TicTacToePlayer player) {
@@ -173,16 +173,16 @@ public class Match {
         String loseMessage = "&#CF1020You've aborted the game! You lost.";
         if (player == TicTacToePlayer.FIRST) {
             firstPlayer.sendMessage(loseMessage);
-            secondPlayer.sendMessage(winMessage);
+            tardisPlayer.sendMessage(winMessage);
         } else {
             firstPlayer.sendMessage(winMessage);
-            secondPlayer.sendMessage(loseMessage);
+            tardisPlayer.sendMessage(loseMessage);
         }
         this.end();
     }
 
     public boolean containsPlayer(Player player) {
-        return firstPlayer == player || secondPlayer == player;
+        return firstPlayer == player || tardisPlayer == player;
     }
 
     public Player getFirstPlayer() {
@@ -190,7 +190,7 @@ public class Match {
     }
 
     public Player getSecondPlayer() {
-        return secondPlayer;
+        return tardisPlayer;
     }
 
     private MatchState getFieldState() {
@@ -209,8 +209,8 @@ public class Match {
             }
             if (twoDField[0][y] == twoDField[1][y] && twoDField[1][y] == twoDField[2][y]) {
                 TicTacToePlayer winner = TicTacToePlayer.values()[twoDField[0][y]];
-                if (winner == TicTacToePlayer.FIRST) return MatchState.FIRST_PLAYER_WON;
-                if (winner == TicTacToePlayer.SECOND) return MatchState.SECOND_PLAYER_WON;
+                if (winner == TicTacToePlayer.FIRST) return MatchState.PLAYER_WON;
+                if (winner == TicTacToePlayer.SECOND) return MatchState.TARDIS_WON;
             }
         }
         // Checking horizontals
@@ -221,10 +221,10 @@ public class Match {
             if (twoDField[x][0] == twoDField[x][1] && twoDField[x][1] == twoDField[x][2]) {
                 TicTacToePlayer winner = TicTacToePlayer.values()[twoDField[x][0]];
                 if (winner == TicTacToePlayer.FIRST) {
-                    return MatchState.FIRST_PLAYER_WON;
+                    return MatchState.PLAYER_WON;
                 }
                 if (winner == TicTacToePlayer.SECOND) {
-                    return MatchState.SECOND_PLAYER_WON;
+                    return MatchState.TARDIS_WON;
                 }
             }
         }
@@ -232,19 +232,19 @@ public class Match {
         if (twoDField[0][0] == twoDField[1][1] && twoDField[1][1] == twoDField[2][2] && twoDField[0][0] != -1) {
             TicTacToePlayer winner = TicTacToePlayer.values()[twoDField[0][0]];
             if (winner == TicTacToePlayer.FIRST) {
-                return MatchState.FIRST_PLAYER_WON;
+                return MatchState.PLAYER_WON;
             }
             if (winner == TicTacToePlayer.SECOND) {
-                return MatchState.SECOND_PLAYER_WON;
+                return MatchState.TARDIS_WON;
             }
         }
         if (twoDField[0][2] == twoDField[1][1] && twoDField[1][1] == twoDField[2][0] && twoDField[0][2] != -1) {
             TicTacToePlayer winner = TicTacToePlayer.values()[twoDField[0][2]];
             if (winner == TicTacToePlayer.FIRST) {
-                return MatchState.FIRST_PLAYER_WON;
+                return MatchState.PLAYER_WON;
             }
             if (winner == TicTacToePlayer.SECOND) {
-                return MatchState.SECOND_PLAYER_WON;
+                return MatchState.TARDIS_WON;
             }
         }
         // Checking if the field is full
@@ -256,6 +256,6 @@ public class Match {
                 }
             }
         }
-        return emptyFields == 0 ? MatchState.DRAW : MatchState.GAME_NOT_FINISHED;
+        return emptyFields == 0 ? MatchState.DRAW : MatchState.IN_PROGRESS;
     }
 }
