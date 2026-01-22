@@ -35,4 +35,15 @@ public enum MatchState {
             }
         }
     }
+
+    public boolean isGameOver() {
+        switch (this) {
+            case DRAW, NOT_STARTED, PLAYER_WON, TARDIS_WON -> {
+                return true;
+            }
+            default -> {
+                return false;
+            }
+        }
+    }
 }

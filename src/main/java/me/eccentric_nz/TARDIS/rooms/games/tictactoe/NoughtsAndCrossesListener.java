@@ -108,6 +108,7 @@ public class NoughtsAndCrossesListener extends TARDISMenuListener {
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             view.setItem(indexToSlot.get(n), ItemStack.of(match.getMatchState().getSymbol()));
             match.getBoard()[n] = match.getMatchState().getSymbol();
+            debugBoard(match);
             match.getUsed()[n] = true;
             switchTurn(view, match);
             match.setCount(match.getCount() + 1);
@@ -150,6 +151,10 @@ public class NoughtsAndCrossesListener extends TARDISMenuListener {
     }
 
     public void tardisTurn(InventoryView view, MatchData match) {
+        if (match.getMatchState().isGameOver()) {
+            return;
+        }
+        
         int rand = (int) (Math.random() * 9);
         boolean test = true;
         if (match.getC() < 9) {
@@ -224,6 +229,12 @@ public class NoughtsAndCrossesListener extends TARDISMenuListener {
             checkWinner(match);
             turn(view, rand, match);
         }
+    }
+
+    private void debugBoard(MatchData match) {
+        plugin.debug("[" + match.getBoard()[0] + "][" + match.getBoard()[1] + "][" + match.getBoard()[2] + "]");
+        plugin.debug("[" + match.getBoard()[3] + "][" + match.getBoard()[4] + "][" + match.getBoard()[5] + "]");
+        plugin.debug("[" + match.getBoard()[6] + "][" + match.getBoard()[7] + "][" + match.getBoard()[8] + "]");
     }
 
     @EventHandler
