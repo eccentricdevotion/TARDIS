@@ -53,8 +53,8 @@ public class ShowHand {
     }
 
     private void setBannerSlots(StoneMagmaIceState state, InventoryView view) {
-        for (int i = 9; i < 18; i++) {
-            view.setItem(i, state.getBanners()[i - 9]);
+        for (int i = 18; i < 27; i++) {
+            view.setItem(i, state.getBanners()[i - 18]);
         }
     }
 }

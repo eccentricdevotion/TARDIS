@@ -42,7 +42,7 @@ public enum StoneMagmaIceState {
             null,
             Letters.L(Material.MAGENTA_BANNER, DyeColor.MAGENTA, DyeColor.WHITE),
             Letters.O(Material.MAGENTA_BANNER, DyeColor.MAGENTA, DyeColor.WHITE),
-            Letters.S(Material.MAGENTA_BANNER, DyeColor.MAGENTA, DyeColor.WHITE),
+            Letters.S(Material.WHITE_BANNER, DyeColor.MAGENTA, DyeColor.WHITE),
             Letters.E(Material.MAGENTA_BANNER, DyeColor.MAGENTA, DyeColor.WHITE),
             Letters.exclamation(Material.MAGENTA_BANNER, DyeColor.MAGENTA, DyeColor.WHITE)
         },

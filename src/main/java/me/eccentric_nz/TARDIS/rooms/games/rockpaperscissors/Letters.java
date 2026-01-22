@@ -17,6 +17,19 @@ import org.bukkit.inventory.meta.BannerMeta;
 
 import java.util.Locale;
 
+/**
+ * Utility class to make alphabetic banners.
+ *
+ * To make a red banner with white letters:
+ * Use:
+ * Material banner = Material.RED_BANNER
+ * DyeColor base = DyeColor.RED
+ * DyeColor letter = DyeColor.WHITE
+ * Except where the letters are H, J, and Q - use the letter colour for the banner
+ * Material banner = Material.WHITE_BANNER
+ * DyeColor base = DyeColor.RED
+ * DyeColor letter = DyeColor.WHITE
+ */
 public class Letters {
 
     public static ItemStack A(Material banner, DyeColor base, DyeColor letter) {
@@ -354,7 +367,7 @@ public class Letters {
             Inventory inventory = box.getInventory();
             int i = 0;
             for (ItemStack is : inventory.getContents()) {
-                if (is != null && is.getType() == Material.CYAN_BANNER) {
+                if (is != null && (is.getType() == Material.CYAN_BANNER || is.getType() == Material.WHITE_BANNER)) {
                     TARDIS.plugin.debug("public static ItemStack " + upper[i] + "(Material banner, DyeColor base, DyeColor letter) {");
                     TARDIS.plugin.debug("ItemStack " + lower[i] + " = ItemStack.of(banner);");
                     TARDIS.plugin.debug("BannerMeta bm = (BannerMeta) " + lower[i] + ".getItemMeta();");

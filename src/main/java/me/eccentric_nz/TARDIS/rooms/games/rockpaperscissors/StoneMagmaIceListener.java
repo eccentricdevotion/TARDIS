@@ -46,12 +46,11 @@ public class StoneMagmaIceListener extends TARDISMenuListener {
                 view.setItem(5, hand.getTARDISChoice());
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     Sound sound = hand.revealResults(view);
+                    player.playSound(player.getLocation(), sound, 0.8f, 0.8f);
                 }, 10L);
             }
-            case 27 -> {
-                // reset 3,5,18->26
-
-            }
+            // reset
+            case 27 -> view.getTopInventory().setContents(new StoneMagmaIceInventory(plugin).getInventory().getContents());
             case 35 -> close(player);
             default -> {
             }
