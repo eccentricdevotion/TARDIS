@@ -19,21 +19,16 @@ import java.util.Locale;
 
 /**
  * Utility class to make alphabetic banners.
- *
- * To make a red banner with white letters:
+ * <p>
+ * To make a red getBanner(base) with white letters:
  * Use:
- * Material banner = Material.RED_BANNER
- * DyeColor base = DyeColor.RED
- * DyeColor letter = DyeColor.WHITE
- * Except where the letters are H, J, and Q - use the letter colour for the banner
- * Material banner = Material.WHITE_BANNER
- * DyeColor base = DyeColor.RED
- * DyeColor letter = DyeColor.WHITE
+ * DyeColor base = `DyeColor.RED`
+ * DyeColor letter = `DyeColor.WHITE`
  */
 public class Letters {
 
-    public static ItemStack A(Material banner, DyeColor base, DyeColor letter) {
-        ItemStack a = ItemStack.of(banner);
+    public static ItemStack A(DyeColor base, DyeColor letter) {
+        ItemStack a = ItemStack.of(getBanner(base));
         BannerMeta bm = (BannerMeta) a.getItemMeta();
         bm.addPattern(new Pattern(letter, PatternType.STRIPE_RIGHT));
         bm.addPattern(new Pattern(letter, PatternType.STRIPE_LEFT));
@@ -44,8 +39,8 @@ public class Letters {
         return a;
     }
 
-    public static ItemStack B(Material banner, DyeColor base, DyeColor letter) {
-        ItemStack b = ItemStack.of(banner);
+    public static ItemStack B(DyeColor base, DyeColor letter) {
+        ItemStack b = ItemStack.of(getBanner(base));
         BannerMeta bm = (BannerMeta) b.getItemMeta();
         bm.addPattern(new Pattern(letter, PatternType.STRIPE_RIGHT));
         bm.addPattern(new Pattern(letter, PatternType.STRIPE_BOTTOM));
@@ -58,8 +53,8 @@ public class Letters {
         return b;
     }
 
-    public static ItemStack C(Material banner, DyeColor base, DyeColor letter) {
-        ItemStack c = ItemStack.of(banner);
+    public static ItemStack C(DyeColor base, DyeColor letter) {
+        ItemStack c = ItemStack.of(getBanner(base));
         BannerMeta bm = (BannerMeta) c.getItemMeta();
         bm.addPattern(new Pattern(letter, PatternType.STRIPE_TOP));
         bm.addPattern(new Pattern(letter, PatternType.STRIPE_BOTTOM));
@@ -71,8 +66,8 @@ public class Letters {
         return c;
     }
 
-    public static ItemStack D(Material banner, DyeColor base, DyeColor letter) {
-        ItemStack d = ItemStack.of(banner);
+    public static ItemStack D(DyeColor base, DyeColor letter) {
+        ItemStack d = ItemStack.of(getBanner(base));
         BannerMeta bm = (BannerMeta) d.getItemMeta();
         bm.addPattern(new Pattern(letter, PatternType.STRIPE_RIGHT));
         bm.addPattern(new Pattern(letter, PatternType.STRIPE_BOTTOM));
@@ -84,8 +79,8 @@ public class Letters {
         return d;
     }
 
-    public static ItemStack E(Material banner, DyeColor base, DyeColor letter) {
-        ItemStack e = ItemStack.of(banner);
+    public static ItemStack E(DyeColor base, DyeColor letter) {
+        ItemStack e = ItemStack.of(getBanner(base));
         BannerMeta bm = (BannerMeta) e.getItemMeta();
         bm.addPattern(new Pattern(letter, PatternType.STRIPE_LEFT));
         bm.addPattern(new Pattern(letter, PatternType.STRIPE_TOP));
@@ -96,8 +91,8 @@ public class Letters {
         return e;
     }
 
-    public static ItemStack F(Material banner, DyeColor base, DyeColor letter) {
-        ItemStack f = ItemStack.of(banner);
+    public static ItemStack F(DyeColor base, DyeColor letter) {
+        ItemStack f = ItemStack.of(getBanner(base));
         BannerMeta bm = (BannerMeta) f.getItemMeta();
         bm.addPattern(new Pattern(letter, PatternType.STRIPE_MIDDLE));
         bm.addPattern(new Pattern(base, PatternType.STRIPE_RIGHT));
@@ -108,8 +103,8 @@ public class Letters {
         return f;
     }
 
-    public static ItemStack G(Material banner, DyeColor base, DyeColor letter) {
-        ItemStack g = ItemStack.of(banner);
+    public static ItemStack G(DyeColor base, DyeColor letter) {
+        ItemStack g = ItemStack.of(getBanner(base));
         BannerMeta bm = (BannerMeta) g.getItemMeta();
         bm.addPattern(new Pattern(letter, PatternType.STRIPE_RIGHT));
         bm.addPattern(new Pattern(base, PatternType.HALF_HORIZONTAL));
@@ -121,8 +116,8 @@ public class Letters {
         return g;
     }
 
-    public static ItemStack H(Material banner, DyeColor base, DyeColor letter) {
-        ItemStack h = ItemStack.of(banner);
+    public static ItemStack H(DyeColor base, DyeColor letter) {
+        ItemStack h = ItemStack.of(getBanner(letter));
         BannerMeta bm = (BannerMeta) h.getItemMeta();
         bm.addPattern(new Pattern(base, PatternType.STRIPE_TOP));
         bm.addPattern(new Pattern(base, PatternType.STRIPE_BOTTOM));
@@ -133,8 +128,8 @@ public class Letters {
         return h;
     }
 
-    public static ItemStack I(Material banner, DyeColor base, DyeColor letter) {
-        ItemStack i = ItemStack.of(banner);
+    public static ItemStack I(DyeColor base, DyeColor letter) {
+        ItemStack i = ItemStack.of(getBanner(base));
         BannerMeta bm = (BannerMeta) i.getItemMeta();
         bm.addPattern(new Pattern(letter, PatternType.STRIPE_CENTER));
         bm.addPattern(new Pattern(letter, PatternType.STRIPE_TOP));
@@ -144,8 +139,8 @@ public class Letters {
         return i;
     }
 
-    public static ItemStack J(Material banner, DyeColor base, DyeColor letter) {
-        ItemStack j = ItemStack.of(banner);
+    public static ItemStack J(DyeColor base, DyeColor letter) {
+        ItemStack j = ItemStack.of(getBanner(letter));
         BannerMeta bm = (BannerMeta) j.getItemMeta();
         bm.addPattern(new Pattern(letter, PatternType.STRIPE_LEFT));
         bm.addPattern(new Pattern(base, PatternType.HALF_HORIZONTAL));
@@ -156,8 +151,8 @@ public class Letters {
         return j;
     }
 
-    public static ItemStack K(Material banner, DyeColor base, DyeColor letter) {
-        ItemStack k = ItemStack.of(banner);
+    public static ItemStack K(DyeColor base, DyeColor letter) {
+        ItemStack k = ItemStack.of(getBanner(base));
         BannerMeta bm = (BannerMeta) k.getItemMeta();
         bm.addPattern(new Pattern(letter, PatternType.STRIPE_DOWNRIGHT));
         bm.addPattern(new Pattern(base, PatternType.HALF_HORIZONTAL));
@@ -168,8 +163,8 @@ public class Letters {
         return k;
     }
 
-    public static ItemStack L(Material banner, DyeColor base, DyeColor letter) {
-        ItemStack l = ItemStack.of(banner);
+    public static ItemStack L(DyeColor base, DyeColor letter) {
+        ItemStack l = ItemStack.of(getBanner(base));
         BannerMeta bm = (BannerMeta) l.getItemMeta();
         bm.addPattern(new Pattern(letter, PatternType.STRIPE_BOTTOM));
         bm.addPattern(new Pattern(letter, PatternType.STRIPE_LEFT));
@@ -178,8 +173,8 @@ public class Letters {
         return l;
     }
 
-    public static ItemStack M(Material banner, DyeColor base, DyeColor letter) {
-        ItemStack m = ItemStack.of(banner);
+    public static ItemStack M(DyeColor base, DyeColor letter) {
+        ItemStack m = ItemStack.of(getBanner(base));
         BannerMeta bm = (BannerMeta) m.getItemMeta();
         bm.addPattern(new Pattern(letter, PatternType.TRIANGLE_TOP));
         bm.addPattern(new Pattern(base, PatternType.TRIANGLES_TOP));
@@ -190,8 +185,8 @@ public class Letters {
         return m;
     }
 
-    public static ItemStack N(Material banner, DyeColor base, DyeColor letter) {
-        ItemStack n = ItemStack.of(banner);
+    public static ItemStack N(DyeColor base, DyeColor letter) {
+        ItemStack n = ItemStack.of(getBanner(base));
         BannerMeta bm = (BannerMeta) n.getItemMeta();
         bm.addPattern(new Pattern(letter, PatternType.STRIPE_LEFT));
         bm.addPattern(new Pattern(base, PatternType.TRIANGLE_TOP));
@@ -202,8 +197,8 @@ public class Letters {
         return n;
     }
 
-    public static ItemStack O(Material banner, DyeColor base, DyeColor letter) {
-        ItemStack o = ItemStack.of(banner);
+    public static ItemStack O(DyeColor base, DyeColor letter) {
+        ItemStack o = ItemStack.of(getBanner(base));
         BannerMeta bm = (BannerMeta) o.getItemMeta();
         bm.addPattern(new Pattern(letter, PatternType.STRIPE_LEFT));
         bm.addPattern(new Pattern(letter, PatternType.STRIPE_RIGHT));
@@ -214,8 +209,8 @@ public class Letters {
         return o;
     }
 
-    public static ItemStack P(Material banner, DyeColor base, DyeColor letter) {
-        ItemStack p = ItemStack.of(banner);
+    public static ItemStack P(DyeColor base, DyeColor letter) {
+        ItemStack p = ItemStack.of(getBanner(base));
         BannerMeta bm = (BannerMeta) p.getItemMeta();
         bm.addPattern(new Pattern(letter, PatternType.STRIPE_RIGHT));
         bm.addPattern(new Pattern(base, PatternType.HALF_HORIZONTAL_BOTTOM));
@@ -227,8 +222,8 @@ public class Letters {
         return p;
     }
 
-    public static ItemStack Q(Material banner, DyeColor base, DyeColor letter) {
-        ItemStack q = ItemStack.of(banner);
+    public static ItemStack Q(DyeColor base, DyeColor letter) {
+        ItemStack q = ItemStack.of(getBanner(letter));
         BannerMeta bm = (BannerMeta) q.getItemMeta();
         bm.addPattern(new Pattern(base, PatternType.RHOMBUS));
         bm.addPattern(new Pattern(letter, PatternType.STRIPE_RIGHT));
@@ -239,8 +234,8 @@ public class Letters {
         return q;
     }
 
-    public static ItemStack R(Material banner, DyeColor base, DyeColor letter) {
-        ItemStack r = ItemStack.of(banner);
+    public static ItemStack R(DyeColor base, DyeColor letter) {
+        ItemStack r = ItemStack.of(getBanner(base));
         BannerMeta bm = (BannerMeta) r.getItemMeta();
         bm.addPattern(new Pattern(letter, PatternType.HALF_HORIZONTAL));
         bm.addPattern(new Pattern(base, PatternType.STRIPE_CENTER));
@@ -252,8 +247,8 @@ public class Letters {
         return r;
     }
 
-    public static ItemStack S(Material banner, DyeColor base, DyeColor letter) {
-        ItemStack s = ItemStack.of(banner);
+    public static ItemStack S(DyeColor base, DyeColor letter) {
+        ItemStack s = ItemStack.of(getBanner(base));
         BannerMeta bm = (BannerMeta) s.getItemMeta();
         bm.addPattern(new Pattern(base, PatternType.RHOMBUS));
         bm.addPattern(new Pattern(base, PatternType.STRIPE_MIDDLE));
@@ -263,8 +258,8 @@ public class Letters {
         return s;
     }
 
-    public static ItemStack T(Material banner, DyeColor base, DyeColor letter) {
-        ItemStack t = ItemStack.of(banner);
+    public static ItemStack T(DyeColor base, DyeColor letter) {
+        ItemStack t = ItemStack.of(getBanner(base));
         BannerMeta bm = (BannerMeta) t.getItemMeta();
         bm.addPattern(new Pattern(letter, PatternType.STRIPE_TOP));
         bm.addPattern(new Pattern(letter, PatternType.STRIPE_CENTER));
@@ -273,8 +268,8 @@ public class Letters {
         return t;
     }
 
-    public static ItemStack U(Material banner, DyeColor base, DyeColor letter) {
-        ItemStack u = ItemStack.of(banner);
+    public static ItemStack U(DyeColor base, DyeColor letter) {
+        ItemStack u = ItemStack.of(getBanner(base));
         BannerMeta bm = (BannerMeta) u.getItemMeta();
         bm.addPattern(new Pattern(letter, PatternType.STRIPE_BOTTOM));
         bm.addPattern(new Pattern(letter, PatternType.STRIPE_LEFT));
@@ -284,8 +279,8 @@ public class Letters {
         return u;
     }
 
-    public static ItemStack V(Material banner, DyeColor base, DyeColor letter) {
-        ItemStack v = ItemStack.of(banner);
+    public static ItemStack V(DyeColor base, DyeColor letter) {
+        ItemStack v = ItemStack.of(getBanner(base));
         BannerMeta bm = (BannerMeta) v.getItemMeta();
         bm.addPattern(new Pattern(letter, PatternType.STRIPE_DOWNLEFT));
         bm.addPattern(new Pattern(letter, PatternType.STRIPE_LEFT));
@@ -296,8 +291,8 @@ public class Letters {
         return v;
     }
 
-    public static ItemStack W(Material banner, DyeColor base, DyeColor letter) {
-        ItemStack w = ItemStack.of(banner);
+    public static ItemStack W(DyeColor base, DyeColor letter) {
+        ItemStack w = ItemStack.of(getBanner(base));
         BannerMeta bm = (BannerMeta) w.getItemMeta();
         bm.addPattern(new Pattern(letter, PatternType.TRIANGLE_BOTTOM));
         bm.addPattern(new Pattern(base, PatternType.TRIANGLES_BOTTOM));
@@ -308,8 +303,8 @@ public class Letters {
         return w;
     }
 
-    public static ItemStack X(Material banner, DyeColor base, DyeColor letter) {
-        ItemStack x = ItemStack.of(banner);
+    public static ItemStack X(DyeColor base, DyeColor letter) {
+        ItemStack x = ItemStack.of(getBanner(base));
         BannerMeta bm = (BannerMeta) x.getItemMeta();
         bm.addPattern(new Pattern(letter, PatternType.CROSS));
         bm.addPattern(new Pattern(base, PatternType.BORDER));
@@ -317,8 +312,8 @@ public class Letters {
         return x;
     }
 
-    public static ItemStack Y(Material banner, DyeColor base, DyeColor letter) {
-        ItemStack y = ItemStack.of(banner);
+    public static ItemStack Y(DyeColor base, DyeColor letter) {
+        ItemStack y = ItemStack.of(getBanner(base));
         BannerMeta bm = (BannerMeta) y.getItemMeta();
         bm.addPattern(new Pattern(letter, PatternType.STRIPE_DOWNRIGHT));
         bm.addPattern(new Pattern(base, PatternType.HALF_HORIZONTAL_BOTTOM));
@@ -328,8 +323,8 @@ public class Letters {
         return y;
     }
 
-    public static ItemStack Z(Material banner, DyeColor base, DyeColor letter) {
-        ItemStack z = ItemStack.of(banner);
+    public static ItemStack Z(DyeColor base, DyeColor letter) {
+        ItemStack z = ItemStack.of(getBanner(base));
         BannerMeta bm = (BannerMeta) z.getItemMeta();
         bm.addPattern(new Pattern(letter, PatternType.STRIPE_TOP));
         bm.addPattern(new Pattern(letter, PatternType.STRIPE_DOWNLEFT));
@@ -339,8 +334,8 @@ public class Letters {
         return z;
     }
 
-    public static ItemStack exclamation(Material banner, DyeColor base, DyeColor letter) {
-        ItemStack ex = ItemStack.of(banner);
+    public static ItemStack exclamation(DyeColor base, DyeColor letter) {
+        ItemStack ex = ItemStack.of(getBanner(base));
         BannerMeta bm = (BannerMeta) ex.getItemMeta();
         bm.addPattern(new Pattern(letter, PatternType.STRIPE_CENTER));
         bm.addPattern(new Pattern(base, PatternType.STRIPE_BOTTOM));
@@ -368,8 +363,8 @@ public class Letters {
             int i = 0;
             for (ItemStack is : inventory.getContents()) {
                 if (is != null && (is.getType() == Material.CYAN_BANNER || is.getType() == Material.WHITE_BANNER)) {
-                    TARDIS.plugin.debug("public static ItemStack " + upper[i] + "(Material banner, DyeColor base, DyeColor letter) {");
-                    TARDIS.plugin.debug("ItemStack " + lower[i] + " = ItemStack.of(banner);");
+                    TARDIS.plugin.debug("public static ItemStack " + upper[i] + "(DyeColor base, DyeColor letter) {");
+                    TARDIS.plugin.debug("ItemStack " + lower[i] + " = ItemStack.of(getBanner(base));");
                     TARDIS.plugin.debug("BannerMeta bm = (BannerMeta) " + lower[i] + ".getItemMeta();");
                     BannerMeta bm = (BannerMeta) is.getItemMeta();
                     for (Pattern p : bm.getPatterns()) {
@@ -384,5 +379,9 @@ public class Letters {
                 }
             }
         }
+    }
+
+    private static Material getBanner(DyeColor colour) {
+        return Material.valueOf(colour + "_BANNER");
     }
 }
