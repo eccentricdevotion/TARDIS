@@ -144,7 +144,7 @@ public class ArtronConfigUpdater {
             artron_config.set("upgrades.custom", null);
             i++;
         }
-        if (!artron_config.contains("upgrades.custom")) {
+        if (!artron_config.contains("upgrades.cost_factor")) {
             double factor = (artron_config.getInt("full_charge") == 5000) ? 0.85d : 0.425d;
             artron_config.set("upgrades.cost_factor", factor);
             i++;

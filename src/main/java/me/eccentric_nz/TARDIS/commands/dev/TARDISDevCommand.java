@@ -73,7 +73,7 @@ import java.util.*;
 /**
  * Command /tardisadmin [arguments].
  * <p>
- * The Lord President was the most powerful member of the Time Lord Council and had near absolute authority, and used a
+ * The Lord President was the most powerful member of the Time Lord Council and had near absolute authority. They used a
  * link to the Matrix, a vast computer network containing the knowledge and experiences of all past generations of Time
  * Lords, to set Time Lord policy and remain alert to potential threats from lesser civilisations.
  *
@@ -131,7 +131,7 @@ public class TARDISDevCommand implements CommandExecutor {
                         case "pong" -> {
                             if (sender instanceof Player player) {
                                 Block targetBlock = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 16);
-                                String uuids = new GameDisplay().create(targetBlock.getLocation().add(0.5d, 2d, 0.5d));
+                                String uuids = GameDisplay.create(targetBlock.getLocation().add(0.5d, 2d, 0.5d));
                                 plugin.debug(uuids);
                             }
                             return true;
