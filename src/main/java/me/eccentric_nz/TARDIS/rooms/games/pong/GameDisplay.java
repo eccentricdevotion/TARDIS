@@ -17,6 +17,7 @@ public class GameDisplay {
             TextDisplay display = spawn(location, Component.text(joined));
             builder.append(display.getUniqueId()).append(":");
         }
+        location.add(0, -0.125d, 0);
         TextDisplay display = spawn(location, Component.text("Score", NamedTextColor.GOLD));
         builder.append(display.getUniqueId());
         return builder.toString();

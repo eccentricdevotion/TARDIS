@@ -2,13 +2,10 @@ package me.eccentric_nz.TARDIS.rooms.games.rockpaperscissors;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
-import me.eccentric_nz.TARDIS.rooms.games.tictactoe.TicTacToeInventory;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 
 public class StoneMagmaIceListener extends TARDISMenuListener {
@@ -21,7 +18,7 @@ public class StoneMagmaIceListener extends TARDISMenuListener {
     }
 
     @EventHandler
-    public void onInventoryClick(InventoryClickEvent event) {
+    public void onStoneMagicIceClick(InventoryClickEvent event) {
         if (!(event.getInventory().getHolder(false) instanceof StoneMagmaIceInventory)) {
             return;
         }

@@ -22,8 +22,13 @@ public class StoneMagmaIceInventory implements InventoryHolder {
 
     public StoneMagmaIceInventory(TARDIS plugin) {
         this.plugin = plugin;
-        this.inventory = TARDIS.plugin.getServer().createInventory(this, 36, Component.text("Stone Magma Ice", NamedTextColor.DARK_RED));
+        this.inventory = plugin.getServer().createInventory(this, 36, Component.text("Stone Magma Ice", NamedTextColor.DARK_RED));
         this.inventory.setContents(getItemStack());
+    }
+
+    @Override
+    public @NotNull Inventory getInventory() {
+        return inventory;
     }
 
     private ItemStack[] getItemStack() {
@@ -64,10 +69,5 @@ public class StoneMagmaIceInventory implements InventoryHolder {
         close.setItemMeta(gui);
         items[35] = close;
         return items;
-    }
-
-    @Override
-    public @NotNull Inventory getInventory() {
-        return inventory;
     }
 }
