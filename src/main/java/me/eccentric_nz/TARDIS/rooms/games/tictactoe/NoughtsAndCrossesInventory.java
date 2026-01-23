@@ -62,7 +62,7 @@ public class NoughtsAndCrossesInventory implements InventoryHolder {
         // player indicator
         ItemStack turn = ItemStack.of(MatchState.PLAYER_TURN.getSymbol(), 1);
         ItemMeta indicator = turn.getItemMeta();
-        indicator.displayName(Component.text("Player turn"));
+        indicator.displayName(Component.text("Player"));
         turn.setItemMeta(indicator);
         items[8] = turn;
         // tardis turn

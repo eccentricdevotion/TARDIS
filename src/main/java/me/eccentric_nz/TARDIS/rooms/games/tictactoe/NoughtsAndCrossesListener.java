@@ -1,7 +1,11 @@
 package me.eccentric_nz.TARDIS.rooms.games.tictactoe;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.commands.TARDISCallCommand;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
+import me.eccentric_nz.TARDIS.rooms.games.rockpaperscissors.StoneMagmaIceState;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -85,8 +89,7 @@ public class NoughtsAndCrossesListener extends TARDISMenuListener {
                 matches.put(uuid, new MatchData());
             }
             case 53 -> close(player);
-            default -> {
-            }
+            default -> { }
         }
     }
 
@@ -100,39 +103,39 @@ public class NoughtsAndCrossesListener extends TARDISMenuListener {
             view.setItem(8, ItemStack.of(MatchState.PLAYER_TURN.getSymbol()));
             view.setItem(17, null);
         }
-        checkWinner(match);
+        checkWinner(view, match);
     }
 
     public void turn(InventoryView view, int n, MatchData match) {
-        plugin.debug("index = " + n + ", slot = " + indexToSlot.get(n) + ", " + match.getMatchState());
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-            view.setItem(indexToSlot.get(n), ItemStack.of(match.getMatchState().getSymbol()));
-            match.getBoard()[n] = match.getMatchState().getSymbol();
-            debugBoard(match);
+            Material symbol = (match.getMatchState() == MatchState.NOT_STARTED) ? MatchState.PLAYER_TURN.getSymbol() : match.getMatchState().getSymbol();
+            view.setItem(indexToSlot.get(n), ItemStack.of(symbol));
+            match.getBoard()[n] = symbol;
+//            debugBoard(match);
             match.getUsed()[n] = true;
             switchTurn(view, match);
             match.setCount(match.getCount() + 1);
-            if (match.getTurn() % 2 == 0) {
+            if (match.getMatchState() == MatchState.TARDIS_TURN) {
                 match.setTurn(match.getTurn() + 1);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> tardisTurn(view, match), delay);
             }
         }, 5L);
     }
 
-    public void checkWinner(MatchData match) {
+    public void checkWinner(InventoryView view, MatchData match) {
         int chk = 0;
         for (int i = 0; i < 8; i++) {
             if ((match.getBoard()[winPos[i][0]].equals(MatchState.PLAYER_TURN.getSymbol())) && (match.getBoard()[winPos[i][0]].equals(match.getBoard()[winPos[i][1]])) && (match.getBoard()[winPos[i][1]].equals(match.getBoard()[winPos[i][2]]))) {
-                //x has won
-                plugin.debug("YOU WON!");
+                // player has won
+                setBannerSlots(StoneMagmaIceState.WIN, view);
                 match.setMatchState(MatchState.PLAYER_WON);
                 chk = 1;
                 for (int j = 0; j < 9; j++) {
                     match.getUsed()[j] = true;
                 }
             } else if ((match.getBoard()[winPos[i][0]].equals(MatchState.TARDIS_TURN.getSymbol())) && (match.getBoard()[winPos[i][0]].equals(match.getBoard()[winPos[i][1]])) && (match.getBoard()[winPos[i][1]].equals(match.getBoard()[winPos[i][2]]))) {
-                //o has won
-                plugin.debug("YOU LOST!");
+                // TARDIS has won
+                setBannerSlots(StoneMagmaIceState.LOSE, view);
                 match.setMatchState(MatchState.TARDIS_WON);
                 chk = 1;
                 for (int j = 0; j < 9; j++) {
@@ -141,8 +144,8 @@ public class NoughtsAndCrossesListener extends TARDISMenuListener {
             }
         }
         if (match.getCount() == 8 && chk == 0) {
-            //draw
-            plugin.debug("DRAW!");
+            // draw
+            setBannerSlots(StoneMagmaIceState.DRAW, view);
             match.setMatchState(MatchState.DRAW);
             for (int j = 0; j < 9; j++) {
                 match.getUsed()[j] = true;
@@ -154,8 +157,7 @@ public class NoughtsAndCrossesListener extends TARDISMenuListener {
         if (match.getMatchState().isGameOver()) {
             return;
         }
-        
-        int rand = (int) (Math.random() * 9);
+        int rand = TARDISConstants.RANDOM.nextInt(9);
         boolean test = true;
         if (match.getC() < 9) {
             if (!match.getUsed()[4]) {
@@ -210,6 +212,7 @@ public class NoughtsAndCrossesListener extends TARDISMenuListener {
                 rand = 4;
             } else {
                 while ((match.getUsed()[rand] || test)) {
+                    plugin.debug("test");
                     test = false;
                     rand = (int) (Math.random() * 9);
                     for (int i : match.getCompUsed()) {
@@ -226,7 +229,7 @@ public class NoughtsAndCrossesListener extends TARDISMenuListener {
             match.getCompUsed()[match.getC()] = rand;
             match.setC(match.getC() + 1);
             match.getUsed()[rand] = true;
-            checkWinner(match);
+            checkWinner(view, match);
             turn(view, rand, match);
         }
     }
@@ -250,6 +253,12 @@ public class NoughtsAndCrossesListener extends TARDISMenuListener {
         if (event.getInventory().getHolder(false) instanceof NoughtsAndCrossesInventory) {
             Player p = (Player) event.getPlayer();
             matches.remove(p.getUniqueId());
+        }
+    }
+
+    private void setBannerSlots(StoneMagmaIceState state, InventoryView view) {
+        for (int i = 36; i < 45; i++) {
+            view.setItem(i, state.getBanners()[i - 36]);
         }
     }
 }
