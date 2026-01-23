@@ -17,12 +17,12 @@ public class ResultSetGames {
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final String prefix;
+    private final List<UUID> pongUUIDs = new ArrayList<>();
     private int game_id;
     private String playerLocation;
     private String tetrisBoard;
     private String tetrisSign;
     private String pongDisplay;
-    private List<UUID> pongUUIDs = new ArrayList<>();
 
 
     public ResultSetGames(TARDIS plugin) {

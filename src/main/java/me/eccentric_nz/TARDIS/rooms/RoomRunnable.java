@@ -599,7 +599,7 @@ public class RoomRunnable implements Runnable {
                 String rname = (room.equals("GRAVITY") || room.equals("ANTIGRAVITY")) ? room + " WELL" : room;
                 if (player != null) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "ROOM_FINISHED", rname);
-                    if (plugin.getUtils().inTARDISWorld(player) && thisChunk != null) {
+                    if (plugin.getUtils().inTARDISWorld(player) && thisChunk != null && !room.equals("ARCADE") && !room.equals("ZERO")) {
                         // get room coords and send message to transmat player to room
                         Transmat transmat = getTransmat(thisChunk);
                         plugin.getMessenger().sendRoomTransmat(player, transmat);
@@ -906,7 +906,7 @@ public class RoomRunnable implements Runnable {
                             // pong display location TODO remove this as probably not needed as we have the display UUIDs
                             setArcade.put("pong_display", TARDISStaticLocationGetters.makeTetrisLocationString(world.getName(), startx + 0.5d, starty + 2.5d, startz - 1.5d));
                             // spawn pong text displays
-                            String textDisplays = GameDisplay.create(new Location(world, startx + 0.5d, starty + 3.5d, startz - 4.5d));
+                            String textDisplays = GameDisplay.create(new Location(world, startx + 0.5d, starty + 2.5d, startz - 1.5d));
                             setArcade.put("pong_uuids", textDisplays);
                             // do they have a games record?
                             ResultSetGames rsg = new ResultSetGames(plugin);

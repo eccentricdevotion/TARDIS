@@ -3,6 +3,7 @@ package me.eccentric_nz.TARDIS.rooms.games;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
+import me.eccentric_nz.TARDIS.rooms.games.pong.Init;
 import me.eccentric_nz.TARDIS.rooms.games.pong.Pong;
 import me.eccentric_nz.TARDIS.rooms.games.rockpaperscissors.StoneMagmaIceInventory;
 import me.eccentric_nz.TARDIS.rooms.games.tetris.Game;
@@ -21,7 +22,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 public class GamesListener extends TARDISMenuListener {
 
@@ -51,7 +54,7 @@ public class GamesListener extends TARDISMenuListener {
             case 2 -> {
                 // start pong game
                 close(player);
-                new Pong(plugin).startGame(player);
+                new Init(plugin).startGame(player);
             }
             // start Stone Magma Ice game
             case 3 -> player.openInventory(new StoneMagmaIceInventory(plugin).getInventory());
@@ -107,7 +110,17 @@ public class GamesListener extends TARDISMenuListener {
             if (data.listener() instanceof Game game) {
                 HandlerList.unregisterAll(game);
             }
-            ArcadeTracker.PLAYERS.remove(e.getPlayer().getUniqueId());
+            if (data.listener() instanceof Pong pong) {
+                HandlerList.unregisterAll(pong);
+            }
+            UUID uuid = e.getPlayer().getUniqueId();
+            int id = data.id();
+            ArcadeTracker.PLAYERS.remove(uuid);
+            // put player back in travellers table
+            HashMap<String, Object> where = new HashMap<>();
+            where.put("tardis_id", id);
+            where.put("uuid", uuid.toString());
+            plugin.getQueryFactory().doInsert("travellers", where);
         }
     }
 }

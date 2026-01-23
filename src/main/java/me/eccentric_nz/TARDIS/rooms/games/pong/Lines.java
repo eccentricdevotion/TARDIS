@@ -4,6 +4,9 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 
 public class Lines {
 
+    /**
+     * Playing canvas is 15 x 29 pixels. The extra line displays the score.
+     */
     public static char[][] CANVAS = new char[16][29];
 
     static {
@@ -21,7 +24,7 @@ public class Lines {
             CANVAS[p][1] = GameChar.paddle;
             CANVAS[p][27] = GameChar.paddle;
         }
-        // ball
-        CANVAS[TARDISConstants.RANDOM.nextBoolean() ? 6 : 8][14] = GameChar.ball;
+        // ball - random position between 2 and 13
+        CANVAS[TARDISConstants.RANDOM.nextInt(2,14)][14] = GameChar.ball;
     }
 }

@@ -4,9 +4,13 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetGames;
 import me.eccentric_nz.TARDIS.rooms.games.ArcadeData;
 import me.eccentric_nz.TARDIS.rooms.games.ArcadeTracker;
+import me.eccentric_nz.TARDIS.rooms.games.GameUtils;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import net.kyori.adventure.text.Component;
-import org.bukkit.*;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.Sound;
+import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.block.sign.Side;
@@ -44,7 +48,7 @@ public class Game implements Listener {
         player.getInventory().setHeldItemSlot(0);
         world = plugin.getServer().getWorld("TARDIS_Zero_Room");
         GameLocations locations = getRoom(player);
-        ArcadeTracker.PLAYERS.put(player.getUniqueId(), new ArcadeData(player.getLocation(), player.getAllowFlight(), this));
+        ArcadeTracker.PLAYERS.put(player.getUniqueId(), new ArcadeData(GameUtils.centre(player.getLocation()), player.getAllowFlight(), this, locations.id()));
         player.setAllowFlight(true);
         player.teleport(locations.teleport());
         playerLocation = locations.teleport();
@@ -79,7 +83,7 @@ public class Game implements Listener {
                 Location second = TARDISStaticLocationGetters.getLocationFromBukkitString(tetrisLocation);
                 String tetrisSign = rsg.getTetrisSign();
                 Location sign = TARDISStaticLocationGetters.getLocationFromBukkitString(tetrisSign);
-                return new GameLocations(first, second, sign);
+                return new GameLocations(first, second, sign, id);
             }
         }
         return null;
@@ -344,7 +348,7 @@ public class Game implements Listener {
                 playSound(GameSound.GAME_OVER);
                 board.close();
                 // tell player to sneak to exit
-                player.sendMessage(ChatColor.RED + "Game Over! Sneak to exit.");
+                plugin.getMessenger().message(player, "Game Over! Sneak to exit.");
             }
         }.runTaskLater(plugin, 20);
     }
@@ -395,6 +399,7 @@ public class Game implements Listener {
             case ROTATE -> {
                 player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_SNARE, 0.1f, 0.9f);
                 new BukkitRunnable() {
+
                     @Override
                     public void run() {
                         player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_SNARE, 0.1f, 0.9f);
