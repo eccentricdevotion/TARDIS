@@ -248,7 +248,7 @@ public class Letters {
     }
 
     public static ItemStack S(DyeColor base, DyeColor letter) {
-        ItemStack s = ItemStack.of(getBanner(base));
+        ItemStack s = ItemStack.of(getBanner(letter));
         BannerMeta bm = (BannerMeta) s.getItemMeta();
         bm.addPattern(new Pattern(base, PatternType.RHOMBUS));
         bm.addPattern(new Pattern(base, PatternType.STRIPE_MIDDLE));
