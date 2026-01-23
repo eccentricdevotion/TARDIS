@@ -38,11 +38,10 @@ public class NoughtsAndCrossesInventory implements InventoryHolder {
         ItemMeta io = info.getItemMeta();
         io.displayName(Component.text(plugin.getChameleonGuis().getString("INFO", "Info")));
         io.lore(List.of(
-                Component.text("Click the block to make your choice."),
-                Component.text("The TARDIS will choose at the same time."),
-                Component.text("STONE smashes ICE."),
-                Component.text("ICE cools MAGMA."),
-                Component.text("MAGMA melts STONE."),
+                Component.text("Click an empty slot to place your mark."),
+                Component.text("The TARDIS will choose soon after."),
+                Component.text("PLAYER is noughts."),
+                Component.text("TARDIS is crosses."),
                 Component.text("Click the reset button to play again.")
         ));
         info.setItemMeta(io);
@@ -50,6 +49,9 @@ public class NoughtsAndCrossesInventory implements InventoryHolder {
         // play grid
         int[] grid = new int[]{3, 4, 5, 12, 13, 14, 21, 22, 23};
         ItemStack wool = ItemStack.of(MatchState.NOT_STARTED.getSymbol());
+        ItemMeta wim = wool.getItemMeta();
+        wim.displayName(Component.text(" "));
+        wool.setItemMeta(wim);
         for (int g : grid) {
             items[g] = wool;
         }

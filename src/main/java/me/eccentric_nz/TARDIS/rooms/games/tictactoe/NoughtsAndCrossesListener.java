@@ -2,9 +2,9 @@ package me.eccentric_nz.TARDIS.rooms.games.tictactoe;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.commands.TARDISCallCommand;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.rooms.games.rockpaperscissors.StoneMagmaIceState;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -13,6 +13,7 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -48,11 +49,31 @@ public class NoughtsAndCrossesListener extends TARDISMenuListener {
             put(8, 23);
         }
     };
+    private final ItemStack player;
+    private final ItemStack tardis;
+    private final ItemStack nought;
+    private final ItemStack cross;
     long delay = 20;
 
     public NoughtsAndCrossesListener(TARDIS plugin) {
         super(plugin);
         this.plugin = plugin;
+        player = ItemStack.of(Material.CYAN_GLAZED_TERRACOTTA);
+        ItemMeta pim = player.getItemMeta();
+        pim.displayName(Component.text("Player"));
+        player.setItemMeta(pim);
+        tardis = ItemStack.of(Material.RED_GLAZED_TERRACOTTA);
+        ItemMeta tim = tardis.getItemMeta();
+        tim.displayName(Component.text("TARDIS"));
+        tardis.setItemMeta(tim);
+        nought = ItemStack.of(Material.CYAN_GLAZED_TERRACOTTA);
+        ItemMeta nim = nought.getItemMeta();
+        nim.displayName(Component.text("Nought"));
+        nought.setItemMeta(nim);
+        cross = ItemStack.of(Material.RED_GLAZED_TERRACOTTA);
+        ItemMeta cim = cross.getItemMeta();
+        cim.displayName(Component.text("Cross"));
+        cross.setItemMeta(cim);
     }
 
     @EventHandler
@@ -89,7 +110,8 @@ public class NoughtsAndCrossesListener extends TARDISMenuListener {
                 matches.put(uuid, new MatchData());
             }
             case 53 -> close(player);
-            default -> { }
+            default -> {
+            }
         }
     }
 
@@ -97,10 +119,10 @@ public class NoughtsAndCrossesListener extends TARDISMenuListener {
         if (match.getMatchState() == MatchState.NOT_STARTED || match.getMatchState() == MatchState.PLAYER_TURN) {
             match.setMatchState(MatchState.TARDIS_TURN);
             view.setItem(8, null);
-            view.setItem(17, ItemStack.of(MatchState.TARDIS_TURN.getSymbol()));
+            view.setItem(17, tardis);
         } else {
             match.setMatchState(MatchState.PLAYER_TURN);
-            view.setItem(8, ItemStack.of(MatchState.PLAYER_TURN.getSymbol()));
+            view.setItem(8, player);
             view.setItem(17, null);
         }
         checkWinner(view, match);
@@ -109,7 +131,8 @@ public class NoughtsAndCrossesListener extends TARDISMenuListener {
     public void turn(InventoryView view, int n, MatchData match) {
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             Material symbol = (match.getMatchState() == MatchState.NOT_STARTED) ? MatchState.PLAYER_TURN.getSymbol() : match.getMatchState().getSymbol();
-            view.setItem(indexToSlot.get(n), ItemStack.of(symbol));
+            ItemStack noughtOrCross = (match.getMatchState() == MatchState.NOT_STARTED || match.getMatchState() == MatchState.PLAYER_TURN) ? nought : cross;
+            view.setItem(indexToSlot.get(n), noughtOrCross);
             match.getBoard()[n] = symbol;
 //            debugBoard(match);
             match.getUsed()[n] = true;
