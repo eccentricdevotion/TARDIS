@@ -56,7 +56,7 @@ public class TARDISDevTabComplete extends TARDISCompleter implements TabComplete
             "painting", "plurals", "pong",
             "recipe", "regen", "registry", "roman", "rooms",
             "screen", "shelf", "skin", "snapshot", "staircase", "stats", "systree",
-            "tis", "tips", "tree", "trim",
+            "text", "tis", "tips", "tree", "trim",
             "unmount", "update"
     );
     private final ImmutableList<String> LIST_SUBS = ImmutableList.of("preset_perms", "perms", "recipes", "blueprints", "commands", "block_colours", "change", "consoles");

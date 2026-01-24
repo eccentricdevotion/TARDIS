@@ -79,10 +79,8 @@ public class Ball {
         if (paddle != PaddlePosition.NONE) {
             // flip angle
             switch (paddle) {
-                case PLAYER_TOP, PLAYER_MIDDLE, PLAYER_BOTTOM ->
-                        angle = GameUtils.getReflectedAngle(angle, Border.LEFT) + paddle.getDeflection(angle);
-                case TARDIS_TOP, TARDIS_MIDDLE, TARDIS_BOTTOM ->
-                        angle = GameUtils.getReflectedAngle(angle, Border.RIGHT) + paddle.getDeflection(angle);
+                case PLAYER_TOP, PLAYER_MIDDLE, PLAYER_BOTTOM -> angle = GameUtils.getReflectedAngle(angle, Border.LEFT) + paddle.getDeflection(angle);
+                case TARDIS_TOP, TARDIS_MIDDLE, TARDIS_BOTTOM -> angle = GameUtils.getReflectedAngle(angle, Border.RIGHT) + paddle.getDeflection(angle);
             }
             // recalculate path
             point = positionForAngle(angle, originY, originX);

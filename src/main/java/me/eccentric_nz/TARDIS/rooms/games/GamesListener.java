@@ -4,9 +4,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.rooms.games.pong.Init;
-import me.eccentric_nz.TARDIS.rooms.games.pong.Pong;
 import me.eccentric_nz.TARDIS.rooms.games.rockpaperscissors.StoneMagmaIceInventory;
-import me.eccentric_nz.TARDIS.rooms.games.tetris.Game;
 import me.eccentric_nz.TARDIS.rooms.games.tetris.Play;
 import me.eccentric_nz.TARDIS.rooms.games.tictactoe.NoughtsAndCrossesInventory;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
@@ -14,17 +12,13 @@ import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.HandlerList;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
 
 public class GamesListener extends TARDISMenuListener {
 
@@ -96,35 +90,6 @@ public class GamesListener extends TARDISMenuListener {
             }
             case 8 -> close(player);
             default -> { }
-        }
-    }
-
-    @EventHandler
-    public void onGameSneak(PlayerToggleSneakEvent event) {
-        if (ArcadeTracker.PLAYERS.containsKey(event.getPlayer().getUniqueId()) && event.isSneaking()) {
-            Player player = event.getPlayer();
-            ArcadeData data = ArcadeTracker.PLAYERS.get(player.getUniqueId());
-            // teleport player back to games room
-            player.setAllowFlight(true);
-            player.setFlying(true);
-            player.teleport(data.backup());
-            // reset flight status
-            player.setAllowFlight(data.allowFlight());
-            player.setFlying(false);
-            if (data.listener() instanceof Game game) {
-                HandlerList.unregisterAll(game);
-            }
-            if (data.listener() instanceof Pong pong) {
-                HandlerList.unregisterAll(pong);
-            }
-            UUID uuid = player.getUniqueId();
-            int id = data.id();
-            ArcadeTracker.PLAYERS.remove(uuid);
-            // put player back in travellers table
-            HashMap<String, Object> where = new HashMap<>();
-            where.put("tardis_id", id);
-            where.put("uuid", uuid.toString());
-            plugin.getQueryFactory().doInsert("travellers", where);
         }
     }
 }

@@ -15,12 +15,17 @@ import org.bukkit.block.sign.Side;
 import org.bukkit.block.sign.SignSide;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.HashMap;
+import java.util.UUID;
 
 public class Game implements Listener {
 
@@ -47,8 +52,9 @@ public class Game implements Listener {
         world = plugin.getServer().getWorld("TARDIS_Zero_Room");
         GameLocations locations = getRoom(player);
         ArcadeTracker.PLAYERS.put(player.getUniqueId(), new ArcadeData(GameUtils.centre(player.getLocation()), player.getAllowFlight(), this, locations.id()));
-        player.setAllowFlight(true);
+        player.setFallDistance(0.0f);
         player.teleport(locations.teleport());
+        player.setFallDistance(0.0f);
         playerLocation = locations.teleport();
         boardLocation = locations.board();
         signLocation = locations.sign();
@@ -387,6 +393,27 @@ public class Game implements Listener {
                 moveDown();
             }
             player.teleport(playerLocation);
+        }
+    }
+
+    @EventHandler
+    public void onGameSneak(PlayerToggleSneakEvent event) {
+        if (ArcadeTracker.PLAYERS.containsKey(event.getPlayer().getUniqueId()) && event.isSneaking()) {
+            UUID uuid = player.getUniqueId();
+            ArcadeData data = ArcadeTracker.PLAYERS.get(uuid);
+            // teleport player back to games room
+            player.setFallDistance(0.0f);
+            player.teleport(data.backup());
+            player.setFallDistance(0.0f);
+            // reset flight status
+            player.setAllowFlight(data.allowFlight());
+            HandlerList.unregisterAll(this);
+            ArcadeTracker.PLAYERS.remove(uuid);
+            // put player back in travellers table
+            HashMap<String, Object> where = new HashMap<>();
+            where.put("tardis_id", data.id());
+            where.put("uuid", uuid.toString());
+            plugin.getQueryFactory().doInsert("travellers", where);
         }
     }
 
