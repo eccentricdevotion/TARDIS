@@ -1,6 +1,7 @@
 package me.eccentric_nz.TARDIS.rooms.games.rockpaperscissors;
 
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.rooms.games.GameOutcome;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.inventory.InventoryView;
@@ -26,33 +27,33 @@ public class ShowHand {
     public Sound revealResults(InventoryView view) {
         Material playerBlock = view.getItem(3).getType();
         Material agentBlock = view.getItem(5).getType();
-        StoneMagmaIceState state;
+        GameOutcome state;
         if (playerBlock == agentBlock) {
-            state = StoneMagmaIceState.DRAW;
+            state = GameOutcome.DRAW;
         } else if (playerBlock == STONE) {
             if (agentBlock == MAGMA) {
-                state = StoneMagmaIceState.LOSE;
+                state = GameOutcome.LOSE;
             } else {
-                state = StoneMagmaIceState.WIN;
+                state = GameOutcome.WIN;
             }
         } else if (playerBlock == ICE) {
             if (agentBlock == STONE) {
-                state = StoneMagmaIceState.LOSE;
+                state = GameOutcome.LOSE;
             } else {
-                state = StoneMagmaIceState.WIN;
+                state = GameOutcome.WIN;
             }
         } else {
             if (agentBlock == ICE) {
-                state = StoneMagmaIceState.LOSE;
+                state = GameOutcome.LOSE;
             } else {
-                state = StoneMagmaIceState.WIN;
+                state = GameOutcome.WIN;
             }
         }
         setBannerSlots(state, view);
         return state.getSound();
     }
 
-    private void setBannerSlots(StoneMagmaIceState state, InventoryView view) {
+    private void setBannerSlots(GameOutcome state, InventoryView view) {
         for (int i = 18; i < 27; i++) {
             view.setItem(i, state.getBanners()[i - 18]);
         }

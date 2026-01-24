@@ -1,10 +1,12 @@
-package me.eccentric_nz.TARDIS.rooms.games.rockpaperscissors;
+package me.eccentric_nz.TARDIS.rooms.games;
 
+import me.eccentric_nz.TARDIS.rooms.games.rockpaperscissors.Letters;
 import org.bukkit.DyeColor;
 import org.bukkit.Sound;
 import org.bukkit.inventory.ItemStack;
 
-public enum StoneMagmaIceState {
+public enum GameOutcome {
+    
     DRAW(
         new ItemStack[]{
             null,
@@ -51,7 +53,7 @@ public enum StoneMagmaIceState {
     private final ItemStack[] banners;
     private final Sound sound;
 
-    StoneMagmaIceState(ItemStack[] banners, Sound sound) {
+    GameOutcome(ItemStack[] banners, Sound sound) {
         this.banners = banners;
         this.sound = sound;
     }

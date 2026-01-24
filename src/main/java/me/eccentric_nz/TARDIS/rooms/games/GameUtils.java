@@ -28,7 +28,6 @@ public class GameUtils {
         // Normalize angle to 0 - 2*PI
         double angle = incomingAngle % (2 * Math.PI);
         if (angle < 0) angle += 2 * Math.PI;
-
         return switch (border) {
             // reflect horizontally: angle becomes PI - angle
             case TOP, BOTTOM -> (Math.PI - angle) % (2 * Math.PI);

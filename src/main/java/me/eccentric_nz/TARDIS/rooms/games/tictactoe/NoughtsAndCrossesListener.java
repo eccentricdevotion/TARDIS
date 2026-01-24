@@ -3,7 +3,7 @@ package me.eccentric_nz.TARDIS.rooms.games.tictactoe;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
-import me.eccentric_nz.TARDIS.rooms.games.rockpaperscissors.StoneMagmaIceState;
+import me.eccentric_nz.TARDIS.rooms.games.GameOutcome;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -150,7 +150,7 @@ public class NoughtsAndCrossesListener extends TARDISMenuListener {
         for (int i = 0; i < 8; i++) {
             if ((match.getBoard()[winPos[i][0]].equals(MatchState.PLAYER_TURN.getSymbol())) && (match.getBoard()[winPos[i][0]].equals(match.getBoard()[winPos[i][1]])) && (match.getBoard()[winPos[i][1]].equals(match.getBoard()[winPos[i][2]]))) {
                 // player has won
-                setBannerSlots(StoneMagmaIceState.WIN, view);
+                setBannerSlots(GameOutcome.WIN, view);
                 match.setMatchState(MatchState.PLAYER_WON);
                 chk = 1;
                 for (int j = 0; j < 9; j++) {
@@ -158,7 +158,7 @@ public class NoughtsAndCrossesListener extends TARDISMenuListener {
                 }
             } else if ((match.getBoard()[winPos[i][0]].equals(MatchState.TARDIS_TURN.getSymbol())) && (match.getBoard()[winPos[i][0]].equals(match.getBoard()[winPos[i][1]])) && (match.getBoard()[winPos[i][1]].equals(match.getBoard()[winPos[i][2]]))) {
                 // TARDIS has won
-                setBannerSlots(StoneMagmaIceState.LOSE, view);
+                setBannerSlots(GameOutcome.LOSE, view);
                 match.setMatchState(MatchState.TARDIS_WON);
                 chk = 1;
                 for (int j = 0; j < 9; j++) {
@@ -168,7 +168,7 @@ public class NoughtsAndCrossesListener extends TARDISMenuListener {
         }
         if (match.getCount() == 8 && chk == 0) {
             // draw
-            setBannerSlots(StoneMagmaIceState.DRAW, view);
+            setBannerSlots(GameOutcome.DRAW, view);
             match.setMatchState(MatchState.DRAW);
             for (int j = 0; j < 9; j++) {
                 match.getUsed()[j] = true;
@@ -279,7 +279,7 @@ public class NoughtsAndCrossesListener extends TARDISMenuListener {
         }
     }
 
-    private void setBannerSlots(StoneMagmaIceState state, InventoryView view) {
+    private void setBannerSlots(GameOutcome state, InventoryView view) {
         for (int i = 36; i < 45; i++) {
             view.setItem(i, state.getBanners()[i - 36]);
         }

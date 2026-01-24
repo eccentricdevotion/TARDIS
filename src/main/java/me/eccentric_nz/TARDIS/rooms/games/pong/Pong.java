@@ -6,8 +6,8 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetGames;
 import me.eccentric_nz.TARDIS.rooms.games.ArcadeData;
 import me.eccentric_nz.TARDIS.rooms.games.ArcadeTracker;
+import me.eccentric_nz.TARDIS.rooms.games.GameState;
 import me.eccentric_nz.TARDIS.rooms.games.GameUtils;
-import me.eccentric_nz.TARDIS.rooms.games.tetris.GameState;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
@@ -25,12 +25,12 @@ import java.util.UUID;
 public class Pong implements Listener {
 
     private final TARDIS plugin;
+    private final Player player;
     private List<UUID> uuids;
     private List<TextDisplay> displayList;
     private Location first;
     private char[][] CANVAS;
     private GameState state = GameState.INITIALIZING;
-    private final Player player;
     private int tickTask = -1;
     private boolean hasMoved = false;
     private int paddleY = 8;
