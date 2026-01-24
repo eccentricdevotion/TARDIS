@@ -243,7 +243,7 @@ public class Main {
                                         bw.write(str);
                                     }
                                     case games -> {
-                                        str = String.format(SQL_VALUES.LIST.get(i), rs.getInt("game_id"), rs.getInt("tardis_id"), rs.getString("player_location"), rs.getString("tetris_board"), rs.getString("tetris_sign"), rs.getString("pong_display"), rs.getString("pong_uuids")) + end;
+                                        str = String.format(SQL_VALUES.LIST.get(i), rs.getInt("game_id"), rs.getInt("tardis_id"), rs.getString("player_location"), rs.getString("tetris_board"), rs.getString("tetris_sign"), rs.getString("pong_uuids")) + end;
                                         bw.write(str);
                                     }
                                     case gardens -> {

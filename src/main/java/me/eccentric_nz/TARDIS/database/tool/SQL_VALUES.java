@@ -82,7 +82,7 @@ public class SQL_VALUES {
             // forcefield
             "('%s', '%s')",
             // games
-            "(%s, %s, '%s', '%s', '%s', '%s', '%s')",
+            "(%s, %s, '%s', '%s', '%s', '%s')",
             // gardens
             "(%s, %s, '%s', %s, %s, %s, %s, %s)",
             // gravity_well

@@ -81,7 +81,7 @@ public class SQL_INSERT {
 
             "INSERT INTO `%sforcefield` (`uuid`, `location`) VALUES ",
 
-            "INSERT INTO `%sgames` (`game_id`, `tardis_id`, `player_location`, `tetris_board`, `tetris_sign`, `pong_display`, `pong_uuids`) VALUES ",
+            "INSERT INTO `%sgames` (`game_id`, `tardis_id`, `player_location`, `tetris_board`, `tetris_sign`, `pong_uuids`) VALUES ",
 
             "INSERT INTO `%sgardens` (`garden_id`, `tardis_id`, `world`, `minx`, `maxx`, `y`, `minz`, `maxz`) VALUES ",
 

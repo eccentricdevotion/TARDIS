@@ -22,8 +22,6 @@ public class ResultSetGames {
     private String playerLocation;
     private String tetrisBoard;
     private String tetrisSign;
-    private String pongDisplay;
-
 
     public ResultSetGames(TARDIS plugin) {
         this.plugin = plugin;
@@ -52,7 +50,6 @@ public class ResultSetGames {
                 playerLocation = rs.getString("player_location");
                 tetrisBoard = rs.getString("tetris_board");
                 tetrisSign = rs.getString("tetris_sign");
-                pongDisplay = rs.getString("pong_display");
                 for (String u : rs.getString("pong_uuids").split(":")) {
                     try {
                         pongUUIDs.add(UUID.fromString(u));
@@ -93,10 +90,6 @@ public class ResultSetGames {
 
     public String getTetrisSign() {
         return tetrisSign;
-    }
-
-    public String getPongDisplay() {
-        return pongDisplay;
     }
 
     public List<UUID> getPongUUIDs() {

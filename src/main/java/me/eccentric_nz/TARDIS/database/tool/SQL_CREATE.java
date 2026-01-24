@@ -81,7 +81,7 @@ public class SQL_CREATE {
 
             "CREATE TABLE IF NOT EXISTS %sforcefield (uuid varchar(48) NOT NULL DEFAULT '', location varchar(512) DEFAULT '', PRIMARY KEY (uuid)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
-            "CREATE TABLE IF NOT EXISTS %sgames (game_id int(11) NOT NULL AUTO_INCREMENT, tardis_id int(11) DEFAULT '0', player_location varchar(512) DEFAULT '', tetris_board varchar(512) DEFAULT '', tetris_sign varchar(512) DEFAULT '', pong_display varchar(512) DEFAULT '', pong_uuids text, PRIMARY KEY (game_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
+            "CREATE TABLE IF NOT EXISTS %sgames (game_id int(11) NOT NULL AUTO_INCREMENT, tardis_id int(11) DEFAULT '0', player_location varchar(512) DEFAULT '', tetris_board varchar(512) DEFAULT '', tetris_sign varchar(512) DEFAULT '', pong_uuids text, PRIMARY KEY (game_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
             "CREATE TABLE IF NOT EXISTS %sgardens (garden_id int(11) NOT NULL AUTO_INCREMENT, tardis_id int(11) DEFAULT '0', world varchar(64) DEFAULT '', minx int(7) DEFAULT '0', maxx int(7) DEFAULT '0', y int(3) DEFAULT '0', minz int(7) DEFAULT '0', maxz int(7) DEFAULT '0', PRIMARY KEY (garden_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 

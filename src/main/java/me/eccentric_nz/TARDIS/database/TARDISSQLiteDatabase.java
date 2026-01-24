@@ -164,7 +164,7 @@ public class TARDISSQLiteDatabase {
             statement.executeUpdate(queryForce);
 
             // Table structure for table 'games'
-            String queryGames = "CREATE TABLE IF NOT EXISTS " + prefix + "games (game_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, player_location TEXT COLLATE NOCASE DEFAULT '', tetris_board TEXT COLLATE NOCASE DEFAULT '', tetris_sign TEXT COLLATE NOCASE DEFAULT '', pong_display TEXT COLLATE NOCASE DEFAULT '', pong_uuids TEXT COLLATE NOCASE DEFAULT '')";
+            String queryGames = "CREATE TABLE IF NOT EXISTS " + prefix + "games (game_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, player_location TEXT COLLATE NOCASE DEFAULT '', tetris_board TEXT COLLATE NOCASE DEFAULT '', tetris_sign TEXT COLLATE NOCASE DEFAULT '', pong_uuids TEXT COLLATE NOCASE DEFAULT '')";
             statement.executeUpdate(queryGames);
 
             // Table structure for table 'gardens'
