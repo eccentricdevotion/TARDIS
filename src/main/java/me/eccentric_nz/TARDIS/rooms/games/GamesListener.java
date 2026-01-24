@@ -100,20 +100,24 @@ public class GamesListener extends TARDISMenuListener {
     }
 
     @EventHandler
-    public void onGameSneak(PlayerToggleSneakEvent e) {
-        if (ArcadeTracker.PLAYERS.containsKey(e.getPlayer().getUniqueId()) && e.isSneaking()) {
-            ArcadeData data = ArcadeTracker.PLAYERS.get(e.getPlayer().getUniqueId());
+    public void onGameSneak(PlayerToggleSneakEvent event) {
+        if (ArcadeTracker.PLAYERS.containsKey(event.getPlayer().getUniqueId()) && event.isSneaking()) {
+            Player player = event.getPlayer();
+            ArcadeData data = ArcadeTracker.PLAYERS.get(player.getUniqueId());
             // teleport player back to games room
-            e.getPlayer().teleport(data.backup());
+            player.setAllowFlight(true);
+            player.setFlying(true);
+            player.teleport(data.backup());
             // reset flight status
-            e.getPlayer().setAllowFlight(data.allowFlight());
+            player.setAllowFlight(data.allowFlight());
+            player.setFlying(false);
             if (data.listener() instanceof Game game) {
                 HandlerList.unregisterAll(game);
             }
             if (data.listener() instanceof Pong pong) {
                 HandlerList.unregisterAll(pong);
             }
-            UUID uuid = e.getPlayer().getUniqueId();
+            UUID uuid = player.getUniqueId();
             int id = data.id();
             ArcadeTracker.PLAYERS.remove(uuid);
             // put player back in travellers table

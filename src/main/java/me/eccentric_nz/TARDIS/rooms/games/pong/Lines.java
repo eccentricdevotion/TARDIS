@@ -1,7 +1,5 @@
 package me.eccentric_nz.TARDIS.rooms.games.pong;
 
-import me.eccentric_nz.TARDIS.TARDISConstants;
-
 public class Lines {
 
     /**
@@ -24,7 +22,7 @@ public class Lines {
             CANVAS[p][1] = GameChar.paddle;
             CANVAS[p][27] = GameChar.paddle;
         }
-        // ball - random position between 2 and 13
-        CANVAS[TARDISConstants.RANDOM.nextInt(2,14)][14] = GameChar.ball;
+//        // ball - random position between 2 and 13
+//        CANVAS[TARDISConstants.RANDOM.nextInt(2,14)][14] = GameChar.ball;
     }
 }
