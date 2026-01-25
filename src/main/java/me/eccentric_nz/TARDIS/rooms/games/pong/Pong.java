@@ -13,7 +13,7 @@ import org.bukkit.Chunk;
 import org.bukkit.Input;
 import org.bukkit.Location;
 import org.bukkit.block.BlockFace;
-import org.bukkit.entity.Boat;
+import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.TextDisplay;
@@ -38,7 +38,6 @@ public class Pong implements Listener {
     private char[][] CANVAS;
     private GameState state = GameState.INITIALIZING;
     private int tickTask = -1;
-    private boolean hasMoved = false;
     private int paddleY = 8;
     private int tardisY = 8;
     private Ball ball;
@@ -60,10 +59,11 @@ public class Pong implements Listener {
         }
         player.setFallDistance(0.0f);
         player.teleport(playerLocation);
-        // get boat and put player in it
+        // get armour stand and put player in it
         for (Entity e : playerLocation.getChunk().getEntities()) {
-            if (e instanceof Boat boat) {
-                boat.addPassenger(player);
+            if (e instanceof ArmorStand stand) {
+                stand.setRotation(180.0f, 0);
+                stand.addPassenger(player);
             }
         }
         player.setFallDistance(0.0f);
@@ -86,7 +86,7 @@ public class Pong implements Listener {
                 // get the player location
                 String location = rsg.getPlayerLocation();
                 playerLocation = TARDISStaticLocationGetters.getLocationFromBukkitString(location);
-                playerLocation.setYaw(180f);
+                playerLocation.setYaw(180.0f);
             }
         }
     }
@@ -136,11 +136,11 @@ public class Pong implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerInput(PlayerInputEvent event) {
         Player player = event.getPlayer();
-        if (!ArcadeTracker.PLAYERS.containsKey(event.getPlayer().getUniqueId()) ) {
+        if (!ArcadeTracker.PLAYERS.containsKey(player.getUniqueId()) ) {
             return;
         }
         Entity entity = player.getVehicle();
-        if (entity instanceof Boat) {
+        if (entity instanceof ArmorStand) {
             Input input = event.getInput();
             if (input.isSneak()) {
                 abort();

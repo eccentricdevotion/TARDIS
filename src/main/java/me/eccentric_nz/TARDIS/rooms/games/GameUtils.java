@@ -30,9 +30,9 @@ public class GameUtils {
         if (angle < 0) angle += 2 * Math.PI;
         return switch (border) {
             // reflect horizontally: angle becomes PI - angle
-            case TOP, BOTTOM -> (Math.PI - angle) % (2 * Math.PI);
+            case TOP, BOTTOM -> (2 * Math.PI - angle) % (2 * Math.PI);
             // reflect vertically: angle becomes -angle
-            case LEFT, RIGHT -> (2 * Math.PI - angle) % (2 * Math.PI);
+            case LEFT, RIGHT -> (Math.PI - angle) % (2 * Math.PI);
         };
     }
 }

@@ -5,22 +5,19 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetGames;
 import me.eccentric_nz.TARDIS.rooms.games.*;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import net.kyori.adventure.text.Component;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Sound;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.block.sign.Side;
 import org.bukkit.block.sign.SignSide;
+import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.event.player.PlayerToggleSneakEvent;
-import org.bukkit.inventory.ItemStack;
+import org.bukkit.event.player.PlayerInputEvent;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -35,27 +32,34 @@ public class Game implements Listener {
     private final int startLevel;
     private final Player player;
     private final Location boardLocation;
-    private final Location playerLocation;
+//    private final Location playerLocation;
     private final Location signLocation;
     private final World world;
     private GameState state = GameState.INITIALIZING;
     private Pieces current;
     private int level, linesClearedLevel;
     private long score, linesClearedTotal;
-    private boolean hasMoved = false;
+//    private boolean hasMoved = false;
 
     public Game(TARDIS plugin, Player player, int startLevel) {
         this.plugin = plugin;
         this.player = player;
-        player.getInventory().setItem(0, new ItemStack(Material.TRIPWIRE_HOOK));
-        player.getInventory().setHeldItemSlot(0);
+//        player.getInventory().setItem(0, new ItemStack(Material.TRIPWIRE_HOOK));
+//        player.getInventory().setHeldItemSlot(0);
         world = plugin.getServer().getWorld("TARDIS_Zero_Room");
         GameLocations locations = getRoom(player);
         ArcadeTracker.PLAYERS.put(player.getUniqueId(), new ArcadeData(GameUtils.centre(player.getLocation()), player.getAllowFlight(), this, locations.id()));
         player.setFallDistance(0.0f);
         player.teleport(locations.teleport());
+        // set as armour stand passenger
+        for (Entity e : locations.teleport().getChunk().getEntities()) {
+            if (e instanceof ArmorStand stand) {
+                stand.setRotation(0,0);
+                stand.addPassenger(player);
+            }
+        }
         player.setFallDistance(0.0f);
-        playerLocation = locations.teleport();
+//        playerLocation = locations.teleport();
         boardLocation = locations.board();
         signLocation = locations.sign();
         board = new Board(10, 20, this);
@@ -357,48 +361,76 @@ public class Game implements Listener {
         }.runTaskLater(plugin, 20);
     }
 
-    @EventHandler
-    public void onClick(PlayerInteractEvent e) {
-        if (state == GameState.PLAYING && e.getPlayer() == player) {
-            switch (e.getAction()) {
-                case RIGHT_CLICK_AIR, RIGHT_CLICK_BLOCK -> rotateClockwise();
-                case LEFT_CLICK_AIR, LEFT_CLICK_BLOCK -> rotateCounterClockwise();
-                default -> {
-                }
-            }
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void onPlayerInput(PlayerInputEvent event) {
+        Player player = event.getPlayer();
+        if (!ArcadeTracker.PLAYERS.containsKey(player.getUniqueId()) ) {
+            return;
         }
-    }
-
-    @EventHandler
-    public void onMove(PlayerMoveEvent e) {
-        if (state == GameState.PLAYING && e.getPlayer() == player) {
-            double dx = e.getTo().getX() - e.getFrom().getX();
-            double dz = e.getTo().getZ() - e.getFrom().getZ();
-            // if not holding down
-            if (!((dx > 0.1425 && dx < 0.2) || (dx < -0.1425 && dx > -0.2))) {
-                hasMoved = false;
+        Entity entity = player.getVehicle();
+        if (entity instanceof ArmorStand) {
+            Input input = event.getInput();
+            if (input.isSneak()) {
+                abort();
             }
-            if (!hasMoved) {
-                if (dx > 0) {
-                    moveLeft();
-                }
-                if (dx < 0) {
-                    moveRight();
-                }
-                hasMoved = true;
-            } else {
-                hasMoved = false;
+            if (input.isJump()) {
+                rotateCounterClockwise();
             }
-            if (dz < 0) {
+            if (input.isLeft()) {
+                moveLeft();
+            }
+            if (input.isRight()) {
+                moveRight();
+            }
+            if (input.isForward()) {
+                rotateClockwise();
+            }
+            if (input.isBackward()) {
                 moveDown();
             }
-            player.teleport(playerLocation);
         }
     }
 
-    @EventHandler
-    public void onGameSneak(PlayerToggleSneakEvent event) {
-        if (ArcadeTracker.PLAYERS.containsKey(event.getPlayer().getUniqueId()) && event.isSneaking()) {
+//    @EventHandler
+//    public void onClick(PlayerInteractEvent e) {
+//        if (state == GameState.PLAYING && e.getPlayer() == player) {
+//            switch (e.getAction()) {
+//                case RIGHT_CLICK_AIR, RIGHT_CLICK_BLOCK -> rotateClockwise();
+//                case LEFT_CLICK_AIR, LEFT_CLICK_BLOCK -> rotateCounterClockwise();
+//                default -> { }
+//            }
+//        }
+//    }
+
+//    @EventHandler
+//    public void onMove(PlayerMoveEvent e) {
+//        if (state == GameState.PLAYING && e.getPlayer() == player) {
+//            double dx = e.getTo().getX() - e.getFrom().getX();
+//            double dz = e.getTo().getZ() - e.getFrom().getZ();
+//            // if not holding down
+//            if (!((dx > 0.1425 && dx < 0.2) || (dx < -0.1425 && dx > -0.2))) {
+//                hasMoved = false;
+//            }
+//            if (!hasMoved) {
+//                if (dx > 0) {
+//                    moveLeft();
+//                }
+//                if (dx < 0) {
+//                    moveRight();
+//                }
+//                hasMoved = true;
+//            } else {
+//                hasMoved = false;
+//            }
+//            if (dz < 0) {
+//                moveDown();
+//            }
+//            player.teleport(playerLocation);
+//        }
+//    }
+
+    public void abort() {
+        if (ArcadeTracker.PLAYERS.containsKey(player.getUniqueId())) {
             UUID uuid = player.getUniqueId();
             ArcadeData data = ArcadeTracker.PLAYERS.get(uuid);
             // teleport player back to games room

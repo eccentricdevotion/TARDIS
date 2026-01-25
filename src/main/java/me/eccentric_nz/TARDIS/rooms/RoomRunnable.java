@@ -48,7 +48,7 @@ import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Directional;
 import org.bukkit.block.data.FaceAttachable;
 import org.bukkit.block.data.type.*;
-import org.bukkit.entity.Boat;
+import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
@@ -903,13 +903,14 @@ public class RoomRunnable implements Runnable {
                         case "ARCADE" -> {
                             HashMap<String, Object> setArcade = new HashMap<>();
                             // player spawn location
-                            Location p = new Location(world, startx + 0.5d, starty + 1d, startz + 0.5d);
+                            Location p = new Location(world, startx + 0.5d, starty, startz + 0.5d);
                             setArcade.put("player_location", p.toString());
-                            // spawn a boat
-                            Boat boat = (Boat) p.getWorld().spawnEntity(p, EntityType.PALE_OAK_BOAT);
-                            boat.setPersistent(true);
+                            // spawn an armour stand
+                            ArmorStand stand = (ArmorStand) p.getWorld().spawnEntity(p, EntityType.ARMOR_STAND);
+                            stand.setPersistent(true);
+                            stand.setInvisible(true);
                             // spawn pong text displays
-                            String textDisplays = GameDisplay.create(new Location(world, startx + 0.5d, starty + 4.5d, startz - 1.5d));
+                            String textDisplays = GameDisplay.create(new Location(world, startx + 0.5d, starty + 4.0d, startz - 1.5d));
                             setArcade.put("pong_uuids", textDisplays);
                             // do they have a games record?
                             ResultSetGames rsg = new ResultSetGames(plugin);
