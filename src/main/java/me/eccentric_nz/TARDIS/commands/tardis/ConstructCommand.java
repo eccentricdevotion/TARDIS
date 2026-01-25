@@ -68,13 +68,14 @@ class ConstructCommand {
         where.put("tardis_id", id);
         HashMap<String, Object> set = new HashMap<>();
         int l = TARDISNumberParsers.parseInt(args[1]);
-        Component raw = LegacyComponentSerializer.legacyAmpersand().deserialize(String.join(" ", Arrays.copyOfRange(args, 2, args.length)));
+        String joined = String.join(" ", Arrays.copyOfRange(args, 2, args.length));
+        Component raw = LegacyComponentSerializer.legacyAmpersand().deserialize(joined);
         // strip color codes and check length
         if (ComponentUtils.stripColour(raw).length() > 16) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "CONSTRUCT_LINE_LEN");
             return true;
         }
-        set.put("line" + l, raw);
+        set.put("line" + l, joined);
         // save it
         plugin.getQueryFactory().doUpdate("chameleon", set, where);
         plugin.getMessenger().send(player, TardisModule.TARDIS, "CONSTRUCT_LINE_SAVED");
