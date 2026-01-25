@@ -43,6 +43,7 @@ import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import me.eccentric_nz.tardischunkgenerator.worldgen.TARDISChunkGenerator;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -432,10 +433,15 @@ public class MaterialiseBlockPreset implements Runnable {
                                                         front.line(1, Component.text(line1, sign_colour));
                                                         front.line(2, Component.text(line2, sign_colour));
                                                     } else {
-                                                        front.line(0, Component.text(rscs.getLine1()));
-                                                        front.line(1, Component.text(rscs.getLine2()));
-                                                        front.line(2, Component.text(rscs.getLine3()));
-                                                        front.line(3, Component.text(rscs.getLine4()));
+                                                        // player has set custom text - potentially with colour codes
+                                                        Component raw1 = LegacyComponentSerializer.legacyAmpersand().deserialize(rscs.getLine1());
+                                                        Component raw2 = LegacyComponentSerializer.legacyAmpersand().deserialize(rscs.getLine2());
+                                                        Component raw3 = LegacyComponentSerializer.legacyAmpersand().deserialize(rscs.getLine3());
+                                                        Component raw4 = LegacyComponentSerializer.legacyAmpersand().deserialize(rscs.getLine4());
+                                                        front.line(0, raw1);
+                                                        front.line(1, raw2);
+                                                        front.line(2, raw3);
+                                                        front.line(3, raw4);
                                                     }
                                                 }
                                             }
