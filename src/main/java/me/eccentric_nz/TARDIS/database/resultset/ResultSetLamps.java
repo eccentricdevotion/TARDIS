@@ -102,7 +102,7 @@ public class ResultSetLamps {
                     if (loc != null) {
                         String materialOnStr = rs.getString("material_on");
                         Material materialOn = null;
-                        if (!materialOnStr.isEmpty()) {
+                        if (materialOnStr != null && !materialOnStr.isEmpty()) {
                             try {
                                 materialOn = Material.valueOf(materialOnStr);
                             } catch (IllegalArgumentException ignored) {
@@ -110,7 +110,7 @@ public class ResultSetLamps {
                         }
                         String materialOffStr = rs.getString("material_off");
                         Material materialOff = null;
-                        if (!materialOffStr.isEmpty()) {
+                        if (materialOffStr != null && !materialOffStr.isEmpty()) {
                             try {
                                 materialOff = Material.valueOf(materialOffStr);
                             } catch (IllegalArgumentException ignored) {
