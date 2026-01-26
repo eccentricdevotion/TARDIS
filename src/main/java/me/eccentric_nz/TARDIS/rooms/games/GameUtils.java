@@ -17,22 +17,52 @@ public class GameUtils {
         return location;
     }
 
+    private static final double HALF_PI = Math.PI * 0.5;
+    private static final double ONEDOT5_PI = Math.PI * 1.5;
+    private static final double TWO_PI = Math.PI * 2;
+
     /**
      * Calculates the reflected angle in radians.
      *
-     * @param incomingAngle angle in radians (0 to 2*PI)
-     * @param border        the border hit
+     * @param angle  angle in radians (0 to 2*PI)
+     * @param border the border hit
      * @return Rreflected angle in radians
      */
-    public static double getReflectedAngle(double incomingAngle, Border border) {
-        // Normalize angle to 0 - 2*PI
-        double angle = incomingAngle % (2 * Math.PI);
-        if (angle < 0) angle += 2 * Math.PI;
-        return switch (border) {
-            // reflect horizontally: angle becomes PI - angle
-            case TOP, BOTTOM -> (2 * Math.PI - angle) % (2 * Math.PI);
-            // reflect vertically: angle becomes -angle
-            case LEFT, RIGHT -> (Math.PI - angle) % (2 * Math.PI);
-        };
+    public static double getReflectedAngle(double angle, Border border) {
+        switch (border) {
+            case TOP -> {
+                if (angle > 0 && angle < Math.PI / 2) {
+                    return Math.PI - angle;
+                }
+                if (angle > ONEDOT5_PI && angle < TWO_PI) {
+                    return (TWO_PI) - angle;
+                }
+            }
+            case BOTTOM -> {
+                if (angle > HALF_PI && angle < Math.PI) {
+                    return Math.PI + (Math.PI - angle);
+                }
+                if (angle > 0 && angle < HALF_PI) {
+                    return (TWO_PI) - angle;
+                }
+            }
+            case LEFT -> {
+                if (angle > 0 && angle < (HALF_PI)) {
+                    return Math.PI - angle;
+                }
+                if (angle > (ONEDOT5_PI) && angle < (TWO_PI)) {
+                    return Math.PI + ((TWO_PI) - angle);
+                }
+            }
+            case RIGHT -> {
+                if (angle > (Math.PI / 2) && angle < Math.PI) {
+                    return (angle - Math.PI);
+                }
+                if (angle > Math.PI && angle < (ONEDOT5_PI)) {
+                    return (TWO_PI) - (angle - Math.PI);
+                }
+            }
+        }
+        return angle;
     }
 }

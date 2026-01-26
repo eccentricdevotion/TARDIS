@@ -5,5 +5,6 @@ public enum Border {
     TOP,
     LEFT,
     BOTTOM,
-    RIGHT
+    RIGHT,
+    NONE
 }

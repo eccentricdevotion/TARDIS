@@ -12,11 +12,11 @@ public enum PaddlePosition {
 
     public double getDeflection(double angle) {
         switch (this) {
-            case PLAYER_TOP, TARDIS_BOTTOM -> {
-                return 0.15f;
+            case PLAYER_TOP, PLAYER_BOTTOM -> {
+                return angle < Math.PI / 2 ? -0.1f : 0.1f;
             }
-            case PLAYER_BOTTOM, TARDIS_TOP -> {
-                return -0.15f;
+            case TARDIS_BOTTOM, TARDIS_TOP -> {
+                return angle < Math.PI / 2 ? 0.1f : -0.1f;
             }
             default -> { // PLAYER_MIDDLE, TARDIS MIDDLE
                 return 0;

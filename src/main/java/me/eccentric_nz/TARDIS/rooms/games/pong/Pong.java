@@ -48,6 +48,10 @@ public class Pong implements Listener {
         startGame();
     }
 
+    public char[][] getCANVAS() {
+        return CANVAS;
+    }
+
     public void startGame() {
         // teleport to ARCADE room
         getRoom(player);
@@ -91,52 +95,10 @@ public class Pong implements Listener {
         }
     }
 
-//    @EventHandler
-//    public void onClick(PlayerInteractEvent e) {
-//        if (e.getPlayer() == player) {
-//            switch (e.getAction()) {
-//                case RIGHT_CLICK_AIR, RIGHT_CLICK_BLOCK -> startTick();
-//                case LEFT_CLICK_AIR, LEFT_CLICK_BLOCK -> pauseTick();
-//                default -> {
-//                }
-//            }
-//        }
-//    }
-
-//    @EventHandler
-//    public void onMove(PlayerMoveEvent e) {
-//        if (e.getPlayer() == player) {
-//            double dz = e.getTo().getZ() - e.getFrom().getZ();
-//            // if not holding down
-//            if (!((dz > 0.1425 && dz < 0.2) || (dz < -0.1425 && dz > -0.2))) {
-//                hasMoved = false;
-//            }
-//            if (!hasMoved) {
-//                if (dz > 0) {
-//                    paddleDown();
-//                }
-//                if (dz < 0) {
-//                    paddleUp();
-//                }
-//                hasMoved = true;
-//            } else {
-//                hasMoved = false;
-//            }
-//            player.teleport(playerLocation);
-//        }
-//    }
-
-//    @EventHandler
-//    public void onGameSneak(PlayerToggleSneakEvent event) {
-//        if (ArcadeTracker.PLAYERS.containsKey(event.getPlayer().getUniqueId()) && event.isSneaking()) {
-//            abort();
-//        }
-//    }
-
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerInput(PlayerInputEvent event) {
         Player player = event.getPlayer();
-        if (!ArcadeTracker.PLAYERS.containsKey(player.getUniqueId()) ) {
+        if (!ArcadeTracker.PLAYERS.containsKey(player.getUniqueId())) {
             return;
         }
         Entity entity = player.getVehicle();
@@ -163,8 +125,8 @@ public class Pong implements Listener {
 
     private void startTick() {
         tickTask = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
-            ball.move();
             draw();
+            ball.move();
         }, 15L, 15L);
     }
 
@@ -179,8 +141,12 @@ public class Pong implements Listener {
         if (paddleY < 1) {
             paddleY = 1;
         }
+        for (int p = 0; p < 16; p++) {
+            CANVAS[p][1] = GameChar.space;
+        }
         CANVAS[paddleY - 1][1] = GameChar.paddle;
-        CANVAS[paddleY + 2][1] = GameChar.space;
+        CANVAS[paddleY][1] = GameChar.paddle;
+        CANVAS[paddleY + 1][1] = GameChar.paddle;
     }
 
     private void paddleDown() {
@@ -189,8 +155,12 @@ public class Pong implements Listener {
         if (paddleY > 14) {
             paddleY = 14;
         }
+        for (int p = 0; p < 16; p++) {
+            CANVAS[p][1] = GameChar.space;
+        }
         CANVAS[paddleY + 1][1] = GameChar.paddle;
-        CANVAS[paddleY - 2][1] = GameChar.space;
+        CANVAS[paddleY][1] = GameChar.paddle;
+        CANVAS[paddleY - 1][1] = GameChar.paddle;
     }
 
     private void tardisUp() {
@@ -199,8 +169,12 @@ public class Pong implements Listener {
         if (tardisY < 1) {
             tardisY = 1;
         }
+        for (int p = 0; p < 16; p++) {
+            CANVAS[p][27] = GameChar.space;
+        }
         CANVAS[tardisY - 1][27] = GameChar.paddle;
-        CANVAS[tardisY + 2][27] = GameChar.space;
+        CANVAS[tardisY][27] = GameChar.paddle;
+        CANVAS[tardisY + 1][27] = GameChar.paddle;
     }
 
     private void tardisDown() {
@@ -209,13 +183,16 @@ public class Pong implements Listener {
         if (tardisY > 14) {
             tardisY = 14;
         }
+        for (int p = 0; p < 16; p++) {
+            CANVAS[p][27] = GameChar.space;
+        }
         CANVAS[tardisY + 1][27] = GameChar.paddle;
-        CANVAS[tardisY - 2][27] = GameChar.space;
+        CANVAS[tardisY][27] = GameChar.paddle;
+        CANVAS[tardisY - 1][27] = GameChar.paddle;
     }
 
     private void draw() {
         if (state == GameState.PLAYING) {
-            ball.move();
             tardisPaddle();
         }
         for (int i = 0; i < 16; i++) {
@@ -233,23 +210,41 @@ public class Pong implements Listener {
         // move paddle towards ball
         if (tardisY < ball.by) {
             tardisDown();
-        } else {
+        } else if (tardisY > ball.by) {
             tardisUp();
         }
     }
 
-    private void reset() {
-        CANVAS = new char[16][29];
+    protected void reset() {
+        if (state != GameState.INITIALIZING) {
+            pauseTick();
+        }
+        plugin.debug("reset");
+        this.CANVAS = new char[16][29];
         for (int i = 0; i < 16; i++) {
             char[] line = Lines.CANVAS[i];
-            CANVAS[i] = line;
+            this.CANVAS[i] = line;
         }
         int row = TARDISConstants.RANDOM.nextInt(2, 14);
-        CANVAS[row][14] = GameChar.ball;
+        this.CANVAS[row][14] = GameChar.ball;
         paddleY = 8;
         tardisY = 8;
-        ball = new Ball(CANVAS, row);
+        if (state == GameState.INITIALIZING) {
+            ball = new Ball(this, row);
+        }
+        ball.by = row;
+        ball.bx = 14;
+        ball.originY = row;
+        ball.originX = 14;
+        double tmp = TARDISConstants.RANDOM.nextDouble(-ball.limit, ball.limit);
+        if (tmp < 0) {
+            tmp = (Math.PI * 2) + tmp;
+        }
+        ball.angle = tmp;
         draw();
+        if (state != GameState.INITIALIZING) {
+            startTick();
+        }
     }
 
     private void load() {
@@ -274,7 +269,7 @@ public class Pong implements Listener {
     }
 
     private void abort() {
-        state = GameState.GAME_OVER;
+        state = GameState.INITIALIZING;
         plugin.getServer().getScheduler().cancelTask(tickTask);
         reset();
         UUID uuid = player.getUniqueId();

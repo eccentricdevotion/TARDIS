@@ -11,20 +11,24 @@ import java.util.List;
 
 public class Ball {
 
-    private final char[][] CANVAS;
+    Pong pong;
     int by;
     int bx = 14;
     int originY;
     int originX = 14;
     int oldY;
     int oldX = 14;
-    double angle = TARDISConstants.RANDOM.nextDouble(-Math.PI/6, Math.PI/6);
+    double limit = Math.PI / 6;
+    double angle = TARDISConstants.RANDOM.nextDouble(-limit, limit);
 
-    public Ball(char[][] CANVAS, int starty) {
-        this.CANVAS = CANVAS;
+    public Ball(Pong pong, int starty) {
+        this.pong = pong;
         this.by = starty;
         this.originY = starty;
         this.oldY = starty;
+        if (angle < 0) {
+            angle = (Math.PI * 2) + angle;
+        }
     }
 
     public static List<Point> findLine(int x0, int y0, int x1, int y1) {
@@ -53,13 +57,16 @@ public class Ball {
     }
 
     public void move() {
-        if (by == 15) {
+        Point point = positionForAngle(angle, originY, originX);
+        int ny = point.y;
+        Border border = detectBorder(ny);
+        if (border == Border.BOTTOM) {
             // flip angle
             angle = GameUtils.getReflectedAngle(angle, Border.BOTTOM);
             originY = 15;
             originX = bx;
         }
-        if (by < 0) {
+        if (border == Border.TOP) {
             // flip angle
             angle = GameUtils.getReflectedAngle(angle, Border.TOP);
             originY = 0;
@@ -68,36 +75,49 @@ public class Ball {
         if (bx == 0) {
             TARDIS.plugin.debug("tardis wins point");
             // tardis wins point
+            pong.reset();
             return;
         }
-        if (bx == 29) {
+        if (bx == 13 || bx == 15) {
+            // reset net
+            for (int n = 1; n < 14; n += 2) {
+                pong.getCANVAS()[n][14] = GameChar.net;
+            }
+        }
+        if (bx == 28) {
             TARDIS.plugin.debug("player wins point");
             // player wins point
+            pong.reset();
             return;
         }
-        Point point = positionForAngle(angle, originY, originX);
-        int ny = point.y;
+        point = positionForAngle(angle, originY, originX);
+        ny = point.y;
         int nx = point.x;
         PaddlePosition paddle = detectPaddle(ny, nx);
         if (paddle != PaddlePosition.NONE) {
             // flip angle
             switch (paddle) {
-                case PLAYER_TOP, PLAYER_MIDDLE, PLAYER_BOTTOM -> angle = GameUtils.getReflectedAngle(angle, Border.LEFT) + paddle.getDeflection(angle);
-                case TARDIS_TOP, TARDIS_MIDDLE, TARDIS_BOTTOM -> angle = GameUtils.getReflectedAngle(angle, Border.RIGHT) + paddle.getDeflection(angle);
+                case PLAYER_TOP, PLAYER_MIDDLE, PLAYER_BOTTOM ->
+                        angle = GameUtils.getReflectedAngle(angle, Border.LEFT) + paddle.getDeflection(angle);
+                case TARDIS_TOP, TARDIS_MIDDLE, TARDIS_BOTTOM ->
+                        angle = GameUtils.getReflectedAngle(angle, Border.RIGHT) + paddle.getDeflection(angle);
             }
+            originX = bx;
+            originY = by;
             // recalculate path
             point = positionForAngle(angle, originY, originX);
         }
         oldY = by;
         oldX = bx;
-        by = point.y;
-        bx = point.x;
-        CANVAS[by][bx] = GameChar.ball;
-        CANVAS[oldY][oldX] = GameChar.space;
+        by = Math.max(point.y, 0);
+        bx = Math.min(point.x, 28);
+        pong.getCANVAS()[by][bx] = GameChar.ball;
+        pong.getCANVAS()[oldY][oldX] = GameChar.space;
     }
 
     private Point positionForAngle(double angle, int oy, int ox) {
-        int ey = angle < Math.PI ? 0 : 15;
+        TARDIS.plugin.debug(String.format("%.2f", angle));
+        int ey = angle > Math.PI ? 0 : 15;
         int ex = (int) (ox + (ey - oy / Math.tan(angle)));
         List<Point> line = findLine(ox, oy, ex, ey);
         int i = 0;
@@ -107,25 +127,34 @@ public class Ball {
                 break;
             }
         }
-        return line.get(i);
+        return i < line.size() ? line.get(i) : new Point(by, bx);
     }
 
     private PaddlePosition detectPaddle(int y, int x) {
-        TARDIS.plugin.debug(by + "," + bx + " / " + y + "," + x + " = " + CANVAS[y][x]);
-        if (CANVAS[y][x] == GameChar.paddle) {
-            TARDIS.plugin.debug("will hit paddle");
-            if (y == 0 || CANVAS[y - 1][x] == GameChar.space) {
-                TARDIS.plugin.debug("top paddle");
+        TARDIS.plugin.debug(by + "," + bx + " / " + y + "," + x);
+        if (y < pong.getCANVAS().length && x < pong.getCANVAS()[y].length) {
+            TARDIS.plugin.debug(" = " + pong.getCANVAS()[y][x]);
+        } else {
+            return PaddlePosition.NONE;
+        }
+        if (pong.getCANVAS()[y][x] == GameChar.paddle) {
+            if (y == 0 || pong.getCANVAS()[y - 1][x] == GameChar.space) {
                 return x == 1 ? PaddlePosition.PLAYER_TOP : PaddlePosition.TARDIS_TOP;
-            } else if (y == 15 || y + 1 < 16 && CANVAS[y + 1][x] == GameChar.space) {
-                TARDIS.plugin.debug("bottom paddle");
+            } else if (y == 15 || y + 1 < 16 && pong.getCANVAS()[y + 1][x] == GameChar.space) {
                 return x == 1 ? PaddlePosition.PLAYER_BOTTOM : PaddlePosition.TARDIS_BOTTOM;
             } else {
-                TARDIS.plugin.debug("middle paddle");
                 return x == 1 ? PaddlePosition.PLAYER_MIDDLE : PaddlePosition.TARDIS_MIDDLE;
             }
         } else {
             return PaddlePosition.NONE;
         }
+    }
+
+    private Border detectBorder(int y) {
+        return switch (y) {
+            case 0 -> Border.TOP;
+            case 15 -> Border.BOTTOM;
+            default -> Border.NONE;
+        };
     }
 }
