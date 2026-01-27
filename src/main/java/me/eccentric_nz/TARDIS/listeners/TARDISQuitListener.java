@@ -26,6 +26,8 @@ import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
+import me.eccentric_nz.TARDIS.rooms.games.ArcadeData;
+import me.eccentric_nz.TARDIS.rooms.games.ArcadeTracker;
 import org.bukkit.Chunk;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -58,6 +60,13 @@ public class TARDISQuitListener implements Listener {
             // set their location back to the TARDIS interior
             plugin.getTrackerKeeper().getJunkRelog().put(uuid, CameraTracker.SPECTATING.get(uuid).location());
             CameraTracker.SPECTATING.remove(uuid);
+        }
+        // remove if was in ARCADE room
+        if (ArcadeTracker.PLAYERS.containsKey(uuid)) {
+            ArcadeData data = ArcadeTracker.PLAYERS.get(uuid);
+            // set their location to the return destination
+            plugin.getTrackerKeeper().getJunkRelog().put(uuid, data.backup());
+            ArcadeTracker.PLAYERS.remove(uuid);
         }
         // remove if Junk TARDIS traveller
         if (plugin.getGeneralKeeper().getJunkTravellers().contains(uuid)) {
