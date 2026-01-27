@@ -54,8 +54,9 @@ public class GallifreyBlueprintTrade {
     }
 
     public MerchantRecipe getRoom() {
-        // room blueprint index 0 and 1 are not rooms, and the last index is the zero room which can't be grown with ARS
-        BlueprintRoom bpr = BlueprintRoom.values()[TARDISConstants.RANDOM.nextInt(1, BlueprintRoom.values().length - 1)];
+        // room blueprint index 0 is not a room, and the last index is the zero room which is a special case (requires config option)
+        int index = plugin.getConfig().getBoolean("allow.zero_room") ? 0 : 1;
+        BlueprintRoom bpr = BlueprintRoom.values()[TARDISConstants.RANDOM.nextInt(2, BlueprintRoom.values().length - index)];
         // get the blueprint item stack
         ItemStack ris = buildResult(bpr.getPermission(), bpr.toString());
         // single use?
