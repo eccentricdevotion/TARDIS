@@ -82,10 +82,15 @@ public class PlanetsConfigUpdater {
                 planets_config.set("planets.TARDIS_Zero_Room.gamerules.advance_time", false);
                 planets_config.set("planets.TARDIS_Zero_Room.gamerules.show_advancement_messages", false);
                 planets_config.set("planets.TARDIS_Zero_Room.gamerules.spawn_wardens", false);
+                planets_config.set("planets.TARDIS_Zero_Room.gamerules.spawn_mobs", false);
                 planets_config.set("planets.TARDIS_Zero_Room.allow_portals", false);
                 planets_config.set("planets.TARDIS_Zero_Room.alias", "ZeroRoom");
                 planets_config.set("planets.TARDIS_Zero_Room.icon", "PINK_WOOL");
                 planets_config.set("planets.TARDIS_Zero_Room.helmic_regulator_order", -1);
+                save++;
+            }
+            if (!planets_config.contains("planets.TARDIS_Zero_Room.gamerules.spawn_mobs")) {
+                planets_config.set("planets.TARDIS_Zero_Room.gamerules.spawn_mobs", false);
                 save++;
             }
             planets_config.set("planets." + dn + ".enabled", true);
