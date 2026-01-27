@@ -125,7 +125,7 @@ public class TARDISChecker {
             plugin.getMessenger().message(plugin.getConsole(), TardisModule.WARNING, String.format(plugin.getLanguage().getString("DATAPACK_COPYING", "%s"), "datapack", "pack.mcmeta"));
             copy("pack.mcmeta", mcmeta);
         }
-        // update the format - 81 is the latest for 1.21.11
+        // update the format - 94.1 is the latest for 1.21.11
         // it's a json file, so load it and check the value
         Gson gson = new GsonBuilder().create();
         try {
