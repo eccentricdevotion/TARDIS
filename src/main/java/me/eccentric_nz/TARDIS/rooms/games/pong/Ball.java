@@ -31,26 +31,26 @@ public class Ball {
         }
     }
 
-    public static List<Point> findLine(int x0, int y0, int x1, int y1) {
+    public static List<Point> findLine(int ox, int oy, int ex, int ey) {
         List<Point> line = new ArrayList<>();
-        int dx = Math.abs(x1 - x0);
-        int dy = Math.abs(y1 - y0);
-        int sx = x0 < x1 ? 1 : -1; // step direction for x
-        int sy = y0 < y1 ? 1 : -1; // step direction for y
+        int dx = Math.abs(ex - ox);
+        int dy = Math.abs(ey - oy);
+        int sx = ox < ex ? 1 : -1; // step direction for x
+        int sy = oy < ey ? 1 : -1; // step direction for y
         int err = dx - dy; // initial error/decision parameter
         while (true) {
-            line.add(new Point(x0, y0));
-            if (x0 == x1 && y0 == y1) {
+            line.add(new Point(ox, oy));
+            if (ox == ex && oy == ey) {
                 break;
             }
             int e2 = 2 * err;
             if (e2 > -dy) {
                 err -= dy;
-                x0 += sx;
+                ox += sx;
             }
             if (e2 < dx) {
                 err += dx;
-                y0 += sy;
+                oy += sy;
             }
         }
         return line;
@@ -97,10 +97,8 @@ public class Ball {
         if (paddle != PaddlePosition.NONE) {
             // flip angle
             switch (paddle) {
-                case PLAYER_TOP, PLAYER_MIDDLE, PLAYER_BOTTOM ->
-                        angle = GameUtils.getReflectedAngle(angle, Border.LEFT) + paddle.getDeflection(angle);
-                case TARDIS_TOP, TARDIS_MIDDLE, TARDIS_BOTTOM ->
-                        angle = GameUtils.getReflectedAngle(angle, Border.RIGHT) + paddle.getDeflection(angle);
+                case PLAYER_TOP, PLAYER_MIDDLE, PLAYER_BOTTOM -> angle = GameUtils.getReflectedAngle(angle, Border.LEFT) + paddle.getDeflection(angle);
+                case TARDIS_TOP, TARDIS_MIDDLE, TARDIS_BOTTOM -> angle = GameUtils.getReflectedAngle(angle, Border.RIGHT) + paddle.getDeflection(angle);
             }
             originX = bx;
             originY = by;
@@ -120,14 +118,14 @@ public class Ball {
         int ey = angle > Math.PI ? 0 : 15;
         int ex = (int) (ox + (ey - oy / Math.tan(angle)));
         List<Point> line = findLine(ox, oy, ex, ey);
-        int i = 0;
+        int i = 1;
         for (Point point : line) {
             i++;
             if (point.x == bx && point.y == by) {
                 break;
             }
         }
-        return i < line.size() ? line.get(i) : new Point(by, bx);
+        return i < line.size() ? line.get(i) : line.getFirst();
     }
 
     private PaddlePosition detectPaddle(int y, int x) {
