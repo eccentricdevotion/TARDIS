@@ -11,7 +11,7 @@ public class GameDisplay {
 
     public static String create(Location location) {
         StringBuilder builder = new StringBuilder();
-        for (char[] line : Lines.CANVAS) {
+        for (char[] line : Lines.newCanvas()) {
             String joined = new String(line); // char[] line = joined.toCharArray()
             location.add(0, -0.125d, 0);
             TextDisplay display = spawn(location, Component.text(joined));

@@ -5,7 +5,7 @@ public class Lines {
     /**
      * Playing canvas is 15 x 29 pixels. The extra line displays the score.
      */
-    public static char[][] CANVAS = new char[16][29];
+    private static final char[][] CANVAS = new char[16][29];
 
     static {
         for (int r = 0; r < 16; r++) {
@@ -22,5 +22,17 @@ public class Lines {
             CANVAS[p][1] = GameChar.paddle;
             CANVAS[p][27] = GameChar.paddle;
         }
+    }
+
+    /**
+     * Returns a deep copy of the base canvas.
+     * Callers can never modify the original.
+     */
+    public static char[][] newCanvas() {
+        char[][] copy = new char[CANVAS.length][];
+        for (int i = 0; i < CANVAS.length; i++) {
+            copy[i] = CANVAS[i].clone();
+        }
+        return copy;
     }
 }

@@ -4,11 +4,11 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-public class Init {
+public class XiaoQiu {
 
     private final TARDIS plugin;
 
-    public Init(TARDIS plugin) {
+    public XiaoQiu(TARDIS plugin) {
         this.plugin = plugin;
     }
 

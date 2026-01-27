@@ -1,9 +1,8 @@
 package me.eccentric_nz.TARDIS.rooms.games;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
-import me.eccentric_nz.TARDIS.rooms.games.pong.Init;
+import me.eccentric_nz.TARDIS.rooms.games.pong.XiaoQiu;
 import me.eccentric_nz.TARDIS.rooms.games.rockpaperscissors.StoneMagmaIceInventory;
 import me.eccentric_nz.TARDIS.rooms.games.tetris.Play;
 import me.eccentric_nz.TARDIS.rooms.games.tictactoe.NoughtsAndCrossesInventory;
@@ -15,7 +14,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
@@ -48,7 +46,7 @@ public class GamesListener extends TARDISMenuListener {
             case 2 -> {
                 // start pong game
                 close(player);
-                new Init(plugin).startGame(player);
+                new XiaoQiu(plugin).startGame(player);
             }
             // start Stone Magma Ice game
             case 3 -> player.openInventory(new StoneMagmaIceInventory(plugin).getInventory());

@@ -23,15 +23,13 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInputEvent;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class Pong implements Listener {
 
     private final TARDIS plugin;
     private final Player player;
+    private final boolean[] dirtyRows = new boolean[16];
     private List<TextDisplay> displayList;
     private Location playerLocation;
     private int id = -1;
@@ -125,8 +123,8 @@ public class Pong implements Listener {
 
     private void startTick() {
         tickTask = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
-            draw();
-            ball.move();
+            ball.update();
+            drawDirty();
         }, 15L, 15L);
     }
 
@@ -142,11 +140,11 @@ public class Pong implements Listener {
             paddleY = 1;
         }
         for (int p = 0; p < 16; p++) {
-            CANVAS[p][1] = GameChar.space;
+            setChar(p, 1, GameChar.space);
         }
-        CANVAS[paddleY - 1][1] = GameChar.paddle;
-        CANVAS[paddleY][1] = GameChar.paddle;
-        CANVAS[paddleY + 1][1] = GameChar.paddle;
+        setChar(paddleY - 1, 1, GameChar.paddle);
+        setChar(paddleY, 1, GameChar.paddle);
+        setChar(paddleY + 1, 1, GameChar.paddle);
     }
 
     private void paddleDown() {
@@ -156,11 +154,11 @@ public class Pong implements Listener {
             paddleY = 14;
         }
         for (int p = 0; p < 16; p++) {
-            CANVAS[p][1] = GameChar.space;
+            setChar(p, 1, GameChar.space);
         }
-        CANVAS[paddleY + 1][1] = GameChar.paddle;
-        CANVAS[paddleY][1] = GameChar.paddle;
-        CANVAS[paddleY - 1][1] = GameChar.paddle;
+        setChar(paddleY + 1, 1, GameChar.paddle);
+        setChar(paddleY, 1, GameChar.paddle);
+        setChar(paddleY - 1, 1, GameChar.paddle);
     }
 
     private void tardisUp() {
@@ -170,11 +168,11 @@ public class Pong implements Listener {
             tardisY = 1;
         }
         for (int p = 0; p < 16; p++) {
-            CANVAS[p][27] = GameChar.space;
+            setChar(p, 27, GameChar.space);
         }
-        CANVAS[tardisY - 1][27] = GameChar.paddle;
-        CANVAS[tardisY][27] = GameChar.paddle;
-        CANVAS[tardisY + 1][27] = GameChar.paddle;
+        setChar(tardisY - 1, 27, GameChar.paddle);
+        setChar(tardisY, 27, GameChar.paddle);
+        setChar(tardisY + 1, 27, GameChar.paddle);
     }
 
     private void tardisDown() {
@@ -184,33 +182,38 @@ public class Pong implements Listener {
             tardisY = 14;
         }
         for (int p = 0; p < 16; p++) {
-            CANVAS[p][27] = GameChar.space;
+            setChar(p, 27, GameChar.space);
         }
-        CANVAS[tardisY + 1][27] = GameChar.paddle;
-        CANVAS[tardisY][27] = GameChar.paddle;
-        CANVAS[tardisY - 1][27] = GameChar.paddle;
+        setChar(tardisY + 1, 27, GameChar.paddle);
+        setChar(tardisY, 27, GameChar.paddle);
+        setChar(tardisY - 1, 27, GameChar.paddle);
     }
 
-    private void draw() {
+    private void drawDirty() {
         if (state == GameState.PLAYING) {
             tardisPaddle();
         }
-        for (int i = 0; i < 16; i++) {
-            char[] chars = CANVAS[i];
-            String line = new String(chars);
-            if (state == GameState.INITIALIZING) {
-                plugin.debug(line);
+        for (int i = 0; i < CANVAS.length; i++) {
+            if (dirtyRows[i]) {
+                displayList.get(i).text(Component.text(new String(CANVAS[i])));
+                dirtyRows[i] = false;
             }
-            TextDisplay display = displayList.get(i);
-            display.text(Component.text(line));
         }
     }
 
+    public void setChar(int y, int x, char c) {
+        if (CANVAS[y][x] != c) {
+            CANVAS[y][x] = c;
+            dirtyRows[y] = true;
+        }
+    }
+
+
     private void tardisPaddle() {
         // move paddle towards ball
-        if (tardisY < ball.by) {
+        if (tardisY < ball.y) {
             tardisDown();
-        } else if (tardisY > ball.by) {
+        } else if (tardisY > ball.y) {
             tardisUp();
         }
     }
@@ -219,10 +222,9 @@ public class Pong implements Listener {
         if (state != GameState.INITIALIZING) {
             pauseTick();
         }
-        plugin.debug("reset");
         this.CANVAS = new char[16][29];
         for (int i = 0; i < 16; i++) {
-            char[] line = Lines.CANVAS[i];
+            char[] line = Lines.newCanvas()[i];
             this.CANVAS[i] = line;
         }
         int row = TARDISConstants.RANDOM.nextInt(2, 14);
@@ -230,18 +232,15 @@ public class Pong implements Listener {
         paddleY = 8;
         tardisY = 8;
         if (state == GameState.INITIALIZING) {
-            ball = new Ball(this, row);
+            ball = new Ball(row, this);
         }
-        ball.by = row;
-        ball.bx = 14;
-        ball.originY = row;
-        ball.originX = 14;
-        double tmp = TARDISConstants.RANDOM.nextDouble(-ball.limit, ball.limit);
-        if (tmp < 0) {
-            tmp = (Math.PI * 2) + tmp;
-        }
-        ball.angle = tmp;
-        draw();
+        ball.y = row;
+        ball.x = 14;
+        int[] d = GameUtils.DIRECTIONS[TARDISConstants.RANDOM.nextInt(GameUtils.DIRECTIONS.length)];
+        ball.vx = d[0];
+        ball.vy = d[1];
+        Arrays.fill(dirtyRows, true);
+        drawDirty();
         if (state != GameState.INITIALIZING) {
             startTick();
         }
