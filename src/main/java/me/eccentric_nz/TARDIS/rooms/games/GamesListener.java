@@ -55,12 +55,6 @@ public class GamesListener extends TARDISMenuListener {
             // start tic tac toe game
             case 4 -> player.openInventory(new NoughtsAndCrossesInventory(plugin).getInventory());
             case 5 -> {
-                // check the player has nothing in slot 0
-                PlayerInventory playerInventory = player.getInventory();
-                if (playerInventory.getItem(0) != null) {
-                    plugin.getMessenger().send(player, TardisModule.TARDIS, "GAME_ITEM_SLOT");
-                    return;
-                }
                 // get level
                 ItemStack startLevel = view.getItem(6);
                 ItemMeta sim = startLevel.getItemMeta();
