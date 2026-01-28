@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.database.tool.Converter;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.maze.MazeBuilder;
 import me.eccentric_nz.TARDIS.maze.MazeGenerator;
+import me.eccentric_nz.TARDIS.utility.UpdateTARDISPlugins;
 import org.bukkit.Location;
 import org.bukkit.block.BlockFace;
 import org.bukkit.command.Command;
@@ -85,6 +86,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsStr.add("set_size");
         firstsStr.add("spawn_abandoned");
         firstsStr.add("undisguise");
+        firstsStr.add("update_plugin");
     }
 
     @Override
@@ -137,6 +139,13 @@ public class TARDISAdminCommands implements CommandExecutor {
                             }
                             plugin.getMVHelper().importWorlds(sender);
                             return true;
+                        }
+                        case "update_plugin" -> {
+                            if (!sender.isOp()) {
+                                plugin.getMessenger().message(sender, "You must be a server operator to run this command!");
+                                return true;
+                            }
+                            return new UpdateTARDISPlugins(plugin).fetchFromGitHub(sender);
                         }
                     }
                 }
