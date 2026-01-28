@@ -27,6 +27,7 @@ public class Ball {
             // tardis wins point
             pong.updateScore(MatchState.TARDIS_WON);
             pong.playSound(GameSound.POINT);
+//            pong.reducePeriod();
             pong.reset();
             return;
         }
@@ -34,6 +35,8 @@ public class Ball {
             // player wins point
             pong.updateScore(MatchState.PLAYER_WON);
             pong.playSound(GameSound.POINT);
+            // game speeds up every five points
+            pong.reducePeriod();
             pong.reset();
             return;
         }

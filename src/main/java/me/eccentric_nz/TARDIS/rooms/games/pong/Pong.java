@@ -43,8 +43,8 @@ public class Pong implements Listener {
     private GameState state = GameState.INITIALIZING;
     private int tickTask = -1;
     private int paddleY = 8;
-    private int tardisY = 8;
     private Ball ball;
+    private long period = 60;
 
     public Pong(TARDIS plugin, Player player) {
         this.plugin = plugin;
@@ -129,10 +129,11 @@ public class Pong implements Listener {
     }
 
     private void startTick() {
+        long p = Math.max((long) Math.ceil(period / 10.0d), 1);
         tickTask = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
             ball.update();
             drawDirty();
-        }, 10L, 5L);
+        }, 10L, p);
     }
 
     private void pauseTick() {
@@ -226,7 +227,6 @@ public class Pong implements Listener {
         int row = TARDISConstants.RANDOM.nextInt(2, 14);
         this.CANVAS[row][14] = GameChar.ball;
         paddleY = 8;
-        tardisY = 8;
         if (state == GameState.INITIALIZING) {
             ball = new Ball(row, this);
             updateScore(MatchState.PLAYER_WON);
@@ -340,5 +340,9 @@ public class Pong implements Listener {
         if (volume > 0) {
             player.playSound(playerLocation, gameSound.getSound(), volume, pitch);
         }
+    }
+
+    public void reducePeriod() {
+        period -= 2;
     }
 }
