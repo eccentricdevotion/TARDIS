@@ -7,8 +7,12 @@ import me.eccentric_nz.TARDIS.rooms.games.ArcadeData;
 import me.eccentric_nz.TARDIS.rooms.games.ArcadeTracker;
 import me.eccentric_nz.TARDIS.rooms.games.GameState;
 import me.eccentric_nz.TARDIS.rooms.games.GameUtils;
+import me.eccentric_nz.TARDIS.rooms.games.tictactoe.MatchState;
+import me.eccentric_nz.TARDIS.utility.ComponentUtils;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Chunk;
 import org.bukkit.Input;
 import org.bukkit.Location;
@@ -233,6 +237,7 @@ public class Pong implements Listener {
         tardisY = 8;
         if (state == GameState.INITIALIZING) {
             ball = new Ball(row, this);
+            updateScore(MatchState.PLAYER_WON);
         }
         ball.y = row;
         ball.x = 14;
@@ -287,5 +292,23 @@ public class Pong implements Listener {
         where.put("tardis_id", id);
         where.put("uuid", uuid.toString());
         plugin.getQueryFactory().doInsert("travellers", where);
+    }
+
+    public void updateScore(MatchState state) {
+        String score = ComponentUtils.stripColour(displayList.getLast().text());
+        int p = 0;
+        int t = 0;
+        if (!score.equals("Score") && this.state != GameState.INITIALIZING) {
+            String[] split = score.split(" \\| ");
+            p = TARDISNumberParsers.parseInt(split[0].split(" ")[1]);
+            t = TARDISNumberParsers.parseInt(split[1].split(" ")[1]);
+            if (state == MatchState.PLAYER_WON) {
+                p++;
+            }
+            if (state == MatchState.TARDIS_WON) {
+                t++;
+            }
+        }
+        displayList.getLast().text(Component.text(String.format("Player %s | TARDIS %s", p, t), NamedTextColor.GOLD));
     }
 }

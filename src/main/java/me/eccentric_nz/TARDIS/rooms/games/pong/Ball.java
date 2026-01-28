@@ -3,6 +3,7 @@ package me.eccentric_nz.TARDIS.rooms.games.pong;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.rooms.games.GameUtils;
+import me.eccentric_nz.TARDIS.rooms.games.tictactoe.MatchState;
 
 public class Ball {
 
@@ -23,14 +24,14 @@ public class Ball {
 
     public void update() {
         if (x == 0) {
-            TARDIS.plugin.debug("tardis wins point");
             // tardis wins point
+            pong.updateScore(MatchState.TARDIS_WON);
             pong.reset();
             return;
         }
         if (x == 28) {
-            TARDIS.plugin.debug("player wins point");
             // player wins point
+            pong.updateScore(MatchState.PLAYER_WON);
             pong.reset();
             return;
         }
