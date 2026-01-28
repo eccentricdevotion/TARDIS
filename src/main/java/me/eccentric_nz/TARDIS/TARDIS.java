@@ -54,6 +54,7 @@ import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
 import me.eccentric_nz.TARDIS.utility.*;
 import me.eccentric_nz.TARDIS.utility.logging.TARDISBlockLogger;
 import me.eccentric_nz.TARDIS.utility.protection.TARDISWorldGuardUtils;
+import me.eccentric_nz.TARDIS.utility.update.TARDISUpdateChecker;
 import me.eccentric_nz.tardischunkgenerator.TARDISHelper;
 import me.eccentric_nz.tardischunkgenerator.worldgen.*;
 import me.eccentric_nz.tardisregeneration.TARDISRegenerationUpdater;

@@ -24,7 +24,7 @@ import me.eccentric_nz.TARDIS.database.tool.Converter;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.maze.MazeBuilder;
 import me.eccentric_nz.TARDIS.maze.MazeGenerator;
-import me.eccentric_nz.TARDIS.utility.UpdateTARDISPlugins;
+import me.eccentric_nz.TARDIS.utility.update.UpdateTARDISPlugins;
 import org.bukkit.Location;
 import org.bukkit.block.BlockFace;
 import org.bukkit.command.Command;
