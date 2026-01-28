@@ -5,8 +5,9 @@ import org.bukkit.Location;
 public class GameUtils {
     
     public static int[][] DIRECTIONS = {
-            {1, 0}, {-1, 0}, {0, 1}, {0, -1},
-            {1, 1}, {1, -1}, {-1, 1}, {-1, -1}
+            {1, 0}, {-1, 0},
+            {1, 1}, {1, -1},
+            {-1, 1}, {-1, -1}
     };
 
     /**

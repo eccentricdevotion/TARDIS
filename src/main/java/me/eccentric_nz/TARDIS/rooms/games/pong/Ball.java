@@ -1,8 +1,8 @@
 package me.eccentric_nz.TARDIS.rooms.games.pong;
 
-import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.rooms.games.GameUtils;
+import me.eccentric_nz.TARDIS.rooms.games.tetris.GameSound;
 import me.eccentric_nz.TARDIS.rooms.games.tictactoe.MatchState;
 
 public class Ball {
@@ -26,12 +26,14 @@ public class Ball {
         if (x == 0) {
             // tardis wins point
             pong.updateScore(MatchState.TARDIS_WON);
+            pong.playSound(GameSound.POINT);
             pong.reset();
             return;
         }
         if (x == 28) {
             // player wins point
             pong.updateScore(MatchState.PLAYER_WON);
+            pong.playSound(GameSound.POINT);
             pong.reset();
             return;
         }
@@ -40,9 +42,11 @@ public class Ball {
         int nextY = y + vy;
         // walls
         if (nextX < 0 || nextX >= WIDTH) {
+            pong.playSound(GameSound.BOUNCE);
             vx = -vx;
         }
         if (nextY < 0 || nextY >= HEIGHT) {
+            pong.playSound(GameSound.BOUNCE);
             vy = -vy;
         }
         nextX = x + vx;
@@ -54,10 +58,13 @@ public class Ball {
         } else {
 //            TARDIS.plugin.debug(position.toString());
             applyPaddleBounce(position);
-            pong.setChar(y, x, GameChar.paddle);
+            pong.playSound(GameSound.PADDLE);
         }
         // update grid
         pong.setChar(nextY, nextX, GameChar.ball);
+        if (x == 2 && vx > 0) {
+            pong.updatePaddle(position);
+        }
         if (x == 13 || x == 15) {
             // reset net
             for (int n = 1; n < 14; n += 2) {

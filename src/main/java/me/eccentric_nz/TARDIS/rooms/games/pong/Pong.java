@@ -7,6 +7,7 @@ import me.eccentric_nz.TARDIS.rooms.games.ArcadeData;
 import me.eccentric_nz.TARDIS.rooms.games.ArcadeTracker;
 import me.eccentric_nz.TARDIS.rooms.games.GameState;
 import me.eccentric_nz.TARDIS.rooms.games.GameUtils;
+import me.eccentric_nz.TARDIS.rooms.games.tetris.GameSound;
 import me.eccentric_nz.TARDIS.rooms.games.tictactoe.MatchState;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
@@ -16,6 +17,7 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Chunk;
 import org.bukkit.Input;
 import org.bukkit.Location;
+import org.bukkit.Sound;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
@@ -64,6 +66,7 @@ public class Pong implements Listener {
             displayChunk.load();
         }
         player.setFallDistance(0.0f);
+        player.playSound(playerLocation, Sound.ENTITY_ENDERMAN_TELEPORT, 1.0f, 1.0f);
         player.teleport(playerLocation);
         // get armour stand and put player in it
         for (Entity e : playerLocation.getChunk().getEntities()) {
@@ -129,7 +132,7 @@ public class Pong implements Listener {
         tickTask = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
             ball.update();
             drawDirty();
-        }, 15L, 15L);
+        }, 10L, 5L);
     }
 
     private void pauseTick() {
@@ -165,34 +168,6 @@ public class Pong implements Listener {
         setChar(paddleY - 1, 1, GameChar.paddle);
     }
 
-    private void tardisUp() {
-        // upper bound = 1
-        tardisY--;
-        if (tardisY < 1) {
-            tardisY = 1;
-        }
-        for (int p = 0; p < 16; p++) {
-            setChar(p, 27, GameChar.space);
-        }
-        setChar(tardisY - 1, 27, GameChar.paddle);
-        setChar(tardisY, 27, GameChar.paddle);
-        setChar(tardisY + 1, 27, GameChar.paddle);
-    }
-
-    private void tardisDown() {
-        // lower bound = 14
-        tardisY++;
-        if (tardisY > 14) {
-            tardisY = 14;
-        }
-        for (int p = 0; p < 16; p++) {
-            setChar(p, 27, GameChar.space);
-        }
-        setChar(tardisY + 1, 27, GameChar.paddle);
-        setChar(tardisY, 27, GameChar.paddle);
-        setChar(tardisY - 1, 27, GameChar.paddle);
-    }
-
     private void drawDirty() {
         if (state == GameState.PLAYING) {
             tardisPaddle();
@@ -212,14 +187,31 @@ public class Pong implements Listener {
         }
     }
 
-
     private void tardisPaddle() {
         // move paddle towards ball
-        if (tardisY < ball.y) {
-            tardisDown();
-        } else if (tardisY > ball.y) {
-            tardisUp();
+        int targetY = predictBallY(ball);
+        int imperfection = 3; // lower = stronger AI
+        if (TARDISConstants.RANDOM.nextInt(imperfection) == 0) {
+            targetY += TARDISConstants.RANDOM.nextBoolean() ? 1 : -1;
         }
+        int clamped = Math.clamp(targetY, 1, 14);
+        for (int p = 0; p < 16; p++) {
+            setChar(p, 27, GameChar.space);
+        }
+        setChar(clamped + 1, 27, GameChar.paddle);
+        setChar(clamped, 27, GameChar.paddle);
+        setChar(clamped - 1, 27, GameChar.paddle);
+    }
+
+    private int predictBallY(Ball ball) {
+        // ball moving away → dumb tracking
+        if (ball.vx < 0 && ball.x < 27) {
+            return ball.y;
+        }
+        int simY = ball.y;
+        int vy = ball.vy;
+        simY += vy;
+        return simY;
     }
 
     protected void reset() {
@@ -280,6 +272,7 @@ public class Pong implements Listener {
         ArcadeData data = ArcadeTracker.PLAYERS.get(uuid);
         // teleport player back to games room
         player.setFallDistance(0.0f);
+        player.playSound(playerLocation, Sound.ENTITY_ENDERMAN_TELEPORT, 1.0f, 1.0f);
         player.teleport(data.backup());
         player.setFallDistance(0.0f);
         // reset flight status
@@ -310,5 +303,42 @@ public class Pong implements Listener {
             }
         }
         displayList.getLast().text(Component.text(String.format("Player %s | TARDIS %s", p, t), NamedTextColor.GOLD));
+    }
+
+    public void updatePaddle(PaddlePosition position) {
+        switch (position) {
+            case PLAYER_TOP, PLAYER_MIDDLE, PLAYER_BOTTOM -> {
+                setChar(paddleY + 1, 1, GameChar.paddle);
+                setChar(paddleY, 1, GameChar.paddle);
+                setChar(paddleY - 1, 1, GameChar.paddle);
+            }
+            default -> { }
+        }
+    }
+
+    public void playSound(GameSound gameSound) {
+        float volume;
+        float pitch;
+        switch (gameSound) {
+            case PADDLE -> {
+                volume = 0.2f;
+                pitch = 0.5f;
+            }
+            case POINT -> {
+                volume = 0.3f;
+                pitch = 1.0f;
+            }
+            case BOUNCE -> {
+                volume = 0.1f;
+                pitch = 1.6f;
+            }
+            default -> {
+                volume = 0;
+                pitch = 0;
+            }
+        }
+        if (volume > 0) {
+            player.playSound(playerLocation, gameSound.getSound(), volume, pitch);
+        }
     }
 }

@@ -391,44 +391,6 @@ public class Game implements Listener {
         }
     }
 
-//    @EventHandler
-//    public void onClick(PlayerInteractEvent e) {
-//        if (state == GameState.PLAYING && e.getPlayer() == player) {
-//            switch (e.getAction()) {
-//                case RIGHT_CLICK_AIR, RIGHT_CLICK_BLOCK -> rotateClockwise();
-//                case LEFT_CLICK_AIR, LEFT_CLICK_BLOCK -> rotateCounterClockwise();
-//                default -> { }
-//            }
-//        }
-//    }
-
-//    @EventHandler
-//    public void onMove(PlayerMoveEvent e) {
-//        if (state == GameState.PLAYING && e.getPlayer() == player) {
-//            double dx = e.getTo().getX() - e.getFrom().getX();
-//            double dz = e.getTo().getZ() - e.getFrom().getZ();
-//            // if not holding down
-//            if (!((dx > 0.1425 && dx < 0.2) || (dx < -0.1425 && dx > -0.2))) {
-//                hasMoved = false;
-//            }
-//            if (!hasMoved) {
-//                if (dx > 0) {
-//                    moveLeft();
-//                }
-//                if (dx < 0) {
-//                    moveRight();
-//                }
-//                hasMoved = true;
-//            } else {
-//                hasMoved = false;
-//            }
-//            if (dz < 0) {
-//                moveDown();
-//            }
-//            player.teleport(playerLocation);
-//        }
-//    }
-
     public void abort() {
         if (ArcadeTracker.PLAYERS.containsKey(player.getUniqueId())) {
             UUID uuid = player.getUniqueId();
