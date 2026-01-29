@@ -30,18 +30,4 @@ public record GUIArchive() {
     public static final GUIData MEDIUM = new GUIData(GuiVariant.MEDIUM.getKey(), 23, Material.BOWL);
     public static final GUIData TALL = new GUIData(GuiVariant.TALL.getKey(), 24, Material.BOWL);
     public static final GUIData CLOSE = new GUIData(GuiVariant.CLOSE.getKey(), 26, Material.BOWL);
-
-    public static GUIData getByName(String name) {
-        switch (name) {
-            case "MEDIUM" -> {
-                return MEDIUM;
-            }
-            case "TALL" -> {
-                return TALL;
-            }
-            default -> {
-                return SMALL;
-            }
-        }
-    }
 }

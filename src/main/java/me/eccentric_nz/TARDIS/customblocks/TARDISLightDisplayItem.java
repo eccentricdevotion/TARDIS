@@ -136,4 +136,9 @@ public enum TARDISLightDisplayItem implements TARDISDisplayItem {
     public boolean isClosedDoor() {
         return false;
     }
+
+    @Override
+    public boolean isPipe() {
+        return false;
+    }
 }

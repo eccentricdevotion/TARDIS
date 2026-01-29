@@ -78,13 +78,16 @@ public class TARDISSchematicCommand implements CommandExecutor {
                 return new SchematicClear().act(plugin, player);
             }
             if (args[0].equalsIgnoreCase("remove")) {
-                return new SchematicRemoveLights().act(plugin, player);
+                return new SchematicRemove().act(plugin, player, args[1]);
             }
             if (args[0].equalsIgnoreCase("flowers")) {
                 return new SchematicFlowers().act(plugin, player);
             }
             if (args[0].equalsIgnoreCase("fixliquid")) {
                 return new SchematicLavaAndWater().act(plugin, player, "lava".equals(args[1].toLowerCase(Locale.ROOT)));
+            }
+            if (args[0].equalsIgnoreCase("position")) {
+                return new SchematicPosition().teleport(plugin, player);
             }
             if (args.length < 2) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");

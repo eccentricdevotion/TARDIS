@@ -633,13 +633,14 @@ class AbandonedBuildRunnable implements Runnable {
                 }
             } else if (type.equals(Material.DECORATED_POT)) {
                 TARDISBlockSetters.setBlock(world, x, y, z, data);
-                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                    if (c.has("pot")) {
-                        JsonObject pot = c.get("pot").getAsJsonObject();
-                        PotSetter.decorate(plugin, pot, world.getBlockAt(x, y, z));
-
-                    }
-                }, 1l);
+                if (c.has("pot")) {
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> PotSetter.decorate(plugin, c.get("pot").getAsJsonObject(), world.getBlockAt(x, y, z)), 1l);
+                }
+            } else if (Tag.WOODEN_SHELVES.isTagged(type)) {
+                TARDISBlockSetters.setBlock(world, x, y, z, data);
+                if (c.has("items")) {
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> ShelfSetter.stock(world.getBlockAt(x, y, z), c.get("items").getAsJsonArray()), 3L);
+                }
             } else if (TARDISStaticUtils.isInfested(type)) {
                 // legacy monster egg stone for controls
                 TARDISBlockSetters.setBlock(world, x, y, z, Material.AIR);

@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.database;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.tool.SQL;
+import me.eccentric_nz.TARDIS.database.tool.SQL_CREATE;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 
 import java.sql.Connection;
@@ -49,7 +49,7 @@ public class TARDISMySQLDatabase {
         service.setIsMySQL(true);
         service.testConnection(connection);
         try (Statement statement = connection.createStatement()) {
-            for (String query : SQL.CREATES) {
+            for (String query : SQL_CREATE.LIST) {
                 String subbed = String.format(query, plugin.getConfig().getString("storage.mysql.prefix"));
                 statement.executeUpdate(subbed);
             }

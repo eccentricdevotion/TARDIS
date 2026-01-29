@@ -54,6 +54,7 @@ import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
 import me.eccentric_nz.TARDIS.utility.*;
 import me.eccentric_nz.TARDIS.utility.logging.TARDISBlockLogger;
 import me.eccentric_nz.TARDIS.utility.protection.TARDISWorldGuardUtils;
+import me.eccentric_nz.TARDIS.utility.update.TARDISUpdateChecker;
 import me.eccentric_nz.tardischunkgenerator.TARDISHelper;
 import me.eccentric_nz.tardischunkgenerator.worldgen.*;
 import me.eccentric_nz.tardisregeneration.TARDISRegenerationUpdater;
@@ -194,6 +195,7 @@ public class TARDIS extends JavaPlugin {
     private ShopSettings shopSettings;
     private TVMSettings tvmSettings;
     private BlasterSettings blasterSettings;
+    private final String serverStr = "1.21.11";
 
     /**
      * Constructor
@@ -273,7 +275,7 @@ public class TARDIS extends JavaPlugin {
         persistentDataTypeUUID = new TARDISUUIDDataType();
         console = getServer().getConsoleSender();
         ModuleDescriptor.Version serverVersion = getServerVersion(getServer().getVersion());
-        ModuleDescriptor.Version minVersion = ModuleDescriptor.Version.parse("1.21.11");
+        ModuleDescriptor.Version minVersion = ModuleDescriptor.Version.parse(serverStr);
         // check server version
         if (serverVersion.compareTo(minVersion) >= 0) {
             // don't start if TARDISChunkGenerator is present
@@ -427,6 +429,10 @@ public class TARDIS extends JavaPlugin {
             condensables = cond.getCondensables();
             // start runnable tasks
             new TARDISRunnables(this).start();
+            // check TARDIS build
+            if (getConfig().getBoolean("preferences.update.notify")) {
+                getServer().getScheduler().runTaskAsynchronously(this, new TARDISUpdateChecker(this, null));
+            }
             // hook PlaceholderAPI
             if (pm.getPlugin("PlaceholderAPI") != null) {
                 debug("Registering expansion with PlaceholderAPI.");
@@ -1678,5 +1684,9 @@ public class TARDIS extends JavaPlugin {
             set.put("time", time);
             getQueryFactory().doSyncInsert("tag", set);
         }
+    }
+
+    public String getServerStr() {
+        return serverStr;
     }
 }

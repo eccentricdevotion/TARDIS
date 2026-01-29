@@ -27,6 +27,8 @@ import me.eccentric_nz.TARDIS.forcefield.ForceFieldPersister;
 import me.eccentric_nz.TARDIS.hads.HadsPersister;
 import me.eccentric_nz.TARDIS.move.PortalPersister;
 import me.eccentric_nz.TARDIS.rooms.RoomPersister;
+import me.eccentric_nz.TARDIS.rooms.games.ArcadePersister;
+import me.eccentric_nz.TARDIS.rooms.games.ArcadeTracker;
 import me.eccentric_nz.TARDIS.sensor.SensorTracker;
 import me.eccentric_nz.TARDIS.siegemode.SiegePersister;
 import me.eccentric_nz.TARDIS.skins.SkinPersister;
@@ -77,6 +79,9 @@ public class TARDISPersister {
 
     public void save() {
         // persist any room growing
+        if (!ArcadeTracker.PLAYERS.isEmpty()) {
+            new ArcadePersister(plugin).save();
+        }
         new RoomPersister(plugin).saveProgress();
         new PortalPersister(plugin).save();
         if (plugin.isDisguisesOnServer() && plugin.getConfig().getBoolean("arch.enabled")) {

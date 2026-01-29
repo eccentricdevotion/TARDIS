@@ -45,7 +45,6 @@ import me.eccentric_nz.TARDIS.schematic.setters.*;
 import me.eccentric_nz.TARDIS.utility.TARDISBannerData;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import me.eccentric_nz.TARDIS.utility.protection.TARDISProtectionRemover;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -620,12 +619,14 @@ public class RepairDesktopRunnable extends DesktopThemeRunnable {
                     }
                 } else if (type.equals(Material.DECORATED_POT)) {
                     TARDISBlockSetters.setBlock(world, x, y, z, data);
-                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                        if (bb.has("pot")) {
-                            JsonObject pot = bb.get("pot").getAsJsonObject();
-                            PotSetter.decorate(plugin, pot, world.getBlockAt(x, y, z));
-                        }
-                    }, 1L);
+                    if (bb.has("pot")) {
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> PotSetter.decorate(plugin, bb.get("pot").getAsJsonObject(), world.getBlockAt(x, y, z)), 1L);
+                    }
+                } else if (Tag.WOODEN_SHELVES.isTagged(type)) {
+                    TARDISBlockSetters.setBlock(world, x, y, z, data);
+                    if (bb.has("items")) {
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> ShelfSetter.stock(world.getBlockAt(x, y, z), bb.get("items").getAsJsonArray()), 3L);
+                    }
                 } else if (MaterialTags.INFESTED_BLOCKS.isTagged(type)) {
                     // legacy monster egg stone for controls
                     TARDISBlockSetters.setBlock(world, x, y, z, Material.AIR);

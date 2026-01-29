@@ -69,7 +69,7 @@ public class ControlListener implements Listener {
             31, 32, 33, 35, 38, 39, 40,
             41, 42, 43, 47,
             54, 55, 58, 59,
-            60, 61
+            60, 61, 62
     );
     private final Set<UUID> cooldown = new HashSet<>();
 
@@ -259,6 +259,7 @@ public class ControlListener implements Listener {
                                     }
                                 }
                                 case 61 -> new LaundryAction(plugin).openGUI(player);
+                                case 62 -> new GamesAction(plugin).openGUI(player);
                                 default -> { }
                             }
                         } else if (action.equals(Action.PHYSICAL)) {

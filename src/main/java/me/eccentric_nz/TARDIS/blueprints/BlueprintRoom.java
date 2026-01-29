@@ -24,10 +24,6 @@ public enum BlueprintRoom {
 
 //    ROOM("tardis.room"), // all room perms
 
-//    VAULT("tardis.vault"), // can use vault room
-//    FARM("tardis.farm"), // can farm mobs into TARDIS - must have appropriate room
-//    LAZARUS("tardis.lazarus"), // can use the genetic manipulator
-
     ALLAY("tardis.room.allay", BlueprintFeature.FARM),
     ANTIGRAVITY("tardis.room.antigravity"),
     APIARY("tardis.room.apiary", BlueprintFeature.FARM),
@@ -44,8 +40,10 @@ public enum BlueprintRoom {
     EYE("tardis.room.eye"),
     FARM("tardis.room.farm", BlueprintFeature.FARM),
     GALLERY("tardis.room.gallery"),
+    GAMES("tardis.room.games"),
     GARDEN("tardis.room.garden"),
     GEODE("tardis.room.geode"),
+    GOLEM("tardis.room.golem"),
     GRAVITY("tardis.room.gravity"),
     GREENHOUSE("tardis.room.greenhouse"),
     HAPPY("tardis.room.happy"),

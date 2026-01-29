@@ -89,7 +89,7 @@ public class TARDISGiveTabComplete extends TARDISCompleter implements TabComplet
             BLUEPRINT_SUBS.add("BLUEPRINT_TRAVEL_" + travel.toString());
         }
         for (String seed : Desktops.getBY_NAMES().keySet()) {
-            if (!seed.equals("SMALL") && !seed.equals("MEDIUM") && !seed.equals("TALL") && !seed.equals("ARCHIVE")) {
+            if (!seed.equals("JUNK") && !seed.equals("SMALL") && !seed.equals("MEDIUM") && !seed.equals("TALL") && !seed.equals("ARCHIVE")) {
                 SEED_SUBS.add(seed);
             }
         }

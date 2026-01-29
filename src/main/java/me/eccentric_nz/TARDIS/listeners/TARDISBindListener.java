@@ -58,6 +58,7 @@ public class TARDISBindListener implements Listener {
         this.plugin = plugin;
         validBlocks.addAll(Tag.SIGNS.getValues());
         validBlocks.addAll(Tag.BUTTONS.getValues());
+        validBlocks.addAll(Tag.PRESSURE_PLATES.getValues());
         validBlocks.add(Material.LEVER);
     }
 

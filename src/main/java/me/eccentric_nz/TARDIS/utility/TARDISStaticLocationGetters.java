@@ -131,6 +131,11 @@ public class TARDISStaticLocationGetters {
         return "Location{world=CraftWorld{name=" + w.getName() + "},x=" + x + ".0,y=" + y + ".0,z=" + z + ".0,pitch=0.0,yaw=0.0}";
     }
 
+    public static String makeTetrisLocationString(String world, double x, double y, double z) {
+        // Location{world=CraftWorld{name=world},x=0.0,y=0.0,z=0.0,pitch=0.0,yaw=0.0}
+        return String.format("Location{world=CraftWorld{name=%s},x=%.1f,y=%.1f,z=%.1f,pitch=0.0,yaw=0.0}", world, x, y, z);
+    }
+
     /**
      * Create a TARDIS Repeater location string from a Bukkit location.
      *

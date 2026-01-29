@@ -22,13 +22,17 @@ import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.UUID;
 
-public class SchematicRemoveLights {
+public class SchematicRemove {
 
-    public boolean act(TARDIS plugin, Player player) {
+    public boolean act(TARDIS plugin, Player player, String arg) {
+        boolean lights = arg.equalsIgnoreCase("lights");
         UUID uuid = player.getUniqueId();
         // check they have selected start and end blocks
         if (!plugin.getTrackerKeeper().getStartLocation().containsKey(uuid)) {
@@ -65,15 +69,27 @@ public class SchematicRemoveLights {
             for (int r = minx; r <= maxx; r++) {
                 for (int c = minz; c <= maxz; c++) {
                     Block b = w.getBlockAt(r, l, c);
-                    if (b.getType().equals(Material.LIGHT) || b.getType().equals(Material.REDSTONE_LAMP)) {
+                    if (lights && b.getType().equals(Material.LIGHT) || b.getType().equals(Material.REDSTONE_LAMP)) {
                         TARDISDisplayItemUtils.remove(b);
                         // replace with redstone lamp
                         b.setType(Material.REDSTONE_LAMP);
+                    } else if (b.getType().equals(Material.BARRIER)) {
+                        // get the item display's item stack and remove the custom model
+                        ItemDisplay display = TARDISDisplayItemUtils.get(b);
+                        if (display != null) {
+                            ItemStack is = display.getItemStack();
+                            ItemMeta im = is.getItemMeta();
+                            if (im.hasItemModel()) {
+                                im.setItemModel(null);
+                                is.setItemMeta(im);
+                                display.setItemStack(is);
+                            }
+                        }
                     }
                 }
             }
         }
-        plugin.getMessenger().message(player, TardisModule.TARDIS, "Light removal complete");
+        plugin.getMessenger().message(player, TardisModule.TARDIS, lights ? "Light removal complete" : "Custom model removal complete");
         return true;
     }
 }

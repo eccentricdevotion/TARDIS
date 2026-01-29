@@ -50,6 +50,8 @@ public class RoomsConfigUpdater {
         booleanOptions.put("rooms.AQUARIUM.user", false);
         booleanOptions.put("rooms.ARBORETUM.enabled", true);
         booleanOptions.put("rooms.ARBORETUM.user", false);
+        booleanOptions.put("rooms.ARCADE.enabled", true);
+        booleanOptions.put("rooms.ARCADE.user", false);
         booleanOptions.put("rooms.ARCHITECTURAL.enabled", true);
         booleanOptions.put("rooms.ARCHITECTURAL.user", false);
         booleanOptions.put("rooms.BAKER.enabled", true);
@@ -72,10 +74,14 @@ public class RoomsConfigUpdater {
         booleanOptions.put("rooms.FARM.user", false);
         booleanOptions.put("rooms.GALLERY.enabled", true);
         booleanOptions.put("rooms.GALLERY.user", false);
+        booleanOptions.put("rooms.GAMES.enabled", true);
+        booleanOptions.put("rooms.GAMES.user", false);
         booleanOptions.put("rooms.GARDEN.enabled", true);
         booleanOptions.put("rooms.GARDEN.user", false);
         booleanOptions.put("rooms.GEODE.enabled", true);
         booleanOptions.put("rooms.GEODE.user", false);
+        booleanOptions.put("rooms.GOLEM.enabled", true);
+        booleanOptions.put("rooms.GOLEM.user", false);
         booleanOptions.put("rooms.GRAVITY.enabled", true);
         booleanOptions.put("rooms.GRAVITY.user", false);
         booleanOptions.put("rooms.GREENHOUSE.enabled", true);
@@ -159,6 +165,8 @@ public class RoomsConfigUpdater {
         integerOptions.put("rooms.AQUARIUM.offset", -4);
         integerOptions.put("rooms.ARBORETUM.cost", 850);
         integerOptions.put("rooms.ARBORETUM.offset", -4);
+        integerOptions.put("rooms.ARCADE.cost", 250);
+        integerOptions.put("rooms.ARCADE.offset", 0);
         integerOptions.put("rooms.ARCHITECTURAL.cost", 775);
         integerOptions.put("rooms.ARCHITECTURAL.offset", -4);
         integerOptions.put("rooms.BAKER.cost", 750);
@@ -181,10 +189,14 @@ public class RoomsConfigUpdater {
         integerOptions.put("rooms.FARM.offset", -4);
         integerOptions.put("rooms.GALLERY.cost", 1275);
         integerOptions.put("rooms.GALLERY.offset", -4);
+        integerOptions.put("rooms.GAMES.cost", 750);
+        integerOptions.put("rooms.GAMES.offset", -4);
         integerOptions.put("rooms.GARDEN.cost", 625);
         integerOptions.put("rooms.GARDEN.offset", -4);
         integerOptions.put("rooms.GEODE.cost", 675);
         integerOptions.put("rooms.GEODE.offset", -4);
+        integerOptions.put("rooms.GOLEM.cost", 1025);
+        integerOptions.put("rooms.GOLEM.offset", -4);
         integerOptions.put("rooms.GRAVITY.cost", 1525);
         integerOptions.put("rooms.GRAVITY.offset", -20);
         integerOptions.put("rooms.GREENHOUSE.cost", 750);
@@ -263,6 +275,7 @@ public class RoomsConfigUpdater {
         stringOptions.put("rooms.APIARY.seed", "BEE_NEST");
         stringOptions.put("rooms.AQUARIUM.seed", "TUBE_CORAL_BLOCK");
         stringOptions.put("rooms.ARBORETUM.seed", "OAK_LEAVES");
+        stringOptions.put("rooms.ARCADE.seed", "STRUCTURE_BLOCK");
         stringOptions.put("rooms.ARCHITECTURAL.seed", "WAXED_COPPER_GRATE");
         stringOptions.put("rooms.BAKER.seed", "END_STONE");
         stringOptions.put("rooms.BAMBOO.seed", "BAMBOO");
@@ -274,8 +287,10 @@ public class RoomsConfigUpdater {
         stringOptions.put("rooms.EYE.seed", "SHROOMLIGHT");
         stringOptions.put("rooms.FARM.seed", "DIRT");
         stringOptions.put("rooms.GALLERY.seed", "CHISELED_QUARTZ_BLOCK");
+        stringOptions.put("rooms.GAMES.seed", "DARK_OAK_PLANKS");
         stringOptions.put("rooms.GARDEN.seed", "CHERRY_LEAVES");
         stringOptions.put("rooms.GEODE.seed", "AMETHYST_BLOCK");
+        stringOptions.put("rooms.GOLEM.seed", "TUFF");
         stringOptions.put("rooms.GRAVITY.seed", "MOSSY_COBBLESTONE");
         stringOptions.put("rooms.GREENHOUSE.seed", "MELON");
         stringOptions.put("rooms.HAPPY.seed", "STRIPPED_OAK_LOG");

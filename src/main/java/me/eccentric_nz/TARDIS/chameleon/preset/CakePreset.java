@@ -27,50 +27,48 @@ import me.eccentric_nz.TARDIS.chameleon.TARDISPreset;
  */
 public class CakePreset extends TARDISPreset {
 
-    // TODO use candles instead of torches
-
     public CakePreset() {
         // set blueprint data strings
         String[][] blueprintData = new String[10][4];
         blueprintData[0][0] = "minecraft:brown_wool";
         blueprintData[0][1] = "minecraft:brown_wool";
         blueprintData[0][2] = "minecraft:white_wool";
-        blueprintData[0][3] = "minecraft:torch";
+        blueprintData[0][3] = "minecraft:cyan_candle[candles=1,lit=true,waterlogged=false]";
         blueprintData[1][0] = "minecraft:brown_wool";
         blueprintData[1][1] = "minecraft:brown_wool";
         blueprintData[1][2] = "minecraft:white_wool";
-        blueprintData[1][3] = "minecraft:torch";
+        blueprintData[1][3] = "minecraft:lime_candle[candles=1,lit=true,waterlogged=false]";
         blueprintData[2][0] = "minecraft:brown_wool";
         blueprintData[2][1] = "minecraft:brown_wool";
         blueprintData[2][2] = "minecraft:white_wool";
-        blueprintData[2][3] = "minecraft:torch";
+        blueprintData[2][3] = "minecraft:yellow_candle[candles=1,lit=true,waterlogged=false]";
         blueprintData[3][0] = "minecraft:brown_wool";
         blueprintData[3][1] = "minecraft:brown_wool";
         blueprintData[3][2] = "minecraft:white_wool";
-        blueprintData[3][3] = "minecraft:torch";
+        blueprintData[3][3] = "minecraft:orange_candle[candles=1,lit=true,waterlogged=false]";
         blueprintData[4][0] = "minecraft:brown_wool";
         blueprintData[4][1] = "minecraft:brown_wool";
         blueprintData[4][2] = "minecraft:white_wool";
-        blueprintData[4][3] = "minecraft:torch";
+        blueprintData[4][3] = "minecraft:red_candle[candles=1,lit=true,waterlogged=false]";
         blueprintData[5][0] = "minecraft:brown_wool";
         blueprintData[5][1] = "minecraft:brown_wool";
         blueprintData[5][2] = "minecraft:white_wool";
-        blueprintData[5][3] = "minecraft:torch";
+        blueprintData[5][3] = "minecraft:pink_candle[candles=1,lit=true,waterlogged=false]";
         blueprintData[6][0] = "minecraft:brown_wool";
         blueprintData[6][1] = "minecraft:brown_wool";
         blueprintData[6][2] = "minecraft:white_wool";
-        blueprintData[6][3] = "minecraft:torch";
-        blueprintData[7][0] = "minecraft:oak_door[half=lower,hinge=right,facing=east,open=false]";
-        blueprintData[7][1] = "minecraft:oak_door[half=upper,hinge=right,facing=east,open=false]";
+        blueprintData[6][3] = "minecraft:purple_candle[candles=1,lit=true,waterlogged=false]";
+        blueprintData[7][0] = "minecraft:oak_door[half=lower,hinge=right,facing=east,open=false,powered=false]";
+        blueprintData[7][1] = "minecraft:oak_door[half=upper,hinge=right,facing=east,open=false,powered=false]";
         blueprintData[7][2] = "minecraft:white_wool";
-        blueprintData[7][3] = "minecraft:torch";
+        blueprintData[7][3] = "minecraft:blue_candle[candles=1,lit=true,waterlogged=false]";
         blueprintData[8][0] = "minecraft:air";
         blueprintData[8][1] = "minecraft:air";
         blueprintData[8][2] = "minecraft:white_wool";
         blueprintData[8][3] = "minecraft:air";
         blueprintData[9][0] = "minecraft:air";
         blueprintData[9][1] = "minecraft:air";
-        blueprintData[9][2] = "minecraft:oak_wall_sign[facing=west]";
+        blueprintData[9][2] = "minecraft:oak_wall_sign[facing=west,waterlogged=false]";
         blueprintData[9][3] = "minecraft:air";
         setBlueprintData(blueprintData);
         // set stained data strings
@@ -78,42 +76,42 @@ public class CakePreset extends TARDISPreset {
         stainedData[0][0] = "minecraft:brown_stained_glass";
         stainedData[0][1] = "minecraft:brown_stained_glass";
         stainedData[0][2] = "minecraft:white_stained_glass";
-        stainedData[0][3] = "minecraft:air";
+        stainedData[0][3] = "minecraft:cyan_stained_glass";
         stainedData[1][0] = "minecraft:brown_stained_glass";
         stainedData[1][1] = "minecraft:brown_stained_glass";
         stainedData[1][2] = "minecraft:white_stained_glass";
-        stainedData[1][3] = "minecraft:air";
+        stainedData[1][3] = "minecraft:lime_stained_glass";
         stainedData[2][0] = "minecraft:brown_stained_glass";
         stainedData[2][1] = "minecraft:brown_stained_glass";
         stainedData[2][2] = "minecraft:white_stained_glass";
-        stainedData[2][3] = "minecraft:air";
+        stainedData[2][3] = "minecraft:yellow_stained_glass";
         stainedData[3][0] = "minecraft:brown_stained_glass";
         stainedData[3][1] = "minecraft:brown_stained_glass";
         stainedData[3][2] = "minecraft:white_stained_glass";
-        stainedData[3][3] = "minecraft:air";
+        stainedData[3][3] = "minecraft:orange_stained_glass";
         stainedData[4][0] = "minecraft:brown_stained_glass";
         stainedData[4][1] = "minecraft:brown_stained_glass";
         stainedData[4][2] = "minecraft:white_stained_glass";
-        stainedData[4][3] = "minecraft:air";
+        stainedData[4][3] = "minecraft:red_stained_glass";
         stainedData[5][0] = "minecraft:brown_stained_glass";
         stainedData[5][1] = "minecraft:brown_stained_glass";
         stainedData[5][2] = "minecraft:white_stained_glass";
-        stainedData[5][3] = "minecraft:air";
+        stainedData[5][3] = "minecraft:pink_stained_glass";
         stainedData[6][0] = "minecraft:brown_stained_glass";
         stainedData[6][1] = "minecraft:brown_stained_glass";
         stainedData[6][2] = "minecraft:white_stained_glass";
-        stainedData[6][3] = "minecraft:air";
-        stainedData[7][0] = "minecraft:oak_door[half=lower,hinge=right,facing=east,open=false]";
-        stainedData[7][1] = "minecraft:oak_door[half=upper,hinge=right,facing=east,open=false]";
+        stainedData[6][3] = "minecraft:purple_stained_glass";
+        stainedData[7][0] = "minecraft:oak_door[half=lower,hinge=right,facing=east,open=false,powered=false]";
+        stainedData[7][1] = "minecraft:oak_door[half=upper,hinge=right,facing=east,open=false,powered=false]";
         stainedData[7][2] = "minecraft:white_stained_glass";
-        stainedData[7][3] = "minecraft:air";
+        stainedData[7][3] = "minecraft:blue_stained_glass";
         stainedData[8][0] = "minecraft:air";
         stainedData[8][1] = "minecraft:air";
         stainedData[8][2] = "minecraft:white_stained_glass";
         stainedData[8][3] = "minecraft:air";
         stainedData[9][0] = "minecraft:air";
         stainedData[9][1] = "minecraft:air";
-        stainedData[9][2] = "minecraft:oak_wall_sign[facing=west]";
+        stainedData[9][2] = "minecraft:oak_wall_sign[facing=west,waterlogged=false]";
         stainedData[9][3] = "minecraft:air";
         setStainedData(stainedData);
         // set glass data strings
@@ -146,8 +144,8 @@ public class CakePreset extends TARDISPreset {
         glassData[6][1] = "minecraft:glass";
         glassData[6][2] = "minecraft:glass";
         glassData[6][3] = "minecraft:air";
-        glassData[7][0] = "minecraft:oak_door[half=lower,hinge=right,facing=east,open=false]";
-        glassData[7][1] = "minecraft:oak_door[half=upper,hinge=right,facing=east,open=false]";
+        glassData[7][0] = "minecraft:oak_door[half=lower,hinge=right,facing=east,open=false,powered=false]";
+        glassData[7][1] = "minecraft:oak_door[half=upper,hinge=right,facing=east,open=false,powered=false]";
         glassData[7][2] = "minecraft:glass";
         glassData[7][3] = "minecraft:air";
         glassData[8][0] = "minecraft:air";
@@ -156,7 +154,7 @@ public class CakePreset extends TARDISPreset {
         glassData[8][3] = "minecraft:air";
         glassData[9][0] = "minecraft:air";
         glassData[9][1] = "minecraft:air";
-        glassData[9][2] = "minecraft:oak_wall_sign[facing=west]";
+        glassData[9][2] = "minecraft:oak_wall_sign[facing=west,waterlogged=false]";
         glassData[9][3] = "minecraft:air";
         setGlassData(glassData);
     }
