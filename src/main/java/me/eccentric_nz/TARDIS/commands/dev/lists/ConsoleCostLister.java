@@ -16,7 +16,7 @@ public class ConsoleCostLister {
 
     public void actualArtron() {
         ArtronValues artronValues = new Processor(plugin).getValues();
-        plugin.debug("| Desktop | Condensed Artron | Current cost | Updated cost | Mapped cost | Size |");
+        plugin.debug("| Desktop | Condensed Artron | Old cost     | Updated cost | Mapped cost | Size |");
         plugin.debug("| ------- | ---------------- | ------------ | ------------ | ----------- | ---- |");
         for (CostData data : artronValues.calculated()) {
             int cost = Calculator.getMapped(data, artronValues.highest());

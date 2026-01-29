@@ -69,16 +69,22 @@ public class TARDISZeroRoomChatListener implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onPlayerCommandPreprocessEvent(PlayerCommandPreprocessEvent event) {
         Player player = event.getPlayer();
-        if ((player.isOp() || TARDISPermission.hasPermission(player, "tardis.admin")) && ArcadeTracker.PLAYERS.containsKey(player.getUniqueId())) {
-            return;
-        }
-        if (plugin.getTrackerKeeper().getZeroRoomOccupants().contains(player.getUniqueId())) {
-            event.setCancelled(true);
-            plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_IN_ZERO");
-            return;
-        }
         UUID uuid = player.getUniqueId();
+        if ((player.isOp() || TARDISPermission.hasPermission(player, "tardis.admin")) && ArcadeTracker.PLAYERS.containsKey(uuid)) {
+            return;
+        }
         String resend = event.getMessage();
+        if (plugin.getTrackerKeeper().getZeroRoomOccupants().contains(uuid)) {
+            if (resend.contains("arcade return")) {
+                plugin.getTrackerKeeper().getZeroRoomOccupants().remove(uuid);
+                ArcadeTracker.PLAYERS.remove(uuid);
+                player.teleport(plugin.getServer().getWorlds().getFirst().getSpawnLocation());
+            } else {
+                event.setCancelled(true);
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_IN_ZERO");
+            }
+            return;
+        }
         String command = resend.toLowerCase(Locale.ROOT);
         if (plugin.getTrackerKeeper().getTelepaths().containsKey(uuid)) {
             if (command.contains("tardis ") || command.contains("tardistravel ") || command.contains("ttravel ")) {

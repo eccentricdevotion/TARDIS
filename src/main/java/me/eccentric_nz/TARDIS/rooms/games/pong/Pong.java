@@ -37,6 +37,8 @@ public class Pong implements Listener {
     private final TARDIS plugin;
     private final Player player;
     private final boolean[] dirtyRows = new boolean[16];
+    int p = 0;
+    int t = 0;
     private List<TextDisplay> displayList;
     private Location playerLocation;
     private int id = -1;
@@ -45,9 +47,7 @@ public class Pong implements Listener {
     private int tickTask = -1;
     private int paddleY = 8;
     private Ball ball;
-    private long period = 60;
-    int p = 0;
-    int t = 0;
+    private double period = 58.0d;
 
     public Pong(TARDIS plugin, Player player) {
         this.plugin = plugin;
@@ -370,6 +370,6 @@ public class Pong implements Listener {
     }
 
     public void reducePeriod() {
-        period -= 3;
+        period -= 3.333d;
     }
 }
