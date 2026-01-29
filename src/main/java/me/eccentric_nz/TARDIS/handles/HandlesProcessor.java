@@ -88,7 +88,7 @@ public class HandlesProcessor {
         String event = "";
         for (ItemStack is : program.getInventory()) {
             if (is != null) {
-                HandlesBlock thb = HandlesBlock.BY_NAME.get(is.getItemMeta().displayName());
+                HandlesBlock thb = HandlesBlock.BY_NAME.get(ComponentUtils.stripColour(is.getItemMeta().displayName()));
                 switch (thb) {
                     case ARTRON, DEATH, DEMATERIALISE, ENTER, EXIT, HADS, LOG_OUT, MATERIALISE, SIEGE_OFF, SIEGE_ON ->
                             event = thb.toString();
@@ -115,7 +115,7 @@ public class HandlesProcessor {
         for (int i = pos; i < 36; i++) {
             ItemStack is = program.getInventory()[i];
             if (is != null) {
-                HandlesBlock thb = HandlesBlock.BY_NAME.get(is.getItemMeta().displayName());
+                HandlesBlock thb = HandlesBlock.BY_NAME.get(ComponentUtils.stripColour(is.getItemMeta().displayName()));
                 HandlesBlock next = getNext(i + 1);
                 if (next != null) {
                     UUID uuid = player.getUniqueId();
@@ -142,7 +142,7 @@ public class HandlesProcessor {
                                             boolean outerDisplayDoor = rsp.getPreset().usesArmourStand();
                                             // close outer
                                             if (outerDisplayDoor) {
-                                                new OuterDisplayDoorCloser(plugin).close(new OuterDoor(plugin, id).getDisplay(), id, uuid);
+                                                new OuterDisplayDoorCloser(plugin).close(new OuterDoor(plugin, id).getDisplay(), id, uuid, false);
                                             } else if (rsp.getPreset().hasDoor()) {
                                                 new OuterMinecraftDoorCloser(plugin).close(new OuterDoor(plugin, id).getMinecraft(), id, uuid);
                                             }
@@ -161,7 +161,7 @@ public class HandlesProcessor {
                                             boolean outerDisplayDoor = rsp.getPreset().usesArmourStand();
                                             // open outer
                                             if (outerDisplayDoor) {
-                                                new OuterDisplayDoorCloser(plugin).close(new OuterDoor(plugin, id).getDisplay(), id, uuid);
+                                                new OuterDisplayDoorCloser(plugin).close(new OuterDoor(plugin, id).getDisplay(), id, uuid, false);
                                             } else if (rsp.getPreset().hasDoor()) {
                                                 new OuterMinecraftDoorCloser(plugin).close(new OuterDoor(plugin, id).getMinecraft(), id, uuid);
                                             }
@@ -453,7 +453,7 @@ public class HandlesProcessor {
                                                         continue;
                                                     }
                                                     UUID toUUID = to.getUniqueId();
-                                                    // check the to player's DND status
+                                                    // check the request to player's DND status
                                                     ResultSetPlayerPrefs rspp = new ResultSetPlayerPrefs(plugin, toUUID.toString());
                                                     if (rspp.resultSet() && rspp.isDND()) {
                                                         plugin.getMessenger().handlesSend(player, "DND", first);
@@ -490,7 +490,7 @@ public class HandlesProcessor {
                                                     int sx = TARDISNumberParsers.parseInt(ComponentUtils.stripColour(lore.get(2)));
                                                     int sy = TARDISNumberParsers.parseInt(ComponentUtils.stripColour(lore.get(3)));
                                                     int sz = TARDISNumberParsers.parseInt(ComponentUtils.stripColour(lore.get(4)));
-                                                    if (current.location().getWorld().getName().equals(lore.get(1)) && current.location().getBlockX() == sx && current.location().getBlockZ() == sz) {
+                                                    if (current.location().getWorld().getName().equals(ComponentUtils.stripColour(lore.get(1))) && current.location().getBlockX() == sx && current.location().getBlockZ() == sz) {
                                                         continue;
                                                     }
                                                     plugin.getMessenger().handlesSend(player, "LOC_SET");
@@ -625,8 +625,7 @@ public class HandlesProcessor {
             if (is != null) {
                 HandlesBlock thb = HandlesBlock.BY_NAME.get(ComponentUtils.stripColour(is.getItemMeta().displayName()));
                 switch (thb) {
-                    case LESS_THAN, LESS_THAN_EQUAL, GREATER_THAN, GREATER_THAN_EQUAL, EQUALS ->
-                            comparison = thb; // operator
+                    case LESS_THAN, LESS_THAN_EQUAL, GREATER_THAN, GREATER_THAN_EQUAL, EQUALS -> comparison = thb; // operator
                     case ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, ZERO -> {
                         // find all sequential number blocks
                         if (first) {
@@ -649,8 +648,7 @@ public class HandlesProcessor {
                         }
                     }
                     case DO -> processCommand(i);
-                    default -> {
-                    }
+                    default -> { }
                 }
             }
         }

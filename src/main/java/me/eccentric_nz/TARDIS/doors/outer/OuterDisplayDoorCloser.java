@@ -48,7 +48,7 @@ public class OuterDisplayDoorCloser {
         this.plugin = plugin;
     }
 
-    public void close(ArmorStand stand, int id, UUID uuid) {
+    public void close(ArmorStand stand, int id, UUID uuid, boolean destroy) {
         if (stand == null) {
             return;
         }
@@ -101,7 +101,9 @@ public class OuterDisplayDoorCloser {
                 }
                 dye.setItemMeta(dim);
                 ee.setHelmet(dye, true);
-                TARDISSounds.playDoorSound(false, portal);
+                if (!destroy) {
+                    TARDISSounds.playDoorSound(false, portal);
+                }
             }
             HashMap<String, Object> where = new HashMap<>();
             where.put("tardis_id", id);

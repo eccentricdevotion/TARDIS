@@ -216,7 +216,7 @@ public class AnyoneDoorListener extends DoorListener implements Listener {
                                                         new InnerMinecraftDoorCloser(plugin).close(block, id, playerUUID);
                                                         // close doors / deactivate portal
                                                         if (outerDisplayDoor) {
-                                                            new OuterDisplayDoorCloser(plugin).close(new OuterDoor(plugin, id).getDisplay(), id, playerUUID);
+                                                            new OuterDisplayDoorCloser(plugin).close(new OuterDoor(plugin, id).getDisplay(), id, playerUUID, false);
                                                         } else if (tardis.getPreset().hasDoor()) {
                                                             new OuterMinecraftDoorCloser(plugin).close(new OuterDoor(plugin, id).getMinecraft(), id, playerUUID);
                                                         }

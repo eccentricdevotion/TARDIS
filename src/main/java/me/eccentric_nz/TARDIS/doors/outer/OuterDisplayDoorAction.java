@@ -226,7 +226,7 @@ public class OuterDisplayDoorAction extends DoorListener {
                                             return;
                                         }
                                         // close outer
-                                        new OuterDisplayDoorCloser(plugin).close(stand, id, uuid);
+                                        new OuterDisplayDoorCloser(plugin).close(stand, id, uuid, false);
                                         // close inner
                                         if (innerDisplayDoor.display()) {
                                             new InnerDisplayDoorCloser(plugin).close(innerDisplayDoor.block(), id, uuid, true);

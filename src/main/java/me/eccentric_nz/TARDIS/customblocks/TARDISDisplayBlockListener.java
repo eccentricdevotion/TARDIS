@@ -380,7 +380,7 @@ public class TARDISDisplayBlockListener implements Listener {
                                         new InnerDisplayDoorCloser(plugin).close(block, id, playerUUID, false);
                                         // close outer
                                         if (outerDisplayDoor) {
-                                            new OuterDisplayDoorCloser(plugin).close(new OuterDoor(plugin, id).getDisplay(), id, playerUUID);
+                                            new OuterDisplayDoorCloser(plugin).close(new OuterDoor(plugin, id).getDisplay(), id, playerUUID, false);
                                         } else if (tardis.getPreset().hasDoor()) {
                                             new OuterMinecraftDoorCloser(plugin).close(new OuterDoor(plugin, id).getMinecraft(), id, playerUUID);
                                         }

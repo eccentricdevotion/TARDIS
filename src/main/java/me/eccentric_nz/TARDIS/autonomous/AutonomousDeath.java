@@ -94,7 +94,7 @@ public class AutonomousDeath {
                             }
                             // close outer
                             if (outerDisplayDoor) {
-                                new OuterDisplayDoorCloser(plugin).close(new OuterDoor(plugin, id).getDisplay(), id, playerUUID);
+                                new OuterDisplayDoorCloser(plugin).close(new OuterDoor(plugin, id).getDisplay(), id, playerUUID, false);
                             } else if (rstp.getPreset().hasDoor()) {
                                 new OuterMinecraftDoorCloser(plugin).close(new OuterDoor(plugin, id).getMinecraft(), id, playerUUID);
                             }
