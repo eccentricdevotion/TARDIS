@@ -285,7 +285,7 @@ public class SiegeListener implements Listener {
             return;
         }
         Block b = event.getClickedBlock();
-        if (!isSiegeCube(b)) {
+        if (b == null || !isSiegeCube(b)) {
             return;
         }
         Player p = event.getPlayer();

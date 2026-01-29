@@ -28,6 +28,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInputEvent;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.*;
 
@@ -45,6 +46,8 @@ public class Pong implements Listener {
     private int paddleY = 8;
     private Ball ball;
     private long period = 60;
+    int p = 0;
+    int t = 0;
 
     public Pong(TARDIS plugin, Player player) {
         this.plugin = plugin;
@@ -238,7 +241,7 @@ public class Pong implements Listener {
         ball.vy = d[1];
         Arrays.fill(dirtyRows, true);
         drawDirty();
-        if (state != GameState.INITIALIZING) {
+        if (state != GameState.INITIALIZING && state != GameState.GAME_OVER) {
             startTick();
         }
     }
@@ -287,22 +290,46 @@ public class Pong implements Listener {
         plugin.getQueryFactory().doInsert("travellers", where);
     }
 
-    public void updateScore(MatchState state) {
+    public void updateScore(MatchState point) {
         String score = ComponentUtils.stripColour(displayList.getLast().text());
-        int p = 0;
-        int t = 0;
         if (!score.equals("Score") && this.state != GameState.INITIALIZING) {
             String[] split = score.split(" \\| ");
             p = TARDISNumberParsers.parseInt(split[0].split(" ")[1]);
             t = TARDISNumberParsers.parseInt(split[1].split(" ")[1]);
-            if (state == MatchState.PLAYER_WON) {
+            if (point == MatchState.PLAYER_WON) {
                 p++;
+                if (p == 11) {
+                    state = GameState.GAME_OVER;
+                    endGame(MatchState.PLAYER_WON);
+                }
             }
-            if (state == MatchState.TARDIS_WON) {
+            if (point == MatchState.TARDIS_WON) {
                 t++;
+                if (t == 11) {
+                    state = GameState.GAME_OVER;
+                    endGame(MatchState.TARDIS_WON);
+                }
             }
         }
         displayList.getLast().text(Component.text(String.format("Player %s | TARDIS %s", p, t), NamedTextColor.GOLD));
+    }
+
+    private void endGame(MatchState match) {
+        player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_XYLOPHONE, 0.3f, 0.7f);
+        new BukkitRunnable() {
+            float p = 1.8f;
+
+            @Override
+            public void run() {
+                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_XYLOPHONE, 0.2f, p);
+                p *= 0.9f;
+                if (p < 0.5f) {
+                    cancel();
+                }
+            }
+        }.runTaskTimer(plugin, 3, 1);
+        String who = match == MatchState.TARDIS_WON ? "TARDIS" : "You";
+        plugin.getMessenger().message(player, "Game Over! " + who + " won. Sneak to exit.");
     }
 
     public void updatePaddle(PaddlePosition position) {
@@ -343,6 +370,6 @@ public class Pong implements Listener {
     }
 
     public void reducePeriod() {
-        period -= 2;
+        period -= 3;
     }
 }

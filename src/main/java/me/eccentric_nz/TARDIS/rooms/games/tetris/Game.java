@@ -32,20 +32,16 @@ public class Game implements Listener {
     private final int startLevel;
     private final Player player;
     private final Location boardLocation;
-//    private final Location playerLocation;
     private final Location signLocation;
     private final World world;
     private GameState state = GameState.INITIALIZING;
     private Pieces current;
     private int level, linesClearedLevel;
     private long score, linesClearedTotal;
-//    private boolean hasMoved = false;
 
     public Game(TARDIS plugin, Player player, int startLevel) {
         this.plugin = plugin;
         this.player = player;
-//        player.getInventory().setItem(0, new ItemStack(Material.TRIPWIRE_HOOK));
-//        player.getInventory().setHeldItemSlot(0);
         world = plugin.getServer().getWorld("TARDIS_Zero_Room");
         GameLocations locations = getRoom(player);
         ArcadeTracker.PLAYERS.put(player.getUniqueId(), new ArcadeData(GameUtils.centre(player.getLocation()), player.getAllowFlight(), this, locations.id()));
@@ -59,7 +55,6 @@ public class Game implements Listener {
             }
         }
         player.setFallDistance(0.0f);
-//        playerLocation = locations.teleport();
         boardLocation = locations.board();
         signLocation = locations.sign();
         board = new Board(10, 20, this);
