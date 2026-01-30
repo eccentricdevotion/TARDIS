@@ -89,6 +89,7 @@ public class SiegeListener implements Listener {
     public void onSiegeCubeBreak(BlockBreakEvent event) {
         Block b = event.getBlock();
         if (!isSiegeCube(b)) {
+            plugin.debug("[onSiegeCubeBreak] Not a siege cube!");
             return;
         }
         // check location
@@ -169,13 +170,16 @@ public class SiegeListener implements Listener {
         UUID uuid = p.getUniqueId();
         // only if we're tracking this player
         if (!plugin.getTrackerKeeper().getSiegeCarrying().containsKey(uuid)) {
+            plugin.debug("[onDropSiegeCube] Not a tracking player with siege cube!");
             return;
         }
         ItemStack is = item.getItemStack();
         if (!isSiegeCube(is)) {
+            plugin.debug("[onDropSiegeCube] Not a siege cube!");
             return;
         }
         if (!hasSiegeCubeName(is)) {
+            plugin.debug("[onDropSiegeCube] Not a siege cube name!");
             return;
         }
         if (plugin.getUtils().inTARDISWorld(p)) {
@@ -230,12 +234,14 @@ public class SiegeListener implements Listener {
     public void onSiegeCubePlace(BlockPlaceEvent event) {
         ItemStack is = event.getItemInHand();
         if (!isSiegeCube(is)) {
+            plugin.debug("[onSiegeCubePlace] Not a siege cube!");
             return;
         }
         Player p = event.getPlayer();
         UUID uuid = p.getUniqueId();
         // only if we're tracking this player
         if (!plugin.getTrackerKeeper().getSiegeCarrying().containsKey(uuid)) {
+            plugin.debug("[onSiegeCubePlace] Not a tracking player with siege cube!");
             return;
         }
         Location loc = event.getBlock().getLocation();

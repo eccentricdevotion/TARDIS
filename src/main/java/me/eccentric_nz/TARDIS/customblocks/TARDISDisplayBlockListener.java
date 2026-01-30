@@ -487,6 +487,7 @@ public class TARDISDisplayBlockListener implements Listener {
     private void processInteraction(ItemDisplay fake, ItemDisplay breaking, Player player, Location l, Block block, Interaction interaction) {
         if (fake != null && player.getGameMode().equals(GameMode.CREATIVE)) {
             if (SiegeListener.isSiegeCube(fake.getItemStack())){
+                plugin.debug("[processInteraction] is siege cube!");
                 return;
             }
             fake.remove();
@@ -534,10 +535,26 @@ public class TARDISDisplayBlockListener implements Listener {
                                 }
                             }
                         } else {
-                            l.getWorld().dropItemNaturally(l, fake.getItemStack());
+                            Item item = l.getWorld().dropItemNaturally(l, fake.getItemStack());
                             // process siege cube
                             if (isSiege) {
-
+                                plugin.debug("[TARDISDisplayBlockListener] It's a siege cube!");
+                                item.setInvulnerable(true);
+                                // get the TARDIS id
+                                HashMap<String, Object> where = new HashMap<>();
+                                where.put("world", interaction.getLocation().getWorld().getName());
+                                where.put("x", interaction.getLocation().getBlockX());
+                                where.put("y", interaction.getLocation().getBlockY());
+                                where.put("z", interaction.getLocation().getBlockZ());
+                                ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, where);
+                                if (rscl.resultSet()) {
+                                    plugin.debug("Found current location");
+                                    int id = rscl.getTardis_id();
+                                    // track it
+                                    plugin.getTrackerKeeper().getIsSiegeCube().add(id);
+                                    // track the player as well
+                                    plugin.getTrackerKeeper().getSiegeCarrying().put(player.getUniqueId(), id);
+                                }
                             }
                         }
                     }
