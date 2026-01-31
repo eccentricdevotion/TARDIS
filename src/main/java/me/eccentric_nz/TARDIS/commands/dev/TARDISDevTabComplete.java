@@ -55,7 +55,7 @@ public class TARDISDevTabComplete extends TARDISCompleter implements TabComplete
             "ntc", "nms",
             "painting", "plurals", "pong",
             "recipe", "regen", "registry", "roman", "rooms",
-            "screen", "shelf", "skin", "snapshot", "staircase", "stats", "systree",
+            "screen", "shelf", "siege", "skin", "snapshot", "staircase", "stats", "systree",
             "text", "tis", "tips", "tree", "trim",
             "unmount", "update"
     );

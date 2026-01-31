@@ -32,12 +32,14 @@ import me.eccentric_nz.TARDIS.doors.inner.InnerDisplayDoorExtra;
 import me.eccentric_nz.TARDIS.doors.inner.InnerDisplayDoorMover;
 import me.eccentric_nz.TARDIS.doors.inner.InnerDisplayDoorOpener;
 import me.eccentric_nz.TARDIS.doors.outer.*;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.Updateable;
 import me.eccentric_nz.TARDIS.siegemode.SiegeListener;
 import me.eccentric_nz.TARDIS.sonic.actions.SonicLight;
 import me.eccentric_nz.TARDIS.update.UpdateDoor;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import net.kyori.adventure.text.Component;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -62,6 +64,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.Vector;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -95,7 +98,7 @@ public class TARDISDisplayBlockListener implements Listener {
         if (!im.hasDisplayName() || !im.getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.STRING)) {
             return;
         }
-        if (ComponentUtils.endsWith(im.displayName(), "TARDIS Seed Block") || ComponentUtils.endsWith(im.displayName(), "Console") || ComponentUtils.endsWith(im.displayName(), "Siege Cube")) {
+        if (ComponentUtils.endsWith(im.displayName(), "TARDIS Seed Block") || ComponentUtils.endsWith(im.displayName(), "Console")) {
             return;
         }
         String key = im.getPersistentDataContainer().get(plugin.getCustomBlockKey(), PersistentDataType.STRING);
@@ -130,6 +133,24 @@ public class TARDISDisplayBlockListener implements Listener {
         display.setItemStack(single);
         display.setPersistent(true);
         display.setInvulnerable(true);
+        if (which == TARDISBlockDisplayItem.SIEGE_CUBE) {
+            plugin.debug("which == TARDISBlockDisplayItem.SIEGE_CUBE");
+            UUID uuid = player.getUniqueId();
+            int id = plugin.getTrackerKeeper().getSiegeCarrying().get(uuid);
+            HashMap<String, Object> where = new HashMap<>();
+            where.put("tardis_id", id);
+            HashMap<String, Object> set = new HashMap<>();
+            set.put("world", location.getWorld().getName());
+            set.put("x", location.getBlockX());
+            set.put("y", location.getBlockY());
+            set.put("z", location.getBlockZ());
+            COMPASS direction = COMPASS.valueOf(TARDISStaticUtils.getPlayersDirection(player, false));
+            set.put("direction", direction.toString());
+            plugin.getQueryFactory().doUpdate("current", set, where);
+            // remove trackers
+            plugin.getTrackerKeeper().getIsSiegeCube().remove(id);
+            plugin.getTrackerKeeper().getSiegeCarrying().remove(uuid);
+        }
         if (which.isClosedDoor() || which == TARDISBlockDisplayItem.TELEVISION) {
             if (which != TARDISBlockDisplayItem.TELEVISION) {
                 display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.FIXED);
@@ -542,14 +563,41 @@ public class TARDISDisplayBlockListener implements Listener {
                                 item.setInvulnerable(true);
                                 // get the TARDIS id
                                 HashMap<String, Object> where = new HashMap<>();
-                                where.put("world", interaction.getLocation().getWorld().getName());
-                                where.put("x", interaction.getLocation().getBlockX());
-                                where.put("y", interaction.getLocation().getBlockY());
-                                where.put("z", interaction.getLocation().getBlockZ());
+                                where.put("world", block.getLocation().getWorld().getName());
+                                where.put("x", block.getLocation().getBlockX());
+                                where.put("y", block.getLocation().getBlockY());
+                                where.put("z", block.getLocation().getBlockZ());
                                 ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, where);
                                 if (rscl.resultSet()) {
-                                    plugin.debug("Found current location");
                                     int id = rscl.getTardis_id();
+                                    HashMap<String, Object> wheret = new HashMap<>();
+                                    wheret.put("tardis_id", id);
+                                    ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false);
+                                    if (!rs.resultSet()) {
+                                        return;
+                                    }
+                                    ItemStack cube = item.getItemStack();
+                                    ItemMeta im = cube.getItemMeta();
+                                    im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, TARDISBlockDisplayItem.SIEGE_CUBE.getCustomModel().getKey());
+                                    List<Component> lore = new ArrayList<>();
+                                    lore.add(Component.text("Time Lord: " + rs.getTardis().getOwner()));
+                                    lore.add(Component.text("ID: " + id));
+                                    // get occupants
+                                    HashMap<String, Object> wherec = new HashMap<>();
+                                    wherec.put("tardis_id", id);
+                                    ResultSetTravellers rst = new ResultSetTravellers(plugin, wherec, true);
+                                    if (rst.resultSet()) {
+                                        rst.getData().forEach((tuuid) -> {
+                                            Player p = plugin.getServer().getPlayer(tuuid);
+                                            if (p != null && tuuid != rs.getTardis().getUuid()) {
+                                                String c = p.getName();
+                                                lore.add(Component.text("Companion: " + c));
+                                            }
+                                        });
+                                    }
+                                    im.lore(lore);
+                                    cube.setItemMeta(im);
+                                    item.setItemStack(cube);
                                     // track it
                                     plugin.getTrackerKeeper().getIsSiegeCube().add(id);
                                     // track the player as well

@@ -27,6 +27,7 @@ import me.eccentric_nz.TARDIS.bStats.ARSRoomCounts;
 import me.eccentric_nz.TARDIS.blueprints.BlueprintRoom;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import me.eccentric_nz.TARDIS.commands.dev.wiki.WikiRecipeCommand;
+import me.eccentric_nz.TARDIS.customblocks.TARDISBlockDisplayItem;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetGames;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -66,6 +67,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 import org.bukkit.inventory.meta.components.EquippableComponent;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -97,7 +99,7 @@ public class TARDISDevCommand implements CommandExecutor {
             "ntc", "nms",
             "painting", "plurals", "pong",
             "recipe", "regen", "registry", "roman", "rooms",
-            "screen", "shelf", "skin", "snapshot", "staircase", "stats", "systree",
+            "screen", "shelf", "siege", "skin", "snapshot", "staircase", "stats", "systree",
             "text", "tis", "tips", "tree",
             "unmount", "update"
     );
@@ -123,6 +125,23 @@ public class TARDISDevCommand implements CommandExecutor {
                 }
                 if (args.length == 1) {
                     switch (first) {
+                        case "siege"->{
+                            if (sender instanceof Player player) {
+                                ItemStack cube = player.getInventory().getItemInMainHand();
+                                ItemMeta im = cube.getItemMeta();
+                                im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, TARDISBlockDisplayItem.SIEGE_CUBE.getCustomModel().getKey());
+                                List<Component> lore = new ArrayList<>();
+                                lore.add(Component.text("Time Lord: eccentric_nz"));
+                                lore.add(Component.text("ID: 1"));
+                                im.lore(lore);
+                                cube.setItemMeta(im);
+                                // track it
+                                plugin.getTrackerKeeper().getIsSiegeCube().add(1);
+                                // track the player as well
+                                plugin.getTrackerKeeper().getSiegeCarrying().put(player.getUniqueId(), 1);
+                            }
+                            return true;
+                        }
                         case "text" -> {
                             if (sender instanceof Player player) {
                                 ResultSetTardisID rs = new ResultSetTardisID(plugin);

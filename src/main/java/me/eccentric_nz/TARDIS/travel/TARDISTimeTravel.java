@@ -79,20 +79,20 @@ public class TARDISTimeTravel {
      * @return the number of unsafe blocks
      */
     public static int safeLocation(int startx, int starty, int startz, int resetx, int resetz, World w, COMPASS d) {
-        int level, row, col, rowcount, colcount, count = 0;
+        int level, row, col, rowCount, colCount, count = 0;
         switch (d) {
             case EAST, WEST -> {
-                rowcount = 3;
-                colcount = 4;
+                rowCount = 3;
+                colCount = 4;
             }
             default -> {
-                rowcount = 4;
-                colcount = 3;
+                rowCount = 4;
+                colCount = 3;
             }
         }
         for (level = 0; level < 4; level++) {
-            for (row = 0; row < rowcount; row++) {
-                for (col = 0; col < colcount; col++) {
+            for (row = 0; row < rowCount; row++) {
+                for (col = 0; col < colCount; col++) {
                     Block block = w.getBlockAt(startx, starty, startz);
                     if (level == 0) {
                         // check for item frame
@@ -106,14 +106,15 @@ public class TARDISTimeTravel {
                     Material mat = block.getType();
                     if (!TARDISConstants.GOOD_MATERIALS.contains(mat)) {
                         // check for siege cube
-                        if (TARDIS.plugin.getConfig().getBoolean("siege.enabled") && (mat.equals(Material.BROWN_MUSHROOM_BLOCK) || mat.equals(Material.BARRIER))) {
+                        if (TARDIS.plugin.getConfig().getBoolean("siege.enabled") && (mat.equals(Material.BROWN_MUSHROOM_BLOCK) || mat.equals(Material.BARRIER) || mat.equals(Material.CYAN_CONCRETE))) {
                             BlockData blockData = block.getBlockData();
                             if (blockData instanceof MultipleFacing mf && !mf.getAsString().equals(TARDISMushroomBlockData.BROWN_MUSHROOM_DATA.get(2))) {
                                 count++;
                                 break;
                             } else {
                                 ItemDisplay tdi = TARDISDisplayItemUtils.get(block);
-                                if (tdi == null || tdi.getItemStack() == null || tdi.getItemStack().getType() != Material.CYAN_CONCRETE) {
+                                if (tdi == null || tdi.getItemStack().getType().isAir() || tdi.getItemStack().getType() != Material.CYAN_CONCRETE) {
+                                    TARDIS.plugin.debug("count++ item display");
                                     count++;
                                     break;
                                 }
@@ -121,6 +122,75 @@ public class TARDISTimeTravel {
                         } else if (w.getName().equals("siluria") && mat.equals(Material.BAMBOO)) {
                             // do nothing
                         } else {
+                            TARDIS.plugin.debug("count++ else");
+                            count++;
+                        }
+                    }
+                    startx += 1;
+                }
+                startx = resetx;
+                startz += 1;
+            }
+            startz = resetz;
+            starty += 1;
+        }
+        return count;
+    }
+
+    /**
+     * Checks if a random location is safe for the TARDIS Police Box to land at. The Police Box requires a clear 4 x 3 x
+     * 4 (d x w x h) area.
+     *
+     * @param startx a starting position in the x direction.
+     * @param starty a starting position in the y direction.
+     * @param startz a starting position in the z direction.
+     * @param resetx a copy of the starting x position to return to.
+     * @param resetz a copy of the starting z position to return to.
+     * @param w      the world the location check will take place in.
+     * @param d      the direction the Police Box is facing.
+     * @return the number of unsafe blocks
+     */
+    public static int safeSiegeLocation(int startx, int starty, int startz, int resetx, int resetz, World w, COMPASS d) {
+        int level, row, col, rowCount, colCount, count = 0;
+        switch (d) {
+            case EAST, WEST -> {
+                rowCount = 3;
+                colCount = 4;
+            }
+            default -> {
+                rowCount = 4;
+                colCount = 3;
+            }
+        }
+        for (level = 0; level < 4; level++) {
+            for (row = 0; row < rowCount; row++) {
+                for (col = 0; col < colCount; col++) {
+                    Block block = w.getBlockAt(startx, starty, startz);
+                    if (level == 0) {
+                        // check for item frame
+                        for (Entity e : w.getNearbyEntities(block.getLocation(), 1.5d, 1.5d, 1.5d)) {
+                            if (e instanceof ItemFrame) {
+                                count++;
+                                break;
+                            }
+                        }
+                    }
+                    Material mat = block.getType();
+                    if (!TARDISConstants.GOOD_MATERIALS.contains(mat)) {
+                        // check for siege cube
+                        if (TARDIS.plugin.getConfig().getBoolean("siege.enabled") && mat.equals(Material.CYAN_CONCRETE)) {
+                            continue;
+                        } else if (TARDIS.plugin.getConfig().getBoolean("siege.enabled") && mat.equals(Material.BARRIER)) {
+                            BlockData blockData = block.getBlockData();
+                            ItemDisplay tdi = TARDISDisplayItemUtils.get(block);
+                            if (tdi == null || tdi.getItemStack().getType().isAir() || tdi.getItemStack().getType() != Material.CYAN_CONCRETE) {
+                                count++;
+                                break;
+                            }
+                        } else if (w.getName().equals("siluria") && mat.equals(Material.BAMBOO)) {
+                            // do nothing
+                        } else {
+                            TARDIS.plugin.debug("count++ else");
                             count++;
                         }
                     }

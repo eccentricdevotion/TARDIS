@@ -73,6 +73,18 @@ public class SiegeListener implements Listener {
         this.plugin = plugin;
     }
 
+    public static boolean isSiegeCube(ItemStack is) {
+        Material m = is.getType();
+        if (!m.equals(Material.BROWN_MUSHROOM_BLOCK) && !m.equals(Material.CYAN_CONCRETE)) {
+            return false;
+        }
+        ItemMeta im = is.getItemMeta();
+        if (im != null) {
+            return (im.hasDisplayName() && ComponentUtils.endsWith(im.displayName(), "Siege Cube")) || (im.hasItemModel() && Whoniverse.SIEGE_CUBE.getKey().equals(im.getItemModel()));
+        }
+        return false;
+    }
+
     @EventHandler(ignoreCancelled = true)
     public void onSiegeCubeDespawn(ItemDespawnEvent event) {
         ItemStack is = event.getEntity().getItemStack();
@@ -198,7 +210,7 @@ public class SiegeListener implements Listener {
             Location loc = item.getLocation();
             COMPASS d = COMPASS.valueOf(TARDISStaticUtils.getPlayersDirection(p, false));
             int[] start = TARDISTimeTravel.getStartLocation(loc, d);
-            int count = TARDISTimeTravel.safeLocation(start[0], loc.getBlockY(), start[2], start[1], start[3], loc.getWorld(), d);
+            int count = TARDISTimeTravel.safeSiegeLocation(start[0], loc.getBlockY(), start[2], start[1], start[3], loc.getWorld(), d);
             if (count > 0) {
                 plugin.getMessenger().send(p, TardisModule.TARDIS, "SIEGE_NO_SPACE");
                 return;
@@ -257,14 +269,20 @@ public class SiegeListener implements Listener {
             return;
         }
         // check there is room to expand to a police box
-        COMPASS d = COMPASS.valueOf(TARDISStaticUtils.getPlayersDirection(p, false));
-        int[] start = TARDISTimeTravel.getStartLocation(loc, d);
-        int count = TARDISTimeTravel.safeLocation(start[0], loc.getBlockY(), start[2], start[1], start[3], loc.getWorld(), d);
+        COMPASS direction = COMPASS.valueOf(TARDISStaticUtils.getPlayersDirection(p, false));
+        int[] start = TARDISTimeTravel.getStartLocation(loc, direction);
+        int count = TARDISTimeTravel.safeSiegeLocation(start[0], loc.getBlockY(), start[2], start[1], start[3], loc.getWorld(), direction);
         if (count > 0) {
             event.setCancelled(true);
             plugin.getMessenger().send(p, TardisModule.TARDIS, "SIEGE_NO_SPACE");
             return;
         }
+        ItemStack single = is.clone();
+        single.setAmount(1);
+        if (!is.hasItemMeta()) {
+            return;
+        }
+        ItemMeta im = is.getItemMeta();
         // update the current location
         int id = plugin.getTrackerKeeper().getSiegeCarrying().get(uuid);
         HashMap<String, Object> where = new HashMap<>();
@@ -274,7 +292,7 @@ public class SiegeListener implements Listener {
         set.put("x", loc.getBlockX());
         set.put("y", loc.getBlockY());
         set.put("z", loc.getBlockZ());
-        set.put("direction", d.toString());
+        set.put("direction", direction.toString());
         plugin.getQueryFactory().doUpdate("current", set, where);
         // remove trackers
         plugin.getTrackerKeeper().getIsSiegeCube().remove(id);
@@ -388,18 +406,6 @@ public class SiegeListener implements Listener {
             }
             plugin.getMessenger().sendStatus(p, "SIEGE_OFF");
         }
-    }
-
-    public static boolean isSiegeCube(ItemStack is) {
-        Material m = is.getType();
-        if (!m.equals(Material.BROWN_MUSHROOM_BLOCK) && !m.equals(Material.CYAN_CONCRETE)) {
-            return false;
-        }
-        ItemMeta im = is.getItemMeta();
-        if (im != null) {
-            return (im.hasDisplayName() && ComponentUtils.endsWith(im.displayName(), "Siege Cube")) || (im.hasItemModel() && Whoniverse.SIEGE_CUBE.getKey().equals(im.getItemModel()));
-        }
-        return false;
     }
 
     private boolean isSiegeCube(Block b) {
