@@ -43,8 +43,8 @@ public class LibraryListener implements Listener {
         if (holder instanceof Chest chest) {
             Location loc = chest.getLocation();
             // check is drop chest
-            ResultSetLibrary rs = new ResultSetLibrary(plugin, loc.toString());
-            if (!rs.resultSet()) {
+            ResultSetLibrary rs = new ResultSetLibrary(plugin);
+            if (!rs.fromLocation(loc.toString())) {
                 return;
             }
             // sort contents

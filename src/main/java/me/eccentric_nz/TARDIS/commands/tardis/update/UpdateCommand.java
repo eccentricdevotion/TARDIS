@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands.tardis;
+package me.eccentric_nz.TARDIS.commands.tardis.update;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
@@ -52,15 +52,15 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-class UpdateCommand {
+public class UpdateCommand {
 
     private final TARDIS plugin;
 
-    UpdateCommand(TARDIS plugin) {
+    public UpdateCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    boolean startUpdate(Player player, String[] args) {
+    public boolean startUpdate(Player player, String[] args) {
         if (TARDISPermission.hasPermission(player, "tardis.update")) {
             if (args.length == 1) {
                 return new UpdateChatGUI(plugin).showInterface(player, args);
@@ -84,6 +84,9 @@ class UpdateCommand {
             }
             if (args[1].equalsIgnoreCase("blocks")) {
                 return new UpdateBlocksCommand(plugin).convert(player);
+            }
+            if (args[1].equalsIgnoreCase("lunge")) {
+                return new UpdateLungeCommand(plugin).addChiseledShelves(player);
             }
             if (args[1].equalsIgnoreCase("remove_displays")) {
                 return new UpdateBlocksCommand(plugin).remove_displays(player);

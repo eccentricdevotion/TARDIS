@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.commands.dev;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.commands.tardis.UpdateBlocksCommand;
+import me.eccentric_nz.TARDIS.commands.tardis.update.UpdateBlocksCommand;
 import me.eccentric_nz.TARDIS.console.ConsoleBuilder;
 import me.eccentric_nz.TARDIS.customblocks.TARDISBlockDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;

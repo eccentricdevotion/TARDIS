@@ -1,4 +1,4 @@
-package me.eccentric_nz.TARDIS.commands.tardis;
+package me.eccentric_nz.TARDIS.commands.tardis.update;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
@@ -41,7 +41,7 @@ public class UpdateLungeCommand {
                     block = start.clone().add(EnchantmentShelf.LUNGE.getPosition()).getBlock().getRelative(BlockFace.UP, level);
                     block.setType(Material.CHISELED_BOOKSHELF);
                     // add text display
-                    Location card = block.getLocation().clone().add(0.5, 0.5, 0.9);
+                    Location card = block.getLocation().clone().add(0.5, 0.5, -0.1);
                     TextDisplay display = (TextDisplay) start.getWorld().spawnEntity(card, EntityType.TEXT_DISPLAY);
                     display.text(Component.text("Lunge" + LibraryCatalogue.roman(level)));
                     display.setAlignment(TextDisplay.TextAlignment.CENTER);
