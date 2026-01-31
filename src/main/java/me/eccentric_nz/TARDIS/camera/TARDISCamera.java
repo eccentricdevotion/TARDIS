@@ -56,6 +56,10 @@ public class TARDISCamera {
         }
         // teleport player to exterior
         Location location = rs.getCurrent().location().clone();
+        // wait for the chunk to load
+        while (!location.getChunk().isLoaded()) {
+            location.getChunk().load();
+        }
         location.setYaw(player.getLocation().getYaw());
         location.setPitch(player.getLocation().getPitch());
         player.teleport(location);
@@ -86,8 +90,9 @@ public class TARDISCamera {
                         case CYAN_STAINED_GLASS_PANE -> ChameleonVariant.TENNANT_CAMERA.getKey();
                         case LEATHER_HORSE_ARMOR -> ColouredVariant.TINTED_CAMERA.getKey();
                         case WOLF_SPAWN_EGG -> ChameleonVariant.BAD_WOLF_CAMERA.getKey();
-                        // TODO check this for SIDRAT
-                        default -> null; // don't change for PANDORICA, SIDRAT, WEEPING_ANGEL or CUSTOM
+                        case CLAY_BALL -> ChameleonVariant.TYPE_40_CAMERA.getKey();
+                        // TODO check this for SIDRAT, BATTLE
+                        default -> null; // don't change for BATTLE, PANDORICA, SIDRAT, WEEPING_ANGEL or CUSTOM
                     };
                     if (viewing != null) {
                         im.setItemModel(viewing);
@@ -96,7 +101,9 @@ public class TARDISCamera {
                     ee.setHelmet(is);
                     // hide player from themselves
                     player.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 15));
-                    stand.addPassenger(player);
+                    while (!stand.addPassenger(player)) {
+                        plugin.debug("addPassenger FAILED!");
+                    }
                 }, 2L);
             }
         }
@@ -132,8 +139,9 @@ public class TARDISCamera {
                 case CYAN_STAINED_GLASS_PANE -> ChameleonVariant.TENNANT_CLOSED.getKey();
                 case LEATHER_HORSE_ARMOR -> ColouredVariant.TINTED_CLOSED.getKey();
                 case WOLF_SPAWN_EGG -> ChameleonVariant.BAD_WOLF_CLOSED.getKey();
-                // TODO check this for SIDRAT
-                default -> null; // don't change for `PANDORICA, SIDRAT, WEEPING_ANGEL or CUSTOM
+                case CLAY_BALL -> ChameleonVariant.TYPE_40_CLOSED.getKey();
+                // TODO check this for SIDRAT, BATTLE
+                default -> null; // don't change for BATTLE, PANDORICA, SIDRAT, WEEPING_ANGEL or CUSTOM
             };
             if (notviewing != null) {
                 im.setItemModel(notviewing);

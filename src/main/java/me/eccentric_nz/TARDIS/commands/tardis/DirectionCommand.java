@@ -153,7 +153,7 @@ public class DirectionCommand {
                 }
                 // close outer
                 if (outerDisplayDoor) {
-                    new OuterDisplayDoorCloser(plugin).close(new OuterDoor(plugin, id).getDisplay(), id, uuid);
+                    new OuterDisplayDoorCloser(plugin).close(new OuterDoor(plugin, id).getDisplay(), id, uuid, false);
                 } else if (rsp.getPreset().hasDoor()) {
                     new OuterMinecraftDoorCloser(plugin).close(new OuterDoor(plugin, id).getMinecraft(), id, uuid);
                 }

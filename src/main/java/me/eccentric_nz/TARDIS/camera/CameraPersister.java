@@ -65,7 +65,7 @@ public class CameraPersister {
                 plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Saved " + count + " camera/junk players.");
             }
         } catch (SQLException ex) {
-            plugin.debug("Insert error for flight table: " + ex.getMessage());
+            plugin.debug("Insert error for camera table: " + ex.getMessage());
         } finally {
             try {
                 if (ps != null) {

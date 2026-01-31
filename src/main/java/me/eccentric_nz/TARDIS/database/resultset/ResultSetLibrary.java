@@ -34,18 +34,16 @@ public class ResultSetLibrary {
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
-    private final String location;
     private final String prefix;
+    private String location;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet from the vaults table.
      *
      * @param plugin an instance of the main class.
-     * @param location  the location of the smelter chest.
      */
-    public ResultSetLibrary(TARDIS plugin, String location) {
+    public ResultSetLibrary(TARDIS plugin) {
         this.plugin = plugin;
-        this.location = location;
         prefix = this.plugin.getPrefix();
     }
 
@@ -55,7 +53,7 @@ public class ResultSetLibrary {
      *
      * @return true or false depending on whether any data matches the query
      */
-    public boolean resultSet() {
+    public boolean fromLocation(String location) {
         PreparedStatement statement = null;
         ResultSet rs = null;
         String query = "SELECT * FROM " + prefix + "vaults WHERE location = ? AND chest_type = 'LIBRARY'";
@@ -80,5 +78,41 @@ public class ResultSetLibrary {
                 plugin.debug("Error closing [vaults] library table! " + e.getMessage());
             }
         }
+    }
+
+    public boolean fromId(int id) {
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+        String query = "SELECT location FROM " + prefix + "vaults WHERE tardis_id = ? AND chest_type = 'LIBRARY'";
+        try {
+            service.testConnection(connection);
+            statement = connection.prepareStatement(query);
+            statement.setInt(1, id);
+            rs = statement.executeQuery();
+            if (rs.isBeforeFirst()) {
+                rs.next();
+                location = rs.getString("location");
+                return true;
+            }
+        } catch (SQLException e) {
+            plugin.debug("ResultSet error for [vaults] library table! " + e.getMessage());
+            return false;
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (statement != null) {
+                    statement.close();
+                }
+            } catch (SQLException e) {
+                plugin.debug("Error closing [vaults] library table! " + e.getMessage());
+            }
+        }
+        return false;
+    }
+
+    public String getLocation() {
+        return location;
     }
 }

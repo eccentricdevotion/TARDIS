@@ -42,7 +42,7 @@ public class TARDISDevTabComplete extends TARDISCompleter implements TabComplete
 
     private final ImmutableList<String> ROOT_SUBS = ImmutableList.of(
             "add_regions", "advancements", "armour",
-            "biome", "bleach", "blueprint", "box", "brushable",
+            "banner", "biome", "bleach", "blueprint", "box", "brushable",
             "chain", "chunks", "chunky", "circuit", "component",
             "dalek", "debug", "dialog", "dismount", "displayitem",
             "effect", "empty",
@@ -53,11 +53,11 @@ public class TARDISDevTabComplete extends TARDISCompleter implements TabComplete
             "label", "leather", "list",
             "mannequin", "monster", "mount",
             "ntc", "nms",
-            "painting", "plurals",
+            "painting", "plurals", "pong",
             "recipe", "regen", "registry", "roman", "rooms",
-            "screen", "shelf", "skin", "snapshot", "staircase", "stats", "systree",
-            "tis", "tips", "tree", "trim",
-            "unmount"
+            "screen", "shelf", "siege", "skin", "snapshot", "staircase", "stats", "systree",
+            "text", "tis", "tips", "tree", "trim",
+            "unmount", "update"
     );
     private final ImmutableList<String> LIST_SUBS = ImmutableList.of("preset_perms", "perms", "recipes", "blueprints", "commands", "block_colours", "change", "consoles");
     private final ImmutableList<String> SNAPSHOT_SUBS = ImmutableList.of("in", "out", "c");

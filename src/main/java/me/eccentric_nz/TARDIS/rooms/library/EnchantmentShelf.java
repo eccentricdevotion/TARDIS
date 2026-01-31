@@ -61,6 +61,8 @@ public enum EnchantmentShelf {
     FLAME(Enchantment.FLAME, "Flame", 1, EnchantmentCategory.RANGED_WEAPONS, new Vector(5, 3, 14), BlockFace.NORTH),
     INFINITY(Enchantment.INFINITY, "Infinity", 1, EnchantmentCategory.RANGED_WEAPONS, new Vector(4, 3, 14), BlockFace.NORTH),
     LOYALTY(Enchantment.LOYALTY, "Loyalty", 3, EnchantmentCategory.RANGED_WEAPONS, new Vector(3, 3, 14), BlockFace.NORTH),
+    // 1.21.11 lunge
+    LUNGE(Enchantment.LUNGE, "Lunge", 3, EnchantmentCategory.RANGED_WEAPONS, new Vector(5, 5, 14), BlockFace.NORTH),
     // right
     MULTISHOT(Enchantment.MULTISHOT, "Multishot", 1, EnchantmentCategory.RANGED_WEAPONS, new Vector(2, 3, 13), BlockFace.EAST),
     PIERCING(Enchantment.PIERCING, "Piercing", 4, EnchantmentCategory.RANGED_WEAPONS, new Vector(2, 3, 12), BlockFace.EAST),

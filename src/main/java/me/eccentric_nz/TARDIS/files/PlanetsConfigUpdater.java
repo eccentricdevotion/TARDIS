@@ -82,6 +82,7 @@ public class PlanetsConfigUpdater {
                 planets_config.set("planets.TARDIS_Zero_Room.gamerules.advance_time", false);
                 planets_config.set("planets.TARDIS_Zero_Room.gamerules.show_advancement_messages", false);
                 planets_config.set("planets.TARDIS_Zero_Room.gamerules.spawn_wardens", false);
+                planets_config.set("planets.TARDIS_Zero_Room.gamerules.spawn_mobs", false);
                 planets_config.set("planets.TARDIS_Zero_Room.allow_portals", false);
                 planets_config.set("planets.TARDIS_Zero_Room.alias", "ZeroRoom");
                 planets_config.set("planets.TARDIS_Zero_Room.icon", "PINK_WOOL");
@@ -103,6 +104,14 @@ public class PlanetsConfigUpdater {
             planets_config.set("planets." + dn + ".alias", "TimeVortex");
             planets_config.set("planets." + dn + ".icon", "CRYING_OBSIDIAN");
             planets_config.set("planets." + dn + ".helmic_regulator_order", -1);
+            save++;
+        }
+        // no TARDIS_Zero_Room mob spawns
+        if (!planets_config.contains("planets.TARDIS_Zero_Room.gamerules.spawn_mobs")) {
+            planets_config.set("planets.TARDIS_Zero_Room.gamerules.spawn_mobs", false);
+            planets_config.set("planets.TARDIS_Zero_Room.gamerules.spawn_phantoms", false);
+            planets_config.set("planets.TARDIS_TimeVortex.gamerules.spawn_phantoms", false);
+            planets_config.set("planets.rooms.gamerules.spawn_phantoms", false);
             save++;
         }
         // add colour_skies

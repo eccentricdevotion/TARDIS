@@ -100,9 +100,10 @@ public class SchematicSave {
         dimensions.addProperty("length", length);
         if (width != length) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "SCHM_SQUARE");
+            plugin.getMessenger().message(player, TardisModule.TARDIS, "Dimensions are: (x,z)" + width + ", " + length);
             return true;
         }
-        if (width % 16 != 0 && !which.equals("zero") && !which.equals("junk") && !which.contains("dalek")) {
+        if (width % 16 != 0 && !which.equals("zero") && !which.equals("junk") && !which.equals("arcade") && !which.contains("dalek")) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "SCHM_MULTIPLE");
             return true;
         }
@@ -215,12 +216,12 @@ public class SchematicSave {
                                 NamespacedKey model = null;
                                 if (display.getItemStack().hasItemMeta()) {
                                     ItemMeta im = display.getItemStack().getItemMeta();
-                                    if (im.getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.STRING)) {
+                                    if (im.hasDisplayName() && !im.hasItemModel()) {
+                                        stack.addProperty("display_name", ComponentUtils.stripColour(im.displayName()));
+                                    } else if (im.getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.STRING)) {
                                         String key = im.getPersistentDataContainer().get(plugin.getCustomBlockKey(), PersistentDataType.STRING);
                                         model = new NamespacedKey(plugin, key);
                                         stack.addProperty("cmd", model.getKey());
-                                    } else if (im.hasDisplayName()) {
-                                        stack.addProperty("display_name", ComponentUtils.stripColour(im.displayName()));
                                     }
                                 }
                                 stack.addProperty("type", material.toString());

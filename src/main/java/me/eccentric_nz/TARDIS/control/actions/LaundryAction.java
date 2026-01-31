@@ -13,6 +13,6 @@ public class LaundryAction {
     }
 
     public void openGUI(Player player) {
-        player.openInventory(new WashingMachineInventory(plugin, player).getInventory());
+        player.openInventory(new WashingMachineInventory(plugin).getInventory());
     }
 }

@@ -27,6 +27,18 @@ import org.bukkit.util.Transformation;
 
 public class LibraryCatalogue {
 
+    public static String roman(int i) {
+        String numeral;
+        switch (i) {
+            case 5 -> numeral = " V";
+            case 4 -> numeral = " IV";
+            case 3 -> numeral = " III";
+            case 2 -> numeral = " II";
+            default -> numeral = " I";
+        }
+        return numeral;
+    }
+
     public void label(Location start) {
         for (EnchantmentShelf shelf : EnchantmentShelf.values()) {
             Block block = start.clone().add(shelf.getPosition()).getBlock().getRelative(shelf.getFacing());
@@ -61,17 +73,5 @@ public class LibraryCatalogue {
                 display.setRotation(yaw, 0);
             }
         }
-    }
-
-    private String roman(int i) {
-        String numeral;
-        switch (i) {
-            case 5 -> numeral = " V";
-            case 4 -> numeral = " IV";
-            case 3 -> numeral = " III";
-            case 2 -> numeral = " II";
-            default -> numeral = " I";
-        }
-        return numeral;
     }
 }

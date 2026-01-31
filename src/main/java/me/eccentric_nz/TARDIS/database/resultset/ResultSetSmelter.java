@@ -96,7 +96,7 @@ public class ResultSetSmelter {
                 return false;
             }
         } catch (SQLException e) {
-            plugin.debug("ResultSet error for smelter table! " + e.getMessage());
+            plugin.debug("ResultSet error for smelter record! " + e.getMessage());
             return false;
         } finally {
             try {
@@ -107,7 +107,7 @@ public class ResultSetSmelter {
                     statement.close();
                 }
             } catch (SQLException e) {
-                plugin.debug("Error closing smelter table! " + e.getMessage());
+                plugin.debug("Error closing smelter record! " + e.getMessage());
             }
         }
         return true;

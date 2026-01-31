@@ -331,6 +331,23 @@ public class TARDISStaticUtils {
         return false;
     }
 
+    /**
+     * Checks whether an ItemStack is a sonic screwdriver
+     *
+     * @param is the ItemStack to check
+     * @return true if the ItemStack is a Sonic Screwdriver
+     */
+    public static boolean isKeyOrSonic(ItemStack is) {
+        if (is != null && is.hasItemMeta()) {
+            ItemMeta im = is.getItemMeta();
+            if (im.hasDisplayName()) {
+                String stripped = ComponentUtils.stripColour(im.displayName());
+                return stripped.endsWith("TARDIS Key") || stripped.endsWith("Sonic Screwdriver");
+            }
+        }
+        return false;
+    }
+
     public static void warnPreset(UUID uuid) {
         Player player = TARDIS.plugin.getServer().getPlayer(uuid);
         if (player != null) {

@@ -18,14 +18,16 @@ package me.eccentric_nz.TARDIS.listeners;
 
 import io.papermc.paper.event.player.AsyncChatEvent;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.rooms.games.ArcadeTracker;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
-import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
 
@@ -52,25 +54,37 @@ public class TARDISZeroRoomChatListener implements Listener {
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onChat(AsyncChatEvent event) {
         Player zero = event.getPlayer();
+        if (ArcadeTracker.PLAYERS.containsKey(zero.getUniqueId())) {
+            return;
+        }
+        World world = plugin.getServer().getWorld("TARDIS_Zero_Room");
         if (plugin.getTrackerKeeper().getZeroRoomOccupants().contains(zero.getUniqueId())) {
             event.setCancelled(true);
             plugin.getMessenger().send(zero, TardisModule.TARDIS, "NOT_IN_ZERO");
-        } else if (plugin.getServer().getWorld("TARDIS_Zero_Room") != null) {
-            List<Player> inZeroRoom = plugin.getServer().getWorld("TARDIS_Zero_Room").getPlayers();
-            inZeroRoom.forEach((p) -> event.viewers().remove(p));
+        } else if (world != null) {
+            world.getPlayers().forEach((p) -> event.viewers().remove(p));
         }
     }
 
     @EventHandler(ignoreCancelled = true)
     public void onPlayerCommandPreprocessEvent(PlayerCommandPreprocessEvent event) {
         Player player = event.getPlayer();
-        if (plugin.getTrackerKeeper().getZeroRoomOccupants().contains(player.getUniqueId())) {
-            event.setCancelled(true);
-            plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_IN_ZERO");
+        UUID uuid = player.getUniqueId();
+        if ((player.isOp() || TARDISPermission.hasPermission(player, "tardis.admin")) && ArcadeTracker.PLAYERS.containsKey(uuid)) {
             return;
         }
-        UUID uuid = player.getUniqueId();
         String resend = event.getMessage();
+        if (plugin.getTrackerKeeper().getZeroRoomOccupants().contains(uuid)) {
+            if (resend.contains("arcade return")) {
+                plugin.getTrackerKeeper().getZeroRoomOccupants().remove(uuid);
+                ArcadeTracker.PLAYERS.remove(uuid);
+                player.teleport(plugin.getServer().getWorlds().getFirst().getSpawnLocation());
+            } else {
+                event.setCancelled(true);
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_IN_ZERO");
+            }
+            return;
+        }
         String command = resend.toLowerCase(Locale.ROOT);
         if (plugin.getTrackerKeeper().getTelepaths().containsKey(uuid)) {
             if (command.contains("tardis ") || command.contains("tardistravel ") || command.contains("ttravel ")) {

@@ -12,7 +12,7 @@ plugins {
 
 group = "me.eccentric_nz"
 val buildNumber = "-b${System.getenv("BUILD_NUMBER") ?: (System.getenv("SHORT_SHA") ?: ".local")}"
-version = "6.3.10${buildNumber}"
+version = "6.3.11${buildNumber}"
 
 repositories {
     mavenCentral()
@@ -88,10 +88,10 @@ repositories {
 
 dependencies {
     paperweight.paperDevBundle("1.21.11-R0.1-SNAPSHOT")
-    compileOnly("com.sk89q.worldedit:worldedit-core:7.4.0-SNAPSHOT") {
+    compileOnly("com.sk89q.worldedit:worldedit-core:8.0.0-SNAPSHOT") {
         isTransitive = false
     }
-    compileOnly("com.sk89q.worldedit:worldedit-bukkit:7.4.0-SNAPSHOT") {
+    compileOnly("com.sk89q.worldedit:worldedit-bukkit:8.0.0-SNAPSHOT") {
         isTransitive = false
     }
     compileOnly("com.sk89q.worldguard:worldguard-core:7.1.0-SNAPSHOT") {
@@ -103,7 +103,7 @@ dependencies {
     compileOnly("net.citizensnpcs:citizensapi:2.0.41-SNAPSHOT") {
         isTransitive = false
     }
-    compileOnly("com.palmergames.bukkit.towny:towny:0.102.0.3") {
+    compileOnly("com.palmergames.bukkit.towny:towny:0.102.0.6") {
         isTransitive = false
     }
     compileOnly("org.mvplugins.multiverse.core:multiverse-core:5.5.0") {
@@ -122,7 +122,7 @@ dependencies {
     compileOnly("com.griefcraft:lwc:2.4.1") {
         isTransitive = false
     }
-    compileOnly("com.github.retrooper:packetevents-api:2.11.1") {
+    compileOnly("com.github.retrooper:packetevents-api:2.11.2") {
         isTransitive = false
     }
     compileOnly("me.libraryaddict.disguises:libsdisguises:11.0.14") {
@@ -143,8 +143,8 @@ dependencies {
     compileOnly("net.coreprotect:coreprotect:23.1") {
         isTransitive = false
     }
-    compileOnly(files("libs/dynmap-api-3.7-beta-10.jar"))
-    compileOnly(files("libs/DynmapCoreAPI-3.7-beta-10.jar"))
+    compileOnly(files("libs/dynmap-api-3.8.jar"))
+    compileOnly(files("libs/DynmapCoreAPI-3.8.jar"))
     compileOnly("de.bluecolored:bluemap-api:2.7.7")
     compileOnly("xyz.jpenilla:squaremap-api:1.3.12") {
         isTransitive = false

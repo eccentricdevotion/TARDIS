@@ -93,7 +93,7 @@ public class InstantPresetDestroyer {
             boolean outerDisplayDoor = rs.getPreset().usesArmourStand();
             // close outer
             if (outerDisplayDoor) {
-                new OuterDisplayDoorCloser(plugin).close(new OuterDoor(plugin, id).getDisplay(), id, playerUUID);
+                new OuterDisplayDoorCloser(plugin).close(new OuterDoor(plugin, id).getDisplay(), id, playerUUID, true);
             } else if (rs.getPreset().hasDoor()) {
                 new OuterMinecraftDoorCloser(plugin).close(new OuterDoor(plugin, id).getMinecraft(), id, playerUUID);
             }

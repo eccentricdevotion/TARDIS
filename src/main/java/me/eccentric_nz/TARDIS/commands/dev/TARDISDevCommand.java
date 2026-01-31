@@ -27,16 +27,22 @@ import me.eccentric_nz.TARDIS.bStats.ARSRoomCounts;
 import me.eccentric_nz.TARDIS.blueprints.BlueprintRoom;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import me.eccentric_nz.TARDIS.commands.dev.wiki.WikiRecipeCommand;
+import me.eccentric_nz.TARDIS.customblocks.TARDISBlockDisplayItem;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetGames;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.monitor.MonitorSnapshot;
 import me.eccentric_nz.TARDIS.move.TARDISTeleportLocation;
 import me.eccentric_nz.TARDIS.playerprefs.PreferencesDialog;
+import me.eccentric_nz.TARDIS.rooms.games.pong.GameDisplay;
+import me.eccentric_nz.TARDIS.rooms.games.rockpaperscissors.Letters;
 import me.eccentric_nz.TARDIS.skins.ArchSkins;
 import me.eccentric_nz.TARDIS.skins.DoctorSkins;
 import me.eccentric_nz.TARDIS.skins.Skin;
 import me.eccentric_nz.TARDIS.skins.tv.TVInventory;
 import me.eccentric_nz.TARDIS.utility.Pluraliser;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import me.eccentric_nz.tardisregeneration.Regenerator;
 import me.eccentric_nz.tardisweepingangels.equip.MonsterArmour;
@@ -51,18 +57,14 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Skeleton;
-import org.bukkit.inventory.EntityEquipment;
-import org.bukkit.inventory.EquipmentSlot;
-import org.bukkit.inventory.ItemFlag;
-import org.bukkit.inventory.ItemStack;
+import org.bukkit.entity.*;
+import org.bukkit.inventory.*;
 import org.bukkit.inventory.meta.BlockStateMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 import org.bukkit.inventory.meta.components.EquippableComponent;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -71,7 +73,7 @@ import java.util.*;
 /**
  * Command /tardisadmin [arguments].
  * <p>
- * The Lord President was the most powerful member of the Time Lord Council and had near absolute authority, and used a
+ * The Lord President was the most powerful member of the Time Lord Council and had near absolute authority. They used a
  * link to the Matrix, a vast computer network containing the knowledge and experiences of all past generations of Time
  * Lords, to set Time Lord policy and remain alert to potential threats from lesser civilisations.
  *
@@ -81,7 +83,7 @@ public class TARDISDevCommand implements CommandExecutor {
 
     private final Set<String> firstsStr = Sets.newHashSet(
             "add_regions", "advancements", "armour",
-            "biome", "bleach", "blueprint", "box", "brushable",
+            "banner", "biome", "bleach", "blueprint", "box", "brushable",
             "chain", "chunks", "chunky", "circuit", "component",
             "dalek", "debug", "dialog", "dismount", "displayitem",
             "effect", "empty",
@@ -92,11 +94,11 @@ public class TARDISDevCommand implements CommandExecutor {
             "label", "leather", "list",
             "mannequin", "monster", "mount",
             "ntc", "nms",
-            "painting", "plurals",
+            "painting", "plurals", "pong",
             "recipe", "regen", "registry", "roman", "rooms",
-            "screen", "shelf", "skin", "snapshot", "staircase", "stats", "systree",
-            "tis", "tips", "tree",
-            "unmount"
+            "screen", "shelf", "siege", "skin", "snapshot", "staircase", "stats", "systree",
+            "text", "tis", "tips", "tree",
+            "unmount", "update"
     );
     private final TARDIS plugin;
 
@@ -120,6 +122,64 @@ public class TARDISDevCommand implements CommandExecutor {
                 }
                 if (args.length == 1) {
                     switch (first) {
+                        case "siege"->{
+                            if (sender instanceof Player player) {
+                                ItemStack cube = player.getInventory().getItemInMainHand();
+                                ItemMeta im = cube.getItemMeta();
+                                im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, TARDISBlockDisplayItem.SIEGE_CUBE.getCustomModel().getKey());
+                                List<Component> lore = new ArrayList<>();
+                                lore.add(Component.text("Time Lord: eccentric_nz"));
+                                lore.add(Component.text("ID: 1"));
+                                im.lore(lore);
+                                cube.setItemMeta(im);
+                                // track it
+                                plugin.getTrackerKeeper().getIsSiegeCube().add(1);
+                                // track the player as well
+                                plugin.getTrackerKeeper().getSiegeCarrying().put(player.getUniqueId(), 1);
+                            }
+                            return true;
+                        }
+                        case "text" -> {
+                            if (sender instanceof Player player) {
+                                ResultSetTardisID rs = new ResultSetTardisID(plugin);
+                                if (rs.fromUUID(player.getUniqueId().toString())) {
+                                    ResultSetGames rsg = new ResultSetGames(plugin);
+                                    if (rsg.fromId(rs.getTardisId())) {
+                                        // get the pong_ids
+                                        List<UUID> uuids = rsg.getPongUUIDs();
+                                        for (Entity e : player.getLocation().getChunk().getEntities()) {
+                                            if (e instanceof TextDisplay display) {
+                                                plugin.debug(display.getUniqueId().toString());
+                                                if (uuids.contains(display.getUniqueId())) {
+                                                    plugin.debug("found!");
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            return true;
+                        }
+                        case "banner" -> {
+                            if (sender instanceof Player player) {
+                                Letters.giveAll(player);
+                            }
+                            return true;
+                        }
+                        case "pong" -> {
+                            if (sender instanceof Player player) {
+                                Block targetBlock = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 16);
+                                String uuids = GameDisplay.create(targetBlock.getLocation().add(0.5d, 2d, 0.5d));
+                                plugin.debug(uuids);
+                            }
+                            return true;
+                        }
+                        case "update" -> {
+                            if (sender instanceof Player player) {
+                                return new UpdateBlockStateCommand(plugin).refresh(player);
+                            }
+                            return true;
+                        }
                         case "shelf" -> {
                             if (sender instanceof Player player) {
                                 return new ShelfCommand(plugin).putItems(player);
@@ -207,7 +267,7 @@ public class TARDISDevCommand implements CommandExecutor {
                             if (sender instanceof Player player) {
                                 return new StaircaseCommand().spiral(player);
                             }
-                            return false;
+                            return true;
                         }
                         case "furnace" -> {
                             return new FurnaceCommand(plugin).list();
@@ -326,6 +386,56 @@ public class TARDISDevCommand implements CommandExecutor {
                     }
                 }
                 switch (first) {
+                    case "bleach" -> {
+                        if (sender instanceof Player player) {
+                            ShapelessRecipe recipe = plugin.getIncomposita().getShapelessRecipes().get("Bleached Bed");
+                            for (RecipeChoice choice : recipe.getChoiceList()) {
+                                if (choice instanceof RecipeChoice.ExactChoice exact) {
+                                    ItemStack ec = exact.getItemStack();
+                                    player.getInventory().addItem(ec);
+                                }
+                            }
+                        }
+                        return true;
+                    }
+                    case "text" -> {
+                        if (sender instanceof Player player) {
+                            ResultSetTardisID rs = new ResultSetTardisID(plugin);
+                            if (rs.fromUUID(player.getUniqueId().toString())) {
+                                if (args[1].equals("tp")) {
+                                    if (rs.fromUUID(player.getUniqueId().toString())) {
+                                        ResultSetGames rsg = new ResultSetGames(plugin);
+                                        if (rsg.fromId(rs.getTardisId())) {
+                                            String playerLocation = rsg.getPlayerLocation();
+                                            Location tp = TARDISStaticLocationGetters.getLocationFromBukkitString(playerLocation);
+                                            tp.setYaw(180f);
+                                            player.teleport(tp);
+                                        }
+                                    }
+                                } else {
+                                    int y = args[2].equals("up") ? 1 : -1;
+                                    ResultSetGames rsg = new ResultSetGames(plugin);
+                                    if (rsg.fromId(rs.getTardisId())) {
+                                        // get the pong_ids
+                                        List<UUID> uuids = rsg.getPongUUIDs();
+                                        for (UUID u : uuids) {
+                                            Entity e = player.getWorld().getEntity(u);
+                                            if (e instanceof TextDisplay display) {
+                                                display.teleport(display.getLocation().add(0,y,0));
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        return true;
+                    }
+                    case "banner" -> {
+                        if (sender instanceof Player player) {
+                            Letters.makeCode(player);
+                        }
+                        return true;
+                    }
                     case "head" -> {
                         if (sender instanceof Player player) {
                             new HeadCommand(plugin).getHeadProperties(player);

@@ -1,7 +1,7 @@
 # TARDIS
 
 TARDIS is a PaperMC plugin that allows you to create a TARDIS that lets you time travel (teleport) to random
-locations. It adds a Whovian twist to the typical /sethome and /home commands.
+locations. It adds a Whovian twist to the typical `/sethome` and `/home` commands.
 
 **As a player, you can:**
 
@@ -33,6 +33,8 @@ GitHub continuously integrated builds (updated when changes are pushed to this r
 ![Spigot downloads](https://img.shields.io/spiget/downloads/45729?label=Spigot%20downloads&style=for-the-badge)
 ![bStats Servers](https://img.shields.io/bstats/servers/11698?style=for-the-badge)
 
+![1.21.11 downloads](https://img.shields.io/github/downloads/eccentricdevotion/TARDIS/1.21.11/total?style=for-the-badge)
+![1.21.10 downloads](https://img.shields.io/github/downloads/eccentricdevotion/TARDIS/1.21.10/total?style=for-the-badge)
 ![1.21.8 downloads](https://img.shields.io/github/downloads/eccentricdevotion/TARDIS/1.21.8/total?style=for-the-badge)
 ![1.21.5 downloads](https://img.shields.io/github/downloads/eccentricdevotion/TARDIS/1.21.5/total?style=for-the-badge)
 ![1.21.4 downloads](https://img.shields.io/github/downloads/eccentricdevotion/TARDIS/1.21.4/total?style=for-the-badge)

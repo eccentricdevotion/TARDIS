@@ -280,4 +280,17 @@ public class TARDISMessage {
             audience.sendMessage(textComponent);
         }
     }
+
+    public void sendGitHubUpdateReady(CommandSender cs, String current, String latest) {
+        cs.sendMessage(AdventureComponents.getGitHubUpdateReady(current, latest));
+    }
+
+    public void sendUpdateCommand(CommandSender cs) {
+        cs.sendMessage(AdventureComponents.getUpdateCommand());
+    }
+
+    public void sendBuildsBehind(CommandSender cs, int behind) {
+        cs.sendMessage(AdventureComponents.getBuildsBehind(behind));
+    }
+
 }

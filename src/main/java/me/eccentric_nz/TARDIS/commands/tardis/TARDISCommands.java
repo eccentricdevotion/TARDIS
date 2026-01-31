@@ -21,6 +21,7 @@ import me.eccentric_nz.TARDIS.advanced.DiskWriterCommand;
 import me.eccentric_nz.TARDIS.arch.TARDISArchCommand;
 import me.eccentric_nz.TARDIS.chatGUI.UpdateChatGUI;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
+import me.eccentric_nz.TARDIS.commands.tardis.update.UpdateCommand;
 import me.eccentric_nz.TARDIS.commands.utils.RescueAcceptor;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.TardisCommand;

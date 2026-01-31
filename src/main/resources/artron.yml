@@ -33,6 +33,8 @@ jettison_seed: TNT
 render: 250
 zero: 250
 # upgrades
+# since v6.3.11 upgrade costs are calculated
+# dynamically at server start up
 upgrades:
   ancient: 5000
   ars: 5000
@@ -72,7 +74,6 @@ upgrades:
   legacy_deluxe: 10000
   legacy_eleventh: 10000
   legacy_redstone: 8000
-  custom: 10000
   archive:
     small: 5000
     medium: 7500
@@ -83,6 +84,7 @@ upgrades:
     small: 1666
     medium: 2500
     tall: 3333
+  cost_factor: 0.425
 just_wall_floor: 50
 # artron furnace
 artron_furnace:

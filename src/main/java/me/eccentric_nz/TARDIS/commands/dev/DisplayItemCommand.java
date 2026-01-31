@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.commands.dev;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.commands.tardis.UpdateBlocksCommand;
+import me.eccentric_nz.TARDIS.commands.tardis.update.UpdateBlocksCommand;
 import me.eccentric_nz.TARDIS.console.ConsoleBuilder;
 import me.eccentric_nz.TARDIS.customblocks.TARDISBlockDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
@@ -189,7 +189,7 @@ public class DisplayItemCommand {
                     if (tdi.isClosedDoor() || tdi == TARDISBlockDisplayItem.UNTEMPERED_SCHISM) {
                         display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.FIXED);
                     }
-                    if (tdi.getMaterial() == Material.AMETHYST_SHARD) {
+                    if (tdi.isPipe() || tdi.getMaterial() == Material.AMETHYST_SHARD) {
                         display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.HEAD);
                     }
                     if (tdi == TARDISBlockDisplayItem.ARTRON_FURNACE) {

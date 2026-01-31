@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.files;
 
 import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.artron.costs.UpgradeCostSetter;
 import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
 import me.eccentric_nz.TARDIS.enumeration.Desktops;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
@@ -106,7 +107,7 @@ public class DesktopThemeLoader {
             Desktops.getBY_NAMES().put("LEGACY_ELEVENTH", new Schematic("CYAN_GLAZED_TERRACOTTA", "legacy_eleventh", "Legacy 11th Doctor's Console", ConsoleSize.TALL, true, TardisLight.TWELFTH, false, -44));
             Desktops.getBY_NAMES().put("LEGACY_REDSTONE", new Schematic("RED_GLAZED_TERRACOTTA", "legacy_redstone", "Legacy Redstone Console", ConsoleSize.TALL, true, TardisLight.TENTH, false, -45));
         }
-        int p = -46;
+        int preview = -46;
         for (String desktop : plugin.getCustomDesktopsConfig().getKeys(false)) {
             if (plugin.getCustomDesktopsConfig().getBoolean(desktop + ".enabled")) {
                 // check that the .tschm file exists
@@ -156,12 +157,16 @@ public class DesktopThemeLoader {
                     save = true;
                 }
                 // add the schematic
-                Desktops.getBY_NAMES().put(desktop.toUpperCase(Locale.ROOT), new Schematic(seed, permission, description, consoleSize, beacon, light, sy, true, p));
-                p--;
+                Desktops.getBY_NAMES().put(desktop.toUpperCase(Locale.ROOT), new Schematic(seed, permission, description, consoleSize, beacon, light, sy, true, preview));
+                preview--;
             }
         }
         // reload lookup maps
         Desktops.loadLookups();
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, ()->{
+        // set desktop upgrade costs
+            new UpgradeCostSetter(plugin).calculate();
+        }, 40L);
         if (save) {
             // save custom consoles config
             try {

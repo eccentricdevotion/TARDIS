@@ -120,7 +120,7 @@ class ArchiveInventory implements InventoryHolder {
         // templates
         int t = 22;
         for (ConsoleSize c : ConsoleSize.values()) {
-            if (!c.equals(ConsoleSize.MASSIVE)) {
+            if (!c.equals(ConsoleSize.MASSIVE) && !c.equals(ConsoleSize.WIDE)) {
                 ItemStack temp = ItemStack.of(GUIArchive.SMALL.material(), 1);
                 ItemMeta late = temp.getItemMeta();
                 late.displayName(Component.text(c.toString()));

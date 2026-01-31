@@ -39,7 +39,7 @@ import java.util.Locale;
  */
 public class TARDISSchematicTabComplete extends TARDISCompleter implements TabCompleter {
 
-    private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("load", "paste", "save", "clear", "replace", "convert", "remove", "flowers", "fixliquid");
+    private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("load", "paste", "save", "clear", "replace", "convert", "remove", "flowers", "fixliquid", "position");
     private final List<String> LOAD_SUBS = ImmutableList.of("console", "room", "structure", "user");
     private final List<String> LIQUID_SUBS = ImmutableList.of("water", "lava");
     private final List<String> CONSOLE_SUBS = new ArrayList<>(Desktops.getBY_PERMS().keySet());
