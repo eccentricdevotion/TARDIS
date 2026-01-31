@@ -376,7 +376,7 @@ public class ArtronCondenserListener implements Listener {
             return;
         }
         Block b = event.getClickedBlock();
-        if (b != null && b.getType().equals(Material.CHEST) && event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
+        if (b != null && (b.getType().equals(Material.CHEST) || b.getType().equals(Material.TRAPPED_CHEST)) && event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
             Location loc = b.getLocation();
             String chest_loc = loc.toString();
             HashMap<String, Object> where = new HashMap<>();
