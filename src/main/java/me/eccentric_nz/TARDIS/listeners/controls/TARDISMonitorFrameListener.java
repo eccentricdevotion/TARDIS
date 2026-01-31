@@ -29,6 +29,7 @@ import me.eccentric_nz.TARDIS.monitor.MonitorUtils;
 import me.eccentric_nz.TARDIS.monitor.Snapshot;
 import me.eccentric_nz.TARDIS.upgrades.SystemTree;
 import me.eccentric_nz.TARDIS.upgrades.SystemUpgradeChecker;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -70,7 +71,8 @@ public class TARDISMonitorFrameListener implements Listener {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "TARDIS Monitor");
                     return;
                 }
-                if (player.isSneaking() && TARDISPermission.hasPermission(player, "tardis.camera")) {
+                ItemStack inHand = player.getInventory().getItemInMainHand();
+                if (TARDISStaticUtils.isKeyOrSonic(inHand) && TARDISPermission.hasPermission(player, "tardis.camera")) {
                     // not while travelling
                     if (isTravelling(rs.getTardis_id())) {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "CAMERA_NO_TRAVEL");

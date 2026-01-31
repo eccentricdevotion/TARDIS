@@ -2,7 +2,7 @@
 
 | Priority                                                                | Feature                                                                                                                                     | Link                                                           |
 |-------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------|
-| ![Static Badge](https://img.shields.io/badge/WIP-f90?style=flat-square) | **Fix bugs**!<br/>- Monitor camera<br/>- Bleach recipes                                                                                     | -                                                              |
+| ![Static Badge](https://img.shields.io/badge/WIP-f90?style=flat-square) | **Fix bugs**!<br/>- Bleach recipes                                                                                                          | -                                                              |
 | ![Static Badge](https://img.shields.io/badge/1-f00?style=flat-square)   | **Diner interior**                                                                                                                          | [#836](https://github.com/eccentricdevotion/TARDIS/issues/836) |
 | ![Static Badge](https://img.shields.io/badge/1-f00?style=flat-square)   | **Time Rotors and 3D Console Improvements**<br/>- Change rotor placement in item frames<br/>- Additional models for cloister and off states | [#916](https://github.com/eccentricdevotion/TARDIS/issues/916) |
 | ![Static Badge](https://img.shields.io/badge/1-f00?style=flat-square)   | **Modelled controls**<br/>- Console lamp done                                                                                               | [#836](https://github.com/eccentricdevotion/TARDIS/issues/836) |
@@ -20,9 +20,7 @@
 
 ## Wiki Documentation
 
-* Artron upgrade and room cost changes
 * Copper golems and trapped chests
-* Games
 * `/ts position` command
 * Make all images tabbed
 * Vanilla/TARDIS screenshots for TabbedImage views
