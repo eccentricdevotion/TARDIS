@@ -18,8 +18,8 @@ package me.eccentric_nz.TARDIS.commands.give.actions;
 
 import com.google.common.collect.Multimaps;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.commands.give.Give;
 import me.eccentric_nz.TARDIS.commands.give.DisplayBlockCommand;
+import me.eccentric_nz.TARDIS.commands.give.Give;
 import me.eccentric_nz.TARDIS.enumeration.RecipeCategory;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -101,7 +101,6 @@ public class TARDISItem {
                     result = ProductBuilder.getProduct(product);
                 } catch (IllegalArgumentException e) {
                     try {
-                        plugin.debug("Giving lab built item...");
                         Lab lab = Lab.valueOf(enumName);
                         result = LabBuilder.getLabProduct(lab);
                     } catch (IllegalArgumentException ignored) {
@@ -158,7 +157,9 @@ public class TARDISItem {
             if (im == null) {
                 im = result.getItemMeta();
             }
-            im.displayName(ComponentUtils.toWhite(Give.items.get(item)));
+            if (!item.equals("bleach")) {
+                im.displayName(ComponentUtils.toWhite(Give.items.get(item)));
+            }
             result.setItemMeta(im);
             result.setAmount(amount);
             player.getInventory().addItem(result);

@@ -58,10 +58,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.*;
-import org.bukkit.inventory.EntityEquipment;
-import org.bukkit.inventory.EquipmentSlot;
-import org.bukkit.inventory.ItemFlag;
-import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.*;
 import org.bukkit.inventory.meta.BlockStateMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
@@ -389,6 +386,18 @@ public class TARDISDevCommand implements CommandExecutor {
                     }
                 }
                 switch (first) {
+                    case "bleach" -> {
+                        if (sender instanceof Player player) {
+                            ShapelessRecipe recipe = plugin.getIncomposita().getShapelessRecipes().get("Bleached Bed");
+                            for (RecipeChoice choice : recipe.getChoiceList()) {
+                                if (choice instanceof RecipeChoice.ExactChoice exact) {
+                                    ItemStack ec = exact.getItemStack();
+                                    player.getInventory().addItem(ec);
+                                }
+                            }
+                        }
+                        return true;
+                    }
                     case "text" -> {
                         if (sender instanceof Player player) {
                             ResultSetTardisID rs = new ResultSetTardisID(plugin);
