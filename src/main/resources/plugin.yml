@@ -445,6 +445,7 @@ permissions:
       tardis.room.apiary: true
       tardis.room.aquarium: true
       tardis.room.arboretum: true
+      tardis.room.architectural: true
       tardis.room.baker: true
       tardis.room.bamboo: true
       tardis.room.bedroom: true
