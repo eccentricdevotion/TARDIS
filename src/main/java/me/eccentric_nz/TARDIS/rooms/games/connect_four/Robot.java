@@ -1,6 +1,5 @@
 package me.eccentric_nz.TARDIS.rooms.games.connect_four;
 
-import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import org.bukkit.Material;
 
@@ -15,15 +14,15 @@ public class Robot {
     /**
      * The board object that the robot can access.
      */
-    private final Board board;
+    private final Grid grid;
 
     /**
      * Constructor for the PlayerRobot class.
      *
-     * @param board The board object that the robot can access.
+     * @param grid The board object that the robot can access.
      */
-    public Robot(Board board) {
-        this.board = board;
+    public Robot(Grid grid) {
+        this.grid = grid;
     }
 
     /**
@@ -37,13 +36,13 @@ public class Robot {
         // find if there is a winning move with 3 tokens in line
         int winningMove = findWinningMove();
         if (winningMove != -1) {
-            TARDIS.plugin.debug("I am about to win!");
+//            TARDIS.plugin.debug("I am about to win!");
             return winningMove;
         }
         // find if the opponent has 3 tokens in line and block it
         int blockMove = blockOpponentWinningMove();
         if (blockMove != -1) {
-            TARDIS.plugin.debug("I am blocking you haha");
+//            TARDIS.plugin.debug("I am blocking you haha");
             return blockMove;
         }
         // if no strategic move is found, random move
@@ -62,14 +61,14 @@ public class Robot {
     private int blockOpponentWinningMove() {
         // checking the opponents moves for a win
         for (int col = 0; col < 7; col++) {
-            if (board.isValidMove(col)) {
-                int row = board.getFirstAvailableRow(col);
-                board.setToken(row, col, Material.RED_CONCRETE_POWDER);
+            if (grid.isValidMove(col)) {
+                int row = grid.getFirstAvailableRow(col);
+                grid.setToken(row, col, Material.RED_CONCRETE_POWDER);
                 if (areFourInLine()) {
-                    board.removeToken(row, col);
+                    grid.removeToken(row, col);
                     return col;
                 }
-                board.removeToken(row, col);
+                grid.removeToken(row, col);
             }
         }
         return -1;
@@ -87,14 +86,14 @@ public class Robot {
     private int findWinningMove() {
         // checking all the available moves for a win
         for (int col = 0; col < 7; col++) {
-            if (board.isValidMove(col)) {
-                int row = board.getFirstAvailableRow(col);
-                board.setToken(row, col, Material.YELLOW_CONCRETE_POWDER);
+            if (grid.isValidMove(col)) {
+                int row = grid.getFirstAvailableRow(col);
+                grid.setToken(row, col, Material.YELLOW_CONCRETE_POWDER);
                 if (areFourInLine()) {
-                    board.removeToken(row, col);
+                    grid.removeToken(row, col);
                     return col;
                 }
-                board.removeToken(row, col);
+                grid.removeToken(row, col);
             }
         }
         return -1;
@@ -109,17 +108,17 @@ public class Robot {
      * @return The random column chosen by the robot player.
      */
     private int randomMove() {
-        TARDIS.plugin.debug("I am moving at random...");
+//        TARDIS.plugin.debug("I am moving at random...");
         // create a list of available columns
         ArrayList<Integer> availableColumns = new ArrayList<>();
         for (int col = 0; col < 7; col++) {
-            if (!board.isColumnFull(col)) {
+            if (!grid.isColumnFull(col)) {
                 availableColumns.add(col);
             }
         }
         // handle the empty available columns list
         if (availableColumns.isEmpty()) {
-            TARDIS.plugin.debug("Oh no... I have no available columns to use.");
+//            TARDIS.plugin.debug("Oh no... I have no available columns to use.");
             return -1;
         }
         // randomly choose one of the available columns
@@ -134,6 +133,6 @@ public class Robot {
      * @return True if there are four tokens in line, false otherwise.
      */
     private boolean areFourInLine() {
-        return (board.checkVertically() || board.checkHorizontally() || board.checkDiagonally());
+        return (grid.checkVertically() || grid.checkHorizontally() || grid.checkDiagonally());
     }
 }

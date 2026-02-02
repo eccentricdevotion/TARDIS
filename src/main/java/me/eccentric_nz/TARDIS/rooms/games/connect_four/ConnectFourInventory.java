@@ -4,8 +4,10 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUIArs;
 import me.eccentric_nz.TARDIS.custommodels.GUIChameleonConstructor;
 import me.eccentric_nz.TARDIS.custommodels.GUIMap;
+import me.eccentric_nz.TARDIS.rooms.games.rockpaperscissors.Letters;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
+import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
@@ -56,13 +58,25 @@ public class ConnectFourInventory implements InventoryHolder {
                 items[slot] = hole;
             }
         }
-        // 35 reset
+        // 17 game result
+        ItemStack game = ItemStack.of(Material.TARGET, 1);
+        ItemMeta result = game.getItemMeta();
+        result.displayName(Component.text("Game result"));
+        game.setItemMeta(result);
+        items[17] = game;
+        // 26 playing
+        ItemStack banner = Letters.P(DyeColor.ORANGE, DyeColor.WHITE);
+        ItemMeta im = banner.getItemMeta();
+        im.displayName(Component.text("Playing"));
+        banner.setItemMeta(im);
+        items[26] = banner;
+        // 44 reset
         ItemStack reset = ItemStack.of(GUIArs.BUTTON_RESET.material(), 1);
         ItemMeta cobble = reset.getItemMeta();
         cobble.displayName(Component.text("Reset game"));
         reset.setItemMeta(cobble);
-        items[35] = reset;
-        // 35 close
+        items[44] = reset;
+        // 53 close
         ItemStack close = ItemStack.of(GUIMap.BUTTON_CLOSE.material(), 1);
         ItemMeta gui = close.getItemMeta();
         gui.displayName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));

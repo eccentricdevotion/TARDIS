@@ -2,8 +2,11 @@ package me.eccentric_nz.TARDIS.rooms.games.connect_four;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
+import me.eccentric_nz.TARDIS.rooms.games.GameOutcome;
+import me.eccentric_nz.TARDIS.rooms.games.rockpaperscissors.Letters;
 import me.eccentric_nz.TARDIS.rooms.games.tictactoe.MatchState;
 import net.kyori.adventure.text.Component;
+import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -24,7 +27,7 @@ public class ConnectFourListener extends TARDISMenuListener {
     private final ItemStack red;
     private final ItemStack yellow;
     private final Robot tardis;
-    private Board board;
+    private Grid grid;
     private MatchState state;
 
     public ConnectFourListener(TARDIS plugin) {
@@ -50,8 +53,8 @@ public class ConnectFourListener extends TARDISMenuListener {
         yellowMeta.displayName(Component.text("Yellow"));
         yellow.setItemMeta(yellowMeta);
         state = MatchState.PLAYER_TURN;
-        board = new Board();
-        tardis = new Robot(board);
+        grid = new Grid();
+        tardis = new Robot(grid);
     }
 
     @EventHandler
@@ -71,9 +74,9 @@ public class ConnectFourListener extends TARDISMenuListener {
         Player player = (Player) event.getWhoClicked();
         switch (slot) {
             // reset
-            case 35 -> {
+            case 44 -> {
                 view.getTopInventory().setContents(new ConnectFourInventory(plugin).getInventory().getContents());
-                board = new Board();
+                grid = new Grid();
                 state = MatchState.PLAYER_TURN;
             }
             // close
@@ -97,19 +100,20 @@ public class ConnectFourListener extends TARDISMenuListener {
                         } else {
                             view.setItem(column.get(start), red);
                             // update board
-                            int[] coords = getXY(column.get(start));
-                            board.setToken(coords[0], coords[1], Material.RED_CONCRETE_POWDER);
+                            int[] coords = getRowCol(column.get(start));
+                            grid.setToken(coords[0], coords[1], Material.RED_CONCRETE_POWDER);
                             cancel();
                             if (isGameOver()) {
                                 // player won
                                 state = MatchState.PLAYER_WON;
+                                endGame(view, player);
                             } else if (isDraw()) {
                                 // show something
                                 state = MatchState.DRAW;
+                                endGame(view, player);
                             } else {
                                 // start tardis turn
                                 int c = tardis.chooseColumn();
-                                plugin.debug("tardis.chooseColumn -> " + c);
                                 List<Integer> column = COLUMNS.get(c);
                                 new BukkitRunnable() {
                                     int start = 0;
@@ -123,15 +127,17 @@ public class ConnectFourListener extends TARDISMenuListener {
                                         } else {
                                             view.setItem(column.get(start), yellow);
                                             // update board
-                                            int[] coords = getXY(column.get(start));
-                                            board.setToken(coords[0], coords[1], Material.YELLOW_CONCRETE_POWDER);
+                                            int[] coords = getRowCol(column.get(start));
+                                            grid.setToken(coords[0], coords[1], Material.YELLOW_CONCRETE_POWDER);
                                             cancel();
                                             if (isGameOver()) {
                                                 // tardis won
                                                 state = MatchState.TARDIS_WON;
+                                                endGame(view, player);
                                             } else if (isDraw()) {
                                                 // show something
                                                 state = MatchState.DRAW;
+                                                endGame(view, player);
                                             } else {
                                                 // start player turn
                                                 state = MatchState.PLAYER_TURN;
@@ -148,35 +154,67 @@ public class ConnectFourListener extends TARDISMenuListener {
         }
     }
 
-    private int[] getXY(int slot) {
-        int y = 0;
-        int x = 0;
-        if (slot < 7) {
-            x = slot;
-        } else if (slot < 16) {
-            x = slot - 9;
-            y = 1;
-        } else if (slot < 25) {
-            x = slot - 18;
-            y = 2;
-        } else if (slot < 34) {
-            x = slot - 27;
-            y = 3;
-        } else if (slot < 43) {
-            x = slot - 36;
-            y = 4;
-        } else if (slot < 52) {
-            x = slot - 45;
-            y = 5;
+    private void endGame(InventoryView view, Player player) {
+        GameOutcome result = null;
+        ItemStack banner = null;
+        String display = "";
+        switch (state) {
+            case DRAW -> {
+                result = GameOutcome.DRAW;
+                banner = Letters.D(DyeColor.CYAN, DyeColor.WHITE);
+                display = "It was a draw :|";
+            }
+            case PLAYER_WON -> {
+                result = GameOutcome.WIN;
+                banner = Letters.W(DyeColor.LIME, DyeColor.WHITE);
+                display = "You won :)";
+            }
+            case TARDIS_WON -> {
+                result = GameOutcome.LOSE;
+                banner = Letters.L(DyeColor.MAGENTA, DyeColor.WHITE);
+                display = "You lost :(";
+            }
+            default -> {
+            }
         }
-        return new int[]{x, y};
+        if (result != null) {
+            ItemMeta im = banner.getItemMeta();
+            im.displayName(Component.text(display));
+            banner.setItemMeta(im);
+            player.playSound(player.getLocation(), result.getSound(), 0.8f, 0.8f);
+            view.setItem(26, banner);
+        }
+    }
+
+    private int[] getRowCol(int slot) {
+        int row = 0;
+        int col = 0;
+        if (slot < 7) {
+            col = slot;
+        } else if (slot < 16) {
+            col = slot - 9;
+            row = 1;
+        } else if (slot < 25) {
+            col = slot - 18;
+            row = 2;
+        } else if (slot < 34) {
+            col = slot - 27;
+            row = 3;
+        } else if (slot < 43) {
+            col = slot - 36;
+            row = 4;
+        } else if (slot < 52) {
+            col = slot - 45;
+            row = 5;
+        }
+        return new int[]{row, col};
     }
 
     public boolean isGameOver() {
-        return board.checkHorizontally() || board.checkVertically() || board.checkDiagonally();
+        return grid.checkHorizontally() || grid.checkVertically() || grid.checkDiagonally();
     }
 
     public boolean isDraw() {
-        return (board.areAllColumnsFull() && !isGameOver());
+        return (grid.areAllColumnsFull() && !isGameOver());
     }
 }

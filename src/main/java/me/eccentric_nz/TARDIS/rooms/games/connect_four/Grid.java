@@ -3,9 +3,9 @@ package me.eccentric_nz.TARDIS.rooms.games.connect_four;
 import org.bukkit.Material;
 
 /**
- * This class represents the board for the game.
+ * This class represents the grid for the game.
  * It is represented as a 2D array of Tokens with 6 rows and 7 columns.
- * The structure of the board is represented by the following table:
+ * The structure of the grid is represented by the following table:
  * <pre>
  *         0   1   2   3   4   5   6
  *       _____________________________
@@ -18,50 +18,50 @@ import org.bukkit.Material;
  *
  */
 
-public class Board {
+public class Grid {
 
-    /** A 2D array of Tokens representing the board. */
-    private final Material[][] board = new Material[6][7];
+    /** A 2D array of Tokens representing the grid. */
+    private final Material[][] grid = new Material[6][7];
 
     /**
-     * Constructor for the Board class.
-     * It initialises the board with null values.
+     * Constructor for the Grid class.
+     * It initialises the grid with null values.
      */
-    public Board() {
+    public Grid() {
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 7; j++) {
-                board[i][j] = null;
+                grid[i][j] = null;
             }
         }
     }
 
     // Methods
     /**
-     * This method returns the entire board.
-     * @return the board
+     * This method returns the entire grid.
+     * @return the grid
      */
-    public Material[][] getBoard() {
-        return board;
+    public Material[][] getGrid() {
+        return grid;
     }
 
     /**
-     * This method sets a token at a specific position on the board.
+     * This method sets a token at a specific position on the grid.
      * @param row the row of the position.
      * @param col the column of the position.
      * @param token the token to set.
      */
     public void setToken(int row, int col, Material token) {
-        board[row][col] = token;
+        grid[row][col] = token;
     }
 
     /**
-     * This method removes a token at a specific position on the board by
+     * This method removes a token at a specific position on the grid by
      * setting the item in that location to null.
      * @param row the row of the position.
      * @param col the column of the position.
      */
     public void removeToken(int row, int col) {
-        board[row][col] = null;
+        grid[row][col] = null;
     }
 
     /**
@@ -74,7 +74,7 @@ public class Board {
         int maxRow = -1;
         // checking from the bottom of the column
         for (int row = 6 - 1; row >= 0; row--) {
-            if (board[row][col] == null) {
+            if (grid[row][col] == null) {
                 if (row >= maxRow) {
                     maxRow = row;
                 }
@@ -90,7 +90,7 @@ public class Board {
      * @return true if the column is full, false otherwise.
      */
     public boolean isColumnFull(int column) {
-        return board[0][column] != null;
+        return grid[0][column] != null;
     }
 
     /**
@@ -108,7 +108,7 @@ public class Board {
 
     /**
      * This method checks if a move is valid.
-     * A move is valid if the column is within the bounds of the board,
+     * A move is valid if the column is within the bounds of the grid,
      * this check is mostly necessary due to user input in command line,
      * and if the chosen column is not full.
      *
@@ -143,8 +143,8 @@ public class Board {
      * @return  true if there are four tokens in a row, false otherwise.
      */
     private boolean horizontalCondition(int i, int j) {
-        return (board[i][j] != null && board[i][j].equals(board[i][j + 1]) &&
-                board[i][j].equals(board[i][j + 2]) && board[i][j].equals(board[i][j + 3]));
+        return (grid[i][j] != null && grid[i][j].equals(grid[i][j + 1]) &&
+                grid[i][j].equals(grid[i][j + 2]) && grid[i][j].equals(grid[i][j + 3]));
     }
 
     /**
@@ -171,8 +171,8 @@ public class Board {
      * @return  true if there are four tokens in a row, false otherwise.
      */
     private boolean verticalCondition(int i, int j) {
-        return (board[i][j] != null && board[i][j].equals(board[i + 1][j]) &&
-                board[i][j].equals(board[i + 2][j]) && board[i][j].equals(board[i + 3][j]));
+        return (grid[i][j] != null && grid[i][j].equals(grid[i + 1][j]) &&
+                grid[i][j].equals(grid[i + 2][j]) && grid[i][j].equals(grid[i + 3][j]));
     }
 
     /**
@@ -206,8 +206,8 @@ public class Board {
      * @return  true if there are four tokens in a row, false otherwise.
      */
     private boolean diagonalConditionLeftRight(int i, int j) {
-        return (board[i][j] != null && board[i][j].equals(board[i + 1][j + 1]) &&
-                board[i][j].equals(board[i + 2][j + 2]) && board[i][j].equals(board[i + 3][j + 3]));
+        return (grid[i][j] != null && grid[i][j].equals(grid[i + 1][j + 1]) &&
+                grid[i][j].equals(grid[i + 2][j + 2]) && grid[i][j].equals(grid[i + 3][j + 3]));
     }
 
     /**
@@ -217,7 +217,7 @@ public class Board {
      * @return  true if there are four tokens in a row, false otherwise.
      */
     private boolean diagonalConditionRightLeft(int i, int j) {
-        return (board[i][j] != null && board[i][j].equals(board[i + 1][j - 1]) &&
-                board[i][j].equals(board[i + 2][j - 2]) && board[i][j].equals(board[i + 3][j - 3]));
+        return (grid[i][j] != null && grid[i][j].equals(grid[i + 1][j - 1]) &&
+                grid[i][j].equals(grid[i + 2][j - 2]) && grid[i][j].equals(grid[i + 3][j - 3]));
     }
 }
