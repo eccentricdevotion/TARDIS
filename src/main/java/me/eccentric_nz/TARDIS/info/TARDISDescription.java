@@ -178,6 +178,7 @@ public enum TARDISDescription {
     CORAL("The 10th Doctor's TARDIS - console design by vistaero."),
     CURSED("A dark, cursed TARDIS - console design by airomis"),
     DELTA("A Nether Delta TARDIS."),
+    DINER("Clara's Diner."),
     DIVISION("The Division Interuniverse Spaceship."),
     CAVE("A dripstone cave TARDIS."),
     WEATHERED("A weathered copper TARDIS."),

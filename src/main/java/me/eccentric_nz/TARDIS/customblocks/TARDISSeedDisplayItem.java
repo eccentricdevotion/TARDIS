@@ -17,6 +17,7 @@ public enum TARDISSeedDisplayItem implements TARDISDisplayItem {
     CURSED(SeedBlock.CURSED.getKey(), Material.BLACK_CONCRETE),
     DELTA(SeedBlock.DELTA.getKey(), Material.CRYING_OBSIDIAN),
     DELUXE(SeedBlock.DELUXE.getKey(), Material.DIAMOND_BLOCK),
+    DINER(SeedBlock.DINER.getKey(), Material.STRIPPED_CRIMSON_HYPHAE),
     DIVISION(SeedBlock.DIVISION.getKey(), Material.PINK_GLAZED_TERRACOTTA),
     EIGHTH(SeedBlock.EIGHTH.getKey(), Material.CHISELED_STONE_BRICKS),
     ELEVENTH(SeedBlock.ELEVENTH.getKey(), Material.EMERALD_BLOCK),

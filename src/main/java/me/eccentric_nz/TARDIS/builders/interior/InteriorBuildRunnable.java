@@ -112,10 +112,10 @@ public class InteriorBuildRunnable implements Runnable {
      *
      * @param plugin     an instance of the main TARDIS plugin class
      * @param schm       the name of the schematic file to use can be ANCIENT, ARS, BIGGER, BONE, BUDGET, CAVE, COPPER,
-     *                   CORAL, CURSED, CUSTOM, DELTA, DELUXE, DIVISION, EIGHTH, ELEVENTH, ENDER, FACTORY, FIFTEENTH, FUGITIVE,
-     *                   HOSPITAL, MASTER, MECHANICAL, ORIGINAL, PLANK, PYRAMID, REDSTONE, ROTOR, RUSTIC, SIDRAT, STEAMPUNK,
-     *                   THIRTEENTH, TOM, TWELFTH, WAR, WEATHERED, WOOD, LEGACY_BIGGER, LEGACY_DELUXE, LEGACY_ELEVENTH,
-     *                   LEGACY_REDSTONE or a CUSTOM name.
+     *                   CORAL, CURSED, CUSTOM, DELTA, DELUXE, DINER, DIVISION, EIGHTH, ELEVENTH, ENDER, FACTORY, FIFTEENTH,
+     *                   FUGITIVE, HOSPITAL, MASTER, MECHANICAL, ORIGINAL, PLANK, PYRAMID, REDSTONE, ROTOR, RUSTIC, SIDRAT,
+     *                   STEAMPUNK, THIRTEENTH, TOM, TWELFTH, WAR, WEATHERED, WOOD, LEGACY_BIGGER, LEGACY_DELUXE,
+     *                   LEGACY_ELEVENTH, LEGACY_REDSTONE or a CUSTOM name.
      * @param world      the world where the TARDIS is to be built.
      * @param dbID       the unique key of the record for this TARDIS in the database.
      * @param player     an instance of the player who owns the TARDIS.

@@ -101,6 +101,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         t.put("CURSED", Material.BLACK_CONCRETE); // designed by airomis (player at thatsnotacreeper.com)
         t.put("DELTA", Material.CRYING_OBSIDIAN); // delta
         t.put("DELUXE", Material.DIAMOND_BLOCK); // deluxe
+        t.put("DINER", Material.STRIPPED_CRIMSON_HYPHAE); // diner
         t.put("DIVISION", Material.PINK_GLAZED_TERRACOTTA); // division
         t.put("EIGHTH", Material.CHISELED_STONE_BRICKS); // eighth
         t.put("ELEVENTH", Material.EMERALD_BLOCK); // eleventh

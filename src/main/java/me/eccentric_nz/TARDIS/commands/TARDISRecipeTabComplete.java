@@ -39,7 +39,7 @@ public class TARDISRecipeTabComplete extends TARDISCompleter implements TabCompl
             "ancient", "ars",
             "bigger", "bone", "budget",
             "cave", "copper", "coral", "cursed", "custom",
-            "delta", "deluxe", "division",
+            "delta", "deluxe", "diner", "division",
             "eighth", "eleventh", "ender",
             "factory", "fifteenth", "fugitive",
             "hospital",

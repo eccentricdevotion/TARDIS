@@ -33,6 +33,9 @@ consoles:
   DELUXE:
     material: DIAMOND_BLOCK
     amount: 40
+  DINER:
+    material: STRIPPED_CRIMSON_HYPHAE
+    amount: 30
   DIVISION:
     material: PINK_GLAZED_TERRACOTTA
     amount: 30

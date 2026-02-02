@@ -28,6 +28,7 @@ public enum BlueprintConsole {
     CURSED("tardis.cursed"),
     DELTA("tardis.delta"),
     DELUXE("tardis.deluxe"),
+    DINER("tardis.diner"),
     DIVISION("tardis.division"),
     EIGHTH("tardis.eighth"),
     ELEVENTH("tardis.eleventh"),

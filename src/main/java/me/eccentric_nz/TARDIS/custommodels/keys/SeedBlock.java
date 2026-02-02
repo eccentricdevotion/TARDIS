@@ -32,6 +32,7 @@ public enum SeedBlock {
     CURSED(new NamespacedKey(TARDIS.plugin, "seed_cursed")),
     DELTA(new NamespacedKey(TARDIS.plugin, "seed_delta")),
     DELUXE(new NamespacedKey(TARDIS.plugin, "seed_deluxe")),
+    DINER(new NamespacedKey(TARDIS.plugin, "seed_diner")),
     DIVISION(new NamespacedKey(TARDIS.plugin, "seed_division")),
     EIGHTH(new NamespacedKey(TARDIS.plugin, "seed_eighth")),
     ELEVENTH(new NamespacedKey(TARDIS.plugin, "seed_eleventh")),

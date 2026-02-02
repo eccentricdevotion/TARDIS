@@ -61,6 +61,7 @@ public class DesktopThemeLoader {
         Desktops.getBY_NAMES().put("DELTA", new Schematic("CRYING_OBSIDIAN", "delta", "Nether Delta Console", ConsoleSize.MEDIUM, false, TardisLight.LAMP, false, -19));
         // DELUXE schematic designed by Lord_Rahl and killeratnight at mcnovus.net
         Desktops.getBY_NAMES().put("DELUXE", new Schematic("DIAMOND_BLOCK", "deluxe", "Supersized Deluxe Console", ConsoleSize.TALL, true, TardisLight.TENTH, false, -20));
+        Desktops.getBY_NAMES().put("DINER", new Schematic("STRIPPED_CRIMSON_HYPHAE", "diner", "Clara's diner", ConsoleSize.MEDIUM, false, TardisLight.LANTERN, false, -62));
         Desktops.getBY_NAMES().put("DIVISION", new Schematic("PINK_GLAZED_TERRACOTTA", "division", "The Division Interuniverse Console", ConsoleSize.MEDIUM, false, TardisLight.LANTERN, false, -21));
         // EIGHTH based on a design by DT10 - https://www.youtube.com/watch?v=dMZ-yqHJDLo
         Desktops.getBY_NAMES().put("EIGHTH", new Schematic("CHISELED_STONE_BRICKS", "eighth", "8th Doctor's Console", ConsoleSize.MASSIVE, false, TardisLight.LANTERN, 65, false, -61));

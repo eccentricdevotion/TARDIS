@@ -283,6 +283,7 @@ permissions:
       tardis.custom: true
       tardis.delta: true
       tardis.deluxe: true
+      tardis.diner: true
       tardis.division: true
       tardis.eighth: true
       tardis.eleventh: true
@@ -337,6 +338,9 @@ permissions:
     default: op
   tardis.deluxe:
     description: Allow players to build the 'deluxe' TARDIS.
+    default: op
+  tardis.diner:
+    description: Allow players to build Clara's Diner TARDIS.
     default: op
   tardis.division:
     description: Allow players to build the 'division' Spaceship.
