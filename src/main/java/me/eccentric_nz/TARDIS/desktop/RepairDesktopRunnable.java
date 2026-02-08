@@ -497,7 +497,9 @@ public class RepairDesktopRunnable extends DesktopThemeRunnable {
                     String button = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
                     plugin.getQueryFactory().insertSyncControl(id, 1, button, 0);
                 }
-                if (type.equals(Material.JUKEBOX) && !(tud.getSchematic().getPermission().equals("eighth") && world.getBlockAt(x, y, z).getRelative(BlockFace.DOWN).getType() == Material.ANDESITE)) {
+                if (type.equals(Material.JUKEBOX)
+                        && (!(tud.getSchematic().getPermission().equals("eighth") && world.getBlockAt(x, y, z).getRelative(BlockFace.DOWN).getType() == Material.ANDESITE))
+                        && (!(tud.getSchematic().getPermission().equals("diner") && world.getBlockAt(x, y, z).getRelative(BlockFace.DOWN).getType() == Material.WHITE_CONCRETE))) {
                     // remember the location of this Advanced Console
                     String advanced = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
                     plugin.getQueryFactory().insertSyncControl(id, 15, advanced, 0);

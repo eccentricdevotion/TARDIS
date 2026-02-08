@@ -281,7 +281,9 @@ public class PreviewBuildRunnable implements Runnable {
                 lever.setFacing(BlockFace.WEST);
                 data = lever;
             }
-            if (type.equals(Material.JUKEBOX) && !(schm.getPermission().equals("eighth") && world.getBlockAt(x, y, z).getRelative(BlockFace.DOWN).getType() == Material.ANDESITE)) {
+            if (type.equals(Material.JUKEBOX)
+                    && (!(schm.getPermission().equals("eighth") && world.getBlockAt(x, y, z).getRelative(BlockFace.DOWN).getType() == Material.ANDESITE))
+                    && (!(schm.getPermission().equals("diner") && world.getBlockAt(x, y, z).getRelative(BlockFace.DOWN).getType() == Material.WHITE_CONCRETE))) {
                 // set block data to correct BARRIER + Item Display
                 data = TARDISConstants.BARRIER;
                 // spawn an item display entity
