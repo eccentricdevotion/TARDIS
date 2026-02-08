@@ -24,6 +24,9 @@ public enum TARDISBlockDisplayItem implements TARDISDisplayItem {
     DOOR(TardisDoorVariant.TARDIS_DOOR_CLOSED.getKey(), Material.IRON_DOOR, Material.IRON_DOOR),
     DOOR_OPEN(TardisDoorVariant.TARDIS_DOOR_OPEN.getKey(), Material.IRON_DOOR),
     DOOR_BOTH_OPEN(TardisDoorVariant.TARDIS_DOOR_EXTRA.getKey(), Material.IRON_DOOR),
+    DINER_DOOR(DinerDoorVariant.DINER_DOOR_CLOSED.getKey(), Material.IRON_DOOR, Material.CRIMSON_DOOR),
+    DINER_DOOR_OPEN(DinerDoorVariant.DINER_DOOR_OPEN.getKey(), Material.IRON_DOOR),
+    DINER_DOOR_BOTH_OPEN(DinerDoorVariant.DINER_DOOR_EXTRA.getKey(), Material.IRON_DOOR),
     BONE_DOOR(BoneDoorVariant.BONE_DOOR_CLOSED.getKey(), Material.IRON_DOOR, Material.BIRCH_DOOR),
     BONE_DOOR_OPEN(BoneDoorVariant.BONE_DOOR_OPEN.getKey(), Material.BIRCH_DOOR),
     CLASSIC_DOOR(ClassicDoorVariant.CLASSIC_DOOR_CLOSED.getKey(), Material.IRON_DOOR, Material.CHERRY_DOOR),
@@ -110,7 +113,8 @@ public enum TARDISBlockDisplayItem implements TARDISDisplayItem {
     @Override
     public boolean isDoor() {
         switch (this) {
-            case DOOR, DOOR_OPEN, DOOR_BOTH_OPEN, BONE_DOOR, BONE_DOOR_OPEN, CLASSIC_DOOR, CLASSIC_DOOR_OPEN,
+            case DOOR, DOOR_OPEN, DOOR_BOTH_OPEN, DINER_DOOR, DINER_DOOR_OPEN, DINER_DOOR_BOTH_OPEN,
+                 BONE_DOOR, BONE_DOOR_OPEN, CLASSIC_DOOR, CLASSIC_DOOR_OPEN,
                  SIDRAT_DOOR, SIDRAT_DOOR_OPEN, CUSTOM_DOOR -> {
                 return true;
             }
@@ -123,7 +127,7 @@ public enum TARDISBlockDisplayItem implements TARDISDisplayItem {
     @Override
     public boolean isClosedDoor() {
         switch (this) {
-            case DOOR, BONE_DOOR, CLASSIC_DOOR, SIDRAT_DOOR -> {
+            case DOOR, BONE_DOOR, CLASSIC_DOOR, DINER_DOOR, SIDRAT_DOOR -> {
                 return true;
             }
             default -> {
