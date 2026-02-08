@@ -71,7 +71,7 @@ public class BoxCommand {
                                 switch (args[2]) {
                                     case "open" -> model = ChameleonVariant.BLUE_OPEN.getKey();
                                     case "stained" -> model = ChameleonVariant.BLUE_STAINED.getKey();
-                                    case "glass" -> model = ChameleonVariant.GLASS.getKey();
+                                    case "glass" -> model = ChameleonVariant.BLUE_GLASS.getKey();
                                     case "camera" -> model = ChameleonVariant.BLUE_CAMERA.getKey();
                                     default -> {
                                     } // already assigned to ChameleonVariant.BLUE_CLOSED.getKey()
@@ -81,7 +81,7 @@ public class BoxCommand {
                                 switch (args[2]) {
                                     case "open" -> model = ChameleonVariant.BLACK_OPEN.getKey();
                                     case "stained" -> model = ChameleonVariant.BLACK_STAINED.getKey();
-                                    case "glass" -> model = ChameleonVariant.GLASS.getKey();
+                                    case "glass" -> model = ChameleonVariant.BLACK_GLASS.getKey();
                                     case "camera" -> model = ChameleonVariant.BLACK_CAMERA.getKey();
                                     default -> model = ChameleonVariant.BLACK_CLOSED.getKey();
                                 }
@@ -90,7 +90,7 @@ public class BoxCommand {
                                 switch (args[2]) {
                                     case "open" -> model = ChameleonVariant.BROWN_OPEN.getKey();
                                     case "stained" -> model = ChameleonVariant.BROWN_STAINED.getKey();
-                                    case "glass" -> model = ChameleonVariant.GLASS.getKey();
+                                    case "glass" -> model = ChameleonVariant.BROWN_GLASS.getKey();
                                     case "camera" -> model = ChameleonVariant.BROWN_CAMERA.getKey();
                                     default -> model = ChameleonVariant.BROWN_CLOSED.getKey();
                                 }
@@ -99,7 +99,7 @@ public class BoxCommand {
                                 switch (args[2]) {
                                     case "open" -> model = ChameleonVariant.LIGHT_BLUE_OPEN.getKey();
                                     case "stained" -> model = ChameleonVariant.LIGHT_BLUE_STAINED.getKey();
-                                    case "glass" -> model = ChameleonVariant.GLASS.getKey();
+                                    case "glass" -> model = ChameleonVariant.LIGHT_BLUE_GLASS.getKey();
                                     case "camera" -> model = ChameleonVariant.LIGHT_BLUE_CAMERA.getKey();
                                     default -> model = ChameleonVariant.LIGHT_BLUE_CLOSED.getKey();
                                 }
@@ -108,7 +108,7 @@ public class BoxCommand {
                                 switch (args[2]) {
                                     case "open" -> model = ChameleonVariant.LIGHT_GRAY_OPEN.getKey();
                                     case "stained" -> model = ChameleonVariant.LIGHT_GRAY_STAINED.getKey();
-                                    case "glass" -> model = ChameleonVariant.GLASS.getKey();
+                                    case "glass" -> model = ChameleonVariant.LIGHT_GRAY_GLASS.getKey();
                                     case "camera" -> model = ChameleonVariant.LIGHT_GRAY_CAMERA.getKey();
                                     default -> model = ChameleonVariant.LIGHT_GRAY_CLOSED.getKey();
                                 }
@@ -117,7 +117,7 @@ public class BoxCommand {
                                 switch (args[2]) {
                                     case "open" -> model = ChameleonVariant.GRAY_OPEN.getKey();
                                     case "stained" -> model = ChameleonVariant.GRAY_STAINED.getKey();
-                                    case "glass" -> model = ChameleonVariant.GLASS.getKey();
+                                    case "glass" -> model = ChameleonVariant.GRAY_GLASS.getKey();
                                     case "camera" -> model = ChameleonVariant.GRAY_CAMERA.getKey();
                                     default -> model = ChameleonVariant.GRAY_CLOSED.getKey();
                                 }
@@ -126,7 +126,7 @@ public class BoxCommand {
                                 switch (args[2]) {
                                     case "open" -> model = ChameleonVariant.CYAN_OPEN.getKey();
                                     case "stained" -> model = ChameleonVariant.CYAN_STAINED.getKey();
-                                    case "glass" -> model = ChameleonVariant.GLASS.getKey();
+                                    case "glass" -> model = ChameleonVariant.CYAN_GLASS.getKey();
                                     case "camera" -> model = ChameleonVariant.CYAN_CAMERA.getKey();
                                     default -> model = ChameleonVariant.CYAN_CLOSED.getKey();
                                 }
@@ -135,7 +135,7 @@ public class BoxCommand {
                                 switch (args[2]) {
                                     case "open" -> model = ChameleonVariant.MAGENTA_OPEN.getKey();
                                     case "stained" -> model = ChameleonVariant.MAGENTA_STAINED.getKey();
-                                    case "glass" -> model = ChameleonVariant.GLASS.getKey();
+                                    case "glass" -> model = ChameleonVariant.MAGENTA_GLASS.getKey();
                                     case "camera" -> model = ChameleonVariant.MAGENTA_CAMERA.getKey();
                                     default -> model = ChameleonVariant.MAGENTA_CLOSED.getKey();
                                 }
@@ -144,7 +144,7 @@ public class BoxCommand {
                                 switch (args[2]) {
                                     case "open" -> model = ChameleonVariant.YELLOW_OPEN.getKey();
                                     case "stained" -> model = ChameleonVariant.YELLOW_STAINED.getKey();
-                                    case "glass" -> model = ChameleonVariant.GLASS.getKey();
+                                    case "glass" -> model = ChameleonVariant.YELLOW_GLASS.getKey();
                                     case "camera" -> model = ChameleonVariant.YELLOW_CAMERA.getKey();
                                     default -> model = ChameleonVariant.YELLOW_CLOSED.getKey();
                                 }
@@ -153,7 +153,7 @@ public class BoxCommand {
                                 switch (args[2]) {
                                     case "open" -> model = ChameleonVariant.LIME_OPEN.getKey();
                                     case "stained" -> model = ChameleonVariant.LIME_STAINED.getKey();
-                                    case "glass" -> model = ChameleonVariant.GLASS.getKey();
+                                    case "glass" -> model = ChameleonVariant.LIME_GLASS.getKey();
                                     case "camera" -> model = ChameleonVariant.LIME_CAMERA.getKey();
                                     default -> model = ChameleonVariant.LIME_CLOSED.getKey();
                                 }
@@ -162,7 +162,7 @@ public class BoxCommand {
                                 switch (args[2]) {
                                     case "open" -> model = ChameleonVariant.GREEN_OPEN.getKey();
                                     case "stained" -> model = ChameleonVariant.GREEN_STAINED.getKey();
-                                    case "glass" -> model = ChameleonVariant.GLASS.getKey();
+                                    case "glass" -> model = ChameleonVariant.GREEN_GLASS.getKey();
                                     case "camera" -> model = ChameleonVariant.GREEN_CAMERA.getKey();
                                     default -> model = ChameleonVariant.GREEN_CLOSED.getKey();
                                 }
@@ -171,7 +171,7 @@ public class BoxCommand {
                                 switch (args[2]) {
                                     case "open" -> model = ChameleonVariant.PINK_OPEN.getKey();
                                     case "stained" -> model = ChameleonVariant.PINK_STAINED.getKey();
-                                    case "glass" -> model = ChameleonVariant.GLASS.getKey();
+                                    case "glass" -> model = ChameleonVariant.PINK_GLASS.getKey();
                                     case "camera" -> model = ChameleonVariant.PINK_CAMERA.getKey();
                                     default -> model = ChameleonVariant.PINK_CLOSED.getKey();
                                 }
@@ -180,7 +180,7 @@ public class BoxCommand {
                                 switch (args[2]) {
                                     case "open" -> model = ChameleonVariant.PURPLE_OPEN.getKey();
                                     case "stained" -> model = ChameleonVariant.PURPLE_STAINED.getKey();
-                                    case "glass" -> model = ChameleonVariant.GLASS.getKey();
+                                    case "glass" -> model = ChameleonVariant.PURPLE_GLASS.getKey();
                                     case "camera" -> model = ChameleonVariant.PURPLE_CAMERA.getKey();
                                     default -> model = ChameleonVariant.PURPLE_CLOSED.getKey();
                                 }
@@ -189,7 +189,7 @@ public class BoxCommand {
                                 switch (args[2]) {
                                     case "open" -> model = ChameleonVariant.RED_OPEN.getKey();
                                     case "stained" -> model = ChameleonVariant.RED_STAINED.getKey();
-                                    case "glass" -> model = ChameleonVariant.GLASS.getKey();
+                                    case "glass" -> model = ChameleonVariant.RED_GLASS.getKey();
                                     case "camera" -> model = ChameleonVariant.RED_CAMERA.getKey();
                                     default -> model = ChameleonVariant.RED_CLOSED.getKey();
                                 }
@@ -198,7 +198,7 @@ public class BoxCommand {
                                 switch (args[2]) {
                                     case "open" -> model = ChameleonVariant.ORANGE_OPEN.getKey();
                                     case "stained" -> model = ChameleonVariant.ORANGE_STAINED.getKey();
-                                    case "glass" -> model = ChameleonVariant.GLASS.getKey();
+                                    case "glass" -> model = ChameleonVariant.ORANGE_GLASS.getKey();
                                     case "camera" -> model = ChameleonVariant.ORANGE_CAMERA.getKey();
                                     default -> model = ChameleonVariant.ORANGE_CLOSED.getKey();
                                 }
@@ -207,7 +207,7 @@ public class BoxCommand {
                                 switch (args[2]) {
                                     case "open" -> model = ChameleonVariant.WHITE_OPEN.getKey();
                                     case "stained" -> model = ChameleonVariant.WHITE_STAINED.getKey();
-                                    case "glass" -> model = ChameleonVariant.GLASS.getKey();
+                                    case "glass" -> model = ChameleonVariant.WHITE_GLASS.getKey();
                                     case "camera" -> model = ChameleonVariant.WHITE_CAMERA.getKey();
                                     default -> model = ChameleonVariant.WHITE_CLOSED.getKey();
                                 }
@@ -216,7 +216,7 @@ public class BoxCommand {
                                 switch (args[2]) {
                                     case "open" -> model = ChameleonVariant.BAD_WOLF_OPEN.getKey();
                                     case "stained" -> model = ChameleonVariant.BAD_WOLF_STAINED.getKey();
-                                    case "glass" -> model = ChameleonVariant.GLASS.getKey();
+                                    case "glass" -> model = ChameleonVariant.BAD_WOLF_GLASS.getKey();
                                     case "camera" -> model = ChameleonVariant.BAD_WOLF_CAMERA.getKey();
                                     default -> model = ChameleonVariant.BAD_WOLF_CLOSED.getKey();
                                 }
@@ -225,7 +225,7 @@ public class BoxCommand {
                                 switch (args[2]) {
                                     case "open" -> model = ChameleonVariant.TENNANT_OPEN.getKey();
                                     case "stained" -> model = ChameleonVariant.TENNANT_STAINED.getKey();
-                                    case "glass" -> model = ChameleonVariant.GLASS.getKey();
+                                    case "glass" -> model = ChameleonVariant.TENNANT_GLASS.getKey();
                                     case "camera" -> model = ChameleonVariant.TENNANT_CAMERA.getKey();
                                     default -> model = ChameleonVariant.TENNANT_CLOSED.getKey();
                                 }

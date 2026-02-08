@@ -24,7 +24,7 @@ public enum ColouredVariant {
     TINTED_CLOSED(new NamespacedKey(TARDIS.plugin, "chameleon_tinted_closed")),
     TINTED_OPEN(new NamespacedKey(TARDIS.plugin, "chameleon_tinted_open")),
     TINTED_STAINED(new NamespacedKey(TARDIS.plugin, "chameleon_tinted_stained")),
-    TINTED_GLASS(new NamespacedKey(TARDIS.plugin, "chameleon_glass")),
+    TINTED_GLASS(new NamespacedKey(TARDIS.plugin, "chameleon_tinted_glass")),
     TINTED_CAMERA(new NamespacedKey(TARDIS.plugin, "chameleon_tinted_camera")),
     TINT(new NamespacedKey(TARDIS.plugin, "chameleon_tint"));
 

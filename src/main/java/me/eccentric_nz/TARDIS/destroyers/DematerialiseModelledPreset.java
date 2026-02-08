@@ -98,11 +98,24 @@ public class DematerialiseModelledPreset implements Runnable {
                 light.setBlockData(TARDISConstants.AIR);
             } else if (i % 4 == 1) { // glass
                 model = switch (dye) {
-                    case BLACK_DYE, BLUE_DYE, BROWN_DYE,
-                         CYAN_DYE, GRAY_DYE, GREEN_DYE, LIGHT_BLUE_DYE,
-                         LIGHT_GRAY_DYE, LIME_DYE, MAGENTA_DYE, ORANGE_DYE,
-                         PINK_DYE, PURPLE_DYE, RED_DYE, WHITE_DYE,
-                         YELLOW_DYE, LEATHER_HORSE_ARMOR, CYAN_STAINED_GLASS_PANE -> ChameleonVariant.GLASS.getKey();
+                    case BLACK_DYE -> ChameleonVariant.BLACK_GLASS.getKey();
+                    case BLUE_DYE -> ChameleonVariant.BLUE_GLASS.getKey();
+                    case BROWN_DYE -> ChameleonVariant.BROWN_GLASS.getKey();
+                    case CYAN_DYE -> ChameleonVariant.CYAN_GLASS.getKey();
+                    case GRAY_DYE -> ChameleonVariant.GRAY_GLASS.getKey();
+                    case GREEN_DYE -> ChameleonVariant.GREEN_GLASS.getKey();
+                    case LIGHT_BLUE_DYE -> ChameleonVariant.LIGHT_BLUE_GLASS.getKey();
+                    case LIGHT_GRAY_DYE -> ChameleonVariant.LIGHT_GRAY_GLASS.getKey();
+                    case LIME_DYE -> ChameleonVariant.LIME_GLASS.getKey();
+                    case MAGENTA_DYE -> ChameleonVariant.MAGENTA_GLASS.getKey();
+                    case ORANGE_DYE -> ChameleonVariant.ORANGE_GLASS.getKey();
+                    case PINK_DYE -> ChameleonVariant.PINK_GLASS.getKey();
+                    case PURPLE_DYE -> ChameleonVariant.PURPLE_GLASS.getKey();
+                    case RED_DYE -> ChameleonVariant.RED_GLASS.getKey();
+                    case WHITE_DYE -> ChameleonVariant.WHITE_GLASS.getKey();
+                    case YELLOW_DYE -> ChameleonVariant.YELLOW_GLASS.getKey();
+                    case LEATHER_HORSE_ARMOR -> ColouredVariant.TINTED_GLASS.getKey();
+                    case CYAN_STAINED_GLASS_PANE -> ChameleonVariant.TENNANT_GLASS.getKey();
                     case GRAY_STAINED_GLASS_PANE -> ChameleonVariant.WEEPING_ANGEL_GLASS.getKey();
                     case GREEN_STAINED_GLASS_PANE -> ChameleonVariant.SIDRAT_GLASS.getKey();
                     case RED_STAINED_GLASS_PANE -> ChameleonVariant.BATTLE_GLASS.getKey();
