@@ -343,11 +343,20 @@ public class InteriorBuildRunnable implements Runnable {
             int z = startz + col;
             BlockData data = plugin.getServer().createBlockData(c.get("data").getAsString());
             Material type = data.getMaterial();
-            if (type.equals(Material.LIGHT_GRAY_CONCRETE) && (schm.getPermission().equals("bone") || schm.getPermission().equals("rustic"))) {
+            if (type.equals(Material.LIGHT_GRAY_CONCRETE) && (
+                    schm.getPermission().equals("bone") ||
+                    schm.getPermission().equals("rustic") ||
+                    schm.getPermission().equals("diner") ||
+                    schm.getPermission().equals("hell_bent")
+            )) {
                 // get the block
                 Block block = new Location(world, x, y, z).getBlock();
+                String ct = switch (schm.getPermission()) {
+                    case "bone" -> "console_light_gray";
+                    case "rustic" -> "console_rustic";
+                    default -> "console_white";
+                };
                 // build a console
-                String ct = (schm.getPermission().equals("bone")) ? "console_light_gray" : "console_rustic";
                 new ConsoleBuilder(plugin).create(block, ct, dbID, playerUUID);
             }
             if (type.equals(Material.SCULK_SHRIEKER)) {
