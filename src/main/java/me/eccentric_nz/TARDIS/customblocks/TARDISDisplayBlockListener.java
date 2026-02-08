@@ -378,7 +378,6 @@ public class TARDISDisplayBlockListener implements Listener {
                                             display.setItemStack(itemStack);
                                             // close doors / deactivate portal
                                             new InnerDisplayDoorExtra(plugin).deactivate(block, id, playerUUID);
-//                                            new DisplayItemDoorToggler(plugin).openClose(player, block, false, TARDISDisplayItem.DOOR_OPEN);
                                         }
                                     }
                                 }
