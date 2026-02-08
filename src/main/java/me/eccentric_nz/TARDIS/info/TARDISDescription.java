@@ -162,6 +162,7 @@ public enum TARDISDescription {
     FIFTEENTH("The 14/15th Doctor's TARDIS - console design by airomis"),
     FACTORY("The 1st Doctor's TARDIS; straight from the factory! - console design by Razihel."),
     FUGITIVE("The Fugitive Doctor's TARDIS; don't get captured by the Judoon! - based on design by DT10."),
+    HELL_BENT("Clara's TARDIS; from the TV episode 'Hell Bent'."),
     HOSPITAL("St John's Hospital TARDIS; for when you just need some rest."),
     REDSTONE("This one has some redstone in it - console design by killeratnight & L0rd Rahl."),
     STEAMPUNK("Small, but steamy."),

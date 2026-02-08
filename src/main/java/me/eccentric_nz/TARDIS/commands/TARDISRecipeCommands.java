@@ -109,6 +109,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         t.put("FACTORY", Material.YELLOW_CONCRETE_POWDER); // factory schematic designed by Razihel
         t.put("FIFTEENTH", Material.OCHRE_FROGLIGHT); // designed by airomis (player at thatsnotacreeper.com)
         t.put("FUGITIVE", Material.POLISHED_DEEPSLATE); // fugitive - based on TARDIS designed by DT10 - https://www.youtube.com/watch?v=aykwXVemSs8
+        t.put("HELL_BENT", Material.WHITE_GLAZED_TERRACOTTA); // hell bent
         t.put("HOSPITAL", Material.WHITE_CONCRETE); // hospital
         t.put("MASTER", Material.NETHER_BRICKS); // master schematic designed by ShadowAssociate
         t.put("MECHANICAL", Material.POLISHED_ANDESITE); // mechanical schematic adapted from design by Plastic Straw

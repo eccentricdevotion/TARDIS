@@ -40,6 +40,7 @@ public enum SeedBlock {
     FACTORY(new NamespacedKey(TARDIS.plugin, "seed_factory")),
     FIFTEENTH(new NamespacedKey(TARDIS.plugin, "seed_fifteenth")),
     FUGITIVE(new NamespacedKey(TARDIS.plugin, "seed_fugitive")),
+    HELL_BENT(new NamespacedKey(TARDIS.plugin, "seed_hell_bent")),
     HOSPITAL(new NamespacedKey(TARDIS.plugin, "seed_hospital")),
     MASTER(new NamespacedKey(TARDIS.plugin, "seed_master")),
     MECHANICAL(new NamespacedKey(TARDIS.plugin, "seed_mechanical")),

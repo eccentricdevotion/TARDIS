@@ -25,6 +25,7 @@ public enum TARDISSeedDisplayItem implements TARDISDisplayItem {
     FACTORY(SeedBlock.FACTORY.getKey(), Material.GRAY_CONCRETE),
     FIFTEENTH(SeedBlock.FIFTEENTH.getKey(), Material.OCHRE_FROGLIGHT),
     FUGITIVE(SeedBlock.FUGITIVE.getKey(), Material.POLISHED_DEEPSLATE),
+    HELL_BENT(SeedBlock.HELL_BENT.getKey(), Material.WHITE_GLAZED_TERRACOTTA),
     HOSPITAL(SeedBlock.HOSPITAL.getKey(), Material.WHITE_CONCRETE),
     MASTER(SeedBlock.MASTER.getKey(), Material.NETHER_BRICKS),
     MECHANICAL(SeedBlock.MECHANICAL.getKey(), Material.POLISHED_ANDESITE),

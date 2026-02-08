@@ -83,6 +83,7 @@ public enum ShopItem {
     HATH_HEAD("Hath Head", Material.PUFFERFISH, HathVariant.HATH_HEAD.getKey(), ShopItemRecipe.TWA),
     HEADLESS_MONK_HEAD("Headless Monk Head", Material.RED_CANDLE, MonkVariant.HEADLESS_MONK_HEAD.getKey(), ShopItemRecipe.TWA),
     HEAVENLY_HOST_HEAD("Heavenly Host Head", Material.GOLD_INGOT, HeavenlyHostVariant.HEAVENLY_HOST_HEAD.getKey(), ShopItemRecipe.TWA),
+    HELL_BENT_SEED("Hell Bent Seed", Material.WHITE_GLAZED_TERRACOTTA, SeedBlock.HELL_BENT.getKey(), ShopItemRecipe.SEED),
     HOSPITAL_SEED("Hospital Seed", Material.WHITE_CONCRETE, SeedBlock.HOSPITAL.getKey(), ShopItemRecipe.SEED),
     ICE_WARRIOR_HEAD("Ice Warrior Head", Material.SNOWBALL, IceWarriorVariant.ICE_WARRIOR_HEAD.getKey(), ShopItemRecipe.TWA),
     IGNITE_CIRCUIT("Ignite Circuit", Material.GLOWSTONE_DUST, CircuitVariant.IGNITE.getKey(), ShopItemRecipe.SHAPED, CircuitVariant.IGNITE.getFloats()),

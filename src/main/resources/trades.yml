@@ -57,6 +57,9 @@ consoles:
   FUGITIVE:
     material: POLISHED_DEEPSLATE
     amount: 30
+  HELL_BENT:
+    material: WHITE_GLAZED_TERRACOTTA
+    amount: 20
   HOSPITAL:
     material: WHITE_CONCRETE
     amount: 20

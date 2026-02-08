@@ -291,6 +291,7 @@ permissions:
       tardis.factory: true
       tardis.fugitive: true
       tardis.fifteenth: true
+      tardis.hell_bent: true
       tardis.hospital: true
       tardis.legacy_bigger: true
       tardis.legacy_deluxe: true
@@ -362,6 +363,9 @@ permissions:
     default: op
   tardis.fugitive:
     description: Allow players to build Ruth (The Fugitive Doctor) Clayton's TARDIS.
+    default: op
+  tardis.hell_bent:
+    description: Allow players to build Clara's 'Hell Bent' TARDIS.
     default: op
   tardis.hospital:
     description: Allow players to build the St John's Hospital TARDIS.
