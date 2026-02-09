@@ -57,7 +57,6 @@ public enum ConsoleInteraction {
     TELEPATHIC_CIRCUIT("Telepathic Circuit", new Vector(1.575d, 0.75d, -0.05d), 0.5f, 0.65f, 0, 240.0f, Material.DAYLIGHT_DETECTOR, ModelledControl.TELEPATHIC_CIRCUIT.getKey()),
 
     // section five
-
     WORLD("Environment Selector", new Vector(1.425d, 0.75d, 1.15d), 0.15f, 0.65f, 1, 300.0f, Material.BAMBOO_BUTTON, ModelledButton.WXYZ_0.getKey()),
     MULTIPLIER("Coordinate Increment Modifier", new Vector(1.55d, 0.75d, 0.925d), 0.15f, 0.65f, 1, 300.0f, Material.BAMBOO_BUTTON, ModelledButton.WXYZ_0.getKey()),
     X("X Distance", new Vector(1.625d, 0.75d, 1.275d), 0.15f, 0.4f, 1, 300.0f, Material.BAMBOO_BUTTON, ModelledButton.WXYZ_0.getKey()),

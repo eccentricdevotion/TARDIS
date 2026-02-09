@@ -697,10 +697,14 @@ public class FullDesktopThemeRunnable extends DesktopThemeRunnable {
                     /*
                      * This block will be converted to a lever by setBlock(),
                      * but remember it so we can use it as the handbrake!
-                     * Bone and Rustic have modelled consoles, not a lever handbrake,
+                     * Bone, Diner, Hell Bent and Rustic have modelled consoles, not a lever handbrake,
                      * so remove it to avoid unintentional bugs.
                      */
-                    if (tud.getSchematic().getPermission().equals("rustic") || tud.getSchematic().getPermission().equals("bone")) {
+                    if (tud.getSchematic().getPermission().equals("rustic") ||
+                        tud.getSchematic().getPermission().equals("diner") ||
+                        tud.getSchematic().getPermission().equals("hell_bent") ||
+                        tud.getSchematic().getPermission().equals("bone")
+                    ) {
                         // delete handbrake record
                         HashMap<String, Object> whereD = new HashMap<>();
                         whereD.put("tardis_id", id);
@@ -750,6 +754,17 @@ public class FullDesktopThemeRunnable extends DesktopThemeRunnable {
                                     existing[2][6][5] = "STONE";
                                     existing[2][6][6] = "STONE";
                                 }
+                                case WIDE -> {
+                                    // the 8 slots on the same level
+                                    existing[1][4][5] = "STONE";
+                                    existing[1][4][6] = "STONE";
+                                    existing[1][5][4] = "STONE";
+                                    existing[1][5][5] = "STONE";
+                                    existing[1][5][6] = "STONE";
+                                    existing[1][6][4] = "STONE";
+                                    existing[1][6][5] = "STONE";
+                                    existing[1][6][6] = "STONE";
+                                }
                                 case TALL -> {
                                     // the 3 slots on the same level &
                                     existing[1][4][5] = "STONE";
@@ -768,8 +783,8 @@ public class FullDesktopThemeRunnable extends DesktopThemeRunnable {
                                     existing[1][5][5] = "STONE";
                                 }
                                 default -> {
+                                    // SMALL size do nothing
                                 }
-                                // SMALL size do nothing
                             }
                         }
                         // add control blocks
@@ -797,6 +812,17 @@ public class FullDesktopThemeRunnable extends DesktopThemeRunnable {
                                 existing[2][6][5] = control;
                                 existing[2][6][6] = control;
                             }
+                            case WIDE -> {
+                                // the 8 slots on the same level
+                                existing[1][4][5] = control;
+                                existing[1][4][6] = control;
+                                existing[1][5][4] = control;
+                                existing[1][5][5] = control;
+                                existing[1][5][6] = control;
+                                existing[1][6][4] = control;
+                                existing[1][6][5] = control;
+                                existing[1][6][6] = control;
+                            }
                             case TALL -> {
                                 // the 3 slots on the same level &
                                 existing[1][4][5] = control;
@@ -815,8 +841,8 @@ public class FullDesktopThemeRunnable extends DesktopThemeRunnable {
                                 existing[1][5][5] = control;
                             }
                             default -> {
+                                // SMALL size do nothing
                             }
-                            // SMALL size do nothing
                         }
                         Gson gson = new GsonBuilder().disableHtmlEscaping().create();
                         JsonArray json = JsonParser.parseString(gson.toJson(existing)).getAsJsonArray();
@@ -841,7 +867,13 @@ public class FullDesktopThemeRunnable extends DesktopThemeRunnable {
                 if (type.equals(Material.PALE_OAK_FENCE) && tud.getSchematic().getPermission().equals("sidrat")) {
                     sidratFenceBlocks.put(b, data);
                 }
-                if (type.equals(Material.COMMAND_BLOCK) || ((tud.getSchematic().getPermission().equals("bigger") || tud.getSchematic().getPermission().equals("coral") || tud.getSchematic().getPermission().equals("deluxe") || tud.getSchematic().getPermission().equals("twelfth")) && type.equals(Material.BEACON))) {
+                if (type.equals(Material.COMMAND_BLOCK) || ((
+                        tud.getSchematic().getPermission().equals("bigger") ||
+                        tud.getSchematic().getPermission().equals("coral") ||
+                        tud.getSchematic().getPermission().equals("deluxe") ||
+                        tud.getSchematic().getPermission().equals("twelfth"))
+                        && type.equals(Material.BEACON))
+                ) {
                     /*
                      * command block - remember it to spawn the creeper on.
                      * could also be a beacon block, as the creeper sits over
@@ -1083,8 +1115,7 @@ public class FullDesktopThemeRunnable extends DesktopThemeRunnable {
                         list.add(new JettisonSlot(chunk, 2, 6, 5));
                         list.add(new JettisonSlot(chunk, 2, 6, 6));
                     }
-                    default -> {
-                    } // same size do nothing
+                    default -> { } // same size do nothing
                 }
             }
             case TALL -> {
@@ -1107,8 +1138,7 @@ public class FullDesktopThemeRunnable extends DesktopThemeRunnable {
                         list.add(new JettisonSlot(chunk, 2, 5, 4));
                         list.add(new JettisonSlot(chunk, 2, 5, 5));
                     }
-                    default -> {
-                    } // same size or bigger do nothing
+                    default -> { } // same size or bigger do nothing
                 }
             }
             case WIDE -> {
@@ -1132,20 +1162,18 @@ public class FullDesktopThemeRunnable extends DesktopThemeRunnable {
                         list.add(new JettisonSlot(chunk, 1, 6, 5));
                         list.add(new JettisonSlot(chunk, 1, 6, 6));
                     }
-                    default -> {
-                    } // same size or bigger do nothing
+                    default -> { } // same size or bigger do nothing
                 }
             }
             case MEDIUM -> {
                 // the 3 chunks on the same level
-                if (next == ConsoleSize.SMALL) {// the 3 chunks on the same level
+                if (next == ConsoleSize.SMALL) {
                     list.add(new JettisonSlot(chunk, 1, 4, 5));
                     list.add(new JettisonSlot(chunk, 1, 5, 4));
                     list.add(new JettisonSlot(chunk, 1, 5, 5));
                 }
             }
-            default -> {
-            } // same size or bigger do nothing
+            default -> { } // same size or bigger do nothing
         }
         return list;
     }
