@@ -37,7 +37,7 @@ public class CustomDoorLoader {
         Door classic = new Door("classic_door", Material.CHERRY_DOOR, new int[]{0,1,2,3,4}, 4, false, "classic_door", "classic_door", false);
         Door bone = new Door("bone_door", Material.BIRCH_DOOR, new int[]{0,1,2,3,4}, 4, false, "classic_door", "classic_door", false);
         Door sidrat = new Door("sidrat_door", Material.PALE_OAK_DOOR, new int[]{0,1,2}, 4, false, "sidrat_open", "sidrat_close", false);
-        Door diner = new Door("diner_door", Material.CRIMSON_DOOR, new int[]{0,1,2}, 6, true, "diner_door_open", "diner_door_close", false);
+        Door diner = new Door("diner_door", Material.CRIMSON_DOOR, new int[]{0,1,2}, 6, true, "tardis_door_open", "tardis_door_close", false);
         Door.byMaterial.put(Material.IRON_DOOR, police_box);
         Door.byName.put("POLICE_BOX_DOOR", police_box);
         Door.byName.put("DOOR", police_box);

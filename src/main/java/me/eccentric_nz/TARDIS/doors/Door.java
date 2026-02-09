@@ -52,7 +52,7 @@ public class Door {
     public static NamespacedKey getExtraModel(Material material) {
         Door door = byMaterial.get(material);
         if (door != null) {
-            return new NamespacedKey(TARDIS.plugin, TARDISStringUtils.toDashedLowercase(door.getName()) + "_extra");
+            return new NamespacedKey(TARDIS.plugin, TARDISStringUtils.toScoredLowercase(door.getName()) + "_extra");
         }
         return null;
     }
@@ -60,7 +60,7 @@ public class Door {
     public static NamespacedKey getOpenModel(Material material) {
         Door door = byMaterial.get(material);
         if (door != null) {
-            return new NamespacedKey(TARDIS.plugin, TARDISStringUtils.toDashedLowercase(door.getName()) + "_open");
+            return new NamespacedKey(TARDIS.plugin, TARDISStringUtils.toScoredLowercase(door.getName()) + "_open");
         }
         return null;
     }
@@ -68,7 +68,7 @@ public class Door {
     public static NamespacedKey getClosedModel(Material material) {
         Door door = byMaterial.get(material);
         if (door != null) {
-            return new NamespacedKey(TARDIS.plugin, TARDISStringUtils.toDashedLowercase(door.getName()) + "_closed");
+            return new NamespacedKey(TARDIS.plugin, TARDISStringUtils.toScoredLowercase(door.getName()) + "_closed");
         }
         return null;
     }

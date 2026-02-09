@@ -365,7 +365,7 @@ public class TARDISDisplayBlockListener implements Listener {
                                     new InnerDisplayDoorMover(plugin).exit(player, block);
                                     return;
                                 }
-                                if (tdi == TARDISBlockDisplayItem.DOOR_OPEN || (tdi == TARDISBlockDisplayItem.CUSTOM_DOOR && !isCustomClosed(display))) {
+                                if (tdi == TARDISBlockDisplayItem.DOOR_OPEN || tdi == TARDISBlockDisplayItem.DINER_DOOR_OPEN || (tdi == TARDISBlockDisplayItem.CUSTOM_DOOR && !isCustomClosed(display))) {
                                     // open right hand door as well
                                     ItemStack itemStack = display.getItemStack();
                                     if (itemStack != null) {

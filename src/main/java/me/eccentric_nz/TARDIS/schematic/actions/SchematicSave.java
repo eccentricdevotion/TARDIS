@@ -211,6 +211,7 @@ public class SchematicSave {
                                 loc.addProperty("y", entityLocation.getY() - miny);
                                 loc.addProperty("z", entityLocation.getZ() - minz);
                                 item.add("rel_location", loc);
+                                item.addProperty("rotation", display.getYaw());
                                 JsonObject stack = new JsonObject();
                                 Material material = display.getItemStack().getType();
                                 NamespacedKey model = null;

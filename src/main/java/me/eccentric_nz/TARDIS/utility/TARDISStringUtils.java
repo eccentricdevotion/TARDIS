@@ -93,6 +93,10 @@ public class TARDISStringUtils {
         return s.toLowerCase(Locale.ROOT).replace("_", "-");
     }
 
+    public static String toScoredLowercase(String s) {
+        return s.toLowerCase(Locale.ROOT).replace("-", "_").replace(" ", "_");
+    }
+
     public static String toLowercaseDashed(String s) {
         return s.toLowerCase(Locale.ROOT).replace(" ", "-");
     }

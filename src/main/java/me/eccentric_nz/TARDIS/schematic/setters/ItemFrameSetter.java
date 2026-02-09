@@ -17,33 +17,19 @@
 package me.eccentric_nz.TARDIS.schematic.setters;
 
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
-import io.papermc.paper.registry.RegistryAccess;
-import io.papermc.paper.registry.RegistryKey;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.rotors.TimeRotor;
-import me.eccentric_nz.TARDIS.utility.ComponentUtils;
-import net.kyori.adventure.text.Component;
-import org.bukkit.*;
-import org.bukkit.block.Banner;
+import org.bukkit.Location;
+import org.bukkit.Rotation;
 import org.bukkit.block.BlockFace;
-import org.bukkit.block.banner.Pattern;
-import org.bukkit.block.banner.PatternType;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.BlockStateMeta;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.BoundingBox;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
 
 /**
  * @author eccentric_nz
@@ -65,8 +51,8 @@ public class ItemFrameSetter {
             if (json.has("item")) {
                 ItemStack is = ItemStackSetter.build(
                         json.get("item") instanceof JsonPrimitive ?
-                                json :
-                                json.get("item").getAsJsonObject()
+                        json :
+                        json.get("item").getAsJsonObject()
                 );
                 frame.setItem(is, false);
                 if (json.has("rotation")) {

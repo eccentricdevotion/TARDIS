@@ -20,10 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.customblocks.TARDISBlockDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
-import me.eccentric_nz.TARDIS.custommodels.keys.BoneDoorVariant;
-import me.eccentric_nz.TARDIS.custommodels.keys.ClassicDoorVariant;
-import me.eccentric_nz.TARDIS.custommodels.keys.SidratDoorVariant;
-import me.eccentric_nz.TARDIS.custommodels.keys.TardisDoorVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.*;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.doors.Door;
@@ -63,6 +60,7 @@ public class InnerDisplayDoorCloser {
                             case BIRCH_DOOR -> im.setItemModel(BoneDoorVariant.BONE_DOOR_CLOSED.getKey());
                             case CHERRY_DOOR -> im.setItemModel(ClassicDoorVariant.CLASSIC_DOOR_CLOSED.getKey());
                             case PALE_OAK_DOOR -> im.setItemModel(SidratDoorVariant.SIDRAT_DOOR_CLOSED.getKey());
+                            case CRIMSON_DOOR -> im.setItemModel(DinerDoorVariant.DINER_DOOR_CLOSED.getKey());
                             default -> im.setItemModel(Door.getClosedModel(tdi.getMaterial()));
                         }
                     }
