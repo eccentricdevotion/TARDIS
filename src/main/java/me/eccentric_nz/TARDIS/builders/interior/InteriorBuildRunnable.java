@@ -465,14 +465,22 @@ public class InteriorBuildRunnable implements Runnable {
                     postOod = new Location(world, x, y + 1, z);
                 }
             }
-            if (type.equals(Material.WHITE_STAINED_GLASS) && schm.getPermission().equals("war")) {
+            if (type.equals(Material.WHITE_STAINED_GLASS) && (
+                    schm.getPermission().equals("war") ||
+                    schm.getPermission().equals("diner") ||
+                    schm.getPermission().equals("hell_bent")
+            )) {
                 if (!TARDISFloodgate.isFloodgateEnabled() || !TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) {
                     data = TARDISConstants.BARRIER;
                     // spawn an item display entity
                     TARDISDisplayItemUtils.set(TARDISBlockDisplayItem.ROUNDEL, world, x, y, z);
                 }
             }
-            if (type.equals(Material.WHITE_TERRACOTTA) && schm.getPermission().equals("war")) {
+            if (type.equals(Material.WHITE_TERRACOTTA) && (
+                    schm.getPermission().equals("war") ||
+                    schm.getPermission().equals("diner") ||
+                    schm.getPermission().equals("hell_bent")
+            )) {
                 if (!TARDISFloodgate.isFloodgateEnabled() || !TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) {
                     data = TARDISConstants.BARRIER;
                     // spawn an item display entity

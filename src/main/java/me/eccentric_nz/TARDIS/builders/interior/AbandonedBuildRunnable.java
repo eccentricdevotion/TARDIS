@@ -392,11 +392,19 @@ class AbandonedBuildRunnable implements Runnable {
                     postOod = new Location(world, x, y + 1, z);
                 }
             }
-            if (type.equals(Material.WHITE_STAINED_GLASS) && schm.getPermission().equals("war")) {
+            if (type.equals(Material.WHITE_STAINED_GLASS) && (
+                    schm.getPermission().equals("war") ||
+                    schm.getPermission().equals("diner") ||
+                    schm.getPermission().equals("hell_bent")
+            )) {
                 data = TARDISConstants.BARRIER;
                 TARDISDisplayItemUtils.set(TARDISBlockDisplayItem.ROUNDEL, world, x, y, z);
             }
-            if (type.equals(Material.WHITE_TERRACOTTA) && schm.getPermission().equals("war")) {
+            if (type.equals(Material.WHITE_TERRACOTTA) && (
+                    schm.getPermission().equals("war") ||
+                    schm.getPermission().equals("diner") ||
+                    schm.getPermission().equals("hell_bent")
+            )) {
                 data = TARDISConstants.BARRIER;
                 TARDISDisplayItemUtils.set(TARDISBlockDisplayItem.ROUNDEL_OFFSET, world, x, y, z);
             }

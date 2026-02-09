@@ -626,13 +626,21 @@ public class FullDesktopThemeRunnable extends DesktopThemeRunnable {
                 if (level == 0 && type.equals(Material.PINK_STAINED_GLASS) && tud.getSchematic().getPermission().equals("division")) {
                     postLightBlocks.add(world.getBlockAt(x, y - 1, z));
                 }
-                if (type.equals(Material.WHITE_STAINED_GLASS) && tud.getSchematic().getPermission().equals("war")) {
+                if (type.equals(Material.WHITE_STAINED_GLASS) && (
+                            tud.getSchematic().getPermission().equals("war") ||
+                            tud.getSchematic().getPermission().equals("diner") ||
+                            tud.getSchematic().getPermission().equals("hell_bent")
+                    )) {
                     if (!TARDISFloodgate.isFloodgateEnabled() || !TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) {
                         data = TARDISConstants.BARRIER;
                         TARDISDisplayItemUtils.set(TARDISBlockDisplayItem.ROUNDEL, world, x, y, z);
                     }
                 }
-                if (type.equals(Material.WHITE_TERRACOTTA) && tud.getSchematic().getPermission().equals("war")) {
+                if (type.equals(Material.WHITE_TERRACOTTA) && (
+                        tud.getSchematic().getPermission().equals("war") ||
+                        tud.getSchematic().getPermission().equals("diner") ||
+                        tud.getSchematic().getPermission().equals("hell_bent")
+                )) {
                     if (!TARDISFloodgate.isFloodgateEnabled() || !TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) {
                         data = TARDISConstants.BARRIER;
                         TARDISDisplayItemUtils.set(TARDISBlockDisplayItem.ROUNDEL_OFFSET, world, x, y, z);
