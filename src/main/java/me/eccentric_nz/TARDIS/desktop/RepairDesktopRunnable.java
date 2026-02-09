@@ -406,11 +406,20 @@ public class RepairDesktopRunnable extends DesktopThemeRunnable {
                     set.put("beacon", bedrocloc);
                     postBedrock = world.getBlockAt(x, y, z);
                 }
-                if (type.equals(Material.LIGHT_GRAY_CONCRETE) && (tud.getSchematic().getPermission().equals("bone") || tud.getSchematic().getPermission().equals("rustic"))) {
+                if (type.equals(Material.LIGHT_GRAY_CONCRETE) && (
+                        tud.getSchematic().getPermission().equals("bone") ||
+                        tud.getSchematic().getPermission().equals("rustic") ||
+                        tud.getSchematic().getPermission().equals("diner") ||
+                        tud.getSchematic().getPermission().equals("hell_bent")
+                )) {
                     // get the block
                     Block block = new Location(world, x, y, z).getBlock();
+                    String ct = switch (tud.getSchematic().getPermission()) {
+                        case "bone" -> "console_light_gray";
+                        case "rustic" -> "console_rustic";
+                        default -> "console_white";
+                    };
                     // build a console
-                    String ct = (tud.getSchematic().getPermission().equals("bone")) ? "console_light_gray" : "console_rustic";
                     new ConsoleBuilder(plugin).create(block, ct, id, uuid.toString());
                 }
                 if (type.equals(Material.SCULK_SHRIEKER)) {
@@ -452,11 +461,19 @@ public class RepairDesktopRunnable extends DesktopThemeRunnable {
                 if (level == 0 && type.equals(Material.PINK_STAINED_GLASS) && tud.getSchematic().getPermission().equals("division")) {
                     postLightBlocks.add(world.getBlockAt(x, y - 1, z));
                 }
-                if (type.equals(Material.WHITE_STAINED_GLASS) && tud.getSchematic().getPermission().equals("war")) {
+                if (type.equals(Material.WHITE_STAINED_GLASS) && (
+                        tud.getSchematic().getPermission().equals("war") ||
+                        tud.getSchematic().getPermission().equals("diner") ||
+                        tud.getSchematic().getPermission().equals("hell_bent")
+                )) {
                     data = TARDISConstants.BARRIER;
                     TARDISDisplayItemUtils.set(TARDISBlockDisplayItem.ROUNDEL, world, x, y, z);
                 }
-                if (type.equals(Material.WHITE_TERRACOTTA) && tud.getSchematic().getPermission().equals("war")) {
+                if (type.equals(Material.WHITE_TERRACOTTA) && (
+                        tud.getSchematic().getPermission().equals("war") ||
+                        tud.getSchematic().getPermission().equals("diner") ||
+                        tud.getSchematic().getPermission().equals("hell_bent")
+                )) {
                     data = TARDISConstants.BARRIER;
                     TARDISDisplayItemUtils.set(TARDISBlockDisplayItem.ROUNDEL_OFFSET, world, x, y, z);
                 }
@@ -497,7 +514,9 @@ public class RepairDesktopRunnable extends DesktopThemeRunnable {
                     String button = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
                     plugin.getQueryFactory().insertSyncControl(id, 1, button, 0);
                 }
-                if (type.equals(Material.JUKEBOX) && !(tud.getSchematic().getPermission().equals("eighth") && world.getBlockAt(x, y, z).getRelative(BlockFace.DOWN).getType() == Material.ANDESITE)) {
+                if (type.equals(Material.JUKEBOX)
+                        && (!(tud.getSchematic().getPermission().equals("eighth") && world.getBlockAt(x, y, z).getRelative(BlockFace.DOWN).getType() == Material.ANDESITE))
+                        && (!(tud.getSchematic().getPermission().equals("diner") && world.getBlockAt(x, y, z).getRelative(BlockFace.DOWN).getType() == Material.WHITE_CONCRETE))) {
                     // remember the location of this Advanced Console
                     String advanced = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
                     plugin.getQueryFactory().insertSyncControl(id, 15, advanced, 0);

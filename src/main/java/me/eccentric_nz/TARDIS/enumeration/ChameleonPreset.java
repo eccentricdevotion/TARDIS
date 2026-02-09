@@ -345,10 +345,24 @@ public enum ChameleonPreset {
 
     public NamespacedKey getGlass() {
         switch (this) {
-            case POLICE_BOX_BLUE, POLICE_BOX_WHITE, POLICE_BOX_ORANGE, POLICE_BOX_MAGENTA, POLICE_BOX_LIGHT_BLUE,
-                 POLICE_BOX_YELLOW, POLICE_BOX_LIME, POLICE_BOX_PINK, POLICE_BOX_GRAY, POLICE_BOX_LIGHT_GRAY,
-                 POLICE_BOX_CYAN, POLICE_BOX_PURPLE, POLICE_BOX_BROWN, POLICE_BOX_GREEN, POLICE_BOX_RED, POLICE_BOX_BLACK,
-                 POLICE_BOX_TENNANT, COLOURED -> { return ChameleonVariant.GLASS.getKey(); }
+            case POLICE_BOX_BLUE -> { return ChameleonVariant.BLUE_GLASS.getKey(); }
+            case POLICE_BOX_WHITE -> { return ChameleonVariant.WHITE_GLASS.getKey(); }
+            case POLICE_BOX_ORANGE -> { return ChameleonVariant.ORANGE_GLASS.getKey(); }
+            case POLICE_BOX_MAGENTA -> { return ChameleonVariant.MAGENTA_GLASS.getKey(); }
+            case POLICE_BOX_LIGHT_BLUE -> { return ChameleonVariant.LIGHT_BLUE_GLASS.getKey(); }
+            case POLICE_BOX_YELLOW -> { return ChameleonVariant.YELLOW_GLASS.getKey(); }
+            case POLICE_BOX_LIME -> { return ChameleonVariant.LIME_GLASS.getKey(); }
+            case POLICE_BOX_PINK -> { return ChameleonVariant.PINK_GLASS.getKey(); }
+            case POLICE_BOX_GRAY -> { return ChameleonVariant.GRAY_GLASS.getKey(); }
+            case POLICE_BOX_LIGHT_GRAY -> { return ChameleonVariant.LIGHT_GRAY_GLASS.getKey(); }
+            case POLICE_BOX_CYAN -> { return ChameleonVariant.CYAN_GLASS.getKey(); }
+            case POLICE_BOX_PURPLE -> { return ChameleonVariant.PURPLE_GLASS.getKey(); }
+            case POLICE_BOX_BROWN -> { return ChameleonVariant.BROWN_GLASS.getKey(); }
+            case POLICE_BOX_GREEN -> { return ChameleonVariant.GREEN_GLASS.getKey(); }
+            case POLICE_BOX_RED -> { return ChameleonVariant.RED_GLASS.getKey(); }
+            case POLICE_BOX_BLACK -> { return ChameleonVariant.BLACK_GLASS.getKey(); }
+            case POLICE_BOX_TENNANT -> { return ChameleonVariant.TENNANT_GLASS.getKey(); }
+            case COLOURED -> { return ColouredVariant.TINTED_GLASS.getKey(); }
             case WEEPING_ANGEL -> { return ChameleonVariant.WEEPING_ANGEL_GLASS.getKey(); }
             case PANDORICA -> { return ChameleonVariant.PANDORICA_GLASS.getKey(); }
             case SIDRAT -> { return ChameleonVariant.SIDRAT_GLASS.getKey(); }

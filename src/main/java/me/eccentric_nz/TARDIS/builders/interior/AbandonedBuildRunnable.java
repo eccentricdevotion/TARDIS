@@ -110,10 +110,10 @@ class AbandonedBuildRunnable implements Runnable {
      *
      * @param plugin an instance of the TARDIS plugin main class.
      * @param schm   the name of the schematic file to use can be ANCIENT, ARS, BIGGER, BONE, BUDGET, CAVE, COPPER,
-     *               CORAL, CURSED, CUSTOM, DELTA, DELUXE, DIVISION, EIGHTH, ELEVENTH, ENDER, FACTORY, FIFTEENTH, FUGITIVE,
-     *               HOSPITAL, MASTER, MECHANICAL, ORIGINAL, PLANK, PYRAMID, REDSTONE, ROTOR, RUSTIC, SIDRAT, STEAMPUNK,
-     *               THIRTEENTH, TOM, TWELFTH, WAR, WEATHERED, WOOD, LEGACY_BIGGER, LEGACY_DELUXE, LEGACY_ELEVENTH,
-     *               LEGACY_REDSTONE or a CUSTOM name.
+     *               CORAL, CURSED, CUSTOM, DELTA, DELUXE, DINER, DIVISION, EIGHTH, ELEVENTH, ENDER, FACTORY, FIFTEENTH,
+     *               FUGITIVE, HELL_BENT, HOSPITAL, MASTER, MECHANICAL, ORIGINAL, PLANK, PYRAMID, REDSTONE, ROTOR,
+     *               RUSTIC, SIDRAT, STEAMPUNK, THIRTEENTH, TOM, TWELFTH, WAR, WEATHERED, WOOD, LEGACY_BIGGER,
+     *               LEGACY_DELUXE, LEGACY_ELEVENTH, LEGACY_REDSTONE or a CUSTOM name.
      * @param world  the world where the TARDIS is to be built.
      * @param dbID   the unique key of the record for this TARDIS in the database.
      * @param player the player to show the progress bar to, may be null.
@@ -276,10 +276,19 @@ class AbandonedBuildRunnable implements Runnable {
             int z = startz + col;
             BlockData data = plugin.getServer().createBlockData(c.get("data").getAsString());
             Material type = data.getMaterial();
-            if (type.equals(Material.LIGHT_GRAY_CONCRETE) && (schm.getPermission().equals("bone") || schm.getPermission().equals("rustic"))) {
+            if (type.equals(Material.LIGHT_GRAY_CONCRETE) && (
+                    schm.getPermission().equals("bone") ||
+                    schm.getPermission().equals("rustic") ||
+                    schm.getPermission().equals("diner") ||
+                    schm.getPermission().equals("hell_bent")
+            )) {
                 // get the block
                 Block block = new Location(world, x, y, z).getBlock();
-                String ct = (schm.getPermission().equals("bone")) ? "console_light_gray" : "console_rustic";
+                String ct = switch (schm.getPermission()) {
+                    case "bone" -> "console_light_gray";
+                    case "rustic" -> "console_rustic";
+                    default -> "console_white";
+                };
                 // build a console
                 new ConsoleBuilder(plugin).create(block, ct, dbID, TARDISConstants.UUID_ZERO.toString());
             }
@@ -383,11 +392,19 @@ class AbandonedBuildRunnable implements Runnable {
                     postOod = new Location(world, x, y + 1, z);
                 }
             }
-            if (type.equals(Material.WHITE_STAINED_GLASS) && schm.getPermission().equals("war")) {
+            if (type.equals(Material.WHITE_STAINED_GLASS) && (
+                    schm.getPermission().equals("war") ||
+                    schm.getPermission().equals("diner") ||
+                    schm.getPermission().equals("hell_bent")
+            )) {
                 data = TARDISConstants.BARRIER;
                 TARDISDisplayItemUtils.set(TARDISBlockDisplayItem.ROUNDEL, world, x, y, z);
             }
-            if (type.equals(Material.WHITE_TERRACOTTA) && schm.getPermission().equals("war")) {
+            if (type.equals(Material.WHITE_TERRACOTTA) && (
+                    schm.getPermission().equals("war") ||
+                    schm.getPermission().equals("diner") ||
+                    schm.getPermission().equals("hell_bent")
+            )) {
                 data = TARDISConstants.BARRIER;
                 TARDISDisplayItemUtils.set(TARDISBlockDisplayItem.ROUNDEL_OFFSET, world, x, y, z);
             }
@@ -421,7 +438,9 @@ class AbandonedBuildRunnable implements Runnable {
                 String button = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
                 plugin.getQueryFactory().insertSyncControl(dbID, 1, button, 0);
             }
-            if (type.equals(Material.JUKEBOX) && !(schm.getPermission().equals("eighth") && world.getBlockAt(x, y, z).getRelative(BlockFace.DOWN).getType() == Material.ANDESITE)) {
+            if (type.equals(Material.JUKEBOX)
+                    && (!(schm.getPermission().equals("eighth") && world.getBlockAt(x, y, z).getRelative(BlockFace.DOWN).getType() == Material.ANDESITE))
+                    && (!(schm.getPermission().equals("diner") && world.getBlockAt(x, y, z).getRelative(BlockFace.DOWN).getType() == Material.WHITE_CONCRETE))) {
                 // remember the location of this Advanced Console
                 String advanced = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
                 plugin.getQueryFactory().insertSyncControl(dbID, 15, advanced, 0);

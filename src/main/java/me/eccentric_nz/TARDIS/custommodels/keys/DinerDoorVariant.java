@@ -19,18 +19,18 @@ package me.eccentric_nz.TARDIS.custommodels.keys;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.NamespacedKey;
 
-public enum ColouredVariant {
+public enum DinerDoorVariant {
 
-    TINTED_CLOSED(new NamespacedKey(TARDIS.plugin, "chameleon_tinted_closed")),
-    TINTED_OPEN(new NamespacedKey(TARDIS.plugin, "chameleon_tinted_open")),
-    TINTED_STAINED(new NamespacedKey(TARDIS.plugin, "chameleon_tinted_stained")),
-    TINTED_GLASS(new NamespacedKey(TARDIS.plugin, "chameleon_tinted_glass")),
-    TINTED_CAMERA(new NamespacedKey(TARDIS.plugin, "chameleon_tinted_camera")),
-    TINT(new NamespacedKey(TARDIS.plugin, "chameleon_tint"));
+    DINER_DOOR_CLOSED(new NamespacedKey(TARDIS.plugin, "diner_door_closed")),
+    DINER_DOOR_0(new NamespacedKey(TARDIS.plugin, "diner_door_0")),
+    DINER_DOOR_1(new NamespacedKey(TARDIS.plugin, "diner_door_1")),
+    DINER_DOOR_2(new NamespacedKey(TARDIS.plugin, "diner_door_2")),
+    DINER_DOOR_OPEN(new NamespacedKey(TARDIS.plugin, "diner_door_open")),
+    DINER_DOOR_EXTRA(new NamespacedKey(TARDIS.plugin, "diner_door_extra"));
 
     private final NamespacedKey key;
 
-    ColouredVariant(NamespacedKey key) {
+    DinerDoorVariant(NamespacedKey key) {
         this.key = key;
     }
 

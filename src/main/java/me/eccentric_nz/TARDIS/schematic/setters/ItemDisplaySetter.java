@@ -129,6 +129,9 @@ public class ItemDisplaySetter {
                     is.setItemMeta(im);
                     display.setItemStack(is);
                 }
+                if (json.has("rotation")) {
+                    display.setRotation(json.get("rotation").getAsFloat(), 0);
+                }
             } else {
                 setInRoom(block, material, model);
             }

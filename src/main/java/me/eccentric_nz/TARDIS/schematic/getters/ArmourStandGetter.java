@@ -22,6 +22,8 @@ public class ArmourStandGetter {
         object.addProperty("facing", stand.getFacing().toString());
         object.addProperty("invisible", stand.isVisible());
         object.addProperty("gravity", stand.hasGravity());
+        object.addProperty("body_yaw", stand.getBodyYaw());
+        object.addProperty("yaw", stand.getYaw());
         // add rotations - x,y,z degrees Rotations.ofDegrees(x,y,z)
         JsonArray rotations = new JsonArray();
         JsonArray headRotations = new JsonArray();
@@ -56,16 +58,18 @@ public class ArmourStandGetter {
         rotations.add(rightLegRotations);
         object.add("rotations", rotations);
         // get helmet
-        JsonObject head = new JsonObject();
         EntityEquipment equipment = stand.getEquipment();
         ItemStack helmet = equipment.getHelmet();
-        if (helmet != null && helmet.hasItemMeta()) {
-            ItemMeta im = helmet.getItemMeta();
-            if (im.hasItemModel()) {
-                head.addProperty("model", im.getItemModel().toString());
-            }
-            if (im instanceof SkullMeta skullMeta) {
-                skullMeta.getPlayerProfile().getProperties().stream().findFirst().ifPresent(property -> head.addProperty("skull", property.getValue()));
+        if (helmet != null) {
+            JsonObject head = new JsonObject();
+            if (helmet.hasItemMeta()) {
+                ItemMeta im = helmet.getItemMeta();
+                if (im.hasItemModel()) {
+                    head.addProperty("model", im.getItemModel().toString());
+                }
+                if (im instanceof SkullMeta skullMeta) {
+                    skullMeta.getPlayerProfile().getProperties().stream().findFirst().ifPresent(property -> head.addProperty("skull", property.getValue()));
+                }
             }
             head.addProperty("material", helmet.getType().toString());
             object.add("head", head);

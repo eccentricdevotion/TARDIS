@@ -209,9 +209,10 @@ public enum TARDISInfoMenu {
     CAVE("TIS|TARDIS Types|Cave", "TYPES", "v"),
     COPPER_11TH("TIS|TARDIS Types|Copper 11th", "TYPES", "1"),
     CORAL("TIS|TARDIS Types|Coral", "TYPES", "o"),
-    CURSED("TIS|TARDIS Types|Cursed+", "TYPES", "+"),
+    CURSED("TIS|TARDIS Types|Cursed-", "TYPES", "-"),
     DELTA("TIS|TARDIS Types|Delta=", "TYPES", "="),
     DELUXE("TIS|TARDIS Types|Deluxe", "TYPES", "D"),
+    DINER("TIS|TARDIS Types|Clara's Diner", "TYPES", "'"),
     DIVISION("TIS|TARDIS Types|Division/", "TYPES", "/"),
     EIGHTH("TIS|TARDIS Types|8th", "TYPES", "8"),
     ELEVENTH("TIS|TARDIS Types|Eleventh", "TYPES", "l"),
@@ -219,7 +220,8 @@ public enum TARDISInfoMenu {
     FACTORY("TIS|TARDIS Types|Factory", "TYPES", "y"),
     FIFTEENTH("TIS|TARDIS Types|Fifteenth*", "TYPES", "*"),
     FUGITIVE("TIS|TARDIS Types|Fugitive", "TYPES", "u"),
-    HOSPITAL("TIS|TARDIS Types|Hospital-", "TYPES", "-"),
+    HELL_BENT("TIS|TARDIS Types|Hell Bent>", "TYPES", ">"),
+    HOSPITAL("TIS|TARDIS Types|Hospital+", "TYPES", "+"),
     MASTER("TIS|TARDIS Types|Master", "TYPES", "M"),
     MECHANICAL("TIS|TARDIS Types|Mechanical^", "TYPES", "^"),
     PLANK("TIS|TARDIS Types|Plank", "TYPES", "P"),
@@ -664,9 +666,9 @@ public enum TARDISInfoMenu {
 
     public boolean isConsole() {
         switch (this) {
-            case ARS, BIGGER, BONE, BUDGET, CAVE, COPPER_11TH, CORAL, CURSED, DELTA, DELUXE, DIVISION, EIGHTH, ELEVENTH,
-                 ENDER, FACTORY, FIFTEENTH, FUGITIVE, HOSPITAL, MASTER, MECHANICAL, PLANK, PYRAMID, REDSTONE, ROTOR,
-                 RUSTIC, STEAMPUNK, SIDRAT, THIRTEENTH, TOM, TWELFTH, WAR, WEATHERED, ORIGINAL, ANCIENT, CUSTOM -> {
+            case ARS, BIGGER, BONE, BUDGET, CAVE, COPPER_11TH, CORAL, CURSED, DELTA, DELUXE, DINER, DIVISION, EIGHTH,
+                 ELEVENTH, ENDER, FACTORY, FIFTEENTH, FUGITIVE, HOSPITAL, MASTER, MECHANICAL, PLANK, PYRAMID, REDSTONE,
+                 ROTOR, RUSTIC, STEAMPUNK, SIDRAT, THIRTEENTH, TOM, TWELFTH, WAR, WEATHERED, ORIGINAL, ANCIENT, CUSTOM -> {
                 return true;
             }
             default -> {

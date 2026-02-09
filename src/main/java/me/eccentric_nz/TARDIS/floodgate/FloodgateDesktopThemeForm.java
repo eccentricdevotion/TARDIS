@@ -57,6 +57,7 @@ public class FloodgateDesktopThemeForm {
         blocks.put("CUSTOM", "custom");
         blocks.put("DELTA", "crying_obsidian");
         blocks.put("DELUXE", "diamond");
+        blocks.put("DINER", "stripped_crimson_hyphae");
         blocks.put("DIVISION", "pink_glazed");
         blocks.put("EIGHTH", "chiseled_stone_bricks");
         blocks.put("ELEVENTH", "emerald");
@@ -64,6 +65,7 @@ public class FloodgateDesktopThemeForm {
         blocks.put("FACTORY", "yellow_concrete_powder");
         blocks.put("FIFTEENTH", "ochre_froglight");
         blocks.put("FUGITIVE", "polished_deepslate");
+        blocks.put("HELL_BENT", "white_glazed");
         blocks.put("HOSPITAL", "white_concrete");
         blocks.put("LEGACY_BIGGER", "orange_glazed");
         blocks.put("LEGACY_DELUXE", "lime_glazed");

@@ -8,7 +8,7 @@ loadbefore: [ Citizens ]
 website: http://tardis.pages.dev/
 dev-url: http://github.com/eccentricdevotion/TARDIS/
 url: http://tardis.pages.dev/
-version: 6.3.11@buildNumber@
+version: 6.3.12@buildNumber@
 api-version: '1.21.11'
 libraries:
   - org.jsoup:jsoup:1.21.1
@@ -283,6 +283,7 @@ permissions:
       tardis.custom: true
       tardis.delta: true
       tardis.deluxe: true
+      tardis.diner: true
       tardis.division: true
       tardis.eighth: true
       tardis.eleventh: true
@@ -290,6 +291,7 @@ permissions:
       tardis.factory: true
       tardis.fugitive: true
       tardis.fifteenth: true
+      tardis.hell_bent: true
       tardis.hospital: true
       tardis.legacy_bigger: true
       tardis.legacy_deluxe: true
@@ -338,6 +340,9 @@ permissions:
   tardis.deluxe:
     description: Allow players to build the 'deluxe' TARDIS.
     default: op
+  tardis.diner:
+    description: Allow players to build Clara's Diner TARDIS.
+    default: op
   tardis.division:
     description: Allow players to build the 'division' Spaceship.
     default: op
@@ -358,6 +363,9 @@ permissions:
     default: op
   tardis.fugitive:
     description: Allow players to build Ruth (The Fugitive Doctor) Clayton's TARDIS.
+    default: op
+  tardis.hell_bent:
+    description: Allow players to build Clara's 'Hell Bent' TARDIS.
     default: op
   tardis.hospital:
     description: Allow players to build the St John's Hospital TARDIS.
@@ -445,6 +453,7 @@ permissions:
       tardis.room.apiary: true
       tardis.room.aquarium: true
       tardis.room.arboretum: true
+      tardis.room.architectural: true
       tardis.room.baker: true
       tardis.room.bamboo: true
       tardis.room.bedroom: true
@@ -456,6 +465,7 @@ permissions:
       tardis.room.farm: true
       tardis.room.gallery: true
       tardis.room.games: true
+      tardis.room.garden: true
       tardis.room.geode: true
       tardis.room.golem: true
       tardis.room.gravity: true

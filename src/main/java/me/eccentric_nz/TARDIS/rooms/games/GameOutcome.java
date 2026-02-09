@@ -19,7 +19,7 @@ public enum GameOutcome {
             null,
             null
         },
-        Sound.ENTITY_SNIFFER_SEARCHING
+        Sound.ENTITY_VINDICATOR_CELEBRATE
     ),
     WIN(
         new ItemStack[]{

@@ -39,6 +39,12 @@ public class ArmourStandSetter {
             if (stand.has("gravity")) {
                 as.setGravity(stand.get("gravity").getAsBoolean());
             }
+            if (stand.has("body_yaw")) {
+                as.setBodyYaw(stand.get("body_yaw").getAsFloat());
+            }
+            if (stand.has("yaw")) {
+                as.setRotation(stand.get("yaw").getAsFloat(), 0);
+            }
             // pose
             if (stand.has("rotations")) {
                 JsonArray rotations = stand.get("rotations").getAsJsonArray();

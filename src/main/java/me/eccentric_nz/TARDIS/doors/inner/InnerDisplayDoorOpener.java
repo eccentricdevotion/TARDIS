@@ -19,10 +19,7 @@ package me.eccentric_nz.TARDIS.doors.inner;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
-import me.eccentric_nz.TARDIS.custommodels.keys.BoneDoorVariant;
-import me.eccentric_nz.TARDIS.custommodels.keys.ClassicDoorVariant;
-import me.eccentric_nz.TARDIS.custommodels.keys.SidratDoorVariant;
-import me.eccentric_nz.TARDIS.custommodels.keys.TardisDoorVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.*;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetOuterPortal;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
@@ -32,6 +29,7 @@ import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.move.TARDISTeleportLocation;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
@@ -49,21 +47,23 @@ public class InnerDisplayDoorOpener {
         this.plugin = plugin;
     }
 
-    public void open(Block block, int id, boolean outside) {
+    public Material open(Block block, int id, boolean outside) {
         // get and open display door
         ItemDisplay display = TARDISDisplayItemUtils.getFromBoundingBox(block);
         if (display != null) {
             TARDISDisplayItem tdi = TARDISDisplayItemUtils.get(display);
             if (tdi != null) {
                 // animate door opening
+                ItemStack itemStack = display.getItemStack();
+                ItemMeta im = itemStack.getItemMeta();
+                Material type = itemStack.getType();
                 if (outside) {
-                    ItemStack itemStack = display.getItemStack();
-                    ItemMeta im = itemStack.getItemMeta();
-                    switch (itemStack.getType()) {
+                    switch (type) {
                         case IRON_DOOR -> im.setItemModel(TardisDoorVariant.TARDIS_DOOR_OPEN.getKey());
                         case BIRCH_DOOR -> im.setItemModel(BoneDoorVariant.BONE_DOOR_OPEN.getKey());
                         case CHERRY_DOOR -> im.setItemModel(ClassicDoorVariant.CLASSIC_DOOR_OPEN.getKey());
                         case PALE_OAK_DOOR -> im.setItemModel(SidratDoorVariant.SIDRAT_DOOR_OPEN.getKey());
+                        case CRIMSON_DOOR -> im.setItemModel(DinerDoorVariant.DINER_DOOR_OPEN.getKey());
                         default -> im.setItemModel(Door.getOpenModel(itemStack.getType()));
                     }
                     itemStack.setItemMeta(im);
@@ -71,7 +71,7 @@ public class InnerDisplayDoorOpener {
                 } else {
                     new DoorAnimator(plugin, display).animate(false);
                 }
-                if (!plugin.getTrackerKeeper().getWoolToggles().contains(id)) {
+                if (!plugin.getTrackerKeeper().getWoolToggles().contains(id) && type != Material.CRIMSON_DOOR) {
                     HashMap<String, Object> where = new HashMap<>();
                     where.put("tardis_id", id);
                     ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
@@ -130,7 +130,9 @@ public class InnerDisplayDoorOpener {
                         }
                     }
                 }
+                return type;
             }
         }
+        return null;
     }
 }

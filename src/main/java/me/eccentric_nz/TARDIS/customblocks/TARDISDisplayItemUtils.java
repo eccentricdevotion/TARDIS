@@ -340,7 +340,12 @@ public class TARDISDisplayItemUtils {
         } else if (tdi != TARDISBlockDisplayItem.ARTRON_FURNACE && tdi != TARDISBlockDisplayItem.SONIC_GENERATOR) {
             block.setBlockData(TARDISConstants.BARRIER);
         }
-        Material material = (tdi == TARDISBlockDisplayItem.CLASSIC_DOOR || tdi == TARDISBlockDisplayItem.BONE_DOOR || tdi == TARDISBlockDisplayItem.SIDRAT_DOOR) ? tdi.getCraftMaterial() : tdi.getMaterial();
+        Material material = (
+                tdi == TARDISBlockDisplayItem.BONE_DOOR ||
+                tdi == TARDISBlockDisplayItem.CLASSIC_DOOR ||
+                tdi == TARDISBlockDisplayItem.DINER_DOOR ||
+                tdi == TARDISBlockDisplayItem.SIDRAT_DOOR
+        ) ? tdi.getCraftMaterial() : tdi.getMaterial();
         ItemStack is = ItemStack.of(material, 1);
         ItemMeta im = is.getItemMeta();
         im.displayName(ComponentUtils.toWhite(tdi.getDisplayName()));

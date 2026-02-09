@@ -69,7 +69,7 @@ public class TARDISDevTabComplete extends TARDISCompleter implements TabComplete
     private final ImmutableList<String> COMPONENT_SUBS = ImmutableList.of("ars", "repeater", "key", "pack", "extra");
     private final ImmutableList<String> DEBUG_SUBS = ImmutableList.of("create", "update", "enter", "exit");
     private final ImmutableList<String> DISPLAY_SUBS = ImmutableList.of("add", "animate", "remove", "place", "break", "convert", "chunk", "console", "door");
-    private final ImmutableList<String> MANNEQUIN_SUBS = ImmutableList.of("roman", "male", "female");
+    private final ImmutableList<String> MANNEQUIN_SUBS = ImmutableList.of("roman","male","female","soldier_roman_static", "soldier_male_static", "soldier_female_static", "venus_de_milo", "black_liberty", "marilyn_monroe", "clara_diner");
     private final List<String> STONE_SUBS = new ArrayList<>();
     private final List<String> MAT_SUBS = new ArrayList<>();
     private final List<String> TRANSFORM_SUBS = new ArrayList<>();

@@ -2,6 +2,7 @@ package me.eccentric_nz.TARDIS.rooms.games;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
+import me.eccentric_nz.TARDIS.rooms.games.connect_four.ConnectFourInventory;
 import me.eccentric_nz.TARDIS.rooms.games.pong.XiaoQiu;
 import me.eccentric_nz.TARDIS.rooms.games.rockpaperscissors.StoneMagmaIceInventory;
 import me.eccentric_nz.TARDIS.rooms.games.tetris.Play;
@@ -43,6 +44,7 @@ public class GamesListener extends TARDISMenuListener {
         }
         Player player = (Player) event.getWhoClicked();
         switch (slot) {
+            case 1 -> player.openInventory(new ConnectFourInventory(plugin).getInventory());
             case 2 -> {
                 // start pong game
                 close(player);

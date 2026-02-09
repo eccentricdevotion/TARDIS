@@ -32,10 +32,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetARS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreas;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisConsole;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
-import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
-import me.eccentric_nz.TARDIS.enumeration.Schematic;
-import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.enumeration.Updateable;
+import me.eccentric_nz.TARDIS.enumeration.*;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.*;
@@ -113,7 +110,37 @@ public class TARDISSudoCommand extends TARDISCompleter implements CommandExecuto
                                 if (rstc.fromUUID(uuid.toString())) {
                                     Schematic schm = rstc.getSchematic();
                                     String controlBlock = schm.getSeedMaterial().toString();
-                                    if (schm.getPermission().equals("coral") || schm.getPermission().equals("deluxe") || schm.getPermission().equals("eleventh") || schm.getPermission().equals("master")) {
+                                    if (schm.getConsoleSize() == ConsoleSize.MASSIVE) {
+                                        // the 8 slots on the same level &
+                                        empty[1][4][5] = controlBlock;
+                                        empty[1][4][6] = controlBlock;
+                                        empty[1][5][4] = controlBlock;
+                                        empty[1][5][5] = controlBlock;
+                                        empty[1][5][6] = controlBlock;
+                                        empty[1][6][4] = controlBlock;
+                                        empty[1][6][5] = controlBlock;
+                                        empty[1][6][6] = controlBlock;
+                                        // the 9 slots on the level above
+                                        empty[2][4][4] = controlBlock;
+                                        empty[2][4][5] = controlBlock;
+                                        empty[2][4][6] = controlBlock;
+                                        empty[2][5][4] = controlBlock;
+                                        empty[2][5][5] = controlBlock;
+                                        empty[2][5][6] = controlBlock;
+                                        empty[2][6][4] = controlBlock;
+                                        empty[2][6][5] = controlBlock;
+                                        empty[2][6][6] = controlBlock;
+                                    } else if (schm.getConsoleSize() == ConsoleSize.WIDE) {
+                                        // the 8 slots on the same level
+                                        empty[1][4][5] = controlBlock;
+                                        empty[1][4][6] = controlBlock;
+                                        empty[1][5][4] = controlBlock;
+                                        empty[1][5][5] = controlBlock;
+                                        empty[1][5][6] = controlBlock;
+                                        empty[1][6][4] = controlBlock;
+                                        empty[1][6][5] = controlBlock;
+                                        empty[1][6][6] = controlBlock;
+                                    } else if (schm.getConsoleSize() == ConsoleSize.TALL) {
                                         empty[0][4][4] = controlBlock;
                                         empty[0][4][5] = controlBlock;
                                         empty[0][5][4] = controlBlock;
@@ -121,7 +148,7 @@ public class TARDISSudoCommand extends TARDISCompleter implements CommandExecuto
                                         empty[1][4][5] = controlBlock;
                                         empty[1][5][4] = controlBlock;
                                         empty[1][5][5] = controlBlock;
-                                    } else if (schm.getPermission().equals("bigger") || schm.getPermission().equals("division") || schm.getPermission().equals("redstone") || schm.getPermission().equals("twelfth") || schm.getPermission().equals("thirteenth")) {
+                                    } else if (schm.getConsoleSize() == ConsoleSize.MEDIUM) {
                                         empty[1][4][5] = controlBlock;
                                         empty[1][5][4] = controlBlock;
                                         empty[1][5][5] = controlBlock;

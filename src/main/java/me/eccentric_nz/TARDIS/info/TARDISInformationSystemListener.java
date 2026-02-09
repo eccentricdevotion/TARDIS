@@ -768,7 +768,10 @@ public class TARDISInformationSystemListener implements Listener {
                 if (chat.equalsIgnoreCase("+")) {
                     new TISInfo(plugin).show(p, TARDISInfoMenu.HOSPITAL);
                 }
-                if (chat.equalsIgnoreCase("+")) {
+                if (chat.equalsIgnoreCase(">")) {
+                    new TISInfo(plugin).show(p, TARDISInfoMenu.HELL_BENT);
+                }
+                if (chat.equalsIgnoreCase("-")) {
                     new TISInfo(plugin).show(p, TARDISInfoMenu.CURSED);
                 }
                 if (chat.equalsIgnoreCase("*")) {
@@ -827,6 +830,9 @@ public class TARDISInformationSystemListener implements Listener {
                 }
                 if (chat.equals("/")) {
                     new TISInfo(plugin).show(p, TARDISInfoMenu.DIVISION);
+                }
+                if (chat.equals("'")) {
+                    new TISInfo(plugin).show(p, TARDISInfoMenu.DINER);
                 }
                 if (chat.equalsIgnoreCase("v")) {
                     new TISInfo(plugin).show(p, TARDISInfoMenu.CAVE);

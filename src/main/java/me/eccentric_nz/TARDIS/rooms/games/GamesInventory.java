@@ -53,6 +53,14 @@ public class GamesInventory implements InventoryHolder {
         ));
         info.setItemMeta(io);
         items[0] = info;
+        // 1 connect four
+        ItemStack connect = ItemStack.of(Material.MUSIC_DISC_OTHERSIDE, 1);
+        ItemMeta four = connect.getItemMeta();
+        four.displayName(Component.text("Connect 4"));
+        four.addItemFlags(ItemFlag.values());
+        four.setAttributeModifiers(Multimaps.forMap(Map.of()));
+        connect.setItemMeta(four);
+        items[1] = connect;
         // pong & tetris require TARDIS_Zero_Room world
         boolean zero = plugin.getConfig().getBoolean("allow.zero_room");
         if (zero) {

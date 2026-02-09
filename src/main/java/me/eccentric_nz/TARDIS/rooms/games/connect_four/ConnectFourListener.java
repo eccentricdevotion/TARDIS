@@ -1,0 +1,220 @@
+package me.eccentric_nz.TARDIS.rooms.games.connect_four;
+
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
+import me.eccentric_nz.TARDIS.rooms.games.GameOutcome;
+import me.eccentric_nz.TARDIS.rooms.games.rockpaperscissors.Letters;
+import me.eccentric_nz.TARDIS.rooms.games.tictactoe.MatchState;
+import net.kyori.adventure.text.Component;
+import org.bukkit.DyeColor;
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.InventoryView;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class ConnectFourListener extends TARDISMenuListener {
+
+    private final TARDIS plugin;
+    private final List<List<Integer>> COLUMNS = new ArrayList<>();
+    private final ItemStack hole;
+    private final ItemStack red;
+    private final ItemStack yellow;
+    private final Robot tardis;
+    private Grid grid;
+    private MatchState state;
+
+    public ConnectFourListener(TARDIS plugin) {
+        super(plugin);
+        this.plugin = plugin;
+        COLUMNS.add(List.of(0, 9, 18, 27, 36, 45));
+        COLUMNS.add(List.of(1, 10, 19, 28, 37, 46));
+        COLUMNS.add(List.of(2, 11, 20, 29, 38, 47));
+        COLUMNS.add(List.of(3, 12, 21, 30, 39, 48));
+        COLUMNS.add(List.of(4, 13, 22, 31, 40, 49));
+        COLUMNS.add(List.of(5, 14, 23, 32, 41, 50));
+        COLUMNS.add(List.of(6, 15, 24, 33, 42, 51));
+        hole = ItemStack.of(Material.BLUE_CONCRETE_POWDER);
+        ItemMeta holeMeta = hole.getItemMeta();
+        holeMeta.displayName(Component.text(" "));
+        hole.setItemMeta(holeMeta);
+        red = ItemStack.of(Material.RED_CONCRETE_POWDER);
+        ItemMeta redMeta = red.getItemMeta();
+        redMeta.displayName(Component.text("Red"));
+        red.setItemMeta(redMeta);
+        yellow = ItemStack.of(Material.YELLOW_CONCRETE_POWDER);
+        ItemMeta yellowMeta = yellow.getItemMeta();
+        yellowMeta.displayName(Component.text("Yellow"));
+        yellow.setItemMeta(yellowMeta);
+        state = MatchState.PLAYER_TURN;
+        grid = new Grid();
+        tardis = new Robot(grid);
+    }
+
+    @EventHandler
+    public void onConnectFourClick(InventoryClickEvent event) {
+        if (!(event.getInventory().getHolder(false) instanceof ConnectFourInventory)) {
+            return;
+        }
+        event.setCancelled(true);
+        int slot = event.getRawSlot();
+        if (slot < 0 || slot > 54) {
+            return;
+        }
+        InventoryView view = event.getView();
+        if (view.getItem(slot) == null) {
+            return;
+        }
+        Player player = (Player) event.getWhoClicked();
+        switch (slot) {
+            // reset
+            case 44 -> {
+                view.getTopInventory().setContents(new ConnectFourInventory(plugin).getInventory().getContents());
+                grid = new Grid();
+                state = MatchState.PLAYER_TURN;
+            }
+            // close
+            case 53 -> close(player);
+            // drop a block
+            case 0, 1, 2, 3, 4, 5, 6 -> {
+                if (state != MatchState.PLAYER_TURN || view.getItem(slot).getType() != Material.BLUE_CONCRETE_POWDER) {
+                    return;
+                }
+                state = MatchState.TARDIS_TURN;
+                List<Integer> column = COLUMNS.get(slot);
+                new BukkitRunnable() {
+                    int start = 0;
+
+                    @Override
+                    public void run() {
+                        if (start < 5 && view.getItem(column.get(start + 1)).getType() == Material.BLUE_CONCRETE_POWDER) {
+                            view.setItem(column.get(start), hole);
+                            view.setItem(column.get(start + 1), red);
+                            start++;
+                        } else {
+                            view.setItem(column.get(start), red);
+                            // update board
+                            int[] coords = getRowCol(column.get(start));
+                            grid.setToken(coords[0], coords[1], Material.RED_CONCRETE_POWDER);
+                            cancel();
+                            if (isGameOver()) {
+                                // player won
+                                state = MatchState.PLAYER_WON;
+                                endGame(view, player);
+                            } else if (isDraw()) {
+                                // show something
+                                state = MatchState.DRAW;
+                                endGame(view, player);
+                            } else {
+                                // start tardis turn
+                                int c = tardis.chooseColumn();
+                                List<Integer> column = COLUMNS.get(c);
+                                new BukkitRunnable() {
+                                    int start = 0;
+
+                                    @Override
+                                    public void run() {
+                                        if (start < 5 && view.getItem(column.get(start + 1)).getType() == Material.BLUE_CONCRETE_POWDER) {
+                                            view.setItem(column.get(start), hole);
+                                            view.setItem(column.get(start + 1), yellow);
+                                            start++;
+                                        } else {
+                                            view.setItem(column.get(start), yellow);
+                                            // update board
+                                            int[] coords = getRowCol(column.get(start));
+                                            grid.setToken(coords[0], coords[1], Material.YELLOW_CONCRETE_POWDER);
+                                            cancel();
+                                            if (isGameOver()) {
+                                                // tardis won
+                                                state = MatchState.TARDIS_WON;
+                                                endGame(view, player);
+                                            } else if (isDraw()) {
+                                                // show something
+                                                state = MatchState.DRAW;
+                                                endGame(view, player);
+                                            } else {
+                                                // start player turn
+                                                state = MatchState.PLAYER_TURN;
+                                            }
+                                        }
+                                    }
+                                }.runTaskTimer(plugin, 2, 5);
+                            }
+                        }
+                    }
+                }.runTaskTimer(plugin, 2, 5);
+            }
+            default -> { }
+        }
+    }
+
+    private void endGame(InventoryView view, Player player) {
+        GameOutcome result = null;
+        ItemStack banner = null;
+        String display = "";
+        switch (state) {
+            case DRAW -> {
+                result = GameOutcome.DRAW;
+                banner = Letters.D(DyeColor.CYAN, DyeColor.WHITE);
+                display = "It was a draw :|";
+            }
+            case PLAYER_WON -> {
+                result = GameOutcome.WIN;
+                banner = Letters.W(DyeColor.LIME, DyeColor.WHITE);
+                display = "You won :)";
+            }
+            case TARDIS_WON -> {
+                result = GameOutcome.LOSE;
+                banner = Letters.L(DyeColor.MAGENTA, DyeColor.WHITE);
+                display = "You lost :(";
+            }
+            default -> {
+            }
+        }
+        if (result != null) {
+            ItemMeta im = banner.getItemMeta();
+            im.displayName(Component.text(display));
+            banner.setItemMeta(im);
+            player.playSound(player.getLocation(), result.getSound(), 0.8f, 0.8f);
+            view.setItem(26, banner);
+        }
+    }
+
+    private int[] getRowCol(int slot) {
+        int row = 0;
+        int col = 0;
+        if (slot < 7) {
+            col = slot;
+        } else if (slot < 16) {
+            col = slot - 9;
+            row = 1;
+        } else if (slot < 25) {
+            col = slot - 18;
+            row = 2;
+        } else if (slot < 34) {
+            col = slot - 27;
+            row = 3;
+        } else if (slot < 43) {
+            col = slot - 36;
+            row = 4;
+        } else if (slot < 52) {
+            col = slot - 45;
+            row = 5;
+        }
+        return new int[]{row, col};
+    }
+
+    public boolean isGameOver() {
+        return grid.checkHorizontally() || grid.checkVertically() || grid.checkDiagonally();
+    }
+
+    public boolean isDraw() {
+        return (grid.areAllColumnsFull() && !isGameOver());
+    }
+}

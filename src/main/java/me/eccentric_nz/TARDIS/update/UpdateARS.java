@@ -22,6 +22,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetARS;
+import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Tag;
@@ -58,7 +59,37 @@ public class UpdateARS {
                 }
             }
             String controlBlock = schm.getSeedMaterial().toString();
-            if (schm.getPermission().equals("coral") || schm.getPermission().equals("deluxe") || schm.getPermission().equals("eleventh") || schm.getPermission().equals("master")) {
+            if (schm.getConsoleSize() == ConsoleSize.MASSIVE) {
+                // the 8 slots on the same level &
+                empty[1][4][5] = controlBlock;
+                empty[1][4][6] = controlBlock;
+                empty[1][5][4] = controlBlock;
+                empty[1][5][5] = controlBlock;
+                empty[1][5][6] = controlBlock;
+                empty[1][6][4] = controlBlock;
+                empty[1][6][5] = controlBlock;
+                empty[1][6][6] = controlBlock;
+                // the 9 slots on the level above
+                empty[2][4][4] = controlBlock;
+                empty[2][4][5] = controlBlock;
+                empty[2][4][6] = controlBlock;
+                empty[2][5][4] = controlBlock;
+                empty[2][5][5] = controlBlock;
+                empty[2][5][6] = controlBlock;
+                empty[2][6][4] = controlBlock;
+                empty[2][6][5] = controlBlock;
+                empty[2][6][6] = controlBlock;
+            } else if (schm.getConsoleSize() == ConsoleSize.WIDE) {
+                // the 8 slots on the same level
+                empty[1][4][5] = controlBlock;
+                empty[1][4][6] = controlBlock;
+                empty[1][5][4] = controlBlock;
+                empty[1][5][5] = controlBlock;
+                empty[1][5][6] = controlBlock;
+                empty[1][6][4] = controlBlock;
+                empty[1][6][5] = controlBlock;
+                empty[1][6][6] = controlBlock;
+            } else if (schm.getConsoleSize() == ConsoleSize.TALL) {
                 empty[0][4][4] = controlBlock;
                 empty[0][4][5] = controlBlock;
                 empty[0][5][4] = controlBlock;
@@ -66,7 +97,7 @@ public class UpdateARS {
                 empty[1][4][5] = controlBlock;
                 empty[1][5][4] = controlBlock;
                 empty[1][5][5] = controlBlock;
-            } else if (schm.getPermission().equals("bigger") || schm.getPermission().equals("division") || schm.getPermission().equals("redstone") || schm.getPermission().equals("twelfth") || schm.getPermission().equals("thirteenth")) {
+            } else if (schm.getConsoleSize() == ConsoleSize.MEDIUM) {
                 empty[1][4][5] = controlBlock;
                 empty[1][5][4] = controlBlock;
                 empty[1][5][5] = controlBlock;

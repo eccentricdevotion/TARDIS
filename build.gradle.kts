@@ -12,7 +12,7 @@ plugins {
 
 group = "me.eccentric_nz"
 val buildNumber = "-b${System.getenv("BUILD_NUMBER") ?: (System.getenv("SHORT_SHA") ?: ".local")}"
-version = "6.3.11${buildNumber}"
+version = "6.3.12${buildNumber}"
 
 repositories {
     mavenCentral()
@@ -106,7 +106,7 @@ dependencies {
     compileOnly("com.palmergames.bukkit.towny:towny:0.102.0.6") {
         isTransitive = false
     }
-    compileOnly("org.mvplugins.multiverse.core:multiverse-core:5.5.0") {
+    compileOnly("org.mvplugins.multiverse.core:multiverse-core:5.5.2") {
         isTransitive = false
     }
     compileOnly("org.mvplugins.multiverse.inventories:multiverse-inventories:5.3.1") {
@@ -131,7 +131,7 @@ dependencies {
     compileOnly("net.essentialsx:EssentialsX:2.22.0-SNAPSHOT") {
         isTransitive = false
     }
-    compileOnly("me.clip:placeholderapi:2.11.7") {
+    compileOnly("me.clip:placeholderapi:2.12.0") {
         isTransitive = false
     }
     compileOnly("io.github.fabiozumbi12.RedProtect:RedProtect-Core:8.1.2") {

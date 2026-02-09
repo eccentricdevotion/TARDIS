@@ -47,6 +47,7 @@ upgrades:
   cursed: 20000
   delta: 7500
   deluxe: 10000
+  diner: 17500
   division: 7500
   eighth: 17500
   eleventh: 10000
@@ -54,6 +55,7 @@ upgrades:
   factory: 7500
   fifteenth: 20000
   fugitive: 7500
+  hell_bent: 5000
   hospital: 5000
   master: 10000
   mechanical: 7500

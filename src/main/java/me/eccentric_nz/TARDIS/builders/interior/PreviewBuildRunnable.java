@@ -89,10 +89,10 @@ public class PreviewBuildRunnable implements Runnable {
      *
      * @param plugin an instance of the main TARDIS plugin class
      * @param schm   the name of the schematic file to use can be ANCIENT, ARS, BIGGER, BONE, BUDGET, CAVE, COPPER,
-     *               CORAL, CURSED, CUSTOM, DELTA, DELUXE, DIVISION, EIGHTH, ELEVENTH, ENDER, FACTORY, FIFTEENTH, FUGITIVE,
-     *               HOSPITAL, MASTER, MECHANICAL, ORIGINAL, PLANK, PYRAMID, REDSTONE, ROTOR, RUSTIC, SIDRAT, STEAMPUNK,
-     *               THIRTEENTH, TOM, TWELFTH, WAR, WEATHERED, WOOD, LEGACY_BIGGER, LEGACY_DELUXE, LEGACY_ELEVENTH,
-     *               LEGACY_REDSTONE or a CUSTOM name.
+     *               CORAL, CURSED, CUSTOM, DELTA, DELUXE, DINER, DIVISION, EIGHTH, ELEVENTH, ENDER, FACTORY, FIFTEENTH, 
+     *               FUGITIVE, HELL_BENT, HOSPITAL, MASTER, MECHANICAL, ORIGINAL, PLANK, PYRAMID, REDSTONE, ROTOR,
+     *               RUSTIC, SIDRAT, STEAMPUNK, THIRTEENTH, TOM, TWELFTH, WAR, WEATHERED, WOOD, LEGACY_BIGGER,
+     *               LEGACY_DELUXE, LEGACY_ELEVENTH, LEGACY_REDSTONE or a CUSTOM name.
      * @param world  the world where the TARDIS is to be built.
      */
     public PreviewBuildRunnable(TARDIS plugin, Schematic schm, World world) {
@@ -216,11 +216,20 @@ public class PreviewBuildRunnable implements Runnable {
             int z = startz + col;
             BlockData data = plugin.getServer().createBlockData(c.get("data").getAsString());
             Material type = data.getMaterial();
-            if (type.equals(Material.LIGHT_GRAY_CONCRETE) && (schm.getPermission().equals("bone") || schm.getPermission().equals("rustic"))) {
+            if (type.equals(Material.LIGHT_GRAY_CONCRETE) && (
+                    schm.getPermission().equals("bone") ||
+                    schm.getPermission().equals("rustic") ||
+                    schm.getPermission().equals("diner") ||
+                    schm.getPermission().equals("hell_bent")
+            )) {
                 // get the block
                 Block block = new Location(world, x, y, z).getBlock();
+                String ct = switch (schm.getPermission()) {
+                    case "bone" -> "console_light_gray";
+                    case "rustic" -> "console_rustic";
+                    default -> "console_white";
+                };
                 // build a console
-                String ct = (schm.getPermission().equals("bone")) ? "console_light_gray" : "console_rustic";
                 new ConsoleBuilder(plugin).create(block, ct, -1, UUID.randomUUID().toString());
             }
             if (type.equals(Material.NOTE_BLOCK)) {
@@ -249,12 +258,20 @@ public class PreviewBuildRunnable implements Runnable {
                 // replace with gray concrete
                 data = schm.getPermission().equals("division") ? Material.GRAY_CONCRETE.createBlockData() : Material.LIGHT_GRAY_CONCRETE.createBlockData();
             }
-            if (type.equals(Material.WHITE_STAINED_GLASS) && schm.getPermission().equals("war")) {
+            if (type.equals(Material.WHITE_STAINED_GLASS) && (
+                    schm.getPermission().equals("war") ||
+                    schm.getPermission().equals("diner") ||
+                    schm.getPermission().equals("hell_bent")
+            )) {
                 data = TARDISConstants.BARRIER;
                 // spawn an item display entity
                 TARDISDisplayItemUtils.set(TARDISBlockDisplayItem.ROUNDEL, world, x, y, z);
             }
-            if (type.equals(Material.WHITE_TERRACOTTA) && schm.getPermission().equals("war")) {
+            if (type.equals(Material.WHITE_TERRACOTTA) && (
+                    schm.getPermission().equals("war") ||
+                    schm.getPermission().equals("diner") ||
+                    schm.getPermission().equals("hell_bent")
+            )) {
                 data = TARDISConstants.BARRIER;
                 // spawn an item display entity
                 TARDISDisplayItemUtils.set(TARDISBlockDisplayItem.ROUNDEL_OFFSET, world, x, y, z);
@@ -281,7 +298,9 @@ public class PreviewBuildRunnable implements Runnable {
                 lever.setFacing(BlockFace.WEST);
                 data = lever;
             }
-            if (type.equals(Material.JUKEBOX) && !(schm.getPermission().equals("eighth") && world.getBlockAt(x, y, z).getRelative(BlockFace.DOWN).getType() == Material.ANDESITE)) {
+            if (type.equals(Material.JUKEBOX)
+                    && (!(schm.getPermission().equals("eighth") && world.getBlockAt(x, y, z).getRelative(BlockFace.DOWN).getType() == Material.ANDESITE))
+                    && (!(schm.getPermission().equals("diner") && world.getBlockAt(x, y, z).getRelative(BlockFace.DOWN).getType() == Material.WHITE_CONCRETE))) {
                 // set block data to correct BARRIER + Item Display
                 data = TARDISConstants.BARRIER;
                 // spawn an item display entity
