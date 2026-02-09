@@ -374,6 +374,135 @@ public class FullDesktopThemeRunnable extends DesktopThemeRunnable {
         }
         if (level == (height - 1) && row == (width - 1)) {
             // we're finished
+            // get current ARS json
+            HashMap<String, Object> whereR = new HashMap<>();
+            whereR.put("tardis_id", id);
+            ResultSetARS rsa = new ResultSetARS(plugin, whereR);
+            if (rsa.resultSet()) {
+                String[][][] existing = ARSMethods.getGridFromJSON(rsa.getJson());
+                if (downgrade) {
+                    // reset slots to stone
+                    switch (size_prev) {
+                        case MASSIVE -> {
+                            // the 8 slots on the same level &
+                            existing[1][4][5] = "STONE";
+                            existing[1][4][6] = "STONE";
+                            existing[1][5][4] = "STONE";
+                            existing[1][5][5] = "STONE";
+                            existing[1][5][6] = "STONE";
+                            existing[1][6][4] = "STONE";
+                            existing[1][6][5] = "STONE";
+                            existing[1][6][6] = "STONE";
+                            // the 9 slots on the level above
+                            existing[2][4][4] = "STONE";
+                            existing[2][4][5] = "STONE";
+                            existing[2][4][6] = "STONE";
+                            existing[2][5][4] = "STONE";
+                            existing[2][5][5] = "STONE";
+                            existing[2][5][6] = "STONE";
+                            existing[2][6][4] = "STONE";
+                            existing[2][6][5] = "STONE";
+                            existing[2][6][6] = "STONE";
+                        }
+                        case WIDE -> {
+                            // the 8 slots on the same level
+                            existing[1][4][5] = "STONE";
+                            existing[1][4][6] = "STONE";
+                            existing[1][5][4] = "STONE";
+                            existing[1][5][5] = "STONE";
+                            existing[1][5][6] = "STONE";
+                            existing[1][6][4] = "STONE";
+                            existing[1][6][5] = "STONE";
+                            existing[1][6][6] = "STONE";
+                        }
+                        case TALL -> {
+                            // the 3 slots on the same level &
+                            existing[1][4][5] = "STONE";
+                            existing[1][5][4] = "STONE";
+                            existing[1][5][5] = "STONE";
+                            // the 4 slots on the level above
+                            existing[2][4][4] = "STONE";
+                            existing[2][4][5] = "STONE";
+                            existing[2][5][4] = "STONE";
+                            existing[2][5][5] = "STONE";
+                        }
+                        case MEDIUM -> {
+                            // the 3 slots on the same level
+                            existing[1][4][5] = "STONE";
+                            existing[1][5][4] = "STONE";
+                            existing[1][5][5] = "STONE";
+                        }
+                        default -> {
+                            // SMALL size do nothing
+                        }
+                    }
+                }
+                // add control blocks
+                String control = tud.getSchematic().getSeedMaterial().toString();
+                plugin.debug(control);
+                existing[1][4][4] = control;
+                switch (size_next) {
+                    case MASSIVE -> {
+                        // the 8 slots on the same level &
+                        existing[1][4][5] = control;
+                        existing[1][4][6] = control;
+                        existing[1][5][4] = control;
+                        existing[1][5][5] = control;
+                        existing[1][5][6] = control;
+                        existing[1][6][4] = control;
+                        existing[1][6][5] = control;
+                        existing[1][6][6] = control;
+                        // the 9 slots on the level above
+                        existing[2][4][4] = control;
+                        existing[2][4][5] = control;
+                        existing[2][4][6] = control;
+                        existing[2][5][4] = control;
+                        existing[2][5][5] = control;
+                        existing[2][5][6] = control;
+                        existing[2][6][4] = control;
+                        existing[2][6][5] = control;
+                        existing[2][6][6] = control;
+                    }
+                    case WIDE -> {
+                        // the 8 slots on the same level
+                        existing[1][4][5] = control;
+                        existing[1][4][6] = control;
+                        existing[1][5][4] = control;
+                        existing[1][5][5] = control;
+                        existing[1][5][6] = control;
+                        existing[1][6][4] = control;
+                        existing[1][6][5] = control;
+                        existing[1][6][6] = control;
+                    }
+                    case TALL -> {
+                        // the 3 slots on the same level &
+                        existing[1][4][5] = control;
+                        existing[1][5][4] = control;
+                        existing[1][5][5] = control;
+                        // the 4 slots on the level above
+                        existing[2][4][4] = control;
+                        existing[2][4][5] = control;
+                        existing[2][5][4] = control;
+                        existing[2][5][5] = control;
+                    }
+                    case MEDIUM -> {
+                        // the 3 slots on the same level
+                        existing[1][4][5] = control;
+                        existing[1][5][4] = control;
+                        existing[1][5][5] = control;
+                    }
+                    default -> {
+                        // SMALL size do nothing
+                    }
+                }
+                Gson gson = new GsonBuilder().disableHtmlEscaping().create();
+                JsonArray json = JsonParser.parseString(gson.toJson(existing)).getAsJsonArray();
+                HashMap<String, Object> seta = new HashMap<>();
+                seta.put("json", json.toString());
+                HashMap<String, Object> wheres = new HashMap<>();
+                wheres.put("tardis_id", id);
+                plugin.getQueryFactory().doUpdate("ars", seta, wheres);
+            }
             // remove items
             previousChunks.forEach((chink) -> {
                 // remove dropped items
@@ -484,6 +613,7 @@ public class FullDesktopThemeRunnable extends DesktopThemeRunnable {
                 int minusY = (tud.getPrevious().getPermission().equals("mechanical")) ? 2 : 0;
                 List<JettisonSlot> jettisons = getJettisons(size_next, size_prev, chunk);
                 jettisons.forEach((jet) -> {
+                    plugin.debug(jet.getX() + ", " + jet.getY() + ", " + jet.getZ());
                     // remove the room
                     setAir(jet.getX(), jet.getY(), jet.getZ(), jet.getChunk().getWorld(), minusY, 16);
                 });
@@ -701,9 +831,9 @@ public class FullDesktopThemeRunnable extends DesktopThemeRunnable {
                      * so remove it to avoid unintentional bugs.
                      */
                     if (tud.getSchematic().getPermission().equals("rustic") ||
-                        tud.getSchematic().getPermission().equals("diner") ||
-                        tud.getSchematic().getPermission().equals("hell_bent") ||
-                        tud.getSchematic().getPermission().equals("bone")
+                            tud.getSchematic().getPermission().equals("diner") ||
+                            tud.getSchematic().getPermission().equals("hell_bent") ||
+                            tud.getSchematic().getPermission().equals("bone")
                     ) {
                         // delete handbrake record
                         HashMap<String, Object> whereD = new HashMap<>();
@@ -723,134 +853,6 @@ public class FullDesktopThemeRunnable extends DesktopThemeRunnable {
                         lever.setAttachedFace(FaceAttachable.AttachedFace.WALL);
                         lever.setFacing(BlockFace.WEST);
                         data = lever;
-                    }
-                    // get current ARS json
-                    HashMap<String, Object> whereR = new HashMap<>();
-                    whereR.put("tardis_id", id);
-                    ResultSetARS rsa = new ResultSetARS(plugin, whereR);
-                    if (rsa.resultSet()) {
-                        String[][][] existing = ARSMethods.getGridFromJSON(rsa.getJson());
-                        if (downgrade) {
-                            // reset slots to stone
-                            switch (size_prev) {
-                                case MASSIVE -> {
-                                    // the 8 slots on the same level &
-                                    existing[1][4][5] = "STONE";
-                                    existing[1][4][6] = "STONE";
-                                    existing[1][5][4] = "STONE";
-                                    existing[1][5][5] = "STONE";
-                                    existing[1][5][6] = "STONE";
-                                    existing[1][6][4] = "STONE";
-                                    existing[1][6][5] = "STONE";
-                                    existing[1][6][6] = "STONE";
-                                    // the 9 slots on the level above
-                                    existing[2][4][4] = "STONE";
-                                    existing[2][4][5] = "STONE";
-                                    existing[2][4][6] = "STONE";
-                                    existing[2][5][4] = "STONE";
-                                    existing[2][5][5] = "STONE";
-                                    existing[2][5][6] = "STONE";
-                                    existing[2][6][4] = "STONE";
-                                    existing[2][6][5] = "STONE";
-                                    existing[2][6][6] = "STONE";
-                                }
-                                case WIDE -> {
-                                    // the 8 slots on the same level
-                                    existing[1][4][5] = "STONE";
-                                    existing[1][4][6] = "STONE";
-                                    existing[1][5][4] = "STONE";
-                                    existing[1][5][5] = "STONE";
-                                    existing[1][5][6] = "STONE";
-                                    existing[1][6][4] = "STONE";
-                                    existing[1][6][5] = "STONE";
-                                    existing[1][6][6] = "STONE";
-                                }
-                                case TALL -> {
-                                    // the 3 slots on the same level &
-                                    existing[1][4][5] = "STONE";
-                                    existing[1][5][4] = "STONE";
-                                    existing[1][5][5] = "STONE";
-                                    // the 4 slots on the level above
-                                    existing[2][4][4] = "STONE";
-                                    existing[2][4][5] = "STONE";
-                                    existing[2][5][4] = "STONE";
-                                    existing[2][5][5] = "STONE";
-                                }
-                                case MEDIUM -> {
-                                    // the 3 slots on the same level
-                                    existing[1][4][5] = "STONE";
-                                    existing[1][5][4] = "STONE";
-                                    existing[1][5][5] = "STONE";
-                                }
-                                default -> {
-                                    // SMALL size do nothing
-                                }
-                            }
-                        }
-                        // add control blocks
-                        String control = tud.getSchematic().getSeedMaterial().toString();
-                        existing[1][4][4] = control;
-                        switch (size_next) {
-                            case MASSIVE -> {
-                                // the 8 slots on the same level &
-                                existing[1][4][5] = control;
-                                existing[1][4][6] = control;
-                                existing[1][5][4] = control;
-                                existing[1][5][5] = control;
-                                existing[1][5][6] = control;
-                                existing[1][6][4] = control;
-                                existing[1][6][5] = control;
-                                existing[1][6][6] = control;
-                                // the 9 slots on the level above
-                                existing[2][4][4] = control;
-                                existing[2][4][5] = control;
-                                existing[2][4][6] = control;
-                                existing[2][5][4] = control;
-                                existing[2][5][5] = control;
-                                existing[2][5][6] = control;
-                                existing[2][6][4] = control;
-                                existing[2][6][5] = control;
-                                existing[2][6][6] = control;
-                            }
-                            case WIDE -> {
-                                // the 8 slots on the same level
-                                existing[1][4][5] = control;
-                                existing[1][4][6] = control;
-                                existing[1][5][4] = control;
-                                existing[1][5][5] = control;
-                                existing[1][5][6] = control;
-                                existing[1][6][4] = control;
-                                existing[1][6][5] = control;
-                                existing[1][6][6] = control;
-                            }
-                            case TALL -> {
-                                // the 3 slots on the same level &
-                                existing[1][4][5] = control;
-                                existing[1][5][4] = control;
-                                existing[1][5][5] = control;
-                                // the 4 slots on the level above
-                                existing[2][4][4] = control;
-                                existing[2][4][5] = control;
-                                existing[2][5][4] = control;
-                                existing[2][5][5] = control;
-                            }
-                            case MEDIUM -> {
-                                // the 3 slots on the same level
-                                existing[1][4][5] = control;
-                                existing[1][5][4] = control;
-                                existing[1][5][5] = control;
-                            }
-                            default -> {
-                                // SMALL size do nothing
-                            }
-                        }
-                        Gson gson = new GsonBuilder().disableHtmlEscaping().create();
-                        JsonArray json = JsonParser.parseString(gson.toJson(existing)).getAsJsonArray();
-                        HashMap<String, Object> seta = new HashMap<>();
-                        seta.put("json", json.toString());
-                        HashMap<String, Object> wheres = new HashMap<>();
-                        wheres.put("tardis_id", id);
-                        plugin.getQueryFactory().doUpdate("ars", seta, wheres);
                     }
                 }
                 if (type.equals(Material.LIGHT)) {
@@ -1050,6 +1052,18 @@ public class FullDesktopThemeRunnable extends DesktopThemeRunnable {
         switch (prev) {
             case MASSIVE -> {
                 switch (next) {
+                    case WIDE -> {
+                        // the 9 chunks on the level above
+                        list.add(new JettisonSlot(chunk, 2, 4, 4));
+                        list.add(new JettisonSlot(chunk, 2, 4, 5));
+                        list.add(new JettisonSlot(chunk, 2, 4, 6));
+                        list.add(new JettisonSlot(chunk, 2, 5, 4));
+                        list.add(new JettisonSlot(chunk, 2, 5, 5));
+                        list.add(new JettisonSlot(chunk, 2, 5, 6));
+                        list.add(new JettisonSlot(chunk, 2, 6, 4));
+                        list.add(new JettisonSlot(chunk, 2, 6, 5));
+                        list.add(new JettisonSlot(chunk, 2, 6, 6));
+                    }
                     case TALL -> {
                         // the 5 chunks on the same level &
                         list.add(new JettisonSlot(chunk, 1, 4, 6));
@@ -1092,18 +1106,6 @@ public class FullDesktopThemeRunnable extends DesktopThemeRunnable {
                         list.add(new JettisonSlot(chunk, 1, 6, 4));
                         list.add(new JettisonSlot(chunk, 1, 6, 5));
                         list.add(new JettisonSlot(chunk, 1, 6, 6));
-                        // the 9 chunks on the level above
-                        list.add(new JettisonSlot(chunk, 2, 4, 4));
-                        list.add(new JettisonSlot(chunk, 2, 4, 5));
-                        list.add(new JettisonSlot(chunk, 2, 4, 6));
-                        list.add(new JettisonSlot(chunk, 2, 5, 4));
-                        list.add(new JettisonSlot(chunk, 2, 5, 5));
-                        list.add(new JettisonSlot(chunk, 2, 5, 6));
-                        list.add(new JettisonSlot(chunk, 2, 6, 4));
-                        list.add(new JettisonSlot(chunk, 2, 6, 5));
-                        list.add(new JettisonSlot(chunk, 2, 6, 6));
-                    }
-                    case WIDE -> {
                         // the 9 chunks on the level above
                         list.add(new JettisonSlot(chunk, 2, 4, 4));
                         list.add(new JettisonSlot(chunk, 2, 4, 5));
