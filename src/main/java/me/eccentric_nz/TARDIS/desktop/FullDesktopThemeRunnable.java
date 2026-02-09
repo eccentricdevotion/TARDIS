@@ -439,7 +439,6 @@ public class FullDesktopThemeRunnable extends DesktopThemeRunnable {
                 }
                 // add control blocks
                 String control = tud.getSchematic().getSeedMaterial().toString();
-                plugin.debug(control);
                 existing[1][4][4] = control;
                 switch (size_next) {
                     case MASSIVE -> {
@@ -613,7 +612,6 @@ public class FullDesktopThemeRunnable extends DesktopThemeRunnable {
                 int minusY = (tud.getPrevious().getPermission().equals("mechanical")) ? 2 : 0;
                 List<JettisonSlot> jettisons = getJettisons(size_next, size_prev, chunk);
                 jettisons.forEach((jet) -> {
-                    plugin.debug(jet.getX() + ", " + jet.getY() + ", " + jet.getZ());
                     // remove the room
                     setAir(jet.getX(), jet.getY(), jet.getZ(), jet.getChunk().getWorld(), minusY, 16);
                 });

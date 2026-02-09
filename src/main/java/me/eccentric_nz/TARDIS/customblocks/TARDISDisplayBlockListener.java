@@ -134,7 +134,6 @@ public class TARDISDisplayBlockListener implements Listener {
         display.setPersistent(true);
         display.setInvulnerable(true);
         if (which == TARDISBlockDisplayItem.SIEGE_CUBE) {
-            plugin.debug("which == TARDISBlockDisplayItem.SIEGE_CUBE");
             UUID uuid = player.getUniqueId();
             int id = plugin.getTrackerKeeper().getSiegeCarrying().get(uuid);
             HashMap<String, Object> where = new HashMap<>();
@@ -406,12 +405,15 @@ public class TARDISDisplayBlockListener implements Listener {
                                         }
                                     } else {
                                         // open inner
-                                        new InnerDisplayDoorOpener(plugin).open(block, id, false);
-                                        // open outer
-                                        if (outerDisplayDoor) {
-                                            new OuterDisplayDoorOpener(plugin).open(new OuterDoor(plugin, id).getDisplay(), id);
-                                        } else if (tardis.getPreset().hasDoor()) {
-                                            new OuterMinecraftDoorOpener(plugin).open(new OuterDoor(plugin, id).getMinecraft(), id, player);
+                                        Material type = new InnerDisplayDoorOpener(plugin).open(block, id, false);
+                                        // only open outer if this is a not diner door
+                                        if (Material.CRIMSON_DOOR != type) {
+                                            // open outer
+                                            if (outerDisplayDoor) {
+                                                new OuterDisplayDoorOpener(plugin).open(new OuterDoor(plugin, id).getDisplay(), id);
+                                            } else if (tardis.getPreset().hasDoor()) {
+                                                new OuterMinecraftDoorOpener(plugin).open(new OuterDoor(plugin, id).getMinecraft(), id, player);
+                                            }
                                         }
                                     }
                                 }
@@ -507,7 +509,6 @@ public class TARDISDisplayBlockListener implements Listener {
     private void processInteraction(ItemDisplay fake, ItemDisplay breaking, Player player, Location l, Block block, Interaction interaction) {
         if (fake != null && player.getGameMode().equals(GameMode.CREATIVE)) {
             if (SiegeListener.isSiegeCube(fake.getItemStack())){
-                plugin.debug("[processInteraction] is siege cube!");
                 return;
             }
             fake.remove();
@@ -558,7 +559,6 @@ public class TARDISDisplayBlockListener implements Listener {
                             Item item = l.getWorld().dropItemNaturally(l, fake.getItemStack());
                             // process siege cube
                             if (isSiege) {
-                                plugin.debug("[TARDISDisplayBlockListener] It's a siege cube!");
                                 item.setInvulnerable(true);
                                 // get the TARDIS id
                                 HashMap<String, Object> where = new HashMap<>();
