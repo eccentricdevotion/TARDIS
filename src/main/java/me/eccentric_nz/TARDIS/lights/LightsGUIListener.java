@@ -76,8 +76,7 @@ public class LightsGUIListener extends TARDISMenuListener {
                     switch (slot) {
                         case 0, 27, 29, 34, 41, 43 -> { }
                         // variable block menu
-                        case 28 ->
-                                player.openInventory(new WallsInventory(plugin, "Variable Light Blocks").getInventory());
+                        case 28 -> player.openInventory(new WallsInventory(plugin, "Variable Light Blocks").getInventory());
                         // change the lights
                         case 35 -> {
                             if (!plugin.getTrackerKeeper().getLightChangers().contains(player.getUniqueId())) {

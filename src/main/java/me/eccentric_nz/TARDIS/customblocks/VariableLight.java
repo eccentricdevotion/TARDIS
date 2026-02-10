@@ -63,14 +63,16 @@ public class VariableLight {
         rim.setItemModel(model);
         r.setItemMeta(rim);
         roundel.setItemStack(r);
-        ItemDisplay inner = (ItemDisplay) world.spawnEntity(location, EntityType.ITEM_DISPLAY);
-        ItemStack b = ItemStack.of(material);
-        inner.setItemStack(b);
-        inner.setTransformation(transformation);
-        // set a light block
-        Levelled light = TARDISConstants.LIGHT;
-        light.setLevel(level);
-        location.getBlock().setBlockData(light);
+        if (material != null) {
+            ItemDisplay inner = (ItemDisplay) world.spawnEntity(location, EntityType.ITEM_DISPLAY);
+            ItemStack b = ItemStack.of(material);
+            inner.setItemStack(b);
+            inner.setTransformation(transformation);
+            // set a light block
+            Levelled light = TARDISConstants.LIGHT;
+            light.setLevel(level);
+            location.getBlock().setBlockData(light);
+        }
         // also set an interaction entity
         Interaction interaction = (Interaction) world.spawnEntity(location.clone().subtract(0, 0.5d, 0), EntityType.INTERACTION);
         interaction.setResponsive(true);

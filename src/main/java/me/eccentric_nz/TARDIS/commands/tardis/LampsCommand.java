@@ -55,14 +55,14 @@ class LampsCommand {
         this.plugin = plugin;
     }
 
-    private boolean valid_material(String mat) {
+    boolean valid_material(String mat) {
         List<?> allowList = plugin.getLampsConfig().getList("lamp_blocks");
         if (allowList == null) {
             return false;
         }
         for (Object allow : allowList) {
-            if (allow instanceof String) {
-                if (((String) allow).equalsIgnoreCase(mat)) {
+            if (allow instanceof String s) {
+                if (s.equalsIgnoreCase(mat)) {
                     return true;
                 }
             }
@@ -176,7 +176,7 @@ class LampsCommand {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "LAMP_SET_USAGE");
             return false;
         }
-        // First material override isn't optional
+        // first material override isn't optional
         String materialOn = null;
         materialOn = args[5];
         if (materialOn.equals("_")) {
@@ -187,7 +187,7 @@ class LampsCommand {
                 return false;
             }
         }
-        // Get optional material override arguments
+        // get optional material override arguments
         String materialOff = null;
         if (args.length >= 7) {
             materialOff = args[6];
@@ -209,7 +209,6 @@ class LampsCommand {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "LAMP_SET_USAGE");
             return false;
         }
-
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", player.getUniqueId().toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
@@ -220,7 +219,6 @@ class LampsCommand {
             HashMap<String, Object> wherel = new HashMap<>();
             wherel.put("tardis_id", id);
             wherel.put("location", (dimension + ":" + x + ":" + y + ":" + z));
-
             HashMap<String, Object> set = new HashMap<>();
             set.put("material_on", materialOn);
             if (materialOff != null) {
@@ -229,11 +227,9 @@ class LampsCommand {
             if (percentage != null) {
                 set.put("percentage", percentage);
             }
-
             plugin.getQueryFactory().doUpdate("lamps", set, wherel);
             plugin.getMessenger().send(player, TardisModule.TARDIS, "LAMP_SET_SUCCESS", wherel.get("location"));
         }
-
         return true;
     }
 
@@ -242,17 +238,14 @@ class LampsCommand {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
             return false;
         }
-
         if (args.length < 2) {
             return false;
         }
-
         String sub = args[1].toLowerCase(Locale.ROOT);
         if (!subs.contains(sub)) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "ARG_NOT_VALID");
             return true;
         }
-
         return switch (sub) {
             case "auto" -> addLampBlocks(player);
             case "list" -> listLampBlocks(player);

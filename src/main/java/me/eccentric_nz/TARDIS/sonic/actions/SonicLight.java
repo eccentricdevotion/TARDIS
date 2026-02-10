@@ -90,7 +90,7 @@ public class SonicLight {
     public void toggle(ItemDisplay display, Block light) {
         ItemStack lamp = display.getItemStack();
         TARDISDisplayItem tdi = TARDISDisplayItemUtils.get(display);
-        // check the block is a chemistry lamp block
+        // check the block is a TARDIS light block
         if (tdi != null && tdi.isLight()) {
             TARDISDisplayItem toggled = TardisLight.getToggled(tdi);
             ItemMeta im = lamp.getItemMeta();
@@ -104,6 +104,7 @@ public class SonicLight {
                 // set light level to zero
                 LampToggler.setLightlevel(light, 0);
             }
+            im.setItemModel(toggled.getCustomModel());
             change.setItemMeta(im);
             display.setItemStack(change);
         }
