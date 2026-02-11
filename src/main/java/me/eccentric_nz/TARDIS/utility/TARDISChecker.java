@@ -17,10 +17,7 @@
 package me.eccentric_nz.TARDIS.utility;
 
 import com.google.common.io.MoreFiles;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import com.google.gson.*;
 import com.google.gson.stream.JsonReader;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.Advancement;
@@ -49,35 +46,22 @@ public class TARDISChecker {
     }
 
     public static void copy(String filename, File file) {
-        InputStream in = null;
-        try {
-            in = TARDIS.plugin.getResource(filename);
-            OutputStream out = new FileOutputStream(file);
-            byte[] buf = new byte[1024];
-            int len;
-            try {
-                while ((len = in.read(buf)) > 0) {
-                    out.write(buf, 0, len);
-                }
-            } catch (IOException io) {
-                TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.SEVERE, "Checker: Could not save the file (" + file + ").");
-            } finally {
+        try (InputStream in = TARDIS.plugin.getResource(filename)) {
+            try (OutputStream out = new FileOutputStream(file)) {
                 try {
-                    out.close();
-                } catch (IOException e) {
-                    TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.SEVERE, "Checker: Could not close the output stream.");
+                    byte[] buf = new byte[1024];
+                    int len;
+                    while ((len = in.read(buf)) > 0) {
+                        out.write(buf, 0, len);
+                    }
+                } catch (IOException io) {
+                    TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.SEVERE, "Checker: Could not save the file (" + file + ").");
                 }
+            } catch (IOException e) {
+                TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.SEVERE, "Checker: Could not close the output stream.");
             }
-        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
             TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.SEVERE, "Checker: File not found: " + filename);
-        } finally {
-            if (in != null) {
-                try {
-                    in.close();
-                } catch (IOException e) {
-                    TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.SEVERE, "Checker: Could not close the input stream.");
-                }
-            }
         }
     }
 
@@ -160,6 +144,25 @@ public class TARDISChecker {
             plugin.getMessenger().message(plugin.getConsole(), TardisModule.WARNING, String.format(plugin.getLanguage().getString("DATAPACK_NOT_FOUND", "%s"), "placeable.json", "painting variant"));
             plugin.getMessenger().message(plugin.getConsole(), TardisModule.WARNING, String.format(plugin.getLanguage().getString("DATAPACK_COPYING", "%s"), "painting variant", "placeable.json"));
             copy("painting_variant/placeable.json", placeable);
+        } else {
+            // load json
+            try (FileReader reader = new FileReader(placeable)) {
+                JsonObject rootObject = JsonParser.parseReader(new JsonReader(reader)).getAsJsonObject();
+                if (rootObject.has("values")) {
+                    JsonArray values = rootObject.get("values").getAsJsonArray();
+                    JsonElement chevy = new JsonPrimitive("tardis:chevrolet");
+                    if (!values.contains(chevy)) {
+                        values.add(chevy);
+                        rootObject.add("values", values);
+                        Gson pson = new GsonBuilder().setPrettyPrinting().create();
+                        try (Writer writer = new FileWriter(placeable)) {
+                            pson.toJson(rootObject, writer);
+                        }
+                    }
+                }
+            } catch (IOException e) {
+                plugin.debug("Failed to update placeable.json " + e.getMessage());
+            }
         }
         // update json files
         write(dataPacksTardis);

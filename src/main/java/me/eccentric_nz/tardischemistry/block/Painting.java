@@ -35,7 +35,8 @@ public enum Painting {
     SULPHUR,
     WORLD,
     GALLIFREY_FALLS_NO_MORE,
-    EXPLODING_TARDIS;
+    EXPLODING_TARDIS,
+    CHEVROLET;
 
     public String getName() {
         return toString().toLowerCase(Locale.ROOT);

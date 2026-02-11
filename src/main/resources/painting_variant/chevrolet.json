@@ -1,0 +1,13 @@
+{
+  "asset_id": "tardis:chevrolet",
+  "height": 2,
+  "width": 3,
+  "title": {
+    "color": "gray",
+    "text": "1957 Chevrolet Bel Air"
+  },
+  "author": {
+    "color": "gray",
+    "text": "eccentric_nz"
+  }
+}
