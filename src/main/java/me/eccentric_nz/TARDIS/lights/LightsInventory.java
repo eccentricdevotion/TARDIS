@@ -126,7 +126,11 @@ public class LightsInventory implements InventoryHolder {
             if (i % 9 == 8) {
                 i += 2;
             } else {
-                i++;
+                if (tl == TardisLight.RED_LAMP) {
+                    i = 18;
+                } else {
+                    i++;
+                }
             }
         }
         // 27 block info

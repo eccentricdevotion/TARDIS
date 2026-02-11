@@ -22,18 +22,17 @@ import me.eccentric_nz.TARDIS.builders.utility.LightLevel;
 import me.eccentric_nz.TARDIS.customblocks.TARDISCustomLightDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
+import me.eccentric_nz.TARDIS.customblocks.VariableLight;
 import me.eccentric_nz.TARDIS.database.data.Lamp;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.TardisLight;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Levelled;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.persistence.PersistentDataType;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -80,38 +79,42 @@ public class PresetLampToggler {
                 }
                 Levelled levelled = TARDISConstants.LIGHT;
                 ItemDisplay display = TARDISDisplayItemUtils.getFromBoundingBox(b);
+                // get variable material
+                ResultSetLightPrefs lightPrefs = new ResultSetLightPrefs(plugin);
+                Material variable = Material.LIGHT_GRAY_WOOL;
+                if (lightPrefs.fromID(id)) {
+                    variable = lightPrefs.getMaterial();
+                }
                 if (on) {
                     if (b.getType().equals(Material.SEA_LANTERN) || (b.getType().equals(Material.REDSTONE_LAMP))) {
                         // convert to light display item
                         if (l.materialOff() == null) {
-                            TARDISDisplayItemUtils.set(light.getOff(), b, id);
-                        } else { // Lamp has an off material override
+                            if (light.getOn().isVariable()) {
+                                new VariableLight(variable, b.getLocation().add(0.5, 0.5, 0.5)).set(light.getOff().getCustomModel(), 0);
+                            } else {
+                                TARDISDisplayItemUtils.set(light.getOff(), b, id);
+                            }
+                        } else { // lamp has an off material override
                             TARDISDisplayItem customLamp = new TARDISCustomLightDisplayItem(l.materialOff(), false);
                             TARDISDisplayItemUtils.set(customLamp, b, id);
                         }
                     } else {
-                        // switch the itemstack
+                        // switch the item stack
                         if (display != null) {
                             Material material = light.getOff().getMaterial();
-                            // Use material defined on lamp if available
+                            // use material defined on lamp if available
                             if (l.materialOff() != null) {
                                 material = l.materialOff();
                             }
-                            ItemStack is = ItemStack.of(material);
-                            ItemMeta im = is.getItemMeta();
-                            im.displayName(ComponentUtils.toWhite(light.getOff().getDisplayName()));
-                            // If the lamp has a material don't use the custom light model.
-                            if (l.materialOff() == null) {
-                                NamespacedKey model = light.getOff().getCustomModel();
-                                if (model != null) {
-                                    im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, model.getKey());
-                                    if (light.getOff().getDisplayName().contains("Variable")) {
-                                        im.setItemModel(model);
-                                    }
-                                }
+                            if (light.isVariable()) {
+                                new VariableLight(material, b.getLocation().add(0.5, 0.5, 0.5)).change(light.getOff().getCustomModel(), 0);
+                            } else {
+                                ItemStack is = ItemStack.of(material);
+                                ItemMeta im = is.getItemMeta();
+                                im.displayName(ComponentUtils.toWhite(light.getOff().getDisplayName()));
+                                is.setItemMeta(im);
+                                display.setItemStack(is);
                             }
-                            is.setItemMeta(im);
-                            display.setItemStack(is);
                         }
                     }
                     levelled.setLevel(0);
@@ -122,28 +125,22 @@ public class PresetLampToggler {
                     int level = (rsill.resultSet()) ? LightLevel.interior_level[rsill.getLevel()] : 15;
                     levelled.setLevel(Math.round(level * l.percentage()));
                     b.setBlockData(levelled);
-                    // switch the itemstack
+                    // switch the item stack
                     if (display != null) {
                         Material material = light.getOn().getMaterial();
-                        // Use material defined on lamp if available
+                        // use material defined on lamp if available
                         if (l.materialOn() != null) {
                             material = l.materialOn();
                         }
-                        ItemStack is = ItemStack.of(material);
-                        ItemMeta im = is.getItemMeta();
-                        im.displayName(ComponentUtils.toWhite(light.getOn().getDisplayName()));
-                        // If the lamp has a material don't use the custom light model.
-                        if (l.materialOn() == null) {
-                            NamespacedKey model = light.getOn().getCustomModel();
-                            if (model != null) {
-                                im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, model.getKey());
-                                if (light.getOn().getDisplayName().contains("Variable")) {
-                                    im.setItemModel(model);
-                                }
-                            }
+                        if (light.isVariable()) {
+                            new VariableLight(variable, b.getLocation().add(0.5, 0.5, 0.5)).change(light.getOn().getCustomModel(), level);
+                        } else {
+                            ItemStack is = ItemStack.of(material);
+                            ItemMeta im = is.getItemMeta();
+                            im.displayName(ComponentUtils.toWhite(light.getOn().getDisplayName()));
+                            is.setItemMeta(im);
+                            display.setItemStack(is);
                         }
-                        is.setItemMeta(im);
-                        display.setItemStack(is);
                     }
                 }
             }

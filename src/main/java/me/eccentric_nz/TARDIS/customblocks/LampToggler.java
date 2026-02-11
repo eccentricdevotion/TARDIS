@@ -45,15 +45,14 @@ public class LampToggler {
     }
 
     private static Block findLightBlock(Block source) {
-        Block block = null;
         for (BlockFace face : TARDIS.plugin.getGeneralKeeper().getBlockFaces()) {
-            block = source.getRelative(face);
+            Block block = source.getRelative(face);
             // check it is not another item display lamp
             ItemDisplay display = TARDISDisplayItemUtils.get(block);
             if (display == null && block.getType().equals(Material.LIGHT)) {
-                break;
+                return block;
             }
         }
-        return block;
+        return null;
     }
 }

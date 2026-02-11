@@ -128,4 +128,12 @@ public enum TardisLight {
     public TARDISDisplayItem getCloister() {
         return cloister;
     }
+
+    public boolean isVariable() {
+        return switch (this) {
+            case VARIABLE, VARIABLE_BLUE, VARIABLE_GREEN, VARIABLE_ORANGE, VARIABLE_PINK,
+                 VARIABLE_PURPLE, VARIABLE_RED, VARIABLE_YELLOW -> true;
+            default -> false;
+        };
+    }
 }
