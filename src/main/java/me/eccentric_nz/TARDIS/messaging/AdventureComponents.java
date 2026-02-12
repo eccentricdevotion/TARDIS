@@ -67,9 +67,9 @@ public class AdventureComponents {
                         .clickEvent(ClickEvent.openUrl("https://github.com/eccentricdevotion/TARDIS/releases"))
                 )
                 .append(Component.text(" or run the "))
-                .append(Component.text("'/tardisadmin update_plugins'")
+                .append(Component.text("'/tardisadmin update_plugin'")
                         .color(NamedTextColor.AQUA)
-                        .clickEvent(ClickEvent.suggestCommand("/tardisadmin update_plugins"))
+                        .clickEvent(ClickEvent.suggestCommand("/tardisadmin update_plugin"))
                 )
                 .append(Component.text(" command"));
     }
@@ -80,8 +80,8 @@ public class AdventureComponents {
                 .append(Component.text("You are "))
                 .append(Component.text(behind))
                 .append(Component.text(" builds behind! Type "))
-                .append(Component.text("/tadmin update_plugins", NamedTextColor.AQUA)
-                        .clickEvent(ClickEvent.suggestCommand("/tadmin update_plugins"))
+                .append(Component.text("/tadmin update_plugin", NamedTextColor.AQUA)
+                        .clickEvent(ClickEvent.suggestCommand("/tadmin update_plugin"))
                 )
                 .append(Component.text(" to update!"));
     }

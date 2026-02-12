@@ -71,16 +71,7 @@ public class TARDISUpdateChecker implements Runnable {
             }
             return;
         }
-        String latestCommit = lastBuild.get("sha").getAsString().substring(0, 8);
-//        if (!latestCommit.equals(commit)) {
-//            // if new build number is older
-//            if (sender == null) {
-//                plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Server is running a newer TARDIS version!");
-//            } else {
-//                plugin.getMessenger().message(sender, TardisModule.TARDIS, "You are running a newer TARDIS version!");
-//            }
-//            return;
-//        }
+        String latestCommit = lastBuild.get("sha").getAsString().substring(0, 9);
         if (commit.equals(latestCommit)) {
             // if latest commit short sha is same
             if (sender == null) {
