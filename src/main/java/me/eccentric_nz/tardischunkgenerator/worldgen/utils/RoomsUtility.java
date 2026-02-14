@@ -26,7 +26,6 @@ import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemRegistry;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.rooms.TARDISPainting;
-import me.eccentric_nz.TARDIS.schematic.getters.DataPackPainting;
 import net.kyori.adventure.text.Component;
 import org.bukkit.*;
 import org.bukkit.block.Banner;
@@ -165,11 +164,7 @@ public class RoomsUtility {
             try {
                 Painting ent = (Painting) region.spawnEntity(pl, EntityType.PAINTING);
                 ent.setFacingDirection(facing, true);
-                if (art != null) {
-                    ent.setArt(art, true);
-                } else {
-                    DataPackPainting.setCustomVariant(ent, which);
-                }
+                ent.setArt(art, true);
             } catch (IllegalArgumentException e) {
                 TARDIS.plugin.debug("Invalid painting location!" + pl);
             }

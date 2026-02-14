@@ -30,7 +30,8 @@ public class TARDISPainting {
     public static Location calculatePosition(Art art, BlockFace facing, Location loc) {
         switch (variants.getKey(art).getKey()) {
             // 1x2 & 3x4, 3x2
-            case "backyard", "exploding_tardis", "eye_chart", "graham", "prairie_ride", "pond", "wanderer" -> {
+            case "backyard", "chevrolet", "exploding_tardis", "eye_chart", "graham", "prairie_ride", "pond",
+                 "wanderer" -> {
                 return loc.clone().add(0, -1, 0);
             }
             // 2x1 & 4x3
@@ -63,35 +64,4 @@ public class TARDISPainting {
             }
         }
     }
-
-//    public static Location calculatePosition(String art, BlockFace facing, Location loc) {
-//        switch (art) {
-//            // 1x2
-//            case "eye_chart" -> {
-//                return loc.clone().add(0, -1, 0);
-//            }
-//            // 2x1 & 4x3
-//            case "magnatise", "melt", "periodic_table", "spectacles", "world" -> {
-//                if (facing == BlockFace.WEST) {
-//                    return loc.clone().add(0, 0, -1);
-//                } else if (facing == BlockFace.SOUTH) {
-//                    return loc.clone().add(-1, 0, 0);
-//                }
-//                return loc;
-//            }
-//            // 2x2, 4x2 & 4x4
-//            case "aorta", "beaker", "chemistry", "gallifrey_falls_no_more", "lava", "pi", "sulphur" -> {
-//                if (facing == BlockFace.WEST) {
-//                    return loc.clone().add(0, -1, -1);
-//                } else if (facing == BlockFace.SOUTH) {
-//                    return loc.clone().add(-1, -1, 0);
-//                }
-//                return loc.add(0, -1, 0);
-//            }
-//            // 1x1 or unsupported artwork
-//            default -> {
-//                return loc;
-//            }
-//        }
-//    }
 }
