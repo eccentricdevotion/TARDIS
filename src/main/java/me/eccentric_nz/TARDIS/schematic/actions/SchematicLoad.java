@@ -24,32 +24,26 @@ import me.eccentric_nz.TARDIS.schematic.SchematicGZip;
 import org.bukkit.entity.Player;
 
 import java.io.File;
-import java.util.Locale;
 import java.util.UUID;
 
 public class SchematicLoad {
 
-    public boolean act(TARDIS plugin, Player player, String[] args) {
-        if (args.length < 3) {
-            plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
-            plugin.getMessenger().send(player, TardisModule.TARDIS, "SCHM_NAME");
-            return true;
-        }
+    public boolean act(TARDIS plugin, Player player, String directory, String schematic) {
         Load load;
         try {
-            load = Load.valueOf(args[1].toLowerCase(Locale.ROOT));
+            load = Load.valueOf(directory);
         } catch (IllegalArgumentException e) {
             load = Load.user;
         }
         if (!load.isFromJar()) {
-            String instr = plugin.getDataFolder() + File.separator + "user_schematics" + File.separator + args[2] + ".tschm";
+            String instr = plugin.getDataFolder() + File.separator + "user_schematics" + File.separator + schematic + ".tschm";
             File file = new File(instr);
             if (!file.exists()) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "SCHM_NOT_VALID");
                 return true;
             }
         }
-        JsonObject sch = SchematicGZip.getObject(plugin, load.getPath(), args[2], !load.isFromJar());
+        JsonObject sch = SchematicGZip.getObject(plugin, load.getPath(), schematic, !load.isFromJar());
         UUID uuid = player.getUniqueId();
         plugin.getTrackerKeeper().getPastes().put(uuid, sch);
         plugin.getMessenger().sendColouredCommand(player, "SCHM_LOADED", "/ts paste", plugin);

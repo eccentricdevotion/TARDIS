@@ -104,7 +104,8 @@ public class TARDISSchematicCommand implements CommandExecutor {
                 return new SchematicConvert().act(plugin, player, args);
             }
             if (args[0].equalsIgnoreCase("load")) {
-                return new SchematicLoad().act(plugin, player, args);
+                return true;
+//                return new SchematicLoad().act(plugin, player, args);
             }
         }
         return false;

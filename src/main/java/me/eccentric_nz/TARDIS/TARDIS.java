@@ -115,6 +115,7 @@ public class TARDIS extends JavaPlugin {
     private final HashMap<String, String> versions = new HashMap<>();
     private final String versionRegex = "(\\d+[.])+\\d+";
     private final Pattern versionPattern = Pattern.compile(versionRegex);
+    private final String serverStr = "1.21.11";
     private TARDISMessage messenger;
     private ChatGUI jsonKeeper;
     private SkinChanger skinChanger;
@@ -195,7 +196,6 @@ public class TARDIS extends JavaPlugin {
     private ShopSettings shopSettings;
     private TVMSettings tvmSettings;
     private BlasterSettings blasterSettings;
-    private final String serverStr = "1.21.11";
 
     /**
      * Constructor
@@ -380,7 +380,7 @@ public class TARDIS extends JavaPlugin {
             // add listeners
             new TARDISListenerRegisterer(this).registerListeners();
             // register commands
-            new TARDISCommandSetter(this).loadCommands();
+//            new TARDISCommandSetter(this).loadCommands();
             loadPluginRespect();
             String mapper = getConfig().getString("mapping.provider", "dynmap");
             if (pm.isPluginEnabled(mapper) && getConfig().getBoolean("modules.mapping")) {
@@ -406,7 +406,7 @@ public class TARDIS extends JavaPlugin {
             }
             loadBooks();
             // copy advancements to tardis datapack
-            new TARDISChecker(this).checkDataPack();
+//            new TARDISChecker(this).checkDataPack();
             presets = new TARDISChameleonPreset();
             presets.makePresets();
             // hook CoreProtectAPI
