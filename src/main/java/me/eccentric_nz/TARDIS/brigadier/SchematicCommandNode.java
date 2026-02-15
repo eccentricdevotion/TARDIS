@@ -8,9 +8,11 @@ import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.brigadier.arguments.DirectoryArgumentType;
+import me.eccentric_nz.TARDIS.brigadier.suggestions.BlockSuggestions;
+import me.eccentric_nz.TARDIS.brigadier.suggestions.LightSuggestions;
 import me.eccentric_nz.TARDIS.brigadier.suggestions.SchematicLoadSuggestions;
-import me.eccentric_nz.TARDIS.schematic.actions.SchematicLoad;
-import org.bukkit.entity.Entity;
+import me.eccentric_nz.TARDIS.schematic.actions.*;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 public class SchematicCommandNode {
@@ -28,33 +30,104 @@ public class SchematicCommandNode {
                                             TARDIS.plugin.debug(d);
                                             String s = StringArgumentType.getString(ctx, "schematic");
                                             TARDIS.plugin.debug(s);
-                                            Entity executor = ctx.getSource().getExecutor();
-                                            if (!(executor instanceof Player player)) {
-                                                // If a non-player tried to set their own flight speed
-                                                ctx.getSource().getSender().sendPlainMessage("Only players can load schematics!");
-                                                return Command.SINGLE_SUCCESS;
-                                            }
+                                            Player player = (Player) ctx.getSource().getExecutor();
                                             new SchematicLoad().act(TARDIS.plugin, player, d, s);
                                             return Command.SINGLE_SUCCESS;
                                         }))
                         ))
                 .then(Commands.literal("paste")
-                        .then(Commands.literal("no_air")))
+                        .executes(ctx -> {
+                            Player player = (Player) ctx.getSource().getExecutor();
+                            SchematicPaster paster = new SchematicPaster(TARDIS.plugin, player, false);
+                            int task = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(TARDIS.plugin, paster, 1L, 3L);
+                            paster.setTask(task);
+                            return Command.SINGLE_SUCCESS;
+                        })
+                        .then(Commands.literal("no_air")
+                                .executes(ctx -> {
+                                    Player player = (Player) ctx.getSource().getExecutor();
+                                    SchematicPaster paster = new SchematicPaster(TARDIS.plugin, player, true);
+                                    int task = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(TARDIS.plugin, paster, 1L, 3L);
+                                    paster.setTask(task);
+                                    return Command.SINGLE_SUCCESS;
+                                })))
                 .then(Commands.literal("save")
-                        .then(Commands.argument("directory", StringArgumentType.word())))
-                .then(Commands.literal("clear"))
+                        .then(Commands.argument("filename", StringArgumentType.word())
+                                .executes(ctx -> {
+                                    Player player = (Player) ctx.getSource().getExecutor();
+                                    String n = StringArgumentType.getString(ctx, "filename");
+                                    new SchematicSave().act(TARDIS.plugin, player, n);
+                                    return Command.SINGLE_SUCCESS;
+                                })))
+                .then(Commands.literal("clear").executes(ctx -> {
+                    Player player = (Player) ctx.getSource().getExecutor();
+                    new SchematicClear().act(TARDIS.plugin, player);
+                    return Command.SINGLE_SUCCESS;
+                }))
                 .then(Commands.literal("replace")
-                        .then(Commands.argument("from", StringArgumentType.word())
-                                .then(Commands.argument("to", StringArgumentType.word()))
+                        .then(Commands.argument("from_block", StringArgumentType.word())
+                                .suggests(BlockSuggestions::get)
+                                .then(Commands.argument("to_block", StringArgumentType.word())
+                                        .suggests(BlockSuggestions::get)
+                                        .executes(ctx -> {
+                                            Player player = (Player) ctx.getSource().getExecutor();
+                                            String from = StringArgumentType.getString(ctx, "from_block");
+                                            String to = StringArgumentType.getString(ctx, "to_block");
+                                            new SchematicReplace().act(TARDIS.plugin, player, from, to);
+                                            return Command.SINGLE_SUCCESS;
+                                        }))
                         ))
                 .then(Commands.literal("convert")
-                        .then(Commands.argument("type", StringArgumentType.word())))
+                        .then(Commands.argument("from_light", StringArgumentType.word())
+                                .suggests(LightSuggestions::get)
+                                .then(Commands.argument("to_block", StringArgumentType.word())
+                                        .suggests(BlockSuggestions::get)
+                                        .executes(ctx -> {
+                                            Player player = (Player) ctx.getSource().getExecutor();
+                                            String from = StringArgumentType.getString(ctx, "from_light");
+                                            String to = StringArgumentType.getString(ctx, "to_block");
+                                            new SchematicConvert().act(TARDIS.plugin, player, from, to);
+                                            return Command.SINGLE_SUCCESS;
+                                        })
+                                )))
                 .then(Commands.literal("remove").
-                        then(Commands.argument("what", StringArgumentType.word())))
-                .then(Commands.literal("flowers"))
-                .then(Commands.literal("fixliquid")
-                        .then(Commands.argument("type", StringArgumentType.word())))
-                .then(Commands.literal("position"));
+                        then(Commands.argument("what", StringArgumentType.word())
+                                .suggests((ctx, builder) -> {
+                                    builder.suggest("lights");
+                                    builder.suggest("models");
+                                    return builder.buildFuture();
+                                })
+                                .executes(ctx -> {
+                                    Player player = (Player) ctx.getSource().getExecutor();
+                                    String what = StringArgumentType.getString(ctx, "what");
+                                    new SchematicRemove().act(TARDIS.plugin, player, what);
+                                    return Command.SINGLE_SUCCESS;
+                                })
+                        ))
+                .then(Commands.literal("flowers").executes(ctx -> {
+                    Player player = (Player) ctx.getSource().getExecutor();
+                    new SchematicFlowers().act(TARDIS.plugin, player);
+                    return Command.SINGLE_SUCCESS;
+                }))
+                .then(Commands.literal("fix_liquid")
+                        .then(Commands.argument("type", StringArgumentType.word())
+                                .suggests((ctx, builder) -> {
+                                    builder.suggest("lava");
+                                    builder.suggest("water");
+                                    return builder.buildFuture();
+                                })
+                                .executes(ctx -> {
+                                    Player player = (Player) ctx.getSource().getExecutor();
+                                    boolean lava = StringArgumentType.getString(ctx, "type").equalsIgnoreCase("lava");
+                                    new SchematicLavaAndWater().act(TARDIS.plugin, player, lava);
+                                    return Command.SINGLE_SUCCESS;
+                                })
+                        ))
+                .then(Commands.literal("position").executes(ctx -> {
+                    Player player = (Player) ctx.getSource().getExecutor();
+                    new SchematicPosition().teleport(TARDIS.plugin, player);
+                    return Command.SINGLE_SUCCESS;
+                }));
         return command.build();
     }
 }

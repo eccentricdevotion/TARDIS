@@ -31,20 +31,16 @@ import java.util.UUID;
 
 public class SchematicConvert {
 
-    public boolean act(TARDIS plugin, Player player, String[] args) {
-        if (args.length < 3) {
-            plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
-            return true;
-        }
+    public boolean act(TARDIS plugin, Player player, String from, String to) {
         TardisLight light;
         try {
-            light = TardisLight.valueOf(args[1].toUpperCase(Locale.ROOT));
+            light = TardisLight.valueOf(from.toUpperCase(Locale.ROOT));
         } catch (IllegalArgumentException e) {
             light = TardisLight.TENTH;
         }
         Material lamp;
         try {
-            lamp = Material.valueOf(args[2].toUpperCase(Locale.ROOT));
+            lamp = Material.valueOf(to.toUpperCase(Locale.ROOT));
         } catch (IllegalArgumentException e) {
             lamp = Material.REDSTONE_LAMP;
         }

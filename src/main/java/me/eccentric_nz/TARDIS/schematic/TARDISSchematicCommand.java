@@ -98,14 +98,29 @@ public class TARDISSchematicCommand implements CommandExecutor {
                 return new SchematicSave().act(plugin, player, args[1]);
             }
             if (args[0].equalsIgnoreCase("replace")) {
-                return new SchematicReplace().act(plugin, player, args);
+                if (args.length < 3) {
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
+                    return true;
+                }
+                String from = args[1].toUpperCase(Locale.ROOT);
+                String to = args[2].toUpperCase(Locale.ROOT);
+                return new SchematicReplace().act(plugin, player, from, to);
             }
             if (args[0].equalsIgnoreCase("convert")) {
-                return new SchematicConvert().act(plugin, player, args);
+                if (args.length < 3) {
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
+                    return true;
+                }
+                String from = args[1].toUpperCase(Locale.ROOT);
+                String to = args[2].toUpperCase(Locale.ROOT);
+                return new SchematicConvert().act(plugin, player, from, to);
             }
             if (args[0].equalsIgnoreCase("load")) {
-                return true;
-//                return new SchematicLoad().act(plugin, player, args);
+                if (args.length < 3) {
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
+                    return true;
+                }
+                return new SchematicLoad().act(plugin, player, args[1], args[2]);
             }
         }
         return false;

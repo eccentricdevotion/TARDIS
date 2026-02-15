@@ -24,16 +24,11 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.entity.Player;
 
-import java.util.Locale;
 import java.util.UUID;
 
 public class SchematicReplace {
 
-    public boolean act(TARDIS plugin, Player player, String[] args) {
-        if (args.length < 3) {
-            plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
-            return true;
-        }
+    public boolean act(TARDIS plugin, Player player, String from, String to) {
         UUID uuid = player.getUniqueId();
         // check they have selected start and end blocks
         if (!plugin.getTrackerKeeper().getStartLocation().containsKey(uuid)) {
@@ -52,8 +47,8 @@ public class SchematicReplace {
             return true;
         }
         try {
-            Material from = Material.valueOf(args[1].toUpperCase(Locale.ROOT));
-            Material to = Material.valueOf(args[2].toUpperCase(Locale.ROOT));
+            Material materialFrom = Material.valueOf(from);
+            Material materialTo = Material.valueOf(to);
             // get the raw coords
             int sx = plugin.getTrackerKeeper().getStartLocation().get(uuid).getBlockX();
             int sy = plugin.getTrackerKeeper().getStartLocation().get(uuid).getBlockY();
@@ -73,12 +68,12 @@ public class SchematicReplace {
                 for (int r = minx; r <= maxx; r++) {
                     for (int c = minz; c <= maxz; c++) {
                         Block b = w.getBlockAt(r, l, c);
-                        if (b.getType().equals(from)) {
+                        if (b.getType().equals(materialFrom)) {
                             BlockState state = b.getState();
                             if (state instanceof BlockState) {
                                 plugin.getTardisHelper().removeTileEntity(state);
                             }
-                            b.setType(to);
+                            b.setType(materialTo);
                         }
                     }
                 }
