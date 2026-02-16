@@ -383,8 +383,7 @@ public class TARDIS extends JavaPlugin {
             new TARDISListenerRegisterer(this).registerListeners();
             // register commands
             this.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
-                    commands -> new BrigadierCommandRegister(commands).addAll());
-//            new TARDISCommandSetter(this).loadCommands();
+                    commands -> new BrigadierCommandRegister(commands, this).addAll());
             loadPluginRespect();
             String mapper = getConfig().getString("mapping.provider", "dynmap");
             if (pm.isPluginEnabled(mapper) && getConfig().getBoolean("modules.mapping")) {

@@ -17,6 +17,12 @@ import org.bukkit.entity.Player;
 
 public class SchematicCommandNode {
 
+    private final TARDIS plugin;
+
+    public SchematicCommandNode(TARDIS plugin) {
+        this.plugin = plugin;
+    }
+
     LiteralCommandNode<CommandSourceStack> build() {
         LiteralArgumentBuilder<CommandSourceStack> command = Commands.literal("tardisschematic")
                 // require a player to execute the command
@@ -27,27 +33,25 @@ public class SchematicCommandNode {
                                         .suggests(SchematicLoadSuggestions::get)
                                         .executes(ctx -> {
                                             String d = StringArgumentType.getString(ctx, "directory");
-                                            TARDIS.plugin.debug(d);
                                             String s = StringArgumentType.getString(ctx, "schematic");
-                                            TARDIS.plugin.debug(s);
                                             Player player = (Player) ctx.getSource().getExecutor();
-                                            new SchematicLoad().act(TARDIS.plugin, player, d, s);
+                                            new SchematicLoad().act(plugin, player, d, s);
                                             return Command.SINGLE_SUCCESS;
                                         }))
                         ))
                 .then(Commands.literal("paste")
                         .executes(ctx -> {
                             Player player = (Player) ctx.getSource().getExecutor();
-                            SchematicPaster paster = new SchematicPaster(TARDIS.plugin, player, false);
-                            int task = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(TARDIS.plugin, paster, 1L, 3L);
+                            SchematicPaster paster = new SchematicPaster(plugin, player, false);
+                            int task = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, paster, 1L, 3L);
                             paster.setTask(task);
                             return Command.SINGLE_SUCCESS;
                         })
                         .then(Commands.literal("no_air")
                                 .executes(ctx -> {
                                     Player player = (Player) ctx.getSource().getExecutor();
-                                    SchematicPaster paster = new SchematicPaster(TARDIS.plugin, player, true);
-                                    int task = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(TARDIS.plugin, paster, 1L, 3L);
+                                    SchematicPaster paster = new SchematicPaster(plugin, player, true);
+                                    int task = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, paster, 1L, 3L);
                                     paster.setTask(task);
                                     return Command.SINGLE_SUCCESS;
                                 })))
@@ -56,12 +60,12 @@ public class SchematicCommandNode {
                                 .executes(ctx -> {
                                     Player player = (Player) ctx.getSource().getExecutor();
                                     String n = StringArgumentType.getString(ctx, "filename");
-                                    new SchematicSave().act(TARDIS.plugin, player, n);
+                                    new SchematicSave().act(plugin, player, n);
                                     return Command.SINGLE_SUCCESS;
                                 })))
                 .then(Commands.literal("clear").executes(ctx -> {
                     Player player = (Player) ctx.getSource().getExecutor();
-                    new SchematicClear().act(TARDIS.plugin, player);
+                    new SchematicClear().act(plugin, player);
                     return Command.SINGLE_SUCCESS;
                 }))
                 .then(Commands.literal("replace")
@@ -73,7 +77,7 @@ public class SchematicCommandNode {
                                             Player player = (Player) ctx.getSource().getExecutor();
                                             String from = StringArgumentType.getString(ctx, "from_block");
                                             String to = StringArgumentType.getString(ctx, "to_block");
-                                            new SchematicReplace().act(TARDIS.plugin, player, from, to);
+                                            new SchematicReplace().act(plugin, player, from, to);
                                             return Command.SINGLE_SUCCESS;
                                         }))
                         ))
@@ -86,7 +90,7 @@ public class SchematicCommandNode {
                                             Player player = (Player) ctx.getSource().getExecutor();
                                             String from = StringArgumentType.getString(ctx, "from_light");
                                             String to = StringArgumentType.getString(ctx, "to_block");
-                                            new SchematicConvert().act(TARDIS.plugin, player, from, to);
+                                            new SchematicConvert().act(plugin, player, from, to);
                                             return Command.SINGLE_SUCCESS;
                                         })
                                 )))
@@ -100,13 +104,13 @@ public class SchematicCommandNode {
                                 .executes(ctx -> {
                                     Player player = (Player) ctx.getSource().getExecutor();
                                     String what = StringArgumentType.getString(ctx, "what");
-                                    new SchematicRemove().act(TARDIS.plugin, player, what);
+                                    new SchematicRemove().act(plugin, player, what);
                                     return Command.SINGLE_SUCCESS;
                                 })
                         ))
                 .then(Commands.literal("flowers").executes(ctx -> {
                     Player player = (Player) ctx.getSource().getExecutor();
-                    new SchematicFlowers().act(TARDIS.plugin, player);
+                    new SchematicFlowers().act(plugin, player);
                     return Command.SINGLE_SUCCESS;
                 }))
                 .then(Commands.literal("fix_liquid")
@@ -119,13 +123,13 @@ public class SchematicCommandNode {
                                 .executes(ctx -> {
                                     Player player = (Player) ctx.getSource().getExecutor();
                                     boolean lava = StringArgumentType.getString(ctx, "type").equalsIgnoreCase("lava");
-                                    new SchematicLavaAndWater().act(TARDIS.plugin, player, lava);
+                                    new SchematicLavaAndWater().act(plugin, player, lava);
                                     return Command.SINGLE_SUCCESS;
                                 })
                         ))
                 .then(Commands.literal("position").executes(ctx -> {
                     Player player = (Player) ctx.getSource().getExecutor();
-                    new SchematicPosition().teleport(TARDIS.plugin, player);
+                    new SchematicPosition().teleport(plugin, player);
                     return Command.SINGLE_SUCCESS;
                 }));
         return command.build();
