@@ -23,9 +23,13 @@ public class PresetArgumentType implements CustomArgumentType<String, String> {
     private static final SimpleCommandExceptionType ERROR_INVALID_PRESET = new SimpleCommandExceptionType(
             MessageComponentSerializer.message().serialize(Component.text("Invalid chameleon preset specified!"))
     );
-    private static final List<String> PRESET_SUBS = new ArrayList<>();
+    private final List<String> PRESET_SUBS = new ArrayList<>();
 
-    static {
+    public PresetArgumentType(boolean includeFlags) {
+        if (includeFlags) {
+            PRESET_SUBS.add("ALLOW");
+            PRESET_SUBS.add("DENY");
+        }
         for (ChameleonPreset p : ChameleonPreset.values()) {
             PRESET_SUBS.add(p.toString());
         }
