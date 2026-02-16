@@ -120,7 +120,7 @@ public class LightLevelsInventory implements InventoryHolder {
         // back button
         ItemStack back = ItemStack.of(GUIChameleonTemplate.BACK_HELP.material(), 1);
         ItemMeta bk = back.getItemMeta();
-        bk.displayName(Component.text(plugin.getChameleonGuis().getString("BACK_HELP")));
+        bk.displayName(Component.text("Back"));
         back.setItemMeta(bk);
         // close
         ItemStack close = ItemStack.of(GUILights.CLOSE.material(), 1);

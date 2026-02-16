@@ -20,8 +20,7 @@
 
 ## Wiki Documentation
 
-* Copper golems and trapped chests
-* `/ts position` command
+* Lights GUI
 * Make all images tabbed
 * Vanilla/TARDIS screenshots for TabbedImage views
 * ?
