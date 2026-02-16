@@ -22,7 +22,6 @@ import me.eccentric_nz.TARDIS.database.data.ProtectedBlock;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetFindHidden;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetFindProtected;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -31,16 +30,9 @@ import java.util.List;
 
 public class FindHiddenCommand {
 
-    public boolean search(TARDIS plugin, CommandSender sender, String[] args) {
+    public boolean search(TARDIS plugin, CommandSender sender, int radius) {
         if (sender instanceof Player player) {
             Location location = player.getLocation();
-            int radius = 16;
-            if (args.length > 1) {
-                int parsed = TARDISNumberParsers.parseInt(args[1]);
-                if (parsed > 0) {
-                    radius = parsed;
-                }
-            }
             ResultSetFindHidden rsfh = new ResultSetFindHidden(plugin);
             List<Hidden> data = rsfh.search(location, radius);
             if (!data.isEmpty()) {

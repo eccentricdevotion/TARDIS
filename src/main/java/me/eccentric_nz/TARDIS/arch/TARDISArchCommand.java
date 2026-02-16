@@ -56,9 +56,9 @@ public class TARDISArchCommand {
         return true;
     }
 
-    public boolean whois(CommandSender sender, String[] args) {
+    public boolean whois(CommandSender sender, String name) {
         for (Player p : plugin.getServer().getOnlinePlayers()) {
-            if (ComponentUtils.stripColour(p.playerListName()).equalsIgnoreCase(args[1])) {
+            if (ComponentUtils.stripColour(p.playerListName()).equalsIgnoreCase(name)) {
                 plugin.getMessenger().send(sender, TardisModule.TARDIS, "ARCH_PLAYER", p.getName());
                 return true;
             }
@@ -67,16 +67,7 @@ public class TARDISArchCommand {
         return true;
     }
 
-    public boolean force(CommandSender sender, String[] args) {
-        if (args[2].length() < 2) {
-            plugin.getMessenger().send(sender, TardisModule.TARDIS, "TOO_FEW_ARGS");
-            return true;
-        }
-        Player player = plugin.getServer().getPlayer(args[1]);
-        if (player == null) {
-            plugin.getMessenger().send(sender, TardisModule.TARDIS, "COULD_NOT_FIND_NAME");
-            return true;
-        }
+    public boolean force(CommandSender sender, Player player) {
         UUID uuid = player.getUniqueId();
         boolean inv = plugin.getConfig().getBoolean("arch.switch_inventory");
         if (!plugin.getTrackerKeeper().getJohnSmith().containsKey(uuid)) {

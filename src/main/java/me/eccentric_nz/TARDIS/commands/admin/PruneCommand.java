@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.commands.admin;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.destroyers.TARDISPruner;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.command.CommandSender;
 import org.bukkit.util.FileUtil;
 
@@ -28,20 +27,16 @@ import java.io.File;
 /**
  * @author eccentric_nz
  */
-class PruneCommand {
+public class PruneCommand {
 
     private final TARDIS plugin;
 
-    PruneCommand(TARDIS plugin) {
+    public PruneCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    boolean startPruning(CommandSender sender, String[] args) {
+    public boolean startPruning(CommandSender sender, int days) {
         TARDISPruner pruner = new TARDISPruner(plugin);
-        if (args[1].equalsIgnoreCase("list") && args.length == 3) {
-            plugin.getMessenger().sendColouredCommand(sender, "PRUNE_INFO", "/tardisadmin prunelist", plugin);
-            return true;
-        }
         try {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "BACKUP_DB");
             // backup database
@@ -49,7 +44,6 @@ class PruneCommand {
             File newFile = new File(plugin.getDataFolder() + File.separator + "TARDIS_" + System.currentTimeMillis() + ".db");
             // back up the file
             FileUtil.copy(oldFile, newFile);
-            int days = Integer.parseInt(args[1]);
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "PRUNE_START");
             pruner.prune(sender, days);
             return true;
@@ -59,8 +53,7 @@ class PruneCommand {
         }
     }
 
-    boolean listPrunes(CommandSender sender, String[] args) {
-        int days = TARDISNumberParsers.parseInt(args[1]);
+    public boolean listPrunes(CommandSender sender, int days) {
         TARDISPruner pruner = new TARDISPruner(plugin);
         pruner.list(sender, days);
         return true;

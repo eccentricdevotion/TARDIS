@@ -14,6 +14,7 @@ public class BrigadierCommandRegister {
     }
 
     public void addAll() {
+        commands.registrar().register(new AdminCommandNode().build(), List.of("tadmin"));
         commands.registrar().register(new SchematicCommandNode().build(), List.of("ts", "tschematic"));
     }
 }

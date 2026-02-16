@@ -41,21 +41,21 @@ public class TARDISAdminTabComplete extends TARDISCompleter implements TabComple
 
     private final ImmutableList<String> ROOT_SUBS = ImmutableList.of(
             "add_regions", "arch", "assemble",
-            "clean", "condenser", "config", "convert_database", "create",
+            "clean", "condenser", "convert_database", "create",
             "decharge", "delete", "disguise", "dispersed",
             "enter",
             "find",
             "list",
             "make_preset", "maze", "mvimport",
             "playercount", "prune", "prunelist", "purge", "purge_portals",
-            "recharger", "region_flag", "reload", "repair", "revoke",
+            "recharger", "remove_protection", "repair", "revoke",
             "set_size", "spawn_abandoned",
             "undisguise", "update_plugin"
     );
     private final ImmutableList<String> ASS_SUBS = ImmutableList.of("clear", "list");
     private final ImmutableList<String> COMPASS_SUBS = ImmutableList.of("NORTH", "EAST", "SOUTH", "WEST");
     private final ImmutableList<String> ENTITY_SUBS;
-    private final ImmutableList<String> LIST_SUBS = ImmutableList.of("abandoned", "portals", "save", "preset_perms", "perms", "recipes", "blueprints");
+    private final ImmutableList<String> LIST_SUBS = ImmutableList.of("abandoned", "portals", "save", "blueprints");
     private final ImmutableList<String> PRESETS;
     private final ImmutableList<String> SEED_SUBS = ImmutableList.copyOf(Desktops.getBY_NAMES().keySet());
     private final ImmutableList<String> WORLD_SUBS;

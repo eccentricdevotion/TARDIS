@@ -20,49 +20,34 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.destroyers.Exterminator;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
-
-import java.util.Locale;
-import java.util.UUID;
 
 /**
  * @author eccentric_nz
  */
-class PurgeCommand {
+public class PurgeCommand {
 
     private final TARDIS plugin;
 
-    PurgeCommand(TARDIS plugin) {
+    public PurgeCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    boolean clearAll(CommandSender sender, String[] args) {
-        // Look up this player's UUID
-        UUID uuid = null;
-        if (args[1].toLowerCase(Locale.ROOT).equals("junk")) {
-            uuid = UUID.fromString("00000000-aaaa-bbbb-cccc-000000000000");
-        } else {
-            OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(args[1]);
-            if (offlinePlayer.getName() != null) {
-                uuid = offlinePlayer.getUniqueId();
-            }
-        }
+    public boolean clearAll(CommandSender sender, String who, String uuid) {
         if (uuid != null) {
             // get the player's TARDIS id
             ResultSetTardisID rs = new ResultSetTardisID(plugin);
             if (!rs.fromUUID(uuid.toString())) {
-                plugin.getMessenger().send(sender, TardisModule.TARDIS, "PLAYER_NOT_FOUND_DB", args[1]);
+                plugin.getMessenger().send(sender, TardisModule.TARDIS, "PLAYER_NOT_FOUND_DB", who);
                 return true;
             }
             int id = rs.getTardisId();
             Exterminator purger = new Exterminator(plugin);
             purger.cleanHashMaps(id);
             purger.cleanDatabase(id);
-            plugin.getMessenger().send(sender, TardisModule.TARDIS, "PURGE_PLAYER", args[1]);
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "PURGE_PLAYER", who);
         } else {
-            plugin.getMessenger().send(sender, TardisModule.TARDIS, "UUID_NOT_FOUND", args[1]);
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "UUID_NOT_FOUND", who);
         }
         return true;
     }

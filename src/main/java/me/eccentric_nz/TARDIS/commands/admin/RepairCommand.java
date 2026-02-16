@@ -19,52 +19,38 @@ package me.eccentric_nz.TARDIS.commands.admin;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCount;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
-import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 
 /**
  * @author eccentric_nz
  */
-class RepairCommand {
+public class RepairCommand {
 
     private final TARDIS plugin;
 
-    RepairCommand(TARDIS plugin) {
+    public RepairCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    boolean setFreeCount(CommandSender sender, String[] args) {
-        if (args.length < 3) {
-            plugin.getMessenger().send(sender, TardisModule.TARDIS, "TOO_FEW_ARGS");
-            return true;
-        }
-        // Look up this player's UUID
-        OfflinePlayer op = Bukkit.getOfflinePlayer(args[1]);
-        if (op.getName() == null) {
-            plugin.getMessenger().send(sender, TardisModule.TARDIS, "COULD_NOT_FIND_NAME");
-            return true;
-        }
-        String uuid = op.getUniqueId().toString();
+    public boolean setFreeCount(CommandSender sender, Player player, int count) {
+
+        String uuid = player.getUniqueId().toString();
         ResultSetCount rs = new ResultSetCount(plugin, uuid);
         if (!rs.resultSet()) {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "PLAYER_NO_TARDIS");
             return true;
         }
         // set repair
-        int r = 1;
-        if (args.length == 3) {
-            r = TARDISNumberParsers.parseInt(args[2]);
-        }
+
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", uuid);
         HashMap<String, Object> set = new HashMap<>();
-        set.put("repair", r);
+        set.put("repair", count);
         plugin.getQueryFactory().doUpdate("t_count", set, where);
-        plugin.getMessenger().send(sender, TardisModule.TARDIS, "REPAIR_SET", args[1], "" + r);
+        plugin.getMessenger().send(sender, TardisModule.TARDIS, "REPAIR_SET", player.getName(), "" + count);
         return true;
     }
 }

@@ -29,11 +29,11 @@ import java.io.IOException;
 /**
  * @author eccentric_nz
  */
-class CondenserCommand {
+public class CondenserCommand {
 
     private final TARDIS plugin;
 
-    CondenserCommand(TARDIS plugin) {
+    public CondenserCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 

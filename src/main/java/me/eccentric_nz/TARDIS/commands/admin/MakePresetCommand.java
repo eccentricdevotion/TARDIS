@@ -25,23 +25,16 @@ import org.bukkit.entity.Player;
 /**
  * @author eccentric_nz
  */
-class MakePresetCommand {
+public class MakePresetCommand {
 
     private final TARDIS plugin;
 
-    MakePresetCommand(TARDIS plugin) {
+    public MakePresetCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    boolean scanBlocks(CommandSender sender, String[] args) {
-        Player player = null;
-        if (sender instanceof Player) {
-            player = (Player) sender;
-        }
-        if (player == null) {
-            plugin.getMessenger().send(sender, TardisModule.TARDIS, "CMD_PLAYER");
-            return true;
-        }
+    public boolean scanBlocks(CommandSender sender, String name) {
+        Player player = (Player) sender;
         // check they are facing east
         String yaw = TARDISStaticUtils.getPlayersDirection(player, false);
         if (!yaw.equals("EAST")) {
@@ -49,7 +42,7 @@ class MakePresetCommand {
             return true;
         }
         plugin.getMessenger().send(player, TardisModule.TARDIS, "PRESET_INFO");
-        plugin.getTrackerKeeper().getPreset().put(player.getUniqueId(), args[1]);
+        plugin.getTrackerKeeper().getPreset().put(player.getUniqueId(), name);
         return true;
     }
 }

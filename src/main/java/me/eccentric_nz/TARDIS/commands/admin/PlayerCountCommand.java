@@ -19,46 +19,38 @@ package me.eccentric_nz.TARDIS.commands.admin;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCount;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
-import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 
 /**
  * @author eccentric_nz
  */
-class PlayerCountCommand {
+public class PlayerCountCommand {
 
     private final TARDIS plugin;
 
-    PlayerCountCommand(TARDIS plugin) {
+    public PlayerCountCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    boolean countPlayers(CommandSender sender, String[] args) {
+    public boolean countPlayers(CommandSender sender, Player player, int count) {
         int max_count = plugin.getConfig().getInt("creation.count");
-        OfflinePlayer player = Bukkit.getOfflinePlayer(args[1]);
-        if (player.getName() == null) {
-            plugin.getMessenger().send(sender, TardisModule.TARDIS, "PLAYER_NOT_VALID");
-            return true;
-        }
         String uuid = player.getUniqueId().toString();
         ResultSetCount rsc = new ResultSetCount(plugin, uuid);
         if (rsc.resultSet()) {
-            if (args.length == 3) {
+            if (count != -1) {
                 // set count
-                int count = TARDISNumberParsers.parseInt(args[2]);
                 HashMap<String, Object> setc = new HashMap<>();
                 setc.put("count", count);
                 HashMap<String, Object> wherec = new HashMap<>();
                 wherec.put("uuid", uuid);
                 plugin.getQueryFactory().doUpdate("t_count", setc, wherec);
-                plugin.getMessenger().send(sender, TardisModule.TARDIS, "COUNT_SET", args[1], count, max_count);
+                plugin.getMessenger().send(sender, TardisModule.TARDIS, "COUNT_SET", player.getName(), count, max_count);
             } else {
                 // display count
-                plugin.getMessenger().send(sender, TardisModule.TARDIS, "COUNT_IS", args[1], rsc.getCount(), max_count);
+                plugin.getMessenger().send(sender, TardisModule.TARDIS, "COUNT_IS", player.getName(), rsc.getCount(), max_count);
             }
         } else {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "COUNT_NOT_FOUND");

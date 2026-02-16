@@ -23,23 +23,23 @@ import org.bukkit.command.CommandSender;
 /**
  * @author eccentric_nz
  */
-class DechargeCommand {
+public class DechargeCommand {
 
     private final TARDIS plugin;
 
-    DechargeCommand(TARDIS plugin) {
+    public DechargeCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    boolean removeChargerStatus(CommandSender sender, String[] args) {
-        if (!plugin.getConfig().contains("rechargers." + args[1])) {
+    public boolean removeChargerStatus(CommandSender sender, String name) {
+        if (!plugin.getConfig().contains("rechargers." + name)) {
             plugin.getMessenger().sendColouredCommand(sender, "CHARGER_NOT_FOUND", "/tardis list rechargers", plugin);
             return true;
         }
         if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
-            plugin.getWorldGuardUtils().removeRechargerRegion(args[1]);
+            plugin.getWorldGuardUtils().removeRechargerRegion(name);
         }
-        plugin.getConfig().set("rechargers." + args[1], null);
+        plugin.getConfig().set("rechargers." + name, null);
         plugin.saveConfig();
         plugin.getMessenger().send(sender, TardisModule.TARDIS, "CONFIG_UPDATED", "recharger");
         return true;

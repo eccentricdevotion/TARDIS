@@ -24,8 +24,13 @@ import me.eccentric_nz.TARDIS.database.tool.Converter;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.maze.MazeBuilder;
 import me.eccentric_nz.TARDIS.maze.MazeGenerator;
+import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.update.UpdateTARDISPlugins;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.World;
 import org.bukkit.block.BlockFace;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -78,8 +83,6 @@ public class TARDISAdminCommands implements CommandExecutor {
         firstsStr.add("purge");
         firstsStr.add("purge_portals");
         firstsStr.add("recharger");
-        firstsStr.add("region_flag");
-        firstsStr.add("reload");
         firstsStr.add("remove_protection");
         firstsStr.add("repair");
         firstsStr.add("revoke");
@@ -151,22 +154,54 @@ public class TARDISAdminCommands implements CommandExecutor {
                 }
                 switch (first) {
                     case "create" -> {
-                        return new CreateTARDISCommand(plugin).buildTARDIS(sender, args);
+                        if (args.length < 3) {
+                            return false;
+                        }
+                        // args[1] player
+                        Player player = Bukkit.getPlayer(args[1]);
+                        if (player == null) {
+                            plugin.getMessenger().send(sender, TardisModule.TARDIS, "COULD_NOT_FIND_NAME");
+                            return true;
+                        }
+                        // args[2] schematic
+                        String seed = args[2].toUpperCase(Locale.ROOT);
+                        // args[3] wall
+                        String wall = "ORANGE_WOOL";
+                        if (args.length > 3) {
+                            wall = args[3].toUpperCase(Locale.ROOT);
+                        }
+                        // args[4] floor
+                        String floor = "LIGHT_GRAY_WOOL";
+                        if (args.length > 4) {
+                            floor = args[4].toUpperCase(Locale.ROOT);
+                        }
+                        return new CreateTARDISCommand(plugin, wall, floor).buildTARDIS(sender, player, seed);
                     }
                     case "find" -> {
-                        return new FindHiddenCommand().search(plugin, sender, args);
+                        int radius = 16;
+                        if (args.length > 1) {
+                            int parsed = TARDISNumberParsers.parseInt(args[1]);
+                            if (parsed > 0) {
+                                radius = parsed;
+                            }
+                        }
+                        return new FindHiddenCommand().search(plugin, sender, radius);
                     }
                     case "remove_protection" -> {
-                        return new RemoveProtectionCommand(plugin).remove(args);
+                        if (args.length < 3) {
+                            return true;
+                        }
+                        int id = TARDISNumberParsers.parseInt(args[1]);
+                        return new RemoveProtectionCommand(plugin).remove(id, args[2]);
                     }
                     case "list" -> {
-                        return new ListCommand(plugin).listStuff(sender, args);
+                        return new ListCommand(plugin).listStuff(sender, "tardises");
                     }
                     case "purge_portals" -> {
                         return new PortalCommand(plugin).clearAll(sender);
                     }
                     case "undisguise" -> {
-                        return new DisguiseCommand(plugin).disguise(sender, args);
+                        return new UndisguiseCommand(plugin).undisguise((Player) sender);
                     }
                 }
                 if (args.length < 2) {
@@ -176,55 +211,158 @@ public class TARDISAdminCommands implements CommandExecutor {
                 switch (first) {
                     case "arch" -> {
                         if (args.length > 2) {
-                            return new TARDISArchCommand(plugin).force(sender, args);
+                            Player player = plugin.getServer().getPlayer(args[1]);
+                            if (player == null) {
+                                plugin.getMessenger().send(sender, TardisModule.TARDIS, "COULD_NOT_FIND_NAME");
+                                return true;
+                            }
+                            return new TARDISArchCommand(plugin).force(sender, player);
                         } else {
-                            return new TARDISArchCommand(plugin).whois(sender, args);
+                            return new TARDISArchCommand(plugin).whois(sender, args[1]);
                         }
                     }
                     case "assemble", "dispersed" -> {
                         return new DispersedCommand(plugin).assemble(sender, args[1]);
                     }
                     case "set_size" -> {
-                        return new SetSizeCommand(plugin).overwrite(sender, args);
+                        // get the player
+                        Player p = plugin.getServer().getPlayer(args[1]);
+                        if (p == null) { // player must be online
+                            plugin.getMessenger().send(sender, TardisModule.TARDIS, "COULD_NOT_FIND_NAME");
+                            return true;
+                        }
+                        String type = args[2].toUpperCase(Locale.ROOT);
+                        return new SetSizeCommand(plugin).overwrite(sender, p, type);
                     }
                     case "spawn_abandoned" -> {
-                        return new CreateAbandonedCommand(plugin).spawn(sender, args);
+                        // tardisadmin spawn_abandoned Schematic PRESET COMPASS world x y z
+                        if (args.length < 4) {
+                            plugin.getMessenger().send(sender, TardisModule.TARDIS, "TOO_FEW_ARGS");
+                            plugin.getMessenger().send(sender, TardisModule.TARDIS, "ABANDONED_ARGS");
+                            return true;
+                        }
+                        Location l;
+                        if (sender instanceof Player p) {
+                            l = p.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 16).getRelative(BlockFace.UP).getLocation();
+                        } else {
+                            if (args.length < 8) {
+                                plugin.getMessenger().send(sender, TardisModule.TARDIS, "TOO_FEW_ARGS");
+                                plugin.getMessenger().send(sender, TardisModule.TARDIS, "ABANDONED_ARGS");
+                                return true;
+                            }
+                            World w = TARDISAliasResolver.getWorldFromAlias(args[4]);
+                            if (w == null) {
+                                plugin.getMessenger().sendColouredCommand(sender, "WORLD_NOT_FOUND", "/tardisworld", plugin);
+                                return true;
+                            }
+                            int x = TARDISNumberParsers.parseInt(args[5]);
+                            int y = TARDISNumberParsers.parseInt(args[6]);
+                            int z = TARDISNumberParsers.parseInt(args[7]);
+                            if (x == 0 || y == 0 || z == 0) {
+                                plugin.getMessenger().sendColouredCommand(sender, "WORLD_NOT_FOUND", "/tardisworld", plugin);
+                                return true;
+                            }
+                            l = new Location(w, x, y, z);
+                        }
+                        return new CreateAbandonedCommand(plugin).spawn(sender, args[1], args[2], args[3], l.getWorld(), l.getBlockX(), l.getBlockY(), l.getBlockZ());
                     }
                     case "make_preset" -> {
-                        return new MakePresetCommand(plugin).scanBlocks(sender, args);
+                        return new MakePresetCommand(plugin).scanBlocks(sender, args[1]);
                     }
                     case "playercount" -> {
-                        return new PlayerCountCommand(plugin).countPlayers(sender, args);
+                        Player player = Bukkit.getPlayer(args[1]);
+                        if (player == null) {
+                            plugin.getMessenger().send(sender, TardisModule.TARDIS, "PLAYER_NOT_VALID");
+                            return true;
+                        }
+                        return new PlayerCountCommand(plugin).countPlayers(sender, player, args.length == 3 ? TARDISNumberParsers.parseInt(args[2]) : -1);
                     }
                     case "prune" -> {
-                        return new PruneCommand(plugin).startPruning(sender, args);
+                        return new PruneCommand(plugin).startPruning(sender, TARDISNumberParsers.parseInt(args[1]));
                     }
                     case "prunelist" -> {
-                        return new PruneCommand(plugin).listPrunes(sender, args);
+                        return new PruneCommand(plugin).listPrunes(sender, TARDISNumberParsers.parseInt(args[1]));
                     }
                     case "purge" -> {
-                        return new PurgeCommand(plugin).clearAll(sender, args);
+                        // Look up this player's UUID
+                        String uuid = "";
+                        if (args[1].toLowerCase(Locale.ROOT).equals("junk")) {
+                            uuid = "00000000-aaaa-bbbb-cccc-000000000000";
+                        } else {
+                            OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(args[1]);
+                            if (offlinePlayer.getName() != null) {
+                                uuid = offlinePlayer.getUniqueId().toString();
+                            }
+                        }
+                        return new PurgeCommand(plugin).clearAll(sender, args[1], uuid);
                     }
                     case "recharger" -> {
-                        return new RechargerCommand(plugin).setRecharger(sender, args);
+                        return new RechargerCommand(plugin).setRecharger(sender, args[1]);
                     }
                     case "decharge" -> {
-                        return new DechargeCommand(plugin).removeChargerStatus(sender, args);
+                        return new DechargeCommand(plugin).removeChargerStatus(sender, args[1]);
                     }
                     case "disguise" -> {
-                        return new DisguiseCommand(plugin).disguise(sender, args);
+                        return new DisguiseCommand(plugin).disguise(sender, (Player) sender, "HUSK");
                     }
                     case "enter" -> {
-                        return new EnterCommand(plugin).enterTARDIS(sender, args);
+                        int tmp = -1;
+                        try {
+                            tmp = Integer.parseInt(args[1]);
+                            new EnterCommand(plugin).enterTARDIS(sender, tmp);
+                        } catch (NumberFormatException nfe) {
+                            // do nothing
+                        }
+                        if (tmp == -1) {
+                            // Look up this player's UUID
+                            OfflinePlayer olp = plugin.getServer().getOfflinePlayer(args[1]);
+                            new EnterCommand(plugin).enterTARDIS(sender, olp.getPlayer());
+                        }
+                        return true;
                     }
                     case "delete" -> {
-                        return new DeleteTARDISCommand(plugin).deleteTARDIS(sender, args);
+                        boolean junk = (args[1].toLowerCase(Locale.ROOT).equals("junk"));
+                        int tmp = -1;
+                        int abandoned = (args.length > 2 && args[2].equals("abandoned")) ? 1 : 0;
+                        try {
+                            tmp = Integer.parseInt(args[1]);
+                            return new DeleteTARDISCommand(plugin).deleteTARDIS(sender, tmp, abandoned);
+                        } catch (NumberFormatException ignored) { } // do nothing
+                        if (junk) {
+                            return new DeleteTARDISCommand(plugin).deleteJunk(sender);
+                        } else {
+                            OfflinePlayer player = plugin.getServer().getOfflinePlayer(args[1]);
+                            return new DeleteTARDISCommand(plugin).deleteTARDIS(sender, player.getPlayer(), abandoned);
+                        }
                     }
                     case "repair" -> {
-                        return new RepairCommand(plugin).setFreeCount(sender, args);
+                        if (args.length < 3) {
+                            plugin.getMessenger().send(sender, TardisModule.TARDIS, "TOO_FEW_ARGS");
+                            return true;
+                        }
+                        // Look up this player's UUID
+                        OfflinePlayer op = Bukkit.getOfflinePlayer(args[1]);
+                        if (op.getName() == null) {
+                            plugin.getMessenger().send(sender, TardisModule.TARDIS, "COULD_NOT_FIND_NAME");
+                            return true;
+                        }
+                        int r = 1;
+                        if (args.length == 3) {
+                            r = TARDISNumberParsers.parseInt(args[2]);
+                        }
+                        return new RepairCommand(plugin).setFreeCount(sender, op.getPlayer(), r);
                     }
                     case "revoke" -> {
-                        return new RevokeCommand(plugin).removePermission(sender, args);
+                        if (args.length < 3) {
+                            plugin.getMessenger().send(sender, TardisModule.TARDIS, "TOO_FEW_ARGS");
+                            return true;
+                        }
+                        Player player = plugin.getServer().getPlayer(args[1]);
+                        if (player == null) {
+                            plugin.getMessenger().send(sender, TardisModule.TARDIS, "COULD_NOT_FIND_NAME");
+                            return true;
+                        }
+                        return new RevokeCommand(plugin).removePermission(sender, player, args[2]);
                     }
                 }
                 return true;

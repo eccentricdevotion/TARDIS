@@ -28,7 +28,7 @@ import java.sql.Statement;
 /**
  * @author eccentric_nz
  */
-class PortalCommand {
+public class PortalCommand {
 
     private final TARDIS plugin;
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
@@ -36,12 +36,12 @@ class PortalCommand {
     private final String prefix;
     private Statement statement = null;
 
-    PortalCommand(TARDIS plugin) {
+    public PortalCommand(TARDIS plugin) {
         this.plugin = plugin;
         prefix = this.plugin.getPrefix();
     }
 
-    boolean clearAll(CommandSender sender) {
+    public boolean clearAll(CommandSender sender) {
         // clear all portals on the server
         plugin.getTrackerKeeper().getPortals().clear();
         // stop tracking players

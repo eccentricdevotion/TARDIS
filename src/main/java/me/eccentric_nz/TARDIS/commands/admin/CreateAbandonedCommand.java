@@ -19,11 +19,8 @@ package me.eccentric_nz.TARDIS.commands.admin;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.interior.AbandonedBuilder;
 import me.eccentric_nz.TARDIS.enumeration.*;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.block.BlockFace;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -32,15 +29,15 @@ import java.util.Locale;
 /**
  * @author eccentric_nz
  */
-class CreateAbandonedCommand {
+public class CreateAbandonedCommand {
 
     private final TARDIS plugin;
 
-    CreateAbandonedCommand(TARDIS plugin) {
+    public CreateAbandonedCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean spawn(CommandSender sender, String[] args) {
+    public boolean spawn(CommandSender sender, String schm, String p, String dir, World world, int x, int y, int z) {
         if (!plugin.getConfig().getBoolean("abandon.enabled")) {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "ABANDONED_DISABLED");
             return true;
@@ -49,24 +46,17 @@ class CreateAbandonedCommand {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "ABANDONED_SPAWN");
             return true;
         }
-        // tardisadmin spawn_abandoned Schematic PRESET COMPASS world x y z
-        if (args.length < 4) {
-            plugin.getMessenger().send(sender, TardisModule.TARDIS, "TOO_FEW_ARGS");
-            plugin.getMessenger().send(sender, TardisModule.TARDIS, "ABANDONED_ARGS");
-            return true;
-        }
-        String schm = args[1].toUpperCase(Locale.ROOT);
         if (!Desktops.getBY_NAMES().containsKey(schm)) {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "TOO_FEW_ARGS");
             return true;
         }
         Schematic s = Desktops.getBY_NAMES().get(schm);
         ChameleonPreset preset;
-        if (plugin.getCustomModelConfig().getConfigurationSection("models").getKeys(false).contains(args[2])) {
+        if (plugin.getCustomModelConfig().getConfigurationSection("models").getKeys(false).contains(p)) {
             preset = ChameleonPreset.ITEM;
         } else {
             try {
-                preset = ChameleonPreset.valueOf(args[2].toUpperCase(Locale.ROOT));
+                preset = ChameleonPreset.valueOf(p.toUpperCase(Locale.ROOT));
             } catch (IllegalArgumentException e) {
                 plugin.getMessenger().send(sender, TardisModule.TARDIS, "ABANDONED_PRESET");
                 return true;
@@ -74,35 +64,13 @@ class CreateAbandonedCommand {
         }
         COMPASS d;
         try {
-            d = COMPASS.valueOf(args[3].toUpperCase(Locale.ROOT));
+            d = COMPASS.valueOf(dir.toUpperCase(Locale.ROOT));
         } catch (IllegalArgumentException e) {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "ABANDONED_COMPASS");
             return true;
         }
-        Location l;
-        if (sender instanceof Player p) {
-            l = p.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 16).getRelative(BlockFace.UP).getLocation();
-        } else {
-            if (args.length < 8) {
-                plugin.getMessenger().send(sender, TardisModule.TARDIS, "TOO_FEW_ARGS");
-                plugin.getMessenger().send(sender, TardisModule.TARDIS, "ABANDONED_ARGS");
-                return true;
-            }
-            World w = TARDISAliasResolver.getWorldFromAlias(args[4]);
-            if (w == null) {
-                plugin.getMessenger().sendColouredCommand(sender, "WORLD_NOT_FOUND", "/tardisworld", plugin);
-                return true;
-            }
-            int x = TARDISNumberParsers.parseInt(args[5]);
-            int y = TARDISNumberParsers.parseInt(args[6]);
-            int z = TARDISNumberParsers.parseInt(args[7]);
-            if (x == 0 || y == 0 || z == 0) {
-                plugin.getMessenger().sendColouredCommand(sender, "WORLD_NOT_FOUND", "/tardisworld", plugin);
-                return true;
-            }
-            l = new Location(w, x, y, z);
-        }
-        new AbandonedBuilder(plugin).spawn(l, s, preset, args[2], d, (sender instanceof Player) ? (Player) sender : null);
+        Location l = new Location(world, x, y, z);;
+        new AbandonedBuilder(plugin).spawn(l, s, preset, schm, d, (sender instanceof Player) ? (Player) sender : null);
         return true;
     }
 }

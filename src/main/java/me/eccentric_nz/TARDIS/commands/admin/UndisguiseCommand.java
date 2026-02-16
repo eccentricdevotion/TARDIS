@@ -17,27 +17,18 @@
 package me.eccentric_nz.TARDIS.commands.admin;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
-public class DisguiseCommand {
+public class UndisguiseCommand {
 
     private final TARDIS plugin;
 
-    public DisguiseCommand(TARDIS plugin) {
+    public UndisguiseCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean disguise(CommandSender sender, Player player, String type) {
-            EntityType entityType;
-            try {
-                entityType = EntityType.valueOf(type);
-            } catch (IllegalArgumentException e) {
-                plugin.getMessenger().message(sender, "You need to specify a valid living entity type!");
-                return true;
-            }
-            plugin.getTardisHelper().disguise(entityType, player);
+    public boolean undisguise(Player player) {
+        plugin.getTardisHelper().undisguise(player);
         return true;
     }
 }

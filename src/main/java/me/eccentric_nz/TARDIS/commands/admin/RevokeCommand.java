@@ -25,26 +25,17 @@ import org.bukkit.entity.Player;
 import java.util.HashMap;
 import java.util.Locale;
 
-class RevokeCommand {
+public class RevokeCommand {
 
     private final TARDIS plugin;
 
-    RevokeCommand(TARDIS plugin) {
+    public RevokeCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    boolean removePermission(CommandSender sender, String[] args) {
+    public boolean removePermission(CommandSender sender, Player player, String perm) {
         // tardisadmin revoke [player] [permission]
-        if (args.length < 3) {
-            plugin.getMessenger().send(sender, TardisModule.TARDIS, "TOO_FEW_ARGS");
-            return true;
-        }
-        Player player = plugin.getServer().getPlayer(args[1]);
-        if (player == null) {
-            plugin.getMessenger().send(sender, TardisModule.TARDIS, "COULD_NOT_FIND_NAME");
-            return true;
-        }
-        int id = new ResultSetBlueprint(plugin).getRecordId(player.getUniqueId().toString(), args[2].toLowerCase(Locale.ROOT));
+        int id = new ResultSetBlueprint(plugin).getRecordId(player.getUniqueId().toString(), perm.toLowerCase(Locale.ROOT));
         if (id != -1) {
             // delete record
             HashMap<String, Object> where = new HashMap<>();

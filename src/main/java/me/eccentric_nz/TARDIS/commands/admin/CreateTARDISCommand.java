@@ -23,7 +23,6 @@ import me.eccentric_nz.TARDIS.enumeration.Desktops;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
@@ -35,57 +34,46 @@ import java.util.Locale;
 public class CreateTARDISCommand {
 
     private final TARDIS plugin;
+    private final String wall;
+    private final String floor;
 
-    public CreateTARDISCommand(TARDIS plugin) {
+    public CreateTARDISCommand(TARDIS plugin, String wall, String floor) {
         this.plugin = plugin;
+        this.wall = wall;
+        this.floor = floor;
     }
 
-    public boolean buildTARDIS(CommandSender sender, String[] args) {
+    public boolean buildTARDIS(CommandSender sender, Player player, String seed) {
         if (sender instanceof Player admin) {
             // tadmin create eccentric_nz BUDGET ORANGE_WOOL LIGHT_GRAY_WOOL
-            if (args.length < 3) {
-                return false;
-            }
-            // args[1] player
-            Player player = Bukkit.getPlayer(args[1]);
-            if (player == null) {
-                plugin.getMessenger().send(sender, TardisModule.TARDIS, "COULD_NOT_FIND_NAME");
-                return true;
-            }
-            // args[2] schematic
-            String seed = args[2].toUpperCase(Locale.ROOT);
+
             if (Desktops.getBY_NAMES().containsKey(seed) && !seed.equals("SMALL") && !seed.equals("MEDIUM") && !seed.equals("TALL") && !seed.equals("ARCHIVE")) {
                 Schematic schematic = Desktops.getBY_NAMES().get(seed);
                 Material wallMaterial = Material.ORANGE_WOOL;
                 Material floorMaterial = Material.LIGHT_GRAY_WOOL;
-                // args[3] wall
-                if (args.length > 3) {
+                // wall wall
                     try {
-                        wallMaterial = Material.valueOf(args[3].toUpperCase(Locale.ROOT));
+                        wallMaterial = Material.valueOf(wall.toUpperCase(Locale.ROOT));
                         if (!TARDISWalls.BLOCKS.contains(wallMaterial)) {
-                            plugin.getMessenger().send(sender, TardisModule.TARDIS, "WALL_NOT_VALID", args[3]);
+                            plugin.getMessenger().send(sender, TardisModule.TARDIS, "WALL_NOT_VALID", wall);
                             TARDISWalls.BLOCKS.forEach((w) -> sender.sendMessage(w.toString()));
                             return true;
                         }
                     } catch (IllegalArgumentException e) {
-                        plugin.getMessenger().send(sender, TardisModule.TARDIS, "SEED_MAT_NOT_VALID", args[3]);
+                        plugin.getMessenger().send(sender, TardisModule.TARDIS, "SEED_MAT_NOT_VALID", wall);
                         return true;
                     }
-                }
-                // args[4] floor
-                if (args.length > 4) {
                     try {
-                        floorMaterial = Material.valueOf(args[4].toUpperCase(Locale.ROOT));
+                        floorMaterial = Material.valueOf(floor);
                         if (!TARDISWalls.BLOCKS.contains(floorMaterial)) {
-                            plugin.getMessenger().send(sender, TardisModule.TARDIS, "WALL_NOT_VALID", args[4]);
+                            plugin.getMessenger().send(sender, TardisModule.TARDIS, "WALL_NOT_VALID", floor);
                             TARDISWalls.BLOCKS.forEach((w) -> sender.sendMessage(w.toString()));
                             return true;
                         }
                     } catch (IllegalArgumentException e) {
-                        plugin.getMessenger().send(sender, TardisModule.TARDIS, "SEED_MAT_NOT_VALID", args[4]);
+                        plugin.getMessenger().send(sender, TardisModule.TARDIS, "SEED_MAT_NOT_VALID", floor);
                         return true;
                     }
-                }
                 // get target location
                 Location target = admin.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 16).getRelative(BlockFace.UP).getLocation();
                 TARDISBuildData data = new TARDISBuildData();
