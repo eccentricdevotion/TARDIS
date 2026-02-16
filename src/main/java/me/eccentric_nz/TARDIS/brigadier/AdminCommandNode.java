@@ -378,7 +378,7 @@ public class AdminCommandNode {
                                         }))))
                 .then(Commands.literal("spawn_abandoned")
                         .then(Commands.argument("schematic", new SeedArgumentType())
-                                .then(Commands.argument("preset", new PresetArgumentType(false))
+                                .then(Commands.argument("preset", new PresetArgumentType(0))
                                         .then(Commands.argument("direction", new CompassArgumentType())
                                                 .executes(ctx -> {
                                                     Entity executor = ctx.getSource().getExecutor();

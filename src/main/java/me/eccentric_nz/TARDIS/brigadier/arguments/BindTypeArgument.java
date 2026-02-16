@@ -10,32 +10,25 @@ import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import io.papermc.paper.command.brigadier.MessageComponentSerializer;
 import io.papermc.paper.command.brigadier.argument.CustomArgumentType;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
+import me.eccentric_nz.TARDIS.enumeration.Bind;
 import net.kyori.adventure.text.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-public class PresetArgumentType implements CustomArgumentType<String, String> {
+public class BindTypeArgument implements CustomArgumentType<String, String> {
 
-    private static final SimpleCommandExceptionType ERROR_INVALID_PRESET = new SimpleCommandExceptionType(
-            MessageComponentSerializer.message().serialize(Component.text("Invalid chameleon preset specified!"))
+    private static final SimpleCommandExceptionType ERROR_INVALID_BIND = new SimpleCommandExceptionType(
+            MessageComponentSerializer.message().serialize(Component.text("Invalid bind type specified!"))
     );
-    private final List<String> PRESET_SUBS = new ArrayList<>();
+    private final List<String> BIND_SUBS = new ArrayList<>();
 
-    public PresetArgumentType(int includeFlags) {
-        if (includeFlags == 1) {
-            PRESET_SUBS.add("ALLOW");
-            PRESET_SUBS.add("DENY");
-        }
-        if (includeFlags == 2) {
-            PRESET_SUBS.add("OFF");
-            PRESET_SUBS.add("ADAPT");
-        }
-        for (ChameleonPreset p : ChameleonPreset.values()) {
-            PRESET_SUBS.add(p.toString());
+    public BindTypeArgument(boolean restrict) {
+        for (Bind b : Bind.values()) {
+            if (!restrict || b.getArgs() == 2) {
+                BIND_SUBS.add(b.toString());
+            }
         }
     }
 
@@ -47,8 +40,8 @@ public class PresetArgumentType implements CustomArgumentType<String, String> {
     @Override
     public <S> String parse(StringReader reader, S source) throws CommandSyntaxException {
         String input = reader.readUnquotedString();
-        if (!PRESET_SUBS.contains(input)) {
-            throw ERROR_INVALID_PRESET.create();
+        if (!BIND_SUBS.contains(input)) {
+            throw ERROR_INVALID_BIND.create();
         }
         return input;
     }
@@ -60,11 +53,8 @@ public class PresetArgumentType implements CustomArgumentType<String, String> {
 
     @Override
     public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
-        for (String d : PRESET_SUBS) {
-            builder.suggest(d);
-        }
-        for (String m : TARDIS.plugin.getCustomModelConfig().getConfigurationSection("models").getKeys(false)) {
-            builder.suggest(m);
+        for (String b : BIND_SUBS) {
+            builder.suggest(b);
         }
         return builder.buildFuture();
     }

@@ -87,7 +87,7 @@ public class AreasCommandNode {
                                                 })))))
                 .then(Commands.literal("invisibility")
                         .then(Commands.argument("name", StringArgumentType.word())
-                                .then(Commands.argument("flag", new PresetArgumentType(true))
+                                .then(Commands.argument("flag", new PresetArgumentType(1))
                                         .executes(ctx -> {
                                             Player player = (Player) ctx.getSource().getExecutor();
                                             String name = StringArgumentType.getString(ctx, "name");
