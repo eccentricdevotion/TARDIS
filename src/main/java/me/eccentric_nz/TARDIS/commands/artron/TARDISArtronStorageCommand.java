@@ -54,7 +54,6 @@ public class TARDISArtronStorageCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         // If the player typed /tardisartron then do the following...
-        // check there is the right number of arguments
         if (cmd.getName().equalsIgnoreCase("tardisartron")) {
             if (!TARDISPermission.hasPermission(sender, "tardis.store")) {
                 plugin.getMessenger().send(sender, TardisModule.TARDIS, "NO_PERMS");
@@ -178,12 +177,11 @@ public class TARDISArtronStorageCommand implements CommandExecutor {
                 is.setItemMeta(im);
                 // remove the energy from the tardis/timelord
                 HashMap<String, Object> where = new HashMap<>();
+                where.put("uuid", playerUUID);
                 String table;
                 if (which.equals("tardis")) {
-                    where.put("uuid", playerUUID);
                     table = "tardis";
                 } else {
-                    where.put("uuid", playerUUID);
                     table = "player_prefs";
                 }
                 plugin.getQueryFactory().alterEnergyLevel(table, -amount, where, player);
