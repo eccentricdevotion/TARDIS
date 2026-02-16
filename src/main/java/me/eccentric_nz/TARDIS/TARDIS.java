@@ -16,9 +16,11 @@
  */
 package me.eccentric_nz.TARDIS;
 
+import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import me.eccentric_nz.TARDIS.api.TARDII;
 import me.eccentric_nz.TARDIS.artron.ArtronCondensables;
 import me.eccentric_nz.TARDIS.bStats.TARDISStats;
+import me.eccentric_nz.TARDIS.brigadier.BrigadierCommandRegister;
 import me.eccentric_nz.TARDIS.builders.exterior.PresetBuilderFactory;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonPreset;
 import me.eccentric_nz.TARDIS.chatGUI.ChatGUI;
@@ -380,6 +382,8 @@ public class TARDIS extends JavaPlugin {
             // add listeners
             new TARDISListenerRegisterer(this).registerListeners();
             // register commands
+            this.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
+                    commands -> new BrigadierCommandRegister(commands).addAll());
 //            new TARDISCommandSetter(this).loadCommands();
             loadPluginRespect();
             String mapper = getConfig().getString("mapping.provider", "dynmap");

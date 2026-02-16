@@ -4,7 +4,6 @@ import io.papermc.paper.plugin.bootstrap.BootstrapContext;
 import io.papermc.paper.plugin.bootstrap.PluginBootstrap;
 import io.papermc.paper.plugin.bootstrap.PluginProviderContext;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
-import me.eccentric_nz.TARDIS.brigadier.BrigadierCommandRegister;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.IOException;
@@ -47,10 +46,10 @@ public class Bootstrap implements PluginBootstrap {
                     }
                 }
         ));
-        context.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS, commands -> {
-            // register commands
-            new BrigadierCommandRegister(commands).addAll();
-        });
+//        context.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS, commands -> {
+//            // register commands
+//            new BrigadierCommandRegister(commands).addAll();
+//        });
     }
 
     @Override
