@@ -57,10 +57,6 @@ repositories {
         url = uri("https://repo.codemc.org/repository/maven-public/")
     }
     maven {
-        name = "lwcx"
-        url = uri("https://ci.ender.zone/plugin/repository/everything/")
-    }
-    maven {
         name = "coreprotect"
         url = uri("https://maven.playpro.com")
     }
@@ -119,7 +115,7 @@ dependencies {
     compileOnly("nl.rutgerkok:blocklocker:1.13") {
         isTransitive = false
     }
-    compileOnly("com.griefcraft:lwc:2.4.1") {
+    compileOnly("com.griefcraft:lwc:2.4.2") {
         isTransitive = false
     }
     compileOnly("com.github.retrooper:packetevents-api:2.11.2") {
