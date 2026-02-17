@@ -16,6 +16,8 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.brigadier.arguments.AreasArgumentType;
 import me.eccentric_nz.TARDIS.brigadier.arguments.BindTypeArgument;
 import me.eccentric_nz.TARDIS.brigadier.arguments.PresetArgumentType;
+import me.eccentric_nz.TARDIS.brigadier.suggestions.SaveSuggestions;
+import me.eccentric_nz.TARDIS.brigadier.suggestions.TransmatSuggestions;
 import me.eccentric_nz.TARDIS.commands.bind.*;
 import me.eccentric_nz.TARDIS.enumeration.Bind;
 import org.bukkit.block.Biome;
@@ -36,6 +38,7 @@ public class BindCommandNode {
                 .then(Commands.literal("add")
                         .then(Commands.literal("SAVE")
                                 .then(Commands.argument("name", StringArgumentType.word())
+                                        .suggests(SaveSuggestions::get)
                                         .executes(ctx -> {
                                             Player player = (Player) ctx.getSource().getExecutor();
                                             String name = StringArgumentType.getString(ctx, "name");
@@ -78,6 +81,7 @@ public class BindCommandNode {
                                         })))
                         .then(Commands.literal("TRANSMAT")
                                 .then(Commands.argument("name", StringArgumentType.word())
+                                        .suggests(TransmatSuggestions::get)
                                         .executes(ctx -> {
                                             Player player = (Player) ctx.getSource().getExecutor();
                                             String name = StringArgumentType.getString(ctx, "name");
