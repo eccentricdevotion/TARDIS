@@ -289,7 +289,7 @@ public class TARDISConfigCommand implements CommandExecutor {
                     plugin.getConfig().set("mapping.provider", provider);
                 }
                 if (first.equals("reload")) {
-                    return new ReloadCommand(plugin).reloadOtherConfig(sender, args);
+                    return new ReloadCommand(plugin).reloadOtherConfig(sender, args[1]);
                 }
                 if (first.equals("area")) {
                     plugin.getConfig().set("creation.area", args[1]);
@@ -383,10 +383,16 @@ public class TARDISConfigCommand implements CommandExecutor {
                 }
                 // checks if it's a boolean config option
                 if (firstsBool.containsKey(first)) {
+                    String tf = args[1].toLowerCase(Locale.ROOT);
+                    if (!tf.equals("true") && !tf.equals("false")) {
+                        plugin.getMessenger().send(sender, TardisModule.TARDIS, "TRUE_FALSE");
+                        return false;
+                    }
+                    boolean bool = Boolean.parseBoolean(tf);
                     if (first.equals("zero_room")) {
                         return new SetZeroRoomCommand(plugin).setConfigZero(sender, args);
                     } else {
-                        return new SetBooleanCommand(plugin).setConfigBool(sender, args, firstsBool.get(first));
+                        return new SetBooleanCommand(plugin).setConfigBool(sender, args[0], bool, firstsBool.get(first));
                     }
                 }
                 // checks if it's a number config option

@@ -59,7 +59,7 @@ public class TARDISConfigTabComplete extends TARDISCompleter implements TabCompl
 
     public TARDISConfigTabComplete(TARDIS plugin) {
         this.plugin = plugin;
-        ROOT_SUBS = ImmutableList.copyOf(combineLists());
+        ROOT_SUBS = ImmutableList.copyOf(ConfigUtility.combineLists());
         if (plugin.isWorldGuardOnServer()) {
             FLAG_SUBS = ImmutableList.copyOf(TARDISWorldGuardFlag.getFLAG_LOOKUP().keySet());
         } else {
@@ -107,21 +107,5 @@ public class TARDISConfigTabComplete extends TARDISCompleter implements TabCompl
             };
         }
         return ImmutableList.of();
-    }
-
-    private List<String> combineLists() {
-        List<String> newList = new ArrayList<>(
-                plugin.getGeneralKeeper().getTardisConfigCommand().firstsStr.size()
-                        + plugin.getGeneralKeeper().getTardisConfigCommand().firstsBool.size()
-                        + plugin.getGeneralKeeper().getTardisConfigCommand().firstsInt.size()
-                        + plugin.getGeneralKeeper().getTardisConfigCommand().firstsStrArtron.size()
-                        + plugin.getGeneralKeeper().getTardisConfigCommand().firstsIntArtron.size()
-        );
-        newList.addAll(plugin.getGeneralKeeper().getTardisConfigCommand().firstsStr.keySet());
-        newList.addAll(plugin.getGeneralKeeper().getTardisConfigCommand().firstsBool.keySet());
-        newList.addAll(plugin.getGeneralKeeper().getTardisConfigCommand().firstsInt.keySet());
-        newList.addAll(plugin.getGeneralKeeper().getTardisConfigCommand().firstsStrArtron);
-        newList.addAll(plugin.getGeneralKeeper().getTardisConfigCommand().firstsIntArtron);
-        return newList;
     }
 }
