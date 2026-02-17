@@ -229,7 +229,7 @@ public class AdminCommandNode {
                 )
                 .then(Commands.literal("list")
                         .then(Commands.literal("blueprints")
-                                .then(Commands.argument("blueprint", new BlueprintArgumentType())
+                                .then(Commands.argument("blueprint", new BlueprintTypeArgumentType())
                                         .executes(ctx -> {
                                             String b = ctx.getArgument("blueprint", String.class);
                                             new BlueprintLister(plugin).list(ctx.getSource().getSender(), b);
