@@ -21,6 +21,7 @@ import me.eccentric_nz.TARDIS.commands.give.actions.*;
 import me.eccentric_nz.TARDIS.enumeration.Desktops;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.messaging.TARDISGiveLister;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -82,34 +83,39 @@ public class TARDISGiveCommand implements CommandExecutor {
                         return true;
                     }
                     case "blueprint" -> {
+                        Player player = plugin.getServer().getPlayer(args[0]);
                         String blueprint = args[2].toUpperCase(Locale.ROOT);
                         if (TARDISGiveTabComplete.getBlueprints().contains(blueprint)) {
-                            new TARDISBlueprint(plugin).give(sender, args, blueprint);
+                            new TARDISBlueprint(plugin).give(sender, player, blueprint);
                         } else {
                             plugin.getMessenger().send(sender, TardisModule.TARDIS, "ARG_BLUEPRINT");
                         }
                         return true;
                     }
                     case "recipes" -> {
+                        Player player = plugin.getServer().getPlayer(args[0]);
                         if (args[2].equalsIgnoreCase("all")) {
-                            new TARDISRecipe(plugin).grantMultiple(sender, args);
+                            new TARDISRecipe(plugin).grantMultiple(sender, player);
                         } else {
-                            new TARDISRecipe(plugin).grant(sender, args);
+                            String i = args[2].toLowerCase(Locale.ROOT);
+                            new TARDISRecipe(plugin).grant(sender, player, i);
                         }
                         return true;
                     }
                     case "seed" -> {
                         String seed = args[2].toUpperCase(Locale.ROOT);
+                        Player sp = plugin.getServer().getPlayer(args[0]);
                         if (Desktops.getBY_NAMES().containsKey(seed) && !seed.equals("SMALL") && !seed.equals("MEDIUM") && !seed.equals("TALL") && !seed.equals("ARCHIVE")) {
                             if (args.length > 3 && args[3].equalsIgnoreCase("knowledge")) {
-                                Player sp = plugin.getServer().getPlayer(args[0]);
                                 if (sp == null) { // player must be online
                                     plugin.getMessenger().send(sender, TardisModule.TARDIS, "COULD_NOT_FIND_NAME");
                                     return true;
                                 }
                                 new Knowledge(plugin).give(sender, seed.toLowerCase(Locale.ROOT) + "_seed", sp);
                             } else {
-                                new Seed(plugin).give(sender, args);
+                                String w = (args.length > 3) ? args[3] : "ORANGE_WOOL";
+                                String f = (args.length > 4) ? args[4] : "LIGHT_GRAY_WOOL";
+                                new Seed(plugin).give(sender, sp, seed, w, f);
                             }
                         } else {
                             plugin.getMessenger().send(sender, TardisModule.TARDIS, "ARG_SEED");
@@ -117,10 +123,21 @@ public class TARDISGiveCommand implements CommandExecutor {
                         return true;
                     }
                     case "system-upgrade" -> {
-                        return new SystemUpgrades(plugin).give(sender, args[0], args[2]);
+                        Player player = Bukkit.getPlayer(args[0]);
+                        if (player == null) {
+                            plugin.getMessenger().send(sender, TardisModule.TARDIS, "COULD_NOT_FIND_NAME");
+                            return true;
+                        }
+                        return new SystemUpgrades(plugin).give(sender, player, args[2]);
                     }
                     case "tachyon" -> {
-                        new Tachyon(plugin).give(sender, args[0], args[2]);
+                        Player player = Bukkit.getPlayer(args[0]);
+                        if (player == null) {
+                            plugin.getMessenger().send(sender, TardisModule.TARDIS, "COULD_NOT_FIND_NAME");
+                            return true;
+                        }
+                        int a = TARDISNumberParsers.parseInt(args[2]);
+                        new Tachyon(plugin).give(sender, player, a);
                         return true;
                     }
                 }
@@ -143,7 +160,8 @@ public class TARDISGiveCommand implements CommandExecutor {
                         plugin.getMessenger().send(sender, TardisModule.TARDIS, "COULD_NOT_FIND_NAME");
                         return true;
                     }
-                    new Artron(plugin).give(sender, args[0], amount, args.length > 3 && args[3].equals("timelord"));
+                    Player player = plugin.getServer().getPlayer(args[0]);
+                    new Artron(plugin).give(sender, player, amount, args.length > 3 && args[3].equals("timelord"));
                     return true;
                 } else {
                     Player player = null;

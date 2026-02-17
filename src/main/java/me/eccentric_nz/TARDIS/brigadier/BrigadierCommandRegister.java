@@ -21,6 +21,7 @@ public class BrigadierCommandRegister {
         commands.registrar().register(new AreasCommandNode(plugin).build(), List.of("tarea"));
         commands.registrar().register(new ArtronStorageCommandNode(plugin).build(), List.of("tartron"));
         commands.registrar().register(new BindCommandNode(plugin).build(), List.of("tbind"));
+        commands.registrar().register(new GiveCommandNode(plugin).build(), List.of("tgive"));
         commands.registrar().register(new SchematicCommandNode(plugin).build(), List.of("ts", "tschematic"));
     }
 }

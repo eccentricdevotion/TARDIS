@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -36,9 +37,9 @@ public class Artron {
         full = this.plugin.getArtronConfig().getInt("full_charge");
     }
 
-    public void give(CommandSender sender, String player, int amount, boolean timelord) {
+    public void give(CommandSender sender, Player player, int amount, boolean timelord) {
         // Look up this player's UUID
-        UUID uuid = plugin.getServer().getOfflinePlayer(player).getUniqueId();
+        UUID uuid = player.getUniqueId();
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", uuid.toString());
         HashMap<String, Object> set = new HashMap<>();
@@ -65,7 +66,7 @@ public class Artron {
                 } else {
                     // always fill to full and no more
                     if (level >= full && amount > 0) {
-                        plugin.getMessenger().send(sender, TardisModule.TARDIS, "GIVE_FULL", player);
+                        plugin.getMessenger().send(sender, TardisModule.TARDIS, "GIVE_FULL", player.getName());
                         return;
                     }
                     if ((full - level) < amount) {
@@ -79,6 +80,6 @@ public class Artron {
                 plugin.getQueryFactory().doUpdate("tardis", set, wheret);
             }
         }
-        plugin.getMessenger().message(sender, TardisModule.TARDIS, player + "'s Artron Energy Level was set to " + set_level);
+        plugin.getMessenger().message(sender, TardisModule.TARDIS, player.getName() + "'s Artron Energy Level was set to " + set_level);
     }
 }

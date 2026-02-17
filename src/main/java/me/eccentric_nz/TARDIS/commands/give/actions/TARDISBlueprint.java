@@ -18,13 +18,9 @@ package me.eccentric_nz.TARDIS.commands.give.actions;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-
-import java.util.List;
 
 public class TARDISBlueprint {
 
@@ -34,26 +30,7 @@ public class TARDISBlueprint {
         this.plugin = plugin;
     }
 
-    public void give(CommandSender sender, String[] args, String blueprint) {
-        Player player = null;
-        if (args[0].equals("@s") && sender instanceof Player) {
-            player = (Player) sender;
-        } else if (args[0].equals("@p")) {
-            List<Entity> near = Bukkit.selectEntities(sender, "@p");
-            if (!near.isEmpty() && near.getFirst() instanceof Player) {
-                player = (Player) near.getFirst();
-                if (player == null) {
-                    plugin.getMessenger().send(sender, TardisModule.TARDIS, "COULD_NOT_NEARBY_PLAYER");
-                    return;
-                }
-            }
-        } else {
-            player = plugin.getServer().getPlayer(args[0]);
-            if (player == null) {
-                plugin.getMessenger().send(sender, TardisModule.TARDIS, "COULD_NOT_FIND_NAME");
-                return;
-            }
-        }
+    public void give(CommandSender sender, Player player, String blueprint) {
         if (player != null) {
             ItemStack bp = plugin.getTardisAPI().getTARDISBlueprintItem(blueprint, player);
             player.getInventory().addItem(bp);
