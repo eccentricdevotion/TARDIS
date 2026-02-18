@@ -22,6 +22,8 @@ import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.UseClay;
+import net.kyori.adventure.text.format.NamedTextColor;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -295,16 +297,22 @@ public class TARDISConfigCommand implements CommandExecutor {
                     plugin.getConfig().set("creation.area", args[1]);
                 }
                 if (first.equals("autonomous_area")) {
-                    return new AutonomousAreaCommand(plugin).processArea(sender, args);
+                    return new AutonomousAreaCommand(plugin).processArea(sender, args[1], args[2]);
                 }
                 if (first.equals("options")) {
-                    return new OptionsCommand(plugin).showConfigOptions(sender, args);
+                    return new OptionsCommand(plugin).showConfigOptions(sender, args[1]);
                 }
                 if (first.equals("language")) {
-                    return new LanguageCommand(plugin).setLanguage(sender, args);
+                    return new LanguageCommand(plugin).setLanguage(sender, args[1]);
                 }
                 if (first.equals("power_down")) {
-                    return new PowerDownCommand(plugin).togglePowerDown(sender, args);
+                    // check they typed true of false
+                    String tf = args[1].toLowerCase(Locale.ROOT);
+                    if (!tf.equals("true") && !tf.equals("false")) {
+                        plugin.getMessenger().send(sender, TardisModule.TARDIS, "TRUE_FALSE");
+                        return false;
+                    }
+                    return new PowerDownCommand(plugin).togglePowerDown(sender, Boolean.valueOf(tf));
                 }
                 if (first.equals("database")) {
                     String dbtype = args[1].toLowerCase(Locale.ROOT);
@@ -315,31 +323,38 @@ public class TARDISConfigCommand implements CommandExecutor {
                     plugin.getConfig().set("database", dbtype);
                 }
                 if (first.equals("include") || first.equals("exclude")) {
-                    return new SetWorldInclusionCommand(plugin).setWorldStatus(sender, args);
+                    return new SetWorldInclusionCommand(plugin).setWorldStatus(sender, first, Bukkit.getWorld(args[1]));
                 }
                 if (first.equals("siege")) {
                     return new SiegeCommand(plugin).setOption(sender, args);
                 }
                 if (first.equals("sign_colour")) {
-                    return new SignColourCommand(plugin).setColour(sender, args);
+                    List<String> COLOURS = List.of("aqua", "black", "blue", "dark_aqua", "dark_blue", "dark_gray", "dark_green", "dark_purple", "dark_red", "gold", "gray", "green", "light_purple", "red", "white", "yellow");
+                    String colour = args[1].toLowerCase(Locale.ROOT);
+                    if (!COLOURS.contains(colour)) {
+                        plugin.getMessenger().send(sender, TardisModule.TARDIS, "ARG_COLOUR");
+                        return true;
+                    }
+                    NamedTextColor c = NamedTextColor.NAMES.value(colour);
+                    return new SignColourCommand(plugin).setColour(sender, c);
                 }
                 if (first.equals("key")) {
                     return new SetMaterialCommand(plugin).setConfigMaterial(sender, args, firstsStr.get(first));
                 }
                 if (first.equals("full_charge_item") || first.equals("jettison_seed")) {
-                    return new SetMaterialCommand(plugin).setConfigMaterial(sender, args);
+                    return new SetMaterialCommand(plugin).setConfigMaterial(sender, first, args[1]);
                 }
                 if (first.equals("default_key") || first.equals("default_model")) {
-                    return new DefaultCommand(plugin).setDefaultItem(sender, args);
+                    return new DefaultCommand(plugin).setDefaultItem(sender, first, args[1]);
                 }
                 if (first.equals("default_world_name")) {
-                    return new DefaultWorldNameCommand(plugin).setName(sender, args);
+                    return new DefaultWorldNameCommand(plugin).setName(sender, Bukkit.getWorld(args[1]));
                 }
                 if (first.equals("respect_towny")) {
-                    return new SetRespectCommand(plugin).setRegion(sender, args);
+                    return new SetRespectCommand(plugin).setRegion(sender, args[1]);
                 }
                 if (first.equals("respect_worldguard")) {
-                    return new SetRespectCommand(plugin).setFlag(sender, args);
+                    return new SetRespectCommand(plugin).setFlag(sender, args[1]);
                 }
                 if (first.equals("crafting")) {
                     if (!args[1].equalsIgnoreCase("easy") && !args[1].equalsIgnoreCase("hard")) {

@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.commands.config;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 
 import java.util.Arrays;
@@ -26,21 +27,18 @@ import java.util.regex.Pattern;
 /**
  * @author eccentric_nz
  */
-class DefaultWorldNameCommand {
+public class DefaultWorldNameCommand {
 
     private static final Pattern DOTS = Pattern.compile("\\.");
     private final TARDIS plugin;
 
-    DefaultWorldNameCommand(TARDIS plugin) {
+    public DefaultWorldNameCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean setName(CommandSender sender, String[] args) {
+    public boolean setName(CommandSender sender, World world) {
         // get world name
-        String t = String.join(" ", Arrays.copyOfRange(args, 1, args.length));
-        // need to make there are no periods(.) in the text
-        String nodots = DOTS.matcher(t).replaceAll("_");
-        plugin.getConfig().set("creation.default_world_name", nodots);
+        plugin.getConfig().set("creation.default_world_name", world.getName());
         plugin.saveConfig();
         plugin.getMessenger().send(sender, TardisModule.TARDIS, "CONFIG_UPDATED", "default_world_name");
         return true;

@@ -84,25 +84,25 @@ public class TARDISConfigTabComplete extends TARDISCompleter implements TabCompl
         } else if (args.length == 2) {
             String sub = args[0];
             return switch (sub) {
-                case "include", "exclude" -> partial(lastArg, WORLD_SUBS);
-                case "options" -> partial(lastArg, CONFIG_SUBS);
-                case "crafting" -> partial(lastArg, CRAFTING_SUBS);
+                case "include", "exclude" -> partial(lastArg, WORLD_SUBS); // done
+                case "options" -> partial(lastArg, CONFIG_SUBS); // done
+                case "crafting" -> partial(lastArg, CRAFTING_SUBS); // done
                 case "provider" -> partial(lastArg, MAPPING_SUBS);
-                case "respect_towny" -> partial(lastArg, TOWNY_SUBS);
-                case "respect_worldguard" -> partial(lastArg, FLAG_SUBS);
+                case "respect_towny" -> partial(lastArg, TOWNY_SUBS); // done
+                case "respect_worldguard" -> partial(lastArg, FLAG_SUBS); // done
                 case "region_flag" -> partial(lastArg, REGION_SUBS);
-                case "reload" -> partial(lastArg, FILE_SUBS);
-                case "vortex_fall" -> partial(lastArg, VORTEX_SUBS);
+                case "reload" -> partial(lastArg, FILE_SUBS); // done
+                case "vortex_fall" -> partial(lastArg, VORTEX_SUBS); // done
                 case "tips_next" -> partial(lastArg, TIPS_NEXT_SUBS);
-                case "sign_colour" -> partial(lastArg, COLOURS);
-                case "siege" -> partial(lastArg, SIEGE_SUBS);
-                case "default_key" -> partial(lastArg, KEYS);
-                case "default_preset" -> partial(lastArg, PRESETS);
-                case "default_model" -> partial(lastArg, SONICS);
-                case "database" -> partial(lastArg, DB_SUBS);
-                case "language" -> partial(lastArg, LANG_SUBS);
+                case "sign_colour" -> partial(lastArg, COLOURS); // done
+                case "siege" -> partial(lastArg, SIEGE_SUBS); // done
+                case "default_key" -> partial(lastArg, KEYS); // done
+                case "default_preset" -> partial(lastArg, PRESETS); // done
+                case "default_model" -> partial(lastArg, SONICS); // done
+                case "database" -> partial(lastArg, DB_SUBS); // done
+                case "language" -> partial(lastArg, LANG_SUBS); // done
                 case "tips_limit" -> partial(lastArg, TIPS_SUBS);
-                case "use_clay" -> partial(lastArg, USE_CLAY_SUBS);
+                case "use_clay" -> partial(lastArg, USE_CLAY_SUBS); // done
                 default -> partial(lastArg, BOOL_SUBS);
             };
         }

@@ -28,19 +28,19 @@ import java.util.Set;
 /**
  * @author eccentric_nz
  */
-class OptionsCommand {
+public class OptionsCommand {
 
     private final TARDIS plugin;
     private final List<String> sections = new ArrayList<>();
 
-    OptionsCommand(TARDIS plugin) {
+    public OptionsCommand(TARDIS plugin) {
         this.plugin = plugin;
         sections.addAll(this.plugin.getConfig().getDefaultSection().getKeys(false));
         sections.remove("debug");
     }
 
-    boolean showConfigOptions(CommandSender sender, String[] args) {
-        String section = args[1].toLowerCase(Locale.ROOT);
+    public boolean showConfigOptions(CommandSender sender, String arg) {
+        String section = arg.toLowerCase(Locale.ROOT);
         plugin.getMessenger().send(sender, TardisModule.TARDIS, "CONFIG");
         if (sections.contains(section)) {
             plugin.getMessenger().messageWithColour(sender, section + ":", "#55FFFF");

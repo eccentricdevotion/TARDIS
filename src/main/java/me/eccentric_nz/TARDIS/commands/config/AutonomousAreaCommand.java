@@ -32,12 +32,7 @@ public class AutonomousAreaCommand {
         this.plugin = plugin;
     }
 
-    public boolean processArea(CommandSender sender, String[] args) {
-        if (args.length < 3) {
-            plugin.getMessenger().send(sender, TardisModule.TARDIS, "TOO_FEW_ARGS");
-            return true;
-        }
-        String area = args[1];
+    public boolean processArea(CommandSender sender, String area, String action) {
         // check the area exists
         HashMap<String, Object> where = new HashMap<>();
         where.put("area_name", area);
@@ -47,7 +42,7 @@ public class AutonomousAreaCommand {
             return true;
         }
         List<String> autoAreas = plugin.getConfig().getStringList("autonomous_areas");
-        if (args[2].equalsIgnoreCase("add")) {
+        if (action.equalsIgnoreCase("add")) {
             if (autoAreas.contains(area)) {
                 plugin.getMessenger().send(sender, TardisModule.TARDIS, "AREA_ALREADY_ADDED", area);
                 return true;

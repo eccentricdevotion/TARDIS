@@ -27,18 +27,18 @@ import java.util.Locale;
 /**
  * @author eccentric_nz
  */
-class SetRespectCommand {
+public class SetRespectCommand {
 
     private final TARDIS plugin;
     private final ImmutableList<String> regions = ImmutableList.of("none", "wilderness", "town", "nation");
     private final ImmutableList<String> flags = ImmutableList.copyOf(TARDISWorldGuardFlag.getFLAG_LOOKUP().keySet());
 
-    SetRespectCommand(TARDIS plugin) {
+    public SetRespectCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    boolean setRegion(CommandSender sender, String[] args) {
-        String region = args[1].toLowerCase(Locale.ROOT);
+    public boolean setRegion(CommandSender sender, String arg) {
+        String region = arg.toLowerCase(Locale.ROOT);
         if (!regions.contains(region)) {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "ARG_TOWNY");
             return false;
@@ -49,8 +49,8 @@ class SetRespectCommand {
         return true;
     }
 
-    boolean setFlag(CommandSender sender, String[] args) {
-        String flag = args[1].toLowerCase(Locale.ROOT);
+    public boolean setFlag(CommandSender sender, String arg) {
+        String flag = arg.toLowerCase(Locale.ROOT);
         if (!flags.contains(flag)) {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "ARG_FLAG");
             return false;

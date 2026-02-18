@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.commands.config;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.command.CommandSender;
 
 import java.util.List;
@@ -26,22 +27,16 @@ import java.util.Locale;
 /**
  * @author eccentric_nz
  */
-class SignColourCommand {
+public class SignColourCommand {
 
     private final TARDIS plugin;
-    private final List<String> COLOURS = List.of("AQUA", "BLACK", "BLUE", "DARK_AQUA", "DARK_BLUE", "DARK_GRAY", "DARK_GREEN", "DARK_PURPLE", "DARK_RED", "GOLD", "GRAY", "GREEN", "LIGHT_PURPLE", "RED", "WHITE", "YELLOW");
 
-    SignColourCommand(TARDIS plugin) {
+    public SignColourCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    boolean setColour(CommandSender sender, String[] args) {
-        String colour = args[1].toUpperCase(Locale.ROOT);
-        if (!COLOURS.contains(colour)) {
-            plugin.getMessenger().send(sender, TardisModule.TARDIS, "ARG_COLOUR");
-            return true;
-        }
-        plugin.getConfig().set("police_box.sign_colour", colour);
+    public boolean setColour(CommandSender sender, NamedTextColor colour) {
+        plugin.getConfig().set("police_box.sign_colour", NamedTextColor.NAMES.key(colour).toUpperCase(Locale.ROOT));
         plugin.saveConfig();
         plugin.getMessenger().send(sender, TardisModule.TARDIS, "CONFIG_UPDATED", "sign_colour");
         return true;

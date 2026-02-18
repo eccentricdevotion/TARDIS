@@ -26,17 +26,17 @@ import java.util.Locale;
 /**
  * @author eccentric_nz
  */
-class SiegeCommand {
+public class SiegeCommand {
 
     private final TARDIS plugin;
     private final List<String> siegeArgs = List.of("enabled", "breeding", "growth", "butcher", "creeper", "healing", "texture");
     private final List<String> siegeBool = List.of("enabled", "butcher", "creeper", "healing", "texture");
 
-    SiegeCommand(TARDIS plugin) {
+    public SiegeCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    boolean setOption(CommandSender sender, String[] args) {
+    public boolean setOption(CommandSender sender, String[] args) {
         String first = args[1].toLowerCase(Locale.ROOT);
         if (args.length == 2 && first.equalsIgnoreCase("true") || first.equalsIgnoreCase("false")) {
             plugin.getConfig().set("siege.enabled", Boolean.valueOf(first));
@@ -73,5 +73,23 @@ class SiegeCommand {
         plugin.getMessenger().send(sender, TardisModule.TARDIS, "CONFIG_UPDATED", first);
         plugin.saveConfig();
         return true;
+    }
+
+    public void setOption(CommandSender sender, String option, int i) {
+        String first = option.toLowerCase(Locale.ROOT);
+        if (!siegeBool.contains(first)) {
+            plugin.getConfig().set("siege." + first, i);
+        }
+        plugin.getMessenger().send(sender, TardisModule.TARDIS, "CONFIG_UPDATED", first);
+        plugin.saveConfig();
+    }
+
+    public void setOption(CommandSender sender, String option, boolean bool) {
+        String first = option.toLowerCase(Locale.ROOT);
+        if (siegeBool.contains(first)) {
+            plugin.getConfig().set("siege." + first, bool);
+        }
+        plugin.getMessenger().send(sender, TardisModule.TARDIS, "CONFIG_UPDATED", first);
+        plugin.saveConfig();
     }
 }
