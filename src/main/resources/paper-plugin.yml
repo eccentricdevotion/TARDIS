@@ -5,3 +5,65 @@ description: A plugin for all Doctor Who fans - create and use a TARDIS! Telepor
 api-version: '1.21.11'
 bootstrapper: me.eccentric_nz.TARDIS.Bootstrap
 #loader: io.papermc.testplugin.TestPluginLoader
+dependencies:
+  server:
+    Blocklocker:
+      load: BEFORE
+      required: false
+    BlueMap:
+      load: BEFORE
+      required: false
+    Chunky:
+      load: BEFORE
+      required: false
+    ChunkyBorder:
+      load: BEFORE
+      required: false
+    Citizens:
+      load: AFTER
+      required: false
+    CoreProtect:
+      load: BEFORE
+      required: false
+    dynmap:
+      load: BEFORE
+      required: false
+    Essentials:
+      load: BEFORE
+      required: false
+    floodgate:
+      load: BEFORE
+      required: false
+    GriefPrevention:
+      load: BEFORE
+      required: false
+    LibsDisguises:
+      load: BEFORE
+      required: false
+    LWC:
+      load: BEFORE
+      required: false
+    LuckPerms:
+      load: BEFORE
+      required: false
+    Multiverse-Core:
+      load: BEFORE
+      required: false
+    Multiverse-Inventories:
+      load: BEFORE
+      required: false
+    PlaceholderAPI:
+      load: BEFORE
+      required: false
+    TerraformGenerator:
+      load: BEFORE
+      required: false
+    Towny:
+      load: BEFORE
+      required: false
+    WorldGuard:
+      load: BEFORE
+      required: false
+    Vault:
+      load: BEFORE
+      required: false
