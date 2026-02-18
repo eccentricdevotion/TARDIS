@@ -336,6 +336,13 @@ public class AdminCommandNode {
                                     new RechargerCommand(plugin).setRecharger(ctx.getSource().getSender(), n);
                                     return Command.SINGLE_SUCCESS;
                                 })))
+                .then(Commands.literal("region_flag")
+                        .then(Commands.argument("flag", new FlagArgumentType())
+                                .executes(ctx -> {
+                                    String f = StringArgumentType.getString(ctx, "flag");
+                                    new RegionFlagCommand(plugin).toggleEntryExit(ctx.getSource().getSender(), f);
+                                    return Command.SINGLE_SUCCESS;
+                                })))
                 .then(Commands.literal("remove_protection")
                         .then(Commands.argument("block_id", IntegerArgumentType.integer(1))
                                 .then(Commands.argument("location", StringArgumentType.string())
