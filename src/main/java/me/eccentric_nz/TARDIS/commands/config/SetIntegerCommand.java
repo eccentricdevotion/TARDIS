@@ -23,41 +23,26 @@ import org.bukkit.command.CommandSender;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 /**
  * @author eccentric_nz
  */
-class SetIntegerCommand {
+public class SetIntegerCommand {
 
     private final TARDIS plugin;
-    private final List<String> TIPS_SUBS = List.of("400", "800", "1200", "1600");
+    private final Set<Integer> TIPS_SUBS = Set.of(400, 800, 1200, 1600);
 
-    SetIntegerCommand(TARDIS plugin) {
+    public SetIntegerCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    boolean setConfigInt(CommandSender sender, String[] args, String section) {
-        String first = (section.isEmpty()) ? args[0].toLowerCase(Locale.ROOT) : section + "." + args[0].toLowerCase(Locale.ROOT);
-        String a = args[1];
-        if (args[0].toLowerCase(Locale.ROOT).equals("tips_limit") && !TIPS_SUBS.contains(a)) {
+    boolean setConfigInt(CommandSender sender, String option, int val, String section) {
+        String first = (section.isEmpty()) ? option.toLowerCase(Locale.ROOT) : section + "." + option.toLowerCase(Locale.ROOT);
+        if (option.toLowerCase(Locale.ROOT).equals("tips_limit") && !TIPS_SUBS.contains(val)) {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "ARG_TIPS");
             return false;
-        }
-        int val;
-        try {
-            val = Integer.parseInt(a);
-        } catch (NumberFormatException nfe) {
-            // not a number
-            plugin.getMessenger().send(sender, TardisModule.TARDIS, "ARG_LAST_NUMBER");
-            return false;
-        }
-        if (first.equals("circuits.uses.chameleon_uses")) {
-            first = "circuits.uses.chameleon";
-        }
-        if (first.equals("circuits.uses.invisibility")) {
-            first = "circuits.uses.invisibility";
         }
         if (first.equals("preferences.sfx_volume")) {
             TARDISSounds.setVolume(val);
@@ -71,24 +56,14 @@ class SetIntegerCommand {
         return true;
     }
 
-    public boolean setConfigInt(CommandSender sender, String[] args) {
-        String first = args[0];
-        String a = args[1];
-        int val;
-        try {
-            val = Integer.parseInt(a);
-        } catch (NumberFormatException nfe) {
-            // not a number
-            plugin.getMessenger().send(sender, TardisModule.TARDIS, "ARG_LAST_NUMBER");
-            return false;
-        }
-        plugin.getArtronConfig().set(first, val);
+    public boolean setConfigInt(CommandSender sender, String option, int val) {
+        plugin.getArtronConfig().set(option, val);
         try {
             plugin.getArtronConfig().save(new File(plugin.getDataFolder(), "artron.yml"));
         } catch (IOException io) {
             plugin.debug("Could not save artron.yml, " + io);
         }
-        plugin.getMessenger().send(sender, TardisModule.TARDIS, "CONFIG_UPDATED", first);
+        plugin.getMessenger().send(sender, TardisModule.TARDIS, "CONFIG_UPDATED", option);
         return true;
     }
 

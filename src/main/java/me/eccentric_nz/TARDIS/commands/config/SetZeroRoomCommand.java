@@ -21,8 +21,6 @@ import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.planets.TARDISSpace;
 import org.bukkit.command.CommandSender;
 
-import java.util.Locale;
-
 /**
  * @author eccentric_nz
  */
@@ -34,17 +32,12 @@ class SetZeroRoomCommand {
         this.plugin = plugin;
     }
 
-    boolean setConfigZero(CommandSender sender, String[] args) {
+    boolean setConfigZero(CommandSender sender, boolean b) {
         // check they typed true of false
-        String tf = args[1].toLowerCase(Locale.ROOT);
-        if (!tf.equals("true") && !tf.equals("false")) {
-            plugin.getMessenger().send(sender, TardisModule.TARDIS, "TRUE_FALSE");
-            return false;
-        }
-        plugin.getConfig().set("allow.zero_room", Boolean.valueOf(tf));
+        plugin.getConfig().set("allow.zero_room", b);
         plugin.saveConfig();
         plugin.getMessenger().send(sender, TardisModule.TARDIS, "CONFIG_UPDATED", "zero_room");
-        if (tf.equals("true") && plugin.getServer().getWorld("TARDIS_Zero_Room") == null) {
+        if (b && plugin.getServer().getWorld("TARDIS_Zero_Room") == null) {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "ZERO_CREATE");
             new TARDISSpace(plugin).createDefaultWorld("TARDIS_Zero_Room");
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "ZERO_RESTART");

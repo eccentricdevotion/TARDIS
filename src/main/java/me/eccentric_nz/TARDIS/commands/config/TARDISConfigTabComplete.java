@@ -47,7 +47,7 @@ public class TARDISConfigTabComplete extends TARDISCompleter implements TabCompl
     private final ImmutableList<String> KEYS = ImmutableList.of("first", "second", "third", "fifth", "seventh", "ninth", "tenth", "eleventh", "susan", "rose", "sally", "perception", "gold");
     private final ImmutableList<String> LANG_SUBS = ImmutableList.of("ar", "bg", "ca", "zh", "cs", "da", "nl", "en", "et", "fi", "fr", "de", "el", "ht", "he", "hi", "mww", "hu", "id", "it", "ja", "ko", "lv", "lt", "ms", "no", "fa", "pl", "pt", "ro", "ru", "sk", "sl", "es", "sv", "th", "tr", "uk", "ur", "vi");
     private final List<String> PRESETS = new ArrayList<>();
-    private final ImmutableList<String> REGION_SUBS = ImmutableList.of("entry", "exit");
+//    private final ImmutableList<String> REGION_SUBS = ImmutableList.of("entry", "exit");
     private final ImmutableList<String> SIEGE_SUBS = ImmutableList.of("enabled", "breeding", "growth", "butcher", "creeper", "healing", "texture", "true", "false");
     private final ImmutableList<String> SONICS = ImmutableList.of("mark_1", "mark_2", "mark_3", "mark_4", "eighth", "ninth", "tenth", "eleventh", "twelfth", "thirteenth", "fourteenth", "fifteenth", "master", "umbrella", "sonic_probe", "sarah_jane", "rani", "river_song", "war");
     private final ImmutableList<String> TIPS_NEXT_SUBS = ImmutableList.of("FREE", "HIGHEST");
@@ -90,7 +90,7 @@ public class TARDISConfigTabComplete extends TARDISCompleter implements TabCompl
                 case "provider" -> partial(lastArg, MAPPING_SUBS);
                 case "respect_towny" -> partial(lastArg, TOWNY_SUBS); // done
                 case "respect_worldguard" -> partial(lastArg, FLAG_SUBS); // done
-                case "region_flag" -> partial(lastArg, REGION_SUBS);
+//                case "region_flag" -> partial(lastArg, REGION_SUBS);
                 case "reload" -> partial(lastArg, FILE_SUBS); // done
                 case "vortex_fall" -> partial(lastArg, VORTEX_SUBS); // done
                 case "tips_next" -> partial(lastArg, TIPS_NEXT_SUBS);

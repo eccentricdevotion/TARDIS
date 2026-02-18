@@ -36,9 +36,9 @@ public class SetMaterialCommand {
         this.plugin = plugin;
     }
 
-    public boolean setConfigMaterial(CommandSender sender, String[] args, String section) {
-        String first = (section.isEmpty()) ? args[0].toLowerCase(Locale.ROOT) : section + "." + args[0].toLowerCase(Locale.ROOT);
-        String setMaterial = args[1].toUpperCase(Locale.ROOT);
+    public boolean setConfigMaterial(CommandSender sender, String option, String value, String section) {
+        String first = (section.isEmpty()) ? option : section + "." + option;
+        String setMaterial = value.toUpperCase(Locale.ROOT);
         if (!checkMaterial(setMaterial)) {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "MATERIAL_NOT_VALID");
             return false;

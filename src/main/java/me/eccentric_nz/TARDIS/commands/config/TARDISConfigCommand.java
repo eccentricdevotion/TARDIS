@@ -320,7 +320,7 @@ public class TARDISConfigCommand implements CommandExecutor {
                         plugin.getMessenger().send(sender, TardisModule.TARDIS, "ARG_DB");
                         return true;
                     }
-                    plugin.getConfig().set("database", dbtype);
+                    plugin.getConfig().set("storage.database", dbtype);
                 }
                 if (first.equals("include") || first.equals("exclude")) {
                     return new SetWorldInclusionCommand(plugin).setWorldStatus(sender, first, Bukkit.getWorld(args[1]));
@@ -339,7 +339,7 @@ public class TARDISConfigCommand implements CommandExecutor {
                     return new SignColourCommand(plugin).setColour(sender, c);
                 }
                 if (first.equals("key")) {
-                    return new SetMaterialCommand(plugin).setConfigMaterial(sender, args, firstsStr.get(first));
+                    return new SetMaterialCommand(plugin).setConfigMaterial(sender, first, args[1], firstsStr.get(first));
                 }
                 if (first.equals("full_charge_item") || first.equals("jettison_seed")) {
                     return new SetMaterialCommand(plugin).setConfigMaterial(sender, first, args[1]);
@@ -405,7 +405,7 @@ public class TARDISConfigCommand implements CommandExecutor {
                     }
                     boolean bool = Boolean.parseBoolean(tf);
                     if (first.equals("zero_room")) {
-                        return new SetZeroRoomCommand(plugin).setConfigZero(sender, args);
+                        return new SetZeroRoomCommand(plugin).setConfigZero(sender, bool);
                     } else {
                         return new SetBooleanCommand(plugin).setConfigBool(sender, args[0], bool, firstsBool.get(first));
                     }
@@ -415,11 +415,27 @@ public class TARDISConfigCommand implements CommandExecutor {
                     if (first.startsWith("random_circuit.")) {
                         return new SetIntegerCommand(plugin).setRandomInt(sender, args);
                     } else {
-                        return new SetIntegerCommand(plugin).setConfigInt(sender, args, firstsInt.get(first));
+                        int val;
+                        try {
+                            val = Integer.parseInt(args[1]);
+                        } catch (NumberFormatException nfe) {
+                            // not a number
+                            plugin.getMessenger().send(sender, TardisModule.TARDIS, "ARG_LAST_NUMBER");
+                            return false;
+                        }
+                        return new SetIntegerCommand(plugin).setConfigInt(sender, first, val, firstsInt.get(first));
                     }
                 }
                 if (firstsIntArtron.contains(first)) {
-                    return new SetIntegerCommand(plugin).setConfigInt(sender, args);
+                    int val;
+                    try {
+                        val = Integer.parseInt(args[1]);
+                    } catch (NumberFormatException nfe) {
+                        // not a number
+                        plugin.getMessenger().send(sender, TardisModule.TARDIS, "ARG_LAST_NUMBER");
+                        return false;
+                    }
+                    return new SetIntegerCommand(plugin).setConfigInt(sender, args[0], val);
                 }
                 plugin.saveConfig();
                 plugin.getMessenger().send(sender, TardisModule.TARDIS, "CONFIG_UPDATED", first);

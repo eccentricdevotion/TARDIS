@@ -9,20 +9,14 @@ import com.mojang.brigadier.tree.LiteralCommandNode;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 import io.papermc.paper.command.brigadier.argument.ArgumentTypes;
-import io.papermc.paper.command.brigadier.argument.resolvers.selector.PlayerSelectorArgumentResolver;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.brigadier.arguments.*;
 import me.eccentric_nz.TARDIS.brigadier.suggestions.BlockSuggestions;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import me.eccentric_nz.TARDIS.commands.config.*;
-import me.eccentric_nz.TARDIS.commands.give.actions.*;
-import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
-import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.enumeration.UseClay;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.World;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Locale;
@@ -52,6 +46,13 @@ public class ConfigCommandNode {
                                 .executes(ctx -> {
                                     String m = ctx.getArgument("module", String.class);
                                     new ReloadCommand(plugin).reloadOtherConfig(ctx.getSource().getSender(), m);
+                                    return Command.SINGLE_SUCCESS;
+                                })))
+                .then(Commands.literal("area")
+                        .then(Commands.argument("name", new AreasArgumentType())
+                                .executes(ctx -> {
+                                    String o = ctx.getArgument("name", String.class);
+                                    new ConfigStringCommand().set(plugin, ctx.getSource().getSender(), "area", o, "creation");
                                     return Command.SINGLE_SUCCESS;
                                 })))
                 .then(Commands.literal("autonomous_area")
@@ -92,9 +93,7 @@ public class ConfigCommandNode {
                         .then(Commands.argument("option", new DatabaseArgumentType())
                                 .executes(ctx -> {
                                     String o = ctx.getArgument("option", String.class);
-                                    String dbtype = o.toLowerCase(Locale.ROOT);
-                                    plugin.getConfig().set("database", dbtype);
-                                    plugin.saveConfig();
+                                    new ConfigStringCommand().set(plugin, ctx.getSource().getSender(), "database", o, "storage");
                                     return Command.SINGLE_SUCCESS;
                                 })))
                 .then(Commands.literal("include")
@@ -131,7 +130,6 @@ public class ConfigCommandNode {
                         .then(Commands.argument("option", ArgumentTypes.namedColor())
                                 .executes(ctx -> {
                                     NamedTextColor colour = ctx.getArgument("color", NamedTextColor.class);
-                                    // TODO SignColourCommand should accept named colour
                                     new SignColourCommand(plugin).setColour(ctx.getSource().getSender(), colour);
                                     return Command.SINGLE_SUCCESS;
                                 })))
@@ -139,7 +137,7 @@ public class ConfigCommandNode {
                         .then(Commands.argument("option", ArgumentTypes.itemStack())
                                 .executes(ctx -> {
                                     ItemStack stack = ctx.getArgument("option", ItemStack.class);
-                                    new SetMaterialCommand(plugin).setConfigMaterial(ctx.getSource().getSender(), stack.getType().toString(), "preferences");
+                                    new SetMaterialCommand(plugin).setConfigMaterial(ctx.getSource().getSender(), "key", stack.getType().toString(), "preferences");
                                     return Command.SINGLE_SUCCESS;
                                 })))
                 .then(Commands.literal("full_charge_item")
@@ -196,9 +194,8 @@ public class ConfigCommandNode {
                         .then(Commands.argument("option", new DifficultyArgumentType())
                                 .executes(ctx -> {
                                     String o = ctx.getArgument("option", String.class);
-                                    plugin.getConfig().set("difficulty.crafting", o.toLowerCase(Locale.ROOT));
+                                    new ConfigStringCommand().set(plugin, ctx.getSource().getSender(), "crafting", o, "difficulty");
                                     plugin.setDifficulty(CraftingDifficulty.valueOf(o.toUpperCase(Locale.ROOT)));
-                                    plugin.saveConfig();
                                     return Command.SINGLE_SUCCESS;
                                 })))
                 .then(Commands.literal("default_preset")
@@ -206,46 +203,67 @@ public class ConfigCommandNode {
                                 .executes(ctx -> {
                                     String o = ctx.getArgument("option", String.class);
                                     if (plugin.getCustomModelConfig().getConfigurationSection("models").getKeys(false).contains(o)) {
-                                        plugin.getConfig().set("police_box.default_preset", "ITEM:" + o);
+                                        new ConfigStringCommand().set(plugin, ctx.getSource().getSender(), "default_preset", "ITEM:" + o, "police_box");
                                     } else {
-                                        plugin.getConfig().set("police_box.default_preset", o.toUpperCase(Locale.ROOT));
+                                        new ConfigStringCommand().set(plugin, ctx.getSource().getSender(), "default_preset", o.toUpperCase(Locale.ROOT), "police_box");
                                     }
-                                    plugin.saveConfig();
                                     return Command.SINGLE_SUCCESS;
                                 })))
                 .then(Commands.literal("use_clay")
                         .then(Commands.argument("option", new UseClayArgumentType())
                                 .executes(ctx -> {
                                     String o = ctx.getArgument("option", String.class).toUpperCase(Locale.ROOT);
-                                    plugin.getConfig().set("creation.use_clay", o);
+                                    new ConfigStringCommand().set(plugin, ctx.getSource().getSender(), "use_clay", o, "creation");
                                     return Command.SINGLE_SUCCESS;
                                 })))
                 .then(Commands.literal("vortex_fall")
                         .then(Commands.argument("option", new VortexFallArgumentType())
                                 .executes(ctx -> {
                                     String o = ctx.getArgument("option", String.class);
-                                    plugin.getConfig().set("preferences.vortex_fall", o);
+                                    new ConfigStringCommand().set(plugin, ctx.getSource().getSender(), "vortex_fall", o, "preferences");
                                     return Command.SINGLE_SUCCESS;
                                 })))
-                // TODO add literals for options with special tab completion
-                // "provider" "region_flag" "tips_next" "tips_limit"
+                .then(Commands.literal("provider")
+                        .then(Commands.argument("option", new MapProviderArgumentType())
+                                .executes(ctx -> {
+                                    String o = ctx.getArgument("option", String.class);
+                                    new ConfigStringCommand().set(plugin, ctx.getSource().getSender(), "provider", o, "mapping");
+                                    return Command.SINGLE_SUCCESS;
+                                })))
+                .then(Commands.literal("tips_next")
+                        .then(Commands.argument("option", new TipsNextArgumentType())
+                                .executes(ctx -> {
+                                    String o = ctx.getArgument("option", String.class);
+                                    new ConfigStringCommand().set(plugin, ctx.getSource().getSender(), "tips_next", o, "creation");
+                                    return Command.SINGLE_SUCCESS;
+                                })))
+                .then(Commands.literal("tips_limit")
+                        .then(Commands.argument("option", new TipsLimitArgumentType())
+                                .executes(ctx -> {
+                                    int i = ctx.getArgument("option", Integer.class);
+                                    new ConfigIntegerCommand().set(plugin, ctx.getSource().getSender(), "tips_limit", i);
+                                    return Command.SINGLE_SUCCESS;
+                                })))
                 .then(Commands.argument("option", new ConfigOptionArgumentType())
                         .then(Commands.argument("boolean", BoolArgumentType.bool())
                                 .executes(ctx -> {
                                     String o = ctx.getArgument("option", String.class);
-
+                                    boolean b = BoolArgumentType.getBool(ctx, "boolean");
+                                    new ConfigBooleanCommand().set(plugin, ctx.getSource().getSender(), o, b);
                                     return Command.SINGLE_SUCCESS;
                                 }))
                         .then(Commands.argument("integer", IntegerArgumentType.integer())
                                 .executes(ctx -> {
                                     String o = ctx.getArgument("option", String.class);
-
+                                    int i = IntegerArgumentType.getInteger(ctx, "integer");
+                                    new ConfigIntegerCommand().set(plugin, ctx.getSource().getSender(), o, i);
                                     return Command.SINGLE_SUCCESS;
                                 }))
                         .then(Commands.argument("string", StringArgumentType.word())
                                 .executes(ctx -> {
                                     String o = ctx.getArgument("option", String.class);
-                                    // TODO sort out string arguments from literals that are just arguments for setConfigString()
+                                    String s = StringArgumentType.getString(ctx, "string");
+                                    new ConfigStringCommand().set(plugin, ctx.getSource().getSender(), o, s, ConfigUtility.firstsStr.get(o));
                                     return Command.SINGLE_SUCCESS;
                                 }))
                 );
