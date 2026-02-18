@@ -46,9 +46,10 @@ public class TARDISShop {
             settings.setBlockMaterial(Material.valueOf(plugin.getShopConfig().getString("block")));
             setupEconomy(settings);
             plugin.setShopSettings(settings);
-            TARDISShopCommand command = new TARDISShopCommand(plugin);
-            plugin.getCommand("tardisshop").setExecutor(command);
-            plugin.getCommand("tardisshop").setTabCompleter(command);
+            // TODO Brigadier this
+//            TARDISShopCommand command = new TARDISShopCommand(plugin);
+//            plugin.getCommand("tardisshop").setExecutor(command);
+//            plugin.getCommand("tardisshop").setTabCompleter(command);
         } else {
             plugin.getMessenger().message(plugin.getConsole(), TardisModule.WARNING, "This feature requires the Vault plugin to function, disabling...");
         }

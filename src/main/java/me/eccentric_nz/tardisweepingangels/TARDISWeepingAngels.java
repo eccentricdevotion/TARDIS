@@ -212,9 +212,10 @@ public class TARDISWeepingAngels {
             plugin.getPM().registerEvents(new SpawnerListener(plugin), plugin);
         }
         // register command
-        plugin.getCommand("twa").setExecutor(new TARDISWeepingAngelsCommand(plugin));
-        // set tab completion
-        plugin.getCommand("twa").setTabCompleter(new TabComplete(plugin));
+        // TODO Brigadier these
+//        plugin.getCommand("twa").setExecutor(new TARDISWeepingAngelsCommand(plugin));
+//        // set tab completion
+//        plugin.getCommand("twa").setTabCompleter(new TabComplete(plugin));
         // remove invisible Guardians not riding a Skeleton
         plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new CleanGuardians(plugin), 100L, 6000L);
         // start repeating spawn tasks

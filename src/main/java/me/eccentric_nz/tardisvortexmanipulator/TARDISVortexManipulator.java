@@ -36,7 +36,8 @@ public class TARDISVortexManipulator {
         plugin.setTvmSettings(new TVMSettings());
         new VortexManipulatorConfig(plugin).checkConfig();
         registerListeners();
-        registerCommand();
+        // TODO Brigadier these
+        // registerCommand();
         new TVMRecipe(plugin).addRecipe();
         startRecharger();
     }
