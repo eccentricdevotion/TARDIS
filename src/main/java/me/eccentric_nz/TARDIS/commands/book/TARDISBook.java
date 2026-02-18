@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.achievement;
+package me.eccentric_nz.TARDIS.commands.book;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -52,12 +52,11 @@ public class TARDISBook {
      * Read text from a file and write it to a book. The book is then placed in
      * the player's inventory.
      *
-     * @param title_reward The name of the book
      * @param author Who wrote the book
-     * @param name The name of the text file
+     * @param name The name of the book and text file
      * @param p The player who will receive the book
      */
-    public void writeBook(String title_reward, String author, String name, Player p) {
+    public void writeBook(String author, String name, Player p) {
         // read the file
         File file = new File(plugin.getDataFolder() + File.separator + "books" + File.separator + name + ".txt");
         StringBuilder fileContents = new StringBuilder((int) file.length());
@@ -82,8 +81,8 @@ public class TARDISBook {
         // make the book
         ItemStack book = ItemStack.of(Material.WRITTEN_BOOK);
         BookMeta meta = (BookMeta) book.getItemMeta();
-        String[] title = title_reward.split(" - ");
-        meta.setTitle(title[0]);
+        String title = plugin.getAchievementConfig().getString(name + ".name");
+        meta.setTitle(title);
         meta.setAuthor(author);
         meta.pages(pages);
         book.setItemMeta(meta);

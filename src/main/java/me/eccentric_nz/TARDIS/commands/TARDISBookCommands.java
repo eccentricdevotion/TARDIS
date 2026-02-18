@@ -18,8 +18,8 @@ package me.eccentric_nz.TARDIS.commands;
 
 import com.google.common.collect.ImmutableList;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.achievement.TARDISBook;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
+import me.eccentric_nz.TARDIS.commands.book.TARDISBook;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAchievements;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.command.Command;
@@ -98,7 +98,7 @@ public class TARDISBookCommands extends TARDISCompleter implements CommandExecut
                     // need to check whether they already have been given the book
                     TARDISBook book = new TARDISBook(plugin);
                     // title, author, filename, player
-                    book.writeBook(books.get(first), "Rassilon", first, player);
+                    book.writeBook("Rassilon", first, player);
                     return true;
                 }
                 if (second.equals("start")) {
