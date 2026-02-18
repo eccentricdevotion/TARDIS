@@ -92,12 +92,12 @@ public class TARDISHelper {
         boolean aPlanetIsEnabled = false;
         if (plugin.getPlanetsConfig().getBoolean("planets.gallifrey.enabled")) {
             plugin.getMessenger().message(plugin.getConsole(), TardisModule.HELPER, "Adding custom biome for planet Gallifrey...");
-            CustomBiome.addCustomBiome(TARDISBiomeData.BADLANDS);
+//            CustomBiome.addCustomBiome(TARDISBiomeData.BADLANDS);
             aPlanetIsEnabled = true;
         }
         if (plugin.getPlanetsConfig().getBoolean("planets.skaro.enabled")) {
             plugin.getMessenger().message(plugin.getConsole(), TardisModule.HELPER, "Adding custom biome for planet Skaro...");
-            CustomBiome.addCustomBiome(TARDISBiomeData.DESERT);
+//            CustomBiome.addCustomBiome(TARDISBiomeData.DESERT);
             aPlanetIsEnabled = true;
         }
         colourSkies = (aPlanetIsEnabled && plugin.getPlanetsConfig().getBoolean("colour_skies"));

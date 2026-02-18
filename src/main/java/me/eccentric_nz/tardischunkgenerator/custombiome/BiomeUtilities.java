@@ -42,16 +42,16 @@ public class BiomeUtilities {
         }
     }
 
-    public static void addBiomes(String basePath) {
-        if (TARDIS.plugin.getPlanetsConfig().getBoolean("planets.gallifrey.enabled")) {
-            TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.HELPER, "Adding custom biomes for planet Gallifrey...");
-            CustomBiome.addCustomBiome(TARDISBiomeData.BADLANDS);
-        }
-        if (TARDIS.plugin.getPlanetsConfig().getBoolean("planets.skaro.enabled")) {
-            TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.HELPER, "Adding custom biomes for planet Skaro...");
-            CustomBiome.addCustomBiome(TARDISBiomeData.DESERT);
-        }
-    }
+//    public static void addBiomes(String basePath) {
+//        if (TARDIS.plugin.getPlanetsConfig().getBoolean("planets.gallifrey.enabled")) {
+//            TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.HELPER, "Adding custom biomes for planet Gallifrey...");
+//            CustomBiome.addCustomBiome(TARDISBiomeData.BADLANDS);
+//        }
+//        if (TARDIS.plugin.getPlanetsConfig().getBoolean("planets.skaro.enabled")) {
+//            TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.HELPER, "Adding custom biomes for planet Skaro...");
+//            CustomBiome.addCustomBiome(TARDISBiomeData.DESERT);
+//        }
+//    }
 
     public static Location searchBiome(World world, Biome biome, Location policeBox) {
         BiomeSearchResult searchResult = world.locateNearestBiome(policeBox, 6400, biome);

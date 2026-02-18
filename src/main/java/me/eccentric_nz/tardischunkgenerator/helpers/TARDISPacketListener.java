@@ -90,6 +90,7 @@ public class TARDISPacketListener {
                     if (world.equals("gallifrey") || world.equals("skaro")) {
                         LevelChunk levelChunk = cloneChunk((LevelChunk) ((CraftChunk) player.getWorld().getChunkAt(chunkPacket.getX(), chunkPacket.getZ())).getHandle(ChunkStatus.BIOMES));
                         String key = (world.endsWith("gallifrey")) ? "gallifrey_badlands" : "skaro_desert";
+                        // TODO get biome from registry - similar to BiomeHelper#setCustomBiome()
                         Biome biome = TARDISHelper.biomeMap.get(key);
                         Registry<Biome> registry = BiomeHelper.getRegistry();
                         if (biome != null) {
