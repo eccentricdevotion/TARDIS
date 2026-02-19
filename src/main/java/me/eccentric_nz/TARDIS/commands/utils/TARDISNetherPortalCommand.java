@@ -20,11 +20,7 @@ import com.google.common.collect.ImmutableList;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
-import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
-import org.bukkit.Location;
-import org.bukkit.World.Environment;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -76,61 +72,13 @@ public class TARDISNetherPortalCommand extends TARDISCompleter implements Comman
                 int x = TARDISNumberParsers.parseInt(args[0]);
                 int y = TARDISNumberParsers.parseInt(args[1]);
                 int z = TARDISNumberParsers.parseInt(args[2]);
-                return o2n(sender, x, y, z, args[3].equalsIgnoreCase("overworld"));
+                return NetherPortalUtility.o2n(plugin, sender, x, y, z, args[3].equalsIgnoreCase("overworld"));
             } else {
                 // get player's coords and environment
-                return o2n(player);
+                return NetherPortalUtility.o2n(plugin, player);
             }
         }
         return false;
-    }
-
-    private boolean o2n(Player player) {
-        int x, y, z, dx, dz;
-        // get player coords
-        Location l = player.getLocation();
-        boolean overworld = !(l.getWorld().getEnvironment().equals(Environment.NETHER));
-        x = l.getBlockX();
-        y = l.getBlockY();
-        z = l.getBlockZ();
-        if ((y > 123) || (y < 1)) {
-            plugin.getMessenger().send(player, TardisModule.TARDIS, "O2N_Y");
-            return false;
-        }
-        // get player direction
-        String d = TARDISStaticUtils.getPlayersDirection(player, false);
-        String message = (overworld) ? "O2N_COORDS_N" : "O2N_COORDS_O";
-        // get destination coords
-        if (overworld) {
-            dx = x / 8;
-            dz = z / 8;
-        } else {
-            dx = x * 8;
-            dz = z * 8;
-        }
-        String coords = "X: " + dx + ", " + "Y: " + y + ", " + "Z: " + dz + ", facing " + d;
-        plugin.getMessenger().send(player, TardisModule.TARDIS, message, coords);
-        return true;
-    }
-
-    private boolean o2n(CommandSender sender, int x, int y, int z, boolean overworld) {
-        int dx, dz;
-        if ((y > 123) || (y < 1)) {
-            plugin.getMessenger().send(sender, TardisModule.TARDIS, "O2N_Y");
-            return false;
-        }
-        String message = (overworld) ? "O2N_COORDS_N" : "O2N_COORDS_O";
-        // get destination coords
-        if (overworld) {
-            dx = x / 8;
-            dz = z / 8;
-        } else {
-            dx = x * 8;
-            dz = z * 8;
-        }
-        String coords = "X: " + dx + ", " + "Y: " + y + ", " + "Z: " + dz;
-        plugin.getMessenger().send(sender, TardisModule.TARDIS, message, coords);
-        return true;
     }
 
     @Override

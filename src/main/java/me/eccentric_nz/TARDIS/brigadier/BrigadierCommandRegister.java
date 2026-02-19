@@ -24,8 +24,14 @@ public class BrigadierCommandRegister {
         commands.registrar().register(new BookCommandNode(plugin).build(), List.of("tbook"));
         commands.registrar().register(new CallCommandNode(plugin).build(), List.of("tcall"));
         commands.registrar().register(new ConfigCommandNode(plugin).build(), List.of("tconfig"));
+        commands.registrar().register(new GamemodeCommandNode(plugin).build(), List.of("tgm"));
+        commands.registrar().register(new SurvivalCommandNode(plugin).build(), List.of());
+        commands.registrar().register(new CreativeCommandNode(plugin).build(), List.of());
+        commands.registrar().register(new AdventureCommandNode(plugin).build(), List.of());
+        commands.registrar().register(new SpectatorCommandNode(plugin).build(), List.of());
         commands.registrar().register(new GiveCommandNode(plugin).build(), List.of("tgive"));
         commands.registrar().register(new GravityCommandNode(plugin).build(), List.of("tgravity"));
+        commands.registrar().register(new NetherPortalCommandNode(plugin).build(), List.of("tnetherportal", "tnp"));
         commands.registrar().register(new PlotCommandNode(plugin).build(), List.of("tplot"));
         commands.registrar().register(new RecipeCommandNode(plugin).build(), List.of("trecipe"));
         commands.registrar().register(new SchematicCommandNode(plugin).build(), List.of("ts", "tschematic"));
