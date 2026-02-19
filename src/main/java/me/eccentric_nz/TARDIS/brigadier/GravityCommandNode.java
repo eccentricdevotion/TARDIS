@@ -7,12 +7,9 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
-import io.papermc.paper.command.brigadier.argument.ArgumentTypes;
-import io.papermc.paper.command.brigadier.argument.resolvers.selector.PlayerSelectorArgumentResolver;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.brigadier.arguments.DirectionArgumentType;
-import me.eccentric_nz.TARDIS.commands.GravityCommand;
-import me.eccentric_nz.TARDIS.commands.TARDISCallRequestCommand;
+import me.eccentric_nz.TARDIS.commands.GravityUtility;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import org.bukkit.entity.Player;
 
@@ -34,13 +31,13 @@ public class GravityCommandNode {
                 .then(Commands.literal("remove")
                         .executes(ctx->{
                             Player player = (Player) ctx.getSource().getExecutor();
-                            new GravityCommand(plugin).remove(player);
+                            new GravityUtility(plugin).remove(player);
                             return Command.SINGLE_SUCCESS;
                         }))
                 .then(Commands.literal("down")
                         .executes(ctx->{
                             Player player = (Player) ctx.getSource().getExecutor();
-                            new GravityCommand(plugin).make(player, "down", 0d, 0.5d);
+                            new GravityUtility(plugin).make(player, "down", 0d, 0.5d);
                             return Command.SINGLE_SUCCESS;
                         }))
                 .then(Commands.argument("direction", new DirectionArgumentType())
@@ -49,7 +46,7 @@ public class GravityCommandNode {
                                     Player player = (Player) ctx.getSource().getExecutor();
                                     String direction = ctx.getArgument("direction", String.class);
                                     double distance = DoubleArgumentType.getDouble(ctx, "distance");
-                                    new GravityCommand(plugin).make(player, direction, distance, 0.5d);
+                                    new GravityUtility(plugin).make(player, direction, distance, 0.5d);
                                     return Command.SINGLE_SUCCESS;
                                 })
                                 .then(Commands.argument("velocity", DoubleArgumentType.doubleArg(0))
@@ -58,7 +55,7 @@ public class GravityCommandNode {
                                             String direction = ctx.getArgument("direction", String.class);
                                             double distance = DoubleArgumentType.getDouble(ctx, "distance");
                                             double velocity = DoubleArgumentType.getDouble(ctx, "velocity");
-                                            new GravityCommand(plugin).make(player, direction, distance, velocity);
+                                            new GravityUtility(plugin).make(player, direction, distance, velocity);
                                             return Command.SINGLE_SUCCESS;
                                 }))));
         return command.build();

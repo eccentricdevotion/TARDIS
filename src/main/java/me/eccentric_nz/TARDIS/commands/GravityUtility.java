@@ -8,12 +8,12 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.UUID;
 
-public class GravityCommand {
+public class GravityUtility {
 
     private final TARDIS plugin;
     private final HashMap<String, Double> gravityDirection = new HashMap<>();
 
-    public GravityCommand(TARDIS plugin) {
+    public GravityUtility(TARDIS plugin) {
         this.plugin = plugin;
         gravityDirection.put("down", 0D);
         gravityDirection.put("up", 1D);
