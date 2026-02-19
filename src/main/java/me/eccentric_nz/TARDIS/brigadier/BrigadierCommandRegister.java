@@ -27,6 +27,7 @@ public class BrigadierCommandRegister {
         commands.registrar().register(new GiveCommandNode(plugin).build(), List.of("tgive"));
         commands.registrar().register(new GravityCommandNode(plugin).build(), List.of("tgravity"));
         commands.registrar().register(new PlotCommandNode(plugin).build(), List.of("tplot"));
+        commands.registrar().register(new RecipeCommandNode(plugin).build(), List.of("trecipe"));
         commands.registrar().register(new SchematicCommandNode(plugin).build(), List.of("ts", "tschematic"));
         commands.registrar().register(new QuestionCommandNode(plugin).build(), List.of("t?", "tardishelp"));
     }
