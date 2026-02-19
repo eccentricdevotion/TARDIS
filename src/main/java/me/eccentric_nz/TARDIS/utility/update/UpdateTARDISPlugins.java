@@ -16,6 +16,13 @@
  */
 package me.eccentric_nz.TARDIS.utility.update;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import org.bukkit.command.CommandSender;
+import org.bukkit.scheduler.BukkitRunnable;
+
 import java.io.File;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -28,13 +35,6 @@ import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.time.Duration;
 import java.util.concurrent.atomic.AtomicBoolean;
-
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import org.bukkit.command.CommandSender;
-import org.bukkit.scheduler.BukkitRunnable;
 
 public class UpdateTARDISPlugins {
 

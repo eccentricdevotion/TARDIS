@@ -21,8 +21,6 @@ import me.eccentric_nz.TARDIS.TARDISRunnables;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.command.CommandSender;
 
-import java.util.Locale;
-
 /**
  * @author eccentric_nz
  */

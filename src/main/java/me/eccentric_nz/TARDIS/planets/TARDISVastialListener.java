@@ -10,8 +10,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.Locale;
-
 public class TARDISVastialListener implements Listener {
 
     private final TARDIS plugin;

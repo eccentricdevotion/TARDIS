@@ -19,9 +19,8 @@ package me.eccentric_nz.TARDIS.commands.dev.lists;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.Desktops;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
-import org.bukkit.command.CommandSender;
 
-import java.util.*;
+import java.util.Map;
 
 public class TradesLister {
 

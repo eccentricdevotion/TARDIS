@@ -15,7 +15,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.protection.TARDISWorldGuardFlag;
 import net.kyori.adventure.text.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 

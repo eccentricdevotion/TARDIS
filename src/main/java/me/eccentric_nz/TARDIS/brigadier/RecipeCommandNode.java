@@ -1,7 +1,6 @@
 package me.eccentric_nz.TARDIS.brigadier;
 
 import com.mojang.brigadier.Command;
-import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
@@ -10,13 +9,9 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.brigadier.arguments.RecipeArgumentType;
 import me.eccentric_nz.TARDIS.brigadier.arguments.SeedArgumentType;
 import me.eccentric_nz.TARDIS.commands.RecipeUtility;
-import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.messaging.TARDISRecipeLister;
 import me.eccentric_nz.TARDIS.recipes.TARDISRecipeCategoryInventory;
-import me.eccentric_nz.tardischunkgenerator.worldgen.PlotGenerator;
 import org.bukkit.entity.Player;
-
-import java.util.Locale;
 
 public class RecipeCommandNode {
 

@@ -21,7 +21,6 @@ import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.command.CommandSender;
 
-import java.util.List;
 import java.util.Locale;
 
 /**

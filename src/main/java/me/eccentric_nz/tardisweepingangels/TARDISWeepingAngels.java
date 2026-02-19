@@ -17,8 +17,6 @@
 package me.eccentric_nz.tardisweepingangels;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.tardisweepingangels.commands.TARDISWeepingAngelsCommand;
-import me.eccentric_nz.tardisweepingangels.commands.TabComplete;
 import me.eccentric_nz.tardisweepingangels.death.Death;
 import me.eccentric_nz.tardisweepingangels.death.PlayerDeath;
 import me.eccentric_nz.tardisweepingangels.equip.PlayerUndisguise;

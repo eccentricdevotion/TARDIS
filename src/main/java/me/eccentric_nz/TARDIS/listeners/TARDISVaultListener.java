@@ -20,25 +20,14 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetVault;
 import me.eccentric_nz.TARDIS.enumeration.SmelterChest;
 import me.eccentric_nz.TARDIS.rooms.VaultDrop;
-import me.eccentric_nz.TARDIS.sonic.SonicSorterListener;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Tag;
-import org.bukkit.World;
-import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
 import org.bukkit.block.Container;
-import org.bukkit.block.data.type.Chest;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
-import org.bukkit.inventory.ItemStack;
-
-import java.util.*;
 
 public class TARDISVaultListener implements Listener {
 

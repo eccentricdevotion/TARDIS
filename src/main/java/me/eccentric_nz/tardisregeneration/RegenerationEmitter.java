@@ -17,8 +17,8 @@
 package me.eccentric_nz.tardisregeneration;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.particles.Regeneration;
 import me.eccentric_nz.TARDIS.particles.ParticleRunnable;
+import me.eccentric_nz.TARDIS.particles.Regeneration;
 import org.bukkit.Location;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Entity;

@@ -4,7 +4,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.SmelterChest;
 import me.eccentric_nz.TARDIS.rooms.library.LibrarySorter;
-import me.eccentric_nz.TARDIS.rooms.smelter.SmelterDrop;
 import me.eccentric_nz.TARDIS.rooms.smelter.SmelterFuel;
 import me.eccentric_nz.TARDIS.rooms.smelter.SmelterOre;
 import org.bukkit.Location;

@@ -23,7 +23,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
-import java.util.List;
 
 /**
  * @author eccentric_nz

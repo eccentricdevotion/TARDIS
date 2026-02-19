@@ -21,7 +21,6 @@ import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 
-import java.util.Arrays;
 import java.util.regex.Pattern;
 
 /**

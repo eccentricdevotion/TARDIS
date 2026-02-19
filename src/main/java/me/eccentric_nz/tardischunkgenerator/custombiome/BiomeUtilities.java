@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.tardischunkgenerator.custombiome;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
