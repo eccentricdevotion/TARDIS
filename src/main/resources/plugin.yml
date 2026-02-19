@@ -1831,7 +1831,7 @@ commands:
     description: Teleport to a world's spawn point
     permission: tardis.admin
     permission-message: You don't have the permission <permission> to use this command
-    usage: /<command> [world]
+    usage: /<command> [world] [player]
   tardisworld:
     aliases: tworld
     description: Load or unload TARDIS worlds

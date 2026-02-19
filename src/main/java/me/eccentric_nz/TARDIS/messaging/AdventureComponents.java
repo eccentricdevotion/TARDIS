@@ -165,7 +165,7 @@ public class AdventureComponents {
         if (hasPerm) {
             textComponent = Component.text(recharger, NamedTextColor.GREEN)
                     .hoverEvent(HoverEvent.showText(Component.text(String.format("%s %s, %s, %s", world, x, y, z))))
-                    .clickEvent(ClickEvent.runCommand(String.format("/tardisteleport %s %s %s not_for_players", world, x, z)));
+                    .clickEvent(ClickEvent.runCommand(String.format("/tardisteleport %s %s %s %s not_for_players", world, x, y, z)));
         } else {
             textComponent = Component.text(recharger, NamedTextColor.GREEN)
                     .hoverEvent(HoverEvent.showText(Component.text(String.format("%s %s, %s, %s", world, x, y, z))));

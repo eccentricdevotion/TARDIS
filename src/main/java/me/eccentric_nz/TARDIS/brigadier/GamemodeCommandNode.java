@@ -25,7 +25,7 @@ public class GamemodeCommandNode {
                 .then(Commands.argument("mode", ArgumentTypes.gameMode())
                         .executes(ctx -> {
                             if (ctx.getSource().getExecutor() instanceof Player player) {
-                                GameMode gamemode = ctx.getArgument("arg", GameMode.class);
+                                GameMode gamemode = ctx.getArgument("mode", GameMode.class);
                                 player.setGameMode(gamemode);
                             }
                             return Command.SINGLE_SUCCESS;
@@ -35,7 +35,7 @@ public class GamemodeCommandNode {
                                 .executes(ctx -> {
                                     PlayerSelectorArgumentResolver targetResolver = ctx.getArgument("player", PlayerSelectorArgumentResolver.class);
                                     Player player = targetResolver.resolve(ctx.getSource()).getFirst();
-                                    GameMode gamemode = ctx.getArgument("arg", GameMode.class);
+                                    GameMode gamemode = ctx.getArgument("mode", GameMode.class);
                                     player.setGameMode(gamemode);
                                     return Command.SINGLE_SUCCESS;
                                 })));

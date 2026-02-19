@@ -50,7 +50,9 @@ import java.util.Map;
 public class TARDISWorldCommand extends TARDISCompleter implements CommandExecutor, TabCompleter {
 
     private final TARDIS plugin;
-    private final List<String> ROOT_SUBS = List.of("load", "unload", "enable", "disable", "gm", "rename", "update_name", "info", "dimensionicon");
+    private final List<String> ROOT_SUBS = List.of(
+            "load", "unload", "enable", "disable", "gm", "rename", "update_name", "info", "dimensionicon"
+    );
     private final List<String> WORLD_SUBS = new ArrayList<>();
     private final List<String> TYPE_SUBS = new ArrayList<>();
     private final List<String> ENV_SUBS = new ArrayList<>();
@@ -84,7 +86,11 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
             }
             // icon
             if (args[0].equalsIgnoreCase("dimensionicon")) {
-                return new SaveIconCommand(plugin).changeIcon(sender, args);
+                if (args.length < 3) {
+                    plugin.getMessenger().send(sender, TardisModule.TARDIS, "TOO_FEW_ARGS");
+                    return false;
+                }
+                return new SaveIconCommand(plugin).changeIcon(sender, args[1], args[2], true);
             }
             // info
             if (args[0].equalsIgnoreCase("info") && sender instanceof Player player) {
@@ -221,7 +227,7 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
                             case "gallifrey" -> {
                                 plugin.debug("Gallifrey enabled, registering planet event listeners");
                                 plugin.getPM().registerEvents(new TARDISGallifreySpawnListener(plugin), plugin);
-                                plugin.getTardisHelper().addCustomBiome("gallifrey");
+//                                plugin.getTardisHelper().addCustomBiome("gallifrey");
                             }
                             case "siluria" -> {
                                 plugin.debug("Siluria enabled, registering planet event listeners");
@@ -237,7 +243,7 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
                                 if (plugin.getConfig().getBoolean("modules.weeping_angels")) {
                                     plugin.getPM().registerEvents(new TARDISSkaroSpawnListener(plugin), plugin);
                                 }
-                                plugin.getTardisHelper().addCustomBiome("skaro");
+//                                plugin.getTardisHelper().addCustomBiome("skaro");
                             }
                             default -> {
                                 // telos

@@ -24,7 +24,6 @@ import me.eccentric_nz.TARDIS.lazarus.disguise.TARDISDisguiser;
 import me.eccentric_nz.TARDIS.lazarus.disguise.TARDISPlayerDisguiser;
 import me.eccentric_nz.TARDIS.skins.ChameleonArchDisguiser;
 import me.eccentric_nz.tardischunkgenerator.custombiome.CubicMaterial;
-import me.eccentric_nz.tardischunkgenerator.custombiome.CustomBiome;
 import me.eccentric_nz.tardischunkgenerator.custombiome.CustomBiomeData;
 import me.eccentric_nz.tardischunkgenerator.custombiome.TARDISBiomeData;
 import me.eccentric_nz.tardischunkgenerator.helpers.GetBlockColours;
@@ -293,7 +292,7 @@ public class TARDISHelper {
         } else {
             data = TARDISBiomeData.EYE;
         }
-        CustomBiome.addCustomBiome(data);
+//        CustomBiome.addCustomBiome(data);
     }
 
     public void removeTileEntity(org.bukkit.block.BlockState tile) {

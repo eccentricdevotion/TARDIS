@@ -64,7 +64,7 @@ public class TARDISTimeCommand extends TARDISCompleter implements CommandExecuto
                     if (rsc.resultSet()) {
                         world = rsc.getCurrent().location().getWorld();
                     } else {
-                        // can't change weather in TARDIS world
+                        // can't change time in TARDIS world
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "TIME_TARDIS");
                         return true;
                     }

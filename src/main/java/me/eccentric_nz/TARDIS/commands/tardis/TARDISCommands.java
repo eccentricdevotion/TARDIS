@@ -295,7 +295,11 @@ public class TARDISCommands implements CommandExecutor {
                     }
                 }
                 case saveicon -> {
-                    return new SaveIconCommand(plugin).changeIcon(player, args);
+                    if (args.length < 3) {
+                        plugin.getMessenger().send(sender, TardisModule.TARDIS, "TOO_FEW_ARGS");
+                        return false;
+                    }
+                    return new SaveIconCommand(plugin).changeIcon(player, args[1], args[2], false);
                 }
                 default -> {
                 }
