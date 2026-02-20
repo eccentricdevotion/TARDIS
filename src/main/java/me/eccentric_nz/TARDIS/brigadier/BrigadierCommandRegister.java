@@ -37,6 +37,7 @@ public class BrigadierCommandRegister {
         commands.registrar().register(new SchematicCommandNode(plugin).build(), List.of("ts", "tschematic"));
         commands.registrar().register(new TeleportCommandNode().build(), List.of("tardistp", "ttp"));
         commands.registrar().register(new TimeCommandNode(plugin).build(), List.of("ttime"));
+        commands.registrar().register(new TravelCommandNode(plugin).build(), List.of("ttravel"));
         commands.registrar().register(new WorldCommandNode(plugin).build(), List.of("tworld"));
         commands.registrar().register(new QuestionCommandNode(plugin).build(), List.of("t?", "tardishelp"));
     }

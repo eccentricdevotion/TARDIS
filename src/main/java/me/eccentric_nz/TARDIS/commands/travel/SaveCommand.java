@@ -50,7 +50,7 @@ public class SaveCommand {
         this.plugin = plugin;
     }
 
-    public boolean action(Player player, String[] args, int id, ChameleonPreset preset) {
+    public boolean action(Player player, String name, int id, ChameleonPreset preset) {
         // we're thinking this is a saved destination name
         if (TARDISPermission.hasPermission(player, "tardis.save")) {
             if (plugin.getConfig().getBoolean("difficulty.system_upgrades") && !new SystemUpgradeChecker(plugin).has(player.getUniqueId().toString(), SystemTree.SAVES)) {
@@ -58,7 +58,7 @@ public class SaveCommand {
                 return true;
             }
             HashMap<String, Object> whered = new HashMap<>();
-            whered.put("dest_name", args[1]);
+            whered.put("dest_name", name);
             whered.put("tardis_id", id);
             ResultSetDestinations rsd = new ResultSetDestinations(plugin, whered, false);
             if (!rsd.resultSet()) {

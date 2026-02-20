@@ -36,13 +36,13 @@ public class PlayerCommand {
         this.plugin = plugin;
     }
 
-    public boolean action(Player player, String p, int id) {
+    public boolean action(Player player, Player p, int id) {
         if (TARDISPermission.hasPermission(player, "tardis.timetravel.player")) {
             if (plugin.getConfig().getBoolean("difficulty.disks") && !plugin.getUtils().inGracePeriod(player, false)) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "ADV_PLAYER");
                 return true;
             }
-            if (player.getName().equalsIgnoreCase(p)) {
+            if (player.getName().equalsIgnoreCase(p.getName())) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "TRAVEL_NO_SELF");
                 return true;
             }
@@ -52,18 +52,18 @@ public class PlayerCommand {
                 return true;
             }
             // check the player
-            Player saved = plugin.getServer().getPlayer(p);
-            if (saved == null) {
-                plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_ONLINE");
-                return true;
-            }
+//            Player saved = plugin.getServer().getPlayer(p);
+//            if (saved == null) {
+//                plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_ONLINE");
+//                return true;
+//            }
             // check the to player's DND status
-            ResultSetPlayerPrefs rspp = new ResultSetPlayerPrefs(plugin, saved.getUniqueId().toString());
+            ResultSetPlayerPrefs rspp = new ResultSetPlayerPrefs(plugin, p.getUniqueId().toString());
             if (rspp.resultSet() && rspp.isDND()) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "DND", p);
                 return true;
             }
-            new TARDISRescue(plugin).rescue(player, saved.getUniqueId(), id, rsc.getCurrent().direction(), false, false);
+            new TARDISRescue(plugin).rescue(player, p.getUniqueId(), id, rsc.getCurrent().direction(), false, false);
         } else {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERM_PLAYER");
         }

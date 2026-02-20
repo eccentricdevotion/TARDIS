@@ -95,12 +95,11 @@ public class StructureCommand {
         set.put("y", village.getBlockY());
         set.put("z", village.getBlockZ());
         set.put("submarine", 0);
-        TravelType travelType;
-        switch (village.getWorld().getEnvironment()) {
-            case THE_END -> travelType = TravelType.VILLAGE_THE_END;
-            case NETHER -> travelType = TravelType.VILLAGE_NETHER;
-            default -> travelType = TravelType.VILLAGE_OVERWORLD;
-        }
+        TravelType travelType = switch (village.getWorld().getEnvironment()) {
+            case THE_END -> TravelType.VILLAGE_THE_END;
+            case NETHER -> TravelType.VILLAGE_NETHER;
+            default -> TravelType.VILLAGE_OVERWORLD;
+        };
         HashMap<String, Object> tid = new HashMap<>();
         tid.put("tardis_id", id);
         plugin.getQueryFactory().doSyncUpdate("next", set, tid);

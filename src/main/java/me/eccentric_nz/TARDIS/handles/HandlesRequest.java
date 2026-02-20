@@ -279,7 +279,7 @@ public class HandlesRequest {
                             for (Player p : plugin.getServer().getOnlinePlayers()) {
                                 String name = p.getName();
                                 if (groups.getFirst().equalsIgnoreCase(name)) {
-                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.performCommand("tardistravel " + name + " kzsbtr1h2"), 1L);
+                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.performCommand("tardistravel player " + name + " kzsbtr1h2"), 1L);
                                     return;
                                 }
                                 // don't understand

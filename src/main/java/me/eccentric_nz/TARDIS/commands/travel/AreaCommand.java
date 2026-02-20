@@ -43,16 +43,16 @@ public class AreaCommand {
         this.plugin = plugin;
     }
 
-    public boolean action(Player player, String[] args, int id, ChameleonPreset preset) {
+    public boolean action(Player player, String name, int id, ChameleonPreset preset) {
         HashMap<String, Object> wherea = new HashMap<>();
-        wherea.put("area_name", args[1]);
+        wherea.put("area_name", name);
         ResultSetAreas rsa = new ResultSetAreas(plugin, wherea, false, false);
         if (!rsa.resultSet()) {
             plugin.getMessenger().sendColouredCommand(player, "AREA_NOT_FOUND", "/tardis list areas", plugin);
             return true;
         }
-        if ((!TARDISPermission.hasPermission(player, "tardis.area." + args[1]) && !TARDISPermission.hasPermission(player, "tardis.area.*")) || (!player.isPermissionSet("tardis.area." + args[1]) && !player.isPermissionSet("tardis.area.*"))) {
-            plugin.getMessenger().send(player, TardisModule.TARDIS, "TRAVEL_NO_AREA_PERM", args[1]);
+        if ((!TARDISPermission.hasPermission(player, "tardis.area." + name) && !TARDISPermission.hasPermission(player, "tardis.area.*")) || (!player.isPermissionSet("tardis.area." + name) && !player.isPermissionSet("tardis.area.*"))) {
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "TRAVEL_NO_AREA_PERM", name);
             return true;
         }
         if (plugin.getConfig().getBoolean("difficulty.disks") && !plugin.getUtils().inGracePeriod(player, false)) {
@@ -107,7 +107,7 @@ public class AreaCommand {
         HashMap<String, Object> tid = new HashMap<>();
         tid.put("tardis_id", id);
         plugin.getQueryFactory().doSyncUpdate("next", set, tid);
-        plugin.getMessenger().send(player, TardisModule.TARDIS, "TRAVEL_APPROVED", args[1]);
+        plugin.getMessenger().send(player, TardisModule.TARDIS, "TRAVEL_APPROVED", name);
         plugin.getTrackerKeeper().getHasDestination().put(id, new TravelCostAndType(plugin.getArtronConfig().getInt("travel"), TravelType.AREA));
         plugin.getTrackerKeeper().getRescue().remove(id);
         if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {

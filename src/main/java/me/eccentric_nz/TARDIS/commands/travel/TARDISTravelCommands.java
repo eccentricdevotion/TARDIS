@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.commands.travel;
 
+import io.papermc.paper.registry.RegistryAccess;
+import io.papermc.paper.registry.RegistryKey;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
@@ -23,6 +25,9 @@ import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import org.bukkit.NamespacedKey;
+import org.bukkit.World;
+import org.bukkit.block.Biome;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -121,7 +126,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                             return new HomeCommand(plugin).action(player, id);
                         }
                         case "area" -> {
-                            return new AreaCommand(plugin).action(player, args, id, tardis.getPreset());
+                            return new AreaCommand(plugin).action(player, args[1], id, tardis.getPreset());
                         }
                         case "cave" -> {
                             return new CaveCommand(plugin).action(player, id);
@@ -130,14 +135,16 @@ public class TARDISTravelCommands implements CommandExecutor {
                             return new TARDISTravelGUI(plugin).open(player, id, args[0].toLowerCase(Locale.ROOT));
                         }
                         case "biome" -> {
-                            return new BiomeCommand(plugin).action(player, args, id);
+                            Biome biome = RegistryAccess.registryAccess().getRegistry(RegistryKey.BIOME).get(new NamespacedKey("minecraft", args[1].toLowerCase(Locale.ROOT)));
+                            World world = (args.length > 2) ? plugin.getServer().getWorld(args[2]) : null;
+                            return new BiomeCommand(plugin).action(player, biome, world, id);
                         }
                         case "dest" -> {
-                            return new SaveCommand(plugin).action(player, args, id, tardis.getPreset());
+                            return new SaveCommand(plugin).action(player, args[1], id, tardis.getPreset());
                         }
                         default -> {
                             // player
-                            return new PlayerCommand(plugin).action(player, args[0], id);
+                            return new PlayerCommand(plugin).action(player, plugin.getServer().getPlayer(args[1]), id);
                         }
                     }
                 }
@@ -162,7 +169,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                             return new TARDISTravelGUI(plugin).open(player, id, args[0].toLowerCase(Locale.ROOT));
                         }
                         default -> {
-                            return new PlayerCommand(plugin).action(player, args[0], id);
+                            return new PlayerCommand(plugin).action(player, null, id);
                         }
                     }
                 }
@@ -170,22 +177,23 @@ public class TARDISTravelCommands implements CommandExecutor {
                     return new StructureCommand(plugin).action(player, args, id);
                 }
                 if (args.length == 2 && args[0].equalsIgnoreCase("player")) {
-                    return new PlayerCommand(plugin).action(player, args[1], id);
+                    return new PlayerCommand(plugin).action(player, plugin.getServer().getPlayer(args[1]), id);
                 }
                 if (args.length == 2 && (args[1].equals("?") || args[1].equalsIgnoreCase("tpa"))) {
                     return new AskCommand(plugin).action(player, args);
                 }
                 if (args.length == 2 && args[0].equalsIgnoreCase("biome")) {
                     // we're thinking this is a biome search
-                    return new BiomeCommand(plugin).action(player, args, id);
+                    Biome biome = RegistryAccess.registryAccess().getRegistry(RegistryKey.BIOME).get(new NamespacedKey("minecraft", args[1].toLowerCase(Locale.ROOT)));
+                    return new BiomeCommand(plugin).action(player, biome, null, id);
                 }
                 if (args.length == 2 && (args[0].equalsIgnoreCase("dest") || args[0].equalsIgnoreCase("save"))) {
                     // we're thinking this is a saved destination name
-                    return new SaveCommand(plugin).action(player, args, id, tardis.getPreset());
+                    return new SaveCommand(plugin).action(player, args[1], id, tardis.getPreset());
                 }
                 if (args.length == 2 && args[0].equalsIgnoreCase("area")) {
                     // we're thinking this is admin defined area name
-                    return new AreaCommand(plugin).action(player, args, id, tardis.getPreset());
+                    return new AreaCommand(plugin).action(player, args[1], id, tardis.getPreset());
                 }
                 if (!TARDISPermission.hasPermission(player, "tardis.timetravel.location")) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "TRAVEL_NO_PERM_COORDS");
