@@ -17,10 +17,6 @@
 package me.eccentric_nz.TARDIS.commands.sudo;
 
 import com.google.common.collect.ImmutableList;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonParser;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
 import me.eccentric_nz.TARDIS.commands.preferences.IsomorphicCommand;
@@ -28,11 +24,11 @@ import me.eccentric_nz.TARDIS.commands.remote.BackCommand;
 import me.eccentric_nz.TARDIS.commands.remote.ComehereCommand;
 import me.eccentric_nz.TARDIS.commands.remote.HideCommand;
 import me.eccentric_nz.TARDIS.commands.remote.RebuildCommand;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetARS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreas;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisConsole;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
-import me.eccentric_nz.TARDIS.enumeration.*;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.enumeration.Updateable;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.*;
@@ -91,78 +87,7 @@ public class TARDISSudoCommand extends TARDISCompleter implements CommandExecuto
                                 plugin.getMessenger().send(sender, TardisModule.TARDIS, "CMD_NO_CONSOLE");
                                 return true;
                             }
-                            // does the player have an ARS record yet?
-                            HashMap<String, Object> wherer = new HashMap<>();
-                            wherer.put("tardis_id", rs.getTardisId());
-                            ResultSetARS rsa = new ResultSetARS(plugin, wherer);
-                            if (!rsa.resultSet()) {
-                                // create default json
-                                String[][][] empty = new String[3][9][9];
-                                for (int y = 0; y < 3; y++) {
-                                    for (int x = 0; x < 9; x++) {
-                                        for (int z = 0; z < 9; z++) {
-                                            empty[y][x][z] = "STONE";
-                                        }
-                                    }
-                                }
-                                // get TARDIS console size
-                                ResultSetTardisConsole rstc = new ResultSetTardisConsole(plugin);
-                                if (rstc.fromUUID(uuid.toString())) {
-                                    Schematic schm = rstc.getSchematic();
-                                    String controlBlock = schm.getSeedMaterial().toString();
-                                    if (schm.getConsoleSize() == ConsoleSize.MASSIVE) {
-                                        // the 8 slots on the same level &
-                                        empty[1][4][5] = controlBlock;
-                                        empty[1][4][6] = controlBlock;
-                                        empty[1][5][4] = controlBlock;
-                                        empty[1][5][5] = controlBlock;
-                                        empty[1][5][6] = controlBlock;
-                                        empty[1][6][4] = controlBlock;
-                                        empty[1][6][5] = controlBlock;
-                                        empty[1][6][6] = controlBlock;
-                                        // the 9 slots on the level above
-                                        empty[2][4][4] = controlBlock;
-                                        empty[2][4][5] = controlBlock;
-                                        empty[2][4][6] = controlBlock;
-                                        empty[2][5][4] = controlBlock;
-                                        empty[2][5][5] = controlBlock;
-                                        empty[2][5][6] = controlBlock;
-                                        empty[2][6][4] = controlBlock;
-                                        empty[2][6][5] = controlBlock;
-                                        empty[2][6][6] = controlBlock;
-                                    } else if (schm.getConsoleSize() == ConsoleSize.WIDE) {
-                                        // the 8 slots on the same level
-                                        empty[1][4][5] = controlBlock;
-                                        empty[1][4][6] = controlBlock;
-                                        empty[1][5][4] = controlBlock;
-                                        empty[1][5][5] = controlBlock;
-                                        empty[1][5][6] = controlBlock;
-                                        empty[1][6][4] = controlBlock;
-                                        empty[1][6][5] = controlBlock;
-                                        empty[1][6][6] = controlBlock;
-                                    } else if (schm.getConsoleSize() == ConsoleSize.TALL) {
-                                        empty[0][4][4] = controlBlock;
-                                        empty[0][4][5] = controlBlock;
-                                        empty[0][5][4] = controlBlock;
-                                        empty[0][5][5] = controlBlock;
-                                        empty[1][4][5] = controlBlock;
-                                        empty[1][5][4] = controlBlock;
-                                        empty[1][5][5] = controlBlock;
-                                    } else if (schm.getConsoleSize() == ConsoleSize.MEDIUM) {
-                                        empty[1][4][5] = controlBlock;
-                                        empty[1][5][4] = controlBlock;
-                                        empty[1][5][5] = controlBlock;
-                                    }
-                                    empty[1][4][4] = controlBlock;
-                                    Gson gson = new GsonBuilder().disableHtmlEscaping().create();
-                                    JsonArray json = JsonParser.parseString(gson.toJson(empty)).getAsJsonArray();
-                                    HashMap<String, Object> seta = new HashMap<>();
-                                    seta.put("tardis_id", rs.getTardisId());
-                                    seta.put("uuid", uuid);
-                                    seta.put("json", json.toString());
-                                    plugin.getQueryFactory().doInsert("ars", seta);
-                                }
-                            }
+                            ARSUtility.checkARS(plugin, rs.getTardisId(), uuid.toString());
                             return new SudoARS(plugin).showARS((Player) sender, uuid);
                         }
                         case "assemble" -> {

@@ -40,7 +40,26 @@ public class SudoCommandNode {
         LiteralArgumentBuilder<CommandSourceStack> command = Commands.literal("tardissudo")
                 .requires(ctx -> ctx.getSender().hasPermission("tardis.admin"))
                 .then(Commands.argument("profile", ArgumentTypes.playerProfiles())
-                        .then(Commands.literal("ars"))
+                        .then(Commands.literal("ars")
+                                .executes(ctx -> {
+                                    if (ctx.getSource().getSender() instanceof ConsoleCommandSender) {
+                                        plugin.getMessenger().send(ctx.getSource().getSender(), TardisModule.TARDIS, "CMD_NO_CONSOLE");
+                                        return Command.SINGLE_SUCCESS;
+                                    }
+                                    PlayerProfileListResolver profilesResolver = ctx.getArgument("profile", PlayerProfileListResolver.class);
+                                    Collection<PlayerProfile> foundProfiles = profilesResolver.resolve(ctx.getSource());
+                                    for (PlayerProfile profile : foundProfiles) {
+                                        ResultSetTardisID rs = new ResultSetTardisID(plugin);
+                                        if (!rs.fromUUID(profile.getId().toString())) {
+                                            plugin.getMessenger().send(ctx.getSource().getSender(), TardisModule.TARDIS, "PLAYER_NO_TARDIS");
+                                            return Command.SINGLE_SUCCESS;
+                                        }
+                                        ARSUtility.checkARS(plugin, rs.getTardisId(), profile.getId().toString());
+                                        new SudoARS(plugin).showARS((Player) ctx.getSource().getSender(), profile.getId());
+                                    }
+                                    return Command.SINGLE_SUCCESS;
+                                })
+                        )
                         .then(Commands.literal("assemble").executes(ctx -> {
                             PlayerProfileListResolver profilesResolver = ctx.getArgument("profile", PlayerProfileListResolver.class);
                             Collection<PlayerProfile> foundProfiles = profilesResolver.resolve(ctx.getSource());
