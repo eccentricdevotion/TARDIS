@@ -30,11 +30,11 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-class SudoDesiege {
+public class SudoDesiege {
 
     private final TARDIS plugin;
 
-    SudoDesiege(TARDIS plugin) {
+    public SudoDesiege(TARDIS plugin) {
         this.plugin = plugin;
     }
 

@@ -29,15 +29,15 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-class SudoAssemble {
+public class SudoAssemble {
 
     private final TARDIS plugin;
 
-    SudoAssemble(TARDIS plugin) {
+    public SudoAssemble(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    boolean restore(CommandSender sender, UUID uuid, String player) {
+    public boolean restore(CommandSender sender, UUID uuid, String player) {
         // turn off dispersal for this player
         plugin.getTrackerKeeper().getDispersed().remove(uuid);
         // get players TARDIS

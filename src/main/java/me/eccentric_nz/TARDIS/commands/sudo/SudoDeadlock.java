@@ -25,15 +25,15 @@ import org.bukkit.command.CommandSender;
 import java.util.HashMap;
 import java.util.UUID;
 
-class SudoDeadlock {
+public class SudoDeadlock {
 
     private final TARDIS plugin;
 
-    SudoDeadlock(TARDIS plugin) {
+    public SudoDeadlock(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    boolean toggleDeadlock(UUID uuid, CommandSender sender) {
+    public boolean toggleDeadlock(UUID uuid, CommandSender sender) {
         ResultSetTardisID rs = new ResultSetTardisID(plugin);
         // does the player have a TARDIS
         if (rs.fromUUID(uuid.toString())) {

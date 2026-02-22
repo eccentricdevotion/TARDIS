@@ -221,7 +221,7 @@ public class TARDISSudoCommand extends TARDISCompleter implements CommandExecuto
                                 plugin.getMessenger().send(sender, TardisModule.TARDIS, "CMD_NO_CONSOLE");
                                 return true;
                             }
-                            return new SudoUpdate(plugin).initiate((Player) sender, args, rs.getTardisId(), uuid);
+                            return new SudoUpdate(plugin).initiate((Player) sender, args[2], (args.length == 4 ? args[3] : ""), rs.getTardisId(), uuid);
                         }
                     }
                 }

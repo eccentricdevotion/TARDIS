@@ -35,6 +35,7 @@ public class BrigadierCommandRegister {
         commands.registrar().register(new PlotCommandNode(plugin).build(), List.of("tplot"));
         commands.registrar().register(new RecipeCommandNode(plugin).build(), List.of("trecipe"));
         commands.registrar().register(new SchematicCommandNode(plugin).build(), List.of("ts", "tschematic"));
+        commands.registrar().register(new SudoCommandNode(plugin).build(), List.of("tsudo"));
         commands.registrar().register(new TeleportCommandNode().build(), List.of("tardistp", "ttp"));
         commands.registrar().register(new TimeCommandNode(plugin).build(), List.of("ttime"));
         commands.registrar().register(new TravelCommandNode(plugin).build(), List.of("ttravel"));

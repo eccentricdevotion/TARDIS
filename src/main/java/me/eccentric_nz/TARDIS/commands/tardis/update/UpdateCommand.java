@@ -130,8 +130,8 @@ public class UpdateCommand {
                 Block block = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 10);
                 if (block.getType().equals(Material.IRON_DOOR)) {
                     Door door = (Door) block.getBlockData();
-                    if (args.length == 3) {
-                        Hinge setHinge = Hinge.valueOf(args[2].toUpperCase(Locale.ROOT));
+                    if (args.length == 4) {
+                        Hinge setHinge = Hinge.valueOf(args[3].toUpperCase(Locale.ROOT));
                         door.setHinge(setHinge);
                     } else {
                         Hinge hinge = door.getHinge();
