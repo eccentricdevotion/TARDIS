@@ -53,7 +53,7 @@ public class TARDISRemoteCommands extends TARDISCompleter implements CommandExec
     private final ImmutableList<String> TRAVEL_SUBS = ImmutableList.of("home", "area");
     private final List<String> AREA_SUBS = new ArrayList<>();
 
-    //[player] [travel|comehere|hide|rebuild|back] [home|area|coords]
+    //tardisremote [player] [travel|comehere|hide|rebuild|back] [home|area|coords] [area]
 
     public TARDISRemoteCommands(TARDIS plugin) {
         this.plugin = plugin;
