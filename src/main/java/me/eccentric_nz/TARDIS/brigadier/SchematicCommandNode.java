@@ -8,8 +8,8 @@ import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.brigadier.arguments.DirectoryArgumentType;
+import me.eccentric_nz.TARDIS.brigadier.arguments.LightArgumentType;
 import me.eccentric_nz.TARDIS.brigadier.suggestions.BlockSuggestions;
-import me.eccentric_nz.TARDIS.brigadier.suggestions.LightSuggestions;
 import me.eccentric_nz.TARDIS.brigadier.suggestions.SchematicLoadSuggestions;
 import me.eccentric_nz.TARDIS.schematic.actions.*;
 import org.bukkit.Bukkit;
@@ -82,13 +82,12 @@ public class SchematicCommandNode {
                                         }))
                         ))
                 .then(Commands.literal("convert")
-                        .then(Commands.argument("from_light", StringArgumentType.word())
-                                .suggests(LightSuggestions::get)
+                        .then(Commands.argument("from_light", new LightArgumentType())
                                 .then(Commands.argument("to_block", StringArgumentType.word())
                                         .suggests(BlockSuggestions::get)
                                         .executes(ctx -> {
                                             Player player = (Player) ctx.getSource().getExecutor();
-                                            String from = StringArgumentType.getString(ctx, "from_light");
+                                            String from = ctx.getArgument("from_light", String.class);
                                             String to = StringArgumentType.getString(ctx, "to_block");
                                             new SchematicConvert().act(plugin, player, from, to);
                                             return Command.SINGLE_SUCCESS;

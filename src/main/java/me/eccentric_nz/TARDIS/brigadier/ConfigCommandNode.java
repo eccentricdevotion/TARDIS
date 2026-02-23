@@ -76,7 +76,7 @@ public class ConfigCommandNode {
                                     return Command.SINGLE_SUCCESS;
                                 })))
                 .then(Commands.literal("language")
-                        .then(Commands.argument("option", new LanguageArgumentType())
+                        .then(Commands.argument("option", new LanguageCodeArgumentType())
                                 .executes(ctx -> {
                                     String o = ctx.getArgument("option", String.class);
                                     new LanguageCommand(plugin).setLanguage(ctx.getSource().getSender(), o);

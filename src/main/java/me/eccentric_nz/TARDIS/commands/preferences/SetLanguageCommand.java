@@ -31,7 +31,7 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-class SetLanguageCommand {
+public class SetLanguageCommand {
 
     private final TARDIS plugin;
 
@@ -39,7 +39,7 @@ class SetLanguageCommand {
         this.plugin = plugin;
     }
 
-    boolean setLanguagePref(Player player, String[] args) {
+    public boolean setLanguagePref(Player player, String[] args) {
         String pref = args[0];
         if (args.length < 2) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "PREF_NEED", pref);

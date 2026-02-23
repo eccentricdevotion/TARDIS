@@ -27,7 +27,7 @@ import java.util.Locale;
 /**
  * @author eccentric_nz
  */
-class HumCommand {
+public class HumCommand {
 
     private final TARDIS plugin;
 
@@ -35,14 +35,10 @@ class HumCommand {
         this.plugin = plugin;
     }
 
-    boolean setHumPref(Player player, String[] args) {
-        if (args.length < 2) {
-            plugin.getMessenger().send(player, TardisModule.TARDIS, "HUM_NEED");
-            return false;
-        }
+    public boolean setHumPref(Player player, String hum) {
         Hum go;
         try {
-            go = Hum.valueOf(args[1].toUpperCase(Locale.ROOT));
+            go = Hum.valueOf(hum.toUpperCase(Locale.ROOT));
         } catch (IllegalArgumentException e) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "HUM_NOT_VALID");
             return false;

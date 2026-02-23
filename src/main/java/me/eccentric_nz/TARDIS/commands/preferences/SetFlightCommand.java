@@ -35,14 +35,10 @@ public class SetFlightCommand {
         this.plugin = plugin;
     }
 
-    boolean setMode(Player player, String[] args) {
-        if (args.length < 2) {
-            plugin.getMessenger().send(player, TardisModule.TARDIS, "FLIGHT_NEED");
-            return false;
-        }
+    public boolean setMode(Player player, String mode) {
         FlightMode fm;
         try {
-            fm = FlightMode.valueOf(args[1].toUpperCase(Locale.ROOT));
+            fm = FlightMode.valueOf(mode.toUpperCase(Locale.ROOT));
         } catch (IllegalArgumentException e) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "FLIGHT_INFO");
             return true;

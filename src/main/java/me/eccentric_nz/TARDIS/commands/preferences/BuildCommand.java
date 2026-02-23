@@ -38,7 +38,7 @@ public class BuildCommand {
         this.plugin = plugin;
     }
 
-    public boolean toggleCompanionBuilding(Player player, String[] args) {
+    public boolean toggleCompanionBuilding(Player player, String arg) {
         if (!plugin.isWorldGuardOnServer() || !plugin.getConfig().getBoolean("allow.wg_flag_set")) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "CMD_DISABLED");
             return true;
@@ -57,12 +57,12 @@ public class BuildCommand {
         HashMap<String, Object> setp = new HashMap<>();
         HashMap<String, Object> wherep = new HashMap<>();
         wherep.put("uuid", player.getUniqueId().toString());
-        if (args[1].equalsIgnoreCase(plugin.getLanguage().getString("SET_ON", "ON")) || args[1].equalsIgnoreCase("on")) {
+        if (arg.equalsIgnoreCase(plugin.getLanguage().getString("SET_ON", "ON")) || arg.equalsIgnoreCase("on")) {
             setp.put("build_on", 1);
             plugin.getTrackerKeeper().getAntiBuild().remove(id);
             plugin.getMessenger().send(player, TardisModule.TARDIS, "ANTIBUILD_ON");
         }
-        if (args[1].equalsIgnoreCase(plugin.getLanguage().getString("SET_OFF", "OFF")) || args[1].equalsIgnoreCase("off")) {
+        if (arg.equalsIgnoreCase(plugin.getLanguage().getString("SET_OFF", "OFF")) || arg.equalsIgnoreCase("off")) {
             setp.put("build_on", 0);
             TARDISAntiBuild tab = new TARDISAntiBuild();
             String[] data = tardis.getChunk().split(":");

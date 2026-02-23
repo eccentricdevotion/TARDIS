@@ -21,13 +21,13 @@ public class SilenceMobsCommand {
         this.plugin = plugin;
     }
 
-    public boolean toggle(Player player, String[] args) {
+    public boolean toggle(Player player, String arg) {
         // get the player's TARDIS
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", player.getUniqueId().toString());
         ResultSetTardis rst = new ResultSetTardis(plugin, where, "", false);
         if (rst.resultSet()) {
-            boolean on_off = args[1].equalsIgnoreCase("on");
+            boolean on_off = arg.equalsIgnoreCase("on");
             // get ARS chunks
             String[] tc = rst.getTardis().getChunk().split(":");
             int cx = TARDISNumberParsers.parseInt(tc[1]);

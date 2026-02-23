@@ -29,12 +29,12 @@ import java.util.Locale;
 /**
  * @author eccentric_nz
  */
-class SetKeyCommand {
+public class SetKeyCommand {
 
     private final TARDIS plugin;
     private final List<Material> keys = new ArrayList<>();
 
-    SetKeyCommand(TARDIS plugin) {
+    public SetKeyCommand(TARDIS plugin) {
         this.plugin = plugin;
         plugin.getBlocksConfig().getStringList("keys").forEach((m) -> {
             try {
@@ -45,12 +45,8 @@ class SetKeyCommand {
         });
     }
 
-    boolean setKeyPref(Player player, String[] args) {
-        if (args.length < 2) {
-            plugin.getMessenger().send(player, TardisModule.TARDIS, "KEY_NEED");
-            return false;
-        }
-        String setMaterial = args[1].toUpperCase(Locale.ROOT);
+    public boolean setKeyPref(Player player, String material) {
+        String setMaterial = material.toUpperCase(Locale.ROOT);
         Material go;
         try {
             go = Material.valueOf(setMaterial);

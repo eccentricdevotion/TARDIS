@@ -157,8 +157,8 @@ public class TARDISGeneralPrefsListener extends TARDISMenuListener {
         }
         switch (which) {
             case "Console Labels" -> {
-                String[] args = new String[]{"console_labels", bool ? "off" : "on"};
-                new LabelsCommand(plugin).toggle(player, args);
+                String arg = bool ? "off" : "on";
+                new LabelsCommand(plugin).toggle(player, arg);
                 return;
             }
             case "Isometric" -> {
@@ -253,10 +253,7 @@ public class TARDISGeneralPrefsListener extends TARDISMenuListener {
                 }
             }
             case "Companion Build" -> {
-                String[] args = new String[2];
-                args[0] = "";
-                args[1] = value;
-                new BuildCommand(plugin).toggleCompanionBuilding(player, args);
+                new BuildCommand(plugin).toggleCompanionBuilding(player, value);
             }
             case "Lock Containers" -> {
                 if (bool) {

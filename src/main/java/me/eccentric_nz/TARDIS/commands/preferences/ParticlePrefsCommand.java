@@ -35,37 +35,32 @@ public class ParticlePrefsCommand {
         this.plugin = plugin;
     }
 
-    public boolean setPartclePref(Player player, String[] args) {
-        if (args.length < 2) {
-            plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
-            return true;
-        }
-        String which = args[0].toLowerCase(Locale.ROOT);
+    public boolean setPartclePref(Player player, String which, String arg) {
         Object value;
         switch (which) {
             case "effect" -> {
                 try {
-                    ParticleEffect effect = ParticleEffect.valueOf(args[1].toUpperCase(Locale.ROOT));
+                    ParticleEffect effect = ParticleEffect.valueOf(arg.toUpperCase(Locale.ROOT));
                     value = effect.toString();
                 } catch (IllegalArgumentException e) {
-                    plugin.getMessenger().send(player, TardisModule.TARDIS, "ARG_PARTICLE", args[1], "effect");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "ARG_PARTICLE", arg, "effect");
                     return true;
                 }
             }
             case "shape" -> {
                 try {
-                    ParticleShape shape = ParticleShape.valueOf(args[1].toUpperCase(Locale.ROOT));
+                    ParticleShape shape = ParticleShape.valueOf(arg.toUpperCase(Locale.ROOT));
                     value = shape.toString();
                 } catch (IllegalArgumentException e) {
-                    plugin.getMessenger().send(player, TardisModule.TARDIS, "ARG_PARTICLE", args[1], "shape");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "ARG_PARTICLE", arg, "shape");
                     return true;
                 }
             }
             default -> {
                 // speed
-                value = TARDISNumberParsers.parseDouble(args[1]);
+                value = TARDISNumberParsers.parseDouble(arg);
                 if ((Double) value == -1) {
-                    plugin.getMessenger().send(player, TardisModule.TARDIS, "ARG_PARTICLE", args[1], "speed");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "ARG_PARTICLE", arg, "speed");
                     return true;
                 }
             }

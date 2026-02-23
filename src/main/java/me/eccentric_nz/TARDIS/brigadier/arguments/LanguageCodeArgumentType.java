@@ -16,7 +16,7 @@ import net.kyori.adventure.text.Component;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-public class LanguageArgumentType implements CustomArgumentType<String, String> {
+public class LanguageCodeArgumentType implements CustomArgumentType<String, String> {
 
     private static final SimpleCommandExceptionType ERROR_INVALID_LANG = new SimpleCommandExceptionType(
             MessageComponentSerializer.message().serialize(Component.text("Invalid config section specified!"))

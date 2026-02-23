@@ -18,21 +18,14 @@ package me.eccentric_nz.TARDIS.commands.preferences;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.utility.ComponentUtils;
-import net.kyori.adventure.text.Component;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.BookMeta;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * @author eccentric_nz
  */
-class EPSMessageCommand {
+public class EPSMessageCommand {
 
     private final TARDIS plugin;
 
@@ -40,23 +33,7 @@ class EPSMessageCommand {
         this.plugin = plugin;
     }
 
-    boolean setMessage(Player player, String[] args) {
-        String message;
-        int count = args.length;
-        ItemStack bq = player.getInventory().getItemInMainHand();
-        if (bq.getType().equals(Material.WRITABLE_BOOK) || bq.getType().equals(Material.WRITTEN_BOOK)) {
-            BookMeta bm = (BookMeta) bq.getItemMeta();
-            List<Component> pages = bm.pages();
-            StringBuilder sb = new StringBuilder();
-            pages.forEach((s) -> sb.append(ComponentUtils.stripColour(s)).append(" "));
-            message = sb.toString();
-        } else {
-            if (count < 2) {
-                plugin.getMessenger().send(player, TardisModule.TARDIS, "EP1_NEED");
-                return false;
-            }
-            message = String.join(" ", Arrays.copyOfRange(args, 1, count));
-        }
+    public boolean setMessage(Player player, String message) {
         HashMap<String, Object> sete = new HashMap<>();
         sete.put("eps_message", message);
         HashMap<String, Object> where = new HashMap<>();
