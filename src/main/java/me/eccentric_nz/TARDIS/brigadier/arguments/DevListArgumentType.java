@@ -15,14 +15,18 @@ import net.kyori.adventure.text.Component;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
-public class KeyArgumentType implements CustomArgumentType<String, String> {
+public class DevListArgumentType implements CustomArgumentType<String, String> {
 
     private static final SimpleCommandExceptionType ERROR_INVALID_KEY = new SimpleCommandExceptionType(
             MessageComponentSerializer.message().serialize(Component.text("Invalid key specified!"))
     );
     private final Set<String> KEYS = Set.of(
-            "first", "second", "third", "fifth", "seventh", "ninth",
-            "tenth", "eleventh", "susan", "rose", "sally", "perception", "gold"
+            "preset_perms",
+            "recipes",
+            "blueprints",
+            "block_colours",
+            "change",
+            "trades"
     );
 
     @Override

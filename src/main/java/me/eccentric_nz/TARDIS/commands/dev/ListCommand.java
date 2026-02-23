@@ -28,59 +28,59 @@ import org.bukkit.command.CommandSender;
 /**
  * @author eccentric_nz
  */
-class ListCommand {
+public class ListCommand {
 
     private final TARDIS plugin;
 
-    ListCommand(TARDIS plugin) {
+    public ListCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    boolean listStuff(CommandSender sender, String[] args) {
-        if (args.length > 1 && (
-                args[1].equalsIgnoreCase("preset_perms") ||
-                args[1].equalsIgnoreCase("perms") ||
-                args[1].equalsIgnoreCase("recipes") ||
-                args[1].equalsIgnoreCase("blueprints") ||
-                args[1].equalsIgnoreCase("commands") ||
-                args[1].equalsIgnoreCase("block_colours") ||
-                args[1].equalsIgnoreCase("change") ||
-                args[1].equalsIgnoreCase("consoles") ||
-                args[1].equalsIgnoreCase("trades")
+    public boolean listStuff(CommandSender sender, String which, String other) {
+        if (!which.isEmpty() && (
+                which.equalsIgnoreCase("preset_perms") ||
+                which.equalsIgnoreCase("perms") ||
+                which.equalsIgnoreCase("recipes") ||
+                which.equalsIgnoreCase("blueprints") ||
+                which.equalsIgnoreCase("commands") ||
+                which.equalsIgnoreCase("block_colours") ||
+                which.equalsIgnoreCase("change") ||
+                which.equalsIgnoreCase("consoles") ||
+                which.equalsIgnoreCase("trades")
         )) {
-            if (args[1].equalsIgnoreCase("perms")) {
-                if (args.length > 2) {
+            if (which.equalsIgnoreCase("perms")) {
+                if (!other.isEmpty()) {
                     new PermissionLister(plugin).listPermsHtml(sender);
                 } else {
                     new PermissionLister(plugin).listPerms(sender);
                 }
                 return true;
-            } else if (args[1].equalsIgnoreCase("recipes")) {
-                new RecipesLister(plugin).listRecipes(sender, args);
+            } else if (which.equalsIgnoreCase("recipes")) {
+                new RecipesLister(plugin).listRecipes(sender, other);
                 return true;
-            } else if (args[1].equalsIgnoreCase("trades")) {
+            } else if (which.equalsIgnoreCase("trades")) {
                 new TradesLister(plugin).listConsolesAndRooms();
                 return true;
-            } else if (args[1].equalsIgnoreCase("blueprints")) {
+            } else if (which.equalsIgnoreCase("blueprints")) {
                 new BlueprintsLister().listBlueprints(sender);
                 return true;
-            } else if (args[1].equalsIgnoreCase("commands")) {
-                if (args.length > 2) {
+            } else if (which.equalsIgnoreCase("commands")) {
+                if (!other.isEmpty()) {
                     new CommandsLister(plugin).listOtherTARDISCommands(sender);
                 } else {
                     new CommandsLister(plugin).listTARDISCommands(sender);
                 }
                 return true;
-            } else if (args[1].equalsIgnoreCase("block_colours")) {
+            } else if (which.equalsIgnoreCase("block_colours")) {
                 plugin.getTardisHelper().listBlockColours();
                 return true;
-            } else if (args[1].equalsIgnoreCase("change")) {
+            } else if (which.equalsIgnoreCase("change")) {
                 for (Material m : TARDISConstants.CHAMELEON_BLOCKS_CHANGE) {
                     TARDISConstants.changeToMaterial(m);
                 }
                 return true;
-            } else if (args[1].equalsIgnoreCase("consoles")) {
-                if (args.length == 2) {
+            } else if (which.equalsIgnoreCase("consoles")) {
+                if (other.isEmpty()) {
                     for (BlueprintConsole bpc : BlueprintConsole.values()) {
                         String perm = bpc.getPermission().split("\\.")[1];
                         Schematic console = Desktops.getBY_PERMS().get(perm);

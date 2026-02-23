@@ -28,7 +28,6 @@ import me.eccentric_nz.TARDIS.particles.ParticleEffect;
 import me.eccentric_nz.TARDIS.particles.ParticleShape;
 import me.eccentric_nz.TARDIS.particles.Sphere;
 import me.eccentric_nz.TARDIS.rooms.eye.Capacitor;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -43,8 +42,8 @@ public class EffectCommand {
         this.plugin = plugin;
     }
 
-    public boolean show(Player player, String[] args) {
-        if (args.length == 1) {
+    public boolean show(Player player, String s, String e, int d, double v, String c, String b) {
+        if (s.isEmpty()) {
             // use particle prefs
             UUID uuid = player.getUniqueId();
             // get players TARDIS id
@@ -67,24 +66,24 @@ public class EffectCommand {
                     }
                 }
             }
-        } else if (args.length > 2) {
-            if (args[1].equalsIgnoreCase("sphere")) {
-                Location s = player.getLocation().add(3.5d, 3.5d, 3.5d);
-                Capacitor capacitor = Capacitor.valueOf(args[2].toUpperCase(Locale.ROOT));
-                Sphere sphere = new Sphere(plugin, player.getUniqueId(), s, capacitor);
+        } else {
+            if (s.equalsIgnoreCase("sphere")) {
+                Location location = player.getLocation().add(3.5d, 3.5d, 3.5d);
+                Capacitor capacitor = Capacitor.valueOf(e.toUpperCase(Locale.ROOT));
+                Sphere sphere = new Sphere(plugin, player.getUniqueId(), location, capacitor);
                 int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, sphere, 0, 10);
                 sphere.setTaskID(task);
             } else {
                 ParticleShape shape;
                 ParticleEffect particle;
                 try {
-                    shape = ParticleShape.valueOf(args[1].toUpperCase(Locale.ROOT));
-                } catch (IllegalArgumentException e) {
+                    shape = ParticleShape.valueOf(s.toUpperCase(Locale.ROOT));
+                } catch (IllegalArgumentException ex) {
                     shape = ParticleShape.RANDOM;
                 }
                 try {
-                    particle = ParticleEffect.valueOf(args[2].toUpperCase(Locale.ROOT));
-                } catch (IllegalArgumentException e) {
+                    particle = ParticleEffect.valueOf(e.toUpperCase(Locale.ROOT));
+                } catch (IllegalArgumentException ex) {
                     particle = ParticleEffect.EFFECT;
                 }
                 // get density and speed
@@ -92,17 +91,17 @@ public class EffectCommand {
                 double speed = 0;
                 String colour = "White";
                 String block = "STONE";
-                if (args.length > 3) {
-                    density = TARDISNumberParsers.parseInt(args[3]);
+                if (d > 0) {
+                    density = d;
                 }
-                if (args.length > 4) {
-                    speed = TARDISNumberParsers.parseDouble(args[4]);
+                if (v > 0) {
+                    speed = v;
                 }
-                if (args.length > 5) {
-                    colour = args[5];
+                if (!c.isEmpty()) {
+                    colour = c;
                 }
-                if (args.length > 6) {
-                    block = args[6];
+                if (!b.isEmpty()) {
+                    block = b;
                 }
                 Emitter emitter = new Emitter(plugin, player.getUniqueId(), player.getLocation().add(3, 0, 3), new ParticleData(particle, shape, density, speed, colour, block, true), SpaceTimeThrottle.RAPID.getFlightTime());
                 int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, emitter, 0, shape.getPeriod());

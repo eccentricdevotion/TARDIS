@@ -22,6 +22,7 @@ public class UseClayArgumentType implements CustomArgumentType<String, String> {
             MessageComponentSerializer.message().serialize(Component.text("Invalid use_clay option specified!"))
     );
     private final List<String> USE_CLAY_SUBS = ImmutableList.of("WOOL", "TERRACOTTA", "CONCRETE");
+
     @Override
     public String parse(StringReader reader) throws CommandSyntaxException {
         return "";

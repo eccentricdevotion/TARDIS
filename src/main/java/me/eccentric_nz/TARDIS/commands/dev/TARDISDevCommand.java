@@ -112,7 +112,7 @@ public class TARDISDevCommand implements CommandExecutor {
         if (cmd.getName().equalsIgnoreCase("tardisdev")) {
             if (sender instanceof ConsoleCommandSender || sender.hasPermission("tardis.admin")) {
                 if (args.length == 0) {
-                    new TARDISCommandHelper(plugin).getCommand("tardisadmin", sender);
+                    new TARDISCommandHelper(plugin).getCommand("tardisdev", sender);
                     return true;
                 }
                 String first = args[0].toLowerCase(Locale.ROOT);
@@ -344,7 +344,7 @@ public class TARDISDevCommand implements CommandExecutor {
                         }
                         case "regen" -> {
                             if (sender instanceof Player player) {
-                                new Regenerator().dev(plugin, player, args);
+                                new Regenerator().dev(plugin, player, -1);
                             }
                             return true;
                         }
@@ -481,14 +481,15 @@ public class TARDISDevCommand implements CommandExecutor {
                         return new BiomeCommand().getName(sender);
                     }
                     case "box" -> {
-                        return new BoxCommand(plugin).setPreset(sender, args);
+                        return new BoxCommand(plugin).setPreset(sender, args[1], args[2]);
                     }
                     case "component" -> {
                         switch (args[1].toLowerCase(Locale.ROOT)) {
                             case "ars" -> new ComponentCommand(plugin).writeARS();
                             case "repeater" -> new ComponentCommand(plugin).writeRepeater();
                             case "key" -> new ComponentCommand(plugin).writeKey();
-                            case "pack" -> new ResourcePackConverterCommand(plugin).process(sender, args);
+                            case "pack" ->
+                                    new ResourcePackConverterCommand(plugin).process(sender, args.length > 2 ? "c" : "");
                             case "extra" -> new ComponentCommand(plugin).writeExtra(sender);
                             default -> {
                             }
@@ -496,7 +497,7 @@ public class TARDISDevCommand implements CommandExecutor {
                         return true;
                     }
                     case "debug" -> {
-                        return new DebugCommand(plugin).process(sender, args);
+                        return new DebugCommand(plugin).process(sender, args[1]);
                     }
                     case "label" -> {
                         return new LabelCommand(plugin).catalog(sender);
@@ -511,7 +512,7 @@ public class TARDISDevCommand implements CommandExecutor {
                         return new InfoCommand(plugin).test(sender);
                     }
                     case "list" -> {
-                        return new ListCommand(plugin).listStuff(sender, args);
+                        return new ListCommand(plugin).listStuff(sender, args[1], args.length > 2 ? args[2] : "");
                     }
                     case "tree" -> {
                         return new TreeCommand(plugin).grow(sender, args);
@@ -647,7 +648,15 @@ public class TARDISDevCommand implements CommandExecutor {
                     }
                     case "effect" -> {
                         if (sender instanceof Player player) {
-                            return new EffectCommand(plugin).show(player, args);
+                            return new EffectCommand(plugin).show(
+                                    player,
+                                    args[1],
+                                    args.length > 2 ? args[2] : "",
+                                    args.length > 3 ? TARDISNumberParsers.parseInt(args[3]) : 0,
+                                    args.length > 4 ? TARDISNumberParsers.parseDouble(args[4]) : 0,
+                                    args.length > 5 ? args[5] : "",
+                                    args.length > 6 ? args[6] : ""
+                            );
                         }
                     }
                 }

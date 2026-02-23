@@ -41,8 +41,8 @@ public class RecipesLister {
         this.plugin = plugin;
     }
 
-    public void listRecipes(CommandSender sender, String[] args) {
-        if (args.length > 2) {
+    public void listRecipes(CommandSender sender, String c) {
+        if (!c.isEmpty()) {
             for (RecipeCategory category : RecipeCategory.values()) {
                 if (category != RecipeCategory.UNUSED && category != RecipeCategory.UNCRAFTABLE) {
                     sender.sendMessage("#### " + category.getName());

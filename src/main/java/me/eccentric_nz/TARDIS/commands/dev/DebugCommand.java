@@ -41,14 +41,14 @@ public class DebugCommand {
         this.plugin = plugin;
     }
 
-    public boolean process(CommandSender sender, String[] args) {
+    public boolean process(CommandSender sender, String arg) {
         if (sender instanceof Player player) {
             // must be in TARDIS
             HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", player.getUniqueId().toString());
             ResultSetTravellers rs = new ResultSetTravellers(plugin, where, false);
             if (rs.resultSet()) {
-                String param = args[1].toLowerCase(Locale.ROOT);
+                String param = arg.toLowerCase(Locale.ROOT);
                 switch (param) {
                     case "enter" -> enter(sender, rs.getTardis_id());
                     case "exit" -> exit(sender);
