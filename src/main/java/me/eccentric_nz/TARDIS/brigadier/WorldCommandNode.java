@@ -29,7 +29,7 @@ public class WorldCommandNode {
 
     LiteralCommandNode<CommandSourceStack> build() {
         LiteralArgumentBuilder<CommandSourceStack> command = Commands.literal("tardisworld")
-                .requires(ctx -> ctx.getExecutor().hasPermission("tardis.admin"))
+                .requires(ctx -> ctx.getSender().hasPermission("tardis.admin"))
                 .then(Commands.literal("load")
                         // load [world] <WorldType> <Environment> <generator>
                         .then(Commands.argument("world", StringArgumentType.word())
@@ -63,20 +63,20 @@ public class WorldCommandNode {
                                                         WorldUtility.load(plugin, ctx.getSource().getSender(), world, t, e, "");
                                                     }
                                                     return Command.SINGLE_SUCCESS;
-                                                }))
-                                        .then(Commands.argument("generator", StringArgumentType.greedyString())
-                                                .executes(ctx -> {
-                                                    String world = StringArgumentType.getString(ctx, "world");
-                                                    String t = ctx.getArgument("world_type", String.class);
-                                                    String e = ctx.getArgument("environment", String.class);
-                                                    String g = StringArgumentType.getString(ctx, "environment");
-                                                    if (plugin.getServer().getWorld(world) != null) {
-                                                        plugin.getMessenger().send(ctx.getSource().getSender(), TardisModule.TARDIS, "WORLD_LOADED", world);
-                                                    } else {
-                                                        WorldUtility.load(plugin, ctx.getSource().getSender(), world, t, e, g);
-                                                    }
-                                                    return Command.SINGLE_SUCCESS;
-                                                })))))
+                                                })
+                                                .then(Commands.argument("generator", StringArgumentType.greedyString())
+                                                        .executes(ctx -> {
+                                                            String world = StringArgumentType.getString(ctx, "world");
+                                                            String t = ctx.getArgument("world_type", String.class);
+                                                            String e = ctx.getArgument("environment", String.class);
+                                                            String g = StringArgumentType.getString(ctx, "generator");
+                                                            if (plugin.getServer().getWorld(world) != null) {
+                                                                plugin.getMessenger().send(ctx.getSource().getSender(), TardisModule.TARDIS, "WORLD_LOADED", world);
+                                                            } else {
+                                                                WorldUtility.load(plugin, ctx.getSource().getSender(), world, t, e, g);
+                                                            }
+                                                            return Command.SINGLE_SUCCESS;
+                                                        }))))))
                 .then(Commands.literal("unload")
                         .then(Commands.argument("world", ArgumentTypes.world())
                                 .executes(ctx -> {
