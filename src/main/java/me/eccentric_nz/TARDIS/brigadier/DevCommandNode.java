@@ -1,6 +1,7 @@
 package me.eccentric_nz.TARDIS.brigadier;
 
 import com.mojang.brigadier.Command;
+import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.arguments.DoubleArgumentType;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
@@ -8,6 +9,7 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
+import io.papermc.paper.command.brigadier.argument.ArgumentTypes;
 import io.papermc.paper.dialog.Dialog;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
@@ -16,16 +18,30 @@ import me.eccentric_nz.TARDIS.brigadier.suggestions.BlockSuggestions;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import me.eccentric_nz.TARDIS.commands.dev.*;
 import me.eccentric_nz.TARDIS.commands.dev.lists.*;
+import me.eccentric_nz.TARDIS.commands.dev.wiki.WikiRecipeCommand;
+import me.eccentric_nz.TARDIS.commands.tardis.update.UpdateBlocksCommand;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.monitor.MonitorSnapshot;
 import me.eccentric_nz.TARDIS.playerprefs.PreferencesDialog;
+import me.eccentric_nz.TARDIS.rooms.architectural.tree.TreeBuilder;
+import me.eccentric_nz.TARDIS.rooms.games.pong.GameDisplay;
 import me.eccentric_nz.TARDIS.rooms.games.rockpaperscissors.Letters;
+import me.eccentric_nz.TARDIS.utility.Pluraliser;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import me.eccentric_nz.tardisregeneration.Regenerator;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
+import org.bukkit.Chunk;
+import org.bukkit.Material;
+import org.bukkit.World;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.command.ConsoleCommandSender;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
+import org.bukkit.inventory.ItemStack;
+
+import java.util.Locale;
 
 public class DevCommandNode {
 
@@ -69,11 +85,7 @@ public class DevCommandNode {
                                                 DevelopmentUtility.setArmour(player, m, s);
                                             }
                                             return Command.SINGLE_SUCCESS;
-                                        })))
-                        .executes(ctx -> {
-
-                            return Command.SINGLE_SUCCESS;
-                        }))
+                                        }))))
                 .then(Commands.literal("banner")
                         .executes(ctx -> {
                             if (ctx.getSource().getExecutor() instanceof Player player) {
@@ -136,9 +148,20 @@ public class DevCommandNode {
                                 })))
                 .then(Commands.literal("brushable")
                         .executes(ctx -> {
-
+                            if (ctx.getSource().getExecutor() instanceof Player player) {
+                                DevelopmentUtility.brush(player);
+                            }
                             return Command.SINGLE_SUCCESS;
-                        }))
+                        })
+                        .then(Commands.literal("target")
+                                .executes(ctx -> {
+                                    if (ctx.getSource().getExecutor() instanceof Player player) {
+                                        // get target block
+                                        Block block = player.getTargetBlock(null, 8);
+                                        player.sendMessage(block.getState().toString());
+                                    }
+                                    return Command.SINGLE_SUCCESS;
+                                })))
                 .then(Commands.literal("chain")
                         .executes(ctx -> {
                             new ChainCommand(plugin).checkSchematics();
@@ -146,14 +169,26 @@ public class DevCommandNode {
                         }))
                 .then(Commands.literal("chunks")
                         .executes(ctx -> {
+                            new ChunksCommand(plugin).list(ctx.getSource().getSender());
                             return Command.SINGLE_SUCCESS;
                         }))
                 .then(Commands.literal("chunky")
-                        .executes(ctx -> {
-                            return Command.SINGLE_SUCCESS;
-                        }))
+                        .then(Commands.argument("world", ArgumentTypes.world())
+                                .executes(ctx -> {
+                                    World world = ctx.getArgument("world", World.class);
+                                    DevelopmentUtility.chunky(plugin, world.getName(), "250");
+                                    return Command.SINGLE_SUCCESS;
+                                })
+                                .then(Commands.argument("radius", IntegerArgumentType.integer(1))
+                                        .executes(ctx -> {
+                                            World world = ctx.getArgument("world", World.class);
+                                            String r = Integer.toString(IntegerArgumentType.getInteger(ctx, "radius"));
+                                            DevelopmentUtility.chunky(plugin, world.getName(), r);
+                                            return Command.SINGLE_SUCCESS;
+                                        }))))
                 .then(Commands.literal("circuit")
                         .executes(ctx -> {
+                            new CircuitCommand(plugin).give(ctx.getSource().getSender());
                             return Command.SINGLE_SUCCESS;
                         }))
                 .then(Commands.literal("component")
@@ -226,9 +261,109 @@ public class DevCommandNode {
                             return Command.SINGLE_SUCCESS;
                         }))
                 .then(Commands.literal("displayitem")
-                        .executes(ctx -> {
-                            return Command.SINGLE_SUCCESS;
-                        }))
+                        // "add", "shop", "animate", "remove", "place", "break", "convert", "chunk", "console", "door"
+                        .then(Commands.literal("add")
+                                .then(Commands.argument("item", ArgumentTypes.itemStack())
+                                        .executes(ctx -> {
+                                            if (ctx.getSource().getSender() instanceof Player player) {
+                                                String item = ctx.getArgument("item", ItemStack.class).getType().toString();
+                                                DisplayItemUtility.add(player, item, "");
+                                            }
+                                            return Command.SINGLE_SUCCESS;
+                                        })
+                                        .then(Commands.argument("transform", new TransformArgumentType())
+                                                .executes(ctx -> {
+                                                    if (ctx.getSource().getSender() instanceof Player player) {
+                                                        String item = ctx.getArgument("item", ItemStack.class).getType().toString();
+                                                        String transform = ctx.getArgument("transform", String.class);
+                                                        DisplayItemUtility.add(player, item, transform);
+                                                    }
+                                                    return Command.SINGLE_SUCCESS;
+                                                }))))
+                        .then(Commands.literal("shop")
+                                .then(Commands.argument("item", StringArgumentType.word())
+                                        .then(Commands.argument("label", BoolArgumentType.bool())
+                                                .executes(ctx -> {
+                                                    if (ctx.getSource().getSender() instanceof Player player) {
+                                                        String s = StringArgumentType.getString(ctx, "item");
+                                                        boolean b = BoolArgumentType.getBool(ctx, "label");
+                                                        DisplayItemUtility.shop(player, s, b);
+                                                    }
+                                                    return Command.SINGLE_SUCCESS;
+                                                }))))
+                        .then(Commands.literal("animate")
+                                .executes(ctx -> {
+                                    if (ctx.getSource().getSender() instanceof Player player) {
+                                        DisplayItemUtility.animate(plugin, player, false);
+                                    }
+                                    return Command.SINGLE_SUCCESS;
+                                })
+                                .then(Commands.argument("bee", BoolArgumentType.bool())
+                                        .executes(ctx -> {
+                                            if (ctx.getSource().getSender() instanceof Player player) {
+                                                boolean b = BoolArgumentType.getBool(ctx, "bee");
+                                                DisplayItemUtility.animate(plugin, player, b);
+                                            }
+                                            return Command.SINGLE_SUCCESS;
+                                        })))
+                        .then(Commands.literal("place")
+                                .then(Commands.argument("tdi", new DisplayItemArgumentType())
+                                        .executes(ctx -> {
+                                            if (ctx.getSource().getSender() instanceof Player player) {
+                                                String tdi = ctx.getArgument("tdi", String.class);
+                                                DisplayItemUtility.place(plugin, player, tdi);
+                                            }
+                                            return Command.SINGLE_SUCCESS;
+                                        })))
+                        .then(Commands.literal("remove")
+                                .executes(ctx -> {
+                                    if (ctx.getSource().getSender() instanceof Player player) {
+                                        DisplayItemUtility.remove(player);
+                                    }
+                                    return Command.SINGLE_SUCCESS;
+                                }))
+                        .then(Commands.literal("break")
+                                .executes(ctx -> {
+                                    if (ctx.getSource().getSender() instanceof Player player) {
+                                        DisplayItemUtility.breakDisplay(player);
+                                    }
+                                    return Command.SINGLE_SUCCESS;
+                                }))
+                        .then(Commands.literal("convert")
+                                .executes(ctx -> {
+                                    if (ctx.getSource().getSender() instanceof Player player) {
+                                        new UpdateBlocksCommand(plugin).convert(player);
+                                    }
+                                    return Command.SINGLE_SUCCESS;
+                                }))
+                        .then(Commands.literal("chunk")
+                                .executes(ctx -> {
+                                    if (ctx.getSource().getSender() instanceof Player player) {
+                                        Chunk chunk = player.getLocation().getChunk();
+                                        for (Entity entity : chunk.getEntities()) {
+                                            if (entity instanceof ItemDisplay || entity instanceof Interaction || entity instanceof TextDisplay) {
+                                                entity.remove();
+                                            }
+                                        }
+                                    }
+                                    return Command.SINGLE_SUCCESS;
+                                }))
+                        .then(Commands.literal("console")
+                                .then(Commands.argument("colour", new ConsoleColourArgumentType())
+                                        .executes(ctx -> {
+                                            if (ctx.getSource().getSender() instanceof Player player) {
+                                                String c = ctx.getArgument("colour", String.class);
+                                                DisplayItemUtility.console(plugin, player, c);
+                                            }
+                                            return Command.SINGLE_SUCCESS;
+                                        })))
+                        .then(Commands.literal("door")
+                                .executes(ctx -> {
+                                    if (ctx.getSource().getSender() instanceof Player player) {
+                                        DisplayItemUtility.door(plugin, player);
+                                    }
+                                    return Command.SINGLE_SUCCESS;
+                                })))
                 .then(Commands.literal("effect")
                         .executes(ctx -> {
                             if (ctx.getSource().getSender() instanceof Player player) {
@@ -438,10 +573,14 @@ public class DevCommandNode {
                                     return Command.SINGLE_SUCCESS;
                                 })))
                 .then(Commands.literal("mannequin")
-                        .executes(ctx -> {
-
-                            return Command.SINGLE_SUCCESS;
-                        }))
+                        .then(Commands.argument("type", new MannequinEquipArgumentType())
+                                .executes(ctx -> {
+                                    if (ctx.getSource().getExecutor() instanceof Player player) {
+                                        String t = ctx.getArgument("type", String.class);
+                                        new MannequinCommand().equip(player, t);
+                                    }
+                                    return Command.SINGLE_SUCCESS;
+                                })))
                 .then(Commands.literal("monster")
                         .executes(ctx -> {
                             if (ctx.getSource().getExecutor() instanceof Player player) {
@@ -462,10 +601,18 @@ public class DevCommandNode {
                             return Command.SINGLE_SUCCESS;
                         }))
                 .then(Commands.literal("nms")
-                        .executes(ctx -> {
-
-                            return Command.SINGLE_SUCCESS;
-                        }))
+                        .then(Commands.argument("monster", new MonsterArgumentType())
+                                .executes(ctx -> {
+                                    String m = ctx.getArgument("monster", String.class);
+                                    new NMSCommand(plugin).spawn(ctx.getSource().getSender(), m, false);
+                                    return Command.SINGLE_SUCCESS;
+                                })
+                                .then(Commands.literal("unclaimed")
+                                        .executes(ctx -> {
+                                            String m = ctx.getArgument("monster", String.class);
+                                            new NMSCommand(plugin).spawn(ctx.getSource().getSender(), m, true);
+                                            return Command.SINGLE_SUCCESS;
+                                        }))))
                 .then(Commands.literal("painting")
                         .executes(ctx -> {
                             if (ctx.getSource().getSender() instanceof Player player) {
@@ -475,19 +622,28 @@ public class DevCommandNode {
                         }))
                 .then(Commands.literal("plurals")
                         .executes(ctx -> {
-
+                            for (Material m : Material.values()) {
+                                String str = m.toString().toLowerCase(Locale.ROOT).replace("_", " ");
+                                plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, str + " --> " + Pluraliser.pluralise(str));
+                            }
                             return Command.SINGLE_SUCCESS;
                         }))
                 .then(Commands.literal("pong")
                         .executes(ctx -> {
-
+                            if (ctx.getSource().getSender() instanceof Player player) {
+                                Block targetBlock = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 16);
+                                String uuids = GameDisplay.create(targetBlock.getLocation().add(0.5d, 2d, 0.5d));
+                                plugin.debug(uuids);
+                            }
                             return Command.SINGLE_SUCCESS;
                         }))
                 .then(Commands.literal("recipe")
-                        .executes(ctx -> {
-
-                            return Command.SINGLE_SUCCESS;
-                        }))
+                        .then(Commands.argument("which", new WikiRecipeArgumentType())
+                                .executes(ctx -> {
+                                    String w = ctx.getArgument("which", String.class);
+                                    new WikiRecipeCommand(plugin).write(ctx.getSource().getSender(), w);
+                                    return Command.SINGLE_SUCCESS;
+                                })))
                 .then(Commands.literal("regen")
                         .executes(ctx -> {
                             if (ctx.getSource().getExecutor() instanceof Player player) {
@@ -509,20 +665,30 @@ public class DevCommandNode {
                             return Command.SINGLE_SUCCESS;
                         }))
                 .then(Commands.literal("roman")
-                        .executes(ctx -> {
-
-                            return Command.SINGLE_SUCCESS;
-                        }))
+                        .then(Commands.argument("type", new MannequinEquipArgumentType())
+                                .executes(ctx -> {
+                                    if (ctx.getSource().getSender() instanceof Player player) {
+                                        String t = ctx.getArgument("type", String.class);
+                                        new RomanCommand().equip(player, t);
+                                    }
+                                    return Command.SINGLE_SUCCESS;
+                                })))
                 .then(Commands.literal("rooms")
-                        .executes(ctx -> {
-
-                            return Command.SINGLE_SUCCESS;
-                        }))
+                        .then(Commands.argument("rooms", StringArgumentType.greedyString())
+                                .executes(ctx -> {
+                                    String[] rooms = StringArgumentType.getString(ctx, "rooms").split(" ");
+                                    new RoomsCommand(plugin).build(ctx.getSource().getSender(), rooms);
+                                    return Command.SINGLE_SUCCESS;
+                                })))
                 .then(Commands.literal("screen")
-                        .executes(ctx -> {
-
-                            return Command.SINGLE_SUCCESS;
-                        }))
+                        .then(Commands.argument("direction", new ScreenMoveArgumentType())
+                                .executes(ctx -> {
+                                    if (ctx.getSource().getSender() instanceof Player player) {
+                                        String d = ctx.getArgument("direction", String.class);
+                                        new ConsoleTextCommand(plugin).move(player, d);
+                                    }
+                                    return Command.SINGLE_SUCCESS;
+                                })))
                 .then(Commands.literal("shelf")
                         .executes(ctx -> {
                             if (ctx.getSource().getSender() instanceof Player player) {
@@ -545,10 +711,27 @@ public class DevCommandNode {
                             return Command.SINGLE_SUCCESS;
                         }))
                 .then(Commands.literal("snapshot")
-                        .executes(ctx -> {
-
-                            return Command.SINGLE_SUCCESS;
-                        }))
+                        .then(Commands.literal("clear")
+                                .executes(ctx -> {
+                                    if (ctx.getSource().getSender() instanceof Player player) {
+                                        player.performCommand("minecraft:clear @s minecraft:filled_map");
+                                    }
+                                    return Command.SINGLE_SUCCESS;
+                                }))
+                        .then(Commands.literal("in")
+                                .executes(ctx -> {
+                                    if (ctx.getSource().getSender() instanceof Player player) {
+                                        new MonitorSnapshot(plugin).get(true, player);
+                                    }
+                                    return Command.SINGLE_SUCCESS;
+                                }))
+                        .then(Commands.literal("out")
+                                .executes(ctx -> {
+                                    if (ctx.getSource().getSender() instanceof Player player) {
+                                        new MonitorSnapshot(plugin).get(false, player);
+                                    }
+                                    return Command.SINGLE_SUCCESS;
+                                })))
                 .then(Commands.literal("staircase")
                         .executes(ctx -> {
                             if (ctx.getSource().getExecutor() instanceof Player player) {
@@ -613,7 +796,7 @@ public class DevCommandNode {
                                         }))))
                 .then(Commands.literal("tis")
                         .executes(ctx -> {
-
+                            new InfoCommand(plugin).test(ctx.getSource().getSender());
                             return Command.SINGLE_SUCCESS;
                         }))
                 .then(Commands.literal("tips")
@@ -623,9 +806,38 @@ public class DevCommandNode {
                         }))
                 .then(Commands.literal("tree")
                         .executes(ctx -> {
-                            
+                            if (ctx.getSource().getSender() instanceof Player player) {
+                                new TreeCommand(plugin).grow(ctx.getSource().getSender(), "", "", "", "");
+                            }
                             return Command.SINGLE_SUCCESS;
-                        }))
+                        })
+                        .then(Commands.literal("delta")
+                                .then(Commands.argument("which", IntegerArgumentType.integer(0))
+                                        .executes(ctx -> {
+                                            if (ctx.getSource().getSender() instanceof Player player) {
+                                                String s = Integer.toString(IntegerArgumentType.getInteger(ctx, "which"));
+                                                new TreeCommand(plugin).grow(ctx.getSource().getSender(), "delta", s, "", "");
+                                            }
+                                            return Command.SINGLE_SUCCESS;
+                                        })))
+                        .then(Commands.literal("worldgen")
+                                .executes(ctx -> {
+                                    if (ctx.getSource().getSender() instanceof Player player) {
+                                        new TreeCommand(plugin).grow(ctx.getSource().getSender(), "worldgen", "", "", "");
+                                    }
+                                    return Command.SINGLE_SUCCESS;
+                                }))
+                        .then(Commands.literal("with")
+                                .then(Commands.argument("stem", new TreeBlockArgumentType())
+                                        .then(Commands.argument("hat", new TreeBlockArgumentType())
+                                                .then(Commands.argument("decor", new TreeBlockArgumentType())
+                                                        .executes(ctx -> {
+                                                            String s = ctx.getArgument("stem", String.class);
+                                                            String h = ctx.getArgument("hat", String.class);
+                                                            String d = ctx.getArgument("decor", String.class);
+                                                            new TreeCommand(plugin).grow(ctx.getSource().getSender(), "with", s, h, d);
+                                                            return Command.SINGLE_SUCCESS;
+                                                        }))))))
                 .then(Commands.literal("unmount")
                         .executes(ctx -> {
                             if (ctx.getSource().getSender() instanceof Player player) {

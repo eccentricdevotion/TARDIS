@@ -1,6 +1,5 @@
 package me.eccentric_nz.TARDIS.brigadier.arguments;
 
-import com.google.common.collect.ImmutableList;
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.arguments.ArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
@@ -11,17 +10,26 @@ import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import io.papermc.paper.command.brigadier.MessageComponentSerializer;
 import io.papermc.paper.command.brigadier.argument.CustomArgumentType;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemRegistry;
 import net.kyori.adventure.text.Component;
+import org.bukkit.entity.ItemDisplay;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
-public class VortexFallArgumentType implements CustomArgumentType<String, String> {
+public class DisplayItemArgumentType implements CustomArgumentType<String, String> {
 
-    private static final SimpleCommandExceptionType ERROR_INVALID_OPT = new SimpleCommandExceptionType(
-            MessageComponentSerializer.message().serialize(Component.text("Invalid vortex fall option specified!"))
+    private static final SimpleCommandExceptionType ERROR_INVALID_TDI = new SimpleCommandExceptionType(
+            MessageComponentSerializer.message().serialize(Component.text("Invalid TARDIS item display specified!"))
     );
-    private final List<String> VORTEX_SUBS = ImmutableList.of("kill", "teleport");
+    private final Set<String> TDIS = new HashSet<>();
+
+    public DisplayItemArgumentType() {
+        for (String t : TARDISDisplayItemRegistry.getBY_NAME().keySet()) {
+            TDIS.add(t.toString());
+        }
+    }
 
     @Override
     public String parse(StringReader reader) throws CommandSyntaxException {
@@ -31,8 +39,8 @@ public class VortexFallArgumentType implements CustomArgumentType<String, String
     @Override
     public <S> String parse(StringReader reader, S source) throws CommandSyntaxException {
         String input = reader.readUnquotedString();
-        if (!VORTEX_SUBS.contains(input)) {
-            throw ERROR_INVALID_OPT.create();
+        if (!TDIS.contains(input)) {
+            throw ERROR_INVALID_TDI.create();
         }
         return input;
     }
@@ -44,7 +52,7 @@ public class VortexFallArgumentType implements CustomArgumentType<String, String
 
     @Override
     public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
-        for (String d : VORTEX_SUBS) {
+        for (String d : TDIS) {
             builder.suggest(d);
         }
         return builder.buildFuture();

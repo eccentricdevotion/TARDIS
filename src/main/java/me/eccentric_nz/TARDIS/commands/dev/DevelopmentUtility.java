@@ -9,17 +9,20 @@ import me.eccentric_nz.TARDIS.blueprints.BlueprintRoom;
 import me.eccentric_nz.TARDIS.customblocks.TARDISBlockDisplayItem;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetGames;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.move.TARDISTeleportLocation;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import me.eccentric_nz.tardisweepingangels.equip.MonsterArmour;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import net.kyori.adventure.text.Component;
 import org.bukkit.*;
+import org.bukkit.block.BrushableBlock;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.BlockStateMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.inventory.meta.components.CustomModelDataComponent;
@@ -193,5 +196,27 @@ public class DevelopmentUtility {
             player.getInventory().addItem(a);
         } catch (IllegalArgumentException ignored) {
         }
+    }
+
+    public static void brush(Player player) {
+        ItemStack sand = ItemStack.of(Material.SUSPICIOUS_SAND);
+        BlockStateMeta sandMeta = (BlockStateMeta) sand.getItemMeta();
+        BrushableBlock blockState = (BrushableBlock) sandMeta.getBlockState();
+        blockState.setItem(player.getInventory().getItemInMainHand());
+        sandMeta.setBlockState(blockState);
+        sand.setItemMeta(sandMeta);
+        player.getInventory().addItem(sand);
+    }
+
+    public static void chunky(TARDIS plugin, String world, String radius) {
+        if (!plugin.getPM().isPluginEnabled("Chunky")) {
+            plugin.getMessenger().message(plugin.getConsole(), TardisModule.WARNING, "Chunky plugin is not enabled!");
+            return;
+        }
+        plugin.getServer().dispatchCommand(plugin.getConsole(), "chunky world " + world);
+        plugin.getServer().dispatchCommand(plugin.getConsole(), "chunky radius " + radius);
+        plugin.getServer().dispatchCommand(plugin.getConsole(), "chunky spawn");
+        plugin.getServer().dispatchCommand(plugin.getConsole(), "chunky start");
+        plugin.getServer().dispatchCommand(plugin.getConsole(), "chunky confirm");
     }
 }

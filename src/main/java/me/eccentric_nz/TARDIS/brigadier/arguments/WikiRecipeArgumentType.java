@@ -16,12 +16,12 @@ import net.kyori.adventure.text.Component;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-public class VortexFallArgumentType implements CustomArgumentType<String, String> {
+public class WikiRecipeArgumentType implements CustomArgumentType<String, String> {
 
     private static final SimpleCommandExceptionType ERROR_INVALID_OPT = new SimpleCommandExceptionType(
-            MessageComponentSerializer.message().serialize(Component.text("Invalid vortex fall option specified!"))
+            MessageComponentSerializer.message().serialize(Component.text("Invalid wiki recipe specified!"))
     );
-    private final List<String> VORTEX_SUBS = ImmutableList.of("kill", "teleport");
+    private final List<String> OPTIONS = ImmutableList.of("shaped", "shapeless", "chest", "chemistry", "custom");
 
     @Override
     public String parse(StringReader reader) throws CommandSyntaxException {
@@ -31,7 +31,7 @@ public class VortexFallArgumentType implements CustomArgumentType<String, String
     @Override
     public <S> String parse(StringReader reader, S source) throws CommandSyntaxException {
         String input = reader.readUnquotedString();
-        if (!VORTEX_SUBS.contains(input)) {
+        if (!OPTIONS.contains(input)) {
             throw ERROR_INVALID_OPT.create();
         }
         return input;
@@ -44,7 +44,7 @@ public class VortexFallArgumentType implements CustomArgumentType<String, String
 
     @Override
     public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
-        for (String d : VORTEX_SUBS) {
+        for (String d : OPTIONS) {
             builder.suggest(d);
         }
         return builder.buildFuture();

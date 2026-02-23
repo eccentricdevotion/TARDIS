@@ -122,7 +122,7 @@ public class TARDISDevCommand implements CommandExecutor {
                 }
                 if (args.length == 1) {
                     switch (first) {
-                        case "siege"->{
+                        case "siege" -> {
                             if (sender instanceof Player player) {
                                 ItemStack cube = player.getInventory().getItemInMainHand();
                                 ItemMeta im = cube.getItemMeta();
@@ -421,7 +421,7 @@ public class TARDISDevCommand implements CommandExecutor {
                                         for (UUID u : uuids) {
                                             Entity e = player.getWorld().getEntity(u);
                                             if (e instanceof TextDisplay display) {
-                                                display.teleport(display.getLocation().add(0,y,0));
+                                                display.teleport(display.getLocation().add(0, y, 0));
                                             }
                                         }
                                     }
@@ -503,7 +503,7 @@ public class TARDISDevCommand implements CommandExecutor {
                         return new LabelCommand(plugin).catalog(sender);
                     }
                     case "nms" -> {
-                        return new NMSCommand(plugin).spawn(sender, args);
+                        return new NMSCommand(plugin).spawn(sender, args[1], args.length > 2);
                     }
                     case "circuit" -> {
                         return new CircuitCommand(plugin).give(sender);
@@ -515,10 +515,14 @@ public class TARDISDevCommand implements CommandExecutor {
                         return new ListCommand(plugin).listStuff(sender, args[1], args.length > 2 ? args[2] : "");
                     }
                     case "tree" -> {
-                        return new TreeCommand(plugin).grow(sender, args);
+                        return new TreeCommand(plugin).grow(sender,
+                                args.length > 1 ? args[1] : "",
+                                args.length > 2 ? args[2] : "",
+                                args.length > 3 ? args[3] : "",
+                                args.length > 4 ? args[4] : "");
                     }
                     case "recipe" -> {
-                        return new WikiRecipeCommand(plugin).write(sender, args);
+                        return new WikiRecipeCommand(plugin).write(sender, args[1]);
                     }
                     case "rooms" -> {
                         return new RoomsCommand(plugin).build(sender, args);
@@ -561,7 +565,7 @@ public class TARDISDevCommand implements CommandExecutor {
                     case "screen" -> {
                         if (sender instanceof Player player) {
                             // get the console text display
-                            return new ConsoleTextCommand(plugin).move(player, args);
+                            return new ConsoleTextCommand(plugin).move(player, args[1]);
                         }
                     }
                     case "skin" -> {

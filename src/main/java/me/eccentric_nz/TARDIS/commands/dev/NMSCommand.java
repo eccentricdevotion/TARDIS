@@ -50,11 +50,11 @@ public class NMSCommand {
         this.plugin = plugin;
     }
 
-    public boolean spawn(CommandSender sender, String[] args) {
+    public boolean spawn(CommandSender sender, String m, boolean unclaimed) {
         if (sender instanceof Player player) {
             try {
-                Monster monster = Monster.valueOf(args[1].toUpperCase(Locale.ROOT));
-                UUID uuid = (args.length>2) ? TARDISWeepingAngels.UNCLAIMED: player.getUniqueId();
+                Monster monster = Monster.valueOf(m.toUpperCase(Locale.ROOT));
+                UUID uuid = unclaimed ? TARDISWeepingAngels.UNCLAIMED: player.getUniqueId();
                 Location location = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 16).getLocation();
                 if (monster == Monster.OOD || monster == Monster.JUDOON || monster == Monster.K9) {
                     Follower follower = new Follower(UUID.randomUUID(), uuid, monster, false, true, OodColour.BLUE, 0);
