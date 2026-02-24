@@ -28,15 +28,15 @@ import org.bukkit.entity.Player;
 /**
  * @author eccentric_nz
  */
-class CheckLocationCommand {
+public class CheckLocationCommand {
 
     private final TARDIS plugin;
 
-    CheckLocationCommand(TARDIS plugin) {
+    public CheckLocationCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    boolean doACheckLocation(Player player) {
+    public boolean doACheckLocation(Player player) {
         Location eyeLocation = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getLocation();
         Material m = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getType();
         if (m != Material.SNOW) {

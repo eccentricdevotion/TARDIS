@@ -25,15 +25,15 @@ import org.bukkit.entity.Player;
 /**
  * @author eccentric_nz
  */
-class ExciteCommand {
+public class ExciteCommand {
 
     private final TARDIS plugin;
 
-    ExciteCommand(TARDIS plugin) {
+    public ExciteCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    boolean excite(Player player) {
+    public boolean excite(Player player) {
         if (plugin.getTrackerKeeper().getExcitation().contains(player.getUniqueId())) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "CMD_EXCITE");
             return true;

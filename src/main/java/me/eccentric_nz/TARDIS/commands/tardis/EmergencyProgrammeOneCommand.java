@@ -33,15 +33,15 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-class EmergencyProgrammeOneCommand {
+public class EmergencyProgrammeOneCommand {
 
     private final TARDIS plugin;
 
-    EmergencyProgrammeOneCommand(TARDIS plugin) {
+    public EmergencyProgrammeOneCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    boolean showEP1(Player p) {
+    public boolean showEP1(Player p) {
         if (!plugin.getConfig().getBoolean("allow.emergency_npc")) {
             plugin.getMessenger().send(p, TardisModule.TARDIS, "EP1_DISABLED");
             return true;

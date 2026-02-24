@@ -40,20 +40,16 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-class DecommissionCommand {
+public class DecommissionCommand {
 
     private final TARDIS plugin;
 
-    DecommissionCommand(TARDIS plugin) {
+    public DecommissionCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    boolean withdraw(Player player, String[] args) {
+    public boolean withdraw(Player player, String tb) {
         if (TARDISPermission.hasPermission(player, "tardis.update")) {
-            if (args.length < 2) {
-                plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
-                return false;
-            }
             HashMap<String, Object> where = new HashMap<>();
             UUID playerUUID = player.getUniqueId();
             UUID uuid = TARDISSudoTracker.SUDOERS.getOrDefault(playerUUID, playerUUID);
@@ -63,7 +59,7 @@ class DecommissionCommand {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_A_TIMELORD");
                 return false;
             }
-            String tardis_block = TARDISStringUtils.toScoredUppercase(args[1]);
+            String tardis_block = TARDISStringUtils.toScoredUppercase(tb);
             Block block = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 10);
             String l = block.getLocation().toString();
             Updateable updateable;

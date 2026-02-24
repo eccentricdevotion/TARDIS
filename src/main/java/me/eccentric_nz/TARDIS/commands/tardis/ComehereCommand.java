@@ -52,15 +52,15 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-class ComehereCommand {
+public class ComehereCommand {
 
     private final TARDIS plugin;
 
-    ComehereCommand(TARDIS plugin) {
+    public ComehereCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    boolean doComeHere(Player player) {
+    public boolean doComeHere(Player player) {
         if (TARDISPermission.hasPermission(player, "tardis.timetravel")) {
             // check they are a timelord
             UUID uuid = player.getUniqueId();

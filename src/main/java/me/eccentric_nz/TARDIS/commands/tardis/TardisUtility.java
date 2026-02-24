@@ -1,7 +1,6 @@
 package me.eccentric_nz.TARDIS.commands.tardis;
 
-import com.mojang.brigadier.context.CommandContext;
-import io.papermc.paper.command.brigadier.CommandSourceStack;
+import com.mojang.datafixers.util.Pair;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.TardisCommand;
@@ -11,7 +10,7 @@ import org.bukkit.entity.Player;
 
 public class TardisUtility {
 
-    public static Player check(TARDIS plugin, CommandSender sender, TardisCommand tc) {
+    public static Pair<Player, Integer> check(TARDIS plugin, CommandSender sender, TardisCommand tc) {
         if (sender instanceof Player player) {
             ResultSetTardisID rs = new ResultSetTardisID(plugin);
             if (!rs.fromUUID(player.getUniqueId().toString())) {
@@ -22,7 +21,7 @@ public class TardisUtility {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "SIEGE_NO_CMD");
                 return null;
             }
-            return player;
+            return new Pair<>(player, rs.getTardisId());
         }
         return null;
     }

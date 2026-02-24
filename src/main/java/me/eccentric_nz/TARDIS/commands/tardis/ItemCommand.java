@@ -41,16 +41,12 @@ public class ItemCommand {
         this.plugin = plugin;
     }
 
-    public boolean update(Player player, String[] args) {
-        if (args.length < 2) {
-            plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
-            return true;
-        }
-        if (!args[1].equalsIgnoreCase("hand") && !args[1].equalsIgnoreCase("inventory") && !args[1].equalsIgnoreCase("cell")) {
+    public boolean update(Player player, String which) {
+        if (!which.equalsIgnoreCase("hand") && !which.equalsIgnoreCase("inventory") && !which.equalsIgnoreCase("cell")) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "ARG_ITEM");
             return true;
         }
-        switch (args[1].toLowerCase(Locale.ROOT)) {
+        switch (which.toLowerCase(Locale.ROOT)) {
             case "hand" -> {
                 ItemStack inHand = player.getInventory().getItemInMainHand();
                 if (!inHand.hasItemMeta()) {

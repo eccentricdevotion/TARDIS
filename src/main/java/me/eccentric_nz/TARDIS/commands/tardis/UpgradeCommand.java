@@ -37,15 +37,15 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-class UpgradeCommand {
+public class UpgradeCommand {
 
     private final TARDIS plugin;
 
-    UpgradeCommand(TARDIS plugin) {
+    public UpgradeCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    boolean openUpgradeGUI(Player player) {
+    public boolean openUpgradeGUI(Player player) {
         if (!TARDISPermission.hasPermission(player, "tardis.upgrade")) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERM_UPGRADE");
             return true;

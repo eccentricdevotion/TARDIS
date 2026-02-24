@@ -58,15 +58,11 @@ public class DirectionCommand {
         this.plugin = plugin;
     }
 
-    public boolean changeDirection(Player player, String[] args) {
+    public boolean changeDirection(Player player, String d) {
         if (TARDISPermission.hasPermission(player, "tardis.timetravel")) {
-            if (args.length < 2) {
-                plugin.getMessenger().send(player, TardisModule.TARDIS, "DIRECTION_NEED");
-                return true;
-            }
             COMPASS compass;
             try {
-                compass = COMPASS.valueOf(args[1].toUpperCase(Locale.ROOT));
+                compass = COMPASS.valueOf(d.toUpperCase(Locale.ROOT));
             } catch (IllegalArgumentException e) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "DIRECTION_NEED");
                 return true;
@@ -81,7 +77,7 @@ public class DirectionCommand {
             }
             Tardis tardis = rs.getTardis();
             if (!tardis.getPreset().usesArmourStand()
-                    && (args[1].equalsIgnoreCase("north_east") || args[1].equalsIgnoreCase("north_west") || args[1].equalsIgnoreCase("south_west") || args[1].equalsIgnoreCase("south_east"))) {
+                    && (d.equalsIgnoreCase("north_east") || d.equalsIgnoreCase("north_west") || d.equalsIgnoreCase("south_west") || d.equalsIgnoreCase("south_east"))) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "DIRECTION_PRESET");
                 return true;
             }

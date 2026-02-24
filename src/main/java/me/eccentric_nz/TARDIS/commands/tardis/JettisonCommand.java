@@ -29,26 +29,22 @@ import java.util.Locale;
 /**
  * @author eccentric_nz
  */
-class JettisonCommand {
+public class JettisonCommand {
 
     private final TARDIS plugin;
 
-    JettisonCommand(TARDIS plugin) {
+    public JettisonCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    boolean startJettison(Player player, String[] args) {
+    public boolean startJettison(Player player, String arg) {
         if (TARDISPermission.hasPermission(player, "tardis.jettison")) {
-            if (args.length < 2) {
-                plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
-                return false;
-            }
-            String room = args[1].toUpperCase(Locale.ROOT);
+            String room = arg.toUpperCase(Locale.ROOT);
             if (room.equals("GRAVITY") || room.equals("ANTIGRAVITY")) {
-                plugin.getMessenger().send(player, TardisModule.TARDIS, "GRAVITY_INFO /tardisgravity remove");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "GRAVITY_INFO","/tardisgravity remove");
             }
             if (!plugin.getGeneralKeeper().getRoomArgs().contains(room)) {
-                StringBuilder buf = new StringBuilder(args[1]);
+                StringBuilder buf = new StringBuilder();
                 plugin.getGeneralKeeper().getRoomArgs().forEach((rl) -> buf.append(rl).append(", "));
                 String roomlist = buf.substring(0, buf.length() - 2);
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "ROOM_NOT_VALID", roomlist);

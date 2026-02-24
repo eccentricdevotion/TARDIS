@@ -28,15 +28,15 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-class EjectCommand {
+public class EjectCommand {
 
     private final TARDIS plugin;
 
-    EjectCommand(TARDIS plugin) {
+    public EjectCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    boolean eject(Player player) {
+    public boolean eject(Player player) {
         if (!TARDISPermission.hasPermission(player, "tardis.eject")) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
             return true;

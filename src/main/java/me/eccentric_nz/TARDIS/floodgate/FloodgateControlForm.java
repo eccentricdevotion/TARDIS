@@ -341,8 +341,7 @@ public class FloodgateControlForm {
                             }
                             direction = COMPASS.values()[ordinal].toString();
                         }
-                        String[] args = new String[]{"direction", direction};
-                        new DirectionCommand(plugin).changeDirection(player, args);
+                        new DirectionCommand(plugin).changeDirection(player, direction);
                     }
                     case 16 -> { // temporal
                         if (!TARDISPermission.hasPermission(player, "tardis.temporal")) {

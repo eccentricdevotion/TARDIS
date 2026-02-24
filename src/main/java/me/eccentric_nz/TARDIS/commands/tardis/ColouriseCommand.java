@@ -35,15 +35,15 @@ import java.util.UUID;
  *
  * @author eccentric_nz
  */
-class ColouriseCommand {
+public class ColouriseCommand {
 
     private final TARDIS plugin;
 
-    ColouriseCommand(TARDIS plugin) {
+    public ColouriseCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    boolean updateBeaconGlass(Player player) {
+    public boolean updateBeaconGlass(Player player) {
         if (!TARDISPermission.hasPermission(player, "tardis.upgrade")) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
             return true;

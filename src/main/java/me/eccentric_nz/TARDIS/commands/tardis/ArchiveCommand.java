@@ -206,7 +206,7 @@ class ArchiveCommand {
                             sz = gsl[2];
                         }
                         int sy = current.getStartY();
-                        ArchiveData ad = new SchematicBuilder(plugin, id, player.getLocation().getWorld(), sx, sx + w, sy, sy + h, sz, sz + c).build();
+                        ArchiveData ad = new SchematicBuilder(plugin, id, player.getLocation().getWorld(), sx, sx + w, sy, sy + h, sz, sz + c, console_size).build();
                         if (sub.equals("scan")) {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "ARCHIVE_SCAN");
                             return true;
@@ -229,7 +229,7 @@ class ArchiveCommand {
                             set.put("y", sy);
                             plugin.getQueryFactory().doInsert("archive", set);
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "ARCHIVE_ADD", name);
-                        }else  {
+                        } else  {
                             // update json in database
                             HashMap<String, Object> whereu = new HashMap<>();
                             whereu.put("uuid", uuid);

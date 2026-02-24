@@ -28,15 +28,15 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-class SiegeCubeCommand {
+public class SiegeCubeCommand {
 
     private final TARDIS plugin;
 
-    SiegeCubeCommand(TARDIS plugin) {
+    public SiegeCubeCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    boolean whoHasCube(Player player) {
+    public boolean whoHasCube(Player player) {
         // check they have TARDIS
         if (TARDISPermission.hasPermission(player, "tardis.find")) {
             ResultSetTardisID rs = new ResultSetTardisID(plugin);

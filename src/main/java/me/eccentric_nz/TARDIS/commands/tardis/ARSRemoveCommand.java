@@ -35,15 +35,15 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-class ARSRemoveCommand {
+public class ARSRemoveCommand {
 
     private final TARDIS plugin;
 
-    ARSRemoveCommand(TARDIS plugin) {
+    public ARSRemoveCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    boolean resetARS(Player player) {
+    public boolean resetARS(Player player) {
         // check they are a timelord
         ResultSetTardisID rs = new ResultSetTardisID(plugin);
         if (!rs.fromUUID(player.getUniqueId().toString())) {

@@ -27,15 +27,15 @@ import org.bukkit.entity.Player;
 /**
  * @author eccentric_nz
  */
-class ExterminateCommand {
+public class ExterminateCommand {
 
     private final TARDIS plugin;
 
-    ExterminateCommand(TARDIS plugin) {
+    public ExterminateCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    boolean doExterminate(Player player, boolean messagePlayer) {
+    public boolean doExterminate(Player player, boolean messagePlayer) {
         if (TARDISPermission.hasPermission(player, "tardis.exterminate")) {
             if (messagePlayer) {
                 // must be outside TARDIS to run this command

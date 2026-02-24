@@ -46,12 +46,12 @@ import java.util.Locale;
  *
  * @author eccentric_nz
  */
-class LampsCommand {
+public class LampsCommand {
 
     private final TARDIS plugin;
     private final List<String> subs = List.of("auto", "list", "set");
 
-    LampsCommand(TARDIS plugin) {
+    public LampsCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
@@ -160,7 +160,7 @@ class LampsCommand {
         return true;
     }
 
-    boolean setLampBlock(Player player, String[] args) {
+    public boolean setLampBlock(Player player, String[] args) {
         if (args.length < 6) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "LAMP_SET_USAGE");
             return false;
@@ -233,15 +233,12 @@ class LampsCommand {
         return true;
     }
 
-    boolean zip(Player player, String[] args) {
+    public boolean zip(Player player, String arg) {
         if (!TARDISPermission.hasPermission(player, "tardis.update")) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
             return false;
         }
-        if (args.length < 2) {
-            return false;
-        }
-        String sub = args[1].toLowerCase(Locale.ROOT);
+        String sub = arg.toLowerCase(Locale.ROOT);
         if (!subs.contains(sub)) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "ARG_NOT_VALID");
             return true;
@@ -249,7 +246,7 @@ class LampsCommand {
         return switch (sub) {
             case "auto" -> addLampBlocks(player);
             case "list" -> listLampBlocks(player);
-            case "set" -> setLampBlock(player, args);
+//            case "set" -> setLampBlock(player, args);
             default -> true;
         };
     }

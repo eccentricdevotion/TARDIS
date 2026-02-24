@@ -29,15 +29,15 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-class InsideCommand {
+public class InsideCommand {
 
     private final TARDIS plugin;
 
-    InsideCommand(TARDIS plugin) {
+    public InsideCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    boolean whosInside(Player player) {
+    public boolean whosInside(Player player) {
         // check they are a timelord
         ResultSetTardisID rs = new ResultSetTardisID(plugin);
         if (!rs.fromUUID(player.getUniqueId().toString())) {

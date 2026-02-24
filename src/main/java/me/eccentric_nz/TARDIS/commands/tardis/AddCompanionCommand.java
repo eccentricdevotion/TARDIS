@@ -37,16 +37,16 @@ import java.util.regex.Pattern;
 /**
  * @author eccentric_nz
  */
-class AddCompanionCommand {
+public class AddCompanionCommand {
 
     private static final Pattern LETTERS_NUMBERS = Pattern.compile("[A-Za-z0-9_*.]{2,16}");
     private final TARDIS plugin;
 
-    AddCompanionCommand(TARDIS plugin) {
+    public AddCompanionCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    boolean doAddGUI(Player player) {
+    public boolean doAddGUI(Player player) {
         if (TARDISPermission.hasPermission(player, "tardis.add")) {
             player.openInventory(new CompanionAddInventory(plugin, player).getInventory());
         } else {
@@ -55,7 +55,7 @@ class AddCompanionCommand {
         return true;
     }
 
-    boolean doAdd(Player player, String[] args) {
+    public boolean doAdd(Player player, String arg) {
         if (TARDISPermission.hasPermission(player, "tardis.add")) {
             HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", player.getUniqueId().toString());
@@ -74,14 +74,10 @@ class AddCompanionCommand {
                 data = tardis.getChunk();
                 owner = tardis.getOwner();
             }
-            if (args.length < 2) {
-                plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
-                return false;
-            }
-            if (!LETTERS_NUMBERS.matcher(args[1]).matches()) {
+            if (!LETTERS_NUMBERS.matcher(arg).matches()) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "PLAYER_NOT_VALID");
             } else {
-                boolean addAll = (args[1].equalsIgnoreCase("everyone") || args[1].equalsIgnoreCase("all"));
+                boolean addAll = (arg.equalsIgnoreCase("everyone") || arg.equalsIgnoreCase("all"));
                 HashMap<String, Object> tid = new HashMap<>();
                 HashMap<String, Object> set = new HashMap<>();
                 OfflinePlayer companion = null;
@@ -90,7 +86,7 @@ class AddCompanionCommand {
                     set.put("companions", "everyone");
                 } else {
                     // get player from name
-                    companion = Bukkit.getOfflinePlayer(args[1]);
+                    companion = Bukkit.getOfflinePlayer(arg);
                     if (companion.getName() != null) {
                         UUID oluuid = companion.getUniqueId();
                         tid.put("tardis_id", id);
@@ -133,7 +129,7 @@ class AddCompanionCommand {
                     plugin.getMessenger().sendInsertedColour(player, "COMPANIONS_ADD", "everyone", plugin);
                     plugin.getMessenger().sendColouredCommand(player, "COMPANIONS_EVERYONE", "/tardis remove all", plugin);
                 } else {
-                    plugin.getMessenger().sendInsertedColour(player, "COMPANIONS_ADD", args[1], plugin);
+                    plugin.getMessenger().sendInsertedColour(player, "COMPANIONS_ADD", arg, plugin);
                 }
             }
         } else {

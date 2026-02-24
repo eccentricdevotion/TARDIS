@@ -38,15 +38,15 @@ import java.util.Locale;
 /**
  * @author eccentric_nz
  */
-class SetHomeCommand {
+public class SetHomeCommand {
 
     private final TARDIS plugin;
 
-    SetHomeCommand(TARDIS plugin) {
+    public SetHomeCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    boolean setHome(Player player, String[] args) {
+    public boolean setHome(Player player, String p, String t) {
         if (TARDISPermission.hasPermission(player, "tardis.timetravel")) {
             ResultSetTardisID rs = new ResultSetTardisID(plugin);
             if (!rs.fromUUID(player.getUniqueId().toString())) {
@@ -54,14 +54,14 @@ class SetHomeCommand {
                 return false;
             }
             int id = rs.getTardisId();
-            if (args.length == 3 && args[1].equalsIgnoreCase("preset")) {
+            if (p.equalsIgnoreCase("preset")) {
                 // set the PRESET for the home location
                 String which;
-                if (plugin.getCustomModelConfig().getConfigurationSection("models").getKeys(false).contains(args[2])) {
-                    which = args[2];
+                if (plugin.getCustomModelConfig().getConfigurationSection("models").getKeys(false).contains(t)) {
+                    which = t;
                 } else {
                     try {
-                        which = args[2].toUpperCase(Locale.ROOT);
+                        which = t.toUpperCase(Locale.ROOT);
                         ChameleonPreset.valueOf(which);
                     } catch (IllegalArgumentException e) {
                         // abort

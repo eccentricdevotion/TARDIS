@@ -37,7 +37,7 @@ public class DoorCommand {
         this.plugin = plugin;
     }
 
-    public boolean toggleDoors(Player player, String[] args) {
+    public boolean toggleDoors(Player player, boolean open) {
         if (!TARDISPermission.hasPermission(player, "tardis.use")) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
             return true;
@@ -48,12 +48,7 @@ public class DoorCommand {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_A_TIMELORD");
             return false;
         }
-        if (args.length < 2) {
-            plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
-            return false;
-        }
         int id = rs.getTardisId();
-        boolean open = (args[1].equalsIgnoreCase("close"));
         UUID playerUUID = player.getUniqueId();
         ResultSetTardisPreset rsp = new ResultSetTardisPreset(plugin);
         if (rsp.fromID(id)) {

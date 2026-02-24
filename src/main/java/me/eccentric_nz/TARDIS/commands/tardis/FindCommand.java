@@ -31,15 +31,15 @@ import org.bukkit.entity.Player;
 /**
  * @author eccentric_nz
  */
-class FindCommand {
+public class FindCommand {
 
     private final TARDIS plugin;
 
-    FindCommand(TARDIS plugin) {
+    public FindCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    boolean findTARDIS(Player player) {
+    public boolean findTARDIS(Player player) {
         if (TARDISPermission.hasPermission(player, "tardis.find")) {
             if (plugin.getConfig().getBoolean("difficulty.system_upgrades") && !new SystemUpgradeChecker(plugin).has(player.getUniqueId().toString(), SystemTree.TARDIS_LOCATOR)) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "TARDIS Locator");

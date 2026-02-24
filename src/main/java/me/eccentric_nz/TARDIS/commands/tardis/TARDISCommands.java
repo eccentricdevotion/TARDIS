@@ -128,7 +128,7 @@ public class TARDISCommands implements CommandExecutor {
                     if (args.length == 1) {
                         return new AddCompanionCommand(plugin).doAddGUI(player);
                     } else {
-                        return new AddCompanionCommand(plugin).doAdd(player, args);
+                        return new AddCompanionCommand(plugin).doAdd(player, args[1]);
                     }
                 }
                 case arch_time -> {
@@ -141,7 +141,7 @@ public class TARDISCommands implements CommandExecutor {
                     return new ARSRemoveCommand(plugin).resetARS(player);
                 }
                 case bell -> {
-                    return new BellCommand(plugin).toggle(rs.getTardisId(), player, args);
+                    return new BellCommand(plugin).toggle(rs.getTardisId(), player, args.length > 1 ? args[1] : "");
                 }
                 case check_loc -> {
                     return new CheckLocationCommand(plugin).doACheckLocation(player);
@@ -153,7 +153,11 @@ public class TARDISCommands implements CommandExecutor {
                     return new ComehereCommand(plugin).doComeHere(player);
                 }
                 case construct -> {
-                    return new ConstructCommand(plugin).setLine(player, args);
+                    if (args.length < 2) {
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
+                        return true;
+                    }
+                    return new ConstructCommand(plugin).setLine(player, TARDISNumberParsers.parseInt(args[1]), args[2]);
                 }
                 case cube -> {
                     return new SiegeCubeCommand(plugin).whoHasCube(player);
@@ -162,13 +166,21 @@ public class TARDISCommands implements CommandExecutor {
                     return new UpgradeCommand(plugin).openUpgradeGUI(player);
                 }
                 case direction -> {
-                    return new DirectionCommand(plugin).changeDirection(player, args);
+                    if (args.length < 2) {
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "DIRECTION_NEED");
+                        return true;
+                    }
+                    return new DirectionCommand(plugin).changeDirection(player, args[1]);
                 }
                 case door -> {
-                    return new DoorCommand(plugin).toggleDoors(player, args);
+                    if (args.length < 2) {
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
+                        return false;
+                    }
+                    return new DoorCommand(plugin).toggleDoors(player, args[1].equalsIgnoreCase("close"));
                 }
                 case egg -> { // play tardis theme from resource pack
-                    return new ThemeMusicCommand(plugin).play(player, args);
+                    return new ThemeMusicCommand(plugin).play(player, args.length > 1 ? args[1] : "");
                 }
                 case eject -> {
                     return new EjectCommand(plugin).eject(player);
@@ -192,19 +204,34 @@ public class TARDISCommands implements CommandExecutor {
                     return new HideCommand(plugin).hide(player);
                 }
                 case sethome -> {
-                    return new SetHomeCommand(plugin).setHome(player, args);
+                    return new SetHomeCommand(plugin).setHome(
+                            player,
+                            args.length > 1 ? args[1] : "",
+                            args.length > 2 ? args[2] : ""
+                    );
                 }
                 case inside -> {
                     return new InsideCommand(plugin).whosInside(player);
                 }
                 case item -> {
-                    return new ItemCommand(plugin).update(player, args);
+                    if (args.length < 2) {
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
+                        return true;
+                    }
+                    return new ItemCommand(plugin).update(player, args[1]);
                 }
                 case jettison -> {
-                    return new JettisonCommand(plugin).startJettison(player, args);
+                    if (args.length < 2) {
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
+                        return false;
+                    }
+                    return new JettisonCommand(plugin).startJettison(player, args[1]);
                 }
                 case lamps -> {
-                    return new LampsCommand(plugin).zip(player, args);
+                    if (args.length < 2) {
+                        return false;
+                    }
+                    return new LampsCommand(plugin).zip(player, args[1]);
                 }
                 case list -> {
                     return new ListCommand(plugin).doList(player, args);
@@ -222,7 +249,11 @@ public class TARDISCommands implements CommandExecutor {
                     return new OccupyCommand(plugin).toggleOccupancy(player, args);
                 }
                 case decommission -> {
-                    return new DecommissionCommand(plugin).withdraw(player, args);
+                    if (args.length < 2) {
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
+                        return false;
+                    }
+                    return new DecommissionCommand(plugin).withdraw(player, args[1]);
                 }
                 case rebuild -> {
                     return new RebuildCommand(plugin).rebuildPreset(player);
