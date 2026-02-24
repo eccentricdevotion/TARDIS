@@ -27,15 +27,15 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-class LockUnlockCommand {
+public class LockUnlockCommand {
 
     private final TARDIS plugin;
 
-    LockUnlockCommand(TARDIS plugin) {
+    public LockUnlockCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    boolean toggleLock(Player player, int id, boolean lock) {
+    public boolean toggleLock(Player player, int id, boolean lock) {
         // get the TARDIS current location
         ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
         if (rsc.resultSet()) {

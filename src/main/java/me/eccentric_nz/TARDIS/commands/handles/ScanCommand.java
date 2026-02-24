@@ -42,21 +42,21 @@ import java.util.Locale;
 /**
  * @author eccentric_nz
  */
-class ScanCommand {
+public class ScanCommand {
 
     private final TARDIS plugin;
     private final Player player;
     private final int id;
     private final boolean inTARDIS;
 
-    ScanCommand(TARDIS plugin, Player player, int id) {
+    public ScanCommand(TARDIS plugin, Player player, int id) {
         this.plugin = plugin;
         this.player = player;
         this.id = id;
         inTARDIS = plugin.getUtils().inTARDISWorld(this.player);
     }
 
-    boolean sayScan() {
+    public boolean sayScan() {
         TARDISSounds.playTARDISSound(player.getLocation(), "handles_scanner");
         Location scan_loc;
         String whereIsIt;

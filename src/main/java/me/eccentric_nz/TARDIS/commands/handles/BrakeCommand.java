@@ -29,9 +29,8 @@ public class BrakeCommand {
         this.plugin = plugin;
     }
 
-    public boolean park(Player player, String[] args) {
+    public boolean park(Player player, int id, String toggle) {
         // handles brake on uuid id
-        int id = TARDISNumberParsers.parseInt(args[3]);
-        return new HandbrakeCommand(plugin).toggle(player, id, args, false);
+        return new HandbrakeCommand(plugin).toggle(player, id, toggle, false);
     }
 }

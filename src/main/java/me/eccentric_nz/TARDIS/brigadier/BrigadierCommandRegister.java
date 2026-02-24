@@ -26,6 +26,7 @@ public class BrigadierCommandRegister {
         commands.registrar().register(new ConfigCommandNode(plugin).build(), List.of("tconfig"));
         commands.registrar().register(new DevCommandNode(plugin).build(), List.of("tdev"));
         commands.registrar().register(new GamemodeCommandNode(plugin).build(), List.of("tgm"));
+        commands.registrar().register(new HandlesCommandNode(plugin).build(), List.of("tardishandles", "thandles"));
         commands.registrar().register(new SurvivalCommandNode().build(), List.of());
         commands.registrar().register(new CreativeCommandNode().build(), List.of());
         commands.registrar().register(new AdventureCommandNode().build(), List.of());

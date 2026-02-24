@@ -24,7 +24,7 @@ import java.util.Arrays;
 /**
  * @author eccentric_nz
  */
-class SayCommand {
+public class SayCommand {
 
     private final TARDIS plugin;
 
@@ -32,8 +32,7 @@ class SayCommand {
         this.plugin = plugin;
     }
 
-    boolean say(Player player, String[] args) {
-        String message = String.join(" ", Arrays.copyOfRange(args, 2, args.length));
+    public boolean say(Player player, String message) {
         plugin.getMessenger().handlesMessage(player, message);
         return true;
     }

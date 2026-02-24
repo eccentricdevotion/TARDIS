@@ -36,13 +36,8 @@ public class HandbrakeCommand {
         this.plugin = plugin;
     }
 
-    public boolean toggle(Player player, int id, String[] args, boolean admin) {
-        if (args.length < 2) {
-            plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
-            return true;
-        }
-        String tf = args[1];
-        if (!admin && !tf.equalsIgnoreCase("on") && !tf.equalsIgnoreCase("off")) {
+    public boolean toggle(Player player, int id, String oo, boolean admin) {
+        if (!admin && !oo.equalsIgnoreCase("on") && !oo.equalsIgnoreCase("off")) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "PREF_ON_OFF", "the handbrake");
             return true;
         }
@@ -52,7 +47,7 @@ public class HandbrakeCommand {
         whereh.put("tardis_id", id);
         ResultSetControls rsc = new ResultSetControls(plugin, whereh, false);
         if (rsc.resultSet()) {
-            boolean bool = tf.equalsIgnoreCase("on");
+            boolean bool = oo.equalsIgnoreCase("on");
             int onoff = (bool) ? 1 : 0;
             HashMap<String, Object> where = new HashMap<>();
             where.put("tardis_id", id);
@@ -70,7 +65,7 @@ public class HandbrakeCommand {
                 plugin.getTrackerKeeper().getDidDematToVortex().remove(id);
             }
             if (!admin) {
-                plugin.getMessenger().send(player, TardisModule.TARDIS, "HANDBRAKE_ON_OFF", args[1].toUpperCase(Locale.ROOT));
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "HANDBRAKE_ON_OFF", oo.toUpperCase(Locale.ROOT));
             }
         }
         return true;

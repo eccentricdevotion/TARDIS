@@ -45,11 +45,11 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-class LandCommand {
+public class LandCommand {
 
     private final TARDIS plugin;
 
-    LandCommand(TARDIS plugin) {
+    public LandCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 

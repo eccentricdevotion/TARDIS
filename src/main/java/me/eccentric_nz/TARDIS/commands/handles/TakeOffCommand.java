@@ -35,7 +35,7 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-class TakeOffCommand {
+public class TakeOffCommand {
 
     private final TARDIS plugin;
 
@@ -43,9 +43,8 @@ class TakeOffCommand {
         this.plugin = plugin;
     }
 
-    public boolean enterVortex(Player player, String[] args) {
+    public boolean enterVortex(Player player, String uuid, int id) {
         // get TARDIS
-        int id = TARDISNumberParsers.parseInt(args[2]);
         HashMap<String, Object> wherei = new HashMap<>();
         wherei.put("tardis_id", id);
         ResultSetTardis rs = new ResultSetTardis(plugin, wherei, "", false);
@@ -84,14 +83,14 @@ class TakeOffCommand {
                     }
                     Location location = TARDISStaticLocationGetters.getLocationFromBukkitString(rsc.getLocation());
                     Block handbrake = location.getBlock();
-                    ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, args[1]);
+                    ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid);
                     boolean beac_on = true;
                     boolean bar = false;
                     if (rsp.resultSet()) {
                         beac_on = rsp.isBeaconOn();
                         bar = rsp.isTravelbarOn();
                     }
-                    Throticle throticle = new ResultSetThrottle(plugin).getSpeedAndParticles(args[1]);
+                    Throticle throticle = new ResultSetThrottle(plugin).getSpeedAndParticles(uuid);
                     new TARDISTakeoff(plugin).run(id, handbrake, location, player, beac_on, tardis.getBeacon(), bar, throticle);
                 } else {
                     plugin.getMessenger().handlesSend(player, "HANDBRAKE_OFF_ERR");

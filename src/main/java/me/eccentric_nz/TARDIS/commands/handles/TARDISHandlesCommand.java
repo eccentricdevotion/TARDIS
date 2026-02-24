@@ -28,6 +28,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.Arrays;
 import java.util.UUID;
 
 /**
@@ -57,7 +58,8 @@ public class TARDISHandlesCommand implements CommandExecutor {
                     return true;
                 }
                 case "disk" -> {
-                    return new DiskCommand(plugin).renameDisk(player, args);
+                    String name = String.join(" ", Arrays.copyOfRange(args, 1, args.length));
+                    return new DiskCommand(plugin).renameDisk(player, name);
                 }
                 case "remove" -> {
                     return new RemoveCommand(plugin).purge(player);
@@ -81,7 +83,9 @@ public class TARDISHandlesCommand implements CommandExecutor {
                 return true;
             }
             if (args[0].equals("tell")) {
-                return new TellCommand(plugin).message(args);
+                Player player = plugin.getServer().getPlayer(args[1]);
+                String message = String.join(" ", Arrays.copyOfRange(args, 2, args.length));
+                return new TellCommand(plugin).message(player, message);
             }
             UUID uuid;
             try {
@@ -103,22 +107,22 @@ public class TARDISHandlesCommand implements CommandExecutor {
                     return true;
                 }
                 case "remind" -> {
-                    return new RemindCommand(plugin).doReminder(player, args);
+                    return new RemindCommand(plugin).doReminder(player, String.join(" ", Arrays.copyOfRange(args, 2, args.length - 1)), TARDISNumberParsers.parseLong(args[args.length - 1]));
                 }
                 case "say" -> {
-                    return new SayCommand(plugin).say(player, args);
+                    return new SayCommand(plugin).say(player, String.join(" ", Arrays.copyOfRange(args, 2, args.length)));
                 }
                 case "scan" -> {
                     return new ScanCommand(plugin, player, TARDISNumberParsers.parseInt(args[2])).sayScan();
                 }
                 case "takeoff" -> {
-                    return new TakeOffCommand(plugin).enterVortex(player, args);
+                    return new TakeOffCommand(plugin).enterVortex(player, args[1], TARDISNumberParsers.parseInt(args[2]));
                 }
                 case "time" -> {
                     return new TimeCommand(plugin).sayTime(player);
                 }
                 case "brake" -> {
-                    return new BrakeCommand(plugin).park(player, args);
+                    return new BrakeCommand(plugin).park(player, TARDISNumberParsers.parseInt(args[3]), args[1]);
                 }
             }
         }

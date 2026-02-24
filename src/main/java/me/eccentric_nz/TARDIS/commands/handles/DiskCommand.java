@@ -31,15 +31,15 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-class DiskCommand {
+public class DiskCommand {
 
     private final TARDIS plugin;
 
-    DiskCommand(TARDIS plugin) {
+    public DiskCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    boolean renameDisk(Player player, String[] args) {
+    public boolean renameDisk(Player player, String name) {
         // check perms
         if (!TARDISPermission.hasPermission(player, "tardis.handles.program")) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
@@ -53,7 +53,6 @@ class DiskCommand {
                 // get the program_id from the disk
                 int pid = TARDISNumberParsers.parseInt(ComponentUtils.stripColour(dim.lore().get(1)));
                 // get the name - must be 32 chars or fewer
-                String name = String.join(" ", Arrays.copyOfRange(args, 1, args.length));
                 if (name.length() < 3 || name.length() > 32) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "SAVE_NAME_NOT_VALID");
                     return true;

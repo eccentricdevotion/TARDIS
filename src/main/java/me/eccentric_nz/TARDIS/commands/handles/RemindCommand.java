@@ -27,18 +27,15 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-class RemindCommand {
+public class RemindCommand {
 
     private final TARDIS plugin;
 
-    RemindCommand(TARDIS plugin) {
+    public RemindCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    boolean doReminder(Player player, String[] args) {
-        String message = String.join(" ", Arrays.copyOfRange(args, 2, args.length - 1));
-        // the last argument should be a number
-        long when = TARDISNumberParsers.parseLong(args[args.length - 1]);
+    public boolean doReminder(Player player, String message, long when) {
         if (when == 0) {
             plugin.getMessenger().handlesMessage(player, "HANDLES_NUMBER");
             return true;
