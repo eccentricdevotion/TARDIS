@@ -31,6 +31,7 @@ import me.eccentric_nz.TARDIS.travel.ComehereRequest;
 import me.eccentric_nz.TARDIS.upgrades.SystemTree;
 import me.eccentric_nz.TARDIS.upgrades.SystemUpgradeChecker;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -98,7 +99,10 @@ public class TARDISCommands implements CommandExecutor {
                 return new VersionCommand(plugin).displayVersion(sender);
             }
             if (args[0].equalsIgnoreCase("help")) {
-                return new HelpCommand(plugin).showHelp(sender, args);
+                return new HelpCommand(plugin).showHelp(sender,
+                        args.length > 1 ? args[1] : "",
+                        args.length > 2 ? args[2] : ""
+                );
             }
             if (player == null) {
                 plugin.getMessenger().send(sender, TardisModule.TARDIS, "CMD_PLAYER");
@@ -182,7 +186,7 @@ public class TARDISCommands implements CommandExecutor {
                     return new FindCommand(plugin).findTARDIS(player);
                 }
                 case handbrake -> {
-                    return new HandbrakeCommand(plugin).toggle(player, rs.getTardisId(), args, false);
+                    return new HandbrakeCommand(plugin).toggle(player, rs.getTardisId(), args[1], false);
                 }
                 case hide -> {
                     return new HideCommand(plugin).hide(player);

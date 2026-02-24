@@ -39,7 +39,7 @@ public class SudoHandbrake {
         }
         ResultSetTardisID rs = new ResultSetTardisID(plugin);
         if (rs.fromUUID(uuid.toString())) {
-            return new HandbrakeCommand(plugin).toggle(null, rs.getTardisId(), args, true);
+            return new HandbrakeCommand(plugin).toggle(null, rs.getTardisId(), args[1], true);
         }
         return true;
     }

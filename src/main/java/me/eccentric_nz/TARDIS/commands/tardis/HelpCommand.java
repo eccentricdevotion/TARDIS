@@ -25,26 +25,26 @@ import java.util.Locale;
 /**
  * @author eccentric_nz
  */
-class HelpCommand {
+public class HelpCommand {
 
     private final TARDIS plugin;
 
-    HelpCommand(TARDIS plugin) {
+    public HelpCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    boolean showHelp(CommandSender sender, String[] args) {
+    public boolean showHelp(CommandSender sender, String cmd, String sub) {
         TARDISCommandHelper tch = new TARDISCommandHelper(plugin);
-        if (args.length == 1) {
+        if (cmd.isEmpty()) {
             tch.getCommand("", sender);
             return true;
         }
-        if (args.length == 2) {
-            tch.getCommand(args[1].toLowerCase(Locale.ROOT), sender);
+        if (!cmd.isEmpty()) {
+            tch.getCommand(cmd.toLowerCase(Locale.ROOT), sender);
             return true;
         }
-        if (args.length > 2) {
-            String cmds = args[1].toLowerCase(Locale.ROOT) + " " + args[2].toLowerCase(Locale.ROOT);
+        if (!sub.isEmpty()) {
+            String cmds = cmd.toLowerCase(Locale.ROOT) + " " + sub.toLowerCase(Locale.ROOT);
             tch.getCommand(cmds, sender);
             return true;
         }
