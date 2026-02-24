@@ -31,15 +31,15 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-class OccupyCommand {
+public class OccupyCommand {
 
     private final TARDIS plugin;
 
-    OccupyCommand(TARDIS plugin) {
+    public OccupyCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    boolean toggleOccupancy(Player player, String[] args) {
+    public boolean toggleOccupancy(Player player) {
         if (TARDISPermission.hasPermission(player, "tardis.timetravel")) {
             HashMap<String, Object> wheret = new HashMap<>();
             wheret.put("uuid", player.getUniqueId().toString());
@@ -79,9 +79,7 @@ class OccupyCommand {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "OCCUPY_MUST_BE_IN");
                 return true;
             }
-            if (args.length < 2) {
-                plugin.getMessenger().send(player, TardisModule.TARDIS, "OCCUPY_SET", occupied);
-            }
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "OCCUPY_SET", occupied);
             return true;
         } else {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");

@@ -29,21 +29,17 @@ import java.util.regex.Pattern;
 /**
  * @author eccentric_nz
  */
-class RenameSavedLocationCommand {
+public class RenameSavedLocationCommand {
 
     private static final Pattern LETTERS_NUMBERS = Pattern.compile("[A-Za-z0-9_]{2,16}");
     private final TARDIS plugin;
 
-    RenameSavedLocationCommand(TARDIS plugin) {
+    public RenameSavedLocationCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    boolean doRenameSave(Player player, String[] args) {
+    public boolean doRenameSave(Player player, String oldName, String newName) {
         if (TARDISPermission.hasPermission(player, "tardis.save")) {
-            if (args.length < 3) {
-                plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
-                return false;
-            }
             ResultSetTardisID rs = new ResultSetTardisID(plugin);
             if (!rs.fromUUID(player.getUniqueId().toString())) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
@@ -51,17 +47,17 @@ class RenameSavedLocationCommand {
             }
             int id = rs.getTardisId();
             HashMap<String, Object> whered = new HashMap<>();
-            whered.put("dest_name", args[1]);
+            whered.put("dest_name", oldName);
             whered.put("tardis_id", id);
             ResultSetDestinations rsd = new ResultSetDestinations(plugin, whered, false);
             if (!rsd.resultSet()) {
                 plugin.getMessenger().sendColouredCommand(player, "SAVE_NOT_FOUND", "/tardis list saves", plugin);
                 return false;
             }
-            if (!LETTERS_NUMBERS.matcher(args[2]).matches()) {
+            if (!LETTERS_NUMBERS.matcher(newName).matches()) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "SAVE_NAME_NOT_VALID");
                 return false;
-            } else if (args[2].equalsIgnoreCase("hide") || args[1].equalsIgnoreCase("rebuild") || args[1].equalsIgnoreCase("home")) {
+            } else if (newName.equalsIgnoreCase("hide") || oldName.equalsIgnoreCase("rebuild") || oldName.equalsIgnoreCase("home")) {
                 plugin.getMessenger().sendColouredCommand(player, "SAVE_RESERVED", "/tardis home", plugin);
                 return false;
             } else {
@@ -69,9 +65,9 @@ class RenameSavedLocationCommand {
                 HashMap<String, Object> did = new HashMap<>();
                 did.put("dest_id", destID);
                 HashMap<String, Object> set = new HashMap<>();
-                set.put("dest_name", args[2]);
+                set.put("dest_name", newName);
                 plugin.getQueryFactory().doUpdate("destinations", set, did);
-                plugin.getMessenger().send(player, TardisModule.TARDIS, "DEST_RENAMED", args[2]);
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "DEST_RENAMED", newName);
             }
             return true;
         } else {

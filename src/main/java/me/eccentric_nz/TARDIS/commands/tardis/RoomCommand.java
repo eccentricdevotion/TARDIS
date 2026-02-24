@@ -43,25 +43,21 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-class RoomCommand {
+public class RoomCommand {
 
     private final TARDIS plugin;
 
-    RoomCommand(TARDIS plugin) {
+    public RoomCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    boolean startRoom(Player player, String[] args) {
+    public boolean startRoom(Player player, String arg) {
         UUID uuid = player.getUniqueId();
         if (plugin.getConfig().getBoolean("difficulty.system_upgrades") && !new SystemUpgradeChecker(plugin).has(uuid.toString(), SystemTree.ROOM_GROWING)) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "Room Growing");
             return true;
         }
-        if (args.length < 2) {
-            plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
-            return false;
-        }
-        String room = args[1].toUpperCase(Locale.ROOT);
+        String room = arg.toUpperCase(Locale.ROOT);
         if (room.equals("ARCADE")) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "GAME_ARCADE");
             return true;
@@ -70,7 +66,7 @@ class RoomCommand {
             new TARDISRoomLister(plugin, player).list();
             return true;
         }
-        String perm = "tardis.room." + args[1].toLowerCase(Locale.ROOT);
+        String perm = "tardis.room." + arg.toLowerCase(Locale.ROOT);
         if (!TARDISPermission.hasPermission(player, perm) && !TARDISPermission.hasPermission(player, "tardis.room")) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERM_ROOM_TYPE");
             return true;

@@ -63,7 +63,7 @@ public class UpdateCommand {
     public boolean startUpdate(Player player, String[] args) {
         if (TARDISPermission.hasPermission(player, "tardis.update")) {
             if (args.length == 1) {
-                return new UpdateChatGUI(plugin).showInterface(player, args);
+                return new UpdateChatGUI(plugin).showInterface(player, "");
             } else if (args.length < 2) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
                 return false;

@@ -36,11 +36,11 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-class MakeHerBlueCommand {
+public class MakeHerBlueCommand {
 
     private final TARDIS plugin;
 
-    MakeHerBlueCommand(TARDIS plugin) {
+    public MakeHerBlueCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 

@@ -33,20 +33,16 @@ import org.bukkit.entity.Player;
 import java.util.HashMap;
 import java.util.regex.Pattern;
 
-class TransmatCommand {
+public class TransmatCommand {
 
     private static final Pattern LETTERS_NUMBERS = Pattern.compile("[A-Za-z0-9_]{2,16}");
     private final TARDIS plugin;
 
-    TransmatCommand(TARDIS plugin) {
+    public TransmatCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    boolean teleportOrProcess(Player player, String[] args) {
-        if (args.length < 2) {
-            plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
-            return false;
-        }
+    public boolean teleportOrProcess(Player player, String[] args) {
         if (!TARDISPermission.hasPermission(player, "tardis.transmat")) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
             return true;

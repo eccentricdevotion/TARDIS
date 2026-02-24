@@ -77,7 +77,7 @@ public class LampsCommand {
      * @param owner the Timelord of the TARDIS
      * @return true if the TARDIS has not been updated, otherwise false
      */
-    boolean addLampBlocks(Player owner) {
+    public boolean addLampBlocks(Player owner) {
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", owner.getUniqueId().toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
@@ -140,7 +140,7 @@ public class LampsCommand {
         }
     }
 
-    boolean listLampBlocks(Player owner) {
+    public boolean listLampBlocks(Player owner) {
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", owner.getUniqueId().toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
@@ -160,54 +160,29 @@ public class LampsCommand {
         return true;
     }
 
-    public boolean setLampBlock(Player player, String[] args) {
-        if (args.length < 6) {
-            plugin.getMessenger().send(player, TardisModule.TARDIS, "LAMP_SET_USAGE");
-            return false;
-        }
-        int x;
-        int y;
-        int z;
-        try {
-            x = Integer.parseInt(args[2]);
-            y = Integer.parseInt(args[3]);
-            z = Integer.parseInt(args[4]);
-        } catch (NumberFormatException ignored) {
-            plugin.getMessenger().send(player, TardisModule.TARDIS, "LAMP_SET_USAGE");
-            return false;
-        }
-        // first material override isn't optional
-        String materialOn = null;
-        materialOn = args[5];
-        if (materialOn.equals("_")) {
-            materialOn = "";
+    public boolean setLampBlock(Player player, int x, int y, int z, String on, String off, float p) {
+        if (on.equals("_")) {
+            on = "";
         } else {
-            if (!valid_material(materialOn)) {
+            if (!valid_material(on)) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "LAMP_BAD_MATERIAL");
                 return false;
             }
         }
         // get optional material override arguments
-        String materialOff = null;
-        if (args.length >= 7) {
-            materialOff = args[6];
-            if (materialOff.equals("_")) {
-                materialOff = "";
+        if (!off.isEmpty()) {
+            if (off.equals("_")) {
+                off = "";
             } else {
-                if (!valid_material(materialOff)) {
+                if (!valid_material(off)) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "LAMP_BAD_MATERIAL");
                     return false;
                 }
             }
         }
         Float percentage = null;
-        try {
-            if (args.length >= 8) {
-                percentage = Math.clamp(Float.parseFloat(args[7]), 0, 1);
-            }
-        } catch (NumberFormatException ignored) {
-            plugin.getMessenger().send(player, TardisModule.TARDIS, "LAMP_SET_USAGE");
-            return false;
+        if (p != -1f) {
+            percentage = Math.clamp(p, 0, 1);
         }
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", player.getUniqueId().toString());
@@ -220,10 +195,8 @@ public class LampsCommand {
             wherel.put("tardis_id", id);
             wherel.put("location", (dimension + ":" + x + ":" + y + ":" + z));
             HashMap<String, Object> set = new HashMap<>();
-            set.put("material_on", materialOn);
-            if (materialOff != null) {
-                set.put("material_off", materialOff);
-            }
+            set.put("material_on", on);
+                set.put("material_off", off);
             if (percentage != null) {
                 set.put("percentage", percentage);
             }
@@ -233,21 +206,47 @@ public class LampsCommand {
         return true;
     }
 
-    public boolean zip(Player player, String arg) {
+    public boolean zip(Player player, String[] args) {
         if (!TARDISPermission.hasPermission(player, "tardis.update")) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
             return false;
         }
-        String sub = arg.toLowerCase(Locale.ROOT);
+        String sub = args[1].toLowerCase(Locale.ROOT);
         if (!subs.contains(sub)) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "ARG_NOT_VALID");
             return true;
         }
-        return switch (sub) {
-            case "auto" -> addLampBlocks(player);
-            case "list" -> listLampBlocks(player);
-//            case "set" -> setLampBlock(player, args);
-            default -> true;
-        };
+         switch (sub) {
+            case "auto" -> {
+                return addLampBlocks(player);
+            }
+            case "list" -> {
+                return listLampBlocks(player);
+            }
+            case "set" -> {
+                if (args.length < 6) {
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "LAMP_SET_USAGE");
+                    return true;
+                }
+                int x;
+                int y;
+                int z;
+                try {
+                    x = Integer.parseInt(args[2]);
+                    y = Integer.parseInt(args[3]);
+                    z = Integer.parseInt(args[4]);
+                } catch (NumberFormatException ignored) {
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "LAMP_SET_USAGE");
+                    return true;
+                }
+                String on = args.length > 5 ? args[5] : "";
+                String off = args.length > 6 ? args[6] : "";
+                float p = args.length > 7 ? TARDISNumberParsers.parseFloat(args[7]) : -1f;
+                return setLampBlock(player, x, y, z, on, off, p);
+            }
+            default -> {
+                return true;
+            }
+        }
     }
 }

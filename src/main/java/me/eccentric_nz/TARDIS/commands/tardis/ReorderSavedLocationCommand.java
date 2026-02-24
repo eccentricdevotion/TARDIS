@@ -29,20 +29,16 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-class ReorderSavedLocationCommand {
+public class ReorderSavedLocationCommand {
 
     private final TARDIS plugin;
 
-    ReorderSavedLocationCommand(TARDIS plugin) {
+    public ReorderSavedLocationCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    boolean doReorderSave(Player player, String[] args) {
+    public boolean doReorderSave(Player player, String name, int slot) {
         if (TARDISPermission.hasPermission(player, "tardis.save")) {
-            if (args.length < 3) {
-                plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
-                return false;
-            }
             ResultSetTardisID rs = new ResultSetTardisID(plugin);
             if (!rs.fromUUID(player.getUniqueId().toString())) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
@@ -50,22 +46,21 @@ class ReorderSavedLocationCommand {
             }
             int id = rs.getTardisId();
             HashMap<String, Object> whered = new HashMap<>();
-            whered.put("dest_name", args[1]);
+            whered.put("dest_name", name);
             whered.put("tardis_id", id);
             ResultSetDestinations rsd = new ResultSetDestinations(plugin, whered, false);
             if (!rsd.resultSet()) {
                 plugin.getMessenger().sendColouredCommand(player, "SAVE_NOT_FOUND", "/tardis list saves", plugin);
                 return false;
             }
-            if (args[1].equalsIgnoreCase("home")) {
+            if (name.equalsIgnoreCase("home")) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "SAVE_REORDER");
                 return false;
             }
-            if (!TARDISNumberParsers.isNumber(args[2])) {
+            if (slot == -1) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "ARG_LAST_NUMBER");
                 return false;
             }
-            int slot = TARDISNumberParsers.parseInt(args[2]);
             // check slot is not occupied
             HashMap<String, Object> wheres = new HashMap<>();
             wheres.put("tardis_id", id);
@@ -81,7 +76,7 @@ class ReorderSavedLocationCommand {
             HashMap<String, Object> set = new HashMap<>();
             set.put("slot", slot);
             plugin.getQueryFactory().doUpdate("destinations", set, did);
-            plugin.getMessenger().send(player, TardisModule.TARDIS, "DEST_REORDERED", args[2]);
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "DEST_REORDERED", slot);
             return true;
         } else {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");

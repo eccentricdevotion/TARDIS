@@ -36,16 +36,16 @@ import java.util.regex.Pattern;
 /**
  * @author eccentric_nz
  */
-class SetDestinationCommand {
+public class SetDestinationCommand {
 
     private static final Pattern LETTERS_NUMBERS = Pattern.compile("[A-Za-z0-9_]{2,16}");
     private final TARDIS plugin;
 
-    SetDestinationCommand(TARDIS plugin) {
+    public SetDestinationCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    boolean doSetDestination(Player player, String[] args) {
+    public boolean doSetDestination(Player player, String name) {
         if (TARDISPermission.hasPermission(player, "tardis.save")) {
             String uuid = player.getUniqueId().toString();
             ResultSetTardisID rs = new ResultSetTardisID(plugin);
@@ -57,14 +57,10 @@ class SetDestinationCommand {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "Saves");
                 return true;
             }
-            if (args.length < 2) {
-                plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
-                return false;
-            }
-            if (!LETTERS_NUMBERS.matcher(args[1]).matches()) {
+            if (!LETTERS_NUMBERS.matcher(name).matches()) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "DEST_NAME_NOT_VALID");
                 return false;
-            } else if (args[1].equalsIgnoreCase("hide") || args[1].equalsIgnoreCase("rebuild") || args[1].equalsIgnoreCase("home")) {
+            } else if (name.equalsIgnoreCase("hide") || name.equalsIgnoreCase("rebuild") || name.equalsIgnoreCase("home")) {
                 plugin.getMessenger().sendColouredCommand(player, "SAVE_RESERVED", "/tardis home", plugin);
                 return false;
             } else {
@@ -120,7 +116,7 @@ class SetDestinationCommand {
                 int dz = l.getBlockZ();
                 HashMap<String, Object> set = new HashMap<>();
                 set.put("tardis_id", id);
-                set.put("dest_name", args[1]);
+                set.put("dest_name", name);
                 set.put("world", dw);
                 set.put("x", dx);
                 set.put("y", dy);
@@ -128,7 +124,7 @@ class SetDestinationCommand {
                 if (plugin.getQueryFactory().doSyncInsert("destinations", set) < 0) {
                     return false;
                 } else {
-                    plugin.getMessenger().send(player, TardisModule.TARDIS, "DEST_SAVED", args[1]);
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "DEST_SAVED", name);
                     return true;
                 }
             }

@@ -49,14 +49,14 @@ public class RoomCommandNode {
                                     RoomsUtility.saveBlocks(plugin, ctx.getSource().getSender());
                                     return Command.SINGLE_SUCCESS;
                                 }))
-                        .then(Commands.argument("room", new RoomArgumentType(plugin)))
+                        .then(Commands.argument("room", new RoomArgumentType(plugin, false)))
                         .executes(ctx -> {
                             String r = ctx.getArgument("room", String.class);
                             RoomsUtility.listBlocks(plugin, ctx.getSource().getSender(), r);
                             return Command.SINGLE_SUCCESS;
                         }))
                 .then(Commands.literal("required")
-                        .then(Commands.argument("room", new RoomArgumentType(plugin))
+                        .then(Commands.argument("room", new RoomArgumentType(plugin, false))
                                 .requires(ctx -> ctx.getExecutor() instanceof Player)
                                 .executes(ctx -> {
                                     Player player = (Player) ctx.getSource().getExecutor();
@@ -64,7 +64,7 @@ public class RoomCommandNode {
                                     RoomRequiredLister.listCondensables(plugin, r, player);
                                     return Command.SINGLE_SUCCESS;
                                 })))
-                .then(Commands.argument("room", new RoomArgumentType(plugin))
+                .then(Commands.argument("room", new RoomArgumentType(plugin, false))
                         .then(Commands.argument("enable", BoolArgumentType.bool())
                                 .requires(ctx -> ctx.getSender().hasPermission("tardis.admin"))
                                 .executes(ctx -> {

@@ -31,34 +31,30 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-class SecondaryCommand {
+public class SecondaryCommand {
 
     private final TARDIS plugin;
 
-    SecondaryCommand(TARDIS plugin) {
+    public SecondaryCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    boolean startSecondary(Player player, String[] args) {
+    public boolean startSecondary(Player player, String arg) {
         if (TARDISPermission.hasPermission(player, "tardis.update")) {
-            if (args.length < 2) {
-                plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
-                return false;
-            }
             UUID uuid = player.getUniqueId();
             ResultSetTardisID rs = new ResultSetTardisID(plugin);
             if (!rs.fromUUID(uuid.toString())) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_A_TIMELORD");
                 return false;
             }
-            if (args[1].equalsIgnoreCase("remove")) {
+            if (arg.equalsIgnoreCase("remove")) {
                 plugin.getTrackerKeeper().getSecondaryRemovers().put(player.getUniqueId(), rs.getTardisId());
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "SEC_REMOVE_CLICK_BLOCK");
                 return true;
             }
             Updateable updateable;
             try {
-                updateable = Updateable.valueOf(TARDISStringUtils.toScoredUppercase(args[1]));
+                updateable = Updateable.valueOf(TARDISStringUtils.toScoredUppercase(arg));
             } catch (IllegalArgumentException e) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_NOT_VALID");
                 return false;

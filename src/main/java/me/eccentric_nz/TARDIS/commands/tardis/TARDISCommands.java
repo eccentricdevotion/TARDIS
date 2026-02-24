@@ -39,6 +39,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.Arrays;
 import java.util.Locale;
 import java.util.UUID;
 
@@ -231,22 +232,27 @@ public class TARDISCommands implements CommandExecutor {
                     if (args.length < 2) {
                         return false;
                     }
-                    return new LampsCommand(plugin).zip(player, args[1]);
+                    return new LampsCommand(plugin).zip(player, args);
                 }
                 case list -> {
-                    return new ListCommand(plugin).doList(player, args);
+                    return new ListCommand(plugin).doList(player, args[1]);
                 }
                 case make_her_blue -> {
                     return new MakeHerBlueCommand(plugin).show(player);
                 }
                 case monsters -> {
-                    return new MonstersCommand(plugin).reset(player, rs.getTardisId(), args);
+                    return new MonstersCommand(plugin).reset(player, rs.getTardisId(), args[1]);
                 }
                 case namekey -> {
-                    return new NameKeyCommand(plugin).nameKey(player, args);
+                    int count = args.length;
+                    if (count < 2) {
+                        return false;
+                    }
+                    String newName = String.join(" ", Arrays.copyOfRange(args, 1, args.length));
+                    return new NameKeyCommand(plugin).nameKey(player, newName);
                 }
                 case occupy -> {
-                    return new OccupyCommand(plugin).toggleOccupancy(player, args);
+                    return new OccupyCommand(plugin).toggleOccupancy(player);
                 }
                 case decommission -> {
                     if (args.length < 2) {
@@ -259,44 +265,88 @@ public class TARDISCommands implements CommandExecutor {
                     return new RebuildCommand(plugin).rebuildPreset(player);
                 }
                 case remove -> {
-                    return new RemoveCompanionCommand(plugin).doRemoveCompanion(player, args);
+                    if (args.length < 2) {
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
+                        return false;
+                    }
+                    return new RemoveCompanionCommand(plugin).doRemoveCompanion(player, args[1]);
                 }
                 case removesave -> {
-                    return new RemoveSavedLocationCommand(plugin).doRemoveSave(player, args);
+                    if (args.length < 2) {
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
+                        return false;
+                    }
+                    return new RemoveSavedLocationCommand(plugin).doRemoveSave(player, args[1]);
                 }
                 case renamesave -> {
-                    return new RenameSavedLocationCommand(plugin).doRenameSave(player, args);
+                    if (args.length < 3) {
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
+                        return false;
+                    }
+                    return new RenameSavedLocationCommand(plugin).doRenameSave(player, args[1], args[2]);
                 }
                 case reordersave -> {
-                    return new ReorderSavedLocationCommand(plugin).doReorderSave(player, args);
+                    if (args.length < 3) {
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
+                        return false;
+                    }
+                    return new ReorderSavedLocationCommand(plugin).doReorderSave(player, args[1], TARDISNumberParsers.parseInt(args[2]));
                 }
                 case rescue -> {
-                    return new RescueCommand(plugin).startRescue(player, args);
+                    if (args.length < 2) {
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
+                        return true;
+                    }
+                    if (args[1].equalsIgnoreCase("accept")) {
+                        new RescueAcceptor(plugin).doRequest(player, false);
+                        return true;
+                    }
+                    return new RescueCommand(plugin).startRescue(player, plugin.getServer().getPlayer(args[1]));
                 }
                 case room -> {
-                    return new RoomCommand(plugin).startRoom(player, args);
+                    if (args.length < 2) {
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
+                        return false;
+                    }
+                    return new RoomCommand(plugin).startRoom(player, args[1]);
                 }
                 case save_player -> {
+                    if (args.length < 2) {
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
+                        return false;
+                    }
                     ItemStack is = player.getInventory().getItemInMainHand();
-                    if (heldDiskIsWrong(is, "Player Storage Disk")) {
+                    if (TardisUtility.heldDiskIsWrong(is, "Player Storage Disk")) {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "DISK_HAND_PLAYER");
                         return true;
                     }
-                    return new DiskWriterCommand(plugin).writePlayer(player, args);
+                    return new DiskWriterCommand(plugin).writePlayer(player, plugin.getServer().getPlayer(args[1]));
                 }
                 case secondary -> {
-                    return new SecondaryCommand(plugin).startSecondary(player, args);
+                    if (args.length < 2) {
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
+                        return false;
+                    }
+                    return new SecondaryCommand(plugin).startSecondary(player, args[1]);
                 }
                 case section -> {
-                    return new UpdateChatGUI(plugin).showInterface(player, args);
+                    return new UpdateChatGUI(plugin).showInterface(player, args.length > 1 ? args[1] : "");
                 }
                 case setdest -> {
-                    return new SetDestinationCommand(plugin).doSetDestination(player, args);
+                    if (args.length < 2) {
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
+                        return false;
+                    }
+                    return new SetDestinationCommand(plugin).doSetDestination(player, args[1]);
                 }
                 case tagtheood -> {
                     return new TagCommand(plugin).getStats(player);
                 }
                 case transmat -> {
+                    if (args.length < 2) {
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
+                        return false;
+                    }
                     return new TransmatCommand(plugin).teleportOrProcess(player, args);
                 }
                 case update -> {
@@ -310,22 +360,26 @@ public class TARDISCommands implements CommandExecutor {
                     return new ExterminateCommand(plugin).doExterminate(player, messagePlayer);
                 }
                 case save -> {
+                    if (args.length < 2) {
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
+                        return false;
+                    }
                     if (plugin.getConfig().getBoolean("difficulty.system_upgrades") && !new SystemUpgradeChecker(plugin).has(player.getUniqueId().toString(), SystemTree.SAVES)) {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "Saves");
                         return true;
                     }
                     ItemStack itemStack = player.getInventory().getItemInMainHand();
                     if (itemStack.getType().equals(Material.MUSIC_DISC_FAR)) {
-                        return new DiskWriterCommand(plugin).writeSaveToControlDisk(player, args);
+                        return new DiskWriterCommand(plugin).writeSaveToControlDisk(player, args[1]);
                     } else {
                         if (plugin.getConfig().getBoolean("difficulty.disks") && !plugin.getUtils().inGracePeriod(player, true)) {
-                            if (plugin.getConfig().getBoolean("difficulty.disk_in_hand_for_write") && heldDiskIsWrong(itemStack, "Save Storage Disk")) {
+                            if (plugin.getConfig().getBoolean("difficulty.disk_in_hand_for_write") && TardisUtility.heldDiskIsWrong(itemStack, "Save Storage Disk")) {
                                 plugin.getMessenger().send(player, TardisModule.TARDIS, "DISK_HAND_SAVE");
                                 return true;
                             }
-                            return new DiskWriterCommand(plugin).writeSave(player, args);
+                            return new DiskWriterCommand(plugin).writeSave(player, args[1]);
                         } else {
-                            return new SaveLocationCommand(plugin).doSave(player, args);
+                            return new SaveLocationCommand(plugin).doSave(player, args[1], args.length == 2);
                         }
                     }
                 }
@@ -342,19 +396,5 @@ public class TARDISCommands implements CommandExecutor {
         }
         // If the above has happened the function will break and return true. If this hasn't happened then value of false will be returned.
         return false;
-    }
-
-    private boolean heldDiskIsWrong(ItemStack is, String dn) {
-        boolean complexBool = false;
-        if (is == null) {
-            complexBool = true;
-        } else if (!is.hasItemMeta()) {
-            complexBool = true;
-        } else if (!is.getItemMeta().hasDisplayName()) {
-            complexBool = true;
-        } else if (!ComponentUtils.endsWith(is.getItemMeta().displayName(), dn)) {
-            complexBool = true;
-        }
-        return complexBool;
     }
 }
