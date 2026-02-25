@@ -23,7 +23,6 @@ public class BrigadierCommandRegister {
         commands.registrar().register(new BindCommandNode(plugin).build(), List.of("tbind"));
         commands.registrar().register(new BookCommandNode(plugin).build(), List.of("tbook"));
         commands.registrar().register(new CallCommandNode(plugin).build(), List.of("tcall"));
-        commands.registrar().register(new ChemistryCommandNode(plugin).build(), List.of("tchemistry"));
         commands.registrar().register(new ConfigCommandNode(plugin).build(), List.of("tconfig"));
         commands.registrar().register(new DevCommandNode(plugin).build(), List.of("tdev"));
         commands.registrar().register(new DisplayCommandNode(plugin).build(), List.of("tdisplay"));
@@ -51,5 +50,20 @@ public class BrigadierCommandRegister {
         commands.registrar().register(new WorldCommandNode(plugin).build(), List.of("tworld"));
         commands.registrar().register(new QuestionCommandNode(plugin).build(), List.of("t?", "tardishelp"));
         // TODO module commands
+        if (plugin.getConfig().getBoolean("modules.chemistry")) {
+            commands.registrar().register(new ChemistryCommandNode(plugin).build(), List.of("tchemistry"));
+        }
+        if (plugin.getConfig().getBoolean("modules.regeneration")) {
+//            commands.registrar().register(new RegenerationCommandNode(plugin).build(), List.of("regeneration", "regen"));
+        }
+        if (plugin.getConfig().getBoolean("modules.shop")) {
+//            commands.registrar().register(new ShopCommandNode(plugin).build(), List.of("tshop"));
+        }
+        if (plugin.getConfig().getBoolean("modules.vortex_manipulator")) {
+//            commands.registrar().register(new VortexManipulatorCommandNode(plugin).build(), List.of("vortexmainpulator", "tvm"));
+        }
+        if (plugin.getConfig().getBoolean("modules.weeping_angels")) {
+//            commands.registrar().register(new MonstersCommandNode(plugin).build(), List.of("tardisweepingangels"));
+        }
     }
 }
