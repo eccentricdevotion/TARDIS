@@ -12,7 +12,6 @@ import io.papermc.paper.command.brigadier.MessageComponentSerializer;
 import io.papermc.paper.command.brigadier.argument.CustomArgumentType;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemRegistry;
 import net.kyori.adventure.text.Component;
-import org.bukkit.entity.ItemDisplay;
 
 import java.util.HashSet;
 import java.util.Set;

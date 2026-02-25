@@ -12,10 +12,7 @@ import io.papermc.paper.command.brigadier.MessageComponentSerializer;
 import io.papermc.paper.command.brigadier.argument.CustomArgumentType;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import net.kyori.adventure.text.Component;
-import org.bukkit.entity.ItemDisplay;
 
-import java.util.HashSet;
-import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
 public class ConsoleColourArgumentType implements CustomArgumentType<String, String> {
