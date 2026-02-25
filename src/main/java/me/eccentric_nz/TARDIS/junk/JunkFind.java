@@ -29,11 +29,11 @@ import org.bukkit.command.CommandSender;
 /**
  * @author eccentric_nz
  */
-class JunkFind {
+public class JunkFind {
 
     private final TARDIS plugin;
 
-    JunkFind(TARDIS plugin) {
+    public JunkFind(TARDIS plugin) {
         this.plugin = plugin;
     }
 

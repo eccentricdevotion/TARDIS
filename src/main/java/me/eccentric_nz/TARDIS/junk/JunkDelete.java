@@ -32,11 +32,11 @@ import org.bukkit.command.CommandSender;
 /**
  * @author eccentric_nz
  */
-class JunkDelete {
+public class JunkDelete {
 
     private final TARDIS plugin;
 
-    JunkDelete(TARDIS plugin) {
+    public JunkDelete(TARDIS plugin) {
         this.plugin = plugin;
     }
 

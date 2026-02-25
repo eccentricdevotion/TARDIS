@@ -27,15 +27,15 @@ import org.bukkit.command.CommandSender;
 /**
  * @author eccentric_nz
  */
-class JunkReturn {
+public class JunkReturn {
 
     private final TARDIS plugin;
 
-    JunkReturn(TARDIS plugin) {
+    public JunkReturn(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    boolean recall(CommandSender sender, boolean noCheck) {
+    public boolean recall(CommandSender sender, boolean noCheck) {
         if (!sender.hasPermission("tardis.admin")) {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "CMD_ADMIN");
             return true;

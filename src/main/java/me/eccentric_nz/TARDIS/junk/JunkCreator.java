@@ -37,17 +37,17 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-class JunkCreator {
+public class JunkCreator {
 
     private final TARDIS plugin;
     private final Player p;
 
-    JunkCreator(TARDIS plugin, Player p) {
+    public JunkCreator(TARDIS plugin, Player p) {
         this.plugin = plugin;
         this.p = p;
     }
 
-    boolean createJunkTARDIS() {
+    public boolean createJunkTARDIS() {
         if (!TARDISPermission.hasPermission(p, "tardis.admin")) {
             plugin.getMessenger().send(p, TardisModule.TARDIS, "CMD_ADMIN");
             return true;

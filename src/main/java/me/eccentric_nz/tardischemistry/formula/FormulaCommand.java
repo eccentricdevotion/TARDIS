@@ -30,32 +30,28 @@ public class FormulaCommand {
         this.plugin = plugin;
     }
 
-    public boolean show(Player player, String[] args) {
-        if (args.length < 2) {
-            plugin.getMessenger().message(player, "You need to specify the compound or product you want the formula for! Try using tab complete...");
-            return false;
-        }
+    public boolean show(Player player, String which) {
         // do stuff
         FormulaViewer holder = new FormulaViewer(plugin, player);
         try {
-            Compound compound = Compound.valueOf(args[1]);
+            Compound compound = Compound.valueOf(which);
             holder.getCompoundFormula(compound);
             player.openInventory(holder.getInventory());
             return true;
         } catch (IllegalArgumentException ce) {
             try {
-                Product product = Product.valueOf(args[1]);
+                Product product = Product.valueOf(which);
                 holder.getProductFormula(product);
                 player.openInventory(holder.getInventory());
                 return true;
             } catch (IllegalArgumentException pe) {
                 try {
-                    Lab lab = Lab.valueOf(args[1]);
+                    Lab lab = Lab.valueOf(which);
                     holder.getLabFormula(lab);
                     player.openInventory(holder.getInventory());
                     return true;
                 } catch (IllegalArgumentException le) {
-                    plugin.getMessenger().message(player, "Could not find a formula for '" + args[1] + "' make sure you typed it correctly.");
+                    plugin.getMessenger().message(player, "Could not find a formula for '" + which + "' make sure you typed it correctly.");
                     return true;
                 }
             }

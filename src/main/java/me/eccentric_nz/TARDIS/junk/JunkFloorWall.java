@@ -24,35 +24,27 @@ import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Locale;
 
 /**
  * @author eccentric_nz
  */
-class JunkFloorWall {
+public class JunkFloorWall {
 
     private final TARDIS plugin;
 
-    JunkFloorWall(TARDIS plugin) {
+    public JunkFloorWall(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    boolean setJunkWallOrFloor(CommandSender sender, String[] args) {
-        String pref = args[0].toLowerCase(Locale.ROOT);
-        // check args
-        if (args.length < 2) {
-            plugin.getMessenger().send(sender, TardisModule.TARDIS, "PREF_WALL", pref);
-            return false;
+    public boolean setJunkWallOrFloor(CommandSender sender, String which, String material) {
+        if (!sender.hasPermission("tardis.admin")) {
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "CMD_ADMIN");
+            return true;
         }
-        String wall_mat;
-        if (args.length > 2) {
-            String t = String.join(" ", Arrays.copyOfRange(args, 1, args.length));
-            wall_mat = t.toUpperCase(Locale.ROOT);
-        } else {
-            wall_mat = args[1].toUpperCase(Locale.ROOT);
-        }
+        String pref = which.toLowerCase(Locale.ROOT);
+        String wall_mat = material.toUpperCase(Locale.ROOT);
         if (!TARDISWalls.BLOCKS.contains(Material.valueOf(wall_mat))) {
             String message = (wall_mat.equals("HELP")) ? "WALL_LIST" : "WALL_NOT_VALID";
             plugin.getMessenger().send(sender, TardisModule.TARDIS, message, pref);
