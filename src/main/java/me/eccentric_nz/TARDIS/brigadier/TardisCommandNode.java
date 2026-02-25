@@ -23,7 +23,6 @@ import me.eccentric_nz.TARDIS.chatGUI.UpdateChatGUI;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import me.eccentric_nz.TARDIS.commands.tardis.*;
 import me.eccentric_nz.TARDIS.commands.tardis.update.UpdateBlocksCommand;
-import me.eccentric_nz.TARDIS.commands.tardis.update.UpdateCommand;
 import me.eccentric_nz.TARDIS.commands.tardis.update.UpdateLungeCommand;
 import me.eccentric_nz.TARDIS.commands.utils.RescueAcceptor;
 import me.eccentric_nz.TARDIS.database.data.Tardis;

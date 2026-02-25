@@ -16,11 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.handles;
 
+import com.google.common.collect.ImmutableList;
 import io.papermc.paper.registry.RegistryAccess;
 import io.papermc.paper.registry.RegistryKey;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.commands.TARDISRecipeTabComplete;
 import me.eccentric_nz.TARDIS.commands.handles.TeleportCommand;
 import me.eccentric_nz.TARDIS.commands.handles.TransmatCommand;
 import me.eccentric_nz.TARDIS.control.TARDISPowerButton;
@@ -29,6 +29,8 @@ import me.eccentric_nz.TARDIS.control.actions.LightSwitchAction;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.RecipeCategory;
+import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
@@ -49,10 +51,45 @@ public class HandlesRequest {
 
     private final TARDIS plugin;
     private final Pattern handlesPattern;
+    public static final Set<String> ROOT_SUBS = new HashSet<>();
+    public static final List<String> TARDIS_TYPES = ImmutableList.of(
+            "ancient", "ars",
+            "bigger", "bone", "budget",
+            "cave", "copper", "coral", "cursed", "custom",
+            "delta", "deluxe", "diner", "division",
+            "eighth", "eleventh", "ender",
+            "factory", "fifteenth", "fugitive",
+            "hell_bent", "hospital",
+            "master", "mechanical",
+            "original",
+            "plank", "pyramid",
+            "redstone", "rotor", "rustic",
+            "sidrat", "steampunk",
+            "thirteenth", "tom", "twelfth",
+            "war", "weathered", "wood",
+            "legacy_bigger", "legacy_deluxe", "legacy_eleventh", "legacy_redstone"
+    );
+
 
     public HandlesRequest(TARDIS plugin) {
         this.plugin = plugin;
         handlesPattern = HandlesPattern.getPattern("prefix", false);
+        ROOT_SUBS.add("seed");
+        ROOT_SUBS.add("tardis");
+        for (RecipeItem recipeItem : RecipeItem.values()) {
+            if (recipeItem.getCategory() != RecipeCategory.UNCRAFTABLE && recipeItem.getCategory() != RecipeCategory.UNUSED && recipeItem.getCategory() != RecipeCategory.CHEMISTRY) {
+                ROOT_SUBS.add(recipeItem.toTabCompletionString());
+            }
+        }
+        for (String d : TARDIS.plugin.getCustomDoorsConfig().getKeys(false)) {
+            ROOT_SUBS.add("door-" + d.toLowerCase(Locale.ROOT));
+        }
+        for (String r : TARDIS.plugin.getCustomRotorsConfig().getKeys(false)) {
+            ROOT_SUBS.add("time-rotor-" + r.toLowerCase(Locale.ROOT));
+        }
+        for (String c : TARDIS.plugin.getCustomConsolesConfig().getConfigurationSection("consoles").getKeys(false)) {
+            ROOT_SUBS.add("console-" + c.toLowerCase(Locale.ROOT));
+        }
     }
 
     public void process(UUID uuid, String chat) {
@@ -135,7 +172,7 @@ public class HandlesRequest {
                             String tardis = groups.get(1);
                             if (tardis == null || tardis.isEmpty()) {
                                 // tardis recipes
-                                for (String item : TARDISRecipeTabComplete.ROOT_SUBS) {
+                                for (String item : ROOT_SUBS) {
                                     if (groups.get(2).equalsIgnoreCase(item)) {
                                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.performCommand("tardisrecipe " + item), 1L);
                                         return;
@@ -143,7 +180,7 @@ public class HandlesRequest {
                                 }
                             } else {
                                 // tardis seed block
-                                for (String seed : TARDISRecipeTabComplete.TARDIS_TYPES) {
+                                for (String seed : TARDIS_TYPES) {
                                     if (groups.getFirst().equalsIgnoreCase(seed)) {
                                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.performCommand("tardisrecipe tardis " + seed), 1L);
                                         return;
