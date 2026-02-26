@@ -14,7 +14,6 @@ import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.brigadier.arguments.MonsterArgumentType;
 import me.eccentric_nz.TARDIS.brigadier.arguments.MonsterExtraArgumentType;
 import me.eccentric_nz.TARDIS.brigadier.arguments.OnOffArgumentType;
-import me.eccentric_nz.TARDIS.commands.TARDISCallRequestCommand;
 import me.eccentric_nz.tardisweepingangels.commands.*;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -33,10 +32,20 @@ public class MonstersCommandNode {
         LiteralArgumentBuilder<CommandSourceStack> command = Commands.literal("twa")
                 .requires(ctx -> ctx.getExecutor() instanceof Player)
                 .then(Commands.literal("spawn")
-                        .executes(ctx -> {
-                            new SpawnCommand(plugin).spawn(ctx.getSource().getSender(), args);
-                            return Command.SINGLE_SUCCESS;
-                        }))
+                        .then(Commands.argument("monster", new MonsterArgumentType())
+                                .executes(ctx -> {
+                                    String m = ctx.getArgument("monster", String.class);
+                                    new SpawnCommand(plugin).spawn(ctx.getSource().getSender(), m, "");
+                                    return Command.SINGLE_SUCCESS;
+                                })
+                                .then(Commands.argument("extra", new MonsterExtraArgumentType())
+                                        .executes(ctx -> {
+                                            String m = ctx.getArgument("monster", String.class);
+                                            String e = ctx.getArgument("extra", String.class);
+                                            new SpawnCommand(plugin).spawn(ctx.getSource().getSender(), m, e);
+                                            return Command.SINGLE_SUCCESS;
+                                        })
+                                )))
                 .then(Commands.literal("equip")
                         .then(Commands.argument("monster", new MonsterArgumentType())
                                 .executes(ctx -> {

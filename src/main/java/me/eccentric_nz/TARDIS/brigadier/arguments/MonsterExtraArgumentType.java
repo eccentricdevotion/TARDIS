@@ -1,6 +1,5 @@
 package me.eccentric_nz.TARDIS.brigadier.arguments;
 
-import com.google.common.collect.ImmutableList;
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.arguments.ArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
@@ -15,7 +14,6 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.DyeColor;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 

@@ -61,7 +61,6 @@ public class BrigadierCommandRegister {
         if (plugin.getConfig().getBoolean("modules.vortex_manipulator")) {
             commands.registrar().register(new VortexManipulatorCommandNode(plugin).build(), List.of("vortexmainpulator", "tvm"));
         }
-        // TODO twa commands
         if (plugin.getConfig().getBoolean("modules.weeping_angels")) {
             commands.registrar().register(new MonstersCommandNode(plugin).build(), List.of("tardisweepingangels"));
         }

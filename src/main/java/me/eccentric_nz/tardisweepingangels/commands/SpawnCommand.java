@@ -61,11 +61,8 @@ public class SpawnCommand {
         this.plugin = plugin;
     }
 
-    public boolean spawn(CommandSender sender, String[] args) {
-        if (args.length < 2) {
-            return false;
-        }
-        String upper = args[1].toUpperCase(Locale.ROOT);
+    public boolean spawn(CommandSender sender, String mon, String extra) {
+        String upper = mon.toUpperCase(Locale.ROOT);
         // check monster type
         Monster monster;
         try {
@@ -93,8 +90,8 @@ public class SpawnCommand {
             switch (monster) {
                 case DALEK -> {
                     DalekEquipment.set(a, false);
-                    if (args.length > 2) {
-                        if (args[2].equalsIgnoreCase("flying")) {
+                    if (!extra.isEmpty()) {
+                        if (extra.equalsIgnoreCase("flying")) {
                             // make the Dalek fly
                             EntityEquipment ee = a.getEquipment();
                             ee.setChestplate(ItemStack.of(Material.ELYTRA, 1));
@@ -105,7 +102,7 @@ public class SpawnCommand {
                             }, 2L);
                         } else {
                             try {
-                                DyeColor colour = DyeColor.valueOf(args[2].toUpperCase(Locale.ROOT));
+                                DyeColor colour = DyeColor.valueOf(extra.toUpperCase(Locale.ROOT));
                                 NamespacedKey head = DalekVariant.DALEK_BRASS.getKey();
                                 switch (colour) {
                                     case BLACK -> head = DalekVariant.DALEK_BLACK.getKey();

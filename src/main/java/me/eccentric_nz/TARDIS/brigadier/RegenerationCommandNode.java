@@ -10,14 +10,8 @@ import io.papermc.paper.command.brigadier.argument.ArgumentTypes;
 import io.papermc.paper.command.brigadier.argument.resolvers.selector.PlayerSelectorArgumentResolver;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.brigadier.arguments.OnOffArgumentType;
-import me.eccentric_nz.TARDIS.brigadier.arguments.ShopItemArgumentType;
-import me.eccentric_nz.TARDIS.commands.TARDISCallRequestCommand;
-import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.tardisregeneration.RegenerationUtility;
-import me.eccentric_nz.tardisshop.ShopUtility;
 import org.bukkit.entity.Player;
-
-import java.util.HashMap;
 
 public class RegenerationCommandNode {
 
