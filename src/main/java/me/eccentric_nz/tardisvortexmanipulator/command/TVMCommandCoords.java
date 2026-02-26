@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.tardisvortexmanipulator.command;
 
+import io.papermc.paper.math.BlockPosition;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
@@ -44,87 +45,44 @@ public class TVMCommandCoords {
         this.plugin = plugin;
     }
 
-    public boolean execute(Player player, String[] args) {
+    public void execute(Player player, World world, BlockPosition pos) {
         if (!TARDISPermission.hasPermission(player, "vm.teleport")) {
             plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_PERM_CMD");
-            return true;
+            return;
         }
         Parameters params = new Parameters(player, Flag.getAPIFlags());
         int required;
         List<String> worlds = new ArrayList<>();
         Location l;
-        switch (args.length) {
-            case 1, 2, 3 -> {
-                // check world is an actual world
-                if (plugin.getServer().getWorld(args[0]) == null) {
-                    plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_NO_WORLD");
-                    return true;
-                }
-                // check world is enabled for travel
-                if (!containsIgnoreCase(args[0], plugin.getTardisAPI().getWorlds())) {
-                    plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_NO_TRAVEL");
-                    return true;
-                }
-                required = plugin.getVortexConfig().getInt("tachyon_use.travel.world");
-                // only world specified (or incomplete setting)
-                worlds.add(args[0]);
-                l = plugin.getTardisAPI().getRandomLocation(worlds, null, params);
+        if (world == null) {
+            required = plugin.getVortexConfig().getInt("tachyon_use.travel.random");
+            // random
+            l = plugin.getTardisAPI().getRandomLocation(plugin.getTardisAPI().getWorlds(), null, params);
+        } else if (pos == null) {
+            // check world is enabled for travel
+            if (!containsIgnoreCase(world.getName(), plugin.getTardisAPI().getWorlds())) {
+                plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_NO_TRAVEL");
+                return;
             }
-            case 4 -> {
-                required = plugin.getVortexConfig().getInt("tachyon_use.travel.coords");
-                // world, x, y, z specified
-                World w;
-                if (args[0].contains("~")) {
-                    // relative location
-                    w = player.getLocation().getWorld();
-                } else {
-                    w = plugin.getServer().getWorld(args[0]);
-                    if (w == null) {
-                        plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_NO_WORLD");
-                        return true;
-                    }
-                    // check world is enabled for travel
-                    if (!containsIgnoreCase(args[0], plugin.getTardisAPI().getWorlds())) {
-                        plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_NO_TRAVEL");
-                        return true;
-                    }
-                }
-                double x;
-                double y;
-                double z;
-                try {
-                    if (args[1].startsWith("~")) {
-                        // get players current location
-                        Location tl = player.getLocation();
-                        double tx = tl.getX();
-                        double ty = tl.getY();
-                        double tz = tl.getZ();
-                        // strip off the initial "~" and add to current position
-                        x = tx + Double.parseDouble(args[1].substring(1));
-                        y = ty + Double.parseDouble(args[2].substring(1));
-                        z = tz + Double.parseDouble(args[3].substring(1));
-                    } else {
-                        x = Double.parseDouble(args[1]);
-                        y = Double.parseDouble(args[2]);
-                        z = Double.parseDouble(args[3]);
-                    }
-                } catch (NumberFormatException e) {
-                    plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_COORDS");
-                    return true;
-                }
-                l = new Location(w, x, y, z);
-                // check block has space for player
-                if (!l.getBlock().getType().equals(Material.AIR)) {
-                    plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_ADJUST");
-                    // get highest block at these coords
-                    int highest = l.getWorld().getHighestBlockYAt(l);
-                    l.setY(highest);
-                }
+            required = plugin.getVortexConfig().getInt("tachyon_use.travel.world");
+            // only world specified (or incomplete setting)
+            worlds.add(world.getName());
+            l = plugin.getTardisAPI().getRandomLocation(worlds, null, params);
+        } else {
+            required = plugin.getVortexConfig().getInt("tachyon_use.travel.coords");
+            // world, x, y, z specified
+            // check world is enabled for travel
+            if (!containsIgnoreCase(world.getName(), plugin.getTardisAPI().getWorlds())) {
+                plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_NO_TRAVEL");
+                return;
             }
-            default -> {
-                required = plugin.getVortexConfig().getInt("tachyon_use.travel.random");
-                // random
-                l = plugin.getTardisAPI().getRandomLocation(plugin.getTardisAPI().getWorlds(), null, params);
+            l = new Location(world, pos.blockX(), pos.blockY(), pos.blockZ());
+            // check block has space for player
+            if (!l.getBlock().getType().equals(Material.AIR)) {
+                plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_ADJUST");
+                // get highest block at these coords
+                int highest = l.getWorld().getHighestBlockYAt(l);
+                l.setY(highest);
             }
         }
         List<Player> players = new ArrayList<>();
@@ -140,7 +98,7 @@ public class TVMCommandCoords {
         int actual = required * players.size();
         if (!TVMUtils.checkTachyonLevel(uuid, actual)) {
             plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_NEED_TACHYON", actual);
-            return true;
+            return;
         }
         if (l != null) {
             plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_STANDBY");
@@ -151,10 +109,8 @@ public class TVMCommandCoords {
             // remove tachyons
             new TVMQueryFactory(plugin).alterTachyons(uuid, -actual);
         } else {
-            //close(player);
             plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_PARAMETERS");
         }
-        return true;
     }
 
     private boolean containsIgnoreCase(String str, List<String> list) {

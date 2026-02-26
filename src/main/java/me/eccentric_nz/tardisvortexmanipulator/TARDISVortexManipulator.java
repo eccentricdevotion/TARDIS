@@ -17,8 +17,6 @@
 package me.eccentric_nz.tardisvortexmanipulator;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.tardisvortexmanipulator.command.TVMCommand;
-import me.eccentric_nz.tardisvortexmanipulator.command.TVMTabComplete;
 import me.eccentric_nz.tardisvortexmanipulator.gui.TVMGUIListener;
 import me.eccentric_nz.tardisvortexmanipulator.gui.TVMMessageGUIListener;
 import me.eccentric_nz.tardisvortexmanipulator.gui.TVMSavesGUIListener;
@@ -36,8 +34,6 @@ public class TARDISVortexManipulator {
         plugin.setTvmSettings(new TVMSettings());
         new VortexManipulatorConfig(plugin).checkConfig();
         registerListeners();
-        // TODO Brigadier these
-        // registerCommand();
         new TVMRecipe(plugin).addRecipe();
         startRecharger();
     }
@@ -51,11 +47,6 @@ public class TARDISVortexManipulator {
         plugin.getPM().registerEvents(new TVMMessageGUIListener(plugin), plugin);
         plugin.getPM().registerEvents(new TVMMoveListener(plugin), plugin);
         plugin.getPM().registerEvents(new TVMSavesGUIListener(plugin), plugin);
-    }
-
-    private void registerCommand() {
-        plugin.getCommand("vm").setExecutor(new TVMCommand(plugin));
-        plugin.getCommand("vm").setTabCompleter(new TVMTabComplete());
     }
 
     private void startRecharger() {

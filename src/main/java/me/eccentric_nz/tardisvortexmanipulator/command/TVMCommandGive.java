@@ -36,42 +36,24 @@ public class TVMCommandGive {
         full = this.plugin.getVortexConfig().getInt("tachyon_use.max");
     }
 
-    public boolean process(CommandSender sender, String[] args) {
+    public void process(CommandSender sender, Player p, int amount) {
         if (!TARDISPermission.hasPermission(sender, "tardis.admin")) {
             plugin.getMessenger().send(sender, TardisModule.VORTEX_MANIPULATOR, "VM_PERM_CMD");
-            return true;
+            return;
         }
-        if (args.length < 3) {
-            plugin.getMessenger().send(sender, TardisModule.VORTEX_MANIPULATOR, "VM_UUID");
-            return true;
-        }
-        Player p = plugin.getServer().getPlayer(args[1]);
         if (p == null || !p.isOnline()) {
             plugin.getMessenger().send(sender, TardisModule.VORTEX_MANIPULATOR, "NOT_ONLINE");
-            return true;
+            return;
         }
         UUID uuid = p.getUniqueId();
         // check for existing record
         TVMResultSetManipulator rs = new TVMResultSetManipulator(plugin, uuid.toString());
         if (rs.resultSet()) {
             int tachyon_level = rs.getTachyonLevel();
-            int amount;
-            if (args[2].equalsIgnoreCase("full")) {
+            if (tachyon_level + amount > full) {
                 amount = full;
-            } else if (args[2].equalsIgnoreCase("empty")) {
-                amount = 0;
             } else {
-                try {
-                    amount = Integer.parseInt(args[2]);
-                } catch (NumberFormatException e) {
-                    plugin.getMessenger().send(sender, TardisModule.VORTEX_MANIPULATOR, "VM_LAST_ARG");
-                    return true;
-                }
-                if (tachyon_level + amount > full) {
-                    amount = full;
-                } else {
-                    amount += tachyon_level;
-                }
+                amount += tachyon_level;
             }
             HashMap<String, Object> set = new HashMap<>();
             set.put("tachyon_level", amount);
@@ -82,6 +64,5 @@ public class TVMCommandGive {
         } else {
             plugin.getMessenger().send(sender, TardisModule.VORTEX_MANIPULATOR, "VM_NONE", p.getName());
         }
-        return true;
     }
 }
