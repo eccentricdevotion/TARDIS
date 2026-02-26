@@ -76,18 +76,24 @@ public class TardisCommandNode {
                         .executes(ctx -> {
                             Pair<Player, Integer> c = TardisUtility.check(plugin, ctx.getSource().getSender(), TardisCommand.abandon);
                             if (c != null) {
-                                // TODO
+                                new AbandonCommand(plugin).doAbandon(c.getFirst());
                             }
                             return Command.SINGLE_SUCCESS;
-                        }))
+                        })
+                        .then(Commands.literal("list").executes(ctx -> {
+                            new AbandonCommand(plugin).list(ctx.getSource().getSender());
+                            return Command.SINGLE_SUCCESS;
+                        })))
                 .then(Commands.literal("abort")
+                        .then(Commands.argument("task", IntegerArgumentType.integer(1))
                         .executes(ctx -> {
                             Pair<Player, Integer> c = TardisUtility.check(plugin, ctx.getSource().getSender(), TardisCommand.abort);
                             if (c != null) {
-                                // TODO
+                                int t = IntegerArgumentType.getInteger(ctx, "task");
+                                new AbortCommand(plugin).doAbort(c.getFirst(), t, c.getSecond());
                             }
                             return Command.SINGLE_SUCCESS;
-                        }))
+                        })))
                 .then(Commands.literal("add")
                         .executes(ctx -> {
                             Pair<Player, Integer> c = TardisUtility.check(plugin, ctx.getSource().getSender(), TardisCommand.add);

@@ -816,7 +816,7 @@ commands:
     abandon:
       description: Abandon your current TARDIS.
       permission: tardis.abandon
-      usage: /<command> abandon
+      usage: /<command> abandon [list]
     abort:
       description: Stop growing a TARDIS room.
       permission: tardis.room
