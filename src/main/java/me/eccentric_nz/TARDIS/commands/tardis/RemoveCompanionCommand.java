@@ -43,7 +43,7 @@ public class RemoveCompanionCommand {
         this.plugin = plugin;
     }
 
-    public boolean doRemoveCompanion(Player player, String p) {
+    public void doRemoveCompanion(Player player, String p) {
         if (TARDISPermission.hasPermission(player, "tardis.add")) {
             HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", player.getUniqueId().toString());
@@ -54,13 +54,13 @@ public class RemoveCompanionCommand {
             String owner;
             if (!rs.resultSet()) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
-                return false;
+                return;
             } else {
                 Tardis tardis = rs.getTardis();
                 comps = tardis.getCompanions();
                 if (comps == null || comps.isEmpty()) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "COMPANIONS_NONE");
-                    return true;
+                    return;
                 }
                 id = tardis.getTardisId();
                 data = tardis.getChunk();
@@ -100,7 +100,7 @@ public class RemoveCompanionCommand {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, message, p);
                     } else {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "COULD_NOT_FIND_NAME");
-                        return true;
+                        return;
                     }
                 } else {
                     // if using WorldGuard, remove them from the region membership
@@ -122,10 +122,8 @@ public class RemoveCompanionCommand {
                 set.put("companions", newList);
                 plugin.getQueryFactory().doUpdate("tardis", set, tid);
             }
-            return true;
         } else {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
-            return false;
         }
     }
 }

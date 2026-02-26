@@ -36,12 +36,12 @@ public class RemoveSavedLocationCommand {
         this.plugin = plugin;
     }
 
-    public boolean doRemoveSave(Player player, String name) {
+    public void doRemoveSave(Player player, String name) {
         if (TARDISPermission.hasPermission(player, "tardis.save")) {
             ResultSetTardisID rs = new ResultSetTardisID(plugin);
             if (!rs.fromUUID(player.getUniqueId().toString())) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
-                return false;
+                return;
             }
             int id = rs.getTardisId();
             HashMap<String, Object> whered = new HashMap<>();
@@ -50,17 +50,15 @@ public class RemoveSavedLocationCommand {
             ResultSetDestinations rsd = new ResultSetDestinations(plugin, whered, false);
             if (!rsd.resultSet()) {
                 plugin.getMessenger().sendColouredCommand(player, "SAVE_NOT_FOUND", "/tardis list saves", plugin);
-                return false;
+                return;
             }
             int destID = rsd.getDest_id();
             HashMap<String, Object> did = new HashMap<>();
             did.put("dest_id", destID);
             plugin.getQueryFactory().doDelete("destinations", did);
             plugin.getMessenger().send(player, TardisModule.TARDIS, "DEST_DELETED", name);
-            return true;
         } else {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
-            return false;
         }
     }
 }

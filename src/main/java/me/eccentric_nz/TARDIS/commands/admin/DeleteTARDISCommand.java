@@ -63,7 +63,7 @@ public class DeleteTARDISCommand {
         });
     }
 
-    public boolean deleteTARDIS(CommandSender sender, Player player, int abandoned) {
+    public void deleteTARDIS(CommandSender sender, Player player, int abandoned) {
         HashMap<String, Object> where = new HashMap<>();
             // Look up this player's UUID
         UUID uuid = player.getUniqueId();
@@ -75,29 +75,24 @@ public class DeleteTARDISCommand {
             process(rs.getTardis(), sender, player);
         } else {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "PLAYER_NOT_FOUND_DB", player.getName());
-            return true;
         }
-        return true;
     }
 
-    public boolean deleteTARDIS(CommandSender sender, int id, int abandoned) {
+    public void deleteTARDIS(CommandSender sender, int id, int abandoned) {
         HashMap<String, Object> where = new HashMap<>();
-        OfflinePlayer player = null;
         where.put("tardis_id", id);
         where.put("abandoned", abandoned);
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
-            player = plugin.getServer().getOfflinePlayer(tardis.getUuid());
+            OfflinePlayer player = plugin.getServer().getOfflinePlayer(tardis.getUuid());
             process(tardis, sender, player.getPlayer());
         } else {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "PLAYER_NOT_FOUND_DB", "tardis_id=" + id);
-            return true;
         }
-        return true;
     }
 
-    public boolean deleteJunk(CommandSender sender) {
+    public void deleteJunk(CommandSender sender) {
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", "00000000-aaaa-bbbb-cccc-000000000000");
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
@@ -105,9 +100,7 @@ public class DeleteTARDISCommand {
             process(rs.getTardis(), sender, null);
         } else {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "PLAYER_NOT_FOUND_DB", "junk");
-            return true;
         }
-        return true;
     }
 
     private void process(Tardis tardis, CommandSender sender, Player player) {

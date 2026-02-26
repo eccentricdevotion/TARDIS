@@ -38,11 +38,11 @@ public class DiskCommand {
         this.plugin = plugin;
     }
 
-    public boolean renameDisk(Player player, String name) {
+    public void renameDisk(Player player, String name) {
         // check perms
         if (!TARDISPermission.hasPermission(player, "tardis.handles.program")) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
-            return true;
+            return;
         }
         // check if item in hand is a Handles program disk
         ItemStack disk = player.getInventory().getItemInMainHand();
@@ -54,7 +54,7 @@ public class DiskCommand {
                 // get the name - must be 32 chars or fewer
                 if (name.length() < 3 || name.length() > 32) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "SAVE_NAME_NOT_VALID");
-                    return true;
+                    return;
                 }
                 // rename the disk
                 HashMap<String, Object> set = new HashMap<>();
@@ -70,6 +70,5 @@ public class DiskCommand {
         } else {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "HANDLES_DISK");
         }
-        return true;
     }
 }

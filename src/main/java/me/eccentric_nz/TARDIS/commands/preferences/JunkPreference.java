@@ -40,7 +40,7 @@ public class JunkPreference {
         this.plugin = plugin;
     }
 
-    public boolean toggle(Player player, String arg) {
+    public void toggle(Player player, String arg) {
         UUID uuid = player.getUniqueId();
         String ustr = uuid.toString();
         // get TARDIS
@@ -58,7 +58,7 @@ public class JunkPreference {
             ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
             if (rst.resultSet()) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "JUNK_PRESET_OUTSIDE");
-                return true;
+                return;
             }
             if (plugin.getTrackerKeeper().getRebuildCooldown().containsKey(uuid)) {
                 long now = System.currentTimeMillis();
@@ -66,17 +66,17 @@ public class JunkPreference {
                 long then = plugin.getTrackerKeeper().getRebuildCooldown().get(uuid) + cooldown;
                 if (now < then) {
                     plugin.getMessenger().send(player.getPlayer(), TardisModule.TARDIS, "COOLDOWN", String.format("%d", cooldown / 1000));
-                    return true;
+                    return;
                 }
             }
             // make sure is opposite
             if (current.equals("JUNK_MODE") && arg.equalsIgnoreCase("on")) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "JUNK_ALREADY_ON");
-                return true;
+                return;
             }
             if (!current.equals("JUNK_MODE") && arg.equalsIgnoreCase("off")) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "JUNK_ALREADY_OFF");
-                return true;
+                return;
             }
             // check if they have a junk record
             HashMap<String, Object> wherej = new HashMap<>();
@@ -132,8 +132,6 @@ public class JunkPreference {
             }
             // rebuild
             player.performCommand("tardis rebuild");
-            return true;
         }
-        return true;
     }
 }

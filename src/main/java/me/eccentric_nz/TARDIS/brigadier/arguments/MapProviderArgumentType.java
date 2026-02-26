@@ -23,7 +23,7 @@ public class MapProviderArgumentType implements CustomArgumentType<String, Strin
     private final Set<String> PROVIDER_SUBS = Set.of("dynmap", "BlueMap", "squaremap");
 
     @Override
-    public String parse(StringReader reader) throws CommandSyntaxException {
+    public String parse(StringReader reader) {
         return "";
     }
 

@@ -13,8 +13,7 @@ import io.papermc.paper.command.brigadier.argument.CustomArgumentType;
 import me.eccentric_nz.TARDIS.TARDIS;
 import net.kyori.adventure.text.Component;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
 public class KitArgumentType implements CustomArgumentType<String, String> {
@@ -22,16 +21,10 @@ public class KitArgumentType implements CustomArgumentType<String, String> {
     private static final SimpleCommandExceptionType ERROR_INVALID_KIT = new SimpleCommandExceptionType(
             MessageComponentSerializer.message().serialize(Component.text("Invalid kit specified!"))
     );
-    private final List<String> KIT_SUBS = new ArrayList<>();
-
-    public KitArgumentType() {
-        for (String k : TARDIS.plugin.getKitsConfig().getConfigurationSection("kits").getKeys(false)) {
-            KIT_SUBS.add(k);
-        }
-    }
+    private final Set<String> KIT_SUBS = TARDIS.plugin.getKitsConfig().getConfigurationSection("kits").getKeys(false);
 
     @Override
-    public String parse(StringReader reader) throws CommandSyntaxException {
+    public String parse(StringReader reader) {
         return "";
     }
 

@@ -24,7 +24,7 @@ public class BookArgumentType implements CustomArgumentType<String, String> {
     private final Set<String> BOOK_SUBS = TARDIS.plugin.getAchievementConfig().getRoot().getKeys(false);
 
     @Override
-    public String parse(StringReader reader) throws CommandSyntaxException {
+    public String parse(StringReader reader) {
         return "";
     }
 

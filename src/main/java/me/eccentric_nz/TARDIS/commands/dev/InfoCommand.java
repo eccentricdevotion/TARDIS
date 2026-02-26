@@ -27,7 +27,7 @@ public class InfoCommand {
         this.plugin = plugin;
     }
 
-    public boolean test(CommandSender sender) {
+    public void test(CommandSender sender) {
         for (TARDISInfoMenu tim : TARDISInfoMenu.values()) {
             sender.sendMessage("---");
             sender.sendMessage("[" + tim.getName() + "]");
@@ -41,6 +41,5 @@ public class InfoCommand {
                 }
             });
         }
-        return true;
     }
 }

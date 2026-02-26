@@ -25,7 +25,7 @@ public class SeedArgumentType implements CustomArgumentType<String, String> {
     private final List<String> SEED_SUBS = ImmutableList.copyOf(Desktops.getBY_NAMES().keySet());
 
     @Override
-    public String parse(StringReader reader) throws CommandSyntaxException {
+    public String parse(StringReader reader) {
         return "";
     }
 

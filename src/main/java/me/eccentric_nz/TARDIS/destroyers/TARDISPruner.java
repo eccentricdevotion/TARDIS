@@ -51,54 +51,43 @@ public class TARDISPruner {
         long millis = getTime(days);
         Timestamp prune = getTimestamp(millis);
         String query = "SELECT * FROM " + prefix + "tardis WHERE lastuse < " + millis;
-        Statement statement = null;
-        ResultSet rs = null;
-        try {
-            statement = connection.createStatement();
-            rs = statement.executeQuery(query);
-            String file = plugin.getDataFolder() + File.separator + "TARDIS_Prune_List.txt";
+        try (Statement statement = connection.createStatement(); ResultSet rs = statement.executeQuery(query)) {
             try {
-                try (BufferedWriter bw = new BufferedWriter(new FileWriter(file, false))) {
-                    if (rs.isBeforeFirst()) {
-                        plugin.getMessenger().message(sender, TardisModule.TARDIS,  "Prune List:");
-                    } else {
-                        plugin.getMessenger().send(sender, TardisModule.TARDIS, "PRUNE_NONE");
-                    }
-                    while (rs.next()) {
-                        ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, rs.getInt("tardis_id"));
-                        if (rsc.resultSet()) {
-                            // double check that this is an unused TARDIS
-                            Timestamp lastuse = new Timestamp(rs.getLong("lastuse"));
-                            if (lastuse.before(prune)) {
-                                Current current = rsc.getCurrent();
-                                String line = "Time Lord: " + rs.getString("owner") + ", Location: " + current.location().getWorld().getName() + ":" + current.location().getBlockX() + ":" + current.location().getBlockY() + ":" + current.location().getBlockZ();
-                                // write line to file
-                                bw.write(line);
-                                bw.newLine();
-                                // display the TARDIS prune list
-                                sender.sendMessage(line);
-                            }
+                String file = plugin.getDataFolder() + File.separator + "TARDIS_Prune_List.txt";
+                try {
+                    try (BufferedWriter bw = new BufferedWriter(new FileWriter(file, false))) {
+                        if (rs.isBeforeFirst()) {
+                            plugin.getMessenger().message(sender, TardisModule.TARDIS, "Prune List:");
                         } else {
-                            plugin.debug(plugin.getLanguage().getString("CURRENT_NOT_FOUND"));
+                            plugin.getMessenger().send(sender, TardisModule.TARDIS, "PRUNE_NONE");
+                        }
+                        while (rs.next()) {
+                            ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, rs.getInt("tardis_id"));
+                            if (rsc.resultSet()) {
+                                // double check that this is an unused TARDIS
+                                Timestamp lastuse = new Timestamp(rs.getLong("lastuse"));
+                                if (lastuse.before(prune)) {
+                                    Current current = rsc.getCurrent();
+                                    String line = "Time Lord: " + rs.getString("owner") + ", Location: " + current.location().getWorld().getName() + ":" + current.location().getBlockX() + ":" + current.location().getBlockY() + ":" + current.location().getBlockZ();
+                                    // write line to file
+                                    bw.write(line);
+                                    bw.newLine();
+                                    // display the TARDIS prune list
+                                    sender.sendMessage(line);
+                                }
+                            } else {
+                                plugin.debug(plugin.getLanguage().getString("CURRENT_NOT_FOUND"));
+                            }
                         }
                     }
-                }
-            } catch (IOException e) {
-                plugin.debug("Could not create and write to TARDIS_Prune_List.txt! " + e.getMessage());
-            }
-        } catch (SQLException e) {
-            plugin.debug("ResultSet error trying to display prune list! " + e.getMessage());
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (statement != null) {
-                    statement.close();
+                } catch (IOException e) {
+                    plugin.debug("Could not create and write to TARDIS_Prune_List.txt! " + e.getMessage());
                 }
             } catch (SQLException e) {
-                plugin.debug(e.getMessage());
+                plugin.debug("ResultSet error trying to display prune list! " + e.getMessage());
             }
+        } catch (SQLException e) {
+            plugin.debug(e.getMessage());
         }
     }
 
@@ -106,35 +95,24 @@ public class TARDISPruner {
         long millis = getTime(days);
         Timestamp prune = getTimestamp(millis);
         String query = "SELECT * FROM " + prefix + "tardis WHERE lastuse < " + millis;
-        Statement statement = null;
-        ResultSet rs = null;
-        try {
-            statement = connection.createStatement();
-            rs = statement.executeQuery(query);
-            Exterminator te = new Exterminator(plugin);
-            while (rs.next()) {
-                // double check that this is an unused TARDIS
-                Timestamp lastuse = new Timestamp(rs.getLong("lastuse"));
-                if (lastuse.before(prune)) {
-                    // remove the TARDIS
-                    if (te.pruneExterminate(rs.getInt("tardis_id"))) {
-                        sender.sendMessage("Pruned " + rs.getString("owner") + "'s TARDIS");
+        try (Statement statement = connection.createStatement(); ResultSet rs = statement.executeQuery(query)) {
+            try {
+                Exterminator te = new Exterminator(plugin);
+                while (rs.next()) {
+                    // double check that this is an unused TARDIS
+                    Timestamp lastuse = new Timestamp(rs.getLong("lastuse"));
+                    if (lastuse.before(prune)) {
+                        // remove the TARDIS
+                        if (te.pruneExterminate(rs.getInt("tardis_id"))) {
+                            sender.sendMessage("Pruned " + rs.getString("owner") + "'s TARDIS");
+                        }
                     }
                 }
+            } catch (SQLException e) {
+                plugin.debug("ResultSet error trying to prune! " + e.getMessage());
             }
         } catch (SQLException e) {
-            plugin.debug("ResultSet error trying to prune! " + e.getMessage());
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (statement != null) {
-                    statement.close();
-                }
-            } catch (SQLException e) {
-                plugin.debug(e.getMessage());
-            }
+            plugin.debug(e.getMessage());
         }
     }
 

@@ -48,7 +48,7 @@ public class DecommissionCommand {
         this.plugin = plugin;
     }
 
-    public boolean withdraw(Player player, String tb) {
+    public void withdraw(Player player, String tb) {
         if (TARDISPermission.hasPermission(player, "tardis.update")) {
             HashMap<String, Object> where = new HashMap<>();
             UUID playerUUID = player.getUniqueId();
@@ -57,7 +57,7 @@ public class DecommissionCommand {
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             if (!rs.resultSet()) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_A_TIMELORD");
-                return false;
+                return;
             }
             String tardis_block = TARDISStringUtils.toScoredUppercase(tb);
             Block block = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 10);
@@ -68,7 +68,7 @@ public class DecommissionCommand {
                 if (updateable.equals(Updateable.ROTOR)) {
                     // use update unlock command
                     plugin.getMessenger().sendColouredCommand(player,"ROTOR_UNLOCK", "/tardis update rotor unlock", plugin);
-                    return true;
+                    return;
                 }
                 if (updateable.equals(Updateable.STORAGE)) {
                     // withdraw record if there is one for this location
@@ -114,7 +114,7 @@ public class DecommissionCommand {
                                 // if contains a sonic return...
                                 if (display != null) {
                                     plugin.getMessenger().send(player, TardisModule.TARDIS, "DOCK_REMOVE");
-                                    return true;
+                                    return;
                                 }
                             }
                             default -> {
@@ -135,15 +135,11 @@ public class DecommissionCommand {
                     int control = Control.getUPDATE_CONTROLS().get(updateable.getName());
                     removeRecord(control, l);
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "DECOMMISSIONED");
-                    return true;
                 }
-            } catch (IllegalArgumentException e) {
-                return true;
+            } catch (IllegalArgumentException ignored) {
             }
-            return true;
         } else {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
-            return false;
         }
     }
 

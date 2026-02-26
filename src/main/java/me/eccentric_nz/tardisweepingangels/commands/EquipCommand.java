@@ -46,7 +46,7 @@ public class EquipCommand {
         this.plugin = plugin;
     }
 
-    public boolean equip(CommandSender sender, String arg, String extra) {
+    public void equip(CommandSender sender, String arg, String extra) {
         // check monster type
         String upper = arg.toUpperCase(Locale.ROOT);
         Monster monster;
@@ -54,7 +54,7 @@ public class EquipCommand {
             monster = Monster.valueOf(upper);
         } catch (IllegalArgumentException e) {
             plugin.getMessenger().send(sender, TardisModule.MONSTERS, "WA_INVALID");
-            return true;
+            return;
         }
         Player player = null;
         if (sender instanceof Player) {
@@ -62,14 +62,14 @@ public class EquipCommand {
         }
         if (player == null) {
             plugin.getMessenger().send(sender, TardisModule.MONSTERS, "CMD_PLAYER");
-            return true;
+            return;
         }
         // get the armour stand player is looking at
         Location observerPos = player.getEyeLocation();
         RayTraceResult result = observerPos.getWorld().rayTraceEntities(observerPos, observerPos.getDirection(), 16.0d, (s) -> s.getType() == EntityType.ARMOR_STAND);
         if (result == null) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "WA_STAND");
-            return true;
+            return;
         }
         ArmorStand as = (ArmorStand) result.getHitEntity();
         if (as != null) {
@@ -137,6 +137,5 @@ public class EquipCommand {
                 }, 2L);
             }
         }
-        return true;
     }
 }

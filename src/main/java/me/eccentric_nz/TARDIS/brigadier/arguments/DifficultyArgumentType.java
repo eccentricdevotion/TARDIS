@@ -24,7 +24,7 @@ public class DifficultyArgumentType implements CustomArgumentType<String, String
     private final List<String> DIFF_SUBS = ImmutableList.of("easy", "hard");
 
     @Override
-    public String parse(StringReader reader) throws CommandSyntaxException {
+    public String parse(StringReader reader) {
         return "";
     }
 

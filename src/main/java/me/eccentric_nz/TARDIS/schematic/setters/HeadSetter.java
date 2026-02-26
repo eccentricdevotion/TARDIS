@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.schematic.setters;
 
 import com.destroystokyo.paper.profile.PlayerProfile;
 import com.google.gson.JsonObject;
+import io.papermc.paper.datacomponent.item.ResolvableProfile;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.desktop.RandomArchiveName;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -53,9 +54,10 @@ public class HeadSetter {
             URL url = URI.create(head.get("texture").getAsString()).toURL();
             textures.setSkin(url);
             profile.setTextures(textures);
+            ResolvableProfile resolvable = ResolvableProfile.resolvableProfile(profile);
             Skull skull = (Skull) block.getState();
             if (profile.isComplete()) {
-                skull.setPlayerProfile(profile);
+                skull.setProfile(resolvable);
             } else {
                 TARDIS.plugin.debug("Head texture could not be set due to incomplete player profile!");
             }

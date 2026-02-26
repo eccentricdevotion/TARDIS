@@ -46,16 +46,15 @@ public class AddCompanionCommand {
         this.plugin = plugin;
     }
 
-    public boolean doAddGUI(Player player) {
+    public void doAddGUI(Player player) {
         if (TARDISPermission.hasPermission(player, "tardis.add")) {
             player.openInventory(new CompanionAddInventory(plugin, player).getInventory());
         } else {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
         }
-        return true;
     }
 
-    public boolean doAdd(Player player, String arg) {
+    public void doAdd(Player player, String arg) {
         if (TARDISPermission.hasPermission(player, "tardis.add")) {
             HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", player.getUniqueId().toString());
@@ -66,7 +65,7 @@ public class AddCompanionCommand {
             String owner;
             if (!rs.resultSet()) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
-                return true;
+                return;
             } else {
                 Tardis tardis = rs.getTardis();
                 id = tardis.getTardisId();
@@ -105,7 +104,7 @@ public class AddCompanionCommand {
                         }
                     } else {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "COULD_NOT_FIND_NAME");
-                        return true;
+                        return;
                     }
                 }
                 // if using WorldGuard, add them to the region membership
@@ -135,6 +134,5 @@ public class AddCompanionCommand {
         } else {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
         }
-        return true;
     }
 }

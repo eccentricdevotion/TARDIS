@@ -32,7 +32,7 @@ class SetZeroRoomCommand {
         this.plugin = plugin;
     }
 
-    boolean setConfigZero(CommandSender sender, boolean b) {
+    void setConfigZero(CommandSender sender, boolean b) {
         // check they typed true of false
         plugin.getConfig().set("allow.zero_room", b);
         plugin.saveConfig();
@@ -42,6 +42,5 @@ class SetZeroRoomCommand {
             new TARDISSpace(plugin).createDefaultWorld("TARDIS_Zero_Room");
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "ZERO_RESTART");
         }
-        return true;
     }
 }

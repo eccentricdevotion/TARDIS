@@ -33,7 +33,7 @@ import java.util.List;
 public class TARDISWalls {
 
     public static final List<Material> BLOCKS = new ArrayList<>();
-    public static RecipeChoice.MaterialChoice CHOICES;
+    public static final RecipeChoice.MaterialChoice CHOICES;
 
     static {
         for (String m : TARDIS.plugin.getBlocksConfig().getStringList("tardis_blocks")) {

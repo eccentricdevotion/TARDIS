@@ -19,7 +19,7 @@ public class MannequinSkins {
             "d+GsDy50dBTsOEr5WX9c4OBL1j8wOncxX2xzlR1C0fakKipp8Olf1ZyrHSgbReSY/mm112JjiKl2cmmaMWmH85CSGBMYWgzGmqqn2DplR4zI2gj8GEvXSNj5RP3UmSVFZgcPyyLPI+9V4cduR1TCnWIQl9TOmWifB3uP+IBWT4nMl8gQt9hpktuLGOziRejBV9kov9hBqm1BOq4zitpXEvqCHQvgZeeWFsE4UHCfuSbi4Ka2OrGvAdQv9UiEreeYBrPxb00UdnCBP3g5cawf73lenmfhDweE4JLbNstmKmoZLdGpECLrhsu7Nzf72eH9VQcZlAPDhooNqPXpu2+qee1wNatc445Y/KHM5cwTCszl4hG38Kuo1H0/qGQQ16HDwzxLE7AqbWZLgntlBqFHt9l5/PkjLrySFMY1rtkVEarwCGaSUZBNKVr90bZW7AqKdyzQFVje2sHXuYruNMRExNIpC0dgyqlQ/lfEh2kQeU8GSClIhvp4JTGrmxnkPMs08cvpE52YijmwYi5/XNMLjjuDSJdnZzArHgkiL1d7GyOWjqaUL1YHcYWMnDajOiejuB3HeOxM4A9CEtxx77w74dCBUWGSz50iZsnKo+JmbeO4qny8/1mrYZ1i6oN1OSwBvmX3GhPUJymqQE+acmeFTySuA44TL7MI5rTA4YhHuUI="
     );
 
-    public static HashMap<String, Skin> getByName = new HashMap<>() {
+    public static final HashMap<String, Skin> getByName = new HashMap<>() {
         {
             put("roman", ROMAN);
             put("male", MALE);

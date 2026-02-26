@@ -40,7 +40,7 @@ public class Exile {
         this.plugin = plugin;
     }
 
-    public boolean action(Player player, int id) {
+    public void action(Player player, int id) {
         String permArea = plugin.getTardisArea().getExileArea(player);
         plugin.getMessenger().send(player, TardisModule.TARDIS, "EXILE", permArea);
         Location l;
@@ -55,7 +55,7 @@ public class Exile {
         }
         if (l == null) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_MORE_SPOTS");
-            return true;
+            return;
         }
         HashMap<String, Object> set = new HashMap<>();
         set.put("world", l.getWorld().getName());
@@ -73,6 +73,5 @@ public class Exile {
             new TARDISLand(plugin, id, player).exitVortex();
             plugin.getPM().callEvent(new TARDISTravelEvent(player, null, TravelType.EXILE, id));
         }
-        return true;
     }
 }

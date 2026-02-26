@@ -35,13 +35,13 @@ public class HumCommand {
         this.plugin = plugin;
     }
 
-    public boolean setHumPref(Player player, String hum) {
+    public void setHumPref(Player player, String hum) {
         Hum go;
         try {
             go = Hum.valueOf(hum.toUpperCase(Locale.ROOT));
         } catch (IllegalArgumentException e) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "HUM_NOT_VALID");
-            return false;
+            return;
         }
         String hum_set = (go.equals(Hum.RANDOM)) ? "" : go.toString().toLowerCase(Locale.ROOT);
         HashMap<String, Object> set = new HashMap<>();
@@ -50,6 +50,5 @@ public class HumCommand {
         where.put("uuid", player.getUniqueId().toString());
         TARDIS.plugin.getQueryFactory().doUpdate("player_prefs", set, where);
         plugin.getMessenger().send(player, TardisModule.TARDIS, "HUM_SAVED");
-        return true;
     }
 }

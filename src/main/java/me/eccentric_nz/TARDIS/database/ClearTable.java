@@ -35,20 +35,14 @@ public class ClearTable {
     }
 
     public void removeRecords(String table) {
-        PreparedStatement ps = null;
-        try {
-            ps = connection.prepareStatement("DELETE FROM " + prefix + table);
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            plugin.debug("Error clearing " + table + " table: " + e.getMessage());
-        } finally {
+        try (PreparedStatement ps = connection.prepareStatement("DELETE FROM " + prefix + table)) {
             try {
-                if (ps != null) {
-                    ps.close();
-                }
-            } catch (SQLException ex) {
-                plugin.debug("Error clearing " + table + " statement: " + ex.getMessage());
+                ps.executeUpdate();
+            } catch (SQLException e) {
+                plugin.debug("Error clearing " + table + " table: " + e.getMessage());
             }
+        } catch (SQLException ex) {
+            plugin.debug("Error clearing " + table + " statement: " + ex.getMessage());
         }
     }
 }

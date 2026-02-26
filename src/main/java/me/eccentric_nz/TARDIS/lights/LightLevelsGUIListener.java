@@ -192,9 +192,9 @@ public class LightLevelsGUIListener extends TARDISMenuListener {
     }
 
     private static class StateResult {
-        Boolean success;
-        Integer strength;
-        Integer level;
+        final Boolean success;
+        final Integer strength;
+        final Integer level;
 
         public StateResult(Boolean success, Integer strength, Integer level) {
             this.success = success;

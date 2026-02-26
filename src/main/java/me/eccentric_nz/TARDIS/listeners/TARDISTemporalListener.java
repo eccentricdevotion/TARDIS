@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.listeners;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -50,7 +51,7 @@ public class TARDISTemporalListener implements Listener {
         Player p = event.getPlayer();
         ItemStack inhand = p.getInventory().getItemInMainHand();
         if (event.getAction().equals(Action.RIGHT_CLICK_AIR) && inhand.getType().equals(Material.CLOCK) && TARDISPermission.hasPermission(p, "tardis.temporal")) {
-            if (inhand.hasItemMeta() && inhand.getItemMeta().hasDisplayName() && notthese.contains(inhand.getItemMeta().displayName())) {
+            if (inhand.hasItemMeta() && inhand.getItemMeta().hasDisplayName() && notthese.contains(ComponentUtils.stripColour(inhand.getItemMeta().displayName()))) {
                 return;
             }
             p.resetPlayerTime();

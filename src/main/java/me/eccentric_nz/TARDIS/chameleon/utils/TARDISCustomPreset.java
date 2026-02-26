@@ -41,7 +41,7 @@ import java.util.*;
  */
 public class TARDISCustomPreset {
 
-    public static HashMap<String, CustomPreset> CUSTOM_PRESETS = new HashMap<>();
+    public static final HashMap<String, CustomPreset> CUSTOM_PRESETS = new HashMap<>();
 
     public void makePresets() {
         // get the custom presets file and read the contents to json

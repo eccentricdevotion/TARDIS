@@ -252,9 +252,7 @@ public class TARDISGeneralPrefsListener extends TARDISMenuListener {
                     player.performCommand("tardis rebuild");
                 }
             }
-            case "Companion Build" -> {
-                new BuildCommand(plugin).toggleCompanionBuilding(player, value);
-            }
+            case "Companion Build" -> new BuildCommand(plugin).toggleCompanionBuilding(player, value);
             case "Lock Containers" -> {
                 if (bool) {
                     plugin.getWorldGuardUtils().unlockContainers(player.getWorld(), player.getName());

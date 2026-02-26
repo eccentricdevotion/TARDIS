@@ -31,7 +31,7 @@ import java.util.UUID;
 
 public class SchematicConvert {
 
-    public boolean act(TARDIS plugin, Player player, String from, String to) {
+    public void act(TARDIS plugin, Player player, String from, String to) {
         TardisLight light;
         try {
             light = TardisLight.valueOf(from.toUpperCase(Locale.ROOT));
@@ -48,18 +48,18 @@ public class SchematicConvert {
         // check they have selected start and end blocks
         if (!plugin.getTrackerKeeper().getStartLocation().containsKey(uuid)) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "SCHM_NO_START");
-            return true;
+            return;
         }
         if (!plugin.getTrackerKeeper().getEndLocation().containsKey(uuid)) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "SCHM_NO_END");
-            return true;
+            return;
         }
         // get the world
         World w = plugin.getTrackerKeeper().getStartLocation().get(uuid).getWorld();
         String chk_w = plugin.getTrackerKeeper().getEndLocation().get(uuid).getWorld().getName();
         if (!w.getName().equals(chk_w)) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "SCHM_WORLD");
-            return true;
+            return;
         }
         // get the raw coords
         int sx = plugin.getTrackerKeeper().getStartLocation().get(uuid).getBlockX();
@@ -94,6 +94,5 @@ public class SchematicConvert {
             }
         }
         plugin.getMessenger().message(player, TardisModule.TARDIS, "Light conversion complete");
-        return true;
     }
 }

@@ -31,24 +31,24 @@ import java.util.UUID;
 
 public class SchematicRemove {
 
-    public boolean act(TARDIS plugin, Player player, String arg) {
+    public void act(TARDIS plugin, Player player, String arg) {
         boolean lights = arg.equalsIgnoreCase("lights");
         UUID uuid = player.getUniqueId();
         // check they have selected start and end blocks
         if (!plugin.getTrackerKeeper().getStartLocation().containsKey(uuid)) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "SCHM_NO_START");
-            return true;
+            return;
         }
         if (!plugin.getTrackerKeeper().getEndLocation().containsKey(uuid)) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "SCHM_NO_END");
-            return true;
+            return;
         }
         // get the world
         World w = plugin.getTrackerKeeper().getStartLocation().get(uuid).getWorld();
         String chk_w = plugin.getTrackerKeeper().getEndLocation().get(uuid).getWorld().getName();
         if (!w.getName().equals(chk_w)) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "SCHM_WORLD");
-            return true;
+            return;
         }
         // get the raw coords
         int sx = plugin.getTrackerKeeper().getStartLocation().get(uuid).getBlockX();
@@ -90,6 +90,5 @@ public class SchematicRemove {
             }
         }
         plugin.getMessenger().message(player, TardisModule.TARDIS, lights ? "Light removal complete" : "Custom model removal complete");
-        return true;
     }
 }

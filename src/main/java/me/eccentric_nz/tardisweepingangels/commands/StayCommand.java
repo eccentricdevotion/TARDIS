@@ -37,19 +37,19 @@ public class StayCommand {
         this.plugin = plugin;
     }
 
-    public boolean stay(CommandSender sender) {
+    public void stay(CommandSender sender) {
         if (sender instanceof Player player) {
             // get the entity the player is looking at
             Entity husk = FollowerFinder.getEntity(player, EntityType.HUSK);
             if (husk == null) {
                 plugin.getMessenger().send(player, TardisModule.MONSTERS, "WA_NOT_LOOKING");
-                return true;
+                return;
             }
             // check if monster is already following
             TWAFollower follower = (TWAFollower) ((CraftEntity) husk).getHandle();
             if (!follower.isFollowing()) {
                 plugin.getMessenger().send(player, TardisModule.MONSTERS, "WA_NOT_FOLLOWING");
-                return true;
+                return;
             }
             // set following status
             PersistentDataContainer pdc = husk.getPersistentDataContainer();
@@ -63,6 +63,5 @@ public class StayCommand {
         } else {
             plugin.getMessenger().send(sender, TardisModule.MONSTERS, "CMD_PLAYER");
         }
-        return true;
     }
 }

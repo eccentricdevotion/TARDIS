@@ -39,43 +39,41 @@ public class SecondaryCommand {
         this.plugin = plugin;
     }
 
-    public boolean startSecondary(Player player, String arg) {
+    public void startSecondary(Player player, String arg) {
         if (TARDISPermission.hasPermission(player, "tardis.update")) {
             UUID uuid = player.getUniqueId();
             ResultSetTardisID rs = new ResultSetTardisID(plugin);
             if (!rs.fromUUID(uuid.toString())) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_A_TIMELORD");
-                return false;
+                return;
             }
             if (arg.equalsIgnoreCase("remove")) {
                 plugin.getTrackerKeeper().getSecondaryRemovers().put(player.getUniqueId(), rs.getTardisId());
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "SEC_REMOVE_CLICK_BLOCK");
-                return true;
+                return;
             }
             Updateable updateable;
             try {
                 updateable = Updateable.valueOf(TARDISStringUtils.toScoredUppercase(arg));
             } catch (IllegalArgumentException e) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_NOT_VALID");
-                return false;
+                return;
             }
             if (!updateable.isSecondary()) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_NOT_VALID");
-                return false;
+                return;
             }
             HashMap<String, Object> wheret = new HashMap<>();
             wheret.put("uuid", uuid.toString());
             ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
             if (!rst.resultSet()) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_IN_TARDIS");
-                return false;
+                return;
             }
             plugin.getTrackerKeeper().getSecondary().put(uuid, updateable);
             plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_CLICK", updateable.getName());
-            return true;
         } else {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
-            return false;
         }
     }
 }

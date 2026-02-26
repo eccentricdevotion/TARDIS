@@ -30,7 +30,7 @@ public class LanguageCodeArgumentType implements CustomArgumentType<String, Stri
     );
 
     @Override
-    public String parse(StringReader reader) throws CommandSyntaxException {
+    public String parse(StringReader reader) {
         return "";
     }
 

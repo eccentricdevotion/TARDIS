@@ -48,7 +48,7 @@ public class SetBooleanCommand {
         this.plugin = plugin;
     }
 
-    public boolean setConfigBool(CommandSender sender, String option, boolean bool, String section) {
+    public void setConfigBool(CommandSender sender, String option, boolean bool, String section) {
         String tolower = option.toLowerCase(Locale.ROOT);
         String first = (section.isEmpty()) ? tolower : section + "." + tolower;
         if (first.equals("switch_resource_packs")) {
@@ -71,7 +71,7 @@ public class SetBooleanCommand {
                 if (bool && (plugin.getConfig().getBoolean("creation.create_worlds") || plugin.getConfig().getBoolean("creation.create_worlds_with_perms"))) {
                     String which = first.equals("abandon") ? "Abandoned TARDISes" : "Desktop previews";
                     plugin.getMessenger().messageWithColour(sender, which + " cannot be enabled as TARDISes are not stored in a TIPS world!", "#FF5555");
-                    return true;
+                    return;
                 }
             }
             if (first.equals("archive") || first.equals("abandon")) {
@@ -141,6 +141,5 @@ public class SetBooleanCommand {
                 }
             }
         }
-        return true;
     }
 }

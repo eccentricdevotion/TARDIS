@@ -20,6 +20,7 @@ import java.util.UUID;
 
 public class NoughtsAndCrossesListener extends TARDISMenuListener {
 
+    final long delay = 20;
     private final TARDIS plugin;
     private final HashMap<UUID, MatchData> matches = new HashMap<>();
     private final int[][] winPos = {{0, 1, 2}, {3, 4, 5}, {6, 7, 8}, {2, 4, 6}, {0, 4, 8}, {0, 3, 6}, {1, 4, 7}, {2, 5, 8}};
@@ -53,7 +54,6 @@ public class NoughtsAndCrossesListener extends TARDISMenuListener {
     private final ItemStack tardis;
     private final ItemStack nought;
     private final ItemStack cross;
-    long delay = 20;
 
     public NoughtsAndCrossesListener(TARDIS plugin) {
         super(plugin);

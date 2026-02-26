@@ -50,12 +50,12 @@ public class SaveCommand {
         this.plugin = plugin;
     }
 
-    public boolean action(Player player, String name, int id, ChameleonPreset preset) {
+    public void action(Player player, String name, int id, ChameleonPreset preset) {
         // we're thinking this is a saved destination name
         if (TARDISPermission.hasPermission(player, "tardis.save")) {
             if (plugin.getConfig().getBoolean("difficulty.system_upgrades") && !new SystemUpgradeChecker(plugin).has(player.getUniqueId().toString(), SystemTree.SAVES)) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "Saves");
-                return true;
+                return;
             }
             HashMap<String, Object> whered = new HashMap<>();
             whered.put("dest_name", name);
@@ -63,14 +63,14 @@ public class SaveCommand {
             ResultSetDestinations rsd = new ResultSetDestinations(plugin, whered, false);
             if (!rsd.resultSet()) {
                 plugin.getMessenger().sendColouredCommand(player, "SAVE_NOT_FOUND", "/tardis list saves", plugin);
-                return true;
+                return;
             }
             // check for memory circuit
             CircuitChecker tcc = new CircuitChecker(plugin, id);
             tcc.getCircuits();
             if (plugin.getConfig().getBoolean("difficulty.circuits") && !plugin.getUtils().inGracePeriod(player, false) && !tcc.hasMemory()) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_MEM_CIRCUIT");
-                return true;
+                return;
             }
             // damage circuit if configured
             if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getInt("circuits.uses.memory") > 0) {
@@ -82,14 +82,14 @@ public class SaveCommand {
             if (w != null) {
                 if (w.getName().startsWith("TARDIS_")) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "SAVE_NO_TARDIS");
-                    return true;
+                    return;
                 }
                 Location save_dest = new Location(w, rsd.getX(), rsd.getY(), rsd.getZ());
                 if (!plugin.getPluginRespect().getRespect(save_dest, new Parameters(player, Flag.getDefaultFlags()))) {
                     if (plugin.getConfig().getBoolean("travel.no_destination_malfunctions")) {
                         plugin.getTrackerKeeper().getMalfunction().put(id, true);
                     } else {
-                        return true;
+                        return;
                     }
                 }
                 TARDISAreaCheck tac = plugin.getTardisArea().isSaveInArea(save_dest);
@@ -103,13 +103,13 @@ public class SaveCommand {
                     ResultSetCurrentLocation rsz = new ResultSetCurrentLocation(plugin, wheres);
                     if (rsz.resultSet()) {
                         plugin.getMessenger().sendColouredCommand(player, "TARDIS_IN_SPOT", "/tardistravel area [name]", plugin);
-                        return true;
+                        return;
                     }
                     String invisibility = tac.getArea().invisibility();
                     if (invisibility.equals("DENY") && preset.equals(ChameleonPreset.INVISIBLE)) {
                         // check preset
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "AREA_NO_INVISIBLE");
-                        return true;
+                        return;
                     } else if (!invisibility.equals("ALLOW")) {
                         // force preset
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "AREA_FORCE_PRESET", invisibility);
@@ -134,7 +134,7 @@ public class SaveCommand {
                     ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
                     if (!rsc.resultSet()) {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
-                        return true;
+                        return;
                     }
                     set.put("direction", rsc.getCurrent().direction().toString());
                 }
@@ -165,6 +165,5 @@ public class SaveCommand {
         } else {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "TRAVEL_NO_PERM_SAVE");
         }
-        return true;
     }
 }

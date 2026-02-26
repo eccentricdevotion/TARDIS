@@ -32,7 +32,7 @@ public class PowerDownCommand {
         this.plugin = plugin;
     }
 
-    public boolean togglePowerDown(CommandSender sender, boolean b) {
+    public void togglePowerDown(CommandSender sender, boolean b) {
 
         plugin.getConfig().set("allow.power_down", b);
         plugin.saveConfig();
@@ -46,6 +46,5 @@ public class PowerDownCommand {
             TARDISRunnables.startStandBy(plugin);
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "STANDBY_START");
         }
-        return true;
     }
 }

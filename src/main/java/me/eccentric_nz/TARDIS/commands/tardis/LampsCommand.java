@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 
 import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.data.Lamp;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetLamps;
@@ -37,7 +36,6 @@ import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * The TARDIS scanner was the main method for the occupants of the vessel to
@@ -75,9 +73,8 @@ public class LampsCommand {
      * can flash.
      *
      * @param owner the Timelord of the TARDIS
-     * @return true if the TARDIS has not been updated, otherwise false
      */
-    public boolean addLampBlocks(Player owner) {
+    public void addLampBlocks(Player owner) {
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", owner.getUniqueId().toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
@@ -133,14 +130,12 @@ public class LampsCommand {
                     }
                 }
             }
-            return true;
         } else {
             plugin.getMessenger().send(owner, TardisModule.TARDIS, "NOT_A_TIMELORD");
-            return false;
         }
     }
 
-    public boolean listLampBlocks(Player owner) {
+    public void listLampBlocks(Player owner) {
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", owner.getUniqueId().toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
@@ -157,16 +152,15 @@ public class LampsCommand {
                 }
             }
         }
-        return true;
     }
 
-    public boolean setLampBlock(Player player, int x, int y, int z, String on, String off, float p) {
+    public void setLampBlock(Player player, int x, int y, int z, String on, String off, float p) {
         if (on.equals("_")) {
             on = "";
         } else {
             if (!valid_material(on)) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "LAMP_BAD_MATERIAL");
-                return false;
+                return;
             }
         }
         // get optional material override arguments
@@ -176,7 +170,7 @@ public class LampsCommand {
             } else {
                 if (!valid_material(off)) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "LAMP_BAD_MATERIAL");
-                    return false;
+                    return;
                 }
             }
         }
@@ -202,51 +196,6 @@ public class LampsCommand {
             }
             plugin.getQueryFactory().doUpdate("lamps", set, wherel);
             plugin.getMessenger().send(player, TardisModule.TARDIS, "LAMP_SET_SUCCESS", wherel.get("location"));
-        }
-        return true;
-    }
-
-    public boolean zip(Player player, String[] args) {
-        if (!TARDISPermission.hasPermission(player, "tardis.update")) {
-            plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
-            return false;
-        }
-        String sub = args[1].toLowerCase(Locale.ROOT);
-        if (!subs.contains(sub)) {
-            plugin.getMessenger().send(player, TardisModule.TARDIS, "ARG_NOT_VALID");
-            return true;
-        }
-         switch (sub) {
-            case "auto" -> {
-                return addLampBlocks(player);
-            }
-            case "list" -> {
-                return listLampBlocks(player);
-            }
-            case "set" -> {
-                if (args.length < 6) {
-                    plugin.getMessenger().send(player, TardisModule.TARDIS, "LAMP_SET_USAGE");
-                    return true;
-                }
-                int x;
-                int y;
-                int z;
-                try {
-                    x = Integer.parseInt(args[2]);
-                    y = Integer.parseInt(args[3]);
-                    z = Integer.parseInt(args[4]);
-                } catch (NumberFormatException ignored) {
-                    plugin.getMessenger().send(player, TardisModule.TARDIS, "LAMP_SET_USAGE");
-                    return true;
-                }
-                String on = args.length > 5 ? args[5] : "";
-                String off = args.length > 6 ? args[6] : "";
-                float p = args.length > 7 ? TARDISNumberParsers.parseFloat(args[7]) : -1f;
-                return setLampBlock(player, x, y, z, on, off, p);
-            }
-            default -> {
-                return true;
-            }
         }
     }
 }

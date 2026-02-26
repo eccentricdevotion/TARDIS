@@ -23,7 +23,7 @@ public class CompassArgumentType implements CustomArgumentType<String, String> {
     private final List<String> DIRECTIONS = List.of("NORTH", "EAST", "SOUTH", "WEST");
 
     @Override
-    public String parse(StringReader reader) throws CommandSyntaxException {
+    public String parse(StringReader reader) {
         return "";
     }
 

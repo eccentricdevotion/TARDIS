@@ -8,5 +8,5 @@ public enum PaddlePosition {
     TARDIS_TOP,
     TARDIS_MIDDLE,
     TARDIS_BOTTOM,
-    NONE;
+    NONE
 }

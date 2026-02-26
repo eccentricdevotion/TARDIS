@@ -29,10 +29,10 @@ public class TVMCommandHelp {
         this.plugin = plugin;
     }
 
-    public boolean display(final CommandSender sender, String arg) {
+    public void display(final CommandSender sender, String arg) {
         if (!TARDISPermission.hasPermission(sender, "vm.teleport")) {
             plugin.getMessenger().send(sender, TardisModule.VORTEX_MANIPULATOR, "VM_PERM_CMD");
-            return true;
+            return;
         }
         if (arg.isEmpty()) {
             plugin.getMessenger().sendWithColour(sender, TardisModule.VORTEX_MANIPULATOR, "VM_HELP", "#55FFFF");
@@ -124,6 +124,5 @@ public class TVMCommandHelp {
                 plugin.getMessenger().sendWithColours(sender, "/vmm delete [#]", "#AAAAAA", " - deletes a specific message.", "#FFFFFF");
             }
         }
-        return true;
     }
 }

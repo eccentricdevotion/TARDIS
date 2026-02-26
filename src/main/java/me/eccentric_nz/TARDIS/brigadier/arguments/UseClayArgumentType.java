@@ -24,7 +24,7 @@ public class UseClayArgumentType implements CustomArgumentType<String, String> {
     private final List<String> USE_CLAY_SUBS = ImmutableList.of("WOOL", "TERRACOTTA", "CONCRETE");
 
     @Override
-    public String parse(StringReader reader) throws CommandSyntaxException {
+    public String parse(StringReader reader) {
         return "";
     }
 

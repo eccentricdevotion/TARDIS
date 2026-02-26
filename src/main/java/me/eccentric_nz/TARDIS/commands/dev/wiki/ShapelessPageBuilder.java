@@ -37,7 +37,7 @@ public class ShapelessPageBuilder extends PageBuilder {
         this.plugin = plugin;
     }
 
-    public boolean compile() {
+    public void compile() {
         // all shapeless recipes
         for (String key : plugin.getIncomposita().getShapelessRecipes().keySet()) {
             plugin.debug(key);
@@ -46,7 +46,6 @@ public class ShapelessPageBuilder extends PageBuilder {
                 save(TARDISStringUtils.toDashedLowercase(key), data);
             }
         }
-        return true;
     }
 
     private String formatShapeless(String item) {

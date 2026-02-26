@@ -52,14 +52,14 @@ public class BiomeCommand {
         this.plugin = plugin;
     }
 
-    public boolean action(Player player, Biome biome, World world, int id) {
+    public void action(Player player, Biome biome, World world, int id) {
         if (!TARDISPermission.hasPermission(player, "tardis.timetravel.biome")) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "TRAVEL_NO_PERM_BIOME");
-            return true;
+            return;
         }
         if (plugin.getConfig().getBoolean("difficulty.system_upgrades") && !new SystemUpgradeChecker(plugin).has(player.getUniqueId().toString(), SystemTree.TELEPATHIC_CIRCUIT)) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "Telepathic Circuit");
-            return true;
+            return;
         }
         // check for telepathic circuit
         if (plugin.getConfig().getBoolean("difficulty.circuits") && !plugin.getUtils().inGracePeriod(player, true)) {
@@ -67,7 +67,7 @@ public class BiomeCommand {
             tcc.getCircuits();
             if (!tcc.hasTelepathic()) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TELEPATHIC_CIRCUIT");
-                return true;
+                return;
             }
         }
         String upper = biome.getKey().getKey().toUpperCase(Locale.ROOT);
@@ -96,11 +96,11 @@ public class BiomeCommand {
                 }
                 if (!hasBiomeDisk) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "BIOME_DISK_NOT_FOUND");
-                    return true;
+                    return;
                 }
             } else {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "ADV_BIOME");
-                return true;
+                return;
             }
         }
         if (upper.equals("LIST")) {
@@ -117,7 +117,7 @@ public class BiomeCommand {
             ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
             if (!rsc.resultSet()) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
-                return true;
+                return;
             }
             Current current = rsc.getCurrent();
             // have they specified a world argument?
@@ -125,12 +125,12 @@ public class BiomeCommand {
                 // must be in the vortex
                 if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "BIOME_FROM_VORTEX");
-                    return true;
+                    return;
                 }
                 String planet = world.getName();
                 if (TARDISConstants.isTARDISPlanet(planet)) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "BIOME_NOT_PLANET", planet);
-                    return true;
+                    return;
                 }
                 // get the world
                 w = world;
@@ -138,12 +138,11 @@ public class BiomeCommand {
                 String planet = current.location().getWorld().getName();
                 if (TARDISConstants.isTARDISPlanet(planet)) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "BIOME_NOT_PLANET", current.location().getWorld().getName());
-                    return true;
+                    return;
                 }
                 w = current.location().getWorld();
             }
             new TARDISBiomeFinder(plugin).run(w, upper, player, id, current.direction(), current.location());
         }
-        return true;
     }
 }

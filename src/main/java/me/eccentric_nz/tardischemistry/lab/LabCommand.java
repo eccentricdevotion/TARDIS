@@ -29,13 +29,12 @@ public class LabCommand {
         this.plugin = plugin;
     }
 
-    public boolean combine(Player player) {
+    public void combine(Player player) {
         if (!TARDISPermission.hasPermission(player, "tardis.lab.combine")) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "CHEMISTRY_SUB_PERM", "Lab");
-            return true;
+            return;
         }
         // do stuff
         player.openInventory(new LabInventory(plugin).getInventory());
-        return true;
     }
 }

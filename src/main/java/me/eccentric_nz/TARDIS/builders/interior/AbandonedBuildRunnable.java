@@ -653,7 +653,7 @@ class AbandonedBuildRunnable implements Runnable {
             } else if (type.equals(Material.DECORATED_POT)) {
                 TARDISBlockSetters.setBlock(world, x, y, z, data);
                 if (c.has("pot")) {
-                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> PotSetter.decorate(plugin, c.get("pot").getAsJsonObject(), world.getBlockAt(x, y, z)), 1l);
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> PotSetter.decorate(plugin, c.get("pot").getAsJsonObject(), world.getBlockAt(x, y, z)), 1);
                 }
             } else if (Tag.WOODEN_SHELVES.isTagged(type)) {
                 TARDISBlockSetters.setBlock(world, x, y, z, data);

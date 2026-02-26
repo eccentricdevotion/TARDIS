@@ -39,7 +39,7 @@ public class OccupyCommand {
         this.plugin = plugin;
     }
 
-    public boolean toggleOccupancy(Player player) {
+    public void toggleOccupancy(Player player) {
         if (TARDISPermission.hasPermission(player, "tardis.timetravel")) {
             HashMap<String, Object> wheret = new HashMap<>();
             wheret.put("uuid", player.getUniqueId().toString());
@@ -54,7 +54,7 @@ public class OccupyCommand {
                     occupied = Component.text(plugin.getLanguage().getString("OCCUPY_OUT", "UNOCCUPIED"), NamedTextColor.RED);
                 } else {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "OCCUPY_MUST_BE_OUT");
-                    return true;
+                    return;
                 }
             } else if (plugin.getUtils().inTARDISWorld(player)) {
                 ResultSetTardisID rsid = new ResultSetTardisID(plugin);
@@ -63,11 +63,11 @@ public class OccupyCommand {
                     int slot = TARDISInteriorPostioning.getTIPSSlot(player.getLocation());
                     if (!rsid.fromTIPSSlot(slot)) {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "OCCUPY_MUST_BE_IN");
-                        return false;
+                        return;
                     }
                 } else if (!rsid.fromUUID(player.getUniqueId().toString())) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_A_TIMELORD");
-                    return false;
+                    return;
                 }
                 int id = rsid.getTardisId();
                 HashMap<String, Object> wherei = new HashMap<>();
@@ -77,13 +77,11 @@ public class OccupyCommand {
                 occupied = Component.text(plugin.getLanguage().getString("OCCUPY_IN", "OCCUPIED"), NamedTextColor.GREEN);
             } else {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "OCCUPY_MUST_BE_IN");
-                return true;
+                return;
             }
             plugin.getMessenger().send(player, TardisModule.TARDIS, "OCCUPY_SET", occupied);
-            return true;
         } else {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
-            return false;
         }
     }
 }

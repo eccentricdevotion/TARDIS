@@ -59,11 +59,7 @@ public class SudoUpdate {
         this.plugin = plugin;
     }
 
-    public boolean initiate(Player player, String which, String extra, int id, UUID uuid) {
-//        if (args.length < 3) {
-//            plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
-//            return false;
-//        }
+    public void initiate(Player player, String which, String extra, int id, UUID uuid) {
         // tsudo player update updatable lock|unlock|LEFT|RIGHT
         String tardis_block = TARDISStringUtils.toScoredUppercase(which);
         Updateable updateable;
@@ -71,11 +67,11 @@ public class SudoUpdate {
             updateable = Updateable.valueOf(tardis_block);
         } catch (IllegalArgumentException e) {
             new TARDISUpdateLister(plugin, player).list();
-            return true;
+            return;
         }
         if (updateable.equals(Updateable.SIEGE) && !plugin.getConfig().getBoolean("siege.enabled")) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "SIEGE_DISABLED");
-            return true;
+            return;
         }
         // get TARDIS data
         HashMap<String, Object> wheret = new HashMap<>();
@@ -100,7 +96,7 @@ public class SudoUpdate {
                     }
                     block.setBlockData(door);
                 }
-                return true;
+                return;
             }
             if (updateable.equals(Updateable.STORAGE)) {
                 // update note block if it's not BARRIER
@@ -141,7 +137,7 @@ public class SudoUpdate {
                         plugin.getGeneralKeeper().getProtectBlockMap().remove(under);
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "ROTOR_UNFIXED");
                     }
-                    return true;
+                    return;
                 }
                 TARDISSudoTracker.SUDOERS.put(player.getUniqueId(), uuid);
                 plugin.getTrackerKeeper().getUpdatePlayers().put(player.getUniqueId(), tardis_block);
@@ -151,6 +147,5 @@ public class SudoUpdate {
                 }
             }
         }
-        return true;
     }
 }

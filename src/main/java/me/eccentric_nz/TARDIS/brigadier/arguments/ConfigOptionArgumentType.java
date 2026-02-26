@@ -25,7 +25,7 @@ public class ConfigOptionArgumentType implements CustomArgumentType<String, Stri
     private final List<String> CONFIG_SUBS = ImmutableList.copyOf(ConfigUtility.combineLists());
 
     @Override
-    public String parse(StringReader reader) throws CommandSyntaxException {
+    public String parse(StringReader reader) {
         return "";
     }
 

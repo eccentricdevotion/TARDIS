@@ -43,18 +43,18 @@ public class EnterCommand {
         this.plugin = plugin;
     }
 
-    public boolean enterTARDIS(CommandSender sender, Player timelord) {
+    public void enterTARDIS(CommandSender sender, Player timelord) {
         Player player = null;
         if (sender instanceof Player) {
             player = (Player) sender;
         }
         if (player == null) {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "CMD_PLAYER");
-            return true;
+            return;
         }
         if (!TARDISPermission.hasPermission(player, "tardis.skeletonkey")) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
-            return true;
+            return;
         }
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", timelord.getUniqueId().toString());
@@ -65,11 +65,9 @@ public class EnterCommand {
             int id = tardis.getTardisId();
             String owner = tardis.getOwner();
             process(player, owner, id);
-            return true;
         } else {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "PLAYER_NO_TARDIS");
         }
-        return true;
     }
 
     public void enterTARDIS(CommandSender sender, int id) {

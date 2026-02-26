@@ -33,21 +33,19 @@ public class HelpCommand {
         this.plugin = plugin;
     }
 
-    public boolean showHelp(CommandSender sender, String cmd, String sub) {
+    public void showHelp(CommandSender sender, String cmd, String sub) {
         TARDISCommandHelper tch = new TARDISCommandHelper(plugin);
         if (cmd.isEmpty()) {
             tch.getCommand("", sender);
-            return true;
+            return;
         }
         if (!cmd.isEmpty()) {
             tch.getCommand(cmd.toLowerCase(Locale.ROOT), sender);
-            return true;
+            return;
         }
         if (!sub.isEmpty()) {
             String cmds = cmd.toLowerCase(Locale.ROOT) + " " + sub.toLowerCase(Locale.ROOT);
             tch.getCommand(cmds, sender);
-            return true;
         }
-        return true;
     }
 }

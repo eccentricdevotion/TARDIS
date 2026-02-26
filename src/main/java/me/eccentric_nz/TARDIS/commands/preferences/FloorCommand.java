@@ -37,13 +37,13 @@ public class FloorCommand {
         this.plugin = plugin;
     }
 
-    public boolean setFloorOrWallBlock(Player player, String which, String type) {
+    public void setFloorOrWallBlock(Player player, String which, String type) {
         String wall_mat = type.toUpperCase(Locale.ROOT);
         if (!TARDISWalls.BLOCKS.contains(Material.getMaterial(wall_mat))) {
             String message = (wall_mat.equals("HELP")) ? "WALL_LIST" : "WALL_NOT_VALID";
             plugin.getMessenger().send(player, TardisModule.TARDIS, message, which);
             TARDISWalls.BLOCKS.forEach((w) -> player.sendMessage(w.toString()));
-            return true;
+            return;
         }
         HashMap<String, Object> setw = new HashMap<>();
         setw.put(which, wall_mat);
@@ -51,6 +51,5 @@ public class FloorCommand {
         where.put("uuid", player.getUniqueId().toString());
         TARDIS.plugin.getQueryFactory().doUpdate("player_prefs", setw, where);
         plugin.getMessenger().send(player, TardisModule.TARDIS, "PREF_MAT_SET", TARDISStringUtils.uppercaseFirst(which));
-        return true;
     }
 }

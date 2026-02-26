@@ -38,17 +38,16 @@ public class ReloadCommand {
         this.plugin = plugin;
     }
 
-    public boolean reloadConfig(CommandSender sender) {
+    public void reloadConfig(CommandSender sender) {
         plugin.reloadConfig();
         // check worlds
         TARDISWorlds tc = new TARDISWorlds(plugin);
         tc.doWorlds();
         plugin.saveConfig();
         plugin.getMessenger().send(sender, TardisModule.TARDIS, "RELOADED");
-        return true;
     }
 
-    public boolean reloadOtherConfig(CommandSender sender, String module) {
+    public void reloadOtherConfig(CommandSender sender, String module) {
         try {
             Config config = Config.valueOf(module.toLowerCase(Locale.ROOT));
             File file = new File(plugin.getDataFolder(), config + ".yml");
@@ -71,17 +70,14 @@ public class ReloadCommand {
                 case vortex_manipulator -> plugin.getVortexConfig().load(file);
                 default -> {
                     plugin.getMessenger().send(sender, TardisModule.TARDIS, "RELOAD_NOT_THESE", module);
-                    return true;
+                    return;
                 }
             }
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "RELOAD_SUCCESS", config.toString());
         } catch (IllegalArgumentException e) {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "RELOAD_FILE_BAD", module);
-            return true;
         } catch (InvalidConfigurationException | IOException e) {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "RELOAD_FAIL", module);
-            return true;
         }
-        return true;
     }
 }

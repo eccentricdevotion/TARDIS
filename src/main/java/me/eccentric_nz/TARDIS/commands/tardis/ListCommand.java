@@ -36,14 +36,14 @@ public class ListCommand {
         this.plugin = plugin;
     }
 
-    public boolean doList(Player player, String arg) {
+    public void doList(Player player, String arg) {
         if (TARDISPermission.hasPermission(player, "tardis.list")) {
             HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", player.getUniqueId().toString());
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             if (!rs.resultSet()) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
-                return false;
+                return;
             }
             if (arg.isEmpty() || (
                     !arg.equalsIgnoreCase("saves")
@@ -52,13 +52,11 @@ public class ListCommand {
                     && !arg.equalsIgnoreCase("rechargers"))
             ) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "LIST_NEED");
-                return false;
+                return;
             }
             new TARDISLister(plugin).list(player, arg);
-            return true;
         } else {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
-            return false;
         }
     }
 }

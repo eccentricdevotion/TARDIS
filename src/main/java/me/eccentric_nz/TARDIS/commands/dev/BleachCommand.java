@@ -20,7 +20,7 @@ public class BleachCommand {
         this.plugin = plugin;
     }
 
-    public boolean setDisplay(Player player) {
+    public void setDisplay(Player player) {
         Block block = player.getTargetBlock(null, 4);
         Location location = block.getLocation().add(0.75d, 0.5d, 1.0d);
         ItemStack bleach = ItemStack.of(Material.WHITE_DYE);
@@ -31,6 +31,5 @@ public class BleachCommand {
         ItemDisplay display = (ItemDisplay) block.getWorld().spawnEntity(location, EntityType.ITEM_DISPLAY);
         display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.HEAD);
         display.setItemStack(bleach);
-        return true;
     }
 }

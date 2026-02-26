@@ -32,13 +32,13 @@ public class CancelCommand {
         this.plugin = plugin;
     }
 
-    public boolean action(Player player, int id) {
+    public void action(Player player, int id) {
         if (plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
             plugin.getTrackerKeeper().getHasDestination().remove(id);
             plugin.getMessenger().send(player, TardisModule.TARDIS, "TRAVEL_CANCEL");
         } else {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "TRAVEL_NEED_DEST");
         }
-        return true;
+
     }
 }

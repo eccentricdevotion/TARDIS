@@ -40,7 +40,7 @@ public class DisguiseCommand {
         this.plugin = plugin;
     }
 
-    public boolean disguise(CommandSender sender, String mon, String o, String uid) {
+    public void disguise(CommandSender sender, String mon, String o, String uid) {
         // check monster type
         String upper = mon.toUpperCase(Locale.ROOT);
         Monster monster;
@@ -48,14 +48,14 @@ public class DisguiseCommand {
             monster = Monster.valueOf(upper);
         } catch (IllegalArgumentException e) {
             plugin.getMessenger().send(sender, TardisModule.MONSTERS, "WA_INVALID");
-            return true;
+            return;
         }
         Player player = null;
         if (sender instanceof ConsoleCommandSender) {
             // check argument length
             if (uid.isEmpty()) {
                 plugin.getMessenger().send(sender, TardisModule.MONSTERS, "WA_UUID");
-                return true;
+                return;
             }
             UUID uuid = UUID.fromString(uid);
             player = plugin.getServer().getPlayer(uuid);
@@ -65,18 +65,18 @@ public class DisguiseCommand {
         }
         if (player == null) {
             plugin.getMessenger().send(sender, TardisModule.MONSTERS, "WA_UUID");
-            return true;
+            return;
         }
         if (!o.equalsIgnoreCase("on") && !o.equalsIgnoreCase("off")) {
             plugin.getMessenger().send(player, TardisModule.MONSTERS, "TWA_ON_OFF");
-            return true;
+            return;
         }
         PlayerInventory inv = player.getInventory();
         if (o.equalsIgnoreCase("on")
                 && (!inv.getBoots().getType().isAir() || !inv.getChestplate().getType().isAir()
                 || !inv.getHelmet().getType().isAir() || !inv.getLeggings().getType().isAir())) {
             plugin.getMessenger().send(player, TardisModule.MONSTERS, "WA_ARMOUR");
-            return true;
+            return;
         }
         if (o.equalsIgnoreCase("on")) {
             switch (monster) {
@@ -91,6 +91,5 @@ public class DisguiseCommand {
         } else {
             RemoveEquipment.set(player);
         }
-        return true;
     }
 }

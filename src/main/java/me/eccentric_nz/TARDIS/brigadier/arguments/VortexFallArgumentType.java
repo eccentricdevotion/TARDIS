@@ -24,7 +24,7 @@ public class VortexFallArgumentType implements CustomArgumentType<String, String
     private final List<String> VORTEX_SUBS = ImmutableList.of("kill", "teleport");
 
     @Override
-    public String parse(StringReader reader) throws CommandSyntaxException {
+    public String parse(StringReader reader) {
         return "";
     }
 

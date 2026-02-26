@@ -38,61 +38,39 @@ public class ResultSetTIPS {
      * Make a list of the currently used TIPS slots.
      */
     public void fillUsedSlotList() {
-        Statement statement = null;
-        ResultSet rs = null;
         String query = "SELECT tips FROM " + prefix + "tardis";
-        try {
-            statement = connection.createStatement();
-            rs = statement.executeQuery(query);
-            if (rs.isBeforeFirst()) {
-                while (rs.next()) {
-                    int slot = rs.getInt("tips");
-                    TARDISBuilderInstanceKeeper.getTipsSlots().add(slot);
-                }
-            }
-        } catch (SQLException e) {
-            plugin.debug("ResultSet error for tardis table (getting TIPS slots)! " + e.getMessage());
-        } finally {
+        try (Statement statement = connection.createStatement(); ResultSet rs = statement.executeQuery(query)) {
             try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (statement != null) {
-                    statement.close();
+                if (rs.isBeforeFirst()) {
+                    while (rs.next()) {
+                        int slot = rs.getInt("tips");
+                        TARDISBuilderInstanceKeeper.getTipsSlots().add(slot);
+                    }
                 }
             } catch (SQLException e) {
-                plugin.debug("Error closing tardis table (getting TIPS slots)! " + e.getMessage());
+                plugin.debug("ResultSet error for tardis table (getting TIPS slots)! " + e.getMessage());
             }
+        } catch (SQLException e) {
+            plugin.debug("Error closing tardis table (getting TIPS slots)! " + e.getMessage());
         }
     }
 
     /**
      * Get the highest TIPS slot number
      */
-    public int getHightestSlot() {
-        Statement statement = null;
-        ResultSet rs = null;
+    public int getHighestSlot() {
         String query = "SELECT MAX(tips) as highest FROM " + prefix + "tardis";
-        try {
-            statement = connection.createStatement();
-            rs = statement.executeQuery(query);
-            if (rs.isBeforeFirst()) {
-                rs.next();
-                return rs.getInt("highest");
-            }
-        } catch (SQLException e) {
-            plugin.debug("ResultSet error for tardis table (getting TIPS highest slot)! " + e.getMessage());
-        } finally {
+        try (Statement statement = connection.createStatement(); ResultSet rs = statement.executeQuery(query)) {
             try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (statement != null) {
-                    statement.close();
+                if (rs.isBeforeFirst()) {
+                    rs.next();
+                    return rs.getInt("highest");
                 }
             } catch (SQLException e) {
-                plugin.debug("Error closing tardis table (getting TIPS highest slot)! " + e.getMessage());
+                plugin.debug("ResultSet error for tardis table (getting TIPS highest slot)! " + e.getMessage());
             }
+        } catch (SQLException e) {
+            plugin.debug("Error closing tardis table (getting TIPS highest slot)! " + e.getMessage());
         }
         return -1;
     }

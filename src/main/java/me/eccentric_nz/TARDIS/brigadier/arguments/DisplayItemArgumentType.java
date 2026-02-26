@@ -13,7 +13,6 @@ import io.papermc.paper.command.brigadier.argument.CustomArgumentType;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemRegistry;
 import net.kyori.adventure.text.Component;
 
-import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
@@ -22,16 +21,10 @@ public class DisplayItemArgumentType implements CustomArgumentType<String, Strin
     private static final SimpleCommandExceptionType ERROR_INVALID_TDI = new SimpleCommandExceptionType(
             MessageComponentSerializer.message().serialize(Component.text("Invalid TARDIS item display specified!"))
     );
-    private final Set<String> TDIS = new HashSet<>();
-
-    public DisplayItemArgumentType() {
-        for (String t : TARDISDisplayItemRegistry.getBY_NAME().keySet()) {
-            TDIS.add(t.toString());
-        }
-    }
+    private final Set<String> TDIS = TARDISDisplayItemRegistry.getBY_NAME().keySet();
 
     @Override
-    public String parse(StringReader reader) throws CommandSyntaxException {
+    public String parse(StringReader reader) {
         return "";
     }
 

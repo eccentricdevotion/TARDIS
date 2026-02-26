@@ -60,27 +60,27 @@ public class ComehereCommand {
         this.plugin = plugin;
     }
 
-    public boolean doComeHere(Player player) {
+    public void doComeHere(Player player) {
         if (TARDISPermission.hasPermission(player, "tardis.timetravel")) {
             // check they are a timelord
             UUID uuid = player.getUniqueId();
             if (plugin.getConfig().getBoolean("difficulty.system_upgrades") && !new SystemUpgradeChecker(plugin).has(uuid.toString(), SystemTree.STATTENHEIM_REMOTE)) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "Stattenheim Remote");
-                return true;
+                return;
             }
             HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", uuid.toString());
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             if (!rs.resultSet()) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_A_TIMELORD");
-                return true;
+                return;
             }
             if (!plugin.getConfig().getBoolean("difficulty.stattenheim_remote") || plugin.getUtils().inGracePeriod(player, true)) {
                 Tardis tardis = rs.getTardis();
                 int id = tardis.getTardisId();
                 if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPoweredOn()) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "POWER_DOWN");
-                    return true;
+                    return;
                 }
                 int level = tardis.getArtronLevel();
                 boolean hidden = tardis.isHidden();
@@ -88,25 +88,25 @@ public class ComehereCommand {
                 Location eyeLocation = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getLocation();
                 if (!plugin.getConfig().getBoolean("travel.include_default_world") && plugin.getConfig().getBoolean("creation.default_world") && eyeLocation.getWorld().getName().equals(plugin.getConfig().getString("creation.default_world_name"))) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_WORLD_TRAVEL");
-                    return true;
+                    return;
                 }
                 if (!plugin.getPluginRespect().getRespect(eyeLocation, new Parameters(player, Flag.getDefaultFlags()))) {
-                    return true;
+                    return;
                 }
                 if (TARDISPermission.hasPermission(player, "tardis.exile") && plugin.getConfig().getBoolean("travel.exile")) {
                     String areaPerm = plugin.getTardisArea().getExileArea(player);
                     if (plugin.getTardisArea().areaCheckInExile(areaPerm, eyeLocation)) {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "EXILE_NO_TRAVEL");
-                        return true;
+                        return;
                     }
                 }
                 if (plugin.getTrackerKeeper().getDispersedTARDII().contains(id)) {
                     plugin.getMessenger().send(player.getPlayer(), TardisModule.TARDIS, "NOT_WHILE_DISPERSED");
-                    return true;
+                    return;
                 }
                 if (plugin.getTardisArea().isInExistingArea(eyeLocation)) {
                     plugin.getMessenger().sendColouredCommand(player, "AREA_NO_COMEHERE", "/tardistravel area [area name]", plugin);
-                    return true;
+                    return;
                 }
                 Material m = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getType();
                 if (m != Material.SNOW) {
@@ -117,7 +117,7 @@ public class ComehereCommand {
                 String world = eyeLocation.getWorld().getName();
                 if (!plugin.getPlanetsConfig().getBoolean("planets." + world + ".time_travel")) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PB_IN_WORLD");
-                    return true;
+                    return;
                 }
                 // check they are not in the tardis
                 HashMap<String, Object> wherettrav = new HashMap<>();
@@ -126,18 +126,18 @@ public class ComehereCommand {
                 ResultSetTravellers rst = new ResultSetTravellers(plugin, wherettrav, false);
                 if (rst.resultSet()) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PB_IN_TARDIS");
-                    return true;
+                    return;
                 }
                 if (plugin.getTrackerKeeper().getInVortex().contains(id) || plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getDematerialising().contains(id)) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_WHILE_MAT");
-                    return true;
+                    return;
                 }
                 // get current police box location
                 ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
                 if (!rsc.resultSet()) {
                     // emergency TARDIS relocation
                     new EmergencyRelocation(plugin).relocate(id, player);
-                    return true;
+                    return;
                 }
                 Current current = rsc.getCurrent();
                 COMPASS d = current.direction();
@@ -165,7 +165,7 @@ public class ComehereCommand {
                 }
                 if (count > 0) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "WOULD_GRIEF_BLOCKS");
-                    return true;
+                    return;
                 }
                 // get space-time throttle
                 Throticle throticle = new ResultSetThrottle(plugin).getSpeedAndParticles(uuid.toString());
@@ -173,7 +173,7 @@ public class ComehereCommand {
                 int ch = Math.round(plugin.getArtronConfig().getInt("comehere") * spaceTimeThrottle.getArtronMultiplier());
                 if (level < ch) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_ENOUGH_ENERGY");
-                    return true;
+                    return;
                 }
                 World w = current.location().getWorld();
                 HashMap<String, Object> bid = new HashMap<>();
@@ -259,10 +259,8 @@ public class ComehereCommand {
             } else {
                 plugin.getMessenger().sendColouredCommand(player, "DIFF_HARD_REMOTE", "/tardisrecipe remote", plugin);
             }
-            return true;
         } else {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
-            return false;
         }
     }
 }

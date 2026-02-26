@@ -33,10 +33,10 @@ public class RemindCommand {
         this.plugin = plugin;
     }
 
-    public boolean doReminder(Player player, String message, long when) {
+    public void doReminder(Player player, String message, long when) {
         if (when == 0) {
             plugin.getMessenger().handlesMessage(player, "HANDLES_NUMBER");
-            return true;
+            return;
         }
         plugin.getMessenger().handlesSend(player, "HANDLES_OK", "" + when);
         TARDISSounds.playTARDISSound(player, "handles_confirmed", 5L);
@@ -50,6 +50,5 @@ public class RemindCommand {
         data.put("reminder", message);
         data.put("time", when);
         plugin.getQueryFactory().doInsert("reminders", data);
-        return true;
     }
 }

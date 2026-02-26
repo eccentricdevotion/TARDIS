@@ -47,10 +47,10 @@ public class StopCommand {
         this.plugin = plugin;
     }
 
-    public boolean action(Player player, int id) {
+    public void action(Player player, int id) {
         if (!plugin.getTrackerKeeper().getMaterialising().contains(id) && !plugin.getTrackerKeeper().getInVortex().contains(id) && !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_TRAVELLING");
-            return true;
+            return;
         }
         // remove trackers
         plugin.getTrackerKeeper().getMaterialising().removeAll(Collections.singleton(id));
@@ -97,7 +97,7 @@ public class StopCommand {
             ResultSetHomeLocation rsh = new ResultSetHomeLocation(plugin, wherehl);
             if (!rsh.resultSet()) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "HOME_NOT_FOUND");
-                return true;
+                return;
             }
             // update current, next and back tables
             HashMap<String, Object> setlocs = new HashMap<>();
@@ -162,6 +162,5 @@ public class StopCommand {
                 }
             }
         }
-        return true;
     }
 }

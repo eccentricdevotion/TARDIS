@@ -45,10 +45,10 @@ public class UpdateTARDISPlugins {
         this.plugin = plugin;
     }
 
-    public boolean fetchFromGitHub(CommandSender sender) {
+    public void fetchFromGitHub(CommandSender sender) {
         if (updateInProgress.get()) {
             plugin.getMessenger().sendWithColour(sender, TardisModule.TARDIS, "An update is already in progress!", "#FF5555");
-            return true;
+            return;
         }
         plugin.getMessenger().sendWithColour(sender, TardisModule.TARDIS,  "Downloading TARDIS...", "#55FFFF");
         new BukkitRunnable() {
@@ -108,6 +108,5 @@ public class UpdateTARDISPlugins {
                 }
             }
         }.runTaskAsynchronously(plugin);
-        return true;
     }
 }

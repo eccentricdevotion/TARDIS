@@ -63,7 +63,7 @@ public class AdminCommand {
         types.put(Monster.ZYGON, "zygons");
     }
 
-    public boolean set(CommandSender sender, String mon, World w, int m) {
+    public void set(CommandSender sender, String mon, World w, int m) {
         if (w == null) {
             plugin.getMessenger().send(sender, TardisModule.MONSTERS, "COULD_NOT_FIND_WORLD");
         }
@@ -105,11 +105,10 @@ public class AdminCommand {
                 plugin.getMonstersConfig().set("zygons.worlds." + world, m);
             } else {
                 plugin.getMessenger().send(sender, TardisModule.MONSTERS, "WA_INVALID");
-                return true;
+                return;
             }
         }
         plugin.saveConfig();
         plugin.getMessenger().send(sender,TardisModule.MONSTERS, "WA_CONFIG");
-        return true;
     }
 }

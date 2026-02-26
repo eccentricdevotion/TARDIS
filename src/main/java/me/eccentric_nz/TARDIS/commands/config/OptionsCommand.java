@@ -39,7 +39,7 @@ public class OptionsCommand {
         sections.remove("debug");
     }
 
-    public boolean showConfigOptions(CommandSender sender, String arg) {
+    public void showConfigOptions(CommandSender sender, String arg) {
         String section = arg.toLowerCase(Locale.ROOT);
         plugin.getMessenger().send(sender, TardisModule.TARDIS, "CONFIG");
         if (sections.contains(section)) {
@@ -55,7 +55,7 @@ public class OptionsCommand {
                     plugin.getMessenger().messageWithColour(sender, "    " + o + ": " + plugin.getConfig().getString(section + "." + o), "#55FF55");
                 }
             });
-            return true;
+            return;
         }
         switch (section) {
             case "worlds" -> {
@@ -65,7 +65,6 @@ public class OptionsCommand {
                     String enabled = plugin.getPlanetsConfig().getString("planets." + wname + ".time_travel");
                     plugin.getMessenger().sendWithColours(sender, "    " + wname + ": ", "#55FF55", enabled, "#FFFFFF");
                 });
-                return true;
             }
             case "rechargers" -> {
                 plugin.getMessenger().messageWithColour(sender, section + ":", "#55FFFF");
@@ -77,7 +76,6 @@ public class OptionsCommand {
                     sender.sendMessage("        y: " + plugin.getConfig().getString("rechargers." + charname + ".y"));
                     sender.sendMessage("        z: " + plugin.getConfig().getString("rechargers." + charname + ".z"));
                 });
-                return true;
             }
             case "rooms" -> {
                 plugin.getMessenger().messageWithColour(sender, section + ":", "#55FFFF");
@@ -89,9 +87,7 @@ public class OptionsCommand {
                     sender.sendMessage("        offset: " + plugin.getRoomsConfig().getString("rooms." + r + ".offset"));
                     sender.sendMessage("        seed: " + plugin.getRoomsConfig().getString("rooms." + r + ".seed"));
                 });
-                return true;
             }
         }
-        return false;
     }
 }

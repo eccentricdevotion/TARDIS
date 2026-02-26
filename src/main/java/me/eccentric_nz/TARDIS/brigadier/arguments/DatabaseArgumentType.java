@@ -24,7 +24,7 @@ public class DatabaseArgumentType implements CustomArgumentType<String, String> 
     private final List<String> DB_SUBS = ImmutableList.of("mysql", "sqlite");
 
     @Override
-    public String parse(StringReader reader) throws CommandSyntaxException {
+    public String parse(StringReader reader) {
         return "";
     }
 

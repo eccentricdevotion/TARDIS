@@ -37,27 +37,25 @@ public class SetRespectCommand {
         this.plugin = plugin;
     }
 
-    public boolean setRegion(CommandSender sender, String arg) {
+    public void setRegion(CommandSender sender, String arg) {
         String region = arg.toLowerCase(Locale.ROOT);
         if (!regions.contains(region)) {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "ARG_TOWNY");
-            return false;
+            return;
         }
         plugin.getConfig().set("preferences.respect_towny", region);
         plugin.saveConfig();
         plugin.getMessenger().send(sender, TardisModule.TARDIS, "CONFIG_UPDATED", "respect_towny");
-        return true;
     }
 
-    public boolean setFlag(CommandSender sender, String arg) {
+    public void setFlag(CommandSender sender, String arg) {
         String flag = arg.toLowerCase(Locale.ROOT);
         if (!flags.contains(flag)) {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "ARG_FLAG");
-            return false;
+            return;
         }
         plugin.getConfig().set("preferences.respect_worldguard", flag);
         plugin.saveConfig();
         plugin.getMessenger().send(sender, TardisModule.TARDIS, "CONFIG_UPDATED", "respect_worldguard");
-        return true;
     }
 }

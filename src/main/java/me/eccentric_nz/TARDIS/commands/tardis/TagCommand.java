@@ -37,7 +37,7 @@ public class TagCommand {
         this.plugin = plugin;
     }
 
-    public boolean getStats(Player player) {
+    public void getStats(Player player) {
         ResultSetTag rs = new ResultSetTag(plugin);
         plugin.getMessenger().message(player, TardisModule.TARDIS,  "Here are the stats:");
         String who = (!plugin.getTagConfig().getString("it").isEmpty()) ? plugin.getTagConfig().getString("it") : "No one";
@@ -56,7 +56,6 @@ public class TagCommand {
             player.sendMessage("The are no stats yet :(");
         }
         player.sendMessage("-----------");
-        return true;
     }
 
     private String getHoursMinutesSeconds(long millis) {

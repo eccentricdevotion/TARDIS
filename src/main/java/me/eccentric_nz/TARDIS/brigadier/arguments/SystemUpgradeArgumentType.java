@@ -32,7 +32,7 @@ public class SystemUpgradeArgumentType implements CustomArgumentType<String, Str
     }
 
     @Override
-    public String parse(StringReader reader) throws CommandSyntaxException {
+    public String parse(StringReader reader) {
         return "";
     }
 

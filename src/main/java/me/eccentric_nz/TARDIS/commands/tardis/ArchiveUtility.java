@@ -1,10 +1,8 @@
 package me.eccentric_nz.TARDIS.commands.tardis;
 
-import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.builders.interior.TIPSData;
-import me.eccentric_nz.TARDIS.database.data.Archive;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
@@ -13,8 +11,6 @@ import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.schematic.SchematicBuilder;
-import me.eccentric_nz.TARDIS.schematic.SchematicGZip;
-import me.eccentric_nz.TARDIS.schematic.archive.ResultSetArchiveByName;
 import me.eccentric_nz.TARDIS.schematic.archive.ResultSetArchiveCount;
 import me.eccentric_nz.TARDIS.schematic.archive.ResultSetArchiveName;
 import org.bukkit.entity.Player;
@@ -47,77 +43,54 @@ public class ArchiveUtility {
     private static SchematicBuilder.ArchiveData getData(TARDIS plugin, Tardis tardis, String uuid, String name, String size, Player player) {
         Schematic current = tardis.getSchematic();
         // get the schematic start location, width, length and height
-        JsonObject obj = null;
-        if (current.getPermission().equals("archive")) {
-            ResultSetArchiveByName rsa = new ResultSetArchiveByName(plugin, uuid, name);
-            if (rsa.resultSet()) {
-                Archive archive = rsa.getArchive();
-                obj = archive.getJSON();
+        int h;
+        int w;
+        int c;
+        // get console size
+        ConsoleSize console_size = ConsoleSize.valueOf(size.toUpperCase(Locale.ROOT));
+        switch (console_size) {
+            case MASSIVE -> {
+                h = 31;
+                w = 47;
+                c = 47;
             }
+            case WIDE -> {
+                h = 15;
+                w = 47;
+                c = 47;
+            }
+            case TALL -> {
+                h = 31;
+                w = 31;
+                c = 31;
+            }
+            case MEDIUM -> {
+                h = 15;
+                w = 31;
+                c = 31;
+            }
+            default -> {
+                h = 15;
+                w = 15;
+                c = 15;
+            }
+        }
+        // calculate startx, starty, startz
+        int slot = tardis.getTIPS();
+        int id = tardis.getTardisId();
+        int sx, sz;
+        if (slot != -1000001) { // default world - use TIPS
+            TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
+            TIPSData pos = tintpos.getTIPSData(slot);
+            sx = pos.getCentreX();
+            sz = pos.getCentreZ();
         } else {
-            // get JSON
-            obj = SchematicGZip.getObject(plugin, "consoles", current.getPermission(), current.isCustom());
+            int[] gsl = plugin.getLocationUtils().getStartLocation(tardis.getTardisId());
+            sx = gsl[0];
+            sz = gsl[2];
         }
-        if (obj != null) {
-            // get dimensions
-            JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
-            int h = dimensions.get("height").getAsInt() - 1;
-            int w = dimensions.get("width").getAsInt() - 1;
-            int c = dimensions.get("length").getAsInt() - 1;
-            // get console size
-            ConsoleSize console_size = ConsoleSize.getByWidthAndHeight(w, h);
-            // size from args[2/3]
-            try {
-                console_size = ConsoleSize.valueOf(size.toUpperCase(Locale.ROOT));
-                switch (console_size) {
-                    case MASSIVE -> {
-                        h = 31;
-                        w = 47;
-                        c = 47;
-                    }
-                    case WIDE -> {
-                        h = 15;
-                        w = 47;
-                        c = 47;
-                    }
-                    case TALL -> {
-                        h = 31;
-                        w = 31;
-                        c = 31;
-                    }
-                    case MEDIUM -> {
-                        h = 15;
-                        w = 31;
-                        c = 31;
-                    }
-                    default -> {
-                        h = 15;
-                        w = 15;
-                        c = 15;
-                    }
-                }
-            } catch (IllegalArgumentException e) {
-                plugin.getMessenger().send(player, TardisModule.TARDIS, "ARCHIVE_SIZE");
-                return null;
-            }
-            // calculate startx, starty, startz
-            int slot = tardis.getTIPS();
-            int id = tardis.getTardisId();
-            int sx, sz;
-            if (slot != -1000001) { // default world - use TIPS
-                TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
-                TIPSData pos = tintpos.getTIPSData(slot);
-                sx = pos.getCentreX();
-                sz = pos.getCentreZ();
-            } else {
-                int[] gsl = plugin.getLocationUtils().getStartLocation(tardis.getTardisId());
-                sx = gsl[0];
-                sz = gsl[2];
-            }
-            int sy = current.getStartY();
-            return new SchematicBuilder(plugin, id, player.getLocation().getWorld(), sx, sx + w, sy, sy + h, sz, sz + c, console_size).build();
-        }
-        return null;
+        int sy = current.getStartY();
+        return new SchematicBuilder(plugin, id, player.getLocation().getWorld(), sx, sx + w, sy, sy + h, sz, sz + c, console_size).build();
     }
 
     public static void add(TARDIS plugin, Player player, String name, String size) {

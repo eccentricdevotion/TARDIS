@@ -42,7 +42,7 @@ public class MonsterExtraArgumentType implements CustomArgumentType<String, Stri
     }
 
     @Override
-    public String parse(StringReader reader) throws CommandSyntaxException {
+    public String parse(StringReader reader) {
         return "";
     }
 

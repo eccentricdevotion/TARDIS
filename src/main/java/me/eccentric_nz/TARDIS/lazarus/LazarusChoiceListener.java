@@ -25,7 +25,6 @@ import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
-import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -40,7 +39,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -50,14 +48,10 @@ import java.util.UUID;
 public class LazarusChoiceListener extends TARDISMenuListener {
 
     private final TARDIS plugin;
-    private final List<String> twaMonsters = new ArrayList<>();
 
     public LazarusChoiceListener(TARDIS plugin) {
         super(plugin);
         this.plugin = plugin;
-        for (Monster m : Monster.values()) {
-            twaMonsters.add(m.toString());
-        }
     }
 
     /**

@@ -287,9 +287,9 @@ public class AdventureComponents {
     }
 
     public static TextComponent getWikiLink(WikiLink wikiLink) {
-        return Component.text(wikiLink.getTitle(), NamedTextColor.BLUE)
+        return Component.text(wikiLink.title(), NamedTextColor.BLUE)
                 .hoverEvent(HoverEvent.showText(Component.text("Open link")))
-                .clickEvent(ClickEvent.openUrl(wikiLink.getURL()));
+                .clickEvent(ClickEvent.openUrl(wikiLink.URL()));
     }
 
     public static TextComponent getRemoveProtected(String xyz, String location, int id) {

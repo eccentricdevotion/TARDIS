@@ -23,7 +23,7 @@ public class TipsNextArgumentType implements CustomArgumentType<String, String> 
     private final Set<String> NEXT_SUBS = Set.of("FREE", "HIGHEST");
 
     @Override
-    public String parse(StringReader reader) throws CommandSyntaxException {
+    public String parse(StringReader reader) {
         return "";
     }
 

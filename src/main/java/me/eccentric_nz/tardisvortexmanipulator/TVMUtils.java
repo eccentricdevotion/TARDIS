@@ -49,9 +49,7 @@ public class TVMUtils {
                     p.setAllowFlight(true);
                 }
             }, 15L);
-        }).forEachOrdered((thePlayer) -> {
-            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(TARDIS.plugin, () -> TARDIS.plugin.getTvmSettings().getTravellers().remove(thePlayer.getUniqueId()), 100L);
-        });
+        }).forEachOrdered((thePlayer) -> Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(TARDIS.plugin, () -> TARDIS.plugin.getTvmSettings().getTravellers().remove(thePlayer.getUniqueId()), 100L));
     }
 
     /**

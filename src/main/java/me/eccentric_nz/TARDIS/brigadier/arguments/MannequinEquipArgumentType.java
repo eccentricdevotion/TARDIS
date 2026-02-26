@@ -28,7 +28,7 @@ public class MannequinEquipArgumentType implements CustomArgumentType<String, St
     );
 
     @Override
-    public String parse(StringReader reader) throws CommandSyntaxException {
+    public String parse(StringReader reader) {
         return "";
     }
 

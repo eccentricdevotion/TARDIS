@@ -35,7 +35,7 @@ public class TimeCommand {
         this.plugin = plugin;
     }
 
-    public boolean sayTime(Player player) {
+    public void sayTime(Player player) {
         long minecraftTime = player.getWorld().getTime();
         String daynight = TARDISStaticUtils.getTime(minecraftTime);
         // get current server time (in a nice format)
@@ -46,7 +46,6 @@ public class TimeCommand {
             plugin.getMessenger().handlesSend(player, "HANDLES_TIME", minecraftTime, daynight, parseTime(minecraftTime));
             plugin.getMessenger().handlesSend(player, "HANDLES_SERVER_TIME", formatted);
         }, 2L);
-        return true;
     }
 
     private String parseTime(long time) {

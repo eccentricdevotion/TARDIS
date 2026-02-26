@@ -26,7 +26,7 @@ public class BrigadierCommandRegister {
         commands.registrar().register(new ConfigCommandNode(plugin).build(), List.of("tconfig"));
         commands.registrar().register(new DevCommandNode(plugin).build(), List.of("tdev"));
         commands.registrar().register(new DisplayCommandNode(plugin).build(), List.of("tdisplay"));
-        commands.registrar().register(new GamemodeCommandNode(plugin).build(), List.of("tgm"));
+        commands.registrar().register(new GamemodeCommandNode().build(), List.of("tgm"));
         commands.registrar().register(new SurvivalCommandNode().build(), List.of());
         commands.registrar().register(new CreativeCommandNode().build(), List.of());
         commands.registrar().register(new AdventureCommandNode().build(), List.of());
@@ -44,6 +44,7 @@ public class BrigadierCommandRegister {
         commands.registrar().register(new SayCommandNode(plugin).build(), List.of("tsay"));
         commands.registrar().register(new SchematicCommandNode(plugin).build(), List.of("ts", "tschematic"));
         commands.registrar().register(new SudoCommandNode(plugin).build(), List.of("tsudo"));
+        commands.registrar().register(new TardisCommandNode(plugin).build(), List.of("tt"));
         commands.registrar().register(new TeleportCommandNode().build(), List.of("tardistp", "ttp"));
         commands.registrar().register(new TimeCommandNode(plugin).build(), List.of("ttime"));
         commands.registrar().register(new TravelCommandNode(plugin).build(), List.of("ttravel"));

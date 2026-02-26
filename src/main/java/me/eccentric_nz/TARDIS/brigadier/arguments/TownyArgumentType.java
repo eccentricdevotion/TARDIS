@@ -24,7 +24,7 @@ public class TownyArgumentType implements CustomArgumentType<String, String> {
     private final List<String> TOWNY_SUBS = ImmutableList.of("none", "wilderness", "town", "nation");
 
     @Override
-    public String parse(StringReader reader) throws CommandSyntaxException {
+    public String parse(StringReader reader) {
         return "";
     }
 

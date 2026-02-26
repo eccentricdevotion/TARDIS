@@ -35,10 +35,10 @@ public class JunkReturn {
         this.plugin = plugin;
     }
 
-    public boolean recall(CommandSender sender, boolean noCheck) {
+    public void recall(CommandSender sender, boolean noCheck) {
         if (!sender.hasPermission("tardis.admin")) {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "CMD_ADMIN");
-            return true;
+            return;
         }
         JunkLocation tjl = new JunkLocation(plugin);
         if (noCheck || tjl.isNotHome()) {
@@ -60,6 +60,5 @@ public class JunkReturn {
         } else {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "JUNK_AT_HOME");
         }
-        return true;
     }
 }

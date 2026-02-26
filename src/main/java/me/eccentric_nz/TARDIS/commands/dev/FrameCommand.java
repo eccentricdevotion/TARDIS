@@ -36,14 +36,13 @@ public class FrameCommand {
     }
 
     public static ItemFrame getItemFrame(Player player) {
-        ItemFrame frame = null;
         // get the item frame player is looking at
         Location observerPos = player.getEyeLocation();
         RayTraceResult result = observerPos.getWorld().rayTraceEntities(observerPos, observerPos.getDirection(), 16.0d, (s) -> s.getType() == EntityType.ITEM_FRAME);
         return result != null ? (ItemFrame) result.getHitEntity() : null;
     }
 
-    public boolean toggle(Player player, boolean lock, boolean rotor) {
+    public void toggle(Player player, boolean lock, boolean rotor) {
         // get the item frame the player is targeting
         ItemFrame frame = getItemFrame(player);
         if (frame != null) {
@@ -58,6 +57,5 @@ public class FrameCommand {
         } else {
             plugin.getMessenger().message(player, "You are not looking at an ItemFrame!");
         }
-        return true;
     }
 }

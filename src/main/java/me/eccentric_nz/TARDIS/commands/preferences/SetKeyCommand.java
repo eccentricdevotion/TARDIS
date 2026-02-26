@@ -45,22 +45,22 @@ public class SetKeyCommand {
         });
     }
 
-    public boolean setKeyPref(Player player, String material) {
+    public void setKeyPref(Player player, String material) {
         String setMaterial = material.toUpperCase(Locale.ROOT);
         Material go;
         try {
             go = Material.valueOf(setMaterial);
         } catch (IllegalArgumentException e) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "MATERIAL_NOT_VALID");
-            return false;
+            return;
         }
         if (go.isBlock()) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "KEY_NO_BLOCK");
-            return true;
+            return;
         }
         if (plugin.getConfig().getBoolean("travel.give_key") && !plugin.getConfig().getBoolean("allow.all_blocks") && !keys.contains(go)) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "MATERIAL_NOT_VALID");
-            return true;
+            return;
         }
         String field = (plugin.getConfig().getString("storage.database").equals("sqlite")) ? "key" : "key_item";
         HashMap<String, Object> setk = new HashMap<>();
@@ -69,6 +69,5 @@ public class SetKeyCommand {
         where.put("uuid", player.getUniqueId().toString());
         plugin.getQueryFactory().doUpdate("player_prefs", setk, where);
         plugin.getMessenger().send(player, TardisModule.TARDIS, "KEY_SAVED");
-        return true;
     }
 }

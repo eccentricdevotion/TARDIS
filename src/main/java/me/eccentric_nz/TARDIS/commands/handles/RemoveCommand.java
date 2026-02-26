@@ -31,7 +31,7 @@ public class RemoveCommand {
         this.plugin = plugin;
     }
 
-    public boolean purge(Player player) {
+    public void purge(Player player) {
         ResultSetTardisID rs = new ResultSetTardisID(plugin);
         if (rs.fromUUID(player.getUniqueId().toString())) {
             HashMap<String, Object> whereh = new HashMap<>();
@@ -42,6 +42,5 @@ public class RemoveCommand {
         } else {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_A_TIMELORD");
         }
-        return true;
     }
 }

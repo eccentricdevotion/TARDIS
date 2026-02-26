@@ -33,17 +33,16 @@ public class LabelCommand {
         this.plugin = plugin;
     }
 
-    public boolean catalog(CommandSender sender) {
+    public void catalog(CommandSender sender) {
         if (sender instanceof Player player) {
             UUID uuid = player.getUniqueId();
             // get start location
             if (!plugin.getTrackerKeeper().getStartLocation().containsKey(uuid)) {
                 plugin.getMessenger().send(sender, TardisModule.TARDIS, "SCHM_NO_START");
-                return true;
+                return;
             }
             Location start = plugin.getTrackerKeeper().getStartLocation().get(uuid);
             new LibraryCatalogue().label(start);
         }
-        return true;
     }
 }

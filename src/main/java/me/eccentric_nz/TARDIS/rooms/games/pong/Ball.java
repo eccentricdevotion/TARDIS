@@ -9,8 +9,8 @@ public class Ball {
 
     static final int WIDTH = 29;
     static final int HEIGHT = 16;
+    final Pong pong;
     int x, y;
-    Pong pong;
     int vx, vy;
 
     public Ball(int y, Pong pong) {

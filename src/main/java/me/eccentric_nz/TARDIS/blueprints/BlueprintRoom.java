@@ -81,7 +81,7 @@ public enum BlueprintRoom {
     WORKSHOP("tardis.room.workshop"),
     ZERO("tardis.room.zero");
 
-    public static HashMap<String, BlueprintRoom> PERMS = new HashMap<>();
+    public static final HashMap<String, BlueprintRoom> PERMS = new HashMap<>();
 
     static {
         for (BlueprintRoom room : BlueprintRoom.values()) {

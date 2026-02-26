@@ -76,7 +76,7 @@ public class TardisCommandNode {
                         .executes(ctx -> {
                             Pair<Player, Integer> c = TardisUtility.check(plugin, ctx.getSource().getSender(), TardisCommand.abandon);
                             if (c != null) {
-
+                                // TODO
                             }
                             return Command.SINGLE_SUCCESS;
                         }))
@@ -84,7 +84,7 @@ public class TardisCommandNode {
                         .executes(ctx -> {
                             Pair<Player, Integer> c = TardisUtility.check(plugin, ctx.getSource().getSender(), TardisCommand.abort);
                             if (c != null) {
-
+                                // TODO
                             }
                             return Command.SINGLE_SUCCESS;
                         }))

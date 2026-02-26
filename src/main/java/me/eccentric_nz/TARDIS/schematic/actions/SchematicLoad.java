@@ -28,7 +28,7 @@ import java.util.UUID;
 
 public class SchematicLoad {
 
-    public boolean act(TARDIS plugin, Player player, String directory, String schematic) {
+    public void act(TARDIS plugin, Player player, String directory, String schematic) {
         Load load;
         try {
             load = Load.valueOf(directory);
@@ -40,13 +40,12 @@ public class SchematicLoad {
             File file = new File(instr);
             if (!file.exists()) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "SCHM_NOT_VALID");
-                return true;
+                return;
             }
         }
         JsonObject sch = SchematicGZip.getObject(plugin, load.getPath(), schematic, !load.isFromJar());
         UUID uuid = player.getUniqueId();
         plugin.getTrackerKeeper().getPastes().put(uuid, sch);
         plugin.getMessenger().sendColouredCommand(player, "SCHM_LOADED", "/ts paste", plugin);
-        return true;
     }
 }

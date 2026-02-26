@@ -35,13 +35,13 @@ public class HadsTypeCommand {
         this.plugin = plugin;
     }
 
-    public boolean setHadsPref(Player player, String type) {
+    public void setHadsPref(Player player, String type) {
         String hads_type = type.toUpperCase(Locale.ROOT);
         try {
             HADS.valueOf(hads_type);
         } catch (IllegalArgumentException e) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "HADS_NOT_VALID");
-            return false;
+            return;
         }
         HashMap<String, Object> set = new HashMap<>();
         set.put("hads_type", hads_type);
@@ -49,6 +49,5 @@ public class HadsTypeCommand {
         where.put("uuid", player.getUniqueId().toString());
         TARDIS.plugin.getQueryFactory().doUpdate("player_prefs", set, where);
         plugin.getMessenger().send(player, TardisModule.TARDIS, "HADS_SAVED");
-        return true;
     }
 }

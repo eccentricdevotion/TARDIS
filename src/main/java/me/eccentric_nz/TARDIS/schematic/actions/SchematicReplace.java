@@ -28,23 +28,23 @@ import java.util.UUID;
 
 public class SchematicReplace {
 
-    public boolean act(TARDIS plugin, Player player, String from, String to) {
+    public void act(TARDIS plugin, Player player, String from, String to) {
         UUID uuid = player.getUniqueId();
         // check they have selected start and end blocks
         if (!plugin.getTrackerKeeper().getStartLocation().containsKey(uuid)) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "SCHM_NO_START");
-            return true;
+            return;
         }
         if (!plugin.getTrackerKeeper().getEndLocation().containsKey(uuid)) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "SCHM_NO_END");
-            return true;
+            return;
         }
         // get the world
         World w = plugin.getTrackerKeeper().getStartLocation().get(uuid).getWorld();
         String chk_w = plugin.getTrackerKeeper().getEndLocation().get(uuid).getWorld().getName();
         if (!w.getName().equals(chk_w)) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "SCHM_WORLD");
-            return true;
+            return;
         }
         try {
             Material materialFrom = Material.valueOf(from);
@@ -80,8 +80,6 @@ public class SchematicReplace {
             }
         } catch (IllegalArgumentException e) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "ARG_MATERIAL");
-            return true;
         }
-        return true;
     }
 }

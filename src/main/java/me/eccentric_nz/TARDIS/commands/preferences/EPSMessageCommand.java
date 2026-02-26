@@ -33,13 +33,12 @@ public class EPSMessageCommand {
         this.plugin = plugin;
     }
 
-    public boolean setMessage(Player player, String message) {
+    public void setMessage(Player player, String message) {
         HashMap<String, Object> sete = new HashMap<>();
         sete.put("eps_message", message);
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", player.getUniqueId().toString());
         plugin.getQueryFactory().doUpdate("player_prefs", sete, where);
         plugin.getMessenger().send(player, TardisModule.TARDIS, "EP1_SET");
-        return true;
     }
 }

@@ -61,7 +61,7 @@ public class SpawnCommand {
         this.plugin = plugin;
     }
 
-    public boolean spawn(CommandSender sender, String mon, String extra) {
+    public void spawn(CommandSender sender, String mon, String extra) {
         String upper = mon.toUpperCase(Locale.ROOT);
         // check monster type
         Monster monster;
@@ -69,13 +69,13 @@ public class SpawnCommand {
             monster = Monster.valueOf(upper);
         } catch (IllegalArgumentException e) {
             plugin.getMessenger().send(sender, TardisModule.MONSTERS, "WA_INVALID");
-            return true;
+            return;
         }
         if (sender instanceof Player player) {
             // check player has permission for this monster
             if (!TARDISPermission.hasPermission(player, "tardisweepingangels.spawn." + monster.getPermission())) {
                 plugin.getMessenger().send(sender, TardisModule.MONSTERS, "WA_PERM_SPAWN", monster.toString());
-                return true;
+                return;
             }
             Location eyeLocation = player.getTargetBlock(null, 50).getLocation();
             eyeLocation.add(0.5d, 1.25d, 0.5d);
@@ -193,6 +193,5 @@ public class SpawnCommand {
         } else {
             plugin.getMessenger().send(sender, TardisModule.MONSTERS, "CMD_PLAYER");
         }
-        return true;
     }
 }

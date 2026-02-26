@@ -151,20 +151,6 @@ public class TARDISAntiBuildListener implements Listener {
             event.setCancelled(true);
             plugin.getMessenger().send(p, TardisModule.TARDIS, "ANTIBUILD");
         }
-//        if (event.getClickedBlock().getType().equals(Material.FLOWER_POT) && (hand.equals(EquipmentSlot.HAND) && no_flower_pot.contains(m)) || (hand.equals(EquipmentSlot.OFF_HAND) && no_flower_pot.contains(m))) {
-//            event.setUseItemInHand(Result.DENY);
-//            event.setCancelled(true);
-//            Block b = event.getClickedBlock();
-//            b.getState().update();
-//            for (BlockFace f : plugin.getGeneralKeeper().getFaces()) {
-//                if (b.getRelative(f).getType().isAir()) {
-//                    b.getRelative(f).setBlockData(TARDISConstants.GLASS, true);
-//                    b.getRelative(f).setBlockData(TARDISConstants.AIR, true);
-//                    break;
-//                }
-//            }
-//            plugin.getMessenger().send(p, TardisModule.TARDIS, "ANTIBUILD");
-//        }
     }
 
     @EventHandler(ignoreCancelled = true)

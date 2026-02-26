@@ -31,10 +31,10 @@ public class DechargeCommand {
         this.plugin = plugin;
     }
 
-    public boolean removeChargerStatus(CommandSender sender, String name) {
+    public void removeChargerStatus(CommandSender sender, String name) {
         if (!plugin.getConfig().contains("rechargers." + name)) {
             plugin.getMessenger().sendColouredCommand(sender, "CHARGER_NOT_FOUND", "/tardis list rechargers", plugin);
-            return true;
+            return;
         }
         if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
             plugin.getWorldGuardUtils().removeRechargerRegion(name);
@@ -42,6 +42,5 @@ public class DechargeCommand {
         plugin.getConfig().set("rechargers." + name, null);
         plugin.saveConfig();
         plugin.getMessenger().send(sender, TardisModule.TARDIS, "CONFIG_UPDATED", "recharger");
-        return true;
     }
 }

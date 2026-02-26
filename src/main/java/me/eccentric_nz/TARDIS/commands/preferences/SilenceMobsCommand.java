@@ -21,7 +21,7 @@ public class SilenceMobsCommand {
         this.plugin = plugin;
     }
 
-    public boolean toggle(Player player, String arg) {
+    public void toggle(Player player, String arg) {
         // get the player's TARDIS
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", player.getUniqueId().toString());
@@ -50,6 +50,5 @@ public class SilenceMobsCommand {
         } else {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
         }
-        return true;
     }
 }

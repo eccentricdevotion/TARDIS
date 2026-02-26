@@ -38,7 +38,7 @@ public class ShapedPageBuilder extends PageBuilder {
         this.plugin = plugin;
     }
 
-    public boolean compile() {
+    public void compile() {
         // all shaped recipes
         for (String key : plugin.getFigura().getShapedRecipes().keySet()) {
             plugin.debug(key);
@@ -47,7 +47,6 @@ public class ShapedPageBuilder extends PageBuilder {
                 save(TARDISStringUtils.toDashedLowercase(key), data);
             }
         }
-        return true;
     }
 
     private String formatShaped(String item) {

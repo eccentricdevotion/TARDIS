@@ -41,7 +41,7 @@ class LazarusNeutralInventory extends LazarusItems implements InventoryHolder, L
     private final TARDIS plugin;
     private final List<Material> neutral = new ArrayList<>();
     private final Inventory inventory;
-    private int maxSlot;
+    private final int maxSlot;
 
     LazarusNeutralInventory(TARDIS plugin) {
         this.plugin = plugin;

@@ -46,7 +46,7 @@ public class RebuildCommand {
         this.plugin = plugin;
     }
 
-    public boolean rebuildPreset(OfflinePlayer player) {
+    public void rebuildPreset(OfflinePlayer player) {
         if (TARDISPermission.hasPermission(player, "tardis.rebuild")) {
             UUID uuid = player.getUniqueId();
             if (plugin.getTrackerKeeper().getRebuildCooldown().containsKey(uuid)) {
@@ -55,7 +55,7 @@ public class RebuildCommand {
                 long then = plugin.getTrackerKeeper().getRebuildCooldown().get(uuid) + cooldown;
                 if (now < then) {
                     plugin.getMessenger().send(player.getPlayer(), TardisModule.TARDIS, "COOLDOWN", String.format("%d", cooldown / 1000));
-                    return true;
+                    return;
                 }
             }
             HashMap<String, Object> where = new HashMap<>();
@@ -63,23 +63,23 @@ public class RebuildCommand {
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             if (!rs.resultSet()) {
                 plugin.getMessenger().send(player.getPlayer(), TardisModule.TARDIS, "NO_TARDIS");
-                return true;
+                return;
             }
             Tardis tardis = rs.getTardis();
             if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPoweredOn()) {
                 plugin.getMessenger().send(player.getPlayer(), TardisModule.TARDIS, "POWER_DOWN");
-                return true;
+                return;
             }
             if (tardis.getPreset().equals(ChameleonPreset.INVISIBLE) && tardis.getDemat().equals(ChameleonPreset.INVISIBLE)) {
                 plugin.getMessenger().send(player.getPlayer(), TardisModule.TARDIS, "INVISIBILITY_ENGAGED");
-                return true;
+                return;
             }
             int id = tardis.getTardisId();
             CircuitChecker tcc = new CircuitChecker(plugin, id);
             tcc.getCircuits();
             if (plugin.getConfig().getBoolean("difficulty.circuits") && !plugin.getUtils().inGracePeriod(player.getPlayer(), true) && !tcc.hasMaterialisation()) {
                 plugin.getMessenger().send(player.getPlayer(), TardisModule.TARDIS, "NO_MAT_CIRCUIT");
-                return true;
+                return;
             }
             // damage circuit if configured
             if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getInt("circuits.uses.materialisation") > 0) {
@@ -92,31 +92,31 @@ public class RebuildCommand {
             ResultSetTravellers rst = new ResultSetTravellers(plugin, wherein, false);
             if (rst.resultSet() && plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
                 plugin.getMessenger().send(player.getPlayer(), TardisModule.TARDIS, "TARDIS_NO_REBUILD");
-                return true;
+                return;
             }
             if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
                 plugin.getMessenger().send(player.getPlayer(), TardisModule.TARDIS, "NOT_IN_VORTEX");
-                return true;
+                return;
             }
             if (plugin.getTrackerKeeper().getInVortex().contains(id) || plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getDematerialising().contains(id)) {
                 plugin.getMessenger().send(player.getPlayer(), TardisModule.TARDIS, "NOT_WHILE_MAT");
-                return true;
+                return;
             }
             if (plugin.getTrackerKeeper().getDispersed().containsKey(uuid)) {
                 plugin.getMessenger().send(player.getPlayer(), TardisModule.TARDIS, "NOT_WHILE_DISPERSED");
-                return true;
+                return;
             }
             ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
             if (!rsc.resultSet()) {
                 plugin.getMessenger().send(player.getPlayer(), TardisModule.TARDIS, "CURRENT_NOT_FOUND");
                 plugin.getMessenger().sendColouredCommand(player.getPlayer(), "REBUILD_FAIL", "/tardis comehere", plugin);
-                return true;
+                return;
             }
             int level = tardis.getArtronLevel();
             int rebuild = plugin.getArtronConfig().getInt("random");
             if (level < rebuild) {
                 plugin.getMessenger().send(player.getPlayer(), TardisModule.TARDIS, "ENERGY_NO_REBUILD");
-                return false;
+                return;
             }
             plugin.getTrackerKeeper().getRebuildCooldown().put(uuid, System.currentTimeMillis());
             Current current = rsc.getCurrent();
@@ -147,10 +147,8 @@ public class RebuildCommand {
                 seth.put("hidden", 0);
                 plugin.getQueryFactory().doUpdate("tardis", seth, whereh);
             }
-            return true;
         } else {
             plugin.getMessenger().send(player.getPlayer(), TardisModule.TARDIS, "NO_PERMS");
-            return false;
         }
     }
 }

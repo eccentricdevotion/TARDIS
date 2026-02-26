@@ -37,11 +37,11 @@ public class IsomorphicCommand {
         this.plugin = plugin;
     }
 
-    public boolean toggleIsomorphicControls(Player player) {
-        return toggleIsomorphicControls(player.getUniqueId(), player);
+    public void toggleIsomorphicControls(Player player) {
+        toggleIsomorphicControls(player.getUniqueId(), player);
     }
 
-    public boolean toggleIsomorphicControls(UUID uuid, CommandSender sender) {
+    public void toggleIsomorphicControls(UUID uuid, CommandSender sender) {
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", uuid.toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
@@ -60,6 +60,5 @@ public class IsomorphicCommand {
         } else {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "NO_TARDIS");
         }
-        return true;
     }
 }

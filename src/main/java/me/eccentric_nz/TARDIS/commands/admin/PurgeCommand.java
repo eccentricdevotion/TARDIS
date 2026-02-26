@@ -33,13 +33,13 @@ public class PurgeCommand {
         this.plugin = plugin;
     }
 
-    public boolean clearAll(CommandSender sender, String who, String uuid) {
+    public void clearAll(CommandSender sender, String who, String uuid) {
         if (uuid != null) {
             // get the player's TARDIS id
             ResultSetTardisID rs = new ResultSetTardisID(plugin);
-            if (!rs.fromUUID(uuid.toString())) {
+            if (!rs.fromUUID(uuid)) {
                 plugin.getMessenger().send(sender, TardisModule.TARDIS, "PLAYER_NOT_FOUND_DB", who);
-                return true;
+                return;
             }
             int id = rs.getTardisId();
             Exterminator purger = new Exterminator(plugin);
@@ -49,6 +49,5 @@ public class PurgeCommand {
         } else {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "UUID_NOT_FOUND", who);
         }
-        return true;
     }
 }

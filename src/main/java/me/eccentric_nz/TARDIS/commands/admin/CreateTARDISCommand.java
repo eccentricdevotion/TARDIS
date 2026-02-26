@@ -43,36 +43,36 @@ public class CreateTARDISCommand {
         this.floor = floor;
     }
 
-    public boolean buildTARDIS(CommandSender sender, Player player, String seed) {
+    public void buildTARDIS(CommandSender sender, Player player, String seed) {
         if (sender instanceof Player admin) {
             // tadmin create eccentric_nz BUDGET ORANGE_WOOL LIGHT_GRAY_WOOL
 
             if (Desktops.getBY_NAMES().containsKey(seed) && !seed.equals("SMALL") && !seed.equals("MEDIUM") && !seed.equals("TALL") && !seed.equals("ARCHIVE")) {
                 Schematic schematic = Desktops.getBY_NAMES().get(seed);
-                Material wallMaterial = Material.ORANGE_WOOL;
-                Material floorMaterial = Material.LIGHT_GRAY_WOOL;
-                // wall wall
+                Material wallMaterial;
+                Material floorMaterial;
+                // wall
                     try {
                         wallMaterial = Material.valueOf(wall.toUpperCase(Locale.ROOT));
                         if (!TARDISWalls.BLOCKS.contains(wallMaterial)) {
                             plugin.getMessenger().send(sender, TardisModule.TARDIS, "WALL_NOT_VALID", wall);
                             TARDISWalls.BLOCKS.forEach((w) -> sender.sendMessage(w.toString()));
-                            return true;
+                            return;
                         }
                     } catch (IllegalArgumentException e) {
                         plugin.getMessenger().send(sender, TardisModule.TARDIS, "SEED_MAT_NOT_VALID", wall);
-                        return true;
+                        return;
                     }
                     try {
                         floorMaterial = Material.valueOf(floor);
                         if (!TARDISWalls.BLOCKS.contains(floorMaterial)) {
                             plugin.getMessenger().send(sender, TardisModule.TARDIS, "WALL_NOT_VALID", floor);
                             TARDISWalls.BLOCKS.forEach((w) -> sender.sendMessage(w.toString()));
-                            return true;
+                            return;
                         }
                     } catch (IllegalArgumentException e) {
                         plugin.getMessenger().send(sender, TardisModule.TARDIS, "SEED_MAT_NOT_VALID", floor);
-                        return true;
+                        return;
                     }
                 // get target location
                 Location target = admin.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 16).getRelative(BlockFace.UP).getLocation();
@@ -81,14 +81,12 @@ public class CreateTARDISCommand {
                 data.setWallType(wallMaterial);
                 data.setFloorType(floorMaterial);
                 // build a TARDIS
-                return new SeedBlockProcessor(plugin).processBlock(data, target, player);
+                new SeedBlockProcessor(plugin).processBlock(data, target, player);
             } else {
                 plugin.getMessenger().send(sender, TardisModule.TARDIS, "ARG_SEED");
-                return true;
             }
         } else {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "CMD_PLAYER");
-            return true;
         }
     }
 }

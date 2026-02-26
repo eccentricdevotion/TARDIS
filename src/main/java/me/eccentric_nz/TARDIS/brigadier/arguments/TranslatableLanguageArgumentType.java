@@ -31,7 +31,7 @@ public class TranslatableLanguageArgumentType implements CustomArgumentType<Stri
     }
 
     @Override
-    public String parse(StringReader reader) throws CommandSyntaxException {
+    public String parse(StringReader reader) {
         return "";
     }
 

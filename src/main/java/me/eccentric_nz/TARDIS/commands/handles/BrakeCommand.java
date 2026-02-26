@@ -28,8 +28,8 @@ public class BrakeCommand {
         this.plugin = plugin;
     }
 
-    public boolean park(Player player, int id, String toggle) {
+    public void park(Player player, int id, String toggle) {
         // handles brake on uuid id
-        return new HandbrakeCommand(plugin).toggle(player, id, toggle, false);
+        new HandbrakeCommand(plugin).toggle(player, id, toggle, false);
     }
 }

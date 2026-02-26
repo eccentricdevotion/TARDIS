@@ -97,7 +97,7 @@ public class TARDISBlueMap implements TARDISMapper {
                 } else {
                     // get next world
                     curWorld = worldsToDo.removeFirst();
-                    BlueMapAPI.getInstance().ifPresent(api -> api.getWorld(curWorld).ifPresent(w -> {
+                    BlueMapAPI.getInstance().flatMap(api -> api.getWorld(curWorld)).ifPresent(w -> {
                         // get TARDISes
                         TARDISGetter getter = new TARDISGetter(plugin, curWorld);
                         getter.resultSetAsync(results -> {
@@ -133,7 +133,7 @@ public class TARDISBlueMap implements TARDISMapper {
                                 map.getMarkerSets().put("TARDIS", markerSet);
                             }
                         });
-                    }));
+                    });
                 }
             }
         }

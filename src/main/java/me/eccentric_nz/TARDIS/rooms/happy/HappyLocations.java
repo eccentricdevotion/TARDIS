@@ -25,7 +25,7 @@ import java.util.List;
 
 public class HappyLocations {
 
-    public static List<Pair<Vector, BlockFace>> VECTORS = new ArrayList<>(){
+    public static final List<Pair<Vector, BlockFace>> VECTORS = new ArrayList<>(){
         {
             add(new Pair<>(new Vector(-1.5,2.5,-2.5), BlockFace.NORTH));
             add(new Pair<>(new Vector(-1.5,3.5,-2.5), BlockFace.NORTH));

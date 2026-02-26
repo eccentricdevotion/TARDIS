@@ -40,20 +40,20 @@ public class RescueCommand {
         this.plugin = plugin;
     }
 
-    public boolean startRescue(Player player, Player saved) {
+    public void startRescue(Player player, Player saved) {
         if (TARDISPermission.hasPermission(player, "tardis.timetravel.rescue")) {
             ResultSetTardisPowered rs = new ResultSetTardisPowered(plugin);
             if (!rs.fromUUID(player.getUniqueId().toString())) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_A_TIMELORD");
-                return true;
+                return;
             }
             if (plugin.getConfig().getBoolean("allow.power_down") && !rs.isPowered()) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "POWER_DOWN");
-                return true;
+                return;
             }
             if (saved == null) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_ONLINE");
-                return true;
+                return;
             }
             UUID savedUUID = saved.getUniqueId();
             String who = (plugin.getTrackerKeeper().getTelepathicRescue().containsKey(savedUUID)) ? plugin.getServer().getPlayer(plugin.getTrackerKeeper().getTelepathicRescue().get(savedUUID)).getName() : player.getName();
@@ -88,8 +88,6 @@ public class RescueCommand {
             }
         } else {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERM_PLAYER");
-            return true;
         }
-        return false;
     }
 }

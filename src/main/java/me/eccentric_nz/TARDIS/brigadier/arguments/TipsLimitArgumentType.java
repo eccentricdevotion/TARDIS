@@ -23,7 +23,7 @@ public class TipsLimitArgumentType implements CustomArgumentType<Integer, Intege
     private final Set<Integer> LIMIT_SUBS = Set.of(400, 800, 1200, 1600);
 
     @Override
-    public Integer parse(StringReader reader) throws CommandSyntaxException {
+    public Integer parse(StringReader reader) {
         return 0;
     }
 

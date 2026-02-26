@@ -34,7 +34,7 @@ public class CreatureArgumentType implements CustomArgumentType<String, String> 
     }
 
     @Override
-    public String parse(StringReader reader) throws CommandSyntaxException {
+    public String parse(StringReader reader) {
         return "";
     }
 

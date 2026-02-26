@@ -29,50 +29,10 @@ import java.util.Locale;
 public class SiegeCommand {
 
     private final TARDIS plugin;
-    private final List<String> siegeArgs = List.of("enabled", "breeding", "growth", "butcher", "creeper", "healing", "texture");
     private final List<String> siegeBool = List.of("enabled", "butcher", "creeper", "healing", "texture");
 
     public SiegeCommand(TARDIS plugin) {
         this.plugin = plugin;
-    }
-
-    public boolean setOption(CommandSender sender, String[] args) {
-        String first = args[1].toLowerCase(Locale.ROOT);
-        if (args.length == 2 && first.equalsIgnoreCase("true") || first.equalsIgnoreCase("false")) {
-            plugin.getConfig().set("siege.enabled", Boolean.valueOf(first));
-            plugin.saveConfig();
-            return true;
-        }
-        if (args.length < 3) {
-            plugin.getMessenger().send(sender, TardisModule.TARDIS, "TOO_FEW_ARGS");
-            return true;
-        }
-        if (!siegeArgs.contains(first)) {
-            plugin.getMessenger().send(sender, TardisModule.TARDIS, "ARG_NOT_VALID");
-            return true;
-        }
-        if (siegeBool.contains(first)) {
-            String tf = args[2].toLowerCase(Locale.ROOT);
-            if (!tf.equals("true") && !tf.equals("false")) {
-                plugin.getMessenger().send(sender, TardisModule.TARDIS, "TRUE_FALSE");
-                return true;
-            }
-            plugin.getConfig().set("siege." + first, Boolean.valueOf(tf));
-        }
-        if (!siegeBool.contains(first)) {
-            int val;
-            try {
-                val = Integer.parseInt(args[2]);
-            } catch (NumberFormatException nfe) {
-                // not a number
-                plugin.getMessenger().send(sender, TardisModule.TARDIS, "ARG_LAST_NUMBER");
-                return false;
-            }
-            plugin.getConfig().set("siege." + first, val);
-        }
-        plugin.getMessenger().send(sender, TardisModule.TARDIS, "CONFIG_UPDATED", first);
-        plugin.saveConfig();
-        return true;
     }
 
     public void setOption(CommandSender sender, String option, int i) {

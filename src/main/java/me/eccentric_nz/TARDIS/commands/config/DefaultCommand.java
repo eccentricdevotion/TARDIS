@@ -33,12 +33,11 @@ public class DefaultCommand {
         this.plugin = plugin;
     }
 
-    public boolean setDefaultItem(CommandSender sender, String option, String value) {
+    public void setDefaultItem(CommandSender sender, String option, String value) {
         String which = option.toLowerCase(Locale.ROOT);
         plugin.getConfig().set("preferences." + which, value);
         plugin.saveConfig();
         plugin.getMessenger().send(sender, TardisModule.TARDIS, "CONFIG_UPDATED", "which");
         plugin.getMessenger().send(sender, TardisModule.TARDIS, "RESTART");
-        return true;
     }
 }

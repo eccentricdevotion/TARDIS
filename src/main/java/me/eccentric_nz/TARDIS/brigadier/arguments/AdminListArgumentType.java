@@ -24,7 +24,7 @@ public class AdminListArgumentType implements CustomArgumentType<String, String>
     private final List<String> LIST_SUBS = ImmutableList.of("abandoned", "portals", "save", "blueprints");
 
     @Override
-    public String parse(StringReader reader) throws CommandSyntaxException {
+    public String parse(StringReader reader) {
         return "";
     }
 

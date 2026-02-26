@@ -54,14 +54,14 @@ public class AddRegionsCommand {
         }
     }
 
-    public boolean doCheck(CommandSender sender) {
+    public void doCheck(CommandSender sender) {
         if (!plugin.isWorldGuardOnServer()) {
             plugin.getMessenger().message(sender, TardisModule.TARDIS, "WorldGuard is not enabled on this server!");
-            return true;
+            return;
         }
         if (!plugin.getConfig().getBoolean("creation.default_world")) {
             plugin.getMessenger().message(sender, TardisModule.TARDIS,  "This command only works if TARDISes are created in a default world!");
-            return true;
+            return;
         }
         // get default world name
         String dw = plugin.getConfig().getString("creation.default_world_name");
@@ -98,7 +98,6 @@ public class AddRegionsCommand {
             }
         } catch (SQLException e) {
             plugin.debug("ResultSet error for tardis table! " + e.getMessage());
-            return false;
         } finally {
             try {
                 if (rs != null) {
@@ -111,6 +110,5 @@ public class AddRegionsCommand {
                 plugin.debug("Error closing tardis table! " + e.getMessage());
             }
         }
-        return true;
     }
 }

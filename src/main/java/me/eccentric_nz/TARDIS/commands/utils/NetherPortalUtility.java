@@ -10,7 +10,7 @@ import org.bukkit.entity.Player;
 
 public class NetherPortalUtility {
 
-    public static boolean o2n(TARDIS plugin, Player player) {
+    public static void o2n(TARDIS plugin, Player player) {
         int x, y, z, dx, dz;
         // get player coords
         Location l = player.getLocation();
@@ -20,7 +20,7 @@ public class NetherPortalUtility {
         z = l.getBlockZ();
         if ((y > 123) || (y < 1)) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "O2N_Y");
-            return false;
+            return;
         }
         // get player direction
         String d = TARDISStaticUtils.getPlayersDirection(player, false);
@@ -35,14 +35,13 @@ public class NetherPortalUtility {
         }
         String coords = "X: " + dx + ", " + "Y: " + y + ", " + "Z: " + dz + ", facing " + d;
         plugin.getMessenger().send(player, TardisModule.TARDIS, message, coords);
-        return true;
     }
 
-    public static boolean o2n(TARDIS plugin, CommandSender sender, int x, int y, int z, boolean overworld) {
+    public static void o2n(TARDIS plugin, CommandSender sender, int x, int y, int z, boolean overworld) {
         int dx, dz;
         if ((y > 123) || (y < 1)) {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "O2N_Y");
-            return false;
+            return;
         }
         String message = (overworld) ? "O2N_COORDS_N" : "O2N_COORDS_O";
         // get destination coords
@@ -55,6 +54,5 @@ public class NetherPortalUtility {
         }
         String coords = "X: " + dx + ", " + "Y: " + y + ", " + "Z: " + dz;
         plugin.getMessenger().send(sender, TardisModule.TARDIS, message, coords);
-        return true;
     }
 }

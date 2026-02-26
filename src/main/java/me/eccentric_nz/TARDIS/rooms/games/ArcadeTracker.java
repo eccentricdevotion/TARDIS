@@ -5,5 +5,5 @@ import java.util.UUID;
 
 public class ArcadeTracker {
 
-    public static HashMap<UUID, ArcadeData> PLAYERS = new HashMap<>();
+    public static final HashMap<UUID, ArcadeData> PLAYERS = new HashMap<>();
 }

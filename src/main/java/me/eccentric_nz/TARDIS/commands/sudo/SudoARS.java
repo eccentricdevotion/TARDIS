@@ -36,9 +36,8 @@ public class SudoARS {
         this.plugin = plugin;
     }
 
-    public boolean showARS(Player player, UUID uuid) {
+    public void showARS(Player player, UUID uuid) {
         TARDISSudoTracker.SUDOERS.put(player.getUniqueId(), uuid);
         player.openInventory(new ARSInventory(plugin, player).getInventory());
-        return true;
     }
 }

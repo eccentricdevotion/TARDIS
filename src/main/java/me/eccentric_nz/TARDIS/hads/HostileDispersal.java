@@ -185,9 +185,7 @@ class HostileDispersal {
                         if (yy == 1 && xx == 0 && zz == 0) {
                             tmp = carpet;
                         }
-                        FallingBlock fb = w.spawn(b.getLocation(), FallingBlock.class, (fallingBlock -> {
-                            fallingBlock.setBlockData(carpet.createBlockData());
-                        }));
+                        FallingBlock fb = w.spawn(b.getLocation(), FallingBlock.class, (fallingBlock -> fallingBlock.setBlockData(carpet.createBlockData())));
                         falls.add(fb);
                         fb.setDropItem(false);
                         fb.setVelocity(new Vector(v, v, v));

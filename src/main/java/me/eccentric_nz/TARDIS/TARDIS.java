@@ -1033,15 +1033,6 @@ public class TARDIS extends JavaPlugin {
     }
 
     /**
-     * Gets the TARDIS File Copier
-     *
-     * @return the TARDIS File Copier
-     */
-    public FileCopier getTardisCopier() {
-        return tardisCopier;
-    }
-
-    /**
      * Gets the TARDIS API
      *
      * @return the TARDIS API

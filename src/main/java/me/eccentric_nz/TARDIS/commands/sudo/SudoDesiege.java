@@ -38,7 +38,7 @@ public class SudoDesiege {
         this.plugin = plugin;
     }
 
-    public boolean restore(CommandSender sender, UUID uuid, int id) {
+    public void restore(CommandSender sender, UUID uuid, int id) {
         // turn off siege mode
         HashMap<String, Object> wheres = new HashMap<>();
         wheres.put("tardis_id", id);
@@ -79,6 +79,5 @@ public class SudoDesiege {
             plugin.getPresetBuilder().buildPreset(bd);
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "SIEGE_REBUILT");
         }
-        return true;
     }
 }

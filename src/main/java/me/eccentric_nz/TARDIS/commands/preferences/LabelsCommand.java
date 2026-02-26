@@ -33,10 +33,10 @@ public class LabelsCommand {
         this.plugin = plugin;
     }
 
-    public boolean toggle(Player player, String arg) {
+    public void toggle(Player player, String arg) {
         if (arg.isEmpty() || (!arg.equalsIgnoreCase("on") && !arg.equalsIgnoreCase("off"))) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "PREF_ON_OFF", "console_labels");
-            return false;
+            return;
         }
         ResultSetTardisID rs = new ResultSetTardisID(plugin);
         if (rs.fromUUID(player.getUniqueId().toString())) {
@@ -44,6 +44,5 @@ public class LabelsCommand {
             boolean on = arg.equalsIgnoreCase("on");
             new LabelAction(plugin).toggle(id, on);
         }
-        return true;
     }
 }

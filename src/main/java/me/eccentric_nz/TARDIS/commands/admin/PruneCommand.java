@@ -35,7 +35,7 @@ public class PruneCommand {
         this.plugin = plugin;
     }
 
-    public boolean startPruning(CommandSender sender, int days) {
+    public void startPruning(CommandSender sender, int days) {
         TARDISPruner pruner = new TARDISPruner(plugin);
         try {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "BACKUP_DB");
@@ -46,16 +46,13 @@ public class PruneCommand {
             FileUtil.copy(oldFile, newFile);
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "PRUNE_START");
             pruner.prune(sender, days);
-            return true;
         } catch (NumberFormatException nfe) {
             plugin.debug("Could not convert to integer");
-            return false;
         }
     }
 
-    public boolean listPrunes(CommandSender sender, int days) {
+    public void listPrunes(CommandSender sender, int days) {
         TARDISPruner pruner = new TARDISPruner(plugin);
         pruner.list(sender, days);
-        return true;
     }
 }

@@ -38,13 +38,13 @@ public class BackCommand {
         this.plugin = plugin;
     }
 
-    public boolean action(Player player, int id) {
+    public void action(Player player, int id) {
         HashMap<String, Object> wherebl = new HashMap<>();
         wherebl.put("tardis_id", id);
         ResultSetBackLocation rsb = new ResultSetBackLocation(plugin, wherebl);
         if (!rsb.resultSet()) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "PREV_NOT_FOUND");
-            return true;
+            return;
         }
         HashMap<String, Object> set = new HashMap<>();
         set.put("world", rsb.getWorld().getName());
@@ -63,6 +63,5 @@ public class BackCommand {
         if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
             new TARDISLand(plugin, id, player).exitVortex();
         }
-        return true;
     }
 }

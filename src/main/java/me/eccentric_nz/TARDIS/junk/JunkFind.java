@@ -37,11 +37,11 @@ public class JunkFind {
         this.plugin = plugin;
     }
 
-    public boolean find(CommandSender sender) {
+    public void find(CommandSender sender) {
         // get current location
         if (!TARDISPermission.hasPermission(sender, "tardis.junk")) {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "JUNK_NO_PERM");
-            return true;
+            return;
         }
         // get junk TARDIS id
         ResultSetTardisID rs = new ResultSetTardisID(plugin);
@@ -58,8 +58,6 @@ public class JunkFind {
             } else {
                 plugin.getMessenger().send(sender, TardisModule.TARDIS, "JUNK_NOT_FOUND");
             }
-            return true;
         }
-        return true;
     }
 }

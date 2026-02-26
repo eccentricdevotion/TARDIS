@@ -25,7 +25,7 @@ import org.bukkit.block.BlockFace;
 
 public class TARDISPainting {
 
-    static Registry<Art> variants = RegistryAccess.registryAccess().getRegistry(RegistryKey.PAINTING_VARIANT);
+    static final Registry<Art> variants = RegistryAccess.registryAccess().getRegistry(RegistryKey.PAINTING_VARIANT);
 
     public static Location calculatePosition(Art art, BlockFace facing, Location loc) {
         switch (variants.getKey(art).getKey()) {

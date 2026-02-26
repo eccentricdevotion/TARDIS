@@ -28,13 +28,12 @@ public class RemoveProtectionCommand {
         this.plugin = plugin;
     }
 
-    public boolean remove(int id, String location) {
+    public void remove(int id, String location) {
         // remove database record
         HashMap<String, Object> where = new HashMap<>();
         where.put("b_id", id);
         plugin.getQueryFactory().doDelete("blocks", where);
         // remove from protection map
         plugin.getGeneralKeeper().getProtectBlockMap().remove(location);
-        return true;
     }
 }

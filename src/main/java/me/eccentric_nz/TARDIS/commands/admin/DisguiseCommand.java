@@ -29,15 +29,14 @@ public class DisguiseCommand {
         this.plugin = plugin;
     }
 
-    public boolean disguise(CommandSender sender, Player player, String type) {
+    public void disguise(CommandSender sender, Player player, String type) {
             EntityType entityType;
             try {
                 entityType = EntityType.valueOf(type);
             } catch (IllegalArgumentException e) {
                 plugin.getMessenger().message(sender, "You need to specify a valid living entity type!");
-                return true;
+                return;
             }
             plugin.getTardisHelper().disguise(entityType, player);
-        return true;
     }
 }

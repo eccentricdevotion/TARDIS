@@ -118,11 +118,10 @@ public class GallifreyTradeSelectListener implements Listener {
     }
 
     public MerchantView getView(Villager villager, Player player) {
-        MerchantView merchant = MenuType.MERCHANT.builder()
+        return MenuType.MERCHANT.builder()
                 .merchant(villager)
                 .checkReachable(true)
                 .title(villager.customName())
                 .build(player);
-        return merchant;
     }
 }

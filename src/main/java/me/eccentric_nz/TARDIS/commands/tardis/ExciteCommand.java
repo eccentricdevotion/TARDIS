@@ -33,18 +33,16 @@ public class ExciteCommand {
         this.plugin = plugin;
     }
 
-    public boolean excite(Player player) {
+    public void excite(Player player) {
         if (plugin.getTrackerKeeper().getExcitation().contains(player.getUniqueId())) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "CMD_EXCITE");
-            return true;
+            return;
         }
         // get TARDIS id
         ResultSetTardisID rs = new ResultSetTardisID(plugin);
         if (rs.fromUUID(player.getUniqueId().toString())) {
             new AtmosphericExcitation(plugin).excite(rs.getTardisId(), player);
             plugin.getTrackerKeeper().getExcitation().add(player.getUniqueId());
-            return true;
         }
-        return true;
     }
 }

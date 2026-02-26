@@ -38,12 +38,12 @@ public class RenameSavedLocationCommand {
         this.plugin = plugin;
     }
 
-    public boolean doRenameSave(Player player, String oldName, String newName) {
+    public void doRenameSave(Player player, String oldName, String newName) {
         if (TARDISPermission.hasPermission(player, "tardis.save")) {
             ResultSetTardisID rs = new ResultSetTardisID(plugin);
             if (!rs.fromUUID(player.getUniqueId().toString())) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
-                return false;
+                return;
             }
             int id = rs.getTardisId();
             HashMap<String, Object> whered = new HashMap<>();
@@ -52,14 +52,12 @@ public class RenameSavedLocationCommand {
             ResultSetDestinations rsd = new ResultSetDestinations(plugin, whered, false);
             if (!rsd.resultSet()) {
                 plugin.getMessenger().sendColouredCommand(player, "SAVE_NOT_FOUND", "/tardis list saves", plugin);
-                return false;
+                return;
             }
             if (!LETTERS_NUMBERS.matcher(newName).matches()) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "SAVE_NAME_NOT_VALID");
-                return false;
             } else if (newName.equalsIgnoreCase("hide") || oldName.equalsIgnoreCase("rebuild") || oldName.equalsIgnoreCase("home")) {
                 plugin.getMessenger().sendColouredCommand(player, "SAVE_RESERVED", "/tardis home", plugin);
-                return false;
             } else {
                 int destID = rsd.getDest_id();
                 HashMap<String, Object> did = new HashMap<>();
@@ -69,10 +67,8 @@ public class RenameSavedLocationCommand {
                 plugin.getQueryFactory().doUpdate("destinations", set, did);
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "DEST_RENAMED", newName);
             }
-            return true;
         } else {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
-            return false;
         }
     }
 }

@@ -68,7 +68,7 @@ public class DematerialiseToVortex implements Runnable {
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
             Current current;
-            String resetw = "";
+            String resetw;
             ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
             if (!rsc.resultSet()) {
                 // emergency TARDIS relocation

@@ -40,23 +40,23 @@ public class ConstructCommand {
         this.plugin = plugin;
     }
 
-    public boolean setLine(Player player, int l, String t) {
+    public void setLine(Player player, int l, String t) {
         ResultSetTardisID rs = new ResultSetTardisID(plugin);
         if (!rs.fromUUID(player.getUniqueId().toString())) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
-            return true;
+            return;
         }
         int id = rs.getTardisId();
         // must have a construct
         ResultSetConstructSign rscs = new ResultSetConstructSign(plugin, id);
         if (!rscs.resultSet()) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_CONSTRUCT");
-            return true;
+            return;
         }
         // check line number
         if (!lineNumbers.contains(l)) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "CONSTRUCT_LINE_NUM");
-            return true;
+            return;
         }
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
@@ -65,12 +65,11 @@ public class ConstructCommand {
         // strip color codes and check length
         if (ComponentUtils.stripColour(raw).length() > 16) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "CONSTRUCT_LINE_LEN");
-            return true;
+            return;
         }
         set.put("line" + l, t);
         // save it
         plugin.getQueryFactory().doUpdate("chameleon", set, where);
         plugin.getMessenger().send(player, TardisModule.TARDIS, "CONSTRUCT_LINE_SAVED");
-        return true;
     }
 }

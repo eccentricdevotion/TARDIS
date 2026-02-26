@@ -35,7 +35,7 @@ public class LockUnlockCommand {
         this.plugin = plugin;
     }
 
-    public boolean toggleLock(Player player, int id, boolean lock) {
+    public void toggleLock(Player player, int id, boolean lock) {
         // get the TARDIS current location
         ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
         if (rsc.resultSet()) {
@@ -56,6 +56,5 @@ public class LockUnlockCommand {
                 TARDISSounds.playTARDISSound(rsc.getCurrent().location(), "tardis_lock");
             }
         }
-        return true;
     }
 }

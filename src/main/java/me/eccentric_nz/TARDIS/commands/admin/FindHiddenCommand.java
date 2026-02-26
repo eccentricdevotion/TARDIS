@@ -30,7 +30,7 @@ import java.util.List;
 
 public class FindHiddenCommand {
 
-    public boolean search(TARDIS plugin, CommandSender sender, int radius) {
+    public void search(TARDIS plugin, CommandSender sender, int radius) {
         if (sender instanceof Player player) {
             Location location = player.getLocation();
             ResultSetFindHidden rsfh = new ResultSetFindHidden(plugin);
@@ -68,6 +68,5 @@ public class FindHiddenCommand {
         } else {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "CMD_PLAYER");
         }
-        return true;
     }
 }

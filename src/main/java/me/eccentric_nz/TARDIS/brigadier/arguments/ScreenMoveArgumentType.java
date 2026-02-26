@@ -23,7 +23,7 @@ public class ScreenMoveArgumentType implements CustomArgumentType<String, String
     private final Set<String> DIRECTIONS = Set.of("forward", "backward", "left", "right");
 
     @Override
-    public String parse(StringReader reader) throws CommandSyntaxException {
+    public String parse(StringReader reader) {
         return "";
     }
 

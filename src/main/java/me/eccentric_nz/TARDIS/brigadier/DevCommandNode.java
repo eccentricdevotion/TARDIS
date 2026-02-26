@@ -804,7 +804,7 @@ public class DevCommandNode {
                         }))
                 .then(Commands.literal("tree")
                         .executes(ctx -> {
-                            if (ctx.getSource().getSender() instanceof Player player) {
+                            if (ctx.getSource().getSender() instanceof Player) {
                                 new TreeCommand(plugin).grow(ctx.getSource().getSender(), "", "", "", "");
                             }
                             return Command.SINGLE_SUCCESS;
@@ -812,7 +812,7 @@ public class DevCommandNode {
                         .then(Commands.literal("delta")
                                 .then(Commands.argument("which", IntegerArgumentType.integer(0))
                                         .executes(ctx -> {
-                                            if (ctx.getSource().getSender() instanceof Player player) {
+                                            if (ctx.getSource().getSender() instanceof Player) {
                                                 String s = Integer.toString(IntegerArgumentType.getInteger(ctx, "which"));
                                                 new TreeCommand(plugin).grow(ctx.getSource().getSender(), "delta", s, "", "");
                                             }
@@ -820,7 +820,7 @@ public class DevCommandNode {
                                         })))
                         .then(Commands.literal("worldgen")
                                 .executes(ctx -> {
-                                    if (ctx.getSource().getSender() instanceof Player player) {
+                                    if (ctx.getSource().getSender() instanceof Player) {
                                         new TreeCommand(plugin).grow(ctx.getSource().getSender(), "worldgen", "", "", "");
                                     }
                                     return Command.SINGLE_SUCCESS;

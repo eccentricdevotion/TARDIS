@@ -35,22 +35,19 @@ public class RepairCommand {
         this.plugin = plugin;
     }
 
-    public boolean setFreeCount(CommandSender sender, Player player, int count) {
-
+    public void setFreeCount(CommandSender sender, Player player, int count) {
         String uuid = player.getUniqueId().toString();
         ResultSetCount rs = new ResultSetCount(plugin, uuid);
         if (!rs.resultSet()) {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "PLAYER_NO_TARDIS");
-            return true;
+            return;
         }
         // set repair
-
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", uuid);
         HashMap<String, Object> set = new HashMap<>();
         set.put("repair", count);
         plugin.getQueryFactory().doUpdate("t_count", set, where);
         plugin.getMessenger().send(sender, TardisModule.TARDIS, "REPAIR_SET", player.getName(), "" + count);
-        return true;
     }
 }

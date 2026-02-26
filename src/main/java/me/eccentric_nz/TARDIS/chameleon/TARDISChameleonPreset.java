@@ -532,9 +532,6 @@ public class TARDISChameleonPreset {
             case YELLOW -> {
                 return yellow.getBlueprint().get(d);
             }
-//            case CUSTOM -> {
-//                return custom.getBlueprint().get(d);
-//            }
             case EXTREME_HILLS -> {
                 return extreme.getBlueprint().get(d);
             }
@@ -730,9 +727,6 @@ public class TARDISChameleonPreset {
             case YELLOW -> {
                 return yellow.getGlass().get(d);
             }
-//            case CUSTOM -> {
-//                return custom.getGlass().get(d);
-//            }
             case EXTREME_HILLS -> {
                 return extreme.getGlass().get(d);
             }
@@ -928,9 +922,6 @@ public class TARDISChameleonPreset {
             case YELLOW -> {
                 return yellow.getStained().get(d);
             }
-//            case CUSTOM -> {
-//                return custom.getStained().get(d);
-//            }
             case EXTREME_HILLS -> {
                 return extreme.getStained().get(d);
             }

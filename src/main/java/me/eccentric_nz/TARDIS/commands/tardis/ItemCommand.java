@@ -41,22 +41,22 @@ public class ItemCommand {
         this.plugin = plugin;
     }
 
-    public boolean update(Player player, String which) {
+    public void update(Player player, String which) {
         if (!which.equalsIgnoreCase("hand") && !which.equalsIgnoreCase("inventory") && !which.equalsIgnoreCase("cell")) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "ARG_ITEM");
-            return true;
+            return;
         }
         switch (which.toLowerCase(Locale.ROOT)) {
             case "hand" -> {
                 ItemStack inHand = player.getInventory().getItemInMainHand();
                 if (!inHand.hasItemMeta()) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "ITEM_IN_HAND");
-                    return true;
+                    return;
                 }
                 ItemMeta im = inHand.getItemMeta();
                 if (!im.hasDisplayName()) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "ITEM_IN_HAND");
-                    return true;
+                    return;
                 }
                 Component component = im.displayName();
                 // strip color codes
@@ -150,6 +150,5 @@ public class ItemCommand {
             default -> {
             }
         }
-        return true;
     }
 }

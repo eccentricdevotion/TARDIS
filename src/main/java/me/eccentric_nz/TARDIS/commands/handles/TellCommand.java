@@ -30,10 +30,9 @@ public class TellCommand {
         this.plugin = plugin;
     }
 
-    public boolean message(Player player, String message) {
+    public void message(Player player, String message) {
         if (player != null) {
             plugin.getMessenger().handlesMessage(player, message);
         }
-        return true;
     }
 }

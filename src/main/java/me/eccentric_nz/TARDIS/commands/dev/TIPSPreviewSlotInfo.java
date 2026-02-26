@@ -28,7 +28,7 @@ public class TIPSPreviewSlotInfo {
         this.plugin = plugin;
     }
 
-    public boolean display() {
+    public void display() {
         for (Schematic schematic : Desktops.getBY_NAMES().values()) {
             if (schematic.getPreview() < 0) {
                 int slot = schematic.getPreview();
@@ -39,6 +39,5 @@ public class TIPSPreviewSlotInfo {
                 plugin.debug("slot = " + slot + ", row = " + row + ", col = " + col + ", X = " + centreX + ", Z = " + centreZ);
             }
         }
-        return true;
     }
 }

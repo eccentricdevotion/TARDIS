@@ -31,7 +31,7 @@ public class ConsoleSizeArgumentType implements CustomArgumentType<String, Strin
     }
 
     @Override
-    public String parse(StringReader reader) throws CommandSyntaxException {
+    public String parse(StringReader reader) {
         return "";
     }
 

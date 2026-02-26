@@ -50,7 +50,7 @@ public class NMSCommand {
         this.plugin = plugin;
     }
 
-    public boolean spawn(CommandSender sender, String m, boolean unclaimed) {
+    public void spawn(CommandSender sender, String m, boolean unclaimed) {
         if (sender instanceof Player player) {
             try {
                 Monster monster = Monster.valueOf(m.toUpperCase(Locale.ROOT));
@@ -100,6 +100,5 @@ public class NMSCommand {
             } catch (IllegalArgumentException ignored) {
             }
         }
-        return true;
     }
 }

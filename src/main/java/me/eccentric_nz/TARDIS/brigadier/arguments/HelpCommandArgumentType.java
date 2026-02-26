@@ -27,11 +27,11 @@ public class HelpCommandArgumentType implements CustomArgumentType<String, Strin
     public HelpCommandArgumentType() {
         for (RootCommand command : RootCommand.values()) {
             ROOT_CMDS.add(command.toString());
-        };
+        }
     }
 
     @Override
-    public String parse(StringReader reader) throws CommandSyntaxException {
+    public String parse(StringReader reader) {
         return "";
     }
 

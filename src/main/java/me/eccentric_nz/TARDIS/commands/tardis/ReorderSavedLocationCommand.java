@@ -36,12 +36,12 @@ public class ReorderSavedLocationCommand {
         this.plugin = plugin;
     }
 
-    public boolean doReorderSave(Player player, String name, int slot) {
+    public void doReorderSave(Player player, String name, int slot) {
         if (TARDISPermission.hasPermission(player, "tardis.save")) {
             ResultSetTardisID rs = new ResultSetTardisID(plugin);
             if (!rs.fromUUID(player.getUniqueId().toString())) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
-                return false;
+                return;
             }
             int id = rs.getTardisId();
             HashMap<String, Object> whered = new HashMap<>();
@@ -50,15 +50,15 @@ public class ReorderSavedLocationCommand {
             ResultSetDestinations rsd = new ResultSetDestinations(plugin, whered, false);
             if (!rsd.resultSet()) {
                 plugin.getMessenger().sendColouredCommand(player, "SAVE_NOT_FOUND", "/tardis list saves", plugin);
-                return false;
+                return;
             }
             if (name.equalsIgnoreCase("home")) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "SAVE_REORDER");
-                return false;
+                return;
             }
             if (slot == -1) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "ARG_LAST_NUMBER");
-                return false;
+                return;
             }
             // check slot is not occupied
             HashMap<String, Object> wheres = new HashMap<>();
@@ -67,7 +67,7 @@ public class ReorderSavedLocationCommand {
             ResultSetDestinations rss = new ResultSetDestinations(plugin, wheres, false);
             if (rss.resultSet()) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "DEST_SLOT", rss.getDest_name());
-                return true;
+                return;
             }
             int destID = rsd.getDest_id();
             HashMap<String, Object> did = new HashMap<>();
@@ -76,10 +76,8 @@ public class ReorderSavedLocationCommand {
             set.put("slot", slot);
             plugin.getQueryFactory().doUpdate("destinations", set, did);
             plugin.getMessenger().send(player, TardisModule.TARDIS, "DEST_REORDERED", slot);
-            return true;
         } else {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
-            return false;
         }
     }
 }

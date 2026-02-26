@@ -30,8 +30,7 @@ public class SayCommand {
         this.plugin = plugin;
     }
 
-    public boolean say(Player player, String message) {
+    public void say(Player player, String message) {
         plugin.getMessenger().handlesMessage(player, message);
-        return true;
     }
 }

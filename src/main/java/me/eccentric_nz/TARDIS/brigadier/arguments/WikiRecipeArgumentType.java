@@ -24,7 +24,7 @@ public class WikiRecipeArgumentType implements CustomArgumentType<String, String
     private final List<String> OPTIONS = ImmutableList.of("shaped", "shapeless", "chest", "chemistry", "custom");
 
     @Override
-    public String parse(StringReader reader) throws CommandSyntaxException {
+    public String parse(StringReader reader) {
         return "";
     }
 

@@ -33,7 +33,7 @@ public class SudoDeadlock {
         this.plugin = plugin;
     }
 
-    public boolean toggleDeadlock(UUID uuid, CommandSender sender) {
+    public void toggleDeadlock(UUID uuid, CommandSender sender) {
         ResultSetTardisID rs = new ResultSetTardisID(plugin);
         // does the player have a TARDIS
         if (rs.fromUUID(uuid.toString())) {
@@ -54,6 +54,5 @@ public class SudoDeadlock {
         } else {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "NO_TARDIS");
         }
-        return true;
     }
 }

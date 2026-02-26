@@ -168,10 +168,9 @@ public class TARDISStaticLocationGetters {
                 int tmp = world.getHighestBlockYAt(x + xx, z + zz) + 1;
                 y = Math.max(tmp, y);
                 if (world.getName().equals("siluria") && world.getBlockAt(x, y - 1, z).getType().equals(Material.BAMBOO)) {
-                    y--;
-                    while (world.getBlockAt(x, y, z).getType().equals(Material.BAMBOO)) {
+                    do {
                         y--;
-                    }
+                    } while (world.getBlockAt(x, y, z).getType().equals(Material.BAMBOO));
                 }
             }
         }

@@ -16,13 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.customblocks;
 
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.block.Block;
 import org.bukkit.block.data.MultipleFacing;
 
 import java.util.HashMap;
-import java.util.List;
 
 public class TARDISMushroomBlock {
 
@@ -42,45 +38,6 @@ public class TARDISMushroomBlock {
             put("minecraft:mushroom_stem[down=false,east=false,north=false,south=false,up=false,west=true]", TARDISChemistryDisplayItem.HEAT_BLOCK);
         }
     };
-    private static final List<String> vanillaBrown = List.of(
-            "minecraft:brown_mushroom_block[down=false,east=false,north=false,south=false,up=false,west=false]",
-            "minecraft:brown_mushroom_block[down=false,east=false,north=false,south=false,up=true,west=false]",
-            "minecraft:brown_mushroom_block[down=false,east=false,north=false,south=false,up=true,west=true]",
-            "minecraft:brown_mushroom_block[down=false,east=false,north=false,south=true,up=true,west=false]",
-            "minecraft:brown_mushroom_block[down=false,east=false,north=false,south=true,up=true,west=true]",
-            "minecraft:brown_mushroom_block[down=false,east=false,north=true,south=false,up=true,west=false]",
-            "minecraft:brown_mushroom_block[down=false,east=false,north=true,south=false,up=true,west=true]",
-            "minecraft:brown_mushroom_block[down=false,east=true,north=false,south=false,up=true,west=false]",
-            "minecraft:brown_mushroom_block[down=false,east=true,north=false,south=true,up=true,west=false]",
-            "minecraft:brown_mushroom_block[down=false,east=true,north=true,south=false,up=true,west=false]",
-            "minecraft:brown_mushroom_block[down=true,east=true,north=true,south=true,up=true,west=true]"
-    );
-    private static final List<String> vanillaRed = List.of(
-            "minecraft:red_mushroom_block[down=false,east=false,north=false,south=false,up=false,west=false]",
-            "minecraft:red_mushroom_block[down=false,east=false,north=false,south=false,up=false,west=true]",
-            "minecraft:red_mushroom_block[down=false,east=false,north=false,south=false,up=true,west=true]",
-            "minecraft:red_mushroom_block[down=false,east=false,north=false,south=true,up=false,west=false]",
-            "minecraft:red_mushroom_block[down=false,east=false,north=false,south=true,up=false,west=true]",
-            "minecraft:red_mushroom_block[down=false,east=false,north=false,south=true,up=true,west=false]",
-            "minecraft:red_mushroom_block[down=false,east=false,north=false,south=true,up=true,west=true]",
-            "minecraft:red_mushroom_block[down=false,east=false,north=true,south=false,up=false,west=false]",
-            "minecraft:red_mushroom_block[down=false,east=false,north=true,south=false,up=false,west=true]",
-            "minecraft:red_mushroom_block[down=false,east=false,north=true,south=false,up=true,west=false]",
-            "minecraft:red_mushroom_block[down=false,east=false,north=true,south=false,up=true,west=true]",
-            "minecraft:red_mushroom_block[down=false,east=true,north=false,south=false,up=false,west=false]",
-            "minecraft:red_mushroom_block[down=false,east=true,north=false,south=false,up=true,west=false]",
-            "minecraft:red_mushroom_block[down=false,east=true,north=false,south=true,up=false,west=false]",
-            "minecraft:red_mushroom_block[down=false,east=true,north=false,south=true,up=true,west=false]",
-            "minecraft:red_mushroom_block[down=false,east=true,north=true,south=false,up=false,west=false]",
-            "minecraft:red_mushroom_block[down=false,east=true,north=true,south=false,up=true,west=false]",
-            "minecraft:red_mushroom_block[down=true,east=true,north=true,south=true,up=true,west=true]",
-            "minecraft:red_mushroom_block[down=false,east=false,north=false,south=false,up=true,west=false]"
-    );
-    private static final List<String> vanillaStem = List.of(
-            "minecraft:mushroom_stem[down=false,east=false,north=false,south=false,up=false,west=false]",
-            "minecraft:mushroom_stem[down=false,east=true,north=true,south=true,up=false,west=true]",
-            "minecraft:mushroom_stem[down=true,east=true,north=true,south=true,up=true,west=true]"
-    );
     private static final HashMap<String, String> chemistryStemOn = new HashMap<>() {
         {
             // blue_lamp_on
@@ -106,36 +63,11 @@ public class TARDISMushroomBlock {
         }
     };
 
-    public static boolean isVanillaBrownMushroomState(MultipleFacing multipleFacing) {
-        return (vanillaBrown.contains(multipleFacing.getAsString()));
-    }
-
-    public static boolean isVanillaRedMushroomState(MultipleFacing multipleFacing) {
-        return (vanillaRed.contains(multipleFacing.getAsString()));
-    }
-
-    public static boolean isVanillaMushroomStemState(MultipleFacing multipleFacing) {
-        return (vanillaStem.contains(multipleFacing.getAsString()));
-    }
-
-    public static MultipleFacing getChemistryStemOff(MultipleFacing multipleFacing) {
-        return (MultipleFacing) Bukkit.createBlockData(chemistryStemOn.get(multipleFacing.getAsString()));
-    }
-
     public static boolean isChemistryStemOn(MultipleFacing multipleFacing) {
         return (chemistryStemOn.containsKey(multipleFacing.getAsString()));
     }
 
-    public static MultipleFacing getChemistryStemOn(MultipleFacing multipleFacing) {
-        return (MultipleFacing) Bukkit.createBlockData(chemistryStemOff.get(multipleFacing.getAsString()));
-    }
-
     public static boolean isChemistryStemOff(MultipleFacing multipleFacing) {
         return (chemistryStemOff.containsKey(multipleFacing.getAsString()));
-    }
-
-    public static boolean isTardisMushroom(Block block) {
-        Material material = block.getType();
-        return (material == Material.BROWN_MUSHROOM_BLOCK || material == Material.RED_MUSHROOM_BLOCK || material == Material.MUSHROOM_STEM);
     }
 }

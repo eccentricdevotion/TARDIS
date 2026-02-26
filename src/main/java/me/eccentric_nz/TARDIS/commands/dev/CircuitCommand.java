@@ -45,7 +45,7 @@ public class CircuitCommand {
         }
     }
 
-    public boolean give(CommandSender sender) {
+    public void give(CommandSender sender) {
         if (sender instanceof Player player) {
             // get a random circuit
             String c = circuits.get(TARDISConstants.RANDOM.nextInt(circuits.size()));
@@ -60,6 +60,5 @@ public class CircuitCommand {
             result.setItemMeta(im);
             player.getInventory().addItem(result);
         }
-        return true;
     }
 }

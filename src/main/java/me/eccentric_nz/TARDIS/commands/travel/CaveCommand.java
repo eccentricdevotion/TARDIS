@@ -45,14 +45,14 @@ public class CaveCommand {
         this.plugin = plugin;
     }
 
-    public boolean action(Player player, int id) {
+    public void action(Player player, int id) {
         if (!TARDISPermission.hasPermission(player, "tardis.timetravel.cave")) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "TRAVEL_NO_PERM_CAVE");
-            return true;
+            return;
         }
         if (plugin.getConfig().getBoolean("difficulty.system_upgrades") && !new SystemUpgradeChecker(plugin).has(player.getUniqueId().toString(), SystemTree.TELEPATHIC_CIRCUIT)) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "Telepathic Circuit");
-            return true;
+            return;
         }
         // check for telepathic circuit
         if (plugin.getConfig().getBoolean("difficulty.circuits") && !plugin.getUtils().inGracePeriod(player, true)) {
@@ -60,21 +60,21 @@ public class CaveCommand {
             tcc.getCircuits();
             if (!tcc.hasTelepathic()) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TELEPATHIC_CIRCUIT");
-                return true;
+                return;
             }
         }
         // find a cave
         Location cave = new TARDISCaveFinder(plugin).searchCave(player, id);
         if (cave == null) {
             plugin.getMessenger().sendStatus(player, "CAVE_NOT_FOUND");
-            return true;
+            return;
         }
         // check respect
         if (!plugin.getPluginRespect().getRespect(cave, new Parameters(player, Flag.getDefaultFlags()))) {
             if (plugin.getConfig().getBoolean("travel.no_destination_malfunctions")) {
                 plugin.getTrackerKeeper().getMalfunction().put(id, true);
             } else {
-                return true;
+                return;
             }
         }
         HashMap<String, Object> set = new HashMap<>();
@@ -93,6 +93,5 @@ public class CaveCommand {
             new TARDISLand(plugin, id, player).exitVortex();
             plugin.getPM().callEvent(new TARDISTravelEvent(player, null, TravelType.CAVE, id));
         }
-        return true;
     }
 }

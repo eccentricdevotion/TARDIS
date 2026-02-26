@@ -35,14 +35,14 @@ public class LanguageCommand {
         this.plugin = plugin;
     }
 
-    public boolean setLanguage(CommandSender sender, String arg) {
+    public void setLanguage(CommandSender sender, String arg) {
         // check file exists
         File file;
         file = new File(plugin.getDataFolder() + File.separator + "language" + File.separator + arg + ".yml");
         if (!file.isFile()) {
             // file not found
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "LANG_NOT_FOUND", arg);
-            return true;
+            return;
         }
         // load the language
         plugin.setLanguage(YamlConfiguration.loadConfiguration(file));
@@ -50,6 +50,5 @@ public class LanguageCommand {
         // set and save the config
         plugin.getConfig().set("preferences.language", arg);
         plugin.saveConfig();
-        return true;
     }
 }

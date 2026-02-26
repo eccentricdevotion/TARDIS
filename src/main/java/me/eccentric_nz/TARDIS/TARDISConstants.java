@@ -92,9 +92,6 @@ public class TARDISConstants {
      * Bad Chameleon blocks that shouldn't be changed to
      */
     public static final Set<Material> CHAMELEON_BLOCKS_BAD = getBadMaterials();
-    public static final List<Tag> CHAMELEON_TAGS_CHANGE = List.of(
-            Tag.SLABS, Tag.STAIRS, Tag.TRAPDOORS, Tag.CLIMBABLE, Tag.WALLS, Tag.FLOWER_POTS
-    );
     /**
      * Chameleon blocks that need to be changed to a full block
      */
@@ -196,10 +193,6 @@ public class TARDISConstants {
      */
     public static final BlockData POWER = Material.REDSTONE_BLOCK.createBlockData();
     /**
-     * BlockData for SEA_LANTERN
-     */
-    public static final BlockData LANTERN = Material.SEA_LANTERN.createBlockData();
-    /**
      * BlockData for BLACK_WOOL
      */
     public static final BlockData BLACK = Material.BLACK_WOOL.createBlockData();
@@ -219,10 +212,6 @@ public class TARDISConstants {
      * BlockData for LAVA
      */
     public static final BlockData LAVA = Material.LAVA.createBlockData();
-    /**
-     * BlockData for MAGMA_BLOCK
-     */
-    public static final BlockData MAGMA = Material.MAGMA_BLOCK.createBlockData();
     /**
      * BlockData for SOUL_SAND
      */

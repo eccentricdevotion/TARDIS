@@ -35,13 +35,13 @@ public class SetFlightCommand {
         this.plugin = plugin;
     }
 
-    public boolean setMode(Player player, String mode) {
+    public void setMode(Player player, String mode) {
         FlightMode fm;
         try {
             fm = FlightMode.valueOf(mode.toUpperCase(Locale.ROOT));
         } catch (IllegalArgumentException e) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "FLIGHT_INFO");
-            return true;
+            return;
         }
         HashMap<String, Object> setf = new HashMap<>();
         setf.put("flying_mode", fm.getMode());
@@ -49,6 +49,5 @@ public class SetFlightCommand {
         where.put("uuid", player.getUniqueId().toString());
         plugin.getQueryFactory().doUpdate("player_prefs", setf, where);
         plugin.getMessenger().send(player, TardisModule.TARDIS, "FLIGHT_SAVED");
-        return true;
     }
 }

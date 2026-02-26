@@ -35,7 +35,7 @@ public class PlayerCountCommand {
         this.plugin = plugin;
     }
 
-    public boolean countPlayers(CommandSender sender, Player player, int count) {
+    public void countPlayers(CommandSender sender, Player player, int count) {
         int max_count = plugin.getConfig().getInt("creation.count");
         String uuid = player.getUniqueId().toString();
         ResultSetCount rsc = new ResultSetCount(plugin, uuid);
@@ -55,6 +55,5 @@ public class PlayerCountCommand {
         } else {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "COUNT_NOT_FOUND");
         }
-        return true;
     }
 }

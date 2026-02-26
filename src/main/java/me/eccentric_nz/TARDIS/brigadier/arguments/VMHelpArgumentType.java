@@ -24,7 +24,7 @@ public class VMHelpArgumentType implements CustomArgumentType<String, String> {
     private final List<String> TOPICS = ImmutableList.of("command", "gui", "message", "tachyon");
 
     @Override
-    public String parse(StringReader reader) throws CommandSyntaxException {
+    public String parse(StringReader reader) {
         return "";
     }
 

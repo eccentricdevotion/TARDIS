@@ -57,9 +57,7 @@ public class CreativeGUIListener implements Listener {
                 event.setCancelled(true);
                 // switch to elements
                 close(p);
-                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                    p.openInventory(new ElementInventory(plugin).getInventory());
-                }, 2L);
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> p.openInventory(new ElementInventory(plugin).getInventory()), 2L);
             }
             case 44 -> {
                 event.setCancelled(true);

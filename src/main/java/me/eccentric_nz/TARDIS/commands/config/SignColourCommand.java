@@ -34,10 +34,9 @@ public class SignColourCommand {
         this.plugin = plugin;
     }
 
-    public boolean setColour(CommandSender sender, NamedTextColor colour) {
+    public void setColour(CommandSender sender, NamedTextColor colour) {
         plugin.getConfig().set("police_box.sign_colour", NamedTextColor.NAMES.key(colour).toUpperCase(Locale.ROOT));
         plugin.saveConfig();
         plugin.getMessenger().send(sender, TardisModule.TARDIS, "CONFIG_UPDATED", "sign_colour");
-        return true;
     }
 }

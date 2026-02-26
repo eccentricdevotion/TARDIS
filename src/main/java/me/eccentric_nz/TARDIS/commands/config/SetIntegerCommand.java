@@ -38,11 +38,11 @@ public class SetIntegerCommand {
         this.plugin = plugin;
     }
 
-    boolean setConfigInt(CommandSender sender, String option, int val, String section) {
+    void setConfigInt(CommandSender sender, String option, int val, String section) {
         String first = (section.isEmpty()) ? option.toLowerCase(Locale.ROOT) : section + "." + option.toLowerCase(Locale.ROOT);
         if (option.toLowerCase(Locale.ROOT).equals("tips_limit") && !TIPS_SUBS.contains(val)) {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "ARG_TIPS");
-            return false;
+            return;
         }
         if (first.equals("preferences.sfx_volume")) {
             TARDISSounds.setVolume(val);
@@ -53,10 +53,9 @@ public class SetIntegerCommand {
         if (first.equals("allow.force_field")) {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "RESTART");
         }
-        return true;
     }
 
-    public boolean setConfigInt(CommandSender sender, String option, int val) {
+    public void setConfigInt(CommandSender sender, String option, int val) {
         plugin.getArtronConfig().set(option, val);
         try {
             plugin.getArtronConfig().save(new File(plugin.getDataFolder(), "artron.yml"));
@@ -64,26 +63,5 @@ public class SetIntegerCommand {
             plugin.debug("Could not save artron.yml, " + io);
         }
         plugin.getMessenger().send(sender, TardisModule.TARDIS, "CONFIG_UPDATED", option);
-        return true;
-    }
-
-    public boolean setRandomInt(CommandSender sender, String[] args) {
-        String first = args[0];
-        if (!first.endsWith(".x") || !first.endsWith(".z")) {
-            plugin.getMessenger().sendColouredCommand(sender, "ARG_DIRECTION", "/tconfig random_circuit.[x|z] [distance]", plugin);
-            return true;
-        }
-        int val;
-        try {
-            val = Integer.parseInt(args[1]);
-        } catch (NumberFormatException nfe) {
-            // not a number
-            plugin.getMessenger().send(sender, TardisModule.TARDIS, "ARG_LAST_NUMBER");
-            return false;
-        }
-        plugin.getConfig().set("travel." + first, val);
-        plugin.saveConfig();
-        plugin.getMessenger().send(sender, TardisModule.TARDIS, "CONFIG_UPDATED", first);
-        return true;
     }
 }

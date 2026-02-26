@@ -288,9 +288,4 @@ public class TARDISMessage {
     public void sendUpdateCommand(CommandSender cs) {
         cs.sendMessage(AdventureComponents.getUpdateCommand());
     }
-
-    public void sendBuildsBehind(CommandSender cs, int behind) {
-        cs.sendMessage(AdventureComponents.getBuildsBehind(behind));
-    }
-
 }

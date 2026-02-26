@@ -41,7 +41,7 @@ public class DebugCommand {
         this.plugin = plugin;
     }
 
-    public boolean process(CommandSender sender, String arg) {
+    public void process(CommandSender sender, String arg) {
         if (sender instanceof Player player) {
             // must be in TARDIS
             HashMap<String, Object> where = new HashMap<>();
@@ -62,7 +62,6 @@ public class DebugCommand {
                 plugin.getMessenger().send(sender, TardisModule.TARDIS, "CMD_IN_WORLD");
             }
         }
-        return true;
     }
 
     private void enter(CommandSender sender, int id) {

@@ -32,22 +32,7 @@ public class SetWorldInclusionCommand {
         this.plugin = plugin;
     }
 
-    public boolean setWorldStatus(CommandSender sender, String first, World world) {
-//        ArgumentParser parser = new ArgumentParser();
-//        String command = parser.join(args);
-//        plugin.debug(command);
-//        Arguments arguments = parser.parse(command);
-//        for (String a : arguments.getArguments()) {
-//            plugin.debug(a);
-//        }
-//        String first = arguments.getArguments().getFirst();
-//        // get world name with no periods(.)
-//        String name = arguments.getArguments().get(1).replace(".", "_");
-//        // check the world actually exists!
-//        if (TARDISAliasResolver.getWorldFromAlias(name) == null) {
-//            plugin.getMessenger().sendColouredCommand(sender, "WORLD_NOT_FOUND", "/tardisworld load", plugin);
-//            return false;
-//        }
+    public void setWorldStatus(CommandSender sender, String first, World world) {
         if (first.equals("include")) {
             plugin.getPlanetsConfig().set("planets." + world.getName() + ".time_travel", true);
         } else {
@@ -55,6 +40,5 @@ public class SetWorldInclusionCommand {
         }
         plugin.savePlanetsConfig();
         plugin.getMessenger().send(sender, TardisModule.TARDIS, "CONFIG_UPDATED", "time_travel");
-        return true;
     }
 }

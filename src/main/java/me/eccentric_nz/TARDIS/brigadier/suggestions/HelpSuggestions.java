@@ -17,9 +17,7 @@ public class HelpSuggestions {
 
     public HelpSuggestions(TARDIS plugin, CommandContext<CommandSourceStack> ctx) {
         String sub = StringArgumentType.getString(ctx, "command");
-        for (String command : plugin.getGeneralKeeper().getPluginYAML().getConfigurationSection("commands." + sub).getKeys(false)) {
-            CMD_ARGS.add(command.toString());
-        }
+        CMD_ARGS.addAll(plugin.getGeneralKeeper().getPluginYAML().getConfigurationSection("commands." + sub).getKeys(false));
         // remove unwanted
         Set.of("aliases", "description", "usage", "permission", "permission-message").forEach(CMD_ARGS::remove);
     }

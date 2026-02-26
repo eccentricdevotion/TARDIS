@@ -43,15 +43,15 @@ public class HideCommand {
         this.plugin = plugin;
     }
 
-    public boolean doRemoteHide(CommandSender sender, int id) {
+    public void doRemoteHide(CommandSender sender, int id) {
         if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "NOT_IN_VORTEX");
-            return true;
+            return;
         }
         ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
         if (!rsc.resultSet()) {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
-            return true;
+            return;
         }
         OfflinePlayer olp = null;
         if (sender instanceof Player) {
@@ -68,7 +68,7 @@ public class HideCommand {
         ResultSetTardisPreset rs = new ResultSetTardisPreset(plugin);
         if (rs.fromID(id) && rs.getPreset().equals(ChameleonPreset.INVISIBLE) && olp != null) {
             plugin.getMessenger().send(olp.getPlayer(), TardisModule.TARDIS, "INVISIBILITY_ENGAGED");
-            return true;
+            return;
         }
         UUID uuid = olp.getUniqueId();
         Current current = rsc.getCurrent();
@@ -94,6 +94,5 @@ public class HideCommand {
             plugin.getTrackerKeeper().getActiveForceFields().remove(uuid);
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "FORCE_FIELD", "OFF");
         }
-        return true;
     }
 }

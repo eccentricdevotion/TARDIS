@@ -24,7 +24,7 @@ public class DirectoryArgumentType implements CustomArgumentType<String, String>
     private final List<String> DIR_SUBS = ImmutableList.of("console", "room", "structure", "user");
 
     @Override
-    public String parse(StringReader reader) throws CommandSyntaxException {
+    public String parse(StringReader reader) {
         return "";
     }
 

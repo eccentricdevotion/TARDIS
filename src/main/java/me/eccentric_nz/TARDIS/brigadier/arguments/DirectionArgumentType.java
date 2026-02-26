@@ -24,7 +24,7 @@ public class DirectionArgumentType  implements CustomArgumentType<String, String
     private final List<String> DIRECTIONS = ImmutableList.of("up", "north", "west", "south", "east");
 
     @Override
-    public String parse(StringReader reader) throws CommandSyntaxException {
+    public String parse(StringReader reader) {
         return "";
     }
 

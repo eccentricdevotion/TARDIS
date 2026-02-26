@@ -40,14 +40,14 @@ public class SudoRepair {
         this.clean = clean;
     }
 
-    public boolean repair() {
+    public void repair() {
         Player player = plugin.getServer().getPlayer(uuid);
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", player.getUniqueId().toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (!rs.resultSet()) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
-            return false;
+            return;
         }
         Tardis tardis = rs.getTardis();
         // get player's current console
@@ -59,6 +59,5 @@ public class SudoRepair {
         plugin.getTrackerKeeper().getUpgrades().put(player.getUniqueId(), tud);
         DesktopRepair tr = new DesktopRepair(plugin, player);
         tr.restore(clean);
-        return true;
     }
 }

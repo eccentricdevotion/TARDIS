@@ -27,7 +27,7 @@ public class ChameleonDirectionArgumentType implements CustomArgumentType<String
     );
 
     @Override
-    public String parse(StringReader reader) throws CommandSyntaxException {
+    public String parse(StringReader reader) {
         return "";
     }
 

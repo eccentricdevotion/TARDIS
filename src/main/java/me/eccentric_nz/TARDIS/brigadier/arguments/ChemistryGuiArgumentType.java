@@ -24,7 +24,7 @@ public class ChemistryGuiArgumentType implements CustomArgumentType<String, Stri
     private final List<String> GUIS = ImmutableList.of("construct", "compound", "reduce", "product", "lab");
 
     @Override
-    public String parse(StringReader reader) throws CommandSyntaxException {
+    public String parse(StringReader reader) {
         return "";
     }
 

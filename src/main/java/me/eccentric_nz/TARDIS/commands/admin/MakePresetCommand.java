@@ -33,16 +33,15 @@ public class MakePresetCommand {
         this.plugin = plugin;
     }
 
-    public boolean scanBlocks(CommandSender sender, String name) {
+    public void scanBlocks(CommandSender sender, String name) {
         Player player = (Player) sender;
         // check they are facing east
         String yaw = TARDISStaticUtils.getPlayersDirection(player, false);
         if (!yaw.equals("EAST")) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "PRESET_DIRECTION");
-            return true;
+            return;
         }
         plugin.getMessenger().send(player, TardisModule.TARDIS, "PRESET_INFO");
         plugin.getTrackerKeeper().getPreset().put(player.getUniqueId(), name);
-        return true;
     }
 }

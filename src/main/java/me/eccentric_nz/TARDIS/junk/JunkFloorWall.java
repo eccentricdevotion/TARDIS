@@ -38,10 +38,10 @@ public class JunkFloorWall {
         this.plugin = plugin;
     }
 
-    public boolean setJunkWallOrFloor(CommandSender sender, String which, String material) {
+    public void setJunkWallOrFloor(CommandSender sender, String which, String material) {
         if (!sender.hasPermission("tardis.admin")) {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "CMD_ADMIN");
-            return true;
+            return;
         }
         String pref = which.toLowerCase(Locale.ROOT);
         String wall_mat = material.toUpperCase(Locale.ROOT);
@@ -49,7 +49,7 @@ public class JunkFloorWall {
             String message = (wall_mat.equals("HELP")) ? "WALL_LIST" : "WALL_NOT_VALID";
             plugin.getMessenger().send(sender, TardisModule.TARDIS, message, pref);
             TARDISWalls.BLOCKS.forEach((w) -> sender.sendMessage(w.toString()));
-            return true;
+            return;
         }
         // check if player_prefs record
         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, "00000000-aaaa-bbbb-cccc-000000000000");
@@ -70,6 +70,5 @@ public class JunkFloorWall {
             plugin.getQueryFactory().doUpdate("player_prefs", setpp, where);
         }
         plugin.getMessenger().send(sender, TardisModule.TARDIS, "PREF_MAT_SET", TARDISStringUtils.uppercaseFirst(pref));
-        return true;
     }
 }

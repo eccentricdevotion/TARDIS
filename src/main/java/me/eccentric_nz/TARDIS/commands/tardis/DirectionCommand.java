@@ -58,14 +58,14 @@ public class DirectionCommand {
         this.plugin = plugin;
     }
 
-    public boolean changeDirection(Player player, String d) {
+    public void changeDirection(Player player, String d) {
         if (TARDISPermission.hasPermission(player, "tardis.timetravel")) {
             COMPASS compass;
             try {
                 compass = COMPASS.valueOf(d.toUpperCase(Locale.ROOT));
             } catch (IllegalArgumentException e) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "DIRECTION_NEED");
-                return true;
+                return;
             }
             UUID uuid = player.getUniqueId();
             HashMap<String, Object> where = new HashMap<>();
@@ -73,24 +73,24 @@ public class DirectionCommand {
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             if (!rs.resultSet()) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
-                return true;
+                return;
             }
             Tardis tardis = rs.getTardis();
             if (!tardis.getPreset().usesArmourStand()
                     && (d.equalsIgnoreCase("north_east") || d.equalsIgnoreCase("north_west") || d.equalsIgnoreCase("south_west") || d.equalsIgnoreCase("south_east"))) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "DIRECTION_PRESET");
-                return true;
+                return;
             }
             if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPoweredOn()) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "POWER_DOWN");
-                return true;
+                return;
             }
             int id = tardis.getTardisId();
             CircuitChecker tcc = new CircuitChecker(plugin, id);
             tcc.getCircuits();
             if (plugin.getConfig().getBoolean("difficulty.circuits") && !plugin.getUtils().inGracePeriod(player, true) && !tcc.hasMaterialisation()) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_MAT_CIRCUIT");
-                return true;
+                return;
             }
             // damage circuit if configured
             if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getInt("circuits.uses.materialisation") > 0) {
@@ -102,26 +102,26 @@ public class DirectionCommand {
             int amount = plugin.getArtronConfig().getInt("random");
             if (level < amount) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "ENERGY_NO_DIRECTION");
-                return true;
+                return;
             }
             if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
                 plugin.getMessenger().send(player.getPlayer(), TardisModule.TARDIS, "NOT_IN_VORTEX");
-                return true;
+                return;
             }
             if (plugin.getTrackerKeeper().getInVortex().contains(id) || plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getDematerialising().contains(id)) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_WHILE_MAT");
-                return true;
+                return;
             }
             if (plugin.getTrackerKeeper().getDispersedTARDII().contains(id)) {
                 plugin.getMessenger().send(player.getPlayer(), TardisModule.TARDIS, "NOT_WHILE_DISPERSED");
-                return true;
+                return;
             }
             boolean hid = tardis.isHidden();
             ChameleonPreset demat = tardis.getDemat();
             ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
             if (!rsc.resultSet()) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
-                return true;
+                return;
             }
             Current current = rsc.getCurrent();
             COMPASS old_d = current.direction();
@@ -217,10 +217,8 @@ public class DirectionCommand {
                     }
                 }
             }
-            return true;
         } else {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
-            return false;
         }
     }
 }

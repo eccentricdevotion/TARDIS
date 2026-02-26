@@ -41,7 +41,7 @@ public class ListCommand {
         this.plugin = plugin;
     }
 
-    public boolean listStuff(CommandSender sender, String what) {
+    public void listStuff(CommandSender sender, String what) {
         if (what.equalsIgnoreCase("save") || what.equalsIgnoreCase("portals") || what.equalsIgnoreCase("abandoned")) {
             if (what.equalsIgnoreCase("save")) {
                 HashMap<String, Object> where = new HashMap<>();
@@ -55,7 +55,7 @@ public class ListCommand {
                                 ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, tardis.getTardisId());
                                 if (!rsc.resultSet()) {
                                     plugin.getMessenger().send(sender, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
-                                    return true;
+                                    return;
                                 }
                                 Current current = rsc.getCurrent();
                                 String line = "ID: " + tardis.getTardisId() + ", Time Lord: " + tardis.getOwner() + ", Location: " + current.location().getWorld().getName() + ":" + current.location().getBlockX() + ":" + current.location().getBlockY() + ":" + current.location().getBlockZ();
@@ -68,15 +68,11 @@ public class ListCommand {
                     }
                 }
                 plugin.getMessenger().send(sender, TardisModule.TARDIS, "FILE_SAVED");
-                return true;
             } else if (what.equalsIgnoreCase("portals")) {
                 plugin.getTrackerKeeper().getPortals().forEach((key, value) -> sender.sendMessage("TARDIS id: " + value.getTardisId() + " has a portal open at: " + key.toString()));
-                return true;
             } else if (what.equalsIgnoreCase("abandoned")) { // abandoned
                 new AbandonedLister(plugin).list(sender);
-                return true;
             }
         }
-        return false;
     }
 }

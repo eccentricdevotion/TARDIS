@@ -23,7 +23,7 @@ public class FlagArgumentType implements CustomArgumentType<String, String> {
     private final Set<String> FLAG_SUBS = Set.of("entry", "exit");
 
     @Override
-    public String parse(StringReader reader) throws CommandSyntaxException {
+    public String parse(StringReader reader) {
         return "";
     }
 

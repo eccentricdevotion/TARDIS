@@ -52,22 +52,22 @@ public class TARDISItem {
         this.plugin = plugin;
     }
 
-    public boolean give(CommandSender sender, String item, int amount, Player player) {
+    public void give(CommandSender sender, String item, int amount, Player player) {
         if (amount > 64) {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "ARG_MAX");
-            return true;
+            return;
         }
         if ((item.equals("untempered-schism") || item.equals("elixir-of-life")) && !plugin.getConfig().getBoolean("modules.regeneration")) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "RECIPE_REGENERATION");
-            return true;
+            return;
         }
         if ((item.equals("sonic-blaster") || item.equals("blaster-battery") || item.equals("landing-pad")) && !plugin.getConfig().getBoolean("modules.sonic_blaster")) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "RECIPE_BLASTER");
-            return true;
+            return;
         }
         if (item.equals("k9") && !plugin.getConfig().getBoolean("modules.weeping_angels")) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "RECIPE_K9");
-            return true;
+            return;
         }
         String item_to_give = Give.items.get(item);
         RecipeCategory category = RecipeCategory.ITEMS;
@@ -81,7 +81,7 @@ public class TARDISItem {
         if (category == RecipeCategory.CHEMISTRY) {
             if (!plugin.getConfig().getBoolean("modules.chemistry")) {
                 plugin.getMessenger().send(sender, TardisModule.TARDIS, "RECIPE_CHEMISTRY");
-                return true;
+                return;
             }
             String enumName;
             if (item.equalsIgnoreCase("balloon") || item.equalsIgnoreCase("glow-stick") || item.equalsIgnoreCase("sparkler")) {
@@ -110,7 +110,7 @@ public class TARDISItem {
         } else {
             if (item.equals("vortex-manipulator") && !plugin.getConfig().getBoolean("modules.vortex_manipulator")) {
                 plugin.getMessenger().send(sender, TardisModule.TARDIS, "RECIPE_VORTEX");
-                return true;
+                return;
             }
             if (item.equals("acid-bucket") || item.equals("rust-bucket")) {
                 result = ItemStack.of((item.equals("acid-bucket") ? Material.WATER_BUCKET : Material.LAVA_BUCKET), 1);
@@ -166,6 +166,5 @@ public class TARDISItem {
             player.updateInventory();
             plugin.getMessenger().send(player, TardisModule.TARDIS, "GIVE_ITEM", sender.getName(), amount + " " + item_to_give);
         }
-        return true;
     }
 }

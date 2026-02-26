@@ -24,7 +24,7 @@ public class OnOffArgumentType implements CustomArgumentType<String, String> {
     private final List<String> ON_OFF = ImmutableList.of("on", "off");
 
     @Override
-    public String parse(StringReader reader) throws CommandSyntaxException {
+    public String parse(StringReader reader) {
         return "";
     }
 

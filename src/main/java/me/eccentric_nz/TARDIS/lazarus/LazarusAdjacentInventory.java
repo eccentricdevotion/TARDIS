@@ -41,7 +41,7 @@ class LazarusAdjacentInventory extends LazarusItems implements InventoryHolder, 
     private final TARDIS plugin;
     private final List<Material> adjacent = new ArrayList<>();
     private final Inventory inventory;
-    private int maxSlot;
+    private final int maxSlot;
 
     LazarusAdjacentInventory(TARDIS plugin) {
         this.plugin = plugin;

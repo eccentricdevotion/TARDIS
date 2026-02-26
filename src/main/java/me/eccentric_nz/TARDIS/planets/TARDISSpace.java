@@ -81,7 +81,7 @@ public class TARDISSpace {
         return tardisWorld;
     }
 
-    public World createDefaultWorld(String name) {
+    public void createDefaultWorld(String name) {
         World world = WorldCreator.name(name).type(WorldType.FLAT).environment(World.Environment.NORMAL).generator("TARDIS:void").generateStructures(false).createWorld();
         // add world to config, but disabled by default
         plugin.getPlanetsConfig().set("planets." + name + ".enabled", true);
@@ -93,6 +93,5 @@ public class TARDISSpace {
         plugin.getPlanetsConfig().set("planets." + name + ".void", true);
         plugin.getPlanetsConfig().set("planets." + name + ".generator", "TARDIS:void");
         plugin.savePlanetsConfig();
-        return world;
     }
 }

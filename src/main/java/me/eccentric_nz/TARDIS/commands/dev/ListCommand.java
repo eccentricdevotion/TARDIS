@@ -36,7 +36,7 @@ public class ListCommand {
         this.plugin = plugin;
     }
 
-    public boolean listStuff(CommandSender sender, String which, String other) {
+    public void listStuff(CommandSender sender, String which, String other) {
         if (!which.isEmpty() && (
                 which.equalsIgnoreCase("preset_perms") ||
                 which.equalsIgnoreCase("perms") ||
@@ -54,31 +54,24 @@ public class ListCommand {
                 } else {
                     new PermissionLister(plugin).listPerms(sender);
                 }
-                return true;
             } else if (which.equalsIgnoreCase("recipes")) {
                 new RecipesLister(plugin).listRecipes(sender, other);
-                return true;
             } else if (which.equalsIgnoreCase("trades")) {
                 new TradesLister(plugin).listConsolesAndRooms();
-                return true;
             } else if (which.equalsIgnoreCase("blueprints")) {
                 new BlueprintsLister().listBlueprints(sender);
-                return true;
             } else if (which.equalsIgnoreCase("commands")) {
                 if (!other.isEmpty()) {
                     new CommandsLister(plugin).listOtherTARDISCommands(sender);
                 } else {
                     new CommandsLister(plugin).listTARDISCommands(sender);
                 }
-                return true;
             } else if (which.equalsIgnoreCase("block_colours")) {
                 plugin.getTardisHelper().listBlockColours();
-                return true;
             } else if (which.equalsIgnoreCase("change")) {
                 for (Material m : TARDISConstants.CHAMELEON_BLOCKS_CHANGE) {
                     TARDISConstants.changeToMaterial(m);
                 }
-                return true;
             } else if (which.equalsIgnoreCase("consoles")) {
                 if (other.isEmpty()) {
                     for (BlueprintConsole bpc : BlueprintConsole.values()) {
@@ -93,13 +86,10 @@ public class ListCommand {
                 } else {
                     new ConsoleCostLister(plugin).actualArtron();
                 }
-                return true;
             } else {
                 // preset permissions
                 new PresetPermissionLister().list(sender);
-                return true;
             }
         }
-        return false;
     }
 }

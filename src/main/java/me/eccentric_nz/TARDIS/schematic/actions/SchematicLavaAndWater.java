@@ -28,23 +28,23 @@ import java.util.UUID;
 
 public class SchematicLavaAndWater {
 
-    public boolean act(TARDIS plugin, Player player, boolean lava) {
+    public void act(TARDIS plugin, Player player, boolean lava) {
         UUID uuid = player.getUniqueId();
         // check they have selected start and end blocks
         if (!plugin.getTrackerKeeper().getStartLocation().containsKey(uuid)) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "SCHM_NO_START");
-            return true;
+            return;
         }
         if (!plugin.getTrackerKeeper().getEndLocation().containsKey(uuid)) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "SCHM_NO_END");
-            return true;
+            return;
         }
         // get the world
         World w = plugin.getTrackerKeeper().getStartLocation().get(uuid).getWorld();
         String chk_w = plugin.getTrackerKeeper().getEndLocation().get(uuid).getWorld().getName();
         if (!w.getName().equals(chk_w)) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "SCHM_WORLD");
-            return true;
+            return;
         }
         // get the raw coords
         int sx = plugin.getTrackerKeeper().getStartLocation().get(uuid).getBlockX();
@@ -68,12 +68,10 @@ public class SchematicLavaAndWater {
                     Block b = w.getBlockAt(r, l, c);
                     if (b.getType().equals(which)) {
                         Levelled to = (Levelled) which.createBlockData();
-//                        to.setLevel(0);
                         b.setBlockData(to);
                     }
                 }
             }
         }
-        return true;
     }
 }

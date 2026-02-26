@@ -43,12 +43,12 @@ public class ARSRemoveCommand {
         this.plugin = plugin;
     }
 
-    public boolean resetARS(Player player) {
+    public void resetARS(Player player) {
         // check they are a timelord
         ResultSetTardisID rs = new ResultSetTardisID(plugin);
         if (!rs.fromUUID(player.getUniqueId().toString())) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_A_TIMELORD");
-            return true;
+            return;
         }
         int id = rs.getTardisId();
         // get the sign location so we can reset the sign text
@@ -58,7 +58,7 @@ public class ARSRemoveCommand {
         ResultSetControls rsc = new ResultSetControls(plugin, wheres, false);
         if (!rsc.resultSet()) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_ARS");
-            return true;
+            return;
         }
         Location l = TARDISStaticLocationGetters.getLocationFromBukkitString(rsc.getLocation());
         if (l != null) {
@@ -77,6 +77,5 @@ public class ARSRemoveCommand {
             plugin.getQueryFactory().doDelete("controls", del);
             plugin.getMessenger().send(player, TardisModule.TARDIS, "ARS_REMOVED");
         }
-        return true;
     }
 }

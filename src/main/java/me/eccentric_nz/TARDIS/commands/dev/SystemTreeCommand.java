@@ -35,14 +35,14 @@ public class SystemTreeCommand {
         this.plugin = plugin;
     }
 
-    public boolean open(Player player) {
+    public void open(Player player) {
         String uuid = player.getUniqueId().toString();
         // get TARDIS player is in
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", uuid);
         ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
         if (!rst.resultSet()) {
-            return true;
+            return;
         }
         int id = rst.getTardis_id();
         // must be the owner of the TARDIS
@@ -52,16 +52,15 @@ public class SystemTreeCommand {
         ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false);
         if (!rs.resultSet()) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_OWNER");
-            return true;
+            return;
         }
         // get player's artron energy level
         ResultSetSystemUpgrades rsp = new ResultSetSystemUpgrades(plugin, id, uuid);
         if (!rsp.resultset()) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_TRAVEL_FIRST");
-            return true;
+            return;
         }
         SystemUpgrade current = rsp.getData();
         player.openInventory(new SystemTreeInventory(plugin, current).getInventory());
-        return true;
     }
 }

@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.*;
 import me.eccentric_nz.TARDIS.database.data.Program;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetProgramFromEvent;
+import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
@@ -43,7 +44,7 @@ public class HandlesEventListener implements Listener {
             for (ItemStack is : stack) {
                 // find the ARTRON / DO
                 if (is != null) {
-                    HandlesBlock thb = HandlesBlock.BY_NAME.get(is.getItemMeta().displayName());
+                    HandlesBlock thb = HandlesBlock.BY_NAME.get(ComponentUtils.stripColour(is.getItemMeta().displayName()));
                     HandlesProcessor processor = new HandlesProcessor(TARDIS.plugin, program, player, program.getProgram_id());
                     switch (thb) {
                         case ARTRON -> {

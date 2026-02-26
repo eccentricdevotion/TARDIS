@@ -43,35 +43,25 @@ public class ResultSetUpdateShop {
     }
 
     public boolean getAll() {
-        PreparedStatement statement = null;
-        ResultSet rs = null;
         final String query = "SELECT * FROM " + prefix + "items";
-        try {
-            statement = connection.prepareStatement(query);
-            rs = statement.executeQuery();
-            if (rs.isBeforeFirst()) {
-                shopItems = new ArrayList<>();
-                while (rs.next()) {
-                    shopItems.add(new TARDISShopItem(rs.getInt("item_id"), rs.getString("item"), TARDISStaticLocationGetters.getLocationFromBukkitString(rs.getString("location")), rs.getDouble("cost")));
-                }
-                return true;
-            }
-            return false;
-        } catch (SQLException e) {
-            plugin.debug("ResultSet error for items table! " + e.getMessage());
-            return false;
-        } finally {
+        try (PreparedStatement statement = connection.prepareStatement(query); ResultSet rs = statement.executeQuery()) {
             try {
-                if (rs != null) {
-                    rs.close();
+                if (rs.isBeforeFirst()) {
+                    shopItems = new ArrayList<>();
+                    while (rs.next()) {
+                        shopItems.add(new TARDISShopItem(rs.getInt("item_id"), rs.getString("item"), TARDISStaticLocationGetters.getLocationFromBukkitString(rs.getString("location")), rs.getDouble("cost")));
+                    }
+                    return true;
                 }
-                if (statement != null) {
-                    statement.close();
-                }
+                return false;
             } catch (SQLException e) {
-                plugin.debug("Error closing items table! " + e.getMessage());
+                plugin.debug("ResultSet error for items table! " + e.getMessage());
+                return false;
             }
+        } catch (SQLException e) {
+            plugin.debug("Error closing items table! " + e.getMessage());
         }
+        return true;
     }
 
     public List<TARDISShopItem> getShopItems() {

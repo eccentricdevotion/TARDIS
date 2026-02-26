@@ -44,12 +44,12 @@ public class BoxCommand {
         this.plugin = plugin;
     }
 
-    public boolean setPreset(CommandSender sender, String p, String state) {
+    public void setPreset(CommandSender sender, String p, String state) {
         try {
             ChameleonPreset preset = ChameleonPreset.valueOf(p);
             if (!preset.usesArmourStand()) {
                 plugin.getMessenger().message(sender, "The specified Chameleon preset must be a custom model!");
-                return true;
+                return;
             }
             if (sender instanceof Player player) {
                 // get the armour stand the player is looking at
@@ -57,7 +57,7 @@ public class BoxCommand {
                 RayTraceResult result = observerPos.getWorld().rayTraceEntities(observerPos, observerPos.getDirection(), 16.0d, (s) -> s.getType() == EntityType.ARMOR_STAND);
                 if (result == null) {
                     plugin.getMessenger().send(sender, TardisModule.TARDIS, "WA_STAND");
-                    return true;
+                    return;
                 }
                 ArmorStand as = (ArmorStand) result.getHitEntity();
                 if (as != null) {
@@ -280,8 +280,6 @@ public class BoxCommand {
             }
         } catch (IllegalArgumentException e) {
             plugin.getMessenger().message(sender, "Not a valid Chameleon preset!");
-            return true;
         }
-        return true;
     }
 }

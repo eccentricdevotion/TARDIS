@@ -35,7 +35,7 @@ public class NameKeyCommand {
         this.plugin = plugin;
     }
 
-    public boolean nameKey(Player player, String name) {
+    public void nameKey(Player player, String name) {
         // determine key item
         String key;
         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, player.getUniqueId().toString());
@@ -47,21 +47,17 @@ public class NameKeyCommand {
         Material m = Material.getMaterial(key);
         if (m.isAir()) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "KEY_NO_RENAME");
-            return true;
+            return;
         }
         ItemStack is = player.getInventory().getItemInMainHand();
         if (!is.getType().equals(m)) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "KEY_ONLY");
-            return true;
+            return;
         }
-
         if (!name.isEmpty()) {
             TARDISItemRenamer ir = new TARDISItemRenamer(plugin, player, is);
             ir.setName(name, false);
             plugin.getMessenger().send(player, TardisModule.TARDIS, "KEY_RENAMED", name);
-            return true;
-        } else {
-            return false;
         }
     }
 }

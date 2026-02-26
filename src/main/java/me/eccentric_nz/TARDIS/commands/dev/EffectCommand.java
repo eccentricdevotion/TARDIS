@@ -42,7 +42,7 @@ public class EffectCommand {
         this.plugin = plugin;
     }
 
-    public boolean show(Player player, String s, String e, int d, double v, String c, String b) {
+    public void show(Player player, String s, String e, int d, double v, String c, String b) {
         if (s.isEmpty()) {
             // use particle prefs
             UUID uuid = player.getUniqueId();
@@ -108,6 +108,5 @@ public class EffectCommand {
                 emitter.setTaskID(task);
             }
         }
-        return true;
     }
 }

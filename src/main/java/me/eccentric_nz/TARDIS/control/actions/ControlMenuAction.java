@@ -32,9 +32,7 @@ public class ControlMenuAction {
     }
 
     public void openGUI(Player player, int id) {
-        if (player.isSneaking()) {
-            // keyboard
-        } else {
+        if (!player.isSneaking()) {
             UUID playerUUID = player.getUniqueId();
             // controls GUI
             if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(playerUUID)) {

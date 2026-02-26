@@ -17,21 +17,21 @@ public class TeamCommand {
         this.plugin = plugin;
     }
 
-    public boolean join(CommandSender sender) {
+    public void join(CommandSender sender) {
         Player player = null;
         if (sender instanceof Player) {
             player = (Player) sender;
         }
         if (player == null) {
             plugin.getMessenger().send(sender, TardisModule.MONSTERS, "CMD_PLAYER");
-            return true;
+            return;
         }
         // get the entity the player is targeting
         Location observerPos = player.getEyeLocation();
         RayTraceResult result = observerPos.getWorld().rayTraceEntities(observerPos, observerPos.getDirection(), 8.0d);
         if (result == null) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "WA_TEAM_LOOK");
-            return true;
+            return;
         }
         Entity entity = result.getHitEntity();
         if (entity != null) {
@@ -40,8 +40,6 @@ public class TeamCommand {
             plugin.getMessenger().send(player, TardisModule.MONSTERS, "WA_TEAM");
         } else {
             plugin.getMessenger().send(sender, TardisModule.MONSTERS, "WA_TEAM_LOOK");
-            return true;
         }
-        return true;
     }
 }

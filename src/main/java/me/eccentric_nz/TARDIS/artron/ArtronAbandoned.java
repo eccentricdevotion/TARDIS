@@ -50,7 +50,7 @@ public class ArtronAbandoned {
         this.plugin = plugin;
     }
 
-    public boolean claim(Player player, int id, Location location, Tardis tardis) {
+    public void claim(Player player, int id, Location location, Tardis tardis) {
         // transfer ownership to the player who clicked
         boolean pu = plugin.getQueryFactory().claimTARDIS(player, id);
         // make sure player is added as owner of interior WorldGuard region
@@ -103,6 +103,5 @@ public class ArtronAbandoned {
                 }
             }
         }
-        return pu;
     }
 }

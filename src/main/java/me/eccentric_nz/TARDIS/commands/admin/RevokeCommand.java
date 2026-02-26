@@ -33,7 +33,7 @@ public class RevokeCommand {
         this.plugin = plugin;
     }
 
-    public boolean removePermission(CommandSender sender, Player player, String perm) {
+    public void removePermission(CommandSender sender, Player player, String perm) {
         // tardisadmin revoke [player] [permission]
         int id = new ResultSetBlueprint(plugin).getRecordId(player.getUniqueId().toString(), perm.toLowerCase(Locale.ROOT));
         if (id != -1) {
@@ -45,6 +45,5 @@ public class RevokeCommand {
         } else {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "BLUEPRINT_NOT_FOUND");
         }
-        return true;
     }
 }

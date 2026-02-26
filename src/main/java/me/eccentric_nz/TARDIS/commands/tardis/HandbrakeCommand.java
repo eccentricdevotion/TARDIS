@@ -36,10 +36,10 @@ public class HandbrakeCommand {
         this.plugin = plugin;
     }
 
-    public boolean toggle(Player player, int id, String oo, boolean admin) {
+    public void toggle(Player player, int id, String oo, boolean admin) {
         if (!admin && !oo.equalsIgnoreCase("on") && !oo.equalsIgnoreCase("off")) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "PREF_ON_OFF", "the handbrake");
-            return true;
+            return;
         }
         // actually toggle the lever block
         HashMap<String, Object> whereh = new HashMap<>();
@@ -68,6 +68,5 @@ public class HandbrakeCommand {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "HANDBRAKE_ON_OFF", oo.toUpperCase(Locale.ROOT));
             }
         }
-        return true;
     }
 }

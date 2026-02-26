@@ -46,12 +46,12 @@ public class SetHomeCommand {
         this.plugin = plugin;
     }
 
-    public boolean setHome(Player player, String p, String t) {
+    public void setHome(Player player, String p, String t) {
         if (TARDISPermission.hasPermission(player, "tardis.timetravel")) {
             ResultSetTardisID rs = new ResultSetTardisID(plugin);
             if (!rs.fromUUID(player.getUniqueId().toString())) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_A_TIMELORD");
-                return false;
+                return;
             }
             int id = rs.getTardisId();
             if (p.equalsIgnoreCase("preset")) {
@@ -66,7 +66,7 @@ public class SetHomeCommand {
                     } catch (IllegalArgumentException e) {
                         // abort
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "ARG_PRESET");
-                        return true;
+                        return;
                     }
                 }
                 if (!which.isEmpty()) {
@@ -84,14 +84,14 @@ public class SetHomeCommand {
                 COMPASS player_d = COMPASS.valueOf(TARDISStaticUtils.getPlayersDirection(player, false));
                 if (!plugin.getConfig().getBoolean("travel.include_default_world") && plugin.getConfig().getBoolean("creation.default_world") && world.equals(plugin.getConfig().getString("creation.default_world_name"))) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_WORLD_TRAVEL");
-                    return true;
+                    return;
                 }
                 if (plugin.getTardisArea().isInExistingArea(eyeLocation)) {
                     plugin.getMessenger().sendColouredCommand(player, "AREA_NO_HOME", "/tardistravel area [area name]", plugin);
-                    return true;
+                    return;
                 }
                 if (!plugin.getPluginRespect().getRespect(eyeLocation, new Parameters(player, Flag.getDefaultFlags()))) {
-                    return true;
+                    return;
                 }
                 Material m = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getType();
                 if (m != Material.SNOW) {
@@ -101,7 +101,7 @@ public class SetHomeCommand {
                 // check the world is not excluded
                 if (!plugin.getPlanetsConfig().getBoolean("planets." + world + ".time_travel")) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_WORLD_TRAVEL");
-                    return true;
+                    return;
                 }
                 CircuitChecker tcc = null;
                 if (plugin.getConfig().getBoolean("difficulty.circuits") && !plugin.getUtils().inGracePeriod(player, false)) {
@@ -110,7 +110,7 @@ public class SetHomeCommand {
                 }
                 if (tcc != null && !tcc.hasMemory()) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_MEM_CIRCUIT");
-                    return true;
+                    return;
                 }
                 // check they are not in the tardis
                 HashMap<String, Object> wherettrav = new HashMap<>();
@@ -119,7 +119,7 @@ public class SetHomeCommand {
                 ResultSetTravellers rst = new ResultSetTravellers(plugin, wherettrav, false);
                 if (rst.resultSet()) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "TARDIS_NO_INSIDE");
-                    return true;
+                    return;
                 }
                 // check it is not another Time Lords home location
                 HashMap<String, Object> where = new HashMap<>();
@@ -130,7 +130,7 @@ public class SetHomeCommand {
                 ResultSetHomeLocation rsh = new ResultSetHomeLocation(plugin, where);
                 if (rsh.resultSet()) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "TARDIS_NO_HOME");
-                    return true;
+                    return;
                 }
                 HashMap<String, Object> tid = new HashMap<>();
                 HashMap<String, Object> set = new HashMap<>();
@@ -144,10 +144,8 @@ public class SetHomeCommand {
                 plugin.getQueryFactory().doUpdate("homes", set, tid);
                 plugin.getMessenger().sendStatus(player, "HOME_SET");
             }
-            return true;
         } else {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
-            return false;
         }
     }
 

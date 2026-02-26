@@ -29,7 +29,7 @@ public class BellCommand {
         this.plugin = plugin;
     }
 
-    public boolean toggle(int id, Player player, String arg) {
+    public void toggle(int id, Player player, String arg) {
         if (arg.isEmpty()) {
             // cloister bell
             if (plugin.getTrackerKeeper().getCloisterBells().containsKey(id)) {
@@ -44,17 +44,14 @@ public class BellCommand {
                 } else {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "CLOISTER_BELL_CMD", "off");
                 }
-                return true;
             } else if (arg.equalsIgnoreCase("on")) {
                 if (!plugin.getTrackerKeeper().getCloisterBells().containsKey(id)) {
                     startCloisterBell(id);
                 } else {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "CLOISTER_BELL_CMD", "on");
                 }
-                return true;
             }
         }
-        return false;
     }
 
     private void stopCloisterBell(int id) {

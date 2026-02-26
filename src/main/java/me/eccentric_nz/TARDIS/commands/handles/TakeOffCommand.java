@@ -42,7 +42,7 @@ public class TakeOffCommand {
         this.plugin = plugin;
     }
 
-    public boolean enterVortex(Player player, String uuid, int id) {
+    public void enterVortex(Player player, String uuid, int id) {
         // get TARDIS
         HashMap<String, Object> wherei = new HashMap<>();
         wherei.put("tardis_id", id);
@@ -50,15 +50,15 @@ public class TakeOffCommand {
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
             if (tardis.getPreset().equals(ChameleonPreset.JUNK)) {
-                return true;
+                return;
             }
             if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPoweredOn()) {
                 plugin.getMessenger().handlesSend(player, "POWER_DOWN");
-                return true;
+                return;
             }
             if (plugin.getTrackerKeeper().getInVortex().contains(id) || plugin.getTrackerKeeper().getDidDematToVortex().contains(id) || plugin.getTrackerKeeper().getDestinationVortex().containsKey(id) || plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getDematerialising().contains(id)) {
                 plugin.getMessenger().handlesSend(player, "HANDBRAKE_IN_VORTEX");
-                return true;
+                return;
             }
             HashMap<String, Object> whereh = new HashMap<>();
             whereh.put("type", 0);
@@ -69,7 +69,7 @@ public class TakeOffCommand {
                     // check there is enough power for at last random travel
                     if (!plugin.getTrackerKeeper().getHasDestination().containsKey(id) && tardis.getArtronLevel() < plugin.getArtronConfig().getInt("random")) {
                         plugin.getMessenger().handlesSend(player, "ENERGY_NOT_ENOUGH");
-                        return true;
+                        return;
                     }
                     // check if door is open
                     if (isDoorOpen(id)) {
@@ -78,7 +78,7 @@ public class TakeOffCommand {
                         plugin.getTrackerKeeper().getHasClickedHandbrake().add(id);
                         // give them 30 seconds to close the door
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getTrackerKeeper().getHasClickedHandbrake().removeAll(Collections.singleton(id)), 600L);
-                        return true;
+                        return;
                     }
                     Location location = TARDISStaticLocationGetters.getLocationFromBukkitString(rsc.getLocation());
                     Block handbrake = location.getBlock();
@@ -96,7 +96,6 @@ public class TakeOffCommand {
                 }
             }
         }
-        return true;
     }
 
     private boolean isDoorOpen(int id) {

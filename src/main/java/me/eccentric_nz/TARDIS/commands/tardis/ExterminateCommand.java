@@ -35,13 +35,13 @@ public class ExterminateCommand {
         this.plugin = plugin;
     }
 
-    public boolean doExterminate(Player player, boolean messagePlayer) {
+    public void doExterminate(Player player, boolean messagePlayer) {
         if (TARDISPermission.hasPermission(player, "tardis.exterminate")) {
             if (messagePlayer) {
                 // must be outside TARDIS to run this command
                 if (plugin.getUtils().inTARDISWorld(player)) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "TARDIS_OUTSIDE");
-                    return true;
+                    return;
                 }
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "EXTERMINATE_CHECK");
                 plugin.getMessenger().sendExterminate(player, plugin);
@@ -49,13 +49,11 @@ public class ExterminateCommand {
                 if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) {
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new FloodgateExterminateForm(plugin, player.getUniqueId()).send(), 2L);
                 }
-                return true;
             } else {
-                return new Exterminator(plugin).playerExterminate(player);
+                new Exterminator(plugin).playerExterminate(player);
             }
         } else {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERM_DELETE");
-            return true;
         }
     }
 }

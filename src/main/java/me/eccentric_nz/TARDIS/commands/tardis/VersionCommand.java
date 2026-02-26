@@ -36,7 +36,7 @@ public class VersionCommand {
         this.plugin = plugin;
     }
 
-    public boolean displayVersion(CommandSender sender) {
+    public void displayVersion(CommandSender sender) {
         List<String> hooks = plugin.getDescription().getSoftDepend();
         String tardisversion = plugin.getDescription().getVersion();
         String cb = Bukkit.getVersion();
@@ -52,6 +52,5 @@ public class VersionCommand {
                 plugin.getMessenger().sendWithColours(sender, TardisModule.TARDIS, name + " version: ", "#FFFFFF", version, "#55FFFF");
             }
         }
-        return true;
     }
 }

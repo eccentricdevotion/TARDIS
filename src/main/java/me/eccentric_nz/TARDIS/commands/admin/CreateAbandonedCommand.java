@@ -37,18 +37,18 @@ public class CreateAbandonedCommand {
         this.plugin = plugin;
     }
 
-    public boolean spawn(CommandSender sender, String schm, String p, String dir, World world, int x, int y, int z) {
+    public void spawn(CommandSender sender, String schm, String p, String dir, World world, int x, int y, int z) {
         if (!plugin.getConfig().getBoolean("abandon.enabled")) {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "ABANDONED_DISABLED");
-            return true;
+            return;
         }
         if (!plugin.getConfig().getBoolean("creation.default_world")) {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "ABANDONED_SPAWN");
-            return true;
+            return;
         }
         if (!Desktops.getBY_NAMES().containsKey(schm)) {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "TOO_FEW_ARGS");
-            return true;
+            return;
         }
         Schematic s = Desktops.getBY_NAMES().get(schm);
         ChameleonPreset preset;
@@ -59,7 +59,7 @@ public class CreateAbandonedCommand {
                 preset = ChameleonPreset.valueOf(p.toUpperCase(Locale.ROOT));
             } catch (IllegalArgumentException e) {
                 plugin.getMessenger().send(sender, TardisModule.TARDIS, "ABANDONED_PRESET");
-                return true;
+                return;
             }
         }
         COMPASS d;
@@ -67,10 +67,9 @@ public class CreateAbandonedCommand {
             d = COMPASS.valueOf(dir.toUpperCase(Locale.ROOT));
         } catch (IllegalArgumentException e) {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "ABANDONED_COMPASS");
-            return true;
+            return;
         }
-        Location l = new Location(world, x, y, z);;
+        Location l = new Location(world, x, y, z);
         new AbandonedBuilder(plugin).spawn(l, s, preset, schm, d, (sender instanceof Player) ? (Player) sender : null);
-        return true;
     }
 }

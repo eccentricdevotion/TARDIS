@@ -23,7 +23,7 @@ public class PlanetArgumentType implements CustomArgumentType<String, String> {
     private final Set<String> PLANETS = Set.of("gallifrey", "siluria", "skaro", "telos", "rooms");
 
     @Override
-    public String parse(StringReader reader) throws CommandSyntaxException {
+    public String parse(StringReader reader) {
         return "";
     }
 

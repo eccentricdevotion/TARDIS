@@ -23,9 +23,6 @@ import me.eccentric_nz.TARDIS.lazarus.disguise.TARDISDisguiseListener;
 import me.eccentric_nz.TARDIS.lazarus.disguise.TARDISDisguiser;
 import me.eccentric_nz.TARDIS.lazarus.disguise.TARDISPlayerDisguiser;
 import me.eccentric_nz.TARDIS.skins.ChameleonArchDisguiser;
-import me.eccentric_nz.tardischunkgenerator.custombiome.CubicMaterial;
-import me.eccentric_nz.tardischunkgenerator.custombiome.CustomBiomeData;
-import me.eccentric_nz.tardischunkgenerator.custombiome.TARDISBiomeData;
 import me.eccentric_nz.tardischunkgenerator.helpers.GetBlockColours;
 import me.eccentric_nz.tardischunkgenerator.helpers.TARDISItemFrameFaker;
 import me.eccentric_nz.tardischunkgenerator.helpers.TARDISMapUpdater;
@@ -64,7 +61,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
 
@@ -283,18 +279,6 @@ public class TARDISHelper {
         new TARDISMapUpdater(world).update(mapView);
     }
 
-    public void addCustomBiome(String biome) {
-        CustomBiomeData data;
-        if (biome.equalsIgnoreCase("gallifrey")) {
-            data = TARDISBiomeData.BADLANDS;
-        } else if (biome.equalsIgnoreCase("skaro")) {
-            data = TARDISBiomeData.DESERT;
-        } else {
-            data = TARDISBiomeData.EYE;
-        }
-//        CustomBiome.addCustomBiome(data);
-    }
-
     public void removeTileEntity(org.bukkit.block.BlockState tile) {
         BlockPos position = new BlockPos(tile.getLocation().getBlockX(), tile.getLocation().getBlockY(), tile.getLocation().getBlockZ());
         ServerLevel level = ((CraftWorld) tile.getLocation().getWorld()).getHandle();
@@ -325,10 +309,6 @@ public class TARDISHelper {
 
     public void growTree(Location location, Material base, Material hat, Material stem, Material decor) {
         CustomTree.grow(location, base, hat, stem, decor);
-    }
-
-    public List<Material> getTreeMaterials() {
-        return CubicMaterial.cubes;
     }
 
     public int[] getReputation(Villager villager, UUID uuid) {

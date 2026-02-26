@@ -107,7 +107,6 @@ public class ArtronCapacitorStorageListener extends TARDISMenuListener {
 
     @EventHandler(ignoreCancelled = true)
     public void onCapacitorStorageInteract(InventoryClickEvent event) {
-        InventoryView view = event.getView();
         if (!(event.getInventory().getHolder(false) instanceof EyeStorage)) {
             return;
         }

@@ -43,10 +43,10 @@ public class ZeroRoomBuilder {
         this.plugin = plugin;
     }
 
-    public boolean build(Player p, int tips, int id) {
+    public void build(Player p, int tips, int id) {
         if (!plugin.getConfig().getBoolean("allow.zero_room")) {
             plugin.getMessenger().send(p, TardisModule.TARDIS, "ZERO_DISABLED");
-            return true;
+            return;
         }
         TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
         int slot = tips;
@@ -66,7 +66,7 @@ public class ZeroRoomBuilder {
         World w = plugin.getServer().getWorld("TARDIS_Zero_room");
         if (w == null) {
             plugin.getMessenger().send(p, TardisModule.TARDIS, "ZERO_NOT_FOUND");
-            return true;
+            return;
         }
         Location l = new Location(w, x, y, z);
         RoomBuilder builder = new RoomBuilder(plugin, "ZERO", l, COMPASS.SOUTH, p);
@@ -94,6 +94,5 @@ public class ZeroRoomBuilder {
                 taf.doAchievement("ZERO");
             }
         }
-        return true;
     }
 }

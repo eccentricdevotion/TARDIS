@@ -81,9 +81,9 @@ public class HandlesWikiDialogProcessor {
         if (!results.isEmpty()) {
             for (WikiLink w : results) {
                 try {
-                    URI uri = URI.create(w.getURL());
+                    URI uri = URI.create(w.URL());
                     DialogAction action = DialogAction.staticAction(ClickEvent.openUrl(uri.toURL()));
-                    ActionButton button = ActionButton.create(Component.text(w.getTitle()), null, 150, action);
+                    ActionButton button = ActionButton.create(Component.text(w.title()), null, 150, action);
                     actions.add(button);
                 } catch (MalformedURLException ignored) {
                 }

@@ -34,14 +34,14 @@ public class TARDISTravelGUI {
         this.plugin = plugin;
     }
 
-    public boolean open(Player player, int id, String which) {
+    public void open(Player player, int id, String which) {
         // check for telepathic circuit
         if (plugin.getConfig().getBoolean("difficulty.circuits") && !plugin.getUtils().inGracePeriod(player, true)) {
             CircuitChecker tcc = new CircuitChecker(plugin, id);
             tcc.getCircuits();
             if (!tcc.hasTelepathic()) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TELEPATHIC_CIRCUIT");
-                return true;
+                return;
             }
         }
         if (which.equals("biome")) {
@@ -59,6 +59,5 @@ public class TARDISTravelGUI {
                 player.openInventory(new TelepathicStructure(plugin).getInventory());
             }
         }
-        return true;
     }
 }

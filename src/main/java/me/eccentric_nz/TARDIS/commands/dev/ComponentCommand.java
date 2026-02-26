@@ -65,7 +65,6 @@ public class ComponentCommand {
             }
           }
          """;
-    private Gson gson;
 
     public ComponentCommand(TARDIS plugin) {
         this.plugin = plugin;
@@ -458,7 +457,7 @@ public class ComponentCommand {
     }
 
     private void writeFile(CommandSender sender, String material, String key, String name) {
-        gson = new GsonBuilder().setPrettyPrinting().create();
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String filename = material + "_" + key;
         // make json - something like:
         JsonObject select = new JsonObject();

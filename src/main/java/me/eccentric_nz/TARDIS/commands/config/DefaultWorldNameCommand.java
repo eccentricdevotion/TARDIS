@@ -21,25 +21,21 @@ import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 
-import java.util.regex.Pattern;
-
 /**
  * @author eccentric_nz
  */
 public class DefaultWorldNameCommand {
 
-    private static final Pattern DOTS = Pattern.compile("\\.");
     private final TARDIS plugin;
 
     public DefaultWorldNameCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean setName(CommandSender sender, World world) {
+    public void setName(CommandSender sender, World world) {
         // get world name
         plugin.getConfig().set("creation.default_world_name", world.getName());
         plugin.saveConfig();
         plugin.getMessenger().send(sender, TardisModule.TARDIS, "CONFIG_UPDATED", "default_world_name");
-        return true;
     }
 }

@@ -21,9 +21,7 @@ import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisPreset;
 import me.eccentric_nz.TARDIS.doors.inner.*;
-import me.eccentric_nz.TARDIS.doors.outer.OuterDisplayDoorCloser;
-import me.eccentric_nz.TARDIS.doors.outer.OuterDoor;
-import me.eccentric_nz.TARDIS.doors.outer.OuterMinecraftDoorCloser;
+import me.eccentric_nz.TARDIS.doors.outer.*;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.entity.Player;
 
@@ -37,16 +35,16 @@ public class DoorCommand {
         this.plugin = plugin;
     }
 
-    public boolean toggleDoors(Player player, boolean open) {
+    public void toggleDoors(Player player, boolean open) {
         if (!TARDISPermission.hasPermission(player, "tardis.use")) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
-            return true;
+            return;
         }
         // must have a TARDIS
         ResultSetTardisID rs = new ResultSetTardisID(plugin);
         if (!rs.fromUUID(player.getUniqueId().toString())) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_A_TIMELORD");
-            return false;
+            return;
         }
         int id = rs.getTardisId();
         UUID playerUUID = player.getUniqueId();
@@ -77,12 +75,11 @@ public class DoorCommand {
                 }
                 // open outer
                 if (outerDisplayDoor) {
-                    new OuterDisplayDoorCloser(plugin).close(new OuterDoor(plugin, id).getDisplay(), id, playerUUID, false);
+                    new OuterDisplayDoorOpener(plugin).open(new OuterDoor(plugin, id).getDisplay(), id);
                 } else if (rsp.getPreset().hasDoor()) {
-                    new OuterMinecraftDoorCloser(plugin).close(new OuterDoor(plugin, id).getMinecraft(), id, playerUUID);
+                    new OuterMinecraftDoorOpener(plugin).open(new OuterDoor(plugin, id).getMinecraft(), id, player);
                 }
             }
         }
-        return true;
     }
 }

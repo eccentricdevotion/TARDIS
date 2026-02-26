@@ -33,7 +33,7 @@ public class FurnaceCommand {
         this.plugin = plugin;
     }
 
-    public boolean list() {
+    public void list() {
         Iterator<Recipe> recipes = Bukkit.recipeIterator();
         while (recipes.hasNext()) {
             Recipe r = recipes.next();
@@ -51,6 +51,5 @@ public class FurnaceCommand {
                 }
             }
         }
-        return true;
     }
 }

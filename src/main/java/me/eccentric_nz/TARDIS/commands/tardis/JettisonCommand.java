@@ -37,7 +37,7 @@ public class JettisonCommand {
         this.plugin = plugin;
     }
 
-    public boolean startJettison(Player player, String arg) {
+    public void startJettison(Player player, String arg) {
         if (TARDISPermission.hasPermission(player, "tardis.jettison")) {
             String room = arg.toUpperCase(Locale.ROOT);
             if (room.equals("GRAVITY") || room.equals("ANTIGRAVITY")) {
@@ -48,12 +48,12 @@ public class JettisonCommand {
                 plugin.getGeneralKeeper().getRoomArgs().forEach((rl) -> buf.append(rl).append(", "));
                 String roomlist = buf.substring(0, buf.length() - 2);
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "ROOM_NOT_VALID", roomlist);
-                return true;
+                return;
             }
             ResultSetTardisID rs = new ResultSetTardisID(plugin);
             if (!rs.fromUUID(player.getUniqueId().toString())) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_A_TIMELORD");
-                return true;
+                return;
             }
             int id = rs.getTardisId();
             // check they are in the tardis
@@ -63,15 +63,13 @@ public class JettisonCommand {
             ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
             if (!rst.resultSet()) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_IN_TARDIS");
-                return true;
+                return;
             }
             plugin.getTrackerKeeper().getJettison().put(player.getUniqueId(), room);
             String seed = plugin.getArtronConfig().getString("jettison_seed");
             plugin.getMessenger().send(player, TardisModule.TARDIS, "ROOM_JETT_INFO", seed, room, seed);
-            return true;
         } else {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
-            return false;
         }
     }
 }

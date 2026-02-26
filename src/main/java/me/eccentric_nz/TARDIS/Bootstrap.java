@@ -14,25 +14,6 @@ public class Bootstrap implements PluginBootstrap {
 
     @Override
     public void bootstrap(BootstrapContext context) {
-//        Component author = Component.text("eccentric_nz", NamedTextColor.GRAY);
-//        context.getLifecycleManager().registerEventHandler(RegistryEvents.PAINTING_VARIANT.compose().newHandler(event -> {
-//            event.registry().register(
-//                    PaintingVariantKeys.create(Key.key("tardis:chevrolet")),
-//                    p -> p.assetId(Key.key("tardis:chevrolet"))
-//                            .width(3)
-//                            .height(2)
-//                            .author(author)
-//                            .title(Component.text("1957 Chevrolet Bel Air", NamedTextColor.GRAY))
-//            );
-//            event.registry().register(
-//                    PaintingVariantKeys.create(Key.key("tardis:lava")),
-//                    p -> p.assetId(Key.key("tardis:lava"))
-//                            .width(2)
-//                            .height(2)
-//                            .author(author)
-//                            .title(Component.text("Lava", NamedTextColor.GRAY))
-//            );
-//        }));
         context.getLifecycleManager().registerEventHandler(LifecycleEvents.DATAPACK_DISCOVERY.newHandler(
                 event -> {
                     try {
@@ -46,10 +27,6 @@ public class Bootstrap implements PluginBootstrap {
                     }
                 }
         ));
-//        context.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS, commands -> {
-//            // register commands
-//            new BrigadierCommandRegister(commands).addAll();
-//        });
     }
 
     @Override

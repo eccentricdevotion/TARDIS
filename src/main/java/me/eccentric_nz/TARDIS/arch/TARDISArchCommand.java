@@ -37,11 +37,11 @@ public class TARDISArchCommand {
         this.plugin = plugin;
     }
 
-    public boolean getTime(Player player) {
+    public void getTime(Player player) {
         UUID uuid = player.getUniqueId();
         if (!plugin.getTrackerKeeper().getJohnSmith().containsKey(uuid)) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "ARCH_NOT_VALID");
-            return true;
+            return;
         }
         long time = plugin.getTrackerKeeper().getJohnSmith().get(uuid).getTime();
         long now = System.currentTimeMillis();
@@ -53,21 +53,19 @@ public class TARDISArchCommand {
         } else {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "ARCH_FREE");
         }
-        return true;
     }
 
-    public boolean whois(CommandSender sender, String name) {
+    public void whois(CommandSender sender, String name) {
         for (Player p : plugin.getServer().getOnlinePlayers()) {
             if (ComponentUtils.stripColour(p.playerListName()).equalsIgnoreCase(name)) {
                 plugin.getMessenger().send(sender, TardisModule.TARDIS, "ARCH_PLAYER", p.getName());
-                return true;
+                return;
             }
         }
         plugin.getMessenger().send(sender, TardisModule.TARDIS, "COULD_NOT_FIND_NAME");
-        return true;
     }
 
-    public boolean force(CommandSender sender, Player player) {
+    public void force(Player player) {
         UUID uuid = player.getUniqueId();
         boolean inv = plugin.getConfig().getBoolean("arch.switch_inventory");
         if (!plugin.getTrackerKeeper().getJohnSmith().containsKey(uuid)) {
@@ -114,6 +112,5 @@ public class TARDISArchCommand {
             }, 5L);            // remove player from arched table
             new ArchPersister(plugin).removeArch(uuid);
         }
-        return true;
     }
 }

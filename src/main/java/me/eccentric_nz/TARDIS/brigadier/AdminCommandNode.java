@@ -59,7 +59,7 @@ public class AdminCommandNode {
                                         .executes(ctx -> {
                                             PlayerSelectorArgumentResolver targetResolver = ctx.getArgument("player", PlayerSelectorArgumentResolver.class);
                                             Player player = targetResolver.resolve(ctx.getSource()).getFirst();
-                                            new TARDISArchCommand(plugin).force(ctx.getSource().getSender(), player);
+                                            new TARDISArchCommand(plugin).force(player);
                                             return Command.SINGLE_SUCCESS;
                                         }))))
                 .then(Commands.literal("assemble")

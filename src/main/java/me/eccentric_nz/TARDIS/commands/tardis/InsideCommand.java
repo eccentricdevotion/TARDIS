@@ -37,12 +37,12 @@ public class InsideCommand {
         this.plugin = plugin;
     }
 
-    public boolean whosInside(Player player) {
+    public void whosInside(Player player) {
         // check they are a timelord
         ResultSetTardisID rs = new ResultSetTardisID(plugin);
         if (!rs.fromUUID(player.getUniqueId().toString())) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_A_TIMELORD");
-            return true;
+            return;
         }
         int id = rs.getTardisId();
         HashMap<String, Object> wheret = new HashMap<>();
@@ -60,6 +60,5 @@ public class InsideCommand {
         } else {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "INSIDE");
         }
-        return true;
     }
 }

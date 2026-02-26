@@ -56,7 +56,7 @@ public class ScanCommand {
         inTARDIS = plugin.getUtils().inTARDISWorld(this.player);
     }
 
-    public boolean sayScan() {
+    public void sayScan() {
         TARDISSounds.playTARDISSound(player.getLocation(), "handles_scanner");
         Location scan_loc;
         String whereIsIt;
@@ -66,7 +66,7 @@ public class ScanCommand {
                 ResultSetNextLocation rsn = new ResultSetNextLocation(plugin, id);
                 if (!rsn.resultSet()) {
                     plugin.getMessenger().handlesSend(player, "NEXT_NOT_FOUND");
-                    return true;
+                    return;
                 }
                 scan_loc = new Location(rsn.getWorld(), rsn.getX(), rsn.getY(), rsn.getZ());
                 tardisDirection = rsn.getDirection();
@@ -75,7 +75,7 @@ public class ScanCommand {
                 ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
                 if (!rsc.resultSet()) {
                     plugin.getMessenger().handlesSend(player, "CURRENT_NOT_FOUND");
-                    return true;
+                    return;
                 }
                 Current current = rsc.getCurrent();
                 scan_loc = current.location();
@@ -231,6 +231,5 @@ public class ScanCommand {
             // damage the circuit if configured
             DamageUtility.run(plugin, DiskCircuit.SCANNER, id, player);
         }, 140L);
-        return true;
     }
 }

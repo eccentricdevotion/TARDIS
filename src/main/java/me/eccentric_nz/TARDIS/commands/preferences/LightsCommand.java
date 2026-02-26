@@ -35,13 +35,13 @@ public class LightsCommand {
         this.plugin = plugin;
     }
 
-    public boolean setLightsPref(Player player, String light) {
+    public void setLightsPref(Player player, String light) {
         String set_light = light.toUpperCase(Locale.ROOT);
         try {
             TardisLight.valueOf(set_light);
         } catch (IllegalArgumentException e) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "LIGHT_NOT_VALID");
-            return false;
+            return;
         }
         HashMap<String, Object> set = new HashMap<>();
         set.put("lights", set_light);
@@ -49,6 +49,5 @@ public class LightsCommand {
         where.put("uuid", player.getUniqueId().toString());
         TARDIS.plugin.getQueryFactory().doUpdate("player_prefs", set, where);
         plugin.getMessenger().send(player, TardisModule.TARDIS, "LIGHT_SAVED");
-        return true;
     }
 }

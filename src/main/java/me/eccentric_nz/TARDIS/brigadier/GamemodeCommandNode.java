@@ -7,17 +7,10 @@ import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 import io.papermc.paper.command.brigadier.argument.ArgumentTypes;
 import io.papermc.paper.command.brigadier.argument.resolvers.selector.PlayerSelectorArgumentResolver;
-import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 
 public class GamemodeCommandNode {
-
-    private final TARDIS plugin;
-
-    public GamemodeCommandNode(TARDIS plugin) {
-        this.plugin = plugin;
-    }
 
     LiteralCommandNode<CommandSourceStack> build() {
         LiteralArgumentBuilder<CommandSourceStack> command = Commands.literal("tardisgamemode")

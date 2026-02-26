@@ -31,7 +31,7 @@ import org.mvplugins.multiverse.external.vavr.control.Option;
  */
 public class TARDISMultiverseHelper {
 
-    MultiverseCoreApi coreApi = MultiverseCoreApi.get();
+    final MultiverseCoreApi coreApi = MultiverseCoreApi.get();
 
     public String getAlias(World world) {
         Option<MultiverseWorld> option = coreApi.getWorldManager().getWorld(world);
