@@ -28,7 +28,7 @@ public class MonstersCommandNode {
         this.plugin = plugin;
     }
 
-    LiteralCommandNode<CommandSourceStack> build() {
+    public LiteralCommandNode<CommandSourceStack> build() {
         LiteralArgumentBuilder<CommandSourceStack> command = Commands.literal("twa")
                 .requires(ctx -> ctx.getExecutor() instanceof Player)
                 .then(Commands.literal("spawn")

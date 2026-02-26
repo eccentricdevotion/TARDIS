@@ -22,7 +22,7 @@ public class ChemistryCommandNode {
         this.plugin = plugin;
     }
 
-    LiteralCommandNode<CommandSourceStack> build() {
+    public LiteralCommandNode<CommandSourceStack> build() {
         LiteralArgumentBuilder<CommandSourceStack> command = Commands.literal("tardischemistry")
                 .requires(ctx -> ctx.getExecutor() instanceof Player)
                 .then(Commands.literal("gui")

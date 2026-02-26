@@ -21,7 +21,7 @@ public class RegenerationCommandNode {
         this.plugin = plugin;
     }
 
-    LiteralCommandNode<CommandSourceStack> build() {
+    public LiteralCommandNode<CommandSourceStack> build() {
         LiteralArgumentBuilder<CommandSourceStack> command = Commands.literal("tardisregeneration")
                 .then(Commands.literal("add")
                         .then(Commands.argument("player", ArgumentTypes.player())

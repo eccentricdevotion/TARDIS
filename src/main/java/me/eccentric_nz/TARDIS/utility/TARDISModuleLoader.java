@@ -16,7 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.utility;
 
+import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.brigadier.ChemistryCommandNode;
 import me.eccentric_nz.TARDIS.database.converters.ShopTransfer;
 import me.eccentric_nz.TARDIS.database.converters.VortexManipulatorTransfer;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -34,6 +36,8 @@ import me.eccentric_nz.tardisvortexmanipulator.TARDISVortexManipulator;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.nms.TARDISEntityRegister;
 
+import java.util.List;
+
 public class TARDISModuleLoader {
 
     private final TARDIS plugin;
@@ -46,9 +50,13 @@ public class TARDISModuleLoader {
     public void enable() {
         if (plugin.getConfig().getBoolean("modules.chemistry")) {
             plugin.getMessenger().message(plugin.getConsole(), TardisModule.CHEMISTRY, "Loading Chemistry Module");
+            // add recipes
             new Microscope(plugin).enable();
             new ChemistryBlockRecipes(plugin).addRecipes();
             new BleachRecipe(plugin).setRecipes();
+            // register command
+            plugin.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS, commands ->
+                    commands.registrar().register(new ChemistryCommandNode(plugin).build(), List.of("tchemistry")));
             plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new GlowStickRunnable(plugin), 200, 200);
             plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new HeatBlockRunnable(plugin), 200, 80);
         }

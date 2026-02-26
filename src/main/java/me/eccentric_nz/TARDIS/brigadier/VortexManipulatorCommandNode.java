@@ -29,7 +29,7 @@ public class VortexManipulatorCommandNode {
         this.plugin = plugin;
     }
 
-    LiteralCommandNode<CommandSourceStack> build() {
+    public LiteralCommandNode<CommandSourceStack> build() {
         LiteralArgumentBuilder<CommandSourceStack> command = Commands.literal("vm")
                 .executes(ctx -> {
                     new TVMCommandHelp(plugin).display(ctx.getSource().getSender(), "");

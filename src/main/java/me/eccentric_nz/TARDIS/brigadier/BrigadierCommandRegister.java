@@ -49,20 +49,5 @@ public class BrigadierCommandRegister {
         commands.registrar().register(new TravelCommandNode(plugin).build(), List.of("ttravel"));
         commands.registrar().register(new WorldCommandNode(plugin).build(), List.of("tworld"));
         commands.registrar().register(new QuestionCommandNode(plugin).build(), List.of("t?", "tardishelp"));
-        if (plugin.getConfig().getBoolean("modules.chemistry")) {
-            commands.registrar().register(new ChemistryCommandNode(plugin).build(), List.of("tchemistry"));
-        }
-        if (plugin.getConfig().getBoolean("modules.regeneration")) {
-            commands.registrar().register(new RegenerationCommandNode(plugin).build(), List.of("regeneration", "regen"));
-        }
-        if (plugin.getConfig().getBoolean("modules.shop")) {
-            commands.registrar().register(new ShopCommandNode(plugin).build(), List.of("tshop"));
-        }
-        if (plugin.getConfig().getBoolean("modules.vortex_manipulator")) {
-            commands.registrar().register(new VortexManipulatorCommandNode(plugin).build(), List.of("vortexmainpulator", "tvm"));
-        }
-        if (plugin.getConfig().getBoolean("modules.weeping_angels")) {
-            commands.registrar().register(new MonstersCommandNode(plugin).build(), List.of("tardisweepingangels"));
-        }
     }
 }

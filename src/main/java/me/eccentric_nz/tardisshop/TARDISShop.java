@@ -16,7 +16,9 @@
  */
 package me.eccentric_nz.tardisshop;
 
+import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.brigadier.ShopCommandNode;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.tardisshop.listener.TARDISShopItemBreak;
 import me.eccentric_nz.tardisshop.listener.TARDISShopItemDespawn;
@@ -26,6 +28,8 @@ import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.plugin.RegisteredServiceProvider;
+
+import java.util.List;
 
 public class TARDISShop {
 
@@ -37,19 +41,20 @@ public class TARDISShop {
 
     public void enable() {
         if (plugin.getPM().isPluginEnabled("Vault")) {
+            // register listeners
             plugin.getPM().registerEvents(new TARDISShopItemInteract(plugin), plugin);
             plugin.getPM().registerEvents(new TARDISShopItemDespawn(plugin), plugin);
             plugin.getPM().registerEvents(new TARDISShopItemBreak(plugin), plugin);
             plugin.getPM().registerEvents(new TARDISShopItemExplode(plugin), plugin);
+            // settings
             ShopSettings settings = new ShopSettings();
             settings.setItemKey(new NamespacedKey(plugin, "tardis_shop_item"));
             settings.setBlockMaterial(Material.valueOf(plugin.getShopConfig().getString("block")));
             setupEconomy(settings);
             plugin.setShopSettings(settings);
-            // TODO Brigadier this
-//            TARDISShopCommand command = new TARDISShopCommand(plugin);
-//            plugin.getCommand("tardisshop").setExecutor(command);
-//            plugin.getCommand("tardisshop").setTabCompleter(command);
+            // register command
+            plugin.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS, commands ->
+                    commands.registrar().register(new ShopCommandNode(plugin).build(), List.of("tshop")));
         } else {
             plugin.getMessenger().message(plugin.getConsole(), TardisModule.WARNING, "This feature requires the Vault plugin to function, disabling...");
         }
