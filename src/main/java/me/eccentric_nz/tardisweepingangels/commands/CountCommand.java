@@ -37,17 +37,13 @@ public class CountCommand {
         this.plugin = plugin;
     }
 
-    public boolean count(CommandSender sender, String[] args) {
-        if (args.length < 3) {
-            return false;
-        }
-        String which = args[1].toUpperCase(Locale.ROOT);
+    public void count(CommandSender sender, String mon, World w) {
+        String which = mon.toUpperCase(Locale.ROOT);
         String what = "Angels";
         int count = 0;
-        World w = plugin.getServer().getWorld(args[2]);
         if (w == null) {
             plugin.getMessenger().send(sender, TardisModule.MONSTERS, "COULD_NOT_FIND_WORLD");
-            return true;
+            return;
         }
         if (which.equals("G")) {
             what = "Invisible Guardians without Endermen";
@@ -63,7 +59,7 @@ public class CountCommand {
                 monster = Monster.valueOf(which);
             } catch (IllegalArgumentException e) {
                 plugin.getMessenger().send(sender, TardisModule.MONSTERS, "WA_INVALID");
-                return true;
+                return;
             }
             switch (monster) {
                 case DALEK, HEADLESS_MONK, MIRE, OMEGA, SILENT, SILURIAN, WEEPING_ANGEL -> {
@@ -152,11 +148,9 @@ public class CountCommand {
                         }
                     }
                 }
-                default -> {
-                }
+                default -> { }
             }
         }
         plugin.getMessenger().send(sender, TardisModule.MONSTERS, "WA_COUNT", count, what, w.getName());
-        return true;
     }
 }

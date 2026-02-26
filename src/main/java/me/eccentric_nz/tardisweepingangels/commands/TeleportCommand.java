@@ -35,31 +35,43 @@ public class TeleportCommand {
         this.plugin = plugin;
     }
 
-    public boolean add(CommandSender sender, String[] args) {
-        String message = "Added a weeping angels' teleport location successfully.";
-        String a = (args.length > 1) ? args[1].toLowerCase(Locale.ROOT) : "";
-        if (a.equals("true") || a.equals("false")) {
-            message = "Set 'angels.teleport_to_location' to " + a;
-            plugin.getMonstersConfig().set("angels.teleport_to_location", Boolean.valueOf(a));
-        } else if (sender instanceof Player player) {
-            Location location = player.getLocation();
-            String tpLoc = location.getWorld().getName() + "," + location.getBlockX() + "," + location.getBlockY() + "," + location.getBlockZ();
-            List<String> list;
-            if (a.equals("replace")) {
-                list = List.of(tpLoc);
-            } else {
-                list = plugin.getMonstersConfig().getStringList("angels.teleport_locations");
-                list.add(tpLoc);
-            }
-            plugin.getMonstersConfig().set("angels.teleport_locations", list);
-        }
+    public void add(Player player) {
+        Location location = player.getLocation();
+        String tpLoc = location.getWorld().getName() + "," + location.getBlockX() + "," + location.getBlockY() + "," + location.getBlockZ();
+        List<String> list = plugin.getMonstersConfig().getStringList("angels.teleport_locations");
+        list.add(tpLoc);
+        plugin.getMonstersConfig().set("angels.teleport_locations", list);
         try {
             String monstersPath = plugin.getDataFolder() + File.separator + "monsters.yml";
             plugin.getMonstersConfig().save(new File(monstersPath));
-            plugin.getMessenger().message(sender, TardisModule.MONSTERS, message);
+            plugin.getMessenger().message(player, TardisModule.MONSTERS, "Added a weeping angels' teleport location successfully.");
         } catch (IOException io) {
             plugin.debug("Could not save monsters.yml, " + io.getMessage());
         }
-        return true;
+    }
+
+    public void replace(Player player) {
+        Location location = player.getLocation();
+        String tpLoc = location.getWorld().getName() + "," + location.getBlockX() + "," + location.getBlockY() + "," + location.getBlockZ();
+        List<String> list = List.of(tpLoc);
+        plugin.getMonstersConfig().set("angels.teleport_locations", list);
+        try {
+            String monstersPath = plugin.getDataFolder() + File.separator + "monsters.yml";
+            plugin.getMonstersConfig().save(new File(monstersPath));
+            plugin.getMessenger().message(player, TardisModule.MONSTERS, "Added a weeping angels' teleport location successfully.");
+        } catch (IOException io) {
+            plugin.debug("Could not save monsters.yml, " + io.getMessage());
+        }
+    }
+
+    public void toggle(CommandSender sender, boolean b) {
+        plugin.getMonstersConfig().set("angels.teleport_to_location", b);
+        try {
+            String monstersPath = plugin.getDataFolder() + File.separator + "monsters.yml";
+            plugin.getMonstersConfig().save(new File(monstersPath));
+            plugin.getMessenger().message(sender, TardisModule.MONSTERS, "Set 'angels.teleport_to_location' to " + b);
+        } catch (IOException io) {
+            plugin.debug("Could not save monsters.yml, " + io.getMessage());
+        }
     }
 }

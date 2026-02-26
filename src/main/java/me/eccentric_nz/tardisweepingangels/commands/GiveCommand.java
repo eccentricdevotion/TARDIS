@@ -34,18 +34,14 @@ public class GiveCommand {
         this.plugin = plugin;
     }
 
-    public boolean give(CommandSender sender, String[] args) {
-        if (args.length < 3) {
-            return false;
-        }
+    public boolean give(CommandSender sender, Player player, String m) {
         // get the player
-        Player player = plugin.getServer().getPlayer(args[1]);
         if (player == null) {
             plugin.getMessenger().send(sender, TardisModule.MONSTERS, "PLAYER_NOT_FOUND");
             return true;
         }
         // check monster type
-        String upper = args[2].toUpperCase(Locale.ROOT);
+        String upper = m.toUpperCase(Locale.ROOT);
         Monster monster;
         try {
             monster = Monster.valueOf(upper);

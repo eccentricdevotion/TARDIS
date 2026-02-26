@@ -36,15 +36,11 @@ public class KillCommand {
         this.plugin = plugin;
     }
 
-    public boolean kill(CommandSender sender, String[] args) {
-        if (args.length < 3) {
-            return false;
-        }
-        String which = args[1].toUpperCase(Locale.ROOT);
-        World w = plugin.getServer().getWorld(args[2]);
+    public void kill(CommandSender sender, String mon, World w) {
+        String which = mon.toUpperCase(Locale.ROOT);
         if (w == null) {
             plugin.getMessenger().send(sender, TardisModule.MONSTERS, "COULD_NOT_FIND_WORLD");
-            return true;
+            return;
         }
         int count = 0;
         String what = "Angels";
@@ -66,7 +62,7 @@ public class KillCommand {
             } else {
                 plugin.getMessenger().send(sender, TardisModule.MONSTERS, "WA_INVALID");
             }
-            return true;
+            return;
         }
         switch (monster) {
             case ANGEL_OF_LIBERTY, CLOCKWORK_DROID, CYBERMAN, CYBERSHADE, EMPTY_CHILD, HEAVENLY_HOST, NIMON, OSSIFIED, SCARECROW,
@@ -180,10 +176,8 @@ public class KillCommand {
                     }
                 }
             }
-            default -> {
-            }
+            default -> { }
         }
         plugin.getMessenger().send(sender, TardisModule.MONSTERS, "WA_REMOVED", count, what, w.getName());
-        return true;
     }
 }
