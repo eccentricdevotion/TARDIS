@@ -804,25 +804,25 @@ public class TardisCommandNode {
                                         TransmatUtility.list(plugin, c.getFirst(), c.getSecond());
                                     }
                                     return Command.SINGLE_SUCCESS;
-                                })
-                                .then(Commands.literal("tp")
-                                        .then(Commands.literal("Rooms")
-                                                .executes(ctx -> {
-                                                    Pair<Player, Integer> c = TardisUtility.check(plugin, ctx.getSource().getSender(), TardisCommand.transmat);
-                                                    if (c != null) {
-                                                        TransmatUtility.toRoomsWorld(plugin, c.getFirst(), c.getSecond());
-                                                    }
-                                                    return Command.SINGLE_SUCCESS;
-                                                }))
-                                        .then(Commands.argument("to", StringArgumentType.word())
-                                                .executes(ctx -> {
-                                                    Pair<Player, Integer> c = TardisUtility.check(plugin, ctx.getSource().getSender(), TardisCommand.transmat);
-                                                    if (c != null) {
-                                                        String w = StringArgumentType.getString(ctx, "to");
-                                                        TransmatUtility.tp(plugin, c.getFirst(), w, c.getSecond());
-                                                    }
-                                                    return Command.SINGLE_SUCCESS;
-                                                })))))
+                                }))
+                        .then(Commands.literal("tp")
+                                .then(Commands.literal("Rooms")
+                                        .executes(ctx -> {
+                                            Pair<Player, Integer> c = TardisUtility.check(plugin, ctx.getSource().getSender(), TardisCommand.transmat);
+                                            if (c != null) {
+                                                TransmatUtility.toRoomsWorld(plugin, c.getFirst(), c.getSecond());
+                                            }
+                                            return Command.SINGLE_SUCCESS;
+                                        }))
+                                .then(Commands.argument("to", StringArgumentType.word())
+                                        .executes(ctx -> {
+                                            Pair<Player, Integer> c = TardisUtility.check(plugin, ctx.getSource().getSender(), TardisCommand.transmat);
+                                            if (c != null) {
+                                                String w = StringArgumentType.getString(ctx, "to");
+                                                TransmatUtility.tp(plugin, c.getFirst(), w, c.getSecond());
+                                            }
+                                            return Command.SINGLE_SUCCESS;
+                                        }))))
                 .then(Commands.literal("update")
                         .executes(ctx -> {
                             Pair<Player, Integer> c = TardisUtility.check(plugin, ctx.getSource().getSender(), TardisCommand.update);

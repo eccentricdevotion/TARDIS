@@ -107,11 +107,15 @@ public class AdventureComponents {
     }
 
     public static TextComponent getTransmat(Transmat t) {
+        String to = t.name();
+        if (to.equals("Rooms World")) {
+            to = "Rooms";
+        }
         return Component.text(t.name(), NamedTextColor.GREEN)
                 .append(Component.text(String.format(" X: %.2f, Y: %.2f, Z: %.2f, Yaw %.2f", t.x(), t.y(), t.z(), t.yaw()), NamedTextColor.WHITE))
                 .append(Component.text(" <Transmat> ", NamedTextColor.AQUA)
                         .hoverEvent(HoverEvent.showText(Component.text("Transmat to this location")))
-                        .clickEvent(ClickEvent.runCommand("/tardis transmat tp " + t.name()))
+                        .clickEvent(ClickEvent.runCommand("/tardis transmat tp " + to))
                 );
     }
 
