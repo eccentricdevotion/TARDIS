@@ -200,9 +200,9 @@ public class TardisCommandNode {
                                                     }
                                                     return Command.SINGLE_SUCCESS;
                                                 })))))
-                .then(Commands.literal("arsremove")
+                .then(Commands.literal("ars_remove")
                         .executes(ctx -> {
-                            Pair<Player, Integer> c = TardisUtility.check(plugin, ctx.getSource().getSender(), TardisCommand.arsremove);
+                            Pair<Player, Integer> c = TardisUtility.check(plugin, ctx.getSource().getSender(), TardisCommand.ars_remove);
                             if (c != null) {
                                 new ARSRemoveCommand(plugin).resetARS(c.getFirst());
                             }
@@ -249,9 +249,9 @@ public class TardisCommandNode {
                             }
                             return Command.SINGLE_SUCCESS;
                         }))
-                .then(Commands.literal("comehere")
+                .then(Commands.literal("come_here")
                         .executes(ctx -> {
-                            Pair<Player, Integer> c = TardisUtility.check(plugin, ctx.getSource().getSender(), TardisCommand.comehere);
+                            Pair<Player, Integer> c = TardisUtility.check(plugin, ctx.getSource().getSender(), TardisCommand.come_here);
                             if (c != null) {
                                 new ComehereCommand(plugin).doComeHere(c.getFirst());
                             }
@@ -562,10 +562,10 @@ public class TardisCommandNode {
                                     }
                                     return Command.SINGLE_SUCCESS;
                                 })))
-                .then(Commands.literal("namekey")
+                .then(Commands.literal("name_key")
                         .then(Commands.argument("name", StringArgumentType.greedyString()))
                         .executes(ctx -> {
-                            Pair<Player, Integer> c = TardisUtility.check(plugin, ctx.getSource().getSender(), TardisCommand.namekey);
+                            Pair<Player, Integer> c = TardisUtility.check(plugin, ctx.getSource().getSender(), TardisCommand.name_key);
                             if (c != null) {
                                 String n = StringArgumentType.getString(ctx, "name");
                                 new NameKeyCommand(plugin).nameKey(c.getFirst(), n);
@@ -598,21 +598,21 @@ public class TardisCommandNode {
                                     }
                                     return Command.SINGLE_SUCCESS;
                                 })))
-                .then(Commands.literal("removesave")
+                .then(Commands.literal("remove_save")
                         .then(Commands.argument("name", StringArgumentType.word())
                                 .executes(ctx -> {
-                                    Pair<Player, Integer> c = TardisUtility.check(plugin, ctx.getSource().getSender(), TardisCommand.removesave);
+                                    Pair<Player, Integer> c = TardisUtility.check(plugin, ctx.getSource().getSender(), TardisCommand.remove_save);
                                     if (c != null) {
                                         String n = StringArgumentType.getString(ctx, "name");
                                         new RemoveSavedLocationCommand(plugin).doRemoveSave(c.getFirst(), n);
                                     }
                                     return Command.SINGLE_SUCCESS;
                                 })))
-                .then(Commands.literal("renamesave")
+                .then(Commands.literal("rename_save")
                         .then(Commands.argument("old_name", StringArgumentType.word())
                                 .then(Commands.argument("new_name", StringArgumentType.word())
                                         .executes(ctx -> {
-                                            Pair<Player, Integer> c = TardisUtility.check(plugin, ctx.getSource().getSender(), TardisCommand.renamesave);
+                                            Pair<Player, Integer> c = TardisUtility.check(plugin, ctx.getSource().getSender(), TardisCommand.rename_save);
                                             if (c != null) {
                                                 String o = StringArgumentType.getString(ctx, "old_name");
                                                 String n = StringArgumentType.getString(ctx, "new_name");
@@ -620,11 +620,11 @@ public class TardisCommandNode {
                                             }
                                             return Command.SINGLE_SUCCESS;
                                         }))))
-                .then(Commands.literal("reordersave")
+                .then(Commands.literal("reorder_save")
                         .then(Commands.argument("name", StringArgumentType.word())
                                 .then(Commands.argument("slot", IntegerArgumentType.integer(1))
                                         .executes(ctx -> {
-                                            Pair<Player, Integer> c = TardisUtility.check(plugin, ctx.getSource().getSender(), TardisCommand.reordersave);
+                                            Pair<Player, Integer> c = TardisUtility.check(plugin, ctx.getSource().getSender(), TardisCommand.reorder_save);
                                             if (c != null) {
                                                 String n = StringArgumentType.getString(ctx, "name");
                                                 int s = IntegerArgumentType.getInteger(ctx, "slot");
@@ -696,12 +696,12 @@ public class TardisCommandNode {
                                     }
                                     return Command.SINGLE_SUCCESS;
                                 })))
-                .then(Commands.literal("saveicon")
+                .then(Commands.literal("save_icon")
                         .then(Commands.argument("name", StringArgumentType.word())
                                 .then(Commands.argument("icon", StringArgumentType.word())
                                         .suggests(BlockSuggestions::get)
                                         .executes(ctx -> {
-                                            Pair<Player, Integer> c = TardisUtility.check(plugin, ctx.getSource().getSender(), TardisCommand.saveicon);
+                                            Pair<Player, Integer> c = TardisUtility.check(plugin, ctx.getSource().getSender(), TardisCommand.save_icon);
                                             if (c != null) {
                                                 String n = StringArgumentType.getString(ctx, "name");
                                                 String i = StringArgumentType.getString(ctx, "icon");
@@ -745,19 +745,19 @@ public class TardisCommandNode {
                                     }
                                     return Command.SINGLE_SUCCESS;
                                 })))
-                .then(Commands.literal("setdest")
+                .then(Commands.literal("set_destination")
                         .then(Commands.argument("name", StringArgumentType.word())
                                 .executes(ctx -> {
-                                    Pair<Player, Integer> c = TardisUtility.check(plugin, ctx.getSource().getSender(), TardisCommand.setdest);
+                                    Pair<Player, Integer> c = TardisUtility.check(plugin, ctx.getSource().getSender(), TardisCommand.set_destination);
                                     if (c != null) {
                                         String n = StringArgumentType.getString(ctx, "name");
                                         new SetDestinationCommand(plugin).doSetDestination(c.getFirst(), n);
                                     }
                                     return Command.SINGLE_SUCCESS;
                                 })))
-                .then(Commands.literal("sethome")
+                .then(Commands.literal("set_home")
                         .executes(ctx -> {
-                            Pair<Player, Integer> c = TardisUtility.check(plugin, ctx.getSource().getSender(), TardisCommand.sethome);
+                            Pair<Player, Integer> c = TardisUtility.check(plugin, ctx.getSource().getSender(), TardisCommand.set_home);
                             if (c != null) {
                                 new SetHomeCommand(plugin).setHome(c.getFirst(), "", "");
                             }
@@ -766,7 +766,7 @@ public class TardisCommandNode {
                         .then(Commands.literal("preset")
                                 .then(Commands.argument("type", new PresetArgumentType(0))
                                         .executes(ctx -> {
-                                            Pair<Player, Integer> c = TardisUtility.check(plugin, ctx.getSource().getSender(), TardisCommand.sethome);
+                                            Pair<Player, Integer> c = TardisUtility.check(plugin, ctx.getSource().getSender(), TardisCommand.set_home);
                                             if (c != null) {
                                                 String t = ctx.getArgument("type", String.class);
                                                 new SetHomeCommand(plugin).setHome(c.getFirst(), "preset", t);
@@ -780,9 +780,9 @@ public class TardisCommandNode {
                             }
                             return Command.SINGLE_SUCCESS;
                         }))
-                .then(Commands.literal("tagtheood")
+                .then(Commands.literal("tag_the_ood")
                         .executes(ctx -> {
-                            Pair<Player, Integer> c = TardisUtility.check(plugin, ctx.getSource().getSender(), TardisCommand.tagtheood);
+                            Pair<Player, Integer> c = TardisUtility.check(plugin, ctx.getSource().getSender(), TardisCommand.tag_the_ood);
                             if (c != null) {
                                 new TagCommand(plugin).getStats(c.getFirst());
                             }

@@ -395,7 +395,7 @@ public class TARDISTrackerInstanceKeeper {
     }
 
     /**
-     * Tracks players using the <code>/tardis comehere [player]</code> command
+     * Tracks players using the <code>/tardis come_here [player]</code> command
      */
     public HashMap<UUID, ComehereRequest> getComehereRequests() {
         return comehereRequests;

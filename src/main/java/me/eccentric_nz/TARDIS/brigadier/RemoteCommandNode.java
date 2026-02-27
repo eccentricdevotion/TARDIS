@@ -104,7 +104,7 @@ public class RemoteCommandNode {
                                                     RemoteUtility.coordinates(plugin, ctx.getSource().getSender(), world, pos, required.getSecond(), required.getFirst().getTardisId());
                                                     return Command.SINGLE_SUCCESS;
                                                 }))))
-                        .then(Commands.literal("comehere")
+                        .then(Commands.literal("come_here")
                                 .executes(ctx -> {
                                     Pair<Tardis, OfflinePlayer> required = getRequired(ctx);
                                     if (required == null) {

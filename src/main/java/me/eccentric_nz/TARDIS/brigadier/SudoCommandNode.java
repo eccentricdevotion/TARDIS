@@ -104,7 +104,7 @@ public class SudoCommandNode {
                                     }
                                     return Command.SINGLE_SUCCESS;
                                 }))
-                        .then(Commands.literal("comehere")
+                        .then(Commands.literal("come_here")
                                 .executes(ctx -> {
                                     if (ctx.getSource().getSender() instanceof ConsoleCommandSender) {
                                         plugin.getMessenger().send(ctx.getSource().getSender(), TardisModule.TARDIS, "CMD_NO_CONSOLE");

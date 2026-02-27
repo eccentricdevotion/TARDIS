@@ -835,11 +835,11 @@ commands:
       description: Archive your current TARDIS console.
       permission: tardis.archive
       usage: /<command> archive [scan|add|remove|update|description|y] [name] <y_value>
-    arsremove:
+    ars_remove:
       description: Remove the TARDIS' ARS records so that manual room growing can
         be used.
       permission: tardis.use
-      usage: /<command> arsremove
+      usage: /<command> ars_remove
     bell:
       description: Toggle the TARDIS Cloister Bell on and off.
       permission: tardis.use
@@ -857,11 +857,11 @@ commands:
         with a Sonic Screwdriver.
       permission: tardis.upgrade
       usage: /<command> colourise
-    comehere:
+    come_here:
       description: Make the TARDIS come to the block you are looking at.
       permission: tardis.timetravel
       permission-message: You don't have the permission <permission> to use this command
-      usage: /<command> comehere
+      usage: /<command> come_here
     construct:
       description: Set the sign text of the TARDIS CONSTRUCT Chameleon preset.
       permission: tardis.use
@@ -931,11 +931,11 @@ commands:
       permission: tardis.rebuild
       permission-message: You don't have the permission <permission> to use this command
       usage: /<command> hide
-    sethome:
+    set_home:
       description: Save a time travel location as home.
       permission: tardis.timetravel
       permission-message: You don't have the permission <permission> to use this command
-      usage: /<command> sethome <preset> [preset]
+      usage: /<command> set_home <preset> [preset]
     inside:
       description: List players inside your TARDIS.
       permission: tardis.use
@@ -969,11 +969,11 @@ commands:
       permission: tardis.use
       permission-message: You don't have the permission <permission> to use this command
       usage: /<command> monsters [reset|kill]
-    namekey:
+    name_key:
       description: Rename the TARDIS key Item.
       permission: tardis.timetravel
       permission-message: You don't have the permission <permission> to use this command
-      usage: Hold the key in your hand, then type /<command> namekey [new name]
+      usage: Hold the key in your hand, then type /<command> name_key [new name]
     occupy:
       description: Toggle TARDIS occupation.
       permission: tardis.timetravel
@@ -989,21 +989,21 @@ commands:
       permission: tardis.add
       permission-message: You don't have the permission <permission> to use this command
       usage: /<command> remove [player name|all]
-    removesave:
+    remove_save:
       description: Delete a saved destination.
       permission: tardis.save
       permission-message: You don't have the permission <permission> to use this command
-      usage: /<command> removesave [name]
-    renamesave:
+      usage: /<command> remove_save [name]
+    rename_save:
       description: Rename a saved destination.
       permission: tardis.save
       permission-message: You don't have the permission <permission> to use this command
-      usage: /<command> renamesave [old name] [new name]
-    reordersave:
+      usage: /<command> rename_save [old name] [new name]
+    reorder_save:
       description: Reorder a saved destination in the TARDIS Saves GUI.
       permission: tardis.save
       permission-message: You don't have the permission <permission> to use this command
-      usage: /<command> reordersave [name] [slot number]
+      usage: /<command> reorder_save [name] [slot number]
     rescue:
       description: Rescue a player in the TARDIS.
       permission: tardis.timetravel.rescue
@@ -1023,11 +1023,11 @@ commands:
       description: Allows a player to save a Player to a blank TARDIS Storage Disk.
       permission: tardis.storage
       usage: /<command> save_player [player]
-    saveicon:
+    save_icon:
       description: Change a saved destinations icon in the TARDIS Saves GUI.
       permission: tardis.save
       permission-message: You don't have the permission <permission> to use this command
-      usage: /<command> saveicon [save] [material]
+      usage: /<command> save_icon [save] [material]
     secondary:
       description: Set secondary TARDIS controls.
       permission: tardis.update
@@ -1037,19 +1037,19 @@ commands:
       description: Open the TARDIS Update chat GUI.
       permission: tardis.update
       usage: /<command> section
-    setdest:
+    set_destination:
       description: Save a destination determined by the block you are looking at.
       permission: tardis.save
       permission-message: You don't have the permission <permission> to use this command
-      usage: /<command> setdest [name]
+      usage: /<command> set_destination [name]
     stop_sound:
       description: Stops looping sounds!
       permission: tardis.fly
       usage: /<command> stop_sound
-    tagtheood:
+    tag_the_ood:
       description: Display the 'Tag the Ood' game statistics.
       permission: tardis.tag
-      usage: /<command> tagtheood
+      usage: /<command> tag_the_ood
     transmat:
       description: Teleports to or sets an internal TARDIS transmat location.
       permission: tardis.transmat
@@ -1371,9 +1371,9 @@ commands:
     clean:
       description: Cleans the specified player's TARDIS interior
       usage: /<command> [player] clean
-    comehere:
+    come_here:
       description: Makes the specified player's TARDIS travel to the sudoers currently targeted block
-      usage: /<command> [player] comehere
+      usage: /<command> [player] come_here
     deadlock:
       description: Locks or unlocks the specified player's TARDIS door
       usage: /<command> [player] deadlock [on|off]
@@ -1751,9 +1751,9 @@ commands:
     travel:
       description: Make a player's TARDIS travel to the specified location - home, area or coordinates
       usage: /<command> [player] travel [home|area|coords]
-    comehere:
+    come_here:
       description: Make a player's TARDIS come to the currently targeted block
-      usage: /<command> [player] comehere
+      usage: /<command> [player] come_here
     hide:
       description: Hide a player's TARDIS
       usage: /<command> [player] hide

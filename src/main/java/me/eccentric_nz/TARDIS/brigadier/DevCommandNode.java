@@ -258,7 +258,7 @@ public class DevCommandNode {
                             }
                             return Command.SINGLE_SUCCESS;
                         }))
-                .then(Commands.literal("displayitem")
+                .then(Commands.literal("display_item")
                         // "add", "shop", "animate", "remove", "place", "break", "convert", "chunk", "console", "door"
                         .then(Commands.literal("add")
                                 .then(Commands.argument("item", ArgumentTypes.itemStack())
@@ -763,7 +763,7 @@ public class DevCommandNode {
                             DevelopmentUtility.listStats(plugin);
                             return Command.SINGLE_SUCCESS;
                         }))
-                .then(Commands.literal("systree")
+                .then(Commands.literal("system_tree")
                         .executes(ctx -> {
                             if (ctx.getSource().getSender() instanceof Player player) {
                                 new SystemTreeCommand(plugin).open(player);

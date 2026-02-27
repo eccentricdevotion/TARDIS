@@ -33,7 +33,7 @@ public enum HandlesBlock {
 
     // paper
     // command
-    COMEHERE(HandlesCategory.COMMAND, "/tardis comehere command", List.of(Component.text("Make the TARDIS"), Component.text("travel to you")), HandlesVariant.HANDLES_COMMAND_COMEHERE.getKey()),
+    COMEHERE(HandlesCategory.COMMAND, "/tardis come_here command", List.of(Component.text("Make the TARDIS"), Component.text("travel to you")), HandlesVariant.HANDLES_COMMAND_COMEHERE.getKey()),
     HIDE(HandlesCategory.COMMAND, "/tardis hide command", List.of(Component.text("Make the TARDIS"), Component.text("exterior invisible")), HandlesVariant.HANDLES_COMMAND_HIDE.getKey()),
     REBUILD(HandlesCategory.COMMAND, "/tardis rebuild command", List.of(Component.text("Rebuild the"), Component.text("TARDIS exterior")), HandlesVariant.HANDLES_COMMAND_REBUILD.getKey()),
     SCAN(HandlesCategory.COMMAND, "TARDIS scan command", List.of(Component.text("Scan the environment"), Component.text("outside the TARDIS")), HandlesVariant.HANDLES_COMMAND_SCAN.getKey()),
