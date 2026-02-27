@@ -287,6 +287,8 @@ public class TARDIS extends JavaPlugin {
                 pm.disablePlugin(this);
                 return;
             }
+            // remove old datapack
+            new TARDISChecker(this).removeOldDataPack();
             messenger = new TARDISMessage();
             jsonKeeper = new ChatGUI();
             skinChanger = new SkinChanger();
@@ -408,8 +410,6 @@ public class TARDIS extends JavaPlugin {
                 bl.loadAntiBuild();
             }
             loadBooks();
-            // copy advancements to tardis datapack
-//            new TARDISChecker(this).checkDataPack();
             presets = new TARDISChameleonPreset();
             presets.makePresets();
             // hook CoreProtectAPI

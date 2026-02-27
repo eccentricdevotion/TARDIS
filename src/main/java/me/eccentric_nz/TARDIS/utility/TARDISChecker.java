@@ -17,18 +17,10 @@
 package me.eccentric_nz.TARDIS.utility;
 
 import com.google.common.io.MoreFiles;
-import com.google.gson.*;
-import com.google.gson.stream.JsonReader;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.Advancement;
-import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.tardischemistry.block.Painting;
 
-import java.io.*;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.io.File;
+import java.io.IOException;
 
 /**
  * @author eccentric_nz
@@ -36,179 +28,26 @@ import java.util.Set;
 public class TARDISChecker {
 
     private final TARDIS plugin;
-    private final Set<String> broken = new HashSet<>();
 
     public TARDISChecker(TARDIS plugin) {
         this.plugin = plugin;
-        broken.add("aorta.json");
-        broken.add("chemistry.json");
-        broken.add("lava.json");
     }
 
-    public static void copy(String filename, File file) {
-        try (InputStream in = TARDIS.plugin.getResource(filename)) {
-            try (OutputStream out = new FileOutputStream(file)) {
-                try {
-                    byte[] buf = new byte[1024];
-                    int len;
-                    while ((len = in.read(buf)) > 0) {
-                        out.write(buf, 0, len);
-                    }
-                } catch (IOException io) {
-                    TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.SEVERE, "Checker: Could not save the file (" + file + ").");
-                }
-            } catch (IOException e) {
-                TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.SEVERE, "Checker: Could not close the output stream.");
-            }
-        } catch (IOException e) {
-            TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.SEVERE, "Checker: File not found: " + filename);
-        }
-    }
-
-    public void checkDataPack() {
+    public void removeOldDataPack() {
         // get server's main world folder
         // is there a world container?
         File container = plugin.getServer().getWorldContainer();
         String s_world = plugin.getServer().getWorlds().getFirst().getName();
-        // check if directories exist
-        String dataPacksTardis = container.getAbsolutePath() + File.separator + s_world + File.separator + "datapacks" + File.separator + "tardis" + File.separator + "data" + File.separator + "tardis" + File.separator;
-        String dataPacksAdvancement = dataPacksTardis + "advancements";
-        File tardisOldDir = new File(dataPacksAdvancement);
-        boolean update = false;
+        String dataPacksTardis = container.getAbsolutePath() + File.separator + s_world + File.separator + "datapacks" + File.separator + "tardis";
+        File tardisOldDir = new File(dataPacksTardis);
+        // check if the directory exists
         if (tardisOldDir.exists()) {
-            // delete directory and files as they need updating
+            // delete directory and files as we now load the datapack from the TARDIS.jar file
             try {
                 MoreFiles.deleteRecursively(tardisOldDir.toPath());
-                update = true;
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-        }
-        String dataPacksMinecraft = container.getAbsolutePath() + File.separator + s_world + File.separator + "datapacks" + File.separator + "tardis" + File.separator + "data" + File.separator + "minecraft" + File.separator + "tags" + File.separator + "painting_variant" + File.separator;
-        File placeableDir = new File(dataPacksMinecraft);
-        if (!placeableDir.exists()) {
-            plugin.getMessenger().message(plugin.getConsole(), TardisModule.WARNING, String.format(plugin.getLanguage().getString("DATAPACK_DIRECTORIES", "%s"), "placeable"));
-            placeableDir.mkdirs();
-        }
-        dataPacksAdvancement = dataPacksTardis + "advancement";
-        String dataPacksPaintings = dataPacksTardis + "painting_variant";
-        File advancementDir = new File(dataPacksAdvancement);
-        if (!advancementDir.exists()) {
-            plugin.getMessenger().message(plugin.getConsole(), TardisModule.WARNING, String.format(plugin.getLanguage().getString("DATAPACK_DIRECTORIES", "%s"), "advancements"));
-            advancementDir.mkdirs();
-        }
-        File paintingsDir = new File(dataPacksPaintings);
-        if (!paintingsDir.exists()) {
-            plugin.getMessenger().message(plugin.getConsole(), TardisModule.WARNING, String.format(plugin.getLanguage().getString("DATAPACK_DIRECTORIES", "%s"), "painting variants"));
-            paintingsDir.mkdirs();
-        }
-        String dataPacksMeta = container.getAbsolutePath() + File.separator + s_world + File.separator + "datapacks" + File.separator + "tardis";
-        File mcmeta = new File(dataPacksMeta, "pack.mcmeta");
-        if (!mcmeta.exists() || update) {
-            plugin.getMessenger().message(plugin.getConsole(), TardisModule.WARNING, String.format(plugin.getLanguage().getString("DATAPACK_NOT_FOUND", "%s"), "pack.mcmeta", "datapack"));
-            plugin.getMessenger().message(plugin.getConsole(), TardisModule.WARNING, String.format(plugin.getLanguage().getString("DATAPACK_COPYING", "%s"), "datapack", "pack.mcmeta"));
-            copy("pack.mcmeta", mcmeta);
-        }
-        // update the format - 94.1 is the latest for 1.21.11
-        // it's a json file, so load it and check the value
-        Gson gson = new GsonBuilder().create();
-        try {
-            // convert JSON file to map
-            Map<?, ?> map = gson.fromJson(new FileReader(mcmeta), Map.class);
-            // loop map entries
-            for (Map.Entry<?, ?> entry : map.entrySet()) {
-                if (entry.getKey().equals("pack") && entry.getValue() instanceof Map<?, ?> values) {
-                    for (Map.Entry<?, ?> data : values.entrySet()) {
-                        if (data.getKey().equals("pack_format")) {
-                            Double d = (Double) data.getValue();
-                            if (d < 94.1D) {
-                                Map<String, Map<String, Object>> mcmap = new HashMap<>();
-                                Map<String, Object> pack = new HashMap<>();
-                                pack.put("description", "Data pack for the TARDIS plugin");
-                                pack.put("pack_format", 94.1);
-                                pack.put("min_format", 94.1);
-                                pack.put("max_format", 94.1);
-                                mcmap.put("pack", pack);
-                                FileWriter writer = new FileWriter(mcmeta);
-                                gson.toJson(mcmap, writer);
-                                writer.close();
-                            }
-                        }
-                    }
-                }
-            }
-        } catch (IOException ignored) {
-        }
-        File placeable = new File(dataPacksMinecraft, "placeable.json");
-        if (!placeable.exists()) {
-            plugin.getMessenger().message(plugin.getConsole(), TardisModule.WARNING, String.format(plugin.getLanguage().getString("DATAPACK_NOT_FOUND", "%s"), "placeable.json", "painting variant"));
-            plugin.getMessenger().message(plugin.getConsole(), TardisModule.WARNING, String.format(plugin.getLanguage().getString("DATAPACK_COPYING", "%s"), "painting variant", "placeable.json"));
-            copy("painting_variant/placeable.json", placeable);
-        } else {
-            // load json
-            try (FileReader reader = new FileReader(placeable)) {
-                JsonObject rootObject = JsonParser.parseReader(new JsonReader(reader)).getAsJsonObject();
-                if (rootObject.has("values")) {
-                    JsonArray values = rootObject.get("values").getAsJsonArray();
-                    JsonElement chevy = new JsonPrimitive("tardis:chevrolet");
-                    if (!values.contains(chevy)) {
-                        values.add(chevy);
-                        rootObject.add("values", values);
-                        Gson pson = new GsonBuilder().setPrettyPrinting().create();
-                        try (Writer writer = new FileWriter(placeable)) {
-                            pson.toJson(rootObject, writer);
-                        }
-                    }
-                }
-            } catch (IOException e) {
-                plugin.debug("Failed to update placeable.json " + e.getMessage());
-            }
-        }
-        // update json files
-        write(dataPacksTardis);
-    }
-
-    private void write(String rootFolder) {
-        for (Advancement advancement : Advancement.values()) {
-            String json = advancement.getConfigName() + ".json";
-            File jfile = new File(rootFolder + "advancement", json);
-            if (!jfile.exists()) {
-                plugin.getMessenger().message(plugin.getConsole(), TardisModule.WARNING, String.format(plugin.getLanguage().getString("DATAPACK_NOT_FOUND", "%s"), json, "advancement"));
-                plugin.getMessenger().message(plugin.getConsole(), TardisModule.WARNING, String.format(plugin.getLanguage().getString("DATAPACK_COPYING", "%s, %s"), "advancement", json));
-                copy("advancement/" + json, jfile);
-            } else if (advancement == Advancement.ROOT && !plugin.getConfig().getBoolean("conversions.adv_root", false)) {
-                // check the display.background value
-                try {
-                    JsonReader reader = new JsonReader(new FileReader(jfile));
-                    JsonObject root = JsonParser.parseReader(reader).getAsJsonObject();
-                    JsonObject display = root.get("display").getAsJsonObject();
-                    String background = display.get("background").getAsString();
-                    if (background.contains(".png")) {
-                        copy("advancement/" + json, jfile);
-                        plugin.getConfig().set("conversions.adv_root", true);
-                        plugin.saveConfig();
-                    }
-                } catch (FileNotFoundException ignored) {
-                }
-            }
-        }
-        for (Painting painting : Painting.values()) {
-            String json = painting.getName() + ".json";
-            File jfile = new File(rootFolder + "painting_variant", json);
-            if (!jfile.exists()) {
-                plugin.getMessenger().message(plugin.getConsole(), TardisModule.WARNING, String.format(plugin.getLanguage().getString("DATAPACK_NOT_FOUND", "%s"), json, "painting variant"));
-                plugin.getMessenger().message(plugin.getConsole(), TardisModule.WARNING, String.format(plugin.getLanguage().getString("DATAPACK_COPYING", "%s"), "painting variant", json));
-                copy("painting_variant/" + json, jfile);
-            } else if (!plugin.getConfig().getBoolean("conversions.paintings") && broken.contains(json)) {
-                // fix broken paintings
-                copy("painting_variant/" + json, jfile);
-            } else if (!plugin.getConfig().getBoolean("conversions.exploding") && painting == Painting.EXPLODING_TARDIS) {
-                plugin.debug("Fixing exploding TARDIS painting");
-                // fix exploding TARDIS
-                copy("painting_variant/" + json, jfile);
-                plugin.getConfig().set("conversions.exploding", true);
-            }
-            plugin.saveConfig();
         }
     }
 }
