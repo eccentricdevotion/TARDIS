@@ -12,6 +12,7 @@ import io.papermc.paper.command.brigadier.argument.resolvers.BlockPositionResolv
 import io.papermc.paper.command.brigadier.argument.resolvers.PlayerProfileListResolver;
 import io.papermc.paper.math.BlockPosition;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.brigadier.arguments.UpdateableArgumentType;
 import me.eccentric_nz.TARDIS.commands.preferences.IsomorphicCommand;
 import me.eccentric_nz.TARDIS.commands.remote.BackCommand;
@@ -38,7 +39,7 @@ public class SudoCommandNode {
 
     LiteralCommandNode<CommandSourceStack> build() {
         LiteralArgumentBuilder<CommandSourceStack> command = Commands.literal("tardissudo")
-                .requires(ctx -> ctx.getSender().hasPermission("tardis.admin"))
+                .requires(ctx -> TARDISPermission.hasPermission(ctx.getSender(), "tardis.admin"))
                 .then(Commands.argument("profile", ArgumentTypes.playerProfiles())
                         .then(Commands.literal("ars")
                                 .executes(ctx -> {

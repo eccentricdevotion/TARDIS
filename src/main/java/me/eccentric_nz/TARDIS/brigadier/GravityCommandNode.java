@@ -8,6 +8,7 @@ import com.mojang.brigadier.tree.LiteralCommandNode;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.brigadier.arguments.DirectionArgumentType;
 import me.eccentric_nz.TARDIS.commands.GravityUtility;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
@@ -23,27 +24,27 @@ public class GravityCommandNode {
 
     LiteralCommandNode<CommandSourceStack> build() {
         LiteralArgumentBuilder<CommandSourceStack> command = Commands.literal("tardisgravity")
-                .requires(ctx -> ctx.getExecutor() instanceof Player && ctx.getSender().hasPermission("tardis.gravity"))
+                .requires(ctx -> ctx.getSender() instanceof Player p && TARDISPermission.hasPermission(p, "tardis.gravity"))
                 .executes(ctx -> {
                     new TARDISCommandHelper(plugin).getCommand("tardisgravity", ctx.getSource().getSender());
                     return Command.SINGLE_SUCCESS;
                 })
                 .then(Commands.literal("remove")
                         .executes(ctx->{
-                            Player player = (Player) ctx.getSource().getExecutor();
+                            Player player = (Player) ctx.getSource().getSender();
                             new GravityUtility(plugin).remove(player);
                             return Command.SINGLE_SUCCESS;
                         }))
                 .then(Commands.literal("down")
                         .executes(ctx->{
-                            Player player = (Player) ctx.getSource().getExecutor();
+                            Player player = (Player) ctx.getSource().getSender();
                             new GravityUtility(plugin).make(player, "down", 0d, 0.5d);
                             return Command.SINGLE_SUCCESS;
                         }))
                 .then(Commands.argument("direction", new DirectionArgumentType())
                         .then(Commands.argument("distance", IntegerArgumentType.integer(0))
                                 .executes(ctx -> {
-                                    Player player = (Player) ctx.getSource().getExecutor();
+                                    Player player = (Player) ctx.getSource().getSender();
                                     String direction = ctx.getArgument("direction", String.class);
                                     double distance = DoubleArgumentType.getDouble(ctx, "distance");
                                     new GravityUtility(plugin).make(player, direction, distance, 0.5d);
@@ -51,7 +52,7 @@ public class GravityCommandNode {
                                 })
                                 .then(Commands.argument("velocity", DoubleArgumentType.doubleArg(0))
                                         .executes(ctx->{
-                                            Player player = (Player) ctx.getSource().getExecutor();
+                                            Player player = (Player) ctx.getSource().getSender();
                                             String direction = ctx.getArgument("direction", String.class);
                                             double distance = DoubleArgumentType.getDouble(ctx, "distance");
                                             double velocity = DoubleArgumentType.getDouble(ctx, "velocity");

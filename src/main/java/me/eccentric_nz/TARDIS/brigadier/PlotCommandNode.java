@@ -7,6 +7,7 @@ import com.mojang.brigadier.tree.LiteralCommandNode;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.tardischunkgenerator.worldgen.PlotGenerator;
 import org.bukkit.entity.Player;
@@ -21,11 +22,11 @@ public class PlotCommandNode {
 
     LiteralCommandNode<CommandSourceStack> build() {
         LiteralArgumentBuilder<CommandSourceStack> command = Commands.literal("tardisplot")
-                .requires(ctx -> ctx.getExecutor() instanceof Player && ctx.getSender().hasPermission("tardis.plot"))
+                .requires(ctx -> ctx.getSender() instanceof Player p && TARDISPermission.hasPermission(p, "tardis.plot"))
                 .then(Commands.literal("name")
                         .then(Commands.argument("string", StringArgumentType.greedyString())
                                 .executes(ctx -> {
-                                    Player player = (Player) ctx.getSource().getExecutor();
+                                    Player player = (Player) ctx.getSource().getSender();
                                     // are they in a plot world?
                                     if (!(player.getWorld().getGenerator() instanceof PlotGenerator)) {
                                         plugin.getMessenger().send(player, TardisModule.TARDIS, "PLOT_WORLD");

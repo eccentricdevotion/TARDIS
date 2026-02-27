@@ -6,6 +6,7 @@ import com.mojang.brigadier.tree.LiteralCommandNode;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.brigadier.arguments.RecipeArgumentType;
 import me.eccentric_nz.TARDIS.brigadier.arguments.SeedArgumentType;
 import me.eccentric_nz.TARDIS.commands.RecipeUtility;
@@ -23,7 +24,7 @@ public class RecipeCommandNode {
 
     LiteralCommandNode<CommandSourceStack> build() {
         LiteralArgumentBuilder<CommandSourceStack> command = Commands.literal("tardisrecipe")
-                .requires(ctx -> ctx.getSender().hasPermission("tardis.help"))
+                .requires(ctx -> TARDISPermission.hasPermission(ctx.getSender(), "tardis.help"))
                 .executes(ctx -> {
                     if (ctx.getSource().getSender() instanceof Player player) {
                         player.openInventory(new TARDISRecipeCategoryInventory(plugin).getInventory());
@@ -32,11 +33,11 @@ public class RecipeCommandNode {
                     }
                     return Command.SINGLE_SUCCESS;
                 })
-                .requires(ctx -> ctx.getExecutor() instanceof Player)
+                .requires(ctx -> ctx.getSender() instanceof Player)
                 .then(Commands.literal("seed")
                         .then(Commands.argument("type", new SeedArgumentType())
                                 .executes(ctx -> {
-                                    Player player = (Player) ctx.getSource().getExecutor();
+                                    Player player = (Player) ctx.getSource().getSender();
                                     String t = ctx.getArgument("type", String.class);
                                     RecipeUtility.showTARDISRecipe(plugin, player, t);
                                     return Command.SINGLE_SUCCESS;
@@ -44,14 +45,14 @@ public class RecipeCommandNode {
                 .then(Commands.literal("tardis")
                         .then(Commands.argument("type", new SeedArgumentType())
                                 .executes(ctx -> {
-                                    Player player = (Player) ctx.getSource().getExecutor();
+                                    Player player = (Player) ctx.getSource().getSender();
                                     String t = ctx.getArgument("type", String.class);
                                     RecipeUtility.showTARDISRecipe(plugin, player, t);
                                     return Command.SINGLE_SUCCESS;
                                 })))
                 .then(Commands.argument("item", new RecipeArgumentType(plugin))
                         .executes(ctx -> {
-                            Player player = (Player) ctx.getSource().getExecutor();
+                            Player player = (Player) ctx.getSource().getSender();
                             String item = ctx.getArgument("item", String.class);
                             RecipeUtility.showItemRecipe(plugin, player, item);
                             return Command.SINGLE_SUCCESS;

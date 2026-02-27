@@ -25,9 +25,9 @@ public class DisplayCommandNode {
 
     LiteralCommandNode<CommandSourceStack> build() {
         LiteralArgumentBuilder<CommandSourceStack> command = Commands.literal("tardisdisplay")
-                .requires(ctx -> ctx.getExecutor() instanceof Player p && TARDISPermission.hasPermission(p, "tardis.display"))
+                .requires(ctx -> ctx.getSender() instanceof Player p && TARDISPermission.hasPermission(p, "tardis.display"))
                 .executes(ctx -> {
-                    Player player = (Player) ctx.getSource().getExecutor();
+                    Player player = (Player) ctx.getSource().getSender();
                     UUID uuid = player.getUniqueId();
                     if (plugin.getTrackerKeeper().getDisplay().containsKey(uuid)) {
                         plugin.getTrackerKeeper().getDisplay().remove(uuid);
@@ -40,7 +40,7 @@ public class DisplayCommandNode {
                 })
                 .then(Commands.argument("hud", new DisplayArgumentType())
                         .executes(ctx -> {
-                            Player player = (Player) ctx.getSource().getExecutor();
+                            Player player = (Player) ctx.getSource().getSender();
                             String d = ctx.getArgument("hud", String.class);
                             try {
                                 TARDISDisplayType displayType = TARDISDisplayType.valueOf(d.toUpperCase(Locale.ROOT));

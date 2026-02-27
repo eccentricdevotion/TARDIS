@@ -21,10 +21,10 @@ public class CallCommandNode {
 
     LiteralCommandNode<CommandSourceStack> build() {
         LiteralArgumentBuilder<CommandSourceStack> command = Commands.literal("tardiscall")
-                .requires(ctx -> ctx.getExecutor() instanceof Player)
+                .requires(ctx -> ctx.getSender() instanceof Player)
                 .then(Commands.argument("player", ArgumentTypes.player())
                         .executes(ctx -> {
-                            Player player = (Player) ctx.getSource().getExecutor();
+                            Player player = (Player) ctx.getSource().getSender();
                             PlayerSelectorArgumentResolver targetResolver = ctx.getArgument("player", PlayerSelectorArgumentResolver.class);
                             Player requested = targetResolver.resolve(ctx.getSource()).getFirst();
                             new TARDISCallRequestCommand(plugin).requestComeHere(player, requested);

@@ -22,9 +22,9 @@ public class InfoCommandNode {
 
     LiteralCommandNode<CommandSourceStack> build() {
         LiteralArgumentBuilder<CommandSourceStack> command = Commands.literal("tardisinfo")
-                .requires(ctx -> ctx.getExecutor() instanceof Player)
+                .requires(ctx -> ctx.getSender() instanceof Player)
                 .executes(ctx -> {
-                    Player player = (Player) ctx.getSource().getExecutor();
+                    Player player = (Player) ctx.getSource().getSender();
                     if (plugin.getTrackerKeeper().getInfoMenu().containsKey(player.getUniqueId())) {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "TIS_EXIT");
                     }
@@ -32,7 +32,7 @@ public class InfoCommandNode {
                 })
                 .then(Commands.literal("e")
                         .executes(ctx -> {
-                            Player player = (Player) ctx.getSource().getExecutor();
+                            Player player = (Player) ctx.getSource().getSender();
                             if (plugin.getTrackerKeeper().getInfoMenu().containsKey(player.getUniqueId())) {
                                 TARDISInformationSystemListener.exit(player, plugin);
                             }
@@ -40,7 +40,7 @@ public class InfoCommandNode {
                         }))
                 .then(Commands.literal("E")
                         .executes(ctx -> {
-                            Player player = (Player) ctx.getSource().getExecutor();
+                            Player player = (Player) ctx.getSource().getSender();
                             if (plugin.getTrackerKeeper().getInfoMenu().containsKey(player.getUniqueId())) {
                                 TARDISInformationSystemListener.exit(player, plugin);
                             }
@@ -48,13 +48,13 @@ public class InfoCommandNode {
                         }))
                 .then(Commands.literal("gui")
                         .executes(ctx -> {
-                            Player player = (Player) ctx.getSource().getExecutor();
+                            Player player = (Player) ctx.getSource().getSender();
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.openInventory(new TARDISIndexFileInventory(plugin).getInventory()), 2L);
                             return Command.SINGLE_SUCCESS;
                         }))
                 .then(Commands.argument("i", StringArgumentType.word())
                         .executes(ctx -> {
-                            Player player = (Player) ctx.getSource().getExecutor();
+                            Player player = (Player) ctx.getSource().getSender();
                             if (plugin.getTrackerKeeper().getInfoMenu().containsKey(player.getUniqueId())) {
                                 String i = StringArgumentType.getString(ctx, "i");
                                 TARDISInformationSystemListener.processInput(player, i, plugin);

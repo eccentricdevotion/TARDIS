@@ -10,6 +10,7 @@ import io.papermc.paper.command.brigadier.argument.ArgumentTypes;
 import io.papermc.paper.command.brigadier.argument.resolvers.BlockPositionResolver;
 import io.papermc.paper.command.brigadier.argument.resolvers.selector.PlayerSelectorArgumentResolver;
 import io.papermc.paper.math.BlockPosition;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.commands.utils.TeleportUtility;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -18,10 +19,10 @@ public class TeleportCommandNode {
 
     LiteralCommandNode<CommandSourceStack> build() {
         LiteralArgumentBuilder<CommandSourceStack> command = Commands.literal("tardisteleport")
-                .requires(ctx -> ctx.getExecutor().hasPermission("tardis.admin"))
+                .requires(ctx -> TARDISPermission.hasPermission(ctx.getSender(), "tardis.admin"))
                 .then(Commands.argument("world", ArgumentTypes.world())
                         .executes(ctx -> {
-                            if (ctx.getSource().getExecutor() instanceof Player player) {
+                            if (ctx.getSource().getSender() instanceof Player player) {
                                 World world = ctx.getArgument("world", World.class);
                                 TeleportUtility.teleport(player, world);
                             }
@@ -35,7 +36,7 @@ public class TeleportCommandNode {
                                                 World world = ctx.getArgument("world", World.class);
                                                 BlockPositionResolver resolver = ctx.getArgument("coords", BlockPositionResolver.class);
                                                 BlockPosition pos = resolver.resolve(ctx.getSource());
-                                                Player player = (Player) ctx.getSource().getExecutor();
+                                                Player player = (Player) ctx.getSource().getSender();
                                                 TeleportUtility.notForPlayers(player, world, pos);
                                             }
                                             return Command.SINGLE_SUCCESS;

@@ -30,7 +30,7 @@ public class MonstersCommandNode {
 
     public LiteralCommandNode<CommandSourceStack> build() {
         LiteralArgumentBuilder<CommandSourceStack> command = Commands.literal("twa")
-                .requires(ctx -> ctx.getExecutor() instanceof Player)
+                .requires(ctx -> ctx.getSender() instanceof Player)
                 .then(Commands.literal("spawn")
                         .then(Commands.argument("monster", new MonsterArgumentType())
                                 .executes(ctx -> {

@@ -16,6 +16,7 @@ import io.papermc.paper.registry.RegistryAccess;
 import io.papermc.paper.registry.RegistryKey;
 import io.papermc.paper.registry.TypedKey;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.brigadier.arguments.AreasArgumentType;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import me.eccentric_nz.TARDIS.commands.travel.*;
@@ -35,14 +36,14 @@ public class TravelCommandNode {
 
     LiteralCommandNode<CommandSourceStack> build() {
         LiteralArgumentBuilder<CommandSourceStack> command = Commands.literal("tardiscall")
-                .requires(ctx -> ctx.getExecutor() instanceof Player player && player.hasPermission("tardis.travel"))
+                .requires(ctx -> ctx.getSender() instanceof Player p && TARDISPermission.hasPermission(p, "tardis.travel"))
                 .executes(ctx -> {
                     new TARDISCommandHelper(plugin).getCommand("tardistravel", ctx.getSource().getSender());
                     return Command.SINGLE_SUCCESS;
                 })
                 .then(Commands.literal("home")
                         .executes(ctx -> {
-                            Player player = (Player) ctx.getSource().getExecutor();
+                            Player player = (Player) ctx.getSource().getSender();
                             int id = TravelUtilities.getId(plugin, player);
                             if (id > 0) {
                                 new HomeCommand(plugin).action(player, id);
@@ -52,7 +53,7 @@ public class TravelCommandNode {
                         .then(Commands.argument("communicator", StringArgumentType.word())
                                 .executes(ctx -> {
                                     if (StringArgumentType.getString(ctx, "communicator").equals("kzsbtr1h2")) {
-                                        Player player = (Player) ctx.getSource().getExecutor();
+                                        Player player = (Player) ctx.getSource().getSender();
                                         int id = TravelUtilities.getId(plugin, player);
                                         if (id > 0) {
                                             new HomeCommand(plugin).action(player, id);
@@ -62,13 +63,13 @@ public class TravelCommandNode {
                                 })))
                 .then(Commands.literal("biome")
                         .then(Commands.literal("list").executes(ctx -> {
-                            Player player = (Player) ctx.getSource().getExecutor();
+                            Player player = (Player) ctx.getSource().getSender();
                             TravelUtilities.listBiomes(plugin, player);
                             return Command.SINGLE_SUCCESS;
                         }))
                         .then(Commands.argument("biome", ArgumentTypes.resourceKey(RegistryKey.BIOME))
                                 .executes(ctx -> {
-                                    Player player = (Player) ctx.getSource().getExecutor();
+                                    Player player = (Player) ctx.getSource().getSender();
                                     int id = TravelUtilities.getId(plugin, player);
                                     if (id > 0) {
                                         TypedKey<Biome> key = RegistryArgumentExtractor.getTypedKey(ctx, RegistryKey.BIOME, "biome");
@@ -80,7 +81,7 @@ public class TravelCommandNode {
                                 .then(Commands.argument("communicator", StringArgumentType.word())
                                         .executes(ctx -> {
                                             if (StringArgumentType.getString(ctx, "communicator").equals("kzsbtr1h2")) {
-                                                Player player = (Player) ctx.getSource().getExecutor();
+                                                Player player = (Player) ctx.getSource().getSender();
                                                 int id = TravelUtilities.getId(plugin, player);
                                                 if (id > 0) {
                                                     TypedKey<Biome> key = RegistryArgumentExtractor.getTypedKey(ctx, RegistryKey.BIOME, "biome");
@@ -92,7 +93,7 @@ public class TravelCommandNode {
                                         }))
                                 .then(Commands.argument("world", ArgumentTypes.world())
                                         .executes(ctx -> {
-                                            Player player = (Player) ctx.getSource().getExecutor();
+                                            Player player = (Player) ctx.getSource().getSender();
                                             int id = TravelUtilities.getId(plugin, player);
                                             if (id > 0) {
                                                 TypedKey<Biome> key = RegistryArgumentExtractor.getTypedKey(ctx, RegistryKey.BIOME, "biome");
@@ -105,7 +106,7 @@ public class TravelCommandNode {
                 .then(Commands.literal("save")
                         .then(Commands.argument("name", StringArgumentType.string())
                                 .executes(ctx -> {
-                                    Player player = (Player) ctx.getSource().getExecutor();
+                                    Player player = (Player) ctx.getSource().getSender();
                                     Pair<Integer, ChameleonPreset> data = TravelUtilities.getIdAndPreset(plugin, player);
                                     if (data.getFirst() > 0) {
                                         String n = ctx.getArgument("name", String.class);
@@ -116,7 +117,7 @@ public class TravelCommandNode {
                 .then(Commands.literal("dest")
                         .then(Commands.argument("name", StringArgumentType.string())
                                 .executes(ctx -> {
-                                    Player player = (Player) ctx.getSource().getExecutor();
+                                    Player player = (Player) ctx.getSource().getSender();
                                     Pair<Integer, ChameleonPreset> data = TravelUtilities.getIdAndPreset(plugin, player);
                                     if (data.getFirst() > 0) {
                                         String n = ctx.getArgument("name", String.class);
@@ -127,7 +128,7 @@ public class TravelCommandNode {
                                 .then(Commands.argument("communicator", StringArgumentType.word())
                                         .executes(ctx -> {
                                             if (StringArgumentType.getString(ctx, "communicator").equals("kzsbtr1h2")) {
-                                                Player player = (Player) ctx.getSource().getExecutor();
+                                                Player player = (Player) ctx.getSource().getSender();
                                                 Pair<Integer, ChameleonPreset> data = TravelUtilities.getIdAndPreset(plugin, player);
                                                 if (data.getFirst() > 0) {
                                                     String n = ctx.getArgument("name", String.class);
@@ -139,7 +140,7 @@ public class TravelCommandNode {
                 .then(Commands.literal("area")
                         .then(Commands.argument("name", new AreasArgumentType())
                                 .executes(ctx -> {
-                                    Player player = (Player) ctx.getSource().getExecutor();
+                                    Player player = (Player) ctx.getSource().getSender();
                                     Pair<Integer, ChameleonPreset> data = TravelUtilities.getIdAndPreset(plugin, player);
                                     if (data.getFirst() > 0) {
                                         String n = ctx.getArgument("name", String.class);
@@ -149,7 +150,7 @@ public class TravelCommandNode {
                                 })))
                 .then(Commands.literal("back")
                         .executes(ctx -> {
-                            Player player = (Player) ctx.getSource().getExecutor();
+                            Player player = (Player) ctx.getSource().getSender();
                             int id = TravelUtilities.getId(plugin, player);
                             if (id > 0) {
                                 new BackCommand(plugin).action(player, id);
@@ -159,7 +160,7 @@ public class TravelCommandNode {
                 .then(Commands.literal("player")
                         .then(Commands.argument("target", ArgumentTypes.player())
                                 .executes(ctx -> {
-                                    Player player = (Player) ctx.getSource().getExecutor();
+                                    Player player = (Player) ctx.getSource().getSender();
                                     int id = TravelUtilities.getId(plugin, player);
                                     if (id > 0) {
                                         PlayerSelectorArgumentResolver targetResolver = ctx.getArgument("target", PlayerSelectorArgumentResolver.class);
@@ -171,7 +172,7 @@ public class TravelCommandNode {
                                 .then(Commands.argument("communicator", StringArgumentType.word())
                                         .executes(ctx -> {
                                             if (StringArgumentType.getString(ctx, "communicator").equals("kzsbtr1h2")) {
-                                                Player player = (Player) ctx.getSource().getExecutor();
+                                                Player player = (Player) ctx.getSource().getSender();
                                                 int id = TravelUtilities.getId(plugin, player);
                                                 if (id > 0) {
                                                     PlayerSelectorArgumentResolver targetResolver = ctx.getArgument("target", PlayerSelectorArgumentResolver.class);
@@ -183,7 +184,7 @@ public class TravelCommandNode {
                                         }))))
                 .then(Commands.literal("cave")
                         .executes(ctx -> {
-                            Player player = (Player) ctx.getSource().getExecutor();
+                            Player player = (Player) ctx.getSource().getSender();
                             int id = TravelUtilities.getId(plugin, player);
                             if (id > 0) {
                                 new CaveCommand(plugin).action(player, id);
@@ -193,7 +194,7 @@ public class TravelCommandNode {
                         .then(Commands.argument("communicator", StringArgumentType.word())
                                 .executes(ctx -> {
                                     if (StringArgumentType.getString(ctx, "communicator").equals("kzsbtr1h2")) {
-                                        Player player = (Player) ctx.getSource().getExecutor();
+                                        Player player = (Player) ctx.getSource().getSender();
                                         int id = TravelUtilities.getId(plugin, player);
                                         if (id > 0) {
                                             new CaveCommand(plugin).action(player, id);
@@ -203,7 +204,7 @@ public class TravelCommandNode {
                                 })))
                 .then(Commands.literal("village")
                         .executes(ctx -> {
-                            Player player = (Player) ctx.getSource().getExecutor();
+                            Player player = (Player) ctx.getSource().getSender();
                             int id = TravelUtilities.getId(plugin, player);
                             if (id > 0) {
                                 // get random village in current world
@@ -213,7 +214,7 @@ public class TravelCommandNode {
                         })
                         .then(Commands.argument("type", ArgumentTypes.resourceKey(RegistryKey.STRUCTURE))
                                 .executes(ctx -> {
-                                    Player player = (Player) ctx.getSource().getExecutor();
+                                    Player player = (Player) ctx.getSource().getSender();
                                     int id = TravelUtilities.getId(plugin, player);
                                     if (id > 0) {
                                         Structure type = ctx.getArgument("type", Structure.class);
@@ -224,7 +225,7 @@ public class TravelCommandNode {
                         .then(Commands.argument("communicator", StringArgumentType.word())
                                 .executes(ctx -> {
                                     if (StringArgumentType.getString(ctx, "communicator").equals("kzsbtr1h2")) {
-                                        Player player = (Player) ctx.getSource().getExecutor();
+                                        Player player = (Player) ctx.getSource().getSender();
                                         int id = TravelUtilities.getId(plugin, player);
                                         if (id > 0) {
                                             new TARDISTravelGUI(plugin).open(player, id, "village");
@@ -234,7 +235,7 @@ public class TravelCommandNode {
                                 })))
                 .then(Commands.literal("structure")
                         .executes(ctx -> {
-                            Player player = (Player) ctx.getSource().getExecutor();
+                            Player player = (Player) ctx.getSource().getSender();
                             int id = TravelUtilities.getId(plugin, player);
                             if (id > 0) {
                                 // get random structure in current world
@@ -244,7 +245,7 @@ public class TravelCommandNode {
                         })
                         .then(Commands.argument("type", ArgumentTypes.resourceKey(RegistryKey.STRUCTURE))
                                 .executes(ctx -> {
-                                    Player player = (Player) ctx.getSource().getExecutor();
+                                    Player player = (Player) ctx.getSource().getSender();
                                     int id = TravelUtilities.getId(plugin, player);
                                     if (id > 0) {
                                         Structure type = ctx.getArgument("type", Structure.class);
@@ -254,7 +255,7 @@ public class TravelCommandNode {
                                 })))
                 .then(Commands.literal("cancel")
                         .executes(ctx -> {
-                            Player player = (Player) ctx.getSource().getExecutor();
+                            Player player = (Player) ctx.getSource().getSender();
                             int id = TravelUtilities.getId(plugin, player);
                             if (id > 0) {
                                 new CancelCommand(plugin).action(player, id);
@@ -263,7 +264,7 @@ public class TravelCommandNode {
                         }))
                 .then(Commands.literal("costs")
                         .executes(ctx -> {
-                            Player player = (Player) ctx.getSource().getExecutor();
+                            Player player = (Player) ctx.getSource().getSender();
                             int id = TravelUtilities.getId(plugin, player);
                             if (id > 0) {
                                 new StopCommand(plugin).action(player, id);
@@ -272,7 +273,7 @@ public class TravelCommandNode {
                         }))
                 .then(Commands.literal("stop")
                         .executes(ctx -> {
-                            Player player = (Player) ctx.getSource().getExecutor();
+                            Player player = (Player) ctx.getSource().getSender();
                             int id = TravelUtilities.getId(plugin, player);
                             if (id > 0) {
                                 new StopCommand(plugin).action(player, id);
@@ -282,7 +283,7 @@ public class TravelCommandNode {
                 .then(Commands.literal("random")
                         .then(Commands.argument("world", ArgumentTypes.world())
                                 .executes(ctx -> {
-                                    Player player = (Player) ctx.getSource().getExecutor();
+                                    Player player = (Player) ctx.getSource().getSender();
                                     int id = TravelUtilities.getId(plugin, player);
                                     if (id > 0) {
                                         World world = ctx.getArgument("world", World.class);
@@ -293,7 +294,7 @@ public class TravelCommandNode {
                 .then(Commands.argument("world", ArgumentTypes.world())
                         .then(Commands.argument("coords", ArgumentTypes.blockPosition())
                                 .executes(ctx -> {
-                                    Player player = (Player) ctx.getSource().getExecutor();
+                                    Player player = (Player) ctx.getSource().getSender();
                                     int id = TravelUtilities.getId(plugin, player);
                                     if (id > 0) {
                                         World world = ctx.getArgument("world", World.class);
@@ -305,7 +306,7 @@ public class TravelCommandNode {
                                 })))
                 .then(Commands.argument("coords", ArgumentTypes.blockPosition())
                         .executes(ctx -> {
-                            Player player = (Player) ctx.getSource().getExecutor();
+                            Player player = (Player) ctx.getSource().getSender();
                             int id = TravelUtilities.getId(plugin, player);
                             if (id > 0) {
                                 BlockPositionResolver resolver = ctx.getArgument("coords", BlockPositionResolver.class);

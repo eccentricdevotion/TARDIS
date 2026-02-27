@@ -13,6 +13,7 @@ import io.papermc.paper.registry.RegistryAccess;
 import io.papermc.paper.registry.RegistryKey;
 import io.papermc.paper.registry.TypedKey;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.brigadier.arguments.AreasArgumentType;
 import me.eccentric_nz.TARDIS.brigadier.arguments.BindTypeArgument;
 import me.eccentric_nz.TARDIS.brigadier.arguments.PresetArgumentType;
@@ -34,13 +35,13 @@ public class BindCommandNode {
     LiteralCommandNode<CommandSourceStack> build() {
         LiteralArgumentBuilder<CommandSourceStack> command = Commands.literal("tardisbind")
                 // require a player to execute the command
-                .requires(ctx -> ctx.getExecutor() instanceof Player && ctx.getSender().hasPermission("tardis.update"))
+                .requires(ctx -> ctx.getSender() instanceof Player p && TARDISPermission.hasPermission(p, "tardis.update"))
                 .then(Commands.literal("add")
                         .then(Commands.literal("SAVE")
                                 .then(Commands.argument("name", StringArgumentType.word())
                                         .suggests(SaveSuggestions::get)
                                         .executes(ctx -> {
-                                            Player player = (Player) ctx.getSource().getExecutor();
+                                            Player player = (Player) ctx.getSource().getSender();
                                             String name = StringArgumentType.getString(ctx, "name");
                                             new BindSave().click(plugin, player, name);
                                             return Command.SINGLE_SUCCESS;
@@ -48,7 +49,7 @@ public class BindCommandNode {
                         .then(Commands.literal("AREA")
                                 .then(Commands.argument("area", new AreasArgumentType())
                                         .executes(ctx -> {
-                                            Player player = (Player) ctx.getSource().getExecutor();
+                                            Player player = (Player) ctx.getSource().getSender();
                                             String area = ctx.getArgument("area", String.class);
                                             new BindArea().click(plugin, player, area);
                                             return Command.SINGLE_SUCCESS;
@@ -56,7 +57,7 @@ public class BindCommandNode {
                         .then(Commands.literal("BIOME")
                                 .then(Commands.argument("biome", ArgumentTypes.resourceKey(RegistryKey.BIOME))
                                         .executes(ctx -> {
-                                            Player player = (Player) ctx.getSource().getExecutor();
+                                            Player player = (Player) ctx.getSource().getSender();
                                             TypedKey<Biome> key = RegistryArgumentExtractor.getTypedKey(ctx, RegistryKey.BIOME, "biome");
                                             Biome biome = RegistryAccess.registryAccess().getRegistry(key.registryKey()).get(key.key());
                                             new BindBiome().click(plugin, player, biome);
@@ -65,7 +66,7 @@ public class BindCommandNode {
                         .then(Commands.literal("CHAMELEON")
                                 .then(Commands.argument("preset", new PresetArgumentType(2))
                                         .executes(ctx -> {
-                                            Player player = (Player) ctx.getSource().getExecutor();
+                                            Player player = (Player) ctx.getSource().getSender();
                                             String p = ctx.getArgument("preset", String.class);
                                             new BindPreset().click(plugin, player, p);
                                             return Command.SINGLE_SUCCESS;
@@ -73,7 +74,7 @@ public class BindCommandNode {
                         .then(Commands.literal("PLAYER")
                                 .then(Commands.argument("target", ArgumentTypes.player())
                                         .executes(ctx -> {
-                                            Player player = (Player) ctx.getSource().getExecutor();
+                                            Player player = (Player) ctx.getSource().getSender();
                                             PlayerSelectorArgumentResolver targetResolver = ctx.getArgument("target", PlayerSelectorArgumentResolver.class);
                                             Player target = targetResolver.resolve(ctx.getSource()).getFirst();
                                             new BindPlayer().click(plugin, player, target);
@@ -83,14 +84,14 @@ public class BindCommandNode {
                                 .then(Commands.argument("name", StringArgumentType.word())
                                         .suggests(TransmatSuggestions::get)
                                         .executes(ctx -> {
-                                            Player player = (Player) ctx.getSource().getExecutor();
+                                            Player player = (Player) ctx.getSource().getSender();
                                             String name = StringArgumentType.getString(ctx, "name");
                                             new BindTransmat().click(plugin, player, name);
                                             return Command.SINGLE_SUCCESS;
                                         })))
                         .then(Commands.argument("bind_type", new BindTypeArgument(true))
                                 .executes(ctx -> {
-                                    Player player = (Player) ctx.getSource().getExecutor();
+                                    Player player = (Player) ctx.getSource().getSender();
                                     Bind bind = Bind.valueOf(ctx.getArgument("bind_type", String.class));
                                     new BindButton().click(plugin, player, bind);
                                     return Command.SINGLE_SUCCESS;
@@ -99,7 +100,7 @@ public class BindCommandNode {
                         .then(Commands.argument("bind_type", new BindTypeArgument(false))
                                 .executes(ctx -> {
                                     Bind bind = Bind.valueOf(StringArgumentType.getString(ctx, "bind_type"));
-                                    Player player = (Player) ctx.getSource().getExecutor();
+                                    Player player = (Player) ctx.getSource().getSender();
                                     new BindRemove(plugin).setClick(bind, player);
                                     return Command.SINGLE_SUCCESS;
                                 })));

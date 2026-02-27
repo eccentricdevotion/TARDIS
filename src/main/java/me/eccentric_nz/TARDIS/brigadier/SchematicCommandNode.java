@@ -7,6 +7,7 @@ import com.mojang.brigadier.tree.LiteralCommandNode;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.brigadier.arguments.DirectoryArgumentType;
 import me.eccentric_nz.TARDIS.brigadier.arguments.LightArgumentType;
 import me.eccentric_nz.TARDIS.brigadier.suggestions.BlockSuggestions;
@@ -26,7 +27,7 @@ public class SchematicCommandNode {
     LiteralCommandNode<CommandSourceStack> build() {
         LiteralArgumentBuilder<CommandSourceStack> command = Commands.literal("tardisschematic")
                 // require a player to execute the command
-                .requires(ctx -> ctx.getExecutor() instanceof Player && ctx.getSender().hasPermission("tardis.admin"))
+                .requires(ctx -> ctx.getSender() instanceof Player p && TARDISPermission.hasPermission(p, "tardis.admin"))
                 .then(Commands.literal("load")
                         .then(Commands.argument("directory", new DirectoryArgumentType())
                                 .then(Commands.argument("schematic", StringArgumentType.word())
@@ -34,14 +35,14 @@ public class SchematicCommandNode {
                                         .executes(ctx -> {
                                             String d = StringArgumentType.getString(ctx, "directory");
                                             String s = StringArgumentType.getString(ctx, "schematic");
-                                            Player player = (Player) ctx.getSource().getExecutor();
+                                            Player player = (Player) ctx.getSource().getSender();
                                             new SchematicLoad().act(plugin, player, d, s);
                                             return Command.SINGLE_SUCCESS;
                                         }))
                         ))
                 .then(Commands.literal("paste")
                         .executes(ctx -> {
-                            Player player = (Player) ctx.getSource().getExecutor();
+                            Player player = (Player) ctx.getSource().getSender();
                             SchematicPaster paster = new SchematicPaster(plugin, player, false);
                             int task = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, paster, 1L, 3L);
                             paster.setTask(task);
@@ -49,7 +50,7 @@ public class SchematicCommandNode {
                         })
                         .then(Commands.literal("no_air")
                                 .executes(ctx -> {
-                                    Player player = (Player) ctx.getSource().getExecutor();
+                                    Player player = (Player) ctx.getSource().getSender();
                                     SchematicPaster paster = new SchematicPaster(plugin, player, true);
                                     int task = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, paster, 1L, 3L);
                                     paster.setTask(task);
@@ -58,13 +59,13 @@ public class SchematicCommandNode {
                 .then(Commands.literal("save")
                         .then(Commands.argument("filename", StringArgumentType.word())
                                 .executes(ctx -> {
-                                    Player player = (Player) ctx.getSource().getExecutor();
+                                    Player player = (Player) ctx.getSource().getSender();
                                     String n = StringArgumentType.getString(ctx, "filename");
                                     new SchematicSave().act(plugin, player, n);
                                     return Command.SINGLE_SUCCESS;
                                 })))
                 .then(Commands.literal("clear").executes(ctx -> {
-                    Player player = (Player) ctx.getSource().getExecutor();
+                    Player player = (Player) ctx.getSource().getSender();
                     new SchematicClear().act(plugin, player);
                     return Command.SINGLE_SUCCESS;
                 }))
@@ -74,7 +75,7 @@ public class SchematicCommandNode {
                                 .then(Commands.argument("to_block", StringArgumentType.word())
                                         .suggests(BlockSuggestions::get)
                                         .executes(ctx -> {
-                                            Player player = (Player) ctx.getSource().getExecutor();
+                                            Player player = (Player) ctx.getSource().getSender();
                                             String from = StringArgumentType.getString(ctx, "from_block");
                                             String to = StringArgumentType.getString(ctx, "to_block");
                                             new SchematicReplace().act(plugin, player, from, to);
@@ -86,7 +87,7 @@ public class SchematicCommandNode {
                                 .then(Commands.argument("to_block", StringArgumentType.word())
                                         .suggests(BlockSuggestions::get)
                                         .executes(ctx -> {
-                                            Player player = (Player) ctx.getSource().getExecutor();
+                                            Player player = (Player) ctx.getSource().getSender();
                                             String from = ctx.getArgument("from_light", String.class);
                                             String to = StringArgumentType.getString(ctx, "to_block");
                                             new SchematicConvert().act(plugin, player, from, to);
@@ -101,14 +102,14 @@ public class SchematicCommandNode {
                                     return builder.buildFuture();
                                 })
                                 .executes(ctx -> {
-                                    Player player = (Player) ctx.getSource().getExecutor();
+                                    Player player = (Player) ctx.getSource().getSender();
                                     String what = StringArgumentType.getString(ctx, "what");
                                     new SchematicRemove().act(plugin, player, what);
                                     return Command.SINGLE_SUCCESS;
                                 })
                         ))
                 .then(Commands.literal("flowers").executes(ctx -> {
-                    Player player = (Player) ctx.getSource().getExecutor();
+                    Player player = (Player) ctx.getSource().getSender();
                     new SchematicFlowers().act(plugin, player);
                     return Command.SINGLE_SUCCESS;
                 }))
@@ -120,14 +121,14 @@ public class SchematicCommandNode {
                                     return builder.buildFuture();
                                 })
                                 .executes(ctx -> {
-                                    Player player = (Player) ctx.getSource().getExecutor();
+                                    Player player = (Player) ctx.getSource().getSender();
                                     boolean lava = StringArgumentType.getString(ctx, "type").equalsIgnoreCase("lava");
                                     new SchematicLavaAndWater().act(plugin, player, lava);
                                     return Command.SINGLE_SUCCESS;
                                 })
                         ))
                 .then(Commands.literal("position").executes(ctx -> {
-                    Player player = (Player) ctx.getSource().getExecutor();
+                    Player player = (Player) ctx.getSource().getSender();
                     new SchematicPosition().teleport(plugin, player);
                     return Command.SINGLE_SUCCESS;
                 }));

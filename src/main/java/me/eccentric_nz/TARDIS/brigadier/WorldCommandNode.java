@@ -8,6 +8,7 @@ import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 import io.papermc.paper.command.brigadier.argument.ArgumentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.brigadier.arguments.EnvironmentArgument;
 import me.eccentric_nz.TARDIS.brigadier.arguments.PlanetArgumentType;
 import me.eccentric_nz.TARDIS.brigadier.arguments.WorldTypeArgument;
@@ -29,7 +30,7 @@ public class WorldCommandNode {
 
     LiteralCommandNode<CommandSourceStack> build() {
         LiteralArgumentBuilder<CommandSourceStack> command = Commands.literal("tardisworld")
-                .requires(ctx -> ctx.getSender().hasPermission("tardis.admin"))
+                .requires(ctx -> TARDISPermission.hasPermission(ctx.getSender(), "tardis.admin"))
                 .then(Commands.literal("load")
                         // load [world] <WorldType> <Environment> <generator>
                         .then(Commands.argument("world", StringArgumentType.word())

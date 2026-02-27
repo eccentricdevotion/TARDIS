@@ -6,6 +6,7 @@ import com.mojang.brigadier.tree.LiteralCommandNode;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.brigadier.arguments.BookArgumentType;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import me.eccentric_nz.TARDIS.commands.book.BookUtility;
@@ -26,18 +27,18 @@ public class BookCommandNode {
                     new TARDISCommandHelper(plugin).getCommand("tardisbook", ctx.getSource().getSender());
                     return Command.SINGLE_SUCCESS;
                 })
-                .requires(ctx -> ctx.getSender().hasPermission("tardis.book"))
+                .requires(ctx -> TARDISPermission.hasPermission(ctx.getSender(), "tardis.book"))
                 .then(Commands.literal("list")
                         .executes(ctx -> {
                             BookUtility.list(plugin, ctx.getSource().getSender());
                             return Command.SINGLE_SUCCESS;
                         }))
-                .requires(ctx -> ctx.getExecutor() instanceof Player)
+                .requires(ctx -> ctx.getSender() instanceof Player)
                 .then(Commands.argument("book_name", new BookArgumentType())
                         .then(Commands.literal("get")
                                 .executes(ctx -> {
                                     String b = ctx.getArgument("book_name", String.class);
-                                    Player player = (Player) ctx.getSource().getExecutor();
+                                    Player player = (Player) ctx.getSource().getSender();
                                     TARDISBook book = new TARDISBook(plugin);
                                     // title, author, filename, player
                                     book.writeBook("Rassilon", b, player);
@@ -46,7 +47,7 @@ public class BookCommandNode {
                         .then(Commands.literal("start")
                                 .executes(ctx -> {
                                     String b = ctx.getArgument("book_name", String.class);
-                                    Player player = (Player) ctx.getSource().getExecutor();
+                                    Player player = (Player) ctx.getSource().getSender();
                                     BookUtility.start(plugin, b, player);
                                     return Command.SINGLE_SUCCESS;
                                 })));

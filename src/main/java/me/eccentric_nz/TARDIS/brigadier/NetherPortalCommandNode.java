@@ -10,6 +10,7 @@ import io.papermc.paper.command.brigadier.argument.ArgumentTypes;
 import io.papermc.paper.command.brigadier.argument.resolvers.BlockPositionResolver;
 import io.papermc.paper.math.BlockPosition;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.commands.utils.NetherPortalUtility;
 import org.bukkit.entity.Player;
 
@@ -23,9 +24,9 @@ public class NetherPortalCommandNode {
 
     LiteralCommandNode<CommandSourceStack> build() {
         LiteralArgumentBuilder<CommandSourceStack> command = Commands.literal("tardisnetherportal")
-                .requires(ctx -> ctx.getSender().hasPermission("tardis.help"))
+                .requires(ctx -> TARDISPermission.hasPermission(ctx.getSender(), "tardis.help"))
                 .executes(ctx -> {
-                    if (ctx.getSource().getExecutor() instanceof Player player) {
+                    if (ctx.getSource().getSender() instanceof Player player) {
                         NetherPortalUtility.o2n(plugin, player);
                     }
                     return Command.SINGLE_SUCCESS;

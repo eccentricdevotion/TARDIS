@@ -10,6 +10,7 @@ import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 import io.papermc.paper.command.brigadier.argument.ArgumentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.brigadier.arguments.*;
 import me.eccentric_nz.TARDIS.brigadier.suggestions.BlockSuggestions;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
@@ -32,7 +33,7 @@ public class ConfigCommandNode {
     LiteralCommandNode<CommandSourceStack> build() {
         LiteralArgumentBuilder<CommandSourceStack> command = Commands.literal("tardisconfig")
                 // require a player to execute the command
-                .requires(ctx -> ctx.getSender().hasPermission("tardis.admin"))
+                .requires(ctx -> TARDISPermission.hasPermission(ctx.getSender(), "tardis.admin"))
                 .executes(ctx -> {
                     new TARDISCommandHelper(plugin).getCommand("tardisconfig", ctx.getSource().getSender());
                     return Command.SINGLE_SUCCESS;

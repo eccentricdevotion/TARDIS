@@ -13,6 +13,7 @@ import io.papermc.paper.command.brigadier.argument.resolvers.selector.PlayerSele
 import io.papermc.paper.math.BlockPosition;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.arch.TARDISArchCommand;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.brigadier.arguments.*;
 import me.eccentric_nz.TARDIS.brigadier.suggestions.PermissionSuggestions;
 import me.eccentric_nz.TARDIS.brigadier.suggestions.SeedSuggestions;
@@ -27,7 +28,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.BlockFace;
-import org.bukkit.entity.Entity;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class AdminCommandNode {
@@ -40,7 +41,7 @@ public class AdminCommandNode {
 
     LiteralCommandNode<CommandSourceStack> build() {
         LiteralArgumentBuilder<CommandSourceStack> command = Commands.literal("tardisadmin")
-                .requires(ctx -> ctx.getSender().hasPermission("tardis.admin"))
+                .requires(ctx -> TARDISPermission.hasPermission(ctx.getSender(), "tardis.admin"))
                 .then(Commands.literal("add_regions")
                         .executes(ctx -> {
                             new AddRegionsCommand(plugin).doCheck(ctx.getSource().getSender());
@@ -126,7 +127,7 @@ public class AdminCommandNode {
                 .then(Commands.literal("delete")
                         .then(Commands.argument("player", ArgumentTypes.player())
                                 .executes(ctx -> {
-                                    Entity executor = ctx.getSource().getExecutor();
+                                    CommandSender executor = ctx.getSource().getSender();
                                     if (!(executor instanceof Player)) {
                                         ctx.getSource().getSender().sendPlainMessage("Only players can enter TARDISes!");
                                         return Command.SINGLE_SUCCESS;
@@ -138,7 +139,7 @@ public class AdminCommandNode {
                                 })
                                 .then(Commands.literal("abandoned")
                                         .executes(ctx -> {
-                                            Entity executor = ctx.getSource().getExecutor();
+                                            CommandSender executor = ctx.getSource().getSender();
                                             if (!(executor instanceof Player)) {
                                                 ctx.getSource().getSender().sendPlainMessage("Only players can enter TARDISes!");
                                                 return Command.SINGLE_SUCCESS;
@@ -150,7 +151,7 @@ public class AdminCommandNode {
                                         })))
                         .then(Commands.argument("id", IntegerArgumentType.integer(1))
                                 .executes(ctx -> {
-                                    Entity executor = ctx.getSource().getExecutor();
+                                    CommandSender executor = ctx.getSource().getSender();
                                     if (!(executor instanceof Player)) {
                                         ctx.getSource().getSender().sendPlainMessage("Only players can enter TARDISes!");
                                         return Command.SINGLE_SUCCESS;
@@ -159,7 +160,7 @@ public class AdminCommandNode {
                                     new DeleteTARDISCommand(plugin).deleteTARDIS(ctx.getSource().getSender(), id, 0);
                                     return Command.SINGLE_SUCCESS;
                                 })).then(Commands.literal("abandoned")).executes(ctx -> {
-                            Entity executor = ctx.getSource().getExecutor();
+                            CommandSender executor = ctx.getSource().getSender();
                             if (!(executor instanceof Player)) {
                                 ctx.getSource().getSender().sendPlainMessage("Only players can enter TARDISes!");
                                 return Command.SINGLE_SUCCESS;
@@ -194,7 +195,7 @@ public class AdminCommandNode {
                 .then(Commands.literal("enter")
                         .then(Commands.argument("player", ArgumentTypes.player())
                                 .executes(ctx -> {
-                                    Entity executor = ctx.getSource().getExecutor();
+                                    CommandSender executor = ctx.getSource().getSender();
                                     if (!(executor instanceof Player)) {
                                         ctx.getSource().getSender().sendPlainMessage("Only players can enter TARDISes!");
                                         return Command.SINGLE_SUCCESS;
@@ -206,7 +207,7 @@ public class AdminCommandNode {
                                 }))
                         .then(Commands.argument("id", IntegerArgumentType.integer(1))
                                 .executes(ctx -> {
-                                    Entity executor = ctx.getSource().getExecutor();
+                                    CommandSender executor = ctx.getSource().getSender();
                                     if (!(executor instanceof Player)) {
                                         ctx.getSource().getSender().sendPlainMessage("Only players can enter TARDISes!");
                                         return Command.SINGLE_SUCCESS;
@@ -262,7 +263,7 @@ public class AdminCommandNode {
                                 })))
                 .then(Commands.literal("maze")
                         .executes(ctx -> {
-                            Entity executor = ctx.getSource().getExecutor();
+                            CommandSender executor = ctx.getSource().getSender();
                             if (!(executor instanceof Player player)) {
                                 ctx.getSource().getSender().sendPlainMessage("Only players can create mazes!");
                                 return Command.SINGLE_SUCCESS;
@@ -388,7 +389,7 @@ public class AdminCommandNode {
                                 .then(Commands.argument("preset", new PresetArgumentType(0))
                                         .then(Commands.argument("direction", new CompassArgumentType())
                                                 .executes(ctx -> {
-                                                    Entity executor = ctx.getSource().getExecutor();
+                                                    CommandSender executor = ctx.getSource().getSender();
                                                     if (!(executor instanceof Player player)) {
                                                         ctx.getSource().getSender().sendPlainMessage("Only players can create abandoned TARDISes!");
                                                         return Command.SINGLE_SUCCESS;
@@ -413,7 +414,7 @@ public class AdminCommandNode {
                                                                     return Command.SINGLE_SUCCESS;
                                                                 })))))))
                 .then(Commands.literal("undisguise").executes(ctx -> {
-                            Entity executor = ctx.getSource().getExecutor();
+                            CommandSender executor = ctx.getSource().getSender();
                             if (!(executor instanceof Player player)) {
                                 ctx.getSource().getSender().sendPlainMessage("Only players can undisguise!");
                                 return Command.SINGLE_SUCCESS;

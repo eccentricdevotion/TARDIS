@@ -8,6 +8,7 @@ import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 import io.papermc.paper.command.brigadier.argument.ArgumentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.brigadier.arguments.TimeArgumentType;
 import me.eccentric_nz.TARDIS.commands.utils.TimeUtility;
 import org.bukkit.entity.Player;
@@ -22,17 +23,17 @@ public class TimeCommandNode {
 
     LiteralCommandNode<CommandSourceStack> build() {
         LiteralArgumentBuilder<CommandSourceStack> command = Commands.literal("tardistime")
-                .requires(ctx -> ctx.getExecutor() instanceof Player && ctx.getExecutor().hasPermission("tardis.admin"))
+                .requires(ctx -> ctx.getSender() instanceof Player p && TARDISPermission.hasPermission(p, "tardis.admin"))
                 .then(Commands.argument("time", ArgumentTypes.time())
                         .executes(ctx -> {
-                            Player player = (Player) ctx.getSource().getExecutor();
+                            Player player = (Player) ctx.getSource().getSender();
                             int timeInTicks = IntegerArgumentType.getInteger(ctx, "time");
                             TimeUtility.setTime(plugin, timeInTicks, player);
                             return Command.SINGLE_SUCCESS;
                         }))
                 .then(Commands.argument("time_of_day", new TimeArgumentType())
                         .executes(ctx -> {
-                            Player player = (Player) ctx.getSource().getExecutor();
+                            Player player = (Player) ctx.getSource().getSender();
                             String t = ctx.getArgument("time_of_day", String.class);
                             TimeUtility.setTime(plugin, t, player);
                             return Command.SINGLE_SUCCESS;

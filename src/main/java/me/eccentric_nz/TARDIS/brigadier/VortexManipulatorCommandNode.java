@@ -37,14 +37,14 @@ public class VortexManipulatorCommandNode {
                 })
                 .then(Commands.literal("go")
                         .executes(ctx -> {
-                            if (ctx.getSource().getExecutor() instanceof Player player && VortexManipulatorUtility.checkPlayer(plugin, player)) {
+                            if (ctx.getSource().getSender() instanceof Player player && VortexManipulatorUtility.checkPlayer(plugin, player)) {
                                 new TVMCommandCoords(plugin).execute(player, null, null);
                             }
                             return Command.SINGLE_SUCCESS;
                         })
                         .then(Commands.argument("save", StringArgumentType.string())
                                 .executes(ctx -> {
-                                    if (ctx.getSource().getExecutor() instanceof Player player && VortexManipulatorUtility.checkPlayer(plugin, player)) {
+                                    if (ctx.getSource().getSender() instanceof Player player && VortexManipulatorUtility.checkPlayer(plugin, player)) {
                                         String s = StringArgumentType.getString(ctx, "save");
                                         new TVMCommandGo(plugin).execute(player, s);
                                     }
@@ -52,7 +52,7 @@ public class VortexManipulatorCommandNode {
                                 }))
                         .then(Commands.argument("world", ArgumentTypes.world())
                                 .executes(ctx -> {
-                                    if (ctx.getSource().getExecutor() instanceof Player player && VortexManipulatorUtility.checkPlayer(plugin, player)) {
+                                    if (ctx.getSource().getSender() instanceof Player player && VortexManipulatorUtility.checkPlayer(plugin, player)) {
                                         World world = ctx.getArgument("world", World.class);
                                         new TVMCommandCoords(plugin).execute(player, world, null);
                                     }
@@ -60,7 +60,7 @@ public class VortexManipulatorCommandNode {
                                 })
                                 .then(Commands.argument("coords", ArgumentTypes.blockPosition())
                                         .executes(ctx -> {
-                                            if (ctx.getSource().getExecutor() instanceof Player player && VortexManipulatorUtility.checkPlayer(plugin, player)) {
+                                            if (ctx.getSource().getSender() instanceof Player player && VortexManipulatorUtility.checkPlayer(plugin, player)) {
                                                 World world = ctx.getArgument("world", World.class);
                                                 BlockPositionResolver resolver = ctx.getArgument("coords", BlockPositionResolver.class);
                                                 BlockPosition pos = resolver.resolve(ctx.getSource());
@@ -70,7 +70,7 @@ public class VortexManipulatorCommandNode {
                                         }))))
                 .then(Commands.literal("gui")
                         .executes(ctx -> {
-                            if (ctx.getSource().getExecutor() instanceof Player player && VortexManipulatorUtility.checkPlayer(plugin, player)) {
+                            if (ctx.getSource().getSender() instanceof Player player && VortexManipulatorUtility.checkPlayer(plugin, player)) {
                                 new TVMCommandGUI(plugin).open(player);
                             }
                             return Command.SINGLE_SUCCESS;
@@ -91,7 +91,7 @@ public class VortexManipulatorCommandNode {
                                 .then(Commands.argument("player", ArgumentTypes.playerProfiles())
                                         .then(Commands.argument("text", StringArgumentType.greedyString())
                                                 .executes(ctx -> {
-                                                    if (ctx.getSource().getExecutor() instanceof Player player && VortexManipulatorUtility.checkPlayer(plugin, player)) {
+                                                    if (ctx.getSource().getSender() instanceof Player player && VortexManipulatorUtility.checkPlayer(plugin, player)) {
                                                         PlayerProfileListResolver profilesResolver = ctx.getArgument("profile", PlayerProfileListResolver.class);
                                                         Collection<PlayerProfile> foundProfiles = profilesResolver.resolve(ctx.getSource());
                                                         for (PlayerProfile profile : foundProfiles) {
@@ -109,7 +109,7 @@ public class VortexManipulatorCommandNode {
                                             return builder.buildFuture();
                                         })
                                         .executes(ctx -> {
-                                            if (ctx.getSource().getExecutor() instanceof Player player && VortexManipulatorUtility.checkPlayer(plugin, player)) {
+                                            if (ctx.getSource().getSender() instanceof Player player && VortexManipulatorUtility.checkPlayer(plugin, player)) {
                                                 String b = StringArgumentType.getString(ctx, "box");
                                                 VortexManipulatorUtility.basicList(plugin, player, b);
                                             }
@@ -117,7 +117,7 @@ public class VortexManipulatorCommandNode {
                                         })
                                         .then(Commands.argument("page", IntegerArgumentType.integer(1))
                                                 .executes(ctx -> {
-                                                    if (ctx.getSource().getExecutor() instanceof Player player && VortexManipulatorUtility.checkPlayer(plugin, player)) {
+                                                    if (ctx.getSource().getSender() instanceof Player player && VortexManipulatorUtility.checkPlayer(plugin, player)) {
                                                         String b = StringArgumentType.getString(ctx, "box");
                                                         int p = IntegerArgumentType.getInteger(ctx, "page");
                                                         VortexManipulatorUtility.pagedList(plugin, player, b, p);
@@ -127,7 +127,7 @@ public class VortexManipulatorCommandNode {
                         .then(Commands.literal("read")
                                 .then(Commands.argument("id", IntegerArgumentType.integer(1))
                                         .executes(ctx -> {
-                                            if (ctx.getSource().getExecutor() instanceof Player player && VortexManipulatorUtility.checkPlayer(plugin, player)) {
+                                            if (ctx.getSource().getSender() instanceof Player player && VortexManipulatorUtility.checkPlayer(plugin, player)) {
                                                 int r = IntegerArgumentType.getInteger(ctx, "id");
                                                 VortexManipulatorUtility.read(plugin, player, r);
                                             }
@@ -136,7 +136,7 @@ public class VortexManipulatorCommandNode {
                         .then(Commands.literal("delete")
                                 .then(Commands.argument("id", IntegerArgumentType.integer(1))
                                         .executes(ctx -> {
-                                            if (ctx.getSource().getExecutor() instanceof Player player && VortexManipulatorUtility.checkPlayer(plugin, player)) {
+                                            if (ctx.getSource().getSender() instanceof Player player && VortexManipulatorUtility.checkPlayer(plugin, player)) {
                                                 int d = IntegerArgumentType.getInteger(ctx, "id");
                                                 VortexManipulatorUtility.delete(plugin, player, d);
                                             }
@@ -150,7 +150,7 @@ public class VortexManipulatorCommandNode {
                                             return builder.buildFuture();
                                         })
                                         .executes(ctx -> {
-                                            if (ctx.getSource().getExecutor() instanceof Player player && VortexManipulatorUtility.checkPlayer(plugin, player)) {
+                                            if (ctx.getSource().getSender() instanceof Player player && VortexManipulatorUtility.checkPlayer(plugin, player)) {
                                                 String b = StringArgumentType.getString(ctx, "box");
                                                 VortexManipulatorUtility.basicList(plugin, player, b);
                                             }
@@ -158,7 +158,7 @@ public class VortexManipulatorCommandNode {
                                         }))))
                 .then(Commands.literal("save")
                         .executes(ctx -> {
-                            if (ctx.getSource().getExecutor() instanceof Player player && VortexManipulatorUtility.checkPlayer(plugin, player)) {
+                            if (ctx.getSource().getSender() instanceof Player player && VortexManipulatorUtility.checkPlayer(plugin, player)) {
                                 new TVMCommandSave(plugin).send(player, 0);
                             }
                             return Command.SINGLE_SUCCESS;
@@ -166,7 +166,7 @@ public class VortexManipulatorCommandNode {
                         .then(Commands.argument("page", IntegerArgumentType.integer(1))
                                 .executes(ctx -> {
                                     int p = IntegerArgumentType.getInteger(ctx, "page");
-                                    if (ctx.getSource().getExecutor() instanceof Player player && VortexManipulatorUtility.checkPlayer(plugin, player)) {
+                                    if (ctx.getSource().getSender() instanceof Player player && VortexManipulatorUtility.checkPlayer(plugin, player)) {
                                         new TVMCommandSave(plugin).send(player, p);
                                     }
                                     return Command.SINGLE_SUCCESS;
@@ -174,7 +174,7 @@ public class VortexManipulatorCommandNode {
                         .then(Commands.argument("name", StringArgumentType.word())
                                 .executes(ctx -> {
                                     String s = StringArgumentType.getString(ctx, "name");
-                                    if (ctx.getSource().getExecutor() instanceof Player player && VortexManipulatorUtility.checkPlayer(plugin, player)) {
+                                    if (ctx.getSource().getSender() instanceof Player player && VortexManipulatorUtility.checkPlayer(plugin, player)) {
                                         new TVMCommandSave(plugin).save(player, s);
                                     }
                                     return Command.SINGLE_SUCCESS;
@@ -182,7 +182,7 @@ public class VortexManipulatorCommandNode {
                 .then(Commands.literal("remove")
                         .then(Commands.argument("save", StringArgumentType.word())
                                 .executes(ctx -> {
-                                    if (ctx.getSource().getExecutor() instanceof Player player && VortexManipulatorUtility.checkPlayer(plugin, player)) {
+                                    if (ctx.getSource().getSender() instanceof Player player && VortexManipulatorUtility.checkPlayer(plugin, player)) {
                                         String s = StringArgumentType.getString(ctx, "save");
                                         new TVMCommandRemove(plugin).process(player, s);
                                     }
@@ -190,14 +190,14 @@ public class VortexManipulatorCommandNode {
                                 })))
                 .then(Commands.literal("lifesigns")
                         .executes(ctx -> {
-                            if (ctx.getSource().getExecutor() instanceof Player player && VortexManipulatorUtility.checkPlayer(plugin, player)) {
+                            if (ctx.getSource().getSender() instanceof Player player && VortexManipulatorUtility.checkPlayer(plugin, player)) {
                                 new TVMCommandLifesigns(plugin).scan(player, null);
                             }
                             return Command.SINGLE_SUCCESS;
                         })
                         .then(Commands.argument("player", ArgumentTypes.player())
                                 .executes(ctx -> {
-                                    if (ctx.getSource().getExecutor() instanceof Player player && VortexManipulatorUtility.checkPlayer(plugin, player)) {
+                                    if (ctx.getSource().getSender() instanceof Player player && VortexManipulatorUtility.checkPlayer(plugin, player)) {
                                         PlayerSelectorArgumentResolver targetResolver = ctx.getArgument("player", PlayerSelectorArgumentResolver.class);
                                         Player target = targetResolver.resolve(ctx.getSource()).getFirst();
                                         new TVMCommandLifesigns(plugin).scan(player, target);
@@ -206,7 +206,7 @@ public class VortexManipulatorCommandNode {
                                 })))
                 .then(Commands.literal("beacon")
                         .executes(ctx -> {
-                            if (ctx.getSource().getExecutor() instanceof Player player && VortexManipulatorUtility.checkPlayer(plugin, player)) {
+                            if (ctx.getSource().getSender() instanceof Player player && VortexManipulatorUtility.checkPlayer(plugin, player)) {
                                 new TVMCommandBeacon(plugin).process(player);
                             }
                             return Command.SINGLE_SUCCESS;

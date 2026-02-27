@@ -20,18 +20,18 @@ public class ShopCommandNode {
 
     public LiteralCommandNode<CommandSourceStack> build() {
         LiteralArgumentBuilder<CommandSourceStack> command = Commands.literal("tardisshop")
-                .requires(ctx -> ctx.getExecutor() instanceof Player)
+                .requires(ctx -> ctx.getSender() instanceof Player)
                 .then(Commands.literal("add")
                         .then(Commands.argument("item", new ShopItemArgumentType(plugin))
                                 .executes(ctx -> {
-                                    Player player = (Player) ctx.getSource().getExecutor();
+                                    Player player = (Player) ctx.getSource().getSender();
                                     String i = ctx.getArgument("item", String.class);
                                     ShopUtility.add(plugin, player, i);
                                     return Command.SINGLE_SUCCESS;
                                 })))
                 .then(Commands.literal("remove")
                         .executes(ctx -> {
-                            Player player = (Player) ctx.getSource().getExecutor();
+                            Player player = (Player) ctx.getSource().getSender();
                             ShopUtility.remove(plugin, player);
                             return Command.SINGLE_SUCCESS;
                         }))

@@ -46,7 +46,7 @@ public class RegenerationCommandNode {
                 .then(Commands.literal("block")
                         .then(Commands.argument("toggle", new OnOffArgumentType())
                                 .executes(ctx -> {
-                                    Player player = (Player) ctx.getSource().getExecutor();
+                                    Player player = (Player) ctx.getSource().getSender();
                                     String o = ctx.getArgument("toggle", String.class);
                                     RegenerationUtility.block(plugin, player, o);
                                     return Command.SINGLE_SUCCESS;

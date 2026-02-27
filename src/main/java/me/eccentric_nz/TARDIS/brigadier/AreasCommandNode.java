@@ -8,6 +8,7 @@ import com.mojang.brigadier.tree.LiteralCommandNode;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.brigadier.arguments.CompassArgumentType;
 import me.eccentric_nz.TARDIS.brigadier.arguments.PresetArgumentType;
 import me.eccentric_nz.TARDIS.brigadier.suggestions.BlockSuggestions;
@@ -26,7 +27,7 @@ public class AreasCommandNode {
     LiteralCommandNode<CommandSourceStack> build() {
         LiteralArgumentBuilder<CommandSourceStack> command = Commands.literal("tardisarea")
                 // require a player to execute the command
-                .requires(ctx -> ctx.getExecutor() instanceof Player && ctx.getSender().hasPermission("tardis.admin"))
+                .requires(ctx -> ctx.getSender() instanceof Player p && TARDISPermission.hasPermission(p, "tardis.admin"))
                 .executes(ctx -> {
                     new TARDISCommandHelper(plugin).getCommand("tardisarea", ctx.getSource().getSender());
                     return Command.SINGLE_SUCCESS;
@@ -34,14 +35,14 @@ public class AreasCommandNode {
                 .then(Commands.literal("start")
                         .then(Commands.argument("name", StringArgumentType.word())
                                 .executes(ctx -> {
-                                    Player player = (Player) ctx.getSource().getExecutor();
+                                    Player player = (Player) ctx.getSource().getSender();
                                     String name = StringArgumentType.getString(ctx, "name");
                                     new AreaStart().track(plugin, name, player);
                                     return Command.SINGLE_SUCCESS;
                                 })))
                 .then(Commands.literal("end")
                         .executes(ctx -> {
-                            Player player = (Player) ctx.getSource().getExecutor();
+                            Player player = (Player) ctx.getSource().getSender();
                             new AreaEnd().track(plugin, player);
                             return Command.SINGLE_SUCCESS;
                         }))
@@ -49,7 +50,7 @@ public class AreasCommandNode {
                         .then(Commands.argument("name", StringArgumentType.word())
                                 .then(Commands.argument("distance", IntegerArgumentType.integer())
                                         .executes(ctx -> {
-                                            Player player = (Player) ctx.getSource().getExecutor();
+                                            Player player = (Player) ctx.getSource().getSender();
                                             String name = StringArgumentType.getString(ctx, "name");
                                             int dist = IntegerArgumentType.getInteger(ctx, "distance");
                                             new AreaParking().set(plugin, player, name, dist);
@@ -58,7 +59,7 @@ public class AreasCommandNode {
                 .then(Commands.literal("remove")
                         .then(Commands.argument("name", StringArgumentType.word())
                                 .executes(ctx -> {
-                                    Player player = (Player) ctx.getSource().getExecutor();
+                                    Player player = (Player) ctx.getSource().getSender();
                                     String name = StringArgumentType.getString(ctx, "name");
                                     new AreaRemove().delete(plugin, name, player);
                                     return Command.SINGLE_SUCCESS;
@@ -66,7 +67,7 @@ public class AreasCommandNode {
                 .then(Commands.literal("show")
                         .then(Commands.argument("name", StringArgumentType.word())
                                 .executes(ctx -> {
-                                    Player player = (Player) ctx.getSource().getExecutor();
+                                    Player player = (Player) ctx.getSource().getSender();
                                     String name = StringArgumentType.getString(ctx, "name");
                                     new AreaShow().display(plugin, name, player);
                                     return Command.SINGLE_SUCCESS;
@@ -78,7 +79,7 @@ public class AreasCommandNode {
                                         .then(Commands.argument("dock_block", StringArgumentType.word())
                                                 .suggests(BlockSuggestions::get)
                                                 .executes(ctx -> {
-                                                    Player player = (Player) ctx.getSource().getExecutor();
+                                                    Player player = (Player) ctx.getSource().getSender();
                                                     String name = StringArgumentType.getString(ctx, "name");
                                                     String fill = StringArgumentType.getString(ctx, "fill_block");
                                                     String dock = StringArgumentType.getString(ctx, "dock_block");
@@ -89,7 +90,7 @@ public class AreasCommandNode {
                         .then(Commands.argument("name", StringArgumentType.word())
                                 .then(Commands.argument("flag", new PresetArgumentType(1))
                                         .executes(ctx -> {
-                                            Player player = (Player) ctx.getSource().getExecutor();
+                                            Player player = (Player) ctx.getSource().getSender();
                                             String name = StringArgumentType.getString(ctx, "name");
                                             String flag = ctx.getArgument("flag", String.class);
                                             new AreaInvisibility().set(plugin, name, flag, player);
@@ -99,7 +100,7 @@ public class AreasCommandNode {
                         .then(Commands.argument("name", StringArgumentType.word())
                                 .then(Commands.argument("direction", new CompassArgumentType())
                                         .executes(ctx -> {
-                                            Player player = (Player) ctx.getSource().getExecutor();
+                                            Player player = (Player) ctx.getSource().getSender();
                                             String name = StringArgumentType.getString(ctx, "name");
                                             String direction = ctx.getArgument("direction", String.class);
                                             new AreaDirection().set(plugin, name, direction, player);
@@ -108,7 +109,7 @@ public class AreasCommandNode {
                 .then(Commands.literal("create")
                         .then(Commands.argument("name", StringArgumentType.word())
                                 .executes(ctx -> {
-                                    Player player = (Player) ctx.getSource().getExecutor();
+                                    Player player = (Player) ctx.getSource().getSender();
                                     String name = StringArgumentType.getString(ctx, "name");
                                     new AreaCreate().make(plugin, name, player);
                                     return Command.SINGLE_SUCCESS;
@@ -116,7 +117,7 @@ public class AreasCommandNode {
                 .then(Commands.literal("add")
                         .then(Commands.argument("name", StringArgumentType.word())
                                 .executes(ctx -> {
-                                    Player player = (Player) ctx.getSource().getExecutor();
+                                    Player player = (Player) ctx.getSource().getSender();
                                     String name = StringArgumentType.getString(ctx, "name");
                                     new AreaAdd().setLocation(plugin, name, player);
                                     return Command.SINGLE_SUCCESS;
@@ -124,7 +125,7 @@ public class AreasCommandNode {
                 .then(Commands.literal("edit")
                         .then(Commands.argument("name", StringArgumentType.word())
                                 .executes(ctx -> {
-                                    Player player = (Player) ctx.getSource().getExecutor();
+                                    Player player = (Player) ctx.getSource().getSender();
                                     String name = StringArgumentType.getString(ctx, "name");
                                     new AreaEdit().open(plugin, name, player);
                                     return Command.SINGLE_SUCCESS;

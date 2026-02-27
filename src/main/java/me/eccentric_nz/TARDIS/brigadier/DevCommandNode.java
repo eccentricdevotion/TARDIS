@@ -13,6 +13,7 @@ import io.papermc.paper.command.brigadier.argument.ArgumentTypes;
 import io.papermc.paper.dialog.Dialog;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.brigadier.arguments.*;
 import me.eccentric_nz.TARDIS.brigadier.suggestions.BlockSuggestions;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
@@ -51,7 +52,7 @@ public class DevCommandNode {
 
     LiteralCommandNode<CommandSourceStack> build() {
         LiteralArgumentBuilder<CommandSourceStack> command = Commands.literal("tardiscall")
-                .requires(ctx -> ctx.getSender() instanceof ConsoleCommandSender || ctx.getSender().hasPermission("tardis.admin"))
+                .requires(ctx -> ctx.getSender() instanceof ConsoleCommandSender || TARDISPermission.hasPermission(ctx.getSender(), "tardis.admin"))
                 .executes(ctx -> {
                     new TARDISCommandHelper(plugin).getCommand("tardisdev", ctx.getSource().getSender());
                     return Command.SINGLE_SUCCESS;
@@ -77,7 +78,7 @@ public class DevCommandNode {
                                             return builder.buildFuture();
                                         })
                                         .executes(ctx -> {
-                                            if (ctx.getSource().getExecutor() instanceof Player player) {
+                                            if (ctx.getSource().getSender() instanceof Player player) {
                                                 String m = ctx.getArgument("monster", String.class);
                                                 String s = StringArgumentType.getString(ctx, "slot");
                                                 DevelopmentUtility.setArmour(player, m, s);
@@ -86,14 +87,14 @@ public class DevCommandNode {
                                         }))))
                 .then(Commands.literal("banner")
                         .executes(ctx -> {
-                            if (ctx.getSource().getExecutor() instanceof Player player) {
+                            if (ctx.getSource().getSender() instanceof Player player) {
                                 Letters.giveAll(player);
                             }
                             return Command.SINGLE_SUCCESS;
                         })
                         .then(Commands.literal("make")
                                 .executes(ctx -> {
-                                    if (ctx.getSource().getExecutor() instanceof Player player) {
+                                    if (ctx.getSource().getSender() instanceof Player player) {
                                         Letters.makeCode(player);
                                     }
                                     return Command.SINGLE_SUCCESS;
@@ -117,7 +118,7 @@ public class DevCommandNode {
                         }))
                 .then(Commands.literal("blueprint")
                         .executes(ctx -> {
-                            if (ctx.getSource().getExecutor() instanceof Player player) {
+                            if (ctx.getSource().getSender() instanceof Player player) {
                                 DevelopmentUtility.giveBlueprints(plugin, player);
                             }
                             return Command.SINGLE_SUCCESS;
@@ -146,14 +147,14 @@ public class DevCommandNode {
                                 })))
                 .then(Commands.literal("brushable")
                         .executes(ctx -> {
-                            if (ctx.getSource().getExecutor() instanceof Player player) {
+                            if (ctx.getSource().getSender() instanceof Player player) {
                                 DevelopmentUtility.brush(player);
                             }
                             return Command.SINGLE_SUCCESS;
                         })
                         .then(Commands.literal("target")
                                 .executes(ctx -> {
-                                    if (ctx.getSource().getExecutor() instanceof Player player) {
+                                    if (ctx.getSource().getSender() instanceof Player player) {
                                         // get target block
                                         Block block = player.getTargetBlock(null, 8);
                                         player.sendMessage(block.getState().toString());
@@ -222,7 +223,7 @@ public class DevCommandNode {
                                 })))
                 .then(Commands.literal("dalek")
                         .executes(ctx -> {
-                            if (ctx.getSource().getExecutor() instanceof Player player) {
+                            if (ctx.getSource().getSender() instanceof Player player) {
                                 DevelopmentUtility.dalek(plugin, player);
                             }
                             return Command.SINGLE_SUCCESS;
@@ -243,7 +244,7 @@ public class DevCommandNode {
                                 })))
                 .then(Commands.literal("dialog")
                         .executes(ctx -> {
-                            if (ctx.getSource().getExecutor() instanceof Player player) {
+                            if (ctx.getSource().getSender() instanceof Player player) {
                                 Dialog dialog = new PreferencesDialog(plugin, player.getUniqueId()).create();
                                 Audience.audience(player).showDialog(dialog);
                             }
@@ -520,7 +521,7 @@ public class DevCommandNode {
                         }))
                 .then(Commands.literal("leather")
                         .executes(ctx -> {
-                            if (ctx.getSource().getExecutor() instanceof Player player) {
+                            if (ctx.getSource().getSender() instanceof Player player) {
                                 DevelopmentUtility.leather(player);
                             }
                             return Command.SINGLE_SUCCESS;
@@ -573,7 +574,7 @@ public class DevCommandNode {
                 .then(Commands.literal("mannequin")
                         .then(Commands.argument("type", new MannequinEquipArgumentType())
                                 .executes(ctx -> {
-                                    if (ctx.getSource().getExecutor() instanceof Player player) {
+                                    if (ctx.getSource().getSender() instanceof Player player) {
                                         String t = ctx.getArgument("type", String.class);
                                         new MannequinCommand().equip(player, t);
                                     }
@@ -581,7 +582,7 @@ public class DevCommandNode {
                                 })))
                 .then(Commands.literal("monster")
                         .executes(ctx -> {
-                            if (ctx.getSource().getExecutor() instanceof Player player) {
+                            if (ctx.getSource().getSender() instanceof Player player) {
                                 DevelopmentUtility.listPortals(plugin, player);
                             }
                             return Command.SINGLE_SUCCESS;
@@ -644,14 +645,14 @@ public class DevCommandNode {
                                 })))
                 .then(Commands.literal("regen")
                         .executes(ctx -> {
-                            if (ctx.getSource().getExecutor() instanceof Player player) {
+                            if (ctx.getSource().getSender() instanceof Player player) {
                                 new Regenerator().dev(plugin, player, -1);
                             }
                             return Command.SINGLE_SUCCESS;
                         })
                         .then(Commands.argument("index", IntegerArgumentType.integer(0))
                                 .executes(ctx -> {
-                                    if (ctx.getSource().getExecutor() instanceof Player player) {
+                                    if (ctx.getSource().getSender() instanceof Player player) {
                                         int i = IntegerArgumentType.getInteger(ctx, "index");
                                         new Regenerator().dev(plugin, player, i);
                                     }
@@ -696,7 +697,7 @@ public class DevCommandNode {
                         }))
                 .then(Commands.literal("siege")
                         .executes(ctx -> {
-                            if (ctx.getSource().getExecutor() instanceof Player player) {
+                            if (ctx.getSource().getSender() instanceof Player player) {
                                 DevelopmentUtility.siege(plugin, player);
                             }
                             return Command.SINGLE_SUCCESS;
@@ -732,28 +733,28 @@ public class DevCommandNode {
                                 })))
                 .then(Commands.literal("staircase")
                         .executes(ctx -> {
-                            if (ctx.getSource().getExecutor() instanceof Player player) {
+                            if (ctx.getSource().getSender() instanceof Player player) {
                                 new StaircaseCommand().spiral(player);
                             }
                             return Command.SINGLE_SUCCESS;
                         })
                         .then(Commands.literal("mark")
                                 .executes(ctx -> {
-                                    if (ctx.getSource().getExecutor() instanceof Player player) {
+                                    if (ctx.getSource().getSender() instanceof Player player) {
                                         new StaircaseCommand().mark(player);
                                     }
                                     return Command.SINGLE_SUCCESS;
                                 }))
                         .then(Commands.literal("scan")
                                 .executes(ctx -> {
-                                    if (ctx.getSource().getExecutor() instanceof Player player) {
+                                    if (ctx.getSource().getSender() instanceof Player player) {
                                         new StaircaseCommand().scan(player);
                                     }
                                     return Command.SINGLE_SUCCESS;
                                 }))
                         .then(Commands.literal("smaller")
                                 .executes(ctx -> {
-                                    if (ctx.getSource().getExecutor() instanceof Player player) {
+                                    if (ctx.getSource().getSender() instanceof Player player) {
                                         new StaircaseCommand().smaller(player);
                                     }
                                     return Command.SINGLE_SUCCESS;
@@ -772,21 +773,21 @@ public class DevCommandNode {
                         }))
                 .then(Commands.literal("text")
                         .executes(ctx -> {
-                            if (ctx.getSource().getExecutor() instanceof Player player) {
+                            if (ctx.getSource().getSender() instanceof Player player) {
                                 DevelopmentUtility.pong(plugin, player);
                             }
                             return Command.SINGLE_SUCCESS;
                         })
                         .then(Commands.literal("tp")
                                 .executes(ctx -> {
-                                    if (ctx.getSource().getExecutor() instanceof Player player) {
+                                    if (ctx.getSource().getSender() instanceof Player player) {
                                         DevelopmentUtility.pingPong(plugin, player);
                                     }
                                     return Command.SINGLE_SUCCESS;
                                 })
                                 .then(Commands.argument("amount", DoubleArgumentType.doubleArg())
                                         .executes(ctx -> {
-                                            if (ctx.getSource().getExecutor() instanceof Player player) {
+                                            if (ctx.getSource().getSender() instanceof Player player) {
                                                 double d = DoubleArgumentType.getDouble(ctx, "amount");
                                                 DevelopmentUtility.movePongDisplay(plugin, player, d);
                                             }
@@ -845,7 +846,7 @@ public class DevCommandNode {
                         }))
                 .then(Commands.literal("update")
                         .executes(ctx -> {
-                            if (ctx.getSource().getExecutor() instanceof Player player) {
+                            if (ctx.getSource().getSender() instanceof Player player) {
                                 new UpdateBlockStateCommand(plugin).refresh(player);
                             }
                             return Command.SINGLE_SUCCESS;

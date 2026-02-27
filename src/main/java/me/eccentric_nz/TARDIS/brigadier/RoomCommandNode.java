@@ -9,6 +9,7 @@ import com.mojang.brigadier.tree.LiteralCommandNode;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.brigadier.arguments.RoomArgumentType;
 import me.eccentric_nz.TARDIS.brigadier.suggestions.BlockSuggestions;
 import me.eccentric_nz.TARDIS.commands.RoomsUtility;
@@ -36,7 +37,7 @@ public class RoomCommandNode {
                 })
                 .then(Commands.literal("add")
                         .then(Commands.argument("name", StringArgumentType.word())
-                                .requires(ctx -> ctx.getSender().hasPermission("tardis.admin"))
+                                .requires(ctx -> TARDISPermission.hasPermission(ctx.getSender(), "tardis.admin"))
                                 .executes(ctx -> {
                                     String n = ctx.getArgument("name", String.class);
                                     RoomsUtility.add(plugin, ctx.getSource().getSender(), n);
@@ -44,7 +45,7 @@ public class RoomCommandNode {
                                 })))
                 .then(Commands.literal("blocks")
                         .then(Commands.literal("save")
-                                .requires(ctx -> ctx.getSender().hasPermission("tardis.admin"))
+                                .requires(ctx -> TARDISPermission.hasPermission(ctx.getSender(), "tardis.admin"))
                                 .executes(ctx -> {
                                     RoomsUtility.saveBlocks(plugin, ctx.getSource().getSender());
                                     return Command.SINGLE_SUCCESS;
@@ -57,16 +58,16 @@ public class RoomCommandNode {
                         }))
                 .then(Commands.literal("required")
                         .then(Commands.argument("room", new RoomArgumentType(plugin, false))
-                                .requires(ctx -> ctx.getExecutor() instanceof Player)
+                                .requires(ctx -> ctx.getSender() instanceof Player)
                                 .executes(ctx -> {
-                                    Player player = (Player) ctx.getSource().getExecutor();
+                                    Player player = (Player) ctx.getSource().getSender();
                                     String r = ctx.getArgument("room", String.class);
                                     RoomRequiredLister.listCondensables(plugin, r, player);
                                     return Command.SINGLE_SUCCESS;
                                 })))
                 .then(Commands.argument("room", new RoomArgumentType(plugin, false))
                         .then(Commands.argument("enable", BoolArgumentType.bool())
-                                .requires(ctx -> ctx.getSender().hasPermission("tardis.admin"))
+                                .requires(ctx -> TARDISPermission.hasPermission(ctx.getSender(), "tardis.admin"))
                                 .executes(ctx -> {
                                     String r = ctx.getArgument("room", String.class);
                                     boolean b = BoolArgumentType.getBool(ctx, "enable");
@@ -74,7 +75,7 @@ public class RoomCommandNode {
                                     return Command.SINGLE_SUCCESS;
                                 }))
                         .then(Commands.argument("offset", IntegerArgumentType.integer(-6, 0))
-                                .requires(ctx -> ctx.getSender().hasPermission("tardis.admin"))
+                                .requires(ctx -> TARDISPermission.hasPermission(ctx.getSender(), "tardis.admin"))
                                 .executes(ctx -> {
                                     String r = ctx.getArgument("room", String.class);
                                     int o = IntegerArgumentType.getInteger(ctx, "offset");
@@ -88,7 +89,7 @@ public class RoomCommandNode {
                                     return Command.SINGLE_SUCCESS;
                                 }))
                         .then(Commands.argument("cost", IntegerArgumentType.integer(1))
-                                .requires(ctx -> ctx.getSender().hasPermission("tardis.admin"))
+                                .requires(ctx -> TARDISPermission.hasPermission(ctx.getSender(), "tardis.admin"))
                                 .executes(ctx -> {
                                     String r = ctx.getArgument("room", String.class);
                                     int c = IntegerArgumentType.getInteger(ctx, "cost");
@@ -102,7 +103,7 @@ public class RoomCommandNode {
                                     return Command.SINGLE_SUCCESS;
                                 }))
                         .then(Commands.argument("seed", StringArgumentType.word())
-                                .requires(ctx -> ctx.getSender().hasPermission("tardis.admin"))
+                                .requires(ctx -> TARDISPermission.hasPermission(ctx.getSender(), "tardis.admin"))
                                 .suggests(BlockSuggestions::get)
                                 .executes(ctx -> {
                                     String r = ctx.getArgument("room", String.class);

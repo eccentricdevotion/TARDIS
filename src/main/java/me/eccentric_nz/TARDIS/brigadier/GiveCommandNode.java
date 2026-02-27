@@ -9,6 +9,7 @@ import io.papermc.paper.command.brigadier.Commands;
 import io.papermc.paper.command.brigadier.argument.ArgumentTypes;
 import io.papermc.paper.command.brigadier.argument.resolvers.selector.PlayerSelectorArgumentResolver;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.brigadier.arguments.*;
 import me.eccentric_nz.TARDIS.commands.give.actions.*;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -29,7 +30,7 @@ public class GiveCommandNode {
     LiteralCommandNode<CommandSourceStack> build() {
         LiteralArgumentBuilder<CommandSourceStack> command = Commands.literal("tardisgive")
                 // require a player to execute the command
-                .requires(ctx -> ctx.getSender().hasPermission("tardis.admin"))
+                .requires(ctx -> TARDISPermission.hasPermission(ctx.getSender(), "tardis.admin"))
                 .then(Commands.argument("player", ArgumentTypes.player())
                         .then(Commands.literal("artron")
                                 .then(Commands.literal("full")

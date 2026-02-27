@@ -7,6 +7,7 @@ import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 import io.papermc.paper.command.brigadier.argument.ArgumentTypes;
 import io.papermc.paper.command.brigadier.argument.resolvers.selector.PlayerSelectorArgumentResolver;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 
@@ -14,9 +15,9 @@ public class CreativeCommandNode {
 
     LiteralCommandNode<CommandSourceStack> build() {
         LiteralArgumentBuilder<CommandSourceStack> command = Commands.literal("tgmc")
-                .requires(ctx -> ctx.getSender().hasPermission("tardis.admin"))
+                .requires(ctx -> TARDISPermission.hasPermission(ctx.getSender(), "tardis.admin"))
                 .executes(ctx -> {
-                    if (ctx.getSource().getExecutor() instanceof Player player) {
+                    if (ctx.getSource().getSender() instanceof Player player) {
                         player.setGameMode(GameMode.CREATIVE);
                     }
                     return Command.SINGLE_SUCCESS;

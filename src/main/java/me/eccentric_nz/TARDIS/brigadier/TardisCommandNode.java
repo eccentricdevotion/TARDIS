@@ -55,7 +55,7 @@ public class TardisCommandNode {
                 })
                 .then(Commands.literal("call")
                         .executes(ctx -> {
-                            Player player = (Player) ctx.getSource().getExecutor();
+                            Player player = (Player) ctx.getSource().getSender();
                             UUID chatter = player.getUniqueId();
                             if (plugin.getTrackerKeeper().getComehereRequests().containsKey(chatter)) {
                                 ComehereRequest request = plugin.getTrackerKeeper().getComehereRequests().get(chatter);
@@ -68,7 +68,7 @@ public class TardisCommandNode {
                         }))
                 .then(Commands.literal("request")
                         .executes(ctx -> {
-                            Player player = (Player) ctx.getSource().getExecutor();
+                            Player player = (Player) ctx.getSource().getSender();
                             new RescueAcceptor(plugin).doRequest(player, true);
                             return Command.SINGLE_SUCCESS;
                         }))

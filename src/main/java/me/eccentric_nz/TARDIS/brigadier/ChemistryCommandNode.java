@@ -24,19 +24,19 @@ public class ChemistryCommandNode {
 
     public LiteralCommandNode<CommandSourceStack> build() {
         LiteralArgumentBuilder<CommandSourceStack> command = Commands.literal("tardischemistry")
-                .requires(ctx -> ctx.getExecutor() instanceof Player)
+                .requires(ctx -> ctx.getSender() instanceof Player)
                 .then(Commands.literal("gui")
                         .then(Commands.literal("creative")
                                 .then(Commands.argument("which", new ChemistryCreativeArgumentType())
                                         .executes(ctx -> {
-                                            Player player = (Player) ctx.getSource().getExecutor();
+                                            Player player = (Player) ctx.getSource().getSender();
                                             String w = ctx.getArgument("which", String.class);
                                             ChemistryUtility.creative(plugin, player, w);
                                             return Command.SINGLE_SUCCESS;
                                         })))
                         .then(Commands.argument("which", new ChemistryGuiArgumentType())
                                 .executes(ctx -> {
-                                    Player player = (Player) ctx.getSource().getExecutor();
+                                    Player player = (Player) ctx.getSource().getSender();
                                     String g = ctx.getArgument("which", String.class);
                                     ChemistryUtility.open(plugin, player, g);
                                     return Command.SINGLE_SUCCESS;
@@ -44,7 +44,7 @@ public class ChemistryCommandNode {
                 .then(Commands.literal("formula")
                         .then(Commands.argument("item", new FormulaArgumentType()))
                         .executes(ctx -> {
-                            Player player = (Player) ctx.getSource().getExecutor();
+                            Player player = (Player) ctx.getSource().getSender();
                             if (TARDISPermission.hasPermission(player, "tardis.formula.show")) {
                                 String w = ctx.getArgument("item", String.class);
                                 new FormulaCommand(plugin).show(player, w);
@@ -54,7 +54,7 @@ public class ChemistryCommandNode {
                 .then(Commands.literal("recipe")
                         .then(Commands.argument("block", new ChemistryGuiArgumentType())
                                 .executes(ctx -> {
-                                    Player player = (Player) ctx.getSource().getExecutor();
+                                    Player player = (Player) ctx.getSource().getSender();
                                     String b = ctx.getArgument("block", String.class);
                                     ChemistryUtility.recipe(plugin, player, b);
                                     return Command.SINGLE_SUCCESS;
