@@ -10,7 +10,7 @@ on:
 
 env:
   VERSION: '7.0.0'
-  RELEASE_TAG: '1.21.11'
+  RELEASE_TAG: '26.1'
 
 jobs:
   build:
