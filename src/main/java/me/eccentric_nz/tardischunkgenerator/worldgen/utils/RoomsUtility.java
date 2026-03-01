@@ -19,6 +19,7 @@ package me.eccentric_nz.tardischunkgenerator.worldgen.utils;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 import io.papermc.paper.registry.RegistryAccess;
 import io.papermc.paper.registry.RegistryKey;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -26,6 +27,7 @@ import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemRegistry;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.rooms.TARDISPainting;
+import me.eccentric_nz.TARDIS.schematic.setters.ItemStackSetter;
 import net.kyori.adventure.text.Component;
 import org.bukkit.*;
 import org.bukkit.block.Banner;
@@ -95,7 +97,11 @@ public class RoomsUtility {
         String cmd;
         if (json.has("item")) {
             try {
-                ItemStack is = ItemStack.of(Material.valueOf(json.get("item").getAsString()));
+                ItemStack is = ItemStackSetter.build(
+                        json.get("item") instanceof JsonPrimitive ?
+                                json :
+                                json.get("item").getAsJsonObject()
+                );
                 ItemMeta im = is.getItemMeta();
                 if (json.has("cmd")) {
                     cmd = json.get("cmd").getAsString();

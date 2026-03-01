@@ -38,12 +38,9 @@ public class ConsoleTextCommand {
         this.plugin = plugin;
     }
 
-    public boolean move(Player player, String[] args) {
-        if (args.length < 2) {
-            return false;
-        }
-        if (!SCREEN_SUBS.contains(args[1].toLowerCase(Locale.ROOT))) {
-            return false;
+    public void move(Player player, String dir) {
+        if (!SCREEN_SUBS.contains(dir.toLowerCase(Locale.ROOT))) {
+            return;
         }
         // get tardis player is in
         String uuid = player.getUniqueId().toString();
@@ -51,7 +48,7 @@ public class ConsoleTextCommand {
         where.put("uuid", uuid);
         ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
         if (!rst.resultSet()) {
-            return true;
+            return;
         }
         int id = rst.getTardis_id();
         // get text display
@@ -66,7 +63,7 @@ public class ConsoleTextCommand {
             Location location = textDisplay.getLocation();
             double x;
             double z;
-            switch (args[1].toLowerCase(Locale.ROOT)) {
+            switch (dir.toLowerCase(Locale.ROOT)) {
                 case "forward" -> {
                     x = 0.025d;
                     z = 0.025d;
@@ -91,6 +88,5 @@ public class ConsoleTextCommand {
             Location cloned = location.clone().add(x, 0, z);
             textDisplay.teleport(cloned);
         });
-        return true;
     }
 }

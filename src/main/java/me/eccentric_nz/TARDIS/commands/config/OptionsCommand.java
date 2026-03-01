@@ -28,19 +28,19 @@ import java.util.Set;
 /**
  * @author eccentric_nz
  */
-class OptionsCommand {
+public class OptionsCommand {
 
     private final TARDIS plugin;
     private final List<String> sections = new ArrayList<>();
 
-    OptionsCommand(TARDIS plugin) {
+    public OptionsCommand(TARDIS plugin) {
         this.plugin = plugin;
         sections.addAll(this.plugin.getConfig().getDefaultSection().getKeys(false));
         sections.remove("debug");
     }
 
-    boolean showConfigOptions(CommandSender sender, String[] args) {
-        String section = args[1].toLowerCase(Locale.ROOT);
+    public void showConfigOptions(CommandSender sender, String arg) {
+        String section = arg.toLowerCase(Locale.ROOT);
         plugin.getMessenger().send(sender, TardisModule.TARDIS, "CONFIG");
         if (sections.contains(section)) {
             plugin.getMessenger().messageWithColour(sender, section + ":", "#55FFFF");
@@ -55,7 +55,7 @@ class OptionsCommand {
                     plugin.getMessenger().messageWithColour(sender, "    " + o + ": " + plugin.getConfig().getString(section + "." + o), "#55FF55");
                 }
             });
-            return true;
+            return;
         }
         switch (section) {
             case "worlds" -> {
@@ -65,7 +65,6 @@ class OptionsCommand {
                     String enabled = plugin.getPlanetsConfig().getString("planets." + wname + ".time_travel");
                     plugin.getMessenger().sendWithColours(sender, "    " + wname + ": ", "#55FF55", enabled, "#FFFFFF");
                 });
-                return true;
             }
             case "rechargers" -> {
                 plugin.getMessenger().messageWithColour(sender, section + ":", "#55FFFF");
@@ -77,7 +76,6 @@ class OptionsCommand {
                     sender.sendMessage("        y: " + plugin.getConfig().getString("rechargers." + charname + ".y"));
                     sender.sendMessage("        z: " + plugin.getConfig().getString("rechargers." + charname + ".z"));
                 });
-                return true;
             }
             case "rooms" -> {
                 plugin.getMessenger().messageWithColour(sender, section + ":", "#55FFFF");
@@ -89,9 +87,7 @@ class OptionsCommand {
                     sender.sendMessage("        offset: " + plugin.getRoomsConfig().getString("rooms." + r + ".offset"));
                     sender.sendMessage("        seed: " + plugin.getRoomsConfig().getString("rooms." + r + ".seed"));
                 });
-                return true;
             }
         }
-        return false;
     }
 }

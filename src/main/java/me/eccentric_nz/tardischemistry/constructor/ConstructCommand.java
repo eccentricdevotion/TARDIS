@@ -29,13 +29,12 @@ public class ConstructCommand {
         this.plugin = plugin;
     }
 
-    public boolean build(Player player) {
+    public void build(Player player) {
         if (!TARDISPermission.hasPermission(player, "tardis.construct.build")) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "CHEMISTRY_SUB_PERM", "Construct");
-            return true;
+            return;
         }
         // do stuff
         player.openInventory(new ConstructorInventory(plugin).getInventory());
-        return true;
     }
 }

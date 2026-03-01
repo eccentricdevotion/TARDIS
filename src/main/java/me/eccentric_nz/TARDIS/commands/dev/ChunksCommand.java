@@ -43,7 +43,7 @@ public class ChunksCommand {
         this.plugin = plugin;
     }
 
-    public boolean list(CommandSender sender) {
+    public void list(CommandSender sender) {
         if (sender instanceof Player player) {
             // get TARDIS player is in
             HashMap<String, Object> where = new HashMap<>();
@@ -78,11 +78,9 @@ public class ChunksCommand {
                             plugin.debug(c);
                         }
                     }
-                    return true;
                 }
             }
         }
-        return false;
     }
 
     private Location getLocation(Schematic schematic, Tardis tardis, World world) {

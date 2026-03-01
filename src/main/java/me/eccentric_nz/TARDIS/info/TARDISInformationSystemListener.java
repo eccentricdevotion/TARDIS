@@ -41,8 +41,8 @@ public class TARDISInformationSystemListener implements Listener {
         this.plugin = plugin;
     }
 
-    public static void processInput(Player p, UUID uuid, String chat, TARDIS plugin) {
-        switch (plugin.getTrackerKeeper().getInfoMenu().get(uuid)) {
+    public static void processInput(Player p, String chat, TARDIS plugin) {
+        switch (plugin.getTrackerKeeper().getInfoMenu().get(p.getUniqueId())) {
             // TOP level menu
             case TIS -> {
                 if (chat.equalsIgnoreCase("M")) {
@@ -1934,7 +1934,7 @@ public class TARDISInformationSystemListener implements Listener {
                 return;
             }
             if (chat.length() == 1 || chat.length() == 2) {
-                processInput(p, uuid, chat, plugin);
+                processInput(p, chat, plugin);
             } else {
                 plugin.getMessenger().send(p, TardisModule.TARDIS, "TIS_EXIT");
             }

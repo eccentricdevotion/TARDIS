@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.planets;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.areas.PlotArea;
-import me.eccentric_nz.TARDIS.commands.TARDISPlotCommand;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.tardischunkgenerator.worldgen.PlotListener;
 import org.bukkit.*;
@@ -65,10 +64,6 @@ public class WorldLoader {
                 if (g != null && g.equals("TARDIS:plot")) {
                     // load the plot listener
                     plugin.getPM().registerEvents(new PlotListener(plugin), plugin);
-                    // load the command
-                    TARDISPlotCommand plotCommand = new TARDISPlotCommand(plugin);
-                    plugin.getCommand("tardisplot").setExecutor(plotCommand);
-                    plugin.getCommand("tardisplot").setTabCompleter(plotCommand);
                     // add worldguard protection
                     if (plugin.isWorldGuardOnServer()) {
                         plugin.getWorldGuardUtils().addPlotWorldProtection(w);

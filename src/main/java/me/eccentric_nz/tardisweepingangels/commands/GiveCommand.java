@@ -34,28 +34,24 @@ public class GiveCommand {
         this.plugin = plugin;
     }
 
-    public boolean give(CommandSender sender, String[] args) {
-        if (args.length < 3) {
-            return false;
-        }
+    public void give(CommandSender sender, Player player, String m) {
         // get the player
-        Player player = plugin.getServer().getPlayer(args[1]);
         if (player == null) {
             plugin.getMessenger().send(sender, TardisModule.MONSTERS, "PLAYER_NOT_FOUND");
-            return true;
+            return;
         }
         // check monster type
-        String upper = args[2].toUpperCase(Locale.ROOT);
+        String upper = m.toUpperCase(Locale.ROOT);
         Monster monster;
         try {
             monster = Monster.valueOf(upper);
         } catch (IllegalArgumentException e) {
             plugin.getMessenger().send(sender, TardisModule.MONSTERS, "WA_INVALID");
-            return true;
+            return;
         }
         if (monster == Monster.K9 || monster == Monster.TOCLAFANE) {
             plugin.getMessenger().send(sender, TardisModule.MONSTERS, "WA_HELMET");
-            return true;
+            return;
         }
         ItemStack is = HeadBuilder.getItemStack(monster);
         player.getInventory().addItem(is);
@@ -68,6 +64,5 @@ public class GiveCommand {
         if (!who.equals(player.getName())) {
             plugin.getMessenger().send(sender, TardisModule.MONSTERS, "WA_GIVE_WHO", who, monster.getName());
         }
-        return true;
     }
 }

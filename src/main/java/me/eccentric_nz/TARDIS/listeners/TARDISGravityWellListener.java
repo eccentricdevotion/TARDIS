@@ -281,7 +281,7 @@ public class TARDISGravityWellListener implements Listener {
                             plugin.getGeneralKeeper().getGravityEastList().put(loc, values);
                             dir = "EAST";
                         }
-                        default -> {
+                        default -> { // 0
                             plugin.getGeneralKeeper().getGravityDownList().add(loc);
                             dir = "DOWN";
                         }

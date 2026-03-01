@@ -21,30 +21,23 @@ import me.eccentric_nz.TARDIS.TARDISRunnables;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.command.CommandSender;
 
-import java.util.Locale;
-
 /**
  * @author eccentric_nz
  */
-class PowerDownCommand {
+public class PowerDownCommand {
 
     private final TARDIS plugin;
 
-    PowerDownCommand(TARDIS plugin) {
+    public PowerDownCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    boolean togglePowerDown(CommandSender sender, String[] args) {
-        // check they typed true of false
-        String tf = args[1].toLowerCase(Locale.ROOT);
-        if (!tf.equals("true") && !tf.equals("false")) {
-            plugin.getMessenger().send(sender, TardisModule.TARDIS, "TRUE_FALSE");
-            return false;
-        }
-        plugin.getConfig().set("allow.power_down", Boolean.valueOf(tf));
+    public void togglePowerDown(CommandSender sender, boolean b) {
+
+        plugin.getConfig().set("allow.power_down", b);
         plugin.saveConfig();
         plugin.getMessenger().send(sender, TardisModule.TARDIS, "CONFIG_UPDATED", "power_down");
-        if (tf.equals("false")) {
+        if (!b) {
             // if false, stop the repeating task
             plugin.getStandbyTask().cancel();
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "STANDBY_STOP");
@@ -53,6 +46,5 @@ class PowerDownCommand {
             TARDISRunnables.startStandBy(plugin);
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "STANDBY_START");
         }
-        return true;
     }
 }

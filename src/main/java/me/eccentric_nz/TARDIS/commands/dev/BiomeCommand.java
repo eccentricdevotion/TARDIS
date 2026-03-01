@@ -30,7 +30,7 @@ import java.util.List;
 
 public class BiomeCommand {
 
-    public boolean reset(CommandSender sender) {
+    public void reset(CommandSender sender) {
         if (sender instanceof Player player) {
             Chunk chunk = player.getLocation().getChunk();
             int cx = chunk.getX() * 16;
@@ -46,14 +46,12 @@ public class BiomeCommand {
             CraftChunk craftChunk = (CraftChunk) chunk;
             w.getChunkSource().chunkMap.resendBiomesForChunks(List.of(craftChunk.getHandle(ChunkStatus.BIOMES)));
         }
-        return true;
     }
 
-    public boolean getName(CommandSender sender) {
+    public void getName(CommandSender sender) {
         if (sender instanceof Player player) {
             String biome = TARDISStringUtils.capitalise(player.getLocation().getBlock().getBiome().getKey().getKey());
             TARDIS.plugin.getMessenger().message(player, "Biome: " + biome);
         }
-        return true;
     }
 }

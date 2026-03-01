@@ -28,32 +28,35 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-class ListCommand {
+public class ListCommand {
 
     private final TARDIS plugin;
 
-    ListCommand(TARDIS plugin) {
+    public ListCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    boolean doList(Player player, String[] args) {
+    public void doList(Player player, String arg) {
         if (TARDISPermission.hasPermission(player, "tardis.list")) {
             HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", player.getUniqueId().toString());
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             if (!rs.resultSet()) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
-                return false;
+                return;
             }
-            if (args.length < 2 || (!args[1].equalsIgnoreCase("saves") && !args[1].equalsIgnoreCase("companions") && !args[1].equalsIgnoreCase("areas") && !args[1].equalsIgnoreCase("rechargers"))) {
+            if (arg.isEmpty() || (
+                    !arg.equalsIgnoreCase("saves")
+                    && !arg.equalsIgnoreCase("companions")
+                    && !arg.equalsIgnoreCase("areas")
+                    && !arg.equalsIgnoreCase("rechargers"))
+            ) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "LIST_NEED");
-                return false;
+                return;
             }
-            new TARDISLister(plugin).list(player, args[1]);
-            return true;
+            new TARDISLister(plugin).list(player, arg);
         } else {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
-            return false;
         }
     }
 }

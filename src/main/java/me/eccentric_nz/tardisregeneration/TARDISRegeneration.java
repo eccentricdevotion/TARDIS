@@ -16,7 +16,11 @@
  */
 package me.eccentric_nz.tardisregeneration;
 
+import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.brigadier.RegenerationCommandNode;
+
+import java.util.List;
 
 public class TARDISRegeneration {
 
@@ -27,13 +31,14 @@ public class TARDISRegeneration {
     }
 
     public void enable() {
+        // register listeners
         plugin.getPM().registerEvents(new ElixirOfLifeListener(plugin), plugin);
         plugin.getPM().registerEvents(new UntemperedSchismListener(plugin), plugin);
         plugin.getPM().registerEvents(new VoidListener(plugin), plugin);
-        TARDISRegenerationCommand command = new TARDISRegenerationCommand(plugin);
-        plugin.getCommand("tardisregeneration").setExecutor(command);
-        plugin.getCommand("tardisregeneration").setTabCompleter(command);
-        // add elixir recipe
+        // register command
+        plugin.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS, commands ->
+                commands.registrar().register(new RegenerationCommandNode(plugin).build(), List.of("regeneration", "regen")));
+        // add recipes
         new ElixirOfLifeRecipe(plugin).addRecipe();
         new UntemperedSchismRecipe(plugin).addRecipe();
     }

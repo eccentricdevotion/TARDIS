@@ -23,30 +23,19 @@ import org.bukkit.entity.Player;
 /**
  * @author eccentric_nz
  */
-class AbortCommand {
+public class AbortCommand {
 
     private final TARDIS plugin;
 
-    AbortCommand(TARDIS plugin) {
+    public AbortCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    boolean doAbort(Player player, String[] args, int id) {
-        if (args.length < 2) {
-            plugin.getMessenger().send(player, TardisModule.TARDIS, "ROOM_ABORT");
-            return false;
-        }
-        try {
-            int task = Integer.parseInt(args[1]);
-            plugin.getServer().getScheduler().cancelTask(task);
-            plugin.getTrackerKeeper().getRoomTasks().remove(task);
-            plugin.getBuildKeeper().getRoomProgress().remove(player.getUniqueId());
-            plugin.getTrackerKeeper().getIsGrowingRooms().remove(id);
-            plugin.getMessenger().send(player, TardisModule.TARDIS, "TASK_ABORT");
-            return true;
-        } catch (NumberFormatException nfe) {
-            plugin.getMessenger().send(player, TardisModule.TARDIS, "TASK_NUMBER");
-            return false;
-        }
+    public void doAbort(Player player, int task, int id) {
+        plugin.getServer().getScheduler().cancelTask(task);
+        plugin.getTrackerKeeper().getRoomTasks().remove(task);
+        plugin.getBuildKeeper().getRoomProgress().remove(player.getUniqueId());
+        plugin.getTrackerKeeper().getIsGrowingRooms().remove(id);
+        plugin.getMessenger().send(player, TardisModule.TARDIS, "TASK_ABORT");
     }
 }

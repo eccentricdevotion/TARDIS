@@ -28,43 +28,37 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-class RemoveSavedLocationCommand {
+public class RemoveSavedLocationCommand {
 
     private final TARDIS plugin;
 
-    RemoveSavedLocationCommand(TARDIS plugin) {
+    public RemoveSavedLocationCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    boolean doRemoveSave(Player player, String[] args) {
+    public void doRemoveSave(Player player, String name) {
         if (TARDISPermission.hasPermission(player, "tardis.save")) {
-            if (args.length < 2) {
-                plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
-                return false;
-            }
             ResultSetTardisID rs = new ResultSetTardisID(plugin);
             if (!rs.fromUUID(player.getUniqueId().toString())) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
-                return false;
+                return;
             }
             int id = rs.getTardisId();
             HashMap<String, Object> whered = new HashMap<>();
-            whered.put("dest_name", args[1]);
+            whered.put("dest_name", name);
             whered.put("tardis_id", id);
             ResultSetDestinations rsd = new ResultSetDestinations(plugin, whered, false);
             if (!rsd.resultSet()) {
                 plugin.getMessenger().sendColouredCommand(player, "SAVE_NOT_FOUND", "/tardis list saves", plugin);
-                return false;
+                return;
             }
             int destID = rsd.getDest_id();
             HashMap<String, Object> did = new HashMap<>();
             did.put("dest_id", destID);
             plugin.getQueryFactory().doDelete("destinations", did);
-            plugin.getMessenger().send(player, TardisModule.TARDIS, "DEST_DELETED", args[1]);
-            return true;
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "DEST_DELETED", name);
         } else {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
-            return false;
         }
     }
 }

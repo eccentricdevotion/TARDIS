@@ -55,9 +55,9 @@ public class SiluriaStructurePopulator extends BlockPopulator {
         Iterator<SiluriaProcessData> iterator = toProcess.iterator();
         while (iterator.hasNext()) {
             SiluriaProcessData xz = iterator.next();
-            if (xz.x == x && xz.z == z) {
-                for (Map.Entry<BlockVector, String> grid : xz.grid.entrySet()) {
-                    build(limitedRegion, (x * 16) + grid.getKey().getBlockX(), xz.y, (z * 16) + grid.getKey().getBlockZ(), random, grid.getValue());
+            if (xz.x() == x && xz.z() == z) {
+                for (Map.Entry<BlockVector, String> grid : xz.grid().entrySet()) {
+                    build(limitedRegion, (x * 16) + grid.getKey().getBlockX(), xz.y(), (z * 16) + grid.getKey().getBlockZ(), random, grid.getValue());
                 }
                 iterator.remove();
             }

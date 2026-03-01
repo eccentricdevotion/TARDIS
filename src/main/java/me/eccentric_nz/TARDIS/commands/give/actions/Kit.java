@@ -38,7 +38,7 @@ public class Kit {
     }
 
     public void give(String item, Player player) {
-        ItemStack result = null;
+        ItemStack result;
         if (plugin.getIncomposita().getShapelessRecipes().containsKey(item)) {
             ShapelessRecipe recipe = plugin.getIncomposita().getShapelessRecipes().get(item);
             result = recipe.getResult();

@@ -47,8 +47,8 @@ public class TranslateChatListener implements Listener {
             if (audience instanceof Player p && plugin.getTrackerKeeper().getTranslators().containsKey(p.getUniqueId())) {
                 TranslateData data = plugin.getTrackerKeeper().getTranslators().get(p.getUniqueId());
                 // should we translate for this sender?
-                if ((data != null) && (data.getSender().equals(sender))) {
-                    translateChat(p, data.getFrom(), data.getTo(), ComponentUtils.stripColour(event.message()));
+                if ((data != null) && (data.sender().equals(sender))) {
+                    translateChat(p, data.from(), data.to(), ComponentUtils.stripColour(event.message()));
                 }
             }
         }

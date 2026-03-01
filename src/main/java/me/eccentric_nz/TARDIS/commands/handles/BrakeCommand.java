@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.commands.handles;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.tardis.HandbrakeCommand;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.entity.Player;
 
 public class BrakeCommand {
@@ -29,9 +28,8 @@ public class BrakeCommand {
         this.plugin = plugin;
     }
 
-    public boolean park(Player player, String[] args) {
+    public void park(Player player, int id, String toggle) {
         // handles brake on uuid id
-        int id = TARDISNumberParsers.parseInt(args[3]);
-        return new HandbrakeCommand(plugin).toggle(player, id, args, false);
+        new HandbrakeCommand(plugin).toggle(player, id, toggle, false);
     }
 }

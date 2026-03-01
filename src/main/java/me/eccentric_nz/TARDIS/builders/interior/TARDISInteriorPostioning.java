@@ -79,7 +79,7 @@ public class TARDISInteriorPostioning {
             }
         } else {
             // HIGHEST
-            slot = new ResultSetTIPS(plugin).getHightestSlot() + 1;
+            slot = new ResultSetTIPS(plugin).getHighestSlot() + 1;
         }
         return slot;
     }

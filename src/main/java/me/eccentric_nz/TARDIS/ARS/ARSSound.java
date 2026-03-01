@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 public class ARSSound {
 
-    public static HashMap<Room, Sound> ROOM_SOUNDS = new HashMap<>() {
+    public static final HashMap<Room, Sound> ROOM_SOUNDS = new HashMap<>() {
         {
             put(Room.ALLAY, Sound.ENTITY_ALLAY_AMBIENT_WITHOUT_ITEM);
             put(Room.APIARY, Sound.ENTITY_BEE_POLLINATE);

@@ -46,18 +46,15 @@ public class EquipCommand {
         this.plugin = plugin;
     }
 
-    public boolean equip(CommandSender sender, String[] args) {
-        if (args.length < 2) {
-            return false;
-        }
+    public void equip(CommandSender sender, String arg, String extra) {
         // check monster type
-        String upper = args[1].toUpperCase(Locale.ROOT);
+        String upper = arg.toUpperCase(Locale.ROOT);
         Monster monster;
         try {
             monster = Monster.valueOf(upper);
         } catch (IllegalArgumentException e) {
             plugin.getMessenger().send(sender, TardisModule.MONSTERS, "WA_INVALID");
-            return true;
+            return;
         }
         Player player = null;
         if (sender instanceof Player) {
@@ -65,25 +62,25 @@ public class EquipCommand {
         }
         if (player == null) {
             plugin.getMessenger().send(sender, TardisModule.MONSTERS, "CMD_PLAYER");
-            return true;
+            return;
         }
         // get the armour stand player is looking at
         Location observerPos = player.getEyeLocation();
         RayTraceResult result = observerPos.getWorld().rayTraceEntities(observerPos, observerPos.getDirection(), 16.0d, (s) -> s.getType() == EntityType.ARMOR_STAND);
         if (result == null) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "WA_STAND");
-            return true;
+            return;
         }
         ArmorStand as = (ArmorStand) result.getHitEntity();
         if (as != null) {
             new ArmourStandEquipment().setStandEquipment(as, monster, (monster == Monster.EMPTY_CHILD));
-            if (args.length > 2) {
+            if (!extra.isEmpty()) {
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     EntityEquipment ee = as.getEquipment();
                     ItemStack head = ee.getHelmet();
                     ItemMeta meta = head.getItemMeta();
                     if (monster == Monster.HEADLESS_MONK) {
-                        if (args[2].equals("flaming")) {
+                        if (extra.equals("flaming")) {
                             int flameID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new HeadlessFlameRunnable(as), 1, 20);
                             as.getPersistentDataContainer().set(TARDISWeepingAngels.FLAME_TASK, PersistentDataType.INTEGER, flameID);
                             // set helmet to sword version
@@ -101,7 +98,7 @@ public class EquipCommand {
                     }
                     if (monster == Monster.DALEK) {
                         try {
-                            DyeColor colour = DyeColor.valueOf(args[2].toUpperCase(Locale.ROOT));
+                            DyeColor colour = DyeColor.valueOf(extra.toUpperCase(Locale.ROOT));
                             NamespacedKey c = DalekVariant.DALEK_BRASS.getKey();
                             switch (colour) {
                                 case BLACK -> c = DalekVariant.DALEK_BLACK.getKey();
@@ -127,7 +124,7 @@ public class EquipCommand {
                     }
                     if (monster == Monster.CYBERMAN) {
                         try {
-                            CybermanVariant variant = CybermanVariant.valueOf(args[2].toUpperCase(Locale.ROOT) + "_STATIC");
+                            CybermanVariant variant = CybermanVariant.valueOf(extra.toUpperCase(Locale.ROOT) + "_STATIC");
                             meta.setItemModel(variant.getKey());
                         } catch (IllegalArgumentException ignored) {
                         }
@@ -140,6 +137,5 @@ public class EquipCommand {
                 }, 2L);
             }
         }
-        return true;
     }
 }

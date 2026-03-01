@@ -49,9 +49,9 @@ public class ResourcePackConverterCommand {
         return s.substring(0, 1).toUpperCase(Locale.ROOT) + s.substring(1).toLowerCase(Locale.ROOT).replace("tardis", "TARDIS");
     }
 
-    public void process(CommandSender sender, String[] args) {
+    public void process(CommandSender sender, String arg) {
         gson = new GsonBuilder().setPrettyPrinting().create();
-        if (args.length > 2) {
+        if (!arg.isEmpty()) {
             // get folder
             File[] directoryListing = new File(plugin.getDataFolder() + File.separator + "component").listFiles();
             if (directoryListing != null) {

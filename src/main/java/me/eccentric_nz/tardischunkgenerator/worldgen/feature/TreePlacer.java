@@ -43,8 +43,7 @@ public class TreePlacer {
         if (under == base) {
             pos = blockPos;
         }
-        if (pos == null) {
-        } else {
+        if (pos != null) {
             int i = Mth.nextInt(random, 4, 13);
             if (random.nextInt(12) == 0) {
                 i *= 2;

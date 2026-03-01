@@ -41,7 +41,7 @@ class LazarusHostileInventory extends LazarusItems implements InventoryHolder, L
     private final TARDIS plugin;
     private final List<Material> hostile = new ArrayList<>();
     private final Inventory inventory;
-    private int maxSlot;
+    private final int maxSlot;
 
     LazarusHostileInventory(TARDIS plugin) {
         this.plugin = plugin;

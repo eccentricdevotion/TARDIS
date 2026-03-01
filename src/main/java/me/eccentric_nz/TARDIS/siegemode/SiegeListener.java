@@ -276,7 +276,6 @@ public class SiegeListener implements Listener {
         if (!is.hasItemMeta()) {
             return;
         }
-        ItemMeta im = is.getItemMeta();
         // update the current location
         int id = plugin.getTrackerKeeper().getSiegeCarrying().get(uuid);
         HashMap<String, Object> where = new HashMap<>();

@@ -34,7 +34,7 @@ public class RoomsCommand {
         this.plugin = plugin;
     }
 
-    public boolean build(CommandSender sender, String[] args) {
+    public void build(CommandSender sender, String[] args) {
         if (sender instanceof Player player) {
             // get players current location
             Location location = player.getLocation();
@@ -56,8 +56,6 @@ public class RoomsCommand {
                 }
                 delay += 10;
             }
-            return true;
         }
-        return false;
     }
 }

@@ -28,15 +28,15 @@ import java.util.List;
 /**
  * @author eccentric_nz
  */
-class VersionCommand {
+public class VersionCommand {
 
     private final TARDIS plugin;
 
-    VersionCommand(TARDIS plugin) {
+    public VersionCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    boolean displayVersion(CommandSender sender) {
+    public void displayVersion(CommandSender sender) {
         List<String> hooks = plugin.getDescription().getSoftDepend();
         String tardisversion = plugin.getDescription().getVersion();
         String cb = Bukkit.getVersion();
@@ -52,6 +52,5 @@ class VersionCommand {
                 plugin.getMessenger().sendWithColours(sender, TardisModule.TARDIS, name + " version: ", "#FFFFFF", version, "#55FFFF");
             }
         }
-        return true;
     }
 }

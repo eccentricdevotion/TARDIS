@@ -36,18 +36,18 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-class MakeHerBlueCommand {
+public class MakeHerBlueCommand {
 
     private final TARDIS plugin;
 
-    MakeHerBlueCommand(TARDIS plugin) {
+    public MakeHerBlueCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean show(Player player) {
+    public void show(Player player) {
         if (!plugin.getConfig().getBoolean("allow.invisibility")) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "INVISIBILITY_DISABLED");
-            return true;
+            return;
         }
         // do the usual checks
         UUID uuid = player.getUniqueId();
@@ -57,7 +57,7 @@ class MakeHerBlueCommand {
             long then = plugin.getTrackerKeeper().getRebuildCooldown().get(uuid) + cooldown;
             if (now < then) {
                 plugin.getMessenger().send(player.getPlayer(), TardisModule.TARDIS, "COOLDOWN", String.format("%d", cooldown / 1000));
-                return true;
+                return;
             }
         }
         HashMap<String, Object> where = new HashMap<>();
@@ -65,16 +65,16 @@ class MakeHerBlueCommand {
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (!rs.resultSet()) {
             plugin.getMessenger().send(player.getPlayer(), TardisModule.TARDIS, "NO_TARDIS");
-            return true;
+            return;
         }
         Tardis tardis = rs.getTardis();
         if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPoweredOn()) {
             plugin.getMessenger().send(player.getPlayer(), TardisModule.TARDIS, "POWER_DOWN");
-            return true;
+            return;
         }
         if (!tardis.getPreset().equals(ChameleonPreset.INVISIBLE) && !tardis.getPreset().equals(ChameleonPreset.JUNK_MODE)) {
             plugin.getMessenger().send(player.getPlayer(), TardisModule.TARDIS, "INVISIBILITY_NOT");
-            return true;
+            return;
         }
         int id = tardis.getTardisId();
         CircuitChecker tcc = new CircuitChecker(plugin, id);
@@ -82,11 +82,11 @@ class MakeHerBlueCommand {
         if (plugin.getConfig().getBoolean("difficulty.circuits")) {
             if (!tcc.hasInvisibility() && !tardis.getPreset().equals(ChameleonPreset.JUNK_MODE)) {
                 plugin.getMessenger().send(player.getPlayer(), TardisModule.TARDIS, "INVISIBILITY_MISSING");
-                return true;
+                return;
             }
             if (!tcc.hasMaterialisation()) {
                 plugin.getMessenger().send(player.getPlayer(), TardisModule.TARDIS, "NO_MAT_CIRCUIT");
-                return true;
+                return;
             }
         }
         // damage circuits if configured
@@ -104,23 +104,23 @@ class MakeHerBlueCommand {
         }
         if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
             plugin.getMessenger().send(player.getPlayer(), TardisModule.TARDIS, "NOT_IN_VORTEX");
-            return true;
+            return;
         }
         if (plugin.getTrackerKeeper().getInVortex().contains(id) || plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getDematerialising().contains(id)) {
             plugin.getMessenger().send(player.getPlayer(), TardisModule.TARDIS, "NOT_WHILE_MAT");
-            return true;
+            return;
         }
         ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
         if (!rsc.resultSet()) {
             plugin.getMessenger().send(player.getPlayer(), TardisModule.TARDIS, "CURRENT_NOT_FOUND");
-            plugin.getMessenger().sendColouredCommand(player.getPlayer(), "REBUILD_FAIL", "/tardis comehere", plugin);
-            return true;
+            plugin.getMessenger().sendColouredCommand(player.getPlayer(), "REBUILD_FAIL", "/tardis come_here", plugin);
+            return;
         }
         int level = tardis.getArtronLevel();
         int rebuild = plugin.getArtronConfig().getInt("random");
         if (level < rebuild) {
             plugin.getMessenger().send(player.getPlayer(), TardisModule.TARDIS, "ENERGY_NO_REBUILD");
-            return true;
+            return;
         }
         plugin.getTrackerKeeper().getRebuildCooldown().put(uuid, System.currentTimeMillis());
         // set the preset to POLICE_BOX_BLUE
@@ -146,6 +146,5 @@ class MakeHerBlueCommand {
         HashMap<String, Object> wheret = new HashMap<>();
         wheret.put("tardis_id", id);
         plugin.getQueryFactory().alterEnergyLevel("tardis", -rebuild, wheret, player.getPlayer());
-        return true;
     }
 }

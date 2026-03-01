@@ -23,15 +23,15 @@ import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 
-class RemoveCommand {
+public class RemoveCommand {
 
     private final TARDIS plugin;
 
-    RemoveCommand(TARDIS plugin) {
+    public RemoveCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    boolean purge(Player player) {
+    public void purge(Player player) {
         ResultSetTardisID rs = new ResultSetTardisID(plugin);
         if (rs.fromUUID(player.getUniqueId().toString())) {
             HashMap<String, Object> whereh = new HashMap<>();
@@ -42,6 +42,5 @@ class RemoveCommand {
         } else {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_A_TIMELORD");
         }
-        return true;
     }
 }

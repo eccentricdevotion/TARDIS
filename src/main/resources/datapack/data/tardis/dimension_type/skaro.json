@@ -1,0 +1,30 @@
+{
+  "attributes": {
+    "minecraft:visual/cloud_color": 15459839,
+    "minecraft:visual/fog_color": 13615871,
+    "minecraft:visual/sky_color": 10648061,
+    "minecraft:visual/ambient_particles": [
+      {
+        "particle": {
+          "type": "minecraft:ash"
+        },
+        "probability": 0.00625
+      }
+    ]
+  },
+  "coordinate_scale": 1,
+  "has_ceiling": false,
+  "has_skylight": true,
+  "ambient_light": 0,
+  "height": 384,
+  "infiniburn": "#minecraft:infiniburn_overworld",
+  "logical_height": 384,
+  "min_y": -64,
+  "monster_spawn_block_light_limit": 0,
+  "monster_spawn_light_level": {
+    "type": "minecraft:uniform",
+    "max_inclusive": 7,
+    "min_inclusive": 0
+  },
+  "timelines": "#minecraft:in_overworld"
+}

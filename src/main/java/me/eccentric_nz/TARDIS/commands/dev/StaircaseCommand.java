@@ -105,7 +105,7 @@ public class StaircaseCommand {
             new Vector(7, 15, 5)
     );
 
-    public boolean spiral(Player player) {
+    public void spiral(Player player) {
         Location location = player.getLocation().clone();
         Chunk chunk = location.getChunk();
         int x = (chunk.getX() * 16);
@@ -114,10 +114,9 @@ public class StaircaseCommand {
         Block block = location.getWorld().getBlockAt(x, y, z);
         walls(block.getLocation().clone().add(8, 0, 8));
         build(block.getLocation().add(0.5d, 0, 0.5d), false);
-        return true;
     }
 
-    public boolean smaller(Player player) {
+    public void smaller(Player player) {
         Location location = player.getLocation().clone();
         Chunk chunk = location.getChunk();
         int x = (chunk.getX() * 16);
@@ -126,7 +125,6 @@ public class StaircaseCommand {
         Block block = location.getWorld().getBlockAt(x, y, z);
         walls(block.getLocation().clone().add(8, 0, 8));
         build(block.getLocation().add(0.5d, 0, 0.5d), true);
-        return true;
     }
 
     private void build(Location location, boolean bool) {
@@ -138,7 +136,7 @@ public class StaircaseCommand {
         }
     }
 
-    public boolean mark(Player player) {
+    public void mark(Player player) {
         Location location = player.getLocation().clone();
         Chunk chunk = location.getChunk();
         int x = (chunk.getX() * 16);
@@ -147,7 +145,6 @@ public class StaircaseCommand {
         Block block = location.getWorld().getBlockAt(x, y, z);
         walls(block.getLocation().clone().add(8, 0, 8));
         placeMarkers(block.getLocation().add(0.5d, 0, 0.5d));
-        return true;
     }
 
     private void placeMarkers(Location location) {
@@ -196,7 +193,7 @@ public class StaircaseCommand {
         }
     }
 
-    public boolean scan(Player player) {
+    public void scan(Player player) {
         Location location = player.getLocation().clone();
         Chunk chunk = location.getChunk();
         int sx = (chunk.getX() * 16);
@@ -219,6 +216,5 @@ public class StaircaseCommand {
                 bw.write(builder.toString());
             }
         } catch (IOException ignored) { }
-        return true;
     }
 }

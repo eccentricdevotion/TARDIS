@@ -29,40 +29,14 @@ public class DisguiseCommand {
         this.plugin = plugin;
     }
 
-    public boolean disguise(CommandSender sender, String[] args) {
-        if (args[0].equalsIgnoreCase("disguise")) {
-            Player player = null;
-            if (args.length == 3) {
-                player = plugin.getServer().getPlayer(args[2]);
-            } else if (sender instanceof Player) {
-                player = (Player) sender;
-            }
-            if (player == null) {
-                plugin.getMessenger().message(sender, "You need to specify a player!");
-                return true;
-            }
+    public void disguise(CommandSender sender, Player player, String type) {
             EntityType entityType;
             try {
-                entityType = EntityType.valueOf(args[1]);
+                entityType = EntityType.valueOf(type);
             } catch (IllegalArgumentException e) {
                 plugin.getMessenger().message(sender, "You need to specify a valid living entity type!");
-                return true;
+                return;
             }
             plugin.getTardisHelper().disguise(entityType, player);
-        }
-        if (args[0].equalsIgnoreCase("undisguise")) {
-            Player player = null;
-            if (args.length == 2) {
-                player = plugin.getServer().getPlayer(args[1]);
-            } else if (sender instanceof Player) {
-                player = (Player) sender;
-            }
-            if (player == null) {
-                plugin.getMessenger().message(sender, "You need to specify a player!");
-                return true;
-            }
-            plugin.getTardisHelper().undisguise(player);
-        }
-        return true;
     }
 }

@@ -32,7 +32,7 @@ public class InteractionCommand {
         this.plugin = plugin;
     }
 
-    public boolean process(UUID uuid) {
+    public void process(UUID uuid) {
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", uuid.toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
@@ -43,6 +43,5 @@ public class InteractionCommand {
                 TARDISDisplayItemUtils.setInteraction(rsc.getCurrent().location().getBlock(), id);
             }
         }
-        return true;
     }
 }

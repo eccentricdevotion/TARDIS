@@ -57,33 +57,10 @@ import java.util.UUID;
 public class TARDISPrefsMenuListener extends TARDISMenuListener {
 
     private final TARDIS plugin;
-    private final HashMap<String, String> lookup = new HashMap<>();
 
     public TARDISPrefsMenuListener(TARDIS plugin) {
         super(plugin);
         this.plugin = plugin;
-        lookup.put("Announce Repeaters", "announce_repeaters_on");
-        lookup.put("Auto Power Up", "auto_powerup_on");
-        lookup.put("Auto-rescue", "auto_rescue_on");
-        lookup.put("Autonomous Siege", "auto_siege_on");
-        lookup.put("Autonomous", "auto_on");
-        lookup.put("Beacon", "beacon_on");
-        lookup.put("Close GUI", "close_gui_on");
-        lookup.put("Companion Build", "build_on");
-        lookup.put("Do Not Disturb", "dnd_on");
-        lookup.put("Emergency Programme One", "eps_on");
-        lookup.put("Exterior Rendering Room", "renderer_on");
-        lookup.put("Hostile Action Displacement System", "hads_on");
-        lookup.put("Interior SFX", "sfx_on");
-        lookup.put("Info GUI", "info_on");
-        lookup.put("Minecart Sounds", "minecart_on");
-        lookup.put("Mob Farming", "farm_on");
-        lookup.put("Preset Sign", "sign_on");
-        lookup.put("Open Display Door", "open_display_door_on");
-        lookup.put("Submarine Mode", "submarine_on");
-        lookup.put("Telepathic Circuit", "telepathy_on");
-        lookup.put("Travel Bar", "travelbar_on");
-        lookup.put("Who Quotes", "quotes_on");
     }
 
     @EventHandler(ignoreCancelled = true)
@@ -270,7 +247,6 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener {
                     player.openInventory(new TARDISConfigMenuInventory(plugin).getInventory());
                 }
             }, 1L);
-            return;
         }
     }
 }

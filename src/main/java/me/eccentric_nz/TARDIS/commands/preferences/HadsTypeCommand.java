@@ -27,7 +27,7 @@ import java.util.Locale;
 /**
  * @author eccentric_nz
  */
-class HadsTypeCommand {
+public class HadsTypeCommand {
 
     private final TARDIS plugin;
 
@@ -35,17 +35,13 @@ class HadsTypeCommand {
         this.plugin = plugin;
     }
 
-    boolean setHadsPref(Player player, String[] args) {
-        if (args.length < 2) {
-            plugin.getMessenger().send(player, TardisModule.TARDIS, "HADS_NEED");
-            return false;
-        }
-        String hads_type = args[1].toUpperCase(Locale.ROOT);
+    public void setHadsPref(Player player, String type) {
+        String hads_type = type.toUpperCase(Locale.ROOT);
         try {
             HADS.valueOf(hads_type);
         } catch (IllegalArgumentException e) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "HADS_NOT_VALID");
-            return false;
+            return;
         }
         HashMap<String, Object> set = new HashMap<>();
         set.put("hads_type", hads_type);
@@ -53,6 +49,5 @@ class HadsTypeCommand {
         where.put("uuid", player.getUniqueId().toString());
         TARDIS.plugin.getQueryFactory().doUpdate("player_prefs", set, where);
         plugin.getMessenger().send(player, TardisModule.TARDIS, "HADS_SAVED");
-        return true;
     }
 }

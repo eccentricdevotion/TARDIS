@@ -30,15 +30,15 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-class SudoDesiege {
+public class SudoDesiege {
 
     private final TARDIS plugin;
 
-    SudoDesiege(TARDIS plugin) {
+    public SudoDesiege(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean restore(CommandSender sender, UUID uuid, int id) {
+    public void restore(CommandSender sender, UUID uuid, int id) {
         // turn off siege mode
         HashMap<String, Object> wheres = new HashMap<>();
         wheres.put("tardis_id", id);
@@ -79,6 +79,5 @@ class SudoDesiege {
             plugin.getPresetBuilder().buildPreset(bd);
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "SIEGE_REBUILT");
         }
-        return true;
     }
 }

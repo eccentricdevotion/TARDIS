@@ -29,32 +29,29 @@ public class BellCommand {
         this.plugin = plugin;
     }
 
-    public boolean toggle(int id, Player player, String[] args) {
-        if (args.length < 2) {
+    public void toggle(int id, Player player, String arg) {
+        if (arg.isEmpty()) {
             // cloister bell
             if (plugin.getTrackerKeeper().getCloisterBells().containsKey(id)) {
                 stopCloisterBell(id);
             } else {
                 startCloisterBell(id);
             }
-        } else if (args.length == 2) {
-            if (args[1].equalsIgnoreCase("off")) {
+        } else {
+            if (arg.equalsIgnoreCase("off")) {
                 if (plugin.getTrackerKeeper().getCloisterBells().containsKey(id)) {
                     stopCloisterBell(id);
                 } else {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "CLOISTER_BELL_CMD", "off");
                 }
-                return true;
-            } else if (args[1].equalsIgnoreCase("on")) {
+            } else if (arg.equalsIgnoreCase("on")) {
                 if (!plugin.getTrackerKeeper().getCloisterBells().containsKey(id)) {
                     startCloisterBell(id);
                 } else {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "CLOISTER_BELL_CMD", "on");
                 }
-                return true;
             }
         }
-        return false;
     }
 
     private void stopCloisterBell(int id) {

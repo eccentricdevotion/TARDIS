@@ -65,8 +65,7 @@ public class DirectionAction {
                 }
                 direction = COMPASS.values()[ordinal].toString();
             }
-            String[] args = new String[]{"direction", direction};
-            new DirectionCommand(plugin).changeDirection(player, args);
+            new DirectionCommand(plugin).changeDirection(player, direction);
             return direction;
         }
         return "";

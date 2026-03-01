@@ -42,15 +42,15 @@ public class TVMCommandBeacon {
         this.plugin = plugin;
     }
 
-    public boolean process(Player player) {
+    public void process(Player player) {
         if (!TARDISPermission.hasPermission(player, "vm.beacon")) {
             plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_PERM_CMD");
-            return true;
+            return;
         }
         int required = plugin.getVortexConfig().getInt("tachyon_use.lifesigns");
         if (!TVMUtils.checkTachyonLevel(player.getUniqueId().toString(), required)) {
             plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_BEACON_TACHYON");
-            return true;
+            return;
         }
         UUID uuid = player.getUniqueId();
         String ustr = uuid.toString();
@@ -72,7 +72,7 @@ public class TVMCommandBeacon {
         Parameters params = new Parameters(player, flags);
         if (!plugin.getTardisAPI().getRespect().getRespect(l, params)) {
             plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_BEACON_PERMIT");
-            return true;
+            return;
         }
         Block b = l.getBlock().getRelative(BlockFace.DOWN);
         TVMQueryFactory qf = new TVMQueryFactory(plugin);
@@ -90,6 +90,5 @@ public class TVMCommandBeacon {
         // remove tachyons
         qf.alterTachyons(ustr, -required);
         plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_BEACON_MOVE");
-        return true;
     }
 }

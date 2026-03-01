@@ -43,7 +43,7 @@ public class FixStorageCommand {
         this.plugin = plugin;
     }
 
-    public boolean convertStacks() {
+    public void convertStacks() {
         try {
             for (Storage storage : Storage.values()) {
                 ItemStack[] stacks = SerializeInventory.itemStacksFromString(storage.getEmpty());
@@ -81,6 +81,5 @@ public class FixStorageCommand {
             }
         } catch (IOException ignored) {
         }
-        return true;
     }
 }

@@ -38,14 +38,14 @@ public class HomeCommand {
         this.plugin = plugin;
     }
 
-    public boolean action(Player player, int id) {
+    public void action(Player player, int id) {
         // get home location
         HashMap<String, Object> wherehl = new HashMap<>();
         wherehl.put("tardis_id", id);
         ResultSetHomeLocation rsh = new ResultSetHomeLocation(plugin, wherehl);
         if (!rsh.resultSet()) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "HOME_NOT_FOUND");
-            return true;
+            return;
         }
         HashMap<String, Object> set = new HashMap<>();
         set.put("world", rsh.getWorld().getName());
@@ -73,6 +73,5 @@ public class HomeCommand {
         if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
             new TARDISLand(plugin, id, player).exitVortex();
         }
-        return true;
     }
 }

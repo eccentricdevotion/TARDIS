@@ -50,23 +50,23 @@ import java.util.UUID;
 
 public class SchematicSave {
 
-    public boolean act(TARDIS plugin, Player player, String which) {
+    public void act(TARDIS plugin, Player player, String which) {
         UUID uuid = player.getUniqueId();
         // check they have selected start and end blocks
         if (!plugin.getTrackerKeeper().getStartLocation().containsKey(uuid)) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "SCHM_NO_START");
-            return true;
+            return;
         }
         if (!plugin.getTrackerKeeper().getEndLocation().containsKey(uuid)) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "SCHM_NO_END");
-            return true;
+            return;
         }
         // get the world
         World w = plugin.getTrackerKeeper().getStartLocation().get(uuid).getWorld();
         String chk_w = plugin.getTrackerKeeper().getEndLocation().get(uuid).getWorld().getName();
         if (!w.getName().equals(chk_w)) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "SCHM_WORLD");
-            return true;
+            return;
         }
         // get the raw coords
         int sx = plugin.getTrackerKeeper().getStartLocation().get(uuid).getBlockX();
@@ -101,11 +101,11 @@ public class SchematicSave {
         if (width != length) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "SCHM_SQUARE");
             plugin.getMessenger().message(player, TardisModule.TARDIS, "Dimensions are: (x,z)" + width + ", " + length);
-            return true;
+            return;
         }
         if (width % 16 != 0 && !which.equals("zero") && !which.equals("junk") && !which.equals("arcade") && !which.contains("dalek")) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "SCHM_MULTIPLE");
-            return true;
+            return;
         }
         JsonArray paintings = new JsonArray();
         JsonArray armourStands = new JsonArray();
@@ -344,6 +344,5 @@ public class SchematicSave {
         } catch (IOException e) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "SCHM_ERROR");
         }
-        return true;
     }
 }

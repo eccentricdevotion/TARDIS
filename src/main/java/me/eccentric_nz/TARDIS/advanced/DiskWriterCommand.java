@@ -53,7 +53,7 @@ public class DiskWriterCommand {
         disks.add("Preset Storage Disk");
     }
 
-    public boolean writeSave(Player player, String[] args) {
+    public void writeSave(Player player, String name) {
         ItemStack is;
         boolean makeAndSaveDisk = !plugin.getConfig().getBoolean("difficulty.disk_in_hand_for_write");
         if (makeAndSaveDisk) {
@@ -71,22 +71,17 @@ public class DiskWriterCommand {
                 List<Component> lore = im.lore();
                 if (!ComponentUtils.stripColour(lore.getFirst()).equals("Blank")) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "DISK_ONLY_BLANK");
-                    return true;
+                    return;
                 }
-                if (args.length < 2) {
-                    plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
-                    return false;
-                }
-                if (!LETTERS_NUMBERS.matcher(args[1]).matches()) {
+                if (!LETTERS_NUMBERS.matcher(name).matches()) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "SAVE_NAME_NOT_VALID");
-                    return false;
+                    return;
                 }
                 HashMap<String, Object> where = new HashMap<>();
                 where.put("uuid", player.getUniqueId().toString());
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                 if (!rs.resultSet()) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
-                    return false;
                 } else {
                     Tardis tardis = rs.getTardis();
                     int id = tardis.getTardisId();
@@ -94,21 +89,21 @@ public class DiskWriterCommand {
                     // check has unique name - this will always return false in HARD & MEDIUM difficulty
                     HashMap<String, Object> wherename = new HashMap<>();
                     wherename.put("tardis_id", id);
-                    wherename.put("dest_name", args[1]);
+                    wherename.put("dest_name", name);
                     wherename.put("type", 0);
                     ResultSetDestinations rsd = new ResultSetDestinations(plugin, wherename, false);
                     if (rsd.resultSet()) {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "SAVE_EXISTS");
-                        return true;
+                        return;
                     }
                     // get current destination
                     ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
                     if (!rsc.resultSet()) {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
-                        return true;
+                        return;
                     }
                     Current current = rsc.getCurrent();
-                    lore.set(0, Component.text(args[1]));
+                    lore.set(0, Component.text(name));
                     lore.add(1, Component.text(current.location().getWorld().getName()));
                     lore.add(2, Component.text(current.location().getBlockX()));
                     lore.add(3, Component.text(current.location().getBlockY()));
@@ -123,15 +118,13 @@ public class DiskWriterCommand {
                         boolean isSpace = saveDiskToStorage(player, is);
                         if (!isSpace) {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "SAVE_STORAGE_FULL");
-                            return true;
+                            return;
                         }
                     }
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "DISK_LOC_SAVED");
-                    return true;
                 }
             }
         }
-        return true;
     }
 
     private boolean saveDiskToStorage(Player player, ItemStack is) {
@@ -188,7 +181,7 @@ public class DiskWriterCommand {
         return slot;
     }
 
-    public boolean writePlayer(Player player, String[] args) {
+    public void writePlayer(Player player, Player target) {
         ItemStack is = player.getInventory().getItemInMainHand();
         if (is.hasItemMeta()) {
             ItemMeta im = is.getItemMeta();
@@ -196,41 +189,30 @@ public class DiskWriterCommand {
                 List<Component> lore = im.lore();
                 if (!ComponentUtils.stripColour(lore.getFirst()).equals("Blank")) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "DISK_ONLY_BLANK");
-                    return true;
+                    return;
                 }
-                if (args.length < 2) {
-                    plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
-                    return false;
-                }
-                if (!LETTERS_NUMBERS.matcher(args[1]).matches()) {
-                    plugin.getMessenger().send(player, TardisModule.TARDIS, "PLAYER_NOT_VALID");
-                    return false;
-                }
-                if (player.getName().equalsIgnoreCase(args[1])) {
+                if (player.getName().equalsIgnoreCase(target.getName())) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "DISK_NO_SAVE");
-                    return true;
+                    return;
                 }
                 HashMap<String, Object> where = new HashMap<>();
                 where.put("uuid", player.getUniqueId().toString());
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                 if (!rs.resultSet()) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
-                    return false;
                 } else {
-                    lore.set(0, Component.text(args[1]));
+                    lore.set(0, Component.text(target.getName()));
                     im.lore(lore);
                     is.setItemMeta(im);
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "DISK_PLAYER_SAVED");
-                    return true;
                 }
             }
         }
-        return true;
     }
 
-    public boolean eraseDisk(Player player) {
+    public void eraseDisk(Player player) {
         ItemStack is = player.getInventory().getItemInMainHand();
-        if (is.hasItemMeta() && disks.contains(is.getItemMeta().displayName())) {
+        if (is.hasItemMeta() && disks.contains(ComponentUtils.stripColour(is.getItemMeta().displayName()))) {
             ItemMeta im = is.getItemMeta();
             im.lore(List.of(Component.text("Blank")));
             is.setItemMeta(im);
@@ -238,48 +220,40 @@ public class DiskWriterCommand {
         } else {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "DISK_HAND_ERASE");
         }
-        return true;
     }
 
-    public boolean writeSaveToControlDisk(Player player, String[] args) {
+    public void writeSaveToControlDisk(Player player, String name) {
         ItemStack is = player.getInventory().getItemInMainHand();
         if (is.hasItemMeta()) {
             ItemMeta im = is.getItemMeta();
             if (im.hasDisplayName() && ComponentUtils.endsWith(im.displayName(), "Authorised Control Disk")
                     && im.getPersistentDataContainer().has(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID())) {
-                if (args.length < 2) {
-                    plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
-                    return false;
-                }
                 ResultSetTardisID rs = new ResultSetTardisID(plugin);
                 if (!rs.fromUUID(player.getUniqueId().toString())) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
-                    return false;
                 } else {
                     String save;
-                    if (args[1].equalsIgnoreCase("home")) {
+                    if (name.equalsIgnoreCase("home")) {
                         save = "Home";
                     } else {
                         HashMap<String, Object> wherename = new HashMap<>();
                         wherename.put("tardis_id", rs.getTardisId());
-                        wherename.put("dest_name", args[1]);
+                        wherename.put("dest_name", name);
                         wherename.put("type", 0);
                         ResultSetDestinations rsd = new ResultSetDestinations(plugin, wherename, false);
                         if (!rsd.resultSet()) {
                             plugin.getMessenger().sendColouredCommand(player, "SAVE_NOT_FOUND", "/tardis list saves", plugin);
-                            return true;
+                            return;
                         }
-                        save = args[1];
+                        save = name;
                     }
                     List<Component> lore = im.lore();
                     lore.add(Component.text(save));
                     im.lore(lore);
                     is.setItemMeta(im);
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "DISK_LOC_SAVED");
-                    return true;
                 }
             }
         }
-        return true;
     }
 }

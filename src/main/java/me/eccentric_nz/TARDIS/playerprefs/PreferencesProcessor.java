@@ -97,7 +97,7 @@ public class PreferencesProcessor {
                     case "build" -> {
                         if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("allow.wg_flag_set")) {
                             String onoff = colon[1].equals("1b") ? "on" : "off";
-                            new BuildCommand(plugin).toggleCompanionBuilding(player, new String[]{"", onoff});
+                            new BuildCommand(plugin).toggleCompanionBuilding(player, onoff);
                         }
                     }
                     case "flight" -> {

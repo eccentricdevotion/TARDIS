@@ -65,10 +65,8 @@ public class GrowthListener implements Listener {
                     // get current level
                     int age = ageable.getAge();
                     switch (species) {
-                        case CACTUS, SUGAR_CANE -> {
-                            // with cactus and sugar cane the block returned is AIR
-                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plant.getRelative(BlockFace.UP).setBlockData(plant.getRelative(BlockFace.DOWN).getType().createBlockData()), 3L);
-                        }
+                        // with cactus and sugar cane the block returned is AIR
+                        case CACTUS, SUGAR_CANE -> plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plant.getRelative(BlockFace.UP).setBlockData(plant.getRelative(BlockFace.DOWN).getType().createBlockData()), 3L);
                         case BEETROOTS, CARROTS, WHEAT, MELON_STEM, POTATOES, PUMPKIN_STEM -> {
                             // fully grown is 7
                             if (age < 6) {

@@ -34,8 +34,7 @@ public class TARDISRecipe {
         this.plugin = plugin;
     }
 
-    public void grantMultiple(CommandSender sender, String[] args) {
-        Player player = plugin.getServer().getPlayer(args[0]);
+    public void grantMultiple(CommandSender sender, Player player) {
         if (player == null) { // player must be online
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "COULD_NOT_FIND_NAME");
             return;
@@ -68,13 +67,11 @@ public class TARDISRecipe {
         player.discoverRecipes(keys);
     }
 
-    public void grant(CommandSender sender, String[] args) {
-        Player player = plugin.getServer().getPlayer(args[0]);
+    public void grant(CommandSender sender, Player player, String item) {
         if (player == null) { // player must be online
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "COULD_NOT_FIND_NAME");
             return;
         }
-        String item = args[2].toLowerCase(Locale.ROOT);
         if (!Give.items.containsKey(item)) {
             new TARDISGiveLister(plugin, sender).list();
             return;

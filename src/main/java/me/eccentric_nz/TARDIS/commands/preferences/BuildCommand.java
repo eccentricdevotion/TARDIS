@@ -38,10 +38,10 @@ public class BuildCommand {
         this.plugin = plugin;
     }
 
-    public boolean toggleCompanionBuilding(Player player, String[] args) {
+    public void toggleCompanionBuilding(Player player, String arg) {
         if (!plugin.isWorldGuardOnServer() || !plugin.getConfig().getBoolean("allow.wg_flag_set")) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "CMD_DISABLED");
-            return true;
+            return;
         }
         String playerNameStr = player.getName();
         // get the player's TARDIS world
@@ -50,19 +50,19 @@ public class BuildCommand {
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (!rs.resultSet()) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
-            return true;
+            return;
         }
         Tardis tardis = rs.getTardis();
         Integer id = tardis.getTardisId();
         HashMap<String, Object> setp = new HashMap<>();
         HashMap<String, Object> wherep = new HashMap<>();
         wherep.put("uuid", player.getUniqueId().toString());
-        if (args[1].equalsIgnoreCase(plugin.getLanguage().getString("SET_ON", "ON")) || args[1].equalsIgnoreCase("on")) {
+        if (arg.equalsIgnoreCase(plugin.getLanguage().getString("SET_ON", "ON")) || arg.equalsIgnoreCase("on")) {
             setp.put("build_on", 1);
             plugin.getTrackerKeeper().getAntiBuild().remove(id);
             plugin.getMessenger().send(player, TardisModule.TARDIS, "ANTIBUILD_ON");
         }
-        if (args[1].equalsIgnoreCase(plugin.getLanguage().getString("SET_OFF", "OFF")) || args[1].equalsIgnoreCase("off")) {
+        if (arg.equalsIgnoreCase(plugin.getLanguage().getString("SET_OFF", "OFF")) || arg.equalsIgnoreCase("off")) {
             setp.put("build_on", 0);
             TARDISAntiBuild tab = new TARDISAntiBuild();
             String[] data = tardis.getChunk().split(":");
@@ -70,7 +70,7 @@ public class BuildCommand {
             ProtectedRegion pr = plugin.getWorldGuardUtils().getRegion(data[0], playerNameStr);
             if (pr == null) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "WG_NOT_FOUND");
-                return true;
+                return;
             }
             Vector min = new Vector(pr.getMinimumPoint().x(), pr.getMinimumPoint().y(), pr.getMinimumPoint().z());
             Vector max = new Vector(pr.getMaximumPoint().x(), pr.getMaximumPoint().y(), pr.getMaximumPoint().z());
@@ -81,6 +81,5 @@ public class BuildCommand {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "ANTIBUILD_OFF");
         }
         plugin.getQueryFactory().doUpdate("player_prefs", setp, wherep);
-        return true;
     }
 }

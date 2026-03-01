@@ -23,15 +23,15 @@ import org.bukkit.command.CommandSender;
 /**
  * @author eccentric_nz
  */
-class JunkTime {
+public class JunkTime {
 
     private final TARDIS plugin;
 
-    JunkTime(TARDIS plugin) {
+    public JunkTime(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    boolean elapsed(CommandSender sender) {
+    public void elapsed(CommandSender sender) {
         // check the Junk TARDIS is not home already
         if (new JunkLocation(plugin).isNotHome()) {
             long conf = plugin.getConfig().getLong("junk.return");
@@ -56,6 +56,5 @@ class JunkTime {
         } else {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "JUNK_AT_HOME");
         }
-        return true;
     }
 }

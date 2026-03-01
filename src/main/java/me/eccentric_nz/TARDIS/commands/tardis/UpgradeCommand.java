@@ -37,18 +37,18 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-class UpgradeCommand {
+public class UpgradeCommand {
 
     private final TARDIS plugin;
 
-    UpgradeCommand(TARDIS plugin) {
+    public UpgradeCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    boolean openUpgradeGUI(Player player) {
+    public void openUpgradeGUI(Player player) {
         if (!TARDISPermission.hasPermission(player, "tardis.upgrade")) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERM_UPGRADE");
-            return true;
+            return;
         }
         UUID uuid = player.getUniqueId();
         // they must have an existing TARDIS
@@ -57,22 +57,22 @@ class UpgradeCommand {
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (!rs.resultSet()) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
-            return true;
+            return;
         }
         if (plugin.getConfig().getBoolean("difficulty.system_upgrades") && !new SystemUpgradeChecker(plugin).has(uuid.toString(), SystemTree.DESKTOP_THEME)) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "Desktop Theme");
-            return true;
+            return;
         }
         Tardis tardis = rs.getTardis();
         // console must in a TARDIS world
         if (!plugin.getUtils().canGrowRooms(tardis.getChunk())) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "UPGRADE_ABORT_WORLD");
-            return true;
+            return;
         }
         // check they are not growing rooms
         if (plugin.getTrackerKeeper().getIsGrowingRooms().contains(tardis.getTardisId())) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_UPGRADE_WHILE_GROWING");
-            return true;
+            return;
         }
         // it must be their own TARDIS
         boolean own;
@@ -93,7 +93,7 @@ class UpgradeCommand {
         }
         if (!own) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_OWNER");
-            return true;
+            return;
         }
         // get player's current console
         Schematic current_console = tardis.getSchematic();
@@ -104,6 +104,5 @@ class UpgradeCommand {
         plugin.getTrackerKeeper().getUpgrades().put(uuid, tud);
         // open the upgrade menu
         player.openInventory(new PluginThemeInventory(plugin, player, current_console.getPermission(), level).getInventory());
-        return true;
     }
 }

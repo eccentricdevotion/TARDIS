@@ -83,7 +83,7 @@ public class ProfileChanger {
         Bukkit.getPluginManager().callEvent(new PlayerHideEntityEvent(cp, other.getBukkitEntity()));
         ServerPlayer sp = cp.getHandle();
         // remove this entity from the hidden player's EntityTrackerEntry
-        ChunkMap tracker = ((ServerLevel) sp.level()).getChunkSource().chunkMap;
+        ChunkMap tracker = sp.level().getChunkSource().chunkMap;
         ChunkMap.TrackedEntity entry = tracker.entityMap.get(other.getId());
         if (entry != null) {
             entry.removePlayer(sp);
@@ -96,7 +96,7 @@ public class ProfileChanger {
 
     private static void trackAndShowEntity(CraftPlayer cp, ServerPlayer other, UUID uuidOverride) {
         ServerPlayer sp = cp.getHandle();
-        ChunkMap tracker = ((ServerLevel) sp.level()).getChunkSource().chunkMap;
+        ChunkMap tracker = sp.level().getChunkSource().chunkMap;
         // uuid override
         UUID original = null;
         if (uuidOverride != null) {

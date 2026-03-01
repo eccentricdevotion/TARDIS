@@ -45,15 +45,15 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-class LandCommand {
+public class LandCommand {
 
     private final TARDIS plugin;
 
-    LandCommand(TARDIS plugin) {
+    public LandCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean exitVortex(Player player, int id, String uuid) {
+    public void exitVortex(Player player, int id, String uuid) {
         HashMap<String, Object> wherei = new HashMap<>();
         wherei.put("tardis_id", id);
         ResultSetTardis rs = new ResultSetTardis(plugin, wherei, "", false);
@@ -61,15 +61,15 @@ class LandCommand {
             Tardis tardis = rs.getTardis();
             if (tardis.getPreset().equals(ChameleonPreset.JUNK)) {
                 plugin.getMessenger().handlesSend(player, "HANDLES_JUNK");
-                return true;
+                return;
             }
             if (tardis.isHandbrakeOn()) {
                 plugin.getMessenger().handlesSend(player, "HANDBRAKE_ON_ERR");
-                return true;
+                return;
             }
             if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
                 plugin.getMessenger().handlesSend(player, "HANDLES_VORTEX");
-                return true;
+                return;
             }
             // must have a destination, but setting one will make the TARDIS automatically exit the time vortex
             // so generate a random overworld location
@@ -145,6 +145,5 @@ class LandCommand {
                 plugin.getMessenger().handlesSend(player, "CURRENT_NOT_FOUND");
             }
         }
-        return true;
     }
 }

@@ -21,6 +21,7 @@ import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.InventoryManager;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.utility.TARDISMultiverseInventoriesChecker;
@@ -124,10 +125,12 @@ public class TARDISMinecartListener implements Listener {
                     }
                 }
                 if (data != null && data.length > 3) {
-                    boolean shouldPrevent = switch (plugin.getInvManager()) {
-                        case MULTIVERSE -> (!TARDISMultiverseInventoriesChecker.checkWorldsCanShare(bw, data[0]));
-                        default -> false;
-                    };
+                    boolean shouldPrevent;
+                    if (plugin.getInvManager() == InventoryManager.MULTIVERSE) {
+                        shouldPrevent = (!TARDISMultiverseInventoriesChecker.checkWorldsCanShare(bw, data[0]));
+                    } else {
+                        shouldPrevent = false;
+                    }
                     if (shouldPrevent) {
                         if (playerUUID != null && plugin.getServer().getPlayer(playerUUID).isOnline()) {
                             plugin.getMessenger().send(plugin.getServer().getPlayer(playerUUID), TardisModule.TARDIS, "WORLD_NO_CART", bw, data[0]);

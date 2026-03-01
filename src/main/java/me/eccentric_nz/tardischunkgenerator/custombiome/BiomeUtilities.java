@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.tardischunkgenerator.custombiome;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
@@ -39,17 +37,6 @@ public class BiomeUtilities {
             return props.getProperty("level-name");
         } catch (IOException e) {
             return "world"; // minecraft / paper default
-        }
-    }
-
-    public static void addBiomes(String basePath) {
-        if (TARDIS.plugin.getPlanetsConfig().getBoolean("planets.gallifrey.enabled")) {
-            TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.HELPER, "Adding custom biomes for planet Gallifrey...");
-            CustomBiome.addCustomBiome(TARDISBiomeData.BADLANDS);
-        }
-        if (TARDIS.plugin.getPlanetsConfig().getBoolean("planets.skaro.enabled")) {
-            TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.HELPER, "Adding custom biomes for planet Skaro...");
-            CustomBiome.addCustomBiome(TARDISBiomeData.DESERT);
         }
     }
 

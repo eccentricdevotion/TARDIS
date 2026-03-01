@@ -43,8 +43,8 @@ public class MonstersCommand {
         this.plugin = plugin;
     }
 
-    boolean reset(Player player, int id, String[] args) {
-        if (args[1].equalsIgnoreCase("reset")) {
+    public void reset(Player player, int id, String arg) {
+        if (arg.equalsIgnoreCase("reset")) {
             Location l = null;
             for (Map.Entry<Location, TARDISTeleportLocation> map : plugin.getTrackerKeeper().getPortals().entrySet()) {
                 // only portals in police box worlds
@@ -59,9 +59,8 @@ public class MonstersCommand {
             if (l != null) {
                 plugin.getTrackerKeeper().getPortals().remove(l);
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "PORTAL_RESET");
-                return true;
             }
-        } else if (args[1].equalsIgnoreCase("kill")) {
+        } else if (arg.equalsIgnoreCase("kill")) {
             // get TARDIS console chunks
             HashMap<String, Object> where = new HashMap<>();
             where.put("tardis_id", id);
@@ -82,9 +81,7 @@ public class MonstersCommand {
                     }
                 }
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "MONSTERS_RESET");
-                return true;
             }
         }
-        return false;
     }
 }

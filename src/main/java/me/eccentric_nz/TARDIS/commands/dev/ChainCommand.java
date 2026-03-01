@@ -15,13 +15,13 @@ public class ChainCommand {
         this.plugin = plugin;
     }
 
-    public boolean checkSchematics() {
+    public void checkSchematics() {
         for (String fileName : Desktops.getBY_PERMS().keySet()) {
             // get JSON
             JsonObject obj = SchematicGZip.getObject(plugin, "consoles", fileName, false);
             if (obj == null) {
                 plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "The supplied file [" + fileName + ".tschm] is not a TARDIS JSON schematic!");
-                return false;
+                return;
             } else {
                 // get dimensions
                 JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
@@ -43,7 +43,6 @@ public class ChainCommand {
                 }
             }
         }
-        return true;
     }
 
     private void validateBlockData(String data, String fileName) {

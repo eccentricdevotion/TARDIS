@@ -33,13 +33,12 @@ public class TVMCommandGUI {
         this.plugin = plugin;
     }
 
-    public boolean open(Player player) {
+    public void open(Player player) {
         // get tachyon level
         TVMResultSetManipulator rs = new TVMResultSetManipulator(plugin, player.getUniqueId().toString());
         if (rs.resultSet()) {
             // open gui
             player.openInventory(new TVMGUI(plugin, rs.getTachyonLevel()).getInventory());
         }
-        return true;
     }
 }

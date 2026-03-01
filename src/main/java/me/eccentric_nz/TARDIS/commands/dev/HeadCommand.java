@@ -81,9 +81,6 @@ public class HeadCommand {
             }
             PlayerProfile washingMachineProfile = plugin.getServer().createProfile(UUID.fromString(WashingMachineSkin.WASHING_MACHINE.signature()));
             washingMachineProfile.setProperty(new ProfileProperty("textures", WashingMachineSkin.WASHING_MACHINE.value(), null));
-//            try {
-//                washingMachineProfile.getTextures().setSkin(URI.create(WashingMachineSkin.WASHING_MACHINE.url()).toURL());
-//            } catch (MalformedURLException ignored) { }
             ItemStack washingMachine = ItemStack.of(Material.PLAYER_HEAD);
             SkullMeta washingMachineMeta = (SkullMeta) washingMachine.getItemMeta();
             washingMachineMeta.setPlayerProfile(washingMachineProfile);

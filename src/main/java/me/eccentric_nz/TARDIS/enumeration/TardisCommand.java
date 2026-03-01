@@ -26,12 +26,12 @@ public enum TardisCommand {
     add,
     arch_time,
     archive,
-    arsremove,
+    ars_remove,
     bell,
     check_loc,
     colorize,
     colourise,
-    comehere,
+    come_here,
     construct,
     cube,
     decommission,
@@ -55,24 +55,24 @@ public enum TardisCommand {
     list,
     make_her_blue,
     monsters,
-    namekey,
+    name_key,
     occupy,
     rebuild,
     remove,
-    removesave,
-    renamesave,
-    reordersave,
+    remove_save,
+    rename_save,
+    reorder_save,
     rescue,
     room,
     save,
     save_player,
-    saveicon,
+    save_icon,
     secondary,
     section,
-    setdest,
-    sethome,
+    set_destination,
+    set_home,
     stop_sound,
-    tagtheood,
+    tag_the_ood,
     theme,
     transmat,
     update,
@@ -81,7 +81,7 @@ public enum TardisCommand {
 
     public boolean noSiege() {
         return switch (this) {
-            case abandon, archive, colourise, colorize, comehere, desktop, direction, door, eject, excite, exterminate, hide, sethome, lamps, make_her_blue, rebuild, rescue, room, setdest, theme, upgrade -> true;
+            case abandon, archive, colourise, colorize, come_here, desktop, direction, door, eject, excite, exterminate, hide, set_home, lamps, make_her_blue, rebuild, rescue, room, set_destination, theme, upgrade -> true;
             default -> false;
         };
     }

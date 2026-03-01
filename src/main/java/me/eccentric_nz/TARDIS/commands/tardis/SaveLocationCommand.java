@@ -42,25 +42,19 @@ class SaveLocationCommand {
         this.plugin = plugin;
     }
 
-    boolean doSave(Player player, String[] args) {
+    void doSave(Player player, String name, boolean preset) {
         if (TARDISPermission.hasPermission(player, "tardis.save")) {
             HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", player.getUniqueId().toString());
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
             if (!rs.resultSet()) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
-                return false;
+                return;
             }
-            if (args.length < 2) {
-                plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
-                return false;
-            }
-            if (!LETTERS_NUMBERS.matcher(args[1]).matches()) {
+            if (!LETTERS_NUMBERS.matcher(name).matches()) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "SAVE_NAME_NOT_VALID");
-                return false;
-            } else if (args[1].equalsIgnoreCase("hide") || args[1].equalsIgnoreCase("rebuild") || args[1].equalsIgnoreCase("home")) {
+            } else if (name.equalsIgnoreCase("hide") || name.equalsIgnoreCase("rebuild") || name.equalsIgnoreCase("home")) {
                 plugin.getMessenger().sendColouredCommand(player, "SAVE_RESERVED", "/tardis home", plugin);
-                return false;
             } else {
                 Tardis tardis = rs.getTardis();
                 int id = tardis.getTardisId();
@@ -72,52 +66,50 @@ class SaveLocationCommand {
                 }
                 if (tcc != null && !tcc.hasMemory()) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_MEM_CIRCUIT");
-                    return true;
+                    return;
                 }
                 // check has unique name
                 HashMap<String, Object> wherename = new HashMap<>();
                 wherename.put("tardis_id", id);
-                wherename.put("dest_name", args[1]);
+                wherename.put("dest_name", name);
                 wherename.put("type", 0);
                 ResultSetDestinations rsd = new ResultSetDestinations(plugin, wherename, false);
                 if (rsd.resultSet()) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "SAVE_EXISTS");
-                    return true;
+                    return;
                 }
                 // get current destination
                 ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
                 if (!rsc.resultSet()) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
-                    return true;
+                    return;
                 }
                 Current current = rsc.getCurrent();
                 String w = current.location().getWorld().getName();
                 if (w.startsWith("TARDIS_")) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "SAVE_NO_TARDIS");
-                    return true;
+                    return;
                 }
                 HashMap<String, Object> set = new HashMap<>();
                 set.put("tardis_id", id);
-                set.put("dest_name", args[1]);
+                set.put("dest_name", name);
                 set.put("world", w);
                 set.put("x", current.location().getBlockX());
                 set.put("y", current.location().getBlockY());
                 set.put("z", current.location().getBlockZ());
                 set.put("direction", current.direction().toString());
                 set.put("submarine", (current.submarine()) ? 1 : 0);
-                if (args.length > 2 && args[2].equalsIgnoreCase("true")) {
+                if (preset) {
                     set.put("preset", tardis.getPreset().toString());
                 }
                 if (plugin.getQueryFactory().doSyncInsert("destinations", set) < 0) {
-                    return false;
+
                 } else {
-                    plugin.getMessenger().send(player, TardisModule.TARDIS, "SAVE_SET", args[1]);
-                    return true;
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "SAVE_SET", name);
                 }
             }
         } else {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
-            return false;
         }
     }
 }

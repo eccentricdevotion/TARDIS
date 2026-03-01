@@ -28,41 +28,39 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-class SiegeCubeCommand {
+public class SiegeCubeCommand {
 
     private final TARDIS plugin;
 
-    SiegeCubeCommand(TARDIS plugin) {
+    public SiegeCubeCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    boolean whoHasCube(Player player) {
+    public void whoHasCube(Player player) {
         // check they have TARDIS
         if (TARDISPermission.hasPermission(player, "tardis.find")) {
             ResultSetTardisID rs = new ResultSetTardisID(plugin);
             if (!rs.fromUUID(player.getUniqueId().toString())) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
-                return true;
+                return;
             }
             int id = rs.getTardisId();
             if (!plugin.getTrackerKeeper().getIsSiegeCube().contains(id)) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "SIEGE_NOT_SIEGED");
-                return true;
+                return;
             }
             // get the player who is carrying the Siege cube
             for (Map.Entry<UUID, Integer> map : plugin.getTrackerKeeper().getSiegeCarrying().entrySet()) {
                 if (map.getValue() == id) {
                     String p = plugin.getServer().getPlayer(map.getKey()).getName();
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "SIEGE_CARRIER", p);
-                    return true;
+                    return;
                 }
             }
             // not found
             plugin.getMessenger().send(player, TardisModule.TARDIS, "SIEGE_CARRIER", "no one!");
-            return true;
         } else {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
-            return false;
         }
     }
 }

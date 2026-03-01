@@ -9,7 +9,7 @@ import java.util.UUID;
 
 public class SchematicPosition {
 
-    public boolean teleport(TARDIS plugin, Player player) {
+    public void teleport(TARDIS plugin, Player player) {
         UUID uuid = player.getUniqueId();
         double x;
         double y;
@@ -29,6 +29,5 @@ public class SchematicPosition {
         }
         Location location = new Location(player.getWorld(), x, y, z, player.getYaw(), 0);
         player.teleport(location);
-        return true;
     }
 }

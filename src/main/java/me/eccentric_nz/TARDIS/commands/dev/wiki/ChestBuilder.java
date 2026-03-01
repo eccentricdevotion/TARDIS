@@ -39,9 +39,9 @@ public class ChestBuilder {
         this.plugin = plugin;
     }
 
-    public boolean place(CommandSender sender) {
+    public void place(CommandSender sender) {
         if (!(sender instanceof Player player)) {
-            return true;
+            return;
         }
         // fill chests with every TARDIS item
         Location location = player.getLocation().add(0, 2, 0);
@@ -108,6 +108,5 @@ public class ChestBuilder {
             chest.getBlockInventory().addItem(is);
             count++;
         }
-        return true;
     }
 }

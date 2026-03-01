@@ -40,27 +40,24 @@ public class DisguiseCommand {
         this.plugin = plugin;
     }
 
-    public boolean disguise(CommandSender sender, String[] args) {
-        if (args.length < 2) {
-            return false;
-        }
+    public void disguise(CommandSender sender, String mon, String o, String uid) {
         // check monster type
-        String upper = args[1].toUpperCase(Locale.ROOT);
+        String upper = mon.toUpperCase(Locale.ROOT);
         Monster monster;
         try {
             monster = Monster.valueOf(upper);
         } catch (IllegalArgumentException e) {
             plugin.getMessenger().send(sender, TardisModule.MONSTERS, "WA_INVALID");
-            return true;
+            return;
         }
         Player player = null;
         if (sender instanceof ConsoleCommandSender) {
             // check argument length
-            if (args.length < 4) {
+            if (uid.isEmpty()) {
                 plugin.getMessenger().send(sender, TardisModule.MONSTERS, "WA_UUID");
-                return true;
+                return;
             }
-            UUID uuid = UUID.fromString(args[3]);
+            UUID uuid = UUID.fromString(uid);
             player = plugin.getServer().getPlayer(uuid);
         }
         if (sender instanceof Player) {
@@ -68,20 +65,20 @@ public class DisguiseCommand {
         }
         if (player == null) {
             plugin.getMessenger().send(sender, TardisModule.MONSTERS, "WA_UUID");
-            return true;
+            return;
         }
-        if (args.length < 3 || (!args[2].equalsIgnoreCase("on") && !args[2].equalsIgnoreCase("off"))) {
+        if (!o.equalsIgnoreCase("on") && !o.equalsIgnoreCase("off")) {
             plugin.getMessenger().send(player, TardisModule.MONSTERS, "TWA_ON_OFF");
-            return true;
+            return;
         }
         PlayerInventory inv = player.getInventory();
-        if (args[2].equalsIgnoreCase("on")
+        if (o.equalsIgnoreCase("on")
                 && (!inv.getBoots().getType().isAir() || !inv.getChestplate().getType().isAir()
                 || !inv.getHelmet().getType().isAir() || !inv.getLeggings().getType().isAir())) {
             plugin.getMessenger().send(player, TardisModule.MONSTERS, "WA_ARMOUR");
-            return true;
+            return;
         }
-        if (args[2].equalsIgnoreCase("on")) {
+        if (o.equalsIgnoreCase("on")) {
             switch (monster) {
                 case DALEK -> DalekEquipment.set(player, true);
                 case K9 -> K9Equipment.set(null, player, true);
@@ -94,6 +91,5 @@ public class DisguiseCommand {
         } else {
             RemoveEquipment.set(player);
         }
-        return true;
     }
 }

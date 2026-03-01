@@ -40,28 +40,24 @@ public class SaveIconCommand {
         this.plugin = plugin;
     }
 
-    public boolean changeIcon(CommandSender sender, String[] args) {
-        if (args.length < 3) {
-            plugin.getMessenger().send(sender, TardisModule.TARDIS, "TOO_FEW_ARGS");
-            return false;
-        }
+    public void changeIcon(CommandSender sender, String world_save, String icon, boolean dimension) {
         Material material;
         try {
-            material = Material.valueOf(args[2].toUpperCase(Locale.ROOT));
+            material = Material.valueOf(icon.toUpperCase(Locale.ROOT));
         } catch (IllegalArgumentException e) {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "MATERIAL_NOT_VALID");
-            return false;
+            return;
         }
         String m = material.toString();
-        if (args[0].equalsIgnoreCase("dimensionicon")) {
+        if (dimension) {
             if (!TARDISPermission.hasPermission(sender, "tardis.admin")) {
                 plugin.getMessenger().send(sender, TardisModule.TARDIS, "NO_PERMS");
-                return true;
+                return;
             }
-            World world = TARDISAliasResolver.getWorldFromAlias(args[1]);
+            World world = TARDISAliasResolver.getWorldFromAlias(world_save);
             if (world == null) {
                 plugin.getMessenger().send(sender, TardisModule.TARDIS, "COULD_NOT_FIND_WORLD");
-                return false;
+                return;
             }
             plugin.getPlanetsConfig().set("planets." + world.getName() + ".icon", m);
             try {
@@ -75,16 +71,16 @@ public class SaveIconCommand {
                 ResultSetTardisID rs = new ResultSetTardisID(plugin);
                 if (!rs.fromUUID(player.getUniqueId().toString())) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
-                    return false;
+                    return;
                 }
                 int id = rs.getTardisId();
                 HashMap<String, Object> whered = new HashMap<>();
-                whered.put("dest_name", args[1]);
+                whered.put("dest_name", world_save);
                 whered.put("tardis_id", id);
                 ResultSetDestinations rsd = new ResultSetDestinations(plugin, whered, false);
                 if (!rsd.resultSet()) {
                     plugin.getMessenger().sendColouredCommand(player, "SAVE_NOT_FOUND", "/tardis list saves", plugin);
-                    return false;
+                    return;
                 }
                 int destID = rsd.getDest_id();
                 HashMap<String, Object> did = new HashMap<>();
@@ -95,6 +91,5 @@ public class SaveIconCommand {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "DEST_ICON", m);
             }
         }
-        return true;
     }
 }

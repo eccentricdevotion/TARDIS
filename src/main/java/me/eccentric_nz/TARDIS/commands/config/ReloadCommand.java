@@ -30,27 +30,26 @@ import java.util.Locale;
 /**
  * @author eccentric_nz
  */
-class ReloadCommand {
+public class ReloadCommand {
 
     private final TARDIS plugin;
 
-    ReloadCommand(TARDIS plugin) {
+    public ReloadCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    boolean reloadConfig(CommandSender sender) {
+    public void reloadConfig(CommandSender sender) {
         plugin.reloadConfig();
         // check worlds
         TARDISWorlds tc = new TARDISWorlds(plugin);
         tc.doWorlds();
         plugin.saveConfig();
         plugin.getMessenger().send(sender, TardisModule.TARDIS, "RELOADED");
-        return true;
     }
 
-    boolean reloadOtherConfig(CommandSender sender, String[] args) {
+    public void reloadOtherConfig(CommandSender sender, String module) {
         try {
-            Config config = Config.valueOf(args[1].toLowerCase(Locale.ROOT));
+            Config config = Config.valueOf(module.toLowerCase(Locale.ROOT));
             File file = new File(plugin.getDataFolder(), config + ".yml");
             switch (config) {
                 case achievements -> plugin.getAchievementConfig().load(file);
@@ -70,18 +69,15 @@ class ReloadCommand {
                 case signs -> plugin.getSigns().load(new File(plugin.getDataFolder(), "language" + File.separator + "signs.yml"));
                 case vortex_manipulator -> plugin.getVortexConfig().load(file);
                 default -> {
-                    plugin.getMessenger().send(sender, TardisModule.TARDIS, "RELOAD_NOT_THESE", args[1]);
-                    return true;
+                    plugin.getMessenger().send(sender, TardisModule.TARDIS, "RELOAD_NOT_THESE", module);
+                    return;
                 }
             }
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "RELOAD_SUCCESS", config.toString());
         } catch (IllegalArgumentException e) {
-            plugin.getMessenger().send(sender, TardisModule.TARDIS, "RELOAD_FILE_BAD", args[1]);
-            return true;
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "RELOAD_FILE_BAD", module);
         } catch (InvalidConfigurationException | IOException e) {
-            plugin.getMessenger().send(sender, TardisModule.TARDIS, "RELOAD_FAIL", args[1]);
-            return true;
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "RELOAD_FAIL", module);
         }
-        return true;
     }
 }

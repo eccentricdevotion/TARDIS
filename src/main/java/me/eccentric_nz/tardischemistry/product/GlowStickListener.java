@@ -47,7 +47,7 @@ public class GlowStickListener implements Listener {
                 if (im.hasDisplayName() && ComponentUtils.endsWith(im.displayName(), "Glow Stick") && !im.hasEnchantmentGlintOverride()) {
                     player.playSound(player.getLocation(), Sound.BLOCK_ANVIL_HIT, 1.0f, 1.0f);
                     // switch custom data models e.g. 10000008 -> 12000008
-                    Product glowstick = Product.getByName().get(im.displayName());
+                    Product glowstick = Product.getByName().get(ComponentUtils.stripColour(im.displayName()));
                     im.setItemModel(glowstick.getActive());
                     im.setEnchantmentGlintOverride(true);
                     im.getPersistentDataContainer().set(namespacedKey, PersistentDataType.INTEGER, 100);

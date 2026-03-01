@@ -53,45 +53,45 @@ public class TARDISCallRequestCommand {
         this.plugin = plugin;
     }
 
-    public boolean requestComeHere(Player player, Player requested) {
+    public void requestComeHere(Player player, Player requested) {
         UUID uuid = requested.getUniqueId();
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", uuid.toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (!rs.resultSet()) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "PLAYER_NO_TARDIS");
-            return true;
+            return;
         }
         Tardis tardis = rs.getTardis();
         int id = tardis.getTardisId();
         if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPoweredOn()) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "PLAYER_NOT_POWERED", requested.getName());
-            return true;
+            return;
         }
         int level = tardis.getArtronLevel();
         // get location
         Location eyeLocation = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getLocation();
         if (!plugin.getConfig().getBoolean("travel.include_default_world") && plugin.getConfig().getBoolean("creation.default_world") && eyeLocation.getWorld().getName().equals(plugin.getConfig().getString("creation.default_world_name"))) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_WORLD_TRAVEL");
-            return true;
+            return;
         }
         if (!plugin.getPluginRespect().getRespect(eyeLocation, new Parameters(player, Flag.getDefaultFlags()))) {
-            return true;
+            return;
         }
         if (TARDISPermission.hasPermission(requested, "tardis.exile") && plugin.getConfig().getBoolean("travel.exile")) {
             String areaPerm = plugin.getTardisArea().getExileArea(requested);
             if (plugin.getTardisArea().areaCheckInExile(areaPerm, eyeLocation)) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "EXILE_NO_REQUEST", requested.getName());
-                return true;
+                return;
             }
         }
         if (plugin.getTrackerKeeper().getDispersedTARDII().contains(id)) {
             plugin.getMessenger().send(player.getPlayer(), TardisModule.TARDIS, "NOT_WHILE_DISPERSED_REQUEST", requested.getName());
-            return true;
+            return;
         }
         if (plugin.getTardisArea().isInExistingArea(eyeLocation)) {
             plugin.getMessenger().sendColouredCommand(player, "AREA_NO_COMEHERE", "/tardistravel area [area name]", plugin);
-            return true;
+            return;
         }
         Material m = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getType();
         if (m != Material.SNOW) {
@@ -102,7 +102,7 @@ public class TARDISCallRequestCommand {
         String world = eyeLocation.getWorld().getName();
         if (!plugin.getPlanetsConfig().getBoolean("planets." + world + ".time_travel")) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PB_IN_WORLD");
-            return true;
+            return;
         }
         UUID playerUuid = player.getUniqueId();
         // check the requesting player is NOT in their tardis
@@ -111,7 +111,7 @@ public class TARDISCallRequestCommand {
         ResultSetTravellers rst = new ResultSetTravellers(plugin, wherettrav, false);
         if (rst.resultSet()) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PB_IN_TARDIS");
-            return true;
+            return;
         }
         // check the requested player IS in their tardis
         HashMap<String, Object> wherein = new HashMap<>();
@@ -119,18 +119,18 @@ public class TARDISCallRequestCommand {
         ResultSetTravellers rsti = new ResultSetTravellers(plugin, wherein, false);
         if (!rsti.resultSet()) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "PLAYER_NOT_IN_TARDIS", requested.getName());
-            return true;
+            return;
         }
         if (plugin.getTrackerKeeper().getInVortex().contains(id) || plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getDematerialising().contains(id)) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_WHILE_MAT_REQUEST");
-            return true;
+            return;
         }
         // get current police box location
         ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
         if (!rsc.resultSet()) {
             // emergency TARDIS relocation
             new EmergencyRelocation(plugin).relocate(id, player);
-            return true;
+            return;
         }
         Current current = rsc.getCurrent();
         COMPASS d = current.direction();
@@ -158,7 +158,7 @@ public class TARDISCallRequestCommand {
         }
         if (count > 0) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "WOULD_GRIEF_BLOCKS");
-            return true;
+            return;
         }
         // store request data and await response
         ComehereRequest request = new ComehereRequest();
@@ -185,6 +185,5 @@ public class TARDISCallRequestCommand {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "REQUEST_NO_RESPONSE", requested.getName());
             }
         }, 1200L);
-        return true;
     }
 }

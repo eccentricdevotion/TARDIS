@@ -17,31 +17,26 @@
 package me.eccentric_nz.TARDIS.commands.handles;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.entity.Player;
 
-import java.util.Arrays;
 import java.util.HashMap;
 
 /**
  * @author eccentric_nz
  */
-class RemindCommand {
+public class RemindCommand {
 
     private final TARDIS plugin;
 
-    RemindCommand(TARDIS plugin) {
+    public RemindCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    boolean doReminder(Player player, String[] args) {
-        String message = String.join(" ", Arrays.copyOfRange(args, 2, args.length - 1));
-        // the last argument should be a number
-        long when = TARDISNumberParsers.parseLong(args[args.length - 1]);
+    public void doReminder(Player player, String message, long when) {
         if (when == 0) {
             plugin.getMessenger().handlesMessage(player, "HANDLES_NUMBER");
-            return true;
+            return;
         }
         plugin.getMessenger().handlesSend(player, "HANDLES_OK", "" + when);
         TARDISSounds.playTARDISSound(player, "handles_confirmed", 5L);
@@ -55,6 +50,5 @@ class RemindCommand {
         data.put("reminder", message);
         data.put("time", when);
         plugin.getQueryFactory().doInsert("reminders", data);
-        return true;
     }
 }

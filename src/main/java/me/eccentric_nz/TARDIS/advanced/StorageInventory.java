@@ -25,11 +25,9 @@ import org.bukkit.inventory.ItemStack;
 
 public class StorageInventory implements InventoryHolder {
 
-    private final TARDIS plugin;
     private final Inventory inventory;
 
     public StorageInventory(TARDIS plugin, String title, ItemStack[] contents) {
-        this.plugin = plugin;
         this.inventory = plugin.getServer().createInventory(this, 54, Component.text(title, NamedTextColor.DARK_RED));
         this.inventory.setContents(contents);
     }

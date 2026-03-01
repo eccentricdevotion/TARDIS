@@ -28,29 +28,29 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-class EjectCommand {
+public class EjectCommand {
 
     private final TARDIS plugin;
 
-    EjectCommand(TARDIS plugin) {
+    public EjectCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    boolean eject(Player player) {
+    public void eject(Player player) {
         if (!TARDISPermission.hasPermission(player, "tardis.eject")) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
-            return true;
+            return;
         }
         // check they are still in the TARDIS world
         if (!plugin.getUtils().inTARDISWorld(player)) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "CMD_IN_WORLD");
-            return true;
+            return;
         }
         // must have a TARDIS
         ResultSetTardisID rs = new ResultSetTardisID(plugin);
         if (!rs.fromUUID(player.getUniqueId().toString())) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_A_TIMELORD");
-            return false;
+            return;
         }
         int ownerid = rs.getTardisId();
         HashMap<String, Object> wheret = new HashMap<>();
@@ -58,16 +58,15 @@ class EjectCommand {
         ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
         if (!rst.resultSet()) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_IN_TARDIS");
-            return false;
+            return;
         }
         int thisid = rst.getTardis_id();
         // must be timelord of the TARDIS
         if (thisid != ownerid) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "CMD_ONLY_TL");
-            return false;
+            return;
         }
         // track the player
         plugin.getTrackerKeeper().getEjecting().put(player.getUniqueId(), thisid);
-        return true;
     }
 }

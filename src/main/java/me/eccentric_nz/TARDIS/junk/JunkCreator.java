@@ -37,24 +37,24 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-class JunkCreator {
+public class JunkCreator {
 
     private final TARDIS plugin;
     private final Player p;
 
-    JunkCreator(TARDIS plugin, Player p) {
+    public JunkCreator(TARDIS plugin, Player p) {
         this.plugin = plugin;
         this.p = p;
     }
 
-    boolean createJunkTARDIS() {
+    public void createJunkTARDIS() {
         if (!TARDISPermission.hasPermission(p, "tardis.admin")) {
             plugin.getMessenger().send(p, TardisModule.TARDIS, "CMD_ADMIN");
-            return true;
+            return;
         }
         if (!plugin.getConfig().getBoolean("junk.enabled") || !plugin.getConfig().getBoolean("creation.default_world")) {
             plugin.getMessenger().send(p, TardisModule.TARDIS, "JUNK_DISABLED");
-            return true;
+            return;
         }
         // check if there is a junk TARDIS already
         HashMap<String, Object> where = new HashMap<>();
@@ -62,7 +62,7 @@ class JunkCreator {
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (rs.resultSet()) {
             plugin.getMessenger().send(p, TardisModule.TARDIS, "JUNK_EXISTS");
-            return true;
+            return;
         }
         // get player's target block
         Location l = p.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 16).getLocation().add(0.0d, 1.0d, 0.0d);
@@ -124,6 +124,5 @@ class JunkCreator {
         builder.setTask(task);
         // build the TARDIS in the world
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getPresetBuilder().buildPreset(bd), 5L);
-        return true;
     }
 }

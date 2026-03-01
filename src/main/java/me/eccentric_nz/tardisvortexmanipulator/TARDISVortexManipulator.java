@@ -16,13 +16,15 @@
  */
 package me.eccentric_nz.tardisvortexmanipulator;
 
+import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.tardisvortexmanipulator.command.TVMCommand;
-import me.eccentric_nz.tardisvortexmanipulator.command.TVMTabComplete;
+import me.eccentric_nz.TARDIS.brigadier.VortexManipulatorCommandNode;
 import me.eccentric_nz.tardisvortexmanipulator.gui.TVMGUIListener;
 import me.eccentric_nz.tardisvortexmanipulator.gui.TVMMessageGUIListener;
 import me.eccentric_nz.tardisvortexmanipulator.gui.TVMSavesGUIListener;
 import me.eccentric_nz.tardisvortexmanipulator.listeners.*;
+
+import java.util.List;
 
 public class TARDISVortexManipulator {
 
@@ -34,9 +36,14 @@ public class TARDISVortexManipulator {
 
     public void enable() {
         plugin.setTvmSettings(new TVMSettings());
+        // update the config
         new VortexManipulatorConfig(plugin).checkConfig();
+        // register listeners
         registerListeners();
-        registerCommand();
+        // register command
+        plugin.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS, commands ->
+                commands.registrar().register(new VortexManipulatorCommandNode(plugin).build(), List.of("vortexmainpulator", "tvm")));
+        // add recipe
         new TVMRecipe(plugin).addRecipe();
         startRecharger();
     }
@@ -50,11 +57,6 @@ public class TARDISVortexManipulator {
         plugin.getPM().registerEvents(new TVMMessageGUIListener(plugin), plugin);
         plugin.getPM().registerEvents(new TVMMoveListener(plugin), plugin);
         plugin.getPM().registerEvents(new TVMSavesGUIListener(plugin), plugin);
-    }
-
-    private void registerCommand() {
-        plugin.getCommand("vm").setExecutor(new TVMCommand(plugin));
-        plugin.getCommand("vm").setTabCompleter(new TVMTabComplete());
     }
 
     private void startRecharger() {

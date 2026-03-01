@@ -27,12 +27,11 @@ public class StopSoundCommand {
         this.plugin = plugin;
     }
 
-    public boolean mute(Player player) {
+    public void mute(Player player) {
         if (player.getPersistentDataContainer().has(plugin.getLoopKey(), PersistentDataType.INTEGER)) {
             int task = player.getPersistentDataContainer().get(plugin.getLoopKey(), PersistentDataType.INTEGER);
             plugin.getServer().getScheduler().cancelTask(task);
             player.getPersistentDataContainer().remove(plugin.getLoopKey());
         }
-        return true;
     }
 }

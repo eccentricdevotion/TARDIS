@@ -31,20 +31,16 @@ import java.util.UUID;
 
 public class SchematicConvert {
 
-    public boolean act(TARDIS plugin, Player player, String[] args) {
-        if (args.length < 3) {
-            plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
-            return true;
-        }
+    public void act(TARDIS plugin, Player player, String from, String to) {
         TardisLight light;
         try {
-            light = TardisLight.valueOf(args[1].toUpperCase(Locale.ROOT));
+            light = TardisLight.valueOf(from.toUpperCase(Locale.ROOT));
         } catch (IllegalArgumentException e) {
             light = TardisLight.TENTH;
         }
         Material lamp;
         try {
-            lamp = Material.valueOf(args[2].toUpperCase(Locale.ROOT));
+            lamp = Material.valueOf(to.toUpperCase(Locale.ROOT));
         } catch (IllegalArgumentException e) {
             lamp = Material.REDSTONE_LAMP;
         }
@@ -52,18 +48,18 @@ public class SchematicConvert {
         // check they have selected start and end blocks
         if (!plugin.getTrackerKeeper().getStartLocation().containsKey(uuid)) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "SCHM_NO_START");
-            return true;
+            return;
         }
         if (!plugin.getTrackerKeeper().getEndLocation().containsKey(uuid)) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "SCHM_NO_END");
-            return true;
+            return;
         }
         // get the world
         World w = plugin.getTrackerKeeper().getStartLocation().get(uuid).getWorld();
         String chk_w = plugin.getTrackerKeeper().getEndLocation().get(uuid).getWorld().getName();
         if (!w.getName().equals(chk_w)) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "SCHM_WORLD");
-            return true;
+            return;
         }
         // get the raw coords
         int sx = plugin.getTrackerKeeper().getStartLocation().get(uuid).getBlockX();
@@ -98,6 +94,5 @@ public class SchematicConvert {
             }
         }
         plugin.getMessenger().message(player, TardisModule.TARDIS, "Light conversion complete");
-        return true;
     }
 }

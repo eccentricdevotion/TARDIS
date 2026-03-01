@@ -64,7 +64,7 @@ public class AbandonCommand {
 
     private final TARDIS plugin;
 
-    AbandonCommand(TARDIS plugin) {
+    public AbandonCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
@@ -187,151 +187,139 @@ public class AbandonCommand {
         return sign;
     }
 
-    boolean doAbandon(CommandSender sender, boolean list) {
-        if (TARDISPermission.hasPermission(sender, "tardis.abandon") && plugin.getConfig().getBoolean("abandon.enabled")) {
-            if (list) {
-                // list abandoned TARDISes
-                if (sender.hasPermission("tardis.admin")) {
-                    new AbandonedLister(plugin).list(sender);
-                    return true;
-                } else {
-                    plugin.getMessenger().send(sender, TardisModule.TARDIS, "NO_PERMS");
-                }
+    public void list(CommandSender sender) {
+        // list abandoned TARDISes
+        if (sender.hasPermission("tardis.admin")) {
+            new AbandonedLister(plugin).list(sender);
+        } else {
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "NO_PERMS");
+        }
+    }
+
+    public void doAbandon(Player player) {
+        if (TARDISPermission.hasPermission(player, "tardis.abandon") && plugin.getConfig().getBoolean("abandon.enabled")) {
+            if (!plugin.getConfig().getBoolean("allow.power_down")) {
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "ABANDON_POWER_DOWN");
+                return;
+            }
+            // abandon TARDIS
+            ResultSetTardisAbandoned rs = new ResultSetTardisAbandoned(plugin);
+            if (!rs.fromUUID(player.getUniqueId().toString())) {
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
             } else {
-                // must be a Player
-                Player player = null;
-                if (sender instanceof Player) {
-                    player = (Player) sender;
+                ChameleonPreset preset = rs.getPreset();
+                // need to be in tardis
+                HashMap<String, Object> where = new HashMap<>();
+                where.put("uuid", player.getUniqueId().toString());
+                ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
+                if (!rst.resultSet()) {
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_IN_TARDIS");
+                    return;
                 }
-                if (player == null) {
-                    plugin.getMessenger().send(sender, TardisModule.TARDIS, "CMD_NO_CONSOLE");
-                    return true;
+                if (preset.equals(ChameleonPreset.JUNK_MODE)) {
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "ABANDONED_NOT_JUNK");
+                    return;
                 }
-                if (!plugin.getConfig().getBoolean("allow.power_down")) {
-                    plugin.getMessenger().send(sender, TardisModule.TARDIS, "ABANDON_POWER_DOWN");
-                    return true;
+                int id = rs.getTardis_id();
+                if (rst.getTardis_id() != id) {
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "ABANDONED_OWN");
+                    return;
                 }
-                // abandon TARDIS
-                ResultSetTardisAbandoned rs = new ResultSetTardisAbandoned(plugin);
-                if (!rs.fromUUID(player.getUniqueId().toString())) {
-                    plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
-                    return true;
-                } else {
-                    ChameleonPreset preset = rs.getPreset();
-                    // need to be in tardis
-                    HashMap<String, Object> where = new HashMap<>();
-                    where.put("uuid", player.getUniqueId().toString());
-                    ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
-                    if (!rst.resultSet()) {
-                        plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_IN_TARDIS");
-                        return true;
+                if (!rs.isTardis_init()) {
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "ENERGY_NO_INIT");
+                    return;
+                }
+                if (!rs.isHandbrake_on()) {
+                    plugin.getMessenger().sendStatus(player, "HANDBRAKE_ENGAGE");
+                    return;
+                }
+                if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_IN_VORTEX");
+                    return;
+                }
+                if (plugin.getTrackerKeeper().getInVortex().contains(id) || plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getDematerialising().contains(id)) {
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_WHILE_MAT");
+                    return;
+                }
+                new AbandonUpdate(plugin, id, player.getUniqueId().toString()).run();
+                if (rs.isPowered_on()) {
+                    // power down TARDIS
+                    new TARDISPowerButton(plugin, id, player, rs.getPreset(), rs.isPowered_on(), rs.isHidden(), rs.isLights_on(), player.getLocation(), rs.getArtron_level(), rs.getSchematic().getLights()).clickButton();
+                }
+                // close the door
+                ResultSetTardisPreset rsp = new ResultSetTardisPreset(plugin);
+                if (rsp.fromID(id)) {
+                    boolean outerDisplayDoor = rsp.getPreset().usesArmourStand();
+                    Inner innerDisplayDoor = new InnerDoor(plugin, id).get();
+                    UUID playerUUID = player.getUniqueId();
+                    // close inner
+                    if (innerDisplayDoor.display()) {
+                        new InnerDisplayDoorCloser(plugin).close(innerDisplayDoor.block(), id, playerUUID, true);
+                    } else {
+                        new InnerMinecraftDoorCloser(plugin).close(innerDisplayDoor.block(), id, playerUUID);
                     }
-                    if (preset.equals(ChameleonPreset.JUNK_MODE)) {
-                        plugin.getMessenger().send(player, TardisModule.TARDIS, "ABANDONED_NOT_JUNK");
-                        return true;
+                    // close outer
+                    if (outerDisplayDoor) {
+                        new OuterDisplayDoorCloser(plugin).close(new OuterDoor(plugin, id).getDisplay(), id, playerUUID, false);
+                    } else if (rsp.getPreset().hasDoor()) {
+                        new OuterMinecraftDoorCloser(plugin).close(new OuterDoor(plugin, id).getMinecraft(), id, playerUUID);
                     }
-                    int id = rs.getTardis_id();
-                    if (rst.getTardis_id() != id) {
-                        plugin.getMessenger().send(player, TardisModule.TARDIS, "ABANDONED_OWN");
-                        return true;
-                    }
-                    if (!rs.isTardis_init()) {
-                        plugin.getMessenger().send(player, TardisModule.TARDIS, "ENERGY_NO_INIT");
-                        return true;
-                    }
-                    if (!rs.isHandbrake_on()) {
-                        plugin.getMessenger().sendStatus(player, "HANDBRAKE_ENGAGE");
-                        return true;
-                    }
-                    if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
-                        plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_IN_VORTEX");
-                        return true;
-                    }
-                    if (plugin.getTrackerKeeper().getInVortex().contains(id) || plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getDematerialising().contains(id)) {
-                        plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_WHILE_MAT");
-                        return true;
-                    }
-                    new AbandonUpdate(plugin, id, player.getUniqueId().toString()).run();
-                    if (rs.isPowered_on()) {
-                        // power down TARDIS
-                        new TARDISPowerButton(plugin, id, player, rs.getPreset(), rs.isPowered_on(), rs.isHidden(), rs.isLights_on(), player.getLocation(), rs.getArtron_level(), rs.getSchematic().getLights()).clickButton();
-                    }
-                    // close the door
-                    ResultSetTardisPreset rsp = new ResultSetTardisPreset(plugin);
-                    if (rsp.fromID(id)) {
-                        boolean outerDisplayDoor = rsp.getPreset().usesArmourStand();
-                        Inner innerDisplayDoor = new InnerDoor(plugin, id).get();
-                        UUID playerUUID = player.getUniqueId();
-                        // close inner
-                        if (innerDisplayDoor.display()) {
-                            new InnerDisplayDoorCloser(plugin).close(innerDisplayDoor.block(), id, playerUUID, true);
-                        } else {
-                            new InnerMinecraftDoorCloser(plugin).close(innerDisplayDoor.block(), id, playerUUID);
-                        }
-                        // close outer
-                        if (outerDisplayDoor) {
-                            new OuterDisplayDoorCloser(plugin).close(new OuterDoor(plugin, id).getDisplay(), id, playerUUID, false);
-                        } else if (rsp.getPreset().hasDoor()) {
-                            new OuterMinecraftDoorCloser(plugin).close(new OuterDoor(plugin, id).getMinecraft(), id, playerUUID);
-                        }
-                    }
-                    plugin.getMessenger().send(player, TardisModule.TARDIS, "ABANDONED_SUCCESS");
-                    ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
-                    if (rsc.resultSet()) {
-                        Current current = rsc.getCurrent();
-                        plugin.getPM().callEvent(new TARDISAbandonEvent(player, id, current.location()));
-                        // always clear sign
-                        if (preset.usesArmourStand()) {
-                            World world = current.location().getWorld();
-                            // remove custom name from the armour stand / helmet item
-                            for (Entity e : world.getNearbyEntities(current.location(), 1.1d, 1.1d, 1.1d)) {
-                                if (e instanceof ArmorStand stand) {
-                                    ItemStack is = stand.getItem(EquipmentSlot.HEAD);
-                                    ItemMeta im = is.getItemMeta();
-                                    String pb = "";
-                                    switch (preset) {
-                                        case WEEPING_ANGEL -> pb = "Weeping Angel";
-                                        case PANDORICA -> pb = "Pandorica";
-                                        case SIDRAT -> pb = "SIDRAT";
-                                        case BATTLE -> pb = "Battle TARDIS";
-                                        case ITEM -> {
-                                            for (String k : plugin.getCustomModelConfig().getConfigurationSection("models").getKeys(false)) {
-                                                if (is.getType().toString().equals(plugin.getCustomModelConfig().getString("models." + k + ".item"))) {
-                                                    pb = k;
-                                                    break;
-                                                }
+                }
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "ABANDONED_SUCCESS");
+                ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
+                if (rsc.resultSet()) {
+                    Current current = rsc.getCurrent();
+                    plugin.getPM().callEvent(new TARDISAbandonEvent(player, id, current.location()));
+                    // always clear sign
+                    if (preset.usesArmourStand()) {
+                        World world = current.location().getWorld();
+                        // remove custom name from the armour stand / helmet item
+                        for (Entity e : world.getNearbyEntities(current.location(), 1.1d, 1.1d, 1.1d)) {
+                            if (e instanceof ArmorStand stand) {
+                                ItemStack is = stand.getItem(EquipmentSlot.HEAD);
+                                ItemMeta im = is.getItemMeta();
+                                String pb = "";
+                                switch (preset) {
+                                    case WEEPING_ANGEL -> pb = "Weeping Angel";
+                                    case PANDORICA -> pb = "Pandorica";
+                                    case SIDRAT -> pb = "SIDRAT";
+                                    case BATTLE -> pb = "Battle TARDIS";
+                                    case ITEM -> {
+                                        for (String k : plugin.getCustomModelConfig().getConfigurationSection("models").getKeys(false)) {
+                                            if (is.getType().toString().equals(plugin.getCustomModelConfig().getString("models." + k + ".item"))) {
+                                                pb = k;
+                                                break;
                                             }
                                         }
-                                        default -> pb = "Police Box";
                                     }
-                                    Component custom = Component.text("Abandoned " + pb);
-                                    im.displayName(custom);
-                                    is.setItemMeta(im);
-                                    EntityEquipment ee = stand.getEquipment();
-                                    ee.setHelmet(is, true);
-                                    stand.customName(custom);
-                                    stand.setCustomNameVisible(true);
-                                    break;
+                                    default -> pb = "Police Box";
                                 }
+                                Component custom = Component.text("Abandoned " + pb);
+                                im.displayName(custom);
+                                is.setItemMeta(im);
+                                EntityEquipment ee = stand.getEquipment();
+                                ee.setHelmet(is, true);
+                                stand.customName(custom);
+                                stand.setCustomNameVisible(true);
+                                break;
                             }
-                        } else {
-                            Sign sign = getSign(current.location(), current.direction(), preset);
-                            if (sign != null) {
-                                SignSide front = sign.getSide(Side.FRONT);
-                                switch (preset) {
-                                    case GRAVESTONE -> front.line(3, Component.empty());
-                                    case ANGEL, JAIL -> front.line(2, Component.empty());
-                                    default -> front.line(0, Component.empty());
-                                }
-                                sign.update();
+                        }
+                    } else {
+                        Sign sign = getSign(current.location(), current.direction(), preset);
+                        if (sign != null) {
+                            SignSide front = sign.getSide(Side.FRONT);
+                            switch (preset) {
+                                case GRAVESTONE -> front.line(3, Component.empty());
+                                case ANGEL, JAIL -> front.line(2, Component.empty());
+                                default -> front.line(0, Component.empty());
                             }
+                            sign.update();
                         }
                     }
                 }
             }
         } else {
-            plugin.getMessenger().send(sender, TardisModule.TARDIS, "NO_PERMS_ABANDON");
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS_ABANDON");
         }
-        return true;
     }
 }

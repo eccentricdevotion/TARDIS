@@ -27,7 +27,7 @@ public class UpdateLungeCommand {
         this.plugin = plugin;
     }
 
-    public boolean addChiseledShelves(Player player) {
+    public void addChiseledShelves(Player player) {
         // find the library room and add 1.21.11 lunge enchantment
         // get players tardis_id
         ResultSetTardisID rst = new ResultSetTardisID(plugin);
@@ -54,6 +54,5 @@ public class UpdateLungeCommand {
                 plugin.getMessenger().message(player, TardisModule.TARDIS, "You don't have a Library room!");
             }
         }
-        return true;
     }
 }

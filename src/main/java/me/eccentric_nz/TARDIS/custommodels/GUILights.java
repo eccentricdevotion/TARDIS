@@ -45,6 +45,6 @@ public record GUILights() {
     public static final GUIData SELECT_LIGHT = new GUIData(LightButton.BLOCK_BUTTON.getKey(), 42, Material.COAL_BLOCK);
     public static final GUIData CONVERT_LIGHTS = new GUIData(LightButton.CONVERT.getKey(), 44, Material.COAL_BLOCK);
     public static final GUIData CLOSE = new GUIData(GuiVariant.CLOSE.getKey(), 53, Material.BOWL);
-    public static GUIData DELAY = new GUIData(LightButton.DELAY.getKey(), -1, Material.COAL_BLOCK);
-    public static GUIData LEVEL = new GUIData(LightButton.LIGHT_LEVELS.getKey(), -1, Material.COAL_BLOCK);
+    public static final GUIData DELAY = new GUIData(LightButton.DELAY.getKey(), -1, Material.COAL_BLOCK);
+    public static final GUIData LEVEL = new GUIData(LightButton.LIGHT_LEVELS.getKey(), -1, Material.COAL_BLOCK);
 }

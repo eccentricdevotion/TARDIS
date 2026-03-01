@@ -28,14 +28,12 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
 public class LazarusUtils {
 
     public static final Set<UUID> pagers = new HashSet<>();
-    public static final List<String> twaHelmets = List.of("Dalek Head", "Davros Head", "K9 Head", "Toclafane");
 
     public static void openDoor(Block b) {
         b.getRelative(BlockFace.SOUTH).setType(Material.AIR);

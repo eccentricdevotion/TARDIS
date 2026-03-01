@@ -27,7 +27,7 @@ import java.util.Locale;
 /**
  * @author eccentric_nz
  */
-class LightsCommand {
+public class LightsCommand {
 
     private final TARDIS plugin;
 
@@ -35,17 +35,13 @@ class LightsCommand {
         this.plugin = plugin;
     }
 
-    boolean setLightsPref(Player player, String[] args) {
-        if (args.length < 2) {
-            plugin.getMessenger().send(player, TardisModule.TARDIS, "LIGHT_NEED");
-            return false;
-        }
-        String set_light = args[1].toUpperCase(Locale.ROOT);
+    public void setLightsPref(Player player, String light) {
+        String set_light = light.toUpperCase(Locale.ROOT);
         try {
             TardisLight.valueOf(set_light);
         } catch (IllegalArgumentException e) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "LIGHT_NOT_VALID");
-            return false;
+            return;
         }
         HashMap<String, Object> set = new HashMap<>();
         set.put("lights", set_light);
@@ -53,6 +49,5 @@ class LightsCommand {
         where.put("uuid", player.getUniqueId().toString());
         TARDIS.plugin.getQueryFactory().doUpdate("player_prefs", set, where);
         plugin.getMessenger().send(player, TardisModule.TARDIS, "LIGHT_SAVED");
-        return true;
     }
 }

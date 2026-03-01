@@ -13,10 +13,9 @@ public class UpdateBlockStateCommand {
         this.plugin = plugin;
     }
 
-    public boolean refresh(Player player) {
+    public void refresh(Player player) {
         Block targetBlock = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 16);
         BlockState state = targetBlock.getState();
         state.update(true);
-        return true;
     }
 }

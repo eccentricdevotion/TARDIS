@@ -44,12 +44,12 @@ public class BoxCommand {
         this.plugin = plugin;
     }
 
-    public boolean setPreset(CommandSender sender, String[] args) {
+    public void setPreset(CommandSender sender, String p, String state) {
         try {
-            ChameleonPreset preset = ChameleonPreset.valueOf(args[1]);
+            ChameleonPreset preset = ChameleonPreset.valueOf(p);
             if (!preset.usesArmourStand()) {
                 plugin.getMessenger().message(sender, "The specified Chameleon preset must be a custom model!");
-                return true;
+                return;
             }
             if (sender instanceof Player player) {
                 // get the armour stand the player is looking at
@@ -57,7 +57,7 @@ public class BoxCommand {
                 RayTraceResult result = observerPos.getWorld().rayTraceEntities(observerPos, observerPos.getDirection(), 16.0d, (s) -> s.getType() == EntityType.ARMOR_STAND);
                 if (result == null) {
                     plugin.getMessenger().send(sender, TardisModule.TARDIS, "WA_STAND");
-                    return true;
+                    return;
                 }
                 ArmorStand as = (ArmorStand) result.getHitEntity();
                 if (as != null) {
@@ -65,10 +65,10 @@ public class BoxCommand {
                     ItemStack is = ItemStack.of(dye, 1);
                     ItemMeta im = is.getItemMeta();
                     NamespacedKey model = ChameleonVariant.BLUE_CLOSED.getKey();
-                    if (args.length > 2) {
+                    if (!state.isEmpty()) {
                         switch (dye) {
                             case BLUE_DYE -> {
-                                switch (args[2]) {
+                                switch (state) {
                                     case "open" -> model = ChameleonVariant.BLUE_OPEN.getKey();
                                     case "stained" -> model = ChameleonVariant.BLUE_STAINED.getKey();
                                     case "glass" -> model = ChameleonVariant.BLUE_GLASS.getKey();
@@ -78,7 +78,7 @@ public class BoxCommand {
                                 }
                             }
                             case BLACK_DYE -> {
-                                switch (args[2]) {
+                                switch (state) {
                                     case "open" -> model = ChameleonVariant.BLACK_OPEN.getKey();
                                     case "stained" -> model = ChameleonVariant.BLACK_STAINED.getKey();
                                     case "glass" -> model = ChameleonVariant.BLACK_GLASS.getKey();
@@ -87,7 +87,7 @@ public class BoxCommand {
                                 }
                             }
                             case BROWN_DYE -> {
-                                switch (args[2]) {
+                                switch (state) {
                                     case "open" -> model = ChameleonVariant.BROWN_OPEN.getKey();
                                     case "stained" -> model = ChameleonVariant.BROWN_STAINED.getKey();
                                     case "glass" -> model = ChameleonVariant.BROWN_GLASS.getKey();
@@ -96,7 +96,7 @@ public class BoxCommand {
                                 }
                             }
                             case LIGHT_BLUE_DYE -> {
-                                switch (args[2]) {
+                                switch (state) {
                                     case "open" -> model = ChameleonVariant.LIGHT_BLUE_OPEN.getKey();
                                     case "stained" -> model = ChameleonVariant.LIGHT_BLUE_STAINED.getKey();
                                     case "glass" -> model = ChameleonVariant.LIGHT_BLUE_GLASS.getKey();
@@ -105,7 +105,7 @@ public class BoxCommand {
                                 }
                             }
                             case LIGHT_GRAY_DYE -> {
-                                switch (args[2]) {
+                                switch (state) {
                                     case "open" -> model = ChameleonVariant.LIGHT_GRAY_OPEN.getKey();
                                     case "stained" -> model = ChameleonVariant.LIGHT_GRAY_STAINED.getKey();
                                     case "glass" -> model = ChameleonVariant.LIGHT_GRAY_GLASS.getKey();
@@ -114,7 +114,7 @@ public class BoxCommand {
                                 }
                             }
                             case GRAY_DYE -> {
-                                switch (args[2]) {
+                                switch (state) {
                                     case "open" -> model = ChameleonVariant.GRAY_OPEN.getKey();
                                     case "stained" -> model = ChameleonVariant.GRAY_STAINED.getKey();
                                     case "glass" -> model = ChameleonVariant.GRAY_GLASS.getKey();
@@ -123,7 +123,7 @@ public class BoxCommand {
                                 }
                             }
                             case CYAN_DYE -> {
-                                switch (args[2]) {
+                                switch (state) {
                                     case "open" -> model = ChameleonVariant.CYAN_OPEN.getKey();
                                     case "stained" -> model = ChameleonVariant.CYAN_STAINED.getKey();
                                     case "glass" -> model = ChameleonVariant.CYAN_GLASS.getKey();
@@ -132,7 +132,7 @@ public class BoxCommand {
                                 }
                             }
                             case MAGENTA_DYE -> {
-                                switch (args[2]) {
+                                switch (state) {
                                     case "open" -> model = ChameleonVariant.MAGENTA_OPEN.getKey();
                                     case "stained" -> model = ChameleonVariant.MAGENTA_STAINED.getKey();
                                     case "glass" -> model = ChameleonVariant.MAGENTA_GLASS.getKey();
@@ -141,7 +141,7 @@ public class BoxCommand {
                                 }
                             }
                             case YELLOW_DYE -> {
-                                switch (args[2]) {
+                                switch (state) {
                                     case "open" -> model = ChameleonVariant.YELLOW_OPEN.getKey();
                                     case "stained" -> model = ChameleonVariant.YELLOW_STAINED.getKey();
                                     case "glass" -> model = ChameleonVariant.YELLOW_GLASS.getKey();
@@ -150,7 +150,7 @@ public class BoxCommand {
                                 }
                             }
                             case LIME_DYE -> {
-                                switch (args[2]) {
+                                switch (state) {
                                     case "open" -> model = ChameleonVariant.LIME_OPEN.getKey();
                                     case "stained" -> model = ChameleonVariant.LIME_STAINED.getKey();
                                     case "glass" -> model = ChameleonVariant.LIME_GLASS.getKey();
@@ -159,7 +159,7 @@ public class BoxCommand {
                                 }
                             }
                             case GREEN_DYE -> {
-                                switch (args[2]) {
+                                switch (state) {
                                     case "open" -> model = ChameleonVariant.GREEN_OPEN.getKey();
                                     case "stained" -> model = ChameleonVariant.GREEN_STAINED.getKey();
                                     case "glass" -> model = ChameleonVariant.GREEN_GLASS.getKey();
@@ -168,7 +168,7 @@ public class BoxCommand {
                                 }
                             }
                             case PINK_DYE -> {
-                                switch (args[2]) {
+                                switch (state) {
                                     case "open" -> model = ChameleonVariant.PINK_OPEN.getKey();
                                     case "stained" -> model = ChameleonVariant.PINK_STAINED.getKey();
                                     case "glass" -> model = ChameleonVariant.PINK_GLASS.getKey();
@@ -177,7 +177,7 @@ public class BoxCommand {
                                 }
                             }
                             case PURPLE_DYE -> {
-                                switch (args[2]) {
+                                switch (state) {
                                     case "open" -> model = ChameleonVariant.PURPLE_OPEN.getKey();
                                     case "stained" -> model = ChameleonVariant.PURPLE_STAINED.getKey();
                                     case "glass" -> model = ChameleonVariant.PURPLE_GLASS.getKey();
@@ -186,7 +186,7 @@ public class BoxCommand {
                                 }
                             }
                             case RED_DYE -> {
-                                switch (args[2]) {
+                                switch (state) {
                                     case "open" -> model = ChameleonVariant.RED_OPEN.getKey();
                                     case "stained" -> model = ChameleonVariant.RED_STAINED.getKey();
                                     case "glass" -> model = ChameleonVariant.RED_GLASS.getKey();
@@ -195,7 +195,7 @@ public class BoxCommand {
                                 }
                             }
                             case ORANGE_DYE -> {
-                                switch (args[2]) {
+                                switch (state) {
                                     case "open" -> model = ChameleonVariant.ORANGE_OPEN.getKey();
                                     case "stained" -> model = ChameleonVariant.ORANGE_STAINED.getKey();
                                     case "glass" -> model = ChameleonVariant.ORANGE_GLASS.getKey();
@@ -204,7 +204,7 @@ public class BoxCommand {
                                 }
                             }
                             case WHITE_DYE -> {
-                                switch (args[2]) {
+                                switch (state) {
                                     case "open" -> model = ChameleonVariant.WHITE_OPEN.getKey();
                                     case "stained" -> model = ChameleonVariant.WHITE_STAINED.getKey();
                                     case "glass" -> model = ChameleonVariant.WHITE_GLASS.getKey();
@@ -213,7 +213,7 @@ public class BoxCommand {
                                 }
                             }
                             case WOLF_SPAWN_EGG -> {
-                                switch (args[2]) {
+                                switch (state) {
                                     case "open" -> model = ChameleonVariant.BAD_WOLF_OPEN.getKey();
                                     case "stained" -> model = ChameleonVariant.BAD_WOLF_STAINED.getKey();
                                     case "glass" -> model = ChameleonVariant.BAD_WOLF_GLASS.getKey();
@@ -222,7 +222,7 @@ public class BoxCommand {
                                 }
                             }
                             case CYAN_STAINED_GLASS_PANE -> {
-                                switch (args[2]) {
+                                switch (state) {
                                     case "open" -> model = ChameleonVariant.TENNANT_OPEN.getKey();
                                     case "stained" -> model = ChameleonVariant.TENNANT_STAINED.getKey();
                                     case "glass" -> model = ChameleonVariant.TENNANT_GLASS.getKey();
@@ -231,7 +231,7 @@ public class BoxCommand {
                                 }
                             }
                             case CLAY_BALL -> {
-                                switch (args[2]) {
+                                switch (state) {
                                     case "open" -> model = ChameleonVariant.TYPE_40_OPEN.getKey();
                                     case "stained" -> model = ChameleonVariant.TYPE_40_STAINED.getKey();
                                     case "glass" -> model = ChameleonVariant.TYPE_40_GLASS.getKey();
@@ -240,7 +240,7 @@ public class BoxCommand {
                                 }
                             }
                             case ENDER_PEARL -> {
-                                switch (args[2]) {
+                                switch (state) {
                                     case "open" -> model = ChameleonVariant.PANDORICA_OPEN.getKey();
                                     case "stained" -> model = ChameleonVariant.PANDORICA_STAINED.getKey();
                                     case "glass" -> model = ChameleonVariant.PANDORICA_GLASS.getKey();
@@ -248,7 +248,7 @@ public class BoxCommand {
                                 }
                             }
                             case GREEN_STAINED_GLASS_PANE -> {
-                                switch (args[2]) {
+                                switch (state) {
                                     case "open" -> model = ChameleonVariant.SIDRAT_OPEN.getKey();
                                     case "stained" -> model = ChameleonVariant.SIDRAT_STAINED.getKey();
                                     case "glass" -> model = ChameleonVariant.SIDRAT_GLASS.getKey();
@@ -256,7 +256,7 @@ public class BoxCommand {
                                 }
                             }
                             case RED_STAINED_GLASS_PANE -> {
-                                switch (args[2]) {
+                                switch (state) {
                                     case "open" -> model = ChameleonVariant.BATTLE_OPEN.getKey();
                                     case "stained" -> model = ChameleonVariant.BATTLE_STAINED.getKey();
                                     case "glass" -> model = ChameleonVariant.BATTLE_GLASS.getKey();
@@ -272,7 +272,7 @@ public class BoxCommand {
                         ee.setHelmet(is);
                         as.setInvisible(true);
                         as.setInvulnerable(true);
-                        if (args[2].equals("camera")) {
+                        if (state.equals("camera")) {
                             as.addPassenger(player);
                         }
                     }, 2L);
@@ -280,8 +280,6 @@ public class BoxCommand {
             }
         } catch (IllegalArgumentException e) {
             plugin.getMessenger().message(sender, "Not a valid Chameleon preset!");
-            return true;
         }
-        return true;
     }
 }

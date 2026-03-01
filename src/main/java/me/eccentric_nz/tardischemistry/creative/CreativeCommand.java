@@ -32,31 +32,23 @@ public class CreativeCommand {
         this.plugin = plugin;
     }
 
-    public boolean open(Player player, String[] args) {
+    public void open(Player player, String gui) {
         if (!TARDISPermission.hasPermission(player, "tardis.chemistry.creative")) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "CHEMISTRY_SUB_PERM", "Creative");
-            return true;
+            return;
         }
         Creative creative;
         try {
-            creative = Creative.valueOf(args[2].toLowerCase(Locale.ROOT));
+            creative = Creative.valueOf(gui.toLowerCase(Locale.ROOT));
         } catch (IllegalArgumentException e) {
-            return false;
+            return;
         }
         // do stuff
         switch (creative) {
-            case elements -> {
-                player.openInventory(new ElementInventory(plugin).getInventory());
-                return true;
-            }
-            case compounds -> {
-                player.openInventory(new CompoundsCreativeInventory(plugin).getInventory());
-                return true;
-            }
-            default -> { // lab & products
-                player.openInventory(new ProductsCreativeInventory(plugin).getInventory());
-                return true;
-            }
+            case elements -> player.openInventory(new ElementInventory(plugin).getInventory());
+            case compounds -> player.openInventory(new CompoundsCreativeInventory(plugin).getInventory());
+            // lab & products
+            default -> player.openInventory(new ProductsCreativeInventory(plugin).getInventory());
         }
     }
 }

@@ -33,7 +33,6 @@ public class LazarusMonstersInventory extends LazarusItems implements InventoryH
 
     private final TARDIS plugin;
     private final Inventory inventory;
-    private int maxSlot;
 
     public LazarusMonstersInventory(TARDIS plugin) {
         this.plugin = plugin;

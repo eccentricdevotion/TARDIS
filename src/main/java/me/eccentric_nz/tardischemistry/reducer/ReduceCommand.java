@@ -29,13 +29,12 @@ public class ReduceCommand {
         this.plugin = plugin;
     }
 
-    public boolean use(Player player) {
+    public void use(Player player) {
         if (!TARDISPermission.hasPermission(player, "tardis.reducer.use")) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "CHEMISTRY_SUB_PERM", "Reduction");
-            return true;
+            return;
         }
         // do stuff
         player.openInventory(new ReducerInventory(plugin).getInventory());
-        return true;
     }
 }

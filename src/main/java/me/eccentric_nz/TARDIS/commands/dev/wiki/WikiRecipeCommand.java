@@ -27,22 +27,18 @@ public class WikiRecipeCommand {
         this.plugin = plugin;
     }
 
-    public boolean write(CommandSender sender, String[] args) {
-        if (args.length < 2) {
-            return false;
+    public void write(CommandSender sender, String arg) {
+        if (arg.equalsIgnoreCase("chest")) {
+            new ChestBuilder(plugin).place(sender);
         }
-        if (args[1].equalsIgnoreCase("chest")) {
-            return new ChestBuilder(plugin).place(sender);
+        if (arg.equalsIgnoreCase("shaped")) {
+            new ShapedPageBuilder(plugin).compile();
+        } else if (arg.equalsIgnoreCase("shapeless")) {
+            new ShapelessPageBuilder(plugin).compile();
+        } else if (arg.equalsIgnoreCase("chemistry")) {
+            new ChemistryPageBuilder(plugin).compile();
+        } else if (arg.equalsIgnoreCase("custom")) {
+            new CustomPageBuilder(plugin).compile();
         }
-        if (args[1].equalsIgnoreCase("shaped")) {
-            return new ShapedPageBuilder(plugin).compile();
-        } else if (args[1].equalsIgnoreCase("shapeless")) {
-            return new ShapelessPageBuilder(plugin).compile();
-        } else if (args[1].equalsIgnoreCase("chemistry")) {
-            return new ChemistryPageBuilder(plugin).compile();
-        } else if (args[1].equalsIgnoreCase("custom")) {
-            return new CustomPageBuilder(plugin).compile();
-        }
-        return true;
     }
 }

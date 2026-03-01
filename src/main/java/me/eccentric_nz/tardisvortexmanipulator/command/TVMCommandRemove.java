@@ -32,27 +32,22 @@ public class TVMCommandRemove {
         this.plugin = plugin;
     }
 
-    public boolean process(Player player, String[] args) {
+    public void process(Player player, String name) {
         if (!TARDISPermission.hasPermission(player, "vm.teleport")) {
             plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_PERM_CMD");
-            return true;
-        }
-        if (args.length < 2) {
-            plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_SAVE_NAME");
-            return true;
+            return;
         }
         String uuid = player.getUniqueId().toString();
         // check for existing save
-        TVMResultSetWarpByName rs = new TVMResultSetWarpByName(plugin, uuid, args[1]);
+        TVMResultSetWarpByName rs = new TVMResultSetWarpByName(plugin, uuid, name);
         if (rs.resultSet()) {
             plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_SAVE_NONE");
-            return true;
+            return;
         }
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", uuid);
-        where.put("save_name", args[1]);
+        where.put("save_name", name);
         plugin.getQueryFactory().doDelete("saves", where);
-        plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_SAVE_REMOVED", args[1]);
-        return true;
+        plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_SAVE_REMOVED", name);
     }
 }

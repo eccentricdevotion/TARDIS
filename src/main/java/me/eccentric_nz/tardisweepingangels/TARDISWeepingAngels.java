@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.tardisweepingangels;
 
+import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.tardisweepingangels.commands.TARDISWeepingAngelsCommand;
-import me.eccentric_nz.tardisweepingangels.commands.TabComplete;
+import me.eccentric_nz.TARDIS.brigadier.MonstersCommandNode;
 import me.eccentric_nz.tardisweepingangels.death.Death;
 import me.eccentric_nz.tardisweepingangels.death.PlayerDeath;
 import me.eccentric_nz.tardisweepingangels.equip.PlayerUndisguise;
@@ -212,9 +212,8 @@ public class TARDISWeepingAngels {
             plugin.getPM().registerEvents(new SpawnerListener(plugin), plugin);
         }
         // register command
-        plugin.getCommand("twa").setExecutor(new TARDISWeepingAngelsCommand(plugin));
-        // set tab completion
-        plugin.getCommand("twa").setTabCompleter(new TabComplete(plugin));
+        plugin.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS, commands ->
+                commands.registrar().register(new MonstersCommandNode(plugin).build(), List.of("tardisweepingangels")));
         // remove invisible Guardians not riding a Skeleton
         plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new CleanGuardians(plugin), 100L, 6000L);
         // start repeating spawn tasks

@@ -12,7 +12,7 @@ plugins {
 
 group = "me.eccentric_nz"
 val buildNumber = "-b${System.getenv("BUILD_NUMBER") ?: (System.getenv("SHORT_SHA") ?: ".local")}"
-version = "6.3.12${buildNumber}"
+version = "7.0.0${buildNumber}"
 
 repositories {
     mavenCentral()
@@ -57,10 +57,6 @@ repositories {
         url = uri("https://repo.codemc.org/repository/maven-public/")
     }
     maven {
-        name = "lwcx"
-        url = uri("https://ci.ender.zone/plugin/repository/everything/")
-    }
-    maven {
         name = "coreprotect"
         url = uri("https://maven.playpro.com")
     }
@@ -103,7 +99,7 @@ dependencies {
     compileOnly("net.citizensnpcs:citizensapi:2.0.41-SNAPSHOT") {
         isTransitive = false
     }
-    compileOnly("com.palmergames.bukkit.towny:towny:0.102.0.6") {
+    compileOnly("com.palmergames.bukkit.towny:towny:0.102.0.7") {
         isTransitive = false
     }
     compileOnly("org.mvplugins.multiverse.core:multiverse-core:5.5.2") {
@@ -119,7 +115,7 @@ dependencies {
     compileOnly("nl.rutgerkok:blocklocker:1.13") {
         isTransitive = false
     }
-    compileOnly("com.griefcraft:lwc:2.4.1") {
+    compileOnly("com.griefcraft:lwc:2.4.2") {
         isTransitive = false
     }
     compileOnly("com.github.retrooper:packetevents-api:2.11.2") {
@@ -131,7 +127,7 @@ dependencies {
     compileOnly("net.essentialsx:EssentialsX:2.22.0-SNAPSHOT") {
         isTransitive = false
     }
-    compileOnly("me.clip:placeholderapi:2.12.0") {
+    compileOnly("me.clip:placeholderapi:2.12.2") {
         isTransitive = false
     }
     compileOnly("io.github.fabiozumbi12.RedProtect:RedProtect-Core:8.1.2") {
@@ -151,12 +147,12 @@ dependencies {
     }
     compileOnly(files("libs/VaultAPI.jar"))
     compileOnly("org.geysermc.floodgate:api:2.2.5-SNAPSHOT")
-    compileOnly("org.geysermc.geyser:api:2.9.2-SNAPSHOT")
+    compileOnly("org.geysermc.geyser:api:2.9.4-SNAPSHOT")
     compileOnly("org.jsoup:jsoup:1.22.1") {
         isTransitive = false
     }
-    compileOnly("org.popcraft:chunky-common:1.4.55")
-    compileOnly("org.popcraft:chunky-bukkit:1.4.55")
+    compileOnly("org.popcraft:chunky-common:1.4.57")
+    compileOnly("org.popcraft:chunky-bukkit:1.4.57")
     compileOnly("org.popcraft:chunkyborder-common:1.2.33")
     compileOnly("net.luckperms:api:5.5")
     compileOnly("org.apache.commons:commons-lang3:3.20.0")
@@ -167,7 +163,7 @@ dependencies {
     compileOnly("org.swinglabs:swing-layout:1.0.3") {
         isTransitive = false
     }
-    testImplementation(platform("org.junit:junit-bom:6.0.2"))
+    testImplementation(platform("org.junit:junit-bom:6.0.3"))
     testImplementation("org.junit.jupiter:junit-jupiter")
 }
 

@@ -28,17 +28,16 @@ import java.util.UUID;
  *
  * @author eccentric_nz
  */
-class SudoARS {
+public class SudoARS {
 
     private final TARDIS plugin;
 
-    SudoARS(TARDIS plugin) {
+    public SudoARS(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    boolean showARS(Player player, UUID uuid) {
+    public void showARS(Player player, UUID uuid) {
         TARDISSudoTracker.SUDOERS.put(player.getUniqueId(), uuid);
         player.openInventory(new ARSInventory(plugin, player).getInventory());
-        return true;
     }
 }

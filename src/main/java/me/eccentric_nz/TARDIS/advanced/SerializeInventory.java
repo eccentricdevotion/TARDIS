@@ -66,7 +66,7 @@ public class SerializeInventory {
                         ItemMeta im = is.getItemMeta();
                         if (im.hasDisplayName() && im.displayName().equals("Circuits")) {
                             CustomModelDataComponent component = im.getCustomModelDataComponent();
-                            if (component.getFloats().size() > 0 && component.getFloats().getFirst() != 130.0f) {
+                            if (!component.getFloats().isEmpty() && component.getFloats().getFirst() != 130.0f) {
                                 component.setFloats(List.of(130.0f));
                                 im.setCustomModelDataComponent(component);
                                 is.setItemMeta(im);

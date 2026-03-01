@@ -21,6 +21,7 @@ import me.eccentric_nz.TARDIS.builders.utility.FractalFence;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.rooms.architectural.tree.TreeBuilder;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
+import me.eccentric_nz.tardischunkgenerator.custombiome.CubicMaterial;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -41,44 +42,39 @@ public class TreeCommand {
         this.plugin = plugin;
     }
 
-    public boolean grow(CommandSender sender, String[] args) {
+    public void grow(CommandSender sender, String which, String s, String h, String d) {
         if (sender instanceof Player player) {
             Block targetBlock = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 16);
             Block up = targetBlock.getRelative(BlockFace.UP);
-            if (args[1].equalsIgnoreCase("worldgen")) {
+            if (which.equalsIgnoreCase("worldgen")) {
                 if (!targetBlock.getType().equals(Material.GRASS_BLOCK)) {
                     plugin.getMessenger().message(player, TardisModule.TARDIS, "You must be targeting a grass block!");
-                    return true;
+                    return;
                 }
                 plugin.getTardisHelper().growTree("random", up.getLocation());
-                return true;
+                return;
             }
-            if (args.length == 5) {
+            if (!s.isEmpty()) {
                 try {
-                    Material stem = Material.valueOf(args[2].toUpperCase(Locale.ROOT));
-                    Material hat = Material.valueOf(args[3].toUpperCase(Locale.ROOT));
-                    Material decor = Material.valueOf(args[4].toUpperCase(Locale.ROOT));
-                    if (!stem.isBlock() || !hat.isBlock() || !decor.isBlock() || !plugin.getTardisHelper().getTreeMaterials().contains(stem) || !plugin.getTardisHelper().getTreeMaterials().contains(hat) || !plugin.getTardisHelper().getTreeMaterials().contains(decor)) {
+                    Material stem = Material.valueOf(s.toUpperCase(Locale.ROOT));
+                    Material hat = Material.valueOf(h.toUpperCase(Locale.ROOT));
+                    Material decor = Material.valueOf(d.toUpperCase(Locale.ROOT));
+                    if (!stem.isBlock() || !hat.isBlock() || !decor.isBlock() || !CubicMaterial.cubes.contains(stem) || !CubicMaterial.cubes.contains(hat) || !CubicMaterial.cubes.contains(decor)) {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "ARG_NOT_BLOCK");
-                        return true;
+                        return;
                     }
                     plugin.getTardisHelper().growTree(up.getLocation(), targetBlock.getType(), stem, hat, decor);
-                    return true;
                 } catch (IllegalArgumentException e) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "MATERIAL_NOT_VALID");
-                    return true;
                 }
-            } else if (args[1].equalsIgnoreCase("delta")) {
-                int which = TARDISNumberParsers.parseInt(args[2]);
-                FractalFence.grow(targetBlock, which);
-                return true;
+            } else if (which.equalsIgnoreCase("delta")) {
+                int index = TARDISNumberParsers.parseInt(s);
+                FractalFence.grow(targetBlock, index);
             } else {
                 new TreeBuilder().place(targetBlock.getRelative(BlockFace.UP));
-                return true;
             }
         } else {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "CMD_PLAYER");
-            return true;
         }
     }
 }

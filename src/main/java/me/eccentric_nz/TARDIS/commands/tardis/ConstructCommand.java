@@ -21,64 +21,55 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetConstructSign;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.entity.Player;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
 /**
  * @author eccentric_nz
  */
-class ConstructCommand {
+public class ConstructCommand {
 
     private final TARDIS plugin;
-    private final List<String> lineNumbers = List.of("1", "2", "3", "4");
+    private final List<Integer> lineNumbers = List.of(1, 2, 3, 4);
 
-    ConstructCommand(TARDIS plugin) {
+    public ConstructCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean setLine(Player player, String[] args) {
-        if (args.length < 2) {
-            plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
-            return true;
-        }
+    public void setLine(Player player, int l, String t) {
         ResultSetTardisID rs = new ResultSetTardisID(plugin);
         if (!rs.fromUUID(player.getUniqueId().toString())) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
-            return true;
+            return;
         }
         int id = rs.getTardisId();
         // must have a construct
         ResultSetConstructSign rscs = new ResultSetConstructSign(plugin, id);
         if (!rscs.resultSet()) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_CONSTRUCT");
-            return true;
+            return;
         }
         // check line number
-        if (!lineNumbers.contains(args[1])) {
+        if (!lineNumbers.contains(l)) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "CONSTRUCT_LINE_NUM");
-            return true;
+            return;
         }
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
         HashMap<String, Object> set = new HashMap<>();
-        int l = TARDISNumberParsers.parseInt(args[1]);
-        String joined = String.join(" ", Arrays.copyOfRange(args, 2, args.length));
-        Component raw = LegacyComponentSerializer.legacyAmpersand().deserialize(joined);
+        Component raw = LegacyComponentSerializer.legacyAmpersand().deserialize(t);
         // strip color codes and check length
         if (ComponentUtils.stripColour(raw).length() > 16) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "CONSTRUCT_LINE_LEN");
-            return true;
+            return;
         }
-        set.put("line" + l, joined);
+        set.put("line" + l, t);
         // save it
         plugin.getQueryFactory().doUpdate("chameleon", set, where);
         plugin.getMessenger().send(player, TardisModule.TARDIS, "CONSTRUCT_LINE_SAVED");
-        return true;
     }
 }

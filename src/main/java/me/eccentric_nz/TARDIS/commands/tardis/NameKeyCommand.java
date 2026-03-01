@@ -24,20 +24,18 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.Arrays;
-
 /**
  * @author eccentric_nz
  */
-class NameKeyCommand {
+public class NameKeyCommand {
 
     private final TARDIS plugin;
 
-    NameKeyCommand(TARDIS plugin) {
+    public NameKeyCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    boolean nameKey(Player player, String[] args) {
+    public void nameKey(Player player, String name) {
         // determine key item
         String key;
         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, player.getUniqueId().toString());
@@ -49,25 +47,17 @@ class NameKeyCommand {
         Material m = Material.getMaterial(key);
         if (m.isAir()) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "KEY_NO_RENAME");
-            return true;
+            return;
         }
         ItemStack is = player.getInventory().getItemInMainHand();
         if (!is.getType().equals(m)) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "KEY_ONLY");
-            return true;
+            return;
         }
-        int count = args.length;
-        if (count < 2) {
-            return false;
-        }
-        String newName = String.join(" ", Arrays.copyOfRange(args, 1, args.length));
-        if (!newName.isEmpty()) {
+        if (!name.isEmpty()) {
             TARDISItemRenamer ir = new TARDISItemRenamer(plugin, player, is);
-            ir.setName(newName, false);
-            plugin.getMessenger().send(player, TardisModule.TARDIS, "KEY_RENAMED", newName);
-            return true;
-        } else {
-            return false;
+            ir.setName(name, false);
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "KEY_RENAMED", name);
         }
     }
 }

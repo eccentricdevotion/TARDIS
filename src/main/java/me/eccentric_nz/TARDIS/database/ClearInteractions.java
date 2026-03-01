@@ -35,21 +35,15 @@ public class ClearInteractions {
     }
 
     public void removeRecords(int id) {
-        PreparedStatement ps = null;
-        try {
-            ps = connection.prepareStatement("DELETE FROM " + prefix + "interactions WHERE tardis_id = ?");
-            ps.setInt(1, id);
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            plugin.debug("Error clearing interactions [" + id + "] table: " + e.getMessage());
-        } finally {
+        try (PreparedStatement ps = connection.prepareStatement("DELETE FROM " + prefix + "interactions WHERE tardis_id = ?")) {
             try {
-                if (ps != null) {
-                    ps.close();
-                }
-            } catch (SQLException ex) {
-                plugin.debug("Error clearing interactions [" + id + "] statement: " + ex.getMessage());
+                ps.setInt(1, id);
+                ps.executeUpdate();
+            } catch (SQLException e) {
+                plugin.debug("Error clearing interactions [" + id + "] table: " + e.getMessage());
             }
+        } catch (SQLException ex) {
+            plugin.debug("Error clearing interactions [" + id + "] statement: " + ex.getMessage());
         }
     }
 }

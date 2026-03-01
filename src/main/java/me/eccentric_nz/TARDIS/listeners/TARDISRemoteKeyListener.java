@@ -26,9 +26,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisPreset;
 import me.eccentric_nz.TARDIS.doors.inner.*;
-import me.eccentric_nz.TARDIS.doors.outer.OuterDisplayDoorCloser;
-import me.eccentric_nz.TARDIS.doors.outer.OuterDoor;
-import me.eccentric_nz.TARDIS.doors.outer.OuterMinecraftDoorCloser;
+import me.eccentric_nz.TARDIS.doors.outer.*;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
@@ -175,9 +173,9 @@ public class TARDISRemoteKeyListener implements Listener {
                                 }
                                 // open outer
                                 if (outerDisplayDoor) {
-                                    new OuterDisplayDoorCloser(plugin).close(new OuterDoor(plugin, id).getDisplay(), id, playerUUID, false);
+                                    new OuterDisplayDoorOpener(plugin).open(new OuterDoor(plugin, id).getDisplay(), id);
                                 } else if (rsp.getPreset().hasDoor()) {
-                                    new OuterMinecraftDoorCloser(plugin).close(new OuterDoor(plugin, id).getMinecraft(), id, playerUUID);
+                                    new OuterMinecraftDoorOpener(plugin).open(new OuterDoor(plugin, id).getMinecraft(), id, player);
                                 }
                             }
                             String message = (open) ? "DOOR_CLOSED" : "DOOR_OPENED";

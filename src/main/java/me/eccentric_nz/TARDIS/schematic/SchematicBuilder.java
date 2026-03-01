@@ -24,12 +24,11 @@ import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemRegistry;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.schematic.actions.SchematicSave;
+import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
 import me.eccentric_nz.TARDIS.schematic.getters.BannerGetter;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import net.kyori.adventure.text.Component;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -58,9 +57,10 @@ public class SchematicBuilder {
     private final int id, sx, ex, sy, ey, sz, ez;
     private final int[] controls = {0, 2, 3, 4, 5};
     private final HashMap<String, Material> mushroom_stem = new HashMap<>();
+    private final ConsoleSize size;
     private Location h;
 
-    public SchematicBuilder(TARDIS plugin, int id, World w, int sx, int ex, int sy, int ey, int sz, int ez) {
+    public SchematicBuilder(TARDIS plugin, int id, World w, int sx, int ex, int sy, int ey, int sz, int ez, ConsoleSize size) {
         this.plugin = plugin;
         this.id = id;
         this.w = w;
@@ -70,6 +70,7 @@ public class SchematicBuilder {
         this.ey = ey;
         this.sz = sz;
         this.ez = ez;
+        this.size = size;
         // orange hexagon
         mushroom_stem.put("minecraft:mushroom_stem[down=true,east=false,north=true,south=true,up=true,west=true]", Material.ORANGE_WOOL);
         // blue box
@@ -355,7 +356,7 @@ public class SchematicBuilder {
         if (!interactions.isEmpty()) {
             schematic.add("interactions", interactions);
         }
-        return new ArchiveData(schematic, beacon);
+        return new ArchiveData(schematic, beacon, sy, size);
     }
 
     private boolean isControlBlock(Location l, World w, int x, int y, int z) {
@@ -367,10 +368,14 @@ public class SchematicBuilder {
 
         private final JsonObject JSON;
         private final int beacon;
+        private final int startY;
+        private final ConsoleSize size;
 
-        ArchiveData(JsonObject JSON, int beacon) {
+        ArchiveData(JsonObject JSON, int beacon, int startY, ConsoleSize size) {
             this.JSON = JSON;
             this.beacon = beacon;
+            this.startY = startY;
+            this.size = size;
         }
 
         public JsonObject getJSON() {
@@ -379,6 +384,14 @@ public class SchematicBuilder {
 
         public int getBeacon() {
             return beacon;
+        }
+
+        public int getStartY() {
+            return startY;
+        }
+
+        public ConsoleSize getSize() {
+            return size;
         }
     }
 }

@@ -51,30 +51,27 @@ import java.util.UUID;
  *
  * @author eccentric_nz
  */
-class SudoUpdate {
+public class SudoUpdate {
 
     private final TARDIS plugin;
 
-    SudoUpdate(TARDIS plugin) {
+    public SudoUpdate(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    boolean initiate(Player player, String[] args, int id, UUID uuid) {
-        if (args.length < 3) {
-            plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
-            return false;
-        }
-        String tardis_block = TARDISStringUtils.toScoredUppercase(args[2]);
+    public void initiate(Player player, String which, String extra, int id, UUID uuid) {
+        // tsudo player update updatable lock|unlock|LEFT|RIGHT
+        String tardis_block = TARDISStringUtils.toScoredUppercase(which);
         Updateable updateable;
         try {
             updateable = Updateable.valueOf(tardis_block);
         } catch (IllegalArgumentException e) {
             new TARDISUpdateLister(plugin, player).list();
-            return true;
+            return;
         }
         if (updateable.equals(Updateable.SIEGE) && !plugin.getConfig().getBoolean("siege.enabled")) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "SIEGE_DISABLED");
-            return true;
+            return;
         }
         // get TARDIS data
         HashMap<String, Object> wheret = new HashMap<>();
@@ -86,8 +83,8 @@ class SudoUpdate {
                 Block block = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 10);
                 if (block.getType().equals(Material.IRON_DOOR)) {
                     Door door = (Door) block.getBlockData();
-                    if (args.length == 3) {
-                        Door.Hinge setHinge = Door.Hinge.valueOf(args[2].toUpperCase(Locale.ROOT));
+                    if (!extra.isEmpty()) {
+                        Door.Hinge setHinge = Door.Hinge.valueOf(extra.toUpperCase(Locale.ROOT));
                         door.setHinge(setHinge);
                     } else {
                         Door.Hinge hinge = door.getHinge();
@@ -99,7 +96,7 @@ class SudoUpdate {
                     }
                     block.setBlockData(door);
                 }
-                return true;
+                return;
             }
             if (updateable.equals(Updateable.STORAGE)) {
                 // update note block if it's not BARRIER
@@ -111,7 +108,7 @@ class SudoUpdate {
             }
             if (new TARDISUpdateableChecker(plugin, updateable, player, tardis, tardis_block).canUpdate()) {
                 if ((updateable.equals(Updateable.ROTOR) || updateable.equals(Updateable.MONITOR) || updateable.equals(Updateable.MONITOR_FRAME))
-                        && args.length == 4 && args[3].equalsIgnoreCase("unlock")) {
+                        && extra.equalsIgnoreCase("unlock")) {
                     // get frame location
                     ItemFrame itemFrame = null;
                     switch (updateable) {
@@ -140,7 +137,7 @@ class SudoUpdate {
                         plugin.getGeneralKeeper().getProtectBlockMap().remove(under);
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "ROTOR_UNFIXED");
                     }
-                    return true;
+                    return;
                 }
                 TARDISSudoTracker.SUDOERS.put(player.getUniqueId(), uuid);
                 plugin.getTrackerKeeper().getUpdatePlayers().put(player.getUniqueId(), tardis_block);
@@ -150,6 +147,5 @@ class SudoUpdate {
                 }
             }
         }
-        return true;
     }
 }

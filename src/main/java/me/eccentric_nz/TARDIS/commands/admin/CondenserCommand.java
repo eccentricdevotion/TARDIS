@@ -29,24 +29,24 @@ import java.io.IOException;
 /**
  * @author eccentric_nz
  */
-class CondenserCommand {
+public class CondenserCommand {
 
     private final TARDIS plugin;
 
-    CondenserCommand(TARDIS plugin) {
+    public CondenserCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean set(CommandSender sender) {
+    public void set(CommandSender sender) {
         if (!(sender instanceof Player player)) {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "CMD_PLAYER");
-            return true;
+            return;
         }
         Block b = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 10);
         Material chest = b.getType();
         if (!chest.equals(Material.CHEST)) {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "UPDATE_CONDENSER");
-            return true;
+            return;
         }
         String loc = b.getLocation().toString();
         // update the artron config
@@ -57,6 +57,5 @@ class CondenserCommand {
             plugin.debug("Could not save artron.yml, " + io);
         }
         plugin.getMessenger().send(sender, TardisModule.TARDIS, "CONFIG_UPDATED", "condenser");
-        return true;
     }
 }

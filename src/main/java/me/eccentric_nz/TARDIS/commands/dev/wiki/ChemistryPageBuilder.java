@@ -44,7 +44,7 @@ public class ChemistryPageBuilder extends PageBuilder {
         this.plugin = plugin;
     }
 
-    public boolean compile() {
+    public void compile() {
         // chemistry lab products & compounds
         String data;
         for (Product p : Product.values()) {
@@ -61,7 +61,6 @@ public class ChemistryPageBuilder extends PageBuilder {
                 save(TARDISStringUtils.toDashedLowercase(block.displayName()), data);
             }
         }
-        return true;
     }
 
     private String formatChemistryBlock(RecipeData item) {
@@ -158,13 +157,13 @@ public class ChemistryPageBuilder extends PageBuilder {
                     } catch (IllegalArgumentException me) {
                         // is it a compound?
                         try {
-                            Compound compound = Compound.valueOf(data[i][j].replace(" ", "_"));
+                            Compound.valueOf(data[i][j].replace(" ", "_"));
                             ingredients.add(data[i][j]);
                             dashed = TARDISStringUtils.toLowercaseDashed(data[i][j]);
                         } catch (IllegalArgumentException ce) {
                             // is it an element?
                             try {
-                                Element element = Element.valueOf(data[i][j]);
+                                Element.valueOf(data[i][j]);
                                 ingredients.add(data[i][j]);
                                 dashed = data[i][j].toLowerCase(Locale.ROOT);
                             } catch (IllegalArgumentException ee) {

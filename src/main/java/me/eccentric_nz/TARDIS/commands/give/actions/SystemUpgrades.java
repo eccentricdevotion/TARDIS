@@ -21,9 +21,8 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.upgrades.SystemTree;
 import me.eccentric_nz.TARDIS.upgrades.SystemUpgradeUpdate;
-import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 public class SystemUpgrades {
 
@@ -33,22 +32,17 @@ public class SystemUpgrades {
         this.plugin = plugin;
     }
 
-    public boolean give(CommandSender sender, String player, String upgrade) {
+    public void give(CommandSender sender, Player player, String upgrade) {
         if (!plugin.getConfig().getBoolean("difficulty.system_upgrades")) {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "SYS_DISABLED");
-            return true;
+            return;
         }
-        OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(player);
-        if (offlinePlayer.getName() == null) {
-            plugin.getMessenger().send(sender, TardisModule.TARDIS, "PLAYER_NOT_FOUND");
-            return true;
-        }
-        String uuid = offlinePlayer.getUniqueId().toString();
+        String uuid = player.getUniqueId().toString();
         // get player's TARDIS id
         ResultSetTardisID rst = new ResultSetTardisID(plugin);
         if (!rst.fromUUID(uuid)) {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "PLAYER_NO_TARDIS");
-            return true;
+            return;
         }
         if (upgrade.equalsIgnoreCase("all")) {
             for (SystemTree st : SystemTree.values()) {
@@ -63,12 +57,11 @@ public class SystemUpgrades {
                 systemTree = SystemTree.valueOf(upgrade);
             } catch (IllegalArgumentException e) {
                 plugin.getMessenger().send(sender, TardisModule.TARDIS, "SYS_INVALID");
-                return true;
+                return;
             }
             // update system upgrade record
             new SystemUpgradeUpdate(plugin).set(uuid, rst.getTardisId(), systemTree);
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "SYS_SUCCESS", systemTree.getName());
         }
-        return true;
     }
 }

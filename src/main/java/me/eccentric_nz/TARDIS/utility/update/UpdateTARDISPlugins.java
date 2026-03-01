@@ -16,6 +16,13 @@
  */
 package me.eccentric_nz.TARDIS.utility.update;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import org.bukkit.command.CommandSender;
+import org.bukkit.scheduler.BukkitRunnable;
+
 import java.io.File;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -29,13 +36,6 @@ import java.nio.file.StandardCopyOption;
 import java.time.Duration;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import org.bukkit.command.CommandSender;
-import org.bukkit.scheduler.BukkitRunnable;
-
 public class UpdateTARDISPlugins {
 
     private final TARDIS plugin;
@@ -45,10 +45,10 @@ public class UpdateTARDISPlugins {
         this.plugin = plugin;
     }
 
-    public boolean fetchFromGitHub(CommandSender sender) {
+    public void fetchFromGitHub(CommandSender sender) {
         if (updateInProgress.get()) {
             plugin.getMessenger().sendWithColour(sender, TardisModule.TARDIS, "An update is already in progress!", "#FF5555");
-            return true;
+            return;
         }
         plugin.getMessenger().sendWithColour(sender, TardisModule.TARDIS,  "Downloading TARDIS...", "#55FFFF");
         new BukkitRunnable() {
@@ -108,6 +108,5 @@ public class UpdateTARDISPlugins {
                 }
             }
         }.runTaskAsynchronously(plugin);
-        return true;
     }
 }

@@ -37,7 +37,7 @@ public class CleanEntitiesCommand {
         this.plugin = plugin;
     }
 
-    public boolean checkAndRemove(CommandSender sender) {
+    public void checkAndRemove(CommandSender sender) {
         for (World world : plugin.getServer().getWorlds()) {
             int stands = 0;
             int interactions = 0;
@@ -80,13 +80,11 @@ public class CleanEntitiesCommand {
             // set chunks to be not force loaded
             int forced = 0;
             for (Chunk chunk : world.getForceLoadedChunks()) {
-//                if (chunk.getPluginChunkTickets().contains(plugin)) {
                 // check if a tardis is in this chunk
                 ResultSetChunkContainsTARDIS rsc = new ResultSetChunkContainsTARDIS(plugin, world.getName(), chunk.getX() * 16, chunk.getZ() * 16);
                 if (!rsc.resultSet()) {
                     chunk.removePluginChunkTicket(plugin);
                     forced++;
-//                    }
                 }
             }
             if (stands > 0) {
@@ -99,6 +97,5 @@ public class CleanEntitiesCommand {
                 plugin.getMessenger().message(sender, TardisModule.TARDIS, "Removed " + forced + " force loaded chunks in " + world.getName());
             }
         }
-        return true;
     }
 }

@@ -85,7 +85,7 @@ public class LingvaTranslate {
             String encoded = message.replace(" ", "%20");
             for (String host : domains) {
                 // ping the host
-                if (!pingURL("http://" + host)) {
+                if (!pingURL("https://" + host)) {
                     continue;
                 }
                 // We're connecting to a random Lingva host's REST api

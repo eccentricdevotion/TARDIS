@@ -23,31 +23,30 @@ import org.bukkit.entity.Player;
 
 import java.util.Locale;
 
-class ThemeMusicCommand {
+public class ThemeMusicCommand {
 
     private final TARDIS plugin;
 
-    ThemeMusicCommand(TARDIS plugin) {
+    public ThemeMusicCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    boolean play(Player p, String[] args) {
+    public void play(Player p, String t) {
         if (plugin.getTrackerKeeper().getEggs().contains(p.getUniqueId())) {
             plugin.getMessenger().send(p, TardisModule.TARDIS, "THEME_PLAYING");
-            return true;
+            return;
         }
         Theme theme = Theme.RANDOM;
-        if (args.length == 2) {
+        if (!t.isEmpty()) {
             try {
-                theme = Theme.valueOf(args[1].toUpperCase(Locale.ROOT));
+                theme = Theme.valueOf(t.toUpperCase(Locale.ROOT));
             } catch (IllegalArgumentException e) {
                 plugin.getMessenger().send(p, TardisModule.TARDIS, "ARG_THEME");
-                return false;
+                return;
             }
         }
         plugin.getTrackerKeeper().getEggs().add(p.getUniqueId());
         p.playSound(p.getLocation(), theme.getFilename(), 1.0f, 1.0f);
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getTrackerKeeper().getEggs().remove(p.getUniqueId()), theme.getLength());
-        return true;
     }
 }

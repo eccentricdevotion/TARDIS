@@ -20,14 +20,14 @@ public class MountCommand {
         this.plugin = plugin;
     }
 
-    public boolean test(Player player, boolean mount) {
+    public void test(Player player, boolean mount) {
         if (mount) {
             // get the armour stand the player is looking at
             Location observerPos = player.getEyeLocation();
             RayTraceResult result = observerPos.getWorld().rayTraceEntities(observerPos, observerPos.getDirection(), 16.0d, (s) -> s.getType() == EntityType.ARMOR_STAND);
             if (result == null) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "WA_STAND");
-                return true;
+                return;
             }
             ArmorStand as = (ArmorStand) result.getHitEntity();
             if (as != null) {
@@ -50,6 +50,5 @@ public class MountCommand {
             vehicle.eject();
             plugin.getServer().getScheduler().cancelTask(plugin.getTrackerKeeper().getAnimateTask());
         }
-        return true;
     }
 }

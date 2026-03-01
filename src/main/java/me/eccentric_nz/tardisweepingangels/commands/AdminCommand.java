@@ -39,7 +39,7 @@ public class AdminCommand {
         types.put(Monster.EMPTY_CHILD, "empty_child");
         types.put(Monster.HATH, "hath");
         types.put(Monster.HEADLESS_MONK, "headless_monks");
-        types.put(Monster.HEAVENLY_HOST, "heaveanly_hosts");
+        types.put(Monster.HEAVENLY_HOST, "heavenly_hosts");
         types.put(Monster.ICE_WARRIOR, "ice_warriors");
         types.put(Monster.JUDOON, "judoon");
         types.put(Monster.K9, "k9");
@@ -63,64 +63,52 @@ public class AdminCommand {
         types.put(Monster.ZYGON, "zygons");
     }
 
-    public boolean set(CommandSender sender, String[] args) {
-        if (args.length < 4) {
-            return false;
-        }
-        World w = plugin.getServer().getWorld(args[2]);
+    public void set(CommandSender sender, String mon, World w, int m) {
         if (w == null) {
             plugin.getMessenger().send(sender, TardisModule.MONSTERS, "COULD_NOT_FIND_WORLD");
-            return true;
         }
-        int m;
-        try {
-            m = Integer.parseInt(args[3]);
-        } catch (NumberFormatException e) {
-            plugin.getMessenger().send(sender, TardisModule.MONSTERS, "ARG_LAST_NUMBER");
-            return false;
-        }
-        String which = args[1].toUpperCase(Locale.ROOT);
+        String which = mon.toUpperCase(Locale.ROOT);
         Monster monster;
+        String world = w.getName();
         try {
             monster = Monster.valueOf(which);
-            plugin.getMonstersConfig().set(types.get(monster) + ".worlds." + args[2], m);
+            plugin.getMonstersConfig().set(types.get(monster) + ".worlds." + world, m);
         } catch (IllegalArgumentException e) {
             if (which.equals("ALL")) {
-                plugin.getMonstersConfig().set("angel_of_liberty.worlds." + args[2], m);
-                plugin.getMonstersConfig().set("angels.worlds." + args[2], m);
-                plugin.getMonstersConfig().set("cybermen.worlds." + args[2], m);
-                plugin.getMonstersConfig().set("cybershades.worlds." + args[2], m);
-                plugin.getMonstersConfig().set("daleks.worlds." + args[2], m);
-                plugin.getMonstersConfig().set("empty_child.worlds." + args[2], m);
-                plugin.getMonstersConfig().set("hath.worlds." + args[2], m);
-                plugin.getMonstersConfig().set("headless_monks.worlds." + args[2], m);
-                plugin.getMonstersConfig().set("heavenly_hosts.worlds." + args[2], m);
-                plugin.getMonstersConfig().set("ice_warriors.worlds." + args[2], m);
-                plugin.getMonstersConfig().set("judoon.worlds." + args[2], m);
-                plugin.getMonstersConfig().set("k9.worlds." + args[2], true);
-                plugin.getMonstersConfig().set("nimon.worlds." + args[2], m);
-                plugin.getMonstersConfig().set("omega.worlds." + args[2], m);
-                plugin.getMonstersConfig().set("ood.worlds." + args[2], true);
-                plugin.getMonstersConfig().set("sea_devils.worlds." + args[2], m);
-                plugin.getMonstersConfig().set("silence.worlds." + args[2], m);
-                plugin.getMonstersConfig().set("silurians.worlds." + args[2], m);
-                plugin.getMonstersConfig().set("slitheen.worlds." + args[2], m);
-                plugin.getMonstersConfig().set("smilers.worlds." + args[2], m);
-                plugin.getMonstersConfig().set("sontarans.worlds." + args[2], m);
-                plugin.getMonstersConfig().set("sutekh.worlds." + args[2], m);
-                plugin.getMonstersConfig().set("the_beast.worlds." + args[2], m);
-                plugin.getMonstersConfig().set("the_mire.worlds." + args[2], m);
-                plugin.getMonstersConfig().set("toclafane.worlds." + args[2], m);
-                plugin.getMonstersConfig().set("vampires.worlds." + args[2], m);
-                plugin.getMonstersConfig().set("vashta_nerada.worlds." + args[2], m);
-                plugin.getMonstersConfig().set("zygons.worlds." + args[2], m);
+                plugin.getMonstersConfig().set("angel_of_liberty.worlds." + world, m);
+                plugin.getMonstersConfig().set("angels.worlds." + world, m);
+                plugin.getMonstersConfig().set("cybermen.worlds." + world, m);
+                plugin.getMonstersConfig().set("cybershades.worlds." + world, m);
+                plugin.getMonstersConfig().set("daleks.worlds." + world, m);
+                plugin.getMonstersConfig().set("empty_child.worlds." + world, m);
+                plugin.getMonstersConfig().set("hath.worlds." + world, m);
+                plugin.getMonstersConfig().set("headless_monks.worlds." + world, m);
+                plugin.getMonstersConfig().set("heavenly_hosts.worlds." + world, m);
+                plugin.getMonstersConfig().set("ice_warriors.worlds." + world, m);
+                plugin.getMonstersConfig().set("judoon.worlds." + world, m);
+                plugin.getMonstersConfig().set("k9.worlds." + world, true);
+                plugin.getMonstersConfig().set("nimon.worlds." + world, m);
+                plugin.getMonstersConfig().set("omega.worlds." + world, m);
+                plugin.getMonstersConfig().set("ood.worlds." + world, true);
+                plugin.getMonstersConfig().set("sea_devils.worlds." + world, m);
+                plugin.getMonstersConfig().set("silence.worlds." + world, m);
+                plugin.getMonstersConfig().set("silurians.worlds." + world, m);
+                plugin.getMonstersConfig().set("slitheen.worlds." + world, m);
+                plugin.getMonstersConfig().set("smilers.worlds." + world, m);
+                plugin.getMonstersConfig().set("sontarans.worlds." + world, m);
+                plugin.getMonstersConfig().set("sutekh.worlds." + world, m);
+                plugin.getMonstersConfig().set("the_beast.worlds." + world, m);
+                plugin.getMonstersConfig().set("the_mire.worlds." + world, m);
+                plugin.getMonstersConfig().set("toclafane.worlds." + world, m);
+                plugin.getMonstersConfig().set("vampires.worlds." + world, m);
+                plugin.getMonstersConfig().set("vashta_nerada.worlds." + world, m);
+                plugin.getMonstersConfig().set("zygons.worlds." + world, m);
             } else {
                 plugin.getMessenger().send(sender, TardisModule.MONSTERS, "WA_INVALID");
-                return true;
+                return;
             }
         }
         plugin.saveConfig();
         plugin.getMessenger().send(sender,TardisModule.MONSTERS, "WA_CONFIG");
-        return true;
     }
 }

@@ -17,12 +17,12 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.achievement.TARDISBook;
 import me.eccentric_nz.TARDIS.arch.ArchPersister;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.camera.CameraLocation;
 import me.eccentric_nz.TARDIS.camera.CameraTracker;
+import me.eccentric_nz.TARDIS.commands.book.TARDISBook;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -110,7 +110,7 @@ public class TARDISJoinListener implements Listener {
                     plugin.getQueryFactory().doInsert("achievements", set);
                     TARDISBook book = new TARDISBook(plugin);
                     // title, author, filename, player
-                    book.writeBook("Get transport", "Rassilon", "tardis", player);
+                    book.writeBook("Rassilon", "tardis", player);
                 }
             }
         }

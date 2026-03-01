@@ -19,25 +19,20 @@ package me.eccentric_nz.TARDIS.commands.handles;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.entity.Player;
 
-import java.util.Arrays;
-
 /**
  * @author eccentric_nz
  */
-class TellCommand {
+public class TellCommand {
 
     private final TARDIS plugin;
 
-    TellCommand(TARDIS plugin) {
+    public TellCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    boolean message(String[] args) {
-        Player player = plugin.getServer().getPlayer(args[1]);
+    public void message(Player player, String message) {
         if (player != null) {
-            String message = String.join(" ", Arrays.copyOfRange(args, 2, args.length));
             plugin.getMessenger().handlesMessage(player, message);
         }
-        return true;
     }
 }

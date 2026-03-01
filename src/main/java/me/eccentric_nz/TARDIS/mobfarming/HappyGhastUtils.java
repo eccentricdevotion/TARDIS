@@ -36,15 +36,15 @@ import java.util.UUID;
 
 public class HappyGhastUtils {
 
+    public static final NamespacedKey AGE = new NamespacedKey(TARDIS.plugin, "happy_ghast_age");
+    public static final NamespacedKey BABY = new NamespacedKey(TARDIS.plugin, "happy_ghast_baby");
+    public static final NamespacedKey HARNESS = new NamespacedKey(TARDIS.plugin, "happy_ghast_harness");
+    public static final NamespacedKey HEALTH = new NamespacedKey(TARDIS.plugin, "happy_ghast_health");
+    public static final NamespacedKey HOME = new NamespacedKey(TARDIS.plugin, "happy_ghast_home");
+    public static final NamespacedKey NAME = new NamespacedKey(TARDIS.plugin, "happy_ghast_name");
+    public static final NamespacedKey ID = new NamespacedKey(TARDIS.plugin, "happy_ghast_id");
+    public static final NamespacedKey SLOT = new NamespacedKey(TARDIS.plugin, "happy_ghast_slot");
     private static final HashMap<String, Color> COLOURS = new HashMap<>();
-    public static NamespacedKey AGE = new NamespacedKey(TARDIS.plugin, "happy_ghast_age");
-    public static NamespacedKey BABY = new NamespacedKey(TARDIS.plugin, "happy_ghast_baby");
-    public static NamespacedKey HARNESS = new NamespacedKey(TARDIS.plugin, "happy_ghast_harness");
-    public static NamespacedKey HEALTH = new NamespacedKey(TARDIS.plugin, "happy_ghast_health");
-    public static NamespacedKey HOME = new NamespacedKey(TARDIS.plugin, "happy_ghast_home");
-    public static NamespacedKey NAME = new NamespacedKey(TARDIS.plugin, "happy_ghast_name");
-    public static NamespacedKey ID = new NamespacedKey(TARDIS.plugin, "happy_ghast_id");
-    public static NamespacedKey SLOT = new NamespacedKey(TARDIS.plugin, "happy_ghast_slot");
 
     static {
         COLOURS.put("WHITE_DYE", Color.WHITE);

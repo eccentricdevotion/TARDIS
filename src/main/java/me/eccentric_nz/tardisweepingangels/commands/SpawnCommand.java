@@ -61,24 +61,21 @@ public class SpawnCommand {
         this.plugin = plugin;
     }
 
-    public boolean spawn(CommandSender sender, String[] args) {
-        if (args.length < 2) {
-            return false;
-        }
-        String upper = args[1].toUpperCase(Locale.ROOT);
+    public void spawn(CommandSender sender, String mon, String extra) {
+        String upper = mon.toUpperCase(Locale.ROOT);
         // check monster type
         Monster monster;
         try {
             monster = Monster.valueOf(upper);
         } catch (IllegalArgumentException e) {
             plugin.getMessenger().send(sender, TardisModule.MONSTERS, "WA_INVALID");
-            return true;
+            return;
         }
         if (sender instanceof Player player) {
             // check player has permission for this monster
             if (!TARDISPermission.hasPermission(player, "tardisweepingangels.spawn." + monster.getPermission())) {
                 plugin.getMessenger().send(sender, TardisModule.MONSTERS, "WA_PERM_SPAWN", monster.toString());
-                return true;
+                return;
             }
             Location eyeLocation = player.getTargetBlock(null, 50).getLocation();
             eyeLocation.add(0.5d, 1.25d, 0.5d);
@@ -93,8 +90,8 @@ public class SpawnCommand {
             switch (monster) {
                 case DALEK -> {
                     DalekEquipment.set(a, false);
-                    if (args.length > 2) {
-                        if (args[2].equalsIgnoreCase("flying")) {
+                    if (!extra.isEmpty()) {
+                        if (extra.equalsIgnoreCase("flying")) {
                             // make the Dalek fly
                             EntityEquipment ee = a.getEquipment();
                             ee.setChestplate(ItemStack.of(Material.ELYTRA, 1));
@@ -105,7 +102,7 @@ public class SpawnCommand {
                             }, 2L);
                         } else {
                             try {
-                                DyeColor colour = DyeColor.valueOf(args[2].toUpperCase(Locale.ROOT));
+                                DyeColor colour = DyeColor.valueOf(extra.toUpperCase(Locale.ROOT));
                                 NamespacedKey head = DalekVariant.DALEK_BRASS.getKey();
                                 switch (colour) {
                                     case BLACK -> head = DalekVariant.DALEK_BLACK.getKey();
@@ -196,6 +193,5 @@ public class SpawnCommand {
         } else {
             plugin.getMessenger().send(sender, TardisModule.MONSTERS, "CMD_PLAYER");
         }
-        return true;
     }
 }

@@ -40,7 +40,7 @@ public class UpdateBlocksCommand {
         this.plugin = plugin;
     }
 
-    public boolean convert(Player player) {
+    public void convert(Player player) {
         // find all console and room chunks and convert the item displays there
         // get players tardis_id
         ResultSetTardisID rst = new ResultSetTardisID(plugin);
@@ -71,10 +71,9 @@ public class UpdateBlocksCommand {
                 }
             }
         }
-        return true;
     }
 
-    public boolean remove_displays(Player player) {
+    public void remove_displays(Player player) {
         // find all room chunks and convert the item displays there to blocks based on the player's wall preference
         // get players tardis_id
         String uuid = player.getUniqueId().toString();
@@ -118,6 +117,5 @@ public class UpdateBlocksCommand {
                 }
             }
         }
-        return true;
     }
 }

@@ -38,26 +38,19 @@ import java.util.Locale;
 /**
  * @author eccentric_nz
  */
-class SetBooleanCommand {
+public class SetBooleanCommand {
 
     private final TARDIS plugin;
     private final List<String> require_restart = List.of("use_default_condensables", "use_worldguard", "open_door_policy", "handles", "weather_set", "chemistry", "seed_block.crafting", "seed_block.legacy");
     private final List<String> register = List.of("wg_flag_set", "zero_room", "switch_resource_packs", "load_shells", "mapping");
 
-    SetBooleanCommand(TARDIS plugin) {
+    public SetBooleanCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    boolean setConfigBool(CommandSender sender, String[] args, String section) {
-        String tolower = args[0].toLowerCase(Locale.ROOT);
+    public void setConfigBool(CommandSender sender, String option, boolean bool, String section) {
+        String tolower = option.toLowerCase(Locale.ROOT);
         String first = (section.isEmpty()) ? tolower : section + "." + tolower;
-        // check they typed true or false
-        String tf = args[1].toLowerCase(Locale.ROOT);
-        if (!tf.equals("true") && !tf.equals("false")) {
-            plugin.getMessenger().send(sender, TardisModule.TARDIS, "TRUE_FALSE");
-            return false;
-        }
-        boolean bool = Boolean.parseBoolean(tf);
         if (first.equals("switch_resource_packs")) {
             plugin.getPlanetsConfig().set("switch_resource_packs", bool);
             try {
@@ -75,10 +68,10 @@ class SetBooleanCommand {
             }
         } else {
             if (first.equals("abandon") || first.equals("previews")) {
-                if (tf.equals("true") && (plugin.getConfig().getBoolean("creation.create_worlds") || plugin.getConfig().getBoolean("creation.create_worlds_with_perms"))) {
+                if (bool && (plugin.getConfig().getBoolean("creation.create_worlds") || plugin.getConfig().getBoolean("creation.create_worlds_with_perms"))) {
                     String which = first.equals("abandon") ? "Abandoned TARDISes" : "Desktop previews";
                     plugin.getMessenger().messageWithColour(sender, which + " cannot be enabled as TARDISes are not stored in a TIPS world!", "#FF5555");
-                    return true;
+                    return;
                 }
             }
             if (first.equals("archive") || first.equals("abandon")) {
@@ -148,6 +141,5 @@ class SetBooleanCommand {
                 }
             }
         }
-        return true;
     }
 }

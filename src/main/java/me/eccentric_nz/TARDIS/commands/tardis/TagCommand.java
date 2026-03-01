@@ -29,15 +29,15 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author eccentric_nz
  */
-class TagCommand {
+public class TagCommand {
 
     private final TARDIS plugin;
 
-    TagCommand(TARDIS plugin) {
+    public TagCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    boolean getStats(Player player) {
+    public void getStats(Player player) {
         ResultSetTag rs = new ResultSetTag(plugin);
         plugin.getMessenger().message(player, TardisModule.TARDIS,  "Here are the stats:");
         String who = (!plugin.getTagConfig().getString("it").isEmpty()) ? plugin.getTagConfig().getString("it") : "No one";
@@ -56,7 +56,6 @@ class TagCommand {
             player.sendMessage("The are no stats yet :(");
         }
         player.sendMessage("-----------");
-        return true;
     }
 
     private String getHoursMinutesSeconds(long millis) {

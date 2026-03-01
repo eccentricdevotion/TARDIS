@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS;
 
-import me.eccentric_nz.TARDIS.commands.config.TARDISConfigCommand;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.listeners.TARDISRenderRoomListener;
 import me.eccentric_nz.TARDIS.move.DoorListener;
@@ -81,7 +80,6 @@ public class TARDISGeneralInstanceKeeper {
     private boolean junkTravelling = false;
     private List<String> quotes = new ArrayList<>();
     private Location junkDestination = null;
-    private TARDISConfigCommand tardisConfigCommand;
     private TARDISRenderRoomListener rendererListener;
 
     TARDISGeneralInstanceKeeper(TARDIS plugin) {
@@ -173,14 +171,6 @@ public class TARDISGeneralInstanceKeeper {
 
     public Set<UUID> getTimeRotors() {
         return timeRotors;
-    }
-
-    public TARDISConfigCommand getTardisConfigCommand() {
-        return tardisConfigCommand;
-    }
-
-    void setTardisConfigCommand(TARDISConfigCommand tardisConfigCommand) {
-        this.tardisConfigCommand = tardisConfigCommand;
     }
 
     public DoorListener getDoorListener() {

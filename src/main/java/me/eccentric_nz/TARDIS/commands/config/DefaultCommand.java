@@ -20,27 +20,24 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.command.CommandSender;
 
-import java.util.Arrays;
 import java.util.Locale;
 
 /**
  * @author eccentric_nz
  */
-class DefaultCommand {
+public class DefaultCommand {
 
     private final TARDIS plugin;
 
-    DefaultCommand(TARDIS plugin) {
+    public DefaultCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    boolean setDefaultItem(CommandSender sender, String[] args) {
-        String which = args[0].toLowerCase(Locale.ROOT);
-        String sonic = String.join("_", Arrays.copyOfRange(args, 1, args.length));
-        plugin.getConfig().set("preferences." + which, sonic);
+    public void setDefaultItem(CommandSender sender, String option, String value) {
+        String which = option.toLowerCase(Locale.ROOT);
+        plugin.getConfig().set("preferences." + which, value);
         plugin.saveConfig();
         plugin.getMessenger().send(sender, TardisModule.TARDIS, "CONFIG_UPDATED", "which");
         plugin.getMessenger().send(sender, TardisModule.TARDIS, "RESTART");
-        return true;
     }
 }

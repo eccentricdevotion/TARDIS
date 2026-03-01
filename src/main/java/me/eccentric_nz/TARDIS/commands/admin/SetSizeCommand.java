@@ -23,41 +23,36 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.UUID;
 
 /**
  * @author eccentric_nz
  */
-class SetSizeCommand {
+public class SetSizeCommand {
 
     private final TARDIS plugin;
 
-    SetSizeCommand(TARDIS plugin) {
+    public SetSizeCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public boolean overwrite(CommandSender sender, String[] args) {
-        // /tadmin set_size [player] [size]
-        // get the player
-        Player p = plugin.getServer().getPlayer(args[1]);
-        if (p == null) { // player must be online
+    public void overwrite(CommandSender sender, Player player, String type) {
+        // /tadmin set_size [player] [type]
+        if (player == null) { // player must be online
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "COULD_NOT_FIND_NAME");
-            return true;
+            return;
         }
-        String type = args[2].toUpperCase(Locale.ROOT);
         // check size
         if (!Desktops.getBY_NAMES().containsKey(type)) {
             plugin.getMessenger().message(sender, "Not a valid console size! Try using tab completion.");
-            return true;
+            return;
         }
-        UUID uuid = p.getUniqueId();
+        UUID uuid = player.getUniqueId();
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", uuid.toString());
         HashMap<String, Object> set = new HashMap<>();
         set.put("size", type);
         plugin.getQueryFactory().doUpdate("tardis", set, where);
-        plugin.getMessenger().message(sender, "Successfully set " + args[1] + "'s console size to " + type);
-        return true;
+        plugin.getMessenger().message(sender, "Successfully set " + player.getName() + "'s console size to " + type);
     }
 }

@@ -23,15 +23,15 @@ import org.bukkit.command.CommandSender;
 /**
  * @author eccentric_nz
  */
-class DispersedCommand {
+public class DispersedCommand {
 
     private final TARDIS plugin;
 
-    DispersedCommand(TARDIS plugin) {
+    public DispersedCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    boolean assemble(CommandSender sender, String which) {
+    public void assemble(CommandSender sender, String which) {
         if (which.equalsIgnoreCase("clear")) {
             plugin.getTrackerKeeper().getDispersed().clear();
             plugin.getTrackerKeeper().getDispersedTARDII().clear();
@@ -39,6 +39,5 @@ class DispersedCommand {
         } else if (which.equalsIgnoreCase("list")) {
             plugin.getTrackerKeeper().getDispersedTARDII().forEach((d) -> plugin.debug("TARDIS id: " + d));
         }
-        return true;
     }
 }

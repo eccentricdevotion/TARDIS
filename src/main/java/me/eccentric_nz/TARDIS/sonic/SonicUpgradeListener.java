@@ -113,7 +113,7 @@ public class SonicUpgradeListener implements Listener {
                         lore.add(Component.text("Upgrades:"));
                     }
                     // if they don't already have the upgrade
-                    if (!lore.contains(upgrade)) {
+                    if (!lore.contains(Component.text(upgrade))) {
                         ItemStack upgraded = SonicLore.addUpgrade(lore, dn, floats, is, upgrade);
                         // change the crafting result
                         ci.setResult(upgraded);

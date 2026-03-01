@@ -78,22 +78,16 @@ public class DeleteShopItem {
     }
 
     public int removeByLocation(String location) {
-        PreparedStatement ps = null;
         final String query = "DELETE FROM " + prefix + "items WHERE location = ?";
-        try {
-            ps = connection.prepareStatement(query);
-            ps.setString(1, location);
-            return ps.executeUpdate();
-        } catch (SQLException e) {
-            plugin.debug("Delete error for items table! " + e.getMessage());
-        } finally {
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
             try {
-                if (ps != null) {
-                    ps.close();
-                }
+                ps.setString(1, location);
+                return ps.executeUpdate();
             } catch (SQLException e) {
-                plugin.debug("Error closing items table! " + e.getMessage());
+                plugin.debug("Delete error for items table! " + e.getMessage());
             }
+        } catch (SQLException e) {
+            plugin.debug("Error closing items table! " + e.getMessage());
         }
         return 0;
     }

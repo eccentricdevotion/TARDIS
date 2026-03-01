@@ -26,16 +26,16 @@ import java.time.format.DateTimeFormatter;
 /**
  * @author eccentric_nz
  */
-class TimeCommand {
+public class TimeCommand {
 
     private final TARDIS plugin;
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("h:mm a");
 
-    TimeCommand(TARDIS plugin) {
+    public TimeCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    boolean sayTime(Player player) {
+    public void sayTime(Player player) {
         long minecraftTime = player.getWorld().getTime();
         String daynight = TARDISStaticUtils.getTime(minecraftTime);
         // get current server time (in a nice format)
@@ -46,7 +46,6 @@ class TimeCommand {
             plugin.getMessenger().handlesSend(player, "HANDLES_TIME", minecraftTime, daynight, parseTime(minecraftTime));
             plugin.getMessenger().handlesSend(player, "HANDLES_SERVER_TIME", formatted);
         }, 2L);
-        return true;
     }
 
     private String parseTime(long time) {

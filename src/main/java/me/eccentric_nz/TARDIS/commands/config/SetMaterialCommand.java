@@ -28,34 +28,31 @@ import java.util.Locale;
 /**
  * @author eccentric_nz
  */
-class SetMaterialCommand {
+public class SetMaterialCommand {
 
     private final TARDIS plugin;
 
-    SetMaterialCommand(TARDIS plugin) {
+    public SetMaterialCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    boolean setConfigMaterial(CommandSender sender, String[] args, String section) {
-        String first = (section.isEmpty()) ? args[0].toLowerCase(Locale.ROOT) : section + "." + args[0].toLowerCase(Locale.ROOT);
-        String setMaterial = args[1].toUpperCase(Locale.ROOT);
-        if (!checkMaterial(setMaterial)) {
+    public void setConfigMaterial(CommandSender sender, String option, String value, String section) {
+        String first = (section.isEmpty()) ? option : section + "." + option;
+        String setMaterial = value.toUpperCase(Locale.ROOT);
+        if (checkMaterial(setMaterial)) {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "MATERIAL_NOT_VALID");
-            return false;
         } else {
             plugin.getConfig().set(first, setMaterial);
             plugin.saveConfig();
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "CONFIG_UPDATED", first);
-            return true;
         }
     }
 
-    public boolean setConfigMaterial(CommandSender sender, String[] args) {
-        String first = args[0].toLowerCase(Locale.ROOT);
-        String setMaterial = args[1].toUpperCase(Locale.ROOT);
-        if (!checkMaterial(setMaterial)) {
+    public void setConfigMaterial(CommandSender sender, String option, String value) {
+        String first = option.toLowerCase(Locale.ROOT);
+        String setMaterial = value.toUpperCase(Locale.ROOT);
+        if (checkMaterial(setMaterial)) {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "MATERIAL_NOT_VALID");
-            return false;
         } else {
             plugin.getArtronConfig().set(first, setMaterial);
             try {
@@ -64,16 +61,15 @@ class SetMaterialCommand {
                 plugin.debug("Could not save artron.yml, " + io);
             }
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "CONFIG_UPDATED", first);
-            return true;
         }
     }
 
     private boolean checkMaterial(String setMaterial) {
         try {
             Material.valueOf(setMaterial);
-            return true;
-        } catch (IllegalArgumentException e) {
             return false;
+        } catch (IllegalArgumentException e) {
+            return true;
         }
     }
 }

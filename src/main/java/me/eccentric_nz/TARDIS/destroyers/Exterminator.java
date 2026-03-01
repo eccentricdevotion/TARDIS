@@ -62,8 +62,7 @@ public class Exterminator {
                 }
             }
         }
-        folder.delete();
-        return true;
+        return folder.delete();
     }
 
     boolean pruneExterminate(int id) {
@@ -127,9 +126,8 @@ public class Exterminator {
      * Deletes a TARDIS.
      *
      * @param player running the command.
-     * @return true or false depending on whether the TARDIS could be deleted
      */
-    public boolean playerExterminate(Player player) {
+    public void playerExterminate(Player player) {
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", player.getUniqueId().toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
@@ -145,7 +143,7 @@ public class Exterminator {
                     Player p = plugin.getServer().getPlayer(uuid);
                     if (p != null && p.isOnline()) {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "TARDIS_NO_DELETE");
-                        return false;
+                        return;
                     }
                 }
             }
@@ -158,7 +156,7 @@ public class Exterminator {
             ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
             if (!rsc.resultSet()) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
-                return false;
+                return;
             }
             Current current = rsc.getCurrent();
             // Destroy the TARDIS!
@@ -179,7 +177,7 @@ public class Exterminator {
             World cw = TARDISStaticLocationGetters.getWorldFromSplitString(chunkLoc);
             if (cw == null) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "WORLD_DELETED");
-                return true;
+                return;
             }
             if (!cw.getName().toUpperCase(Locale.ROOT).contains("TARDIS_WORLD_")) {
                 plugin.getInteriorDestroyer().destroyInner(schm, id, cw, tips);
@@ -194,7 +192,6 @@ public class Exterminator {
         } else {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "EXTERMINATE_NONE");
         }
-        return true;
     }
 
     public void cleanHashMaps(int id) {

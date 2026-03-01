@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.commands.utils.RescueAcceptor;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisPowered;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -33,76 +32,62 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-class RescueCommand {
+public class RescueCommand {
 
     private final TARDIS plugin;
 
-    RescueCommand(TARDIS plugin) {
+    public RescueCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    boolean startRescue(Player player, String[] args) {
-        if (args.length < 2) {
-            plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
-            return true;
-        }
-        if (args[1].equalsIgnoreCase("accept")) {
-            new RescueAcceptor(plugin).doRequest(player, false);
-            return true;
-        }
+    public void startRescue(Player player, Player saved) {
         if (TARDISPermission.hasPermission(player, "tardis.timetravel.rescue")) {
             ResultSetTardisPowered rs = new ResultSetTardisPowered(plugin);
             if (!rs.fromUUID(player.getUniqueId().toString())) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_A_TIMELORD");
-                return true;
+                return;
             }
             if (plugin.getConfig().getBoolean("allow.power_down") && !rs.isPowered()) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "POWER_DOWN");
-                return true;
+                return;
             }
-            String saved = args[1];
-            if (!saved.equalsIgnoreCase("accept")) {
-                Player destPlayer = plugin.getServer().getPlayer(saved);
-                if (destPlayer == null) {
-                    plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_ONLINE");
-                    return true;
-                }
-                UUID savedUUID = destPlayer.getUniqueId();
-                String who = (plugin.getTrackerKeeper().getTelepathicRescue().containsKey(savedUUID)) ? plugin.getServer().getPlayer(plugin.getTrackerKeeper().getTelepathicRescue().get(savedUUID)).getName() : player.getName();
-                // get auto_rescue_on preference
-                ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, destPlayer.getUniqueId().toString());
-                if (rsp.resultSet() && rsp.isAutoRescueOn()) {
-                    // go straight to rescue
-                    TARDISRescue res = new TARDISRescue(plugin);
-                    plugin.getTrackerKeeper().getChatRescue().remove(savedUUID);
-                    // delay it so the chat appears before the message
-                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                        TARDISRescue.RescueData rd = res.tryRescue(player, destPlayer.getUniqueId(), false);
-                        if (rd.success()) {
-                            if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(rd.getTardis_id())) {
-                                new TARDISLand(plugin, rd.getTardis_id(), player).exitVortex();
-                                plugin.getPM().callEvent(new TARDISTravelEvent(player, null, TravelType.RESCUE, rd.getTardis_id()));
-                            } else {
-                                plugin.getMessenger().send(player, TardisModule.TARDIS, "REQUEST_RELEASE", destPlayer.getName());
-                            }
+            if (saved == null) {
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_ONLINE");
+                return;
+            }
+            UUID savedUUID = saved.getUniqueId();
+            String who = (plugin.getTrackerKeeper().getTelepathicRescue().containsKey(savedUUID)) ? plugin.getServer().getPlayer(plugin.getTrackerKeeper().getTelepathicRescue().get(savedUUID)).getName() : player.getName();
+            // get auto_rescue_on preference
+            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, saved.getUniqueId().toString());
+            if (rsp.resultSet() && rsp.isAutoRescueOn()) {
+                // go straight to rescue
+                TARDISRescue res = new TARDISRescue(plugin);
+                plugin.getTrackerKeeper().getChatRescue().remove(savedUUID);
+                // delay it so the chat appears before the message
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                    TARDISRescue.RescueData rd = res.tryRescue(player, saved.getUniqueId(), false);
+                    if (rd.success()) {
+                        if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(rd.getTardis_id())) {
+                            new TARDISLand(plugin, rd.getTardis_id(), player).exitVortex();
+                            plugin.getPM().callEvent(new TARDISTravelEvent(player, null, TravelType.RESCUE, rd.getTardis_id()));
+                        } else {
+                            plugin.getMessenger().send(player, TardisModule.TARDIS, "REQUEST_RELEASE", saved.getName());
                         }
-                    }, 2L);
-                } else {
-                    plugin.getMessenger().send(destPlayer, TardisModule.TARDIS, "RESCUE_REQUEST", who);
-                    plugin.getMessenger().sendRescue(destPlayer, plugin);
-                    plugin.getTrackerKeeper().getChatRescue().put(savedUUID, player.getUniqueId());
-                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                        if (plugin.getTrackerKeeper().getChatRescue().containsKey(savedUUID)) {
-                            plugin.getTrackerKeeper().getChatRescue().remove(savedUUID);
-                            plugin.getMessenger().send(player, TardisModule.TARDIS, "RESCUE_NO_RESPONSE", saved);
-                        }
-                    }, 1200L);
-                }
+                    }
+                }, 2L);
+            } else {
+                plugin.getMessenger().send(saved, TardisModule.TARDIS, "RESCUE_REQUEST", who);
+                plugin.getMessenger().sendRescue(saved, plugin);
+                plugin.getTrackerKeeper().getChatRescue().put(savedUUID, player.getUniqueId());
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                    if (plugin.getTrackerKeeper().getChatRescue().containsKey(savedUUID)) {
+                        plugin.getTrackerKeeper().getChatRescue().remove(savedUUID);
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "RESCUE_NO_RESPONSE", saved.getName());
+                    }
+                }, 1200L);
             }
         } else {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERM_PLAYER");
-            return true;
         }
-        return false;
     }
 }

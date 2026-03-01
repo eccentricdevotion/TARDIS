@@ -4,7 +4,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.SmelterChest;
 import me.eccentric_nz.TARDIS.rooms.library.LibrarySorter;
-import me.eccentric_nz.TARDIS.rooms.smelter.SmelterDrop;
 import me.eccentric_nz.TARDIS.rooms.smelter.SmelterFuel;
 import me.eccentric_nz.TARDIS.rooms.smelter.SmelterOre;
 import org.bukkit.Location;
@@ -109,9 +108,7 @@ public class CopperGolemListener implements Listener {
                     int damage = (full / 2) * rsas.getDamageCount();
                     int max = (full * rsas.getCapacitorCount()) - damage;
                     int current = rsas.getCurrentLevel();
-                    if (current + amount > max) {
-                        return;
-                    } else {
+                    if (current + amount <= max) {
                         // clear chest contents
                         chest.getInventory().clear();
                         // process item_counts
@@ -162,10 +159,8 @@ public class CopperGolemListener implements Listener {
                 oreChests = rss.getOreChests();
             }
             switch (type) {
-                case DROP -> {
-                    // process vault items
-                    new VaultDrop(plugin).processItems(inv, rsv);
-                }
+                // process vault items
+                case DROP -> new VaultDrop(plugin).processItems(inv, rsv);
                 case FUEL -> {
                     // add fuel to furnaces
                     if (fuelChests != null) {

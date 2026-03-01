@@ -35,29 +35,22 @@ public class TVMCommandSave {
         this.plugin = plugin;
     }
 
-    public boolean process(Player player, String[] args) {
+    public void send(Player player, int page) {
         if (!TARDISPermission.hasPermission(player, "vm.teleport")) {
             plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_PERM_CMD");
-            return true;
+            return;
         }
         String uuid = player.getUniqueId().toString();
-        if (args.length == 1) {
+        if (page == 0) {
             // list saves
             TVMResultSetSaves rss = new TVMResultSetSaves(plugin, uuid, 0, 10);
             if (rss.resultSet()) {
                 TVMUtils.sendSaveList(player, rss, 1);
             }
-            return true;
-        }
-        if (args.length < 2) {
-            plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_PAGE_NUM");
-            return true;
-        }
-        try {
-            int page = Integer.parseInt(args[1]);
-            if (page <= 0) {
+        } else {
+            if (page < 0) {
                 plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_MSG_INVALID");
-                return true;
+                return;
             }
             int start = (page * 10) - 10;
             int limit = page * 10;
@@ -65,28 +58,29 @@ public class TVMCommandSave {
             if (rss.resultSet()) {
                 TVMUtils.sendSaveList(player, rss, page);
             }
-            return true;
-        } catch (NumberFormatException e) {
-            plugin.debug("Wasn't a page number...");
-            // check for existing save
-            TVMResultSetWarpByName rs = new TVMResultSetWarpByName(plugin, uuid, args[1]);
-            if (rs.resultSet()) {
-                plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_SAVE_EXISTS");
-                return true;
-            }
-            Location l = player.getLocation();
-            HashMap<String, Object> set = new HashMap<>();
-            set.put("uuid", uuid);
-            set.put("save_name", args[1]);
-            set.put("world", l.getWorld().getName());
-            set.put("x", l.getX());
-            set.put("y", l.getY());
-            set.put("z", l.getZ());
-            set.put("yaw", l.getYaw());
-            set.put("pitch", l.getPitch());
-            plugin.getQueryFactory().doInsert("saves", set);
-            plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_SAVE_ADDED", args[1]);
-            return true;
         }
     }
+
+    public void save(Player player, String name) {
+        String uuid = player.getUniqueId().toString();
+        // check for existing save
+        TVMResultSetWarpByName rs = new TVMResultSetWarpByName(plugin, uuid, name);
+        if (rs.resultSet()) {
+            plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_SAVE_EXISTS");
+            return;
+        }
+        Location l = player.getLocation();
+        HashMap<String, Object> set = new HashMap<>();
+        set.put("uuid", uuid);
+        set.put("save_name", name);
+        set.put("world", l.getWorld().getName());
+        set.put("x", l.getX());
+        set.put("y", l.getY());
+        set.put("z", l.getZ());
+        set.put("yaw", l.getYaw());
+        set.put("pitch", l.getPitch());
+        plugin.getQueryFactory().doInsert("saves", set);
+        plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_SAVE_ADDED", name);
+    }
 }
+

@@ -17,6 +17,7 @@
 package me.eccentric_nz.tardisweepingangels.death;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.*;
@@ -221,7 +222,7 @@ public class PlayerDeath implements Listener {
                     }
                 }
             } else if (damage.getCause().equals(DamageCause.BLOCK_EXPLOSION)) {
-                if (event.getDeathMessage().contains("Bee")) {
+                if (ComponentUtils.stripColour(event.deathMessage()).contains("Bee")) {
                     event.deathMessage(Component.text(event.getEntity().getName() + " was slain by a Toclafane"));
                 }
             }

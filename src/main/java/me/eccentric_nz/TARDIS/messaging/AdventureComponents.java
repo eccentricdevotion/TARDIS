@@ -107,11 +107,15 @@ public class AdventureComponents {
     }
 
     public static TextComponent getTransmat(Transmat t) {
+        String to = t.name();
+        if (to.equals("Rooms World")) {
+            to = "Rooms";
+        }
         return Component.text(t.name(), NamedTextColor.GREEN)
                 .append(Component.text(String.format(" X: %.2f, Y: %.2f, Z: %.2f, Yaw %.2f", t.x(), t.y(), t.z(), t.yaw()), NamedTextColor.WHITE))
                 .append(Component.text(" <Transmat> ", NamedTextColor.AQUA)
                         .hoverEvent(HoverEvent.showText(Component.text("Transmat to this location")))
-                        .clickEvent(ClickEvent.runCommand("/tardis transmat tp " + t.name()))
+                        .clickEvent(ClickEvent.runCommand("/tardis transmat tp " + to))
                 );
     }
 
@@ -165,7 +169,7 @@ public class AdventureComponents {
         if (hasPerm) {
             textComponent = Component.text(recharger, NamedTextColor.GREEN)
                     .hoverEvent(HoverEvent.showText(Component.text(String.format("%s %s, %s, %s", world, x, y, z))))
-                    .clickEvent(ClickEvent.runCommand(String.format("/tardisteleport %s %s %s not_for_players", world, x, z)));
+                    .clickEvent(ClickEvent.runCommand(String.format("/tardisteleport %s %s %s %s not_for_players", world, x, y, z)));
         } else {
             textComponent = Component.text(recharger, NamedTextColor.GREEN)
                     .hoverEvent(HoverEvent.showText(Component.text(String.format("%s %s, %s, %s", world, x, y, z))));
@@ -287,9 +291,9 @@ public class AdventureComponents {
     }
 
     public static TextComponent getWikiLink(WikiLink wikiLink) {
-        return Component.text(wikiLink.getTitle(), NamedTextColor.BLUE)
+        return Component.text(wikiLink.title(), NamedTextColor.BLUE)
                 .hoverEvent(HoverEvent.showText(Component.text("Open link")))
-                .clickEvent(ClickEvent.openUrl(wikiLink.getURL()));
+                .clickEvent(ClickEvent.openUrl(wikiLink.URL()));
     }
 
     public static TextComponent getRemoveProtected(String xyz, String location, int id) {

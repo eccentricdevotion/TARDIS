@@ -19,12 +19,10 @@ package me.eccentric_nz.TARDIS.commands.handles;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.entity.Player;
 
-import java.util.Arrays;
-
 /**
  * @author eccentric_nz
  */
-class SayCommand {
+public class SayCommand {
 
     private final TARDIS plugin;
 
@@ -32,9 +30,7 @@ class SayCommand {
         this.plugin = plugin;
     }
 
-    boolean say(Player player, String[] args) {
-        String message = String.join(" ", Arrays.copyOfRange(args, 2, args.length));
+    public void say(Player player, String message) {
         plugin.getMessenger().handlesMessage(player, message);
-        return true;
     }
 }

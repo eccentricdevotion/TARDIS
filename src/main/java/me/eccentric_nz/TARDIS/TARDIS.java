@@ -16,9 +16,11 @@
  */
 package me.eccentric_nz.TARDIS;
 
+import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import me.eccentric_nz.TARDIS.api.TARDII;
 import me.eccentric_nz.TARDIS.artron.ArtronCondensables;
 import me.eccentric_nz.TARDIS.bStats.TARDISStats;
+import me.eccentric_nz.TARDIS.brigadier.BrigadierCommandRegister;
 import me.eccentric_nz.TARDIS.builders.exterior.PresetBuilderFactory;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonPreset;
 import me.eccentric_nz.TARDIS.chatGUI.ChatGUI;
@@ -115,6 +117,7 @@ public class TARDIS extends JavaPlugin {
     private final HashMap<String, String> versions = new HashMap<>();
     private final String versionRegex = "(\\d+[.])+\\d+";
     private final Pattern versionPattern = Pattern.compile(versionRegex);
+    private final String serverStr = "1.21.11";
     private TARDISMessage messenger;
     private ChatGUI jsonKeeper;
     private SkinChanger skinChanger;
@@ -195,7 +198,6 @@ public class TARDIS extends JavaPlugin {
     private ShopSettings shopSettings;
     private TVMSettings tvmSettings;
     private BlasterSettings blasterSettings;
-    private final String serverStr = "1.21.11";
 
     /**
      * Constructor
@@ -285,6 +287,8 @@ public class TARDIS extends JavaPlugin {
                 pm.disablePlugin(this);
                 return;
             }
+            // remove old datapack
+            new TARDISChecker(this).removeOldDataPack();
             messenger = new TARDISMessage();
             jsonKeeper = new ChatGUI();
             skinChanger = new SkinChanger();
@@ -380,7 +384,8 @@ public class TARDIS extends JavaPlugin {
             // add listeners
             new TARDISListenerRegisterer(this).registerListeners();
             // register commands
-            new TARDISCommandSetter(this).loadCommands();
+            this.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS, commands ->
+                    new BrigadierCommandRegister(commands, this).addAll());
             loadPluginRespect();
             String mapper = getConfig().getString("mapping.provider", "dynmap");
             if (pm.isPluginEnabled(mapper) && getConfig().getBoolean("modules.mapping")) {
@@ -405,8 +410,6 @@ public class TARDIS extends JavaPlugin {
                 bl.loadAntiBuild();
             }
             loadBooks();
-            // copy advancements to tardis datapack
-            new TARDISChecker(this).checkDataPack();
             presets = new TARDISChameleonPreset();
             presets.makePresets();
             // hook CoreProtectAPI
@@ -1027,15 +1030,6 @@ public class TARDIS extends JavaPlugin {
      */
     public PluginManager getPM() {
         return pm;
-    }
-
-    /**
-     * Gets the TARDIS File Copier
-     *
-     * @return the TARDIS File Copier
-     */
-    public FileCopier getTardisCopier() {
-        return tardisCopier;
     }
 
     /**

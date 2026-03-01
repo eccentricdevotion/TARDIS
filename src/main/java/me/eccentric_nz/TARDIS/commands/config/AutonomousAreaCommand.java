@@ -32,38 +32,32 @@ public class AutonomousAreaCommand {
         this.plugin = plugin;
     }
 
-    public boolean processArea(CommandSender sender, String[] args) {
-        if (args.length < 3) {
-            plugin.getMessenger().send(sender, TardisModule.TARDIS, "TOO_FEW_ARGS");
-            return true;
-        }
-        String area = args[1];
+    public void processArea(CommandSender sender, String area, String action) {
         // check the area exists
         HashMap<String, Object> where = new HashMap<>();
         where.put("area_name", area);
         ResultSetAreas rsa = new ResultSetAreas(plugin, where, false, true);
         if (!rsa.resultSet()) {
             plugin.getMessenger().sendColouredCommand(sender, "AREA_NOT_FOUND", "/tardis list areas", plugin);
-            return true;
+            return;
         }
         List<String> autoAreas = plugin.getConfig().getStringList("autonomous_areas");
-        if (args[2].equalsIgnoreCase("add")) {
+        if (action.equalsIgnoreCase("add")) {
             if (autoAreas.contains(area)) {
                 plugin.getMessenger().send(sender, TardisModule.TARDIS, "AREA_ALREADY_ADDED", area);
-                return true;
+                return;
             }
             autoAreas.add(area);
         } else {
             // remove
             if (!autoAreas.contains(area)) {
                 plugin.getMessenger().send(sender, TardisModule.TARDIS, "AREA_NOT_IN_LIST", area);
-                return true;
+                return;
             }
             autoAreas.remove(area);
         }
         plugin.getConfig().set("autonomous_areas", autoAreas);
         plugin.saveConfig();
         plugin.getMessenger().send(sender, TardisModule.TARDIS, "AREA_LIST_UPDATED");
-        return true;
     }
 }

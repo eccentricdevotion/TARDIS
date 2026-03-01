@@ -44,7 +44,7 @@ public class UpdateARS {
     public void process(Block block, Schematic schm, int id, String uuid) {
         // insert control
         plugin.getQueryFactory().insertControl(id, 10, block.getLocation().toString(), 0);
-        // check if they already have an ARS record (they may have used `/tardis arsremove`)
+        // check if they already have an ARS record (they may have used `/tardis ars_remove`)
         HashMap<String, Object> wherer = new HashMap<>();
         wherer.put("tardis_id", id);
         ResultSetARS rsa = new ResultSetARS(plugin, wherer);

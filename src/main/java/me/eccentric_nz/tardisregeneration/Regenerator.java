@@ -23,7 +23,6 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetRegenerations;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.skins.DoctorSkins;
 import me.eccentric_nz.TARDIS.skins.Skin;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
@@ -78,13 +77,13 @@ public class Regenerator {
         emitter.setTaskID(task);
     }
 
-    public void dev(TARDIS plugin, Player player, String[] args) {
+    public void dev(TARDIS plugin, Player player, int which) {
         Skin skin;
         int random = TARDISConstants.RANDOM.nextInt(DoctorSkins.DOCTORS.size());
-        if (args.length == 1) {
+        if (which == -1) {
             skin = DoctorSkins.DOCTORS.get(random);
         } else {
-            skin = DoctorSkins.DOCTORS.get(TARDISNumberParsers.parseInt(args[1]));
+            skin = DoctorSkins.DOCTORS.get(which);
         }
         display(plugin, player, skin);
     }

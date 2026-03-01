@@ -40,19 +40,19 @@ public class TVMCommandLifesigns {
         this.plugin = plugin;
     }
 
-    public boolean scan(Player player, String[] args) {
+    public void scan(Player player, Player scanned) {
         if (!TARDISPermission.hasPermission(player, "vm.lifesigns")) {
             plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_PERM_CMD");
-            return true;
+            return;
         }
         int required = plugin.getVortexConfig().getInt("tachyon_use.lifesigns");
         if (!TVMUtils.checkTachyonLevel(player.getUniqueId().toString(), required)) {
             plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_LIFESIGNS_TACHYON");
-            return true;
+            return;
         }
         // remove tachyons
         new TVMQueryFactory(plugin).alterTachyons(player.getUniqueId().toString(), -required);
-        if (args.length == 1) {
+        if (scanned == null) {
             plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "SCAN_ENTS");
             // scan nearby entities
             double d = plugin.getVortexConfig().getDouble("lifesign_scan_distance");
@@ -92,30 +92,20 @@ public class TVMCommandLifesigns {
             } else {
                 player.sendMessage("SCAN_NONE");
             }
-            return true;
-        }
-        if (args.length < 2) {
-            plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_PLAYER");
-            return true;
-        }
-        Player scanned = plugin.getServer().getPlayer(args[1]);
-        if (scanned == null) {
-            plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "COULD_NOT_FIND_NAME");
-            return true;
+            return;
         }
         if (!scanned.isOnline()) {
-            plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_NOT_ONLINE", args[1]);
-            return true;
+            plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_NOT_ONLINE", scanned.getName());
+            return;
         }
         // getHealth() / getMaxHealth() * getHealthScale()
         double health = scanned.getHealth() / scanned.getAttribute(Attribute.MAX_HEALTH).getValue() * scanned.getHealthScale();
         float hunger = (scanned.getFoodLevel() / 20F) * 100;
         int air = scanned.getRemainingAir();
-        plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_LIFESIGNS", args[1]);
+        plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_LIFESIGNS", scanned.getName());
         player.sendMessage("Has been alive for: " + TVMUtils.convertTicksToTime(scanned.getTicksLived()));
         player.sendMessage("Health: " + String.format("%.1f", health / 2) + " hearts");
         player.sendMessage("Hunger bar: " + String.format("%.2f", hunger) + "%");
         player.sendMessage("Air: ~" + (air / 20) + " seconds remaining");
-        return true;
     }
 }

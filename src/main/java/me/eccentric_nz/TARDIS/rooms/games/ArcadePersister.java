@@ -36,8 +36,8 @@ public class ArcadePersister {
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final String prefix;
+    private final ResultSet rs = null;
     private PreparedStatement ps = null;
-    private ResultSet rs = null;
     private int count = 0;
 
     public ArcadePersister(TARDIS plugin) {

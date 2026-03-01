@@ -66,7 +66,7 @@ public class TARDISTagListener implements Listener {
                 plugin.getMessenger().message(event.getPlayer(), TardisModule.TARDIS,  "Happy " + age + ordinal + " Birthday Doctor Who!");
             }
             plugin.getMessenger().message(event.getPlayer(), TardisModule.TARDIS,  "Today, and today only, you can play 'Tag the OOD'!");
-            plugin.getMessenger().message(event.getPlayer(), TardisModule.TARDIS, Component.text("To see tag stats (and who is currently 'it'), use the command ").append(Component.text("/tardis tagtheood", NamedTextColor.AQUA)));
+            plugin.getMessenger().message(event.getPlayer(), TardisModule.TARDIS, Component.text("To see tag stats (and who is currently 'it'), use the command ").append(Component.text("/tardis tag_the_ood", NamedTextColor.AQUA)));
             if (plugin.getTagConfig().getString("it", "").isEmpty()) {
                 Player starter = getRandomPlayer();
                 plugin.getMessenger().broadcast(TardisModule.TARDIS, starter.getName() + " is now the 'OOD'!");

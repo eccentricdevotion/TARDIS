@@ -31,8 +31,8 @@ import me.eccentric_nz.TARDIS.info.TISCategory;
 import me.eccentric_nz.TARDIS.move.TARDISMoveSession;
 import me.eccentric_nz.TARDIS.move.TARDISTeleportLocation;
 import me.eccentric_nz.TARDIS.portal.CastData;
-import me.eccentric_nz.TARDIS.rooms.RoomSeedData;
 import me.eccentric_nz.TARDIS.rooms.RoomData;
+import me.eccentric_nz.TARDIS.rooms.RoomSeedData;
 import me.eccentric_nz.TARDIS.siegemode.SiegeArea;
 import me.eccentric_nz.TARDIS.travel.ComehereRequest;
 import me.eccentric_nz.TARDIS.travel.TravelCostAndType;
@@ -395,7 +395,7 @@ public class TARDISTrackerInstanceKeeper {
     }
 
     /**
-     * Tracks players using the <code>/tardis comehere [player]</code> command
+     * Tracks players using the <code>/tardis come_here [player]</code> command
      */
     public HashMap<UUID, ComehereRequest> getComehereRequests() {
         return comehereRequests;

@@ -22,8 +22,8 @@ import me.eccentric_nz.TARDIS.chameleon.preset.*;
 import me.eccentric_nz.TARDIS.chameleon.preset.biome.*;
 import me.eccentric_nz.TARDIS.chameleon.utils.BlockDataRotator;
 import me.eccentric_nz.TARDIS.chameleon.utils.ChameleonColumn;
-import me.eccentric_nz.TARDIS.chameleon.utils.TARDISCustomPreset;
 import me.eccentric_nz.TARDIS.chameleon.utils.RendererPreset;
+import me.eccentric_nz.TARDIS.chameleon.utils.TARDISCustomPreset;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import org.bukkit.Bukkit;
@@ -532,9 +532,6 @@ public class TARDISChameleonPreset {
             case YELLOW -> {
                 return yellow.getBlueprint().get(d);
             }
-//            case CUSTOM -> {
-//                return custom.getBlueprint().get(d);
-//            }
             case EXTREME_HILLS -> {
                 return extreme.getBlueprint().get(d);
             }
@@ -730,9 +727,6 @@ public class TARDISChameleonPreset {
             case YELLOW -> {
                 return yellow.getGlass().get(d);
             }
-//            case CUSTOM -> {
-//                return custom.getGlass().get(d);
-//            }
             case EXTREME_HILLS -> {
                 return extreme.getGlass().get(d);
             }
@@ -928,9 +922,6 @@ public class TARDISChameleonPreset {
             case YELLOW -> {
                 return yellow.getStained().get(d);
             }
-//            case CUSTOM -> {
-//                return custom.getStained().get(d);
-//            }
             case EXTREME_HILLS -> {
                 return extreme.getStained().get(d);
             }

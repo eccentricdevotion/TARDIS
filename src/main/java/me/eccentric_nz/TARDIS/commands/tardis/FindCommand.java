@@ -31,24 +31,24 @@ import org.bukkit.entity.Player;
 /**
  * @author eccentric_nz
  */
-class FindCommand {
+public class FindCommand {
 
     private final TARDIS plugin;
 
-    FindCommand(TARDIS plugin) {
+    public FindCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    boolean findTARDIS(Player player) {
+    public void findTARDIS(Player player) {
         if (TARDISPermission.hasPermission(player, "tardis.find")) {
             if (plugin.getConfig().getBoolean("difficulty.system_upgrades") && !new SystemUpgradeChecker(plugin).has(player.getUniqueId().toString(), SystemTree.TARDIS_LOCATOR)) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "TARDIS Locator");
-                return true;
+                return;
             }
             ResultSetTardisID rs = new ResultSetTardisID(plugin);
             if (!rs.fromUUID(player.getUniqueId().toString())) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
-                return true;
+                return;
             }
             if (!plugin.getConfig().getBoolean("difficulty.tardis_locator") || plugin.getUtils().inGracePeriod(player, true)) {
                 ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, rs.getTardisId());
@@ -66,14 +66,11 @@ class FindCommand {
                 } else {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
                 }
-                return true;
             } else {
                 plugin.getMessenger().sendColouredCommand(player, "DIFF_HARD_FIND", "/tardisrecipe locator", plugin);
-                return true;
             }
         } else {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
-            return false;
         }
     }
 }

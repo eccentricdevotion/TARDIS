@@ -21,29 +21,27 @@ import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import org.bukkit.command.CommandSender;
 
 import java.util.List;
-import java.util.Locale;
 
 /**
  * @author eccentric_nz
  */
-class RegionFlagCommand {
+public class RegionFlagCommand {
 
     private final TARDIS plugin;
     private final List<String> which = List.of("entry", "exit");
 
-    RegionFlagCommand(TARDIS plugin) {
+    public RegionFlagCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    boolean toggleEntryExit(CommandSender sender, String[] args) {
-        String flag = args[1].toLowerCase(Locale.ROOT);
+    public void toggleEntryExit(CommandSender sender, String flag) {
         if (!which.contains(flag)) {
             plugin.getMessenger().message(sender, "You need to specify which flag type you want to change to - entry or exit.");
-            return true;
+            return;
         }
         if (!plugin.getConfig().getBoolean("creation.default_world")) {
             plugin.getMessenger().message(sender, "This command only works if you are using a default world for TARDISes.");
-            return true;
+            return;
         }
         String world_name = plugin.getConfig().getString("creation.default_world_name");
         // get all regions for the default world
@@ -59,6 +57,5 @@ class RegionFlagCommand {
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "rg flag " + region_id + " chest-access -w " + world_name);
             }
         });
-        return true;
     }
 }

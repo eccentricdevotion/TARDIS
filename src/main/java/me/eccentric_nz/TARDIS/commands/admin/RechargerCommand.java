@@ -30,27 +30,27 @@ import java.util.HashMap;
 /**
  * @author eccentric_nz
  */
-class RechargerCommand {
+public class RechargerCommand {
 
     private final TARDIS plugin;
 
-    RechargerCommand(TARDIS plugin) {
+    public RechargerCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    boolean setRecharger(CommandSender sender, String[] args) {
+    public void setRecharger(CommandSender sender, String name) {
         Player player = null;
         if (sender instanceof Player) {
             player = (Player) sender;
         }
         if (player == null) {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "CHARGER_NO");
-            return true;
+            return;
         }
         Block b = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50);
         if (!b.getType().equals(Material.BEACON)) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "CHARGER_BEACON");
-            return true;
+            return;
         }
         // make sure they're not targeting their inner TARDIS beacon
         HashMap<String, Object> where = new HashMap<>();
@@ -58,13 +58,13 @@ class RechargerCommand {
         ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
         if (rst.resultSet()) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "ENERGY_NO_BEACON");
-            return true;
+            return;
         }
         Location l = b.getLocation();
-        plugin.getConfig().set("rechargers." + args[1] + ".world", l.getWorld().getName());
-        plugin.getConfig().set("rechargers." + args[1] + ".x", l.getBlockX());
-        plugin.getConfig().set("rechargers." + args[1] + ".y", l.getBlockY());
-        plugin.getConfig().set("rechargers." + args[1] + ".z", l.getBlockZ());
+        plugin.getConfig().set("rechargers." + name + ".world", l.getWorld().getName());
+        plugin.getConfig().set("rechargers." + name + ".x", l.getBlockX());
+        plugin.getConfig().set("rechargers." + name + ".y", l.getBlockY());
+        plugin.getConfig().set("rechargers." + name + ".z", l.getBlockZ());
         // add the recharger to the tracker
         plugin.getGeneralKeeper().getRechargers().add(new Location(l.getWorld(), l.getBlockX(), l.getBlockY(), l.getBlockZ()));
         // if worldguard is on the server, protect a 3x3x3 area around beacon
@@ -75,10 +75,9 @@ class RechargerCommand {
             int maxz = l.getBlockZ() + 2;
             Location wg1 = new Location(l.getWorld(), minx, l.getBlockY() + 2, minz);
             Location wg2 = new Location(l.getWorld(), maxx, l.getBlockY() - 2, maxz);
-            plugin.getWorldGuardUtils().addRechargerProtection(player, args[1], wg1, wg2);
+            plugin.getWorldGuardUtils().addRechargerProtection(player, name, wg1, wg2);
         }
         plugin.saveConfig();
         plugin.getMessenger().send(sender, TardisModule.TARDIS, "CONFIG_UPDATED", "recharger");
-        return true;
     }
 }

@@ -18,12 +18,12 @@ public class PaintingCommand {
         this.plugin = plugin;
     }
 
-    public boolean getLocation(Player player) {
+    public void getLocation(Player player) {
         Location observerPos = player.getEyeLocation();
         RayTraceResult result = observerPos.getWorld().rayTraceEntities(observerPos, observerPos.getDirection(), 16.0d, (s) -> s.getType() == EntityType.PAINTING);
         if (result == null) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "WA_STAND");
-            return true;
+            return;
         }
         Painting painting = (Painting) result.getHitEntity();
         if (painting != null) {
@@ -37,6 +37,5 @@ public class PaintingCommand {
             BlockFace face = painting.getFacing();
             plugin.debug("Facing: " + face);
         }
-        return true;
     }
 }

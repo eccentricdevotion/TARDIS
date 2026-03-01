@@ -30,7 +30,7 @@ public class CustomPageBuilder extends PageBuilder {
         this.plugin = plugin;
     }
 
-    public boolean compile() {
+    public void compile() {
         // custom display item blocks
         for (TARDISDisplayItem tdi : TARDISDisplayItemRegistry.values()) {
             if (tdi.getCraftMaterial() != null) {
@@ -41,7 +41,6 @@ public class CustomPageBuilder extends PageBuilder {
                 }
             }
         }
-        return true;
     }
 
     private String formatCustom(TARDISDisplayItem tdi) {

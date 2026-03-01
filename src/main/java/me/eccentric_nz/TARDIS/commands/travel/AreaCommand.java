@@ -43,28 +43,28 @@ public class AreaCommand {
         this.plugin = plugin;
     }
 
-    public boolean action(Player player, String[] args, int id, ChameleonPreset preset) {
+    public void action(Player player, String name, int id, ChameleonPreset preset) {
         HashMap<String, Object> wherea = new HashMap<>();
-        wherea.put("area_name", args[1]);
+        wherea.put("area_name", name);
         ResultSetAreas rsa = new ResultSetAreas(plugin, wherea, false, false);
         if (!rsa.resultSet()) {
             plugin.getMessenger().sendColouredCommand(player, "AREA_NOT_FOUND", "/tardis list areas", plugin);
-            return true;
+            return;
         }
-        if ((!TARDISPermission.hasPermission(player, "tardis.area." + args[1]) && !TARDISPermission.hasPermission(player, "tardis.area.*")) || (!player.isPermissionSet("tardis.area." + args[1]) && !player.isPermissionSet("tardis.area.*"))) {
-            plugin.getMessenger().send(player, TardisModule.TARDIS, "TRAVEL_NO_AREA_PERM", args[1]);
-            return true;
+        if ((!TARDISPermission.hasPermission(player, "tardis.area." + name) && !TARDISPermission.hasPermission(player, "tardis.area.*")) || (!player.isPermissionSet("tardis.area." + name) && !player.isPermissionSet("tardis.area.*"))) {
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "TRAVEL_NO_AREA_PERM", name);
+            return;
         }
         if (plugin.getConfig().getBoolean("difficulty.disks") && !plugin.getUtils().inGracePeriod(player, false)) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "ADV_AREA");
-            return true;
+            return;
         }
         // check whether this is a no invisibility area
         String invisibility = rsa.getArea().invisibility();
         if (invisibility.equals("DENY") && preset.equals(ChameleonPreset.INVISIBLE)) {
             // check preset
             plugin.getMessenger().send(player, TardisModule.TARDIS, "AREA_NO_INVISIBLE");
-            return true;
+            return;
         } else if (!invisibility.equals("ALLOW")) {
             // force preset
             plugin.getMessenger().send(player, TardisModule.TARDIS, "AREA_FORCE_PRESET", invisibility);
@@ -84,7 +84,7 @@ public class AreaCommand {
         }
         if (l == null) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_MORE_SPOTS");
-            return true;
+            return;
         }
         HashMap<String, Object> set = new HashMap<>();
         set.put("world", l.getWorld().getName());
@@ -99,7 +99,7 @@ public class AreaCommand {
             ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
             if (!rsc.resultSet()) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
-                return true;
+                return;
             }
             set.put("direction", rsc.getCurrent().direction().forPreset().toString());
         }
@@ -107,13 +107,12 @@ public class AreaCommand {
         HashMap<String, Object> tid = new HashMap<>();
         tid.put("tardis_id", id);
         plugin.getQueryFactory().doSyncUpdate("next", set, tid);
-        plugin.getMessenger().send(player, TardisModule.TARDIS, "TRAVEL_APPROVED", args[1]);
+        plugin.getMessenger().send(player, TardisModule.TARDIS, "TRAVEL_APPROVED", name);
         plugin.getTrackerKeeper().getHasDestination().put(id, new TravelCostAndType(plugin.getArtronConfig().getInt("travel"), TravelType.AREA));
         plugin.getTrackerKeeper().getRescue().remove(id);
         if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
             new TARDISLand(plugin, id, player).exitVortex();
             plugin.getPM().callEvent(new TARDISTravelEvent(player, null, TravelType.AREA, id));
         }
-        return true;
     }
 }

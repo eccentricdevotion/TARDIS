@@ -40,16 +40,16 @@ public class RebuildCommand {
         this.plugin = plugin;
     }
 
-    public boolean doRemoteRebuild(CommandSender sender, int id, OfflinePlayer player, boolean hidden) {
+    public void doRemoteRebuild(CommandSender sender, int id, OfflinePlayer player, boolean hidden) {
         ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
         if (!rsc.resultSet()) {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
-            return true;
+            return;
         }
         ResultSetTardisPreset rs = new ResultSetTardisPreset(plugin);
         if (rs.fromID(id) && rs.getPreset().equals(ChameleonPreset.INVISIBLE)) {
             plugin.getMessenger().send(player.getPlayer(), TardisModule.TARDIS, "INVISIBILITY_ENGAGED");
-            return true;
+            return;
         }
         Current current = rsc.getCurrent();
         BuildData bd = new BuildData(player.getUniqueId().toString());
@@ -72,6 +72,5 @@ public class RebuildCommand {
             seth.put("hidden", 0);
             plugin.getQueryFactory().doUpdate("tardis", seth, whereh);
         }
-        return true;
     }
 }

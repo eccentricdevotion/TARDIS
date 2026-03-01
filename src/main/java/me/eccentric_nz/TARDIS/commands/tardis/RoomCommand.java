@@ -43,57 +43,53 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-class RoomCommand {
+public class RoomCommand {
 
     private final TARDIS plugin;
 
-    RoomCommand(TARDIS plugin) {
+    public RoomCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    boolean startRoom(Player player, String[] args) {
+    public void startRoom(Player player, String arg) {
         UUID uuid = player.getUniqueId();
         if (plugin.getConfig().getBoolean("difficulty.system_upgrades") && !new SystemUpgradeChecker(plugin).has(uuid.toString(), SystemTree.ROOM_GROWING)) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "Room Growing");
-            return true;
+            return;
         }
-        if (args.length < 2) {
-            plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
-            return false;
-        }
-        String room = args[1].toUpperCase(Locale.ROOT);
+        String room = arg.toUpperCase(Locale.ROOT);
         if (room.equals("ARCADE")) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "GAME_ARCADE");
-            return true;
+            return;
         }
         if (room.equals("HELP") || !plugin.getGeneralKeeper().getRoomArgs().contains(room)) {
             new TARDISRoomLister(plugin, player).list();
-            return true;
+            return;
         }
-        String perm = "tardis.room." + args[1].toLowerCase(Locale.ROOT);
+        String perm = "tardis.room." + arg.toLowerCase(Locale.ROOT);
         if (!TARDISPermission.hasPermission(player, perm) && !TARDISPermission.hasPermission(player, "tardis.room")) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERM_ROOM_TYPE");
-            return true;
+            return;
         }
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", uuid.toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (!rs.resultSet()) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_A_TIMELORD");
-            return true;
+            return;
         }
         Tardis tardis = rs.getTardis();
         if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPoweredOn()) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "POWER_DOWN");
-            return true;
+            return;
         }
         if (!plugin.getUtils().canGrowRooms(tardis.getChunk())) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "ROOM_OWN_WORLD");
-            return true;
+            return;
         }
         if (!tardis.getRenderer().isEmpty() && room.equals("RENDERER")) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "RENDER_EXISTS");
-            return true;
+            return;
         }
         int id = tardis.getTardisId();
         CircuitChecker tcc = null;
@@ -103,7 +99,7 @@ class RoomCommand {
         }
         if (tcc != null && !tcc.hasARS()) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "ARS_MISSING");
-            return true;
+            return;
         }
         int level = tardis.getArtronLevel();
         String chunk = tardis.getChunk();
@@ -116,12 +112,12 @@ class RoomCommand {
         ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
         if (!rst.resultSet()) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_IN_TARDIS");
-            return true;
+            return;
         }
         // check they have enough artron energy
         if (level < plugin.getRoomsConfig().getInt("rooms." + room + ".cost")) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "ENERGY_NO_ROOM");
-            return true;
+            return;
         }
         if (plugin.getConfig().getBoolean("growth.rooms_require_blocks")) {
             boolean hasRequired = true;
@@ -174,7 +170,7 @@ class RoomCommand {
             if (!hasRequired) {
                 player.sendMessage("-----------------------------");
                 plugin.getTrackerKeeper().getRoomSeed().remove(uuid);
-                return true;
+                return;
             }
             CondenserData c_data = new CondenserData();
             c_data.setBlockIDCount(item_counts);
@@ -182,7 +178,8 @@ class RoomCommand {
             plugin.getGeneralKeeper().getRoomCondenserData().put(uuid, c_data);
         }
         if (room.equals("ZERO")) {
-            return new ZeroRoomBuilder(plugin).build(player, tips, id);
+            new ZeroRoomBuilder(plugin).build(player, tips, id);
+            return;
         }
         RoomSeedData sd = new RoomSeedData();
         sd.setId(id);
@@ -195,6 +192,5 @@ class RoomCommand {
         } else {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "ROOM_SEED_INFO", room, plugin.getRoomsConfig().getString("rooms." + room + ".seed"));
         }
-        return true;
     }
 }

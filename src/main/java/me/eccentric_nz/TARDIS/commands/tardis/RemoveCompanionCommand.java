@@ -34,16 +34,16 @@ import java.util.regex.Pattern;
 /**
  * @author eccentric_nz
  */
-class RemoveCompanionCommand {
+public class RemoveCompanionCommand {
 
     private static final Pattern LETTERS_NUMBERS = Pattern.compile("[A-Za-z0-9_*.]{2,16}");
     private final TARDIS plugin;
 
-    RemoveCompanionCommand(TARDIS plugin) {
+    public RemoveCompanionCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    boolean doRemoveCompanion(Player player, String[] args) {
+    public void doRemoveCompanion(Player player, String p) {
         if (TARDISPermission.hasPermission(player, "tardis.add")) {
             HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", player.getUniqueId().toString());
@@ -54,29 +54,25 @@ class RemoveCompanionCommand {
             String owner;
             if (!rs.resultSet()) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
-                return false;
+                return;
             } else {
                 Tardis tardis = rs.getTardis();
                 comps = tardis.getCompanions();
                 if (comps == null || comps.isEmpty()) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "COMPANIONS_NONE");
-                    return true;
+                    return;
                 }
                 id = tardis.getTardisId();
                 data = tardis.getChunk();
                 owner = tardis.getOwner();
             }
-            if (args.length < 2) {
-                plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
-                return false;
-            }
-            if (!LETTERS_NUMBERS.matcher(args[1]).matches()) {
+            if (!LETTERS_NUMBERS.matcher(p).matches()) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "PLAYER_NOT_VALID");
             } else {
                 String newList = "";
                 String message = "COMPANIONS_REMOVE_ALL";
-                if (!args[1].equals("all")) {
-                    OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(args[1]);
+                if (!p.equals("all")) {
+                    OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(p);
                     if (offlinePlayer.getName() != null) {
                         UUID oluuid = offlinePlayer.getUniqueId();
                         String[] split = comps.split(":");
@@ -101,17 +97,17 @@ class RemoveCompanionCommand {
                                 plugin.getWorldGuardUtils().removeMemberFromRegion(w, owner, oluuid);
                             }
                         }
-                        plugin.getMessenger().send(player, TardisModule.TARDIS, message, args[1]);
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, message, p);
                     } else {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "COULD_NOT_FIND_NAME");
-                        return true;
+                        return;
                     }
                 } else {
                     // if using WorldGuard, remove them from the region membership
                     if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
                         World w = TARDISStaticLocationGetters.getWorldFromSplitString(data);
                         if (w != null) {
-                            if (args[1].equals("all")) {
+                            if (p.equals("all")) {
                                 plugin.getWorldGuardUtils().removeAllMembersFromRegion(w, owner, player.getUniqueId());
                                 // set entry and exit flags to deny
                                 plugin.getWorldGuardUtils().setEntryExitFlags(w.getName(), player.getName(), false);
@@ -126,10 +122,8 @@ class RemoveCompanionCommand {
                 set.put("companions", newList);
                 plugin.getQueryFactory().doUpdate("tardis", set, tid);
             }
-            return true;
         } else {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
-            return false;
         }
     }
 }

@@ -29,13 +29,12 @@ public class CompoundCommand {
         this.plugin = plugin;
     }
 
-    public boolean create(Player player) {
+    public void create(Player player) {
         if (!TARDISPermission.hasPermission(player, "tardis.compound.create")) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "CHEMISTRY_SUB_PERM", "Compound");
-            return true;
+            return;
         }
         // do stuff
         player.openInventory(new CompoundInventory(plugin).getInventory());
-        return true;
     }
 }

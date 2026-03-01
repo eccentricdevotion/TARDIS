@@ -29,13 +29,12 @@ public class ProductCommand {
         this.plugin = plugin;
     }
 
-    public boolean craft(Player player) {
+    public void craft(Player player) {
         if (!TARDISPermission.hasPermission(player, "tardis.product.craft")) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "CHEMISTRY_SUB_PERM", "Product");
-            return true;
+            return;
         }
         // do stuff
         player.openInventory(new ProductInventory(plugin).getInventory());
-        return true;
     }
 }

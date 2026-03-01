@@ -85,8 +85,4 @@ public class TARDISAliasResolver {
             }
         }
     }
-
-    public static HashMap<String, TARDISPlanet> getPlanets() {
-        return planets;
-    }
 }

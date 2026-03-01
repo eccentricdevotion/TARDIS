@@ -35,23 +35,23 @@ import java.util.UUID;
  *
  * @author eccentric_nz
  */
-class ColouriseCommand {
+public class ColouriseCommand {
 
     private final TARDIS plugin;
 
-    ColouriseCommand(TARDIS plugin) {
+    public ColouriseCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    boolean updateBeaconGlass(Player player) {
+    public void updateBeaconGlass(Player player) {
         if (!TARDISPermission.hasPermission(player, "tardis.upgrade")) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
-            return true;
+            return;
         }
         // check they are still in the TARDIS world
         if (!plugin.getUtils().inTARDISWorld(player)) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "CMD_IN_WORLD");
-            return true;
+            return;
         }
         // must have a TARDIS
         HashMap<String, Object> where = new HashMap<>();
@@ -59,17 +59,17 @@ class ColouriseCommand {
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (!rs.resultSet()) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_A_TIMELORD");
-            return true;
+            return;
         }
         Tardis tardis = rs.getTardis();
         Schematic console = tardis.getSchematic();
         if (!console.hasBeacon()) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "COLOUR_NOT_VALID");
-            return true;
+            return;
         }
         if (console.mustUseSonic()) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "COLOUR_SONIC");
-            return true;
+            return;
         }
         int ownerid = tardis.getTardisId();
         HashMap<String, Object> wheret = new HashMap<>();
@@ -77,13 +77,13 @@ class ColouriseCommand {
         ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
         if (!rst.resultSet()) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_IN_TARDIS");
-            return true;
+            return;
         }
         int thisid = rst.getTardis_id();
         // must be timelord of the TARDIS
         if (thisid != ownerid) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "CMD_ONLY_TL");
-            return true;
+            return;
         }
         // track the player for 60 seconds
         UUID uuid = player.getUniqueId();
@@ -91,6 +91,5 @@ class ColouriseCommand {
         // message player
         plugin.getMessenger().send(player, TardisModule.TARDIS, "COLOUR_TIME");
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getTrackerKeeper().getBeaconColouring().remove(uuid), 1200L);
-        return true;
     }
 }
