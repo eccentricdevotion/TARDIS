@@ -26,7 +26,10 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 import org.bukkit.inventory.meta.components.EquippableComponent;
+
+import java.util.List;
 
 /*
 easy_shape:N--,IIH,--I
@@ -59,6 +62,9 @@ public class TARDISCommunicatorRecipe {
         equippable.setDispensable(true);
         equippable.setCameraOverlay(Whoniverse.COMMUNICATOR_OVERLAY.getKey());
         im.setEquippable(equippable);
+        CustomModelDataComponent component = im.getCustomModelDataComponent();
+        component.setStrings(List.of("tardis_communicator"));
+        im.setCustomModelDataComponent(component);
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "tardis_communicator");
         ShapedRecipe r = new ShapedRecipe(key, is);

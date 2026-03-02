@@ -25,6 +25,7 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
 import java.util.List;
 
@@ -58,6 +59,9 @@ public class ArtronStorageCellRecipe {
                 Component.text("Charge Level"),
                 Component.text("0")
         ));
+        CustomModelDataComponent component = im.getCustomModelDataComponent();
+        component.setStrings(List.of("artron_storage_cell"));
+        im.setCustomModelDataComponent(component);
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "artron_storage_cell");
         ShapedRecipe r = new ShapedRecipe(key, is);

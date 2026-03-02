@@ -24,6 +24,7 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
 import java.util.List;
 
@@ -52,6 +53,9 @@ public class FishFingerRecipe {
         ItemMeta im = is.getItemMeta();
         im.displayName(ComponentUtils.toWhite("Fish Finger"));
         im.lore(List.of(Component.text("Best eaten with custard!")));
+        CustomModelDataComponent component = im.getCustomModelDataComponent();
+        component.setStrings(List.of("fish_finger"));
+        im.setCustomModelDataComponent(component);
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "fish_finger");
         ShapedRecipe r = new ShapedRecipe(key, is);

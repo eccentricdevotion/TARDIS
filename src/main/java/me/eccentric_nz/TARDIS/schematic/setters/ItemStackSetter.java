@@ -18,6 +18,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BannerMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.ShieldMeta;
+import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +37,9 @@ public class ItemStackSetter {
                 if (!cmd.equals("st_johns")) {
                     NamespacedKey key = new NamespacedKey(TARDIS.plugin, cmd);
                     im.setItemModel(key);
+                    CustomModelDataComponent component = im.getCustomModelDataComponent();
+                    component.setStrings(List.of("st_johns"));
+                    im.setCustomModelDataComponent(component);
                 } else {
                     im.displayName(Component.text("St John's Logo"));
                 }

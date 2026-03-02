@@ -24,6 +24,7 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
 import java.util.List;
 
@@ -47,6 +48,9 @@ public class BiomeStorageDiskRecipe {
         ItemMeta im = is.getItemMeta();
         im.displayName(ComponentUtils.toWhite("Biome Storage Disk"));
         im.lore(List.of(Component.text("Blank")));
+        CustomModelDataComponent component = im.getCustomModelDataComponent();
+        component.setStrings(List.of("biome_storage_disk"));
+        im.setCustomModelDataComponent(component);
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "biome_storage_disk");
         ShapelessRecipe r = new ShapelessRecipe(key, is);

@@ -51,6 +51,9 @@ public class PresetStorageDiskRecipe {
         ItemMeta im = is.getItemMeta();
         im.displayName(ComponentUtils.toWhite("Preset Storage Disk"));
         im.lore(List.of(Component.text("Blank")));
+        CustomModelDataComponent component = im.getCustomModelDataComponent();
+        component.setStrings(List.of("preset_storage_disk"));
+        im.setCustomModelDataComponent(component);
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "preset_storage_disk");
         ShapelessRecipe r = new ShapelessRecipe(key, is);

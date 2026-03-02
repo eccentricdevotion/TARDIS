@@ -29,7 +29,10 @@ import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
+import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 import org.bukkit.inventory.meta.components.EquippableComponent;
+
+import java.util.List;
 
 public class SpaceSuitLeggingsRecipe {
 
@@ -48,6 +51,9 @@ public class SpaceSuitLeggingsRecipe {
         equippable.setSlot(EquipmentSlot.LEGS);
         equippable.setModel(Whoniverse.SPACE_SUIT.getKey());
         im.setEquippable(equippable);
+        CustomModelDataComponent component = im.getCustomModelDataComponent();
+        component.setStrings(List.of("space_suit_leggings"));
+        im.setCustomModelDataComponent(component);
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "space_suit_leggings");
         ShapedRecipe r = new ShapedRecipe(key, is);

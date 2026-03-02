@@ -23,6 +23,9 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.components.CustomModelDataComponent;
+
+import java.util.List;
 
 /*
 easy_shape:---,WYW,---
@@ -47,6 +50,9 @@ public class CustardCreamRecipe {
         ItemStack is = ItemStack.of(Material.COOKIE, 8);
         ItemMeta im = is.getItemMeta();
         im.displayName(ComponentUtils.toWhite("Custard Cream"));
+        CustomModelDataComponent component = im.getCustomModelDataComponent();
+        component.setStrings(List.of("custard_cream"));
+        im.setCustomModelDataComponent(component);
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "custard_cream");
         ShapedRecipe r = new ShapedRecipe(key, is);

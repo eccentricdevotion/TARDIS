@@ -28,6 +28,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
 import java.util.List;
 
@@ -59,6 +60,9 @@ public class RustPlagueSwordRecipe {
         ItemMeta im = is.getItemMeta();
         im.displayName(ComponentUtils.toWhite("Rust Plague Sword"));
         im.lore(List.of(Component.text("Dalek Virus Dispenser")));
+        CustomModelDataComponent component = im.getCustomModelDataComponent();
+        component.setStrings(List.of("rust_plague_sword"));
+        im.setCustomModelDataComponent(component);
         is.setItemMeta(im);
         // set weapon component
         Weapon weapon = Weapon.weapon()

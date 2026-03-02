@@ -69,6 +69,9 @@ public class StattenheimRemoteRecipe {
                 Component.text("Uses left"),
                 Component.text(uses)
         ));
+        CustomModelDataComponent rem = im.getCustomModelDataComponent();
+        rem.setStrings(List.of("stattenheim_remote"));
+        im.setCustomModelDataComponent(rem);
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "stattenheim_remote");
         ShapedRecipe r = new ShapedRecipe(key, is);

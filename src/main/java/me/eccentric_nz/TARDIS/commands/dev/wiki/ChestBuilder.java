@@ -46,12 +46,12 @@ public class ChestBuilder {
         // fill chests with every TARDIS item
         Location location = player.getLocation().add(0, 2, 0);
         int shapedChests = (plugin.getFigura().getShapedRecipes().size() / 27) + 1;
-        int shlessChests = (plugin.getIncomposita().getShapelessRecipes().size() / 27) + 1;
+        int shapelessChests = (plugin.getIncomposita().getShapelessRecipes().size() / 27) + 1;
         // place some chests
         for (int i = 0; i < shapedChests; i++) {
             location.getBlock().getRelative(BlockFace.EAST, i).setType(Material.CHEST);
         }
-        for (int i = 1; i <= shlessChests; i++) {
+        for (int i = 1; i <= shapelessChests; i++) {
             location.getBlock().getRelative(BlockFace.WEST, i).setType(Material.CHEST);
         }
         int count = 0;

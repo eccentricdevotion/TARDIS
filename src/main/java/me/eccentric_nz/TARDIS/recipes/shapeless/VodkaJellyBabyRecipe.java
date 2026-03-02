@@ -23,6 +23,9 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.components.CustomModelDataComponent;
+
+import java.util.List;
 
 /*
 recipe:SUGAR,SLIME_BALL,LIGHT_GRAY_DYE
@@ -42,6 +45,9 @@ public class VodkaJellyBabyRecipe {
         ItemStack is = ItemStack.of(Material.MELON_SLICE, 4);
         ItemMeta im = is.getItemMeta();
         im.displayName(ComponentUtils.toWhite("Vodka Jelly Baby"));
+        CustomModelDataComponent component = im.getCustomModelDataComponent();
+        component.setStrings(List.of("vodka_jelly_baby"));
+        im.setCustomModelDataComponent(component);
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "vodka_jelly_baby");
         ShapelessRecipe r = new ShapelessRecipe(key, is);

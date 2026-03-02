@@ -24,6 +24,7 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
 import java.util.List;
 
@@ -50,6 +51,9 @@ public class TARDISSchematicWandRecipe {
                 Component.text("Right-click start"),
                 Component.text("Left-click end")
         ));
+        CustomModelDataComponent component = im.getCustomModelDataComponent();
+        component.setStrings(List.of("tardis_schematic_wand"));
+        im.setCustomModelDataComponent(component);
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "tardis_schematic_wand");
         ShapelessRecipe r = new ShapelessRecipe(key, is);

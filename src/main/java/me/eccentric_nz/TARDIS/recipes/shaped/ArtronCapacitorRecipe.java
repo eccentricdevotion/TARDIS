@@ -26,6 +26,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
 import java.util.List;
 
@@ -59,6 +60,9 @@ public class ArtronCapacitorRecipe {
         ItemStack is = ItemStack.of(Material.BUCKET, 1);
         ItemMeta im = is.getItemMeta();
         im.displayName(ComponentUtils.toWhite("Artron Capacitor"));
+        CustomModelDataComponent component = im.getCustomModelDataComponent();
+        component.setStrings(List.of("artron_capacitor"));
+        im.setCustomModelDataComponent(component);
         is.setItemMeta(im);
         // exact choice
         ItemStack storage = ItemStack.of(Material.BUCKET, 1);

@@ -24,6 +24,9 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.components.CustomModelDataComponent;
+
+import java.util.List;
 
 /*
 easy_shape:QRQ,RLR,QRQ
@@ -50,6 +53,9 @@ public class AuthorisedControlDiskRecipe {
         ItemStack is = ItemStack.of(Material.MUSIC_DISC_FAR, 1);
         ItemMeta im = is.getItemMeta();
         im.displayName(ComponentUtils.toWhite("Authorised Control Disk"));
+        CustomModelDataComponent component = im.getCustomModelDataComponent();
+        component.setStrings(List.of("authorised_control_disk"));
+        im.setCustomModelDataComponent(component);
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "authorised_control_disk");
         ShapedRecipe r = new ShapedRecipe(key, is);

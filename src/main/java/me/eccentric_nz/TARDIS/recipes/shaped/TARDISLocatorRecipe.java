@@ -28,6 +28,8 @@ import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
+import java.util.List;
+
 /*
 easy_shape:OIO,ICI,OIO
 easy_ingredients.O:GRAVEL
@@ -53,6 +55,9 @@ public class TARDISLocatorRecipe {
         ItemStack is = ItemStack.of(Material.COMPASS, 1);
         ItemMeta im = is.getItemMeta();
         im.displayName(ComponentUtils.toWhite("TARDIS Locator"));
+        CustomModelDataComponent loc = im.getCustomModelDataComponent();
+        loc.setStrings(List.of("tardis_locator"));
+        im.setCustomModelDataComponent(loc);
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "tardis_locator");
         ShapedRecipe r = new ShapedRecipe(key, is);

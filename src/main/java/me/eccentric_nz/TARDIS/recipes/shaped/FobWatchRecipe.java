@@ -58,6 +58,9 @@ public class FobWatchRecipe {
         ItemStack is = ItemStack.of(Material.CLOCK, 1);
         ItemMeta im = is.getItemMeta();
         im.displayName(ComponentUtils.toWhite("Fob Watch"));
+        CustomModelDataComponent fob = im.getCustomModelDataComponent();
+        fob.setStrings(List.of("fob_watch"));
+        im.setCustomModelDataComponent(fob);
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "fob_watch");
         ShapedRecipe r = new ShapedRecipe(key, is);

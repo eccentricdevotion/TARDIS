@@ -61,6 +61,9 @@ public class TARDISRemoteKeyRecipe {
         ItemMeta im = is.getItemMeta();
         im.displayName(ComponentUtils.toWhite("TARDIS Remote Key"));
         im.lore(List.of(Component.text("Deadlock & unlock"), Component.text("Hide & rebuild")));
+        CustomModelDataComponent rem = im.getCustomModelDataComponent();
+        rem.setStrings(List.of("tardis_remote_key"));
+        im.setCustomModelDataComponent(rem);
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "tardis_remote_key");
         ShapedRecipe r = new ShapedRecipe(key, is);
