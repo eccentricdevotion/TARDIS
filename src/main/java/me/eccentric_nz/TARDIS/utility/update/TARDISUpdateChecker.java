@@ -61,7 +61,7 @@ public class TARDISUpdateChecker implements Runnable {
         }
         String commit = build.split("-b")[1];
         JsonObject lastBuild = fetchLatestCommit();
-        // TARDIS-6.3.10-b9a2e689d1.jar - 9 chars
+        // TARDIS-7.0.0-b21c92b20f.jar - 9 chars
         if (lastBuild == null || !lastBuild.has("sha")) {
             // couldn't get GitHub info
             if (sender == null) {
