@@ -328,9 +328,10 @@ public class TARDIS extends JavaPlugin {
             // load planets config
             tardisCopier.copy("planets.yml");
             planetsConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "planets.yml"));
-            loadCustomConfigs();
             // load TARDISChunkGenerator module
             loadHelper();
+            // load configs
+            loadCustomConfigs();
             // load Multiverse
             loadMultiverse();
             // load worldguard
