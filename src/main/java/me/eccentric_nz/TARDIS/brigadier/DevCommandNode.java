@@ -844,6 +844,15 @@ public class DevCommandNode {
                             }
                             return Command.SINGLE_SUCCESS;
                         }))
+                .then(Commands.literal("sprite")
+                        .then(Commands.argument("minecraft", BoolArgumentType.bool())
+                                .executes(ctx -> {
+                                    if (ctx.getSource().getSender() instanceof Player player) {
+                                        boolean b = BoolArgumentType.getBool(ctx, "minecraft");
+                                        new SpriteCommand().send(player, b);
+                                    }
+                                    return Command.SINGLE_SUCCESS;
+                                })))
                 .then(Commands.literal("update")
                         .executes(ctx -> {
                             if (ctx.getSource().getSender() instanceof Player player) {
