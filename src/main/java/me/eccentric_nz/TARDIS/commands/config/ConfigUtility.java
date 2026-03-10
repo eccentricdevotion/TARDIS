@@ -104,8 +104,8 @@ public class ConfigUtility {
             put("use_default_condensables", "preferences");
             put("use_nick", "police_box");
             put("use_worldguard", "preferences");
+            put("use_console_size", "police_box.view_interior");
             put("view_interior", "police_box");
-            put("view_interior_uses_console_size", "police_box");
             put("village_travel", "allow");
             put("vortex_manipulator", "modules");
             put("weather_set", "allow");

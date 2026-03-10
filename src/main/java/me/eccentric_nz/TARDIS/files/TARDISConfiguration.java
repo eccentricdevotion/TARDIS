@@ -466,6 +466,16 @@ public class TARDISConfiguration {
             plugin.getConfig().set("blueprints.enabled", null);
             plugin.getConfig().set("blueprints", null);
         }
+        // boti
+        if (config.contains("police_box.view_interior.use_console_size")) {
+            boolean enabled = config.getBoolean("police_box.view_interior");
+            plugin.getConfig().set("police_box.view_interior", null);
+            plugin.getConfig().set("police_box.view_interior.enabled", enabled);
+            plugin.getConfig().set("police_box.view_interior.type", enabled ? "packets" : "maps");
+            plugin.getConfig().set("police_box.view_interior.use_console_size", config.getBoolean("police_box.view_interior_uses_console_size"));
+            plugin.getConfig().set("police_box.view_interior_uses_console_size", null);
+            i++;
+        }
         // remove handles
         if (config.contains("handles")) {
             plugin.getConfig().set("allow.handles", null);
