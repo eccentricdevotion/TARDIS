@@ -1,6 +1,5 @@
 package me.eccentric_nz.TARDIS.brigadier.arguments;
 
-import com.google.common.collect.ImmutableList;
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.arguments.ArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
@@ -14,7 +13,7 @@ import io.papermc.paper.command.brigadier.argument.CustomArgumentType;
 import me.eccentric_nz.TARDIS.commands.config.ConfigUtility;
 import net.kyori.adventure.text.Component;
 
-import java.util.List;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
 public class ConfigOptionArgumentType implements CustomArgumentType<String, String> {
@@ -22,7 +21,7 @@ public class ConfigOptionArgumentType implements CustomArgumentType<String, Stri
     private static final SimpleCommandExceptionType ERROR_INVALID_OPT = new SimpleCommandExceptionType(
             MessageComponentSerializer.message().serialize(Component.text("Invalid config option specified!"))
     );
-    private final List<String> CONFIG_SUBS = ImmutableList.copyOf(ConfigUtility.combineLists());
+    private final Set<String> CONFIG_SUBS = ConfigUtility.combineLists();
 
     @Override
     public String parse(StringReader reader) {

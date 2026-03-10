@@ -14,8 +14,8 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import net.kyori.adventure.text.Component;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
 public class PresetArgumentType implements CustomArgumentType<String, String> {
@@ -23,7 +23,7 @@ public class PresetArgumentType implements CustomArgumentType<String, String> {
     private static final SimpleCommandExceptionType ERROR_INVALID_PRESET = new SimpleCommandExceptionType(
             MessageComponentSerializer.message().serialize(Component.text("Invalid chameleon preset specified!"))
     );
-    private final List<String> PRESET_SUBS = new ArrayList<>();
+    private final Set<String> PRESET_SUBS = new HashSet<>();
 
     public PresetArgumentType(int includeFlags) {
         if (includeFlags == 1) {

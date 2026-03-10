@@ -15,8 +15,8 @@ import me.eccentric_nz.TARDIS.database.data.Area;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreas;
 import net.kyori.adventure.text.Component;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
 public class AreasArgumentType implements CustomArgumentType<String, String> {
@@ -24,7 +24,7 @@ public class AreasArgumentType implements CustomArgumentType<String, String> {
     private static final SimpleCommandExceptionType ERROR_INVALID_AREA = new SimpleCommandExceptionType(
             MessageComponentSerializer.message().serialize(Component.text("Invalid TARDIS area specified!"))
     );
-    private final List<String> AREA_SUBS = new ArrayList<>();
+    private final Set<String> AREA_SUBS = new HashSet<>();
 
     public AreasArgumentType() {
         ResultSetAreas rsa = new ResultSetAreas(TARDIS.plugin, null, true, false);

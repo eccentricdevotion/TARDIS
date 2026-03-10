@@ -13,8 +13,8 @@ import io.papermc.paper.command.brigadier.argument.CustomArgumentType;
 import me.eccentric_nz.TARDIS.enumeration.Hum;
 import net.kyori.adventure.text.Component;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
 public class HumArgumentType implements CustomArgumentType<String, String> {
@@ -22,7 +22,7 @@ public class HumArgumentType implements CustomArgumentType<String, String> {
     private static final SimpleCommandExceptionType ERROR_INVALID_HUM = new SimpleCommandExceptionType(
             MessageComponentSerializer.message().serialize(Component.text("Invalid HADS mode specified!"))
     );
-    private final List<String> HUMS = new ArrayList<>();
+    private final Set<String> HUMS = new HashSet<>();
 
     public HumArgumentType() {
         for (Hum h : Hum.values()) {
