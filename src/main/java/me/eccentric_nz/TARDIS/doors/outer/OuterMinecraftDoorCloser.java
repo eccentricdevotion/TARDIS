@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.doors.outer;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
@@ -25,10 +26,16 @@ import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.move.TARDISTeleportLocation;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Openable;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
+import org.bukkit.util.BoundingBox;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -48,19 +55,49 @@ public class OuterMinecraftDoorCloser {
             block.setBlockData(closeable, true);
         }
         // hide the interior if it is being cast
-        if (plugin.getConfig().getBoolean("police_box.view_interior")) {
-            plugin.getTrackerKeeper().getCasters().remove(uuid);
-            // remove fake blocks
-            if (plugin.getTrackerKeeper().getCastRestore().containsKey(uuid)) {
-                for (Block b : plugin.getTrackerKeeper().getCastRestore().get(uuid)) {
-                    b.getState().update();
+        if (plugin.getConfig().getBoolean("police_box.view_interior.enabled")) {
+            if (plugin.getConfig().getString("police_box.view_interior.type").equalsIgnoreCase("packets")) {
+                plugin.getTrackerKeeper().getCasters().remove(uuid);
+                // remove fake blocks
+                if (plugin.getTrackerKeeper().getCastRestore().containsKey(uuid)) {
+                    for (Block b : plugin.getTrackerKeeper().getCastRestore().get(uuid)) {
+                        b.getState().update();
+                    }
+                    plugin.getTrackerKeeper().getCastRestore().remove(uuid);
+                    // remove fake item frame if necessary
+                    if (plugin.getTrackerKeeper().getRotorRestore().containsKey(uuid)) {
+                        int rotorId = plugin.getTrackerKeeper().getRotorRestore().get(uuid);
+                        plugin.getTardisHelper().removeFakeItemFrame(rotorId, Bukkit.getPlayer(uuid));
+                        plugin.getTrackerKeeper().getRotorRestore().remove(uuid);
+                    }
                 }
-                plugin.getTrackerKeeper().getCastRestore().remove(uuid);
-                // remove fake item frame if necessary
-                if (plugin.getTrackerKeeper().getRotorRestore().containsKey(uuid)) {
-                    int rotorId = plugin.getTrackerKeeper().getRotorRestore().get(uuid);
-                    plugin.getTardisHelper().removeFakeItemFrame(rotorId, Bukkit.getPlayer(uuid));
-                    plugin.getTrackerKeeper().getRotorRestore().remove(uuid);
+            } else {
+                // maps
+                HashMap<String, Object> where = new HashMap<>();
+                where.put("tardis_id", id);
+                ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+                if (rs.resultSet()) {
+                    ChameleonPreset preset = rs.getTardis().getPreset();
+                    // exterior portal (from current location)
+                    ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
+                    rsc.resultSet();
+                    Current current = rsc.getCurrent();
+                    Location portal = current.location();
+                    if (preset != null && preset.equals(ChameleonPreset.SWAMP)) {
+                        portal.add(0.0d, 1.0d, 0.0d);
+                    }
+                    Block bottom = portal.getBlock();
+                    Block top = bottom.getRelative(BlockFace.UP);
+                    ItemFrame bottomFrame = getFrame(bottom);
+                    ItemFrame topFrame = getFrame(top);
+                    if (bottomFrame != null) {
+                        bottomFrame.remove();
+                    }
+                    if (topFrame != null) {
+                        topFrame.remove();
+                    }
+                    // TODO fix item frame removal
+                    // TODO delete maps and snapshots
                 }
             }
         }
@@ -98,5 +135,15 @@ public class OuterMinecraftDoorCloser {
                 }
             }
         }
+    }
+
+    private ItemFrame getFrame(Block block) {
+        BoundingBox box = new BoundingBox(block.getX(), block.getY(), block.getZ(), block.getX() + 1, block.getY() + 1, block.getZ() + 1).expand(0.1d);
+        for (Entity e : block.getWorld().getNearbyEntities(box, (d) -> d.getType() == EntityType.ITEM_FRAME)) {
+            if (e instanceof ItemFrame frame) {
+                return frame;
+            }
+        }
+        return null;
     }
 }

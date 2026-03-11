@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.monitor;
 
+import com.mojang.datafixers.util.Pair;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetChunks;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
@@ -27,6 +28,7 @@ import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
 
@@ -181,5 +183,57 @@ public class MonitorSnapshot {
                 }
             }
         }
+    }
+
+    public Pair<ItemStack, ItemStack> getInterior(int id) {
+        // get interior door location
+        HashMap<String, Object> whered = new HashMap<>();
+        whered.put("tardis_id", id);
+        whered.put("door_type", 1);
+        ResultSetDoors rsd = new ResultSetDoors(plugin, whered, false);
+        if (rsd.resultSet()) {
+            COMPASS d = rsd.getDoor_direction();
+            Location doorBottom = TARDISStaticLocationGetters.getLocationFromDB(rsd.getDoor_location());
+            // set y position to eye height
+            doorBottom.add(0, 1.6f, 0);
+            // adjust x,z to be centred in front of the door
+            int getx = doorBottom.getBlockX();
+            int getz = doorBottom.getBlockZ();
+            float yaw;
+            switch (d) {
+                case NORTH -> {
+                    // z -ve
+                    doorBottom.setX(getx + 0.5);
+                    doorBottom.setZ(getz - 0.5);
+                    yaw = 180.05f;
+                }
+                case EAST -> {
+                    // x +ve
+                    doorBottom.setX(getx + 1.5);
+                    doorBottom.setZ(getz + 0.5);
+                    yaw = -90.05f;
+                }
+                case SOUTH -> {
+                    // z +ve
+                    doorBottom.setX(getx + 0.5);
+                    doorBottom.setZ(getz + 1.5);
+                    yaw = 0.05f;
+                }
+                // WEST
+                default -> {
+                    // x -ve
+                    doorBottom.setX(getx - 0.5);
+                    doorBottom.setZ(getz + 0.5);
+                    yaw = 90.05f;
+                }
+            }
+            // set pitch to up and down so we can fill two maps
+            doorBottom.setPitch(25);
+            doorBottom.setYaw(yaw);
+            Location doorTop = doorBottom.clone();
+            doorTop.setPitch(-25.5f);
+            return new Pair<>(MonitorUtils.createMap(doorBottom, 48), MonitorUtils.createMap(doorTop, 48));
+        }
+        return null;
     }
 }
