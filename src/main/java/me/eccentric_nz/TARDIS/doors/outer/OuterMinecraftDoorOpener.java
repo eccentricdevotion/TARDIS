@@ -23,18 +23,16 @@ import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetInnerDoorLocations;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
 import me.eccentric_nz.TARDIS.monitor.MonitorSnapshot;
+import me.eccentric_nz.TARDIS.monitor.SnapshotData;
 import me.eccentric_nz.TARDIS.move.TARDISTeleportLocation;
 import me.eccentric_nz.TARDIS.portal.Capture;
 import me.eccentric_nz.TARDIS.portal.Cast;
 import me.eccentric_nz.TARDIS.portal.CastData;
-import me.eccentric_nz.TARDIS.schematic.setters.ItemFrameSetter;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -43,7 +41,7 @@ import org.bukkit.block.data.Openable;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -140,13 +138,15 @@ public class OuterMinecraftDoorOpener {
                         ItemFrame topFrame = (ItemFrame) bottom.getWorld().spawnEntity(top.getLocation(), EntityType.ITEM_FRAME);
                         bottomFrame.setFacingDirection(d);
                         topFrame.setFacingDirection(d);
-                        Pair<ItemStack, ItemStack> maps = new MonitorSnapshot(plugin).getInterior(id);
-                        bottomFrame.setItem(maps.getFirst());
-                        topFrame.setItem(maps.getSecond());
+                        Pair<SnapshotData, SnapshotData> maps = new MonitorSnapshot(plugin).getInterior(id);
+                        bottomFrame.setItem(maps.getFirst().map());
+                        topFrame.setItem(maps.getSecond().map());
                         bottomFrame.setFixed(true);
                         topFrame.setFixed(true);
                         bottomFrame.setInvulnerable(true);
                         topFrame.setInvulnerable(true);
+                        bottomFrame.getPersistentDataContainer().set(plugin.getSnapshotKey(), PersistentDataType.INTEGER, maps.getFirst().id());
+                        topFrame.getPersistentDataContainer().set(plugin.getSnapshotKey(), PersistentDataType.INTEGER, maps.getSecond().id());
                     }
                 }
             }

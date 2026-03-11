@@ -141,7 +141,7 @@ public class TARDISItemFrameUpdateListener implements Listener {
                                     // load chunks
                                     MonitorSnapshot.loadChunks(plugin, door, false, snapshot.direction(), id, 128);
                                     // update the map
-                                    ItemStack filled = MonitorUtils.createMap(door, 128);
+                                    ItemStack filled = MonitorUtils.createMap(door, 128).map();
                                     frame.setItem(filled);
                                     frame.setRotation(Rotation.NONE);
                                 }

@@ -26,7 +26,6 @@ import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.move.TARDISTeleportLocation;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -35,8 +34,10 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.BoundingBox;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -86,14 +87,28 @@ public class OuterMinecraftDoorCloser {
                     if (preset != null && preset.equals(ChameleonPreset.SWAMP)) {
                         portal.add(0.0d, 1.0d, 0.0d);
                     }
+                    plugin.debug(portal.toString());
                     Block bottom = portal.getBlock();
                     Block top = bottom.getRelative(BlockFace.UP);
                     ItemFrame bottomFrame = getFrame(bottom);
                     ItemFrame topFrame = getFrame(top);
                     if (bottomFrame != null) {
+                        if (bottomFrame.getPersistentDataContainer().has(plugin.getSnapshotKey(), PersistentDataType.INTEGER)) {
+                            int bid = bottomFrame.getPersistentDataContainer().get(plugin.getSnapshotKey(), PersistentDataType.INTEGER);
+                            // delete map and snapshot
+                            File b = new File(plugin.getDataFolder() + File.separator + "monitor_snapshots" + File.separator + "view_" + bid + ".json");
+                            b.delete();
+
+                        }
                         bottomFrame.remove();
                     }
                     if (topFrame != null) {
+                        if (topFrame.getPersistentDataContainer().has(plugin.getSnapshotKey(), PersistentDataType.INTEGER)) {
+                            int tid = topFrame.getPersistentDataContainer().get(plugin.getSnapshotKey(), PersistentDataType.INTEGER);
+                            // delete map and snapshot
+                            File t = new File(plugin.getDataFolder() + File.separator + "monitor_snapshots" + File.separator + "view_" + tid + ".json");
+                            t.delete();
+                        }
                         topFrame.remove();
                     }
                     // TODO fix item frame removal
@@ -141,6 +156,7 @@ public class OuterMinecraftDoorCloser {
         BoundingBox box = new BoundingBox(block.getX(), block.getY(), block.getZ(), block.getX() + 1, block.getY() + 1, block.getZ() + 1).expand(0.1d);
         for (Entity e : block.getWorld().getNearbyEntities(box, (d) -> d.getType() == EntityType.ITEM_FRAME)) {
             if (e instanceof ItemFrame frame) {
+                plugin.debug("Found item frame at " + block.getX() + ", " + block.getZ());
                 return frame;
             }
         }

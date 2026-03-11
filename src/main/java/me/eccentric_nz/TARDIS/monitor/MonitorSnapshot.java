@@ -28,7 +28,6 @@ import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
 
@@ -185,7 +184,7 @@ public class MonitorSnapshot {
         }
     }
 
-    public Pair<ItemStack, ItemStack> getInterior(int id) {
+    public Pair<SnapshotData, SnapshotData> getInterior(int id) {
         // get interior door location
         HashMap<String, Object> whered = new HashMap<>();
         whered.put("tardis_id", id);
