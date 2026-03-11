@@ -31,7 +31,6 @@ public class SnapshotRenderer extends MapRenderer {
 
     private final Location location;
     private final int distance;
-    private int id = -1;
 
     public SnapshotRenderer(Location location, int distance) {
         super();
@@ -44,7 +43,6 @@ public class SnapshotRenderer extends MapRenderer {
         if (map.isLocked()) {
             return;
         }
-        id = map.getId();
         // get pitch and yaw to calculate ray trace directions
         double pitch = -Math.toRadians(location.getPitch());
         double yaw = Math.toRadians(location.getYaw() + 90);
@@ -118,11 +116,7 @@ public class SnapshotRenderer extends MapRenderer {
                 }
             }
         }
-        Bukkit.getScheduler().runTaskAsynchronously(TARDIS.plugin, () -> new SnapshotStorage().store(id, canvasColours));
+        Bukkit.getScheduler().runTaskAsynchronously(TARDIS.plugin, () -> new SnapshotStorage().store(map.getId(), canvasColours));
         map.setLocked(true);
-    }
-
-    public int mapID() {
-        return id;
     }
 }

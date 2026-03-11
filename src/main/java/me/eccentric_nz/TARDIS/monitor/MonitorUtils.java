@@ -51,7 +51,7 @@ public class MonitorUtils {
         mapView.addRenderer(renderer);
         mapMeta.setMapView(mapView);
         itemStack.setItemMeta(mapMeta);
-        return new SnapshotData(itemStack, renderer.mapID());
+        return new SnapshotData(itemStack, mapView.getId());
     }
 
     public static void createSnapshot(Location location, Player player, int distance) {

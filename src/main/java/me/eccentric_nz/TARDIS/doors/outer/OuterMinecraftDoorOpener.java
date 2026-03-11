@@ -134,8 +134,8 @@ public class OuterMinecraftDoorOpener {
                         Block bottom = portal.getBlock();
                         Block top = bottom.getRelative(BlockFace.UP);
                         BlockFace d = BlockFace.valueOf(current.direction().toString()).getOppositeFace();
-                        ItemFrame bottomFrame = (ItemFrame) bottom.getWorld().spawnEntity(bottom.getLocation(), EntityType.ITEM_FRAME);
-                        ItemFrame topFrame = (ItemFrame) bottom.getWorld().spawnEntity(top.getLocation(), EntityType.ITEM_FRAME);
+                        ItemFrame bottomFrame = (ItemFrame) bottom.getWorld().spawnEntity(bottom.getLocation().add(0.5, 0.5, 0.5), EntityType.ITEM_FRAME);
+                        ItemFrame topFrame = (ItemFrame) bottom.getWorld().spawnEntity(top.getLocation().add(0.5, 0.5, 0.5), EntityType.ITEM_FRAME);
                         bottomFrame.setFacingDirection(d);
                         topFrame.setFacingDirection(d);
                         Pair<SnapshotData, SnapshotData> maps = new MonitorSnapshot(plugin).getInterior(id);

@@ -26,6 +26,7 @@ import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.move.TARDISTeleportLocation;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -87,7 +88,6 @@ public class OuterMinecraftDoorCloser {
                     if (preset != null && preset.equals(ChameleonPreset.SWAMP)) {
                         portal.add(0.0d, 1.0d, 0.0d);
                     }
-                    plugin.debug(portal.toString());
                     Block bottom = portal.getBlock();
                     Block top = bottom.getRelative(BlockFace.UP);
                     ItemFrame bottomFrame = getFrame(bottom);
@@ -98,9 +98,12 @@ public class OuterMinecraftDoorCloser {
                             // delete map and snapshot
                             File b = new File(plugin.getDataFolder() + File.separator + "monitor_snapshots" + File.separator + "view_" + bid + ".json");
                             b.delete();
-
+                            // TODO file doesn't exist until server does a save, so delete() will fail!
+                            File bm = new File(plugin.getServer().getWorlds().getFirst().getName() + File.separator + "data" + File.separator + "map_" + bid + ".dat");
+                            bm.delete();
                         }
                         bottomFrame.remove();
+                        bottom.setType(Material.AIR);
                     }
                     if (topFrame != null) {
                         if (topFrame.getPersistentDataContainer().has(plugin.getSnapshotKey(), PersistentDataType.INTEGER)) {
@@ -108,11 +111,13 @@ public class OuterMinecraftDoorCloser {
                             // delete map and snapshot
                             File t = new File(plugin.getDataFolder() + File.separator + "monitor_snapshots" + File.separator + "view_" + tid + ".json");
                             t.delete();
+                            // TODO file doesn't exist until server does a save, so delete() will fail!
+                            File tm = new File(plugin.getServer().getWorlds().getFirst().getName() + File.separator + "data" + File.separator + "map_" + tid + ".dat");
+                            tm.delete();
                         }
                         topFrame.remove();
+                        top.setType(Material.AIR);
                     }
-                    // TODO fix item frame removal
-                    // TODO delete maps and snapshots
                 }
             }
         }
@@ -153,10 +158,9 @@ public class OuterMinecraftDoorCloser {
     }
 
     private ItemFrame getFrame(Block block) {
-        BoundingBox box = new BoundingBox(block.getX(), block.getY(), block.getZ(), block.getX() + 1, block.getY() + 1, block.getZ() + 1).expand(0.1d);
+        BoundingBox box = new BoundingBox(block.getX(), block.getY(), block.getZ(), block.getX() + 1, block.getY() + 1, block.getZ() + 1);
         for (Entity e : block.getWorld().getNearbyEntities(box, (d) -> d.getType() == EntityType.ITEM_FRAME)) {
             if (e instanceof ItemFrame frame) {
-                plugin.debug("Found item frame at " + block.getX() + ", " + block.getZ());
                 return frame;
             }
         }
