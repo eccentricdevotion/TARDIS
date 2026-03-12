@@ -111,7 +111,6 @@ public class OuterMinecraftDoorCloser {
                             // delete map and snapshot
                             File t = new File(plugin.getDataFolder() + File.separator + "monitor_snapshots" + File.separator + "view_" + tid + ".json");
                             t.delete();
-                            // TODO file doesn't exist until server does a save, so delete() will fail!
                             File tm = new File(plugin.getServer().getWorlds().getFirst().getName() + File.separator + "data" + File.separator + "map_" + tid + ".dat");
                             tm.delete();
                         }

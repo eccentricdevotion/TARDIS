@@ -138,8 +138,8 @@ public class TARDISConfiguration {
         booleanOptions.put("police_box.load_shells", false);
         booleanOptions.put("police_box.keep_chunk_force_loaded", true);
         booleanOptions.put("police_box.use_nick", false);
-        booleanOptions.put("police_box.view_interior", false);
-        booleanOptions.put("police_box.view_interior_uses_console_size", false);
+        booleanOptions.put("police_box.view_interior.enabled", false);
+        booleanOptions.put("police_box.view_interior.use_console_size", false);
         booleanOptions.put("preferences.add_server_link", true);
         booleanOptions.put("preferences.any_key", false);
         booleanOptions.put("preferences.clean", true);
@@ -243,6 +243,7 @@ public class TARDISConfiguration {
         stringOptions.put("display.all", "&6X&7%X% &6Y&7%Y% &6Z&7%Z% &6F&7%FACING% (%FACING_XZ%) %TARGET_BLOCK%");
         stringOptions.put("police_box.default_preset", "FACTORY");
         stringOptions.put("police_box.sign_colour", "WHITE");
+        stringOptions.put("police_box.view_interior.type", "maps");
         stringOptions.put("preferences.default_key", "eleventh");
         stringOptions.put("preferences.key", "GOLD_NUGGET");
         stringOptions.put("preferences.language", "en");
