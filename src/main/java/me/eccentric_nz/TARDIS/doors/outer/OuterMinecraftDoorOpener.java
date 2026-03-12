@@ -147,6 +147,8 @@ public class OuterMinecraftDoorOpener {
                         topFrame.setInvulnerable(true);
                         bottomFrame.getPersistentDataContainer().set(plugin.getSnapshotKey(), PersistentDataType.INTEGER, maps.getFirst().id());
                         topFrame.getPersistentDataContainer().set(plugin.getSnapshotKey(), PersistentDataType.INTEGER, maps.getSecond().id());
+                        // save so map files get created
+                        bottom.getWorld().save();
                     }
                 }
             }
