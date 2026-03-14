@@ -35,7 +35,7 @@ public class TravelCommandNode {
     }
 
     LiteralCommandNode<CommandSourceStack> build() {
-        LiteralArgumentBuilder<CommandSourceStack> command = Commands.literal("tardiscall")
+        LiteralArgumentBuilder<CommandSourceStack> command = Commands.literal("tardistravel")
                 .requires(ctx -> ctx.getSender() instanceof Player p && TARDISPermission.hasPermission(p, "tardis.travel"))
                 .executes(ctx -> {
                     new TARDISCommandHelper(plugin).getCommand("tardistravel", ctx.getSource().getSender());
