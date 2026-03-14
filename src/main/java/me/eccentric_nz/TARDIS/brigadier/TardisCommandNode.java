@@ -839,14 +839,6 @@ public class TardisCommandNode {
                                     }
                                     return Command.SINGLE_SUCCESS;
                                 }))
-                        .then(Commands.literal("blocks")
-                                .executes(ctx -> {
-                                    Pair<Player, Integer> c = TardisUtility.check(plugin, ctx.getSource().getSender(), TardisCommand.update);
-                                    if (c != null) {
-                                        new UpdateBlocksCommand(plugin).convert(c.getFirst());
-                                    }
-                                    return Command.SINGLE_SUCCESS;
-                                }))
                         .then(Commands.literal("lunge")
                                 .executes(ctx -> {
                                     Pair<Player, Integer> c = TardisUtility.check(plugin, ctx.getSource().getSender(), TardisCommand.update);
