@@ -51,7 +51,7 @@ public class DevCommandNode {
     }
 
     LiteralCommandNode<CommandSourceStack> build() {
-        LiteralArgumentBuilder<CommandSourceStack> command = Commands.literal("tardiscall")
+        LiteralArgumentBuilder<CommandSourceStack> command = Commands.literal("tardisdev")
                 .requires(ctx -> ctx.getSender() instanceof ConsoleCommandSender || TARDISPermission.hasPermission(ctx.getSender(), "tardis.admin"))
                 .executes(ctx -> {
                     new TARDISCommandHelper(plugin).getCommand("tardisdev", ctx.getSource().getSender());
