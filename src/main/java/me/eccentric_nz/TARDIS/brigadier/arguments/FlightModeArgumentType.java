@@ -13,8 +13,8 @@ import io.papermc.paper.command.brigadier.argument.CustomArgumentType;
 import me.eccentric_nz.TARDIS.enumeration.FlightMode;
 import net.kyori.adventure.text.Component;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
 public class FlightModeArgumentType implements CustomArgumentType<String, String> {
@@ -22,7 +22,7 @@ public class FlightModeArgumentType implements CustomArgumentType<String, String
     private static final SimpleCommandExceptionType ERROR_INVALID_MODE = new SimpleCommandExceptionType(
             MessageComponentSerializer.message().serialize(Component.text("Invalid flight mode specified!"))
     );
-    private final List<String> MODES = new ArrayList<>();
+    private final Set<String> MODES = new HashSet<>();
 
     public FlightModeArgumentType() {
         for (FlightMode fm : FlightMode.values()) {

@@ -16,12 +16,17 @@
  */
 package me.eccentric_nz.TARDIS.console.telepathic;
 
+import io.papermc.paper.registry.RegistryAccess;
+import io.papermc.paper.registry.RegistryKey;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.commands.travel.BiomeCommand;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
-import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.block.Biome;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -105,8 +110,10 @@ public class TelepathicBiomeListener extends TARDISMenuListener {
                 if (choice != null) {
                     // get the biome
                     ItemMeta im = choice.getItemMeta();
-                    String enumStr = ComponentUtils.toEnumUppercase(im.displayName());
-                    player.performCommand("tardistravel biome " + enumStr);
+                    String[] keyStr = ComponentUtils.stripColour(im.displayName()).split(":");
+                    int id = getIdFromTravellers(player);
+                    Biome biome = RegistryAccess.registryAccess().getRegistry(RegistryKey.BIOME).get(new NamespacedKey(keyStr[0], keyStr[1]));
+                    new BiomeCommand(plugin).action(player, biome, null, id);
                     close(player);
                 }
             }
@@ -146,7 +153,7 @@ public class TelepathicBiomeListener extends TARDISMenuListener {
             if (material != null) {
                 ItemStack is = ItemStack.of(material, 1);
                 ItemMeta im = is.getItemMeta();
-                im.displayName(Component.text(TARDISStringUtils.capitalise(biome.getKey().getKey())));
+                im.displayName(Component.text(biome.getKey().toString()));
                 is.setItemMeta(im);
                 stacks[r][c] = is;
                 c++;
@@ -157,5 +164,16 @@ public class TelepathicBiomeListener extends TARDISMenuListener {
             }
         }
         return stacks;
+    }
+
+    private int getIdFromTravellers(Player player) {
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("uuid", player.getUniqueId().toString());
+        ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
+        if (!rst.resultSet()) {
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_IN_TARDIS");
+            return -1;
+        }
+        return rst.getTardis_id();
     }
 }

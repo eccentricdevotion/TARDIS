@@ -81,7 +81,7 @@ public class MoveListener implements Listener {
             return;
         }
         // are they casting?
-        if (plugin.getConfig().getBoolean("police_box.view_interior") && plugin.getTrackerKeeper().getCasters().containsKey(uuid)) {
+        if (plugin.getConfig().getBoolean("police_box.view_interior.enabled") && plugin.getTrackerKeeper().getCasters().containsKey(uuid)) {
             CastData data = plugin.getTrackerKeeper().getCasters().get(uuid);
             Location exterior = data.exterior();
             if (exterior.getWorld() == loc.getWorld()) {

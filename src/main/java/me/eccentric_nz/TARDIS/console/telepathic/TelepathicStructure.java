@@ -21,7 +21,6 @@ import io.papermc.paper.registry.RegistryKey;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUIMap;
 import me.eccentric_nz.TARDIS.travel.TARDISStructureTravel;
-import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Color;
@@ -87,7 +86,7 @@ public class TelepathicStructure implements InventoryHolder {
             component.setColors(List.of(Color.GREEN));
             im.setCustomModelDataComponent(component);
         }
-        im.displayName(Component.text(TARDISStringUtils.capitalise(structures.getKey(structure).getKey())));
+        im.displayName(Component.text(structures.getKey(structure).toString()));
         is.setItemMeta(im);
         return is;
     }

@@ -13,8 +13,8 @@ import io.papermc.paper.command.brigadier.argument.CustomArgumentType;
 import net.kyori.adventure.text.Component;
 import org.bukkit.WorldType;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
 public class WorldTypeArgument  implements CustomArgumentType<String, String> {
@@ -22,7 +22,7 @@ public class WorldTypeArgument  implements CustomArgumentType<String, String> {
     private static final SimpleCommandExceptionType ERROR_INVALID_TYPE = new SimpleCommandExceptionType(
             MessageComponentSerializer.message().serialize(Component.text("Invalid world type specified!"))
     );
-    private final List<String> TYPE_SUBS = new ArrayList<>();
+    private final Set<String> TYPE_SUBS = new HashSet<>();
 
     public WorldTypeArgument() {
         for (WorldType wt : WorldType.values()) {

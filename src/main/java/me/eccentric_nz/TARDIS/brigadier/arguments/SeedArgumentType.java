@@ -1,6 +1,5 @@
 package me.eccentric_nz.TARDIS.brigadier.arguments;
 
-import com.google.common.collect.ImmutableList;
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.arguments.ArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
@@ -14,7 +13,7 @@ import io.papermc.paper.command.brigadier.argument.CustomArgumentType;
 import me.eccentric_nz.TARDIS.enumeration.Desktops;
 import net.kyori.adventure.text.Component;
 
-import java.util.List;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
 public class SeedArgumentType implements CustomArgumentType<String, String> {
@@ -22,7 +21,7 @@ public class SeedArgumentType implements CustomArgumentType<String, String> {
     private static final SimpleCommandExceptionType ERROR_INVALID_SEED = new SimpleCommandExceptionType(
             MessageComponentSerializer.message().serialize(Component.text("Invalid TARDIS seed specified!"))
     );
-    private final List<String> SEED_SUBS = ImmutableList.copyOf(Desktops.getBY_NAMES().keySet());
+    private final Set<String> SEED_SUBS = Desktops.getBY_NAMES().keySet();
 
     @Override
     public String parse(StringReader reader) {

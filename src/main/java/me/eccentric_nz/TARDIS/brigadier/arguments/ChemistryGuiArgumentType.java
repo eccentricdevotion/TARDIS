@@ -1,6 +1,5 @@
 package me.eccentric_nz.TARDIS.brigadier.arguments;
 
-import com.google.common.collect.ImmutableList;
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.arguments.ArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
@@ -13,7 +12,7 @@ import io.papermc.paper.command.brigadier.MessageComponentSerializer;
 import io.papermc.paper.command.brigadier.argument.CustomArgumentType;
 import net.kyori.adventure.text.Component;
 
-import java.util.List;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
 public class ChemistryGuiArgumentType implements CustomArgumentType<String, String> {
@@ -21,7 +20,7 @@ public class ChemistryGuiArgumentType implements CustomArgumentType<String, Stri
     private static final SimpleCommandExceptionType ERROR_INVALID_GUI = new SimpleCommandExceptionType(
             MessageComponentSerializer.message().serialize(Component.text("Invalid chemistry GUI specified!"))
     );
-    private final List<String> GUIS = ImmutableList.of("construct", "compound", "reduce", "product", "lab");
+    private final Set<String> GUIS = Set.of("construct", "compound", "reduce", "product", "lab");
 
     @Override
     public String parse(StringReader reader) {

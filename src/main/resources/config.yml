@@ -52,8 +52,10 @@ police_box:
   default_preset: FACTORY
   name_tardis: false
   use_nick: false
-  view_interior: false
-  view_interior_uses_console_size: false
+  view_interior:
+    enabled: false
+    type: maps
+    use_console_size: false
   materialise: true
   sign_colour: WHITE
   rebuild_cooldown: 10000

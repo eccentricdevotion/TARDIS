@@ -20,7 +20,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUIMap;
 import me.eccentric_nz.TARDIS.custommodels.GUIWallFloor;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
-import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
@@ -73,7 +72,7 @@ public class TelepathicBiome implements InventoryHolder {
                 if (material != null) {
                     ItemStack is = ItemStack.of(material, 1);
                     ItemMeta im = is.getItemMeta();
-                    im.displayName(Component.text(TARDISStringUtils.capitalise(biome.getKey().getKey())));
+                    im.displayName(Component.text(biome.getKey().toString()));
                     is.setItemMeta(im);
                     stack[i] = is;
                     if (i % 9 == 7) {

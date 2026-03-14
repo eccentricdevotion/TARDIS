@@ -13,8 +13,8 @@ import io.papermc.paper.command.brigadier.argument.CustomArgumentType;
 import me.eccentric_nz.TARDIS.universaltranslator.Language;
 import net.kyori.adventure.text.Component;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
 public class TranslatableLanguageArgumentType implements CustomArgumentType<String, String> {
@@ -22,7 +22,7 @@ public class TranslatableLanguageArgumentType implements CustomArgumentType<Stri
     private static final SimpleCommandExceptionType ERROR_INVALID_LANG = new SimpleCommandExceptionType(
             MessageComponentSerializer.message().serialize(Component.text("Invalid language specified!"))
     );
-    private final List<String> LANGUAGES = new ArrayList<>();
+    private final Set<String> LANGUAGES = new HashSet<>();
 
     public TranslatableLanguageArgumentType() {
         for (Language l : Language.values()) {

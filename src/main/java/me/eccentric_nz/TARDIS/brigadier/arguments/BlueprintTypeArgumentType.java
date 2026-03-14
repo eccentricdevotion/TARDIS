@@ -13,8 +13,8 @@ import io.papermc.paper.command.brigadier.argument.CustomArgumentType;
 import me.eccentric_nz.TARDIS.blueprints.BlueprintType;
 import net.kyori.adventure.text.Component;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
 public class BlueprintTypeArgumentType implements CustomArgumentType<String, String> {
@@ -22,7 +22,7 @@ public class BlueprintTypeArgumentType implements CustomArgumentType<String, Str
     private static final SimpleCommandExceptionType ERROR_INVALID_BP_TYPE = new SimpleCommandExceptionType(
             MessageComponentSerializer.message().serialize(Component.text("Invalid blueprint type specified!"))
     );
-    private static final List<String> BLUEPRINT_TYPES = new ArrayList<>();
+    private static final Set<String> BLUEPRINT_TYPES = new HashSet<>();
 
     static {
         for (BlueprintType type : BlueprintType.values()) {

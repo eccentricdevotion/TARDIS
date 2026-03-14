@@ -13,8 +13,8 @@ import io.papermc.paper.command.brigadier.argument.CustomArgumentType;
 import me.eccentric_nz.TARDIS.particles.ParticleShape;
 import net.kyori.adventure.text.Component;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
 public class ParticleShapeArgumentType implements CustomArgumentType<String, String> {
@@ -22,7 +22,7 @@ public class ParticleShapeArgumentType implements CustomArgumentType<String, Str
     private static final SimpleCommandExceptionType ERROR_INVALID_SHAPE = new SimpleCommandExceptionType(
             MessageComponentSerializer.message().serialize(Component.text("Invalid particle shape specified!"))
     );
-    private final List<String> SHAPES = new ArrayList<>();
+    private final Set<String> SHAPES = new HashSet<>();
 
     public ParticleShapeArgumentType() {
         for (ParticleShape s : ParticleShape.values()) {
