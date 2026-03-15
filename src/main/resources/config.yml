@@ -119,6 +119,7 @@ preferences:
   language: en
   key: GOLD_NUGGET
   any_key: false
+  default_key: eleventh
   open_door_policy: false
   use_worldguard: true
   respect_worldguard: build
@@ -135,7 +136,6 @@ preferences:
   malfunction_nether: 3
   use_default_condensables: true
   heal_speed: 200
-  default_key: eleventh
   nerf_pistons:
     enabled: false
     only_tardis_worlds: true
