@@ -1,6 +1,5 @@
 package me.eccentric_nz.TARDIS.brigadier.arguments;
 
-import com.google.common.collect.ImmutableList;
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.arguments.ArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
@@ -13,7 +12,7 @@ import io.papermc.paper.command.brigadier.MessageComponentSerializer;
 import io.papermc.paper.command.brigadier.argument.CustomArgumentType;
 import net.kyori.adventure.text.Component;
 
-import java.util.List;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
 public class DatabaseArgumentType implements CustomArgumentType<String, String> {
@@ -21,7 +20,7 @@ public class DatabaseArgumentType implements CustomArgumentType<String, String> 
     private static final SimpleCommandExceptionType ERROR_INVALID_DB = new SimpleCommandExceptionType(
             MessageComponentSerializer.message().serialize(Component.text("Invalid database type specified!"))
     );
-    private final List<String> DB_SUBS = ImmutableList.of("mysql", "sqlite");
+    private final Set<String> DB_SUBS = Set.of("mysql", "sqlite");
 
     @Override
     public String parse(StringReader reader) {

@@ -13,8 +13,8 @@ import io.papermc.paper.command.brigadier.argument.CustomArgumentType;
 import me.eccentric_nz.TARDIS.enumeration.Updateable;
 import net.kyori.adventure.text.Component;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
 public class UpdateableArgumentType implements CustomArgumentType<String, String> {
@@ -22,7 +22,7 @@ public class UpdateableArgumentType implements CustomArgumentType<String, String
     private static final SimpleCommandExceptionType ERROR_INVALID_UPD = new SimpleCommandExceptionType(
             MessageComponentSerializer.message().serialize(Component.text("Invalid updateable specified!"))
     );
-    private final List<String> UPDATABLES = new ArrayList<>();
+    private final Set<String> UPDATABLES = new HashSet<>();
 
     public UpdateableArgumentType() {
         for (Updateable u : Updateable.values()) {

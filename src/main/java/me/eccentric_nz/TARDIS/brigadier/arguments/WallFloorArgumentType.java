@@ -13,8 +13,8 @@ import io.papermc.paper.command.brigadier.argument.CustomArgumentType;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import net.kyori.adventure.text.Component;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
 public class WallFloorArgumentType implements CustomArgumentType<String, String> {
@@ -22,7 +22,7 @@ public class WallFloorArgumentType implements CustomArgumentType<String, String>
     private static final SimpleCommandExceptionType ERROR_INVALID_MATERIAL = new SimpleCommandExceptionType(
             MessageComponentSerializer.message().serialize(Component.text("Invalid wall / floor block specified!"))
     );
-    private static final List<String> MATERIAL_SUBS = new ArrayList<>();
+    private static final Set<String> MATERIAL_SUBS = new HashSet<>();
 
     static {
         TARDISWalls.BLOCKS.forEach((m) -> MATERIAL_SUBS.add(m.toString()));

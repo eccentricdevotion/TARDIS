@@ -12,7 +12,7 @@ import io.papermc.paper.command.brigadier.MessageComponentSerializer;
 import io.papermc.paper.command.brigadier.argument.CustomArgumentType;
 import net.kyori.adventure.text.Component;
 
-import java.util.List;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
 public class CompassArgumentType implements CustomArgumentType<String, String> {
@@ -20,7 +20,7 @@ public class CompassArgumentType implements CustomArgumentType<String, String> {
     private final SimpleCommandExceptionType ERROR_INVALID_DIRECTION = new SimpleCommandExceptionType(
             MessageComponentSerializer.message().serialize(Component.text("Invalid direction specified!"))
     );
-    private final List<String> DIRECTIONS = List.of("NORTH", "EAST", "SOUTH", "WEST");
+    private final Set<String> DIRECTIONS = Set.of("NORTH", "EAST", "SOUTH", "WEST");
 
     @Override
     public String parse(StringReader reader) {

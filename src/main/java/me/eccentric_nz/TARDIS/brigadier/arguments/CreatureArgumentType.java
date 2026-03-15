@@ -14,8 +14,8 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Creature;
 import org.bukkit.entity.EntityType;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
 public class CreatureArgumentType implements CustomArgumentType<String, String> {
@@ -23,7 +23,7 @@ public class CreatureArgumentType implements CustomArgumentType<String, String> 
     private static final SimpleCommandExceptionType ERROR_INVALID_ENTITY = new SimpleCommandExceptionType(
             MessageComponentSerializer.message().serialize(Component.text("Invalid entity type specified!"))
     );
-    private static final List<String> CREATURE_SUBS = new ArrayList<>();
+    private static final Set<String> CREATURE_SUBS = new HashSet<>();
 
     static {
         for (EntityType e : EntityType.values()) {

@@ -13,8 +13,8 @@ import io.papermc.paper.command.brigadier.argument.CustomArgumentType;
 import net.kyori.adventure.text.Component;
 import org.bukkit.World;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
 public class EnvironmentArgument implements CustomArgumentType<String, String> {
@@ -22,7 +22,7 @@ public class EnvironmentArgument implements CustomArgumentType<String, String> {
     private static final SimpleCommandExceptionType ERROR_INVALID_ENV = new SimpleCommandExceptionType(
             MessageComponentSerializer.message().serialize(Component.text("Invalid environment specified!"))
     );
-    private final List<String> ENVIRONS = new ArrayList<>();
+    private final Set<String> ENVIRONS = new HashSet<>();
 
     public EnvironmentArgument() {
         for (World.Environment e : World.Environment.values()) {

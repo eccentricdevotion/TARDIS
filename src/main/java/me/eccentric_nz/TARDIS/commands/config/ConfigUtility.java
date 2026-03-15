@@ -8,10 +8,32 @@ public class ConfigUtility {
 
     public final static HashMap<String, String> firstsStr = new HashMap<>() {
         {
+            put("area", "creation");
+            put("autonomous_area", "");
+            put("crafting", "difficulty");
+            put("database", "storage");
+            put("default_key", "preferences");
+            put("default_model", "sonic");
+            put("default_preset", "police_box");
+            put("default_world_name", "creation");
+            put("exclude", "");
+            put("include", "");
             put("inventory_group", "creation");
+            put("key", "preferences");
+            put("language", "preferences");
+            put("options", "");
+            put("provider", "mapping");
+            put("reload", "");
+            put("respect_towny", "preferences");
+            put("respect_worldguard", "preferences");
             put("seed_block.easy", "creation");
-            put("seed_block.normal", "creation");
             put("seed_block.hard", "creation");
+            put("seed_block.normal", "creation");
+            put("siege", "siege");
+            put("sign_colour", "police_box");
+            put("tips_next", "creation");
+            put("use_clay", "creation");
+            put("vortex_fall", "preferences");
         }
     };
     public final static HashMap<String, String> firstsBool = new HashMap<>() {
@@ -32,7 +54,6 @@ public class ConfigUtility {
             put("autonomous", "allow");
             put("biome_reader", "difficulty");
             put("blueprints", "modules");
-            put("chameleon", "travel");
             put("charge", "sonic");
             put("check_blocks_before_upgrade", "desktop");
             put("check_for_home", "creation");
@@ -104,8 +125,8 @@ public class ConfigUtility {
             put("use_default_condensables", "preferences");
             put("use_nick", "police_box");
             put("use_worldguard", "preferences");
+            put("use_console_size", "police_box.view_interior");
             put("view_interior", "police_box");
-            put("view_interior_uses_console_size", "police_box");
             put("village_travel", "allow");
             put("vortex_manipulator", "modules");
             put("weather_set", "allow");
@@ -167,6 +188,7 @@ public class ConfigUtility {
             "autonomous", "backdoor", "comehere", "creeper_recharge", "full_charge", "hide", "jettison",
             "lightning_recharge", "nether_min", "player", "random", "recharge_distance", "the_end_min", "travel");
 
+    public final static Set<String> firstsStrArtron = Set.of("full_charge_item", "jettison_seed");
 
     public static Set<String> combineLists() {
         Set<String> newList = new HashSet<>(

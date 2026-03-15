@@ -50,6 +50,10 @@ public class ConfigCommandNode {
                                     return Command.SINGLE_SUCCESS;
                                 })))
                 .then(Commands.literal("area")
+                        .executes(ctx -> {
+                            ConfigOptionCommand.show(plugin, ctx.getSource().getSender(), "area");
+                            return Command.SINGLE_SUCCESS;
+                        })
                         .then(Commands.argument("name", new AreasArgumentType())
                                 .executes(ctx -> {
                                     String o = ctx.getArgument("name", String.class);
@@ -77,6 +81,10 @@ public class ConfigCommandNode {
                                     return Command.SINGLE_SUCCESS;
                                 })))
                 .then(Commands.literal("language")
+                        .executes(ctx -> {
+                            ConfigOptionCommand.show(plugin, ctx.getSource().getSender(), "language");
+                            return Command.SINGLE_SUCCESS;
+                        })
                         .then(Commands.argument("option", new LanguageCodeArgumentType())
                                 .executes(ctx -> {
                                     String o = ctx.getArgument("option", String.class);
@@ -84,6 +92,10 @@ public class ConfigCommandNode {
                                     return Command.SINGLE_SUCCESS;
                                 })))
                 .then(Commands.literal("power_down")
+                        .executes(ctx -> {
+                            ConfigOptionCommand.show(plugin, ctx.getSource().getSender(), "power_down");
+                            return Command.SINGLE_SUCCESS;
+                        })
                         .then(Commands.argument("option", BoolArgumentType.bool())
                                 .executes(ctx -> {
                                     boolean b = BoolArgumentType.getBool(ctx, "option");
@@ -91,6 +103,10 @@ public class ConfigCommandNode {
                                     return Command.SINGLE_SUCCESS;
                                 })))
                 .then(Commands.literal("database")
+                        .executes(ctx -> {
+                            ConfigOptionCommand.show(plugin, ctx.getSource().getSender(), "database");
+                            return Command.SINGLE_SUCCESS;
+                        })
                         .then(Commands.argument("option", new DatabaseArgumentType())
                                 .executes(ctx -> {
                                     String o = ctx.getArgument("option", String.class);
@@ -128,6 +144,10 @@ public class ConfigCommandNode {
                                             return Command.SINGLE_SUCCESS;
                                         }))))
                 .then(Commands.literal("sign_colour")
+                        .executes(ctx -> {
+                            ConfigOptionCommand.show(plugin, ctx.getSource().getSender(), "sign_colour");
+                            return Command.SINGLE_SUCCESS;
+                        })
                         .then(Commands.argument("option", ArgumentTypes.namedColor())
                                 .executes(ctx -> {
                                     NamedTextColor colour = ctx.getArgument("color", NamedTextColor.class);
@@ -135,6 +155,10 @@ public class ConfigCommandNode {
                                     return Command.SINGLE_SUCCESS;
                                 })))
                 .then(Commands.literal("key")
+                        .executes(ctx -> {
+                            ConfigOptionCommand.show(plugin, ctx.getSource().getSender(), "key");
+                            return Command.SINGLE_SUCCESS;
+                        })
                         .then(Commands.argument("option", ArgumentTypes.itemStack())
                                 .executes(ctx -> {
                                     ItemStack stack = ctx.getArgument("option", ItemStack.class);
@@ -142,6 +166,10 @@ public class ConfigCommandNode {
                                     return Command.SINGLE_SUCCESS;
                                 })))
                 .then(Commands.literal("full_charge_item")
+                        .executes(ctx -> {
+                            ConfigOptionCommand.show(plugin, ctx.getSource().getSender(), "full_charge_item");
+                            return Command.SINGLE_SUCCESS;
+                        })
                         .then(Commands.argument("option", ArgumentTypes.itemStack())
                                 .executes(ctx -> {
                                     ItemStack stack = ctx.getArgument("option", ItemStack.class);
@@ -149,6 +177,10 @@ public class ConfigCommandNode {
                                     return Command.SINGLE_SUCCESS;
                                 })))
                 .then(Commands.literal("jettison_seed")
+                        .executes(ctx -> {
+                            ConfigOptionCommand.show(plugin, ctx.getSource().getSender(), "jettison_seed");
+                            return Command.SINGLE_SUCCESS;
+                        })
                         .then(Commands.argument("option", StringArgumentType.word())
                                 .suggests(BlockSuggestions::get)
                                 .executes(ctx -> {
@@ -157,6 +189,10 @@ public class ConfigCommandNode {
                                     return Command.SINGLE_SUCCESS;
                                 })))
                 .then(Commands.literal("default_key")
+                        .executes(ctx -> {
+                            ConfigOptionCommand.show(plugin, ctx.getSource().getSender(), "default_key");
+                            return Command.SINGLE_SUCCESS;
+                        })
                         .then(Commands.argument("option", new KeyArgumentType())
                                 .executes(ctx -> {
                                     String o = ctx.getArgument("option", String.class);
@@ -164,6 +200,10 @@ public class ConfigCommandNode {
                                     return Command.SINGLE_SUCCESS;
                                 })))
                 .then(Commands.literal("default_sonic")
+                        .executes(ctx -> {
+                            ConfigOptionCommand.show(plugin, ctx.getSource().getSender(), "default_sonic");
+                            return Command.SINGLE_SUCCESS;
+                        })
                         .then(Commands.argument("option", new SonicArgumentType())
                                 .executes(ctx -> {
                                     String o = ctx.getArgument("option", String.class);
@@ -171,6 +211,10 @@ public class ConfigCommandNode {
                                     return Command.SINGLE_SUCCESS;
                                 })))
                 .then(Commands.literal("default_world_name")
+                        .executes(ctx -> {
+                            ConfigOptionCommand.show(plugin, ctx.getSource().getSender(), "default_world_name");
+                            return Command.SINGLE_SUCCESS;
+                        })
                         .then(Commands.argument("option", ArgumentTypes.world())
                                 .executes(ctx -> {
                                     World world = ctx.getArgument("world", World.class);
@@ -178,6 +222,10 @@ public class ConfigCommandNode {
                                     return Command.SINGLE_SUCCESS;
                                 })))
                 .then(Commands.literal("respect_towny")
+                        .executes(ctx -> {
+                            ConfigOptionCommand.show(plugin, ctx.getSource().getSender(), "respect_towny");
+                            return Command.SINGLE_SUCCESS;
+                        })
                         .then(Commands.argument("option", new TownyArgumentType())
                                 .executes(ctx -> {
                                     String o = ctx.getArgument("option", String.class);
@@ -185,6 +233,10 @@ public class ConfigCommandNode {
                                     return Command.SINGLE_SUCCESS;
                                 })))
                 .then(Commands.literal("respect_worldguard")
+                        .executes(ctx -> {
+                            ConfigOptionCommand.show(plugin, ctx.getSource().getSender(), "respect_worldguard");
+                            return Command.SINGLE_SUCCESS;
+                        })
                         .then(Commands.argument("option", new WorldGuardArgumentType(plugin))
                                 .executes(ctx -> {
                                     String o = ctx.getArgument("option", String.class);
@@ -192,6 +244,10 @@ public class ConfigCommandNode {
                                     return Command.SINGLE_SUCCESS;
                                 })))
                 .then(Commands.literal("crafting")
+                        .executes(ctx -> {
+                            ConfigOptionCommand.show(plugin, ctx.getSource().getSender(), "crafting");
+                            return Command.SINGLE_SUCCESS;
+                        })
                         .then(Commands.argument("option", new DifficultyArgumentType())
                                 .executes(ctx -> {
                                     String o = ctx.getArgument("option", String.class);
@@ -200,6 +256,10 @@ public class ConfigCommandNode {
                                     return Command.SINGLE_SUCCESS;
                                 })))
                 .then(Commands.literal("default_preset")
+                        .executes(ctx -> {
+                            ConfigOptionCommand.show(plugin, ctx.getSource().getSender(), "default_preset");
+                            return Command.SINGLE_SUCCESS;
+                        })
                         .then(Commands.argument("option", new PresetArgumentType(0))
                                 .executes(ctx -> {
                                     String o = ctx.getArgument("option", String.class);
@@ -211,6 +271,10 @@ public class ConfigCommandNode {
                                     return Command.SINGLE_SUCCESS;
                                 })))
                 .then(Commands.literal("use_clay")
+                        .executes(ctx -> {
+                            ConfigOptionCommand.show(plugin, ctx.getSource().getSender(), "use_clay");
+                            return Command.SINGLE_SUCCESS;
+                        })
                         .then(Commands.argument("option", new UseClayArgumentType())
                                 .executes(ctx -> {
                                     String o = ctx.getArgument("option", String.class).toUpperCase(Locale.ROOT);
@@ -218,6 +282,10 @@ public class ConfigCommandNode {
                                     return Command.SINGLE_SUCCESS;
                                 })))
                 .then(Commands.literal("vortex_fall")
+                        .executes(ctx -> {
+                            ConfigOptionCommand.show(plugin, ctx.getSource().getSender(), "vortex_fall");
+                            return Command.SINGLE_SUCCESS;
+                        })
                         .then(Commands.argument("option", new VortexFallArgumentType())
                                 .executes(ctx -> {
                                     String o = ctx.getArgument("option", String.class);
@@ -225,6 +293,10 @@ public class ConfigCommandNode {
                                     return Command.SINGLE_SUCCESS;
                                 })))
                 .then(Commands.literal("provider")
+                        .executes(ctx -> {
+                            ConfigOptionCommand.show(plugin, ctx.getSource().getSender(), "provider");
+                            return Command.SINGLE_SUCCESS;
+                        })
                         .then(Commands.argument("option", new MapProviderArgumentType())
                                 .executes(ctx -> {
                                     String o = ctx.getArgument("option", String.class);
@@ -232,6 +304,10 @@ public class ConfigCommandNode {
                                     return Command.SINGLE_SUCCESS;
                                 })))
                 .then(Commands.literal("tips_next")
+                        .executes(ctx -> {
+                            ConfigOptionCommand.show(plugin, ctx.getSource().getSender(), "tips_next");
+                            return Command.SINGLE_SUCCESS;
+                        })
                         .then(Commands.argument("option", new TipsNextArgumentType())
                                 .executes(ctx -> {
                                     String o = ctx.getArgument("option", String.class);
@@ -239,6 +315,10 @@ public class ConfigCommandNode {
                                     return Command.SINGLE_SUCCESS;
                                 })))
                 .then(Commands.literal("tips_limit")
+                        .executes(ctx -> {
+                            ConfigOptionCommand.show(plugin, ctx.getSource().getSender(), "tips_limit");
+                            return Command.SINGLE_SUCCESS;
+                        })
                         .then(Commands.argument("option", new TipsLimitArgumentType())
                                 .executes(ctx -> {
                                     int i = ctx.getArgument("option", Integer.class);
@@ -246,6 +326,11 @@ public class ConfigCommandNode {
                                     return Command.SINGLE_SUCCESS;
                                 })))
                 .then(Commands.argument("option", new ConfigOptionArgumentType())
+                        .executes(ctx -> {
+                            String o = ctx.getArgument("option", String.class);
+                            ConfigOptionCommand.show(plugin, ctx.getSource().getSender(), o);
+                            return Command.SINGLE_SUCCESS;
+                        })
                         .then(Commands.argument("boolean", BoolArgumentType.bool())
                                 .executes(ctx -> {
                                     String o = ctx.getArgument("option", String.class);

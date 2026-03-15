@@ -52,8 +52,10 @@ police_box:
   default_preset: FACTORY
   name_tardis: false
   use_nick: false
-  view_interior: false
-  view_interior_uses_console_size: false
+  view_interior:
+    enabled: false
+    type: maps
+    use_console_size: false
   materialise: true
   sign_colour: WHITE
   rebuild_cooldown: 10000
@@ -117,6 +119,7 @@ preferences:
   language: en
   key: GOLD_NUGGET
   any_key: false
+  default_key: eleventh
   open_door_policy: false
   use_worldguard: true
   respect_worldguard: build
@@ -133,7 +136,6 @@ preferences:
   malfunction_nether: 3
   use_default_condensables: true
   heal_speed: 200
-  default_key: eleventh
   nerf_pistons:
     enabled: false
     only_tardis_worlds: true

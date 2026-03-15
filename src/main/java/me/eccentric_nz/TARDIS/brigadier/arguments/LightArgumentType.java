@@ -13,8 +13,8 @@ import io.papermc.paper.command.brigadier.argument.CustomArgumentType;
 import me.eccentric_nz.TARDIS.enumeration.TardisLight;
 import net.kyori.adventure.text.Component;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
 public class LightArgumentType implements CustomArgumentType<String, String> {
@@ -22,7 +22,7 @@ public class LightArgumentType implements CustomArgumentType<String, String> {
     private static final SimpleCommandExceptionType ERROR_INVALID_LIGHT = new SimpleCommandExceptionType(
             MessageComponentSerializer.message().serialize(Component.text("Invalid light specified!"))
     );
-    private final List<String> LIGHTS = new ArrayList<>();
+    private final Set<String> LIGHTS = new HashSet<>();
 
     public LightArgumentType() {
         for (TardisLight l : TardisLight.values()) {
