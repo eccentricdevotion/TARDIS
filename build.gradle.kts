@@ -157,7 +157,7 @@ dependencies {
     compileOnly("net.luckperms:api:5.5")
     compileOnly("org.apache.commons:commons-lang3:3.20.0")
     compileOnly(files("libs/TerraformGenerator.jar"))
-    compileOnly("com.formdev:flatlaf:3.7") {
+    compileOnly("com.formdev:flatlaf:3.7.1") {
         isTransitive = false
     }
     compileOnly("org.swinglabs:swing-layout:1.0.3") {
