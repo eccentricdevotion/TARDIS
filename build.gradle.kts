@@ -54,7 +54,7 @@ repositories {
     }
     maven {
         name = "blocklocker"
-        url = uri("https://repo.codemc.org/repository/maven-public/")
+        url = uri("https://repo.codemc.io/repository/maven-public/")
     }
     maven {
         name = "coreprotect"
