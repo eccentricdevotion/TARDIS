@@ -102,7 +102,7 @@ dependencies {
     compileOnly("com.palmergames.bukkit.towny:towny:0.102.0.11") {
         isTransitive = false
     }
-    compileOnly("org.mvplugins.multiverse.core:multiverse-core:5.5.2") {
+    compileOnly("org.mvplugins.multiverse.core:multiverse-core:5.5.3") {
         isTransitive = false
     }
     compileOnly("org.mvplugins.multiverse.inventories:multiverse-inventories:5.3.1") {
