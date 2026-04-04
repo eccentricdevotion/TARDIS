@@ -287,3 +287,6 @@ rooms:
   WORKSHOP:
     material: CRAFTING_TABLE
     amount: 58
+  ZERO:
+    material: OAK_BUTTON
+    amount: 37

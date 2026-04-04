@@ -46,6 +46,7 @@ import me.eccentric_nz.TARDIS.monitor.SnapshotLoader;
 import me.eccentric_nz.TARDIS.perms.TARDISContexts;
 import me.eccentric_nz.TARDIS.placeholders.TARDISPlaceholderExpansion;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
+import me.eccentric_nz.TARDIS.planets.TradesConfigUpdater;
 import me.eccentric_nz.TARDIS.recipes.*;
 import me.eccentric_nz.TARDIS.rooms.eye.EyeLoader;
 import me.eccentric_nz.TARDIS.rotors.CustomTimeRotorLoader;
@@ -363,6 +364,7 @@ public class TARDIS extends JavaPlugin {
             new DesktopThemeLoader(this).addSchematics();
             new CustomTimeRotorLoader(this).addRotors();
             new CustomDoorLoader(this).addDoors();
+            new TradesConfigUpdater(this, tradesConfig, artronConfig, roomsConfig).checkTrades();
             loadFiles();
             disguisesOnServer = pm.isPluginEnabled("LibsDisguises");
             generalKeeper = new TARDISGeneralInstanceKeeper(this);
