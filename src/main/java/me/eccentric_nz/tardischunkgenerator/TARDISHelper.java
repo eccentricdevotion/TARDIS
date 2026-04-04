@@ -292,7 +292,7 @@ public class TARDISHelper {
         if (block.getBlockData() instanceof Directional directional) {
             direction = Direction.byName(directional.getFacing().toString().toLowerCase(Locale.ROOT));
         }
-        BlockState data = ((CraftBlock) block).getNMS();
+        BlockState data = ((CraftBlock) block).getBlockState();
         net.minecraft.world.level.Level world = ((CraftWorld) block.getWorld()).getHandle();
         BlockPos position = ((CraftBlock) block).getPosition();
         data.useWithoutItem(world, null, BlockHitResult.miss(data.getOffset(position), direction, position));

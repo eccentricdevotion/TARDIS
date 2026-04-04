@@ -7,6 +7,7 @@
   "coordinate_scale": 1,
   "has_ceiling": false,
   "has_skylight": true,
+  "has_ender_dragon_fight": false,
   "ambient_light": 0,
   "height": 384,
   "infiniburn": "#minecraft:infiniburn_overworld",

@@ -4,7 +4,7 @@ import java.io.ByteArrayOutputStream
 
 plugins {
     `java-library`
-    id("io.papermc.paperweight.userdev") version "2.0.0-beta.19"
+    id("io.papermc.paperweight.userdev") version "2.0.0-beta.21"
     id("com.gradleup.shadow") version "9.4.1"
     id("java")
     id("io.papermc.hangar-publish-plugin") version "0.1.4"
@@ -83,7 +83,7 @@ repositories {
 }
 
 dependencies {
-    paperweight.paperDevBundle("1.21.11-R0.1-SNAPSHOT")
+    paperweight.paperDevBundle("26.1.1.build.+")
     compileOnly("com.sk89q.worldedit:worldedit-core:8.0.0-SNAPSHOT") {
         isTransitive = false
     }

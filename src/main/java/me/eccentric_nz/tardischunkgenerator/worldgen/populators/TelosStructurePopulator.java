@@ -69,7 +69,7 @@ public class TelosStructurePopulator extends BlockPopulator {
     public boolean isFeatureChunk(long seed, int x, int z) {
         RandomSpreadStructurePlacement spread = new RandomSpreadStructurePlacement(24, 8, RandomSpreadType.TRIANGULAR, 165745295);
         ChunkPos chunkPos = spread.getPotentialStructureChunk(seed, x, z);
-        return chunkPos.x == x && chunkPos.z == z;
+        return chunkPos.x() == x && chunkPos.z() == z;
     }
 
     private void build(LimitedRegion limitedRegion, int startX, int startY, int startZ, Random random) {

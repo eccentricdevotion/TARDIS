@@ -117,7 +117,7 @@ public class TARDIS extends JavaPlugin {
     private final HashMap<String, String> versions = new HashMap<>();
     private final String versionRegex = "(\\d+[.])+\\d+";
     private final Pattern versionPattern = Pattern.compile(versionRegex);
-    private final String serverStr = "1.21.11";
+    private final String serverStr = "26.1.1";
     private TARDISMessage messenger;
     private ChatGUI jsonKeeper;
     private SkinChanger skinChanger;

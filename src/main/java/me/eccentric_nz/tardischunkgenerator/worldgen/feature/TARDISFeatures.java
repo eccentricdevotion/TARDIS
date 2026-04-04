@@ -21,7 +21,7 @@ import me.eccentric_nz.tardischunkgenerator.custombiome.CubicMaterial;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate;
-import net.minecraft.world.level.levelgen.feature.stateproviders.RuleBasedBlockStateProvider;
+import net.minecraft.world.level.levelgen.feature.stateproviders.RuleBasedStateProvider;
 import org.bukkit.Material;
 
 import java.util.concurrent.ThreadLocalRandom;
@@ -67,8 +67,8 @@ public class TARDISFeatures {
             gallifrey_terracotta_leaves = Material.COBWEB;
             gallifrey_terracotta_decor = Material.RED_WOOL;
         }
-        GRASS = new TARDISGrassData(RuleBasedBlockStateProvider.simple(Blocks.GRASS_BLOCK), BlockPredicate.matchesBlocks(Blocks.TERRACOTTA, Blocks.RED_SAND), UniformInt.of(2, 8), 2);
-        VASTIAL = new TARDISGrassData(RuleBasedBlockStateProvider.simple(Blocks.WHITE_CONCRETE_POWDER), BlockPredicate.matchesBlocks(Blocks.STONE, Blocks.GRASS_BLOCK), UniformInt.of(2, 8), 2);
+        GRASS = new TARDISGrassData(RuleBasedStateProvider.simple(Blocks.GRASS_BLOCK), BlockPredicate.matchesBlocks(Blocks.TERRACOTTA, Blocks.RED_SAND), UniformInt.of(2, 8), 2);
+        VASTIAL = new TARDISGrassData(RuleBasedStateProvider.simple(Blocks.WHITE_CONCRETE_POWDER), BlockPredicate.matchesBlocks(Blocks.STONE, Blocks.GRASS_BLOCK), UniformInt.of(2, 8), 2);
         SKARO_TREE = new TARDISTreeData(Material.SAND, skaro_wood, skaro_leaves, skaro_decor, true);
         GALLIFREY_TREE_RED_SAND = new TARDISTreeData(Material.RED_SAND, gallifrey_sand_wood, gallifrey_sand_leaves, gallifrey_sand_decor, true);
         GALLIFREY_TREE_TERRACOTTA = new TARDISTreeData(Material.TERRACOTTA, gallifrey_terracotta_wood, gallifrey_terracotta_leaves, gallifrey_terracotta_decor, true);

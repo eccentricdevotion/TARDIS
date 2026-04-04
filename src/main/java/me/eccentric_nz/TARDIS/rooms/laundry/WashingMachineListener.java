@@ -33,7 +33,7 @@ public class WashingMachineListener extends TARDISMenuListener {
         super(plugin);
         DYEABLE.addAll(Tag.WOOL.getValues());
         DYEABLE.addAll(Tag.WOOL_CARPETS.getValues());
-        DYEABLE.addAll(Tag.ITEMS_DYEABLE.getValues()); // leather player / horse armour & wolf armour
+        DYEABLE.addAll(Tag.ITEMS_DYES.getValues()); // leather player / horse armour & wolf armour
     }
 
     @EventHandler

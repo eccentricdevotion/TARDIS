@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.lazarus.disguise.TARDISDisguiseTracker;
 import me.eccentric_nz.TARDIS.lazarus.disguise.TARDISDisguiser;
 import me.eccentric_nz.tardischunkgenerator.TARDISHelper;
 import me.eccentric_nz.tardischunkgenerator.custombiome.BiomeHelper;
+import me.eccentric_nz.tardischunkgenerator.custombiome.CustomBiome;
 import net.minecraft.core.Registry;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
@@ -90,15 +91,15 @@ public class TARDISPacketListener {
                     if (world.equals("gallifrey") || world.equals("skaro")) {
                         LevelChunk levelChunk = cloneChunk((LevelChunk) ((CraftChunk) player.getWorld().getChunkAt(chunkPacket.getX(), chunkPacket.getZ())).getHandle(ChunkStatus.BIOMES));
                         String key = (world.endsWith("gallifrey")) ? "gallifrey_badlands" : "skaro_desert";
-                        // TODO get biome from registry - similar to BiomeHelper#setCustomBiome()
-                        Biome biome = TARDISHelper.biomeMap.get(key);
+                        // get biome from registry
+                        Biome biome = CustomBiome.get(key);
                         Registry<Biome> registry = BiomeHelper.getRegistry();
                         if (biome != null) {
                             for (LevelChunkSection section : levelChunk.getSections()) {
                                 for (int x = 0; x < 4; ++x) {
                                     for (int z = 0; z < 4; ++z) {
                                         for (int y = 0; y < 4; ++y) {
-                                            section.setBiome(x, y, z, registry.wrapAsHolder(biome));
+                                            section.setNoiseBiome(x, y, z, registry.wrapAsHolder(biome));
                                         }
                                     }
                                 }
@@ -118,6 +119,7 @@ public class TARDISPacketListener {
     }
 
     private static LevelChunk cloneChunk(LevelChunk chunk) {
+
         return new LevelChunk(
                 chunk.getLevel(),
                 chunk.getPos(),

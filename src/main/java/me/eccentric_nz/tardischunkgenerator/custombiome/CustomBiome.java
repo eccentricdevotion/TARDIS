@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.tardischunkgenerator.custombiome;
 
+import io.papermc.paper.registry.RegistryAccess;
+import io.papermc.paper.registry.RegistryKey;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.tardischunkgenerator.TARDISHelper;
@@ -33,6 +35,7 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeGenerationSettings;
 import net.minecraft.world.level.biome.BiomeSpecialEffects;
 import net.minecraft.world.level.biome.MobSpawnSettings;
+import org.bukkit.NamespacedKey;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -43,6 +46,18 @@ import java.util.IdentityHashMap;
 import java.util.Set;
 
 public class CustomBiome {
+
+    public static Biome get(String key) {
+        ResourceKey<Biome> resourceKey = ResourceKey.create(Registries.BIOME, Identifier.fromNamespaceAndPath("tardis", key));
+        // get the biome registry
+        WritableRegistry<Biome> registry = (WritableRegistry<Biome>) BiomeHelper.getRegistry();
+        // get the biome
+        return registry.getValueOrThrow(resourceKey);
+    }
+
+    public static org.bukkit.block.Biome getBukkit(String key) {
+        return RegistryAccess.registryAccess().getRegistry(RegistryKey.BIOME).get(new NamespacedKey("tardis", key));
+    }
 
     public static void addCustomBiome(CustomBiomeData data) {
         // get the key for the biome this custom biome is based on - minecraft:xxxx
