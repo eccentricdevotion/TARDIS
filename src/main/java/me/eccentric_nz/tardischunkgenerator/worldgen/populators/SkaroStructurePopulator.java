@@ -69,7 +69,7 @@ public class SkaroStructurePopulator extends BlockPopulator {
                 }
             }
             if (limitedRegion.isInRegion(xx, y, zz)) {
-                if (limitedRegion.getType(xx, y - 1, zz).equals(Material.WATER)) { // TODO should be just y (not block below)
+                if (limitedRegion.getType(xx, y - 1, zz).equals(Material.WATER)) {
                     // build an island
                     // get a spiral
                     IslandSpiral spiral = new IslandSpiral();
