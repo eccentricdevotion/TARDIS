@@ -20,7 +20,6 @@ import io.papermc.paper.registry.RegistryAccess;
 import io.papermc.paper.registry.RegistryKey;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.tardischunkgenerator.TARDISHelper;
 import net.minecraft.core.Holder;
 import net.minecraft.core.MappedRegistry;
 import net.minecraft.core.RegistrationInfo;
@@ -99,8 +98,6 @@ public class CustomBiome {
         Biome biome = newBiome.build();
 
         try {
-            // put the biome into the TARDIS biome map
-            TARDISHelper.biomeMap.put(data.customName(), biome);
             // inject into the biome registry
             // unfreeze Biome Registry
             Field frozen = MappedRegistry.class.getDeclaredField("frozen");

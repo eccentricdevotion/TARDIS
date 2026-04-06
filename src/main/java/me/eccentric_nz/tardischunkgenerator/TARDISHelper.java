@@ -60,13 +60,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.UUID;
 
 public class TARDISHelper {
 
-    public static final HashMap<String, net.minecraft.world.level.biome.Biome> biomeMap = new HashMap<>();
     public static boolean colourSkies;
     private final TARDIS plugin;
 
@@ -87,12 +85,10 @@ public class TARDISHelper {
         boolean aPlanetIsEnabled = false;
         if (plugin.getPlanetsConfig().getBoolean("planets.gallifrey.enabled")) {
             plugin.getMessenger().message(plugin.getConsole(), TardisModule.HELPER, "Adding custom biome for planet Gallifrey...");
-//            CustomBiome.addCustomBiome(TARDISBiomeData.BADLANDS);
             aPlanetIsEnabled = true;
         }
         if (plugin.getPlanetsConfig().getBoolean("planets.skaro.enabled")) {
             plugin.getMessenger().message(plugin.getConsole(), TardisModule.HELPER, "Adding custom biome for planet Skaro...");
-//            CustomBiome.addCustomBiome(TARDISBiomeData.DESERT);
             aPlanetIsEnabled = true;
         }
         colourSkies = (aPlanetIsEnabled && plugin.getPlanetsConfig().getBoolean("colour_skies"));
