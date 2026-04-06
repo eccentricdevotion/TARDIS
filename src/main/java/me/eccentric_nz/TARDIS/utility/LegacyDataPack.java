@@ -25,15 +25,15 @@ import java.io.IOException;
 /**
  * @author eccentric_nz
  */
-public class TARDISChecker {
+public class LegacyDataPack {
 
     private final TARDIS plugin;
 
-    public TARDISChecker(TARDIS plugin) {
+    public LegacyDataPack(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public void removeOldDataPack() {
+    public void remove() {
         // get server's main world folder
         // is there a world container?
         File container = plugin.getServer().getWorldContainer();

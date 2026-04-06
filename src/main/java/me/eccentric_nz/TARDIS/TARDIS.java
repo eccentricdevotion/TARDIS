@@ -291,7 +291,7 @@ public class TARDIS extends JavaPlugin {
                 return;
             }
             // remove old datapack
-            new TARDISChecker(this).removeOldDataPack();
+            new LegacyDataPack(this).remove();
             messenger = new TARDISMessage();
             jsonKeeper = new ChatGUI();
             skinChanger = new SkinChanger();
