@@ -96,16 +96,8 @@ public class OuterMinecraftDoorCloser {
                         if (bottomFrame.getPersistentDataContainer().has(plugin.getSnapshotKey(), PersistentDataType.INTEGER)) {
                             int bid = bottomFrame.getPersistentDataContainer().get(plugin.getSnapshotKey(), PersistentDataType.INTEGER);
                             // delete map and snapshot
-                            File b = new File(plugin.getDataFolder() + File.separator + "monitor_snapshots" + File.separator + "view_" + bid + ".json");
-                            b.delete();
-                            File bm = new File(
-                                    plugin.getServer().getWorlds().getFirst().getName() + File.separator
-                                            + "data" + File.separator
-                                            + "minecraft" + File.separator
-                                            + "maps" + File.separator
-                                            + bid + ".dat"
-                            );
-                            bm.delete();
+                            getSnapshotFile(bid).delete();
+                            getMapFile(bid).delete();
                         }
                         bottomFrame.remove();
                         bottom.setType(Material.AIR);
@@ -114,16 +106,8 @@ public class OuterMinecraftDoorCloser {
                         if (topFrame.getPersistentDataContainer().has(plugin.getSnapshotKey(), PersistentDataType.INTEGER)) {
                             int tid = topFrame.getPersistentDataContainer().get(plugin.getSnapshotKey(), PersistentDataType.INTEGER);
                             // delete map and snapshot
-                            File t = new File(plugin.getDataFolder() + File.separator + "monitor_snapshots" + File.separator + "view_" + tid + ".json");
-                            t.delete();
-                            File tm = new File(
-                                    plugin.getServer().getWorlds().getFirst().getName() + File.separator
-                                            + "data" + File.separator
-                                            + "minecraft" + File.separator
-                                            + "maps" + File.separator
-                                            + tid + ".dat"
-                            );
-                            tm.delete();
+                            getSnapshotFile(tid).delete();
+                            getMapFile(tid).delete();
                         }
                         topFrame.remove();
                         top.setType(Material.AIR);
@@ -165,6 +149,24 @@ public class OuterMinecraftDoorCloser {
                 }
             }
         }
+    }
+
+    private File getSnapshotFile(int id) {
+        return new File(
+                plugin.getDataFolder() + File.separator
+                        + "monitor_snapshots" + File.separator
+                        + "view_" + id + ".json"
+        );
+    }
+
+    private File getMapFile(int id) {
+        return new File(
+                plugin.getServer().getWorlds().getFirst().getName() + File.separator
+                        + "data" + File.separator
+                        + "minecraft" + File.separator
+                        + "maps" + File.separator
+                        + id + ".dat"
+        );
     }
 
     private ItemFrame getFrame(Block block) {
