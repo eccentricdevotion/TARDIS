@@ -8,4 +8,4 @@ You can always request a feature. Whether I will implement it, depends on how mu
 Pull requests (code contributions) are greatly appreciated. I try to accept all pull requests. However, there is always a chance that I need to reject a pull request, for example if feature doesn't fit within the scope of TARDIS.
 
 ## Any questions?
-If you have a question, feel free to open an issue.
+If you have a question, feel free to open an [issue](https://github.com/eccentricdevotion/TARDIS/issues), or jump on the community led [Discord server](https://discord.gg/sfuPVHh). 

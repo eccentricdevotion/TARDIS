@@ -33,6 +33,7 @@ GitHub continuously integrated builds (updated when changes are pushed to this r
 ![Spigot downloads](https://img.shields.io/spiget/downloads/45729?label=Spigot%20downloads&style=for-the-badge)
 ![bStats Servers](https://img.shields.io/bstats/servers/11698?style=for-the-badge)
 
+![26.1.1 downloads](https://img.shields.io/github/downloads/eccentricdevotion/TARDIS/26.1/total?style=for-the-badge)
 ![1.21.11 downloads](https://img.shields.io/github/downloads/eccentricdevotion/TARDIS/1.21.11/total?style=for-the-badge)
 ![1.21.10 downloads](https://img.shields.io/github/downloads/eccentricdevotion/TARDIS/1.21.10/total?style=for-the-badge)
 ![1.21.8 downloads](https://img.shields.io/github/downloads/eccentricdevotion/TARDIS/1.21.8/total?style=for-the-badge)
