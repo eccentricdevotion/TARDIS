@@ -159,7 +159,7 @@ public class TARDISUpdateChecker implements Runnable {
             reader.close();
             return props.getProperty("paperVersion");
         } catch (IOException  | InterruptedException e) {
-            return "26.1.1";
+            return "26.1.2";
         }
     }
 }
