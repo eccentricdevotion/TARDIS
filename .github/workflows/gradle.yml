@@ -11,6 +11,7 @@ on:
 env:
   VERSION: '7.0.0'
   RELEASE_TAG: '26.1'
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
   build:
