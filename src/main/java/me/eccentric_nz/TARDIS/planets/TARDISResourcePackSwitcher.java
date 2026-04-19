@@ -17,12 +17,18 @@
 package me.eccentric_nz.TARDIS.planets;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import net.kyori.adventure.resource.ResourcePackInfo;
+import net.kyori.adventure.resource.ResourcePackRequest;
+import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+
+import java.net.URI;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * @author eccentric_nz
@@ -66,9 +72,20 @@ public class TARDISResourcePackSwitcher implements Listener {
     private void setResourcePack(Player player, String path) {
         if (path == null || path.equalsIgnoreCase("default")) {
             player.removeResourcePacks();
+            return;
         }
         if (player.isOnline()) {
-            player.setResourcePack(path);
+            CompletableFuture<ResourcePackInfo> futureInfo = ResourcePackInfo.resourcePackInfo()
+                    .uri(URI.create(path))
+                    .computeHashAndBuild();
+            futureInfo.thenAccept(info -> {
+                ResourcePackRequest request = ResourcePackRequest.resourcePackRequest()
+                        .packs(info)
+                        .prompt(Component.text("Please download the resource pack!"))
+                        .required(true)
+                        .build();
+                player.sendResourcePacks(request);
+            });
         }
     }
 }

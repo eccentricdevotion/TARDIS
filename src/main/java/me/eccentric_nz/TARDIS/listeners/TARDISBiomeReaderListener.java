@@ -22,9 +22,11 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetDiskStorage;
 import me.eccentric_nz.TARDIS.enumeration.Storage;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.block.Biome;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -71,7 +73,8 @@ public class TARDISBiomeReaderListener implements Listener {
         if (event.getHand() == null || event.getHand().equals(EquipmentSlot.OFF_HAND)) {
             return;
         }
-        if (event.getClickedBlock().getType().isInteractable()) {
+        Block b = event.getClickedBlock();
+        if (b == null || TARDISStaticUtils.isInteractable(b)) {
             return;
         }
         Player player = event.getPlayer();
@@ -80,7 +83,7 @@ public class TARDISBiomeReaderListener implements Listener {
             ItemMeta im = is.getItemMeta();
             if (im.hasDisplayName() && ComponentUtils.endsWith(im.displayName(), "TARDIS Biome Reader")) {
                 UUID uuid = player.getUniqueId();
-                Biome biome = event.getClickedBlock().getBiome();
+                Biome biome = b.getBiome();
                 if (biome.equals(Biome.THE_VOID)) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "BIOME_READER_NOT_VALID");
                     return;

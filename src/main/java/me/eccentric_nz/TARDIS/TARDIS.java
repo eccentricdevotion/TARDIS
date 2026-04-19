@@ -1336,7 +1336,7 @@ public class TARDIS extends JavaPlugin {
         if (pm.isPluginEnabled(plg)) {
             Plugin check = pm.getPlugin(plg);
             ModuleDescriptor.Version minVersion = ModuleDescriptor.Version.parse(min);
-            String yamlVersion = check.getDescription().getVersion();
+            String yamlVersion = check.getPluginMeta().getVersion();
             Matcher matcher = versionPattern.matcher(yamlVersion);
             if (matcher.find()) {
                 String pluginVersion = matcher.group(0);

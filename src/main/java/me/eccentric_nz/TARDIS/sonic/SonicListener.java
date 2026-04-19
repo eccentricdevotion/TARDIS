@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.playerprefs.TARDISPrefsMenuInventory;
 import me.eccentric_nz.TARDIS.sonic.actions.*;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -220,7 +221,7 @@ public class SonicListener implements Listener {
                         return;
                     }
                     if (TARDISPermission.hasPermission(player, "tardis.sonic.arrow") && lore != null && lore.contains(Component.text("Pickup Arrows Upgrade"))) {
-                        if (!block.getType().isInteractable()) {
+                        if (!TARDISStaticUtils.isInteractable(block)) {
                             SonicSound.playSonicSound(plugin, player, now, 600L, "sonic_short");
                         }
                         // scan area around block for an arrow
@@ -248,7 +249,7 @@ public class SonicListener implements Listener {
                         SonicBrush.dust(plugin, block, player);
                         return;
                     }
-                    if (TARDISPermission.hasPermission(player, "tardis.sonic.emerald") && lore != null && lore.contains(Component.text("Emerald Upgrade")) && !block.getType().isInteractable()) {
+                    if (TARDISPermission.hasPermission(player, "tardis.sonic.emerald") && lore != null && lore.contains(Component.text("Emerald Upgrade")) && !TARDISStaticUtils.isInteractable(block)) {
                         SonicSound.playSonicSound(plugin, player, now, 3050L, "sonic_screwdriver");
                         // scan environment
                         Location scanned = block.getLocation();

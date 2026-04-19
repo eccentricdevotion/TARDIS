@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.schematic;
 
+import com.destroystokyo.paper.profile.PlayerProfile;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -45,7 +46,7 @@ import org.bukkit.util.BoundingBox;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * @author eccentric_nz
@@ -326,13 +327,15 @@ public class SchematicBuilder {
                     if (m.equals(Material.PLAYER_HEAD) || m.equals(Material.PLAYER_WALL_HEAD)) {
                         JsonObject head = new JsonObject();
                         Skull skull = (Skull) b.getState();
-                        if (skull.getPlayerProfile() != null) {
-                            String name = Objects.requireNonNullElse(skull.getPlayerProfile().getName(), "");
-                            head.addProperty("uuid", skull.getPlayerProfile().getUniqueId().toString());
-                            head.addProperty("name", name);
-                            head.addProperty("texture", skull.getPlayerProfile().getTextures().getSkin().toString());
+                        if (skull.getProfile() != null) {
+                            CompletableFuture<PlayerProfile> futureProfile = skull.getProfile().resolve();
+                            futureProfile.thenAccept(playerProfile -> {
+                                head.addProperty("uuid", playerProfile.getId().toString());
+                                head.addProperty("name", playerProfile.getName());
+                                head.addProperty("texture", playerProfile.getTextures().getSkin().toString());
+                                obj.add("head", head);
+                            });
                         }
-                        obj.add("head", head);
                     }
                     columns.add(obj);
                 }
