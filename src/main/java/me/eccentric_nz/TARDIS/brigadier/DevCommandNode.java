@@ -803,6 +803,11 @@ public class DevCommandNode {
                             new TIPSPreviewSlotInfo(plugin).display();
                             return Command.SINGLE_SUCCESS;
                         }))
+                .then(Commands.literal("trades")
+                        .executes(ctx -> {
+                            new TradeInfo(plugin).list(ctx.getSource().getSender());
+                            return Command.SINGLE_SUCCESS;
+                        }))
                 .then(Commands.literal("tree")
                         .executes(ctx -> {
                             if (ctx.getSource().getSender() instanceof Player) {

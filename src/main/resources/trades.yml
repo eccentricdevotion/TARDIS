@@ -290,3 +290,6 @@ rooms:
   ZERO:
     material: OAK_BUTTON
     amount: 37
+# blacklist of dimensions time lord traders cannot spawn in
+no_spawn:
+  - the_end
