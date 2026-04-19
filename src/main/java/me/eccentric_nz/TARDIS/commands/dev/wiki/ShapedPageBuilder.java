@@ -128,7 +128,7 @@ public class ShapedPageBuilder extends PageBuilder {
                             dashed = TARDISStringUtils.toLowercaseDashed(TARDISStringUtils.capitalise(mat.getChoices().getFirst().toString()));
                         }
                         if (choice instanceof RecipeChoice.ExactChoice exact) {
-                            ItemStack is = exact.getItemStack();
+                            ItemStack is = exact.getChoices().getFirst();
                             switch (is.getType()) {
                                 case POTION -> {
                                     PotionMeta pm = (PotionMeta) is.getItemMeta();

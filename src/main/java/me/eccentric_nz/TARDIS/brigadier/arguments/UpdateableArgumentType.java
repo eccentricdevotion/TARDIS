@@ -22,11 +22,11 @@ public class UpdateableArgumentType implements CustomArgumentType<String, String
     private static final SimpleCommandExceptionType ERROR_INVALID_UPD = new SimpleCommandExceptionType(
             MessageComponentSerializer.message().serialize(Component.text("Invalid updateable specified!"))
     );
-    private final Set<String> UPDATABLES = new HashSet<>();
+    private final Set<String> UPDATEABLES = new HashSet<>();
 
     public UpdateableArgumentType() {
         for (Updateable u : Updateable.values()) {
-            UPDATABLES.add(u.toString());
+            UPDATEABLES.add(u.toString());
         }
     }
 
@@ -38,7 +38,7 @@ public class UpdateableArgumentType implements CustomArgumentType<String, String
     @Override
     public <S> String parse(StringReader reader, S source) throws CommandSyntaxException {
         String input = reader.readUnquotedString();
-        if (!UPDATABLES.contains(input)) {
+        if (!UPDATEABLES.contains(input)) {
             throw ERROR_INVALID_UPD.create();
         }
         return input;
@@ -51,7 +51,7 @@ public class UpdateableArgumentType implements CustomArgumentType<String, String
 
     @Override
     public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
-        for (String u : UPDATABLES) {
+        for (String u : UPDATEABLES) {
             builder.suggest(u);
         }
         return builder.buildFuture();

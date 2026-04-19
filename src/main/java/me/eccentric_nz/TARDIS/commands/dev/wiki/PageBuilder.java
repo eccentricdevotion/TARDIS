@@ -70,7 +70,7 @@ public class PageBuilder {
             link = String.format(MINECRAFT, ingredient, ingredient.replaceAll(" ", "_"));
         }
         if (choice instanceof RecipeChoice.ExactChoice exact) {
-            ItemStack is = exact.getItemStack();
+            ItemStack is = exact.getChoices().getFirst();
             switch (is.getType()) {
                 case POTION -> {
                     PotionMeta pm = (PotionMeta) is.getItemMeta();

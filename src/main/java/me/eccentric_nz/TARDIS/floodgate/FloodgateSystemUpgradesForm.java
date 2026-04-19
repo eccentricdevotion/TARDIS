@@ -24,8 +24,11 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.upgrades.SystemTree;
 import me.eccentric_nz.TARDIS.upgrades.SystemUpgradeUpdate;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.geysermc.cumulus.form.SimpleForm;
@@ -87,8 +90,8 @@ public class FloodgateSystemUpgradesForm {
             if (g.getSlot() != -1 && !notThese.contains(g)) {
                 boolean has = sysData.getUpgrades().get(g);
                 boolean branch = g.getBranch().equals("branch");
-                String prefix = (branch) ? ChatColor.GOLD + "" + ChatColor.ITALIC : "";
-                String suffix;
+                Component prefix = (branch) ? Component.text("").color(NamedTextColor.GOLD).decorate(TextDecoration.ITALIC) : Component.text("");
+                Component suffix;
                 String image = "sys_locked";
                 // does the player have this system upgrade?
                 if (!has) {
@@ -99,12 +102,13 @@ public class FloodgateSystemUpgradesForm {
                     } else {
                         cost = plugin.getSystemUpgradesConfig().getString(g.getBranch() + "." + g.toString().toLowerCase(Locale.ROOT));
                     }
-                    suffix = " " + ChatColor.BLUE + ChatColor.ITALIC + "Cost: " + cost;
+                    suffix = Component.text(" Cost: "+cost).color(NamedTextColor.BLUE).decorate(TextDecoration.ITALIC);
                 } else {
-                    suffix = " " + ChatColor.GREEN + ChatColor.ITALIC + "Unlocked";
+                    suffix = Component.text(" Unlocked").color(NamedTextColor.GREEN).decorate(TextDecoration.ITALIC);
                     image = (branch) ? "sys_branch_unlocked" : "sys_unlocked";
                 }
-                builder.button(prefix + g.getName() + suffix, FormImage.Type.URL, String.format("https://github.com/eccentricdevotion/TARDIS-Resource-Pack/raw/master/assets/tardis/textures/item/circuit/%s.png", image));
+                String label = LegacyComponentSerializer.legacySection().serialize(prefix.append(Component.text(g.getName())).append(suffix));
+                builder.button(label, FormImage.Type.URL, String.format("https://github.com/eccentricdevotion/TARDIS-Resource-Pack/raw/master/assets/tardis/textures/item/circuit/%s.png", image));
             }
         }
         builder.validResultHandler(this::handleResponse);

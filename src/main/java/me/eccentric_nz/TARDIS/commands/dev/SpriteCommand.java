@@ -1,6 +1,5 @@
 package me.eccentric_nz.TARDIS.commands.dev;
 
-import me.eccentric_nz.TARDIS.TARDIS;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;

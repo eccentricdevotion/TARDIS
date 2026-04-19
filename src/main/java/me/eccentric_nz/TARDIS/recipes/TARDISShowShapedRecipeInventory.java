@@ -60,9 +60,9 @@ public class TARDISShowShapedRecipeInventory implements InventoryHolder {
                 ItemStack item = null;
                 RecipeChoice choice = ingredientMap.get(recipeShape[j].toCharArray()[k]);
                 if (choice instanceof RecipeChoice.ExactChoice exact) {
-                    item = exact.getItemStack();
+                    item = exact.getChoices().getFirst();
                 } else if (choice instanceof RecipeChoice.MaterialChoice mat) {
-                    item = mat.getItemStack();
+                    item = ItemStack.of(mat.getChoices().getFirst());
                 }
                 if (item == null) {
                     continue;
