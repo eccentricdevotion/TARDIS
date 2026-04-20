@@ -21,64 +21,51 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 import org.bukkit.util.io.BukkitObjectInputStream;
-import org.bukkit.util.io.BukkitObjectOutputStream;
 import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
 
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Base64;
 import java.util.List;
 
-/**
- * @author original code by comphenix -
- * <a href="https://gist.github.com/aadnk/8138186">...</a>
- */
 public class SerializeInventory {
 
     public static String itemStacksToString(ItemStack[] stack) {
-        try {
-            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-            // Write the size of the stack
-            try (BukkitObjectOutputStream dataOutput = new BukkitObjectOutputStream(outputStream)) {
-                // Write the size of the stack
-                dataOutput.writeInt(stack.length);
-                for (ItemStack is : stack) {
-                    dataOutput.writeObject(is);
-                }
-                // Serialize that array
-            }
-            return Base64Coder.encodeLines(outputStream.toByteArray());
-        } catch (IOException e) {
-            throw new IllegalStateException("Unable to save item stacks.", e);
-        }
+        byte[] bytes = ItemStack.serializeItemsAsBytes(stack);
+        return Base64.getEncoder().encodeToString(bytes);
     }
 
     public static ItemStack[] itemStacksFromString(String data) throws IOException {
         try {
-            ByteArrayInputStream inputStream = new ByteArrayInputStream(Base64Coder.decodeLines(data));
-            ItemStack[] stack;
-            try (BukkitObjectInputStream dataInput = new BukkitObjectInputStream(inputStream)) {
-                stack = new ItemStack[dataInput.readInt()];
-                // Read the serialized ItemStacks
-                for (int i = 0; i < stack.length; i++) {
-                    ItemStack is = (ItemStack) dataInput.readObject();
-                    if (is != null && is.getType() == Material.GLOWSTONE_DUST) {
-                        ItemMeta im = is.getItemMeta();
-                        if (im.hasDisplayName() && im.displayName().equals("Circuits")) {
-                            CustomModelDataComponent component = im.getCustomModelDataComponent();
-                            if (!component.getFloats().isEmpty() && component.getFloats().getFirst() != 130.0f) {
-                                component.setFloats(List.of(130.0f));
-                                im.setCustomModelDataComponent(component);
-                                is.setItemMeta(im);
+            byte[] decoded = Base64.getDecoder().decode(data);
+            return ItemStack.deserializeItemsFromBytes(decoded);
+        } catch (IllegalArgumentException tryLegacy) {
+            try {
+                ByteArrayInputStream inputStream = new ByteArrayInputStream(Base64Coder.decodeLines(data));
+                ItemStack[] stack;
+                try (BukkitObjectInputStream dataInput = new BukkitObjectInputStream(inputStream)) {
+                    stack = new ItemStack[dataInput.readInt()];
+                    // Read the serialized ItemStacks
+                    for (int i = 0; i < stack.length; i++) {
+                        ItemStack is = (ItemStack) dataInput.readObject();
+                        if (is != null && is.getType() == Material.GLOWSTONE_DUST) {
+                            ItemMeta im = is.getItemMeta();
+                            if (im.hasDisplayName() && im.displayName().equals("Circuits")) {
+                                CustomModelDataComponent component = im.getCustomModelDataComponent();
+                                if (!component.getFloats().isEmpty() && component.getFloats().getFirst() != 130.0f) {
+                                    component.setFloats(List.of(130.0f));
+                                    im.setCustomModelDataComponent(component);
+                                    is.setItemMeta(im);
+                                }
                             }
                         }
+                        stack[i] = is;
                     }
-                    stack[i] = is;
                 }
+                return stack;
+            } catch (ClassNotFoundException e) {
+                throw new IOException("Unable to decode class type.", e);
             }
-            return stack;
-        } catch (ClassNotFoundException e) {
-            throw new IOException("Unable to decode class type.", e);
         }
     }
 }

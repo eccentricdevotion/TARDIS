@@ -33,7 +33,7 @@ public class TARDISServerListener implements Listener {
     @EventHandler
     public void onPluginEnable(PluginEnableEvent event) {
         Plugin p = event.getPlugin();
-        String name = p.getDescription().getName();
+        String name = p.getPluginMeta().getName();
         if (name.equals(plugin)) {
             mapper.activate();
         }

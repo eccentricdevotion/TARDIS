@@ -31,6 +31,8 @@ import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.*;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
@@ -44,6 +46,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.HashMap;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -273,6 +276,20 @@ public class TARDISStaticUtils {
         }
     }
 
+    private static Set<Material> OTHERS = Set.of(Material.MOVING_PISTON, Material.PUMPKIN, Material.REDSTONE_ORE, Material.REDSTONE_WIRE);
+
+    public static boolean isInteractable(Block block) {
+        Material type = block.getType();
+        boolean interactable = type.isInteractable();
+        if (!interactable) {
+            return false;
+        }
+        if (Tag.STAIRS.isTagged(type) || Tag.FENCES.isTagged(type)) {
+            return false;
+        }
+        return !OTHERS.contains(type);
+    }
+
     public static boolean isInfested(Material material) {
         return switch (material) {
             case INFESTED_CHISELED_STONE_BRICKS, INFESTED_COBBLESTONE, INFESTED_CRACKED_STONE_BRICKS,
@@ -287,7 +304,7 @@ public class TARDISStaticUtils {
             if (essentials != null) {
                 User user = essentials.getUser(uuid);
                 String prefix = essentials.getSettings().getNicknamePrefix();
-                return ChatColor.stripColor(user.getNick()).replace(prefix, "");
+                return PlainTextComponentSerializer.plainText().serialize(LegacyComponentSerializer.legacySection().deserialize(user.getNick())).replace(prefix, "");
             }
         }
         Player player = Bukkit.getPlayer(uuid);
@@ -305,7 +322,7 @@ public class TARDISStaticUtils {
             if (essentials != null) {
                 User user = essentials.getUser(player.getUniqueId());
                 String prefix = essentials.getSettings().getNicknamePrefix();
-                return ChatColor.stripColor(user.getNick()).replace(prefix, "");
+                return PlainTextComponentSerializer.plainText().serialize(LegacyComponentSerializer.legacySection().deserialize(user.getNick())).replace(prefix, "");
             }
         }
         return player.getName();

@@ -29,6 +29,7 @@ import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapedRecipe;
 
 import java.util.ArrayList;
@@ -56,9 +57,13 @@ public class SonicActivatorListener extends TARDISMenuListener {
     private List<ItemStack> getStacks() {
         // get the Sonic Generator recipe
         ShapedRecipe recipe = plugin.getFigura().getShapedRecipes().get("Sonic Generator");
-        List<ItemStack> mats = new ArrayList<>(recipe.getIngredientMap().values());
+        List<RecipeChoice> mats = new ArrayList<>(recipe.getChoiceMap().values());
         mats.removeAll(Collections.singleton(null));
-        return mats;
+        List<ItemStack> choices = new ArrayList<>();
+        for (RecipeChoice choice : mats) {
+            choices.add(choice.getItemStack());
+        }
+        return choices;
     }
 
     @EventHandler(ignoreCancelled = true)
