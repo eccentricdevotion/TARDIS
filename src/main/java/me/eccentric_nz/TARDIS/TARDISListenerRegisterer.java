@@ -28,6 +28,8 @@ import me.eccentric_nz.TARDIS.artron.ArtronCondenserListener;
 import me.eccentric_nz.TARDIS.artron.ArtronFurnaceListener;
 import me.eccentric_nz.TARDIS.artron.BucketListener;
 import me.eccentric_nz.TARDIS.autonomous.AutonomousGUIListener;
+import me.eccentric_nz.TARDIS.blueprints.trader.MerchantListener;
+import me.eccentric_nz.TARDIS.blueprints.trader.TimeLordTradeListener;
 import me.eccentric_nz.TARDIS.camera.DismountListener;
 import me.eccentric_nz.TARDIS.chameleon.construct.ChameleonConstructorListener;
 import me.eccentric_nz.TARDIS.chameleon.construct.ChameleonConstructorOpenCloseListener;
@@ -182,6 +184,8 @@ class TARDISListenerRegisterer {
         plugin.getPM().registerEvents(new ARSMapListener(plugin), plugin);
         if (plugin.getConfig().getBoolean("modules.blueprints")) {
             plugin.getPM().registerEvents(new ArchitecturalBlueprintsListener(plugin), plugin);
+            plugin.getPM().registerEvents(new TimeLordTradeListener(plugin), plugin);
+            plugin.getPM().registerEvents(new MerchantListener(plugin), plugin);
         }
         if (plugin.getConfig().getBoolean("allow.autonomous")) {
             plugin.getPM().registerEvents(new AutonomousGUIListener(plugin), plugin);

@@ -805,7 +805,7 @@ public class DevCommandNode {
                         }))
                 .then(Commands.literal("trades")
                         .executes(ctx -> {
-                            new TradeInfo(plugin).list(ctx.getSource().getSender());
+                            new TradeCommand(plugin).spawn(ctx.getSource().getSender());
                             return Command.SINGLE_SUCCESS;
                         }))
                 .then(Commands.literal("tree")

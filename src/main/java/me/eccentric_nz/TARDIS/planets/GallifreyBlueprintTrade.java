@@ -58,13 +58,17 @@ public class GallifreyBlueprintTrade {
         int index = plugin.getConfig().getBoolean("allow.zero_room") ? 0 : 1;
         BlueprintRoom bpr = BlueprintRoom.values()[TARDISConstants.RANDOM.nextInt(1, BlueprintRoom.values().length - index)];
         // get the blueprint item stack
-        ItemStack ris = buildResult(bpr.getPermission(), bpr.toString());
+        ItemStack ris = buildResult(plugin, bpr.getPermission(), bpr.toString());
+        return getRoomRecipe(plugin, bpr.toString(), ris, uses);
+    }
+
+    public static MerchantRecipe getRoomRecipe(TARDIS plugin, String room, ItemStack is, int uses) {
         // single use?
-        MerchantRecipe roomRecipe = new MerchantRecipe(ris, uses);
+        MerchantRecipe roomRecipe = new MerchantRecipe(is, uses);
         // get the room material for the ingredient from the blueprint
-        Material roomMaterial = Material.valueOf(plugin.getTradesConfig().getString("rooms." + bpr + ".material"));
+        Material roomMaterial = Material.valueOf(plugin.getTradesConfig().getString("rooms." + room + ".material"));
         // determine the stack size of the ingredient
-        int roomAmount = plugin.getTradesConfig().getInt("rooms." + bpr + ".amount");
+        int roomAmount = plugin.getTradesConfig().getInt("rooms." + room + ".amount");
         roomRecipe.addIngredient(ItemStack.of(roomMaterial, roomAmount));
         return roomRecipe;
     }
@@ -73,7 +77,7 @@ public class GallifreyBlueprintTrade {
         // don't include the custom console
         BlueprintConsole bpc = BlueprintConsole.values()[TARDISConstants.RANDOM.nextInt(BlueprintConsole.values().length - 1)];
         // get the blueprint item stack
-        ItemStack cis = buildResult(bpc.getPermission(), bpc.toString());
+        ItemStack cis = buildResult(plugin, bpc.getPermission(), bpc.toString());
         // single use?
         MerchantRecipe consoleRecipe = new MerchantRecipe(cis, uses);
         // get the console material for the ingredient from the blueprint
@@ -94,7 +98,7 @@ public class GallifreyBlueprintTrade {
         return List.of(room1Recipe, room2Recipe, room3Recipe, consoleRecipe);
     }
 
-    private ItemStack buildResult(String perm, String name) {
+    public static ItemStack buildResult(TARDIS plugin, String perm, String name) {
         ItemStack is = ItemStack.of(Material.MUSIC_DISC_MELLOHI, 1);
         ItemMeta im = is.getItemMeta();
         PersistentDataContainer pdc = im.getPersistentDataContainer();

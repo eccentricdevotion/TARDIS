@@ -36,64 +36,71 @@ import org.bukkit.persistence.PersistentDataType;
 import java.util.*;
 
 public class TimeLordTraderSpawner {
-    private static final int DEFAULT_TICK_DELAY = 1200;
-    public static final int DEFAULT_SPAWN_DELAY = 24000;
-    public static final int MIN_SPAWN_CHANCE = 25;
-    private static final int MAX_SPAWN_CHANCE = 75;
-    private static final int SPAWN_CHANCE_INCREASE = 25;
-    private static final int SPAWN_ONE_IN_X_CHANCE = 10;
-    private static final int NUMBER_OF_SPAWN_ATTEMPTS = 10;
+
     private final TARDIS plugin;
+    private final ItemStack type40;
 
     public TimeLordTraderSpawner(TARDIS plugin) {
         this.plugin = plugin;
+        this.type40 = getType40();
     }
 
-    public boolean spawn(World world) {
+    private ItemStack getType40() {
+        ItemStack is = ItemStack.of(Material.CLAY_BALL);
+        ItemMeta im = is.getItemMeta();
+        im.getPersistentDataContainer().set(plugin.getTimeLordUuidKey(), PersistentDataType.BOOLEAN, true);
+        NamespacedKey key = new NamespacedKey(plugin, "type_40_trader");
+        im.setItemModel(key);
+        is.setItemMeta(im);
+        return is;
+    }
+
+    public void spawn(World world) {
         Player player = getRandomPlayer(world);
-        if (player == null) {
-            return true;
-        } else if (TARDISConstants.RANDOM.nextInt(10) != 0) {
-            return false;
-        } else {
+        if (player != null && TARDISConstants.RANDOM.nextInt(10) == 0) {
             Location loc = player.getLocation();
             BlockPos playerPos = new BlockPos(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ());
             ServerLevel level = ((CraftWorld) world).getHandle();
             PoiManager poiManager = level.getPoiManager();
             Optional<BlockPos> poiPos = poiManager.find(p -> p.is(PoiTypes.MEETING), p -> true, playerPos, 48, PoiManager.Occupancy.ANY);
             BlockPos referencePos = poiPos.orElse(playerPos);
-            BlockPos spawnPosition = this.findSpawnPositionNear(level, referencePos);
-            if (spawnPosition != null && this.hasEnoughSpace(level, spawnPosition)) {
+            BlockPos spawnPosition = findSpawnPositionNear(level, referencePos);
+            if (spawnPosition != null && hasEnoughSpace(level, spawnPosition)) {
                 if (level.getBiome(spawnPosition).is(BiomeTags.WITHOUT_WANDERING_TRADER_SPAWNS)) {
-                    return false;
+                    return;
                 }
                 Location biomeLocation = new Location(world, spawnPosition.getX(), spawnPosition.getY(), spawnPosition.getZ());
-                Mannequin mannequin = world.spawn(biomeLocation, Mannequin.class);
-                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                    Skin skin = CharacterSkins.RASSILON;
-                    mannequin.setProfile(ResolvableProfile.resolvableProfile().name("").uuid(UUID.randomUUID()).addProperty(new ProfileProperty("textures", skin.value(), skin.signature())).build());
-                    mannequin.setSilent(true);
-                    mannequin.setAI(false);
-                    mannequin.setImmovable(true);
-                    mannequin.setMainHand(MainHand.RIGHT);
-                    mannequin.getEquipment().setItemInMainHand(ItemStack.of(Material.TOTEM_OF_UNDYING));
-                    Material material = Material.COD;
-                    NamespacedKey key = Features.VAMPIRE_OF_VENICE_FAN.getKey();
-                    ItemStack head = ItemStack.of(material, 1);
-                    ItemMeta im = head.getItemMeta();
-                    im.displayName(Component.text(skin.name()));
-                    im.setItemModel(key);
-                    im.getPersistentDataContainer().set(TARDIS.plugin.getTimeLordUuidKey(), PersistentDataType.BOOLEAN, true);
-                    head.setItemMeta(im);
-                    mannequin.getEquipment().setHelmet(head);
-                    // set trades in PDC
-                    String trades = getTrades(biomeLocation);
-                    mannequin.getPersistentDataContainer().set(plugin.getTimeLordUuidKey(), PersistentDataType.STRING, trades);
-                }, 5L);
-                return true;
+                spawn(biomeLocation);
             }
-            return false;
         }
+    }
+
+    public void spawn(Location location) {
+        Mannequin mannequin = location.getWorld().spawn(location, Mannequin.class);
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+            mannequin.setProfile(ResolvableProfile.resolvableProfile().name("").uuid(UUID.randomUUID())
+                    .addProperty(new ProfileProperty("textures", CharacterSkins.RASSILON.value(), CharacterSkins.RASSILON.signature()))
+                    .build()
+            );
+            mannequin.setSilent(true);
+            mannequin.setAI(false);
+            mannequin.setImmovable(true);
+            mannequin.setMainHand(MainHand.RIGHT);
+            mannequin.getEquipment().setItemInMainHand(ItemStack.of(Material.TOTEM_OF_UNDYING));
+            mannequin.getEquipment().setItemInOffHand(type40);
+            Material material = Material.COD;
+            NamespacedKey key = Features.VAMPIRE_OF_VENICE_FAN.getKey();
+            ItemStack head = ItemStack.of(material, 1);
+            ItemMeta im = head.getItemMeta();
+            im.displayName(Component.text(CharacterSkins.RASSILON.name()));
+            im.setItemModel(key);
+            head.setItemMeta(im);
+            mannequin.getEquipment().setHelmet(head);
+            // set trades in PDC
+            String trades = getTrades(location);
+            mannequin.getPersistentDataContainer().set(plugin.getTimeLordUuidKey(), PersistentDataType.STRING, trades);
+            mannequin.getPersistentDataContainer().set(plugin.getTradesKey(), PersistentDataType.INTEGER, 0);
+        }, 5L);
     }
 
     private BlockPos findSpawnPositionNear(final LevelReader level, final BlockPos referencePosition) {

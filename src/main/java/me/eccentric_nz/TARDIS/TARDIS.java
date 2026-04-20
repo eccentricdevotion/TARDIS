@@ -184,6 +184,7 @@ public class TARDIS extends JavaPlugin {
     private NamespacedKey loopKey;
     private NamespacedKey tardisIdKey;
     private NamespacedKey timeLordUuidKey;
+    private NamespacedKey tradesKey;
     private NamespacedKey standUuidKey;
     private NamespacedKey interactionUuidKey;
     private NamespacedKey modelUuidKey;
@@ -268,6 +269,7 @@ public class TARDIS extends JavaPlugin {
         loopKey = new NamespacedKey(this, "loop");
         tardisIdKey = new NamespacedKey(this, "tardis_id");
         timeLordUuidKey = new NamespacedKey(this, "timelord_uuid");
+        tradesKey = new NamespacedKey(this, "trades");
         standUuidKey = new NamespacedKey(this, "stand_uuid");
         interactionUuidKey = new NamespacedKey(this, "interaction_uuid");
         modelUuidKey = new NamespacedKey(this, "model_uuid");
@@ -738,7 +740,9 @@ public class TARDIS extends JavaPlugin {
      *
      * @return the lamps configuration
      */
-    public FileConfiguration getLampsConfig() { return lampsConfig; }
+    public FileConfiguration getLampsConfig() {
+        return lampsConfig;
+    }
 
     /**
      * Gets the language configuration
@@ -1159,6 +1163,15 @@ public class TARDIS extends JavaPlugin {
      */
     public NamespacedKey getTimeLordUuidKey() {
         return timeLordUuidKey;
+    }
+
+    /**
+     * Gets the Time Lord trades NamespacedKey
+     *
+     * @return the Time Lord trades NamespacedKey
+     */
+    public NamespacedKey getTradesKey() {
+        return tradesKey;
     }
 
     /**

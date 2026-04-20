@@ -5,17 +5,16 @@ import me.eccentric_nz.TARDIS.blueprints.trader.TimeLordTraderSpawner;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class TradeInfo {
+public class TradeCommand {
 
     private final TARDIS plugin;
 
-    public TradeInfo(TARDIS plugin) {
+    public TradeCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public void list(CommandSender sender) {
+    public void spawn(CommandSender sender) {
         Player player = (Player) sender;
-        String list = new TimeLordTraderSpawner(plugin).getTrades(player.getLocation());
-        plugin.getMessenger().message(sender, list);
+        new TimeLordTraderSpawner(plugin).spawn(player.getLocation().add(2.5d, 0, 2.5d));
     }
 }

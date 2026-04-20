@@ -63,18 +63,7 @@ public class TraderRunnable implements Runnable {
             if (plugin.getTradesConfig().getStringList("no_spawn").contains(name)) {
                 continue;
             }
-            // get the current cyberman count
-            int cyberarmy = 0;
-            Collection<Zombie> zombies = w.getEntitiesByClass(Zombie.class);
-            for (Zombie c : zombies) {
-                PersistentDataContainer pdc = c.getPersistentDataContainer();
-                if (pdc.has(TARDISWeepingAngels.CYBERMAN, PersistentDataType.INTEGER)) {
-                    cyberarmy++;
-                }
-            }
-            if (cyberarmy < plugin.getMonstersConfig().getInt("cybermen.worlds." + name)) {
-                spawnTrader(w);
-            }
+            spawnTrader(w);
         }
     }
 
