@@ -105,6 +105,12 @@ public class TARDISConversions {
                 conversions++;
             }
         }
+        if (!plugin.getConfig().getBoolean("conversions.keyed_worlds")) {
+            if (new KeyedWorldsUpdater(plugin).setKeys()) {
+                plugin.getConfig().set("conversions.keyed_worlds", true);
+                conversions++;
+            }
+        }
         if (conversions > 0) {
             plugin.saveConfig();
         }

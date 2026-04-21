@@ -96,6 +96,7 @@ public class TARDISConfiguration {
         booleanOptions.put("conversions.custom_presets", false);
         booleanOptions.put("conversions.eyes", false);
         booleanOptions.put("conversions.icons", false);
+        booleanOptions.put("conversions.keyed_worlds", false);
         booleanOptions.put("conversions.interior_door_id", false);
         booleanOptions.put("conversions.legacy_budget", false);
         booleanOptions.put("conversions.paintings", false);

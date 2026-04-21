@@ -49,6 +49,7 @@ public class WorldNameConverter {
         worldTables.put("homes", "home_id");
         worldTables.put("next", "next_id");
         locationTables.put("blocks", "b_id");
+        locationTables.put("controls", "c_id");
         locationTables.put("doors", "door_id");
         locationTables.put("forcefield", "uuid");
         locationTables.put("portals", "portal_id");

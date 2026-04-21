@@ -292,3 +292,4 @@ conversions:
   player_prefs_materials: true
   short_grass: true
   room_costs: true
+  keyed_worlds: true

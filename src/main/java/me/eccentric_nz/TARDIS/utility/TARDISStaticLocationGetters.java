@@ -16,9 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.utility;
 
+import net.kyori.adventure.key.Key;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+
+import java.util.Locale;
 
 /**
  * @author eccentric_nz
@@ -82,11 +85,11 @@ public class TARDISStaticLocationGetters {
     /**
      * Gets a location object from data stored in the database.
      *
-     * @param string the stored Bukkit location string e.g. Location{world=CraftWorld{name=world},x=0.0,y=0.0,z=0.0,pitch=0.0,yaw=0.0}
+     * @param string the stored Bukkit location string e.g. Location{world=CraftWorld{key=minecraft:world},x=0.0,y=0.0,z=0.0,pitch=0.0,yaw=0.0}
      * @return the location or null
      */
     public static Location getLocationFromBukkitString(String string) {
-        //Location{world=CraftWorld{name=world},x=0.0,y=0.0,z=0.0,pitch=0.0,yaw=0.0}
+        //Location{world=CraftWorld{key=minecraft:world},x=0.0,y=0.0,z=0.0,pitch=0.0,yaw=0.0}
         String[] loc_data = string.split(",");
         // w, x, y, z - 0, 1, 2, 3
         String[] wStr = loc_data[0].split("=");
@@ -94,11 +97,12 @@ public class TARDISStaticLocationGetters {
         String[] yStr = loc_data[2].split("=");
         String[] zStr = loc_data[3].split("=");
         String tmp = wStr[2].substring(0, (wStr[2].length() - 1));
-        World w = Bukkit.getServer().getWorld(tmp);
+        Key key = Key.key(tmp, ':');
+        World w = Bukkit.getServer().getWorld(key);
         if (w == null) {
             return null;
         }
-        // Location{world=CraftWorld{name=world},x=1.0000021E7,y=67.0,z=1824.0,pitch=0.0,yaw=0.0}
+        // Location{world=CraftWorld{key=minecraft:world},x=1.0000021E7,y=67.0,z=1824.0,pitch=0.0,yaw=0.0}
         double x = (xStr[1].contains("E")) ? Double.parseDouble(xStr[1]) : TARDISNumberParsers.parseDouble(xStr[1]);
         double y = TARDISNumberParsers.parseDouble(yStr[1]);
         double z = (zStr[1].contains("E")) ? Double.parseDouble(zStr[1]) : TARDISNumberParsers.parseDouble(zStr[1]);
@@ -112,10 +116,10 @@ public class TARDISStaticLocationGetters {
      * @param x the x coordinate of the block's location
      * @param y the y coordinate of the block's location
      * @param z the z coordinate of the block's location
-     * @return a String in the style of org.bukkit.Location.toString() e.g. Location{world=CraftWorld{name=world},x=0.0,y=0.0,z=0.0,pitch=0.0,yaw=0.0}
+     * @return a String in the style of org.bukkit.Location.toString() e.g. 7.0.1Location{world=CraftWorld{key=minecraft:tworld},x=0.0,y=0.0,z=0.0,pitch=0.0,yaw=0.0}
      */
     public static String makeLocationStr(String w, String x, String y, String z) {
-        return "Location{world=CraftWorld{name=" + w + "},x=" + x + ".0,y=" + y + ".0,z=" + z + ".0,pitch=0.0,yaw=0.0}";
+        return "Location{world=CraftWorld{key=minecraft:" + w.toLowerCase(Locale.ROOT) + "},x=" + x + ".0,y=" + y + ".0,z=" + z + ".0,pitch=0.0,yaw=0.0}";
     }
 
     /**
@@ -125,15 +129,11 @@ public class TARDISStaticLocationGetters {
      * @param x the x coordinate of the block's location
      * @param y the y coordinate of the block's location
      * @param z the z coordinate of the block's location
-     * @return a String in the style of org.bukkit.Location.toString() e.g. Location{world=CraftWorld{name=world},x=0.0,y=0.0,z=0.0,pitch=0.0,yaw=0.0}
+     * @return a String in the style of org.bukkit.Location.toString() e.g. 7.0.1Location{world=CraftWorld{key=minecraft:tworld},x=0.0,y=0.0,z=0.0,pitch=0.0,yaw=0.0}
      */
     public static String makeLocationStr(World w, int x, int y, int z) {
-        return "Location{world=CraftWorld{name=" + w.getName() + "},x=" + x + ".0,y=" + y + ".0,z=" + z + ".0,pitch=0.0,yaw=0.0}";
-    }
-
-    public static String makeTetrisLocationString(String world, double x, double y, double z) {
-        // Location{world=CraftWorld{name=world},x=0.0,y=0.0,z=0.0,pitch=0.0,yaw=0.0}
-        return String.format("Location{world=CraftWorld{name=%s},x=%.1f,y=%.1f,z=%.1f,pitch=0.0,yaw=0.0}", world, x, y, z);
+        String key = w.getKey().asString();
+        return "Location{world=CraftWorld{key=" + key + "},x=" + x + ".0,y=" + y + ".0,z=" + z + ".0,pitch=0.0,yaw=0.0}";
     }
 
     /**
