@@ -41,6 +41,10 @@ public class TradesConfigUpdater {
                 i++;
             }
         }
+        if (tradesConfig.getString("rooms.APIARY.material").equals("BEE_HIVE") ||tradesConfig.getString("rooms.APIARY.material").equals("BEE_NEST")) {
+            tradesConfig.set("rooms.APIARY.material", "BEEHIVE");
+            i++;
+        }
         if (i > 0) {
             try {
                 String tradesPath = plugin.getDataFolder() + File.separator + "trades.yml";

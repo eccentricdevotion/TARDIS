@@ -99,7 +99,7 @@ jobs:
         echo "today=$(date +'%d %B %Y %H:%M')" >> $GITHUB_OUTPUT
 
     - name: Send Discord notification
-      uses: stegzilla/discord-notify@v4
+      uses: stegzilla/discord-notify@v5
       with:
         webhook_url: ${{ secrets.DISCORD_WEBHOOK_URL }}
         title: TARDIS Plugin Update

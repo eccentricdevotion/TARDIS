@@ -99,7 +99,7 @@ dependencies {
     compileOnly("net.citizensnpcs:citizensapi:2.0.42-SNAPSHOT") {
         isTransitive = false
     }
-    compileOnly("com.palmergames.bukkit.towny:towny:0.102.0.13") {
+    compileOnly("com.palmergames.bukkit.towny:towny:0.102.0.14") {
         isTransitive = false
     }
     compileOnly("org.mvplugins.multiverse.core:multiverse-core:5.6.1") {
@@ -118,7 +118,7 @@ dependencies {
     compileOnly("com.griefcraft:lwc:2.4.2") {
         isTransitive = false
     }
-    compileOnly("com.github.retrooper:packetevents-api:2.12.0") {
+    compileOnly("com.github.retrooper:packetevents-api:2.12.1") {
         isTransitive = false
     }
     compileOnly("me.libraryaddict.disguises:libsdisguises:11.0.16") {
@@ -142,13 +142,13 @@ dependencies {
     compileOnly(files("libs/dynmap-api-3.8.jar"))
     compileOnly(files("libs/DynmapCoreAPI-3.8.jar"))
     compileOnly("de.bluecolored:bluemap-api:2.7.8")
-    compileOnly("xyz.jpenilla:squaremap-api:1.3.12") {
+    compileOnly("xyz.jpenilla:squaremap-api:1.3.13") {
         isTransitive = false
     }
     compileOnly(files("libs/VaultAPI.jar"))
     compileOnly("org.geysermc.floodgate:api:2.2.5-SNAPSHOT")
     compileOnly("org.geysermc.geyser:api:2.9.5-SNAPSHOT")
-    compileOnly("org.jsoup:jsoup:1.22.1") {
+    compileOnly("org.jsoup:jsoup:1.22.2") {
         isTransitive = false
     }
     compileOnly("org.popcraft:chunky-common:1.4.58")
