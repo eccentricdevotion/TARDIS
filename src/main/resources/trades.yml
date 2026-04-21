@@ -129,7 +129,7 @@ rooms:
     material: SANDSTONE
     amount: 86
   APIARY:
-    material: BEE_HIVE
+    material: BEEHIVE
     amount: 35
   AQUARIUM:
     material: TUBE_CORAL_BLOCK
