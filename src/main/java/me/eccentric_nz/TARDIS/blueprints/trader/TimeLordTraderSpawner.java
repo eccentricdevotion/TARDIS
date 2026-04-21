@@ -19,6 +19,7 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelReader;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.craftbukkit.CraftWorld;
@@ -72,6 +73,8 @@ public class TimeLordTraderSpawner {
 
     public void spawn(Location location) {
         Mannequin mannequin = location.getWorld().spawn(location, Mannequin.class);
+        // play a sound
+        location.getWorld().playSound(location, Sound.ENTITY_ALLAY_AMBIENT_WITHOUT_ITEM, 1f,0.5f);
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             mannequin.setProfile(ResolvableProfile.resolvableProfile().name("").uuid(UUID.randomUUID())
                     .addProperty(new ProfileProperty("textures", CharacterSkins.RASSILON.value(), CharacterSkins.RASSILON.signature()))

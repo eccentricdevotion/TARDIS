@@ -3,6 +3,7 @@ package me.eccentric_nz.TARDIS.blueprints.trader;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.BlueprintRoom;
 import me.eccentric_nz.TARDIS.planets.GallifreyBlueprintTrade;
+import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Mannequin;
@@ -21,11 +22,9 @@ import java.util.List;
 public class TimeLordTradeListener implements Listener {
 
     private final TARDIS plugin;
-    private final int uses;
 
     public TimeLordTradeListener(TARDIS plugin) {
         this.plugin = plugin;
-        this.uses = Math.min(this.plugin.getPlanetsConfig().getInt("planets.gallifrey.villager_blueprints.uses"), 16);
     }
 
     @EventHandler
@@ -33,9 +32,12 @@ public class TimeLordTradeListener implements Listener {
         if (event.getRightClicked() instanceof Mannequin mannequin
                 && mannequin.getPersistentDataContainer().has(plugin.getTimeLordUuidKey(), PersistentDataType.STRING)) {
             int count = mannequin.getPersistentDataContainer().getOrDefault(plugin.getTradesKey(), PersistentDataType.INTEGER, 0);
-            if (count > uses) {
+            if (count > 4) {
                 // remove this time lord
-                mannequin.remove();
+                Dematerialise runnable = new Dematerialise(plugin, mannequin);
+                int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 2L, 20L);
+                runnable.setTask(task);
+                TARDISSounds.playTARDISSound(mannequin.getLocation(), "tardis_takeoff_fast");
                 return;
             }
             // get the recipes

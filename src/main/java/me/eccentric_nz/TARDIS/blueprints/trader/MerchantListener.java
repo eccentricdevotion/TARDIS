@@ -19,13 +19,12 @@ public class MerchantListener implements Listener {
 
     @EventHandler
     public void onPlayerTrade(PlayerPurchaseEvent event) {
-        plugin.debug("PlayerPurchaseEvent");
         Player player = event.getPlayer();
         // find the mannequin - entity interaction range is maximum 5 blocks
         for (Entity entity : player.getNearbyEntities(5, 5, 5)) {
             if (entity instanceof Mannequin mannequin) {
                 if (mannequin.getPersistentDataContainer().has(plugin.getTradesKey(), PersistentDataType.INTEGER)) {
-                    int count = mannequin.getPersistentDataContainer().get(plugin.getTradesKey(), PersistentDataType.INTEGER);
+                    int count = mannequin.getPersistentDataContainer().getOrDefault(plugin.getTradesKey(), PersistentDataType.INTEGER, 0);
                     mannequin.getPersistentDataContainer().set(plugin.getTradesKey(), PersistentDataType.INTEGER, count + 1);
                 }
             }

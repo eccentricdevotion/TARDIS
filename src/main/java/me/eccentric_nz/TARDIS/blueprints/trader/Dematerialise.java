@@ -34,7 +34,7 @@ public class Dematerialise implements Runnable {
     public Dematerialise(TARDIS plugin, Mannequin mannequin) {
         this.plugin = plugin;
         this.mannequin = mannequin;
-        is = this.mannequin.getEquipment().getItemInOffHand();
+        is = this.mannequin.getEquipment().getHelmet();
     }
 
     @Override
@@ -52,6 +52,7 @@ public class Dematerialise implements Runnable {
             ItemMeta im = is.getItemMeta();
             im.setItemModel(model);
             is.setItemMeta(im);
+            mannequin.getEquipment().setHelmet(is);
         } else {
             plugin.getServer().getScheduler().cancelTask(task);
             task = 0;

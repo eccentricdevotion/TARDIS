@@ -235,7 +235,7 @@ rooms:
     amount: 13
   OBSERVATORY:
     material: POLISHED_BLACKSTONE_BRICKS
-    amount: 197
+    amount: 128
   PASSAGE:
     material: CLAY
     amount: 25

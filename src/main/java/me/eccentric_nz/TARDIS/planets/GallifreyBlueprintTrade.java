@@ -69,7 +69,15 @@ public class GallifreyBlueprintTrade {
         Material roomMaterial = Material.valueOf(plugin.getTradesConfig().getString("rooms." + room + ".material"));
         // determine the stack size of the ingredient
         int roomAmount = plugin.getTradesConfig().getInt("rooms." + room + ".amount");
+        int other = 0;
+        if (roomAmount > 64) {
+            other = roomAmount - 64;
+            roomAmount = 64;
+        }
         roomRecipe.addIngredient(ItemStack.of(roomMaterial, roomAmount));
+        if (other > 0) {
+            roomRecipe.addIngredient(ItemStack.of(roomMaterial, other));
+        }
         return roomRecipe;
     }
 
