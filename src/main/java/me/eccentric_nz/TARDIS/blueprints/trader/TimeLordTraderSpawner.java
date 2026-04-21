@@ -85,6 +85,7 @@ public class TimeLordTraderSpawner {
             mannequin.setSilent(true);
             mannequin.setAI(false);
             mannequin.setImmovable(true);
+            mannequin.setInvulnerable(true);
             mannequin.setMainHand(MainHand.RIGHT);
             mannequin.getEquipment().setItemInMainHand(ItemStack.of(Material.TOTEM_OF_UNDYING));
             mannequin.getEquipment().setItemInOffHand(type40);
