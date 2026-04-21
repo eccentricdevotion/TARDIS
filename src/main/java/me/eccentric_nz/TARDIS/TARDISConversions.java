@@ -106,7 +106,7 @@ public class TARDISConversions {
             }
         }
         if (!plugin.getConfig().getBoolean("conversions.keyed_worlds")) {
-            if (new KeyedWorldsUpdater(plugin).setKeys()) {
+            if (new KeyedWorldsUpdater(plugin).setKeys() && new WorldNameConverter(plugin).update()) {
                 plugin.getConfig().set("conversions.keyed_worlds", true);
                 conversions++;
             }

@@ -49,17 +49,17 @@ public class TARDISStaticLocationGetters {
      * @return a Location.
      */
     public static Location getLocationFromDB(String s) {
-        double savedx, savedy, savedz;
+        double savedX, savedY, savedZ;
         // compile location from string
         String[] data = s.split(":");
-        World savedw = Bukkit.getServer().getWorld(data[0]);
-        if (savedw == null) {
+        World savedWorld = Bukkit.getServer().getWorld(Key.key(data[0], data[1]));
+        if (savedWorld == null) {
             return null;
         }
-        savedx = TARDISNumberParsers.parseDouble(data[1]);
-        savedy = TARDISNumberParsers.parseDouble(data[2]);
-        savedz = TARDISNumberParsers.parseDouble(data[3]);
-        return new Location(savedw, savedx, savedy, savedz);
+        savedX = TARDISNumberParsers.parseDouble(data[2]);
+        savedY = TARDISNumberParsers.parseDouble(data[3]);
+        savedZ = TARDISNumberParsers.parseDouble(data[4]);
+        return new Location(savedWorld, savedX, savedY, savedZ);
     }
 
     /**
@@ -72,19 +72,13 @@ public class TARDISStaticLocationGetters {
         double savedX, savedY, savedZ;
         // compile location from string
         String[] data = s.split(":");
-        World savedWorld = Bukkit.getServer().getWorld(data[0]);
-        if (data.length == 4) {
-            savedWorld = Bukkit.getWorld(data[0]);
-        } else {
-            Key key = Key.key(Key.MINECRAFT_NAMESPACE, data[0]);
-            savedWorld = Bukkit.getWorld(key);
-        }
+        World savedWorld = Bukkit.getServer().getWorld(Key.key(data[0], data[1]));
         if (savedWorld == null) {
             return null;
         }
-        savedX = TARDISNumberParsers.parseDouble(data[1]) + 0.5d;
-        savedY = TARDISNumberParsers.parseDouble(data[2]) + 1.0d;
-        savedZ = TARDISNumberParsers.parseDouble(data[3]) + 0.5d;
+        savedX = TARDISNumberParsers.parseDouble(data[2]) + 0.5d;
+        savedY = TARDISNumberParsers.parseDouble(data[3]) + 1.0d;
+        savedZ = TARDISNumberParsers.parseDouble(data[4]) + 0.5d;
         return new Location(savedWorld, savedX, savedY, savedZ);
     }
 

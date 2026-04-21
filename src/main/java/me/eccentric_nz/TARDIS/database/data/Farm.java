@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.database.data;
 /**
  * @author eccentric_nz
  * <p>
- * Returns a String representation of the room spawn locations in this TARDIS. IThey are in the form of {@code World name:x:y:z}
+ * Returns a String representation of the room spawn locations in this TARDIS. They are in the form of {@code World namespace:dimension:x:y:z}
  */
 public record Farm(int tardis_id, String allay, String apiary, String aquarium, String bamboo, String birdcage,
                    String farm, String geode, String happy, String hutch, String igloo, String iistubil, String lava,

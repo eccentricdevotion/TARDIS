@@ -21,7 +21,6 @@ public class KeyedWorldsUpdater {
         this.plugin = plugin;
         prefix = this.plugin.getPrefix();
         locationTables.add(new SQLTable("artron_powered", "a_id"));
-        locationTables.add(new SQLTable("beacons", "beacon_id"));
         locationTables.add(new SQLTable("bind", "bind_id"));
         locationTables.add(new SQLTable("blocks", "b_id"));
         locationTables.add(new SQLTable("camera", "c_id"));
@@ -33,6 +32,10 @@ public class KeyedWorldsUpdater {
         locationTables.add(new SQLTable("portals", "portal_id", "teleport"));
         locationTables.add(new SQLTable("seeds", "seed_id"));
         locationTables.add(new SQLTable("vaults", "v_id"));
+        // vortex manipulator
+        locationTables.add(new SQLTable("beacons", "beacon_id"));
+        // shop
+        locationTables.add(new SQLTable("items", "item_id"));
     }
 
     public boolean setKeys() {
@@ -51,22 +54,22 @@ public class KeyedWorldsUpdater {
             for (SQLTable entry : locationTables) {
                 int i = 0;
                 // only records that haven't been converted
-                String locationQuery = "SELECT " + entry.id + ", " + entry.column + " FROM " + prefix + entry.table + " WHERE " + entry.column + " LIKE '%name=%';";
-                String locationUpdate = "UPDATE " + prefix + entry.table + " SET " + entry.column + " = ? WHERE " + entry.id + " = ?";
+                String locationQuery = "SELECT " + entry.id() + ", " + entry.column() + " FROM " + prefix + entry.table() + " WHERE " + entry.column() + " LIKE '%name=%';";
+                String locationUpdate = "UPDATE " + prefix + entry.table() + " SET " + entry.column() + " = ? WHERE " + entry.id() + " = ?";
                 ps = connection.prepareStatement(locationUpdate);
                 connection.setAutoCommit(false);
                 // get records
                 ResultSet rsl = statement.executeQuery(locationQuery);
                 if (rsl.isBeforeFirst()) {
                     while (rsl.next()) {
-                        String original = rsl.getString(entry.column);
+                        String original = rsl.getString(entry.column());
                         // find the world name, lowercase it, and swap the prefix
                         String updated = pattern.matcher(original).replaceAll(match ->
                                 "key=minecraft:" + match.group(1).toLowerCase()
                         );
                         // set the new data
                         ps.setString(1, updated);
-                        ps.setInt(2, rsl.getInt(entry.id));
+                        ps.setInt(2, rsl.getInt(entry.id()));
                         ps.addBatch();
                         i++;
                     }
@@ -74,12 +77,12 @@ public class KeyedWorldsUpdater {
                 if (i > 0) {
                     ps.executeBatch();
                     connection.commit();
-                    plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Converted " + i + " old world name records to keyed");
+                    plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Converted " + i + " location records to use world keys.");
                 }
             }
             connection.setAutoCommit(true);
         } catch (SQLException e) {
-            plugin.debug("Conversion error for non-keyed world names! " + e.getMessage());
+            plugin.debug("Conversion error for non-world-keyed locations! " + e.getMessage());
             return false;
         } finally {
             try {
@@ -96,12 +99,5 @@ public class KeyedWorldsUpdater {
             }
         }
         return true;
-    }
-
-    record SQLTable(String table, String id, String column) {
-
-        public SQLTable(String table, String id) {
-            this(table, id, "location");
-        }
     }
 }
