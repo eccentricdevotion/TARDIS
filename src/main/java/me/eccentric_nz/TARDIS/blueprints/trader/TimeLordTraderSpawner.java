@@ -4,15 +4,12 @@ import com.destroystokyo.paper.profile.ProfileProperty;
 import io.papermc.paper.datacomponent.item.ResolvableProfile;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.custommodels.keys.Features;
+import me.eccentric_nz.TARDIS.custommodels.keys.ChameleonVariant;
 import me.eccentric_nz.TARDIS.enumeration.Room;
 import me.eccentric_nz.TARDIS.skins.CharacterSkins;
-import me.eccentric_nz.TARDIS.skins.Skin;
-import net.kyori.adventure.text.Component;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BiomeTags;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.SpawnPlacementType;
 import net.minecraft.world.entity.SpawnPlacements;
@@ -22,7 +19,6 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelReader;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.craftbukkit.CraftWorld;
@@ -49,8 +45,7 @@ public class TimeLordTraderSpawner {
         ItemStack is = ItemStack.of(Material.CLAY_BALL);
         ItemMeta im = is.getItemMeta();
         im.getPersistentDataContainer().set(plugin.getTimeLordUuidKey(), PersistentDataType.BOOLEAN, true);
-        NamespacedKey key = new NamespacedKey(plugin, "type_40_trader");
-        im.setItemModel(key);
+        im.setItemModel(ChameleonVariant.TYPE_40_OPEN.getKey());
         is.setItemMeta(im);
         return is;
     }
@@ -85,18 +80,10 @@ public class TimeLordTraderSpawner {
             mannequin.setSilent(true);
             mannequin.setAI(false);
             mannequin.setImmovable(true);
-            mannequin.setInvulnerable(true);
             mannequin.setMainHand(MainHand.RIGHT);
             mannequin.getEquipment().setItemInMainHand(ItemStack.of(Material.TOTEM_OF_UNDYING));
-            mannequin.getEquipment().setItemInOffHand(type40);
-            Material material = Material.COD;
-            NamespacedKey key = Features.VAMPIRE_OF_VENICE_FAN.getKey();
-            ItemStack head = ItemStack.of(material, 1);
-            ItemMeta im = head.getItemMeta();
-            im.displayName(Component.text(CharacterSkins.RASSILON.name()));
-            im.setItemModel(key);
-            head.setItemMeta(im);
-            mannequin.getEquipment().setHelmet(head);
+            // equip a type 40 TARDIS
+            mannequin.getEquipment().setHelmet(type40);
             // set trades in PDC
             String trades = getTrades(location);
             mannequin.getPersistentDataContainer().set(plugin.getTimeLordUuidKey(), PersistentDataType.STRING, trades);

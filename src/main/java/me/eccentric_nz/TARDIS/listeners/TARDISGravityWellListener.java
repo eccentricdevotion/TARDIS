@@ -17,11 +17,14 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.trader.Dematerialise;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetGravity;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.forcefield.ForceField;
 import me.eccentric_nz.TARDIS.rooms.GravityWellRunnable;
+import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.TARDIS.utility.VoidFall;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -30,6 +33,7 @@ import org.bukkit.block.Block;
 import org.bukkit.damage.DamageSource;
 import org.bukkit.damage.DamageType;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Mannequin;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -38,6 +42,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -153,14 +158,14 @@ public class TARDISGravityWellListener implements Listener {
      * Listens for a player falling onto a Gravity Well location. If the block the player lands on is contained in the
      * gravityDownList (or gravityUpList if they fell back down the up well) then the player receives no fall damage.
      *
-     * @param e an entity taking damage
+     * @param event an entity taking damage
      */
     @EventHandler(ignoreCancelled = true)
-    public void onEntityDamage(EntityDamageEvent e) {
-        Entity ent = e.getEntity();
+    public void onEntityDamage(EntityDamageEvent event) {
+        Entity ent = event.getEntity();
         if ((ent instanceof Player p)) {
             Location l = ent.getLocation();
-            switch (e.getCause()) {
+            switch (event.getCause()) {
                 case FALL:
                     l.setX(l.getBlockX());
                     l.setY(l.getBlockY() - 1);
@@ -169,21 +174,32 @@ public class TARDISGravityWellListener implements Listener {
                     l.setYaw(0.0F);
                     String loc = l.toString();
                     if (plugin.getGeneralKeeper().getGravityDownList().contains(loc) || plugin.getGeneralKeeper().getGravityUpList().containsKey(loc)) {
-                        e.setCancelled(true);
+                        event.setCancelled(true);
                     }
                     break;
                 case VOID:
                     if (l.getBlockY() < 1 && plugin.getUtils().inTARDISWorld(p)) {
-                        if (plugin.getConfig().getString("preferences.vortex_fall").equals("kill")) {
+                        if ("kill".equals(plugin.getConfig().getString("preferences.vortex_fall"))) {
                             p.damage(Float.MAX_VALUE, DamageSource.builder(DamageType.GENERIC_KILL).build());
                         } else {
-                            e.setCancelled(true);
+                            event.setCancelled(true);
                             new VoidFall(plugin).teleport(p);
                         }
                     }
                     break;
                 default:
                     break;
+            }
+        } else if (ent instanceof Mannequin mannequin && mannequin.getPersistentDataContainer().has(plugin.getTimeLordUuidKey(), PersistentDataType.STRING)) {
+            event.setCancelled(true);
+            if (event.getDamageSource().getCausingEntity() instanceof Player player) {
+                // knockback
+                ForceField.velocity(player, ForceField.getTrajectory2d(mannequin.getLocation(), player), 1.25d);
+                // dematerialise the time lord's TARDIS and remove the mannequin
+                Dematerialise runnable = new Dematerialise(plugin, mannequin);
+                int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 2L, 20L);
+                runnable.setTask(task);
+                TARDISSounds.playTARDISSound(mannequin.getLocation(), "tardis_takeoff_fast");
             }
         }
     }

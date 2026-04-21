@@ -19,6 +19,7 @@ public class MerchantListener implements Listener {
 
     @EventHandler
     public void onPlayerTrade(PlayerPurchaseEvent event) {
+        plugin.debug("PlayerPurchaseEvent");
         Player player = event.getPlayer();
         // find the mannequin - entity interaction range is maximum 5 blocks
         for (Entity entity : player.getNearbyEntities(5, 5, 5)) {
