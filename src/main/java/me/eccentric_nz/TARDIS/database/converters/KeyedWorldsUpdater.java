@@ -52,7 +52,7 @@ public class KeyedWorldsUpdater {
                 int i = 0;
                 // only records that haven't been converted
                 String locationQuery = "SELECT " + entry.id + ", " + entry.column + " FROM " + prefix + entry.table + " WHERE " + entry.column + " LIKE '%name=%';";
-                String locationUpdate = "UPDATE " + prefix + entry.table + "SET " + entry.column + " = ? WHERE " + entry.id + " = ?";
+                String locationUpdate = "UPDATE " + prefix + entry.table + " SET " + entry.column + " = ? WHERE " + entry.id + " = ?";
                 ps = connection.prepareStatement(locationUpdate);
                 connection.setAutoCommit(false);
                 // get records

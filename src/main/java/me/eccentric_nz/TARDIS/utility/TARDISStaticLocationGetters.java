@@ -69,17 +69,23 @@ public class TARDISStaticLocationGetters {
      * @return a Location.
      */
     public static Location getSpawnLocationFromDB(String s) {
-        double savedx, savedy, savedz;
+        double savedX, savedY, savedZ;
         // compile location from string
         String[] data = s.split(":");
-        World savedw = Bukkit.getServer().getWorld(data[0]);
-        if (savedw == null) {
+        World savedWorld = Bukkit.getServer().getWorld(data[0]);
+        if (data.length == 4) {
+            savedWorld = Bukkit.getWorld(data[0]);
+        } else {
+            Key key = Key.key(Key.MINECRAFT_NAMESPACE, data[0]);
+            savedWorld = Bukkit.getWorld(key);
+        }
+        if (savedWorld == null) {
             return null;
         }
-        savedx = TARDISNumberParsers.parseDouble(data[1]) + 0.5d;
-        savedy = TARDISNumberParsers.parseDouble(data[2]) + 1.0d;
-        savedz = TARDISNumberParsers.parseDouble(data[3]) + 0.5d;
-        return new Location(savedw, savedx, savedy, savedz);
+        savedX = TARDISNumberParsers.parseDouble(data[1]) + 0.5d;
+        savedY = TARDISNumberParsers.parseDouble(data[2]) + 1.0d;
+        savedZ = TARDISNumberParsers.parseDouble(data[3]) + 0.5d;
+        return new Location(savedWorld, savedX, savedY, savedZ);
     }
 
     /**
@@ -96,7 +102,7 @@ public class TARDISStaticLocationGetters {
         String[] xStr = loc_data[1].split("=");
         String[] yStr = loc_data[2].split("=");
         String[] zStr = loc_data[3].split("=");
-        String tmp = wStr[2].substring(0, (wStr[2].length() - 1));
+        String tmp = wStr[2].substring(0, (wStr[2].length() - 1)).toLowerCase(Locale.ROOT);
         Key key = Key.key(tmp, ':');
         World w = Bukkit.getServer().getWorld(key);
         if (w == null) {
@@ -143,7 +149,7 @@ public class TARDISStaticLocationGetters {
      * @return a String in the style of world:x:y:z
      */
     public static String makeLocationStr(Location location) {
-        return location.getWorld().getName() + ":" + location.getBlockX() + ":" + location.getBlockY() + ":" + location.getBlockZ();
+        return location.getWorld().getKey().getKey() + ":" + location.getBlockX() + ":" + location.getBlockY() + ":" + location.getBlockZ() + ":" + location.getYaw();
     }
 
     /**
