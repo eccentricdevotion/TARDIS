@@ -47,7 +47,7 @@ public class AbandonedLister {
         if (rst.resultSet()) {
             boolean click = (sender instanceof Player);
             if (click) {
-                sender.sendMessage(plugin.getLanguage().getString("ABANDONED_CLICK"));
+                plugin.getMessenger().message(sender, plugin.getLanguage().getString("ABANDONED_CLICK"));
             }
             int i = 1;
             for (Tardis tardis : rst.getData()) {
@@ -61,13 +61,13 @@ public class AbandonedLister {
                     if (click) {
                         plugin.getMessenger().sendAbandoned(sender, i, owner, l, tardis.getTardisId());
                     } else {
-                        sender.sendMessage(i + ". Abandoned by: " + owner + ", location: " + l);
+                        plugin.getMessenger().message(sender, i + ". Abandoned by: " + owner + ", location: " + l);
                     }
                     i++;
                 }
             }
         } else {
-            sender.sendMessage(plugin.getLanguage().getString("ABANDONED_NONE"));
+            plugin.getMessenger().message(sender, plugin.getLanguage().getString("ABANDONED_NONE"));
         }
     }
 }

@@ -80,7 +80,7 @@ public class RoomsUtility {
             int tmp = Math.round((entry.getValue() / 100.0F) * plugin.getConfig().getInt("growth.rooms_condenser_percent"));
             int amount = (tmp > 0) ? tmp : 1;
             String line = mat + ", " + amount;
-            sender.sendMessage(Component.text(line));
+            plugin.getMessenger().message(sender, line);
         }
     }
 

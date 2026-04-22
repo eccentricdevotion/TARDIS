@@ -56,7 +56,7 @@ public class CreateTARDISCommand {
                         wallMaterial = Material.valueOf(wall.toUpperCase(Locale.ROOT));
                         if (!TARDISWalls.BLOCKS.contains(wallMaterial)) {
                             plugin.getMessenger().send(sender, TardisModule.TARDIS, "WALL_NOT_VALID", wall);
-                            TARDISWalls.BLOCKS.forEach((w) -> sender.sendMessage(w.toString()));
+                            TARDISWalls.BLOCKS.forEach((w) -> plugin.getMessenger().message(sender, w.toString()));
                             return;
                         }
                     } catch (IllegalArgumentException e) {
@@ -67,7 +67,7 @@ public class CreateTARDISCommand {
                         floorMaterial = Material.valueOf(floor);
                         if (!TARDISWalls.BLOCKS.contains(floorMaterial)) {
                             plugin.getMessenger().send(sender, TardisModule.TARDIS, "WALL_NOT_VALID", floor);
-                            TARDISWalls.BLOCKS.forEach((w) -> sender.sendMessage(w.toString()));
+                            TARDISWalls.BLOCKS.forEach((w) -> plugin.getMessenger().message(sender, w.toString()));
                             return;
                         }
                     } catch (IllegalArgumentException e) {

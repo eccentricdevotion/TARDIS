@@ -20,7 +20,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
-import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
@@ -43,7 +42,7 @@ public class FloorCommand {
         if (!TARDISWalls.BLOCKS.contains(Material.getMaterial(wall_mat))) {
             String message = (wall_mat.equals("HELP")) ? "WALL_LIST" : "WALL_NOT_VALID";
             plugin.getMessenger().send(player, TardisModule.TARDIS, message, which);
-            TARDISWalls.BLOCKS.forEach((w) -> player.sendMessage(Component.text(w.toString())));
+            TARDISWalls.BLOCKS.forEach((w) -> plugin.getMessenger().message(player, w.toString()));
             return;
         }
         HashMap<String, Object> setw = new HashMap<>();

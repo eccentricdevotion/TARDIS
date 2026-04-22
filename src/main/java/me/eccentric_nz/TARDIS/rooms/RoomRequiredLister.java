@@ -71,7 +71,7 @@ public class RoomRequiredLister {
                 int required = map.getValue() - has;
                 if (required > 0) {
                     String line = map.getKey() + ", " + required;
-                    player.sendMessage(Component.text(line));
+                    plugin.getMessenger().message(player, line);
                     total += required;
                 }
             }

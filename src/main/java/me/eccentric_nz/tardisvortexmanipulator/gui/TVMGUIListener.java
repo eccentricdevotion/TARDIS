@@ -420,11 +420,11 @@ public class TVMGUIListener extends TARDISMenuListener {
                         playernames.forEach((pn) -> buf.append(", ").append(pn));
                         message = " (" + buf.substring(2) + ")";
                     }
-                    player.sendMessage("    " + key + ": " + value + message);
+                    plugin.getMessenger().message(player, "    " + key + ": " + value + message);
                 });
                 scannedentities.clear();
             } else {
-                player.sendMessage("SCAN_NONE");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "SCAN_NONE");
             }
         } else {
             Player scanned = plugin.getServer().getPlayer(pname);
@@ -442,10 +442,10 @@ public class TVMGUIListener extends TARDISMenuListener {
             float hunger = (scanned.getFoodLevel() / 20F) * 100;
             int air = scanned.getRemainingAir();
             plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_LIFESIGNS", pname);
-            player.sendMessage("Has been alive for: " + TVMUtils.convertTicksToTime(scanned.getTicksLived()));
-            player.sendMessage("Health: " + String.format("%.1f", health / 2) + " hearts");
-            player.sendMessage("Hunger bar: " + String.format("%.2f", hunger) + "%");
-            player.sendMessage("Air: ~" + (air / 20) + " seconds remaining");
+            plugin.getMessenger().message(player, "Has been alive for: " + TVMUtils.convertTicksToTime(scanned.getTicksLived()));
+            plugin.getMessenger().message(player, "Health: " + String.format("%.1f", health / 2) + " hearts");
+            plugin.getMessenger().message(player, "Hunger bar: " + String.format("%.2f", hunger) + "%");
+            plugin.getMessenger().message(player, "Air: ~" + (air / 20) + " seconds remaining");
         }
     }
 

@@ -46,10 +46,10 @@ public class RecipesLister {
         if (!c.isEmpty()) {
             for (RecipeCategory category : RecipeCategory.values()) {
                 if (category != RecipeCategory.UNUSED && category != RecipeCategory.UNCRAFTABLE) {
-                    sender.sendMessage(Component.text("#### " + category.getName()));
+                    plugin.getMessenger().message(sender, "#### " + category.getName());
                     for (RecipeItem item : RecipeItem.values()) {
                         if (item.getCategory() == category) {
-                            sender.sendMessage(Component.text("| " + TARDISStringUtils.capitalise(item.name()) + " | `/tardisrecipe " + item.toTabCompletionString() + "` |"));
+                            plugin.getMessenger().message(sender, "| " + TARDISStringUtils.capitalise(item.name()) + " | `/tardisrecipe " + item.toTabCompletionString() + "` |");
                         }
                     }
                     plugin.getMessenger().message(sender, "");
@@ -57,10 +57,10 @@ public class RecipesLister {
             }
         } else {
             for (Map.Entry<String, ShapedRecipe> shaped : plugin.getFigura().getShapedRecipes().entrySet()) {
-                sender.sendMessage(Component.text(TARDISStringUtils.toUnderscoredUppercase(shaped.getKey()) + "(\"" + shaped.getKey() + "\", Material." + shaped.getValue().getResult().getType() + ", " + RecipeItem.getByName(shaped.getKey()).getModel() + "),"));
+                plugin.getMessenger().message(sender, TARDISStringUtils.toUnderscoredUppercase(shaped.getKey()) + "(\"" + shaped.getKey() + "\", Material." + shaped.getValue().getResult().getType() + ", " + RecipeItem.getByName(shaped.getKey()).getModel() + "),");
             }
             for (Map.Entry<String, ShapelessRecipe> shapeless : plugin.getIncomposita().getShapelessRecipes().entrySet()) {
-                sender.sendMessage(Component.text(TARDISStringUtils.toUnderscoredUppercase(shapeless.getKey()) + "(\"" + shapeless.getKey() + "\", Material." + shapeless.getValue().getResult().getType() + ", " + RecipeItem.getByName(shapeless.getKey()).getModel() + "),"));
+                plugin.getMessenger().message(sender, TARDISStringUtils.toUnderscoredUppercase(shapeless.getKey()) + "(\"" + shapeless.getKey() + "\", Material." + shapeless.getValue().getResult().getType() + ", " + RecipeItem.getByName(shapeless.getKey()).getModel() + "),");
             }
             if (plugin.getConfig().getBoolean("creation.seed_block.crafting")) {
                 for (Map.Entry<Schematic, ShapedRecipe> seed : plugin.getObstructionum().getSeedRecipes().entrySet()) {
@@ -77,12 +77,12 @@ public class RecipesLister {
                             material = TARDISSeedDisplayItem.CUSTOM.getMaterial().toString();
                         }
                     }
-                    sender.sendMessage(Component.text(seed.getKey().getPermission().toUpperCase(Locale.ROOT) + "_SEED(\"" + seed.getKey().getPermission() + "\", Material." + material + ", " + model + "),"));
+                    plugin.getMessenger().message(sender, seed.getKey().getPermission().toUpperCase(Locale.ROOT) + "_SEED(\"" + seed.getKey().getPermission() + "\", Material." + material + ", " + model + "),");
                 }
             }
             if (plugin.getConfig().getBoolean("modules.weeping_angels")) {
                 for (Monster m : Monster.values()) {
-                    sender.sendMessage(Component.text(m.toString() + "_HEAD(\"" + m.getName() + " Head\", Material." + m.getMaterial().toString() + ", " + m.getModel() + "),"));
+                    plugin.getMessenger().message(sender, m.toString() + "_HEAD(\"" + m.getName() + " Head\", Material." + m.getMaterial().toString() + ", " + m.getModel() + "),");
                 }
             }
         }

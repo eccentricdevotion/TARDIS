@@ -480,7 +480,7 @@ public class ComponentCommand {
         JsonObject model;
         try {
             String path = plugin.getDataFolder() + File.separator + "component" + File.separator + key + ".json";
-            sender.sendMessage(path);
+            plugin.getMessenger().message(sender, path);
             File child = new File(path);
             JsonReader reader = new JsonReader(new FileReader(child));
             JsonObject root = JsonParser.parseReader(reader).getAsJsonObject();
@@ -501,8 +501,8 @@ public class ComponentCommand {
         try (FileWriter writer = new FileWriter(file)) {
             gson.toJson(select, writer);
         } catch (IOException e) {
-            sender.sendMessage("File write error for " + filename);
-            sender.sendMessage(e.getMessage());
+            plugin.getMessenger().message(sender, "File write error for " + filename);
+            plugin.getMessenger().message(sender, e.getMessage());
         }
     }
 

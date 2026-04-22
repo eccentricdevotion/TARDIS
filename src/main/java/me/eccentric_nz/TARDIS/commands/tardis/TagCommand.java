@@ -20,7 +20,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTag;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
-import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -43,9 +42,9 @@ public class TagCommand {
         plugin.getMessenger().message(player, TardisModule.TARDIS,  "Here are the stats:");
         String who = (!plugin.getTagConfig().getString("it").isEmpty()) ? plugin.getTagConfig().getString("it") : "No one";
         plugin.getMessenger().sendWithColours(player, who + " is currently the ", "#FFFFFF", "'OOD'", "#FF0000");
-        player.sendMessage(Component.text("-----------"));
+        plugin.getMessenger().message(player, "-----------");
         plugin.getMessenger().messageWithColour(player, "Top 5 OODs", "#FFAA00");
-        player.sendMessage(Component.text("-----------"));
+        plugin.getMessenger().message(player, "-----------");
         if (rs.resultSet()) {
             ArrayList<HashMap<String, String>> data = rs.getData();
             data.forEach((map) -> {
@@ -54,9 +53,9 @@ public class TagCommand {
                 plugin.getMessenger().sendWithColours(player, p + ": ", "#FFFFFF", getHoursMinutesSeconds(t), "#55FF55");
             });
         } else {
-            player.sendMessage("The are no stats yet :(");
+            plugin.getMessenger().message(player, "The are no stats yet :(");
         }
-        player.sendMessage(Component.text("-----------"));
+        plugin.getMessenger().message(player, "-----------");
     }
 
     private String getHoursMinutesSeconds(long millis) {

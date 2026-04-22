@@ -157,7 +157,7 @@ public class DevCommandNode {
                                     if (ctx.getSource().getSender() instanceof Player player) {
                                         // get target block
                                         Block block = player.getTargetBlock(null, 8);
-                                        player.sendMessage(Component.text(block.getState().toString()));
+                                        plugin.getMessenger().message(player, block.getState().toString());
                                     }
                                     return Command.SINGLE_SUCCESS;
                                 })))

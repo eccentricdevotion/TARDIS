@@ -72,10 +72,10 @@ public class OptionsCommand {
                 Set<String> chargerNames = plugin.getConfig().getConfigurationSection("rechargers").getKeys(false);
                 chargerNames.forEach((charname) -> {
                     plugin.getMessenger().messageWithColour(sender, "    " + charname + ":", "#55FF55");
-                    sender.sendMessage(Component.text("        world: " + plugin.getConfig().getString("rechargers." + charname + ".world")));
-                    sender.sendMessage(Component.text("        x: " + plugin.getConfig().getString("rechargers." + charname + ".x")));
-                    sender.sendMessage(Component.text("        y: " + plugin.getConfig().getString("rechargers." + charname + ".y")));
-                    sender.sendMessage(Component.text("        z: " + plugin.getConfig().getString("rechargers." + charname + ".z")));
+                    plugin.getMessenger().message(sender, "        world: " + plugin.getConfig().getString("rechargers." + charname + ".world"));
+                    plugin.getMessenger().message(sender, "        x: " + plugin.getConfig().getString("rechargers." + charname + ".x"));
+                    plugin.getMessenger().message(sender, "        y: " + plugin.getConfig().getString("rechargers." + charname + ".y"));
+                    plugin.getMessenger().message(sender, "        z: " + plugin.getConfig().getString("rechargers." + charname + ".z"));
                 });
             }
             case "rooms" -> {
@@ -83,10 +83,10 @@ public class OptionsCommand {
                 Set<String> roomNames = plugin.getRoomsConfig().getConfigurationSection("rooms").getKeys(false);
                 roomNames.forEach((r) -> {
                     plugin.getMessenger().messageWithColour(sender, "    " + r + ":", "#55FF55");
-                    sender.sendMessage(Component.text("        enabled: " + plugin.getRoomsConfig().getString("rooms." + r + ".enabled")));
-                    sender.sendMessage(Component.text("        cost: " + plugin.getRoomsConfig().getString("rooms." + r + ".cost")));
-                    sender.sendMessage(Component.text("        offset: " + plugin.getRoomsConfig().getString("rooms." + r + ".offset")));
-                    sender.sendMessage(Component.text("        seed: " + plugin.getRoomsConfig().getString("rooms." + r + ".seed")));
+                    plugin.getMessenger().message(sender, "        enabled: " + plugin.getRoomsConfig().getString("rooms." + r + ".enabled"));
+                    plugin.getMessenger().message(sender, "        cost: " + plugin.getRoomsConfig().getString("rooms." + r + ".cost"));
+                    plugin.getMessenger().message(sender, "        offset: " + plugin.getRoomsConfig().getString("rooms." + r + ".offset"));
+                    plugin.getMessenger().message(sender, "        seed: " + plugin.getRoomsConfig().getString("rooms." + r + ".seed"));
                 });
             }
         }

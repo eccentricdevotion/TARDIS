@@ -73,7 +73,7 @@ public class TARDISPruner {
                                     bw.write(line);
                                     bw.newLine();
                                     // display the TARDIS prune list
-                                    sender.sendMessage(line);
+                                    plugin.getMessenger().message(sender, line);
                                 }
                             } else {
                                 plugin.debug(plugin.getLanguage().getString("CURRENT_NOT_FOUND"));
@@ -104,7 +104,7 @@ public class TARDISPruner {
                     if (lastuse.before(prune)) {
                         // remove the TARDIS
                         if (te.pruneExterminate(rs.getInt("tardis_id"))) {
-                            sender.sendMessage("Pruned " + rs.getString("owner") + "'s TARDIS");
+                            plugin.getMessenger().message(sender, "Pruned " + rs.getString("owner") + "'s TARDIS");
                         }
                     }
                 }

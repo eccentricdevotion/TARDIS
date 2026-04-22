@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.commands;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.RootCommand;
+import net.kyori.adventure.text.Component;
 import org.bukkit.command.CommandSender;
 
 import java.util.List;
@@ -38,22 +39,22 @@ public class TARDISCommandHelper {
 
     public void getCommand(String c, CommandSender sender) {
         if (c.isEmpty()) {
-            sender.sendMessage("------");
+            plugin.getMessenger().message(sender, "------");
             plugin.getMessenger().sendCommand(sender, "TARDIS", "/tardis? <command>");
             plugin.getMessenger().sendWithColours(sender, "Online: ", "#AAAAAA", "https://tardis.pages.dev/commands", "#FFFFFF");
             plugin.getGeneralKeeper().getPluginYAML().getConfigurationSection("commands").getKeys(false).forEach((o) -> {
                 if (!o.equals("tardis?")) {
-                    sender.sendMessage("/" + o);
+                    plugin.getMessenger().message(sender, "/" + o);
                 }
             });
-            sender.sendMessage("------");
+            plugin.getMessenger().message(sender, "------");
         } else {
             String[] split = c.split(" ");
             try {
                 RootCommand root = RootCommand.valueOf(split[0].toLowerCase(Locale.ROOT));
                 if (split.length > 1) {
                     if (plugin.getGeneralKeeper().getPluginYAML().contains("commands." + root + "." + split[1].toLowerCase(Locale.ROOT))) {
-                        sender.sendMessage("------");
+                        plugin.getMessenger().message(sender, "------");
                         plugin.getMessenger().sendWithColours(sender, "Command: ", "#FFFFFF", "/" + c.toLowerCase(Locale.ROOT), "#FFAA00");
                         plugin.getMessenger().sendWithColours(sender, "Description: ", "#AAAAAA", plugin.getGeneralKeeper().getPluginYAML().getString("commands." + root + "." + split[1].toLowerCase(Locale.ROOT) + ".description"), "#FFFFFF");
                         if (plugin.getGeneralKeeper().getPluginYAML().contains("commands." + root + "." + split[1].toLowerCase(Locale.ROOT) + ".usage")) {
@@ -66,12 +67,12 @@ public class TARDISCommandHelper {
                         } else {
                             plugin.getMessenger().sendWithColours(sender, "Permission: ", "#AAAAAA", "None required", "#FFFFFF");
                         }
-                        sender.sendMessage("------");
+                        plugin.getMessenger().message(sender, "------");
                     } else {
-                        sender.sendMessage("Invalid TARDIS help command argument: " + c);
+                        plugin.getMessenger().message(sender, "Invalid TARDIS help command argument: " + c);
                     }
                 } else {
-                    sender.sendMessage("------");
+                    plugin.getMessenger().message(sender, "------");
                     Set<String> args = plugin.getGeneralKeeper().getPluginYAML().getConfigurationSection("commands." + root).getKeys(false);
                     if (args.size() > 5) {
                         plugin.getMessenger().sendCommand(sender, "/" + root, "/tardis? " + root + " <argument>");
@@ -83,7 +84,7 @@ public class TARDISCommandHelper {
                         }
                         args.forEach((m) -> {
                             if (!notThese.contains(m)) {
-                                sender.sendMessage("/" + c + " " + m);
+                                plugin.getMessenger().message(sender, "/" + c + " " + m);
                             }
                         });
                     } else {
@@ -94,10 +95,10 @@ public class TARDISCommandHelper {
                         plugin.getMessenger().sendWithColours(sender, "Usage: ", "#AAAAAA", plugin.getGeneralKeeper().getPluginYAML().getString("commands." + root + ".usage").replace("<command>", root.toString()), "#FFFFFF");
                         plugin.getMessenger().sendWithColours(sender, "Permission: ", "#AAAAAA", plugin.getGeneralKeeper().getPluginYAML().getString("commands." + root + ".permission"), "#FFFFFF");
                     }
-                    sender.sendMessage("------");
+                    plugin.getMessenger().message(sender, "------");
                 }
             } catch (IllegalArgumentException e) {
-                sender.sendMessage("Invalid TARDIS help command argument: " + c);
+                plugin.getMessenger().message(sender, "Invalid TARDIS help command argument: " + c);
             }
         }
     }

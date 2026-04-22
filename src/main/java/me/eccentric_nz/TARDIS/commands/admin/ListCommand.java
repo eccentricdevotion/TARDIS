@@ -69,7 +69,7 @@ public class ListCommand {
                 }
                 plugin.getMessenger().send(sender, TardisModule.TARDIS, "FILE_SAVED");
             } else if (what.equalsIgnoreCase("portals")) {
-                plugin.getTrackerKeeper().getPortals().forEach((key, value) -> sender.sendMessage("TARDIS id: " + value.getTardisId() + " has a portal open at: " + key.toString()));
+                plugin.getTrackerKeeper().getPortals().forEach((key, value) -> plugin.getMessenger().message(sender, "TARDIS id: " + value.getTardisId() + " has a portal open at: " + key.toString()));
             } else if (what.equalsIgnoreCase("abandoned")) { // abandoned
                 new AbandonedLister(plugin).list(sender);
             }

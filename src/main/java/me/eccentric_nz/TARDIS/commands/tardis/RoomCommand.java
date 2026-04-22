@@ -168,7 +168,7 @@ public class RoomCommand {
                 }
             }
             if (!hasRequired) {
-                player.sendMessage("-----------------------------");
+                plugin.getMessenger().message(player, "-----------------------------");
                 plugin.getTrackerKeeper().getRoomSeed().remove(uuid);
                 return;
             }
