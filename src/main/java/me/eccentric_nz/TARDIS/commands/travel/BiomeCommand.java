@@ -135,9 +135,9 @@ public class BiomeCommand {
                 // get the world
                 w = world;
             } else {
-                String planet = current.location().getWorld().getName();
+                String planet = current.location().getWorld().getKey().getKey();
                 if (TARDISConstants.isTARDISPlanet(planet)) {
-                    plugin.getMessenger().send(player, TardisModule.TARDIS, "BIOME_NOT_PLANET", current.location().getWorld().getName());
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "BIOME_NOT_PLANET", current.location().getWorld().getKey().getKey());
                     return;
                 }
                 w = current.location().getWorld();

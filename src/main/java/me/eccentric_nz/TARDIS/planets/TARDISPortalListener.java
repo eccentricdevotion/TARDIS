@@ -31,7 +31,7 @@ public class TARDISPortalListener implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onPortalCreate(PortalCreateEvent event) {
-        String world = event.getWorld().getName();
+        String world = event.getWorld().getKey().getKey();
         if (!plugin.getPlanetsConfig().getBoolean("planets." + world + ".allow_portals")) {
             event.setCancelled(true);
         }

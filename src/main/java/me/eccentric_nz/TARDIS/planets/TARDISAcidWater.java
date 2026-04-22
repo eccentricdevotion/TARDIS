@@ -86,7 +86,7 @@ public class TARDISAcidWater implements Listener {
             return;
         }
         // check that they are in the Skaro world
-        if (!player.getWorld().getName().equalsIgnoreCase("skaro")) {
+        if (!player.getWorld().getKey().getKey().equalsIgnoreCase("skaro")) {
             return;
         }
         // return if players are immune
@@ -137,7 +137,7 @@ public class TARDISAcidWater implements Listener {
                     if (player.isDead()) {
                         burningPlayers.remove(player);
                         cancel();
-                    } else if ((player.getLocation().getBlock().isLiquid() || player.getLocation().getBlock().getRelative(BlockFace.UP).isLiquid()) && player.getLocation().getWorld().getName().equalsIgnoreCase("skaro")) {
+                    } else if ((player.getLocation().getBlock().isLiquid() || player.getLocation().getBlock().getRelative(BlockFace.UP).isLiquid()) && player.getLocation().getWorld().getKey().getKey().equalsIgnoreCase("skaro")) {
                         // apply additional potion effects
                         if (!plugin.getPlanetsConfig().getStringList("planets.skaro.acid_potions").isEmpty()) {
                             plugin.getPlanetsConfig().getStringList("planets.skaro.acid_potions").forEach((t) -> {
@@ -237,7 +237,7 @@ public class TARDISAcidWater implements Listener {
     @EventHandler
     public void onFillAcidBucket(PlayerBucketFillEvent event) {
         Player p = event.getPlayer();
-        if (!p.getWorld().getName().equalsIgnoreCase("skaro")) {
+        if (!p.getWorld().getKey().getKey().equalsIgnoreCase("skaro")) {
             return;
         }
         Material type = event.getBlockClicked().getType();

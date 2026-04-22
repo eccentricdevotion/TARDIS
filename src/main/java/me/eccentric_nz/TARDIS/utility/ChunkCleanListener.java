@@ -122,17 +122,17 @@ public class ChunkCleanListener implements Listener {
                 }
             }
             if (i > 0) {
-                plugin.debug("Removed " + i + " armour stands in " + event.getWorld().getName());
+                plugin.debug("Removed " + i + " armour stands in " + event.getWorld().getKey().getKey());
             }
             if (j > 0) {
-                plugin.debug("Removed " + j + " interactions in " + event.getWorld().getName());
+                plugin.debug("Removed " + j + " interactions in " + event.getWorld().getKey().getKey());
             }
         }
     }
 
     private boolean checkLocation(Entity entity) {
         HashMap<String, Object> where = new HashMap<>();
-        where.put("world", entity.getWorld().getName());
+        where.put("world", entity.getWorld().getKey().asString());
         where.put("x", entity.getLocation().getBlockX());
         where.put("y", entity.getLocation().getBlockY());
         where.put("z", entity.getLocation().getBlockZ());

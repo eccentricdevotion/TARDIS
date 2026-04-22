@@ -271,7 +271,7 @@ public class TARDISTerminalListener implements Listener {
     }
 
     private void setCurrent(InventoryView view, Player p, int slot) {
-        String current = terminalUsers.get(p.getUniqueId()).location().getWorld().getName();
+        String current = terminalUsers.get(p.getUniqueId()).location().getWorld().getKey().getKey();
         if (!plugin.getPlanetsConfig().getBoolean("planets." + current + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
             current = plugin.getMVHelper().getAlias(current);
         } else {
@@ -398,7 +398,7 @@ public class TARDISTerminalListener implements Listener {
                         e = Environment.NETHER;
                     }
                     TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
-                    if (world.equals(terminalUsers.get(uuid).location().getWorld().getName())) {
+                    if (world.equals(terminalUsers.get(uuid).location().getWorld().getKey().getKey())) {
                         // add current co-ords
                         slotx += terminalUsers.get(uuid).location().getBlockX();
                         slotz += terminalUsers.get(uuid).location().getBlockZ();

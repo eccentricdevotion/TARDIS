@@ -47,7 +47,7 @@ public class RandomDestinationAction {
     public static void setDestination(TARDIS plugin, Player player, int id, COMPASS direction, int cost, String comps, UUID ownerUUID, Location rand) {
         if (rand != null) {
             // double check TARDIS travel is allowed in this world
-            if (!plugin.getPlanetsConfig().getBoolean("planets." + rand.getWorld().getName() + ".time_travel")) {
+            if (!plugin.getPlanetsConfig().getBoolean("planets." + rand.getWorld().getKey().getKey() + ".time_travel")) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_WORLD_TRAVEL");
                 return;
             }
@@ -60,7 +60,7 @@ public class RandomDestinationAction {
             set.put("submarine", (plugin.getTrackerKeeper().getSubmarine().contains(id)) ? 1 : 0);
             plugin.getTrackerKeeper().getSubmarine().remove(id);
             String worldname;
-            if (!plugin.getPlanetsConfig().getBoolean("planets." + rand.getWorld().getName() + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
+            if (!plugin.getPlanetsConfig().getBoolean("planets." + rand.getWorld().getKey().getKey() + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
                 worldname = plugin.getMVHelper().getAlias(rand.getWorld());
             } else {
                 worldname = TARDISAliasResolver.getWorldAlias(rand.getWorld());
@@ -121,7 +121,7 @@ public class RandomDestinationAction {
         if (repeaters[0] == 1) { // first position
             environment = "THIS";
             // check TARDIS travel is allowed in this world
-            if (!plugin.getPlanetsConfig().getBoolean("planets." + current.location().getWorld().getName() + ".time_travel")) {
+            if (!plugin.getPlanetsConfig().getBoolean("planets." + current.location().getWorld().getKey().getKey() + ".time_travel")) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_WORLD_TRAVEL");
                 return;
             }

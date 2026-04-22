@@ -34,6 +34,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.UUID;
 
 /**
@@ -77,7 +78,7 @@ public class AnyoneMoveListener implements Listener {
                 exit = !(to.getWorld().getKey().getKey().contains("tardis"));
             } else if (plugin.getConfig().getBoolean("creation.default_world")) {
                 // check default world name
-                exit = !(to.getWorld().getName().equals(plugin.getConfig().getString("creation.default_world_name")));
+                exit = !(to.getWorld().getKey().getKey().equals(plugin.getConfig().getString("creation.default_world_name", "tardis_timevortex").toLowerCase(Locale.ROOT)));
             } else {
                 exit = !(to.getWorld().getKey().getKey().contains("tardis"));
             }

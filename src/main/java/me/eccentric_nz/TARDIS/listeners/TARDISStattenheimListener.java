@@ -62,10 +62,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * The handheld Recall Button on the TARDIS Stattenheim remote broadcasts a Stattenheim signal through the Vortex, which
@@ -151,7 +148,7 @@ public class TARDISStattenheimListener implements Listener {
                     }
                     if (TARDISPermission.hasPermission(player, "tardis.timetravel")) {
                         Location remoteLocation = b.getLocation();
-                        if (!plugin.getConfig().getBoolean("travel.include_default_world") && plugin.getConfig().getBoolean("creation.default_world") && remoteLocation.getWorld().getName().equals(plugin.getConfig().getString("creation.default_world_name"))) {
+                        if (!plugin.getConfig().getBoolean("travel.include_default_world") && plugin.getConfig().getBoolean("creation.default_world") && remoteLocation.getWorld().getKey().getKey().equals(plugin.getConfig().getString("creation.default_world_name", "tardis_timevortex").toLowerCase(Locale.ROOT))) {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_WORLD_TRAVEL");
                             return;
                         }
@@ -174,7 +171,7 @@ public class TARDISStattenheimListener implements Listener {
                             remoteLocation.setY(yplusone + 1);
                         }
                         // check the world is not excluded
-                        String world = remoteLocation.getWorld().getName();
+                        String world = remoteLocation.getWorld().getKey().getKey();
                         if (!plugin.getPlanetsConfig().getBoolean("planets." + world + ".time_travel")) {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PB_IN_WORLD");
                             return;

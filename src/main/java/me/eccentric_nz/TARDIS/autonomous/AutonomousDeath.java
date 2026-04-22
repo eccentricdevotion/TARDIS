@@ -116,7 +116,7 @@ public class AutonomousDeath {
                                     }
                                 }
                             }
-                            String death_world = death_loc.getWorld().getName();
+                            String death_world = death_loc.getWorld().getKey().getKey();
                             // where is the TARDIS Police Box?
                             ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
                             if (!rsc.resultSet()) {
@@ -170,7 +170,7 @@ public class AutonomousDeath {
                                 }
                                 case CLOSEST -> { // CLOSEST
                                     // if home world is NOT the death world
-                                    if (!hw.getName().equals(death_world)) {
+                                    if (!hw.getKey().getKey().equals(death_world)) {
                                         // look for a recharge location
                                         goto_loc = AutonomousUtils.getRecharger(death_world, player);
                                         if (goto_loc == null) {
@@ -286,7 +286,7 @@ public class AutonomousDeath {
                                 }, 500L);
                                 // set current
                                 HashMap<String, Object> setc = new HashMap<>();
-                                setc.put("world", goto_loc.getWorld().getName());
+                                setc.put("world", goto_loc.getWorld().getKey().asString());
                                 setc.put("x", goto_loc.getBlockX());
                                 setc.put("y", goto_loc.getBlockY());
                                 setc.put("z", goto_loc.getBlockZ());
@@ -297,7 +297,7 @@ public class AutonomousDeath {
                                 plugin.getQueryFactory().doUpdate("current", setc, wherec);
                                 // set back
                                 HashMap<String, Object> setb = new HashMap<>();
-                                setb.put("world", current.location().getWorld().getName());
+                                setb.put("world", current.location().getWorld().getKey().asString());
                                 setb.put("x", current.location().getBlockX());
                                 setb.put("y", current.location().getBlockY());
                                 setb.put("z", current.location().getBlockZ());

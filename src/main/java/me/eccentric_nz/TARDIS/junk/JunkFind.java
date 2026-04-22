@@ -51,7 +51,7 @@ public class JunkFind {
             if (rsc.resultSet()) {
                 Current current = rsc.getCurrent();
                 String world = TARDISAliasResolver.getWorldAlias(current.location().getWorld());
-                if (!plugin.getPlanetsConfig().getBoolean("planets." + current.location().getWorld().getName() + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
+                if (!plugin.getPlanetsConfig().getBoolean("planets." + current.location().getWorld().getKey().getKey() + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
                     world = plugin.getMVHelper().getAlias(current.location().getWorld());
                 }
                 plugin.getMessenger().send(sender, TardisModule.TARDIS, "TARDIS_FIND", world + " at x: " + current.location().getBlockX() + " y: " + current.location().getBlockY() + " z: " + current.location().getBlockZ());

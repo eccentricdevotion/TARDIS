@@ -53,7 +53,7 @@ public class BackCommand {
         set.put("z", rsb.getZ());
         set.put("direction", rsb.getDirection().toString());
         set.put("submarine", (rsb.isSubmarine()) ? 1 : 0);
-        String which = "Fast Return to (" + rsb.getWorld().getName() + ":" + rsb.getX() + ":" + rsb.getY() + ":" + rsb.getZ() + ")";
+        String which = "Fast Return to (" + rsb.getWorld().getKey().getKey() + ":" + rsb.getX() + ":" + rsb.getY() + ":" + rsb.getZ() + ")";
         HashMap<String, Object> tid = new HashMap<>();
         tid.put("tardis_id", id);
         plugin.getQueryFactory().doSyncUpdate("next", set, tid);

@@ -68,7 +68,7 @@ public class TARDISPruner {
                                 Timestamp lastuse = new Timestamp(rs.getLong("lastuse"));
                                 if (lastuse.before(prune)) {
                                     Current current = rsc.getCurrent();
-                                    String line = "Time Lord: " + rs.getString("owner") + ", Location: " + current.location().getWorld().getName() + ":" + current.location().getBlockX() + ":" + current.location().getBlockY() + ":" + current.location().getBlockZ();
+                                    String line = "Time Lord: " + rs.getString("owner") + ", Location: " + current.location().getWorld().getKey().getKey() + ":" + current.location().getBlockX() + ":" + current.location().getBlockY() + ":" + current.location().getBlockZ();
                                     // write line to file
                                     bw.write(line);
                                     bw.newLine();

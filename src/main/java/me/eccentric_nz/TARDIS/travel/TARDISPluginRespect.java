@@ -64,7 +64,7 @@ public class TARDISPluginRespect {
             return true;
         }
         if (plugin.getConfig().getBoolean("travel.per_world_perms")) {
-            String perm = location.getWorld().getName();
+            String perm = location.getWorld().getKey().getKey();
             if (!TARDISPermission.hasPermission(flag.getPlayer(), "tardis.travel." + perm)) {
                 if (flag.messagePlayer()) {
                     plugin.getMessenger().send(flag.getPlayer(), TardisModule.TARDIS, "TRAVEL_NO_PERM_WORLD", perm);

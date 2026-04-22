@@ -129,8 +129,8 @@ public class TerminalDialogProcessor {
                     Pair<Boolean, Integer> safe = safe(finalLocation, rsc.getCurrent().direction(), submarine, player);
                     if (safe.getFirst()) {
                         HashMap<String, Object> set = new HashMap<>();
-                        String ww = (!plugin.getPlanetsConfig().getBoolean("planets." + finalLocation.getWorld().getName() + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMVHelper().getWorld(finalLocation.getWorld().getName()).getName() : finalLocation.getWorld().getName();
-                        set.put("world", ww);
+                        String ww = (!plugin.getPlanetsConfig().getBoolean("planets." + finalLocation.getWorld().getKey().getKey() + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMVHelper().getWorld(finalLocation.getWorld().getName()).getName() : finalLocation.getWorld().getKey().getKey();
+                        set.put("world", "minecraft:" + ww);
                         set.put("x", finalLocation.getBlockX());
                         set.put("y", safe.getSecond());
                         set.put("z", finalLocation.getBlockZ());

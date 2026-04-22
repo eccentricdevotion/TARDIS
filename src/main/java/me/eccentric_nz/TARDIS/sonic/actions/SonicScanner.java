@@ -109,7 +109,7 @@ public class SonicScanner {
         long time = scan_loc.getWorld().getTime();
         String daynight = TARDISStaticUtils.getTime(time);
         String worldname;
-        if (!plugin.getPlanetsConfig().getBoolean("planets." + scan_loc.getWorld().getName() + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
+        if (!plugin.getPlanetsConfig().getBoolean("planets." + scan_loc.getWorld().getKey().getKey() + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
             worldname = plugin.getMVHelper().getAlias(scan_loc.getWorld());
         } else {
             worldname = TARDISAliasResolver.getWorldAlias(scan_loc.getWorld());

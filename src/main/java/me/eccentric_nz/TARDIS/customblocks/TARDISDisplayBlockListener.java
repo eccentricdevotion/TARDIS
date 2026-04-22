@@ -139,7 +139,7 @@ public class TARDISDisplayBlockListener implements Listener {
             HashMap<String, Object> where = new HashMap<>();
             where.put("tardis_id", id);
             HashMap<String, Object> set = new HashMap<>();
-            set.put("world", location.getWorld().getName());
+            set.put("world", location.getWorld().getKey().asString());
             set.put("x", location.getBlockX());
             set.put("y", location.getBlockY());
             set.put("z", location.getBlockZ());
@@ -562,7 +562,7 @@ public class TARDISDisplayBlockListener implements Listener {
                                 item.setInvulnerable(true);
                                 // get the TARDIS id
                                 HashMap<String, Object> where = new HashMap<>();
-                                where.put("world", block.getLocation().getWorld().getName());
+                                where.put("world", block.getLocation().getWorld().getKey().asString());
                                 where.put("x", block.getLocation().getBlockX());
                                 where.put("y", block.getLocation().getBlockY());
                                 where.put("z", block.getLocation().getBlockZ());

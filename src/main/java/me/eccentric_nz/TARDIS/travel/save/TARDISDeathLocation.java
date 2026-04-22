@@ -106,7 +106,7 @@ public class TARDISDeathLocation {
         if (plugin.getTardisArea().isInExistingArea(location)) {
             return null;
         }
-        String world = location.getWorld().getName();
+        String world = location.getWorld().getKey().getKey();
         if (!plugin.getConfig().getBoolean("travel.include_default_world") && plugin.getConfig().getBoolean("creation.default_world") && world.equals(plugin.getConfig().getString("creation.default_world_name"))) {
             return null;
         }

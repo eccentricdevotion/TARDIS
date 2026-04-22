@@ -66,7 +66,7 @@ public class TARDISSavesPlanetInventory implements InventoryHolder {
         ResultSetHomeLocation rsh = new ResultSetHomeLocation(plugin, wherehl);
         if (rsh.resultSet()) {
             him.customName(Component.text("Home"));
-            hlore.add(Component.text(rsh.getWorld().getName()));
+            hlore.add(Component.text(rsh.getWorld().getKey().getKey()));
             hlore.add(Component.text(rsh.getX()));
             hlore.add(Component.text(rsh.getY()));
             hlore.add(Component.text(rsh.getZ()));
@@ -89,7 +89,7 @@ public class TARDISSavesPlanetInventory implements InventoryHolder {
             List<Component> dlore = new ArrayList<>();
             ResultSetDeathLocation rsd = new ResultSetDeathLocation(plugin, player.getUniqueId().toString());
             if (rsd.resultSet()) {
-                dlore.add(Component.text(rsd.getWorld().getName()));
+                dlore.add(Component.text(rsd.getWorld().getKey().getKey()));
                 dlore.add(Component.text(rsd.getX()));
                 dlore.add(Component.text(rsd.getY()));
                 dlore.add(Component.text(rsd.getZ()));

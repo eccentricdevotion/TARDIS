@@ -207,7 +207,7 @@ public class TARDISScanner {
         String dayNight = TARDISStaticUtils.getTime(time);
         // message the player
         plugin.getMessenger().send(player, TardisModule.TARDIS, "SCAN_RESULT", whereIsIt);
-        String worldName = scan_loc.getWorld().getName();
+        String worldName = scan_loc.getWorld().getKey().getKey();
         String alias;
         if (!plugin.getPlanetsConfig().getBoolean("planets." + worldName + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
             alias = plugin.getMVHelper().getAlias(scan_loc.getWorld());

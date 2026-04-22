@@ -38,7 +38,7 @@ public final class TARDISSiluriaSpawnListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onSilurianSpawn(CreatureSpawnEvent event) {
-        if (!event.getLocation().getWorld().getName().equalsIgnoreCase("siluria")) {
+        if (!event.getLocation().getWorld().getKey().getKey().equalsIgnoreCase("siluria")) {
             return;
         }
         CreatureSpawnEvent.SpawnReason spawnReason = event.getSpawnReason();

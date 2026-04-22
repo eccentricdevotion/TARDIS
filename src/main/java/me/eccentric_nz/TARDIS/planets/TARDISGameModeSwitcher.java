@@ -40,7 +40,7 @@ public class TARDISGameModeSwitcher implements Listener {
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onGameModeWorldChange(PlayerChangedWorldEvent event) {
         Player player = event.getPlayer();
-        String world = player.getWorld().getName();
+        String world = player.getWorld().getKey().getKey();
         if (plugin.getPlanetsConfig().getBoolean("planets." + world + ".enabled") && !TARDISPermission.hasPermission(player, "tardis.gamemode.bypass")) {
             // TARDIS is managing worlds so switch player GameMode if necessary
             try {
@@ -55,7 +55,7 @@ public class TARDISGameModeSwitcher implements Listener {
     @EventHandler(priority = EventPriority.MONITOR)
     public void onGameModeJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        String world = player.getWorld().getName();
+        String world = player.getWorld().getKey().getKey();
         if (plugin.getPlanetsConfig().getBoolean("planets." + world + ".enabled") && !TARDISPermission.hasPermission(player, "tardis.gamemode.bypass")) {
             try {
                 GameMode gm = GameMode.valueOf(plugin.getPlanetsConfig().getString("planets." + world + ".gamemode"));

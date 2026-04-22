@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.utils.MonsterTargetListener;
+import net.kyori.adventure.key.Key;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -133,6 +134,7 @@ public class Damage implements Listener {
         List<String> locations = plugin.getMonstersConfig().getStringList("angels.teleport_locations");
         String l = locations.get(TARDISConstants.RANDOM.nextInt(locations.size()));
         String[] split = l.split(",");
+        Key key = Key.key(split[0]);
         World w = plugin.getServer().getWorld(split[0]);
         // use the middle of the block
         double x = TARDISNumberParsers.parseDouble(split[1]) + 0.5d;

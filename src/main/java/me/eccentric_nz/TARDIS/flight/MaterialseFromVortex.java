@@ -261,7 +261,7 @@ public class MaterialseFromVortex implements Runnable {
                             plugin.getQueryFactory().doUpdate("back", setback, whereback);
                             plugin.getQueryFactory().doUpdate("doors", setdoor, wheredoor);
                         }
-                        if (plugin.getAchievementConfig().getBoolean("travel.enabled") && !plugin.getTrackerKeeper().getResetWorlds().contains(current.location().getWorld().getName())) {
+                        if (plugin.getAchievementConfig().getBoolean("travel.enabled") && !plugin.getTrackerKeeper().getResetWorlds().contains(current.location().getWorld().getKey().getKey())) {
                             if (current.location().getWorld().equals(final_location.getWorld())) {
                                 int distance = (int) current.location().distance(final_location);
                                 if (distance > 0 && plugin.getAchievementConfig().getBoolean("travel.enabled")) {

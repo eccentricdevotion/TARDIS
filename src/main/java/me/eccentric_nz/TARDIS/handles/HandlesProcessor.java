@@ -467,7 +467,7 @@ public class HandlesProcessor {
                                                     if (!plugin.getPluginRespect().getRespect(player_loc, new Parameters(player, Flag.getDefaultFlags()))) {
                                                         continue;
                                                     }
-                                                    if (!plugin.getPlanetsConfig().getBoolean("planets." + player_loc.getWorld().getName() + ".time_travel")) {
+                                                    if (!plugin.getPlanetsConfig().getBoolean("planets." + player_loc.getWorld().getKey().getKey() + ".time_travel")) {
                                                         plugin.getMessenger().handlesSend(player, "NO_WORLD_TRAVEL");
                                                         continue;
                                                     }
@@ -490,7 +490,7 @@ public class HandlesProcessor {
                                                     int sx = TARDISNumberParsers.parseInt(ComponentUtils.stripColour(lore.get(2)));
                                                     int sy = TARDISNumberParsers.parseInt(ComponentUtils.stripColour(lore.get(3)));
                                                     int sz = TARDISNumberParsers.parseInt(ComponentUtils.stripColour(lore.get(4)));
-                                                    if (current.location().getWorld().getName().equals(ComponentUtils.stripColour(lore.get(1))) && current.location().getBlockX() == sx && current.location().getBlockZ() == sz) {
+                                                    if (current.location().getWorld().getKey().getKey().equals(ComponentUtils.stripColour(lore.get(1)).toLowerCase(Locale.ROOT)) && current.location().getBlockX() == sx && current.location().getBlockZ() == sz) {
                                                         continue;
                                                     }
                                                     plugin.getMessenger().handlesSend(player, "LOC_SET");
@@ -565,7 +565,7 @@ public class HandlesProcessor {
                                             }, 500L);
                                             // set current
                                             HashMap<String, Object> setc = new HashMap<>();
-                                            setc.put("world", goto_loc.getWorld().getName());
+                                            setc.put("world", goto_loc.getWorld().getKey().asString());
                                             setc.put("x", goto_loc.getBlockX());
                                             setc.put("y", goto_loc.getBlockY());
                                             setc.put("z", goto_loc.getBlockZ());
@@ -576,7 +576,7 @@ public class HandlesProcessor {
                                             plugin.getQueryFactory().doUpdate("current", setc, wherec);
                                             // set back
                                             HashMap<String, Object> setb = new HashMap<>();
-                                            setb.put("world", current.location().getWorld().getName());
+                                            setb.put("world", current.location().getWorld().getKey().asString());
                                             setb.put("x", current.location().getBlockX());
                                             setb.put("y", current.location().getBlockY());
                                             setb.put("z", current.location().getBlockZ());

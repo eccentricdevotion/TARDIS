@@ -61,7 +61,7 @@ public class K9Listener implements Listener {
                 return;
             }
             Location location = ent.getLocation();
-            if (!plugin.getMonstersConfig().getBoolean("k9.worlds." + location.getWorld().getName())) {
+            if (!plugin.getMonstersConfig().getBoolean("k9.worlds." + location.getWorld().getKey().getKey())) {
                 return;
             }
             LivingEntity k9 = (LivingEntity) new MonsterSpawner().createFollower(location, new Follower(UUID.randomUUID(), player.getUniqueId(), Monster.K9)).getBukkitEntity();
@@ -101,7 +101,7 @@ public class K9Listener implements Listener {
                     event.setCancelled(true);
                     Player player = event.getPlayer();
                     Location location = event.getClickedBlock().getLocation().add(0.5d, 1.0d, 0.5d);
-                    if (!plugin.getMonstersConfig().getBoolean("k9.worlds." + location.getWorld().getName())) {
+                    if (!plugin.getMonstersConfig().getBoolean("k9.worlds." + location.getWorld().getKey().getKey())) {
                         plugin.getMessenger().send(player, TardisModule.MONSTERS, "WA_SPAWN");
                         return;
                     }

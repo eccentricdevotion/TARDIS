@@ -118,7 +118,7 @@ public class TARDISLister {
                     wherehl.put("tardis_id", id);
                     ResultSetHomeLocation rsh = new ResultSetHomeLocation(TARDIS.plugin, wherehl);
                     rsh.resultSet();
-                    String homeWorld = (!plugin.getPlanetsConfig().getBoolean("planets." + rsh.getWorld().getName() + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMVHelper().getAlias(rsh.getWorld()) : TARDISAliasResolver.getWorldAlias(rsh.getWorld());
+                    String homeWorld = (!plugin.getPlanetsConfig().getBoolean("planets." + rsh.getWorld().getKey().getKey() + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMVHelper().getAlias(rsh.getWorld()) : TARDISAliasResolver.getWorldAlias(rsh.getWorld());
                     plugin.getMessenger().sendHome(player, plugin, homeWorld, rsh.getX(), rsh.getY(), rsh.getZ());
                     // list other saved destinations
                     HashMap<String, Object> whered = new HashMap<>();

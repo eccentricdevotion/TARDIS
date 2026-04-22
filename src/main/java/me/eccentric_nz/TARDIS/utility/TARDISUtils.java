@@ -259,10 +259,10 @@ public class TARDISUtils {
             case TARGET_BLOCK -> displayType.getFormat()
                     .replace("%TARGET_BLOCK%", player.getTargetBlock(null, 5).getType().toString());
             case WORLD -> displayType.getFormat()
-                    .replace("%WORLD%", player.getLocation().getWorld().getName());
+                    .replace("%WORLD%", player.getLocation().getWorld().getKey().getKey());
             // ALL
             default -> plugin.getConfig().getString("display.all", "&6X&7%X% &6Y&7%Y% &6Z&7%Z% &6F&7%FACING% (%FACING_XZ%) %TARGET_BLOCK%")
-                    .replace("%WORLD%", player.getLocation().getWorld().getName())
+                    .replace("%WORLD%", player.getLocation().getWorld().getKey().getKey())
                     .replace("%X%", String.format("%,d", player.getLocation().getBlockX()))
                     .replace("%Y%", String.format("%,d", player.getLocation().getBlockY()))
                     .replace("%Z%", String.format("%,d", player.getLocation().getBlockZ()))

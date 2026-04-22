@@ -60,7 +60,7 @@ public class CopperGolemListener implements Listener {
                         }
                     }
                     case NONE -> {
-                        if (plugin.getPlanetsConfig().getString("planets." + block.getWorld().getName() + ".gamemode", "SURVIVAL").equalsIgnoreCase("CREATIVE")) {
+                        if (plugin.getPlanetsConfig().getString("planets." + block.getWorld().getKey().getKey() + ".gamemode", "SURVIVAL").equalsIgnoreCase("CREATIVE")) {
                             return;
                         }
                     }

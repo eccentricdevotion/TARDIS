@@ -60,7 +60,7 @@ class TravelCommand {
                 return true;
             }
             Current current = rsc.getCurrent();
-            String resetw = current.location().getWorld().getName();
+            String resetw = current.location().getWorld().getKey().getKey();
             ResultSetNextLocation rsn = new ResultSetNextLocation(plugin, id);
             if (!rsn.resultSet() && !(sender instanceof BlockCommandSender)) {
                 plugin.getMessenger().send(sender, TardisModule.TARDIS, "DEST_NO_LOAD");

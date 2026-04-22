@@ -76,7 +76,7 @@ public class DematerialiseToVortex implements Runnable {
                 return;
             } else {
                 current = rsc.getCurrent();
-                resetw = current.location().getWorld().getName();
+                resetw = current.location().getWorld().getKey().getKey();
                 // set back to current location
                 HashMap<String, Object> bid = new HashMap<>();
                 bid.put("tardis_id", id);

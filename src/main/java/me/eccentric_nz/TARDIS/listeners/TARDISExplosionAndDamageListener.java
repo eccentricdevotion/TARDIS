@@ -37,6 +37,7 @@ import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 
 import java.util.HashMap;
+import java.util.Locale;
 
 /**
  * Distronic explosives are powerful but unstable weapons, used on many worlds as components of explosive warheads
@@ -65,10 +66,10 @@ public class TARDISExplosionAndDamageListener implements Listener {
         }
         Location explode = event.getLocation();
         // check if the explosion is in a TARDIS world
-        if ((explode.getWorld().getKey().getKey().contains("tardis") || explode.getWorld().getName().equals(plugin.getConfig().getString("creation.default_world_name"))) && event.getEntity() instanceof Creeper) {
+        if ((explode.getWorld().getKey().getKey().contains("tardis") || explode.getWorld().getKey().getKey().equals(plugin.getConfig().getString("creation.default_world_name").toLowerCase(Locale.ROOT))) && event.getEntity() instanceof Creeper) {
             event.setCancelled(true);
             // check it is not the Artron creeper
-            String loc_chk = explode.getWorld().getName() + ":" + (explode.getBlockX() + 0.5f) + ":" + (explode.getBlockY() - 1) + ":" + (explode.getBlockZ() + 0.5f);
+            String loc_chk = explode.getWorld().getKey().asString() + ":" + (explode.getBlockX() + 0.5f) + ":" + (explode.getBlockY() - 1) + ":" + (explode.getBlockZ() + 0.5f);
             if (!new ResultSetCreeper(plugin, loc_chk).resultSet()) {
                 // create a new explosion that doesn't destroy blocks or set fire
                 explode.getWorld().createExplosion(explode.getX(), explode.getY(), explode.getZ(), 4.0f, false, false);
@@ -145,8 +146,8 @@ public class TARDISExplosionAndDamageListener implements Listener {
         if (event.getCause() != DamageCause.ENTITY_EXPLOSION) {
             return;
         }
-        String l = event.getDamager().getLocation().getWorld().getName();
-        if (l.contains("TARDIS") || l.equals(plugin.getConfig().getString("creation.default_world_name"))) {
+        String l = event.getDamager().getLocation().getWorld().getKey().getKey();
+        if (l.contains("tardis") || l.equals(plugin.getConfig().getString("creation.default_world_name", "tardis_timevortex").toLowerCase(Locale.ROOT))) {
             event.setCancelled(true);
         }
     }

@@ -79,7 +79,7 @@ public class ItemDisplaySetter {
             if (stack.has("door")) {
                 if (id > 0) {
                     HashMap<String, Object> setd = new HashMap<>();
-                    String doorloc = block.getWorld().getName() + ":" + l.getBlockX() + ":" + l.getBlockY() + ":" + l.getBlockZ();
+                    String doorloc = block.getWorld().getKey().asString() + ":" + l.getBlockX() + ":" + l.getBlockY() + ":" + l.getBlockZ();
                     setd.put("door_location", doorloc);
                     setd.put("door_direction", "SOUTH");
                     // check if there is an existing record
@@ -110,7 +110,7 @@ public class ItemDisplaySetter {
                         HashMap<String, Object> set = new HashMap<>();
                         set.put("tardis_id", id);
                         set.put("name", name);
-                        set.put("world", block.getWorld().getName());
+                        set.put("world", block.getWorld().getKey().asString());
                         set.put("x", l.getBlockX() + 0.5d);
                         set.put("y", l.getBlockY());
                         set.put("z", (l.getBlockZ() + 1));

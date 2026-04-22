@@ -105,7 +105,7 @@ public class SiegeListener implements Listener {
         }
         // check location
         HashMap<String, Object> where = new HashMap<>();
-        where.put("world", b.getWorld().getName());
+        where.put("world", b.getWorld().getKey().asString());
         where.put("x", b.getX());
         where.put("y", b.getY());
         where.put("z", b.getZ());
@@ -195,7 +195,7 @@ public class SiegeListener implements Listener {
             plugin.getMessenger().send(p, TardisModule.TARDIS, "SIEGE_NO_TARDIS");
             return;
         }
-        if (!plugin.getPlanetsConfig().getBoolean("planets." + p.getLocation().getWorld().getName() + ".time_travel")) {
+        if (!plugin.getPlanetsConfig().getBoolean("planets." + p.getLocation().getWorld().getKey().getKey() + ".time_travel")) {
             event.setCancelled(true);
             plugin.getMessenger().send(p, TardisModule.TARDIS, "SIEGE_NO_WORLD");
             return;
@@ -229,7 +229,7 @@ public class SiegeListener implements Listener {
             HashMap<String, Object> where = new HashMap<>();
             where.put("tardis_id", id);
             HashMap<String, Object> set = new HashMap<>();
-            set.put("world", loc.getWorld().getName());
+            set.put("world", loc.getWorld().getKey().asString());
             set.put("x", loc.getBlockX());
             set.put("y", loc.getBlockY());
             set.put("z", loc.getBlockZ());
@@ -256,7 +256,7 @@ public class SiegeListener implements Listener {
             plugin.getMessenger().send(p, TardisModule.TARDIS, "SIEGE_NO_TARDIS");
             return;
         }
-        String w = p.getLocation().getWorld().getName();
+        String w = p.getLocation().getWorld().getKey().getKey();
         if (!plugin.getPlanetsConfig().getBoolean("planets." + w + ".time_travel")) {
             event.setCancelled(true);
             plugin.getMessenger().send(p, TardisModule.TARDIS, "SIEGE_NO_WORLD");
@@ -281,7 +281,7 @@ public class SiegeListener implements Listener {
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
         HashMap<String, Object> set = new HashMap<>();
-        set.put("world", loc.getWorld().getName());
+        set.put("world", loc.getWorld().getKey().asString());
         set.put("x", loc.getBlockX());
         set.put("y", loc.getBlockY());
         set.put("z", loc.getBlockZ());
@@ -313,7 +313,7 @@ public class SiegeListener implements Listener {
         UUID uuid = p.getUniqueId();
         // check location
         HashMap<String, Object> wherec = new HashMap<>();
-        wherec.put("world", b.getWorld().getName());
+        wherec.put("world", b.getWorld().getKey().asString());
         wherec.put("x", b.getX());
         wherec.put("y", b.getY());
         wherec.put("z", b.getZ());

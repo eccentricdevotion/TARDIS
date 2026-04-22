@@ -128,7 +128,7 @@ public class TARDISBlockPlaceListener implements Listener {
             while (plugin.getConfig().contains("rechargers." + name)) {
                 name = "rift_" + player.getName() + "_" + TARDISConstants.RANDOM.nextInt(Integer.MAX_VALUE);
             }
-            plugin.getConfig().set("rechargers." + name + ".world", l.getWorld().getName());
+            plugin.getConfig().set("rechargers." + name + ".world", l.getWorld().getKey().getKey());
             plugin.getConfig().set("rechargers." + name + ".x", l.getBlockX());
             plugin.getConfig().set("rechargers." + name + ".y", l.getBlockY());
             plugin.getConfig().set("rechargers." + name + ".z", l.getBlockZ());
