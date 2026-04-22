@@ -28,7 +28,12 @@ public class KeyedWorldsUpdater {
         locationTables.add(new SQLTable("flight", "f_id"));
         locationTables.add(new SQLTable("forcefield", "uuid"));
         locationTables.add(new SQLTable("games", "game_id", "player_location"));
+        locationTables.add(new SQLTable("games", "game_id", "tetris_board"));
+        locationTables.add(new SQLTable("games", "game_id", "tetris_sign"));
         locationTables.add(new SQLTable("gravity_well", "g_id"));
+        locationTables.add(new SQLTable("junk", "id", "save_sign"));
+        locationTables.add(new SQLTable("junk", "id", "handbrake"));
+        locationTables.add(new SQLTable("portals", "portal_id", "portal"));
         locationTables.add(new SQLTable("portals", "portal_id", "teleport"));
         locationTables.add(new SQLTable("seeds", "seed_id"));
         locationTables.add(new SQLTable("vaults", "v_id"));
@@ -77,7 +82,7 @@ public class KeyedWorldsUpdater {
                 if (i > 0) {
                     ps.executeBatch();
                     connection.commit();
-                    plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Converted " + i + " location records to use world keys.");
+                    plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Converted " + i + " " + entry.table() + " location records to use world keys.");
                 }
             }
             connection.setAutoCommit(true);
