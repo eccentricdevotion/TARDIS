@@ -286,7 +286,7 @@ public class TARDISUtils {
         Location tardis = plugin.getTrackerKeeper().getLocators().get(player.getUniqueId());
         // check same world
         if (location.getWorld() != tardis.getWorld()) {
-            return "TARDIS is located in " + tardis.getWorld().getName();
+            return "TARDIS is located in " + tardis.getWorld().getKey().getKey();
         }
         Vector playerToEntity = tardis.clone().subtract(location).toVector();
         Vector playerLooking = location.getDirection();

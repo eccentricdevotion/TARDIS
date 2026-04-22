@@ -94,7 +94,7 @@ public class DoorUtility {
         // get open portals
         for (Map.Entry<Location, TARDISTeleportLocation> map : TARDIS.plugin.getTrackerKeeper().getPortals().entrySet()) {
             // only portals in police box worlds
-            if (map.getKey().getWorld().getName().contains("TARDIS")) {
+            if (map.getKey().getWorld().getKey().getKey().contains("tardis")) {
                 continue;
             }
             if (map.getValue().isAbandoned()) {

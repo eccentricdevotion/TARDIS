@@ -101,7 +101,7 @@ public class JunkCreator {
         // populate home, current, next and back tables
         HashMap<String, Object> setlocs = new HashMap<>();
         setlocs.put("tardis_id", lastInsertId);
-        setlocs.put("world", l.getWorld().getName());
+        setlocs.put("world", l.getWorld().getKey().asString());
         setlocs.put("x", l.getBlockX());
         setlocs.put("y", l.getBlockY());
         setlocs.put("z", l.getBlockZ());

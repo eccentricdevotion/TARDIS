@@ -134,7 +134,7 @@ public class AuthorisedControlDisk {
             HashMap<String, Object> wheren = new HashMap<>();
             wheren.put("tardis_id", id);
             HashMap<String, Object> setn = new HashMap<>();
-            setn.put("world", location.getWorld().getName());
+            setn.put("world", location.getWorld().getKey().asString());
             setn.put("x", location.getBlockX());
             setn.put("y", location.getBlockY());
             setn.put("z", location.getBlockZ());

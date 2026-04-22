@@ -101,7 +101,7 @@ class TARDISGetter {
                     String chameleon = rs.getString("chameleon_preset");
                     String door = "Closed";
                     for (Map.Entry<Location, TARDISTeleportLocation> map : plugin.getTrackerKeeper().getPortals().entrySet()) {
-                        if (!map.getKey().getWorld().getName().contains("TARDIS") && !map.getValue().isAbandoned()) {
+                        if (!map.getKey().getWorld().getKey().getKey().contains("tardis") && !map.getValue().isAbandoned()) {
                             if (id == map.getValue().getTardisId()) {
                                 door = "Open";
                                 break;

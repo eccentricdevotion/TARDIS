@@ -47,6 +47,7 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.UUID;
 
 /**
@@ -86,7 +87,7 @@ public class ComehereCommand {
                 boolean hidden = tardis.isHidden();
                 // get location
                 Location eyeLocation = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getLocation();
-                if (!plugin.getConfig().getBoolean("travel.include_default_world") && plugin.getConfig().getBoolean("creation.default_world") && eyeLocation.getWorld().getName().equals(plugin.getConfig().getString("creation.default_world_name"))) {
+                if (!plugin.getConfig().getBoolean("travel.include_default_world") && plugin.getConfig().getBoolean("creation.default_world") && eyeLocation.getWorld().getKey().getKey().equals(plugin.getConfig().getString("creation.default_world_name").toLowerCase(Locale.ROOT))) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_WORLD_TRAVEL");
                     return;
                 }
@@ -114,7 +115,7 @@ public class ComehereCommand {
                     eyeLocation.setY(yplusone + 1);
                 }
                 // check the world is not excluded
-                String world = eyeLocation.getWorld().getName();
+                String world = eyeLocation.getWorld().getKey().getKey();
                 if (!plugin.getPlanetsConfig().getBoolean("planets." + world + ".time_travel")) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PB_IN_WORLD");
                     return;
@@ -181,7 +182,7 @@ public class ComehereCommand {
                 HashMap<String, Object> bset = new HashMap<>();
                 if (w != null) {
                     // set fast return location
-                    bset.put("world", current.location().getWorld().getName());
+                    bset.put("world", current.location().getWorld().getKey().asString());
                     bset.put("x", current.location().getBlockX());
                     bset.put("y", current.location().getBlockY());
                     bset.put("z", current.location().getBlockZ());
@@ -190,7 +191,7 @@ public class ComehereCommand {
                 } else {
                     hidden = true;
                     // set fast return location
-                    bset.put("world", eyeLocation.getWorld().getName());
+                    bset.put("world", eyeLocation.getWorld().getKey().asString());
                     bset.put("x", eyeLocation.getX());
                     bset.put("y", eyeLocation.getY());
                     bset.put("z", eyeLocation.getZ());
@@ -200,7 +201,7 @@ public class ComehereCommand {
                 HashMap<String, Object> tid = new HashMap<>();
                 tid.put("tardis_id", id);
                 HashMap<String, Object> set = new HashMap<>();
-                set.put("world", eyeLocation.getWorld().getName());
+                set.put("world", eyeLocation.getWorld().getKey().asString());
                 set.put("x", eyeLocation.getBlockX());
                 set.put("y", eyeLocation.getBlockY());
                 set.put("z", eyeLocation.getBlockZ());

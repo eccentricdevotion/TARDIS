@@ -69,7 +69,7 @@ public class EmergencyRelocation {
                 HashMap<String, Object> wherec = new HashMap<>();
                 wherec.put("tardis_id", id);
                 HashMap<String, Object> setc = new HashMap<>();
-                setc.put("world", emergency.getWorld().getName());
+                setc.put("world", emergency.getWorld().getKey().asString());
                 setc.put("x", emergency.getBlockX());
                 setc.put("y", emergency.getBlockY());
                 setc.put("z", emergency.getBlockZ());
@@ -79,7 +79,7 @@ public class EmergencyRelocation {
                 HashMap<String, Object> whereb = new HashMap<>();
                 whereb.put("tardis_id", id);
                 HashMap<String, Object> setb = new HashMap<>();
-                setb.put("world", emergency.getWorld().getName());
+                setb.put("world", emergency.getWorld().getKey().asString());
                 setb.put("x", emergency.getBlockX());
                 setb.put("y", emergency.getBlockY());
                 setb.put("z", emergency.getBlockZ());

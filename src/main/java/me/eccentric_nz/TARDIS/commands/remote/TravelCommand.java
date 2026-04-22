@@ -112,7 +112,7 @@ class TravelCommand {
             plugin.getTrackerKeeper().getHadsDamage().remove(id);
             // current
             HashMap<String, Object> setcurrent = new HashMap<>();
-            setcurrent.put("world", exit.getWorld().getName());
+            setcurrent.put("world", exit.getWorld().getKey().asString());
             setcurrent.put("x", exit.getBlockX());
             setcurrent.put("y", exit.getBlockY());
             setcurrent.put("z", exit.getBlockZ());
@@ -123,7 +123,7 @@ class TravelCommand {
             HashMap<String, Object> setback = new HashMap<>();
             if (current == null) {
                 // back
-                setback.put("world", exit.getWorld().getName());
+                setback.put("world", exit.getWorld().getKey().asString());
                 setback.put("x", exit.getX());
                 setback.put("y", exit.getY());
                 setback.put("z", exit.getZ());
@@ -131,7 +131,7 @@ class TravelCommand {
                 setback.put("submarine", (is_next_sub) ? 1 : 0);
             } else {
                 // back
-                setback.put("world", current.location().getWorld().getName());
+                setback.put("world", current.location().getWorld().getKey().asString());
                 setback.put("x", current.location().getBlockX());
                 setback.put("y", current.location().getBlockY());
                 setback.put("z", current.location().getBlockZ());

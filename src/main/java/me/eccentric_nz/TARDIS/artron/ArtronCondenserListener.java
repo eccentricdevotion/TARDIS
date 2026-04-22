@@ -97,7 +97,7 @@ public class ArtronCondenserListener implements Listener {
                             }
                         }
                         case NONE -> {
-                            if (plugin.getPlanetsConfig().getString("planets." + location.getWorld().getName() + ".gamemode", "SURVIVAL").equalsIgnoreCase("CREATIVE")) {
+                            if (plugin.getPlanetsConfig().getString("planets." + location.getWorld().getKey().getKey() + ".gamemode", "SURVIVAL").equalsIgnoreCase("CREATIVE")) {
                                 plugin.getMessenger().send(player, TardisModule.TARDIS, "CONDENSE_NO_CREATIVE");
                                 return;
                             }

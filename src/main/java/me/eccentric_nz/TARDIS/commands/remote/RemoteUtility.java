@@ -90,7 +90,7 @@ public class RemoteUtility {
             return;
         }
         HashMap<String, Object> set = new HashMap<>();
-        set.put("world", rsh.getWorld().getName());
+        set.put("world", rsh.getWorld().getKey().asString());
         set.put("x", rsh.getX());
         set.put("y", rsh.getY());
         set.put("z", rsh.getZ());
@@ -168,7 +168,7 @@ public class RemoteUtility {
             return;
         }
         HashMap<String, Object> set = new HashMap<>();
-        set.put("world", l.getWorld().getName());
+        set.put("world", l.getWorld().getKey().asString());
         set.put("x", l.getBlockX());
         set.put("y", l.getBlockY());
         set.put("z", l.getBlockZ());
@@ -246,7 +246,7 @@ public class RemoteUtility {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "NOT_SAFE");
         } else {
             HashMap<String, Object> set = new HashMap<>();
-            set.put("world", location.getWorld().getName());
+            set.put("world", location.getWorld().getKey().asString());
             set.put("x", location.getBlockX());
             set.put("y", location.getBlockY());
             set.put("z", location.getBlockZ());

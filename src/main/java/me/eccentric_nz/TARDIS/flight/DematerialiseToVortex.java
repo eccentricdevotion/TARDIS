@@ -81,7 +81,7 @@ public class DematerialiseToVortex implements Runnable {
                 HashMap<String, Object> bid = new HashMap<>();
                 bid.put("tardis_id", id);
                 HashMap<String, Object> bset = new HashMap<>();
-                bset.put("world", current.location().getWorld().getName());
+                bset.put("world", resetw);
                 bset.put("x", current.location().getBlockX());
                 bset.put("y", current.location().getBlockY());
                 bset.put("z", current.location().getBlockZ());

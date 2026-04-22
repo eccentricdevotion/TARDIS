@@ -101,7 +101,7 @@ public class StopCommand {
             }
             // update current, next and back tables
             HashMap<String, Object> setlocs = new HashMap<>();
-            setlocs.put("world", rsh.getWorld().getName());
+            setlocs.put("world", rsh.getWorld().getKey().asString());
             setlocs.put("x", rsh.getX());
             setlocs.put("y", rsh.getY());
             setlocs.put("z", rsh.getZ());

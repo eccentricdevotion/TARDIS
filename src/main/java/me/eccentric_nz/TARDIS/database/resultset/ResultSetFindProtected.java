@@ -67,15 +67,15 @@ public class ResultSetFindProtected {
         int minZ = location.getBlockZ() - range;
         PreparedStatement statement = null;
         ResultSet rs = null;
-        String query = "SELECT b_id, location FROM " + prefix + "blocks WHERE location LIKE 'Location{world=CraftWorld{name="
-                + location.getWorld().getName() + "%'";
+        String query = "SELECT b_id, location FROM " + prefix + "blocks WHERE location LIKE 'Location{world=CraftWorld{key="
+                + location.getWorld().getKey().asString() + "%'";
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);
             rs = statement.executeQuery();
             while (rs.next()) {
                 // break down location
-                // Location{world=CraftWorld{name=jin},x=-304.0,y=63.0,z=-378.0,pitch=0.0,yaw=0.0}
+                // Location{world=CraftWorld{key=minecraft:jin},x=-304.0,y=63.0,z=-378.0,pitch=0.0,yaw=0.0}
                 String loc = rs.getString("location");
                 String[] bukkit = loc.split(",");
                 String[] xPart = bukkit[1].split("=");

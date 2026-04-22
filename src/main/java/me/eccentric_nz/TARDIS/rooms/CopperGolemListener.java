@@ -34,7 +34,7 @@ public class CopperGolemListener implements Listener {
     @EventHandler
     public void onRedstone(BlockRedstoneEvent event) {
         Block block = event.getBlock();
-        if (!block.getWorld().getName().contains("TARDIS")) {
+        if (!block.getWorld().getKey().getKey().contains("tardis")) {
             return;
         }
         if (!(block.getState() instanceof Chest chest)) {

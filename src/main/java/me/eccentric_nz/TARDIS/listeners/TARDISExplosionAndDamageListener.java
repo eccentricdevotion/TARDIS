@@ -65,7 +65,7 @@ public class TARDISExplosionAndDamageListener implements Listener {
         }
         Location explode = event.getLocation();
         // check if the explosion is in a TARDIS world
-        if ((explode.getWorld().getName().contains("TARDIS") || explode.getWorld().getName().equals(plugin.getConfig().getString("creation.default_world_name"))) && event.getEntity() instanceof Creeper) {
+        if ((explode.getWorld().getKey().getKey().contains("tardis") || explode.getWorld().getName().equals(plugin.getConfig().getString("creation.default_world_name"))) && event.getEntity() instanceof Creeper) {
             event.setCancelled(true);
             // check it is not the Artron creeper
             String loc_chk = explode.getWorld().getName() + ":" + (explode.getBlockX() + 0.5f) + ":" + (explode.getBlockY() - 1) + ":" + (explode.getBlockZ() + 0.5f);

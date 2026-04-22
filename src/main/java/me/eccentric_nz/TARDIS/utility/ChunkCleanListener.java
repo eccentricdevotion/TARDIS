@@ -47,7 +47,7 @@ public class ChunkCleanListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onChunkLoad(ChunkLoadEvent event) {
-        if (event.getWorld().getName().contains("TARDIS")) {
+        if (event.getWorld().getKey().getKey().contains("tardis")) {
             return;
         }
         /*

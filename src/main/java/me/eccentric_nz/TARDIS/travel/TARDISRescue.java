@@ -88,7 +88,7 @@ public class TARDISRescue {
             return false;
         }
         HashMap<String, Object> set = new HashMap<>();
-        set.put("world", player_loc.getWorld().getName());
+        set.put("world", player_loc.getWorld().getKey().asString());
         set.put("x", (player_loc.getBlockX() - move));
         set.put("y", player_loc.getBlockY());
         set.put("z", player_loc.getBlockZ());

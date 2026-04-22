@@ -42,7 +42,7 @@ public class TARDISSkaroSpawnListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onDalekSpawn(CreatureSpawnEvent event) {
-        if (!event.getLocation().getWorld().getName().endsWith("skaro")) {
+        if (!event.getLocation().getWorld().getKey().getKey().endsWith("skaro")) {
             return;
         }
         SpawnReason spawnReason = event.getSpawnReason();

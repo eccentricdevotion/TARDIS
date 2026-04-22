@@ -52,7 +52,7 @@ public class ArtronChargeAction {
                         }
                     }
                     case NONE -> {
-                        if (plugin.getPlanetsConfig().getString("planets." + location.getWorld().getName() + ".gamemode").equalsIgnoreCase("CREATIVE")) {
+                        if (plugin.getPlanetsConfig().getString("planets." + location.getWorld().getKey().getKey() + ".gamemode").equalsIgnoreCase("CREATIVE")) {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "ARTRON_FULL_CREATIVE");
                             return;
                         }

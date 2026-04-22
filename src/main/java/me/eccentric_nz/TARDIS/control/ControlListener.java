@@ -115,7 +115,7 @@ public class ControlListener implements Listener {
                 if (blockType.equals(Material.REPEATER)) {
                     Repeater repeater = (Repeater) block.getBlockData();
                     if (!repeater.isLocked()) {
-                        locStr = blockLocation.getWorld().getName() + ":" + blockLocation.getBlockX() + ":" + blockLocation.getBlockY() + ":" + blockLocation.getBlockZ();
+                        locStr = blockLocation.getWorld().getKey().asString() + ":" + blockLocation.getBlockX() + ":" + blockLocation.getBlockY() + ":" + blockLocation.getBlockZ();
                     }
                 }
                 HashMap<String, Object> where = new HashMap<>();

@@ -54,7 +54,7 @@ public class AbandonedBuilder {
         int cx = chunk.getX();
         int cz = chunk.getZ();
         // save data to database (tardis table)
-        String chun = cw + ":" + cx + ":" + cz;
+        String chun = "minecraft:" + cw + ":" + cx + ":" + cz;
         HashMap<String, Object> set = new HashMap<>();
         set.put("uuid", UUID.randomUUID().toString());
         set.put("owner", "");
@@ -74,7 +74,7 @@ public class AbandonedBuilder {
         // populate home, current, next and back tables
         HashMap<String, Object> setlocs = new HashMap<>();
         setlocs.put("tardis_id", lastInsertId);
-        setlocs.put("world", l.getWorld().getName());
+        setlocs.put("world", l.getWorld().getKey().asString());
         setlocs.put("x", l.getBlockX());
         setlocs.put("y", l.getBlockY());
         setlocs.put("z", l.getBlockZ());

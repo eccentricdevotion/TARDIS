@@ -55,7 +55,7 @@ public class FindCommand {
                 if (rsc.resultSet()) {
                     Current current = rsc.getCurrent();
                     String world = TARDISAliasResolver.getWorldAlias(current.location().getWorld());
-                    if (!plugin.getPlanetsConfig().getBoolean("planets." + current.location().getWorld().getName() + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
+                    if (!plugin.getPlanetsConfig().getBoolean("planets." + current.location().getWorld().getKey().getKey() + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
                         world = plugin.getMVHelper().getAlias(current.location().getWorld());
                     }
                     if (player.isOp()) {

@@ -59,7 +59,7 @@ public class TARDISDeathLocation {
                 set.put("world", "Could not be saved!");
                 return;
             } else {
-                set.put("world", location.getWorld().getName());
+                set.put("world", location.getWorld().getKey().asString());
                 set.put("x", location.getBlockX());
                 set.put("y", location.getBlockY());
                 set.put("z", location.getBlockZ());

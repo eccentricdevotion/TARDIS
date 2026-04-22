@@ -57,7 +57,7 @@ public class HadsPersister {
                 Location l = map.getValue();
                 String uuid = map.getKey().toString();
                 ps.setString(1, uuid);
-                ps.setString(2, l.getWorld().getName());
+                ps.setString(2, l.getWorld().getKey().asString());
                 ps.setInt(3, l.getBlockX());
                 ps.setInt(4, l.getBlockY());
                 ps.setInt(5, l.getBlockZ());

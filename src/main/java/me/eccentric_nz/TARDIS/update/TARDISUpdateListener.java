@@ -269,7 +269,7 @@ public class TARDISUpdateListener implements Listener {
                     if (rsc.resultSet()) {
                         Current current = rsc.getCurrent();
                         HashMap<String, Object> setb = new HashMap<>();
-                        setb.put("world", current.location().getWorld().getName());
+                        setb.put("world", current.location().getWorld().getKey().asString());
                         setb.put("x", current.location().getBlockX());
                         setb.put("y", current.location().getBlockY());
                         setb.put("z", current.location().getBlockZ());

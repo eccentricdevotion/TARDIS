@@ -52,7 +52,7 @@ public class RandomDestinationAction {
                 return;
             }
             HashMap<String, Object> set = new HashMap<>();
-            set.put("world", rand.getWorld().getName());
+            set.put("world", rand.getWorld().getKey().asString());
             set.put("x", rand.getBlockX());
             set.put("y", rand.getBlockY());
             set.put("z", rand.getBlockZ());

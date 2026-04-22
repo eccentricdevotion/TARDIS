@@ -104,7 +104,7 @@ public class DiskWriterCommand {
                     }
                     Current current = rsc.getCurrent();
                     lore.set(0, Component.text(name));
-                    lore.add(1, Component.text(current.location().getWorld().getName()));
+                    lore.add(1, Component.text(current.location().getWorld().getKey().getKey()));
                     lore.add(2, Component.text(current.location().getBlockX()));
                     lore.add(3, Component.text(current.location().getBlockY()));
                     lore.add(4, Component.text(current.location().getBlockZ()));

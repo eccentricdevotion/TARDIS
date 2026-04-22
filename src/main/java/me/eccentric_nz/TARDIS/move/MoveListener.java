@@ -143,12 +143,12 @@ public class MoveListener implements Listener {
                 Location to = tpl.getLocation();
                 boolean exit;
                 if (plugin.getConfig().getBoolean("creation.create_worlds_with_perms") && TARDISPermission.hasPermission(player, "tardis.create_world")) {
-                    exit = !(to.getWorld().getName().contains("TARDIS"));
+                    exit = !(to.getWorld().getKey().getKey().contains("tardis"));
                 } else if (plugin.getConfig().getBoolean("creation.default_world")) {
                     // check default world name
-                    exit = !(to.getWorld().getName().equals(plugin.getConfig().getString("creation.default_world_name")));
+                    exit = !(to.getWorld().getKey().getKey().equals(plugin.getConfig().getString("creation.default_world_name")));
                 } else {
-                    exit = !(to.getWorld().getName().contains("TARDIS"));
+                    exit = !(to.getWorld().getKey().getKey().contains("tardis"));
                 }
                 // adjust player yaw for to
                 float yaw = (exit) ? loc.getYaw() + 180.0f : loc.getYaw();

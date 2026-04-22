@@ -114,10 +114,10 @@ public class TARDISBlockBreakListener implements Listener {
         }
         if (blockType == Material.BEACON) {
             Location loc = event.getBlock().getLocation();
-            if (loc.getWorld().getName().startsWith("TARDIS")) {
+            if (loc.getWorld().getKey().getKey().startsWith("tardis")) {
                 return;
             }
-            String b = loc.getWorld().getName() + "," + loc.getBlockX() + "," + loc.getBlockY() + "," + loc.getBlockZ();
+            String b = loc.getWorld().getKey().getKey() + "," + loc.getBlockX() + "," + loc.getBlockY() + "," + loc.getBlockZ();
             // check if it is a rift manipulator
             for (String r : plugin.getConfig().getConfigurationSection("rechargers").getKeys(false)) {
                 if (r.startsWith("rift")) {

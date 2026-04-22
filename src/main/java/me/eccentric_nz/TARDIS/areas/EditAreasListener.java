@@ -90,7 +90,7 @@ public class EditAreasListener extends TARDISMenuListener {
                 Location location = player.getLocation();
                 HashMap<String, Object> add = new HashMap<>();
                 add.put("area_id", area_id);
-                add.put("world", location.getWorld().getName());
+                add.put("world", location.getWorld().getKey().asString());
                 add.put("x", location.getBlockX());
                 add.put("y", location.getBlockY());
                 add.put("z", location.getBlockZ());

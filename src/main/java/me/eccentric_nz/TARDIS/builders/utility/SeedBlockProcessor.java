@@ -95,7 +95,7 @@ public class SeedBlockProcessor {
                 if (plugin.getConfig().getBoolean("creation.check_for_home")) {
                     // check it is not another Time Lords home location
                     HashMap<String, Object> where = new HashMap<>();
-                    where.put("world", location.getWorld().getName());
+                    where.put("world", location.getWorld().getKey().asString());
                     where.put("x", location.getBlockX());
                     where.put("y", location.getBlockY());
                     where.put("z", location.getBlockZ());
@@ -224,7 +224,7 @@ public class SeedBlockProcessor {
                 // populate home, current, next and back tables
                 HashMap<String, Object> setlocs = new HashMap<>();
                 setlocs.put("tardis_id", lastInsertId);
-                setlocs.put("world", location.getWorld().getName());
+                setlocs.put("world", location.getWorld().getKey().asString());
                 setlocs.put("x", location.getBlockX());
                 setlocs.put("y", location.getBlockY());
                 setlocs.put("z", location.getBlockZ());
@@ -292,7 +292,7 @@ public class SeedBlockProcessor {
                 ResultSetCurrentFromId rscl = new ResultSetCurrentFromId(plugin, rs.getTardisId());
                 if (rscl.resultSet()) {
                     Current current = rscl.getCurrent();
-                    plugin.getMessenger().send(player, TardisModule.TARDIS, "TARDIS_HAVE", current.location().getWorld().getName() + " at x:" + current.location().getBlockX() + " y:" + current.location().getBlockY() + " z:" + current.location().getBlockZ());
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "TARDIS_HAVE", current.location().getWorld().getKey().getKey() + " at x:" + current.location().getBlockX() + " y:" + current.location().getBlockY() + " z:" + current.location().getBlockZ());
                 } else {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "HAVE_TARDIS");
                 }

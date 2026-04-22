@@ -163,7 +163,7 @@ public class TARDII implements TardisAPI {
             String chameleon = tardis.getPreset().toString();
             String door = "Closed";
             for (Map.Entry<Location, TARDISTeleportLocation> map : TARDIS.plugin.getTrackerKeeper().getPortals().entrySet()) {
-                if (!map.getKey().getWorld().getName().contains("TARDIS") && !map.getValue().isAbandoned()) {
+                if (!map.getKey().getWorld().getKey().getKey().contains("tardis") && !map.getValue().isAbandoned()) {
                     if (id == map.getValue().getTardisId()) {
                         door = "Open";
                         break;
@@ -621,7 +621,7 @@ public class TARDII implements TardisAPI {
             HashMap<String, Object> where = new HashMap<>();
             where.put("tardis_id", id);
             HashMap<String, Object> set = new HashMap<>();
-            set.put("world", location.getWorld().getName());
+            set.put("world", location.getWorld().getKey().asString());
             set.put("x", location.getBlockX());
             set.put("y", location.getBlockY());
             set.put("z", location.getBlockZ());

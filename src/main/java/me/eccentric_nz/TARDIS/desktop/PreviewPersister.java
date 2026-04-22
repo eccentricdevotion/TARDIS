@@ -50,7 +50,7 @@ public class PreviewPersister {
                     ps.setString(1, entry.getKey().toString());
                     Location location = entry.getValue().location();
                     GameMode gameMode = entry.getValue().gamemode();
-                    ps.setString(2, location.getWorld().getName());
+                    ps.setString(2, location.getWorld().getKey().asString());
                     ps.setDouble(3, location.getX());
                     ps.setDouble(4, location.getY());
                     ps.setDouble(5, location.getZ());

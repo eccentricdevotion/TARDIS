@@ -51,7 +51,7 @@ public class SonicLight {
             int x = light.getLocation().getBlockX();
             int y = light.getLocation().getBlockY();
             int z = light.getLocation().getBlockZ();
-            String location = light.getWorld().getName() + ":" + x + ":" + y + ":" + z;
+            String location = light.getWorld().getKey().asString() + ":" + x + ":" + y + ":" + z;
             // check if already added
             HashMap<String, Object> wherel = new HashMap<>();
             wherel.put("location", location);
@@ -75,7 +75,7 @@ public class SonicLight {
         int x = light.getLocation().getBlockX();
         int y = light.getLocation().getBlockY();
         int z = light.getLocation().getBlockZ();
-        String location = light.getWorld().getName() + ":" + x + ":" + y + ":" + z;
+        String location = light.getWorld().getKey().asString() + ":" + x + ":" + y + ":" + z;
         // remove lamps record
         HashMap<String, Object> where = new HashMap<>();
         where.put("location", location);

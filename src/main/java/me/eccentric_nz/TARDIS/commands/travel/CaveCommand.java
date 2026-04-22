@@ -78,7 +78,7 @@ public class CaveCommand {
             }
         }
         HashMap<String, Object> set = new HashMap<>();
-        set.put("world", cave.getWorld().getName());
+        set.put("world", cave.getWorld().getKey().asString());
         set.put("x", cave.getBlockX());
         set.put("y", cave.getBlockY());
         set.put("z", cave.getBlockZ());

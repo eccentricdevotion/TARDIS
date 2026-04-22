@@ -87,7 +87,7 @@ public class TARDISPacketListener {
                     }
                 }
                 if (TARDISHelper.colourSkies && packet instanceof ClientboundLevelChunkWithLightPacket chunkPacket) {
-                    String world = player.getWorld().getName();
+                    String world = player.getWorld().getKey().getKey();
                     if (world.equals("gallifrey") || world.equals("skaro")) {
                         LevelChunk levelChunk = cloneChunk((LevelChunk) ((CraftChunk) player.getWorld().getChunkAt(chunkPacket.getX(), chunkPacket.getZ())).getHandle(ChunkStatus.BIOMES));
                         String key = (world.endsWith("gallifrey")) ? "gallifrey_badlands" : "skaro_desert";

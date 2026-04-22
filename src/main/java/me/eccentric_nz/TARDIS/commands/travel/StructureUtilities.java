@@ -204,7 +204,7 @@ public class StructureUtilities {
             }
         }
         HashMap<String, Object> set = new HashMap<>();
-        set.put("world", loc.getWorld().getName());
+        set.put("world", loc.getWorld().getKey().asString());
         set.put("x", loc.getBlockX());
         set.put("y", loc.getBlockY());
         set.put("z", loc.getBlockZ());

@@ -223,7 +223,7 @@ public class SonicDock {
                         HashMap<String, Object> tid = new HashMap<>();
                         tid.put("tardis_id", id);
                         HashMap<String, Object> set = new HashMap<>();
-                        set.put("world", destination.getWorld().getName());
+                        set.put("world", destination.getWorld().getKey().asString());
                         set.put("x", destination.getBlockX());
                         set.put("y", destination.getBlockY());
                         set.put("z", destination.getBlockZ());

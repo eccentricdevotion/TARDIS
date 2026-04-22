@@ -68,7 +68,7 @@ public class TARDISMinecartListener implements Listener {
                 int id = 0;
                 COMPASS d = COMPASS.SOUTH;
                 Location block_loc = block.getLocation();
-                String bw = block_loc.getWorld().getName();
+                String bw = block_loc.getWorld().getKey().asString();
                 int bx = block_loc.getBlockX();
                 int by = block_loc.getBlockY();
                 int bz = block_loc.getBlockZ();

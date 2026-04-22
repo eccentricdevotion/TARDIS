@@ -59,7 +59,7 @@ public class EditAreasInventory implements InventoryHolder {
                     ItemMeta im = is.getItemMeta();
                     im.customName(Component.text("Location " + (i + 1)));
                     im.lore(List.of(
-                            Component.text(l.getWorld().getName()),
+                            Component.text(l.getWorld().getKey().getKey()),
                             Component.text("x: " + l.getBlockX()),
                             Component.text("y: " + l.getBlockY()),
                             Component.text("z: " + l.getBlockZ()),

@@ -79,7 +79,7 @@ public class GallifreyTradeSelectListener implements Listener {
     @EventHandler
     public void onVillagerTrade(PlayerInteractEntityEvent event) {
         if (event.getRightClicked() instanceof Villager villager) {
-            if (!villager.getLocation().getWorld().getName().equals("gallifrey")) {
+            if (!villager.getLocation().getWorld().getKey().getKey().equals("gallifrey")) {
                 return;
             }
             if (!villager.getPersistentDataContainer().has(plugin.getBlueprintKey(), PersistentDataType.BOOLEAN)) {

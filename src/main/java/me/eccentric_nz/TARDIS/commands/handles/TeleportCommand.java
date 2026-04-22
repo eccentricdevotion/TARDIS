@@ -92,7 +92,7 @@ public class TeleportCommand {
             HashMap<String, Object> tid = new HashMap<>();
             tid.put("tardis_id", id);
             HashMap<String, Object> set = new HashMap<>();
-            set.put("world", location.getWorld().getName());
+            set.put("world", location.getWorld().getKey().asString());
             set.put("x", location.getBlockX());
             set.put("y", location.getBlockY());
             set.put("z", location.getBlockZ());

@@ -95,7 +95,7 @@ public class MaterialseFromVortex implements Runnable {
                         HashMap<String, Object> wheress = new HashMap<>();
                         wheress.put("tardis_id", id);
                         HashMap<String, Object> setsave = new HashMap<>();
-                        setsave.put("world", exit.getWorld().getName());
+                        setsave.put("world", exit.getWorld().getKey().asString());
                         setsave.put("x", exit.getBlockX());
                         setsave.put("y", exit.getBlockY());
                         setsave.put("z", exit.getBlockZ());
@@ -231,7 +231,7 @@ public class MaterialseFromVortex implements Runnable {
                         HashMap<String, Object> setdoor = new HashMap<>();
                         HashMap<String, Object> wheredoor = new HashMap<>();
                         // current
-                        setcurrent.put("world", final_location.getWorld().getName());
+                        setcurrent.put("world", final_location.getWorld().getKey().asString());
                         setcurrent.put("x", final_location.getBlockX());
                         setcurrent.put("y", final_location.getBlockY());
                         setcurrent.put("z", final_location.getBlockZ());
@@ -245,7 +245,7 @@ public class MaterialseFromVortex implements Runnable {
                         setcurrent.put("submarine", (bd.isSubmarine()) ? 1 : 0);
                         wherecurrent.put("tardis_id", id);
                         // back
-                        setback.put("world", current.location().getWorld().getName());
+                        setback.put("world", current.location().getWorld().getKey().asString());
                         setback.put("x", current.location().getBlockX());
                         setback.put("y", current.location().getBlockY());
                         setback.put("z", current.location().getBlockZ());
