@@ -73,7 +73,6 @@ public class WorldNameConverter {
                 String worldQuery = "SELECT " + entry.getValue() + ", world FROM " + prefix + entry.getKey();
                 String worldUpdate = "UPDATE " + prefix + entry.getKey() + " SET world = ? WHERE " + entry.getValue() + " = ?";
                 ps = connection.prepareStatement(worldUpdate);
-                connection.setAutoCommit(false);
                 // get records
                 ResultSet rsw = statement.executeQuery(worldQuery);
                 if (rsw.isBeforeFirst()) {
@@ -85,8 +84,14 @@ public class WorldNameConverter {
                         ps.addBatch();
                         i++;
                     }
+                    if (i > 0) {
+                        ps.executeBatch();
+                        connection.commit();
+                        plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Converted " + i + " " + entry.getKey() + " world name records to keyed.");
+                    }
                 }
             }
+            i = 0;
             for (SQLTable entry : locationTables) {
                 String locationQuery = "SELECT " + entry.id() + ", " + entry.column() + " FROM " + prefix + entry.table();
                 if (entry.table().equals("controls")) {
@@ -95,14 +100,13 @@ public class WorldNameConverter {
                 if (entry.table().equals("interactions")) {
                     locationQuery += " WHERE control = 'CENTRE'";
                 }
-                String locationUpdate = "UPDATE " + prefix + entry.table() + " SET location = ? WHERE " + entry.id() + " = ?";
+                String locationUpdate = "UPDATE " + prefix + entry.table() + " SET " + entry.column() + " = ? WHERE " + entry.id() + " = ?";
                 ps = connection.prepareStatement(locationUpdate);
-                connection.setAutoCommit(false);
                 // get records
                 ResultSet rsl = statement.executeQuery(locationQuery);
                 if (rsl.isBeforeFirst()) {
                     while (rsl.next()) {
-                        String oldLocation = rsl.getString("location");
+                        String oldLocation = rsl.getString(entry.column());
                         // TARDIS_TimeVortex:520:68:1529 -> minecraft:tardis_timevortex:520:68:1529
                         String newLocation = "minecraft:" + oldLocation.toLowerCase(Locale.ROOT);
                         ps.setString(1, newLocation);
@@ -110,8 +114,14 @@ public class WorldNameConverter {
                         ps.addBatch();
                         i++;
                     }
+                    if (i > 0) {
+                        ps.executeBatch();
+                        connection.commit();
+                        plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Converted " + i + " " + entry.table() + " world name records to keyed.");
+                    }
                 }
             }
+            i = 0;
             // pattern needed for junk tardis creeper field
             Pattern pattern = Pattern.compile("name=([^},]+)");
             // update relevant fields in tardis records
@@ -120,7 +130,6 @@ public class WorldNameConverter {
             String tardisQuery = "SELECT tardis_id, chunk, creeper, beacon, eps, rail, renderer, zero FROM " + prefix + "tardis";
             String tardisUpdate = "UPDATE " + prefix + "tardis SET chunk = ?, creeper = ?, beacon = ?, eps = ?, rail = ?, renderer = ?, zero = ? WHERE tardis_id = ?";
             ps = connection.prepareStatement(tardisUpdate);
-            connection.setAutoCommit(false);
             // get records
             ResultSet rst = statement.executeQuery(tardisQuery);
             if (rst.isBeforeFirst()) {
@@ -156,13 +165,18 @@ public class WorldNameConverter {
                     ps.addBatch();
                     i++;
                 }
+                if (i > 0) {
+                    ps.executeBatch();
+                    connection.commit();
+                    plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Converted " + i + " tardis world name records to keyed.");
+                }
             }
+            i = 0;
             // ** farming
             // all fields except farm_id/tardis_id
             String farmingQuery = "SELECT * FROM " + prefix + "farming";
             String farmingUpdate = "UPDATE " + prefix + "farming SET allay = ?, apiary = ?, aquarium = ?, bamboo = ?, birdcage = ?, farm = ?, geode = ?, happy = ?, hutch = ?, igloo = ?, iistubil = ?, lava = ?, mangrove = ?, nautilus = ?, pen = ?, stable = ?, stall = ?, village = ? WHERE farm_id = ?";
             ps = connection.prepareStatement(farmingUpdate);
-            connection.setAutoCommit(false);
             // get records
             ResultSet rsf = statement.executeQuery(farmingQuery);
             if (rsf.isBeforeFirst()) {
@@ -225,13 +239,19 @@ public class WorldNameConverter {
                     ps.addBatch();
                     i++;
                 }
+                if (i > 0) {
+                    ps.executeBatch();
+                    connection.commit();
+                    plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Converted " + i + " farm world name records to keyed.");
+                }
+
             }
+            i = 0;
             // ** sensors
             // charging, flight, handbrake, malfunction, power
             String sensorQuery = "SELECT * FROM " + prefix + "sensors";
             String sensorUpdate = "UPDATE " + prefix + "sensors SET charging = ?, flight = ?, handbrake = ?, malfunction = ?, power = ? WHERE sensor_id = ?";
             ps = connection.prepareStatement(sensorUpdate);
-            connection.setAutoCommit(false);
             // get records
             ResultSet rss = statement.executeQuery(sensorQuery);
             if (rss.isBeforeFirst()) {
@@ -255,11 +275,11 @@ public class WorldNameConverter {
                     ps.addBatch();
                     i++;
                 }
-            }
-            if (i > 0) {
-                ps.executeBatch();
-                connection.commit();
-                plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Converted " + i + " world name records to keyed");
+                if (i > 0) {
+                    ps.executeBatch();
+                    connection.commit();
+                    plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Converted " + i + " sensor world name records to keyed.");
+                }
             }
             connection.setAutoCommit(true);
         } catch (SQLException e) {
