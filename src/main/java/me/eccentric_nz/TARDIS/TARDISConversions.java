@@ -23,6 +23,9 @@ import me.eccentric_nz.TARDIS.doors.InteractionDoorUpdater;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.files.AllInOneConfigConverter;
 import me.eccentric_nz.TARDIS.rooms.eye.EyePopulator;
+import org.bukkit.util.FileUtil;
+
+import java.io.File;
 
 public class TARDISConversions {
 
@@ -106,6 +109,11 @@ public class TARDISConversions {
             }
         }
         if (!plugin.getConfig().getBoolean("conversions.keyed_worlds")) {
+            // backup database
+            File oldFile = new File(plugin.getDataFolder() + File.separator + "TARDIS.db");
+            File newFile = new File(plugin.getDataFolder() + File.separator + "TARDIS_" + System.currentTimeMillis() + ".db");
+            // back up the file
+            FileUtil.copy(oldFile, newFile);
             if (new KeyedWorldsUpdater(plugin).setKeys() && new WorldNameConverter(plugin).update()) {
                 plugin.getConfig().set("conversions.keyed_worlds", true);
                 conversions++;
