@@ -68,12 +68,12 @@ public class ArtronCapacitorStorageListener extends TARDISMenuListener {
                 continue;
             }
             ItemMeta im = stack.getItemMeta();
-            if (!im.hasDisplayName() || !ComponentUtils.endsWith(im.displayName(), "Artron Capacitor")) {
+            if (!im.hasCustomName() || !ComponentUtils.endsWith(im.customName(), "Artron Capacitor")) {
                 continue;
             }
             if (!im.hasItemModel()) {
                 // check name
-                if (ComponentUtils.startsWith(im.displayName(), "Damaged")) {
+                if (ComponentUtils.startsWith(im.customName(), "Damaged")) {
                     damaged++;
                 }
             } else {

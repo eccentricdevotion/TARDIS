@@ -72,7 +72,7 @@ public class HandlesProgramInventory implements InventoryHolder {
         for (HandlesBlock b : HandlesBlock.getButtons()) {
             ItemStack is = ItemStack.of(Material.BOWL, 1);
             ItemMeta im = is.getItemMeta();
-            im.displayName(Component.text(b.getDisplayName()));
+            im.customName(Component.text(b.getDisplayName()));
             is.setItemMeta(im);
             stack[i] = is;
             i++;
@@ -85,7 +85,7 @@ public class HandlesProgramInventory implements InventoryHolder {
         for (HandlesBlock b : HandlesBlock.getControls()) {
             ItemStack is = ItemStack.of(Material.PAPER, 1);
             ItemMeta im = is.getItemMeta();
-            im.displayName(Component.text(b.getDisplayName()));
+            im.customName(Component.text(b.getDisplayName()));
             if (b.getLore() != null) {
                 im.lore(b.getLore());
             }

@@ -78,7 +78,7 @@ public class PluginThemeInventory extends DesktopThemeInventory {
             // info
             ItemStack info = ItemStack.of(GUIChameleonConstructor.INFO.material(), 1);
             ItemMeta io = info.getItemMeta();
-            io.displayName(Component.text("Info"));
+            io.customName(Component.text("Info"));
             io.lore(List.of(
                     Component.text("Shift-left click"),
                     Component.text("a console block to"),
@@ -92,7 +92,7 @@ public class PluginThemeInventory extends DesktopThemeInventory {
         if (TARDISPermission.hasPermission(player, "tardis.archive")) {
             ItemStack arc = ItemStack.of(GUIUpgrade.ARCHIVE_CONSOLES.material(), 1);
             ItemMeta hive_im = arc.getItemMeta();
-            hive_im.displayName(Component.text("Archive Consoles"));
+            hive_im.customName(Component.text("Archive Consoles"));
             arc.setItemMeta(hive_im);
             stack[GUIUpgrade.ARCHIVE_CONSOLES.slot()] = arc;
         }
@@ -101,7 +101,7 @@ public class PluginThemeInventory extends DesktopThemeInventory {
             if (TARDISPermission.hasPermission(player, "tardis.repair")) {
                 ItemStack rep = ItemStack.of(GUIUpgrade.REPAIR_CONSOLE.material(), 1);
                 ItemMeta air_im = rep.getItemMeta();
-                air_im.displayName(Component.text("Repair Console"));
+                air_im.customName(Component.text("Repair Console"));
                 rep.setItemMeta(air_im);
                 stack[GUIUpgrade.REPAIR_CONSOLE.slot()] = rep;
             }
@@ -109,7 +109,7 @@ public class PluginThemeInventory extends DesktopThemeInventory {
             if (TARDISPermission.hasPermission(player, "tardis.repair")) {
                 ItemStack cle = ItemStack.of(GUIUpgrade.CLEAN.material(), 1);
                 ItemMeta an_im = cle.getItemMeta();
-                an_im.displayName(Component.text("Clean"));
+                an_im.customName(Component.text("Clean"));
                 cle.setItemMeta(an_im);
                 stack[GUIUpgrade.CLEAN.slot()] = cle;
             }
@@ -117,19 +117,19 @@ public class PluginThemeInventory extends DesktopThemeInventory {
         // customise console
         ItemStack cons = ItemStack.of(GUIUpgrade.CONSOLE_ROTOR.material(), 1);
         ItemMeta ole_im = cons.getItemMeta();
-        ole_im.displayName(Component.text("Customise Console"));
+        ole_im.customName(Component.text("Customise Console"));
         cons.setItemMeta(ole_im);
         stack[GUIUpgrade.CONSOLE_ROTOR.slot()] = cons;
         // custom consoles page
         ItemStack custom = ItemStack.of(GUIChameleonPresets.GO_TO_PAGE_2.material(), 1);
         ItemMeta custom_im = custom.getItemMeta();
-        custom_im.displayName(Component.text(plugin.getLanguage().getString("BUTTON_PAGE_2", "Go to page 2")));
+        custom_im.customName(Component.text(plugin.getLanguage().getString("BUTTON_PAGE_2", "Go to page 2")));
         custom.setItemMeta(custom_im);
         stack[51] = custom;
         // close
         ItemStack close = ItemStack.of(GUIUpgrade.CLOSE.material(), 1);
         ItemMeta close_im = close.getItemMeta();
-        close_im.displayName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
+        close_im.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
         close.setItemMeta(close_im);
         stack[GUIUpgrade.CLOSE.slot()] = close;
 

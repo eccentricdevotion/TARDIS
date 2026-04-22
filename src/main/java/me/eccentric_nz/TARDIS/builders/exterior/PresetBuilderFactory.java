@@ -198,7 +198,7 @@ public class PresetBuilderFactory {
             return ChameleonPreset.ADAPTIVE;
         } else {
             try {
-                return ChameleonPreset.valueOf(plugin.getAdaptiveConfig().getString(biome.key().value().toUpperCase(Locale.ROOT)));
+                return ChameleonPreset.valueOf(plugin.getAdaptiveConfig().getString(biome.getKey().getKey().toUpperCase(Locale.ROOT)));
             } catch (IllegalArgumentException e) {
                 return ChameleonPreset.FACTORY;
             }

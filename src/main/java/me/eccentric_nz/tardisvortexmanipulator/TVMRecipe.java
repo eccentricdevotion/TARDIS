@@ -28,7 +28,7 @@ public class TVMRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.CLOCK, 1);
         ItemMeta im = is.getItemMeta();
-        im.displayName(ComponentUtils.toWhite("Vortex Manipulator"));
+        im.customName(ComponentUtils.toWhite("Vortex Manipulator"));
         im.lore(List.of(Component.text("Cheap and nasty time travel")));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "vortex-manipulator");

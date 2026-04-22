@@ -25,7 +25,7 @@ public class BleachCommand {
         Location location = block.getLocation().add(0.75d, 0.5d, 1.0d);
         ItemStack bleach = ItemStack.of(Material.WHITE_DYE);
         ItemMeta im = bleach.getItemMeta();
-        im.displayName(Component.text("Bleach"));
+        im.customName(Component.text("Bleach"));
         im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, 1);
         bleach.setItemMeta(im);
         ItemDisplay display = (ItemDisplay) block.getWorld().spawnEntity(location, EntityType.ITEM_DISPLAY);

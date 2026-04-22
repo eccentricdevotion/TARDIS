@@ -59,7 +59,7 @@ public class SparklerRunnable implements Runnable {
                 int amount = sparkler.getAmount();
                 if (amount > 1) {
                     ItemMeta im = sparkler.getItemMeta();
-                    Product cmd = Product.getByName().get(ComponentUtils.stripColour(im.displayName()));
+                    Product cmd = Product.getByName().get(ComponentUtils.stripColour(im.customName()));
                     im.setItemModel(cmd.getModel());
                     im.removeEnchant(Enchantment.LOYALTY);
                     im.setEnchantmentGlintOverride(null);

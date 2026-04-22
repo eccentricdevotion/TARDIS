@@ -53,7 +53,7 @@ public class KnockbackRepairRecipe {
         // addition
         ItemStack isa = ItemStack.of(Material.GLOWSTONE_DUST, 1);
         ItemMeta ima = isa.getItemMeta();
-        ima.displayName(ComponentUtils.toWhite("Knockback Circuit"));
+        ima.customName(ComponentUtils.toWhite("Knockback Circuit"));
         CustomModelDataComponent ecomponent = ima.getCustomModelDataComponent();
         ecomponent.setFloats(CircuitVariant.KNOCKBACK.getFloats());
         ima.setCustomModelDataComponent(ecomponent);

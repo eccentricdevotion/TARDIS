@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
+import net.kyori.adventure.text.Component;
 import org.bukkit.NamespacedKey;
 import org.bukkit.command.CommandSender;
 import org.bukkit.inventory.ShapedRecipe;
@@ -45,10 +46,10 @@ public class RecipesLister {
         if (!c.isEmpty()) {
             for (RecipeCategory category : RecipeCategory.values()) {
                 if (category != RecipeCategory.UNUSED && category != RecipeCategory.UNCRAFTABLE) {
-                    sender.sendMessage("#### " + category.getName());
+                    sender.sendMessage(Component.text("#### " + category.getName()));
                     for (RecipeItem item : RecipeItem.values()) {
                         if (item.getCategory() == category) {
-                            sender.sendMessage("| " + TARDISStringUtils.capitalise(item.name()) + " | `/tardisrecipe " + item.toTabCompletionString() + "` |");
+                            sender.sendMessage(Component.text("| " + TARDISStringUtils.capitalise(item.name()) + " | `/tardisrecipe " + item.toTabCompletionString() + "` |"));
                         }
                     }
                     plugin.getMessenger().message(sender, "");
@@ -56,10 +57,10 @@ public class RecipesLister {
             }
         } else {
             for (Map.Entry<String, ShapedRecipe> shaped : plugin.getFigura().getShapedRecipes().entrySet()) {
-                sender.sendMessage(TARDISStringUtils.toUnderscoredUppercase(shaped.getKey()) + "(\"" + shaped.getKey() + "\", Material." + shaped.getValue().getResult().getType() + ", " + RecipeItem.getByName(shaped.getKey()).getModel() + "),");
+                sender.sendMessage(Component.text(TARDISStringUtils.toUnderscoredUppercase(shaped.getKey()) + "(\"" + shaped.getKey() + "\", Material." + shaped.getValue().getResult().getType() + ", " + RecipeItem.getByName(shaped.getKey()).getModel() + "),"));
             }
             for (Map.Entry<String, ShapelessRecipe> shapeless : plugin.getIncomposita().getShapelessRecipes().entrySet()) {
-                sender.sendMessage(TARDISStringUtils.toUnderscoredUppercase(shapeless.getKey()) + "(\"" + shapeless.getKey() + "\", Material." + shapeless.getValue().getResult().getType() + ", " + RecipeItem.getByName(shapeless.getKey()).getModel() + "),");
+                sender.sendMessage(Component.text(TARDISStringUtils.toUnderscoredUppercase(shapeless.getKey()) + "(\"" + shapeless.getKey() + "\", Material." + shapeless.getValue().getResult().getType() + ", " + RecipeItem.getByName(shapeless.getKey()).getModel() + "),"));
             }
             if (plugin.getConfig().getBoolean("creation.seed_block.crafting")) {
                 for (Map.Entry<Schematic, ShapedRecipe> seed : plugin.getObstructionum().getSeedRecipes().entrySet()) {
@@ -76,12 +77,12 @@ public class RecipesLister {
                             material = TARDISSeedDisplayItem.CUSTOM.getMaterial().toString();
                         }
                     }
-                    sender.sendMessage(seed.getKey().getPermission().toUpperCase(Locale.ROOT) + "_SEED(\"" + seed.getKey().getPermission() + "\", Material." + material + ", " + model + "),");
+                    sender.sendMessage(Component.text(seed.getKey().getPermission().toUpperCase(Locale.ROOT) + "_SEED(\"" + seed.getKey().getPermission() + "\", Material." + material + ", " + model + "),"));
                 }
             }
             if (plugin.getConfig().getBoolean("modules.weeping_angels")) {
                 for (Monster m : Monster.values()) {
-                    sender.sendMessage(m.toString() + "_HEAD(\"" + m.getName() + " Head\", Material." + m.getMaterial().toString() + ", " + m.getModel() + "),");
+                    sender.sendMessage(Component.text(m.toString() + "_HEAD(\"" + m.getName() + " Head\", Material." + m.getMaterial().toString() + ", " + m.getModel() + "),"));
                 }
             }
         }

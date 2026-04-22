@@ -58,7 +58,7 @@ public class TARDISARSCircuitRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.GLOWSTONE_DUST, 1);
         ItemMeta im = is.getItemMeta();
-        im.displayName(ComponentUtils.toWhite("TARDIS ARS Circuit"));
+        im.customName(ComponentUtils.toWhite("TARDIS ARS Circuit"));
         CustomModelDataComponent component = im.getCustomModelDataComponent();
         component.setFloats(CircuitVariant.ARS.getFloats());
         im.setCustomModelDataComponent(component);

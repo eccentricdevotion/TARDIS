@@ -66,7 +66,7 @@ public class TARDISPerceptionFilterListener implements Listener {
         if ((is.getType().equals(Material.OMINOUS_TRIAL_KEY) || is.getType().equals(material)) && event.getAction().equals(Action.RIGHT_CLICK_AIR)) {
             if (is.hasItemMeta()) {
                 ItemMeta im = is.getItemMeta();
-                if (im.hasDisplayName() && ComponentUtils.endsWith(im.displayName(), "Perception Filter")) {
+                if (im.hasCustomName() && ComponentUtils.endsWith(im.customName(), "Perception Filter")) {
                     if (TARDISPermission.hasPermission(player, "tardis.filter")) {
                         ItemStack chestPlate = player.getInventory().getChestplate();
                         if (chestPlate == null) {
@@ -98,7 +98,7 @@ public class TARDISPerceptionFilterListener implements Listener {
                 if (is != null) {
                     if (is.hasItemMeta()) {
                         ItemMeta im = is.getItemMeta();
-                        if (im.hasDisplayName() && ComponentUtils.endsWith(im.displayName(), "Perception Filter")) {
+                        if (im.hasCustomName() && ComponentUtils.endsWith(im.customName(), "Perception Filter")) {
                             if (event.getAction().equals(InventoryAction.PICKUP_ALL) || event.getAction().equals(InventoryAction.PLACE_ALL)) {
                                 plugin.getFilter().removePerceptionFilter((Player) event.getWhoClicked());
                             }

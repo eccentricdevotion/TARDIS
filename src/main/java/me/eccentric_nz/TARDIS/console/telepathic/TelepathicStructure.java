@@ -71,7 +71,7 @@ public class TelepathicStructure implements InventoryHolder {
         // close
         ItemStack close = ItemStack.of(GUIMap.BUTTON_CLOSE.material(), 1);
         ItemMeta gui = close.getItemMeta();
-        gui.displayName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
+        gui.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
         gui.setItemModel(GUIMap.BUTTON_CLOSE.key());
         close.setItemMeta(gui);
         stack[53] = close;
@@ -86,7 +86,7 @@ public class TelepathicStructure implements InventoryHolder {
             component.setColors(List.of(Color.GREEN));
             im.setCustomModelDataComponent(component);
         }
-        im.displayName(Component.text(structures.getKey(structure).toString()));
+        im.customName(Component.text(structures.getKey(structure).toString()));
         is.setItemMeta(im);
         return is;
     }

@@ -28,7 +28,7 @@ public class SpriteCommand {
         player.sendMessage(star);
         String atlasKey = contents.atlas().asString();
         String spriteKey = contents.sprite().asString();
-        player.sendMessage(atlasKey);
-        player.sendMessage(spriteKey);
+        player.sendMessage(Component.text(atlasKey));
+        player.sendMessage(Component.text(spriteKey));
     }
 }

@@ -102,9 +102,9 @@ class LazarusPassiveInventory extends LazarusItems implements InventoryHolder, L
             ItemStack egg = ItemStack.of(m, 1);
             ItemMeta me = egg.getItemMeta();
             if (m == Material.MOOSHROOM_SPAWN_EGG) {
-                me.displayName(Component.text("MUSHROOM_COW"));
+                me.customName(Component.text("MUSHROOM_COW"));
             } else {
-                me.displayName(Component.text(m.toString().replace("_SPAWN_EGG", "")));
+                me.customName(Component.text(m.toString().replace("_SPAWN_EGG", "")));
             }
             egg.setItemMeta(me);
             stacks[i] = egg;

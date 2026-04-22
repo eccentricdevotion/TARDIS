@@ -75,10 +75,10 @@ public class TARDISSeedBlockListener implements Listener {
             return;
         }
         ItemMeta im = is.getItemMeta();
-        if (!im.hasDisplayName() || !im.hasLore()) {
+        if (!im.hasCustomName() || !im.hasLore()) {
             return;
         }
-        String dn = ComponentUtils.stripColour(im.displayName());
+        String dn = ComponentUtils.stripColour(im.customName());
         if (dn.equals("TARDIS Seed Block")) {
             Block block = event.getBlockPlaced();
             if (im.getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.STRING)) {
@@ -172,7 +172,7 @@ public class TARDISSeedBlockListener implements Listener {
                     return;
                 }
                 im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, model.getKey());
-                im.displayName(ComponentUtils.toGold("TARDIS Seed Block"));
+                im.customName(ComponentUtils.toGold("TARDIS Seed Block"));
                 List<Component> lore = new ArrayList<>();
                 lore.add(Component.text(console));
                 lore.add(Component.text("Walls: " + data.getWallType().toString()));

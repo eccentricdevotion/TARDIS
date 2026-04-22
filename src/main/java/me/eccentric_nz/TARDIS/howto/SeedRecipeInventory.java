@@ -82,7 +82,7 @@ class SeedRecipeInventory implements InventoryHolder {
         // interior wall
         ItemStack in_wall = ItemStack.of(Material.ORANGE_WOOL, 1);
         ItemMeta in_meta = in_wall.getItemMeta();
-        in_meta.displayName(Component.text("Interior walls"));
+        in_meta.customName(Component.text("Interior walls"));
         in_meta.lore(List.of(
                 Component.text("Any valid Wall/Floor block"),
                 Component.text("Click to see blocks...")
@@ -91,7 +91,7 @@ class SeedRecipeInventory implements InventoryHolder {
         // interior floor
         ItemStack in_floor = ItemStack.of(Material.LIGHT_GRAY_WOOL, 1);
         ItemMeta fl_meta = in_floor.getItemMeta();
-        fl_meta.displayName(Component.text("Interior floors"));
+        fl_meta.customName(Component.text("Interior floors"));
         fl_meta.lore(List.of(
                 Component.text("Any valid Wall/Floor block"),
                 Component.text("Click to see blocks...")
@@ -107,13 +107,13 @@ class SeedRecipeInventory implements InventoryHolder {
         // close
         ItemStack close = ItemStack.of(Material.BOWL, 1);
         ItemMeta close_im = close.getItemMeta();
-        close_im.displayName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
+        close_im.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
         close.setItemMeta(close_im);
         stack[26] = close;
         // back
         ItemStack back = ItemStack.of(Material.BOWL, 1);
         ItemMeta back_im = back.getItemMeta();
-        back_im.displayName(Component.text("Back"));
+        back_im.customName(Component.text("Back"));
         back.setItemMeta(back_im);
         stack[8] = back;
 

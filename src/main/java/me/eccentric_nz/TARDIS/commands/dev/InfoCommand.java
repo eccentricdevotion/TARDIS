@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.commands.dev;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.info.TARDISInfoMenu;
+import net.kyori.adventure.text.Component;
 import org.bukkit.command.CommandSender;
 
 public class InfoCommand {
@@ -29,8 +30,8 @@ public class InfoCommand {
 
     public void test(CommandSender sender) {
         for (TARDISInfoMenu tim : TARDISInfoMenu.values()) {
-            sender.sendMessage("---");
-            sender.sendMessage("[" + tim.getName() + "]");
+            sender.sendMessage(Component.text("---"));
+            sender.sendMessage(Component.text("[" + tim.getName() + "]"));
             TARDISInfoMenu.getChildren(tim.toString()).forEach((key, value) -> {
                 String[] split = key.split(value, 2);
                 if (split.length > 1) {

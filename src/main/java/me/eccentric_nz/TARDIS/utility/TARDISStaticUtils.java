@@ -341,8 +341,8 @@ public class TARDISStaticUtils {
     public static boolean isSonic(ItemStack is) {
         if (is != null && is.hasItemMeta()) {
             ItemMeta im = is.getItemMeta();
-            if (im.hasDisplayName()) {
-                return ComponentUtils.endsWith(im.displayName(), "Sonic Screwdriver");
+            if (im.hasCustomName()) {
+                return ComponentUtils.endsWith(im.customName(), "Sonic Screwdriver");
             }
         }
         return false;
@@ -357,8 +357,8 @@ public class TARDISStaticUtils {
     public static boolean isKeyOrSonic(ItemStack is) {
         if (is != null && is.hasItemMeta()) {
             ItemMeta im = is.getItemMeta();
-            if (im.hasDisplayName()) {
-                String stripped = ComponentUtils.stripColour(im.displayName());
+            if (im.hasCustomName()) {
+                String stripped = ComponentUtils.stripColour(im.customName());
                 return stripped.endsWith("TARDIS Key") || stripped.endsWith("Sonic Screwdriver");
             }
         }

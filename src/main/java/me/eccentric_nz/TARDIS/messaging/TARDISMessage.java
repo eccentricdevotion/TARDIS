@@ -51,7 +51,7 @@ public class TARDISMessage {
     }
 
     public void message(CommandSender cs, String message) {
-            cs.sendMessage(message);
+            cs.sendMessage(Component.text(message));
     }
 
     public void message(CommandSender cs, TardisModule module, Component component) {

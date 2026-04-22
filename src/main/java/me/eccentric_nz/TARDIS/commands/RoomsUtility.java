@@ -4,6 +4,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.files.TARDISRoomMap;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -79,7 +80,7 @@ public class RoomsUtility {
             int tmp = Math.round((entry.getValue() / 100.0F) * plugin.getConfig().getInt("growth.rooms_condenser_percent"));
             int amount = (tmp > 0) ? tmp : 1;
             String line = mat + ", " + amount;
-            sender.sendMessage(line);
+            sender.sendMessage(Component.text(line));
         }
     }
 

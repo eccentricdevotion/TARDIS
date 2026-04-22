@@ -75,8 +75,8 @@ public class ReducerGUIListener extends TARDISMenuListener {
             Material material = is.getType();
             if (material.equals(Material.GLASS_BOTTLE) && is.hasItemMeta()) {
                 ItemMeta im = is.getItemMeta();
-                if (im.hasDisplayName()) {
-                    String c = ComponentUtils.stripColour(im.displayName()).replace(" ", "_");
+                if (im.hasCustomName()) {
+                    String c = ComponentUtils.stripColour(im.customName()).replace(" ", "_");
                     for (Compound compound : Compound.values()) {
                         if (compound.toString().equals(c)) {
                             reduce(compound.getFormula(), inventory, player);

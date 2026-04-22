@@ -20,6 +20,7 @@ import io.papermc.paper.event.player.AsyncChatEvent;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
+import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -1867,8 +1868,8 @@ public class TARDISInformationSystemListener implements Listener {
      */
     private static void processKey(Player p, TARDISInfoMenu item, TARDIS plugin) {
         plugin.getTrackerKeeper().getInfoMenu().put(p.getUniqueId(), item);
-        p.sendMessage("---");
-        p.sendMessage("[" + item.getName() + "]");
+        p.sendMessage(Component.text("---"));
+        p.sendMessage(Component.text("[" + item.getName() + "]"));
         TARDISInfoMenu.getChildren(item.toString()).forEach((key, value) -> {
             String[] split = key.split(value, 2);
             if (split.length > 1) {
@@ -1897,8 +1898,8 @@ public class TARDISInformationSystemListener implements Listener {
             desc = plugin.getGeneralKeeper().getPluginYAML().getString("commands." + c[0] + ".description");
             usage = plugin.getGeneralKeeper().getPluginYAML().getString("commands." + c[0] + ".usage", "/" + c[0]).replace("<command>", c[0]);
         }
-        p.sendMessage("---");
-        p.sendMessage("[" + item.getName() + "]");
+        p.sendMessage(Component.text("---"));
+        p.sendMessage(Component.text("[" + item.getName() + "]"));
         plugin.getMessenger().messageWithColour(p, "Description: " + desc, "#FFAA00");
         plugin.getMessenger().messageWithColour(p, "Usage: " + usage, "#FFAA00");
         exit(p, plugin);

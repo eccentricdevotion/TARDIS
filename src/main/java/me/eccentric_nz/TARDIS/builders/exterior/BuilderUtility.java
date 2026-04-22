@@ -177,7 +177,7 @@ public class BuilderUtility {
             }
             String name = bd.getPlayer().getName() + "'s " + pb;
             Component custom = Component.text(name);
-            im.displayName(custom);
+            im.customName(custom);
             stand.customName(custom);
             stand.setCustomNameVisible(true);
         }

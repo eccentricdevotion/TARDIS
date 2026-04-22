@@ -88,7 +88,7 @@ public class HandlesProcessor {
         String event = "";
         for (ItemStack is : program.getInventory()) {
             if (is != null) {
-                HandlesBlock thb = HandlesBlock.BY_NAME.get(ComponentUtils.stripColour(is.getItemMeta().displayName()));
+                HandlesBlock thb = HandlesBlock.BY_NAME.get(ComponentUtils.stripColour(is.getItemMeta().customName()));
                 switch (thb) {
                     case ARTRON, DEATH, DEMATERIALISE, ENTER, EXIT, HADS, LOG_OUT, MATERIALISE, SIEGE_OFF, SIEGE_ON ->
                             event = thb.toString();
@@ -115,7 +115,7 @@ public class HandlesProcessor {
         for (int i = pos; i < 36; i++) {
             ItemStack is = program.getInventory()[i];
             if (is != null) {
-                HandlesBlock thb = HandlesBlock.BY_NAME.get(ComponentUtils.stripColour(is.getItemMeta().displayName()));
+                HandlesBlock thb = HandlesBlock.BY_NAME.get(ComponentUtils.stripColour(is.getItemMeta().customName()));
                 HandlesBlock next = getNext(i + 1);
                 if (next != null) {
                     UUID uuid = player.getUniqueId();
@@ -280,20 +280,20 @@ public class HandlesProcessor {
                                             case X -> {
                                                 // if X comes after travel then we'll look for Y and Z
                                                 ItemStack coordX = program.getInventory()[i + 2];
-                                                HandlesBlock coordBlockX = HandlesBlock.valueOf(ComponentUtils.stripColour(coordX.getItemMeta().displayName()));
+                                                HandlesBlock coordBlockX = HandlesBlock.valueOf(ComponentUtils.stripColour(coordX.getItemMeta().customName()));
                                                 x = getNumber(coordBlockX, i + 2);
                                                 // find Y
                                                 int fy = find(HandlesBlock.Y, i + 3);
                                                 if (fy > 0) {
                                                     ItemStack coordY = program.getInventory()[fy];
-                                                    HandlesBlock coordBlockY = HandlesBlock.valueOf(ComponentUtils.stripColour(coordY.getItemMeta().displayName()));
+                                                    HandlesBlock coordBlockY = HandlesBlock.valueOf(ComponentUtils.stripColour(coordY.getItemMeta().customName()));
                                                     y = getNumber(coordBlockY, fy);
                                                 }
                                                 // find Z
                                                 int fz = find(HandlesBlock.Z, i + 3);
                                                 if (fz > 0) {
                                                     ItemStack coordZ = program.getInventory()[fz];
-                                                    HandlesBlock coordBlockZ = HandlesBlock.valueOf(ComponentUtils.stripColour(coordZ.getItemMeta().displayName()));
+                                                    HandlesBlock coordBlockZ = HandlesBlock.valueOf(ComponentUtils.stripColour(coordZ.getItemMeta().customName()));
                                                     z = getNumber(coordBlockZ, fz);
                                                 }
                                                 goto_loc = new Location(current.location().getWorld(), x, y, z);
@@ -302,13 +302,13 @@ public class HandlesProcessor {
                                             case Y -> {
                                                 // if Y comes after travel then X use current coords, and we'll look for Z
                                                 ItemStack coordY = program.getInventory()[i + 2];
-                                                HandlesBlock coordBlockY = HandlesBlock.valueOf(ComponentUtils.stripColour(coordY.getItemMeta().displayName()));
+                                                HandlesBlock coordBlockY = HandlesBlock.valueOf(ComponentUtils.stripColour(coordY.getItemMeta().customName()));
                                                 y = getNumber(coordBlockY, i + 2);
                                                 // find Z
                                                 int fyz = find(HandlesBlock.Z, i + 3);
                                                 if (fyz > 0) {
                                                     ItemStack coordZ = program.getInventory()[fyz];
-                                                    HandlesBlock coordBlockZ = HandlesBlock.valueOf(ComponentUtils.stripColour(coordZ.getItemMeta().displayName()));
+                                                    HandlesBlock coordBlockZ = HandlesBlock.valueOf(ComponentUtils.stripColour(coordZ.getItemMeta().customName()));
                                                     z = getNumber(coordBlockZ, fyz);
                                                 }
                                                 goto_loc = new Location(current.location().getWorld(), x, y, z);
@@ -317,7 +317,7 @@ public class HandlesProcessor {
                                             case Z -> {
                                                 // if Z comes after travel then X and Y will use current coords
                                                 ItemStack coordZ = program.getInventory()[i + 2];
-                                                HandlesBlock coordBlockZ = HandlesBlock.valueOf(ComponentUtils.stripColour(coordZ.getItemMeta().displayName()));
+                                                HandlesBlock coordBlockZ = HandlesBlock.valueOf(ComponentUtils.stripColour(coordZ.getItemMeta().customName()));
                                                 z = getNumber(coordBlockZ, i + 2);
                                                 goto_loc = new Location(current.location().getWorld(), x, y, z);
                                                 travelType = TravelType.RELATIVE_COORDINATES;
@@ -623,7 +623,7 @@ public class HandlesProcessor {
         for (int i = pos; i < 36; i++) {
             ItemStack is = program.getInventory()[i];
             if (is != null) {
-                HandlesBlock thb = HandlesBlock.BY_NAME.get(ComponentUtils.stripColour(is.getItemMeta().displayName()));
+                HandlesBlock thb = HandlesBlock.BY_NAME.get(ComponentUtils.stripColour(is.getItemMeta().customName()));
                 switch (thb) {
                     case LESS_THAN, LESS_THAN_EQUAL, GREATER_THAN, GREATER_THAN_EQUAL, EQUALS -> comparison = thb; // operator
                     case ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, ZERO -> {
@@ -660,7 +660,7 @@ public class HandlesProcessor {
         }
         ItemStack num = program.getInventory()[i];
         if (num != null) {
-            return HandlesBlock.BY_NAME.get(ComponentUtils.stripColour(num.getItemMeta().displayName()));
+            return HandlesBlock.BY_NAME.get(ComponentUtils.stripColour(num.getItemMeta().customName()));
         }
         return null;
     }
@@ -689,7 +689,7 @@ public class HandlesProcessor {
         int n = 1;
         ItemStack num = program.getInventory()[i + n];
         while (num != null) {
-            HandlesBlock numBlock = HandlesBlock.BY_NAME.get(ComponentUtils.stripColour(num.getItemMeta().displayName()));
+            HandlesBlock numBlock = HandlesBlock.BY_NAME.get(ComponentUtils.stripColour(num.getItemMeta().customName()));
             if (numBlock.getCategory().equals(HandlesCategory.NUMBER)) {
                 tmp += numBlock.getDisplayName();
             } else {
@@ -708,7 +708,7 @@ public class HandlesProcessor {
         for (int n = i; n < 34; n++) {
             ItemStack yOrZ = program.getInventory()[n];
             if (yOrZ != null) {
-                HandlesBlock block = HandlesBlock.BY_NAME.get(ComponentUtils.stripColour(yOrZ.getItemMeta().displayName()));
+                HandlesBlock block = HandlesBlock.BY_NAME.get(ComponentUtils.stripColour(yOrZ.getItemMeta().customName()));
                 if (block == thb) {
                     return n + 1;
                 }

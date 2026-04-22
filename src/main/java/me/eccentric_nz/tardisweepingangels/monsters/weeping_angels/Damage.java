@@ -148,7 +148,7 @@ public class Damage implements Listener {
             if (stack != null) {
                 if (stack.hasItemMeta()) {
                     ItemMeta im = stack.getItemMeta();
-                    if (im.hasDisplayName() && ComponentUtils.endsWith(im.displayName(), "TARDIS Key")) {
+                    if (im.hasCustomName() && ComponentUtils.endsWith(im.customName(), "TARDIS Key")) {
                         int amount = stack.getAmount();
                         if (amount > 1) {
                             stack.setAmount(amount - 1);

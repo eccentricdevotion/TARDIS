@@ -35,10 +35,10 @@ public class TARDISSonicBlasterUtils {
             return false;
         }
         ItemMeta im = is.getItemMeta();
-        if (!im.hasDisplayName()) {
+        if (!im.hasCustomName()) {
             return false;
         }
-        return ComponentUtils.endsWith(im.displayName(), "Sonic Blaster");
+        return ComponentUtils.endsWith(im.customName(), "Sonic Blaster");
     }
 
     public static float getLineOfSightAngle(Player p) {

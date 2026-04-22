@@ -49,7 +49,7 @@ public class DoorUtility {
             return;
         }
         ItemMeta im = is.getItemMeta();
-        if (!im.hasDisplayName() || !im.getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.STRING) || !im.hasItemModel()) {
+        if (!im.hasCustomName() || !im.getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.STRING) || !im.hasItemModel()) {
             return;
         }
         // set an Interaction

@@ -51,7 +51,7 @@ public class TARDISRecipeCategoryListener extends TARDISMenuListener {
         ItemStack is = event.getView().getItem(slot);
         if (is != null) {
             ItemMeta im = is.getItemMeta();
-            String cat = ComponentUtils.toEnumUppercase(im.displayName());
+            String cat = ComponentUtils.toEnumUppercase(im.customName());
             RecipeCategory category = RecipeCategory.valueOf(cat);
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                 InventoryHolder recipes;

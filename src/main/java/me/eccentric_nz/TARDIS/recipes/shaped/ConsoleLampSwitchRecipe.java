@@ -53,7 +53,7 @@ public class ConsoleLampSwitchRecipe {
         // add interior recipe
         ItemStack is = ItemStack.of(Material.LEVER, 1);
         ItemMeta im = is.getItemMeta();
-        im.displayName(ComponentUtils.toWhite("Console Lamp Switch"));
+        im.customName(ComponentUtils.toWhite("Console Lamp Switch"));
         im.setItemModel(RecipeItem.CONSOLE_LAMP_SWITCH.getModel());
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "console_lamp_switch");

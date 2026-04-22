@@ -32,6 +32,7 @@ import me.eccentric_nz.TARDIS.schematic.SchematicGZip;
 import me.eccentric_nz.TARDIS.schematic.archive.ArchiveUpdate;
 import me.eccentric_nz.TARDIS.schematic.archive.ResultSetArchiveByUse;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.data.BlockData;
@@ -229,7 +230,7 @@ public class DesktopRepair {
                     }
                 }
                 if (!hasRequired) {
-                    player.sendMessage("-----------------------------");
+                    player.sendMessage(Component.text("-----------------------------"));
                     return false;
                 }
                 CondenserData c_data = new CondenserData();

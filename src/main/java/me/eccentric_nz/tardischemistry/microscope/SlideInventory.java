@@ -50,7 +50,7 @@ class SlideInventory implements InventoryHolder {
         for (Slide slide : Slide.values()) {
             ItemStack is = ItemStack.of(Material.GLASS, 1);
             ItemMeta im = is.getItemMeta();
-            im.displayName(Component.text(slide.getName()));
+            im.customName(Component.text(slide.getName()));
             im.setItemModel(ChemistryEquipment.GLASS_SLIDE.getKey());
             im.getPersistentDataContainer().set(plugin.getMicroscopeKey(), PersistentDataType.STRING, slide.getModel().getKey());
             is.setItemMeta(im);
@@ -59,7 +59,7 @@ class SlideInventory implements InventoryHolder {
         // Cancel / close
         ItemStack close = ItemStack.of(Material.BOWL, 1);
         ItemMeta can = close.getItemMeta();
-        can.displayName(Component.text("Close"));
+        can.customName(Component.text("Close"));
         can.setItemModel(GuiVariant.CLOSE.getKey());
         close.setItemMeta(can);
         stacks[53] = close;

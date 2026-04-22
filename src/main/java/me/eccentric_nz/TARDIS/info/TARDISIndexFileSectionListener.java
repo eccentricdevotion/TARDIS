@@ -59,7 +59,7 @@ public class TARDISIndexFileSectionListener extends TARDISMenuListener {
             case 53 -> close(p);
             default -> {
                 ItemMeta im = is.getItemMeta();
-                String name = ComponentUtils.toEnumUppercase(im.displayName());
+                String name = ComponentUtils.toEnumUppercase(im.customName());
                 try {
                     TARDISInfoMenu tim = TARDISInfoMenu.valueOf(name);
                     TISCategory category = plugin.getTrackerKeeper().getInfoGUI().get(p.getUniqueId());

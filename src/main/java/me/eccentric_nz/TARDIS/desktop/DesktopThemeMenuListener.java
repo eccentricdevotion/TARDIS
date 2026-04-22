@@ -104,7 +104,7 @@ public class DesktopThemeMenuListener extends TARDISMenuListener {
                 UpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(player.getUniqueId());
                 InventoryHolder consoles;
                 // switch page
-                if (GUIChameleonPresets.GO_TO_PAGE_2.name().equals(choice.getItemMeta().displayName())) {
+                if (GUIChameleonPresets.GO_TO_PAGE_2.name().equals(choice.getItemMeta().customName())) {
                     // page 2
                     consoles = new CustomThemeInventory(plugin, player, tud.getPrevious().getPermission(), tud.getLevel());
                 } else {

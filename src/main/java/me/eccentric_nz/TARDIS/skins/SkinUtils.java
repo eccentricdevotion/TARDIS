@@ -150,7 +150,7 @@ public class SkinUtils {
                 // + 5 torch
                 ItemStack torch = ItemStack.of(Material.TORCH, 1);
                 ItemMeta tim = torch.getItemMeta();
-                tim.displayName(Component.text("Liberty Torch"));
+                tim.customName(Component.text("Liberty Torch"));
                 tim.setItemModel(Features.ANGEL_OF_LIBERTY_TORCH.getKey());
                 torch.setItemMeta(tim);
                 setOrSwapItem(torch, player, EquipmentSlot.HAND);
@@ -166,7 +166,7 @@ public class SkinUtils {
                 // + 7 weapon
                 ItemStack weapon = ItemStack.of(material, 1);
                 ItemMeta cwim = weapon.getItemMeta();
-                cwim.displayName(Component.text("Cyber Weapon"));
+                cwim.customName(Component.text("Cyber Weapon"));
                 cwim.setItemModel(CybermanVariant.CYBER_WEAPON.getKey());
                 weapon.setItemMeta(cwim);
                 setOrSwapItem(weapon, player, EquipmentSlot.HAND);
@@ -177,7 +177,7 @@ public class SkinUtils {
                 // + weapon
                 ItemStack weapon = ItemStack.of(material, 1);
                 ItemMeta cwim = weapon.getItemMeta();
-                cwim.displayName(Component.text("Wood Cyber Weapon"));
+                cwim.customName(Component.text("Wood Cyber Weapon"));
                 cwim.setItemModel(CybermanVariant.WOOD_CYBER_WEAPON.getKey());
                 weapon.setItemMeta(cwim);
                 setOrSwapItem(weapon, player, EquipmentSlot.HAND);
@@ -192,7 +192,7 @@ public class SkinUtils {
                 // + arm decor
                 ItemStack arm = ItemStack.of(material, 1);
                 ItemMeta cwim = arm.getItemMeta();
-                cwim.displayName(Component.text("Cyber Arm"));
+                cwim.customName(Component.text("Cyber Arm"));
                 cwim.setItemModel(CybermanVariant.CYBERMAN_INVASION_ARM.getKey());
                 arm.setItemMeta(cwim);
                 setOrSwapItem(arm, player, EquipmentSlot.HAND);
@@ -208,7 +208,7 @@ public class SkinUtils {
                 // + arm decor
                 ItemStack arm = ItemStack.of(material, 1);
                 ItemMeta cwim = arm.getItemMeta();
-                cwim.displayName(Component.text("Cyber Arm"));
+                cwim.customName(Component.text("Cyber Arm"));
                 cwim.setItemModel(CybermanVariant.CYBERMAN_RISE_ARM.getKey());
                 arm.setItemMeta(cwim);
                 setOrSwapItem(arm, player, EquipmentSlot.HAND);
@@ -254,7 +254,7 @@ public class SkinUtils {
                 // 17 off-hand katana
                 ItemStack katana = ItemStack.of(material, 1);
                 ItemMeta kim = katana.getItemMeta();
-                kim.displayName(Component.text("Katana"));
+                kim.customName(Component.text("Katana"));
                 kim.setItemModel(Features.JENNY_FLINT_KATANA.getKey());
                 katana.setItemMeta(kim);
                 setOrSwapItem(katana, player, EquipmentSlot.OFF_HAND);
@@ -269,12 +269,12 @@ public class SkinUtils {
                 key = Features.MELANIE_BUSH_HAIR.getKey();
                 ItemStack leftArm = ItemStack.of(material, 1);
                 ItemMeta laim = leftArm.getItemMeta();
-                laim.displayName(Component.text(skin.name()));
+                laim.customName(Component.text(skin.name()));
                 laim.setItemModel(Features.MELANIE_BUSH_ARM_LEFT.getKey());
                 leftArm.setItemMeta(laim);
                 ItemStack rightArm = ItemStack.of(material, 1);
                 ItemMeta raim = rightArm.getItemMeta();
-                raim.displayName(Component.text(skin.name()));
+                raim.customName(Component.text(skin.name()));
                 raim.setItemModel(Features.MELANIE_BUSH_ARM_RIGHT.getKey());
                 rightArm.setItemMeta(raim);
                 setOrSwapItem(leftArm, player, EquipmentSlot.OFF_HAND);
@@ -286,12 +286,12 @@ public class SkinUtils {
                 // + 7, 8 left, right arms
                 ItemStack leftArm = ItemStack.of(material, 1);
                 ItemMeta laim = leftArm.getItemMeta();
-                laim.displayName(Component.text(skin.name()));
+                laim.customName(Component.text(skin.name()));
                 laim.setItemModel(MireVariant.MIRE_LEFT_ARM.getKey());
                 leftArm.setItemMeta(laim);
                 ItemStack rightArm = ItemStack.of(material, 1);
                 ItemMeta raim = rightArm.getItemMeta();
-                raim.displayName(Component.text(skin.name()));
+                raim.customName(Component.text(skin.name()));
                 raim.setItemModel(MireVariant.MIRE_RIGHT_ARM.getKey());
                 rightArm.setItemMeta(raim);
                 setOrSwapItem(leftArm, player, EquipmentSlot.OFF_HAND);
@@ -333,12 +333,12 @@ public class SkinUtils {
                 // + 7, 8 left, right claws
                 ItemStack leftClaw = ItemStack.of(material, 1);
                 ItemMeta lhim = leftClaw.getItemMeta();
-                lhim.displayName(Component.text(skin.name()));
+                lhim.customName(Component.text(skin.name()));
                 lhim.setItemModel(SlitheenVariant.SLITHEEN_CLAW_LEFT.getKey());
                 leftClaw.setItemMeta(lhim);
                 ItemStack rightClaw = ItemStack.of(material, 1);
                 ItemMeta rhim = rightClaw.getItemMeta();
-                rhim.displayName(Component.text(skin.name()));
+                rhim.customName(Component.text(skin.name()));
                 rhim.setItemModel(SlitheenVariant.SLITHEEN_CLAW_RIGHT.getKey());
                 rightClaw.setItemMeta(rhim);
                 setOrSwapItem(leftClaw, player, EquipmentSlot.OFF_HAND);
@@ -377,7 +377,7 @@ public class SkinUtils {
         if (!skin.name().equals("Jenny Flint")) {
             ItemStack head = ItemStack.of(material, 1);
             ItemMeta im = head.getItemMeta();
-            im.displayName(Component.text(skin.name()));
+            im.customName(Component.text(skin.name()));
             if (key != null) {
                 im.setItemModel(key);
             }

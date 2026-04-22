@@ -53,7 +53,7 @@ public class EmeraldRepairRecipe {
         // addition
         ItemStack isa = ItemStack.of(Material.GLOWSTONE_DUST, 1);
         ItemMeta ima = isa.getItemMeta();
-        ima.displayName(ComponentUtils.toWhite("Emerald Environment Circuit"));
+        ima.customName(ComponentUtils.toWhite("Emerald Environment Circuit"));
         CustomModelDataComponent ecomponent = ima.getCustomModelDataComponent();
         ecomponent.setFloats(CircuitVariant.EMERALD.getFloats());
         ima.setCustomModelDataComponent(ecomponent);

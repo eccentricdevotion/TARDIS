@@ -53,7 +53,7 @@ public class AdminRepairRecipe {
         // addition
         ItemStack isa = ItemStack.of(Material.GLOWSTONE_DUST, 1);
         ItemMeta ima = isa.getItemMeta();
-        ima.displayName(ComponentUtils.toWhite("Server Admin Circuit"));
+        ima.customName(ComponentUtils.toWhite("Server Admin Circuit"));
         CustomModelDataComponent ecomponent = ima.getCustomModelDataComponent();
         ecomponent.setFloats(CircuitVariant.ADMIN.getFloats());
         ima.setCustomModelDataComponent(ecomponent);

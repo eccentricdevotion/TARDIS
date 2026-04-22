@@ -125,7 +125,7 @@ public class ShapelessPageBuilder extends PageBuilder {
                     }
                     default -> {
                         ItemMeta im = is.getItemMeta();
-                        dashed = TARDISStringUtils.toLowercaseDashed(ComponentUtils.stripColour(im.displayName()));
+                        dashed = TARDISStringUtils.toLowercaseDashed(ComponentUtils.stripColour(im.customName()));
                     }
                 }
             }

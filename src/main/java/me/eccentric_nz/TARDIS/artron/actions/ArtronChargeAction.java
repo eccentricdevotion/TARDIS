@@ -80,7 +80,7 @@ public class ArtronChargeAction {
             ItemStack is = player.getInventory().getItemInMainHand();
             if (is.hasItemMeta()) {
                 ItemMeta im = is.getItemMeta();
-                String name = ComponentUtils.stripColour(im.displayName());
+                String name = ComponentUtils.stripColour(im.customName());
                 if (!name.endsWith("Artron Storage Cell")) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "CELL_NOT_VALID");
                     return;

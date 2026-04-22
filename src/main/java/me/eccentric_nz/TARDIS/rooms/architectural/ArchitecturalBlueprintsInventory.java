@@ -67,14 +67,14 @@ public class ArchitecturalBlueprintsInventory implements InventoryHolder {
         // scroll up
         ItemStack scroll_up = ItemStack.of(GUIChemistry.SCROLL_UP.material(), 1);
         ItemMeta uim = scroll_up.getItemMeta();
-        uim.displayName(Component.text("Scroll up"));
+        uim.customName(Component.text("Scroll up"));
         uim.setItemModel(GUIChemistry.SCROLL_UP.key());
         scroll_up.setItemMeta(uim);
         items[27] = scroll_up;
         // scroll down
         ItemStack scroll_down = ItemStack.of(GUIChemistry.SCROLL_DOWN.material(), 1);
         ItemMeta dim = scroll_down.getItemMeta();
-        dim.displayName(Component.text("Scroll down"));
+        dim.customName(Component.text("Scroll down"));
         dim.setItemModel(GUIChemistry.SCROLL_DOWN.key());
         scroll_down.setItemMeta(dim);
         items[28] = scroll_down;
@@ -86,7 +86,7 @@ public class ArchitecturalBlueprintsInventory implements InventoryHolder {
                 ItemStack head = ItemStack.of(Material.PLAYER_HEAD, 1);
                 SkullMeta skull = (SkullMeta) head.getItemMeta();
                 skull.setOwningPlayer(p);
-                skull.displayName(Component.text(p.getName()));
+                skull.customName(Component.text(p.getName()));
                 skull.lore(List.of(Component.text(p.getUniqueId().toString())));
                 head.setItemMeta(skull);
                 items[i] = head;
@@ -97,32 +97,32 @@ public class ArchitecturalBlueprintsInventory implements InventoryHolder {
             // no players online
             ItemStack players = ItemStack.of(Material.GRAY_TERRACOTTA, 1);
             ItemMeta pim = players.getItemMeta();
-            pim.displayName(Component.text("No players online"));
+            pim.customName(Component.text("No players online"));
             players.setItemMeta(pim);
             items[36] = players;
         }
         // scroll left
         ItemStack scroll_left = ItemStack.of(GUIArs.BUTTON_SCROLL_L.material(), 1);
         ItemMeta nim = scroll_left.getItemMeta();
-        nim.displayName(Component.text(plugin.getLanguage().getString("BUTTON_SCROLL_L", "Scroll left")));
+        nim.customName(Component.text(plugin.getLanguage().getString("BUTTON_SCROLL_L", "Scroll left")));
         scroll_left.setItemMeta(nim);
         items[45] = scroll_left;
         // scroll right
         ItemStack scroll_right = ItemStack.of(GUIArs.BUTTON_SCROLL_R.material(), 1);
         ItemMeta pim = scroll_right.getItemMeta();
-        pim.displayName(Component.text(plugin.getLanguage().getString("BUTTON_SCROLL_R", "Scroll right")));
+        pim.customName(Component.text(plugin.getLanguage().getString("BUTTON_SCROLL_R", "Scroll right")));
         scroll_right.setItemMeta(pim);
         items[46] = scroll_right;
         // give
         ItemStack give = ItemStack.of(Material.GILDED_BLACKSTONE, 1);
         ItemMeta gim = give.getItemMeta();
-        gim.displayName(Component.text("Give blueprint disc"));
+        gim.customName(Component.text("Give blueprint disc"));
         give.setItemMeta(gim);
         items[49] = give;
         // close
         ItemStack close = ItemStack.of(GUIMap.BUTTON_CLOSE.material(), 1);
         ItemMeta gui = close.getItemMeta();
-        gui.displayName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
+        gui.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
         close.setItemMeta(gui);
         items[53] = close;
         return items;

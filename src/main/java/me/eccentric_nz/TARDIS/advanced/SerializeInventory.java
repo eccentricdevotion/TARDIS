@@ -50,7 +50,7 @@ public class SerializeInventory {
                         ItemStack is = (ItemStack) dataInput.readObject();
                         if (is != null && is.getType() == Material.GLOWSTONE_DUST) {
                             ItemMeta im = is.getItemMeta();
-                            if (im.hasDisplayName() && im.displayName().equals("Circuits")) {
+                            if (im.hasCustomName() && im.customName().equals("Circuits")) {
                                 CustomModelDataComponent component = im.getCustomModelDataComponent();
                                 if (!component.getFloats().isEmpty() && component.getFloats().getFirst() != 130.0f) {
                                     component.setFloats(List.of(130.0f));

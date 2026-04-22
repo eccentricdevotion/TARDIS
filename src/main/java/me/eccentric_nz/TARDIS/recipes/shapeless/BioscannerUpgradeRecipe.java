@@ -49,7 +49,7 @@ public class BioscannerUpgradeRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.BLAZE_ROD, 1);
         ItemMeta im = is.getItemMeta();
-        im.displayName(ComponentUtils.toWhite("Bio-scanner Upgrade"));
+        im.customName(ComponentUtils.toWhite("Bio-scanner Upgrade"));
         List<Float> sonicModel = SonicScrewdriverRecipe.sonicModelLookup.getOrDefault(plugin.getConfig().getString("sonic.default_model").toLowerCase(Locale.ROOT), SonicVariant.ELEVENTH.getFloats());
         CustomModelDataComponent component = im.getCustomModelDataComponent();
         component.setFloats(sonicModel);
@@ -60,7 +60,7 @@ public class BioscannerUpgradeRecipe {
         r.addIngredient(Material.BLAZE_ROD);
         ItemStack exact = ItemStack.of(Material.GLOWSTONE_DUST, 1);
         ItemMeta em = exact.getItemMeta();
-        em.displayName(ComponentUtils.toWhite("Bio-scanner Circuit"));
+        em.customName(ComponentUtils.toWhite("Bio-scanner Circuit"));
         CustomModelDataComponent ecomponent = em.getCustomModelDataComponent();
         ecomponent.setFloats(CircuitVariant.BIO.getFloats());
         em.setCustomModelDataComponent(ecomponent);

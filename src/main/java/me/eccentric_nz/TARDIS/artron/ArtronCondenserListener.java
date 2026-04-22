@@ -411,8 +411,8 @@ public class ArtronCondenserListener implements Listener {
         }
         if (is.hasItemMeta()) {
             ItemMeta im = is.getItemMeta();
-            if (im.hasDisplayName()) {
-                return ComponentUtils.endsWith(im.displayName(),"TARDIS Blueprint Disk");
+            if (im.hasCustomName()) {
+                return ComponentUtils.endsWith(im.customName(),"TARDIS Blueprint Disk");
             }
         }
         return false;

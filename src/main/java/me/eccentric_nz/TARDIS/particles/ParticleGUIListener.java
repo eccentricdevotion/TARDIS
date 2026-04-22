@@ -76,7 +76,7 @@ public class ParticleGUIListener extends TARDISMenuListener {
             ItemStack is = view.getItem(slot);
             if (is != null) {
                 ItemMeta im = is.getItemMeta();
-                String display = ComponentUtils.stripColour(im.displayName());
+                String display = ComponentUtils.stripColour(im.customName());
                 switch (slot) {
                     case 1, 2, 3, 4, 5, 6, 7 -> setShape(view, slot, display, uuid); // particle shape
                     case 10, 11, 12, 13, 14, 15, 16,
@@ -227,13 +227,13 @@ public class ParticleGUIListener extends TARDISMenuListener {
             for (int s = 10; s < 44; s++) {
                 ItemStack eis = view.getItem(s);
                 if (eis != null && eis.getType() == Material.REDSTONE_ORE) {
-                    effect = ParticleEffect.valueOf(ComponentUtils.stripColour(eis.getItemMeta().displayName()).toUpperCase(Locale.ROOT));
+                    effect = ParticleEffect.valueOf(ComponentUtils.stripColour(eis.getItemMeta().customName()).toUpperCase(Locale.ROOT));
                 }
             }
             for (int s = 1; s < 8; s++) {
                 ItemStack sis = view.getItem(s);
                 if (sis != null && sis.getType() == Material.LAPIS_ORE) {
-                    shape = ParticleShape.valueOf(ComponentUtils.stripColour(sis.getItemMeta().displayName()).toUpperCase(Locale.ROOT));
+                    shape = ParticleShape.valueOf(ComponentUtils.stripColour(sis.getItemMeta().customName()).toUpperCase(Locale.ROOT));
                 }
             }
         } catch (IllegalArgumentException ignored) {

@@ -39,7 +39,7 @@ public class WashingMachineInventory implements InventoryHolder {
         // 18 info
         ItemStack info = ItemStack.of(GUIChameleonConstructor.INFO.material(), 1);
         ItemMeta io = info.getItemMeta();
-        io.displayName(Component.text(plugin.getChameleonGuis().getString("INFO", "Info")));
+        io.customName(Component.text(plugin.getChameleonGuis().getString("INFO", "Info")));
         io.lore(List.of(
                 Component.text("Place items you want to launder"),
                 Component.text("in the first row, then click"),
@@ -51,19 +51,19 @@ public class WashingMachineInventory implements InventoryHolder {
         // 21 wash trims
         ItemStack wash = ItemStack.of(Material.CAULDRON, 1);
         ItemMeta trim = wash.getItemMeta();
-        trim.displayName(Component.text("Wash"));
+        trim.customName(Component.text("Wash"));
         wash.setItemMeta(trim);
         items[21] = wash;
         // 23 remove dye
         ItemStack remove = ItemStack.of(Material.CAULDRON, 1);
         ItemMeta dye = remove.getItemMeta();
-        dye.displayName(Component.text("Bleach"));
+        dye.customName(Component.text("Bleach"));
         remove.setItemMeta(dye);
         items[23] = remove;
         // 26 close
         ItemStack close = ItemStack.of(GUIMap.BUTTON_CLOSE.material(), 1);
         ItemMeta gui = close.getItemMeta();
-        gui.displayName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
+        gui.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
         close.setItemMeta(gui);
         items[26] = close;
         return items;

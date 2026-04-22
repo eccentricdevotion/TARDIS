@@ -48,7 +48,7 @@ public class ReducerInventory implements InventoryHolder {
         // info
         ItemStack info = ItemStack.of(GUIChemistry.INFO.material(), 1);
         ItemMeta info_im = info.getItemMeta();
-        info_im.displayName(Component.text("Info"));
+        info_im.customName(Component.text("Info"));
         info_im.lore(List.of(
                 Component.text("Reduce a substance to its"),
                 Component.text("component elements."),
@@ -61,14 +61,14 @@ public class ReducerInventory implements InventoryHolder {
         // check formula
         ItemStack check = ItemStack.of(GUIChemistry.REDUCE.material(), 1);
         ItemMeta check_im = check.getItemMeta();
-        check_im.displayName(Component.text("Reduce"));
+        check_im.customName(Component.text("Reduce"));
         check_im.setItemModel(GUIChemistry.REDUCE.key());
         check.setItemMeta(check_im);
         stack[GUIChemistry.REDUCE.slot()] = check;
         // close
         ItemStack close = ItemStack.of(GUIChemistry.CLOSE.material(), 1);
         ItemMeta close_im = close.getItemMeta();
-        close_im.displayName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
+        close_im.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
         close_im.setItemModel(GUIChemistry.CLOSE.key());
         close.setItemMeta(close_im);
         stack[GUIChemistry.CLOSE.slot()] = close;

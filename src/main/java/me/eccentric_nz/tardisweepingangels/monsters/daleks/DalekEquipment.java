@@ -41,7 +41,7 @@ public class DalekEquipment {
         le.getPersistentDataContainer().set(TARDISWeepingAngels.DALEK, PersistentDataType.INTEGER, Monster.DALEK.ordinal());
         ItemStack helmet = ItemStack.of(Material.SLIME_BALL, 1);
         ItemMeta headMeta = helmet.getItemMeta();
-        headMeta.displayName(Component.text("Dalek Head"));
+        headMeta.customName(Component.text("Dalek Head"));
         headMeta.setItemModel(getRandomModel());
         helmet.setItemMeta(headMeta);
         EntityEquipment ee = le.getEquipment();

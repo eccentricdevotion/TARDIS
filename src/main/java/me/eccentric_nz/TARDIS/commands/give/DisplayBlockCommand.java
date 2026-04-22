@@ -47,7 +47,7 @@ public class DisplayBlockCommand {
             Door door = Door.byName.get(display);
             ItemStack is = ItemStack.of(door.getMaterial(), 1);
             ItemMeta im = is.getItemMeta();
-            im.displayName(ComponentUtils.toWhite("Door " + TARDISStringUtils.capitalise(door.getName())));
+            im.customName(ComponentUtils.toWhite("Door " + TARDISStringUtils.capitalise(door.getName())));
             NamespacedKey key = switch (door.getMaterial()) {
                 case IRON_DOOR -> TardisDoorVariant.TARDIS_DOOR_CLOSED.getKey();
                 case BIRCH_DOOR -> BoneDoorVariant.BONE_DOOR_CLOSED.getKey();
@@ -63,7 +63,7 @@ public class DisplayBlockCommand {
             Rotor rotor = Rotor.byName.get(display);
             ItemStack is = ItemStack.of(Material.LIGHT_GRAY_DYE, 1);
             ItemMeta im = is.getItemMeta();
-            im.displayName(ComponentUtils.toWhite("Time Rotor " + rotor.name()));
+            im.customName(ComponentUtils.toWhite("Time Rotor " + rotor.name()));
             im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, rotor.offModel().getKey());
             im.setItemModel(rotor.offModel());
             is.setItemMeta(im);
@@ -73,7 +73,7 @@ public class DisplayBlockCommand {
                 TARDISDisplayItem tdi = TARDISDisplayItemRegistry.valueOf(display);
                 ItemStack is = ItemStack.of(tdi.getMaterial(), 1);
                 ItemMeta im = is.getItemMeta();
-                im.displayName(ComponentUtils.toWhite(tdi.getDisplayName()));
+                im.customName(ComponentUtils.toWhite(tdi.getDisplayName()));
                 if (tdi.getCustomModel() != null) {
                     im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, tdi.getCustomModel().getKey());
                 }

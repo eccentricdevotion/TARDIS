@@ -59,8 +59,8 @@ public class TARDISDisplayItemUtils {
                 }
             }
             // Try to get by Display Name
-            if (im.hasDisplayName()) {
-                TARDISDisplayItem displayItem = TARDISDisplayItemRegistry.getByDisplayName(im.displayName());
+            if (im.hasCustomName()) {
+                TARDISDisplayItem displayItem = TARDISDisplayItemRegistry.getByDisplayName(im.customName());
                 if (displayItem != null) {
                     return displayItem;
                 }
@@ -249,9 +249,9 @@ public class TARDISDisplayItemUtils {
         ItemStack is = ItemStack.of(tdi.getMaterial(), 1);
         ItemMeta im = is.getItemMeta();
         if (tdi.isSeed()) {
-            im.displayName(ComponentUtils.toGold(tdi.getDisplayName()));
+            im.customName(ComponentUtils.toGold(tdi.getDisplayName()));
         } else {
-            im.displayName(ComponentUtils.toWhite(tdi.getDisplayName()));
+            im.customName(ComponentUtils.toWhite(tdi.getDisplayName()));
         }
         im.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING, tdi.getCustomModel().getKey());
         is.setItemMeta(im);
@@ -278,9 +278,9 @@ public class TARDISDisplayItemUtils {
         ItemStack is = ItemStack.of(tdi.getMaterial(), 1);
         ItemMeta im = is.getItemMeta();
         if (tdi.isSeed()) {
-            im.displayName(ComponentUtils.toGold(tdi.getDisplayName()));
+            im.customName(ComponentUtils.toGold(tdi.getDisplayName()));
         } else {
-            im.displayName(ComponentUtils.toWhite(tdi.getDisplayName()));
+            im.customName(ComponentUtils.toWhite(tdi.getDisplayName()));
         }
         im.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING, tdi.getCustomModel().getKey());
         is.setItemMeta(im);
@@ -348,7 +348,7 @@ public class TARDISDisplayItemUtils {
         ) ? tdi.getCraftMaterial() : tdi.getMaterial();
         ItemStack is = ItemStack.of(material, 1);
         ItemMeta im = is.getItemMeta();
-        im.displayName(ComponentUtils.toWhite(tdi.getDisplayName()));
+        im.customName(ComponentUtils.toWhite(tdi.getDisplayName()));
         im.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING, namespacedKey.getKey());
         if (tdi.isDoor()) {
             im.setItemModel(tdi.getCustomModel());

@@ -81,7 +81,7 @@ public class ChameleonInventory implements InventoryHolder {
         // Apply now
         ItemStack apply = ItemStack.of(GUIChameleon.BUTTON_APPLY.material(), 1);
         ItemMeta now = apply.getItemMeta();
-        now.displayName(Component.text(plugin.getChameleonGuis().getString("APPLY")));
+        now.customName(Component.text(plugin.getChameleonGuis().getString("APPLY")));
         List<Component> nowLore = new ArrayList<>();
         for (String s : plugin.getChameleonGuis().getStringList("APPLY_LORE")) {
             nowLore.add(Component.text(s));
@@ -91,7 +91,7 @@ public class ChameleonInventory implements InventoryHolder {
         // Disabled
         ItemStack dis = ItemStack.of(GUIChameleon.BUTTON_CHAMELEON.material(), 1);
         ItemMeta abled = dis.getItemMeta();
-        abled.displayName(Component.text("Chameleon Circuit"));
+        abled.customName(Component.text("Chameleon Circuit"));
         List<Component> ioLore = new ArrayList<>();
         for (String s : plugin.getChameleonGuis().getStringList("DISABLED_LORE")) {
             ioLore.add(Component.text(s));
@@ -101,7 +101,7 @@ public class ChameleonInventory implements InventoryHolder {
         // Adaptive
         ItemStack adap = ItemStack.of(GUIChameleon.BUTTON_ADAPT.material(), 1);
         ItemMeta tive = adap.getItemMeta();
-        tive.displayName(Component.text(plugin.getChameleonGuis().getString("ADAPT")));
+        tive.customName(Component.text(plugin.getChameleonGuis().getString("ADAPT")));
         List<Component> tiveLore = new ArrayList<>();
         for (String s : plugin.getChameleonGuis().getStringList("ADAPT_LORE")) {
             tiveLore.add(Component.text(s));
@@ -113,7 +113,7 @@ public class ChameleonInventory implements InventoryHolder {
         if (plugin.getConfig().getBoolean("allow.invisibility")) {
             invis = ItemStack.of(GUIChameleon.BUTTON_INVISIBLE.material(), 1);
             ItemMeta ible = invis.getItemMeta();
-            ible.displayName(Component.text(plugin.getChameleonGuis().getString("INVISIBLE")));
+            ible.customName(Component.text(plugin.getChameleonGuis().getString("INVISIBLE")));
             List<Component> ilore = new ArrayList<>();
             for (String s : plugin.getChameleonGuis().getStringList("INVISIBLE_LORE")) {
                 ilore.add(Component.text(s));
@@ -130,7 +130,7 @@ public class ChameleonInventory implements InventoryHolder {
         // Shorted out
         ItemStack shor = ItemStack.of(GUIChameleon.BUTTON_SHORT.material(), 1);
         ItemMeta tout = shor.getItemMeta();
-        tout.displayName(Component.text(plugin.getChameleonGuis().getString("SHORT")));
+        tout.customName(Component.text(plugin.getChameleonGuis().getString("SHORT")));
         List<Component> toutLore = new ArrayList<>();
         for (String s : plugin.getChameleonGuis().getStringList("SHORT_LORE")) {
             toutLore.add(Component.text(s));
@@ -140,7 +140,7 @@ public class ChameleonInventory implements InventoryHolder {
         // construction GUI
         ItemStack cons = ItemStack.of(GUIChameleon.BUTTON_CONSTRUCT.material(), 1);
         ItemMeta truct = cons.getItemMeta();
-        truct.displayName(Component.text(plugin.getChameleonGuis().getString("CONSTRUCT")));
+        truct.customName(Component.text(plugin.getChameleonGuis().getString("CONSTRUCT")));
         List<Component> tructLore = new ArrayList<>();
         for (String s : plugin.getChameleonGuis().getStringList("CONSTRUCT_LORE")) {
             tructLore.add(Component.text(s));
@@ -152,7 +152,7 @@ public class ChameleonInventory implements InventoryHolder {
         if (adapt.equals(Adaption.BIOME)) {
             lock = ItemStack.of(GUIChameleon.BUTTON_LOCK.material(), 1);
             ItemMeta circuit = lock.getItemMeta();
-            circuit.displayName(Component.text(plugin.getChameleonGuis().getString("LOCK")));
+            circuit.customName(Component.text(plugin.getChameleonGuis().getString("LOCK")));
             List<Component> circuitLore = new ArrayList<>();
             for (String s : plugin.getChameleonGuis().getStringList("LOCK_LORE")) {
                 circuitLore.add(Component.text(s));
@@ -165,12 +165,12 @@ public class ChameleonInventory implements InventoryHolder {
         ItemStack fac = isFactoryOff ? on.clone() : off.clone();
         ItemMeta tory = fac.getItemMeta();
         Component donoff = isFactoryOff ? Component.text(plugin.getLanguage().getString("DISABLED", "Disabled"), NamedTextColor.RED) : Component.text(plugin.getLanguage().getString("SET_ON", "ON"), NamedTextColor.GREEN);
-        tory.displayName(donoff);
+        tory.customName(donoff);
         fac.setItemMeta(tory);
         // Adaptive radio button
         ItemStack biome = (adapt.equals(Adaption.OFF)) ? off.clone() : on.clone();
         ItemMeta block = biome.getItemMeta();
-        block.displayName(Component.text(adapt.toString(), adapt.getColour()));
+        block.customName(Component.text(adapt.toString(), adapt.getColour()));
         biome.setItemMeta(block);
         // Invisible radio button
         ItemStack not;
@@ -180,7 +180,7 @@ public class ChameleonInventory implements InventoryHolder {
             Component ionoff = (preset.equals(ChameleonPreset.INVISIBLE))
                     ? Component.text(plugin.getLanguage().getString("SET_ON", "ON"), NamedTextColor.GREEN)
                     : Component.text(plugin.getLanguage().getString("SET_OFF", "OFF"), NamedTextColor.RED);
-            blue.displayName(ionoff);
+            blue.customName(ionoff);
             not.setItemMeta(blue);
         } else {
             not = null;
@@ -195,18 +195,18 @@ public class ChameleonInventory implements InventoryHolder {
         } else {
             shorted = Component.text(plugin.getLanguage().getString("SET_OFF", "OFF"), NamedTextColor.RED);
         }
-        set.displayName(shorted);
+        set.customName(shorted);
         pre.setItemMeta(set);
         // Construct radio button
         ItemStack bui = (preset.equals(ChameleonPreset.CONSTRUCT)) ? on.clone() : off.clone();
         ItemMeta lder = bui.getItemMeta();
         Component conoff = (preset.equals(ChameleonPreset.CONSTRUCT)) ? Component.text(plugin.getLanguage().getString("SET_ON", "ON"), NamedTextColor.GREEN) : Component.text(plugin.getLanguage().getString("SET_OFF", "OFF"), NamedTextColor.RED);
-        lder.displayName(conoff);
+        lder.customName(conoff);
         bui.setItemMeta(lder);
         // Cancel / close
         ItemStack close = ItemStack.of(GUIChameleon.BUTTON_CLOSE.material(), 1);
         ItemMeta can = close.getItemMeta();
-        can.displayName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
+        can.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
         close.setItemMeta(can);
 
         return new ItemStack[]{

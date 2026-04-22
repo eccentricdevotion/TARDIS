@@ -52,7 +52,7 @@ public class TimeRotor {
     public static void setRotor(NamespacedKey key, ItemFrame itemFrame) {
         ItemStack is = ItemStack.of(Material.LIGHT_GRAY_DYE, 1);
         ItemMeta im = is.getItemMeta();
-        im.displayName(Component.text("Time Rotor"));
+        im.customName(Component.text("Time Rotor"));
         im.setItemModel(key);
         is.setItemMeta(im);
         itemFrame.setItem(is, false);
@@ -64,7 +64,7 @@ public class TimeRotor {
     public static void setRotor(Rotor which, ItemFrame itemFrame) {
         ItemStack is = ItemStack.of(which.material(), 1);
         ItemMeta im = is.getItemMeta();
-        im.displayName(Component.text("Time Rotor"));
+        im.customName(Component.text("Time Rotor"));
         im.setItemModel(which.offModel());
         is.setItemMeta(im);
         itemFrame.setItem(is, false);

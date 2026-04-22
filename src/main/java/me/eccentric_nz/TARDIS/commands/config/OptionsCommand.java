@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.commands.config;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import net.kyori.adventure.text.Component;
 import org.bukkit.command.CommandSender;
 
 import java.util.ArrayList;
@@ -71,10 +72,10 @@ public class OptionsCommand {
                 Set<String> chargerNames = plugin.getConfig().getConfigurationSection("rechargers").getKeys(false);
                 chargerNames.forEach((charname) -> {
                     plugin.getMessenger().messageWithColour(sender, "    " + charname + ":", "#55FF55");
-                    sender.sendMessage("        world: " + plugin.getConfig().getString("rechargers." + charname + ".world"));
-                    sender.sendMessage("        x: " + plugin.getConfig().getString("rechargers." + charname + ".x"));
-                    sender.sendMessage("        y: " + plugin.getConfig().getString("rechargers." + charname + ".y"));
-                    sender.sendMessage("        z: " + plugin.getConfig().getString("rechargers." + charname + ".z"));
+                    sender.sendMessage(Component.text("        world: " + plugin.getConfig().getString("rechargers." + charname + ".world")));
+                    sender.sendMessage(Component.text("        x: " + plugin.getConfig().getString("rechargers." + charname + ".x")));
+                    sender.sendMessage(Component.text("        y: " + plugin.getConfig().getString("rechargers." + charname + ".y")));
+                    sender.sendMessage(Component.text("        z: " + plugin.getConfig().getString("rechargers." + charname + ".z")));
                 });
             }
             case "rooms" -> {
@@ -82,10 +83,10 @@ public class OptionsCommand {
                 Set<String> roomNames = plugin.getRoomsConfig().getConfigurationSection("rooms").getKeys(false);
                 roomNames.forEach((r) -> {
                     plugin.getMessenger().messageWithColour(sender, "    " + r + ":", "#55FF55");
-                    sender.sendMessage("        enabled: " + plugin.getRoomsConfig().getString("rooms." + r + ".enabled"));
-                    sender.sendMessage("        cost: " + plugin.getRoomsConfig().getString("rooms." + r + ".cost"));
-                    sender.sendMessage("        offset: " + plugin.getRoomsConfig().getString("rooms." + r + ".offset"));
-                    sender.sendMessage("        seed: " + plugin.getRoomsConfig().getString("rooms." + r + ".seed"));
+                    sender.sendMessage(Component.text("        enabled: " + plugin.getRoomsConfig().getString("rooms." + r + ".enabled")));
+                    sender.sendMessage(Component.text("        cost: " + plugin.getRoomsConfig().getString("rooms." + r + ".cost")));
+                    sender.sendMessage(Component.text("        offset: " + plugin.getRoomsConfig().getString("rooms." + r + ".offset")));
+                    sender.sendMessage(Component.text("        seed: " + plugin.getRoomsConfig().getString("rooms." + r + ".seed")));
                 });
             }
         }

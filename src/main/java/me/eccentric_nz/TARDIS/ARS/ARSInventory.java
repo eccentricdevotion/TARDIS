@@ -66,19 +66,19 @@ public class ARSInventory implements InventoryHolder {
         // direction pad up
         ItemStack pad_up = ItemStack.of(GUIArs.BUTTON_UP.material(), 1);
         ItemMeta up = pad_up.getItemMeta();
-        up.displayName(Component.text(plugin.getLanguage().getString("BUTTON_UP", "Up")));
+        up.customName(Component.text(plugin.getLanguage().getString("BUTTON_UP", "Up")));
         pad_up.setItemMeta(up);
         is[GUIArs.BUTTON_UP.slot()] = pad_up;
         // room relocator
         ItemStack relocator = ItemStack.of(GUIArs.BUTTON_RELOCATE.material(), 1);
         ItemMeta rim = relocator.getItemMeta();
-        rim.displayName(Component.text("Room Relocator"));
+        rim.customName(Component.text("Room Relocator"));
         relocator.setItemMeta(rim);
         is[GUIArs.BUTTON_RELOCATE.slot()] = relocator;
         // black wool
         ItemStack black = ItemStack.of(GUIArs.BUTTON_MAP_ON.material(), 1);
         ItemMeta wool = black.getItemMeta();
-        wool.displayName(Component.text(plugin.getLanguage().getString("BUTTON_MAP_NO", "Load the map!")));
+        wool.customName(Component.text(plugin.getLanguage().getString("BUTTON_MAP_NO", "Load the map!")));
         black.setItemMeta(wool);
         for (int j = 0; j < 37; j += 9) {
             for (int k = 0; k < 5; k++) {
@@ -89,73 +89,73 @@ public class ARSInventory implements InventoryHolder {
         // direction pad left
         ItemStack pad_left = ItemStack.of(GUIArs.BUTTON_LEFT.material(), 1);
         ItemMeta left = pad_left.getItemMeta();
-        left.displayName(Component.text(plugin.getLanguage().getString("BUTTON_LEFT", "Left")));
+        left.customName(Component.text(plugin.getLanguage().getString("BUTTON_LEFT", "Left")));
         pad_left.setItemMeta(left);
         is[GUIArs.BUTTON_LEFT.slot()] = pad_left;
         // load map
         ItemStack map = ItemStack.of(GUIArs.BUTTON_MAP.material(), 1);
         ItemMeta load = map.getItemMeta();
-        load.displayName(Component.text(plugin.getLanguage().getString("BUTTON_MAP", "Load map")));
+        load.customName(Component.text(plugin.getLanguage().getString("BUTTON_MAP", "Load map")));
         map.setItemMeta(load);
         is[GUIArs.BUTTON_MAP.slot()] = map;
         // direction pad right
         ItemStack pad_right = ItemStack.of(GUIArs.BUTTON_RIGHT.material(), 1);
         ItemMeta right = pad_right.getItemMeta();
-        right.displayName(Component.text(plugin.getLanguage().getString("BUTTON_RIGHT", "Right")));
+        right.customName(Component.text(plugin.getLanguage().getString("BUTTON_RIGHT", "Right")));
         pad_right.setItemMeta(right);
         is[GUIArs.BUTTON_RIGHT.slot()] = pad_right;
         // set
         ItemStack s = ItemStack.of(GUIArs.BUTTON_RECON.material(), 1);
         ItemMeta sim = s.getItemMeta();
-        sim.displayName(Component.text(plugin.getLanguage().getString("BUTTON_RECON", "Reconfigure!")));
+        sim.customName(Component.text(plugin.getLanguage().getString("BUTTON_RECON", "Reconfigure!")));
         s.setItemMeta(sim);
         is[GUIArs.BUTTON_RECON.slot()] = s;
         // direction pad down
         ItemStack pad_down = ItemStack.of(GUIArs.BUTTON_DOWN.material(), 1);
         ItemMeta down = pad_down.getItemMeta();
-        down.displayName(Component.text(plugin.getLanguage().getString("BUTTON_DOWN", "Down")));
+        down.customName(Component.text(plugin.getLanguage().getString("BUTTON_DOWN", "Down")));
         pad_down.setItemMeta(down);
         is[GUIArs.BUTTON_DOWN.slot()] = pad_down;
         // level bottom
         ItemStack level_bot = ItemStack.of(GUIArs.BUTTON_LEVEL_B.material(), 1);
         ItemMeta bot = level_bot.getItemMeta();
-        bot.displayName(Component.text(plugin.getLanguage().getString("BUTTON_LEVEL_B", "Bottom level")));
+        bot.customName(Component.text(plugin.getLanguage().getString("BUTTON_LEVEL_B", "Bottom level")));
         level_bot.setItemMeta(bot);
         is[GUIArs.BUTTON_LEVEL_B.slot()] = level_bot;
         // level selected
         ItemStack level_sel = ItemStack.of(GUIArs.BUTTON_LEVEL.material(), 1);
         ItemMeta main = level_sel.getItemMeta();
-        main.displayName(Component.text(plugin.getLanguage().getString("BUTTON_LEVEL", "Main level")));
+        main.customName(Component.text(plugin.getLanguage().getString("BUTTON_LEVEL", "Main level")));
         level_sel.setItemMeta(main);
         is[GUIArs.BUTTON_LEVEL.slot()] = level_sel;
         // level top
         ItemStack level_top = ItemStack.of(GUIArs.BUTTON_LEVEL_T.material(), 1);
         ItemMeta top = level_top.getItemMeta();
-        top.displayName(Component.text(plugin.getLanguage().getString("BUTTON_LEVEL_T", "Top level")));
+        top.customName(Component.text(plugin.getLanguage().getString("BUTTON_LEVEL_T", "Top level")));
         level_top.setItemMeta(top);
         is[GUIArs.BUTTON_LEVEL_T.slot()] = level_top;
         // reset
         ItemStack reset = ItemStack.of(GUIArs.BUTTON_RESET.material(), 1);
         ItemMeta cobble = reset.getItemMeta();
-        cobble.displayName(Component.text(plugin.getLanguage().getString("BUTTON_RESET", "Reset selected")));
+        cobble.customName(Component.text(plugin.getLanguage().getString("BUTTON_RESET", "Reset selected")));
         reset.setItemMeta(cobble);
         is[GUIArs.BUTTON_RESET.slot()] = reset;
         // scroll left
         ItemStack scroll_left = ItemStack.of(GUIArs.BUTTON_SCROLL_L.material(), 1);
         ItemMeta nim = scroll_left.getItemMeta();
-        nim.displayName(Component.text(plugin.getLanguage().getString("BUTTON_SCROLL_L", "Scroll left")));
+        nim.customName(Component.text(plugin.getLanguage().getString("BUTTON_SCROLL_L", "Scroll left")));
         scroll_left.setItemMeta(nim);
         is[GUIArs.BUTTON_SCROLL_L.slot()] = scroll_left;
         // scroll right
         ItemStack scroll_right = ItemStack.of(GUIArs.BUTTON_SCROLL_R.material(), 1);
         ItemMeta pim = scroll_right.getItemMeta();
-        pim.displayName(Component.text(plugin.getLanguage().getString("BUTTON_SCROLL_R", "Scroll right")));
+        pim.customName(Component.text(plugin.getLanguage().getString("BUTTON_SCROLL_R", "Scroll right")));
         scroll_right.setItemMeta(pim);
         is[GUIArs.BUTTON_SCROLL_R.slot()] = scroll_right;
         // jettison
         ItemStack jettison = ItemStack.of(GUIArs.BUTTON_JETT.material(), 1);
         ItemMeta tnt = jettison.getItemMeta();
-        tnt.displayName(Component.text(plugin.getLanguage().getString("BUTTON_JETT", "Jettison")));
+        tnt.customName(Component.text(plugin.getLanguage().getString("BUTTON_JETT", "Jettison")));
         jettison.setItemMeta(tnt);
         is[GUIArs.BUTTON_JETT.slot()] = jettison;
 
@@ -164,7 +164,7 @@ public class ARSInventory implements InventoryHolder {
             if (a.isInGUI() && i < 54) {
                 ItemStack room = ItemStack.of(Material.getMaterial(a.getMaterial()), 1);
                 ItemMeta im = room.getItemMeta();
-                im.displayName(Component.text(a.getDescriptiveName()));
+                im.customName(Component.text(a.getDescriptiveName()));
                 List<Component> lore = new ArrayList<>();
                 lore.add(Component.text("Cost: " + plugin.getRoomsConfig().getInt("rooms." + a + ".cost")));
                 String roomName = TARDISARS.ARSFor(room.getType().toString()).getConfigPath();

@@ -87,7 +87,7 @@ public class TARDISRemoteKeyListener implements Listener {
         }
         if (is.hasItemMeta()) {
             ItemMeta im = is.getItemMeta();
-            if (im.hasDisplayName() && ComponentUtils.endsWith(im.displayName(), "TARDIS Remote Key")) {
+            if (im.hasCustomName() && ComponentUtils.endsWith(im.customName(), "TARDIS Remote Key")) {
                 String uuid = player.getUniqueId().toString();
                 // has TARDIS?
                 HashMap<String, Object> where = new HashMap<>();

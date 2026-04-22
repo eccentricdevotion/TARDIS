@@ -21,6 +21,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetCondenser;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -70,7 +71,7 @@ public class RoomRequiredLister {
                 int required = map.getValue() - has;
                 if (required > 0) {
                     String line = map.getKey() + ", " + required;
-                    player.sendMessage(line);
+                    player.sendMessage(Component.text(line));
                     total += required;
                 }
             }

@@ -36,7 +36,7 @@ public class ChameleonFrame {
                     if (compareLocations(e.getLocation(), location)) {
                         ItemStack is = ItemStack.of(preset.getGuiDisplay());
                         ItemMeta im = is.getItemMeta();
-                        im.displayName(Component.text(preset.toString()));
+                        im.customName(Component.text(preset.toString()));
                         is.setItemMeta(im);
                         frame.setItem(is, true);
                         break;

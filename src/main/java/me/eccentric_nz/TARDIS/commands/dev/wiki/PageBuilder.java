@@ -87,7 +87,7 @@ public class PageBuilder {
                 }
                 default -> {
                     ItemMeta im = is.getItemMeta();
-                    String dn = ComponentUtils.stripColour(im.displayName());
+                    String dn = ComponentUtils.stripColour(im.customName());
                     RecipeItem recipeItem = RecipeItem.getByName(dn);
                     String folder = recipeItem.getCategory().toString().toLowerCase(Locale.ROOT);
                     String WIKI = "[%s](/recipes/%s/%s)";

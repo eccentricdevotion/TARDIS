@@ -125,7 +125,7 @@ public class ItemDisplaySetter {
                 if (json.has("name")) {
                     ItemStack is = display.getItemStack();
                     ItemMeta im = is.getItemMeta();
-                    im.displayName(ComponentUtils.fromJson(json.get("name")));
+                    im.customName(ComponentUtils.fromJson(json.get("name")));
                     is.setItemMeta(im);
                     display.setItemStack(is);
                 }
@@ -152,7 +152,7 @@ public class ItemDisplaySetter {
         ItemStack is = ItemStack.of(material);
         if (model != null) {
             ItemMeta im = is.getItemMeta();
-            im.displayName(model.getKey().equals("xray")
+            im.customName(model.getKey().equals("xray")
                     ? Component.text("X-ray")
                     : Component.text(TARDISStringUtils.capitalise(model.getKey()))
             );
@@ -176,7 +176,7 @@ public class ItemDisplaySetter {
             Material material = Material.valueOf(stack.get("type").getAsString());
             ItemStack is = ItemStack.of(material);
             ItemMeta im = is.getItemMeta();
-            im.displayName(Component.text(stack.get("display_name").getAsString()));
+            im.customName(Component.text(stack.get("display_name").getAsString()));
             is.setItemMeta(im);
             display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.HEAD);
             display.setItemStack(is);

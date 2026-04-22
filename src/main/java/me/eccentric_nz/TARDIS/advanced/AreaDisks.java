@@ -70,7 +70,7 @@ class AreaDisks {
                 if (TARDISPermission.hasPermission(p, "tardis.area." + name) || TARDISPermission.hasPermission(p, "tardis.area.*")) {
                     ItemStack is = ItemStack.of(Material.MUSIC_DISC_BLOCKS, 1);
                     ItemMeta im = is.getItemMeta();
-                    im.displayName(Component.text("Area Storage Disk"));
+                    im.customName(Component.text("Area Storage Disk"));
                     im.lore(List.of(
                             Component.text(name),
                             Component.text(a.world())
@@ -158,7 +158,7 @@ class AreaDisks {
                             if (empty != -1) {
                                 ItemStack is = ItemStack.of(Material.MUSIC_DISC_BLOCKS, 1);
                                 ItemMeta im = is.getItemMeta();
-                                im.displayName(Component.text("Area Storage Disk"));
+                                im.customName(Component.text("Area Storage Disk"));
                                 im.lore(List.of(
                                         Component.text(name),
                                         Component.text(map.world())

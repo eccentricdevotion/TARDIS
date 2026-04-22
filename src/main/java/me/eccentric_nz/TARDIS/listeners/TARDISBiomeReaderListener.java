@@ -81,7 +81,7 @@ public class TARDISBiomeReaderListener implements Listener {
         ItemStack is = player.getInventory().getItemInMainHand();
         if (is.getType().equals(Material.BRICK) && is.hasItemMeta()) {
             ItemMeta im = is.getItemMeta();
-            if (im.hasDisplayName() && ComponentUtils.endsWith(im.displayName(), "TARDIS Biome Reader")) {
+            if (im.hasCustomName() && ComponentUtils.endsWith(im.customName(), "TARDIS Biome Reader")) {
                 UUID uuid = player.getUniqueId();
                 Biome biome = b.getBiome();
                 if (biome.equals(Biome.THE_VOID)) {
@@ -111,7 +111,7 @@ public class TARDISBiomeReaderListener implements Listener {
                             if (!hasBiomeDisk(disks2, biomeKey)) {
                                 ItemStack bd = ItemStack.of(Material.MUSIC_DISC_CAT, 1);
                                 ItemMeta dim = bd.getItemMeta();
-                                dim.displayName(ComponentUtils.toWhite("Biome Storage Disk"));
+                                dim.customName(ComponentUtils.toWhite("Biome Storage Disk"));
                                 List<Component> disk_lore = new ArrayList<>();
                                 disk_lore.add(Component.text(biomeKey));
                                 dim.lore(disk_lore);

@@ -41,7 +41,7 @@ public class AppleJellyBabyRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.MELON_SLICE, 4);
         ItemMeta im = is.getItemMeta();
-        im.displayName(ComponentUtils.toWhite("Apple Jelly Baby"));
+        im.customName(ComponentUtils.toWhite("Apple Jelly Baby"));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "apple_jelly_baby");
         ShapelessRecipe r = new ShapelessRecipe(key, is);

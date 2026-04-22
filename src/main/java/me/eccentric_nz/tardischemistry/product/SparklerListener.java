@@ -53,8 +53,8 @@ public class SparklerListener implements Listener {
             ItemStack is = event.getItem();
             if (is != null && SparklerMaterial.isCorrectMaterial(is.getType()) && is.hasItemMeta()) {
                 ItemMeta im = is.getItemMeta();
-                if (im.hasDisplayName()) {
-                    String which = ComponentUtils.stripColour(im.displayName());
+                if (im.hasCustomName()) {
+                    String which = ComponentUtils.stripColour(im.customName());
                     if (which.endsWith("Sparkler") && im.hasItemModel() && !im.hasEnchant(Enchantment.LOYALTY)) {
                         player.playSound(player.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_TWINKLE, 1.0f, 1.0f);
                         // switch custom data models
@@ -63,7 +63,7 @@ public class SparklerListener implements Listener {
                         im.setEnchantmentGlintOverride(true);
                         is.setItemMeta(im);
                         // start sparkler runnable
-                        BlockData colour = colours.get(ComponentUtils.stripColour(im.displayName()));
+                        BlockData colour = colours.get(ComponentUtils.stripColour(im.customName()));
                         SparklerRunnable runnable = new SparklerRunnable(player, colour, System.currentTimeMillis());
                         int taskId = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 1L, 2L);
                         runnable.setTaskId(taskId);

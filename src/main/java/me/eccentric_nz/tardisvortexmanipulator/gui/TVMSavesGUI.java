@@ -62,7 +62,7 @@ public class TVMSavesGUI implements InventoryHolder {
                 // save
                 ItemStack save = ItemStack.of(blocks.get(s.getEnv()), 1);
                 ItemMeta warp = save.getItemMeta();
-                warp.displayName(Component.text(s.getName()));
+                warp.customName(Component.text(s.getName()));
                 warp.lore(List.of(
                         Component.text("World: " + s.getWorld()),
                         Component.text("x: " + oneDecimal(s.getX())),
@@ -79,7 +79,7 @@ public class TVMSavesGUI implements InventoryHolder {
         // page number
         ItemStack page = ItemStack.of(Material.BOWL, 1);
         ItemMeta num = page.getItemMeta();
-        num.displayName(Component.text("Page " + n));
+        num.customName(Component.text("Page " + n));
         page.setItemMeta(num);
         stack[45] = page;
         // close

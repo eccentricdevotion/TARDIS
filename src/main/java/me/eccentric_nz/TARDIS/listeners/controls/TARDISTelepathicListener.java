@@ -113,7 +113,7 @@ public class TARDISTelepathicListener implements Listener {
                 return;
             }
             ItemMeta im = is.getItemMeta();
-            if (im.hasDisplayName() && ComponentUtils.endsWith(im.displayName(), "TARDIS Telepathic Circuit")) {
+            if (im.hasCustomName() && ComponentUtils.endsWith(im.customName(), "TARDIS Telepathic Circuit")) {
                 Block up = event.getClickedBlock().getRelative(BlockFace.UP);
                 if (!up.getType().isAir()) {
                     return;
@@ -152,7 +152,7 @@ public class TARDISTelepathicListener implements Listener {
         // drop a custom GLOWSTONE_DUST
         ItemStack is = ItemStack.of(Material.GLOWSTONE_DUST, 1);
         ItemMeta im = is.getItemMeta();
-        im.displayName(ComponentUtils.toWhite("TARDIS Telepathic Circuit"));
+        im.customName(ComponentUtils.toWhite("TARDIS Telepathic Circuit"));
         Component uses = (plugin.getConfig().getString("circuits.uses.telepathic", "20").equals("0") || !plugin.getConfig().getBoolean("circuits.damage"))
                 ? Component.text("unlimited", NamedTextColor.YELLOW)
                 : Component.text(plugin.getConfig().getString("circuits.uses.telepathic", "20"), NamedTextColor.YELLOW);
@@ -169,7 +169,7 @@ public class TARDISTelepathicListener implements Listener {
             return;
         }
         ItemMeta im = is.getItemMeta();
-        if (im.hasDisplayName() && ComponentUtils.endsWith(im.displayName(), "TARDIS Telepathic Circuit")) {
+        if (im.hasCustomName() && ComponentUtils.endsWith(im.customName(), "TARDIS Telepathic Circuit")) {
             UUID uuid = event.getPlayer().getUniqueId();
             String l = event.getBlock().getLocation().toString();
             plugin.getTrackerKeeper().getTelepathicPlacements().put(uuid, l);

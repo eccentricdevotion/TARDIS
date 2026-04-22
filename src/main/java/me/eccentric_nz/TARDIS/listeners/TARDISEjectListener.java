@@ -32,6 +32,7 @@ import org.bukkit.entity.*;
 import org.bukkit.entity.memory.MemoryKey;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -52,7 +53,7 @@ public class TARDISEjectListener implements Listener {
     }
 
     @EventHandler(ignoreCancelled = true)
-    public void onInteract(PlayerInteractEntityEvent event) {
+    public void onInteract(PlayerInteractAtEntityEvent event) {
         Player player = event.getPlayer();
         UUID uuid = player.getUniqueId();
         if (!plugin.getTrackerKeeper().getEjecting().containsKey(uuid)) {

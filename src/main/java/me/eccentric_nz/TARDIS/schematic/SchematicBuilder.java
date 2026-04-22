@@ -200,8 +200,8 @@ public class SchematicBuilder {
                                         if (im.hasItemModel()) {
                                             frame.addProperty("cmd", im.getItemModel().getKey());
                                         }
-                                        if (im.hasDisplayName()) {
-                                            JsonElement element = ComponentUtils.getJson(im.displayName());
+                                        if (im.hasCustomName()) {
+                                            JsonElement element = ComponentUtils.getJson(im.customName());
                                             plugin.debug(element.toString());
                                             frame.add("name", element);
                                         }
@@ -248,8 +248,8 @@ public class SchematicBuilder {
                                     }
                                 }
                                 // save custom name
-                                if (im.hasDisplayName()) {
-                                    JsonElement element = ComponentUtils.getJson(im.displayName());
+                                if (im.hasCustomName()) {
+                                    JsonElement element = ComponentUtils.getJson(im.customName());
                                     stack.add("name", element);
                                 }
                                 item.add("stack", stack);

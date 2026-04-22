@@ -60,8 +60,8 @@ public class TARDISCraftListener implements Listener {
             CraftingInventory ci = event.getInventory();
             if (is.hasItemMeta()) {
                 ItemMeta im = is.getItemMeta();
-                if (im.hasDisplayName()) {
-                    String dn = ComponentUtils.stripColour(im.displayName());
+                if (im.hasCustomName()) {
+                    String dn = ComponentUtils.stripColour(im.customName());
                     if (dn.equals("TARDIS Seed Block")) {
                         List<Component> lore = im.lore();
                         lore.add(Component.text("Walls: " + ci.getItem(6).getType()));

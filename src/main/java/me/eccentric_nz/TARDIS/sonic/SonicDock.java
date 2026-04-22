@@ -325,7 +325,7 @@ public class SonicDock {
         ItemMeta im = dock.getItemMeta();
         im.setItemModel(model);
         if (setDisplay) {
-            im.displayName(ComponentUtils.toWhite("Sonic Dock"));
+            im.customName(ComponentUtils.toWhite("Sonic Dock"));
         }
         dock.setItemMeta(im);
         frame.setItem(dock);

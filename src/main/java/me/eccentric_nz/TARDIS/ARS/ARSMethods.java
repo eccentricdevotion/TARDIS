@@ -157,7 +157,7 @@ public class ARSMethods {
     void setSlot(InventoryView view, int slot, Material material, String room, UUID playerUUID, boolean showPerms) {
         ItemStack is = ItemStack.of(material, 1);
         ItemMeta im = is.getItemMeta();
-        im.displayName(Component.text(room));
+        im.customName(Component.text(room));
         if (!room.equals("Empty slot")) {
             ARS ars = TARDISARS.ARSFor(material.toString());
             String config_path = ars.getConfigPath();
@@ -287,7 +287,7 @@ public class ARSMethods {
             }
             ItemStack is = ItemStack.of(material, 1);
             ItemMeta im = is.getItemMeta();
-            im.displayName(Component.text(levels[i - 27]));
+            im.customName(Component.text(levels[i - 27]));
             is.setItemMeta(im);
             setSlot(view, i, is, playerUUID, false);
         }

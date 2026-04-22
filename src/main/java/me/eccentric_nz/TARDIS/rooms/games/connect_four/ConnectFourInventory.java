@@ -38,7 +38,7 @@ public class ConnectFourInventory implements InventoryHolder {
         // 0 info
         ItemStack info = ItemStack.of(GUIChameleonConstructor.INFO.material(), 1);
         ItemMeta io = info.getItemMeta();
-        io.displayName(Component.text(plugin.getChameleonGuis().getString("INFO", "Info")));
+        io.customName(Component.text(plugin.getChameleonGuis().getString("INFO", "Info")));
         io.lore(List.of(
             Component.text("Click a slot at the top of a column to drop a block."),
             Component.text("The TARDIS will choose shortly after."),
@@ -50,7 +50,7 @@ public class ConnectFourInventory implements InventoryHolder {
         // define grid
         ItemStack hole = ItemStack.of(Material.BLUE_CONCRETE_POWDER);
         ItemMeta holeMeta = hole.getItemMeta();
-        holeMeta.displayName(Component.text(" "));
+        holeMeta.customName(Component.text(" "));
         hole.setItemMeta(holeMeta);
         for (int j = 0; j < 53; j += 9) {
             for (int k = 0; k < 7; k++) {
@@ -61,25 +61,25 @@ public class ConnectFourInventory implements InventoryHolder {
         // 17 game result
         ItemStack game = ItemStack.of(Material.TARGET, 1);
         ItemMeta result = game.getItemMeta();
-        result.displayName(Component.text("Game result"));
+        result.customName(Component.text("Game result"));
         game.setItemMeta(result);
         items[17] = game;
         // 26 playing
         ItemStack banner = Letters.P(DyeColor.ORANGE, DyeColor.WHITE);
         ItemMeta im = banner.getItemMeta();
-        im.displayName(Component.text("Playing"));
+        im.customName(Component.text("Playing"));
         banner.setItemMeta(im);
         items[26] = banner;
         // 44 reset
         ItemStack reset = ItemStack.of(GUIArs.BUTTON_RESET.material(), 1);
         ItemMeta cobble = reset.getItemMeta();
-        cobble.displayName(Component.text("Reset game"));
+        cobble.customName(Component.text("Reset game"));
         reset.setItemMeta(cobble);
         items[44] = reset;
         // 53 close
         ItemStack close = ItemStack.of(GUIMap.BUTTON_CLOSE.material(), 1);
         ItemMeta gui = close.getItemMeta();
-        gui.displayName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
+        gui.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
         close.setItemMeta(gui);
         items[53] = close;
         return items;

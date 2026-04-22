@@ -73,9 +73,9 @@ public class CompoundGUIListener extends TARDISMenuListener {
             ItemStack is = inventory.getItem(i);
             if (is != null && is.getType().equals(Material.FEATHER) && is.hasItemMeta()) {
                 ItemMeta im = is.getItemMeta();
-                if (im.hasDisplayName()) {
+                if (im.hasCustomName()) {
                     try {
-                        Element element = Element.valueOf(ComponentUtils.stripColour(im.displayName()));
+                        Element element = Element.valueOf(ComponentUtils.stripColour(im.customName()));
                         int amount = is.getAmount();
                         formula.append(element).append(":").append(amount).append("-");
                     } catch (IllegalArgumentException e) {

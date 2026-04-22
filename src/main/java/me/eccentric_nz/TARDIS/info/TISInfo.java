@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.info;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 
 public class TISInfo {
@@ -28,8 +29,8 @@ public class TISInfo {
     }
 
     public void show(Player p, TARDISInfoMenu item) {
-        p.sendMessage("---");
-        p.sendMessage("[" + item.getName() + "]");
+        p.sendMessage(Component.text("---"));
+        p.sendMessage(Component.text("[" + item.getName() + "]"));
         plugin.getMessenger().messageWithColour(p, TARDISDescription.valueOf(item.toString()).getDesc(), "#FFAA00");
     }
 }

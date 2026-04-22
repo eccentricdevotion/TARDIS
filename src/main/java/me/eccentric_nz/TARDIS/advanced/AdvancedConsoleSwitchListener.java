@@ -96,10 +96,10 @@ public class AdvancedConsoleSwitchListener implements Listener {
             return;
         }
         ItemMeta im = item.getItemMeta();
-        if (!im.hasDisplayName()) {
+        if (!im.hasCustomName()) {
             return;
         }
-        String dn = ComponentUtils.stripColour(im.displayName());
+        String dn = ComponentUtils.stripColour(im.customName());
         if (!gui_circuits.contains(dn)) {
             return;
         }

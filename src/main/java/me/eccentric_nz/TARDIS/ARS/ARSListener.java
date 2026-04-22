@@ -122,7 +122,7 @@ public class ARSListener extends ARSMethods implements Listener {
                     } else {
                         ItemStack stone = ItemStack.of(Material.STONE, 1);
                         ItemMeta s1 = stone.getItemMeta();
-                        s1.displayName(Component.text("Empty slot"));
+                        s1.customName(Component.text("Empty slot"));
                         stone.setItemMeta(s1);
                         setSlot(view, selected_slot.get(playerUUID), stone, playerUUID, true);
                         setLore(view, slot, null);
@@ -172,7 +172,7 @@ public class ARSListener extends ARSMethods implements Listener {
                     // need to check for gravity wells, and jettison both layers...
                     ItemStack tnt = ItemStack.of(Material.TNT, 1);
                     ItemMeta j = tnt.getItemMeta();
-                    j.displayName(Component.text("Jettison"));
+                    j.customName(Component.text("Jettison"));
                     tnt.setItemMeta(j);
                     setSlot(view, selected_slot.get(playerUUID), tnt, playerUUID, true);
                     setLore(view, slot, null);
@@ -196,7 +196,7 @@ public class ARSListener extends ARSMethods implements Listener {
                         setLore(view, slot, "Jettison existing room first!");
                     } else {
                         ItemStack ris = view.getItem(slot);
-                        String displayName = ComponentUtils.stripColour(ris.getItemMeta().displayName());
+                        String displayName = ComponentUtils.stripColour(ris.getItemMeta().customName());
                         String room = TARDISARS.ARSFor(ris.getType().toString()).getConfigPath();
                         if (!TARDISPermission.hasPermission(player, "tardis.room." + room.toLowerCase(Locale.ROOT))) {
                             break;

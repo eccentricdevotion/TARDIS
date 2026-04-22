@@ -36,7 +36,7 @@ public class NoughtsAndCrossesInventory implements InventoryHolder {
         // 0 info
         ItemStack info = ItemStack.of(GUIChameleonConstructor.INFO.material(), 1);
         ItemMeta io = info.getItemMeta();
-        io.displayName(Component.text(plugin.getChameleonGuis().getString("INFO", "Info")));
+        io.customName(Component.text(plugin.getChameleonGuis().getString("INFO", "Info")));
         io.lore(List.of(
                 Component.text("Click an empty slot to place your mark."),
                 Component.text("The TARDIS will choose soon after."),
@@ -50,7 +50,7 @@ public class NoughtsAndCrossesInventory implements InventoryHolder {
         int[] grid = new int[]{3, 4, 5, 12, 13, 14, 21, 22, 23};
         ItemStack wool = ItemStack.of(MatchState.NOT_STARTED.getSymbol());
         ItemMeta wim = wool.getItemMeta();
-        wim.displayName(Component.text(" "));
+        wim.customName(Component.text(" "));
         wool.setItemMeta(wim);
         for (int g : grid) {
             items[g] = wool;
@@ -58,31 +58,31 @@ public class NoughtsAndCrossesInventory implements InventoryHolder {
         // player turn
         ItemStack player = ItemStack.of(Material.TARGET, 1);
         ItemMeta pim = player.getItemMeta();
-        pim.displayName(Component.text("Player"));
+        pim.customName(Component.text("Player"));
         player.setItemMeta(pim);
         items[7] = player;
         // player indicator
         ItemStack turn = ItemStack.of(MatchState.PLAYER_TURN.getSymbol(), 1);
         ItemMeta indicator = turn.getItemMeta();
-        indicator.displayName(Component.text("Player"));
+        indicator.customName(Component.text("Player"));
         turn.setItemMeta(indicator);
         items[8] = turn;
         // tardis turn
         ItemStack tardis = ItemStack.of(Material.TARGET, 1);
         ItemMeta tim = tardis.getItemMeta();
-        tim.displayName(Component.text("TARDIS"));
+        tim.customName(Component.text("TARDIS"));
         tardis.setItemMeta(tim);
         items[16] = tardis;
         // 45 reset
         ItemStack reset = ItemStack.of(GUIArs.BUTTON_RESET.material(), 1);
         ItemMeta cobble = reset.getItemMeta();
-        cobble.displayName(Component.text("Reset game"));
+        cobble.customName(Component.text("Reset game"));
         reset.setItemMeta(cobble);
         items[45] = reset;
         // 35 close
         ItemStack close = ItemStack.of(GUIMap.BUTTON_CLOSE.material(), 1);
         ItemMeta gui = close.getItemMeta();
-        gui.displayName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
+        gui.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
         close.setItemMeta(gui);
         items[53] = close;
         return items;

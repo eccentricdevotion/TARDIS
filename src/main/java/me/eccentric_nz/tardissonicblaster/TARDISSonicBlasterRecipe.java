@@ -48,7 +48,7 @@ public class TARDISSonicBlasterRecipe {
         // blaster battery
         ItemStack battery = ItemStack.of(Material.BUCKET, 1);
         ItemMeta batteryMeta = battery.getItemMeta();
-        batteryMeta.displayName(ComponentUtils.toWhite("Blaster Battery"));
+        batteryMeta.customName(ComponentUtils.toWhite("Blaster Battery"));
 //        batteryMeta.setItemModel(RecipeItem.BLASTER_BATTERY.getModel());
         battery.setItemMeta(batteryMeta);
         NamespacedKey batteryKey = new NamespacedKey(plugin, "blaster_battery");
@@ -63,7 +63,7 @@ public class TARDISSonicBlasterRecipe {
         // sonic blaster
         ItemStack blaster = ItemStack.of(Material.GOLDEN_HOE, 1);
         ItemMeta blasterMeta = blaster.getItemMeta();
-        blasterMeta.displayName(ComponentUtils.toWhite("Sonic Blaster"));
+        blasterMeta.customName(ComponentUtils.toWhite("Sonic Blaster"));
         blasterMeta.lore(List.of(Component.text("The Squareness Gun")));
 //        blasterMeta.setItemModel(RecipeItem.SONIC_BLASTER.getModel());
         blasterMeta.addItemFlags(ItemFlag.values());
@@ -75,7 +75,7 @@ public class TARDISSonicBlasterRecipe {
         sbr.shape("DTD", "TST", "EBE");
         ItemStack exact = ItemStack.of(Material.GLOWSTONE_DUST, 1);
         ItemMeta em = exact.getItemMeta();
-        em.displayName(ComponentUtils.toWhite("Sonic Oscillator"));
+        em.customName(ComponentUtils.toWhite("Sonic Oscillator"));
         CustomModelDataComponent ecomponent = em.getCustomModelDataComponent();
         ecomponent.setFloats(CircuitVariant.SONIC.getFloats());
         em.setCustomModelDataComponent(ecomponent);
@@ -90,7 +90,7 @@ public class TARDISSonicBlasterRecipe {
         // landing pad
         ItemStack pad = ItemStack.of(Material.SLIME_BLOCK, 1);
         ItemMeta padMeta = pad.getItemMeta();
-        padMeta.displayName(ComponentUtils.toWhite("Landing Pad"));
+        padMeta.customName(ComponentUtils.toWhite("Landing Pad"));
 //        padMeta.setItemModel(RecipeItem.LANDING_PAD.getModel());
         pad.setItemMeta(padMeta);
         NamespacedKey padKey = new NamespacedKey(plugin, "landing_pad");

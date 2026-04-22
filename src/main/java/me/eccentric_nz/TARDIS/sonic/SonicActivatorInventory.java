@@ -74,13 +74,13 @@ class SonicActivatorInventory implements InventoryHolder {
         // info
         ItemStack info = ItemStack.of(GUISonicActivator.INSTRUCTIONS.material(), 1);
         ItemMeta info_im = info.getItemMeta();
-        info_im.displayName(Component.text("Instructions"));
+        info_im.customName(Component.text("Instructions"));
         info_im.lore(lore);
         info.setItemMeta(info_im);
         // close
         ItemStack close = ItemStack.of(GUISonicActivator.CLOSE.material(), 1);
         ItemMeta close_im = close.getItemMeta();
-        close_im.displayName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
+        close_im.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
         close.setItemMeta(close_im);
 
         return new ItemStack[]{null, null, null, null, null, null, null, info, close};

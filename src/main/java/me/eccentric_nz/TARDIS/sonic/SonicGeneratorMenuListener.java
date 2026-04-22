@@ -138,7 +138,7 @@ public class SonicGeneratorMenuListener extends TARDISMenuListener {
             case 26, 27, 28, 29, 30, 31, 32, 33, 34, 35 -> {
                 ItemStack upgrade = view.getItem(slot);
                 ItemMeta upgrade_im = upgrade.getItemMeta();
-                Component upgrade_name = upgrade_im.displayName();
+                Component upgrade_name = upgrade_im.customName();
                 sonic = view.getItem(49);
                 if (sonic == null) {
                     sonic = ItemStack.of(Material.BLAZE_ROD, 1);
@@ -174,7 +174,7 @@ public class SonicGeneratorMenuListener extends TARDISMenuListener {
                 }
                 sonic_im = sonic.getItemMeta();
                 if (slotWasNull) {
-                    sonic_im.displayName(ComponentUtils.toWhite("Sonic Screwdriver"));
+                    sonic_im.customName(ComponentUtils.toWhite("Sonic Screwdriver"));
                     view.setItem(49, sonic);
                 } else {
                     // remove lore

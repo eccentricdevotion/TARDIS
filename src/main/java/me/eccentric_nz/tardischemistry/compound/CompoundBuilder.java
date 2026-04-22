@@ -34,7 +34,7 @@ public class CompoundBuilder {
             case Rust -> {
                 is = ItemStack.of(Material.LAVA_BUCKET, 1);
                 ItemMeta rm = is.getItemMeta();
-                rm.displayName(Component.text("Rust Bucket"));
+                rm.customName(Component.text("Rust Bucket"));
                 rm.setItemModel(Whoniverse.RUST_BUCKET.getKey());
                 is.setItemMeta(rm);
             }
@@ -42,14 +42,14 @@ public class CompoundBuilder {
             case Sulphuric_Acid -> {
                 is = ItemStack.of(Material.WATER_BUCKET, 1);
                 ItemMeta am = is.getItemMeta();
-                am.displayName(Component.text("Acid Bucket"));
+                am.customName(Component.text("Acid Bucket"));
                 am.setItemModel(Whoniverse.ACID_BUCKET.getKey());
                 is.setItemMeta(am);
             }
             default -> {
                 is = ItemStack.of(Material.GLASS_BOTTLE, 1);
                 ItemMeta im = is.getItemMeta();
-                im.displayName(Component.text(compound.getName()));
+                im.customName(Component.text(compound.getName()));
                 im.lore(List.of(Component.text(compound.getSymbol())));
                 if (compound.getModel() != null) {
                     im.setItemModel(compound.getModel());

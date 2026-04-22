@@ -65,7 +65,7 @@ public class LightLevelsInventory implements InventoryHolder {
         // interior info
         ItemStack i_info = ItemStack.of(GUILights.INTERIOR_INFO.material(), 1);
         ItemMeta iiim = i_info.getItemMeta();
-        iiim.displayName(Component.text("Interior Lights"));
+        iiim.customName(Component.text("Interior Lights"));
         iiim.lore(List.of(
                 Component.text("Set the light level"),
                 Component.text("of the interior lights")
@@ -74,13 +74,13 @@ public class LightLevelsInventory implements InventoryHolder {
         // interior
         ItemStack interior = ItemStack.of(GUILights.INTERIOR.material(), 1);
         ItemMeta inim = interior.getItemMeta();
-        inim.displayName(Component.text("Interior Lights"));
+        inim.customName(Component.text("Interior Lights"));
         inim.lore(List.of(Component.text(interior_level)));
         interior.setItemMeta(inim);
         // exterior info
         ItemStack e_info = ItemStack.of(GUILights.EXTERIOR_INFO.material(), 1);
         ItemMeta eiim = e_info.getItemMeta();
-        eiim.displayName(Component.text("Exterior Lamp"));
+        eiim.customName(Component.text("Exterior Lamp"));
         eiim.lore(List.of(
                 Component.text("Set the light level"),
                 Component.text("of the exterior lamp")
@@ -89,13 +89,13 @@ public class LightLevelsInventory implements InventoryHolder {
         // exterior
         ItemStack exterior = ItemStack.of(GUILights.EXTERIOR.material(), 1);
         ItemMeta exim = exterior.getItemMeta();
-        exim.displayName(Component.text("Exterior Lamp"));
+        exim.customName(Component.text("Exterior Lamp"));
         exim.lore(List.of(Component.text(exterior_level)));
         exterior.setItemMeta(exim);
         // console info
         ItemStack c_info = ItemStack.of(GUILights.CONSOLE_INFO.material(), 1);
         ItemMeta ciim = c_info.getItemMeta();
-        ciim.displayName(Component.text("Console Lamp"));
+        ciim.customName(Component.text("Console Lamp"));
         ciim.lore(List.of(
                 Component.text("Set the light level"),
                 Component.text("of the console lamp")
@@ -104,28 +104,28 @@ public class LightLevelsInventory implements InventoryHolder {
         // console
         ItemStack console = ItemStack.of(GUILights.CONSOLE.material(), 1);
         ItemMeta lamp = console.getItemMeta();
-        lamp.displayName(Component.text("Console Lamp"));
+        lamp.customName(Component.text("Console Lamp"));
         lamp.lore(List.of(Component.text(console_level)));
         console.setItemMeta(lamp);
         // minus
         ItemStack minus = ItemStack.of(GUIParticle.MINUS.material(), 1);
         ItemMeta mim = minus.getItemMeta();
-        mim.displayName(Component.text(plugin.getLanguage().getString("BUTTON_LESS")));
+        mim.customName(Component.text(plugin.getLanguage().getString("BUTTON_LESS")));
         minus.setItemMeta(mim);
         // plus
         ItemStack plus = ItemStack.of(GUIParticle.PLUS.material(), 1);
         ItemMeta pim = plus.getItemMeta();
-        pim.displayName(Component.text(plugin.getLanguage().getString("BUTTON_MORE")));
+        pim.customName(Component.text(plugin.getLanguage().getString("BUTTON_MORE")));
         plus.setItemMeta(pim);
         // back button
         ItemStack back = ItemStack.of(GUIChameleonTemplate.BACK_HELP.material(), 1);
         ItemMeta bk = back.getItemMeta();
-        bk.displayName(Component.text("Back"));
+        bk.customName(Component.text("Back"));
         back.setItemMeta(bk);
         // close
         ItemStack close = ItemStack.of(GUILights.CLOSE.material(), 1);
         ItemMeta clim = close.getItemMeta();
-        clim.displayName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
+        clim.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
         close.setItemMeta(clim);
         return new ItemStack[]{
                 null, i_info, null, null, null, null, null, e_info, null,

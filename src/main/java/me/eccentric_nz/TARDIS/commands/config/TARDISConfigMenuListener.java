@@ -98,7 +98,7 @@ public class TARDISConfigMenuListener implements Listener {
         ItemStack is = view.getItem(slot);
         if (is != null) {
             ItemMeta im = is.getItemMeta();
-            return ComponentUtils.stripColour(im.displayName());
+            return ComponentUtils.stripColour(im.customName());
         } else {
             return "";
         }

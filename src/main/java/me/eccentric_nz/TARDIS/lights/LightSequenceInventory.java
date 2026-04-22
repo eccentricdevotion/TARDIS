@@ -60,7 +60,7 @@ public class LightSequenceInventory implements InventoryHolder {
         // 4 info
         ItemStack lights = ItemStack.of(GUILights.SEQUENCE_INFO.material(), 1);
         ItemMeta sim = lights.getItemMeta();
-        sim.displayName(Component.text("TARDIS Light Sequence"));
+        sim.customName(Component.text("TARDIS Light Sequence"));
         sim.lore(List.of(
                 Component.text("Click a block in"),
                 Component.text("the second row to"),
@@ -87,7 +87,7 @@ public class LightSequenceInventory implements InventoryHolder {
                 }
                 ItemStack delay = ItemStack.of(Material.COAL_BLOCK, 1);
                 ItemMeta dim = delay.getItemMeta();
-                dim.displayName(Component.text("Display time"));
+                dim.customName(Component.text("Display time"));
                 delay.setItemMeta(dim);
                 delay.setAmount(amount);
                 stacks[i] = delay;
@@ -101,7 +101,7 @@ public class LightSequenceInventory implements InventoryHolder {
                 }
                 ItemStack level = ItemStack.of(Material.COAL_BLOCK, 1);
                 ItemMeta lim = level.getItemMeta();
-                lim.displayName(Component.text("Light level"));
+                lim.customName(Component.text("Light level"));
                 level.setItemMeta(lim);
                 level.setAmount(amount);
                 stacks[i] = level;
@@ -110,7 +110,7 @@ public class LightSequenceInventory implements InventoryHolder {
         // 36 preset (cycle)
         ItemStack preset = ItemStack.of(GUILights.BUTTON_LIGHT_SEQUENCE.material(), 1);
         ItemMeta pim = preset.getItemMeta();
-        pim.displayName(Component.text("Preset Sequence"));
+        pim.customName(Component.text("Preset Sequence"));
         pim.lore(List.of(
                 Component.text("Click to cycle through"),
                 Component.text("various light sequences."),
@@ -121,19 +121,19 @@ public class LightSequenceInventory implements InventoryHolder {
         // 40 save
         ItemStack save = ItemStack.of(GUIChameleonConstructor.SAVE_CONSTRUCT.material(), 1);
         ItemMeta se = save.getItemMeta();
-        se.displayName(Component.text("Save Sequence"));
+        se.customName(Component.text("Save Sequence"));
         save.setItemMeta(se);
         stacks[40] = save;
         // back button
         ItemStack back = ItemStack.of(GUIChameleonTemplate.BACK_HELP.material(), 1);
         ItemMeta bk = back.getItemMeta();
-        bk.displayName(Component.text("Back"));
+        bk.customName(Component.text("Back"));
         back.setItemMeta(bk);
         stacks[42] = back;
         // 44 close
         ItemStack close = ItemStack.of(GUILights.CLOSE.material(), 1);
         ItemMeta clim = close.getItemMeta();
-        clim.displayName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
+        clim.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
         close.setItemMeta(clim);
         stacks[44] = close;
         return stacks;

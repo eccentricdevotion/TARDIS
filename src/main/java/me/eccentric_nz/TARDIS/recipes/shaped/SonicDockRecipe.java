@@ -55,7 +55,7 @@ public class SonicDockRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.FLOWER_POT, 1);
         ItemMeta im = is.getItemMeta();
-        im.displayName(ComponentUtils.toWhite("Sonic Dock"));
+        im.customName(ComponentUtils.toWhite("Sonic Dock"));
         im.setItemModel(RecipeItem.SONIC_DOCK.getModel());
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "sonic_dock");
@@ -67,7 +67,7 @@ public class SonicDockRecipe {
             r.setIngredient('G', Material.GOLD_INGOT);
             ItemStack exact = ItemStack.of(Material.GLOWSTONE_DUST, 1);
             ItemMeta em = exact.getItemMeta();
-            em.displayName(ComponentUtils.toWhite("Sonic Oscillator"));
+            em.customName(ComponentUtils.toWhite("Sonic Oscillator"));
             CustomModelDataComponent component = em.getCustomModelDataComponent();
             component.setFloats(CircuitVariant.SONIC.getFloats());
             em.setCustomModelDataComponent(component);

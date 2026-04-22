@@ -53,7 +53,7 @@ public class TVDoctorsInventory extends TVGUI {
                     is.setData(DataComponentTypes.PROFILE, ResolvableProfile.resolvableProfile(playerProfile));
                     im.setPlayerProfile(playerProfile);
                     String[] name = doctor.name().split(" - ");
-                    im.displayName(Component.text(name[0]));
+                    im.customName(Component.text(name[0]));
                     im.lore(List.of(Component.text(name[1])));
                     is.setItemMeta(im);
                     // cache the item stack

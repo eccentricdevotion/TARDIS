@@ -60,7 +60,7 @@ public class TARDISSmithingListener implements Listener {
                 ItemStack glowstone = inventory.getItem(2);
                 if (glowstone != null && glowstone.getType().equals(Material.GLOWSTONE_DUST) && glowstone.hasItemMeta()) {
                     ItemMeta rm = glowstone.getItemMeta();
-                    upgrade = SonicUpgradeData.displayNames.get(ComponentUtils.stripColour(rm.displayName()));
+                    upgrade = SonicUpgradeData.displayNames.get(ComponentUtils.stripColour(rm.customName()));
                     found = true;
                 }
                 // is it a valid upgrade?
@@ -81,7 +81,7 @@ public class TARDISSmithingListener implements Listener {
                 }
                 ItemMeta sim = sonic.getItemMeta();
                 CustomModelDataComponent component = sim.getCustomModelDataComponent();
-                Component dn = sim.displayName();
+                Component dn = sim.customName();
                 List<Component> lore;
                 if (sim.hasLore()) {
                     // get the current sonic's upgrades
@@ -93,7 +93,7 @@ public class TARDISSmithingListener implements Listener {
                 }
                 // if they don't already have the upgrade
                 if (!lore.contains(Component.text(upgrade))) {
-                    im.displayName(dn);
+                    im.customName(dn);
                     im.setCustomModelDataComponent(component);
                     int index = -1;
                     Component charge = null;
@@ -132,10 +132,10 @@ public class TARDISSmithingListener implements Listener {
             return false;
         }
         ItemMeta im = is.getItemMeta();
-        if (!im.hasDisplayName()) {
+        if (!im.hasCustomName()) {
             return false;
         }
-        if (!ComponentUtils.endsWith(im.displayName(), "Artron Capacitor")) {
+        if (!ComponentUtils.endsWith(im.customName(), "Artron Capacitor")) {
             return false;
         }
         return !im.hasItemModel() || im.getItemModel().equals(Whoniverse.ARTRON_CAPACITOR_DAMAGED.getKey());

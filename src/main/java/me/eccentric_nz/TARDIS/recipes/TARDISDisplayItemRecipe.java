@@ -50,7 +50,7 @@ public class TARDISDisplayItemRecipe {
                     is = ItemStack.of(tdi.getMaterial(), 1);
                 }
                 ItemMeta im = is.getItemMeta();
-                im.displayName(ComponentUtils.toWhite(tdi.getDisplayName()));
+                im.customName(ComponentUtils.toWhite(tdi.getDisplayName()));
                 if (tdi.getCustomModel() != null) {
                     im.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING, tdi.getCustomModel().getKey());
                     if (tdi.isDoor()) {

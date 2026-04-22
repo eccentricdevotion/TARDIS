@@ -74,7 +74,7 @@ public class TARDISSeedRecipe {
         }
         ItemMeta im = is.getItemMeta();
         im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, model.getKey());
-        im.displayName(ComponentUtils.toGold("TARDIS Seed Block"));
+        im.customName(ComponentUtils.toGold("TARDIS Seed Block"));
         im.lore(List.of(Component.text(s.getPermission().toUpperCase(Locale.ROOT))));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, s.getPermission() + "_seed");

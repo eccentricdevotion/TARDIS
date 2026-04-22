@@ -151,7 +151,7 @@ public class TARDISGeneralPrefsInventory implements InventoryHolder {
             if (pref.getMaterial() == Material.REPEATER) {
                 ItemStack is = ItemStack.of(pref.getMaterial(), 1);
                 ItemMeta im = is.getItemMeta();
-                im.displayName(Component.text(pref.getName()));
+                im.customName(Component.text(pref.getName()));
                 boolean v = values.get(pref.getSlot());
                 if (pref.getOffFloats() != null) {
                     CustomModelDataComponent component = im.getCustomModelDataComponent();
@@ -177,13 +177,13 @@ public class TARDISGeneralPrefsInventory implements InventoryHolder {
         // back
         ItemStack back = ItemStack.of(GUIChameleonPresets.BACK.material(), 1);
         ItemMeta but = back.getItemMeta();
-        but.displayName(Component.text("Back"));
+        but.customName(Component.text("Back"));
         back.setItemMeta(but);
         stack[33] = back;
         // close
         ItemStack close = ItemStack.of(GUIWeather.CLOSE.material(), 1);
         ItemMeta can = close.getItemMeta();
-        can.displayName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
+        can.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
         close.setItemMeta(can);
         stack[35] = close;
         return stack;

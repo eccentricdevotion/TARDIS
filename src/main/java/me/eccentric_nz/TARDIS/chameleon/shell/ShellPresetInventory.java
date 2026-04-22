@@ -75,7 +75,7 @@ public class ShellPresetInventory implements InventoryHolder {
                 if (TARDISPermission.hasPermission(player, "tardis.preset." + preset.toString().toLowerCase(Locale.ROOT))) {
                     ItemStack is = ItemStack.of(preset.getGuiDisplay(), 1);
                     ItemMeta im = is.getItemMeta();
-                    im.displayName(Component.text(preset.getDisplayName()));
+                    im.customName(Component.text(preset.getDisplayName()));
                     is.setItemMeta(im);
                     stacks[preset.getSlot()] = is;
                 }
@@ -84,7 +84,7 @@ public class ShellPresetInventory implements InventoryHolder {
         // load current preset
         ItemStack current = ItemStack.of(GUIChameleonPresets.CURRENT.material(), 1);
         ItemMeta pre = current.getItemMeta();
-        pre.displayName(Component.text("Current Chameleon preset"));
+        pre.customName(Component.text("Current Chameleon preset"));
         current.setItemMeta(pre);
         stacks[GUIChameleonPresets.CURRENT.slot()] = current;
         // saved construct
@@ -94,14 +94,14 @@ public class ShellPresetInventory implements InventoryHolder {
         if (rsc.resultSet()) {
             ItemStack saved = ItemStack.of(GUIChameleonPresets.SAVED.material(), 1);
             ItemMeta con = saved.getItemMeta();
-            con.displayName(Component.text("Saved Construct"));
+            con.customName(Component.text("Saved Construct"));
             saved.setItemMeta(con);
             stacks[GUIChameleonPresets.SAVED.slot()] = saved;
         }
         // Cancel / close
         ItemStack close = ItemStack.of(GUIChameleonPresets.CLOSE.material(), 1);
         ItemMeta can = close.getItemMeta();
-        can.displayName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
+        can.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
         close.setItemMeta(can);
         stacks[GUIChameleonPresets.CLOSE.slot()] = close;
 

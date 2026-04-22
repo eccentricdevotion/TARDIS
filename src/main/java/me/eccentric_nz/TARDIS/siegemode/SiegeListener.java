@@ -80,7 +80,7 @@ public class SiegeListener implements Listener {
         }
         ItemMeta im = is.getItemMeta();
         if (im != null) {
-            return (im.hasDisplayName() && ComponentUtils.endsWith(im.displayName(), "Siege Cube")) || (im.hasItemModel() && Whoniverse.SIEGE_CUBE.getKey().equals(im.getItemModel()));
+            return (im.hasCustomName() && ComponentUtils.endsWith(im.customName(), "Siege Cube")) || (im.hasItemModel() && Whoniverse.SIEGE_CUBE.getKey().equals(im.getItemModel()));
         }
         return false;
     }
@@ -144,7 +144,7 @@ public class SiegeListener implements Listener {
         String tl = tardis.getOwner();
         ItemStack is = ItemStack.of(TARDISBlockDisplayItem.SIEGE_CUBE.getMaterial(), 1);
         ItemMeta im = is.getItemMeta();
-        im.displayName(ComponentUtils.toWhite("TARDIS Siege Cube"));
+        im.customName(ComponentUtils.toWhite("TARDIS Siege Cube"));
         im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, TARDISBlockDisplayItem.SIEGE_CUBE.getCustomModel().getKey());
         List<Component> lore = new ArrayList<>();
         lore.add(Component.text("Time Lord: " + tl));
@@ -416,6 +416,6 @@ public class SiegeListener implements Listener {
     }
 
     private boolean hasSiegeCubeName(ItemStack is) {
-        return (is.hasItemMeta() && is.getItemMeta().hasDisplayName() && ComponentUtils.endsWith(is.getItemMeta().displayName(), "Siege Cube"));
+        return (is.hasItemMeta() && is.getItemMeta().hasCustomName() && ComponentUtils.endsWith(is.getItemMeta().customName(), "Siege Cube"));
     }
 }

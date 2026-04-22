@@ -112,7 +112,7 @@ public class TARDISBlockPlaceListener implements Listener {
             return;
         }
         ItemMeta im = is.getItemMeta();
-        if (im.hasDisplayName() && ComponentUtils.endsWith(im.displayName(), "Rift Manipulator")) {
+        if (im.hasCustomName() && ComponentUtils.endsWith(im.customName(), "Rift Manipulator")) {
             // make sure they're not inside the TARDIS
             HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", player.getUniqueId().toString());

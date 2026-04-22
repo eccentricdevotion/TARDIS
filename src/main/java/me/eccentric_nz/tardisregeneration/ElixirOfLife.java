@@ -54,7 +54,7 @@ public class ElixirOfLife {
         foodComponent.setSaturation(1.0f);
         im.setFood(foodComponent);
         im.setItemModel(Whoniverse.ELIXIR_OF_LIFE.getKey());
-        im.displayName(ComponentUtils.toWhite("Elixir of Life"));
+        im.customName(ComponentUtils.toWhite("Elixir of Life"));
         im.lore(List.of(
                 Component.text("Use to trigger a"),
                 Component.text("Time Lord regeneration")
@@ -76,9 +76,9 @@ public class ElixirOfLife {
             return false;
         }
         ItemMeta im = is.getItemMeta();
-        if (!im.hasDisplayName()) {
+        if (!im.hasCustomName()) {
             return false;
         }
-        return ComponentUtils.endsWith(im.displayName(), "Elixir of Life");
+        return ComponentUtils.endsWith(im.customName(), "Elixir of Life");
     }
 }

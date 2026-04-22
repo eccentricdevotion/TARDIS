@@ -61,7 +61,7 @@ public class TARDISChemistryRecipeInventory implements InventoryHolder {
         RecipeData data = ChemistryBlock.RECIPES.get(which);
         ItemStack result = ItemStack.of(data.displayItem().getMaterial(), 1);
         ItemMeta im = result.getItemMeta();
-        im.displayName(ComponentUtils.toWhite(data.displayName()));
+        im.customName(ComponentUtils.toWhite(data.displayName()));
         im.lore(data.lore());
         im.setItemModel(data.displayItem().getCustomModel());
         result.setItemMeta(im);

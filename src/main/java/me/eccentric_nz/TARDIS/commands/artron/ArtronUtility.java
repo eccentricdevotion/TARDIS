@@ -29,7 +29,7 @@ public class ArtronUtility {
             return null;
         }
         ItemMeta im = is.getItemMeta();
-        if (!im.hasDisplayName() || !ComponentUtils.endsWith(im.displayName(), "Artron Storage Cell")) {
+        if (!im.hasCustomName() || !ComponentUtils.endsWith(im.customName(), "Artron Storage Cell")) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "CELL_IN_HAND");
             return null;
         }

@@ -28,7 +28,7 @@ public class ElementBuilder {
     public static ItemStack getElement(Element element) {
         ItemStack is = ItemStack.of(Material.FEATHER, 1);
         ItemMeta im = is.getItemMeta();
-        im.displayName(Component.text(element.toString()));
+        im.customName(Component.text(element.toString()));
         if (element.equals(Element.Unknown)) {
             Component question = Component.text("?");
             im.lore(List.of(question, question));

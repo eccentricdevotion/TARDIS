@@ -299,7 +299,7 @@ public class ResourcePackConverterCommand {
 
     private void writeFile(CommandSender sender, ItemStack result) {
         ItemMeta im = result.getItemMeta();
-        String name = ComponentUtils.stripColour(im.displayName());
+        String name = ComponentUtils.stripColour(im.customName());
         String material = result.getType().toString().toLowerCase(Locale.ROOT);
         String lowercaseName = name.toLowerCase(Locale.ROOT).replace(" ", "_");
         String filename = material + "_" + lowercaseName;

@@ -78,31 +78,31 @@ public class WallsInventory implements InventoryHolder {
         // scroll up
         ItemStack scroll_up = ItemStack.of(GUIWallFloor.BUTTON_SCROLL_U.material(), 1);
         ItemMeta uim = scroll_up.getItemMeta();
-        uim.displayName(Component.text(plugin.getLanguage().getString("BUTTON_SCROLL_U")));
+        uim.customName(Component.text(plugin.getLanguage().getString("BUTTON_SCROLL_U")));
         scroll_up.setItemMeta(uim);
         stack[GUIWallFloor.BUTTON_SCROLL_U.slot()] = scroll_up;
         // scroll down
         ItemStack scroll_down = ItemStack.of(GUIWallFloor.BUTTON_SCROLL_D.material(), 1);
         ItemMeta dim = scroll_down.getItemMeta();
-        dim.displayName(Component.text(plugin.getLanguage().getString("BUTTON_SCROLL_D")));
+        dim.customName(Component.text(plugin.getLanguage().getString("BUTTON_SCROLL_D")));
         scroll_down.setItemMeta(dim);
         stack[GUIWallFloor.BUTTON_SCROLL_D.slot()] = scroll_down;
         // default wall
         ItemStack wall = ItemStack.of(GUIWallFloor.WALL.material(), 1);
         ItemMeta wim = wall.getItemMeta();
-        wim.displayName(Component.text("Default Wall Block"));
+        wim.customName(Component.text("Default Wall Block"));
         wall.setItemMeta(wim);
         stack[GUIWallFloor.WALL.slot()] = wall;
         // default floor
         ItemStack floor = ItemStack.of(GUIWallFloor.FLOOR.material(), 1);
         ItemMeta fim = floor.getItemMeta();
-        fim.displayName(Component.text("Default Floor Block"));
+        fim.customName(Component.text("Default Floor Block"));
         floor.setItemMeta(fim);
         stack[GUIWallFloor.FLOOR.slot()] = floor;
         // close
         ItemStack close = ItemStack.of(GUIWallFloor.BUTTON_ABORT.material(), 1);
         ItemMeta close_im = close.getItemMeta();
-        close_im.displayName(Component.text("Abort upgrade"));
+        close_im.customName(Component.text("Abort upgrade"));
         close.setItemMeta(close_im);
         stack[GUIWallFloor.BUTTON_ABORT.slot()] = close;
 

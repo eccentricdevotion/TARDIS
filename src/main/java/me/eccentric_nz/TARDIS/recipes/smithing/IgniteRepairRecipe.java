@@ -53,7 +53,7 @@ public class IgniteRepairRecipe {
         // addition
         ItemStack isa = ItemStack.of(Material.GLOWSTONE_DUST, 1);
         ItemMeta ima = isa.getItemMeta();
-        ima.displayName(ComponentUtils.toWhite("Ignite Circuit"));
+        ima.customName(ComponentUtils.toWhite("Ignite Circuit"));
         CustomModelDataComponent ecomponent = ima.getCustomModelDataComponent();
         ecomponent.setFloats(CircuitVariant.IGNITE.getFloats());
         ima.setCustomModelDataComponent(ecomponent);

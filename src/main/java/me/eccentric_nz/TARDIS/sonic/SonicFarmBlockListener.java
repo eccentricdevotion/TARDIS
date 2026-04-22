@@ -72,7 +72,7 @@ public class SonicFarmBlockListener implements Listener {
         ItemStack stack = inv.getItemInMainHand();
         if (stack.getType().equals(Material.BLAZE_ROD) && stack.hasItemMeta()) {
             ItemMeta im = stack.getItemMeta();
-            if (im.hasDisplayName() && ComponentUtils.endsWith(im.displayName(), "Sonic Screwdriver") && im.hasLore() && im.lore().contains(Component.text("Emerald Upgrade"))) {
+            if (im.hasCustomName() && ComponentUtils.endsWith(im.customName(), "Sonic Screwdriver") && im.hasLore() && im.lore().contains(Component.text("Emerald Upgrade"))) {
                 if ((material.equals(sc)) && inv.contains(sc)) {
                     // SUGAR_CANE
                     processHarvest(player, sc, block);

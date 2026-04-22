@@ -72,7 +72,7 @@ public class TelepathicBiome implements InventoryHolder {
                 if (material != null) {
                     ItemStack is = ItemStack.of(material, 1);
                     ItemMeta im = is.getItemMeta();
-                    im.displayName(Component.text(biome.getKey().toString()));
+                    im.customName(Component.text(biome.getKey().toString()));
                     is.setItemMeta(im);
                     stack[i] = is;
                     if (i % 9 == 7) {
@@ -86,14 +86,14 @@ public class TelepathicBiome implements InventoryHolder {
                 // scroll up
                 ItemStack scroll_up = ItemStack.of(GUIWallFloor.BUTTON_SCROLL_U.material(), 1);
                 ItemMeta uim = scroll_up.getItemMeta();
-                uim.displayName(Component.text(plugin.getLanguage().getString("BUTTON_SCROLL_U", "Scroll up")));
+                uim.customName(Component.text(plugin.getLanguage().getString("BUTTON_SCROLL_U", "Scroll up")));
                 uim.setItemModel(GUIWallFloor.BUTTON_SCROLL_U.key());
                 scroll_up.setItemMeta(uim);
                 stack[GUIWallFloor.BUTTON_SCROLL_U.slot()] = scroll_up;
                 // scroll down
                 ItemStack scroll_down = ItemStack.of(GUIWallFloor.BUTTON_SCROLL_D.material(), 1);
                 ItemMeta dim = scroll_down.getItemMeta();
-                dim.displayName(Component.text(plugin.getLanguage().getString("BUTTON_SCROLL_D", "Scroll down")));
+                dim.customName(Component.text(plugin.getLanguage().getString("BUTTON_SCROLL_D", "Scroll down")));
                 dim.setItemModel(GUIWallFloor.BUTTON_SCROLL_D.key());
                 scroll_down.setItemMeta(dim);
                 stack[GUIWallFloor.BUTTON_SCROLL_D.slot()] = scroll_down;
@@ -102,7 +102,7 @@ public class TelepathicBiome implements InventoryHolder {
         // close
         ItemStack close = ItemStack.of(GUIMap.BUTTON_CLOSE.material(), 1);
         ItemMeta gui = close.getItemMeta();
-        gui.displayName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
+        gui.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
         gui.setItemModel(GUIMap.BUTTON_CLOSE.key());
         close.setItemMeta(gui);
         stack[53] = close;

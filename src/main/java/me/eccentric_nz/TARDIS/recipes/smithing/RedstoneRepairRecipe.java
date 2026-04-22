@@ -53,7 +53,7 @@ public class RedstoneRepairRecipe {
         // addition
         ItemStack isa = ItemStack.of(Material.GLOWSTONE_DUST, 1);
         ItemMeta ima = isa.getItemMeta();
-        ima.displayName(ComponentUtils.toWhite("Redstone Activator Circuit"));
+        ima.customName(ComponentUtils.toWhite("Redstone Activator Circuit"));
         CustomModelDataComponent ecomponent = ima.getCustomModelDataComponent();
         ecomponent.setFloats(CircuitVariant.REDSTONE.getFloats());
         ima.setCustomModelDataComponent(ecomponent);

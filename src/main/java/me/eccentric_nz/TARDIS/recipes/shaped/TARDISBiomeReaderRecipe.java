@@ -57,13 +57,13 @@ public class TARDISBiomeReaderRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.BRICK, 1);
         ItemMeta im = is.getItemMeta();
-        im.displayName(ComponentUtils.toWhite("TARDIS Biome Reader"));
+        im.customName(ComponentUtils.toWhite("TARDIS Biome Reader"));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "tardis_biome_reader");
         ShapedRecipe r = new ShapedRecipe(key, is);
         ItemStack exact = ItemStack.of(Material.GLOWSTONE_DUST, 1);
         ItemMeta em = exact.getItemMeta();
-        em.displayName(ComponentUtils.toWhite("Emerald Environment Circuit"));
+        em.customName(ComponentUtils.toWhite("Emerald Environment Circuit"));
         CustomModelDataComponent ecomponent = em.getCustomModelDataComponent();
         ecomponent.setFloats(CircuitVariant.EMERALD.getFloats());
         em.setCustomModelDataComponent(ecomponent);

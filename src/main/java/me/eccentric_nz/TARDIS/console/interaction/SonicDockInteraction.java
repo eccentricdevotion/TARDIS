@@ -45,7 +45,7 @@ public class SonicDockInteraction {
         ItemStack is = player.getInventory().getItemInMainHand();
         if (is.getType().equals(Material.BLAZE_ROD) && is.hasItemMeta()) {
             ItemMeta im = player.getInventory().getItemInMainHand().getItemMeta();
-            if (ComponentUtils.endsWith(im.displayName(), "Sonic Screwdriver")) {
+            if (ComponentUtils.endsWith(im.customName(), "Sonic Screwdriver")) {
                 new SonicDock(plugin).dock(id, interaction, player, is);
                 activate = true;
             }

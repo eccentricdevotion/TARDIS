@@ -76,7 +76,7 @@ public class DiskCraftListener implements Listener {
                     return;
                 }
                 ItemMeta im = is.getItemMeta();
-                if (!im.hasDisplayName() || !ComponentUtils.endsWith(im.displayName(), "Biome Storage Disk") || !im.hasLore()) {
+                if (!im.hasCustomName() || !ComponentUtils.endsWith(im.customName(), "Biome Storage Disk") || !im.hasLore()) {
                     return;
                 }
                 List<Component> lore = im.lore();
@@ -96,7 +96,7 @@ public class DiskCraftListener implements Listener {
                 }
                 disk = ItemStack.of(Material.MUSIC_DISC_CAT, 1);
                 ItemMeta dim = disk.getItemMeta();
-                dim.displayName(Component.text("Biome Storage Disk"));
+                dim.customName(Component.text("Biome Storage Disk"));
                 dim.lore(disk_lore);
                 disk.setItemMeta(dim);
                 inv.setItem(0, disk);
@@ -108,7 +108,7 @@ public class DiskCraftListener implements Listener {
                     return;
                 }
                 ItemMeta im = is.getItemMeta();
-                if (!im.hasDisplayName() || !ComponentUtils.endsWith(im.displayName(), "Preset Storage Disk") || !im.hasLore()) {
+                if (!im.hasCustomName() || !ComponentUtils.endsWith(im.customName(), "Preset Storage Disk") || !im.hasLore()) {
                     return;
                 }
                 List<Component> lore = im.lore();
@@ -130,7 +130,7 @@ public class DiskCraftListener implements Listener {
                 }
                 disk = ItemStack.of(Material.MUSIC_DISC_MALL, 1);
                 ItemMeta dim = disk.getItemMeta();
-                dim.displayName(Component.text("Preset Storage Disk"));
+                dim.customName(Component.text("Preset Storage Disk"));
                 dim.lore(List.of(Component.text(preset)));
                 disk.setItemMeta(dim);
                 inv.setItem(0, disk);

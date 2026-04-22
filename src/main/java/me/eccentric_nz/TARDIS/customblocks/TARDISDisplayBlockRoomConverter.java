@@ -100,10 +100,10 @@ public class TARDISDisplayBlockRoomConverter implements Runnable {
                 }
                 ItemMeta im = is.getItemMeta();
                 // get the custom name
-                if (!im.hasDisplayName()) {
+                if (!im.hasCustomName()) {
                     continue;
                 }
-                Component component = im.displayName();
+                Component component = im.customName();
                 if (component == null) {
                     continue;
                 }
@@ -115,7 +115,7 @@ public class TARDISDisplayBlockRoomConverter implements Runnable {
                 try {
                     TARDISDisplayItem tdi = TARDISDisplayItemRegistry.valueOf(name);
                     // set the displayname
-                    im.displayName(ComponentUtils.toWhite(tdi.getDisplayName()));
+                    im.customName(ComponentUtils.toWhite(tdi.getDisplayName()));
                     if (name.toLowerCase(Locale.ROOT).contains("door")) {
                         // set the item model from TDI
                         im.setItemModel(tdi.getCustomModel());

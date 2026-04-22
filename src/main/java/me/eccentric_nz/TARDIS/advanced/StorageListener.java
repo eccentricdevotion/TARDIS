@@ -87,7 +87,7 @@ public class StorageListener extends TARDISMenuListener {
                     return;
                 }
                 ItemMeta ims = stack.getItemMeta();
-                if (!ims.hasDisplayName() || !ComponentUtils.endsWith(ims.displayName(), "Area Storage Disk")) {
+                if (!ims.hasCustomName() || !ComponentUtils.endsWith(ims.customName(), "Area Storage Disk")) {
                     return;
                 }
                 Player p = (Player) event.getPlayer();
@@ -212,7 +212,7 @@ public class StorageListener extends TARDISMenuListener {
             return;
         }
         ItemMeta im = is.getItemMeta();
-        if (im == null || !im.hasDisplayName() || !ComponentUtils.endsWith(im.displayName(), "Area Storage Disk")) {
+        if (im == null || !im.hasCustomName() || !ComponentUtils.endsWith(im.customName(), "Area Storage Disk")) {
             return;
         }
         event.setCancelled(true);

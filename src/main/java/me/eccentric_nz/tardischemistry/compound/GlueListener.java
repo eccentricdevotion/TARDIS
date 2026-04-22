@@ -44,7 +44,7 @@ public class GlueListener implements Listener {
                 ItemStack is = event.getItem();
                 if (is != null && is.getType().equals(Material.GLASS_BOTTLE) && is.hasItemMeta()) {
                     ItemMeta im = is.getItemMeta();
-                    if (im.hasDisplayName() && ComponentUtils.endsWith(im.displayName(), "Glue") && im.hasItemModel() && ChemistryBottle.GLUE.getKey().equals(im.getItemModel())) {
+                    if (im.hasCustomName() && ComponentUtils.endsWith(im.customName(), "Glue") && im.hasItemModel() && ChemistryBottle.GLUE.getKey().equals(im.getItemModel())) {
                         player.playSound(player.getLocation(), Sound.ENTITY_SLIME_SQUISH, 1.0f, 1.0f);
                         // switch piston to sticky piston
                         Piston blockData = (Piston) block.getBlockData();

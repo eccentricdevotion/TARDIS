@@ -73,12 +73,12 @@ public class MonsterInteractListener implements Listener {
             return;
         }
         ItemMeta im = h.getItemMeta();
-        if (!im.hasDisplayName()) {
+        if (!im.hasCustomName()) {
             return;
         }
         if (entity instanceof Zombie zombie) {
             if (h.getType().equals(Material.POTATO)) {
-                if (ComponentUtils.stripColour(im.displayName()).startsWith("Sontaran")) {
+                if (ComponentUtils.stripColour(im.customName()).startsWith("Sontaran")) {
                     Player p = event.getPlayer();
                     ItemStack is = p.getInventory().getItemInMainHand();
                     if (is.getType().equals(Material.POTION)) {
@@ -110,7 +110,7 @@ public class MonsterInteractListener implements Listener {
                 }
             }
             if (ee.getHelmet().getType().equals(Material.BAKED_POTATO)) {
-                if (ComponentUtils.stripColour(im.displayName()).startsWith("Strax")) {
+                if (ComponentUtils.stripColour(im.customName()).startsWith("Strax")) {
                     Player p = event.getPlayer();
                     UUID uuid = p.getUniqueId();
                     ItemStack is = p.getInventory().getItemInMainHand();
@@ -120,7 +120,7 @@ public class MonsterInteractListener implements Listener {
                             p.playSound(zombie.getLocation(), "milk", 1.0f, 1.0f);
                             ItemStack milk = ItemStack.of(Material.MILK_BUCKET);
                             ItemMeta m = milk.getItemMeta();
-                            m.displayName(ComponentUtils.toWhite("Sontaran Lactic Fluid"));
+                            m.customName(ComponentUtils.toWhite("Sontaran Lactic Fluid"));
                             milk.setItemMeta(m);
                             p.getEquipment().setItemInMainHand(milk);
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> milkers.remove(uuid), 3000L);

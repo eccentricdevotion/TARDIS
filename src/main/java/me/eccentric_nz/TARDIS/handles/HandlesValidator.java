@@ -47,7 +47,7 @@ class HandlesValidator {
         int i = 0;
         for (ItemStack is : program) {
             if (is != null) {
-                HandlesBlock thb = HandlesBlock.BY_NAME.get(ComponentUtils.stripColour(is.getItemMeta().displayName()));
+                HandlesBlock thb = HandlesBlock.BY_NAME.get(ComponentUtils.stripColour(is.getItemMeta().customName()));
                 switch (thb) {
                     case FOR -> {
                         if (!validateFor(i + 1)) {
@@ -90,7 +90,7 @@ class HandlesValidator {
                     case RANDOM -> {
                         // must be followed by a number or preceded by travel
                         ItemStack pre = program[i - 1];
-                        HandlesBlock cede = HandlesBlock.BY_NAME.get(ComponentUtils.stripColour(pre.getItemMeta().displayName()));
+                        HandlesBlock cede = HandlesBlock.BY_NAME.get(ComponentUtils.stripColour(pre.getItemMeta().customName()));
                         if (!HandlesBlock.TRAVEL.equals(cede) && !validateCoordOrMath(i + 1)) {
                             plugin.getMessenger().handlesMessage(player, "The Math operation does not compute!");
                             return false;
@@ -138,7 +138,7 @@ class HandlesValidator {
         if (op == null) {
             return false;
         }
-        HandlesBlock thb = HandlesBlock.BY_NAME.get(ComponentUtils.stripColour(op.getItemMeta().displayName()));
+        HandlesBlock thb = HandlesBlock.BY_NAME.get(ComponentUtils.stripColour(op.getItemMeta().customName()));
         if (!thb.getCategory().equals(HandlesCategory.OPERATOR)) {
             return false;
         }
@@ -146,7 +146,7 @@ class HandlesValidator {
         if (val == null) {
             return false;
         }
-        HandlesBlock thbv = HandlesBlock.BY_NAME.get(ComponentUtils.stripColour(val.getItemMeta().displayName()));
+        HandlesBlock thbv = HandlesBlock.BY_NAME.get(ComponentUtils.stripColour(val.getItemMeta().customName()));
         return thbv.getCategory().equals(HandlesCategory.NUMBER);
     }
 
@@ -155,7 +155,7 @@ class HandlesValidator {
         if (op == null) {
             return false;
         }
-        HandlesBlock thb = HandlesBlock.BY_NAME.get(ComponentUtils.stripColour(op.getItemMeta().displayName()));
+        HandlesBlock thb = HandlesBlock.BY_NAME.get(ComponentUtils.stripColour(op.getItemMeta().customName()));
         return thb.getCategory().equals(HandlesCategory.NUMBER) || thb.equals(HandlesBlock.SUBTRACTION);
     }
 
@@ -164,7 +164,7 @@ class HandlesValidator {
         if (op == null) {
             return false;
         }
-        HandlesBlock thb = HandlesBlock.BY_NAME.get(ComponentUtils.stripColour(op.getItemMeta().displayName()));
+        HandlesBlock thb = HandlesBlock.BY_NAME.get(ComponentUtils.stripColour(op.getItemMeta().customName()));
         return thb.equals(HandlesBlock.ASSIGNMENT) || thb.equals(HandlesBlock.EQUALS) || thb.equals(HandlesBlock.OPEN) || thb.equals(HandlesBlock.CLOSE) || thb.equals(HandlesBlock.LOCK) || thb.equals(HandlesBlock.UNLOCK);
     }
 
@@ -173,7 +173,7 @@ class HandlesValidator {
         if (op == null) {
             return false;
         }
-        HandlesBlock thb = HandlesBlock.BY_NAME.get(ComponentUtils.stripColour(op.getItemMeta().displayName()));
+        HandlesBlock thb = HandlesBlock.BY_NAME.get(ComponentUtils.stripColour(op.getItemMeta().customName()));
         return thb.equals(HandlesBlock.ASSIGNMENT) || thb.equals(HandlesBlock.EQUALS) || thb.equals(HandlesBlock.ON) || thb.equals(HandlesBlock.OFF);
     }
 
@@ -182,7 +182,7 @@ class HandlesValidator {
         if (op == null) {
             return false;
         }
-        HandlesBlock thb = HandlesBlock.BY_NAME.get(ComponentUtils.stripColour(op.getItemMeta().displayName()));
+        HandlesBlock thb = HandlesBlock.BY_NAME.get(ComponentUtils.stripColour(op.getItemMeta().customName()));
         return thb.equals(HandlesBlock.ASSIGNMENT) || thb.equals(HandlesBlock.EQUALS) || thb.equals(HandlesBlock.ON) || thb.equals(HandlesBlock.OFF) || thb.equals(HandlesBlock.SHOW) || thb.equals(HandlesBlock.REDSTONE);
     }
 
@@ -191,7 +191,7 @@ class HandlesValidator {
         if (op == null) {
             return false;
         }
-        HandlesBlock thb = HandlesBlock.BY_NAME.get(ComponentUtils.stripColour(op.getItemMeta().displayName()));
+        HandlesBlock thb = HandlesBlock.BY_NAME.get(ComponentUtils.stripColour(op.getItemMeta().customName()));
         Material record = op.getType();
         return thb.equals(HandlesBlock.HOME) || thb.equals(HandlesBlock.RECHARGER) || thb.equals(HandlesBlock.X) || thb.equals(HandlesBlock.Y) || thb.equals(HandlesBlock.Z) || thb.equals(HandlesBlock.RANDOM) || record.equals(Material.MUSIC_DISC_CHIRP) || record.equals(Material.MUSIC_DISC_WAIT) || record.equals(Material.MUSIC_DISC_CAT) || record.equals(Material.MUSIC_DISC_BLOCKS);
     }
@@ -207,7 +207,7 @@ class HandlesValidator {
                     continue;
                 }
             }
-            HandlesBlock thb = HandlesBlock.BY_NAME.get(ComponentUtils.stripColour(is.getItemMeta().displayName()));
+            HandlesBlock thb = HandlesBlock.BY_NAME.get(ComponentUtils.stripColour(is.getItemMeta().customName()));
             switch (i - start) {
                 case 0 -> { // must be a variable
                     if (!thb.getCategory().equals(HandlesCategory.VARIABLE)) {
@@ -261,7 +261,7 @@ class HandlesValidator {
                     continue;
                 }
             }
-            HandlesBlock thb = HandlesBlock.BY_NAME.get(ComponentUtils.stripColour(is.getItemMeta().displayName()));
+            HandlesBlock thb = HandlesBlock.BY_NAME.get(ComponentUtils.stripColour(is.getItemMeta().customName()));
             switch (i - start) {
                 case 0 -> { // must be an event, variable or selector
                     if (!thb.getCategory().equals(HandlesCategory.VARIABLE) && !thb.getCategory().equals(HandlesCategory.SELECTOR) && !thb.getCategory().equals(HandlesCategory.EVENT)) {

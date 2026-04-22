@@ -133,7 +133,7 @@ public class HandlesProgramListener implements Listener {
                     close(player);
                     ItemStack is = ItemStack.of(Material.MUSIC_DISC_WARD, 1);
                     ItemMeta im = is.getItemMeta();
-                    im.displayName(Component.text("Handles Program Disk"));
+                    im.customName(Component.text("Handles Program Disk"));
                     im.lore(List.of(Component.text("Untitled Disk"), Component.text(pid), Component.text("Checked OUT")));
                     im.addItemFlags(ItemFlag.values());
                     is.setItemMeta(im);
@@ -227,7 +227,7 @@ public class HandlesProgramListener implements Listener {
     private void setSlot(InventoryView view, int slot, HandlesBlock block) {
         ItemStack is = ItemStack.of(Material.PAPER, 1);
         ItemMeta im = is.getItemMeta();
-        im.displayName(Component.text(block.getDisplayName()));
+        im.customName(Component.text(block.getDisplayName()));
         if (block.getLore() != null) {
             im.lore(block.getLore());
         }

@@ -37,11 +37,11 @@ public class ItemStackSetter {
                     NamespacedKey key = new NamespacedKey(TARDIS.plugin, cmd);
                     im.setItemModel(key);
                 } else {
-                    im.displayName(Component.text("St John's Logo"));
+                    im.customName(Component.text("St John's Logo"));
                 }
             }
             if (json.has("name")) {
-                im.displayName(ComponentUtils.fromJson(json.get("name")));
+                im.customName(ComponentUtils.fromJson(json.get("name")));
             }
             if (json.has("lore")) {
                 List<Component> lore = new ArrayList<>();

@@ -57,13 +57,13 @@ public class FobWatchRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.CLOCK, 1);
         ItemMeta im = is.getItemMeta();
-        im.displayName(ComponentUtils.toWhite("Fob Watch"));
+        im.customName(ComponentUtils.toWhite("Fob Watch"));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "fob_watch");
         ShapedRecipe r = new ShapedRecipe(key, is);
         ItemStack exact = ItemStack.of(Material.GLOWSTONE_DUST, 1);
         ItemMeta em = exact.getItemMeta();
-        em.displayName(ComponentUtils.toWhite("TARDIS Chameleon Circuit"));
+        em.customName(ComponentUtils.toWhite("TARDIS Chameleon Circuit"));
         CustomModelDataComponent component = em.getCustomModelDataComponent();
         component.setFloats(CircuitVariant.CHAMELEON.getFloats());
         em.setCustomModelDataComponent(component);

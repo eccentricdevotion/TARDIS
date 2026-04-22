@@ -43,7 +43,7 @@ public class DoorLockAction {
         UUID playerUUID = player.getUniqueId();
         ItemStack stack = player.getInventory().getItemInMainHand();
         Material material = stack.getType();
-        if (stack.hasItemMeta() && stack.getItemMeta().hasDisplayName() && ComponentUtils.endsWith(stack.getItemMeta().displayName(), "TARDIS Remote Key")) {
+        if (stack.hasItemMeta() && stack.getItemMeta().hasCustomName() && ComponentUtils.endsWith(stack.getItemMeta().customName(), "TARDIS Remote Key")) {
             return;
         }
         // must be the owner

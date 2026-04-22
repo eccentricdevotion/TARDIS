@@ -66,7 +66,7 @@ public class DesktopThemeInventory implements InventoryHolder {
         if (m != null && !m.equals(Material.COBBLESTONE)) {
             is = ItemStack.of(m, 1);
             ItemMeta im = is.getItemMeta();
-            im.displayName(Component.text(schematic.getDescription()));
+            im.customName(Component.text(schematic.getDescription()));
             int cost = plugin.getArtronConfig().getInt("upgrades." + schematic.getPermission());
             if (currentConsole.equals(schematic.getPermission())) {
                 cost = Math.round((plugin.getArtronConfig().getInt("just_wall_floor") / 100F) * cost);

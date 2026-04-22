@@ -53,7 +53,7 @@ public class PainterRepairRecipe {
         // addition
         ItemStack isa = ItemStack.of(Material.GLOWSTONE_DUST, 1);
         ItemMeta ima = isa.getItemMeta();
-        ima.displayName(ComponentUtils.toWhite("Painter Circuit"));
+        ima.customName(ComponentUtils.toWhite("Painter Circuit"));
         CustomModelDataComponent ecomponent = ima.getCustomModelDataComponent();
         ecomponent.setFloats(CircuitVariant.PAINTER.getFloats());
         ima.setCustomModelDataComponent(ecomponent);

@@ -124,7 +124,7 @@ public class SpawnCommand {
                                 }
                                 ItemStack helmet = ItemStack.of(Material.SLIME_BALL, 1);
                                 ItemMeta headMeta = helmet.getItemMeta();
-                                headMeta.displayName(Component.text("Dalek Head"));
+                                headMeta.customName(Component.text("Dalek Head"));
                                 headMeta.setItemModel(head);
                                 helmet.setItemMeta(headMeta);
                                 EntityEquipment ee = a.getEquipment();

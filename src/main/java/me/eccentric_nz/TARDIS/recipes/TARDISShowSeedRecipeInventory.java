@@ -65,13 +65,13 @@ public class TARDISShowSeedRecipeInventory implements InventoryHolder {
         // interior wall
         ItemStack in_wall = ItemStack.of(Material.ORANGE_WOOL, 1);
         ItemMeta in_meta = in_wall.getItemMeta();
-        in_meta.displayName(Component.text("Interior walls"));
+        in_meta.customName(Component.text("Interior walls"));
         in_meta.lore(List.of(Component.text("Any valid Wall/Floor block")));
         in_wall.setItemMeta(in_meta);
         // interior floor
         ItemStack in_floor = ItemStack.of(Material.LIGHT_GRAY_WOOL, 1);
         ItemMeta fl_meta = in_floor.getItemMeta();
-        fl_meta.displayName(Component.text("Interior floors"));
+        fl_meta.customName(Component.text("Interior floors"));
         fl_meta.lore(List.of(Component.text("Any valid Wall/Floor block")));
         in_floor.setItemMeta(fl_meta);
         // seed block
@@ -94,7 +94,7 @@ public class TARDISShowSeedRecipeInventory implements InventoryHolder {
         ItemMeta seed = tardis.getItemMeta();
         seed.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, model.getKey());
         // set display name
-        seed.displayName(ComponentUtils.toGold("TARDIS Seed Block"));
+        seed.customName(ComponentUtils.toGold("TARDIS Seed Block"));
         List<Component> lore = new ArrayList<>();
         lore.add(Component.text(type));
         lore.add(Component.text("Walls: ORANGE_WOOL"));

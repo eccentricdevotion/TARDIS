@@ -70,7 +70,7 @@ public class TARDISShowShapedRecipeInventory implements InventoryHolder {
                 ItemMeta im = item.getItemMeta();
                 if (item.getType().equals(Material.GLOWSTONE_DUST) && !str.endsWith("Tie")) {
                     String dn = getDisplayName(str, glowstoneCount);
-                    im.displayName(ComponentUtils.toWhite(dn));
+                    im.customName(ComponentUtils.toWhite(dn));
                     glowstoneCount++;
                 }
                 if (str.endsWith("TARDIS Remote Key")) {
@@ -81,17 +81,17 @@ public class TARDISShowShapedRecipeInventory implements InventoryHolder {
                         material = Material.GOLD_NUGGET;
                     }
                     if (item.getType().equals(material)) {
-                        im.displayName(ComponentUtils.toWhite("TARDIS Key"));
+                        im.customName(ComponentUtils.toWhite("TARDIS Key"));
                     }
                 }
                 if (str.equals("Acid Battery") && item.getType().equals(Material.WATER_BUCKET)) {
-                    im.displayName(ComponentUtils.toWhite("Acid Bucket"));
+                    im.customName(ComponentUtils.toWhite("Acid Bucket"));
                 }
                 if (str.equals("Rift Manipulator") && item.getType().equals(Material.NETHER_BRICK)) {
-                    im.displayName(ComponentUtils.toWhite("Acid Battery"));
+                    im.customName(ComponentUtils.toWhite("Acid Battery"));
                 }
                 if (str.equals("Rust Plague Sword") && item.getType().equals(Material.LAVA_BUCKET)) {
-                    im.displayName(ComponentUtils.toWhite("Rust Bucket"));
+                    im.customName(ComponentUtils.toWhite("Rust Bucket"));
                 }
                 item.setItemMeta(im);
                 stacks[j * 9 + k] = item;
@@ -99,7 +99,7 @@ public class TARDISShowShapedRecipeInventory implements InventoryHolder {
         }
         ItemStack result = recipe.getResult();
         ItemMeta im = result.getItemMeta();
-        im.displayName(ComponentUtils.toWhite(str));
+        im.customName(ComponentUtils.toWhite(str));
         if (str.equals("TARDIS Invisibility Circuit")) {
             // set the second line of lore
             List<Component> lore = im.lore();

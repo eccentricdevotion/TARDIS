@@ -505,7 +505,7 @@ public class TARDII implements TardisAPI {
             ItemMeta im = is.getItemMeta();
             im.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING, model.getKey());
             // set display name
-            im.displayName(ComponentUtils.toGold("TARDIS Seed Block"));
+            im.customName(ComponentUtils.toGold("TARDIS Seed Block"));
             List<Component> lore = new ArrayList<>();
             lore.add(Component.text(schematic));
             lore.add(Component.text("Walls: ORANGE_WOOL"));
@@ -587,7 +587,7 @@ public class TARDII implements TardisAPI {
                 PersistentDataContainer pdc = im.getPersistentDataContainer();
                 pdc.set(TARDIS.plugin.getTimeLordUuidKey(), TARDIS.plugin.getPersistentDataTypeUUID(), player.getUniqueId());
                 pdc.set(TARDIS.plugin.getBlueprintKey(), PersistentDataType.STRING, perm);
-                im.displayName(ComponentUtils.toWhite("TARDIS Blueprint Disk"));
+                im.customName(ComponentUtils.toWhite("TARDIS Blueprint Disk"));
                 List<Component> lore = List.of(
                         Component.text(TARDISStringUtils.capitalise(item)),
                         Component.text("Valid only for"),

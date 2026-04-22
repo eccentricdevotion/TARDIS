@@ -56,7 +56,7 @@ public class AbandonedLister {
                 ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, tardis.getTardisId());
                 if (rsc.resultSet()) {
                     Current current = rsc.getCurrent();
-                    String w = (!plugin.getPlanetsConfig().getBoolean("planets." + current.location().getWorld().getName() + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMVHelper().getAlias(current.location().getWorld()) : TARDISAliasResolver.getWorldAlias(current.location().getWorld());
+                    String w = (!plugin.getPlanetsConfig().getBoolean("planets." + current.location().getWorld().getKey().getKey() + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMVHelper().getAlias(current.location().getWorld()) : TARDISAliasResolver.getWorldAlias(current.location().getWorld());
                     String l = w + " " + current.location().getBlockX() + ", " + current.location().getBlockY() + ", " + current.location().getBlockZ();
                     if (click) {
                         plugin.getMessenger().sendAbandoned(sender, i, owner, l, tardis.getTardisId());

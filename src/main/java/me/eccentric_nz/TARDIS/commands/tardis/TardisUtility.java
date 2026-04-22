@@ -96,9 +96,9 @@ public class TardisUtility {
             complexBool = true;
         } else if (!is.hasItemMeta()) {
             complexBool = true;
-        } else if (!is.getItemMeta().hasDisplayName()) {
+        } else if (!is.getItemMeta().hasCustomName()) {
             complexBool = true;
-        } else if (!ComponentUtils.endsWith(is.getItemMeta().displayName(), dn)) {
+        } else if (!ComponentUtils.endsWith(is.getItemMeta().customName(), dn)) {
             complexBool = true;
         }
         return complexBool;
@@ -134,7 +134,7 @@ public class TardisUtility {
                 // reinstate display name
                 ItemStack glass = itemFrame.getItem();
                 ItemMeta im = glass.getItemMeta();
-                im.displayName(ComponentUtils.toWhite("Monitor Frame"));
+                im.customName(ComponentUtils.toWhite("Monitor Frame"));
                 glass.setItemMeta(im);
             }
             case SONIC_DOCK -> itemFrame = SonicDock.getItemFrame(tardis.getTardisId());

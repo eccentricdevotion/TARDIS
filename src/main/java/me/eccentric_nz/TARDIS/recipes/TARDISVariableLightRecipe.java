@@ -43,7 +43,7 @@ public class TARDISVariableLightRecipe {
         ItemStack is;
         is = ItemStack.of(Material.GLASS, 1);
         ItemMeta im = is.getItemMeta();
-        im.displayName(ComponentUtils.toWhite("Variable Light"));
+        im.customName(ComponentUtils.toWhite("Variable Light"));
         im.setItemModel(LightVariant.VARIABLE.getKey());
         im.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.INTEGER, 1003);
         is.setItemMeta(im);

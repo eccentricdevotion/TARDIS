@@ -339,7 +339,7 @@ public class AdvancedConsoleCloseListener implements Listener {
                     } else {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "ADV_BLANK");
                     }
-                } else if (mat.equals(Material.MUSIC_DISC_STRAD) && is.hasItemMeta() && is.getItemMeta().hasDisplayName() && ComponentUtils.endsWith(is.getItemMeta().displayName(), "Blank Storage Disk")) {
+                } else if (mat.equals(Material.MUSIC_DISC_STRAD) && is.hasItemMeta() && is.getItemMeta().hasCustomName() && ComponentUtils.endsWith(is.getItemMeta().customName(), "Blank Storage Disk")) {
                     // Blank Disk - get a random location
                     Location l = new TARDISRandomiserCircuit(plugin).getRandomlocation(player, current.direction());
                     if (l == null) {

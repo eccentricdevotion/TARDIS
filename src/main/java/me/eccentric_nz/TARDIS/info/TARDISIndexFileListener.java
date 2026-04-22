@@ -54,7 +54,7 @@ public class TARDISIndexFileListener extends TARDISMenuListener {
             close(p);
         } else {
             ItemMeta im = is.getItemMeta();
-            String name = ComponentUtils.toEnumUppercase(im.displayName());
+            String name = ComponentUtils.toEnumUppercase(im.customName());
             try {
                 TISCategory category = TISCategory.valueOf(name);
                 plugin.getTrackerKeeper().getInfoGUI().put(p.getUniqueId(), category);

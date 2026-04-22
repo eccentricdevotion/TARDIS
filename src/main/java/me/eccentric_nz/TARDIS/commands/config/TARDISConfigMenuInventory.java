@@ -84,7 +84,7 @@ public class TARDISConfigMenuInventory implements InventoryHolder {
             ) {
                 ItemStack is = ItemStack.of(Material.REPEATER, 1);
                 ItemMeta im = is.getItemMeta();
-                im.displayName(Component.text(c));
+                im.customName(Component.text(c));
                 GUIConfiguration gui = GUIConfiguration.valueOf(c.split("\\.")[0].toUpperCase(Locale.ROOT));
                 CustomModelDataComponent component = im.getCustomModelDataComponent();
                 component.setFloats(value.equals("false") ? gui.getOffFloats() : gui.getOnFloats());
@@ -105,13 +105,13 @@ public class TARDISConfigMenuInventory implements InventoryHolder {
         // next page
         ItemStack next = ItemStack.of(Material.BOWL, 1);
         ItemMeta page = next.getItemMeta();
-        page.displayName(Component.text("Next page"));
+        page.customName(Component.text("Next page"));
         next.setItemMeta(page);
         stack[52] = next;
         // player prefs
         ItemStack play = ItemStack.of(Material.NETHER_STAR, 1);
         ItemMeta prefs = play.getItemMeta();
-        prefs.displayName(Component.text("Player Preferences"));
+        prefs.customName(Component.text("Player Preferences"));
         play.setItemMeta(prefs);
         stack[53] = play;
         return stack;

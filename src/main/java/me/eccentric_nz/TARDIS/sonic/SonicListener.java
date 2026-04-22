@@ -114,7 +114,7 @@ public class SonicListener implements Listener {
         ItemStack is = player.getInventory().getItemInMainHand();
         if (is.getType().equals(Material.BLAZE_ROD) && is.hasItemMeta()) {
             ItemMeta im = is.getItemMeta();
-            if (ComponentUtils.endsWith(im.displayName(), "Sonic Screwdriver")) {
+            if (ComponentUtils.endsWith(im.customName(), "Sonic Screwdriver")) {
                 // check they have charge
                 if (plugin.getConfig().getBoolean("sonic.charge")) {
                     // get sonic UUID
@@ -296,7 +296,7 @@ public class SonicListener implements Listener {
         ItemStack is = item.getItemStack();
         if (is.getType().equals(Material.BLAZE_ROD) && is.hasItemMeta()) {
             ItemMeta im = is.getItemMeta();
-            if (ComponentUtils.endsWith(im.displayName(), "Sonic Screwdriver")) {
+            if (ComponentUtils.endsWith(im.customName(), "Sonic Screwdriver")) {
                 // set to off state
                 CustomModelDataComponent component = im.getCustomModelDataComponent();
                 if (!component.getFloats().isEmpty()) {

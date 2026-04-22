@@ -60,19 +60,19 @@ public class NoughtsAndCrossesListener extends TARDISMenuListener {
         this.plugin = plugin;
         player = ItemStack.of(Material.CYAN_GLAZED_TERRACOTTA);
         ItemMeta pim = player.getItemMeta();
-        pim.displayName(Component.text("Player"));
+        pim.customName(Component.text("Player"));
         player.setItemMeta(pim);
         tardis = ItemStack.of(Material.RED_GLAZED_TERRACOTTA);
         ItemMeta tim = tardis.getItemMeta();
-        tim.displayName(Component.text("TARDIS"));
+        tim.customName(Component.text("TARDIS"));
         tardis.setItemMeta(tim);
         nought = ItemStack.of(Material.CYAN_GLAZED_TERRACOTTA);
         ItemMeta nim = nought.getItemMeta();
-        nim.displayName(Component.text("Nought"));
+        nim.customName(Component.text("Nought"));
         nought.setItemMeta(nim);
         cross = ItemStack.of(Material.RED_GLAZED_TERRACOTTA);
         ItemMeta cim = cross.getItemMeta();
-        cim.displayName(Component.text("Cross"));
+        cim.customName(Component.text("Cross"));
         cross.setItemMeta(cim);
     }
 

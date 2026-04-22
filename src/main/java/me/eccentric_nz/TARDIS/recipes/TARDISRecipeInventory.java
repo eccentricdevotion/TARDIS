@@ -61,13 +61,13 @@ public class TARDISRecipeInventory implements InventoryHolder {
         // back
         ItemStack back = ItemStack.of(Material.BOWL, 1);
         ItemMeta but = back.getItemMeta();
-        but.displayName(Component.text("Back"));
+        but.customName(Component.text("Back"));
         back.setItemMeta(but);
         stack[0] = back;
         // info
         ItemStack info = ItemStack.of(Material.BOWL, 1);
         ItemMeta info_im = info.getItemMeta();
-        info_im.displayName(Component.text("Info"));
+        info_im.customName(Component.text("Info"));
         info_im.lore(List.of(
                 Component.text("Click a button below"),
                 Component.text("to see the recipe"),
@@ -78,7 +78,7 @@ public class TARDISRecipeInventory implements InventoryHolder {
         // close
         ItemStack close = ItemStack.of(Material.BOWL, 1);
         ItemMeta close_im = close.getItemMeta();
-        close_im.displayName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
+        close_im.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
         close.setItemMeta(close_im);
         stack[8] = close;
         int i = 9;
@@ -106,7 +106,7 @@ public class TARDISRecipeInventory implements InventoryHolder {
                         }
                     }
                     ItemMeta im = result.getItemMeta();
-                    im.displayName(ComponentUtils.toWhite(str));
+                    im.customName(ComponentUtils.toWhite(str));
                     im.lore(List.of(Component.text("/trecipe " + arg)));
                     im.addItemFlags(ItemFlag.values());
                     im.setAttributeModifiers(Multimaps.forMap(Map.of()));

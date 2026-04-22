@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.commands.dev.lists;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import net.kyori.adventure.text.Component;
 import org.bukkit.command.CommandSender;
 
 import java.util.ArrayList;
@@ -40,7 +41,7 @@ public class PermissionLister {
             String perm = perms.get(i);
             if (perm.contains(".") && notThese(perm)) {
                 if (!lastPerm.contains(perm)) {
-                    sender.sendMessage(perm);
+                    sender.sendMessage(Component.text(perm));
                     lastPerm = perm;
                 }
             }
@@ -85,7 +86,7 @@ public class PermissionLister {
         }
         Collections.reverse(lines);
         for (String l : lines) {
-            sender.sendMessage(l);
+            sender.sendMessage(Component.text(l));
         }
     }
 

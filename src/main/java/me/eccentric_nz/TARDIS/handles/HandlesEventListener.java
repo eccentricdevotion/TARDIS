@@ -44,7 +44,7 @@ public class HandlesEventListener implements Listener {
             for (ItemStack is : stack) {
                 // find the ARTRON / DO
                 if (is != null) {
-                    HandlesBlock thb = HandlesBlock.BY_NAME.get(ComponentUtils.stripColour(is.getItemMeta().displayName()));
+                    HandlesBlock thb = HandlesBlock.BY_NAME.get(ComponentUtils.stripColour(is.getItemMeta().customName()));
                     HandlesProcessor processor = new HandlesProcessor(TARDIS.plugin, program, player, program.getProgram_id());
                     switch (thb) {
                         case ARTRON -> {

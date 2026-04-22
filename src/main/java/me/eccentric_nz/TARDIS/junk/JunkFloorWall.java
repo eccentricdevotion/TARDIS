@@ -21,6 +21,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 
@@ -48,7 +49,7 @@ public class JunkFloorWall {
         if (!TARDISWalls.BLOCKS.contains(Material.valueOf(wall_mat))) {
             String message = (wall_mat.equals("HELP")) ? "WALL_LIST" : "WALL_NOT_VALID";
             plugin.getMessenger().send(sender, TardisModule.TARDIS, message, pref);
-            TARDISWalls.BLOCKS.forEach((w) -> sender.sendMessage(w.toString()));
+            TARDISWalls.BLOCKS.forEach((w) -> sender.sendMessage(Component.text(w.toString())));
             return;
         }
         // check if player_prefs record

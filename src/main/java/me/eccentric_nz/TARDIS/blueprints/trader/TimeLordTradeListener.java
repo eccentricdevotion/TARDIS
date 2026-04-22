@@ -10,6 +10,7 @@ import org.bukkit.entity.Mannequin;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.*;
 import org.bukkit.inventory.view.MerchantView;
@@ -28,7 +29,7 @@ public class TimeLordTradeListener implements Listener {
     }
 
     @EventHandler
-    public void onEntityInteract(PlayerInteractEntityEvent event) {
+    public void onEntityInteract(PlayerInteractAtEntityEvent event) {
         if (event.getRightClicked() instanceof Mannequin mannequin
                 && mannequin.getPersistentDataContainer().has(plugin.getTimeLordUuidKey(), PersistentDataType.STRING)) {
             int count = mannequin.getPersistentDataContainer().getOrDefault(plugin.getTradesKey(), PersistentDataType.INTEGER, 0);

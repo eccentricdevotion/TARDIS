@@ -54,7 +54,7 @@ public class SonicConfiguratorInventory implements InventoryHolder {
             if (gui.getSlot() != -1) {
                 ItemStack is = ItemStack.of(gui.getMaterial(), 1);
                 ItemMeta im = is.getItemMeta();
-                im.displayName(Component.text(gui.getName()));
+                im.customName(Component.text(gui.getName()));
                 if (!gui.getLore().isEmpty()) {
                     List<Component> lore = new ArrayList<>();
                     for (String s : gui.getLore().split("~")) {
@@ -68,7 +68,7 @@ public class SonicConfiguratorInventory implements InventoryHolder {
         }
         ItemStack wool = ItemStack.of(GUISonicConfigurator.WAITING.getMaterial(), 1);
         ItemMeta wim = wool.getItemMeta();
-        wim.displayName(Component.text(" "));
+        wim.customName(Component.text(" "));
         wool.setItemMeta(wim);
         for (int i = 9; i < 18; i++) {
             stack[i] = wool;
@@ -76,7 +76,7 @@ public class SonicConfiguratorInventory implements InventoryHolder {
         stack[27] = wool;
         ItemStack place = ItemStack.of(GUISonicConfigurator.PLACE_SONIC.getMaterial(), 1);
         ItemMeta pim = place.getItemMeta();
-        pim.displayName(Component.text(GUISonicConfigurator.PLACE_SONIC.getName()));
+        pim.customName(Component.text(GUISonicConfigurator.PLACE_SONIC.getName()));
         place.setItemMeta(pim);
         stack[36] = place;
         return stack;

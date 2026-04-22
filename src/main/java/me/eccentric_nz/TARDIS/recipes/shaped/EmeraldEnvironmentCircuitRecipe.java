@@ -51,7 +51,7 @@ public class EmeraldEnvironmentCircuitRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.GLOWSTONE_DUST, 1);
         ItemMeta im = is.getItemMeta();
-        im.displayName(ComponentUtils.toWhite("Emerald Environment Circuit"));
+        im.customName(ComponentUtils.toWhite("Emerald Environment Circuit"));
         CustomModelDataComponent component = im.getCustomModelDataComponent();
         component.setFloats(CircuitVariant.EMERALD.getFloats());
         im.setCustomModelDataComponent(component);

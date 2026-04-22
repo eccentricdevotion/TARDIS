@@ -129,7 +129,7 @@ public class ARSMapListener extends ARSMethods implements Listener {
                     ItemStack is = view.getItem(slot);
                     if (is != null) {
                         ItemMeta im = is.getItemMeta();
-                        String dn = ComponentUtils.stripColour(im.displayName());
+                        String dn = ComponentUtils.stripColour(im.customName());
                         if (!dn.equals("Empty slot")) {
                             selectedLocation.put(playerUUID, is.getType().toString());
                             // get selected slot

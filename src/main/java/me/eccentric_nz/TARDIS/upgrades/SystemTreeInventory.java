@@ -61,9 +61,9 @@ public class SystemTreeInventory implements InventoryHolder {
                 ItemStack is = ItemStack.of(g.getMaterial(), 1);
                 ItemMeta im = is.getItemMeta();
                 if (g.getBranch().equals("branch")) {
-                    im.displayName(Component.text(g.getName(), NamedTextColor.GOLD).decorate(TextDecoration.ITALIC));
+                    im.customName(Component.text(g.getName(), NamedTextColor.GOLD).decorate(TextDecoration.ITALIC));
                 } else {
-                    im.displayName(Component.text(g.getName()));
+                    im.customName(Component.text(g.getName()));
                 }
                 List<Component> lore = new ArrayList<>(g.getLore());
                 boolean has = sysData.getUpgrades().get(g);
@@ -91,7 +91,7 @@ public class SystemTreeInventory implements InventoryHolder {
         // left_down
         ItemStack ld = ItemStack.of(SystemTree.LEFT_DOWN.getMaterial(), 1);
         ItemMeta eft = ld.getItemMeta();
-        eft.displayName(ComponentUtils.toWhite(""));
+        eft.customName(ComponentUtils.toWhite(""));
         eft.setItemModel(SystemTree.LEFT_DOWN.getLocked());
         ld.setItemMeta(eft);
         stacks[0] = ld;
@@ -99,7 +99,7 @@ public class SystemTreeInventory implements InventoryHolder {
         int[] horizontal = new int[]{1, 3, 5, 7};
         ItemStack his = ItemStack.of(SystemTree.H_LINE.getMaterial(), 1);
         ItemMeta him = his.getItemMeta();
-        him.displayName(ComponentUtils.toWhite(""));
+        him.customName(ComponentUtils.toWhite(""));
         him.setItemModel(SystemTree.H_LINE.getLocked());
         his.setItemMeta(him);
         for (int h : horizontal) {
@@ -109,7 +109,7 @@ public class SystemTreeInventory implements InventoryHolder {
         int[] both_down = new int[]{2, 6};
         ItemStack bd = ItemStack.of(SystemTree.BOTH_DOWN.getMaterial(), 1);
         ItemMeta bdim = bd.getItemMeta();
-        bdim.displayName(ComponentUtils.toWhite(""));
+        bdim.customName(ComponentUtils.toWhite(""));
         bdim.setItemModel(SystemTree.BOTH_DOWN.getLocked());
         bd.setItemMeta(bdim);
         for (int d : both_down) {
@@ -118,28 +118,28 @@ public class SystemTreeInventory implements InventoryHolder {
         // right_down
         ItemStack rd = ItemStack.of(SystemTree.RIGHT_DOWN.getMaterial(), 1);
         ItemMeta own = rd.getItemMeta();
-        own.displayName(ComponentUtils.toWhite(""));
+        own.customName(ComponentUtils.toWhite(""));
         own.setItemModel(SystemTree.RIGHT_DOWN.getLocked());
         rd.setItemMeta(own);
         stacks[8] = rd;
         // background
         ItemStack is = ItemStack.of(SystemTree.BLANK.getMaterial(), 1);
         ItemMeta im = is.getItemMeta();
-        im.displayName(ComponentUtils.toWhite(""));
+        im.customName(ComponentUtils.toWhite(""));
         im.setItemModel(SystemTree.BLANK.getLocked());
         is.setItemMeta(im);
         stacks[10] = is;
         // vertical
         ItemStack vert = ItemStack.of(SystemTree.VERTICAL.getMaterial(), 1);
         ItemMeta ical = vert.getItemMeta();
-        ical.displayName(ComponentUtils.toWhite(""));
+        ical.customName(ComponentUtils.toWhite(""));
         ical.setItemModel(SystemTree.VERTICAL.getLocked());
         vert.setItemMeta(ical);
         stacks[13] = vert;
         // close
         ItemStack close = ItemStack.of(SystemTree.CLOSE.getMaterial(), 1);
         ItemMeta close_im = close.getItemMeta();
-        close_im.displayName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
+        close_im.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
         close_im.setItemModel(SystemTree.CLOSE.getLocked());
         close.setItemMeta(close_im);
         stacks[45] = close;

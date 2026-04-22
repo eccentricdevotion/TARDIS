@@ -65,7 +65,7 @@ public class TARDISSavesPlanetInventory implements InventoryHolder {
         wherehl.put("tardis_id", id);
         ResultSetHomeLocation rsh = new ResultSetHomeLocation(plugin, wherehl);
         if (rsh.resultSet()) {
-            him.displayName(Component.text("Home"));
+            him.customName(Component.text("Home"));
             hlore.add(Component.text(rsh.getWorld().getName()));
             hlore.add(Component.text(rsh.getX()));
             hlore.add(Component.text(rsh.getY()));
@@ -85,7 +85,7 @@ public class TARDISSavesPlanetInventory implements InventoryHolder {
             // home stack
             ItemStack death = ItemStack.of(GUISaves.DEATH.material(), 1);
             ItemMeta dim = death.getItemMeta();
-            dim.displayName(Component.text("Death location"));
+            dim.customName(Component.text("Death location"));
             List<Component> dlore = new ArrayList<>();
             ResultSetDeathLocation rsd = new ResultSetDeathLocation(plugin, player.getUniqueId().toString());
             if (rsd.resultSet()) {
@@ -109,7 +109,7 @@ public class TARDISSavesPlanetInventory implements InventoryHolder {
             for (Planet planet : rsd.getData()) {
                 ItemStack is = ItemStack.of(planet.material(), 1);
                 ItemMeta im = is.getItemMeta();
-                im.displayName(Component.text(planet.name()));
+                im.customName(Component.text(planet.name()));
                 is.setItemMeta(im);
                 stack[i] = is;
                 i += 2;

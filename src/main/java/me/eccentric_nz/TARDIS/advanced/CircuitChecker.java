@@ -99,8 +99,8 @@ public class CircuitChecker {
                 for (ItemStack is : items) {
                     if (is != null && is.hasItemMeta()) {
                         ItemMeta im = is.getItemMeta();
-                        if (im.hasDisplayName()) {
-                            String dn = ComponentUtils.stripColour(im.displayName());
+                        if (im.hasCustomName()) {
+                            String dn = ComponentUtils.stripColour(im.customName());
                             if (dn.endsWith("TARDIS ARS Circuit")) {
                                 ars = true;
                                 arsUses = getUses(im);

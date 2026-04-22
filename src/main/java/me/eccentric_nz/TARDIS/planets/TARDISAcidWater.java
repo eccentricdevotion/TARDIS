@@ -244,10 +244,10 @@ public class TARDISAcidWater implements Listener {
         ItemStack bucket = event.getItemStack();
         ItemMeta im = bucket.getItemMeta();
         if (type.equals(Material.WATER)) {
-            im.displayName(Component.text("Acid Bucket"));
+            im.customName(Component.text("Acid Bucket"));
         }
         if (type.equals(Material.LAVA)) {
-            im.displayName(Component.text("Rust Bucket"));
+            im.customName(Component.text("Rust Bucket"));
         }
         bucket.setItemMeta(im);
         p.updateInventory();

@@ -52,20 +52,20 @@ public class RiftManipulatorRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.BEACON, 1);
         ItemMeta im = is.getItemMeta();
-        im.displayName(ComponentUtils.toWhite("Rift Manipulator"));
+        im.customName(ComponentUtils.toWhite("Rift Manipulator"));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "rift_manipulator");
         ShapedRecipe r = new ShapedRecipe(key, is);
         ItemStack rift = ItemStack.of(Material.GLOWSTONE_DUST, 1);
         ItemMeta em = rift.getItemMeta();
-        em.displayName(ComponentUtils.toWhite("Rift Circuit"));
+        em.customName(ComponentUtils.toWhite("Rift Circuit"));
         CustomModelDataComponent component = em.getCustomModelDataComponent();
         component.setFloats(CircuitVariant.RIFT.getFloats());
         em.setCustomModelDataComponent(component);
         rift.setItemMeta(em);
         ItemStack acid = ItemStack.of(Material.NETHER_BRICK, 1);
         ItemMeta aim = acid.getItemMeta();
-        aim.displayName(ComponentUtils.toWhite("Acid Battery"));
+        aim.customName(ComponentUtils.toWhite("Acid Battery"));
         acid.setItemMeta(aim);
         if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             r.shape(" A ", "ACA", "NAN");

@@ -76,7 +76,7 @@ public class CompanionInventory implements InventoryHolder {
                         // lookup name
                         name = getPlayerNameFromMojang(c);
                     }
-                    skull.displayName(Component.text(name));
+                    skull.customName(Component.text(name));
                     skull.lore(List.of(Component.text(c)));
                     skull.addItemFlags(ItemFlag.values());
                     skull.setAttributeModifiers(Multimaps.forMap(Map.of()));
@@ -91,7 +91,7 @@ public class CompanionInventory implements InventoryHolder {
         // add buttons
         ItemStack info = ItemStack.of(GUICompanion.INFO.material(), 1);
         ItemMeta ii = info.getItemMeta();
-        ii.displayName(Component.text("Info"));
+        ii.customName(Component.text("Info"));
         ii.lore(List.of(
                 Component.text("To REMOVE a companion"),
                 Component.text("select a player head"),
@@ -105,18 +105,18 @@ public class CompanionInventory implements InventoryHolder {
         heads[GUICompanion.INFO.slot()] = info;
         ItemStack add = ItemStack.of(GUICompanion.ADD_COMPANION.material(), 1);
         ItemMeta aa = add.getItemMeta();
-        aa.displayName(Component.text("Add"));
+        aa.customName(Component.text("Add"));
         add.setItemMeta(aa);
         heads[GUICompanion.ADD_COMPANION.slot()] = add;
         ItemStack del = ItemStack.of(GUICompanion.DELETE_COMPANION.material(), 1);
         ItemMeta dd = del.getItemMeta();
-        dd.displayName(Component.text("Remove"));
+        dd.customName(Component.text("Remove"));
         del.setItemMeta(dd);
         heads[GUICompanion.DELETE_COMPANION.slot()] = del;
         // Cancel / close
         ItemStack close = ItemStack.of(GUICompanion.BUTTON_CLOSE.material(), 1);
         ItemMeta can = close.getItemMeta();
-        can.displayName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
+        can.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
         close.setItemMeta(can);
         heads[GUICompanion.BUTTON_CLOSE.slot()] = close;
 

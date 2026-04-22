@@ -53,7 +53,7 @@ public class ColourPickerInventory implements InventoryHolder {
         // display
         ItemStack dis = ItemStack.of(Material.LEATHER_HORSE_ARMOR, 1);
         LeatherArmorMeta play = (LeatherArmorMeta) dis.getItemMeta();
-        play.displayName(Component.text("Colour"));
+        play.customName(Component.text("Colour"));
         play.lore(List.of(
                 Component.text("Red: 255"),
                 Component.text("Green: 255"),
@@ -67,24 +67,24 @@ public class ColourPickerInventory implements InventoryHolder {
         // red
         ItemStack red = ItemStack.of(Material.RED_WOOL, 1);
         ItemMeta rrr = red.getItemMeta();
-        rrr.displayName(Component.text("Red"));
+        rrr.customName(Component.text("Red"));
         red.setItemMeta(rrr);
         // green
         ItemStack green = ItemStack.of(Material.LIME_WOOL, 1);
         ItemMeta ggg = green.getItemMeta();
-        ggg.displayName(Component.text("Green"));
+        ggg.customName(Component.text("Green"));
         green.setItemMeta(ggg);
         // blue
         ItemStack blue = ItemStack.of(Material.LIGHT_BLUE_WOOL, 1);
         ItemMeta bbb = blue.getItemMeta();
-        bbb.displayName(Component.text("Blue"));
+        bbb.customName(Component.text("Blue"));
         blue.setItemMeta(bbb);
         // red tint
         ItemStack redtint = ItemStack.of(Material.LEATHER_HORSE_ARMOR, 1);
         LeatherArmorMeta rrrtint = (LeatherArmorMeta) redtint.getItemMeta();
         rrrtint.setColor(Color.fromRGB(255, 0, 0)); // red
         rrrtint.setItemModel(ColouredVariant.TINT.getKey());
-        rrrtint.displayName(Component.text("Red"));
+        rrrtint.customName(Component.text("Red"));
         rrrtint.addItemFlags(ItemFlag.values());
         rrrtint.setAttributeModifiers(Multimaps.forMap(Map.of()));
         redtint.setItemMeta(rrrtint);
@@ -93,7 +93,7 @@ public class ColourPickerInventory implements InventoryHolder {
         LeatherArmorMeta gggtint = (LeatherArmorMeta) greentint.getItemMeta();
         gggtint.setColor(Color.fromRGB(0, 255, 0)); // green
         gggtint.setItemModel(ColouredVariant.TINT.getKey());
-        gggtint.displayName(Component.text("Green"));
+        gggtint.customName(Component.text("Green"));
         gggtint.addItemFlags(ItemFlag.values());
         gggtint.setAttributeModifiers(Multimaps.forMap(Map.of()));
         greentint.setItemMeta(gggtint);
@@ -102,29 +102,29 @@ public class ColourPickerInventory implements InventoryHolder {
         LeatherArmorMeta bbbtint = (LeatherArmorMeta) bluetint.getItemMeta();
         bbbtint.setColor(Color.fromRGB(0, 0, 255)); // blue
         bbbtint.setItemModel(ColouredVariant.TINT.getKey());
-        bbbtint.displayName(Component.text("Blue"));
+        bbbtint.customName(Component.text("Blue"));
         bbbtint.addItemFlags(ItemFlag.values());
         bbbtint.setAttributeModifiers(Multimaps.forMap(Map.of()));
         bluetint.setItemMeta(bbbtint);
         // less
         ItemStack less = ItemStack.of(Material.ARROW, 1);
         ItemMeta lll = less.getItemMeta();
-        lll.displayName(Component.text("Less"));
+        lll.customName(Component.text("Less"));
         less.setItemMeta(lll);
         // more
         ItemStack more = ItemStack.of(Material.ARROW, 1);
         ItemMeta mmm = more.getItemMeta();
-        mmm.displayName(Component.text("More"));
+        mmm.customName(Component.text("More"));
         more.setItemMeta(mmm);
         // select
         ItemStack select = ItemStack.of(Material.BOWL, 1);
         ItemMeta sss = select.getItemMeta();
-        sss.displayName(Component.text("Select colour"));
+        sss.customName(Component.text("Select colour"));
         select.setItemMeta(sss);
         // close
         ItemStack close = ItemStack.of(Material.BOWL, 1);
         ItemMeta win = close.getItemMeta();
-        win.displayName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
+        win.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
         close.setItemMeta(win);
         return new ItemStack[]{
                 null, null, null, null, dis, null, null, null, null,

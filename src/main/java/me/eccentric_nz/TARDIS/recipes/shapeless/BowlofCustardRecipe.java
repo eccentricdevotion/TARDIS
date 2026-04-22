@@ -41,7 +41,7 @@ public class BowlofCustardRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.MUSHROOM_STEW, 1);
         ItemMeta im = is.getItemMeta();
-        im.displayName(ComponentUtils.toWhite("Bowl of Custard"));
+        im.customName(ComponentUtils.toWhite("Bowl of Custard"));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "bowl_of_custard");
         ShapelessRecipe r = new ShapelessRecipe(key, is);

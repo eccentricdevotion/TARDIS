@@ -78,8 +78,8 @@ public class ProductGUIListener extends TARDISMenuListener {
                 Material material = is.getType();
                 if ((material.equals(Material.GLASS_BOTTLE) || material.equals(Material.FEATHER)) && is.hasItemMeta()) {
                     ItemMeta im = is.getItemMeta();
-                    if (im.hasDisplayName()) {
-                        builder.append(im.displayName()).append(pipe.contains(slot) ? "|" : ",");
+                    if (im.hasCustomName()) {
+                        builder.append(im.customName()).append(pipe.contains(slot) ? "|" : ",");
                     }
                 } else {
                     builder.append(is.getType()).append(pipe.contains(slot) ? "|" : ",");

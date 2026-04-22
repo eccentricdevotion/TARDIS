@@ -37,6 +37,7 @@ import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -66,7 +67,7 @@ public class TARDISItemFrameUpdateListener implements Listener {
     }
 
     @EventHandler(ignoreCancelled = true)
-    public void onItemFrameUpdate(PlayerInteractEntityEvent event) {
+    public void onItemFrameUpdate(PlayerInteractAtEntityEvent event) {
         if (event.getRightClicked() instanceof ItemFrame frame) {
             Player player = event.getPlayer();
             UUID uuid = player.getUniqueId();
@@ -157,7 +158,7 @@ public class TARDISItemFrameUpdateListener implements Listener {
                                 if (glass.getType() == Material.GLASS && glass.hasItemMeta() && glass.getItemMeta().hasItemModel()) {
                                     // remove display name
                                     ItemMeta gm = glass.getItemMeta();
-                                    gm.displayName(null);
+                                    gm.customName(null);
                                     glass.setItemMeta(gm);
                                     // get the monitor item frame, from the same block location
                                     ItemFrame mapFrame = MonitorUtils.getItemFrameFromLocation(l, frame.getUniqueId());
@@ -233,7 +234,7 @@ public class TARDISItemFrameUpdateListener implements Listener {
                                     case Control.LIGHT_LEVEL -> "Light";
                                     default -> "Console";
                                 };
-                                im.displayName(Component.text(dn));
+                                im.customName(Component.text(dn));
                                 sp.lamp().setItemMeta(im);
                                 frame.setItem(sp.lamp());
                                 plugin.getTrackerKeeper().getUpdatePlayers().remove(uuid);
@@ -283,10 +284,10 @@ public class TARDISItemFrameUpdateListener implements Listener {
             return new SwitchPair(false, lampSwitch);
         }
         ItemMeta im = lampSwitch.getItemMeta();
-        if (!im.hasDisplayName()) {
+        if (!im.hasCustomName()) {
             return new SwitchPair(false, lampSwitch);
         }
-        return new SwitchPair(im.hasItemModel() && ComponentUtils.endsWith(im.displayName(), "Switch"), lampSwitch);
+        return new SwitchPair(im.hasItemModel() && ComponentUtils.endsWith(im.customName(), "Switch"), lampSwitch);
     }
 
     private record SwitchPair(boolean b, ItemStack lamp) {

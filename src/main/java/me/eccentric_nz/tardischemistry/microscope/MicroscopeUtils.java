@@ -42,7 +42,7 @@ class MicroscopeUtils {
         if (im == null) {
             return false;
         }
-        if (!im.hasDisplayName()) {
+        if (!im.hasCustomName()) {
             return false;
         }
         if (!im.hasItemModel()) {

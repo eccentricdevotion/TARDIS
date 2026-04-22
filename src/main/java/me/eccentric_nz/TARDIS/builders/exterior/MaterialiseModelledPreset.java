@@ -262,7 +262,7 @@ public class MaterialiseModelledPreset implements Runnable {
             if (bd.shouldAddSign()) {
                 String name = bd.getPlayer().getName() + "'s " + pb;
                 Component custom = Component.text(name);
-                im.displayName(custom);
+                im.customName(custom);
                 stand.customName(custom);
                 stand.setCustomNameVisible(true);
             }

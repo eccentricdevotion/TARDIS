@@ -68,7 +68,7 @@ public class BlockPresetInventory implements InventoryHolder {
                 if (TARDISPermission.hasPermission(player, "tardis.preset." + preset.toString().toLowerCase(Locale.ROOT))) {
                     ItemStack is = ItemStack.of(preset.getGuiDisplay(), 1);
                     ItemMeta im = is.getItemMeta();
-                    im.displayName(Component.text(preset.getDisplayName()));
+                    im.customName(Component.text(preset.getDisplayName()));
                     is.setItemMeta(im);
                     stacks[preset.getSlot()] = is;
                 }
@@ -77,25 +77,25 @@ public class BlockPresetInventory implements InventoryHolder {
         // back
         ItemStack back = ItemStack.of(GUIChameleonPresets.BACK.material(), 1);
         ItemMeta but = back.getItemMeta();
-        but.displayName(Component.text("Back"));
+        but.customName(Component.text("Back"));
         back.setItemMeta(but);
         stacks[GUIChameleonPresets.BACK.slot()] = back;
         // custom page
         ItemStack custom = ItemStack.of(GUIChameleonPresets.CUSTOM.material(), 1);
         ItemMeta customMeta = custom.getItemMeta();
-        customMeta.displayName(Component.text("Custom presets"));
+        customMeta.customName(Component.text("Custom presets"));
         custom.setItemMeta(customMeta);
         stacks[GUIChameleonPresets.CUSTOM.slot()] = custom;
         // page two
         ItemStack page = ItemStack.of(GUIChameleonPresets.GO_TO_PAGE_2.material(), 1);
         ItemMeta two = page.getItemMeta();
-        two.displayName(Component.text(plugin.getLanguage().getString("BUTTON_PAGE_2", "Go to page 2")));
+        two.customName(Component.text(plugin.getLanguage().getString("BUTTON_PAGE_2", "Go to page 2")));
         page.setItemMeta(two);
         stacks[GUIChameleonPresets.GO_TO_PAGE_2.slot()] = page;
         // Cancel / close
         ItemStack close = ItemStack.of(GUIChameleonPresets.CLOSE.material(), 1);
         ItemMeta can = close.getItemMeta();
-        can.displayName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
+        can.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
         close.setItemMeta(can);
         stacks[GUIChameleonPresets.CLOSE.slot()] = close;
         return stacks;

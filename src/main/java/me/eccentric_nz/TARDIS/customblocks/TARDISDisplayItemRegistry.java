@@ -101,8 +101,8 @@ public final class TARDISDisplayItemRegistry {
         if (im.hasItemModel()) {
             return getByModel(im.getItemModel());
         }
-        if (im.hasDisplayName()) {
-            return getByDisplayName(im.displayName());
+        if (im.hasCustomName()) {
+            return getByDisplayName(im.customName());
         }
         return null;
     }

@@ -70,16 +70,16 @@ public class TARDISShowShapelessRecipeInventory implements InventoryHolder {
             ItemMeta im = item.getItemMeta();
             if (item.getType().equals(Material.GLOWSTONE_DUST)) {
                 String dn = getDisplayName(str, glowstoneCount);
-                im.displayName(ComponentUtils.toWhite(dn));
+                im.customName(ComponentUtils.toWhite(dn));
                 glowstoneCount++;
             }
             if (item.getType().equals(Material.MUSIC_DISC_STRAD)) {
-                im.displayName(Component.text("Blank Storage Disk"));
+                im.customName(Component.text("Blank Storage Disk"));
                 im.addItemFlags(ItemFlag.values());
                 im.setAttributeModifiers(Multimaps.forMap(Map.of()));
             }
             if (item.getType().equals(Material.BLAZE_ROD)) {
-                im.displayName(Component.text("Sonic Screwdriver"));
+                im.customName(Component.text("Sonic Screwdriver"));
                 CustomModelDataComponent component = im.getCustomModelDataComponent();
                 component.setFloats(SonicVariant.TENTH.getFloats());
                 im.setCustomModelDataComponent(component);
@@ -89,7 +89,7 @@ public class TARDISShowShapelessRecipeInventory implements InventoryHolder {
         }
         ItemStack result = recipe.getResult();
         ItemMeta im = result.getItemMeta();
-        im.displayName(ComponentUtils.toWhite(str));
+        im.customName(ComponentUtils.toWhite(str));
         if (str.equals("Blank Storage Disk") || str.equals("Save Storage Disk") || str.equals("Preset Storage Disk") || str.equals("Biome Storage Disk") || str.equals("Player Storage Disk") || str.equals("Authorised Control Disk")) {
             im.addItemFlags(ItemFlag.values());
             im.setAttributeModifiers(Multimaps.forMap(Map.of()));
@@ -97,7 +97,7 @@ public class TARDISShowShapelessRecipeInventory implements InventoryHolder {
         RecipeItem recipeItem = RecipeItem.getByName(str);
         if (recipeItem != RecipeItem.NOT_FOUND) {
             if (recipeItem.getCategory().equals(RecipeCategory.SONIC_UPGRADES)) {
-                im.displayName(ComponentUtils.toWhite("Sonic Screwdriver"));
+                im.customName(ComponentUtils.toWhite("Sonic Screwdriver"));
                 im.lore(List.of(Component.text("Upgrades:"), Component.text(str)));
             }
         }

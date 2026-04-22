@@ -3,6 +3,7 @@ package me.eccentric_nz.TARDIS.commands.book;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAchievements;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import net.kyori.adventure.text.Component;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -20,7 +21,7 @@ public class BookUtility {
         plugin.getMessenger().send(sender, TardisModule.TARDIS, "BOOK_RASS");
         if (!books.isEmpty()) {
             for (Map.Entry<String, String> entry : books.entrySet()) {
-                sender.sendMessage(b + ". [" + entry.getKey() + "] - " + entry.getValue());
+                sender.sendMessage(Component.text(b + ". [" + entry.getKey() + "] - " + entry.getValue()));
                 b++;
             }
         } else {

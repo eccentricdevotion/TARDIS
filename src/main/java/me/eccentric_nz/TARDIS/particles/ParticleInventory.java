@@ -81,7 +81,7 @@ public class ParticleInventory implements InventoryHolder {
         // shape
         ItemStack shape = ItemStack.of(GUIParticle.SHAPE_INFO.material(), 1);
         ItemMeta sim = shape.getItemMeta();
-        sim.displayName(Component.text("Effect Shape"));
+        sim.customName(Component.text("Effect Shape"));
         sim.lore(List.of(Component.text("Choose a shape"), Component.text("from the options"), Component.text("on the right.")));
         shape.setItemMeta(sim);
         stacks[GUIParticle.SHAPE_INFO.slot()] = shape;
@@ -91,7 +91,7 @@ public class ParticleInventory implements InventoryHolder {
             Material sm = (data.getShape() == ps) ? Material.LAPIS_ORE : GUIParticle.SHAPE.material();
             ItemStack pshape = ItemStack.of(sm, 1);
             ItemMeta me = pshape.getItemMeta();
-            me.displayName(Component.text(TARDISStringUtils.capitalise(ps.toString())));
+            me.customName(Component.text(TARDISStringUtils.capitalise(ps.toString())));
             pshape.setItemMeta(me);
             stacks[i] = pshape;
             i++;
@@ -99,7 +99,7 @@ public class ParticleInventory implements InventoryHolder {
         // effect
         ItemStack effect = ItemStack.of(GUIParticle.EFFECT_INFO.material(), 1);
         ItemMeta eim = effect.getItemMeta();
-        eim.displayName(Component.text("Effect Particle"));
+        eim.customName(Component.text("Effect Particle"));
         eim.lore(List.of(Component.text("Choose a particle"), Component.text("from the options"), Component.text("on the right.")));
         effect.setItemMeta(eim);
         stacks[GUIParticle.EFFECT_INFO.slot()] = effect;
@@ -110,7 +110,7 @@ public class ParticleInventory implements InventoryHolder {
                 Material pm = (data.getEffect() == pe) ? Material.REDSTONE_ORE : GUIParticle.EFFECT.material();
                 ItemStack peffect = ItemStack.of(pm, 1);
                 ItemMeta pim = peffect.getItemMeta();
-                pim.displayName(Component.text(TARDISStringUtils.capitalise(pe.toString())));
+                pim.customName(Component.text(TARDISStringUtils.capitalise(pe.toString())));
                 peffect.setItemMeta(pim);
                 stacks[i] = peffect;
                 if (i % 9 == 7) {
@@ -124,20 +124,20 @@ public class ParticleInventory implements InventoryHolder {
         Material lm = (data.getEffect() == ParticleEffect.LEAVES) ? Material.REDSTONE_ORE : GUIParticle.EFFECT.material();
         ItemStack leaves = ItemStack.of(lm, 1);
         ItemMeta lim = leaves.getItemMeta();
-        lim.displayName(Component.text("Leaves"));
+        lim.customName(Component.text("Leaves"));
         leaves.setItemMeta(lim);
         stacks[27] = leaves;
         // colour info
         ItemStack colour_info = ItemStack.of(GUIParticle.COLOUR_INFO.material(), 1);
         ItemMeta ciim = colour_info.getItemMeta();
-        ciim.displayName(Component.text("Effect Colour"));
+        ciim.customName(Component.text("Effect Colour"));
         ciim.lore(List.of(Component.text("Only affects DUST"), Component.text("and EFFECT particles."), Component.text("Click below to cycle through"), Component.text("the 16 Minecraft colours.")));
         colour_info.setItemMeta(ciim);
         stacks[GUIParticle.COLOUR_INFO.slot()] = colour_info;
         // colour
         ItemStack colour = ItemStack.of(GUIParticle.COLOUR.material(), 1);
         ItemMeta cim = colour.getItemMeta();
-        cim.displayName(Component.text("Particle Colour"));
+        cim.customName(Component.text("Particle Colour"));
         // set to colour pref
         NamedTextColor chatColor = ParticleColour.fromColor(data.getColour());
         String col = ParticleColour.toString(chatColor);
@@ -147,14 +147,14 @@ public class ParticleInventory implements InventoryHolder {
         // block info
         ItemStack block_info = ItemStack.of(GUIParticle.BLOCK_INFO.material(), 1);
         ItemMeta blim = block_info.getItemMeta();
-        blim.displayName(Component.text("Effect Block"));
+        blim.customName(Component.text("Effect Block"));
         blim.lore(List.of(Component.text("Only affects BLOCK particles."), Component.text("Click below to cycle"), Component.text("through different blocks.")));
         block_info.setItemMeta(blim);
         stacks[GUIParticle.BLOCK_INFO.slot()] = block_info;
         // block
         ItemStack block = ItemStack.of(GUIParticle.BLOCK.material(), 1);
         ItemMeta bim = block.getItemMeta();
-        bim.displayName(Component.text("Block Type"));
+        bim.customName(Component.text("Block Type"));
         // set to material pref
         bim.lore(List.of(Component.text(data.getBlockData().getMaterial().toString())));
         block.setItemMeta(bim);
@@ -162,7 +162,7 @@ public class ParticleInventory implements InventoryHolder {
         // toggle on/off
         ItemStack toggle = ItemStack.of(GUIParticle.TOGGLE.material(), 1);
         ItemMeta tim = toggle.getItemMeta();
-        tim.displayName(Component.text("Particles Enabled"));
+        tim.customName(Component.text("Particles Enabled"));
         tim.lore(List.of(Component.text(data.isOn() ? "ON" : "OFF")));
         CustomModelDataComponent tcomponent = tim.getCustomModelDataComponent();
         tcomponent.setFloats(data.isOn() ? SwitchVariant.BUTTON_TOGGLE_ON.getFloats() : SwitchVariant.BUTTON_TOGGLE_OFF.getFloats());
@@ -173,42 +173,42 @@ public class ParticleInventory implements InventoryHolder {
         // test
         ItemStack test = ItemStack.of(GUIParticle.TEST.material(), 1);
         ItemMeta xim = test.getItemMeta();
-        xim.displayName(Component.text("Test"));
+        xim.customName(Component.text("Test"));
         xim.lore(List.of(Component.text("Display particles"), Component.text("around your TARDIS"), Component.text("with the current settings.")));
         test.setItemMeta(xim);
         stacks[GUIParticle.TEST.slot()] = test;
         // density
         ItemStack density = ItemStack.of(GUIParticle.DENSITY.material(), 1);
         ItemMeta dim = density.getItemMeta();
-        dim.displayName(Component.text("Particle Density"));
+        dim.customName(Component.text("Particle Density"));
         dim.lore(List.of(Component.text(data.getDensity(), NamedTextColor.AQUA), Component.text("Has no effect"), Component.text("on some shapes."), Component.text("Range: 8 - 32.")));
         density.setItemMeta(dim);
         stacks[GUIParticle.DENSITY.slot()] = density;
         // speed
         ItemStack speed = ItemStack.of(GUIParticle.SPEED.material(), 1);
         ItemMeta spim = speed.getItemMeta();
-        spim.displayName(Component.text("Particle Speed"));
+        spim.customName(Component.text("Particle Speed"));
         spim.lore(List.of(Component.text(String.format("%.0f", data.getSpeed() * 10), NamedTextColor.AQUA), Component.text("Range: 0 - 10.")));
         speed.setItemMeta(spim);
         stacks[GUIParticle.SPEED.slot()] = speed;
         // minus
         ItemStack minus = ItemStack.of(GUIParticle.MINUS.material(), 1);
         ItemMeta mim = minus.getItemMeta();
-        mim.displayName(Component.text(plugin.getLanguage().getString("BUTTON_LESS", "Less")));
+        mim.customName(Component.text(plugin.getLanguage().getString("BUTTON_LESS", "Less")));
         minus.setItemMeta(mim);
         stacks[45] = minus;
         stacks[49] = minus;
         // plus
         ItemStack plus = ItemStack.of(GUIParticle.PLUS.material(), 1);
         ItemMeta pim = plus.getItemMeta();
-        pim.displayName(Component.text(plugin.getLanguage().getString("BUTTON_MORE", "More")));
+        pim.customName(Component.text(plugin.getLanguage().getString("BUTTON_MORE", "More")));
         plus.setItemMeta(pim);
         stacks[47] = plus;
         stacks[51] = plus;
         // close
         ItemStack close = ItemStack.of(GUIParticle.CLOSE.material(), 1);
         ItemMeta clim = close.getItemMeta();
-        clim.displayName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
+        clim.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
         close.setItemMeta(clim);
         stacks[GUIParticle.CLOSE.slot()] = close;
         return stacks;

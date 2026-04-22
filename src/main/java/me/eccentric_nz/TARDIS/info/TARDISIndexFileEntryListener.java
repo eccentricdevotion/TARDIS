@@ -59,10 +59,10 @@ public class TARDISIndexFileEntryListener extends TARDISMenuListener {
             ItemStack zero = view.getItem(0);
             ItemMeta zim = zero.getItemMeta();
             ItemMeta im = is.getItemMeta();
-            String name = ComponentUtils.toEnumUppercase(zim.displayName()) + "_" + ComponentUtils.toEnumUppercase(im.displayName());
+            String name = ComponentUtils.toEnumUppercase(zim.customName()) + "_" + ComponentUtils.toEnumUppercase(im.customName());
             try {
                 TARDISInfoMenu tim = TARDISInfoMenu.valueOf(name);
-                if (im.displayName().equals("Recipe")) {
+                if (im.customName().equals("Recipe")) {
                     new TISRecipe(plugin).show(p, tim);
                 } else {
                     new TISInfo(plugin).show(p, tim);

@@ -47,7 +47,7 @@ public class RoomInfoDialog {
             ItemStack icon = ItemStack.of(infoIcon.item());
             // set custom name
             ItemMeta im = icon.getItemMeta();
-            im.displayName(Component.text(infoIcon.name()));
+            im.customName(Component.text(infoIcon.name()));
             icon.setItemMeta(im);
             body.add(DialogBody.item(icon, null, false, false, 16, 16));
         }
