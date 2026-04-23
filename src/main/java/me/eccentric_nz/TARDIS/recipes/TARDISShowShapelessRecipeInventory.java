@@ -63,10 +63,10 @@ public class TARDISShowShapelessRecipeInventory implements InventoryHolder {
             RecipeChoice choice = ingredients.get(i);
             if (choice instanceof RecipeChoice.ExactChoice exact) {
                 item = exact.getChoices().getFirst();
-            } else if (choice instanceof RecipeChoice.ItemTypeChoice i) {
+            } else if (choice instanceof RecipeChoice.ItemTypeChoice itc) {
                 ItemType type = RegistryAccess.registryAccess()
                         .getRegistry(RegistryKey.ITEM)
-                        .get(i.itemTypes().values().iterator().next());
+                        .get(itc.itemTypes().values().iterator().next());
                 item = type.createItemStack();
             } else if (choice instanceof RecipeChoice.MaterialChoice mat) {
                 item = ItemStack.of(mat.getChoices().getFirst());

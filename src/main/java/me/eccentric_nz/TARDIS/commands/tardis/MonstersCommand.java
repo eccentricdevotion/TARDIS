@@ -21,13 +21,13 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetChunks;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.move.TARDISTeleportLocation;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
+import net.kyori.adventure.key.Key;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Enemy;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import xyz.jpenilla.squaremap.api.Key;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -67,7 +67,7 @@ public class MonstersCommand {
             where.put("tardis_id", id);
             ResultSetChunks rsc = new ResultSetChunks(plugin, where, true);
             if (rsc.resultSet()) {
-                World world = plugin.getServer().getWorld(Key.key(rsc.getWorld());
+                World world = plugin.getServer().getWorld(Key.key(rsc.getWorld()));
                 for (HashMap<String, String> map : rsc.getData()) {
                     int x = TARDISNumberParsers.parseInt(map.get("x"));
                     int z = TARDISNumberParsers.parseInt(map.get("z"));

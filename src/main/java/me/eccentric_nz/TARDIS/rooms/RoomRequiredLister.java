@@ -21,7 +21,6 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetCondenser;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;

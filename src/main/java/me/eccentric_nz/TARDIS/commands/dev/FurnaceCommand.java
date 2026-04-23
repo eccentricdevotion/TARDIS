@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.commands.dev;
 import io.papermc.paper.registry.TypedKey;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.inventory.*;
 
 import java.util.Iterator;

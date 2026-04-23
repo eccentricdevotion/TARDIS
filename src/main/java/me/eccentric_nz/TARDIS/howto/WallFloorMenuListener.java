@@ -16,10 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.howto;
 
+import io.papermc.paper.registry.RegistryAccess;
+import io.papermc.paper.registry.RegistryKey;
+import io.papermc.paper.registry.TypedKey;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.ClickType;
@@ -27,6 +29,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.ItemType;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -150,8 +153,11 @@ public class WallFloorMenuListener extends TARDISMenuListener {
         ItemStack[][] stacks = new ItemStack[rows][8];
         int r = 0;
         int c = 0;
-        for (Material entry : TARDISWalls.BLOCKS) {
-            ItemStack is = ItemStack.of(entry, 1);
+        for (TypedKey<ItemType> entry : TARDISWalls.BLOCKS) {
+            ItemType type = RegistryAccess.registryAccess()
+                    .getRegistry(RegistryKey.ITEM)
+                    .get(entry);
+            ItemStack is = type.createItemStack(1);
             stacks[r][c] = is;
             c++;
             if (c == 8) {

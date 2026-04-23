@@ -16,15 +16,18 @@
  */
 package me.eccentric_nz.TARDIS.desktop;
 
+import io.papermc.paper.registry.RegistryAccess;
+import io.papermc.paper.registry.RegistryKey;
+import io.papermc.paper.registry.TypedKey;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUIWallFloor;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
-import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.ItemType;
 import org.bukkit.inventory.meta.ItemMeta;
 
 /**
@@ -62,11 +65,14 @@ public class WallsInventory implements InventoryHolder {
         ItemStack[] stack = new ItemStack[54];
         int i = 0;
         // get BLOCKS
-        for (Material entry : TARDISWalls.BLOCKS) {
+        for (TypedKey<ItemType> entry : TARDISWalls.BLOCKS) {
             if (i > 52) {
                 break;
             }
-            ItemStack is = ItemStack.of(entry, 1);
+            ItemType type = RegistryAccess.registryAccess()
+                    .getRegistry(RegistryKey.ITEM)
+                    .get(entry);
+            ItemStack is = type.createItemStack(1);
             stack[i] = is;
             if (i % 9 == 7) {
                 i += 2;

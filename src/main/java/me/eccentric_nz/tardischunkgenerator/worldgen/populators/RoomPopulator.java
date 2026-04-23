@@ -18,6 +18,9 @@ package me.eccentric_nz.tardischunkgenerator.worldgen.populators;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import io.papermc.paper.registry.RegistryAccess;
+import io.papermc.paper.registry.RegistryKey;
+import io.papermc.paper.registry.TypedKey;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.enumeration.Room;
@@ -25,6 +28,7 @@ import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import me.eccentric_nz.TARDIS.schematic.SchematicGZip;
 import me.eccentric_nz.tardischunkgenerator.worldgen.utils.RoomsUtility;
 import org.bukkit.Material;
+import org.bukkit.Registry;
 import org.bukkit.Tag;
 import org.bukkit.block.Banner;
 import org.bukkit.block.BlockFace;
@@ -34,6 +38,8 @@ import org.bukkit.block.data.type.Switch;
 import org.bukkit.generator.BlockPopulator;
 import org.bukkit.generator.LimitedRegion;
 import org.bukkit.generator.WorldInfo;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.ItemType;
 
 import java.util.List;
 import java.util.Locale;
@@ -68,8 +74,10 @@ public class RoomPopulator extends BlockPopulator {
             int startX = x * 16;
             int startY = 64;
             int startZ = z * 16;
-            BlockData orange = TARDISWalls.BLOCKS.get(random.nextInt(TARDISWalls.BLOCKS.size())).createBlockData();
-            BlockData lightGray = TARDISWalls.BLOCKS.get(random.nextInt(TARDISWalls.BLOCKS.size())).createBlockData();
+            BlockData orange = Registry.MATERIAL.get(
+                    TARDISWalls.BLOCKS.get(random.nextInt(TARDISWalls.BLOCKS.size())).key()).createBlockData();
+            BlockData lightGray = Registry.MATERIAL.get(
+                    TARDISWalls.BLOCKS.get(random.nextInt(TARDISWalls.BLOCKS.size())).key()).createBlockData();
             // get input array
             JsonArray arr = obj.get("input").getAsJsonArray();
             while (level <= h && row < w) {
