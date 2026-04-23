@@ -20,7 +20,6 @@ import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.artron.ArtronFurnaceParticle;
 import me.eccentric_nz.TARDIS.artron.ArtronPoweredRunnable;
 import me.eccentric_nz.TARDIS.artron.StandbyMode;
-import me.eccentric_nz.TARDIS.blueprints.trader.TimeLordTraderSpawner;
 import me.eccentric_nz.TARDIS.blueprints.trader.TraderRunnable;
 import me.eccentric_nz.TARDIS.console.ControlMonitor;
 import me.eccentric_nz.TARDIS.control.ControlRunnable;

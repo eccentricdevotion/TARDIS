@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.commands.dev;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.info.TARDISInfoMenu;
-import net.kyori.adventure.text.Component;
 import org.bukkit.command.CommandSender;
 
 public class InfoCommand {

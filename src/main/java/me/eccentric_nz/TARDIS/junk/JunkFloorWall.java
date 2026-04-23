@@ -21,7 +21,6 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
-import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 

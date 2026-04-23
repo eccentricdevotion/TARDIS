@@ -25,7 +25,6 @@ import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
-import net.kyori.adventure.text.Component;
 import org.bukkit.NamespacedKey;
 import org.bukkit.command.CommandSender;
 import org.bukkit.inventory.ShapedRecipe;

@@ -11,7 +11,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
-import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.*;
 import org.bukkit.inventory.view.MerchantView;
 import org.bukkit.inventory.view.builder.MerchantInventoryViewBuilder;

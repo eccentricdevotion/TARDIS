@@ -16,36 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.blueprints.trader;
 
-import com.destroystokyo.paper.profile.ProfileProperty;
-import io.papermc.paper.datacomponent.item.ResolvableProfile;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.skins.CharacterSkins;
-import me.eccentric_nz.TARDIS.skins.MannequinSkins;
-import me.eccentric_nz.TARDIS.skins.Skin;
-import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelSpawnEvent;
-import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
-import me.eccentric_nz.tardisweepingangels.equip.Equipper;
-import me.eccentric_nz.tardisweepingangels.nms.MonsterSpawner;
-import me.eccentric_nz.tardisweepingangels.utils.Monster;
-import me.eccentric_nz.tardisweepingangels.utils.WaterChecker;
-import me.eccentric_nz.tardisweepingangels.utils.WorldGuardChecker;
 import me.eccentric_nz.tardisweepingangels.utils.WorldProcessor;
-import org.bukkit.Chunk;
-import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.World;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Mannequin;
-import org.bukkit.entity.Zombie;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.MainHand;
-import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.persistence.PersistentDataType;
-
-import java.util.Collection;
-import java.util.UUID;
 
 public class TraderRunnable implements Runnable {
 

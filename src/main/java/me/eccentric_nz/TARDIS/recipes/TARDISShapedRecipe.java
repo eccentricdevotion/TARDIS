@@ -18,8 +18,6 @@ package me.eccentric_nz.TARDIS.recipes;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.recipes.shaped.*;
-import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
-import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapedRecipe;
 
 import java.util.HashMap;

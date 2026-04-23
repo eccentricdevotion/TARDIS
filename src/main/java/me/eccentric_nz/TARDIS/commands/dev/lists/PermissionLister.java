@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.commands.dev.lists;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import net.kyori.adventure.text.Component;
 import org.bukkit.command.CommandSender;
 
 import java.util.ArrayList;

@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.commands.dev;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import net.kyori.adventure.text.Component;
 import org.bukkit.command.CommandSender;
 
 import java.util.Locale;

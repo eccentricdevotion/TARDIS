@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.rooms;
 
-import io.papermc.paper.registry.RegistryAccess;
 import io.papermc.paper.registry.RegistryKey;
 import io.papermc.paper.registry.TypedKey;
 import io.papermc.paper.registry.set.RegistryKeySet;
@@ -24,7 +23,6 @@ import io.papermc.paper.registry.set.RegistrySet;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import net.kyori.adventure.key.Key;
-import org.bukkit.Material;
 import org.bukkit.inventory.ItemType;
 import org.bukkit.inventory.RecipeChoice;
 
