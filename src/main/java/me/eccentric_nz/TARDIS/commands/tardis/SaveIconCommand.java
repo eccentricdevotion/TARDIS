@@ -59,7 +59,7 @@ public class SaveIconCommand {
                 plugin.getMessenger().send(sender, TardisModule.TARDIS, "COULD_NOT_FIND_WORLD");
                 return;
             }
-            plugin.getPlanetsConfig().set("planets." + world.getName() + ".icon", m);
+            plugin.getPlanetsConfig().set("planets." + world.getKey().getKey() + ".icon", m);
             try {
                 plugin.getPlanetsConfig().save(new File(plugin.getDataFolder(), "planets.yml"));
             } catch (IOException ex) {

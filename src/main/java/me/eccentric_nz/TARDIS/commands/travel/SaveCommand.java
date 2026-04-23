@@ -80,7 +80,7 @@ public class SaveCommand {
             }
             World w = TARDISAliasResolver.getWorldFromAlias(rsd.getWorld());
             if (w != null) {
-                if (w.getName().startsWith("TARDIS_")) {
+                if (w.getKey().getKey().startsWith("tardis_")) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "SAVE_NO_TARDIS");
                     return;
                 }

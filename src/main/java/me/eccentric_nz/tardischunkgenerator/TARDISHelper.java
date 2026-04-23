@@ -76,7 +76,7 @@ public class TARDISHelper {
         // should we filter the log?
         if (plugin.getConfig().getBoolean("debug")) {
             // yes we should!
-            String basePath = plugin.getServer().getWorldContainer() + File.separator + "plugins" + File.separator + "TARDIS" + File.separator;
+            String basePath = plugin.getServer().getLevelDirectory() + File.separator + "plugins" + File.separator + "TARDIS" + File.separator;
             filterLog(basePath + "filtered.log");
             plugin.getMessenger().message(plugin.getConsole(), TardisModule.HELPER, "Starting filtered logging for TARDIS...");
             plugin.getMessenger().message(plugin.getConsole(), TardisModule.HELPER, "Log file located at 'plugins/TARDIS/filtered.log'");
@@ -120,7 +120,8 @@ public class TARDISHelper {
     }
 
     public void setLevelName(String oldName, String newName) {
-        File file = new File(Bukkit.getWorldContainer().getAbsolutePath() + File.separator + oldName + File.separator + "level.dat");
+        // TODO use correct path to custom dimensions + level.dat no longer exists for custom worlds
+        File file = new File(Bukkit.getServer().getLevelDirectory() + File.separator + oldName + File.separator + "level.dat");
         if (file.exists()) {
             try {
                 CompoundTag tagCompound;
@@ -137,8 +138,9 @@ public class TARDISHelper {
                         fileoutputstream.close();
                         plugin.getMessenger().message(plugin.getConsole(), TardisModule.HELPER, "Renamed level to " + newName);
                         // rename the directory
-                        File directory = new File(Bukkit.getWorldContainer().getAbsolutePath() + File.separator + oldName);
-                        File folder = new File(Bukkit.getWorldContainer().getAbsolutePath() + File.separator + newName);
+                        // TODO use correct path to custom dimensions
+                        File directory = new File(Bukkit.getServer().getLevelDirectory() + File.separator + oldName);
+                        File folder = new File(Bukkit.getServer().getLevelDirectory() + File.separator + newName);
                         if (directory.renameTo(folder)) {
                             plugin.getMessenger().message(plugin.getConsole(), TardisModule.HELPER, "Renamed directory to " + newName);
                         }
@@ -151,7 +153,8 @@ public class TARDISHelper {
     }
 
     public void setWorldGameMode(String world, GameMode gm) {
-        File file = new File(Bukkit.getWorldContainer().getAbsolutePath() + File.separator + world + File.separator + "level.dat");
+        // TODO use correct path to custom dimensions + level.dat no longer exists for custom worlds
+        File file = new File(Bukkit.getServer().getLevelDirectory() + File.separator + world + File.separator + "level.dat");
         if (file.exists()) {
             try {
                 CompoundTag tagCompound;
@@ -181,7 +184,8 @@ public class TARDISHelper {
     }
 
     public TARDISPlanetData getLevelData(String world) {
-        File file = new File(Bukkit.getWorldContainer().getAbsolutePath() + File.separator + world + File.separator + "level.dat");
+        // TODO use correct path to custom dimensions + level.dat no longer exists for custom worlds
+        File file = new File(Bukkit.getServer().getLevelDirectory() + File.separator + world + File.separator + "level.dat");
         if (file.exists()) {
             try {
                 FileInputStream fileinputstream = new FileInputStream(file);
@@ -213,8 +217,9 @@ public class TARDISHelper {
                             default -> WorldType.NORMAL; // default or unknown
                         };
                     }
-                    File dimDashOne = new File(Bukkit.getWorldContainer().getAbsolutePath() + File.separator + world + File.separator + "DIM-1");
-                    File dimOne = new File(Bukkit.getWorldContainer().getAbsolutePath() + File.separator + world + File.separator + "DIM1");
+                    // TODO use correct path to dimensions + level.dat no longer exists for custom worlds
+                    File dimDashOne = new File(Bukkit.getServer().getLevelDirectory() + File.separator + world + File.separator + "DIM-1");
+                    File dimOne = new File(Bukkit.getServer().getLevelDirectory() + File.separator + world + File.separator + "DIM1");
                     if (dimDashOne.exists() && !dimOne.exists()) {
                         environment = World.Environment.NETHER;
                     }

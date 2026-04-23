@@ -21,10 +21,7 @@ import me.eccentric_nz.TARDIS.custommodels.keys.CircuitVariant;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.RecipeChoice;
-import org.bukkit.inventory.SmithingRecipe;
-import org.bukkit.inventory.SmithingTransformRecipe;
+import org.bukkit.inventory.*;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
@@ -47,9 +44,9 @@ public class KnockbackRepairRecipe {
         // result
         ItemStack result = ItemStack.of(Material.BLAZE_ROD, 1);
         // template
-        RecipeChoice template = new RecipeChoice.MaterialChoice(Material.REDSTONE);
+        RecipeChoice template = RecipeChoice.itemType(ItemType.REDSTONE);
         // base material to upgrade
-        RecipeChoice base = new RecipeChoice.MaterialChoice(Material.BLAZE_ROD);
+        RecipeChoice base = RecipeChoice.itemType(ItemType.BLAZE_ROD);
         // addition
         ItemStack isa = ItemStack.of(Material.GLOWSTONE_DUST, 1);
         ItemMeta ima = isa.getItemMeta();

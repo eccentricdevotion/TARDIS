@@ -293,7 +293,7 @@ public class TARDISConfiguration {
      */
     public void checkConfig() {
         int i = 0;
-        if (config.getString("creation.default_world_name").equals("tardis_time_vortex")) {
+        if (config.getString("creation.default_world_name", "tardis_timevortex").equals("tardis_time_vortex")) {
             plugin.getConfig().set("creation.default_world_name", "TARDIS_TimeVortex");
             i++;
         }

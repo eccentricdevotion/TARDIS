@@ -39,7 +39,7 @@ public class TARDISStaticLocationGetters {
      */
     public static World getWorldFromSplitString(String data) {
         String[] split = data.split(":");
-        return Bukkit.getServer().getWorld(split[0]);
+        return Bukkit.getServer().getWorld(Key.key(split[0], split[1]));
     }
 
     /**
@@ -154,9 +154,9 @@ public class TARDISStaticLocationGetters {
      */
     public static Chunk getChunk(String str) {
         String[] split = str.split(":");
-        World cw = Bukkit.getServer().getWorld(split[0]);
-        int cx = TARDISNumberParsers.parseInt(split[1]);
-        int cz = TARDISNumberParsers.parseInt(split[2]);
+        World cw = Bukkit.getServer().getWorld(Key.key(split[0], split[1]));
+        int cx = TARDISNumberParsers.parseInt(split[2]);
+        int cz = TARDISNumberParsers.parseInt(split[3]);
         return cw.getChunkAt(cx, cz);
     }
 
@@ -167,7 +167,7 @@ public class TARDISStaticLocationGetters {
                 // need to +1 due to Spigot change
                 int tmp = world.getHighestBlockYAt(x + xx, z + zz) + 1;
                 y = Math.max(tmp, y);
-                if (world.getName().equals("siluria") && world.getBlockAt(x, y - 1, z).getType().equals(Material.BAMBOO)) {
+                if (world.getKey().getKey().equals("siluria") && world.getBlockAt(x, y - 1, z).getType().equals(Material.BAMBOO)) {
                     do {
                         y--;
                     } while (world.getBlockAt(x, y, z).getType().equals(Material.BAMBOO));

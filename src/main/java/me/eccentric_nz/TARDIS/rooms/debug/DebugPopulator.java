@@ -95,7 +95,7 @@ public class DebugPopulator {
             HashMap<String, Object> set = new HashMap<>();
             set.put("tardis_id", -50);
             set.put("name", "debug_preview");
-            set.put("world", world.getName());
+            set.put("world", world.getKey().asString());
             set.put("x", x + 0.5d);
             set.put("y", 65);
             set.put("z", z + 0.5d);

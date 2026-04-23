@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.database.resultset;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
+import net.kyori.adventure.key.Key;
 import org.bukkit.Location;
 
 import java.sql.Connection;
@@ -73,7 +74,7 @@ public class ResultSetAreaLocations {
                 while (rs.next()) {
                     locations.add(
                         new Location(
-                            plugin.getServer().getWorld(rs.getString("world")),
+                            plugin.getServer().getWorld(Key.key(rs.getString("world"))),
                             rs.getInt("x"),
                             rs.getInt("y"),
                             rs.getInt("z")

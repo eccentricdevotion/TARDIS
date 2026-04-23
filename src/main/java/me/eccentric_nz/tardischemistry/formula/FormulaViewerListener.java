@@ -67,7 +67,7 @@ public class FormulaViewerListener extends TARDISMenuListener {
                     close(player);
                 } else if (event.getRawSlot() != 0) {
                     ItemStack is = event.getCurrentItem();
-                    if (is != null && is.hasItemMeta() && Objects.requireNonNull(is.getItemMeta()).hasDisplayName()) {
+                    if (is != null && is.hasItemMeta() && Objects.requireNonNull(is.getItemMeta()).hasCustomName()) {
                         // is it a compound?
                         try {
                             Compound compound = Compound.valueOf(ComponentUtils.stripColour(is.getItemMeta().customName()).replace(" ", "_"));

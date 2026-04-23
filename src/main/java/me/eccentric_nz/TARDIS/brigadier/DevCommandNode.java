@@ -175,14 +175,14 @@ public class DevCommandNode {
                         .then(Commands.argument("world", ArgumentTypes.world())
                                 .executes(ctx -> {
                                     World world = ctx.getArgument("world", World.class);
-                                    DevelopmentUtility.chunky(plugin, world.getName(), "250");
+                                    DevelopmentUtility.chunky(plugin, world.getKey().getKey(), "250");
                                     return Command.SINGLE_SUCCESS;
                                 })
                                 .then(Commands.argument("radius", IntegerArgumentType.integer(1))
                                         .executes(ctx -> {
                                             World world = ctx.getArgument("world", World.class);
                                             String r = Integer.toString(IntegerArgumentType.getInteger(ctx, "radius"));
-                                            DevelopmentUtility.chunky(plugin, world.getName(), r);
+                                            DevelopmentUtility.chunky(plugin, world.getKey().getKey(), r);
                                             return Command.SINGLE_SUCCESS;
                                         }))))
                 .then(Commands.literal("circuit")

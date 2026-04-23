@@ -227,7 +227,7 @@ public class InstantBlockPresetBuilder {
                 Material mat = colData[yy].getMaterial();
                 // update door location if invisible
                 if (yy == 0 && (i == 1 || i == 3 || i == 5 || i == 7) && preset.equals(ChameleonPreset.INVISIBLE) && mat.isAir()) {
-                    String invisible_door = world.getName() + ":" + xx + ":" + y + ":" + zz;
+                    String invisible_door = world.getKey().asString() + ":" + xx + ":" + y + ":" + zz;
                     processDoor(invisible_door);
                     // if tardis is in the air add under door
                     TARDISBlockSetters.setUnderDoorBlock(world, xx, (y - 1), zz, bd.getTardisID(), true);
@@ -368,7 +368,7 @@ public class InstantBlockPresetBuilder {
                     }
                     if (door) {
                         // remember the door location
-                        String doorloc = world.getName() + ":" + xx + ":" + (y + yy) + ":" + zz;
+                        String doorloc = world.getKey().asString() + ":" + xx + ":" + (y + yy) + ":" + zz;
                         Block doorBlock = world.getBlockAt(xx, y + yy, zz);
                         String doorStr = doorBlock.getLocation().toString();
                         plugin.getGeneralKeeper().getProtectBlockMap().put(doorStr, bd.getTardisID());

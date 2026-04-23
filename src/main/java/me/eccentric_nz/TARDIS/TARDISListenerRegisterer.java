@@ -137,6 +137,7 @@ import me.eccentric_nz.tardischemistry.product.GlowStickListener;
 import me.eccentric_nz.tardischemistry.product.ProductGUIListener;
 import me.eccentric_nz.tardischemistry.product.SparklerListener;
 import me.eccentric_nz.tardischemistry.reducer.ReducerGUIListener;
+import net.kyori.adventure.key.Key;
 import org.bukkit.World;
 
 /**
@@ -398,7 +399,7 @@ class TARDISListenerRegisterer {
                 plugin.getPM().registerEvents(new TARDISTelosSpawnListener(plugin), plugin);
             }
             // set world time to twilight
-            World telos = plugin.getServer().getWorld("telos");
+            World telos = plugin.getServer().getWorld(Key.key("telos"));
             if (telos!= null) {
                 telos.setTime(13000L);
             }

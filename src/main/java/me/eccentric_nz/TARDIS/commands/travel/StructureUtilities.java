@@ -46,7 +46,7 @@ public class StructureUtilities {
             return null;
         }
         World world = current.location().getWorld();
-        if (!plugin.getPlanetsConfig().getBoolean("planets." + world.getName() + ".time_travel")) {
+        if (!plugin.getPlanetsConfig().getBoolean("planets." + world.getKey().getKey() + ".time_travel")) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_WORLD_TRAVEL");
             return null;
         }

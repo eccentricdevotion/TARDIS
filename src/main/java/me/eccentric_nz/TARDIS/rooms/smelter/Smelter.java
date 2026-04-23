@@ -16,12 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.rooms.smelter;
 
+import io.papermc.paper.registry.TypedKey;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.inventory.FurnaceRecipe;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.Recipe;
-import org.bukkit.inventory.RecipeChoice;
+import org.bukkit.Registry;
+import org.bukkit.inventory.*;
 import org.bukkit.util.Vector;
 
 import java.util.*;
@@ -94,12 +93,19 @@ public class Smelter {
             Recipe r = recipes.next();
             if (r instanceof FurnaceRecipe f) {
                 RecipeChoice c = f.getInputChoice();
-                if (c instanceof RecipeChoice.MaterialChoice m) {
-                    smeltables.addAll(m.getChoices());
-                } else if (c instanceof RecipeChoice.ExactChoice e) {
-                    for (ItemStack i : e.getChoices()) {
-                        smeltables.add(i.getType());
+                switch (c) {
+                    case RecipeChoice.ItemTypeChoice i -> {
+                        for (TypedKey<ItemType> t : i.itemTypes().values()) {
+                            smeltables.add(Registry.MATERIAL.get(t.key()));
+                        }
                     }
+                    case RecipeChoice.MaterialChoice m -> smeltables.addAll(m.getChoices());
+                    case RecipeChoice.ExactChoice e -> {
+                        for (ItemStack i : e.getChoices()) {
+                            smeltables.add(i.getType());
+                        }
+                    }
+                    default -> { }
                 }
             }
         }

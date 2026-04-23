@@ -135,7 +135,7 @@ public class UpgradeBlockScanner {
                         }
                         if (type.equals(Material.BEDROCK)) {
                             type = Material.GLASS;
-                            beacon = world.getName() + ":" + x + ":" + y + ":" + z;
+                            beacon = world.getKey().asString() + ":" + x + ":" + y + ":" + z;
                         }
                         if (type.equals(Material.COMMAND_BLOCK)) {
                             type = Material.STONE_BRICKS;

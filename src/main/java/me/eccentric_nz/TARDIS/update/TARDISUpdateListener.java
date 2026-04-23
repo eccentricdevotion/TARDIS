@@ -154,7 +154,7 @@ public class TARDISUpdateListener implements Listener {
             HashMap<String, Object> tid = new HashMap<>();
             HashMap<String, Object> set = new HashMap<>();
             tid.put("tardis_id", id);
-            String blockLocStr = (updateable.isControl()) ? block_loc.toString() : bw.getName() + ":" + bx + ":" + by + ":" + bz;
+            String blockLocStr = (updateable.isControl()) ? block_loc.toString() : bw.getKey().asString() + ":" + bx + ":" + by + ":" + bz;
             if (secondary) {
                 plugin.getTrackerKeeper().getSecondary().remove(playerUUID);
             } else {
@@ -193,12 +193,12 @@ public class TARDISUpdateListener implements Listener {
                     }
                 }
                 case CREEPER -> {
-                    blockLocStr = bw.getName() + ":" + bx + ".5:" + by + ":" + bz + ".5";
+                    blockLocStr = bw.getKey().asString() + ":" + bx + ".5:" + by + ":" + bz + ".5";
                     set.put("creeper", blockLocStr);
                     plugin.getQueryFactory().doUpdate("tardis", set, tid);
                 }
                 case EPS -> {
-                    blockLocStr = bw.getName() + ":" + bx + ".5:" + (by + 1) + ":" + bz + ".5";
+                    blockLocStr = bw.getKey().asString() + ":" + bx + ".5:" + (by + 1) + ":" + bz + ".5";
                     set.put("eps", blockLocStr);
                     plugin.getQueryFactory().doUpdate("tardis", set, tid);
                 }

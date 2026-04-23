@@ -28,6 +28,7 @@ import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 /**
@@ -56,7 +57,7 @@ public class TARDISRandomiserCircuit {
                         allowedWorlds.add(o);
                     }
                 } else {
-                    if (!o.equals(plugin.getConfig().getString("creation.default_world_name"))) {
+                    if (!o.equals(plugin.getConfig().getString("creation.default_world_name", "tardis_timevortex").toLowerCase(Locale.ROOT))) {
                         if (plugin.getPlanetsConfig().getBoolean("planets." + o + ".time_travel")) {
                             allowedWorlds.add(o);
                         }

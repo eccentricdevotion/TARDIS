@@ -107,7 +107,7 @@ public class LampsCommand {
                 int h = dimensions.get("height").getAsInt();
                 starty = schm.getStartY();
                 endy = starty + h;
-                String w = world.getName();
+                String w = world.getKey().asString();
                 // loop through the chunks
                 for (Chunk chunk : ChunkUtils.getConsoleChunks(startChunk, tardis.getSchematic())) {
                     // find the lamps in the chunks

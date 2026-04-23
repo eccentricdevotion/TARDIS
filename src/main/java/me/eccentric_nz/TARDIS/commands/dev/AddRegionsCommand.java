@@ -64,7 +64,7 @@ public class AddRegionsCommand {
             return;
         }
         // get default world name
-        String dw = plugin.getConfig().getString("creation.default_world_name");
+        String dw = plugin.getConfig().getString("creation.default_world_name", "tardis_timevortex");
         // get and load the regions.yml file for this world
         String world_folder = "worlds" + File.separator + dw + File.separator;
         File configFile = new File(wg.getDataFolder(), world_folder + "regions.yml");

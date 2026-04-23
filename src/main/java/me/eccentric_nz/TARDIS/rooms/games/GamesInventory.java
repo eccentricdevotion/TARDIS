@@ -61,7 +61,7 @@ public class GamesInventory implements InventoryHolder {
         four.setAttributeModifiers(Multimaps.forMap(Map.of()));
         connect.setItemMeta(four);
         items[1] = connect;
-        // pong & tetris require TARDIS_Zero_Room world
+        // pong & tetris require tardis_zero_room world
         boolean zero = plugin.getConfig().getBoolean("allow.zero_room");
         if (zero) {
             // 2 pong

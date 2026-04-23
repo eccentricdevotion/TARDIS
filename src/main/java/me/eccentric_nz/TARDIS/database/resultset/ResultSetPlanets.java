@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.database.data.Planet;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
+import net.kyori.adventure.key.Key;
 import org.bukkit.Material;
 import org.bukkit.World;
 
@@ -76,7 +77,7 @@ public class ResultSetPlanets {
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
                     String planet = rs.getString("world");
-                    World world = plugin.getServer().getWorld(planet);
+                    World world = plugin.getServer().getWorld(Key.key(planet));
                     if (world != null) {
                         String alias = TARDISAliasResolver.getWorldAlias(world);
                         Material material;

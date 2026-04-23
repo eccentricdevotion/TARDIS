@@ -668,7 +668,7 @@ public class HandlesProcessor {
     private Location getRecharger(World world, Player player) {
         Location l = null;
         HashMap<String, Object> wherea = new HashMap<>();
-        wherea.put("world", world.getName());
+        wherea.put("world", world.getKey().asString());
         ResultSetAreas rsa = new ResultSetAreas(plugin, wherea, false, false);
         if (rsa.resultSet()) {
             String area = rsa.getArea().areaName();

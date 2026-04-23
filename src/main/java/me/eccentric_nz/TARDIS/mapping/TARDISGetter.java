@@ -75,7 +75,7 @@ class TARDISGetter {
                 + " FROM " + prefix + "tardis, " + prefix + "current WHERE "
                 + prefix + "tardis.tardis_id = " + prefix + "current.tardis_id";
         if (world != null) {
-            query += " AND " + prefix + "current.world = '" + world.getName() + "'";
+            query += " AND " + prefix + "current.world = '" + world.getKey().asString() + "'";
         } else {
             // build world list
             StringBuilder sb = new StringBuilder();

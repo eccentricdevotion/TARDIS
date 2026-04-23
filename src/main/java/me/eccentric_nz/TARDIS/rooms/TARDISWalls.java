@@ -16,13 +16,21 @@
  */
 package me.eccentric_nz.TARDIS.rooms;
 
+import io.papermc.paper.registry.RegistryAccess;
+import io.papermc.paper.registry.RegistryKey;
+import io.papermc.paper.registry.TypedKey;
+import io.papermc.paper.registry.set.RegistryKeySet;
+import io.papermc.paper.registry.set.RegistrySet;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import net.kyori.adventure.key.Key;
 import org.bukkit.Material;
+import org.bukkit.inventory.ItemType;
 import org.bukkit.inventory.RecipeChoice;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * A TARDIS isn't just a vehicle for travelling in space and time. As a TARDIS has no real constraints on the amount of
@@ -32,17 +40,19 @@ import java.util.List;
  */
 public class TARDISWalls {
 
-    public static final List<Material> BLOCKS = new ArrayList<>();
-    public static final RecipeChoice.MaterialChoice CHOICES;
+    public static final List<TypedKey<ItemType>> BLOCKS = new ArrayList<>();
+    public static final RecipeChoice.ItemTypeChoice CHOICES;
 
     static {
         for (String m : TARDIS.plugin.getBlocksConfig().getStringList("tardis_blocks")) {
             try {
-                BLOCKS.add(Material.valueOf(m));
+                TypedKey<ItemType> typedKey = TypedKey.create(RegistryKey.ITEM, Key.key(Key.MINECRAFT_NAMESPACE, m.toLowerCase(Locale.ROOT)));
+                BLOCKS.add(typedKey);
             } catch (IllegalArgumentException e) {
                 TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.WARNING, "Invalid material '" + m + "' in tardis_blocks list! " + e.getMessage());
             }
         }
-        CHOICES = new RecipeChoice.MaterialChoice(TARDISWalls.BLOCKS);
+        RegistryKeySet<ItemType> keySet = RegistrySet.keySet(RegistryKey.ITEM, BLOCKS);
+        CHOICES = RecipeChoice.itemType(keySet);
     }
 }

@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.planets;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.WorldManager;
+import net.kyori.adventure.key.Key;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 
@@ -28,7 +29,7 @@ public class TARDISAliasResolver {
     private static final HashMap<String, TARDISPlanet> planets = new HashMap<>();
 
     public static String getWorldAlias(World world) {
-        return getWorldAlias(world.getName());
+        return getWorldAlias(world.getKey().getKey());
     }
 
     public static String getWorldAlias(String world) {
@@ -36,7 +37,7 @@ public class TARDISAliasResolver {
     }
 
     public static World getWorldFromAlias(String alias) {
-        World world = Bukkit.getServer().getWorld(alias);
+        World world = Bukkit.getServer().getWorld(Key.key(alias));
         if (world != null) {
             return world;
         } else {
@@ -55,7 +56,7 @@ public class TARDISAliasResolver {
     }
 
     public static String getWorldNameFromAlias(String alias) {
-        World world = Bukkit.getServer().getWorld(alias);
+        World world = Bukkit.getServer().getWorld(Key.key(alias));
         if (world != null) {
             return alias;
         } else {
@@ -70,7 +71,7 @@ public class TARDISAliasResolver {
 
     public static void createAliasMap() {
         for (String s : TARDIS.plugin.getPlanetsConfig().getConfigurationSection("planets").getKeys(false)) {
-            World world = Bukkit.getServer().getWorld(s);
+            World world = Bukkit.getServer().getWorld(Key.key(s));
             if (world != null) {
                 String alias = TARDIS.plugin.getPlanetsConfig().getString("planets." + s + ".alias", s);
                 TARDISPlanet tp = new TARDISPlanet();

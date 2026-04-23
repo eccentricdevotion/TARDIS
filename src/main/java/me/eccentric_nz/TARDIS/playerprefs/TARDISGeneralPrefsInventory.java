@@ -27,6 +27,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.HADS;
+import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Location;
@@ -130,9 +131,9 @@ public class TARDISGeneralPrefsInventory implements InventoryHolder {
             values.add(false); // 19
         }
         if (plugin.isWorldGuardOnServer()) {
-            String chunk = tardis != null ? rst.getTardis().getChunk() : "TARDIS_TimeVortex:1";
+            String chunk = tardis != null ? rst.getTardis().getChunk() : "minecraft:tardis_timevortex:1";
             String[] split = chunk.split(":");
-            World world = plugin.getServer().getWorld(split[0]);
+            World world = plugin.getServer().getWorld(Key.key(split[1]));
             values.add(!plugin.getWorldGuardUtils().queryContainers(world, player.getName())); // lock containers - 20
         } else {
             values.add(false); // 20

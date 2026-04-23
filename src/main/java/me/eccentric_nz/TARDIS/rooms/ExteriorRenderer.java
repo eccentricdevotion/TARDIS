@@ -52,7 +52,7 @@ public class ExteriorRenderer {
         int epbx = exterior.getBlockX();
         int epby = exterior.getBlockY();
         int epbz = exterior.getBlockZ();
-        String isRendered = ew.getName() + ":" + epbx + ":" + epby + ":" + epbz;
+        String isRendered = ew.getKey().asString() + ":" + epbx + ":" + epby + ":" + epbz;
         String[] idata = interior.split(":");
         World iw = TARDISAliasResolver.getWorldFromAlias(idata[0]);
         int ipbx = TARDISNumberParsers.parseInt(idata[1]);

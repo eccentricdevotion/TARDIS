@@ -33,6 +33,7 @@ import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.travel.TravelCostAndType;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import net.kyori.adventure.key.Key;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -83,7 +84,7 @@ public class TerminalDialogProcessor {
                                 location = new Location(nether, x * multiplier, 64, z * multiplier);
                             }
                         } else {
-                            World alternate = plugin.getServer().getWorld(plugin.getConfig().getString("travel.terminal.nether", "world"));
+                            World alternate = plugin.getServer().getWorld(Key.key(plugin.getConfig().getString("travel.terminal.nether", "world")));
                             if (alternate != null) {
                                 location = new Location(alternate, x * multiplier, 64, z * multiplier);
                             }
@@ -97,7 +98,7 @@ public class TerminalDialogProcessor {
                                 location = new Location(the_end, x * multiplier, 64, z * multiplier);
                             }
                         } else {
-                            World alternate = plugin.getServer().getWorld(plugin.getConfig().getString("travel.terminal.the_end", "world"));
+                            World alternate = plugin.getServer().getWorld(Key.key(plugin.getConfig().getString("travel.terminal.the_end", "world")));
                             if (alternate != null) {
                                 location = new Location(alternate, x * multiplier, 64, z * multiplier);
                             }
@@ -129,7 +130,7 @@ public class TerminalDialogProcessor {
                     Pair<Boolean, Integer> safe = safe(finalLocation, rsc.getCurrent().direction(), submarine, player);
                     if (safe.getFirst()) {
                         HashMap<String, Object> set = new HashMap<>();
-                        String ww = (!plugin.getPlanetsConfig().getBoolean("planets." + finalLocation.getWorld().getKey().getKey() + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMVHelper().getWorld(finalLocation.getWorld().getName()).getName() : finalLocation.getWorld().getKey().getKey();
+                        String ww = (!plugin.getPlanetsConfig().getBoolean("planets." + finalLocation.getWorld().getKey().getKey() + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMVHelper().getWorld(finalLocation.getWorld().getKey().getKey()).getKey().getKey() : finalLocation.getWorld().getKey().getKey();
                         set.put("world", "minecraft:" + ww);
                         set.put("x", finalLocation.getBlockX());
                         set.put("y", safe.getSecond());
@@ -191,7 +192,7 @@ public class TerminalDialogProcessor {
         World world = location.getWorld();
         int blockX = location.getBlockX();
         int blockZ = location.getBlockZ();
-        String loc_str = world.getName() + ":" + blockX + ":" + blockZ;
+        String loc_str = world.getKey().asString() + ":" + blockX + ":" + blockZ;
         TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
         switch (world.getEnvironment()) {
             case THE_END -> {
@@ -201,7 +202,7 @@ public class TerminalDialogProcessor {
                     int[] estart = TARDISTimeTravel.getStartLocation(loc, d);
                     int esafe = TARDISTimeTravel.safeLocation(estart[0], endy, estart[2], estart[1], estart[3], world, d);
                     if (esafe == 0) {
-                        String save = world.getName() + ":" + blockX + ":" + endy + ":" + blockZ;
+                        String save = world.getKey().asString() + ":" + blockX + ":" + endy + ":" + blockZ;
                         if (plugin.getPluginRespect().getRespect(new Location(world, blockX, endy, blockZ), new Parameters(p, Flag.getNoMessageFlags()))) {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "DEST_SET_TERMINAL", save);
                             return new Pair<>(true, endy);
@@ -221,7 +222,7 @@ public class TerminalDialogProcessor {
             case NETHER -> {
                 if (tt.safeNether(world, blockX, blockZ, d, p)) {
                     int nethery = plugin.getUtils().getHighestNetherBlock(world, blockX, blockZ);
-                    String save = world.getName() + ":" + blockX + ":" + nethery + ":" + blockZ;
+                    String save = world.getKey().asString() + ":" + blockX + ":" + nethery + ":" + blockZ;
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "DEST_SET_TERMINAL", save);
                     return new Pair<>(true, nethery);
                 } else {
@@ -252,7 +253,7 @@ public class TerminalDialogProcessor {
                     safe = TARDISTimeTravel.safeLocation(start[0], starty, start[2], start[1], start[3], world, d);
                 }
                 if (safe == 0) {
-                    String save = world.getName() + ":" + blockX + ":" + starty + ":" + blockZ;
+                    String save = world.getKey().asString() + ":" + blockX + ":" + starty + ":" + blockZ;
                     if (plugin.getPluginRespect().getRespect(new Location(world, blockX, starty, blockZ), new Parameters(p, Flag.getNoMessageFlags()))) {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "DEST_SET_TERMINAL", save);
                         return new Pair<>(true, starty);

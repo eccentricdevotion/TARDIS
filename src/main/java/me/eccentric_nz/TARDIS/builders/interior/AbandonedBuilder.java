@@ -49,7 +49,7 @@ public class AbandonedBuilder {
     public void spawn(Location l, Schematic schm, ChameleonPreset preset, String item, COMPASS d, Player player) {
         Chunk chunk = l.getChunk();
         // get this chunk's co-ords
-        String cw = plugin.getConfig().getString("creation.default_world_name");
+        String cw = plugin.getConfig().getString("creation.default_world_name", "tardis_timevortex");
         World chunkworld = TARDISAliasResolver.getWorldFromAlias(cw);
         int cx = chunk.getX();
         int cz = chunk.getZ();

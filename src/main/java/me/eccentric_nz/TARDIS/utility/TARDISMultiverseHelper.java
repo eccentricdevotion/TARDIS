@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.utility;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import net.kyori.adventure.key.Key;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.World;
@@ -25,6 +26,8 @@ import org.mvplugins.multiverse.core.MultiverseCoreApi;
 import org.mvplugins.multiverse.core.world.LoadedMultiverseWorld;
 import org.mvplugins.multiverse.core.world.MultiverseWorld;
 import org.mvplugins.multiverse.external.vavr.control.Option;
+
+import java.util.Locale;
 
 /**
  * @author eccentric_nz
@@ -39,12 +42,12 @@ public class TARDISMultiverseHelper {
             MultiverseWorld mvw = option.get();
             return mvw.getAlias();
         } else {
-            return world.getName();
+            return world.getKey().getKey();
         }
     }
 
     public String getAlias(String world) {
-        if (Bukkit.getWorld(world) != null) {
+        if (Bukkit.getWorld(Key.key(world.toLowerCase(Locale.ROOT))) != null) {
             Option<MultiverseWorld> option = coreApi.getWorldManager().getWorld(world);
             if (option.isDefined()) {
                 MultiverseWorld mvw = option.get();
@@ -72,9 +75,9 @@ public class TARDISMultiverseHelper {
         Option<LoadedMultiverseWorld> option = coreApi.getWorldManager().getLoadedWorld(w);
         if (option.isDefined()) {
             LoadedMultiverseWorld mvw = option.get();
-            return (mvw.getBukkitWorld().isDefined()) ? mvw.getBukkitWorld().get() : Bukkit.getServer().getWorld(w);
+            return (mvw.getBukkitWorld().isDefined()) ? mvw.getBukkitWorld().get() : Bukkit.getServer().getWorld(Key.key(w.toLowerCase(Locale.ROOT)));
         }
-        return Bukkit.getServer().getWorld(w);
+        return Bukkit.getServer().getWorld(Key.key(w.toLowerCase(Locale.ROOT)));
     }
 
     public void importWorlds(CommandSender sender) {

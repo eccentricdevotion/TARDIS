@@ -16,12 +16,14 @@
  */
 package me.eccentric_nz.TARDIS.commands.dev.wiki;
 
+import io.papermc.paper.registry.TypedKey;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.ItemType;
 import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -31,6 +33,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.List;
 import java.util.Locale;
 
 public class PageBuilder {
@@ -64,8 +67,9 @@ public class PageBuilder {
         String ingredient;
         String MINECRAFT = "[%s](https://minecraft.wiki/w/%s)";
         String link = MINECRAFT;
-        if (choice instanceof RecipeChoice.MaterialChoice mat) {
-            ingredient = TARDISStringUtils.capitalise(mat.getChoices().getFirst().toString());
+        if (choice instanceof RecipeChoice.ItemTypeChoice mat) {
+           TypedKey<ItemType> firstItem = List.copyOf(mat.itemTypes().values()).getFirst();
+            ingredient = TARDISStringUtils.capitalise(firstItem.value());
             // MINECRAFT = "[%s](https://minecraft.wiki/w/%s)";
             link = String.format(MINECRAFT, ingredient, ingredient.replaceAll(" ", "_"));
         }

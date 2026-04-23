@@ -157,7 +157,8 @@ public class DeleteTARDISCommand {
                     plugin.getServer().dispatchCommand(plugin.getConsole(), "mv remove " + wname);
                 }
                 plugin.getServer().unloadWorld(cw, true);
-                File world_folder = new File(plugin.getServer().getWorldContainer() + File.separator + wname + File.separator);
+                // TODO use correct path to custom dimensions
+                File world_folder = new File(plugin.getServer().getLevelDirectory() + File.separator + wname + File.separator);
                 if (!deleteFolder(world_folder)) {
                     plugin.debug("Could not delete world <" + wname + ">");
                 }

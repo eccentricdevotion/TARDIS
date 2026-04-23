@@ -139,7 +139,7 @@ public class TARDISTerminalListener implements Listener {
                 if (terminalDestination.containsKey(uuid)) {
                     HashMap<String, Object> set = new HashMap<>();
                     String[] data = terminalDestination.get(uuid).split(":");
-                    String ww = (!plugin.getPlanetsConfig().getBoolean("planets." + data[0] + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMVHelper().getWorld(data[0]).getName() : data[0];
+                    String ww = (!plugin.getPlanetsConfig().getBoolean("planets." + data[0] + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMVHelper().getWorld(data[0]).getKey().getKey() : data[0];
                     set.put("world", ww);
                     set.put("x", data[1]);
                     set.put("y", data[2]);
@@ -341,7 +341,7 @@ public class TARDISTerminalListener implements Listener {
                         if (plugin.getPlanetsConfig().getBoolean("planets." + o + ".time_travel")) {
                             allowedWorlds.add(o);
                         }
-                    } else if (!o.equals(plugin.getConfig().getString("creation.default_world_name"))) {
+                    } else if (!o.equals(plugin.getConfig().getString("creation.default_world_name", "tardis_timevortex").toLowerCase(Locale.ROOT))) {
                         if (plugin.getPlanetsConfig().getBoolean("planets." + o + ".time_travel")) {
                             allowedWorlds.add(o);
                         }
@@ -394,7 +394,7 @@ public class TARDISTerminalListener implements Listener {
                             ? plugin.getMVHelper().getWorld(world)
                             : TARDISAliasResolver.getWorldFromAlias(world);
                     e = w.getEnvironment();
-                    if (plugin.getPlanetsConfig().getBoolean("planets." + w.getName() + ".false_nether")) {
+                    if (plugin.getPlanetsConfig().getBoolean("planets." + w.getKey().getKey() + ".false_nether")) {
                         e = Environment.NETHER;
                     }
                     TARDISTimeTravel tt = new TARDISTimeTravel(plugin);

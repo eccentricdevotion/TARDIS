@@ -43,7 +43,7 @@ public class RegionFlagCommand {
             plugin.getMessenger().message(sender, "This command only works if you are using a default world for TARDISes.");
             return;
         }
-        String world_name = plugin.getConfig().getString("creation.default_world_name");
+        String world_name = plugin.getConfig().getString("creation.default_world_name", "tardis_timevortex");
         // get all regions for the default world
         List<String> world_regions = plugin.getWorldGuardUtils().getTARDISRegions(TARDISAliasResolver.getWorldFromAlias(world_name));
         world_regions.forEach((region_id) -> {

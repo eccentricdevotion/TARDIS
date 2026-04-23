@@ -73,12 +73,12 @@ public class TravelUtilities {
             return;
         }
         // check world is enabled for travel
-        if (!plugin.getPlanetsConfig().getBoolean("planets." + world.getName() + ".time_travel")) {
+        if (!plugin.getPlanetsConfig().getBoolean("planets." + world.getKey().getKey() + ".time_travel")) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_WORLD_TRAVEL");
             return;
         }
         // only world specified
-        List<String> worlds = List.of(world.getName());
+        List<String> worlds = List.of(world.getKey().getKey());
         // get current location
         ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
         if (rsc.resultSet()) {
@@ -153,7 +153,7 @@ public class TravelUtilities {
             return null;
         }
         World world = current.location().getWorld();
-        if (!plugin.getPlanetsConfig().getBoolean("planets." + world.getName() + ".time_travel")) {
+        if (!plugin.getPlanetsConfig().getBoolean("planets." + world.getKey().getKey() + ".time_travel")) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_WORLD_TRAVEL");
             return null;
         }

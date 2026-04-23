@@ -24,12 +24,14 @@ import me.eccentric_nz.TARDIS.lazarus.disguise.EmergencyProgramOneSpawner;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
+import net.kyori.adventure.key.Key;
 import org.bukkit.Location;
 import org.bukkit.command.CommandException;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 /**
@@ -125,9 +127,10 @@ public class TARDISEPSRunnable implements Runnable {
         } else if (plugin.getConfig().getBoolean("creation.create_worlds")) {
             // get world spawn location
             if (TARDISFloodgate.shouldReplacePrefix(tl.getName())) {
-                return plugin.getServer().getWorld(TARDISFloodgate.getPlayerWorldName(tl.getName())).getSpawnLocation();
+                String key = TARDISFloodgate.getPlayerWorldName(tl.getName());
+                return plugin.getServer().getWorld(Key.key(key)).getSpawnLocation();
             } else {
-                return plugin.getServer().getWorld("TARDIS_WORLD_" + tl.getName()).getSpawnLocation();
+                return plugin.getServer().getWorld(Key.key("tardis_world_" + tl.getName().toLowerCase(Locale.ROOT))).getSpawnLocation();
             }
         } else {
             HashMap<String, Object> where = new HashMap<>();

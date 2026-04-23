@@ -126,7 +126,7 @@ public class TARDISBlockBreakListener implements Listener {
                     int x = plugin.getConfig().getInt("rechargers." + r + ".x");
                     int y = plugin.getConfig().getInt("rechargers." + r + ".y");
                     int z = plugin.getConfig().getInt("rechargers." + r + ".z");
-                    String l = w.getName() + "," + x + "," + y + "," + z;
+                    String l = w.getKey().getKey() + "," + x + "," + y + "," + z;
                     if (l.equals(b)) {
                         event.setCancelled(true);
                         if (player.getUniqueId().toString().equals(plugin.getConfig().getString("rechargers." + r + ".uuid"))) {

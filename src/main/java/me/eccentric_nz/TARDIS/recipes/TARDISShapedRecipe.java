@@ -35,7 +35,6 @@ public class TARDISShapedRecipe {
     public TARDISShapedRecipe(TARDIS plugin) {
         this.plugin = plugin;
         shapedRecipes = new HashMap<>();
-        RecipeChoice.MaterialChoice init = new RecipeChoice.MaterialChoice(TARDISWalls.BLOCKS);
     }
 
     public void addShapedRecipes() {

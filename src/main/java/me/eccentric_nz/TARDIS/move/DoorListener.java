@@ -232,7 +232,7 @@ public class DoorListener {
         boolean bool = false;
         switch (plugin.getWorldManager()) {
             case MULTIVERSE -> bool = plugin.getMVHelper().isWorldSurvival(world);
-            case NONE -> bool = plugin.getPlanetsConfig().getString("planets." + world.getName() + ".gamemode").equalsIgnoreCase("SURVIVAL");
+            case NONE -> bool = plugin.getPlanetsConfig().getString("planets." + world.getKey().getKey() + ".gamemode").equalsIgnoreCase("SURVIVAL");
         }
         return bool;
     }

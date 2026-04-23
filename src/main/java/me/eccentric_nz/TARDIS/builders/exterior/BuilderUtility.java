@@ -45,7 +45,7 @@ public class BuilderUtility {
         }
         int z = bd.getLocation().getBlockZ();
         // remember the door location
-        String doorloc = world.getName() + ":" + x + ":" + y + ":" + z;
+        String doorloc = world.getKey().asString() + ":" + x + ":" + y + ":" + z;
         String doorStr = world.getBlockAt(x, y, z).getLocation().toString();
         TARDIS.plugin.getGeneralKeeper().getProtectBlockMap().put(doorStr, bd.getTardisID());
         // should insert the door when tardis is first made, and then update location thereafter!
@@ -80,7 +80,7 @@ public class BuilderUtility {
         int y = location.getBlockY();
         int z = location.getBlockZ();
         // remember the door location
-        String doorloc = world.getName() + ":" + x + ":" + y + ":" + z;
+        String doorloc = world.getKey().asString() + ":" + x + ":" + y + ":" + z;
         String doorStr = world.getBlockAt(x, y, z).getLocation().toString();
         TARDIS.plugin.getGeneralKeeper().getProtectBlockMap().put(doorStr, id);
         // should insert the door when tardis is first made, and then update location thereafter!

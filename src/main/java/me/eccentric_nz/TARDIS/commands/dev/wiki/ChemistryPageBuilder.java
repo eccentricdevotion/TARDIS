@@ -182,7 +182,7 @@ public class ChemistryPageBuilder extends PageBuilder {
             Matcher matcher = regex.matcher(s);
             if (matcher.matches()) {
                 Material mat = Material.valueOf(s);
-                String link = getLink(new RecipeChoice.MaterialChoice(mat));
+                String link = getLink(RecipeChoice.itemType(mat.asItemType()));
                 ingredientBuilder.append(prefix);
                 prefix = "<br/>";
                 ingredientBuilder.append(link);

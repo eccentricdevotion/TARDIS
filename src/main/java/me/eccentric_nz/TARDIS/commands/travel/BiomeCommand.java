@@ -127,7 +127,7 @@ public class BiomeCommand {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "BIOME_FROM_VORTEX");
                     return;
                 }
-                String planet = world.getName();
+                String planet = world.getKey().getKey();
                 if (TARDISConstants.isTARDISPlanet(planet)) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "BIOME_NOT_PLANET", planet);
                     return;

@@ -99,7 +99,7 @@ public class AnyoneMoveListener implements Listener {
             if (plugin.getConfig().getBoolean("allow.mob_farming") && TARDISPermission.hasPermission(player, "tardis.farm") && !plugin.getTrackerKeeper().getFarming().contains(uuid) && willFarm) {
                 plugin.getTrackerKeeper().getFarming().add(uuid);
                 TARDISFarmer tf = new TARDISFarmer(plugin);
-                petsAndFollowers = tf.farmAnimals(l, d, id, player, tpl.getLocation().getWorld().getName(), l.getWorld().getName());
+                petsAndFollowers = tf.farmAnimals(l, d, id, player, tpl.getLocation().getWorld().getKey().getKey(), l.getWorld().getKey().getKey());
             }
             // set travelling status
             plugin.getGeneralKeeper().getDoorListener().removeTraveller(uuid);

@@ -143,7 +143,7 @@ public class SeedBlockProcessor {
                     Chunk chunk = location.getChunk();
                     // check config to see whether we are using a default world to store TARDISes
                     if (plugin.getConfig().getBoolean("creation.default_world")) {
-                        cw = plugin.getConfig().getString("creation.default_world_name");
+                        cw = plugin.getConfig().getString("creation.default_world_name", "tardis_timevortex");
                         chunkworld = TARDISAliasResolver.getWorldFromAlias(cw);
                         if (chunkworld == null) {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "TARDIS_WORLD_NOT_LOADED");
@@ -152,7 +152,7 @@ public class SeedBlockProcessor {
                         tips = true;
                     } else {
                         chunkworld = chunk.getWorld();
-                        cw = chunkworld.getName();
+                        cw = chunkworld.getKey().asString();
                     }
                     // get this chunk co-ords
                     cx = chunk.getX();

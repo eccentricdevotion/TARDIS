@@ -152,7 +152,7 @@ class AbandonedBuildRunnable implements Runnable {
                 // get the correct chunk for ARS
                 cl = new Location(world, startx, starty, startz);
                 Chunk cars = world.getChunkAt(cl);
-                String chun = world.getName() + ":" + cars.getX() + ":" + cars.getZ();
+                String chun = world.getKey().asString() + ":" + cars.getX() + ":" + cars.getZ();
                 set.put("chunk", chun);
                 // get list of used chunks
                 List<Chunk> chunkList = ChunkUtils.getConsoleChunks(world, cl.getChunk().getX(), cl.getChunk().getZ(), w, d);
@@ -160,7 +160,7 @@ class AbandonedBuildRunnable implements Runnable {
                 chunkList.forEach((ch) -> {
                     HashMap<String, Object> setc = new HashMap<>();
                     setc.put("tardis_id", dbID);
-                    setc.put("world", world.getName());
+                    setc.put("world", world.getKey().asString());
                     setc.put("x", ch.getX());
                     setc.put("z", ch.getZ());
                     plugin.getQueryFactory().doInsert("chunks", setc);
@@ -425,7 +425,7 @@ class AbandonedBuildRunnable implements Runnable {
                 Bisected bisected = (Bisected) data;
                 if (bisected.getHalf().equals(Half.BOTTOM)) { // iron door bottom
                     HashMap<String, Object> setd = new HashMap<>();
-                    String doorLocation = world.getName() + ":" + x + ":" + y + ":" + z;
+                    String doorLocation = world.getKey().asString() + ":" + x + ":" + y + ":" + z;
                     setd.put("tardis_id", dbID);
                     setd.put("door_type", 1);
                     setd.put("door_location", doorLocation);
@@ -549,7 +549,7 @@ class AbandonedBuildRunnable implements Runnable {
             if (type.equals(Material.LIGHT)) {
                 // remember light block locations for malfunction and light switch
                 HashMap<String, Object> setlb = new HashMap<>();
-                String lightLocation = world.getName() + ":" + x + ":" + y + ":" + z;
+                String lightLocation = world.getKey().asString() + ":" + x + ":" + y + ":" + z;
                 setlb.put("tardis_id", dbID);
                 setlb.put("location", lightLocation);
                 plugin.getQueryFactory().doInsert("lamps", setlb);
@@ -560,7 +560,7 @@ class AbandonedBuildRunnable implements Runnable {
                  * could also be a beacon block, as the creeper sits
                  * over the beacon in the deluxe and bigger consoles.
                  */
-                String creeperLocation = world.getName() + ":" + (x + 0.5) + ":" + y + ":" + (z + 0.5);
+                String creeperLocation = world.getKey().asString() + ":" + (x + 0.5) + ":" + y + ":" + (z + 0.5);
                 set.put("creeper", creeperLocation);
                 if (type.equals(Material.COMMAND_BLOCK)) {
                     data = switch (schm.getPermission()) {
@@ -666,7 +666,7 @@ class AbandonedBuildRunnable implements Runnable {
             } else if (type.equals(Material.MUSHROOM_STEM)) { // mushroom stem for repeaters
                 // save repeater location
                 if (j < 6) {
-                    String repeater = world.getName() + ":" + x + ":" + y + ":" + z;
+                    String repeater = world.getKey().asString() + ":" + x + ":" + y + ":" + z;
                     data = Material.REPEATER.createBlockData();
                     Directional directional = (Directional) data;
                     switch (j) {
@@ -697,7 +697,7 @@ class AbandonedBuildRunnable implements Runnable {
                 TARDISBlockSetters.setBlock(world, x, y, z, Material.AIR);
             } else if (type.equals(Material.BEDROCK)) {
                 // remember bedrock location to block off the beacon light
-                String bedrockLocation = world.getName() + ":" + x + ":" + y + ":" + z;
+                String bedrockLocation = world.getKey().asString() + ":" + x + ":" + y + ":" + z;
                 set.put("beacon", bedrockLocation);
                 postBedrock = world.getBlockAt(x, y, z);
             } else if (type.equals(Material.BROWN_MUSHROOM) && schm.getPermission().equals("master")) {

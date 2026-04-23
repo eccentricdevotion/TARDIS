@@ -34,7 +34,7 @@ public class DefaultWorldNameCommand {
 
     public void setName(CommandSender sender, World world) {
         // get world name
-        plugin.getConfig().set("creation.default_world_name", world.getName());
+        plugin.getConfig().set("creation.default_world_name", world.getKey().getKey());
         plugin.saveConfig();
         plugin.getMessenger().send(sender, TardisModule.TARDIS, "CONFIG_UPDATED", "default_world_name");
     }

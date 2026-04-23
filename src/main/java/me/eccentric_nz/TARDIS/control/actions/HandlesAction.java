@@ -58,7 +58,7 @@ public class HandlesAction {
             ItemStack disk = player.getInventory().getItemInMainHand();
             if (disk.getType().equals(Material.MUSIC_DISC_WARD) && disk.hasItemMeta()) {
                 ItemMeta dim = disk.getItemMeta();
-                if (dim.hasDisplayName() && ComponentUtils.stripColour(dim.customName()).equals("Handles Program Disk")) {
+                if (dim.hasCustomName() && ComponentUtils.stripColour(dim.customName()).equals("Handles Program Disk")) {
                     // get the program_id from the disk
                     int pid = TARDISNumberParsers.parseInt(ComponentUtils.stripColour(dim.lore().get(1)));
                     // query the database

@@ -17,6 +17,8 @@
 package me.eccentric_nz.TARDIS.recipes;
 
 import com.google.common.collect.Multimaps;
+import io.papermc.paper.registry.RegistryAccess;
+import io.papermc.paper.registry.RegistryKey;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.keys.SonicVariant;
 import me.eccentric_nz.TARDIS.enumeration.RecipeCategory;
@@ -61,6 +63,11 @@ public class TARDISShowShapelessRecipeInventory implements InventoryHolder {
             RecipeChoice choice = ingredients.get(i);
             if (choice instanceof RecipeChoice.ExactChoice exact) {
                 item = exact.getChoices().getFirst();
+            } else if (choice instanceof RecipeChoice.ItemTypeChoice i) {
+                ItemType type = RegistryAccess.registryAccess()
+                        .getRegistry(RegistryKey.ITEM)
+                        .get(i.itemTypes().values().iterator().next());
+                item = type.createItemStack();
             } else if (choice instanceof RecipeChoice.MaterialChoice mat) {
                 item = ItemStack.of(mat.getChoices().getFirst());
             }

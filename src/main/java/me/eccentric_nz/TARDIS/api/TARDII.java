@@ -240,7 +240,7 @@ public class TARDII implements TardisAPI {
     public List<String> getWorlds() {
         List<String> worlds = new ArrayList<>();
         Bukkit.getWorlds().forEach((w) -> {
-            String name = w.getName();
+            String name = w.getKey().getKey();
             if (TARDIS.plugin.getPlanetsConfig().getBoolean("planets." + name + ".time_travel")) {
                 if (!TARDIS.plugin.getPlanetsConfig().getBoolean("planets." + name + ".enabled") && TARDIS.plugin.getWorldManager() == WorldManager.MULTIVERSE) {
                     worlds.add(TARDIS.plugin.getMVHelper().getAlias(name));
@@ -256,7 +256,7 @@ public class TARDII implements TardisAPI {
     public List<String> getOverWorlds() {
         List<String> worlds = new ArrayList<>();
         Bukkit.getWorlds().forEach((w) -> {
-            String name = w.getName();
+            String name = w.getKey().getKey();
             if (TARDIS.plugin.getPlanetsConfig().getBoolean("planets." + name + ".time_travel") && w.getEnvironment() != Environment.NETHER && w.getEnvironment() != Environment.THE_END) {
                 if (!TARDIS.plugin.getPlanetsConfig().getBoolean("planets." + name + ".enabled") && TARDIS.plugin.getWorldManager() == WorldManager.MULTIVERSE) {
                     worlds.add(TARDIS.plugin.getMVHelper().getAlias(name));

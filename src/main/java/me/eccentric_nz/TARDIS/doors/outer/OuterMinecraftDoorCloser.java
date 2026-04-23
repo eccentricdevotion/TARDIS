@@ -161,7 +161,7 @@ public class OuterMinecraftDoorCloser {
 
     private File getMapFile(int id) {
         return new File(
-                plugin.getServer().getWorlds().getFirst().getName() + File.separator
+                plugin.getServer().getWorlds().getFirst().getKey().getKey() + File.separator
                         + "data" + File.separator
                         + "minecraft" + File.separator
                         + "maps" + File.separator

@@ -67,7 +67,7 @@ public class JunkCreator {
         // get player's target block
         Location l = p.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 16).getLocation().add(0.0d, 1.0d, 0.0d);
         // save a tardis record
-        String cw = plugin.getConfig().getString("creation.default_world_name");
+        String cw = plugin.getConfig().getString("creation.default_world_name", "tardis_timevortex");
         HashMap<String, Object> set = new HashMap<>();
         set.put("uuid", "00000000-aaaa-bbbb-cccc-000000000000");
         set.put("owner", "junk");

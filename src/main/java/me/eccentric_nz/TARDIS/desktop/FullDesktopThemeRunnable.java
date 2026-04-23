@@ -650,7 +650,7 @@ public class FullDesktopThemeRunnable extends DesktopThemeRunnable {
                 chunks.forEach((hunk) -> {
                     HashMap<String, Object> setC = new HashMap<>();
                     setC.put("tardis_id", id);
-                    setC.put("world", world.getName());
+                    setC.put("world", world.getKey().asString());
                     setC.put("x", hunk.getX());
                     setC.put("z", hunk.getZ());
                     plugin.getQueryFactory().doInsert("chunks", setC);
@@ -690,7 +690,7 @@ public class FullDesktopThemeRunnable extends DesktopThemeRunnable {
                 }
                 if (type.equals(Material.BEDROCK)) {
                     // remember bedrock location to block off the beacon light
-                    String bedrockLoc = world.getName() + ":" + x + ":" + y + ":" + z;
+                    String bedrockLoc = world.getKey().asString() + ":" + x + ":" + y + ":" + z;
                     set.put("beacon", bedrockLoc);
                     postBedrock = b;
                 }
@@ -794,7 +794,7 @@ public class FullDesktopThemeRunnable extends DesktopThemeRunnable {
                     Bisected bisected = (Bisected) data;
                     if (bisected.getHalf().equals(Bisected.Half.BOTTOM)) { // iron door bottom
                         HashMap<String, Object> setD = new HashMap<>();
-                        String doorLoc = world.getName() + ":" + x + ":" + y + ":" + z;
+                        String doorLoc = world.getKey().asString() + ":" + x + ":" + y + ":" + z;
                         setD.put("door_location", doorLoc);
                         HashMap<String, Object> whereD = new HashMap<>();
                         whereD.put("tardis_id", id);
@@ -856,7 +856,7 @@ public class FullDesktopThemeRunnable extends DesktopThemeRunnable {
                 if (type.equals(Material.LIGHT)) {
                     // remember light block locations for malfunction and light switch
                     HashMap<String, Object> setLB = new HashMap<>();
-                    String lightLoc = world.getName() + ":" + x + ":" + y + ":" + z;
+                    String lightLoc = world.getKey().asString() + ":" + x + ":" + y + ":" + z;
                     setLB.put("tardis_id", id);
                     setLB.put("location", lightLoc);
                     plugin.getQueryFactory().doInsert("lamps", setLB);
@@ -879,7 +879,7 @@ public class FullDesktopThemeRunnable extends DesktopThemeRunnable {
                      * could also be a beacon block, as the creeper sits over
                      * the beacon in the deluxe and bigger consoles.
                      */
-                    String creepLoc = world.getName() + ":" + (x + 0.5) + ":" + y + ":" + (z + 0.5);
+                    String creepLoc = world.getKey().asString() + ":" + (x + 0.5) + ":" + y + ":" + (z + 0.5);
                     set.put("creeper", creepLoc);
                     if (type.equals(Material.COMMAND_BLOCK)) {
                         data = switch (tud.getSchematic().getPermission()) {
@@ -986,7 +986,7 @@ public class FullDesktopThemeRunnable extends DesktopThemeRunnable {
                 } else if (type.equals(Material.MUSHROOM_STEM)) { // mushroom stem for repeaters
                     // save repeater location
                     if (j < 6) {
-                        String repeater = world.getName() + ":" + x + ":" + y + ":" + z;
+                        String repeater = world.getKey().asString() + ":" + x + ":" + y + ":" + z;
                         data = Material.REPEATER.createBlockData();
                         Directional directional = (Directional) data;
                         switch (j) {

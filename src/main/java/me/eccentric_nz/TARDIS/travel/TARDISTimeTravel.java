@@ -119,7 +119,7 @@ public class TARDISTimeTravel {
                                     break;
                                 }
                             }
-                        } else if (w.getName().equals("siluria") && mat.equals(Material.BAMBOO)) {
+                        } else if (w.getKey().getKey().equals("siluria") && mat.equals(Material.BAMBOO)) {
                             // do nothing
                         } else {
                             TARDIS.plugin.debug("count++ else");
@@ -187,7 +187,7 @@ public class TARDISTimeTravel {
                                 count++;
                                 break;
                             }
-                        } else if (w.getName().equals("siluria") && mat.equals(Material.BAMBOO)) {
+                        } else if (w.getKey().getKey().equals("siluria") && mat.equals(Material.BAMBOO)) {
                             // do nothing
                         } else {
                             TARDIS.plugin.debug("count++ else");
@@ -257,7 +257,7 @@ public class TARDISTimeTravel {
         // get worlds
         Set<String> worldlist = plugin.getPlanetsConfig().getConfigurationSection("planets").getKeys(false);
         List<World> allowedWorlds = new ArrayList<>();
-        if (e.equals("THIS") && plugin.getPlanetsConfig().getBoolean("planets." + this_world.getName() + ".time_travel")) {
+        if (e.equals("THIS") && plugin.getPlanetsConfig().getBoolean("planets." + this_world.getKey().getKey() + ".time_travel")) {
             allowedWorlds.add(this_world);
         } else {
             worldlist.forEach((o) -> {
@@ -275,7 +275,7 @@ public class TARDISTimeTravel {
                                 allowedWorlds.add(ww);
                             }
                         } else {
-                            if (!o.equals(plugin.getConfig().getString("creation.default_world_name"))) {
+                            if (!o.equals(plugin.getConfig().getString("creation.default_world_name", "tardis_timevortex").toLowerCase(Locale.ROOT))) {
                                 if (plugin.getPlanetsConfig().getBoolean("planets." + o + ".time_travel") || malfunction) {
                                     allowedWorlds.add(ww);
                                 }
@@ -283,7 +283,7 @@ public class TARDISTimeTravel {
                         }
                     }
                     // remove the world the Police Box is in
-                    if (this_world != null && (allowedWorlds.size() > 1 || !plugin.getPlanetsConfig().getBoolean("planets." + this_world.getName() + ".time_travel"))) {
+                    if (this_world != null && (allowedWorlds.size() > 1 || !plugin.getPlanetsConfig().getBoolean("planets." + this_world.getKey().getKey() + ".time_travel"))) {
                         allowedWorlds.remove(this_world);
                     }
                     // remove the world if the player doesn't have permission
@@ -318,7 +318,7 @@ public class TARDISTimeTravel {
                 }
             }
             case THE_END -> {
-                if (plugin.getPlanetsConfig().getBoolean("planets." + randworld.getName() + ".void")) {
+                if (plugin.getPlanetsConfig().getBoolean("planets." + randworld.getKey().getKey() + ".void")) {
                     // any location will do!
                     int voidx = randomX(range, quarter, rx, ry, e, current);
                     int voidy = TARDISConstants.RANDOM.nextInt(240) + 5;
@@ -362,7 +362,7 @@ public class TARDISTimeTravel {
             }
             default -> {
                 // Assume every non-nether/non-END world qualifies as NORMAL.
-                if (plugin.getPlanetsConfig().getBoolean("planets." + randworld.getName() + ".false_nether")) {
+                if (plugin.getPlanetsConfig().getBoolean("planets." + randworld.getKey().getKey() + ".false_nether")) {
                     for (int n = 0; n < attempts; n++) {
                         wherex = randomX(range, quarter, rx, ry, e, current);
                         wherez = randomZ(range, quarter, rz, ry, e, current);
@@ -371,7 +371,7 @@ public class TARDISTimeTravel {
                         }
                     }
                 } else {
-                    if (plugin.getPlanetsConfig().getBoolean("planets." + randworld.getName() + ".void")) {
+                    if (plugin.getPlanetsConfig().getBoolean("planets." + randworld.getKey().getKey() + ".void")) {
                         // any location will do!
                         int voidx = randomX(range, quarter, rx, ry, e, current);
                         int voidy = TARDISConstants.RANDOM.nextInt(240) + 5;
@@ -537,7 +537,7 @@ public class TARDISTimeTravel {
             air++;
         }
         Material mat = startBlock.getType();
-        if (air >= 4 && (plugin.getGeneralKeeper().getGoodNether().contains(mat) || plugin.getPlanetsConfig().getBoolean("planets." + nether.getName() + ".false_nether"))) {
+        if (air >= 4 && (plugin.getGeneralKeeper().getGoodNether().contains(mat) || plugin.getPlanetsConfig().getBoolean("planets." + nether.getKey().getKey() + ".false_nether"))) {
             Location netherLocation = startBlock.getLocation();
             netherLocation.setY(netherLocation.getY() + 1);
             if (plugin.getPluginRespect().getRespect(netherLocation, new Parameters(p, Flag.getNoMessageFlags()))) {

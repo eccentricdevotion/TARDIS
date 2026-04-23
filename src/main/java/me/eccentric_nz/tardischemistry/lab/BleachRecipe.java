@@ -22,6 +22,7 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Tag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.ItemType;
 import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
@@ -107,7 +108,7 @@ public class BleachRecipe {
         helmet.setItemMeta(helmetItemMeta);
         ShapelessRecipe helmetRecipe = new ShapelessRecipe(helmetKey, helmet);
         helmetRecipe.addIngredient(new RecipeChoice.ExactChoice(bleach));
-        RecipeChoice colouredHelmet = new RecipeChoice.MaterialChoice(Material.LEATHER_HELMET);
+        RecipeChoice colouredHelmet = RecipeChoice.itemType(ItemType.LEATHER_HELMET);
         helmetRecipe.addIngredient(colouredHelmet);
         plugin.getServer().addRecipe(helmetRecipe);
         plugin.getIncomposita().getShapelessRecipes().put("Bleached Helmet", helmetRecipe);
@@ -118,7 +119,7 @@ public class BleachRecipe {
         chestplate.setItemMeta(chestplateItemMeta);
         ShapelessRecipe chestplateRecipe = new ShapelessRecipe(chestplateKey, chestplate);
         chestplateRecipe.addIngredient(new RecipeChoice.ExactChoice(bleach));
-        RecipeChoice colouredChestplate = new RecipeChoice.MaterialChoice(Material.LEATHER_CHESTPLATE);
+        RecipeChoice colouredChestplate = RecipeChoice.itemType(ItemType.LEATHER_CHESTPLATE);
         chestplateRecipe.addIngredient(colouredChestplate);
         plugin.getServer().addRecipe(chestplateRecipe);
         plugin.getIncomposita().getShapelessRecipes().put("Bleached Chestplate", chestplateRecipe);
@@ -129,7 +130,7 @@ public class BleachRecipe {
         leggings.setItemMeta(leggingsItemMeta);
         ShapelessRecipe leggingsRecipe = new ShapelessRecipe(leggingsKey, leggings);
         leggingsRecipe.addIngredient(new RecipeChoice.ExactChoice(bleach));
-        RecipeChoice colouredLeggings = new RecipeChoice.MaterialChoice(Material.LEATHER_LEGGINGS);
+        RecipeChoice colouredLeggings = RecipeChoice.itemType(ItemType.LEATHER_LEGGINGS);
         leggingsRecipe.addIngredient(colouredLeggings);
         plugin.getServer().addRecipe(leggingsRecipe);
         plugin.getIncomposita().getShapelessRecipes().put("Bleached Leggings", leggingsRecipe);
@@ -140,7 +141,7 @@ public class BleachRecipe {
         boots.setItemMeta(bootsItemMeta);
         ShapelessRecipe bootsRecipe = new ShapelessRecipe(bootsKey, boots);
         bootsRecipe.addIngredient(new RecipeChoice.ExactChoice(bleach));
-        RecipeChoice colouredBoots = new RecipeChoice.MaterialChoice(Material.LEATHER_BOOTS);
+        RecipeChoice colouredBoots = RecipeChoice.itemType(ItemType.LEATHER_BOOTS);
         bootsRecipe.addIngredient(colouredBoots);
         plugin.getServer().addRecipe(bootsRecipe);
         plugin.getIncomposita().getShapelessRecipes().put("Bleached Boots", bootsRecipe);
@@ -151,7 +152,7 @@ public class BleachRecipe {
         horseArmour.setItemMeta(horseItemMeta);
         ShapelessRecipe horseRecipe = new ShapelessRecipe(horseArmourKey, horseArmour);
         horseRecipe.addIngredient(new RecipeChoice.ExactChoice(bleach));
-        RecipeChoice colouredHorseArmour = new RecipeChoice.MaterialChoice(Material.LEATHER_HORSE_ARMOR);
+        RecipeChoice colouredHorseArmour = RecipeChoice.itemType(ItemType.LEATHER_HORSE_ARMOR);
         horseRecipe.addIngredient(colouredHorseArmour);
         plugin.getServer().addRecipe(horseRecipe);
         plugin.getIncomposita().getShapelessRecipes().put("Bleached Horse Armour", horseRecipe);
@@ -162,7 +163,7 @@ public class BleachRecipe {
         wolfArmour.setItemMeta(wolfItemMeta);
         ShapelessRecipe wolfRecipe = new ShapelessRecipe(wolfArmourKey, wolfArmour);
         wolfRecipe.addIngredient(new RecipeChoice.ExactChoice(bleach));
-        RecipeChoice colouredWolfArmour = new RecipeChoice.MaterialChoice(Material.WOLF_ARMOR);
+        RecipeChoice colouredWolfArmour = RecipeChoice.itemType(ItemType.WOLF_ARMOR);
         wolfRecipe.addIngredient(colouredWolfArmour);
         plugin.getServer().addRecipe(wolfRecipe);
         plugin.getIncomposita().getShapelessRecipes().put("Bleached Wolf Armour", wolfRecipe);

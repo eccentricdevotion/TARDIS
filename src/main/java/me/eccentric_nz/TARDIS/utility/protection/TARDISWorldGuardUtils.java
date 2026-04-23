@@ -39,6 +39,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisCompanions;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
+import net.kyori.adventure.key.Key;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -202,7 +203,7 @@ public class TARDISWorldGuardUtils {
         if (!junk) {
             // deny exit to all
             // usage = "<id> <flag> [-w world] [-g group] [value]",
-            plugin.getServer().dispatchCommand(plugin.getConsole(), "rg flag " + region_id + " exit -w " + world.getName() + " deny");
+            plugin.getServer().dispatchCommand(plugin.getConsole(), "rg flag " + region_id + " exit -w " + world.getKey().getKey() + " deny");
         }
         try {
             rm.save();
@@ -242,7 +243,7 @@ public class TARDISWorldGuardUtils {
         rm.addRegion(region);
         // deny exit to all
         // usage = "<id> <flag> [-w world] [-g group] [value]",
-        plugin.getServer().dispatchCommand(plugin.getConsole(), "rg flag " + region_id + " exit -w " + world.getName() + " deny");
+        plugin.getServer().dispatchCommand(plugin.getConsole(), "rg flag " + region_id + " exit -w " + world.getKey().getKey() + " deny");
         try {
             rm.save();
         } catch (StorageException e) {
@@ -553,7 +554,7 @@ public class TARDISWorldGuardUtils {
             members.removeAll();
             // add the owner back in
             members.addPlayer(uuid);
-            plugin.getServer().dispatchCommand(plugin.getConsole(), "rg addmember TARDIS_" + owner + " " + owner + " -w " + w.getName());
+            plugin.getServer().dispatchCommand(plugin.getConsole(), "rg addmember TARDIS_" + owner + " " + owner + " -w " + w.getKey().getKey());
         }
     }
 
@@ -801,8 +802,8 @@ public class TARDISWorldGuardUtils {
     }
 
     public void checkEntryFlags() {
-        String world_name = plugin.getConfig().getString("creation.default_world_name");
-        World world = plugin.getServer().getWorld(world_name);
+        String world_name = plugin.getConfig().getString("creation.default_world_name", "tardis_timevortex");
+        World world = plugin.getServer().getWorld(Key.key(world_name));
         if (world != null) {
             State flag = plugin.getConfig().getBoolean("preferences.open_door_policy") ? State.ALLOW : State.DENY;
             RegionManager rm = wg.getRegionContainer().get(new BukkitWorld(world));

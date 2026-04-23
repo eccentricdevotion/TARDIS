@@ -46,7 +46,7 @@ public class CleanEntitiesCommand {
                     if (stand.isInvisible() && stand.isInvulnerable()) {
                         // check it has no TARDIS record
                         HashMap<String, Object> where = new HashMap<>();
-                        where.put("world", world.getName());
+                        where.put("world", world.getKey().asString());
                         where.put("x", stand.getLocation().getBlockX());
                         where.put("y", stand.getLocation().getBlockY());
                         where.put("z", stand.getLocation().getBlockZ());
@@ -63,7 +63,7 @@ public class CleanEntitiesCommand {
                     if (interaction.getPersistentDataContainer().has(plugin.getTardisIdKey(), PersistentDataType.INTEGER)) {
                         // check it has no TARDIS record
                         HashMap<String, Object> where = new HashMap<>();
-                        where.put("world", world.getName());
+                        where.put("world", world.getKey().asString());
                         where.put("x", interaction.getLocation().getBlockX());
                         where.put("y", interaction.getLocation().getBlockY());
                         where.put("z", interaction.getLocation().getBlockZ());
@@ -81,20 +81,20 @@ public class CleanEntitiesCommand {
             int forced = 0;
             for (Chunk chunk : world.getForceLoadedChunks()) {
                 // check if a tardis is in this chunk
-                ResultSetChunkContainsTARDIS rsc = new ResultSetChunkContainsTARDIS(plugin, world.getName(), chunk.getX() * 16, chunk.getZ() * 16);
+                ResultSetChunkContainsTARDIS rsc = new ResultSetChunkContainsTARDIS(plugin, world.getKey().asString(), chunk.getX() * 16, chunk.getZ() * 16);
                 if (!rsc.resultSet()) {
                     chunk.removePluginChunkTicket(plugin);
                     forced++;
                 }
             }
             if (stands > 0) {
-                plugin.getMessenger().message(sender, TardisModule.TARDIS, "Removed " + stands + " armour stands in " + world.getName());
+                plugin.getMessenger().message(sender, TardisModule.TARDIS, "Removed " + stands + " armour stands in " + world.getKey().getKey());
             }
             if (interactions > 0) {
-                plugin.getMessenger().message(sender, TardisModule.TARDIS, "Removed " + interactions + " interactions in " + world.getName());
+                plugin.getMessenger().message(sender, TardisModule.TARDIS, "Removed " + interactions + " interactions in " + world.getKey().getKey());
             }
             if (forced > 0) {
-                plugin.getMessenger().message(sender, TardisModule.TARDIS, "Removed " + forced + " force loaded chunks in " + world.getName());
+                plugin.getMessenger().message(sender, TardisModule.TARDIS, "Removed " + forced + " force loaded chunks in " + world.getKey().getKey());
             }
         }
     }
