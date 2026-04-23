@@ -22,7 +22,7 @@ import me.eccentric_nz.TARDIS.builders.exterior.BuildData;
 import me.eccentric_nz.TARDIS.builders.exterior.MaterialiseBlockPreset;
 import me.eccentric_nz.TARDIS.builders.exterior.MaterialiseModelledPreset;
 import me.eccentric_nz.TARDIS.enumeration.*;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
+import me.eccentric_nz.TARDIS.planets.TARDISWorldResolver;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -50,7 +50,7 @@ public class AbandonedBuilder {
         Chunk chunk = l.getChunk();
         // get this chunk's co-ords
         String cw = plugin.getConfig().getString("creation.default_world_name", "tardis_timevortex");
-        World chunkworld = TARDISAliasResolver.getWorldFromAlias(cw);
+        World chunkworld = TARDISWorldResolver.getFromString(cw);
         int cx = chunk.getX();
         int cz = chunk.getZ();
         // save data to database (tardis table)

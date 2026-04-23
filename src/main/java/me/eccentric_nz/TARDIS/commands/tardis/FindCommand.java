@@ -22,8 +22,6 @@ import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.enumeration.WorldManager;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.upgrades.SystemTree;
 import me.eccentric_nz.TARDIS.upgrades.SystemUpgradeChecker;
 import org.bukkit.entity.Player;
@@ -54,10 +52,7 @@ public class FindCommand {
                 ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, rs.getTardisId());
                 if (rsc.resultSet()) {
                     Current current = rsc.getCurrent();
-                    String world = TARDISAliasResolver.getWorldAlias(current.location().getWorld());
-                    if (!plugin.getPlanetsConfig().getBoolean("planets." + current.location().getWorld().getKey().getKey() + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
-                        world = plugin.getMVHelper().getAlias(current.location().getWorld());
-                    }
+                    String world = current.location().getWorld().getKey().getKey();
                     if (player.isOp()) {
                         plugin.getMessenger().sendFind(player, world, current.location().getBlockX(), current.location().getBlockY(), current.location().getBlockZ());
                     } else {

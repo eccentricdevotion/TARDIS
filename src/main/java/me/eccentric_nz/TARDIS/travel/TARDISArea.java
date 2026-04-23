@@ -23,7 +23,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreaLocations;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreas;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
+import me.eccentric_nz.TARDIS.planets.TARDISWorldResolver;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -261,7 +261,7 @@ public class TARDISArea {
                 }
             }
             if (chk) {
-                World w = TARDISAliasResolver.getWorldFromAlias(wStr);
+                World w = TARDISWorldResolver.getFromString(wStr);
                 if (w != null) {
                     int y = a.y();
                     if (y == 0) {

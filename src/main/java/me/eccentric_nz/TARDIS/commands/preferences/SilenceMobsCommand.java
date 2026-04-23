@@ -3,7 +3,7 @@ package me.eccentric_nz.TARDIS.commands.preferences;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
+import me.eccentric_nz.TARDIS.planets.TARDISWorldResolver;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Chunk;
 import org.bukkit.World;
@@ -32,7 +32,7 @@ public class SilenceMobsCommand {
             String[] tc = rst.getTardis().getChunk().split(":");
             int cx = TARDISNumberParsers.parseInt(tc[1]);
             int cz = TARDISNumberParsers.parseInt(tc[2]);
-            World world = TARDISAliasResolver.getWorldFromAlias(tc[0]);
+            World world = TARDISWorldResolver.getFromString(tc[0]);
             if (world != null) {
                 // get ARS chunks - 3 high x 9 wide x 9 deep
                 for (int x = -4; x < 5; x++) {

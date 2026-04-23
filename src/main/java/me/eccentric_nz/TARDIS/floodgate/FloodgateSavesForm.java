@@ -23,7 +23,7 @@ import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
+import me.eccentric_nz.TARDIS.planets.TARDISWorldResolver;
 import me.eccentric_nz.TARDIS.travel.TARDISAreaCheck;
 import me.eccentric_nz.TARDIS.travel.TravelCostAndType;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
@@ -100,7 +100,7 @@ public class FloodgateSavesForm {
             where.put("dest_id", dest_id);
             ResultSetDestinations rsd = new ResultSetDestinations(plugin, where, false);
             if (rsd.resultSet()) {
-                World w = TARDISAliasResolver.getWorldFromAlias(rsd.getWorld());
+                World w = TARDISWorldResolver.getFromString(rsd.getWorld());
                 if (w == null) {
                     return;
                 }

@@ -34,7 +34,6 @@ import me.eccentric_nz.TARDIS.desktop.WallFloorRunnable;
 import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.flight.TARDISTakeoff;
 import me.eccentric_nz.TARDIS.move.TARDISTeleportLocation;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
 import me.eccentric_nz.TARDIS.travel.TravelCostAndType;
@@ -242,11 +241,7 @@ public class TARDII implements TardisAPI {
         Bukkit.getWorlds().forEach((w) -> {
             String name = w.getKey().getKey();
             if (TARDIS.plugin.getPlanetsConfig().getBoolean("planets." + name + ".time_travel")) {
-                if (!TARDIS.plugin.getPlanetsConfig().getBoolean("planets." + name + ".enabled") && TARDIS.plugin.getWorldManager() == WorldManager.MULTIVERSE) {
-                    worlds.add(TARDIS.plugin.getMVHelper().getAlias(name));
-                } else {
-                    worlds.add(TARDISAliasResolver.getWorldAlias(name));
-                }
+                worlds.add(name);
             }
         });
         return worlds;
@@ -258,11 +253,7 @@ public class TARDII implements TardisAPI {
         Bukkit.getWorlds().forEach((w) -> {
             String name = w.getKey().getKey();
             if (TARDIS.plugin.getPlanetsConfig().getBoolean("planets." + name + ".time_travel") && w.getEnvironment() != Environment.NETHER && w.getEnvironment() != Environment.THE_END) {
-                if (!TARDIS.plugin.getPlanetsConfig().getBoolean("planets." + name + ".enabled") && TARDIS.plugin.getWorldManager() == WorldManager.MULTIVERSE) {
-                    worlds.add(TARDIS.plugin.getMVHelper().getAlias(name));
-                } else {
-                    worlds.add(TARDISAliasResolver.getWorldAlias(name));
-                }
+                worlds.add(name);
             }
         });
         return worlds;

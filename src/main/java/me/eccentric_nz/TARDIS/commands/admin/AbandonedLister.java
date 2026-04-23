@@ -21,8 +21,6 @@ import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.enumeration.WorldManager;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -56,7 +54,7 @@ public class AbandonedLister {
                 ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, tardis.getTardisId());
                 if (rsc.resultSet()) {
                     Current current = rsc.getCurrent();
-                    String w = (!plugin.getPlanetsConfig().getBoolean("planets." + current.location().getWorld().getKey().getKey() + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMVHelper().getAlias(current.location().getWorld()) : TARDISAliasResolver.getWorldAlias(current.location().getWorld());
+                    String w = current.location().getWorld().getKey().getKey();
                     String l = w + " " + current.location().getBlockX() + ", " + current.location().getBlockY() + ", " + current.location().getBlockZ();
                     if (click) {
                         plugin.getMessenger().sendAbandoned(sender, i, owner, l, tardis.getTardisId());

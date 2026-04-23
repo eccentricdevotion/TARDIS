@@ -129,14 +129,6 @@ public class PlanetsConfigUpdater {
                 planets_config.set("planets." + w + ".keep_spawn_in_memory", null);
             }
         }
-        // check there is a `gamemode` config option for all worlds
-        for (String w : worlds) {
-            if (!planets_config.contains("planets." + w + ".gamemode")) {
-                TARDISPlanetData data = plugin.getTardisHelper().getLevelData(w);
-                planets_config.set("planets." + w + ".gamemode", data.gameMode().toString());
-                save++;
-            }
-        }
         // check there is an `alias` config option for all worlds
         for (String w : worlds) {
             if (!planets_config.contains("planets." + w + ".alias")) {

@@ -25,9 +25,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.TravelType;
-import me.eccentric_nz.TARDIS.enumeration.WorldManager;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.travel.TravelCostAndType;
 import org.bukkit.Location;
@@ -59,12 +57,7 @@ public class RandomDestinationAction {
             set.put("direction", direction.toString());
             set.put("submarine", (plugin.getTrackerKeeper().getSubmarine().contains(id)) ? 1 : 0);
             plugin.getTrackerKeeper().getSubmarine().remove(id);
-            String worldname;
-            if (!plugin.getPlanetsConfig().getBoolean("planets." + rand.getWorld().getKey().getKey() + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
-                worldname = plugin.getMVHelper().getAlias(rand.getWorld());
-            } else {
-                worldname = TARDISAliasResolver.getWorldAlias(rand.getWorld());
-            }
+            String worldname = rand.getWorld().getKey().getKey();
             String dchat = worldname + " at x: " + rand.getBlockX() + " y: " + rand.getBlockY() + " z: " + rand.getBlockZ();
             boolean isTL = true;
             if (comps != null && !comps.isEmpty()) {

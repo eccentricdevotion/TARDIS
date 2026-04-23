@@ -31,7 +31,7 @@ import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
+import me.eccentric_nz.TARDIS.planets.TARDISWorldResolver;
 import me.eccentric_nz.TARDIS.planets.TARDISSpace;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Chunk;
@@ -144,7 +144,7 @@ public class SeedBlockProcessor {
                     // check config to see whether we are using a default world to store TARDISes
                     if (plugin.getConfig().getBoolean("creation.default_world")) {
                         cw = plugin.getConfig().getString("creation.default_world_name", "tardis_timevortex");
-                        chunkworld = TARDISAliasResolver.getWorldFromAlias(cw);
+                        chunkworld = TARDISWorldResolver.getFromString(cw);
                         if (chunkworld == null) {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "TARDIS_WORLD_NOT_LOADED");
                             return false;

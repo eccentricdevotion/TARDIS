@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.database.resultset;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.database.data.Planet;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import net.kyori.adventure.key.Key;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -79,15 +78,15 @@ public class ResultSetPlanets {
                     String planet = rs.getString("world");
                     World world = plugin.getServer().getWorld(Key.key(planet));
                     if (world != null) {
-                        String alias = TARDISAliasResolver.getWorldAlias(world);
+                        String key = world.getKey().getKey();
                         Material material;
                         try {
-                            String m = plugin.getPlanetsConfig().getString("planets." + planet + ".icon");
+                            String m = plugin.getPlanetsConfig().getString("planets." + key + ".icon");
                             material = (m != null) ? Material.valueOf(m) : getIcon(world.getEnvironment());
                         } catch (IllegalArgumentException e) {
                             material = getIcon(world.getEnvironment());
                         }
-                        data.add(new Planet(alias, material));
+                        data.add(new Planet(key, material));
                     }
                 }
             } else {

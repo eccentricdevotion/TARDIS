@@ -6,8 +6,6 @@ import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.enumeration.WorldManager;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.command.CommandSender;
@@ -52,7 +50,7 @@ public class TardisPagedLister {
                     continue;
                 }
                 Current current = rsc.getCurrent();
-                String world = (!plugin.getPlanetsConfig().getBoolean("planets." + current.location().getWorld().getKey().getKey() + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMVHelper().getAlias(current.location().getWorld()) : TARDISAliasResolver.getWorldAlias(current.location().getWorld());
+                String world = current.location().getWorld().getKey().getKey();
                 plugin.getMessenger().sendTARDISForList(sender, tardis, world, current.location().getBlockX(), current.location().getBlockY(), current.location().getBlockZ());
             }
             if (rsl.getData().size() > 18) {

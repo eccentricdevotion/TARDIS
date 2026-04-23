@@ -22,7 +22,7 @@ import me.eccentric_nz.TARDIS.companionGUI.VanishChecker;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisCompanions;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
+import me.eccentric_nz.TARDIS.planets.TARDISWorldResolver;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -88,7 +88,7 @@ public class FloodgateAddCompanionsForm {
                 if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
                     // remove all members
                     String[] data = tardis.getChunk().split(":");
-                    plugin.getWorldGuardUtils().removeAllMembersFromRegion(TARDISAliasResolver.getWorldFromAlias(data[0]), player.getName(), player.getUniqueId());
+                    plugin.getWorldGuardUtils().removeAllMembersFromRegion(TARDISWorldResolver.getFromString(data[0]), player.getName(), player.getUniqueId());
                     // set entry and exit flags to allow
                     plugin.getWorldGuardUtils().setEntryExitFlags(data[0], player.getName(), true);
                 }

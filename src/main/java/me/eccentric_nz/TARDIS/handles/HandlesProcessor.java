@@ -36,7 +36,7 @@ import me.eccentric_nz.TARDIS.doors.outer.OuterDisplayDoorCloser;
 import me.eccentric_nz.TARDIS.doors.outer.OuterDoor;
 import me.eccentric_nz.TARDIS.doors.outer.OuterMinecraftDoorCloser;
 import me.eccentric_nz.TARDIS.enumeration.*;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
+import me.eccentric_nz.TARDIS.planets.TARDISWorldResolver;
 import me.eccentric_nz.TARDIS.siegemode.SiegeMode;
 import me.eccentric_nz.TARDIS.travel.TARDISRandomiserCircuit;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
@@ -494,7 +494,7 @@ public class HandlesProcessor {
                                                         continue;
                                                     }
                                                     plugin.getMessenger().handlesSend(player, "LOC_SET");
-                                                    goto_loc = new Location(TARDISAliasResolver.getWorldFromAlias(ComponentUtils.stripColour(lore.get(1))), sx, sy, sz);
+                                                    goto_loc = new Location(TARDISWorldResolver.getFromString(ComponentUtils.stripColour(lore.get(1))), sx, sy, sz);
                                                     nextDirection = COMPASS.valueOf(ComponentUtils.stripColour(lore.get(6)));
                                                     sub = Boolean.parseBoolean(ComponentUtils.stripColour(lore.get(7)));
                                                 } else {

@@ -25,7 +25,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.files.TARDISBlockLoader;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
+import me.eccentric_nz.TARDIS.planets.TARDISWorldResolver;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
@@ -111,7 +111,7 @@ public class DeleteTARDISCommand {
         boolean hidden = tardis.isHidden();
         String[] cdata = chunkLoc.split(":");
         String wname = cdata[0];
-        World cw = TARDISAliasResolver.getWorldFromAlias(wname);
+        World cw = TARDISWorldResolver.getFromString(wname);
         if (cw == null) {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "WORLD_DELETED");
             return;

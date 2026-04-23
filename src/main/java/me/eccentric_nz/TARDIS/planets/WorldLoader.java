@@ -74,8 +74,9 @@ public class WorldLoader {
                     }
                 }
                 String gm = plugin.getPlanetsConfig().getString("planets." + world + ".gamemode");
-                if (gm != null && gm.toUpperCase(Locale.ROOT).equals("CREATIVE")) {
-                    plugin.getTardisHelper().setWorldGameMode(world, GameMode.CREATIVE);
+                if (gm != null) {
+                    GameMode gamemode = GameMode.valueOf(gm.toUpperCase(Locale.ROOT));
+                    plugin.getTardisHelper().setWorldGameMode(world, gamemode);
                 }
                 if (plugin.getPlanetsConfig().contains("planets." + world + ".gamerules") && plugin.getPlanetsConfig().getConfigurationSection("planets." + world + ".gamerules") != null) {
                     for (String rule : plugin.getPlanetsConfig().getConfigurationSection("planets." + world + ".gamerules").getKeys(false)) {

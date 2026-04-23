@@ -28,7 +28,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
+import me.eccentric_nz.TARDIS.planets.TARDISWorldResolver;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.travel.TravelCostAndType;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
@@ -175,7 +175,7 @@ public class TerminalDialogProcessor {
             if (plugin.getConfig().getBoolean("travel.per_world_perms") && !TARDISPermission.hasPermission(player, "tardis.travel." + o)) {
                 continue;
             }
-            World ww = TARDISAliasResolver.getWorldFromAlias(o);
+            World ww = TARDISWorldResolver.getFromString(o);
             if (ww != null) {
                 String env = ww.getEnvironment().toString();
                 if (env.equals(environment)) {

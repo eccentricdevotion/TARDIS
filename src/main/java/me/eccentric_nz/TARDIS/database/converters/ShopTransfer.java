@@ -91,7 +91,7 @@ public class ShopTransfer {
 
     public Connection getSQLiteConnection() {
         Connection sqlite = null;
-        String path = plugin.getServer().getLevelDirectory() + File.separator + "plugins" + File.separator + "TARDISShop" + File.separator + "TARDISShop.db";
+        String path = plugin.getServer().getWorldContainer() + File.separator + "plugins" + File.separator + "TARDISShop" + File.separator + "TARDISShop.db";
         File file = new File(path);
         if (file.exists()) {
             try {

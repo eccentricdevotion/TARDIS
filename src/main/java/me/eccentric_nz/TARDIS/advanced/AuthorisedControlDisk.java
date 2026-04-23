@@ -30,7 +30,7 @@ import me.eccentric_nz.TARDIS.enumeration.TravelType;
 import me.eccentric_nz.TARDIS.flight.DematerialiseToVortex;
 import me.eccentric_nz.TARDIS.flight.MaterialseFromVortex;
 import me.eccentric_nz.TARDIS.flight.TARDISHandbrake;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
+import me.eccentric_nz.TARDIS.planets.TARDISWorldResolver;
 import me.eccentric_nz.TARDIS.travel.TARDISEPSRunnable;
 import me.eccentric_nz.TARDIS.travel.TravelCostAndType;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
@@ -106,7 +106,7 @@ public class AuthorisedControlDisk {
                 // get save location
                 ResultSetDestinations rsd = new ResultSetDestinations(plugin, where, false);
                 if (rsd.resultSet()) {
-                    World w = TARDISAliasResolver.getWorldFromAlias(rsd.getWorld());
+                    World w = TARDISWorldResolver.getFromString(rsd.getWorld());
                     if (w != null) {
                         location = new Location(w, rsd.getX(), rsd.getY(), rsd.getZ());
                         direction = COMPASS.valueOf(rsd.getDirection());

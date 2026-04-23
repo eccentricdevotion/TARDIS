@@ -28,11 +28,13 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
+import me.eccentric_nz.TARDIS.planets.TARDISWorldResolver;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -272,11 +274,6 @@ public class TARDISTerminalListener implements Listener {
 
     private void setCurrent(InventoryView view, Player p, int slot) {
         String current = terminalUsers.get(p.getUniqueId()).location().getWorld().getKey().getKey();
-        if (!plugin.getPlanetsConfig().getBoolean("planets." + current + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
-            current = plugin.getMVHelper().getAlias(current);
-        } else {
-            current = TARDISAliasResolver.getWorldAlias(current);
-        }
         int[] slots = new int[]{36, 38, 40, 42};
         for (int i : slots) {
             List<Component> lore = null;
@@ -333,7 +330,7 @@ public class TARDISTerminalListener implements Listener {
         String world;
         Set<String> worldlist = plugin.getPlanetsConfig().getConfigurationSection("planets").getKeys(false);
         worldlist.forEach((o) -> {
-            World ww = TARDISAliasResolver.getWorldFromAlias(o);
+            World ww = Bukkit.getServer().getWorld(Key.key(this_world));
             if (ww != null) {
                 String env = ww.getEnvironment().toString();
                 if (e.equalsIgnoreCase(env)) {
@@ -348,7 +345,7 @@ public class TARDISTerminalListener implements Listener {
                     }
                 }
                 // remove the world the Police Box is in
-                if (this_world != null && (allowedWorlds.size() > 1 || !plugin.getPlanetsConfig().getBoolean("planets." + this_world + ".time_travel"))) {
+                if (allowedWorlds.size() > 1 || !plugin.getPlanetsConfig().getBoolean("planets." + this_world + ".time_travel")) {
                     allowedWorlds.remove(this_world);
                 }
                 // remove the world if the player doesn't have permission
@@ -369,7 +366,7 @@ public class TARDISTerminalListener implements Listener {
             // if all else fails return the current world
             world = this_world;
         }
-        return (!plugin.getPlanetsConfig().getBoolean("planets." + world + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMVHelper().getAlias(world) : TARDISAliasResolver.getWorldAlias(world);
+        return world;
     }
 
     private void checkSettings(InventoryView view, Player p) {
@@ -392,7 +389,7 @@ public class TARDISTerminalListener implements Listener {
                     World w = (!plugin.getPlanetsConfig().getBoolean("planets." + world + ".enabled")
                             && plugin.getWorldManager().equals(WorldManager.MULTIVERSE))
                             ? plugin.getMVHelper().getWorld(world)
-                            : TARDISAliasResolver.getWorldFromAlias(world);
+                            : TARDISWorldResolver.getFromString(world);
                     e = w.getEnvironment();
                     if (plugin.getPlanetsConfig().getBoolean("planets." + w.getKey().getKey() + ".false_nether")) {
                         e = Environment.NETHER;

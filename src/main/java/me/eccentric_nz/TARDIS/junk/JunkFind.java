@@ -22,8 +22,6 @@ import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.enumeration.WorldManager;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import org.bukkit.command.CommandSender;
 
 /**
@@ -50,10 +48,7 @@ public class JunkFind {
             ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, rs.getTardisId());
             if (rsc.resultSet()) {
                 Current current = rsc.getCurrent();
-                String world = TARDISAliasResolver.getWorldAlias(current.location().getWorld());
-                if (!plugin.getPlanetsConfig().getBoolean("planets." + current.location().getWorld().getKey().getKey() + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
-                    world = plugin.getMVHelper().getAlias(current.location().getWorld());
-                }
+                String world = current.location().getWorld().getKey().getKey();
                 plugin.getMessenger().send(sender, TardisModule.TARDIS, "TARDIS_FIND", world + " at x: " + current.location().getBlockX() + " y: " + current.location().getBlockY() + " z: " + current.location().getBlockZ());
             } else {
                 plugin.getMessenger().send(sender, TardisModule.TARDIS, "JUNK_NOT_FOUND");

@@ -19,8 +19,6 @@ package me.eccentric_nz.TARDIS.control;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetConsole;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetOccupied;
-import me.eccentric_nz.TARDIS.enumeration.WorldManager;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -63,10 +61,7 @@ public class ControlRunnable implements Runnable {
                                     front.line(2, Component.text("time", NamedTextColor.DARK_PURPLE));
                                     front.line(3, Component.text("vortex...", NamedTextColor.DARK_PURPLE));
                                 } else {
-                                    String worldName = (resultSetConsole.getWorld() != null) ? TARDISAliasResolver.getWorldAlias(resultSetConsole.getWorld()) : "";
-                                    if (!plugin.getPlanetsConfig().getBoolean("planets." + resultSetConsole.getWorld() + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE) && !worldName.isEmpty()) {
-                                        worldName = plugin.getMVHelper().getAlias(worldName);
-                                    }
+                                    String worldName = (resultSetConsole.getWorld() != null) ? resultSetConsole.getWorld().split(":")[1] : "";
                                     front.line(0, Component.text(worldName, NamedTextColor.DARK_PURPLE));
                                     front.line(1, Component.text(resultSetConsole.getX(), NamedTextColor.BLACK));
                                     front.line(2, Component.text(resultSetConsole.getY(), NamedTextColor.BLACK));

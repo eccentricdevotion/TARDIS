@@ -20,8 +20,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.control.TARDISScanner;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.enumeration.WorldManager;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Location;
 import org.bukkit.entity.ArmorStand;
@@ -108,18 +106,12 @@ public class SonicScanner {
         });
         long time = scan_loc.getWorld().getTime();
         String daynight = TARDISStaticUtils.getTime(time);
-        String worldname;
-        if (!plugin.getPlanetsConfig().getBoolean("planets." + scan_loc.getWorld().getKey().getKey() + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
-            worldname = plugin.getMVHelper().getAlias(scan_loc.getWorld());
-        } else {
-            worldname = TARDISAliasResolver.getWorldAlias(scan_loc.getWorld());
-        }
-        String wn = worldname;
+        String worldname = scan_loc.getWorld().getKey().getKey();
         // message the player
         plugin.getMessenger().send(player, TardisModule.TARDIS, "SONIC_SCAN");
         BukkitScheduler bsched = plugin.getServer().getScheduler();
         bsched.scheduleSyncDelayedTask(plugin, () -> {
-            plugin.getMessenger().send(player, TardisModule.TARDIS, "SCAN_WORLD", wn);
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "SCAN_WORLD", worldname);
             plugin.getMessenger().send(player, TardisModule.TARDIS, "SONIC_COORDS", scan_loc.getBlockX() + ":" + scan_loc.getBlockY() + ":" + scan_loc.getBlockZ());
         }, 20L);
         // get biome

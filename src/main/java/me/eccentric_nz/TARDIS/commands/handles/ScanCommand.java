@@ -25,8 +25,6 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetNextLocation;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
-import me.eccentric_nz.TARDIS.enumeration.WorldManager;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Location;
@@ -160,12 +158,7 @@ public class ScanCommand {
         } else {
             plugin.getMessenger().handlesSend(player, "SCAN_PLAYER");
         }
-        String worldname;
-        if (!plugin.getPlanetsConfig().getBoolean("planets." + scan_loc.getWorld().getKey().getKey() + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
-            worldname = plugin.getMVHelper().getAlias(scan_loc.getWorld());
-        } else {
-            worldname = TARDISAliasResolver.getWorldAlias(scan_loc.getWorld());
-        }
+        String worldname = scan_loc.getWorld().getKey().getKey();
         plugin.getMessenger().handlesSend(player, "SCAN_WORLD", worldname);
         plugin.getMessenger().handlesSend(player, "SONIC_COORDS", scan_loc.getBlockX() + ":" + scan_loc.getBlockY() + ":" + scan_loc.getBlockZ());
         BukkitScheduler bsched = plugin.getServer().getScheduler();

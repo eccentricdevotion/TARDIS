@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.desktop;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
+import me.eccentric_nz.TARDIS.planets.TARDISWorldResolver;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 
@@ -96,7 +96,7 @@ public class PreviewPersister {
                         float z = rs.getFloat("z");
                         float yaw = rs.getFloat("yaw");
                         float pitch = rs.getFloat("pitch");
-                        Location location = new Location(TARDISAliasResolver.getWorldFromAlias(world), x, y, z, yaw, pitch);
+                        Location location = new Location(TARDISWorldResolver.getFromString(world), x, y, z, yaw, pitch);
                         String gm = rs.getString("gamemode");
                         GameMode gamemode = GameMode.valueOf(gm);
                         int id = rs.getInt("tardis_id");

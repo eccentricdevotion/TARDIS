@@ -45,7 +45,7 @@ import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.monitor.SnapshotLoader;
 import me.eccentric_nz.TARDIS.perms.TARDISContexts;
 import me.eccentric_nz.TARDIS.placeholders.TARDISPlaceholderExpansion;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
+import me.eccentric_nz.TARDIS.planets.TARDISWorldResolver;
 import me.eccentric_nz.TARDIS.planets.TradesConfigUpdater;
 import me.eccentric_nz.TARDIS.recipes.*;
 import me.eccentric_nz.TARDIS.rooms.eye.EyeLoader;
@@ -353,7 +353,7 @@ public class TARDIS extends JavaPlugin {
             queryFactory = new QueryFactory(this);
             loadInventoryManager();
             new TARDISWorldConfig(this).check();
-            TARDISAliasResolver.createAliasMap();
+            TARDISWorldResolver.createAliasMap();
             utils = new TARDISUtils(this);
             locationUtils = new TARDISLocationGetters(this);
             buildKeeper.setRoomSeeds(getSeeds());

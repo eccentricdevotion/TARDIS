@@ -26,8 +26,6 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetDestinations;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetHomeLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.enumeration.WorldManager;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -72,12 +70,7 @@ public class TARDISLister {
                 // only list public rechargers
                 if (!s.startsWith("rift")) {
                     String world = TARDIS.plugin.getConfig().getString("rechargers." + s + ".world");
-                    String w;
-                    if (!plugin.getPlanetsConfig().getBoolean("planets." + world + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
-                        w = plugin.getMVHelper().getAlias(world);
-                    } else {
-                        w = TARDISAliasResolver.getWorldAlias(world);
-                    }
+                    String w = world.split(":")[1];
                     String x = TARDIS.plugin.getConfig().getString("rechargers." + s + ".x");
                     String y = TARDIS.plugin.getConfig().getString("rechargers." + s + ".y");
                     String z = TARDIS.plugin.getConfig().getString("rechargers." + s + ".z");
@@ -118,7 +111,7 @@ public class TARDISLister {
                     wherehl.put("tardis_id", id);
                     ResultSetHomeLocation rsh = new ResultSetHomeLocation(TARDIS.plugin, wherehl);
                     rsh.resultSet();
-                    String homeWorld = (!plugin.getPlanetsConfig().getBoolean("planets." + rsh.getWorld().getKey().getKey() + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMVHelper().getAlias(rsh.getWorld()) : TARDISAliasResolver.getWorldAlias(rsh.getWorld());
+                    String homeWorld = rsh.getWorld().getKey().getKey();
                     plugin.getMessenger().sendHome(player, plugin, homeWorld, rsh.getX(), rsh.getY(), rsh.getZ());
                     // list other saved destinations
                     HashMap<String, Object> whered = new HashMap<>();
@@ -128,7 +121,7 @@ public class TARDISLister {
                         ArrayList<HashMap<String, String>> data = rsd.getData();
                         for (HashMap<String, String> map : data) {
                             if (map.get("type").equals("0")) {
-                                String world = (!plugin.getPlanetsConfig().getBoolean("planets." + map.get("world") + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMVHelper().getAlias(map.get("world")) : TARDISAliasResolver.getWorldAlias(map.get("world"));
+                                String world = map.get("world").split(":")[1];
                                 plugin.getMessenger().sendSave(player, map, world);
                             }
                         }

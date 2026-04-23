@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.planets;
 
+import com.google.common.collect.Sets;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -73,7 +74,7 @@ public class TARDISWorlds {
         // now load TARDIS worlds / remove worlds that may have been deleted
         Set<String> cWorlds = plugin.getPlanetsConfig().getConfigurationSection("planets").getKeys(false);
         cWorlds.forEach((cw) -> {
-            if (TARDISAliasResolver.getWorldFromAlias(cw) == null) {
+            if (TARDISWorldResolver.getFromString(cw.toLowerCase()) == null) {
                 if (worldFolderExists(cw) && plugin.getPlanetsConfig().getBoolean("planets." + cw + ".enabled")) {
                     plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Attempting to load world: '" + cw + "'");
                     new WorldLoader(plugin).loadWorld(cw);
@@ -109,21 +110,24 @@ public class TARDISWorlds {
         plugin.savePlanetsConfig();
     }
 
+    private final Set<String> defaultWorlds = Sets.newHashSet("overworld", "the_nether", "the_end");
+
     private boolean worldFolderExists(String world) {
         String worldZero = plugin.getServer().getWorlds().getFirst().getKey().getKey();
-        File container = plugin.getServer().getLevelDirectory().toFile();
-        File[] dirs = container.listFiles();
+        String container = plugin.getServer().getLevelDirectory() + File.separator + "dimensions" + File.separator + "minecraft";
+        File folder = new File(container);
+        File[] dirs = folder.listFiles();
         if (dirs != null) {
             for (File dir : dirs) {
                 if (dir.isDirectory()) {
                     String name = dir.getName();
-                    if (name.startsWith(worldZero)) {
+                    if (defaultWorlds.contains(name)) {
                         // only check worlds that aren't default dimensions
                         return true;
                     }
                     if (name.equals(world)) {
-                        File level = new File(dir, "level.dat");
-                        if (level.exists()) {
+                        File yaml = new File(dir, "paper-world.yml");
+                        if (yaml.exists()) {
                             return true;
                         }
                     }

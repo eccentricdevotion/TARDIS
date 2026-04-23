@@ -21,8 +21,6 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.custommodels.GUISaves;
 import me.eccentric_nz.TARDIS.database.data.Destination;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDestinationsByPlanet;
-import me.eccentric_nz.TARDIS.enumeration.WorldManager;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
@@ -53,7 +51,7 @@ public class TARDISSavesInventory implements InventoryHolder {
     public TARDISSavesInventory(TARDIS plugin, int id, String world) {
         this.plugin = plugin;
         this.id = id;
-        this.world = world;
+        this.world = "minecraft:" + world;
         this.inventory = plugin.getServer().createInventory(this, 54, Component.text("TARDIS saves", NamedTextColor.DARK_RED));
         this.inventory.setContents(getItemStack());
     }
@@ -114,7 +112,7 @@ public class TARDISSavesInventory implements InventoryHolder {
                         ItemMeta im = is.getItemMeta();
                         im.customName(Component.text(map.dest_name()));
                         List<Component> lore = new ArrayList<>();
-                        String world = (!plugin.getPlanetsConfig().getBoolean("planets." + map.world() + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMVHelper().getAlias(map.world()) : TARDISAliasResolver.getWorldAlias(map.world());
+                        String world = map.world().split(":")[1];
                         lore.add(Component.text(world));
                         lore.add(Component.text("" + map.x()));
                         lore.add(Component.text("" + map.y()));

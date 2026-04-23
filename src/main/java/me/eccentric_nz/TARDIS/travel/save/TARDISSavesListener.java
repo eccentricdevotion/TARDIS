@@ -24,7 +24,7 @@ import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
+import me.eccentric_nz.TARDIS.planets.TARDISWorldResolver;
 import me.eccentric_nz.TARDIS.travel.TARDISAreaCheck;
 import me.eccentric_nz.TARDIS.travel.TravelCostAndType;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
@@ -325,7 +325,7 @@ public class TARDISSavesListener extends TARDISMenuListener {
         if (lore == null) {
             return null;
         }
-        World w = TARDISAliasResolver.getWorldFromAlias(ComponentUtils.stripColour(lore.getFirst()));
+        World w = TARDISWorldResolver.getFromString(ComponentUtils.stripColour(lore.getFirst()));
         if (w == null) {
             return null;
         }

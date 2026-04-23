@@ -30,8 +30,6 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.enumeration.WorldManager;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.rooms.ExteriorRenderer;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
@@ -208,13 +206,7 @@ public class TARDISScanner {
         // message the player
         plugin.getMessenger().send(player, TardisModule.TARDIS, "SCAN_RESULT", whereIsIt);
         String worldName = scan_loc.getWorld().getKey().getKey();
-        String alias;
-        if (!plugin.getPlanetsConfig().getBoolean("planets." + worldName + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
-            alias = plugin.getMVHelper().getAlias(scan_loc.getWorld());
-        } else {
-            alias = TARDISAliasResolver.getWorldAlias(scan_loc.getWorld());
-        }
-        plugin.getMessenger().send(player, TardisModule.TARDIS, "SCAN_WORLD", alias);
+        plugin.getMessenger().send(player, TardisModule.TARDIS, "SCAN_WORLD", worldName);
         plugin.getMessenger().send(player, TardisModule.TARDIS, "SONIC_COORDS", scan_loc.getBlockX() + ":" + scan_loc.getBlockY() + ":" + scan_loc.getBlockZ());
         bsched.scheduleSyncDelayedTask(plugin, () -> plugin.getMessenger().send(player, TardisModule.TARDIS, "SCAN_DIRECTION", tardisDirection.toString()), 20L);
         // get biome

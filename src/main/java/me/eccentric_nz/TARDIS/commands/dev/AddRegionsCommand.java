@@ -23,7 +23,7 @@ import me.eccentric_nz.TARDIS.builders.interior.TIPSData;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
+import me.eccentric_nz.TARDIS.planets.TARDISWorldResolver;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -91,7 +91,7 @@ public class AddRegionsCommand {
                         if (!config.contains("regions." + rn)) {
                             TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
                             TIPSData td = tintpos.getTIPSData(t);
-                            plugin.getWorldGuardUtils().addWGProtection(uuid, tl, td, TARDISAliasResolver.getWorldFromAlias(dw));
+                            plugin.getWorldGuardUtils().addWGProtection(uuid, tl, td, TARDISWorldResolver.getFromString(dw));
                         }
                     }
                 }

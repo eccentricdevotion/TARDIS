@@ -32,7 +32,7 @@ public class AllInOneConfigConverter {
 
     public AllInOneConfigConverter(TARDIS plugin) {
         this.plugin = plugin;
-        this.basePath = this.plugin.getServer().getLevelDirectory() + File.separator + "plugins" + File.separator;
+        this.basePath = this.plugin.getServer().getWorldContainer() + File.separator + "plugins" + File.separator;
     }
 
     public boolean transferConfig(TardisModule module) {

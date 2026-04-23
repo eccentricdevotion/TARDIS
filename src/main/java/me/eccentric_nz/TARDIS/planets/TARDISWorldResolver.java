@@ -23,21 +23,14 @@ import org.bukkit.Bukkit;
 import org.bukkit.World;
 
 import java.util.HashMap;
+import java.util.Locale;
 
-public class TARDISAliasResolver {
+public class TARDISWorldResolver {
 
     private static final HashMap<String, TARDISPlanet> planets = new HashMap<>();
 
-    public static String getWorldAlias(World world) {
-        return getWorldAlias(world.getKey().getKey());
-    }
-
-    public static String getWorldAlias(String world) {
-        return TARDIS.plugin.getPlanetsConfig().getString("planets." + world + ".alias", world);
-    }
-
-    public static World getWorldFromAlias(String alias) {
-        World world = Bukkit.getServer().getWorld(Key.key(alias));
+    public static World getFromString(String alias) {
+        World world = Bukkit.getServer().getWorld(Key.key(alias.toLowerCase(Locale.ROOT)));
         if (world != null) {
             return world;
         } else {
@@ -53,20 +46,6 @@ public class TARDISAliasResolver {
             }
         }
         return null;
-    }
-
-    public static String getWorldNameFromAlias(String alias) {
-        World world = Bukkit.getServer().getWorld(Key.key(alias));
-        if (world != null) {
-            return alias;
-        } else {
-            for (TARDISPlanet planet : planets.values()) {
-                if (planet.getAlias().equalsIgnoreCase(alias)) {
-                    return planet.getName();
-                }
-            }
-        }
-        return "";
     }
 
     public static void createAliasMap() {

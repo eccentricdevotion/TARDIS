@@ -23,7 +23,7 @@ import me.eccentric_nz.TARDIS.advanced.CircuitChecker;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
+import me.eccentric_nz.TARDIS.planets.TARDISWorldResolver;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
@@ -118,7 +118,7 @@ public class TARDISKeyboardListener implements Listener {
             return;
         }
         // location?
-        if (TARDISAliasResolver.getWorldFromAlias(firstLine) != null) {
+        if (TARDISWorldResolver.getFromString(firstLine) != null) {
             // set location to coords
             String command = firstLine + " "
                     + ComponentUtils.stripColour(event.line(1)) + " "

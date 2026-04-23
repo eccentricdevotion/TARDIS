@@ -25,7 +25,7 @@ import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.TravelType;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
+import me.eccentric_nz.TARDIS.planets.TARDISWorldResolver;
 import me.eccentric_nz.TARDIS.travel.TravelCostAndType;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
@@ -98,7 +98,7 @@ public class TARDISSavesPlanetListener extends TARDISMenuListener {
             }
             ItemMeta im = is.getItemMeta();
             List<Component> lore = im.lore();
-            World w = TARDISAliasResolver.getWorldFromAlias(ComponentUtils.stripColour(lore.getFirst()));
+            World w = TARDISWorldResolver.getFromString(ComponentUtils.stripColour(lore.getFirst()));
             if (w == null) {
                 close(player);
                 return;
@@ -180,8 +180,7 @@ public class TARDISSavesPlanetListener extends TARDISMenuListener {
             ItemStack is = view.getItem(slot);
             if (is != null) {
                 ItemMeta im = is.getItemMeta();
-                String alias = ComponentUtils.stripColour(im.customName());
-                String world = TARDISAliasResolver.getWorldNameFromAlias(alias);
+                String world = ComponentUtils.stripColour(im.customName());
                 player.openInventory(new TARDISSavesInventory(plugin, id, world).getInventory());
             }
         }
