@@ -32,6 +32,7 @@ public class WorldNameConverter {
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final String prefix;
+    private final String defaultWorld;
 
     public WorldNameConverter(TARDIS plugin) {
         this.plugin = plugin;
@@ -58,6 +59,20 @@ public class WorldNameConverter {
         locationTables.add(new SQLTable("room_progress", "progress_id"));
         locationTables.add(new SQLTable("doors", "door_id", "door_location"));
         locationTables.add(new SQLTable("interactions", "i_id", "uuid"));
+        // default world name
+        defaultWorld = plugin.getServer().getLevelDirectory().toString().substring(2);
+    }
+
+    private String checkDefault(String w) {
+        if (w.equalsIgnoreCase(defaultWorld)) {
+            return "overworld";
+        } else if (w.equalsIgnoreCase(defaultWorld + "_nether")) {
+            return "the_nether";
+        } else if (w.equalsIgnoreCase(defaultWorld + "_the_end")) {
+            return "the_end";
+        } else {
+            return w;
+        }
     }
 
     public boolean update() {
@@ -77,7 +92,7 @@ public class WorldNameConverter {
                 ResultSet rsw = statement.executeQuery(worldQuery);
                 if (rsw.isBeforeFirst()) {
                     while (rsw.next()) {
-                        String key = "minecraft:" + rsw.getString("world").toLowerCase(Locale.ROOT);
+                        String key = "minecraft:" + checkDefault(rsw.getString("world").toLowerCase(Locale.ROOT));
                         // if there is a record
                         ps.setString(1, key);
                         ps.setInt(2, rsw.getInt(entry.getValue()));
@@ -108,7 +123,7 @@ public class WorldNameConverter {
                     while (rsl.next()) {
                         String oldLocation = rsl.getString(entry.column());
                         // TARDIS_TimeVortex:520:68:1529 -> minecraft:tardis_timevortex:520:68:1529
-                        String newLocation = "minecraft:" + oldLocation.toLowerCase(Locale.ROOT);
+                        String newLocation = "minecraft:" + checkDefault(oldLocation.toLowerCase(Locale.ROOT));
                         ps.setString(1, newLocation);
                         ps.setInt(2, rsl.getInt(entry.id()));
                         ps.addBatch();

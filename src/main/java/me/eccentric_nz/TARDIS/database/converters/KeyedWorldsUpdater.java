@@ -6,6 +6,7 @@ import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 
 import java.sql.*;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 import java.util.regex.Pattern;
 
@@ -16,6 +17,7 @@ public class KeyedWorldsUpdater {
     private final TARDIS plugin;
     private final String prefix;
     private final Set<SQLTable> locationTables = new HashSet<>();
+    private final String defaultWorld;
 
     public KeyedWorldsUpdater(TARDIS plugin) {
         this.plugin = plugin;
@@ -41,6 +43,20 @@ public class KeyedWorldsUpdater {
         locationTables.add(new SQLTable("beacons", "beacon_id"));
         // shop
         locationTables.add(new SQLTable("items", "item_id"));
+        // default world name
+        defaultWorld = plugin.getServer().getLevelDirectory().toString().substring(2);
+    }
+
+    private String checkDefault(String w) {
+        if (w.equalsIgnoreCase(defaultWorld)) {
+            return "overworld";
+        } else if (w.equalsIgnoreCase(defaultWorld + "_nether")) {
+            return "the_nether";
+        } else if (w.equalsIgnoreCase(defaultWorld + "_the_end")) {
+            return "the_end";
+        } else {
+            return w;
+        }
     }
 
     public boolean setKeys() {
@@ -70,7 +86,7 @@ public class KeyedWorldsUpdater {
                         String original = rsl.getString(entry.column());
                         // find the world name, lowercase it, and swap the prefix
                         String updated = pattern.matcher(original).replaceAll(match ->
-                                "key=minecraft:" + match.group(1).toLowerCase()
+                                "key=minecraft:" + checkDefault(match.group(1).toLowerCase(Locale.ROOT))
                         );
                         // set the new data
                         ps.setString(1, updated);

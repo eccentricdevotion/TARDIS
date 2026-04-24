@@ -337,6 +337,10 @@ public class TARDIS extends JavaPlugin {
             loadHelper();
             // load configs
             loadCustomConfigs();
+            // update world keys in configs
+            if (!getConfig().getBoolean("conversions.keyed_worlds")) {
+                new WorldKeyConfigUpdater(this).convert();
+            }
             // load Multiverse
             loadMultiverse();
             // load worldguard
@@ -1475,7 +1479,6 @@ public class TARDIS extends JavaPlugin {
         );
         for (String f : files) {
 //            debug(f);
-            tardisCopier.copy(f);
             tardisCopier.copy(f);
         }
         new PlanetsConfigUpdater(this, planetsConfig).checkPlanetsConfig();
