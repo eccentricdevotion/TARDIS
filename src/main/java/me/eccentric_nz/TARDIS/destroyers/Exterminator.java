@@ -262,8 +262,7 @@ public class Exterminator {
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "wb " + name + " clear");
             }
             plugin.getServer().unloadWorld(w, true);
-            // TODO use correct path to custom dimensions
-            File world_folder = new File(plugin.getServer().getLevelDirectory() + File.separator + name + File.separator);
+            File world_folder = new File(plugin.getServer().getLevelDirectory() + File.separator + "dimensions" + File.separator + "minecraft" + File.separator + name + File.separator);
             if (!deleteFolder(world_folder)) {
                 plugin.debug("Could not delete world <" + name + ">");
             }

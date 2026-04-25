@@ -54,7 +54,10 @@ public class DeleteTARDISCommand {
     public static void cleanDatabase(int id) {
         TARDISBlockLoader bl = new TARDISBlockLoader(TARDIS.plugin);
         bl.unloadProtectedBlocks(id);
-        List<String> tables = List.of("ars", "back", "chunks", "controls", "current", "destinations", "doors", "gravity_well", "homes", "junk", "lamps", "next", "tardis", "thevoid", "travellers", "vaults");
+        List<String> tables = List.of(
+                "ars", "back", "chunks", "controls", "current", "destinations", "doors", "gravity_well",
+                "homes", "junk", "lamps", "next", "tardis", "thevoid", "travellers", "vaults"
+        );
         // remove record from database tables
         tables.forEach((table) -> {
             HashMap<String, Object> where = new HashMap<>();
@@ -65,10 +68,9 @@ public class DeleteTARDISCommand {
 
     public void deleteTARDIS(CommandSender sender, Player player, int abandoned) {
         HashMap<String, Object> where = new HashMap<>();
-            // Look up this player's UUID
+        // look up this player's UUID
         UUID uuid = player.getUniqueId();
-            where.put("uuid", uuid.toString());
-
+        where.put("uuid", uuid.toString());
         where.put("abandoned", abandoned);
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (rs.resultSet()) {
@@ -89,17 +91,6 @@ public class DeleteTARDISCommand {
             process(tardis, sender, player.getPlayer());
         } else {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "PLAYER_NOT_FOUND_DB", "tardis_id=" + id);
-        }
-    }
-
-    public void deleteJunk(CommandSender sender) {
-        HashMap<String, Object> where = new HashMap<>();
-        where.put("uuid", "00000000-aaaa-bbbb-cccc-000000000000");
-        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
-        if (rs.resultSet()) {
-            process(rs.getTardis(), sender, null);
-        } else {
-            plugin.getMessenger().send(sender, TardisModule.TARDIS, "PLAYER_NOT_FOUND_DB", "junk");
         }
     }
 
@@ -157,8 +148,7 @@ public class DeleteTARDISCommand {
                     plugin.getServer().dispatchCommand(plugin.getConsole(), "mv remove " + wname);
                 }
                 plugin.getServer().unloadWorld(cw, true);
-                // TODO use correct path to custom dimensions
-                File world_folder = new File(plugin.getServer().getLevelDirectory() + File.separator + wname + File.separator);
+                File world_folder = new File(plugin.getServer().getLevelDirectory() + File.separator + "dimensions" + File.separator + "minecraft" + File.separator + wname + File.separator);
                 if (!deleteFolder(world_folder)) {
                     plugin.debug("Could not delete world <" + wname + ">");
                 }
