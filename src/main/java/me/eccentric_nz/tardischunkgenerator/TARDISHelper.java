@@ -123,31 +123,12 @@ public class TARDISHelper {
     public void setLevelName(String oldName, String newName) {
         File file = new File(basePath + oldName + File.separator + "data" + File.separator + "paper" + File.separator + "level_overrides.dat");
         if (file.exists()) {
-//            try {
-//                CompoundTag tagCompound;
-//                CompoundTag data;
-//                try (FileInputStream fileinputstream = new FileInputStream(file)) {
-//                    tagCompound = NbtIo.readCompressed(fileinputstream, NbtAccounter.unlimitedHeap());
-//                    if (tagCompound.getCompound("data").isPresent()) {
-//                        data = tagCompound.getCompound("data").get();
-//                        // set LevelName tag
-//                        data.putString("level_name", newName);
-//                        tagCompound.put("data", data);
-//                        FileOutputStream fileoutputstream = new FileOutputStream(file);
-//                        NbtIo.writeCompressed(tagCompound, fileoutputstream);
-//                        fileoutputstream.close();
-//                        plugin.getMessenger().message(plugin.getConsole(), TardisModule.HELPER, "Renamed level to " + newName);
             // rename the directory
             File directory = new File(basePath + oldName);
             File folder = new File(basePath + newName);
             if (directory.renameTo(folder)) {
                 plugin.getMessenger().message(plugin.getConsole(), TardisModule.HELPER, "Renamed directory to " + newName);
             }
-//                    }
-//                }
-//            } catch (IOException ex) {
-//                plugin.getMessenger().message(plugin.getConsole(), TardisModule.HELPER_SEVERE, ex.getMessage());
-//            }
         }
     }
 
@@ -214,15 +195,12 @@ public class TARDISHelper {
                             default -> WorldType.NORMAL; // default or unknown
                         };
                     }
-//                    // use correct path to dimensions + level.dat no longer exists for custom worlds
-//                    File dimDashOne = new File(Bukkit.getServer().getLevelDirectory() + File.separator + world + File.separator + "DIM-1");
-//                    File dimOne = new File(Bukkit.getServer().getLevelDirectory() + File.separator + world + File.separator + "DIM1");
-//                    if (dimDashOne.exists() && !dimOne.exists()) {
-//                        environment = World.Environment.NETHER;
-//                    }
-//                    if (dimOne.exists() && !dimDashOne.exists()) {
-//                        environment = World.Environment.THE_END;
-//                    }
+                    if (world.endsWith("nether")) {
+                        environment = World.Environment.NETHER;
+                    }
+                    if (world.endsWith("_end")) {
+                        environment = World.Environment.THE_END;
+                    }
                     if (data.getCompound("difficulty_settings").isPresent()) {
                         CompoundTag difficulty_settings = data.getCompound("difficulty_settings").get();
                         if (difficulty_settings.getString("difficulty").isPresent()) {

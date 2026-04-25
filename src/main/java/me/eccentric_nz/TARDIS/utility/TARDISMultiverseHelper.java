@@ -36,29 +36,6 @@ public class TARDISMultiverseHelper {
 
     final MultiverseCoreApi coreApi = MultiverseCoreApi.get();
 
-    public String getAlias(World world) {
-        Option<MultiverseWorld> option = coreApi.getWorldManager().getWorld(world);
-        if (option.isDefined()) {
-            MultiverseWorld mvw = option.get();
-            return mvw.getAlias();
-        } else {
-            return world.getKey().getKey();
-        }
-    }
-
-    public String getAlias(String world) {
-        if (Bukkit.getWorld(Key.key(world.toLowerCase(Locale.ROOT))) != null) {
-            Option<MultiverseWorld> option = coreApi.getWorldManager().getWorld(world);
-            if (option.isDefined()) {
-                MultiverseWorld mvw = option.get();
-                return mvw.getAlias();
-            } else {
-                return world;
-            }
-        }
-        return world;
-    }
-
     public boolean isWorldSurvival(World world) {
         GameMode gm;
         Option<MultiverseWorld> option = coreApi.getWorldManager().getWorld(world);
