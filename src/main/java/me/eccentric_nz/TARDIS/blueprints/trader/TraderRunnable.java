@@ -32,7 +32,7 @@ public class TraderRunnable implements Runnable {
     public void run() {
         for (World w : plugin.getServer().getWorlds()) {
             // only non-blacklisted worlds
-            String name = WorldProcessor.sanitiseName(w.getKey().getKey());
+            String name = w.getKey().getKey();
             if (plugin.getTradesConfig().getStringList("no_spawn").contains(name)) {
                 continue;
             }
