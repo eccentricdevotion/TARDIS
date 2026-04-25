@@ -96,7 +96,7 @@ public class WorldKeyConfigUpdater {
             plugin.getPlanetsConfig().save(new File(plugin.getDataFolder(), "planets.yml"));
             // monsters
             // **monster**.worlds
-            Set<String> not_these = Set.of("config_version", "spawn_rate", "custom_spawners");
+            Set<String> not_these = Set.of("config_version", "spawn_rate", "custom_spawners", "ossified");
             if (plugin.getConfig().getBoolean("modules.weeping_angels")) {
                 for (String monster : plugin.getMonstersConfig().getKeys(false)) {
                     if (!not_these.contains(monster)) {
