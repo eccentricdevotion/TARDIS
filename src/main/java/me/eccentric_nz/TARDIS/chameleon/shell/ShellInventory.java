@@ -101,7 +101,7 @@ public class ShellInventory implements InventoryHolder {
                 }
                 ItemStack saved = ItemStack.of(material, 1);
                 ItemMeta con = saved.getItemMeta();
-                con.displayName(Component.text("Saved Construct"));
+                con.customName(Component.text("Saved Construct"));
                 List<Component> lore = new ArrayList<>();
                 lore.add(Component.text(map.get("line1")));
                 lore.add(Component.text(map.get("line2")));
@@ -124,7 +124,7 @@ public class ShellInventory implements InventoryHolder {
         // use selected shell
         ItemStack use = ItemStack.of(GUIChameleonPresets.USE_SELECTED.material(), 1);
         ItemMeta uim = use.getItemMeta();
-        uim.displayName(Component.text("Use selected shell"));
+        uim.customName(Component.text("Use selected shell"));
         uim.lore(List.of(
                 Component.text("Will apply shell to"),
                 Component.text("the Chameleon Circuit"),
@@ -135,19 +135,19 @@ public class ShellInventory implements InventoryHolder {
         // delete selected shell
         ItemStack delete = ItemStack.of(GUIChameleonPresets.DELETE_SELECTED.material(), 1);
         ItemMeta dim = delete.getItemMeta();
-        dim.displayName(Component.text("Delete selected shell"));
+        dim.customName(Component.text("Delete selected shell"));
         delete.setItemMeta(dim);
         stacks[GUIChameleonPresets.DELETE_SELECTED.slot()] = delete;
         // update selected shell
         ItemStack update = ItemStack.of(GUIChameleonPresets.UPDATE_SELECTED.material(), 1);
         ItemMeta upim = update.getItemMeta();
-        upim.displayName(Component.text("Update selected shell"));
+        upim.customName(Component.text("Update selected shell"));
         update.setItemMeta(upim);
         stacks[GUIChameleonPresets.UPDATE_SELECTED.slot()] = update;
         // clear shell on platform
         ItemStack newShell = ItemStack.of(GUIChameleonPresets.NEW.material(), 1);
         ItemMeta ns = newShell.getItemMeta();
-        ns.displayName(Component.text("New Chameleon shell"));
+        ns.customName(Component.text("New Chameleon shell"));
         ns.lore(List.of(
                 Component.text("Will clear the shell platform"),
                 Component.text("ready for building.")
@@ -157,7 +157,7 @@ public class ShellInventory implements InventoryHolder {
         // Save current shell on platform
         ItemStack save = ItemStack.of(GUIChameleonPresets.SAVE.material(), 1);
         ItemMeta pre = save.getItemMeta();
-        pre.displayName(Component.text("Save Chameleon shell"));
+        pre.customName(Component.text("Save Chameleon shell"));
         ns.lore(List.of(
                 Component.text("Will save shell and"),
                 Component.text("rebuild the exterior.")
@@ -167,7 +167,7 @@ public class ShellInventory implements InventoryHolder {
         // Cancel / close
         ItemStack close = ItemStack.of(GUIChameleonPresets.CLOSE.material(), 1);
         ItemMeta can = close.getItemMeta();
-        can.displayName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
+        can.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
         close.setItemMeta(can);
         stacks[GUIChameleonPresets.CLOSE.slot()] = close;
 

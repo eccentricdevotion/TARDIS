@@ -143,7 +143,7 @@ public class LightsGUIListener extends TARDISMenuListener {
                         default -> {
                             ItemMeta im = is.getItemMeta();
                             // save preference
-                            String light = TARDISStringUtils.toUnderscoredUppercase(ComponentUtils.stripColour(im.displayName()));
+                            String light = TARDISStringUtils.toUnderscoredUppercase(ComponentUtils.stripColour(im.customName()));
                             HashMap<String, Object> set = new HashMap<>();
                             set.put("light", light);
                             HashMap<String, Object> wheret = new HashMap<>();
@@ -160,7 +160,7 @@ public class LightsGUIListener extends TARDISMenuListener {
                                 ItemStack isl = view.getItem(l);
                                 if (isl != null) {
                                     ItemMeta iml = isl.getItemMeta();
-                                    if (!iml.displayName().equals(im.displayName())) {
+                                    if (!iml.customName().equals(im.customName())) {
                                         iml.lore(null);
                                     } else {
                                         iml.lore(List.of(Component.text("Current light")));

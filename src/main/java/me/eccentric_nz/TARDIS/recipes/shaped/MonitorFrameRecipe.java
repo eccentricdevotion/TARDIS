@@ -54,7 +54,7 @@ public class MonitorFrameRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.GLASS, 1);
         ItemMeta im = is.getItemMeta();
-        im.displayName(ComponentUtils.toWhite("Monitor Frame"));
+        im.customName(ComponentUtils.toWhite("Monitor Frame"));
         im.setItemModel(RecipeItem.MONITOR_FRAME.getModel());
         im.lore(List.of(
                 Component.text("Place in an upwards"),

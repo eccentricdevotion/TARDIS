@@ -61,35 +61,35 @@ public class ElementInventory implements InventoryHolder {
         // scroll up
         ItemStack scroll_up = ItemStack.of(GUIChemistry.SCROLL_UP.material(), 1);
         ItemMeta uim = scroll_up.getItemMeta();
-        uim.displayName(Component.text("Scroll up"));
+        uim.customName(Component.text("Scroll up"));
         uim.setItemModel(GUIChemistry.SCROLL_UP.key());
         scroll_up.setItemMeta(uim);
         stack[8] = scroll_up;
         // scroll down
         ItemStack scroll_down = ItemStack.of(GUIChemistry.SCROLL_DOWN.material(), 1);
         ItemMeta dim = scroll_down.getItemMeta();
-        dim.displayName(Component.text("Scroll down"));
+        dim.customName(Component.text("Scroll down"));
         dim.setItemModel(GUIChemistry.SCROLL_DOWN.key());
         scroll_down.setItemMeta(dim);
         stack[17] = scroll_down;
         // compounds
         ItemStack compounds = ItemStack.of(GUIChemistry.COMPOUNDS.material(), 1);
         ItemMeta cim = compounds.getItemMeta();
-        cim.displayName(Component.text("Compounds"));
+        cim.customName(Component.text("Compounds"));
         cim.setItemModel(GUIChemistry.COMPOUNDS.key());
         compounds.setItemMeta(cim);
         stack[35] = compounds;
         // products
         ItemStack products = ItemStack.of(GUIChemistry.PRODUCTS.material(), 1);
         ItemMeta pim = products.getItemMeta();
-        pim.displayName(Component.text("Products"));
+        pim.customName(Component.text("Products"));
         pim.setItemModel(GUIChemistry.PRODUCTS.key());
         products.setItemMeta(pim);
         stack[GUIChemistry.PRODUCTS.slot()] = products;
         // close
         ItemStack close = ItemStack.of(GUIChemistry.CLOSE.material(), 1);
         ItemMeta close_im = close.getItemMeta();
-        close_im.displayName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
+        close_im.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
         close_im.setItemModel(GUIChemistry.CLOSE.key());
         close.setItemMeta(close_im);
         stack[53] = close;

@@ -21,6 +21,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetChunks;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.move.TARDISTeleportLocation;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
+import net.kyori.adventure.key.Key;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -48,7 +49,7 @@ public class MonstersCommand {
             Location l = null;
             for (Map.Entry<Location, TARDISTeleportLocation> map : plugin.getTrackerKeeper().getPortals().entrySet()) {
                 // only portals in police box worlds
-                if (map.getKey().getWorld().getName().contains("TARDIS")) {
+                if (map.getKey().getWorld().getKey().getKey().contains("tardis")) {
                     continue;
                 }
                 if (map.getValue().getTardisId() == id) {
@@ -66,7 +67,7 @@ public class MonstersCommand {
             where.put("tardis_id", id);
             ResultSetChunks rsc = new ResultSetChunks(plugin, where, true);
             if (rsc.resultSet()) {
-                World world = plugin.getServer().getWorld(rsc.getWorld());
+                World world = plugin.getServer().getWorld(Key.key(rsc.getWorld()));
                 for (HashMap<String, String> map : rsc.getData()) {
                     int x = TARDISNumberParsers.parseInt(map.get("x"));
                     int z = TARDISNumberParsers.parseInt(map.get("z"));

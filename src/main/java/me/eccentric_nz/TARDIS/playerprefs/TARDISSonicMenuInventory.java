@@ -65,7 +65,7 @@ public class TARDISSonicMenuInventory implements InventoryHolder {
             if (sonic.getMaterial() == Material.BLAZE_ROD) {
                 ItemStack is = ItemStack.of(sonic.getMaterial(), 1);
                 ItemMeta im = is.getItemMeta();
-                im.displayName(ComponentUtils.toWhite("Sonic Screwdriver"));
+                im.customName(ComponentUtils.toWhite("Sonic Screwdriver"));
                 im.lore(List.of(Component.text(sonic.getName())));
                 CustomModelDataComponent component = im.getCustomModelDataComponent();
                 component.setFloats(sonic.getFloats());
@@ -77,14 +77,14 @@ public class TARDISSonicMenuInventory implements InventoryHolder {
         // coloured wool
         ItemStack wool = ItemStack.of(Material.WHITE_WOOL);
         ItemMeta wool_im = wool.getItemMeta();
-        wool_im.displayName(Component.text("Display name colour"));
+        wool_im.customName(Component.text("Display name colour"));
         wool_im.lore(List.of(Component.text("Click to select")));
         wool.setItemMeta(wool_im);
         stack[28] = wool;
         // info
         ItemStack info = ItemStack.of(Material.BOOK, 1);
         ItemMeta info_im = info.getItemMeta();
-        info_im.displayName(Component.text("Instructions"));
+        info_im.customName(Component.text("Instructions"));
         info_im.lore(List.of(
                 Component.text("Put your Sonic Screwdriver"),
                 Component.text("in the bottom left most slot"),
@@ -96,7 +96,7 @@ public class TARDISSonicMenuInventory implements InventoryHolder {
         // info 2
         ItemStack name = ItemStack.of(Material.BOOK, 1);
         ItemMeta name_im = name.getItemMeta();
-        name_im.displayName(Component.text("Name"));
+        name_im.customName(Component.text("Name"));
         name_im.lore(List.of(
                 Component.text("If you want to have"),
                 Component.text("a coloured display name"),
@@ -108,7 +108,7 @@ public class TARDISSonicMenuInventory implements InventoryHolder {
         // close
         ItemStack close = ItemStack.of(Material.BOWL, 1);
         ItemMeta close_im = close.getItemMeta();
-        close_im.displayName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
+        close_im.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
         close.setItemMeta(close_im);
         stack[35] = close;
 

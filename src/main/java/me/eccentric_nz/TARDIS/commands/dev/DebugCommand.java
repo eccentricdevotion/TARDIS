@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.desktop.PreviewData;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.rooms.debug.DebugPopulator;
+import net.kyori.adventure.key.Key;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Sound;
@@ -111,8 +112,8 @@ public class DebugCommand {
     private void create(boolean update) {
         // get default world
         if (plugin.getConfig().getBoolean("creation.default_world")) {
-            String dn = plugin.getConfig().getString("creation.default_world_name", "TARDIS_TimeVortex");
-            World world = plugin.getServer().getWorld(dn);
+            String dn = plugin.getConfig().getString("creation.default_world_name", "tardis_timevortex");
+            World world = plugin.getServer().getWorld(Key.key(dn));
             if (world != null) {
                 DebugPopulator populator = new DebugPopulator(plugin, world);
                 populator.createBase(update);

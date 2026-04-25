@@ -77,7 +77,7 @@ public class CustomThemeInventory extends DesktopThemeInventory {
             // info
             ItemStack info = ItemStack.of(GUIChameleonConstructor.INFO.material(), 1);
             ItemMeta io = info.getItemMeta();
-            io.displayName(Component.text("Info"));
+            io.customName(Component.text("Info"));
             io.lore(List.of(
                     Component.text("Shift-left click"),
                     Component.text("a console block"),
@@ -92,13 +92,13 @@ public class CustomThemeInventory extends DesktopThemeInventory {
         // built-in consoles page
         ItemStack custom = ItemStack.of(GUIChameleonPoliceBoxes.GO_TO_PAGE_1.material(), 1);
         ItemMeta custom_im = custom.getItemMeta();
-        custom_im.displayName(Component.text(plugin.getLanguage().getString("BUTTON_PAGE_1")));
+        custom_im.customName(Component.text(plugin.getLanguage().getString("BUTTON_PAGE_1")));
         custom.setItemMeta(custom_im);
         stack[GUIChameleonPoliceBoxes.GO_TO_PAGE_1.slot()] = custom;
         // close
         ItemStack close = ItemStack.of(GUIChameleonPoliceBoxes.CLOSE.material(), 1);
         ItemMeta close_im = close.getItemMeta();
-        close_im.displayName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
+        close_im.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
         close.setItemMeta(close_im);
         stack[GUIChameleonPoliceBoxes.CLOSE.slot()] = close;
 

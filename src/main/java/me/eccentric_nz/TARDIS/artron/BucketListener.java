@@ -57,8 +57,8 @@ public class BucketListener implements Listener {
             return;
         }
         ItemMeta im = bucket.getItemMeta();
-        if (im.hasDisplayName()) {
-            if (ComponentUtils.endsWith(im.displayName(), "Artron Storage Cell") || ComponentUtils.endsWith(im.displayName(), "Artron Capacitor")) {
+        if (im.hasCustomName()) {
+            if (ComponentUtils.endsWith(im.customName(), "Artron Storage Cell") || ComponentUtils.endsWith(im.customName(), "Artron Capacitor")) {
                 event.setCancelled(true);
                 plugin.getMessenger().send(event.getPlayer(), TardisModule.TARDIS, "ARTRON_FILL", material.toString());
             }
@@ -80,8 +80,8 @@ public class BucketListener implements Listener {
             return;
         }
         ItemMeta im = bucket.getItemMeta();
-        if (im.hasDisplayName()) {
-            if (ComponentUtils.endsWith(im.displayName(), "Artron Storage Cell") || ComponentUtils.endsWith(im.displayName(), "Artron Capacitor")) {
+        if (im.hasCustomName()) {
+            if (ComponentUtils.endsWith(im.customName(), "Artron Storage Cell") || ComponentUtils.endsWith(im.customName(), "Artron Capacitor")) {
                 event.setCancelled(true);
                 plugin.getMessenger().send(event.getPlayer(), TardisModule.TARDIS, "ARTRON_FILL", "MILK");
             }

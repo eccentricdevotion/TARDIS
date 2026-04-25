@@ -16,11 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.floodgate;
 
+import io.papermc.paper.registry.TypedKey;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.desktop.DesktopThemeProcessor;
 import me.eccentric_nz.TARDIS.desktop.UpgradeData;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
-import org.bukkit.Material;
+import org.bukkit.inventory.ItemType;
 import org.geysermc.cumulus.form.CustomForm;
 import org.geysermc.cumulus.response.CustomFormResponse;
 import org.geysermc.floodgate.api.FloodgateApi;
@@ -42,8 +43,8 @@ public class FloodgateWallFloorForm {
         this.uuid = uuid;
         this.which = which;
         blocks.add("Default");
-        for (Material mat : TARDISWalls.BLOCKS) {
-            blocks.add(mat.toString());
+        for (TypedKey<ItemType> mat : TARDISWalls.BLOCKS) {
+            blocks.add(mat.key().value());
         }
     }
 

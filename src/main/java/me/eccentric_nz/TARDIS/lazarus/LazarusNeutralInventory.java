@@ -79,7 +79,7 @@ class LazarusNeutralInventory extends LazarusItems implements InventoryHolder, L
         for (Material m : neutral) {
             ItemStack egg = ItemStack.of(m, 1);
             ItemMeta me = egg.getItemMeta();
-            me.displayName(Component.text(m.toString().replace("_SPAWN_EGG", "")));
+            me.customName(Component.text(m.toString().replace("_SPAWN_EGG", "")));
             egg.setItemMeta(me);
             stacks[i] = egg;
             i++;

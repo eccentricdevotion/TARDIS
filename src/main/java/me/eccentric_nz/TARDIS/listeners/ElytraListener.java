@@ -26,6 +26,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityToggleGlideEvent;
 
+import java.util.Locale;
 import java.util.Objects;
 
 public class ElytraListener implements Listener {
@@ -56,9 +57,9 @@ public class ElytraListener implements Listener {
         if (plugin.getConfig().getBoolean("creation.create_worlds")) {
             return;
         }
-        String world = player.getWorld().getName();
+        String world = player.getWorld().getKey().getKey();
         // create_worlds_with_perms may be true so check for shared TIPS world
-        if (!world.equals(plugin.getConfig().getString("creation.default_world_name"))) {
+        if (!world.equals(plugin.getConfig().getString("creation.default_world_name", "tardis_timevortex").toLowerCase(Locale.ROOT))) {
             return;
         }
         event.setCancelled(true);

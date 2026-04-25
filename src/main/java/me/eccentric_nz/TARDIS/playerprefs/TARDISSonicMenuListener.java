@@ -91,11 +91,11 @@ public class TARDISSonicMenuListener extends TARDISMenuListener {
                     return;
                 }
                 ItemMeta meta = cursor.getItemMeta();
-                if (!meta.hasDisplayName()) {
+                if (!meta.hasCustomName()) {
                     return;
                 }
                 // set wool colour from display name of placed sonic
-                NamedTextColor color = TARDISStaticUtils.getColor(meta.displayName());
+                NamedTextColor color = TARDISStaticUtils.getColor(meta.customName());
                 Material material = TARDISKeyMenuListener.REVERSE_LOOKUP.getOrDefault(color, Material.WHITE_WOOL);
                 ItemStack choice = view.getItem(28);
                 ItemMeta cim = choice.getItemMeta();
@@ -117,7 +117,7 @@ public class TARDISSonicMenuListener extends TARDISMenuListener {
                 view.setItem(28, ItemStack.of(wool));
                 NamedTextColor display = TARDISKeyMenuListener.COLOUR_LOOKUP.get(wool);
                 ItemMeta sonic_im = sonic.getItemMeta();
-                sonic_im.displayName(Component.text("Sonic Screwdriver", display).decorationIfAbsent(TextDecoration.ITALIC, TextDecoration.State.FALSE));
+                sonic_im.customName(Component.text("Sonic Screwdriver", display).decorationIfAbsent(TextDecoration.ITALIC, TextDecoration.State.FALSE));
                 sonic.setItemMeta(sonic_im);
             }
             case 35 -> {

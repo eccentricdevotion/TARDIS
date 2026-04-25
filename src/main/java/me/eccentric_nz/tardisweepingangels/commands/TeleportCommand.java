@@ -36,7 +36,7 @@ public class TeleportCommand {
 
     public void add(Player player) {
         Location location = player.getLocation();
-        String tpLoc = location.getWorld().getName() + "," + location.getBlockX() + "," + location.getBlockY() + "," + location.getBlockZ();
+        String tpLoc = location.getWorld().getKey().asString() + "," + location.getBlockX() + "," + location.getBlockY() + "," + location.getBlockZ();
         List<String> list = plugin.getMonstersConfig().getStringList("angels.teleport_locations");
         list.add(tpLoc);
         plugin.getMonstersConfig().set("angels.teleport_locations", list);
@@ -51,7 +51,7 @@ public class TeleportCommand {
 
     public void replace(Player player) {
         Location location = player.getLocation();
-        String tpLoc = location.getWorld().getName() + "," + location.getBlockX() + "," + location.getBlockY() + "," + location.getBlockZ();
+        String tpLoc = location.getWorld().getKey().asString() + "," + location.getBlockX() + "," + location.getBlockY() + "," + location.getBlockZ();
         List<String> list = List.of(tpLoc);
         plugin.getMonstersConfig().set("angels.teleport_locations", list);
         try {

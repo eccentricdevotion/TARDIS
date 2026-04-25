@@ -50,7 +50,7 @@ public class MireRunnable implements Runnable {
     public void run() {
         plugin.getServer().getWorlds().forEach((w) -> {
             // only configured worlds
-            String name = WorldProcessor.sanitiseName(w.getName());
+            String name = w.getKey().getKey();
             if (plugin.getMonstersConfig().getInt("the_mire.worlds." + name) > 0) {
                 // get the current mire count
                 int mire = 0;

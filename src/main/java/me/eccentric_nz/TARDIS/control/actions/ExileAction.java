@@ -51,7 +51,7 @@ public class ExileAction {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_MORE_SPOTS");
         } else {
             HashMap<String, Object> set = new HashMap<>();
-            set.put("world", l.getWorld().getName());
+            set.put("world", l.getWorld().getKey().asString());
             set.put("x", l.getBlockX());
             set.put("y", l.getBlockY());
             set.put("z", l.getBlockZ());

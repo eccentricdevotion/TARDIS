@@ -74,7 +74,7 @@ public class TARDISAreaSignListener extends TARDISMenuListener {
                 return;
             }
             ItemMeta im = is.getItemMeta();
-            String area = ComponentUtils.stripColour(im.displayName());
+            String area = ComponentUtils.stripColour(im.customName());
             HashMap<String, Object> wherea = new HashMap<>();
             wherea.put("area_name", area);
             ResultSetAreas rsa = new ResultSetAreas(plugin, wherea, false, false);

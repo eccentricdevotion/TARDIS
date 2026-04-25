@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS;
 import me.eccentric_nz.TARDIS.database.WorldRemover;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.planets.TARDISSpace;
+import net.kyori.adventure.key.Key;
 
 import java.io.File;
 import java.io.IOException;
@@ -46,7 +47,7 @@ public class TARDISWorldConfig {
                 plugin.getLogger().log(Level.SEVERE, "default_world was disabled as create_worlds is true!");
             }
             // disable TARDIS_TimeVortex world
-            plugin.getPlanetsConfig().set("planets.TARDIS_TimeVortex.enabled", false);
+            plugin.getPlanetsConfig().set("planets.tardis_timevortex.enabled", false);
             try {
                 plugin.getPlanetsConfig().save(new File(plugin.getDataFolder(), "planets.yml"));
             } catch (IOException ex) {
@@ -64,8 +65,8 @@ public class TARDISWorldConfig {
         if (!plugin.getConfig().getBoolean("creation.default_world")) {
             return;
         }
-        String defWorld = plugin.getConfig().getString("creation.default_world_name", "TARDIS_TimeVortex");
-        if (plugin.getServer().getWorld(defWorld) == null) {
+        String defWorld = plugin.getConfig().getString("creation.default_world_name", "tardis_timevortex");
+        if (plugin.getServer().getWorld(Key.key(defWorld)) == null) {
             plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Default world specified, but it doesn't exist! Trying to create it now...");
             new TARDISSpace(plugin).createDefaultWorld(defWorld);
         }

@@ -45,7 +45,7 @@ import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.monitor.SnapshotLoader;
 import me.eccentric_nz.TARDIS.perms.TARDISContexts;
 import me.eccentric_nz.TARDIS.placeholders.TARDISPlaceholderExpansion;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
+import me.eccentric_nz.TARDIS.planets.TARDISWorldResolver;
 import me.eccentric_nz.TARDIS.planets.TradesConfigUpdater;
 import me.eccentric_nz.TARDIS.recipes.*;
 import me.eccentric_nz.TARDIS.rooms.eye.EyeLoader;
@@ -184,6 +184,7 @@ public class TARDIS extends JavaPlugin {
     private NamespacedKey loopKey;
     private NamespacedKey tardisIdKey;
     private NamespacedKey timeLordUuidKey;
+    private NamespacedKey tradesKey;
     private NamespacedKey standUuidKey;
     private NamespacedKey interactionUuidKey;
     private NamespacedKey modelUuidKey;
@@ -268,6 +269,7 @@ public class TARDIS extends JavaPlugin {
         loopKey = new NamespacedKey(this, "loop");
         tardisIdKey = new NamespacedKey(this, "tardis_id");
         timeLordUuidKey = new NamespacedKey(this, "timelord_uuid");
+        tradesKey = new NamespacedKey(this, "trades");
         standUuidKey = new NamespacedKey(this, "stand_uuid");
         interactionUuidKey = new NamespacedKey(this, "interaction_uuid");
         modelUuidKey = new NamespacedKey(this, "model_uuid");
@@ -335,6 +337,10 @@ public class TARDIS extends JavaPlugin {
             loadHelper();
             // load configs
             loadCustomConfigs();
+            // update world keys in configs
+            if (!getConfig().getBoolean("conversions.keyed_worlds")) {
+                new WorldKeyConfigUpdater(this).convert();
+            }
             // load Multiverse
             loadMultiverse();
             // load worldguard
@@ -351,7 +357,7 @@ public class TARDIS extends JavaPlugin {
             queryFactory = new QueryFactory(this);
             loadInventoryManager();
             new TARDISWorldConfig(this).check();
-            TARDISAliasResolver.createAliasMap();
+            TARDISWorldResolver.createAliasMap();
             utils = new TARDISUtils(this);
             locationUtils = new TARDISLocationGetters(this);
             buildKeeper.setRoomSeeds(getSeeds());
@@ -738,7 +744,9 @@ public class TARDIS extends JavaPlugin {
      *
      * @return the lamps configuration
      */
-    public FileConfiguration getLampsConfig() { return lampsConfig; }
+    public FileConfiguration getLampsConfig() {
+        return lampsConfig;
+    }
 
     /**
      * Gets the language configuration
@@ -1162,6 +1170,15 @@ public class TARDIS extends JavaPlugin {
     }
 
     /**
+     * Gets the Time Lord trades NamespacedKey
+     *
+     * @return the Time Lord trades NamespacedKey
+     */
+    public NamespacedKey getTradesKey() {
+        return tradesKey;
+    }
+
+    /**
      * Gets the armour stand UUID NamespacedKey
      *
      * @return the armour stand UUID NamespacedKey
@@ -1462,7 +1479,6 @@ public class TARDIS extends JavaPlugin {
         );
         for (String f : files) {
 //            debug(f);
-            tardisCopier.copy(f);
             tardisCopier.copy(f);
         }
         new PlanetsConfigUpdater(this, planetsConfig).checkPlanetsConfig();

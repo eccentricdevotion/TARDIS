@@ -121,7 +121,7 @@ public class HandlesRequest {
                     }
                     PlayerInventory pi = player.getInventory();
                     ItemStack communicator = pi.getHelmet();
-                    if (communicator == null || !communicator.hasItemMeta() || !communicator.getType().equals(Material.LEATHER_HELMET) || !ComponentUtils.endsWith(communicator.getItemMeta().displayName(), "TARDIS Communicator")) {
+                    if (communicator == null || !communicator.hasItemMeta() || !communicator.getType().equals(Material.LEATHER_HELMET) || !ComponentUtils.endsWith(communicator.getItemMeta().customName(), "TARDIS Communicator")) {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "HANDLES_COMMUNICATOR");
                         return;
                     }
@@ -132,7 +132,7 @@ public class HandlesRequest {
                 for (ItemStack is : player.getInventory().getContents()) {
                     if (is != null && is.getType().equals(Material.BIRCH_BUTTON) && is.hasItemMeta()) {
                         ItemMeta im = is.getItemMeta();
-                        if (im.hasDisplayName() && ComponentUtils.endsWith(im.displayName(), "Handles")) {
+                        if (im.hasCustomName() && ComponentUtils.endsWith(im.customName(), "Handles")) {
                             found = true;
                         }
                     }

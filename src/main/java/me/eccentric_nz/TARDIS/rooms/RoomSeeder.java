@@ -190,7 +190,7 @@ public class RoomSeeder implements Listener {
     private boolean checkConsoleBounds(Chunk c, int id) {
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
-        where.put("world", c.getWorld().getName());
+        where.put("world", c.getWorld().getKey().asString());
         where.put("x", c.getX());
         where.put("z", c.getZ());
         ResultSetChunks rsc = new ResultSetChunks(plugin, where, false);

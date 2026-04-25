@@ -64,7 +64,7 @@ public class TARDISAnvilListener implements Listener {
                     ItemMeta im = is.getItemMeta();
                     ItemStack one = inv.getItem(0);
                     ItemStack two = inv.getItem(1);
-                    if (checkRepair(one, two) && im.hasDisplayName() && disallow.containsKey(ComponentUtils.stripColour(im.displayName())) && is.getType() == disallow.get(ComponentUtils.stripColour(im.displayName()))) {
+                    if (checkRepair(one, two) && im.hasCustomName() && disallow.containsKey(ComponentUtils.stripColour(im.customName())) && is.getType() == disallow.get(ComponentUtils.stripColour(im.customName()))) {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_RENAME");
                         event.setCancelled(true);
                     }
@@ -82,11 +82,11 @@ public class TARDISAnvilListener implements Listener {
         }
         ItemMeta im_one = one.getItemMeta();
         ItemMeta im_two = two.getItemMeta();
-        if (!im_one.hasDisplayName() || !im_two.hasDisplayName()) {
+        if (!im_one.hasCustomName() || !im_two.hasCustomName()) {
             return true;
         }
-        String dn_one = ComponentUtils.stripColour(im_one.displayName());
-        String dn_two = ComponentUtils.stripColour(im_two.displayName());
+        String dn_one = ComponentUtils.stripColour(im_one.customName());
+        String dn_two = ComponentUtils.stripColour(im_two.customName());
         return !dn_one.equals(dn_two);
     }
 }

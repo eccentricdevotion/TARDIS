@@ -78,8 +78,8 @@ public class LabGUIListener extends TARDISMenuListener {
                 Material material = is.getType();
                 if ((material.equals(Material.GLASS_BOTTLE) || material.equals(Material.FEATHER)) && is.hasItemMeta()) {
                     ItemMeta im = is.getItemMeta();
-                    if (im.hasDisplayName()) {
-                        builder.append(im.displayName()).append(",");
+                    if (im.hasCustomName()) {
+                        builder.append(im.customName()).append(",");
                     }
                 } else {
                     builder.append(is.getType()).append(",");

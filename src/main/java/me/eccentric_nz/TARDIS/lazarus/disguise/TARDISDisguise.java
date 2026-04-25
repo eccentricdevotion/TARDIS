@@ -311,14 +311,14 @@ public record TARDISDisguise(EntityType entityType, Object[] options) {
                             case PILLAGER -> {
                                 if (bool) {
                                     Pillager pillager = (Pillager) entity;
-                                    ItemStack crossbow = CraftItemStack.asNMSCopy(new org.bukkit.inventory.ItemStack(org.bukkit.Material.CROSSBOW));
+                                    ItemStack crossbow = CraftItemStack.asNMSCopy(org.bukkit.inventory.ItemStack.of(org.bukkit.Material.CROSSBOW));
                                     pillager.setItemSlot(EquipmentSlot.MAINHAND, crossbow);
                                     pillager.performRangedAttack(pillager, 1.0f);
                                 }
                             }
                             case LLAMA -> {
                                 Llama llama = (Llama) entity;
-                                org.bukkit.inventory.ItemStack bukkitItemStack = new org.bukkit.inventory.ItemStack(CARPET.values()[ThreadLocalRandom.current().nextInt(16)].getCarpet());
+                                org.bukkit.inventory.ItemStack bukkitItemStack = org.bukkit.inventory.ItemStack.of(CARPET.values()[ThreadLocalRandom.current().nextInt(16)].getCarpet());
                                 ItemStack nmsItemStack = CraftItemStack.asNMSCopy(bukkitItemStack);
                                 llama.inventory.setItem(1, nmsItemStack);
                             }

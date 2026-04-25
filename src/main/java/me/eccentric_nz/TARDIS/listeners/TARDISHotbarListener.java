@@ -55,14 +55,14 @@ public class TARDISHotbarListener implements Listener {
         PlayerInventory inv = player.getInventory();
         ItemStack is = inv.getItem(event.getNewSlot());
         if (is != null) {
-            if (is.hasItemMeta() && is.getItemMeta().hasDisplayName()) {
+            if (is.hasItemMeta() && is.getItemMeta().hasCustomName()) {
                 ItemMeta im = is.getItemMeta();
                 if (im.getPersistentDataContainer().has(plugin.getOldBlockKey(), PersistentDataType.INTEGER)) {
                     int which = im.getPersistentDataContainer().get(plugin.getOldBlockKey(), PersistentDataType.INTEGER);
                     im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, which);
                     is.setItemMeta(im);
                 }
-                if (is.getType().equals(Material.COMPASS) && ComponentUtils.endsWith(im.displayName(), "TARDIS Locator")) {
+                if (is.getType().equals(Material.COMPASS) && ComponentUtils.endsWith(im.customName(), "TARDIS Locator")) {
                     // get TARDIS location
                     ResultSetTardisID rs = new ResultSetTardisID(plugin);
                     if (rs.fromUUID(player.getUniqueId().toString())) {

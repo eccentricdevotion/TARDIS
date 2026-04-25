@@ -80,9 +80,9 @@ public class SetHomeCommand {
                 }
             } else {
                 Location eyeLocation = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getLocation();
-                String world = eyeLocation.getWorld().getName();
+                String world = eyeLocation.getWorld().getKey().getKey();
                 COMPASS player_d = COMPASS.valueOf(TARDISStaticUtils.getPlayersDirection(player, false));
-                if (!plugin.getConfig().getBoolean("travel.include_default_world") && plugin.getConfig().getBoolean("creation.default_world") && world.equals(plugin.getConfig().getString("creation.default_world_name"))) {
+                if (!plugin.getConfig().getBoolean("travel.include_default_world") && plugin.getConfig().getBoolean("creation.default_world") && world.equals(plugin.getConfig().getString("creation.default_world_name", "tardis_timevortex").toLowerCase(Locale.ROOT))) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_WORLD_TRAVEL");
                     return;
                 }
@@ -123,7 +123,7 @@ public class SetHomeCommand {
                 }
                 // check it is not another Time Lords home location
                 HashMap<String, Object> where = new HashMap<>();
-                where.put("world", eyeLocation.getWorld().getName());
+                where.put("world", eyeLocation.getWorld().getKey().asString());
                 where.put("x", eyeLocation.getBlockX());
                 where.put("y", eyeLocation.getBlockY());
                 where.put("z", eyeLocation.getBlockZ());
@@ -135,7 +135,7 @@ public class SetHomeCommand {
                 HashMap<String, Object> tid = new HashMap<>();
                 HashMap<String, Object> set = new HashMap<>();
                 tid.put("tardis_id", id);
-                set.put("world", eyeLocation.getWorld().getName());
+                set.put("world", eyeLocation.getWorld().getKey().asString());
                 set.put("x", eyeLocation.getBlockX());
                 set.put("y", eyeLocation.getBlockY());
                 set.put("z", eyeLocation.getBlockZ());

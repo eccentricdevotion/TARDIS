@@ -22,7 +22,7 @@ import me.eccentric_nz.TARDIS.builders.exterior.BuildData;
 import me.eccentric_nz.TARDIS.builders.exterior.MaterialiseBlockPreset;
 import me.eccentric_nz.TARDIS.builders.exterior.MaterialiseModelledPreset;
 import me.eccentric_nz.TARDIS.enumeration.*;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
+import me.eccentric_nz.TARDIS.planets.TARDISWorldResolver;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -49,12 +49,12 @@ public class AbandonedBuilder {
     public void spawn(Location l, Schematic schm, ChameleonPreset preset, String item, COMPASS d, Player player) {
         Chunk chunk = l.getChunk();
         // get this chunk's co-ords
-        String cw = plugin.getConfig().getString("creation.default_world_name");
-        World chunkworld = TARDISAliasResolver.getWorldFromAlias(cw);
+        String cw = plugin.getConfig().getString("creation.default_world_name", "tardis_timevortex");
+        World chunkworld = TARDISWorldResolver.getFromString(cw);
         int cx = chunk.getX();
         int cz = chunk.getZ();
         // save data to database (tardis table)
-        String chun = cw + ":" + cx + ":" + cz;
+        String chun = "minecraft:" + cw + ":" + cx + ":" + cz;
         HashMap<String, Object> set = new HashMap<>();
         set.put("uuid", UUID.randomUUID().toString());
         set.put("owner", "");
@@ -74,7 +74,7 @@ public class AbandonedBuilder {
         // populate home, current, next and back tables
         HashMap<String, Object> setlocs = new HashMap<>();
         setlocs.put("tardis_id", lastInsertId);
-        setlocs.put("world", l.getWorld().getName());
+        setlocs.put("world", l.getWorld().getKey().asString());
         setlocs.put("x", l.getBlockX());
         setlocs.put("y", l.getBlockY());
         setlocs.put("z", l.getBlockZ());

@@ -817,7 +817,7 @@ public class MaterialiseBlockPreset implements Runnable {
 
     private void saveDoorLocation(World world, int xx, int y, int yy, int zz) {
         // remember the door location
-        String doorloc = world.getName() + ":" + xx + ":" + (y + yy) + ":" + zz;
+        String doorloc = world.getKey().asString() + ":" + xx + ":" + (y + yy) + ":" + zz;
         String doorStr = world.getBlockAt(xx, y + yy, zz).getLocation().toString();
         plugin.getGeneralKeeper().getProtectBlockMap().put(doorStr, bd.getTardisID());
         // should insert the door when tardis is first made, and then update location thereafter!

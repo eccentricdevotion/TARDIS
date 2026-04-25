@@ -110,7 +110,7 @@ public class TelepathicBiomeListener extends TARDISMenuListener {
                 if (choice != null) {
                     // get the biome
                     ItemMeta im = choice.getItemMeta();
-                    String[] keyStr = ComponentUtils.stripColour(im.displayName()).split(":");
+                    String[] keyStr = ComponentUtils.stripColour(im.customName()).split(":");
                     int id = getIdFromTravellers(player);
                     Biome biome = RegistryAccess.registryAccess().getRegistry(RegistryKey.BIOME).get(new NamespacedKey(keyStr[0], keyStr[1]));
                     new BiomeCommand(plugin).action(player, biome, null, id);
@@ -153,7 +153,7 @@ public class TelepathicBiomeListener extends TARDISMenuListener {
             if (material != null) {
                 ItemStack is = ItemStack.of(material, 1);
                 ItemMeta im = is.getItemMeta();
-                im.displayName(Component.text(biome.getKey().toString()));
+                im.customName(Component.text(biome.getKey().toString()));
                 is.setItemMeta(im);
                 stacks[r][c] = is;
                 c++;

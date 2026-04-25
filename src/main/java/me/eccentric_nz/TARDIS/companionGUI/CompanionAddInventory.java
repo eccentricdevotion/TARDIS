@@ -74,7 +74,7 @@ public class CompanionAddInventory implements InventoryHolder {
                     ItemStack head = ItemStack.of(Material.PLAYER_HEAD, 1);
                     SkullMeta skull = (SkullMeta) head.getItemMeta();
                     skull.setOwningPlayer(p);
-                    skull.displayName(Component.text(p.getName()));
+                    skull.customName(Component.text(p.getName()));
                     skull.lore(List.of(Component.text(p.getUniqueId().toString())));
                     head.setItemMeta(skull);
                     heads[i] = head;
@@ -85,7 +85,7 @@ public class CompanionAddInventory implements InventoryHolder {
         // add buttons
         ItemStack info = ItemStack.of(GUICompanion.INFO.material(), 1);
         ItemMeta ii = info.getItemMeta();
-        ii.displayName(Component.text("Info"));
+        ii.customName(Component.text("Info"));
         ii.lore(List.of(
                 Component.text("Click a player head to"),
                 Component.text("add them as a companion.")
@@ -94,18 +94,18 @@ public class CompanionAddInventory implements InventoryHolder {
         heads[GUICompanion.INFO.slot()] = info;
         ItemStack list = ItemStack.of(GUICompanion.LIST_COMPANIONS.material(), 1);
         ItemMeta ll = list.getItemMeta();
-        ll.displayName(Component.text("List companions"));
+        ll.customName(Component.text("List companions"));
         list.setItemMeta(ll);
         heads[GUICompanion.LIST_COMPANIONS.slot()] = list;
         ItemStack every = ItemStack.of(GUICompanion.ALL_COMPANIONS.material(), 1);
         ItemMeta one = every.getItemMeta();
-        one.displayName(Component.text("Add all online players"));
+        one.customName(Component.text("Add all online players"));
         every.setItemMeta(one);
         heads[GUICompanion.ALL_COMPANIONS.slot()] = every;
         // Cancel / close
         ItemStack close = ItemStack.of(GUICompanion.BUTTON_CLOSE.material(), 1);
         ItemMeta can = close.getItemMeta();
-        can.displayName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
+        can.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
         close.setItemMeta(can);
         heads[GUICompanion.BUTTON_CLOSE.slot()] = close;
 

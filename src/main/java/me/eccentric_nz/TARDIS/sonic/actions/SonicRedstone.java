@@ -81,7 +81,7 @@ public class SonicRedstone {
                         tmp = block.getRelative(BlockFace.DOWN);
                     }
                     // not TARDIS doors!
-                    String doorloc = tmp.getLocation().getWorld().getName() + ":" + tmp.getLocation().getBlockX() + ":" + tmp.getLocation().getBlockY() + ":" + tmp.getLocation().getBlockZ();
+                    String doorloc = tmp.getLocation().getWorld().getKey().asString() + ":" + tmp.getLocation().getBlockX() + ":" + tmp.getLocation().getBlockY() + ":" + tmp.getLocation().getBlockZ();
                     HashMap<String, Object> wheredoor = new HashMap<>();
                     wheredoor.put("door_location", doorloc);
                     ResultSetDoors rsd = new ResultSetDoors(plugin, wheredoor, false);

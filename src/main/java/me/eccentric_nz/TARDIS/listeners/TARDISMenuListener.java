@@ -85,7 +85,7 @@ public class TARDISMenuListener implements Listener {
     public int getPageNumber(InventoryView view) {
         ItemStack is = view.getItem(45);
         ItemMeta im = is.getItemMeta();
-        String[] split = ComponentUtils.stripColour(im.displayName()).split(" ");
+        String[] split = ComponentUtils.stripColour(im.customName()).split(" ");
         return TARDISNumberParsers.parseInt(split[1]);
     }
 

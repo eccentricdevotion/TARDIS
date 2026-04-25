@@ -55,7 +55,7 @@ public class MicroscopeRecipes {
             String name = equipment.getName();
             ItemStack is = ItemStack.of(equipment.getMaterial(), 1);
             ItemMeta im = is.getItemMeta();
-            im.displayName(ComponentUtils.toWhite(name));
+            im.customName(ComponentUtils.toWhite(name));
             im.setItemModel(equipment.getModel());
             is.setItemMeta(im);
             NamespacedKey key = new NamespacedKey(plugin, equipment.toString().toLowerCase(Locale.ROOT));

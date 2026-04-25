@@ -54,11 +54,11 @@ public class ItemCommand {
                     return;
                 }
                 ItemMeta im = inHand.getItemMeta();
-                if (!im.hasDisplayName()) {
+                if (!im.hasCustomName()) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "ITEM_IN_HAND");
                     return;
                 }
-                Component component = im.displayName();
+                Component component = im.customName();
                 // strip color codes
                 String stripped = ComponentUtils.stripColour(component);
                 if (!component.children().isEmpty()) {
@@ -67,7 +67,7 @@ public class ItemCommand {
                 // look up display name
                 RecipeItem recipeItem = RecipeItem.getByName(stripped);
                 if (!recipeItem.equals(RecipeItem.NOT_FOUND)) {
-                    im.displayName(ComponentUtils.toWhite(stripped));
+                    im.customName(ComponentUtils.toWhite(stripped));
                     im.setItemModel(null);
                     inHand.setItemMeta(im);
                     player.updateInventory();
@@ -79,8 +79,8 @@ public class ItemCommand {
                 for (ItemStack is : player.getInventory()) {
                     if (is != null && is.hasItemMeta()) {
                         ItemMeta im = is.getItemMeta();
-                        if (im.hasDisplayName()) {
-                            Component component = im.displayName();
+                        if (im.hasCustomName()) {
+                            Component component = im.customName();
                             // strip color codes
                             String stripped = ComponentUtils.stripColour(component);
                             if (!component.children().isEmpty()) {
@@ -89,7 +89,7 @@ public class ItemCommand {
                             // look up display name
                             RecipeItem recipeItem = RecipeItem.getByName(stripped);
                             if (!recipeItem.equals(RecipeItem.NOT_FOUND)) {
-                                im.displayName(ComponentUtils.toWhite(stripped));
+                                im.customName(ComponentUtils.toWhite(stripped));
                                 im.setItemModel(null);
                                 is.setItemMeta(im);
                                 i++;
@@ -110,8 +110,8 @@ public class ItemCommand {
                             continue;
                         }
                         ItemMeta im = is.getItemMeta();
-                        if (im.hasDisplayName()) {
-                            Component component = im.displayName();
+                        if (im.hasCustomName()) {
+                            Component component = im.customName();
                             // strip color codes
                             String stripped = ComponentUtils.stripColour(component);
                             if (!component.children().isEmpty()) {
@@ -120,7 +120,7 @@ public class ItemCommand {
                             // look up display name
                             RecipeItem recipeItem = RecipeItem.getByName(stripped);
                             if (recipeItem.equals(RecipeItem.ARTRON_STORAGE_CELL)) {
-                                im.displayName(ComponentUtils.toWhite(stripped));
+                                im.customName(ComponentUtils.toWhite(stripped));
                                 im.setItemModel(null);
                                 if (im.hasLore()) {
                                     // get / set lore

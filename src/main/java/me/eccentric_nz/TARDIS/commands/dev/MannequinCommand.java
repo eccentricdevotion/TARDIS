@@ -34,7 +34,7 @@ public class MannequinCommand {
         mannequin.setImmovable(true);
         if (which.equals("roman") && TARDISConstants.RANDOM.nextBoolean()) {
             mannequin.setMainHand(TARDISConstants.RANDOM.nextBoolean() ? MainHand.LEFT : MainHand.RIGHT);
-            mannequin.getEquipment().setItemInMainHand(new ItemStack(TARDISConstants.RANDOM.nextBoolean() ? Material.IRON_SWORD : Material.IRON_SPEAR));
+            mannequin.getEquipment().setItemInMainHand(ItemStack.of(TARDISConstants.RANDOM.nextBoolean() ? Material.IRON_SWORD : Material.IRON_SPEAR));
         }
     }
 }

@@ -87,11 +87,11 @@ public class CircuitRepairListener implements Listener {
         }
         // get the item meta
         ItemMeta fim = first.getItemMeta();
-        if (!fim.hasDisplayName()) {
+        if (!fim.hasCustomName()) {
             return;
         }
         // get the display name
-        String dnf = ComponentUtils.stripColour(fim.displayName());
+        String dnf = ComponentUtils.stripColour(fim.customName());
         if (dnf.startsWith("TARDIS") && dnf.endsWith("Circuit") && fim.hasLore()) {
             // get the lore
             List<Component> flore = fim.lore();

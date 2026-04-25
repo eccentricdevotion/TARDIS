@@ -44,7 +44,7 @@ public class ArmourStandEquipment {
         as.getPersistentDataContainer().set(TARDIS.plugin.getHeadBlockKey(), PersistentDataType.INTEGER, 1);
         ItemStack head = ItemStack.of(monster.getMaterial(), 1);
         ItemMeta headMeta = head.getItemMeta();
-        headMeta.displayName(Component.text(monster.getName() + " Head"));
+        headMeta.customName(Component.text(monster.getName() + " Head"));
         headMeta.setItemModel(monster.getModel());
         head.setItemMeta(headMeta);
         setHelmetOnly(as, head);

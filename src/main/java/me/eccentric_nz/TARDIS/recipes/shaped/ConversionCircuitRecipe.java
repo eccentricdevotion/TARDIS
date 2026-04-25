@@ -55,7 +55,7 @@ public class ConversionCircuitRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.GLOWSTONE_DUST, 1);
         ItemMeta im = is.getItemMeta();
-        im.displayName(ComponentUtils.toWhite("Conversion Circuit"));
+        im.customName(ComponentUtils.toWhite("Conversion Circuit"));
         CustomModelDataComponent component = im.getCustomModelDataComponent();
         component.setFloats(CircuitVariant.CONVERSION.getFloats());
         im.setCustomModelDataComponent(component);

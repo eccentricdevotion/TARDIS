@@ -51,7 +51,7 @@ public class DiamondDisruptorCircuitRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.GLOWSTONE_DUST, 1);
         ItemMeta im = is.getItemMeta();
-        im.displayName(ComponentUtils.toWhite("Diamond Disruptor Circuit"));
+        im.customName(ComponentUtils.toWhite("Diamond Disruptor Circuit"));
         CustomModelDataComponent component = im.getCustomModelDataComponent();
         component.setFloats(CircuitVariant.DIAMOND.getFloats());
         im.setCustomModelDataComponent(component);

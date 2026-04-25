@@ -21,7 +21,7 @@ import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisCompanions;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
+import me.eccentric_nz.TARDIS.planets.TARDISWorldResolver;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import net.kyori.adventure.text.Component;
 import org.bukkit.World;
@@ -65,7 +65,7 @@ public class CompanionAddGUIListener extends TARDISMenuListener {
 
     public static void addToRegion(String world, String owner, String companion) {
         // if using WorldGuard, add them to the region membership
-        World w = TARDISAliasResolver.getWorldFromAlias(world);
+        World w = TARDISWorldResolver.getFromString(world);
         if (w != null) {
             Player player = TARDIS.plugin.getServer().getPlayer(companion);
             if (player != null) {
@@ -106,7 +106,7 @@ public class CompanionAddGUIListener extends TARDISMenuListener {
                     if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
                         // remove all members
                         String[] data = tardis.getChunk().split(":");
-                        plugin.getWorldGuardUtils().removeAllMembersFromRegion(TARDISAliasResolver.getWorldFromAlias(data[0]), player.getName(), player.getUniqueId());
+                        plugin.getWorldGuardUtils().removeAllMembersFromRegion(TARDISWorldResolver.getFromString(data[0]), player.getName(), player.getUniqueId());
                         // set entry and exit flags to allow
                         plugin.getWorldGuardUtils().setEntryExitFlags(data[0], player.getName(), true);
                     }
@@ -128,7 +128,7 @@ public class CompanionAddGUIListener extends TARDISMenuListener {
                     addCompanion(id, comps, u);
                     if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
                         String[] data = tardis.getChunk().split(":");
-                        addToRegion(data[0], tardis.getOwner(), ComponentUtils.stripColour(m.displayName()));
+                        addToRegion(data[0], tardis.getOwner(), ComponentUtils.stripColour(m.customName()));
                         // set entry and exit flags to deny
                         plugin.getWorldGuardUtils().setEntryExitFlags(data[0], player.getName(), false);
                     }

@@ -122,16 +122,16 @@ public class ConstructorGUIListener extends TARDISMenuListener {
         int oneInt, tenInt = 0, hundredInt = 0;
         ItemStack ones = view.getItem(3 + offset);
         ItemMeta oneMeta = ones.getItemMeta();
-        oneInt = ComponentUtils.parseInt(oneMeta.displayName());
+        oneInt = ComponentUtils.parseInt(oneMeta.customName());
         ItemStack tens = view.getItem(2 + offset);
         if (tens != null) {
             ItemMeta tenMeta = tens.getItemMeta();
-            tenInt = ComponentUtils.parseInt(tenMeta.displayName()) * 10;
+            tenInt = ComponentUtils.parseInt(tenMeta.customName()) * 10;
         }
         ItemStack hundreds = view.getItem(1 + offset);
         if (hundreds != null) {
             ItemMeta hundredMeta = hundreds.getItemMeta();
-            hundredInt = ComponentUtils.parseInt(hundredMeta.displayName()) * 100;
+            hundredInt = ComponentUtils.parseInt(hundredMeta.customName()) * 100;
         }
         return oneInt + tenInt + hundredInt;
     }
@@ -142,7 +142,7 @@ public class ConstructorGUIListener extends TARDISMenuListener {
         int hundredInt = (amount / 100) % 10;
         ItemStack ones = view.getItem(3 + offset);
         ItemMeta oneMeta = ones.getItemMeta();
-        oneMeta.displayName(Component.text(oneInt));
+        oneMeta.customName(Component.text(oneInt));
         oneMeta.setItemModel(HandlesVariant.values()[25 + oneInt].getKey());
         ones.setItemMeta(oneMeta);
         ItemStack tens = view.getItem(2 + offset);
@@ -151,7 +151,7 @@ public class ConstructorGUIListener extends TARDISMenuListener {
                 tens = ItemStack.of(Material.PAPER, 1);
             }
             ItemMeta tenMeta = tens.getItemMeta();
-            tenMeta.displayName(Component.text(tenInt));
+            tenMeta.customName(Component.text(tenInt));
             tenMeta.setItemModel(HandlesVariant.values()[25 + tenInt].getKey());
             tens.setItemMeta(tenMeta);
             view.setItem(2 + offset, tens);
@@ -164,7 +164,7 @@ public class ConstructorGUIListener extends TARDISMenuListener {
                 hundreds = ItemStack.of(Material.PAPER, 1);
             }
             ItemMeta hundredMeta = hundreds.getItemMeta();
-            hundredMeta.displayName(Component.text(hundredInt));
+            hundredMeta.customName(Component.text(hundredInt));
             hundredMeta.setItemModel(HandlesVariant.values()[25 + hundredInt].getKey());
             hundreds.setItemMeta(hundredMeta);
             view.setItem(1 + offset, hundreds);

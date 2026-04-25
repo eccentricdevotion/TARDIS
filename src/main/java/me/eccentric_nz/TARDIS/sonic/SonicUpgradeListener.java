@@ -60,12 +60,12 @@ public class SonicUpgradeListener implements Listener {
                 ItemMeta im = is.getItemMeta();
                 // get the upgrade
                 boolean found = false;
-                String upgrade = ComponentUtils.stripColour(im.displayName());
+                String upgrade = ComponentUtils.stripColour(im.customName());
                 for (ItemStack glowstone : ci.getContents()) {
                     if (glowstone != null && glowstone.getType().equals(Material.GLOWSTONE_DUST) && glowstone.hasItemMeta()) {
                         ItemMeta rm = glowstone.getItemMeta();
-                        String displayName = ComponentUtils.stripColour(rm.displayName());
-                        upgrade = SonicUpgradeData.displayNames.get(displayName);
+                        String customName = ComponentUtils.stripColour(rm.customName());
+                        upgrade = SonicUpgradeData.displayNames.get(customName);
                         found = true;
                     }
                 }
@@ -102,7 +102,7 @@ public class SonicUpgradeListener implements Listener {
                     if (sim.hasCustomModelDataComponent()) {
                         floats = sim.getCustomModelDataComponent().getFloats();
                     }
-                    String dn = ComponentUtils.stripColour(sim.displayName());
+                    String dn = ComponentUtils.stripColour(sim.customName());
                     List<Component> lore;
                     if (sim.hasLore()) {
                         // get the current sonic's upgrades
@@ -123,11 +123,11 @@ public class SonicUpgradeListener implements Listener {
                 }
             }
         } else if (recipe instanceof ShapedRecipe) {
-            if (is == null || !is.hasItemMeta() || !is.getItemMeta().hasDisplayName() || !ComponentUtils.endsWith(is.getItemMeta().displayName(), "TARDIS Remote Key")) {
+            if (is == null || !is.hasItemMeta() || !is.getItemMeta().hasCustomName() || !ComponentUtils.endsWith(is.getItemMeta().customName(), "TARDIS Remote Key")) {
                 return;
             }
             ItemStack key = ci.getItem(5);
-            if (!key.hasItemMeta() || !key.getItemMeta().hasDisplayName() || !ComponentUtils.endsWith(key.getItemMeta().displayName(), "TARDIS Key")) {
+            if (!key.hasItemMeta() || !key.getItemMeta().hasCustomName() || !ComponentUtils.endsWith(key.getItemMeta().customName(), "TARDIS Key")) {
                 ci.setResult(null);
                 TARDIS.plugin.getMessenger().send(event.getView().getPlayer(), TardisModule.TARDIS, "REMOTE_KEY");
             }

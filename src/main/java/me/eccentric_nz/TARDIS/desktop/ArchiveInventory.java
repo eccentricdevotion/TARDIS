@@ -76,13 +76,13 @@ class ArchiveInventory implements InventoryHolder {
         // back
         ItemStack back = ItemStack.of(GUIArchive.BACK.material(), 1);
         ItemMeta back_im = back.getItemMeta();
-        back_im.displayName(Component.text("Back"));
+        back_im.customName(Component.text("Back"));
         back.setItemMeta(back_im);
         stack[17] = back;
         // size
         ItemStack size = ItemStack.of(GUIArchive.SET_SIZE.material(), 1);
         ItemMeta size_im = size.getItemMeta();
-        size_im.displayName(Component.text("Set size"));
+        size_im.customName(Component.text("Set size"));
         String s = "SMALL";
         String b = "16 x 16 x 16 blocks";
 
@@ -102,13 +102,13 @@ class ArchiveInventory implements InventoryHolder {
         // scan
         ItemStack scan = ItemStack.of(GUIArchive.SCAN_CONSOLE.material(), 1);
         ItemMeta but_im = scan.getItemMeta();
-        but_im.displayName(Component.text("Scan console"));
+        but_im.customName(Component.text("Scan console"));
         scan.setItemMeta(but_im);
         stack[19] = scan;
         // archive
         ItemStack arc = ItemStack.of(GUIArchive.ARCHIVE_CURRENT_CONSOLE.material(), 1);
         ItemMeta hive_im = arc.getItemMeta();
-        hive_im.displayName(Component.text("Archive current console"));
+        hive_im.customName(Component.text("Archive current console"));
         hive_im.lore(List.of(
                 Component.text("A random name will"),
                 Component.text("be generated - use the"),
@@ -123,7 +123,7 @@ class ArchiveInventory implements InventoryHolder {
             if (!c.equals(ConsoleSize.MASSIVE) && !c.equals(ConsoleSize.WIDE)) {
                 ItemStack temp = ItemStack.of(GUIArchive.SMALL.material(), 1);
                 ItemMeta late = temp.getItemMeta();
-                late.displayName(Component.text(c.toString()));
+                late.customName(Component.text(c.toString()));
                 late.lore(List.of(
                         Component.text("Cobblestone template"),
                         Component.text(c.getBlocks())
@@ -136,7 +136,7 @@ class ArchiveInventory implements InventoryHolder {
         // close
         ItemStack close = ItemStack.of(GUIArchive.CLOSE.material(), 1);
         ItemMeta close_im = close.getItemMeta();
-        close_im.displayName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
+        close_im.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
         close.setItemMeta(close_im);
         stack[GUIArchive.CLOSE.slot()] = close;
 

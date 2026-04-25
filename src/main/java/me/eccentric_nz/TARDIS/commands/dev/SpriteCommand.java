@@ -1,5 +1,6 @@
 package me.eccentric_nz.TARDIS.commands.dev;
 
+import me.eccentric_nz.TARDIS.TARDIS;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -28,7 +29,7 @@ public class SpriteCommand {
         player.sendMessage(star);
         String atlasKey = contents.atlas().asString();
         String spriteKey = contents.sprite().asString();
-        player.sendMessage(atlasKey);
-        player.sendMessage(spriteKey);
+        TARDIS.plugin.getMessenger().message(player, atlasKey);
+        TARDIS.plugin.getMessenger().message(player, spriteKey);
     }
 }

@@ -22,7 +22,7 @@ import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.customblocks.VariableLight;
 import me.eccentric_nz.TARDIS.enumeration.TardisLight;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
+import me.eccentric_nz.TARDIS.planets.TARDISWorldResolver;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
@@ -65,7 +65,7 @@ public class LightChanger implements Runnable {
         String[] tc = chunk.split(":");
         int cx = TARDISNumberParsers.parseInt(tc[1]);
         int cz = TARDISNumberParsers.parseInt(tc[2]);
-        World world = TARDISAliasResolver.getWorldFromAlias(tc[0]);
+        World world = TARDISWorldResolver.getFromString(tc[1]);
         if (world != null) {
             // get ARS chunks - 3 high x 9 wide x 9 deep
             for (int x = -4; x < 5; x++) {

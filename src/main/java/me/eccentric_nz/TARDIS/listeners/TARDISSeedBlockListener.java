@@ -75,10 +75,10 @@ public class TARDISSeedBlockListener implements Listener {
             return;
         }
         ItemMeta im = is.getItemMeta();
-        if (!im.hasDisplayName() || !im.hasLore()) {
+        if (!im.hasCustomName() || !im.hasLore()) {
             return;
         }
-        String dn = ComponentUtils.stripColour(im.displayName());
+        String dn = ComponentUtils.stripColour(im.customName());
         if (dn.equals("TARDIS Seed Block")) {
             Block block = event.getBlockPlaced();
             if (im.getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.STRING)) {
@@ -172,7 +172,7 @@ public class TARDISSeedBlockListener implements Listener {
                     return;
                 }
                 im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, model.getKey());
-                im.displayName(ComponentUtils.toGold("TARDIS Seed Block"));
+                im.customName(ComponentUtils.toGold("TARDIS Seed Block"));
                 List<Component> lore = new ArrayList<>();
                 lore.add(Component.text(console));
                 lore.add(Component.text("Walls: " + data.getWallType().toString()));
@@ -209,7 +209,7 @@ public class TARDISSeedBlockListener implements Listener {
                     key = plugin.getConfig().getString("preferences.key");
                 }
                 if (player.getInventory().getItemInMainHand().getType().equals(Material.valueOf(key))) {
-                    if (!plugin.getPlanetsConfig().getBoolean("planets." + l.getWorld().getName() + ".time_travel")) {
+                    if (!plugin.getPlanetsConfig().getBoolean("planets." + l.getWorld().getKey().getKey() + ".time_travel")) {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "WORLD_NO_TARDIS");
                         return;
                     }

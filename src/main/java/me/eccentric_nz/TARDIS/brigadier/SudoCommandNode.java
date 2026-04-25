@@ -230,7 +230,7 @@ public class SudoCommandNode {
                                                         World world = ctx.getArgument("world", World.class);
                                                         BlockPositionResolver resolver = ctx.getArgument("coords", BlockPositionResolver.class);
                                                         BlockPosition pos = resolver.resolve(ctx.getSource());
-                                                        plugin.getServer().dispatchCommand(plugin.getConsole(), "tardisremote " + offlinePlayer.getName() + " travel " + world.getName() + " " + pos.blockX() + " " + pos.blockY() + " " + pos.blockZ());
+                                                        plugin.getServer().dispatchCommand(plugin.getConsole(), "tardisremote " + offlinePlayer.getName() + " travel " + world.getKey().asString() + " " + pos.blockX() + " " + pos.blockY() + " " + pos.blockZ());
                                                     }
                                                     return Command.SINGLE_SUCCESS;
                                                 }))))

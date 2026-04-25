@@ -135,7 +135,7 @@ public class SonicSorterListener implements Listener {
             ItemStack is = player.getInventory().getItemInMainHand();
             if (is.hasItemMeta()) {
                 ItemMeta im = is.getItemMeta();
-                if (im.hasDisplayName() && ComponentUtils.endsWith(im.displayName(), "Sonic Screwdriver")) {
+                if (im.hasCustomName() && ComponentUtils.endsWith(im.customName(), "Sonic Screwdriver")) {
                     Block block = event.getClickedBlock();
                     if (block != null && sortables.contains(block.getType())) {
                         boolean allow = true;

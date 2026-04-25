@@ -56,7 +56,7 @@ public class TARDISIndexFileInventory implements InventoryHolder {
         for (TISCategory category : TISCategory.values()) {
             ItemStack is = ItemStack.of(Material.BOOKSHELF, 1);
             ItemMeta im = is.getItemMeta();
-            im.displayName(Component.text(category.getName()));
+            im.customName(Component.text(category.getName()));
             List<Component> lore = new ArrayList<>();
             for (String s : category.getLore().split("~")) {
                 lore.add(Component.text(s));
@@ -69,7 +69,7 @@ public class TARDISIndexFileInventory implements InventoryHolder {
         // close
         ItemStack close = ItemStack.of(Material.BOWL, 1);
         ItemMeta close_im = close.getItemMeta();
-        close_im.displayName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
+        close_im.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
         close.setItemMeta(close_im);
         stack[26] = close;
         return stack;

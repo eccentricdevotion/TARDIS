@@ -123,7 +123,7 @@ public class ModelledPresetListener extends TARDISMenuListener {
             case 53 -> close(player);
             default -> {
                 // custom model exterior
-                String custom = ComponentUtils.stripColour(is.getItemMeta().displayName());
+                String custom = ComponentUtils.stripColour(is.getItemMeta().customName());
                 set.put("chameleon_preset", "ITEM:" + custom);
                 if (hasSign) {
                     updateChameleonSign(rsc.getData(), custom, player);

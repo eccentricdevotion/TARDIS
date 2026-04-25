@@ -51,7 +51,7 @@ public class SilentRunnable implements Runnable {
     public void run() {
         plugin.getServer().getWorlds().forEach((w) -> {
             // only configured worlds
-            String name = WorldProcessor.sanitiseName(w.getName());
+            String name = w.getKey().getKey();
             if (plugin.getMonstersConfig().getInt("silent.worlds." + name) > 0) {
                 // get the current silent count
                 int papal = 0;

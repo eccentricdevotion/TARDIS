@@ -48,7 +48,7 @@ public class InventoryPluginHelper implements Listener {
         Player player = event.getPlayer();
         boolean shouldSwitch;
         if (plugin.getInvManager() == InventoryManager.MULTIVERSE) {
-            shouldSwitch = !TARDISMultiverseInventoriesChecker.checkWorldsCanShare(event.getFrom().getName(), player.getWorld().getName());
+            shouldSwitch = !TARDISMultiverseInventoriesChecker.checkWorldsCanShare(event.getFrom().getKey().getKey(), player.getWorld().getKey().getKey());
         } else {
             // GAMEMODE
             shouldSwitch = (plugin.getGeneralKeeper().getDoorListener().checkSurvival(event.getFrom()) != plugin.getGeneralKeeper().getDoorListener().checkSurvival(player.getWorld()));
@@ -72,7 +72,7 @@ public class InventoryPluginHelper implements Listener {
         Player player = event.getPlayer();
         boolean shouldSwitch;
         if (plugin.getInvManager() == InventoryManager.MULTIVERSE) {
-            shouldSwitch = !TARDISMultiverseInventoriesChecker.checkWorldsCanShare(event.getFrom().getName(), player.getWorld().getName());
+            shouldSwitch = !TARDISMultiverseInventoriesChecker.checkWorldsCanShare(event.getFrom().getKey().getKey(), player.getWorld().getKey().getKey());
         } else {
             // GAMEMODE
             shouldSwitch = (plugin.getGeneralKeeper().getDoorListener().checkSurvival(event.getFrom()) != plugin.getGeneralKeeper().getDoorListener().checkSurvival(player.getWorld()));

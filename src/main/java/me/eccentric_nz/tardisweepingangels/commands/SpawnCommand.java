@@ -25,9 +25,9 @@ import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelSpawnEvent;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.equip.Equipper;
 import me.eccentric_nz.tardisweepingangels.monsters.daleks.DalekEquipment;
-import me.eccentric_nz.tardisweepingangels.monsters.empty_child.EmptyChildEquipment;
 import me.eccentric_nz.tardisweepingangels.monsters.headless_monks.HeadlessFlameRunnable;
 import me.eccentric_nz.tardisweepingangels.monsters.headless_monks.HeadlessMonkEquipment;
+import me.eccentric_nz.tardisweepingangels.monsters.ice_warriors.IceWarriorEquipment;
 import me.eccentric_nz.tardisweepingangels.monsters.judoon.JudoonEquipment;
 import me.eccentric_nz.tardisweepingangels.monsters.k9.K9Equipment;
 import me.eccentric_nz.tardisweepingangels.monsters.ood.OodEquipment;
@@ -124,7 +124,7 @@ public class SpawnCommand {
                                 }
                                 ItemStack helmet = ItemStack.of(Material.SLIME_BALL, 1);
                                 ItemMeta headMeta = helmet.getItemMeta();
-                                headMeta.displayName(Component.text("Dalek Head"));
+                                headMeta.customName(Component.text("Dalek Head"));
                                 headMeta.setItemModel(head);
                                 helmet.setItemMeta(headMeta);
                                 EntityEquipment ee = a.getEquipment();
@@ -139,10 +139,6 @@ public class SpawnCommand {
                     // set entity scale attribute
                     a.getAttribute(Attribute.SCALE).setBaseValue(2.5d);
                 }
-                case EMPTY_CHILD -> {
-                    new Equipper(monster, a, false).setHelmetAndInvisibility();
-                    EmptyChildEquipment.setSpeed(a);
-                }
                 case HEADLESS_MONK -> {
                     new Equipper(monster, a, false).setHelmetAndInvisibility();
                     HeadlessMonkEquipment.setTasks(a);
@@ -152,9 +148,7 @@ public class SpawnCommand {
                 }
                 case ICE_WARRIOR -> {
                     new Equipper(monster, a, false).setHelmetAndInvisibility();
-                    PigZombie pigman = (PigZombie) a;
-                    pigman.setAngry(true);
-                    pigman.setAnger(Integer.MAX_VALUE);
+                    IceWarriorEquipment.setAnger(a);
                 }
                 case JUDOON -> JudoonEquipment.set(player, a, false);
                 case K9 -> K9Equipment.set(player, a, false);
@@ -170,7 +164,7 @@ public class SpawnCommand {
                     a.customName(Component.text("Strax"));
                 }
                 case TOCLAFANE -> ToclafaneEquipment.set(a, false);
-                // WEEPING_ANGEL, CYBERMAN, CYBERSHADE, HATH, HEAVENLY_HOST, MIRE, NIMON, OMEGA, SEA_DEVIL,
+                // WEEPING_ANGEL, CYBERMAN, CYBERSHADE, EMPTY_CHILD, HATH, HEAVENLY_HOST, MIRE, NIMON, OMEGA, SEA_DEVIL,
                 // SILURIAN, SLITHEEN, SMILER, SONTARAN, SUTEKH, VAMPIRE_OF_VENICE, VASHTA_NERADA, ZYGON
                 default -> new Equipper(monster, a, false).setHelmetAndInvisibility();
             }

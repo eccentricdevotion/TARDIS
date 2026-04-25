@@ -65,7 +65,7 @@ public class SonicAtmosphericExcitation {
                     Location bd_loc = blockDown.getLocation();
                     HashMap<String, Object> wherecl = new HashMap<>();
                     wherecl.put("tardis_id", tid);
-                    wherecl.put("world", bd_loc.getWorld().getName());
+                    wherecl.put("world", bd_loc.getWorld().getKey().asString());
                     wherecl.put("x", bd_loc.getBlockX());
                     wherecl.put("y", bd_loc.getBlockY());
                     wherecl.put("z", bd_loc.getBlockZ());

@@ -130,7 +130,7 @@ public class TransmatGUIListener extends TARDISMenuListener {
             default:
                 // select
                 ItemMeta im = is.getItemMeta();
-                selectedLocation.put(player.getUniqueId(), ComponentUtils.stripColour(im.displayName()));
+                selectedLocation.put(player.getUniqueId(), ComponentUtils.stripColour(im.customName()));
                 break;
         }
     }

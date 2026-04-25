@@ -99,7 +99,7 @@ public class BlueprintLister {
         if (!messages.isEmpty()) {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "BLUEPRINTS_LIST", type.toUpperCase(Locale.ROOT));
             for (String s : messages) {
-                sender.sendMessage(s);
+                plugin.getMessenger().message(sender, s);
             }
         }
     }

@@ -161,7 +161,7 @@ public class ChemistryBlockListener implements Listener {
             if (tdi != null) {
                 ItemStack is = ItemStack.of(tdi.getMaterial(), 1);
                 ItemMeta im = is.getItemMeta();
-                im.displayName(Component.text(tdi.getDisplayName()));
+                im.customName(Component.text(tdi.getDisplayName()));
                 im.setItemModel(tdi.getCustomModel());
                 im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, tdi.getCustomModel().getKey());
                 is.setItemMeta(im);

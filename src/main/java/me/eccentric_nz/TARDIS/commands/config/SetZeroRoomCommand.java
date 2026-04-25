@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.commands.config;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.planets.TARDISSpace;
+import net.kyori.adventure.key.Key;
 import org.bukkit.command.CommandSender;
 
 /**
@@ -37,9 +38,9 @@ class SetZeroRoomCommand {
         plugin.getConfig().set("allow.zero_room", b);
         plugin.saveConfig();
         plugin.getMessenger().send(sender, TardisModule.TARDIS, "CONFIG_UPDATED", "zero_room");
-        if (b && plugin.getServer().getWorld("TARDIS_Zero_Room") == null) {
+        if (b && plugin.getServer().getWorld(Key.key("tardis_zero_room")) == null) {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "ZERO_CREATE");
-            new TARDISSpace(plugin).createDefaultWorld("TARDIS_Zero_Room");
+            new TARDISSpace(plugin).createDefaultWorld("tardis_zero_room");
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "ZERO_RESTART");
         }
     }

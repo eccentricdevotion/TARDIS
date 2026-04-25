@@ -42,7 +42,7 @@ public class FloorCommand {
         if (!TARDISWalls.BLOCKS.contains(Material.getMaterial(wall_mat))) {
             String message = (wall_mat.equals("HELP")) ? "WALL_LIST" : "WALL_NOT_VALID";
             plugin.getMessenger().send(player, TardisModule.TARDIS, message, which);
-            TARDISWalls.BLOCKS.forEach((w) -> player.sendMessage(w.toString()));
+            TARDISWalls.BLOCKS.forEach((w) -> plugin.getMessenger().message(player, w.toString()));
             return;
         }
         HashMap<String, Object> setw = new HashMap<>();

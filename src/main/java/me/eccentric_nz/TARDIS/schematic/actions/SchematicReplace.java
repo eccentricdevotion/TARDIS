@@ -41,8 +41,8 @@ public class SchematicReplace {
         }
         // get the world
         World w = plugin.getTrackerKeeper().getStartLocation().get(uuid).getWorld();
-        String chk_w = plugin.getTrackerKeeper().getEndLocation().get(uuid).getWorld().getName();
-        if (!w.getName().equals(chk_w)) {
+        String chk_w = plugin.getTrackerKeeper().getEndLocation().get(uuid).getWorld().getKey().getKey();
+        if (!w.getKey().getKey().equals(chk_w)) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "SCHM_WORLD");
             return;
         }

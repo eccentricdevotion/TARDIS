@@ -29,7 +29,7 @@ creation:
   create_worlds: false
   create_worlds_with_perms: false
   default_world: true
-  default_world_name: TARDIS_TimeVortex
+  default_world_name: tardis_timevortex
   tips_limit: 400
   tips_next: HIGHEST
   keep_night: true
@@ -75,8 +75,8 @@ travel:
   allow_nether_after_visit: false
   terminal:
     redefine: false
-    nether: world
-    the_end: world
+    nether: overworld
+    the_end: overworld
   land_on_water: true
   timeout: 5
   timeout_height: 135
@@ -292,3 +292,4 @@ conversions:
   player_prefs_materials: true
   short_grass: true
   room_costs: true
+  keyed_worlds: true

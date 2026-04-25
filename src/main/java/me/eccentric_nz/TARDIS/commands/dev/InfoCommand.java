@@ -23,14 +23,15 @@ import org.bukkit.command.CommandSender;
 public class InfoCommand {
 
     private final TARDIS plugin;
+
     public InfoCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
     public void test(CommandSender sender) {
         for (TARDISInfoMenu tim : TARDISInfoMenu.values()) {
-            sender.sendMessage("---");
-            sender.sendMessage("[" + tim.getName() + "]");
+            plugin.getMessenger().message(sender, "---");
+            plugin.getMessenger().message(sender, "[" + tim.getName() + "]");
             TARDISInfoMenu.getChildren(tim.toString()).forEach((key, value) -> {
                 String[] split = key.split(value, 2);
                 if (split.length > 1) {

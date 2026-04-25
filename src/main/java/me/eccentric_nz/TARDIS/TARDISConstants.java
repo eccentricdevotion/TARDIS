@@ -517,7 +517,7 @@ public class TARDISConstants {
      */
     public static boolean isTARDISPlanet(String world) {
         String w = world.toLowerCase(Locale.ROOT);
-        return w.endsWith("gallifrey") || w.endsWith("siluria") || w.endsWith("skaro");
+        return w.endsWith("gallifrey") || w.endsWith("siluria") || w.endsWith("skaro") || w.endsWith("telos");
     }
 
     /**

@@ -49,7 +49,7 @@ public class PresetStorageDiskRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.MUSIC_DISC_MALL, 1);
         ItemMeta im = is.getItemMeta();
-        im.displayName(ComponentUtils.toWhite("Preset Storage Disk"));
+        im.customName(ComponentUtils.toWhite("Preset Storage Disk"));
         im.lore(List.of(Component.text("Blank")));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "preset_storage_disk");
@@ -57,7 +57,7 @@ public class PresetStorageDiskRecipe {
         r.addIngredient(Material.MUSIC_DISC_STRAD);
         ItemStack exact = ItemStack.of(Material.GLOWSTONE_DUST, 1);
         ItemMeta em = exact.getItemMeta();
-        em.displayName(ComponentUtils.toWhite("TARDIS Chameleon Circuit"));
+        em.customName(ComponentUtils.toWhite("TARDIS Chameleon Circuit"));
         CustomModelDataComponent ecomponent = em.getCustomModelDataComponent();
         ecomponent.setFloats(CircuitVariant.CHAMELEON.getFloats());
         em.setCustomModelDataComponent(ecomponent);

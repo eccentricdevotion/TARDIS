@@ -95,10 +95,10 @@ public class TARDISDisplayBlockListener implements Listener {
             return;
         }
         ItemMeta im = is.getItemMeta();
-        if (!im.hasDisplayName() || !im.getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.STRING)) {
+        if (!im.hasCustomName() || !im.getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.STRING)) {
             return;
         }
-        if (ComponentUtils.endsWith(im.displayName(), "TARDIS Seed Block") || ComponentUtils.endsWith(im.displayName(), "Console")) {
+        if (ComponentUtils.endsWith(im.customName(), "TARDIS Seed Block") || ComponentUtils.endsWith(im.customName(), "Console")) {
             return;
         }
         String key = im.getPersistentDataContainer().get(plugin.getCustomBlockKey(), PersistentDataType.STRING);
@@ -139,7 +139,7 @@ public class TARDISDisplayBlockListener implements Listener {
             HashMap<String, Object> where = new HashMap<>();
             where.put("tardis_id", id);
             HashMap<String, Object> set = new HashMap<>();
-            set.put("world", location.getWorld().getName());
+            set.put("world", location.getWorld().getKey().asString());
             set.put("x", location.getBlockX());
             set.put("y", location.getBlockY());
             set.put("z", location.getBlockZ());
@@ -496,8 +496,8 @@ public class TARDISDisplayBlockListener implements Listener {
     private boolean isRedstoneSonic(ItemStack is) {
         if (is.hasItemMeta()) {
             ItemMeta im = is.getItemMeta();
-            if (im.hasDisplayName()) {
-                if (ComponentUtils.endsWith(im.displayName(), "Sonic Screwdriver")) {
+            if (im.hasCustomName()) {
+                if (ComponentUtils.endsWith(im.customName(), "Sonic Screwdriver")) {
                     List<Component> lore = im.lore();
                     return lore != null && lore.contains(Component.text("Redstone Upgrade"));
                 }
@@ -547,7 +547,7 @@ public class TARDISDisplayBlockListener implements Listener {
                                         Material variable = vis.getType();
                                         ItemStack ret = ItemStack.of(Material.GLASS, 1);
                                         ItemMeta im = ret.getItemMeta();
-                                        im.displayName(ComponentUtils.toWhite("Variable Light"));
+                                        im.customName(ComponentUtils.toWhite("Variable Light"));
                                         im.lore(List.of(Component.text(variable.toString())));
                                         im.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.INTEGER, 1003);
                                         ret.setItemMeta(im);
@@ -562,7 +562,7 @@ public class TARDISDisplayBlockListener implements Listener {
                                 item.setInvulnerable(true);
                                 // get the TARDIS id
                                 HashMap<String, Object> where = new HashMap<>();
-                                where.put("world", block.getLocation().getWorld().getName());
+                                where.put("world", block.getLocation().getWorld().getKey().asString());
                                 where.put("x", block.getLocation().getBlockX());
                                 where.put("y", block.getLocation().getBlockY());
                                 where.put("z", block.getLocation().getBlockZ());

@@ -52,7 +52,7 @@ public class TimeRotorRusticRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.LIGHT_GRAY_DYE, 1);
         ItemMeta im = is.getItemMeta();
-        im.displayName(ComponentUtils.toWhite("Time Rotor Rustic"));
+        im.customName(ComponentUtils.toWhite("Time Rotor Rustic"));
         im.setItemModel(RecipeItem.TIME_ROTOR_RUSTIC.getModel());
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "time_rotor_rustic");

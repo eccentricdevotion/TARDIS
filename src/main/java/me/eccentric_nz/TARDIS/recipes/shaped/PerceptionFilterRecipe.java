@@ -54,7 +54,7 @@ public class PerceptionFilterRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.OMINOUS_TRIAL_KEY, 1);
         ItemMeta im = is.getItemMeta();
-        im.displayName(ComponentUtils.toWhite("Perception Filter"));
+        im.customName(ComponentUtils.toWhite("Perception Filter"));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "perception_filter");
         ShapedRecipe r = new ShapedRecipe(key, is);
@@ -65,7 +65,7 @@ public class PerceptionFilterRecipe {
         if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             ItemStack exact = ItemStack.of(Material.GLOWSTONE_DUST, 1);
             ItemMeta em = exact.getItemMeta();
-            em.displayName(ComponentUtils.toWhite("Perception Circuit"));
+            em.customName(ComponentUtils.toWhite("Perception Circuit"));
             CustomModelDataComponent component = em.getCustomModelDataComponent();
             component.setFloats(CircuitVariant.PERCEPTION.getFloats());
             em.setCustomModelDataComponent(component);

@@ -5,6 +5,7 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.planets.*;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
+import net.kyori.adventure.key.Key;
 import org.bukkit.*;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
@@ -20,7 +21,7 @@ import java.util.Map;
 public class WorldUtility {
 
     public static void disable(TARDIS plugin, CommandSender sender, World world) {
-        String w = world.getName();
+        String w = world.getKey().getKey();
         // is the world in the config?
         if (!plugin.getPlanetsConfig().contains("planets." + w)) {
             plugin.getMessenger().sendColouredCommand(sender, "WORLD_NOT_FOUND", "/tardisworld load", plugin);
@@ -84,7 +85,7 @@ public class WorldUtility {
                     }
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                         if (plugin.getPlanetsConfig().getBoolean("planets.telos.twilight")) {
-                            World telos = plugin.getServer().getWorld("telos");
+                            World telos = plugin.getServer().getWorld(Key.key("telos"));
                             if (telos != null) {
                                 telos.setTime(13000);
                                 telos.setGameRule(GameRules.ADVANCE_TIME, false);
@@ -112,7 +113,7 @@ public class WorldUtility {
         WorldType worldType = WorldType.NORMAL;
         World.Environment environment = World.Environment.NORMAL;
         // try to load the world
-        WorldCreator creator = new WorldCreator(name);
+        WorldCreator creator = new WorldCreator(new NamespacedKey("minecraft", name));
         if (!type.isEmpty()) {
             try {
                 worldType = WorldType.valueOf(type.toUpperCase(Locale.ROOT));
@@ -172,7 +173,7 @@ public class WorldUtility {
     }
 
     public static void unload(TARDIS plugin, CommandSender sender, World world) {
-        String w = world.getName();
+        String w = world.getKey().getKey();
         plugin.getServer().unloadWorld(world, true);
         plugin.getPlanetsConfig().set("planets." + w + ".enabled", false);
         plugin.getPlanetsConfig().set("planets." + w + ".time_travel", false);
@@ -182,10 +183,10 @@ public class WorldUtility {
 
     public static void sendInfo(TARDIS plugin, Player player) {
         World world = player.getWorld();
-        plugin.getMessenger().send(player, TardisModule.TARDIS, "WORLD_INFO", world.getName());
-        plugin.getMessenger().message(player, "Gamemode -> " + plugin.getPlanetsConfig().getString("planets." + world.getName() + ".gamemode"));
+        plugin.getMessenger().send(player, TardisModule.TARDIS, "WORLD_INFO", world.getKey().getKey());
+        plugin.getMessenger().message(player, "Gamemode -> " + plugin.getPlanetsConfig().getString("planets." + world.getKey().getKey() + ".gamemode"));
         plugin.getMessenger().message(player, "Environment -> " + world.getEnvironment());
-        plugin.getMessenger().message(player, "Generator -> " + plugin.getPlanetsConfig().getString("planets." + world.getName() + ".generator"));
+        plugin.getMessenger().message(player, "Generator -> " + plugin.getPlanetsConfig().getString("planets." + world.getKey().getKey() + ".generator"));
         plugin.getMessenger().message(player, "Difficulty -> " + world.getDifficulty());
         plugin.getMessenger().message(player, "Gamerules -> ");
         for (String s : world.getGameRules()) {
@@ -194,12 +195,12 @@ public class WorldUtility {
                 plugin.getMessenger().message(player, "     " + s + " -> " + world.getGameRuleValue(rule));
             }
         }
-        plugin.getMessenger().message(player, "Spawn chunk radius -> " + plugin.getPlanetsConfig().getInt("planets." + world.getName() + ".spawn_chunk_radius"));
-        plugin.getMessenger().message(player, "Time travel -> " + plugin.getPlanetsConfig().getString("planets." + world.getName() + ".time_travel"));
+        plugin.getMessenger().message(player, "Spawn chunk radius -> " + plugin.getPlanetsConfig().getInt("planets." + world.getKey().getKey() + ".spawn_chunk_radius"));
+        plugin.getMessenger().message(player, "Time travel -> " + plugin.getPlanetsConfig().getString("planets." + world.getKey().getKey() + ".time_travel"));
     }
     
     public static void rename(TARDIS plugin, CommandSender sender, World world, String newName) {
-        String oldName = world.getName();
+        String oldName = world.getKey().getKey();
         // remove players from world
         List<Player> players = world.getPlayers();
         Location spawn = plugin.getServer().getWorlds().getFirst().getSpawnLocation();

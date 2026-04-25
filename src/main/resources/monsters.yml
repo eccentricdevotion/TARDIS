@@ -6,15 +6,15 @@ spawn_rate:
 custom_spawners: true
 angels:
   worlds:
-    world: 10
+    overworld: 10
   # whether to teleport to specific locations or random locations in specified worlds
   teleport_to_location: false
-  # locations to teleport to if 'teleport_to_location' is true - use the format world,x,y,z defaults to world spawn
+  # locations to teleport to if 'teleport_to_location' is true - use the format world.key,x,y,z defaults to overworld spawn
   teleport_locations:
-    - world,0,64,0
+    - overworld,0,64,0
   # worlds to teleport to if 'teleport_to_location' is false
   teleport_worlds:
-    - world
+    - overworld
   freeze_time: 100
   weapon: DIAMOND_PICKAXE
   drops:
@@ -28,20 +28,20 @@ angels:
     distance_from_player: 10
 clockwork_droids:
   worlds:
-    world: 10
+    overworld: 10
   drops:
     - IRON_NUGGET
     - LEATHER
 cybermen:
   worlds:
-    world: 10
+    overworld: 10
   drops:
     - REDSTONE
     - STONE_BUTTON
   can_upgrade: true
 daleks:
   worlds:
-    world: 10
+    overworld: 10
   drops:
     - SLIME_BALL
     - ROTTEN_FLESH
@@ -55,19 +55,19 @@ daleks:
     - CRIMSON_BUTTON
 empty_child:
   worlds:
-    world: 10
+    overworld: 10
   drops:
     - COOKED_BEEF
     - SUGAR
 hath:
   worlds:
-    world: 10
+    overworld: 10
   drops:
     - SALMON
     - STONE_PICKAXE
 headless_monks:
   worlds:
-    world: 10
+    overworld: 10
   drops:
     - BOOK
     - RED_CANDLE
@@ -75,20 +75,20 @@ headless_monks:
   particles: true
 heavenly_hosts:
   worlds:
-    world: 10
+    overworld: 10
   drops:
     - GOLD_NUGGET
     - PAPER
 ice_warriors:
   worlds:
-    world: 10
+    overworld: 10
   drops:
     - ICE
     - PACKED_ICE
     - SNOW_BLOCK
 judoon:
   worlds:
-    world: 10
+    overworld: 10
   guards: true
   can_build: true
   ammunition: 25
@@ -97,16 +97,16 @@ k9:
   by_taming: true
   can_build: true
   worlds:
-    world: true
+    overworld: true
 nimon:
   worlds:
-    world: 10
+    overworld: 10
   drops:
     - BEEF
     - POLISHED_BLACKSTONE
 ood:
   worlds:
-    world: true
+    overworld: true
   drops:
     - NAME_TAG
   spawn_from_villager: 20
@@ -124,57 +124,57 @@ racnoss:
     - ECHO_SHARD
 scarecrows:
   worlds:
-    world: 10
+    overworld: 10
   drops:
     - WHEAT
     - STRING
 sea_devils:
   worlds:
-    world: 10
+    overworld: 10
   drops:
     - COD
     - KELP
 silent:
   worlds:
-    world: 10
+    overworld: 10
   drops:
     - INK_SAC
     - FLOWER_POT
   check_slime_chunk: false
 silurians:
   worlds:
-    world: 10
+    overworld: 10
   drops:
     - GOLD_NUGGET
     - FEATHER
 slitheen:
   worlds:
-    world: 10
+    overworld: 10
   drops:
     - RABBIT_HIDE
     - PHANTOM_MEMBRANE
 sontarans:
   worlds:
-    world: 10
+    overworld: 10
   drops:
     - POTATO
     - POISONOUS_POTATO
   can_tame: true
 sycorax:
   worlds:
-    world: 10
+    overworld: 10
   drops:
     - BONE_MEAL
     - SALMON
 the_mire:
   worlds:
-    world: 10
+    overworld: 10
   drops:
     - POTION
     - HONEY_BOTTLE
 toclafane:
   worlds:
-    world: 10
+    overworld: 10
   spawn_from_bee: 5
   destroy_blocks: true
   drops:
@@ -182,13 +182,13 @@ toclafane:
     - HONEYCOMB
 vashta_nerada:
   worlds:
-    world: 10
+    overworld: 10
   drops:
     - BONE
     - LEATHER
 zygons:
   worlds:
-    world: 10
+    overworld: 10
   drops:
     - PAINTING
     - SAND
@@ -197,34 +197,34 @@ the_beast:
     - MAGMA_BLOCK
     - COPPER_CHAIN
   worlds:
-    world: 1
+    overworld: 1
 sutekh:
   drops:
     - GLOWSTONE_DUST
     - LIGHTNING_ROD
   worlds:
-    world: 10
+    overworld: 10
 smilers:
   drops:
     - COMPARATOR
     - CHERRY_LOG
   worlds:
-    world: 10
+    overworld: 10
 omega:
   drops:
     - GOLD_INGOT
     - CLOCK
   worlds:
-    world: 10
+    overworld: 10
 vampires:
   drops:
     - TROPICAL_FISH
     - FISHING_ROD
   worlds:
-    world: 10
+    overworld: 10
 angel_of_liberty:
   drops:
     - TORCH
     - OXIDIZED_COPPER
   worlds:
-    world: 1
+    overworld: 1

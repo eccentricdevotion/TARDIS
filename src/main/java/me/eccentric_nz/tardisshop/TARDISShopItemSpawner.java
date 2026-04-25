@@ -54,7 +54,7 @@ public class TARDISShopItemSpawner {
                 component.setFloats(si.getFloats());
                 im.setCustomModelDataComponent(component);
             }
-            im.displayName(Component.text(what.item()));
+            im.customName(Component.text(what.item()));
             im.getPersistentDataContainer().set(plugin.getShopSettings().getItemKey(), PersistentDataType.INTEGER, 10001);
             is.setItemMeta(im);
             ItemDisplay display = (ItemDisplay) location.getWorld().spawnEntity(location.clone().add(0.5d, 1.25d, 0.5d), EntityType.ITEM_DISPLAY);

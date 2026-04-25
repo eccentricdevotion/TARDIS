@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import me.eccentric_nz.TARDIS.schematic.SchematicGZip;
 import me.eccentric_nz.tardischunkgenerator.worldgen.utils.RoomsUtility;
 import org.bukkit.Material;
+import org.bukkit.Registry;
 import org.bukkit.Tag;
 import org.bukkit.block.Banner;
 import org.bukkit.block.BlockFace;
@@ -68,8 +69,10 @@ public class RoomPopulator extends BlockPopulator {
             int startX = x * 16;
             int startY = 64;
             int startZ = z * 16;
-            BlockData orange = TARDISWalls.BLOCKS.get(random.nextInt(TARDISWalls.BLOCKS.size())).createBlockData();
-            BlockData lightGray = TARDISWalls.BLOCKS.get(random.nextInt(TARDISWalls.BLOCKS.size())).createBlockData();
+            BlockData orange = Registry.MATERIAL.get(
+                    TARDISWalls.BLOCKS.get(random.nextInt(TARDISWalls.BLOCKS.size())).key()).createBlockData();
+            BlockData lightGray = Registry.MATERIAL.get(
+                    TARDISWalls.BLOCKS.get(random.nextInt(TARDISWalls.BLOCKS.size())).key()).createBlockData();
             // get input array
             JsonArray arr = obj.get("input").getAsJsonArray();
             while (level <= h && row < w) {

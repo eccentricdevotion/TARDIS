@@ -81,7 +81,7 @@ public class SuperFertisliserListener implements Listener {
         Player player = event.getPlayer();
         if (player != null) {
             ItemStack is = player.getInventory().getItemInMainHand();
-            if (is.getType() == Material.BONE_MEAL && is.hasItemMeta() && is.getItemMeta().hasDisplayName() && ComponentUtils.endsWith(is.getItemMeta().displayName(), "Super Fertiliser") && is.getItemMeta().hasItemModel()) {
+            if (is.getType() == Material.BONE_MEAL && is.hasItemMeta() && is.getItemMeta().hasCustomName() && ComponentUtils.endsWith(is.getItemMeta().customName(), "Super Fertiliser") && is.getItemMeta().hasItemModel()) {
                 event.setCancelled(true);
                 Block block = event.getBlock();
                 boolean removeItem = false;
@@ -140,7 +140,7 @@ public class SuperFertisliserListener implements Listener {
         if (block != null && TREES.contains(block.getType())) {
             Player player = event.getPlayer();
             ItemStack is = player.getInventory().getItemInMainHand();
-            if (is.getType() == Material.BONE_MEAL && is.hasItemMeta() && is.getItemMeta().hasDisplayName() && ComponentUtils.endsWith(is.getItemMeta().displayName(), "Super Fertiliser") && is.getItemMeta().hasItemModel()) {
+            if (is.getType() == Material.BONE_MEAL && is.hasItemMeta() && is.getItemMeta().hasCustomName() && ComponentUtils.endsWith(is.getItemMeta().customName(), "Super Fertiliser") && is.getItemMeta().hasItemModel()) {
                 event.setCancelled(true);
                 TreeType treeType = TREE_LOOKUP.get(block.getType());
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {

@@ -143,7 +143,7 @@ public class ArchitecturalBlueprintsListener extends TARDISMenuListener {
                         Player recipient = plugin.getServer().getPlayer(receiver);
                         if (recipient != null && recipient.isOnline()) {
                             recipient.give(gift);
-                            String r = ComponentUtils.stripColour(gim.displayName());
+                            String r = ComponentUtils.stripColour(gim.customName());
                             plugin.getMessenger().send(recipient, TardisModule.TARDIS, "GIVE_ITEM", player.getName(), "a " + r + " Blueprint Disk");
                         }
                     } else {
@@ -168,7 +168,7 @@ public class ArchitecturalBlueprintsListener extends TARDISMenuListener {
         ItemStack head = ItemStack.of(Material.PLAYER_HEAD, 1);
         SkullMeta skull = (SkullMeta) head.getItemMeta();
         skull.setOwningPlayer(player);
-        skull.displayName(Component.text(player.getName()));
+        skull.customName(Component.text(player.getName()));
         skull.lore(List.of(Component.text(player.getUniqueId().toString())));
         head.setItemMeta(skull);
         view.setItem(slot, head);

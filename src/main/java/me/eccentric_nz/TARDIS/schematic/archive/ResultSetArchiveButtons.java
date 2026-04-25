@@ -68,7 +68,7 @@ public class ResultSetArchiveButtons {
                 while (rs.next()) {
                     ItemStack is = ItemStack.of(terracotta[i], 1);
                     ItemMeta im = is.getItemMeta();
-                    im.displayName(Component.text(rs.getString("name")));
+                    im.customName(Component.text(rs.getString("name")));
                     List<Component> lore = new ArrayList<>();
                     if (!rs.getString("description").isEmpty()) {
                         Pattern p = Pattern.compile("\\G\\s*(.{1,25})(?=\\s|$)", Pattern.DOTALL);

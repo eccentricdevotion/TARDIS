@@ -47,8 +47,8 @@ public class Kit {
             result = recipe.getResult();
             if (result.hasItemMeta()) {
                 ItemMeta im = result.getItemMeta();
-                if (im.hasDisplayName()) {
-                    String dn = ComponentUtils.stripColour(im.displayName());
+                if (im.hasCustomName()) {
+                    String dn = ComponentUtils.stripColour(im.customName());
                     if (dn.contains("Key") || dn.contains("Authorised Control Disk")) {
                         im.getPersistentDataContainer().set(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID(), player.getUniqueId());
                         if (im.hasLore()) {

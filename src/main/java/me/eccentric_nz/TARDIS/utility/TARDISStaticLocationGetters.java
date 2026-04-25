@@ -16,9 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.utility;
 
+import net.kyori.adventure.key.Key;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+
+import java.util.Locale;
 
 /**
  * @author eccentric_nz
@@ -36,7 +39,7 @@ public class TARDISStaticLocationGetters {
      */
     public static World getWorldFromSplitString(String data) {
         String[] split = data.split(":");
-        return Bukkit.getServer().getWorld(split[0]);
+        return Bukkit.getServer().getWorld(Key.key(split[0], split[1]));
     }
 
     /**
@@ -46,17 +49,17 @@ public class TARDISStaticLocationGetters {
      * @return a Location.
      */
     public static Location getLocationFromDB(String s) {
-        double savedx, savedy, savedz;
+        double savedX, savedY, savedZ;
         // compile location from string
         String[] data = s.split(":");
-        World savedw = Bukkit.getServer().getWorld(data[0]);
-        if (savedw == null) {
+        World savedWorld = Bukkit.getServer().getWorld(Key.key(data[0], data[1]));
+        if (savedWorld == null) {
             return null;
         }
-        savedx = TARDISNumberParsers.parseDouble(data[1]);
-        savedy = TARDISNumberParsers.parseDouble(data[2]);
-        savedz = TARDISNumberParsers.parseDouble(data[3]);
-        return new Location(savedw, savedx, savedy, savedz);
+        savedX = TARDISNumberParsers.parseDouble(data[2]);
+        savedY = TARDISNumberParsers.parseDouble(data[3]);
+        savedZ = TARDISNumberParsers.parseDouble(data[4]);
+        return new Location(savedWorld, savedX, savedY, savedZ);
     }
 
     /**
@@ -66,39 +69,40 @@ public class TARDISStaticLocationGetters {
      * @return a Location.
      */
     public static Location getSpawnLocationFromDB(String s) {
-        double savedx, savedy, savedz;
+        double savedX, savedY, savedZ;
         // compile location from string
         String[] data = s.split(":");
-        World savedw = Bukkit.getServer().getWorld(data[0]);
-        if (savedw == null) {
+        World savedWorld = Bukkit.getServer().getWorld(Key.key(data[0], data[1]));
+        if (savedWorld == null) {
             return null;
         }
-        savedx = TARDISNumberParsers.parseDouble(data[1]) + 0.5d;
-        savedy = TARDISNumberParsers.parseDouble(data[2]) + 1.0d;
-        savedz = TARDISNumberParsers.parseDouble(data[3]) + 0.5d;
-        return new Location(savedw, savedx, savedy, savedz);
+        savedX = TARDISNumberParsers.parseDouble(data[2]) + 0.5d;
+        savedY = TARDISNumberParsers.parseDouble(data[3]) + 1.0d;
+        savedZ = TARDISNumberParsers.parseDouble(data[4]) + 0.5d;
+        return new Location(savedWorld, savedX, savedY, savedZ);
     }
 
     /**
      * Gets a location object from data stored in the database.
      *
-     * @param string the stored Bukkit location string e.g. Location{world=CraftWorld{name=world},x=0.0,y=0.0,z=0.0,pitch=0.0,yaw=0.0}
+     * @param string the stored Bukkit location string e.g. Location{world=CraftWorld{key=minecraft:world},x=0.0,y=0.0,z=0.0,pitch=0.0,yaw=0.0}
      * @return the location or null
      */
     public static Location getLocationFromBukkitString(String string) {
-        //Location{world=CraftWorld{name=world},x=0.0,y=0.0,z=0.0,pitch=0.0,yaw=0.0}
+        //Location{world=CraftWorld{key=minecraft:world},x=0.0,y=0.0,z=0.0,pitch=0.0,yaw=0.0}
         String[] loc_data = string.split(",");
         // w, x, y, z - 0, 1, 2, 3
         String[] wStr = loc_data[0].split("=");
         String[] xStr = loc_data[1].split("=");
         String[] yStr = loc_data[2].split("=");
         String[] zStr = loc_data[3].split("=");
-        String tmp = wStr[2].substring(0, (wStr[2].length() - 1));
-        World w = Bukkit.getServer().getWorld(tmp);
+        String tmp = wStr[2].substring(0, (wStr[2].length() - 1)).toLowerCase(Locale.ROOT);
+        Key key = Key.key(tmp, ':');
+        World w = Bukkit.getServer().getWorld(key);
         if (w == null) {
             return null;
         }
-        // Location{world=CraftWorld{name=world},x=1.0000021E7,y=67.0,z=1824.0,pitch=0.0,yaw=0.0}
+        // Location{world=CraftWorld{key=minecraft:world},x=1.0000021E7,y=67.0,z=1824.0,pitch=0.0,yaw=0.0}
         double x = (xStr[1].contains("E")) ? Double.parseDouble(xStr[1]) : TARDISNumberParsers.parseDouble(xStr[1]);
         double y = TARDISNumberParsers.parseDouble(yStr[1]);
         double z = (zStr[1].contains("E")) ? Double.parseDouble(zStr[1]) : TARDISNumberParsers.parseDouble(zStr[1]);
@@ -112,10 +116,10 @@ public class TARDISStaticLocationGetters {
      * @param x the x coordinate of the block's location
      * @param y the y coordinate of the block's location
      * @param z the z coordinate of the block's location
-     * @return a String in the style of org.bukkit.Location.toString() e.g. Location{world=CraftWorld{name=world},x=0.0,y=0.0,z=0.0,pitch=0.0,yaw=0.0}
+     * @return a String in the style of org.bukkit.Location.toString() e.g. 7.0.1Location{world=CraftWorld{key=minecraft:tworld},x=0.0,y=0.0,z=0.0,pitch=0.0,yaw=0.0}
      */
     public static String makeLocationStr(String w, String x, String y, String z) {
-        return "Location{world=CraftWorld{name=" + w + "},x=" + x + ".0,y=" + y + ".0,z=" + z + ".0,pitch=0.0,yaw=0.0}";
+        return "Location{world=CraftWorld{key=minecraft:" + w.toLowerCase(Locale.ROOT) + "},x=" + x + ".0,y=" + y + ".0,z=" + z + ".0,pitch=0.0,yaw=0.0}";
     }
 
     /**
@@ -125,15 +129,11 @@ public class TARDISStaticLocationGetters {
      * @param x the x coordinate of the block's location
      * @param y the y coordinate of the block's location
      * @param z the z coordinate of the block's location
-     * @return a String in the style of org.bukkit.Location.toString() e.g. Location{world=CraftWorld{name=world},x=0.0,y=0.0,z=0.0,pitch=0.0,yaw=0.0}
+     * @return a String in the style of org.bukkit.Location.toString() e.g. 7.0.1Location{world=CraftWorld{key=minecraft:tworld},x=0.0,y=0.0,z=0.0,pitch=0.0,yaw=0.0}
      */
     public static String makeLocationStr(World w, int x, int y, int z) {
-        return "Location{world=CraftWorld{name=" + w.getName() + "},x=" + x + ".0,y=" + y + ".0,z=" + z + ".0,pitch=0.0,yaw=0.0}";
-    }
-
-    public static String makeTetrisLocationString(String world, double x, double y, double z) {
-        // Location{world=CraftWorld{name=world},x=0.0,y=0.0,z=0.0,pitch=0.0,yaw=0.0}
-        return String.format("Location{world=CraftWorld{name=%s},x=%.1f,y=%.1f,z=%.1f,pitch=0.0,yaw=0.0}", world, x, y, z);
+        String key = w.getKey().asString();
+        return "Location{world=CraftWorld{key=" + key + "},x=" + x + ".0,y=" + y + ".0,z=" + z + ".0,pitch=0.0,yaw=0.0}";
     }
 
     /**
@@ -143,7 +143,7 @@ public class TARDISStaticLocationGetters {
      * @return a String in the style of world:x:y:z
      */
     public static String makeLocationStr(Location location) {
-        return location.getWorld().getName() + ":" + location.getBlockX() + ":" + location.getBlockY() + ":" + location.getBlockZ();
+        return location.getWorld().getKey().getKey() + ":" + location.getBlockX() + ":" + location.getBlockY() + ":" + location.getBlockZ() + ":" + location.getYaw();
     }
 
     /**
@@ -154,9 +154,9 @@ public class TARDISStaticLocationGetters {
      */
     public static Chunk getChunk(String str) {
         String[] split = str.split(":");
-        World cw = Bukkit.getServer().getWorld(split[0]);
-        int cx = TARDISNumberParsers.parseInt(split[1]);
-        int cz = TARDISNumberParsers.parseInt(split[2]);
+        World cw = Bukkit.getServer().getWorld(Key.key(split[0], split[1]));
+        int cx = TARDISNumberParsers.parseInt(split[2]);
+        int cz = TARDISNumberParsers.parseInt(split[3]);
         return cw.getChunkAt(cx, cz);
     }
 
@@ -167,7 +167,7 @@ public class TARDISStaticLocationGetters {
                 // need to +1 due to Spigot change
                 int tmp = world.getHighestBlockYAt(x + xx, z + zz) + 1;
                 y = Math.max(tmp, y);
-                if (world.getName().equals("siluria") && world.getBlockAt(x, y - 1, z).getType().equals(Material.BAMBOO)) {
+                if (world.getKey().getKey().equals("siluria") && world.getBlockAt(x, y - 1, z).getType().equals(Material.BAMBOO)) {
                     do {
                         y--;
                     } while (world.getBlockAt(x, y, z).getType().equals(Material.BAMBOO));

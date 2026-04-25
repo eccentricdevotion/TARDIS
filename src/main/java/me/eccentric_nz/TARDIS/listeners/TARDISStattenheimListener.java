@@ -62,10 +62,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * The handheld Recall Button on the TARDIS Stattenheim remote broadcasts a Stattenheim signal through the Vortex, which
@@ -100,7 +97,7 @@ public class TARDISStattenheimListener implements Listener {
         if (is.getType().equals(Material.FLINT) && is.hasItemMeta()) {
             ItemMeta im = is.getItemMeta();
             int uses;
-            if (ComponentUtils.endsWith(im.displayName(),"Stattenheim Remote")) {
+            if (ComponentUtils.endsWith(im.customName(),"Stattenheim Remote")) {
                 UUID uuid = player.getUniqueId();
                 if (plugin.getConfig().getBoolean("difficulty.system_upgrades") && !new SystemUpgradeChecker(plugin).has(uuid.toString(), SystemTree.STATTENHEIM_REMOTE)) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "Stattenheim Remote");
@@ -151,7 +148,7 @@ public class TARDISStattenheimListener implements Listener {
                     }
                     if (TARDISPermission.hasPermission(player, "tardis.timetravel")) {
                         Location remoteLocation = b.getLocation();
-                        if (!plugin.getConfig().getBoolean("travel.include_default_world") && plugin.getConfig().getBoolean("creation.default_world") && remoteLocation.getWorld().getName().equals(plugin.getConfig().getString("creation.default_world_name"))) {
+                        if (!plugin.getConfig().getBoolean("travel.include_default_world") && plugin.getConfig().getBoolean("creation.default_world") && remoteLocation.getWorld().getKey().getKey().equals(plugin.getConfig().getString("creation.default_world_name", "tardis_timevortex").toLowerCase(Locale.ROOT))) {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_WORLD_TRAVEL");
                             return;
                         }
@@ -174,7 +171,7 @@ public class TARDISStattenheimListener implements Listener {
                             remoteLocation.setY(yplusone + 1);
                         }
                         // check the world is not excluded
-                        String world = remoteLocation.getWorld().getName();
+                        String world = remoteLocation.getWorld().getKey().getKey();
                         if (!plugin.getPlanetsConfig().getBoolean("planets." + world + ".time_travel")) {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PB_IN_WORLD");
                             return;
@@ -268,7 +265,7 @@ public class TARDISStattenheimListener implements Listener {
                         if (current.location().getWorld() != null) {
                             oldSave = current.location();
                             // set fast return location
-                            bset.put("world", current.location().getWorld().getName());
+                            bset.put("world", current.location().getWorld().getKey().asString());
                             bset.put("x", current.location().getBlockX());
                             bset.put("y", current.location().getBlockY());
                             bset.put("z", current.location().getBlockZ());
@@ -277,7 +274,7 @@ public class TARDISStattenheimListener implements Listener {
                         } else {
                             hidden = true;
                             // set fast return location
-                            bset.put("world", remoteLocation.getWorld().getName());
+                            bset.put("world", remoteLocation.getWorld().getKey().asString());
                             bset.put("x", remoteLocation.getX());
                             bset.put("y", remoteLocation.getY());
                             bset.put("z", remoteLocation.getZ());
@@ -288,7 +285,7 @@ public class TARDISStattenheimListener implements Listener {
                         HashMap<String, Object> cid = new HashMap<>();
                         cid.put("tardis_id", id);
                         HashMap<String, Object> cset = new HashMap<>();
-                        cset.put("world", remoteLocation.getWorld().getName());
+                        cset.put("world", remoteLocation.getWorld().getKey().asString());
                         cset.put("x", remoteLocation.getBlockX());
                         cset.put("y", remoteLocation.getBlockY());
                         cset.put("z", remoteLocation.getBlockZ());

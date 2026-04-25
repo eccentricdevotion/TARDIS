@@ -42,7 +42,7 @@ public class GamesInventory implements InventoryHolder {
         // 0 info
         ItemStack info = ItemStack.of(GUIChameleonConstructor.INFO.material(), 1);
         ItemMeta io = info.getItemMeta();
-        io.displayName(Component.text(plugin.getChameleonGuis().getString("INFO", "Info")));
+        io.customName(Component.text(plugin.getChameleonGuis().getString("INFO", "Info")));
         io.lore(List.of(
                 Component.text("Click the disk for"),
                 Component.text("the game you want to play."),
@@ -56,18 +56,18 @@ public class GamesInventory implements InventoryHolder {
         // 1 connect four
         ItemStack connect = ItemStack.of(Material.MUSIC_DISC_OTHERSIDE, 1);
         ItemMeta four = connect.getItemMeta();
-        four.displayName(Component.text("Connect 4"));
+        four.customName(Component.text("Connect 4"));
         four.addItemFlags(ItemFlag.values());
         four.setAttributeModifiers(Multimaps.forMap(Map.of()));
         connect.setItemMeta(four);
         items[1] = connect;
-        // pong & tetris require TARDIS_Zero_Room world
+        // pong & tetris require tardis_zero_room world
         boolean zero = plugin.getConfig().getBoolean("allow.zero_room");
         if (zero) {
             // 2 pong
             ItemStack pong = ItemStack.of(Material.MUSIC_DISC_OTHERSIDE, 1);
             ItemMeta pim = pong.getItemMeta();
-            pim.displayName(Component.text("Pong"));
+            pim.customName(Component.text("Pong"));
             pim.addItemFlags(ItemFlag.values());
             pim.setAttributeModifiers(Multimaps.forMap(Map.of()));
             pong.setItemMeta(pim);
@@ -76,7 +76,7 @@ public class GamesInventory implements InventoryHolder {
         // 3 stone magma ice
         ItemStack stonemagmaice = ItemStack.of(Material.MUSIC_DISC_OTHERSIDE, 1);
         ItemMeta smiim = stonemagmaice.getItemMeta();
-        smiim.displayName(Component.text("Stone Magma Ice"));
+        smiim.customName(Component.text("Stone Magma Ice"));
         smiim.addItemFlags(ItemFlag.values());
         smiim.setAttributeModifiers(Multimaps.forMap(Map.of()));
         stonemagmaice.setItemMeta(smiim);
@@ -84,7 +84,7 @@ public class GamesInventory implements InventoryHolder {
         // 4 tic tac toe
         ItemStack tictactoe = ItemStack.of(Material.MUSIC_DISC_OTHERSIDE, 1);
         ItemMeta ncim = tictactoe.getItemMeta();
-        ncim.displayName(Component.text("Tic Tac Toe"));
+        ncim.customName(Component.text("Tic Tac Toe"));
         ncim.addItemFlags(ItemFlag.values());
         ncim.setAttributeModifiers(Multimaps.forMap(Map.of()));
         tictactoe.setItemMeta(ncim);
@@ -93,7 +93,7 @@ public class GamesInventory implements InventoryHolder {
             // 5 tetris
             ItemStack tetris = ItemStack.of(Material.MUSIC_DISC_OTHERSIDE, 1);
             ItemMeta tim = tetris.getItemMeta();
-            tim.displayName(Component.text("Tetris"));
+            tim.customName(Component.text("Tetris"));
             tim.addItemFlags(ItemFlag.values());
             tim.setAttributeModifiers(Multimaps.forMap(Map.of()));
             tetris.setItemMeta(tim);
@@ -101,7 +101,7 @@ public class GamesInventory implements InventoryHolder {
             // 6 tetris start level = up tp 30
             ItemStack level = ItemStack.of(Material.FIREWORK_ROCKET, 1);
             ItemMeta lim = level.getItemMeta();
-            lim.displayName(Component.text("Start level"));
+            lim.customName(Component.text("Start level"));
             lim.lore(List.of(Component.text("0")));
             lim.addItemFlags(ItemFlag.values());
             lim.setAttributeModifiers(Multimaps.forMap(Map.of()));
@@ -111,7 +111,7 @@ public class GamesInventory implements InventoryHolder {
         // 8 close
         ItemStack close = ItemStack.of(GUIMap.BUTTON_CLOSE.material(), 1);
         ItemMeta gui = close.getItemMeta();
-        gui.displayName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
+        gui.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
         close.setItemMeta(gui);
         items[8] = close;
         return items;

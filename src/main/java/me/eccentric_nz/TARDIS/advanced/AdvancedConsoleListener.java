@@ -124,7 +124,7 @@ public class AdvancedConsoleListener implements Listener {
             p.openInventory(new AdvancedConsoleInventory(plugin, uuid.toString(), id).getInventory());
         } else if (disk.getType().equals(Material.MUSIC_DISC_FAR)) {
             ItemMeta im = disk.getItemMeta();
-            if (im.hasDisplayName() && ComponentUtils.endsWith(im.displayName(), "Authorised Control Disk")) {
+            if (im.hasCustomName() && ComponentUtils.endsWith(im.customName(), "Authorised Control Disk")) {
                 // get the UUID from the disk
                 if (im.getPersistentDataContainer().has(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID())) {
                     UUID diskUuid = im.getPersistentDataContainer().get(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID());

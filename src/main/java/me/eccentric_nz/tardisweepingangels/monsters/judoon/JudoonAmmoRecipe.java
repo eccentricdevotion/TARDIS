@@ -36,7 +36,7 @@ public class JudoonAmmoRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.ARROW, 2);
         ItemMeta im = is.getItemMeta();
-        im.displayName(ComponentUtils.toWhite("Judoon Ammunition"));
+        im.customName(ComponentUtils.toWhite("Judoon Ammunition"));
         im.setItemModel(ArrowVariant.JUDOON_AMMO.getKey());
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "judoon_ammunition");

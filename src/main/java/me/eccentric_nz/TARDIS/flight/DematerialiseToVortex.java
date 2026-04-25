@@ -76,12 +76,12 @@ public class DematerialiseToVortex implements Runnable {
                 return;
             } else {
                 current = rsc.getCurrent();
-                resetw = current.location().getWorld().getName();
+                resetw = current.location().getWorld().getKey().getKey();
                 // set back to current location
                 HashMap<String, Object> bid = new HashMap<>();
                 bid.put("tardis_id", id);
                 HashMap<String, Object> bset = new HashMap<>();
-                bset.put("world", current.location().getWorld().getName());
+                bset.put("world", resetw);
                 bset.put("x", current.location().getBlockX());
                 bset.put("y", current.location().getBlockY());
                 bset.put("z", current.location().getBlockZ());

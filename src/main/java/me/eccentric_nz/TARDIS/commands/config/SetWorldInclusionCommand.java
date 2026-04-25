@@ -34,9 +34,9 @@ public class SetWorldInclusionCommand {
 
     public void setWorldStatus(CommandSender sender, String first, World world) {
         if (first.equals("include")) {
-            plugin.getPlanetsConfig().set("planets." + world.getName() + ".time_travel", true);
+            plugin.getPlanetsConfig().set("planets." + world.getKey().getKey() + ".time_travel", true);
         } else {
-            plugin.getPlanetsConfig().set("planets." + world.getName() + ".time_travel", false);
+            plugin.getPlanetsConfig().set("planets." + world.getKey().getKey() + ".time_travel", false);
         }
         plugin.savePlanetsConfig();
         plugin.getMessenger().send(sender, TardisModule.TARDIS, "CONFIG_UPDATED", "time_travel");

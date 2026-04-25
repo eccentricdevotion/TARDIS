@@ -84,7 +84,7 @@ public class TelepathicStructureListener extends TARDISMenuListener {
                 }
                 // get the structure
                 ItemMeta im = choice.getItemMeta();
-                String[] keyStr = ComponentUtils.stripColour(im.displayName()).split(":");
+                String[] keyStr = ComponentUtils.stripColour(im.customName()).split(":");
                 int id = getIdFromTravellers(player);
                 Structure type = RegistryAccess.registryAccess().getRegistry(RegistryKey.STRUCTURE).get(NamespacedKey.minecraft(keyStr[1]));
                 StructureUtilities.search(plugin, player, type, id);

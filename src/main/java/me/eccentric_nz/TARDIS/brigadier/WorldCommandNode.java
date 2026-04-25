@@ -16,6 +16,7 @@ import me.eccentric_nz.TARDIS.brigadier.suggestions.BlockSuggestions;
 import me.eccentric_nz.TARDIS.commands.tardis.SaveIconCommand;
 import me.eccentric_nz.TARDIS.commands.utils.WorldUtility;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import net.kyori.adventure.key.Key;
 import org.bukkit.GameMode;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -36,7 +37,7 @@ public class WorldCommandNode {
                         .then(Commands.argument("world", StringArgumentType.word())
                                 .executes(ctx -> {
                                     String world = StringArgumentType.getString(ctx, "world");
-                                    if (plugin.getServer().getWorld(world) != null) {
+                                    if (plugin.getServer().getWorld(Key.key(world)) != null) {
                                         plugin.getMessenger().send(ctx.getSource().getSender(), TardisModule.TARDIS, "WORLD_LOADED", world);
                                     } else {
                                         WorldUtility.load(plugin, ctx.getSource().getSender(), world, "", "", "");
@@ -46,7 +47,7 @@ public class WorldCommandNode {
                                         .executes(ctx -> {
                                             String world = StringArgumentType.getString(ctx, "world");
                                             String t = ctx.getArgument("world_type", String.class);
-                                            if (plugin.getServer().getWorld(world) != null) {
+                                            if (plugin.getServer().getWorld(Key.key(world)) != null) {
                                                 plugin.getMessenger().send(ctx.getSource().getSender(), TardisModule.TARDIS, "WORLD_LOADED", world);
                                             } else {
                                                 WorldUtility.load(plugin, ctx.getSource().getSender(), world, t, "", "");
@@ -58,7 +59,7 @@ public class WorldCommandNode {
                                                     String world = StringArgumentType.getString(ctx, "world");
                                                     String t = ctx.getArgument("world_type", String.class);
                                                     String e = ctx.getArgument("environment", String.class);
-                                                    if (plugin.getServer().getWorld(world) != null) {
+                                                    if (plugin.getServer().getWorld(Key.key(world)) != null) {
                                                         plugin.getMessenger().send(ctx.getSource().getSender(), TardisModule.TARDIS, "WORLD_LOADED", world);
                                                     } else {
                                                         WorldUtility.load(plugin, ctx.getSource().getSender(), world, t, e, "");
@@ -71,7 +72,7 @@ public class WorldCommandNode {
                                                             String t = ctx.getArgument("world_type", String.class);
                                                             String e = ctx.getArgument("environment", String.class);
                                                             String g = StringArgumentType.getString(ctx, "generator");
-                                                            if (plugin.getServer().getWorld(world) != null) {
+                                                            if (plugin.getServer().getWorld(Key.key(world)) != null) {
                                                                 plugin.getMessenger().send(ctx.getSource().getSender(), TardisModule.TARDIS, "WORLD_LOADED", world);
                                                             } else {
                                                                 WorldUtility.load(plugin, ctx.getSource().getSender(), world, t, e, g);
@@ -96,7 +97,7 @@ public class WorldCommandNode {
                         .then(Commands.argument("planet", new PlanetArgumentType())
                                 .executes(ctx -> {
                                     String p = ctx.getArgument("planet", String.class);
-                                    World world = plugin.getServer().getWorld(p);
+                                    World world = plugin.getServer().getWorld(Key.key(p));
                                     if (world != null) {
                                         WorldUtility.disable(plugin, ctx.getSource().getSender(), world);
                                     }
@@ -106,7 +107,7 @@ public class WorldCommandNode {
                         .then(Commands.argument("world", ArgumentTypes.world())
                                 .then(Commands.argument("gamemode", ArgumentTypes.gameMode())
                                         .executes(ctx -> {
-                                            String w = ctx.getArgument("world", World.class).getName();
+                                            String w = ctx.getArgument("world", World.class).getKey().getKey();
                                             GameMode gamemode = ctx.getArgument("gamemode", GameMode.class);
                                             WorldUtility.setGameMode(plugin, ctx.getSource().getSender(), w, gamemode);
                                             return Command.SINGLE_SUCCESS;

@@ -42,7 +42,7 @@ public class SpaceSuitChestplateRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.CHAINMAIL_CHESTPLATE, 1);
         ItemMeta im = is.getItemMeta();
-        im.displayName(ComponentUtils.toWhite("TARDIS Space Suit Chestplate"));
+        im.customName(ComponentUtils.toWhite("TARDIS Space Suit Chestplate"));
         im.setMaxStackSize(1);
         EquippableComponent equippable = im.getEquippable();
         equippable.setSlot(EquipmentSlot.CHEST);

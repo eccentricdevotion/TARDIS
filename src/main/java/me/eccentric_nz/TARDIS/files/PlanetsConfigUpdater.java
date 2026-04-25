@@ -46,7 +46,7 @@ public class PlanetsConfigUpdater {
 
     public void checkPlanetsConfig() {
         int save = 0;
-        String dn = plugin.getConfig().getString("creation.default_world_name");
+        String dn = plugin.getConfig().getString("creation.default_world_name", "tardis_timevortex");
         if (plugin.getConfig().contains("worlds")) {
             for (String w : plugin.getConfig().getConfigurationSection("worlds").getKeys(false)) {
                 if (!planets_config.contains("planets." + w)) {
@@ -59,7 +59,7 @@ public class PlanetsConfigUpdater {
                     planets_config.set("planets." + w + ".world_type", data.worldType().toString());
                     planets_config.set("planets." + w + ".environment", data.environment().toString());
                     planets_config.set("planets." + w + ".difficulty", data.difficulty().toString());
-                    if (w.startsWith("TARDIS_") || w.equals(plugin.getConfig().getString("creation.default_world_name"))) {
+                    if (w.startsWith("tardis_") || w.equals(plugin.getConfig().getString("creation.default_world_name", "tardis_timevortex").toLowerCase(Locale.ROOT))) {
                         planets_config.set("planets." + w + ".generator", "TARDIS:void");
                     } else {
                         planets_config.set("planets." + w + ".generator", "DEFAULT");
@@ -68,25 +68,25 @@ public class PlanetsConfigUpdater {
             }
             plugin.getConfig().set("worlds", null);
             plugin.saveConfig();
-            if (!planets_config.contains("planets.TARDIS_Zero_Room")) {
-                planets_config.set("planets.TARDIS_Zero_Room.enabled", false);
-                planets_config.set("planets.TARDIS_Zero_Room.time_travel", false);
-                planets_config.set("planets.TARDIS_Zero_Room.resource_pack", "default");
-                planets_config.set("planets.TARDIS_Zero_Room.gamemode", plugin.getConfig().getString("creation.gamemode").toUpperCase(Locale.ROOT));
-                planets_config.set("planets.TARDIS_Zero_Room.world_type", "FLAT");
-                planets_config.set("planets.TARDIS_Zero_Room.environment", "NORMAL");
-                planets_config.set("planets.TARDIS_Zero_Room.difficulty", "NORMAL");
-                planets_config.set("planets.TARDIS_Zero_Room.generator", "TARDIS:void");
-                planets_config.set("planets.TARDIS_Zero_Room.void", true);
-                planets_config.set("planets.TARDIS_Zero_Room.gamerules.advance_weather", false);
-                planets_config.set("planets.TARDIS_Zero_Room.gamerules.advance_time", false);
-                planets_config.set("planets.TARDIS_Zero_Room.gamerules.show_advancement_messages", false);
-                planets_config.set("planets.TARDIS_Zero_Room.gamerules.spawn_wardens", false);
-                planets_config.set("planets.TARDIS_Zero_Room.gamerules.spawn_mobs", false);
-                planets_config.set("planets.TARDIS_Zero_Room.allow_portals", false);
-                planets_config.set("planets.TARDIS_Zero_Room.alias", "ZeroRoom");
-                planets_config.set("planets.TARDIS_Zero_Room.icon", "PINK_WOOL");
-                planets_config.set("planets.TARDIS_Zero_Room.helmic_regulator_order", -1);
+            if (!planets_config.contains("planets.tardis_zero_room")) {
+                planets_config.set("planets.tardis_zero_room.enabled", false);
+                planets_config.set("planets.tardis_zero_room.time_travel", false);
+                planets_config.set("planets.tardis_zero_room.resource_pack", "default");
+                planets_config.set("planets.tardis_zero_room.gamemode", plugin.getConfig().getString("creation.gamemode").toUpperCase(Locale.ROOT));
+                planets_config.set("planets.tardis_zero_room.world_type", "FLAT");
+                planets_config.set("planets.tardis_zero_room.environment", "NORMAL");
+                planets_config.set("planets.tardis_zero_room.difficulty", "NORMAL");
+                planets_config.set("planets.tardis_zero_room.generator", "TARDIS:void");
+                planets_config.set("planets.tardis_zero_room.void", true);
+                planets_config.set("planets.tardis_zero_room.gamerules.advance_weather", false);
+                planets_config.set("planets.tardis_zero_room.gamerules.advance_time", false);
+                planets_config.set("planets.tardis_zero_room.gamerules.show_advancement_messages", false);
+                planets_config.set("planets.tardis_zero_room.gamerules.spawn_wardens", false);
+                planets_config.set("planets.tardis_zero_room.gamerules.spawn_mobs", false);
+                planets_config.set("planets.tardis_zero_room.allow_portals", false);
+                planets_config.set("planets.tardis_zero_room.alias", "ZeroRoom");
+                planets_config.set("planets.tardis_zero_room.icon", "PINK_WOOL");
+                planets_config.set("planets.tardis_zero_room.helmic_regulator_order", -1);
                 save++;
             }
             planets_config.set("planets." + dn + ".enabled", true);
@@ -106,11 +106,11 @@ public class PlanetsConfigUpdater {
             planets_config.set("planets." + dn + ".helmic_regulator_order", -1);
             save++;
         }
-        // no TARDIS_Zero_Room mob spawns
-        if (!planets_config.contains("planets.TARDIS_Zero_Room.gamerules.spawn_mobs")) {
-            planets_config.set("planets.TARDIS_Zero_Room.gamerules.spawn_mobs", false);
-            planets_config.set("planets.TARDIS_Zero_Room.gamerules.spawn_phantoms", false);
-            planets_config.set("planets.TARDIS_TimeVortex.gamerules.spawn_phantoms", false);
+        // no tardis_zero_room mob spawns
+        if (!planets_config.contains("planets.tardis_zero_room.gamerules.spawn_mobs")) {
+            planets_config.set("planets.tardis_zero_room.gamerules.spawn_mobs", false);
+            planets_config.set("planets.tardis_zero_room.gamerules.spawn_phantoms", false);
+            planets_config.set("planets.tardis_timevortex.gamerules.spawn_phantoms", false);
             planets_config.set("planets.rooms.gamerules.spawn_phantoms", false);
             save++;
         }
@@ -129,20 +129,12 @@ public class PlanetsConfigUpdater {
                 planets_config.set("planets." + w + ".keep_spawn_in_memory", null);
             }
         }
-        // check there is a `gamemode` config option for all worlds
-        for (String w : worlds) {
-            if (!planets_config.contains("planets." + w + ".gamemode")) {
-                TARDISPlanetData data = plugin.getTardisHelper().getLevelData(w);
-                planets_config.set("planets." + w + ".gamemode", data.gameMode().toString());
-                save++;
-            }
-        }
         // check there is an `alias` config option for all worlds
         for (String w : worlds) {
             if (!planets_config.contains("planets." + w + ".alias")) {
-                if (w.equals("TARDIS_TimeVortex")) {
+                if (w.equals("tardis_timevortex")) {
                     planets_config.set("planets." + w + ".alias", "TimeVortex");
-                } else if (w.endsWith("TARDIS_Zero_Room")) {
+                } else if (w.endsWith("tardis_zero_room")) {
                     planets_config.set("planets." + w + ".alias", "ZeroRoom");
                 } else if (w.toLowerCase(Locale.ROOT).endsWith("gallifrey")) {
                     planets_config.set("planets." + w + ".alias", "Gallifrey");
@@ -305,12 +297,12 @@ public class PlanetsConfigUpdater {
             planets_config.set("planets.rooms.transmat_location.z", 2.5d);
             save++;
         }
-        if (planets_config.getString("planets.TARDIS_TimeVortex.generator").equals("TARDISChunkGenerator")) {
-            planets_config.set("planets.TARDIS_TimeVortex.generator", "TARDIS:void");
-            planets_config.set("planets.TARDIS_Zero_Room.generator", "TARDIS:void");
+        if (planets_config.getString("planets.tardis_timevortex.generator").equals("TARDISChunkGenerator")) {
+            planets_config.set("planets.tardis_timevortex.generator", "TARDIS:void");
+            planets_config.set("planets.tardis_zero_room.generator", "TARDIS:void");
             save++;
         }
-        if (planets_config.getString("planets.TARDIS_TimeVortex.generator").equals("TARDISChunkGenerator:void")) {
+        if (planets_config.getString("planets.tardis_timevortex.generator").equals("TARDISChunkGenerator:void")) {
             for (String w : worlds) {
                 String gen = planets_config.getString("planets." + w + ".generator");
                 if (gen != null && gen.contains("TARDISChunkGenerator")) {
@@ -344,7 +336,7 @@ public class PlanetsConfigUpdater {
             save++;
         }
         // convert game rules to 1.21.11+
-        if (planets_config.contains("planets.TARDIS_TimeVortex.gamerules.doWardenSpawning")) {
+        if (planets_config.contains("planets.tardis_timevortex.gamerules.doWardenSpawning")) {
             for (String w : worlds) {
                 if (planets_config.contains("planets." + w + ".gamerules") && planets_config.getConfigurationSection("planets." + w + ".gamerules") != null) {
                     for (String rule : planets_config.getConfigurationSection("planets." + w + ".gamerules").getKeys(false)) {
@@ -395,8 +387,8 @@ public class PlanetsConfigUpdater {
     private String getIcon(String world, String env) {
         String icon;
         switch (world) {
-            case "TARDIS_TimeVortex" -> icon = "CRYING_OBSIDIAN";
-            case "TARDIS_Zero_Room" -> icon = "PINK_WOOL";
+            case "tardis_timevortex" -> icon = "CRYING_OBSIDIAN";
+            case "tardis_zero_room" -> icon = "PINK_WOOL";
             case "skaro" -> icon = "FIRE_CORAL_BLOCK";
             case "siluria" -> icon = "BAMBOO_MOSAIC";
             case "gallifrey" -> icon = "RED_SAND";

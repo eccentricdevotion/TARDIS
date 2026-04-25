@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.rooms.CondenserData;
 import me.eccentric_nz.TARDIS.rooms.RoomBuilder;
+import net.kyori.adventure.key.Key;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -63,7 +64,7 @@ public class ZeroRoomBuilder {
         int x = pos.getCentreX();
         int y = 64;
         int z = pos.getCentreZ();
-        World w = plugin.getServer().getWorld("TARDIS_Zero_room");
+        World w = plugin.getServer().getWorld(Key.key("tardis_zero_room"));
         if (w == null) {
             plugin.getMessenger().send(p, TardisModule.TARDIS, "ZERO_NOT_FOUND");
             return;

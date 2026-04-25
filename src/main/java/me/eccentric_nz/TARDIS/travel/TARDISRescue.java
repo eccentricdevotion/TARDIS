@@ -75,7 +75,7 @@ public class TARDISRescue {
         if (!request && !plugin.getPluginRespect().getRespect(player_loc, new Parameters(player, Flag.getDefaultFlags()))) {
             return false;
         }
-        if (!plugin.getPlanetsConfig().getBoolean("planets." + player_loc.getWorld().getName() + ".time_travel")) {
+        if (!plugin.getPlanetsConfig().getBoolean("planets." + player_loc.getWorld().getKey().getKey() + ".time_travel")) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_WORLD_TRAVEL");
             return false;
         }
@@ -88,7 +88,7 @@ public class TARDISRescue {
             return false;
         }
         HashMap<String, Object> set = new HashMap<>();
-        set.put("world", player_loc.getWorld().getName());
+        set.put("world", player_loc.getWorld().getKey().asString());
         set.put("x", (player_loc.getBlockX() - move));
         set.put("y", player_loc.getBlockY());
         set.put("z", player_loc.getBlockZ());

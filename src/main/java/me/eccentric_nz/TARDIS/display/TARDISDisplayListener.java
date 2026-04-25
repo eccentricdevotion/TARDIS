@@ -36,7 +36,7 @@ public class TARDISDisplayListener implements Listener {
         if (!plugin.getTrackerKeeper().getDisplay().containsKey(player.getUniqueId())) {
             return;
         }
-        if (event.getFrom().getWorld().getName().contains("TARDIS")) {
+        if (event.getFrom().getWorld().getKey().getKey().contains("tardis")) {
             return;
         }
         plugin.getMessenger().sendHeadsUpDisplay(player, plugin);

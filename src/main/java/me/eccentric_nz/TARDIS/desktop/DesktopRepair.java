@@ -229,7 +229,7 @@ public class DesktopRepair {
                     }
                 }
                 if (!hasRequired) {
-                    player.sendMessage("-----------------------------");
+                    plugin.getMessenger().message(player, "-----------------------------");
                     return false;
                 }
                 CondenserData c_data = new CondenserData();

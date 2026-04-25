@@ -38,14 +38,14 @@ public class StorageConverter {
             for (ItemStack is : stacks) {
                 if (is != null && is.hasItemMeta()) {
                     ItemMeta im = is.getItemMeta();
-                    if (im.hasDisplayName()) {
-                        Component component = im.displayName();
+                    if (im.hasCustomName()) {
+                        Component component = im.customName();
                         // strip color codes
                         String stripped = ComponentUtils.stripColour(component);
                         if (!component.children().isEmpty()) {
                             stripped = ComponentUtils.stripColour(component.children().getFirst());
                         }
-                        im.displayName(Component.text(stripped));
+                        im.customName(Component.text(stripped));
                         if (is.getType() == Material.GLOWSTONE_DUST) {
                             CustomModelDataComponent cmd = im.getCustomModelDataComponent();
                             cmd.setFloats(CircuitVariant.GALLIFREY.getFloats());
@@ -71,14 +71,14 @@ public class StorageConverter {
             for (ItemStack is : stacks) {
                 if (is != null && is.hasItemMeta()) {
                     ItemMeta im = is.getItemMeta();
-                    if (im.hasDisplayName()) {
-                        Component component = im.displayName();
+                    if (im.hasCustomName()) {
+                        Component component = im.customName();
                         // strip color codes
                         String stripped = ComponentUtils.stripColour(component);
                         if (!component.children().isEmpty()) {
                             stripped = ComponentUtils.stripColour(component.children().getFirst());
                         }
-                        im.displayName(Component.text(stripped));
+                        im.customName(Component.text(stripped));
                         if (is.getType() == Material.GLOWSTONE_DUST) {
                             CustomModelDataComponent cmd = im.getCustomModelDataComponent();
                             cmd.setFloats(CircuitVariant.fromDisplayName(stripped).getFloats());

@@ -62,9 +62,9 @@ public class TARDISTemporalLocatorInventory implements InventoryHolder {
             ItemStack is = ItemStack.of(clock.getMaterial(), 1);
             ItemMeta im = is.getItemMeta();
             if (clock.ordinal() < 4) {
-                im.displayName(Component.text(plugin.getLanguage().getString(clock.toString())));
+                im.customName(Component.text(plugin.getLanguage().getString(clock.toString())));
             } else {
-                im.displayName(Component.text(clock.getName()));
+                im.customName(Component.text(clock.getName()));
             }
             if (clock.getLore().contains("~")) {
                 List<Component> lore = new ArrayList<>();

@@ -98,7 +98,7 @@ public class DecommissionCommand {
                             case MONITOR -> {
                                 ItemStack monitor = ItemStack.of(Material.MAP);
                                 ItemMeta im = monitor.getItemMeta();
-                                im.displayName(Component.text("TARDIS Monitor"));
+                                im.customName(Component.text("TARDIS Monitor"));
                                 monitor.setItemMeta(im);
                                 itemFrame.setItem(monitor);
                             }
@@ -106,7 +106,7 @@ public class DecommissionCommand {
                                 // reinstate display name
                                 ItemStack glass = itemFrame.getItem();
                                 ItemMeta im = glass.getItemMeta();
-                                im.displayName(Component.text("Monitor Frame"));
+                                im.customName(Component.text("Monitor Frame"));
                                 glass.setItemMeta(im);
                             }
                             case SONIC_DOCK -> {

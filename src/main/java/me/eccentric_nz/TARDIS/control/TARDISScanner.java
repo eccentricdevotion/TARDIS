@@ -30,8 +30,6 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.enumeration.WorldManager;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.rooms.ExteriorRenderer;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
@@ -207,14 +205,8 @@ public class TARDISScanner {
         String dayNight = TARDISStaticUtils.getTime(time);
         // message the player
         plugin.getMessenger().send(player, TardisModule.TARDIS, "SCAN_RESULT", whereIsIt);
-        String worldName = scan_loc.getWorld().getName();
-        String alias;
-        if (!plugin.getPlanetsConfig().getBoolean("planets." + worldName + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
-            alias = plugin.getMVHelper().getAlias(scan_loc.getWorld());
-        } else {
-            alias = TARDISAliasResolver.getWorldAlias(scan_loc.getWorld());
-        }
-        plugin.getMessenger().send(player, TardisModule.TARDIS, "SCAN_WORLD", alias);
+        String worldName = scan_loc.getWorld().getKey().getKey();
+        plugin.getMessenger().send(player, TardisModule.TARDIS, "SCAN_WORLD", worldName);
         plugin.getMessenger().send(player, TardisModule.TARDIS, "SONIC_COORDS", scan_loc.getBlockX() + ":" + scan_loc.getBlockY() + ":" + scan_loc.getBlockZ());
         bsched.scheduleSyncDelayedTask(plugin, () -> plugin.getMessenger().send(player, TardisModule.TARDIS, "SCAN_DIRECTION", tardisDirection.toString()), 20L);
         // get biome
@@ -245,32 +237,32 @@ public class TARDISScanner {
                         message = " (" + buf.substring(2) + ")";
                     }
                     switch (ent) {
-                        case AREA_EFFECT_CLOUD -> player.sendMessage("    Cyberman: " + value);
-                        case ARROW -> player.sendMessage("    Slitheen: " + value);
-                        case BLOCK_DISPLAY -> player.sendMessage("    Davros: " + value);
-                        case JUNGLE_BOAT -> player.sendMessage("    Silurian: " + value);
-                        case DRAGON_FIREBALL -> player.sendMessage("    Weeping Angel: " + value);
-                        case ITEM -> player.sendMessage("    Toclafane: " + value);
-                        case EGG -> player.sendMessage("    Strax: " + value);
-                        case END_CRYSTAL -> player.sendMessage("    Vashta Nerada: " + value);
-                        case EVOKER_FANGS -> player.sendMessage("    K9: " + value);
-                        case FALLING_BLOCK -> player.sendMessage("    Empty Child: " + value);
-                        case FIREWORK_ROCKET -> player.sendMessage("    Sontaran: " + value);
-                        case FISHING_BOBBER -> player.sendMessage("    Zygon: " + value);
-                        case GLOW_ITEM_FRAME -> player.sendMessage("    Mire: " + value);
-                        case INTERACTION -> player.sendMessage("    Hath: " + value);
-                        case ITEM_DISPLAY -> player.sendMessage("    Racnoss: " + value);
-                        case ITEM_FRAME -> player.sendMessage("    Ood: " + value);
-                        case LLAMA_SPIT -> player.sendMessage("    Dalek: " + value);
-                        case SHULKER_BULLET -> player.sendMessage("    Judoon: " + value);
-                        case SMALL_FIREBALL -> player.sendMessage("    Dalek Sec: " + value);
-                        case SNOWBALL -> player.sendMessage("    Ice Warrior: " + value);
-                        case SPLASH_POTION -> player.sendMessage("    Silent: " + value);
-                        case TEXT_DISPLAY -> player.sendMessage("    Headless Monk: " + value);
-                        case EXPERIENCE_BOTTLE -> player.sendMessage("    Sea Devil: " + value);
+                        case AREA_EFFECT_CLOUD -> plugin.getMessenger().message(player, "    Cyberman: " + value);
+                        case ARROW -> plugin.getMessenger().message(player, "    Slitheen: " + value);
+                        case BLOCK_DISPLAY -> plugin.getMessenger().message(player, "    Davros: " + value);
+                        case JUNGLE_BOAT -> plugin.getMessenger().message(player, "    Silurian: " + value);
+                        case DRAGON_FIREBALL -> plugin.getMessenger().message(player, "    Weeping Angel: " + value);
+                        case ITEM -> plugin.getMessenger().message(player, "    Toclafane: " + value);
+                        case EGG -> plugin.getMessenger().message(player, "    Strax: " + value);
+                        case END_CRYSTAL -> plugin.getMessenger().message(player, "    Vashta Nerada: " + value);
+                        case EVOKER_FANGS -> plugin.getMessenger().message(player, "    K9: " + value);
+                        case FALLING_BLOCK -> plugin.getMessenger().message(player, "    Empty Child: " + value);
+                        case FIREWORK_ROCKET -> plugin.getMessenger().message(player, "    Sontaran: " + value);
+                        case FISHING_BOBBER -> plugin.getMessenger().message(player, "    Zygon: " + value);
+                        case GLOW_ITEM_FRAME -> plugin.getMessenger().message(player, "    Mire: " + value);
+                        case INTERACTION -> plugin.getMessenger().message(player, "    Hath: " + value);
+                        case ITEM_DISPLAY -> plugin.getMessenger().message(player, "    Racnoss: " + value);
+                        case ITEM_FRAME -> plugin.getMessenger().message(player, "    Ood: " + value);
+                        case LLAMA_SPIT -> plugin.getMessenger().message(player, "    Dalek: " + value);
+                        case SHULKER_BULLET -> plugin.getMessenger().message(player, "    Judoon: " + value);
+                        case SMALL_FIREBALL -> plugin.getMessenger().message(player, "    Dalek Sec: " + value);
+                        case SNOWBALL -> plugin.getMessenger().message(player, "    Ice Warrior: " + value);
+                        case SPLASH_POTION -> plugin.getMessenger().message(player, "    Silent: " + value);
+                        case TEXT_DISPLAY -> plugin.getMessenger().message(player, "    Headless Monk: " + value);
+                        case EXPERIENCE_BOTTLE -> plugin.getMessenger().message(player, "    Sea Devil: " + value);
                         default -> {
                             if (ent != EntityType.ARMOR_STAND) {
-                                player.sendMessage("    " + ent + ": " + value + message);
+                                plugin.getMessenger().message(player, "    " + ent + ": " + value + message);
                             }
                         }
                     }

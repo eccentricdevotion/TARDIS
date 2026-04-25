@@ -109,7 +109,7 @@ public class RoomsUtility {
                     im.setItemModel(key);
                 }
                 if (json.has("name")) {
-                    im.displayName(Component.text(json.get("name").getAsString()));
+                    im.customName(Component.text(json.get("name").getAsString()));
                 }
                 if (json.has("lore")) {
                     List<Component> lore = new ArrayList<>();

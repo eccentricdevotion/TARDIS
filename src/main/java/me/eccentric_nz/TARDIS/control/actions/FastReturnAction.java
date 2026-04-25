@@ -62,7 +62,7 @@ public class FastReturnAction {
             if (rsc.resultSet()) {
                 if (!compareCurrentToBack(rsc.getCurrent().location(), rsb)) {
                     HashMap<String, Object> set = new HashMap<>();
-                    set.put("world", rsb.getWorld().getName());
+                    set.put("world", rsb.getWorld().getKey().asString());
                     set.put("x", rsb.getX());
                     set.put("y", rsb.getY());
                     set.put("z", rsb.getZ());
@@ -77,7 +77,7 @@ public class FastReturnAction {
                         new TARDISLand(plugin, id, player).exitVortex();
                         plugin.getPM().callEvent(new TARDISTravelEvent(player, null, TravelType.BACK, id));
                     }
-                    plugin.getMessenger().send(player, TardisModule.TARDIS, "PREV_SET", rsb.getWorld().getName() + ":" + rsb.getX() + ":" + rsb.getY() + ":" + rsb.getZ(), !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "PREV_SET", rsb.getWorld().getKey().asString() + ":" + rsb.getX() + ":" + rsb.getY() + ":" + rsb.getZ(), !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
                 } else {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "TRAVEL_NO_BACK");
                 }

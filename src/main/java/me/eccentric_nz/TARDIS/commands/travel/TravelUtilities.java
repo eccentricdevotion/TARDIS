@@ -73,12 +73,12 @@ public class TravelUtilities {
             return;
         }
         // check world is enabled for travel
-        if (!plugin.getPlanetsConfig().getBoolean("planets." + world.getName() + ".time_travel")) {
+        if (!plugin.getPlanetsConfig().getBoolean("planets." + world.getKey().getKey() + ".time_travel")) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_WORLD_TRAVEL");
             return;
         }
         // only world specified
-        List<String> worlds = List.of(world.getName());
+        List<String> worlds = List.of(world.getKey().getKey());
         // get current location
         ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
         if (rsc.resultSet()) {
@@ -87,7 +87,7 @@ public class TravelUtilities {
             Location l = plugin.getTardisAPI().getRandomLocation(worlds, world.getEnvironment(), parameters);
             if (l != null) {
                 HashMap<String, Object> set = new HashMap<>();
-                set.put("world", l.getWorld().getName());
+                set.put("world", l.getWorld().getKey().asString());
                 set.put("x", l.getBlockX());
                 set.put("y", l.getBlockY());
                 set.put("z", l.getBlockZ());
@@ -123,7 +123,7 @@ public class TravelUtilities {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_SAFE");
         } else {
             HashMap<String, Object> set = new HashMap<>();
-            set.put("world", location.getWorld().getName());
+            set.put("world", location.getWorld().getKey().asString());
             set.put("x", location.getBlockX());
             set.put("y", location.getBlockY());
             set.put("z", location.getBlockZ());
@@ -153,7 +153,7 @@ public class TravelUtilities {
             return null;
         }
         World world = current.location().getWorld();
-        if (!plugin.getPlanetsConfig().getBoolean("planets." + world.getName() + ".time_travel")) {
+        if (!plugin.getPlanetsConfig().getBoolean("planets." + world.getKey().getKey() + ".time_travel")) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_WORLD_TRAVEL");
             return null;
         }

@@ -83,7 +83,7 @@ public class ArtronFurnaceListener implements Listener {
             ItemStack is = event.getFuel().clone();
             if (is.hasItemMeta()) {
                 ItemMeta im = is.getItemMeta();
-                if (im.hasDisplayName() && ComponentUtils.endsWith(im.displayName(), "Artron Storage Cell")) {
+                if (im.hasCustomName() && ComponentUtils.endsWith(im.customName(), "Artron Storage Cell")) {
                     List<Component> lore = im.lore();
                     String one = ComponentUtils.stripColour(lore.get(1));
                     if (!one.equals("0")) {
@@ -149,10 +149,10 @@ public class ArtronFurnaceListener implements Listener {
         if (!event.getItemInHand().hasItemMeta()) {
             return;
         }
-        if (!event.getItemInHand().getItemMeta().hasDisplayName()) {
+        if (!event.getItemInHand().getItemMeta().hasCustomName()) {
             return;
         }
-        if (!ComponentUtils.endsWith(event.getItemInHand().getItemMeta().displayName(), "TARDIS Artron Furnace")) {
+        if (!ComponentUtils.endsWith(event.getItemInHand().getItemMeta().customName(), "TARDIS Artron Furnace")) {
             return;
         }
         Player player = event.getPlayer();
@@ -192,7 +192,7 @@ public class ArtronFurnaceListener implements Listener {
             }
             ItemStack is = ItemStack.of(Material.FURNACE, 1);
             ItemMeta im = is.getItemMeta();
-            im.displayName(ComponentUtils.toWhite("TARDIS Artron Furnace"));
+            im.customName(ComponentUtils.toWhite("TARDIS Artron Furnace"));
             is.setItemMeta(im);
             TARDISDisplayItemUtils.remove(block);
             block.setBlockData(TARDISConstants.AIR);

@@ -101,8 +101,8 @@ public class CureBrewingListener implements Listener {
                                     Material type = is.getType();
                                     if (type.equals(Material.FEATHER) && is.hasItemMeta()) {
                                         ItemMeta im = is.getItemMeta();
-                                        if (im.hasDisplayName() && im.hasItemModel()) {
-                                            String dn = ComponentUtils.stripColour(im.displayName());
+                                        if (im.hasCustomName() && im.hasItemModel()) {
+                                            String dn = ComponentUtils.stripColour(im.customName());
                                             items.add(type + (elements.contains(dn) ? ":" + dn : ""));
                                         } else {
                                             items.add(type.toString());
@@ -177,19 +177,19 @@ public class CureBrewingListener implements Listener {
                                             ItemMeta im = is.getItemMeta();
                                             switch (potionType) {
                                                 case AWKWARD -> {
-                                                    im.displayName(ComponentUtils.toWhite("Antidote"));
+                                                    im.customName(ComponentUtils.toWhite("Antidote"));
                                                     im.setItemModel(CureVariant.ANTIDOTE.getKey());
                                                 }
                                                 case MUNDANE -> {
-                                                    im.displayName(ComponentUtils.toWhite("Elixir"));
+                                                    im.customName(ComponentUtils.toWhite("Elixir"));
                                                     im.setItemModel(CureVariant.ELIXIR.getKey());
                                                 }
                                                 case THICK -> {
-                                                    im.displayName(ComponentUtils.toWhite("Eye drops"));
+                                                    im.customName(ComponentUtils.toWhite("Eye drops"));
                                                     im.setItemModel(CureVariant.EYEDROPS.getKey());
                                                 }
                                                 default -> { // UNCRAFTABLE
-                                                    im.displayName(ComponentUtils.toWhite("Tonic"));
+                                                    im.customName(ComponentUtils.toWhite("Tonic"));
                                                     im.setItemModel(CureVariant.TONIC.getKey());
                                                 }
                                             }

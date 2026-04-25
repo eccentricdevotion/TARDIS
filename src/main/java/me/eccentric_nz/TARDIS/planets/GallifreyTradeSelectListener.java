@@ -24,7 +24,7 @@ import org.bukkit.entity.Villager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.TradeSelectEvent;
-import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.MenuType;
 import org.bukkit.inventory.Merchant;
@@ -77,9 +77,9 @@ public class GallifreyTradeSelectListener implements Listener {
     }
 
     @EventHandler
-    public void onVillagerTrade(PlayerInteractEntityEvent event) {
+    public void onVillagerTrade(PlayerInteractAtEntityEvent event) {
         if (event.getRightClicked() instanceof Villager villager) {
-            if (!villager.getLocation().getWorld().getName().equals("gallifrey")) {
+            if (!villager.getLocation().getWorld().getKey().getKey().equals("gallifrey")) {
                 return;
             }
             if (!villager.getPersistentDataContainer().has(plugin.getBlueprintKey(), PersistentDataType.BOOLEAN)) {

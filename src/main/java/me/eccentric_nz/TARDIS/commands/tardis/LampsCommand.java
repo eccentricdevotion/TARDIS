@@ -25,7 +25,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.desktop.ChunkUtils;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
+import me.eccentric_nz.TARDIS.planets.TARDISWorldResolver;
 import me.eccentric_nz.TARDIS.schematic.SchematicGZip;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Chunk;
@@ -95,7 +95,7 @@ public class LampsCommand {
             String[] tc = tardis.getChunk().split(":");
             int cx = TARDISNumberParsers.parseInt(tc[1]);
             int cz = TARDISNumberParsers.parseInt(tc[2]);
-            World world = TARDISAliasResolver.getWorldFromAlias(tc[0]);
+            World world = TARDISWorldResolver.getFromString(tc[0]);
             Chunk startChunk = world.getChunkAt(cx, cz);
             int starty, endy;
             Schematic schm = tardis.getSchematic();
@@ -107,7 +107,7 @@ public class LampsCommand {
                 int h = dimensions.get("height").getAsInt();
                 starty = schm.getStartY();
                 endy = starty + h;
-                String w = world.getName();
+                String w = world.getKey().asString();
                 // loop through the chunks
                 for (Chunk chunk : ChunkUtils.getConsoleChunks(startChunk, tardis.getSchematic())) {
                     // find the lamps in the chunks

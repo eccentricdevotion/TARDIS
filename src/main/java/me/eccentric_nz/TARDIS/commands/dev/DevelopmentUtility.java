@@ -156,7 +156,7 @@ public class DevelopmentUtility {
         // get open portals
         for (Map.Entry<Location, TARDISTeleportLocation> map : plugin.getTrackerKeeper().getPortals().entrySet()) {
             // only portals in police box worlds
-            if (map.getKey().getWorld().getName().contains("TARDIS")) {
+            if (map.getKey().getWorld().getKey().getKey().contains("tardis")) {
                 continue;
             }
             if (map.getValue().isAbandoned()) {

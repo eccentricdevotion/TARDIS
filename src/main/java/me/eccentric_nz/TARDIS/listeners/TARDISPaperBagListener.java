@@ -63,7 +63,7 @@ public class TARDISPaperBagListener implements Listener {
             return;
         }
         ItemMeta im = is.getItemMeta();
-        if (im == null || !im.hasDisplayName() || !ComponentUtils.endsWith(im.displayName(), "Paper Bag")) {
+        if (im == null || !im.hasCustomName() || !ComponentUtils.endsWith(im.customName(), "Paper Bag")) {
             return;
         }
         if (event.isRightClick()) {
@@ -74,7 +74,7 @@ public class TARDISPaperBagListener implements Listener {
                 // create a random flavoured Jelly Baby
                 ItemStack jb = ItemStack.of(Material.MELON_SLICE, 1);
                 ItemMeta jim = jb.getItemMeta();
-                jim.displayName(Component.text(flavour + " Jelly Baby"));
+                jim.customName(Component.text(flavour + " Jelly Baby"));
                 jb.setItemMeta(jim);
                 int slot = inv.firstEmpty();
                 if (slot != -1) {
@@ -133,8 +133,8 @@ public class TARDISPaperBagListener implements Listener {
                     // is it a jelly baby?
                     if (entry.getValue().hasItemMeta()) {
                         ItemMeta jim = entry.getValue().getItemMeta();
-                        if (jim.hasDisplayName()) {
-                            String name = ComponentUtils.stripColour(jim.displayName());
+                        if (jim.hasCustomName()) {
+                            String name = ComponentUtils.stripColour(jim.customName());
                             if (name.endsWith("Jelly Baby")) {
                                 int amount = entry.getValue().getAmount();
                                 String flavour = name.replace(" Jelly Baby", "");

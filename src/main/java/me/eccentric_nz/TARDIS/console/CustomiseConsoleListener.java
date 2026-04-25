@@ -197,7 +197,7 @@ public class CustomiseConsoleListener extends TARDISMenuListener {
         int slot = selectedRotors.get(playerUUID);
         ItemStack is = view.getItem(slot);
         ItemMeta im = is.getItemMeta();
-        String r = TARDISStringUtils.toEnumUppercase(ComponentUtils.stripColour(im.displayName()));
+        String r = TARDISStringUtils.toEnumUppercase(ComponentUtils.stripColour(im.customName()));
         return Rotor.byName.get(r);
     }
 
@@ -212,7 +212,7 @@ public class CustomiseConsoleListener extends TARDISMenuListener {
         ItemStack is = ItemStack.of(Material.LIGHT_GRAY_DYE, 1);
         ItemMeta im = is.getItemMeta();
         im.setItemModel(rotor.getValue().offModel());
-        im.displayName(Component.text(TARDISStringUtils.capitalise(rotor.getKey())));
+        im.customName(Component.text(TARDISStringUtils.capitalise(rotor.getKey())));
         is.setItemMeta(im);
         view.setItem(slot, is);
     }
@@ -222,7 +222,7 @@ public class CustomiseConsoleListener extends TARDISMenuListener {
         ItemStack is = ItemStack.of(colour.getKey(), 1);
         ItemMeta im = is.getItemMeta();
         String dn = TARDISStringUtils.capitalise(name) + " Console";
-        im.displayName(ComponentUtils.toWhite(dn));
+        im.customName(ComponentUtils.toWhite(dn));
         is.setItemMeta(im);
         view.setItem(slot, is);
     }

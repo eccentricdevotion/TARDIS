@@ -134,7 +134,7 @@ public class OuterDisplayDoorAction extends DoorListener {
                                                 if (plugin.getConfig().getBoolean("allow.mob_farming") && TARDISPermission.hasPermission(player, "tardis.farm") && !plugin.getTrackerKeeper().getFarming().contains(uuid) && willFarm) {
                                                     plugin.getTrackerKeeper().getFarming().add(uuid);
                                                     TARDISFarmer tf = new TARDISFarmer(plugin);
-                                                    petsAndFollowers = tf.farmAnimals(location, d, id, player.getPlayer(), tardis_loc.getWorld().getName(), playerWorld.getName());
+                                                    petsAndFollowers = tf.farmAnimals(location, d, id, player.getPlayer(), tardis_loc.getWorld().getKey().getKey(), playerWorld.getKey().getKey());
                                                 }
                                                 // if WorldGuard is on the server check for TARDIS region protection and add admin as member
                                                 if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard") && TARDISPermission.hasPermission(player, "tardis.skeletonkey")) {

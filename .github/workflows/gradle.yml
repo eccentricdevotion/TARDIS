@@ -9,7 +9,7 @@ on:
     branches: [ "master" ]
 
 env:
-  VERSION: '7.0.0'
+  VERSION: '7.0.1'
   RELEASE_TAG: '26.1'
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
@@ -99,7 +99,7 @@ jobs:
         echo "today=$(date +'%d %B %Y %H:%M')" >> $GITHUB_OUTPUT
 
     - name: Send Discord notification
-      uses: stegzilla/discord-notify@v4
+      uses: stegzilla/discord-notify@v5
       with:
         webhook_url: ${{ secrets.DISCORD_WEBHOOK_URL }}
         title: TARDIS Plugin Update

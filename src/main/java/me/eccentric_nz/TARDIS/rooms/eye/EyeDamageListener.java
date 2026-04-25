@@ -36,7 +36,7 @@ public class EyeDamageListener implements Listener {
 
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event) {
-        if (!event.getFrom().getWorld().getName().contains("TARDIS")) {
+        if (!event.getFrom().getWorld().getKey().getKey().contains("tardis")) {
             return;
         }
         Player player = event.getPlayer();

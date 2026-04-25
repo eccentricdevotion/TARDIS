@@ -16,17 +16,20 @@
  */
 package me.eccentric_nz.TARDIS.planets;
 
+import com.google.common.collect.Sets;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import me.eccentric_nz.tardischunkgenerator.helpers.TARDISPlanetData;
+import net.kyori.adventure.key.Key;
 import org.bukkit.GameRules;
 import org.bukkit.World;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 public class TARDISWorlds {
@@ -39,11 +42,11 @@ public class TARDISWorlds {
 
     public void doWorlds() {
         List<World> worlds = plugin.getServer().getWorlds();
-        String defWorld = plugin.getConfig().getString("creation.default_world_name");
+        String defWorld = plugin.getConfig().getString("creation.default_world_name", "tardis_timevortex");
         worlds.forEach((w) -> {
-            String worldName = w.getName();
+            String worldName = w.getKey().getKey();
             if (!plugin.getPlanetsConfig().contains("planets." + worldName) && !worldName.equals(defWorld)) {
-                TARDISPlanetData data = plugin.getTardisHelper().getLevelData(w.getName());
+                TARDISPlanetData data = plugin.getTardisHelper().getLevelData(w.getKey().getKey());
                 plugin.getPlanetsConfig().set("planets." + worldName + ".enabled", false);
                 plugin.getPlanetsConfig().set("planets." + worldName + ".time_travel", !TARDISConstants.isTARDISPlanet(worldName));
                 plugin.getPlanetsConfig().set("planets." + worldName + ".resource_pack", "default");
@@ -51,7 +54,7 @@ public class TARDISWorlds {
                 plugin.getPlanetsConfig().set("planets." + worldName + ".world_type", data.worldType().toString());
                 plugin.getPlanetsConfig().set("planets." + worldName + ".environment", data.environment().toString());
                 plugin.getPlanetsConfig().set("planets." + worldName + ".difficulty", data.difficulty().toString());
-                plugin.getPlanetsConfig().set("planets." + worldName + ".generator", (worldName.startsWith("TARDIS_") || worldName.equals(plugin.getConfig().getString("creation.default_world_name"))) ? "TARDISChunkGenerator" : "DEFAULT");
+                plugin.getPlanetsConfig().set("planets." + worldName + ".generator", (worldName.startsWith("TARDIS_") || worldName.equals(plugin.getConfig().getString("creation.default_world_name", "tardis_timevortex").toLowerCase(Locale.ROOT))) ? "TARDIS:void" : "DEFAULT");
                 plugin.getPlanetsConfig().set("planets." + worldName + ".spawn_chunk_radius", 0);
                 plugin.getPlanetsConfig().set("planets." + worldName + ".alias", TARDISStringUtils.uppercaseFirst(worldName));
                 plugin.getPlanetsConfig().set("planets." + worldName + ".spawn_other_mobs", true);
@@ -71,14 +74,14 @@ public class TARDISWorlds {
         // now load TARDIS worlds / remove worlds that may have been deleted
         Set<String> cWorlds = plugin.getPlanetsConfig().getConfigurationSection("planets").getKeys(false);
         cWorlds.forEach((cw) -> {
-            if (TARDISAliasResolver.getWorldFromAlias(cw) == null) {
+            if (TARDISWorldResolver.getFromString(cw.toLowerCase()) == null) {
                 if (worldFolderExists(cw) && plugin.getPlanetsConfig().getBoolean("planets." + cw + ".enabled")) {
                     plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Attempting to load world: '" + cw + "'");
                     new WorldLoader(plugin).loadWorld(cw);
                     if (cw.equals("telos")) {
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                             if (plugin.getPlanetsConfig().getBoolean("planets.telos.twilight")) {
-                                World telos = plugin.getServer().getWorld("telos");
+                                World telos = plugin.getServer().getWorld(Key.key("telos"));
                                 if (telos != null) {
                                     telos.setTime(13000);
                                     telos.setGameRule(GameRules.ADVANCE_TIME, false);
@@ -96,7 +99,7 @@ public class TARDISWorlds {
                     }
                 }
             } else {
-                if (!TARDISConstants.isTARDISPlanet(cw) && !cw.equals("TARDIS_Zero_Room") && !cw.equals("TARDIS_TimeVortex") && !worldFolderExists(cw)) {
+                if (!TARDISConstants.isTARDISPlanet(cw) && !cw.equals("tardis_zero_room") && !cw.equals("tardis_timevortex") && !worldFolderExists(cw)) {
                     plugin.getPlanetsConfig().set("planets." + cw, null);
                     plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Removed '" + cw + "' from planets.yml");
                     // remove records from database that may contain the removed world
@@ -107,21 +110,24 @@ public class TARDISWorlds {
         plugin.savePlanetsConfig();
     }
 
+    private final Set<String> defaultWorlds = Sets.newHashSet("overworld", "the_nether", "the_end");
+
     private boolean worldFolderExists(String world) {
-        String worldZero = plugin.getServer().getWorlds().getFirst().getName();
-        File container = plugin.getServer().getWorldContainer();
-        File[] dirs = container.listFiles();
+        String worldZero = plugin.getServer().getWorlds().getFirst().getKey().getKey();
+        String container = plugin.getServer().getLevelDirectory() + File.separator + "dimensions" + File.separator + "minecraft";
+        File folder = new File(container);
+        File[] dirs = folder.listFiles();
         if (dirs != null) {
             for (File dir : dirs) {
                 if (dir.isDirectory()) {
                     String name = dir.getName();
-                    if (name.startsWith(worldZero)) {
+                    if (defaultWorlds.contains(name)) {
                         // only check worlds that aren't default dimensions
                         return true;
                     }
                     if (name.equals(world)) {
-                        File level = new File(dir, "level.dat");
-                        if (level.exists()) {
+                        File yaml = new File(dir, "paper-world.yml");
+                        if (yaml.exists()) {
                             return true;
                         }
                     }

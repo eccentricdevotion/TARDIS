@@ -21,7 +21,7 @@ import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDestinations;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
+import me.eccentric_nz.TARDIS.planets.TARDISWorldResolver;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
@@ -54,12 +54,12 @@ public class SaveIconCommand {
                 plugin.getMessenger().send(sender, TardisModule.TARDIS, "NO_PERMS");
                 return;
             }
-            World world = TARDISAliasResolver.getWorldFromAlias(world_save);
+            World world = TARDISWorldResolver.getFromString(world_save);
             if (world == null) {
                 plugin.getMessenger().send(sender, TardisModule.TARDIS, "COULD_NOT_FIND_WORLD");
                 return;
             }
-            plugin.getPlanetsConfig().set("planets." + world.getName() + ".icon", m);
+            plugin.getPlanetsConfig().set("planets." + world.getKey().getKey() + ".icon", m);
             try {
                 plugin.getPlanetsConfig().save(new File(plugin.getDataFolder(), "planets.yml"));
             } catch (IOException ex) {

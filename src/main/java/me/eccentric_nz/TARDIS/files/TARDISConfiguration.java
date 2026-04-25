@@ -96,6 +96,7 @@ public class TARDISConfiguration {
         booleanOptions.put("conversions.custom_presets", false);
         booleanOptions.put("conversions.eyes", false);
         booleanOptions.put("conversions.icons", false);
+        booleanOptions.put("conversions.keyed_worlds", false);
         booleanOptions.put("conversions.interior_door_id", false);
         booleanOptions.put("conversions.legacy_budget", false);
         booleanOptions.put("conversions.paintings", false);
@@ -292,7 +293,7 @@ public class TARDISConfiguration {
      */
     public void checkConfig() {
         int i = 0;
-        if (config.getString("creation.default_world_name").equals("tardis_time_vortex")) {
+        if (config.getString("creation.default_world_name", "tardis_timevortex").equals("tardis_time_vortex")) {
             plugin.getConfig().set("creation.default_world_name", "TARDIS_TimeVortex");
             i++;
         }

@@ -87,7 +87,7 @@ class LazarusAdjacentInventory extends LazarusItems implements InventoryHolder, 
         for (Material m : adjacent) {
             ItemStack egg = ItemStack.of(m, 1);
             ItemMeta me = egg.getItemMeta();
-            me.displayName(Component.text(m.toString().replace("_SPAWN_EGG", "")));
+            me.customName(Component.text(m.toString().replace("_SPAWN_EGG", "")));
             egg.setItemMeta(me);
             stacks[i] = egg;
             i++;
@@ -95,21 +95,21 @@ class LazarusAdjacentInventory extends LazarusItems implements InventoryHolder, 
         // giant
         ItemStack gi = ItemStack.of(Material.ZOMBIE_HEAD, 1);
         ItemMeta ant = gi.getItemMeta();
-        ant.displayName(Component.text("GIANT"));
+        ant.customName(Component.text("GIANT"));
         gi.setItemMeta(ant);
         stacks[i] = gi;
         i++;
         // illusioner
         ItemStack ill = ItemStack.of(Material.BOWL, 1);
         ItemMeta usi = ill.getItemMeta();
-        usi.displayName(Component.text("ILLUSIONER"));
+        usi.customName(Component.text("ILLUSIONER"));
         ill.setItemMeta(usi);
         stacks[i] = ill;
         i++;
         // herobrine
         ItemStack hero = ItemStack.of(Material.PLAYER_HEAD, 1);
         ItemMeta brine = hero.getItemMeta();
-        brine.displayName(Component.text("HEROBRINE"));
+        brine.customName(Component.text("HEROBRINE"));
         hero.setItemMeta(brine);
         stacks[i] = hero;
         // add standard buttons

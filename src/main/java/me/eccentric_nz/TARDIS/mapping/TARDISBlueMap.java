@@ -23,6 +23,7 @@ import de.bluecolored.bluemap.api.markers.MarkerSet;
 import de.bluecolored.bluemap.api.markers.POIMarker;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.TARDISData;
+import net.kyori.adventure.key.Key;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.plugin.Plugin;
@@ -81,7 +82,7 @@ public class TARDISBlueMap implements TARDISMapper {
                 // only get worlds that are enabled for time travel
                 for (String planet : plugin.getPlanetsConfig().getConfigurationSection("planets").getKeys(false)) {
                     if (plugin.getPlanetsConfig().getBoolean("planets." + planet + ".time_travel")) {
-                        World world = plugin.getServer().getWorld(planet);
+                        World world = plugin.getServer().getWorld(Key.key(planet));
                         if (world != null) {
                             worldsToDo.add(world);
                         }
@@ -118,7 +119,7 @@ public class TARDISBlueMap implements TARDISMapper {
                                     TARDISData data = toDo.get(tardisIndex);
                                     tardisIndex++;
                                     // get marker id
-                                    String id = curWorld.getName() + "/" + data.owner();
+                                    String id = curWorld.getKey().getKey() + "/" + data.owner();
                                     Location loc = data.location();
                                     String label = String.format("%s (TARDIS)", data.owner());
                                     String desc = formatInfoWindow(data);

@@ -97,7 +97,7 @@ public class ArtronCondenserListener implements Listener {
                             }
                         }
                         case NONE -> {
-                            if (plugin.getPlanetsConfig().getString("planets." + location.getWorld().getName() + ".gamemode", "SURVIVAL").equalsIgnoreCase("CREATIVE")) {
+                            if (plugin.getPlanetsConfig().getString("planets." + location.getWorld().getKey().getKey() + ".gamemode", "SURVIVAL").equalsIgnoreCase("CREATIVE")) {
                                 plugin.getMessenger().send(player, TardisModule.TARDIS, "CONDENSE_NO_CREATIVE");
                                 return;
                             }
@@ -411,8 +411,8 @@ public class ArtronCondenserListener implements Listener {
         }
         if (is.hasItemMeta()) {
             ItemMeta im = is.getItemMeta();
-            if (im.hasDisplayName()) {
-                return ComponentUtils.endsWith(im.displayName(),"TARDIS Blueprint Disk");
+            if (im.hasCustomName()) {
+                return ComponentUtils.endsWith(im.customName(),"TARDIS Blueprint Disk");
             }
         }
         return false;

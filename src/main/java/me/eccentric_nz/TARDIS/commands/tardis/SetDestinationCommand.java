@@ -31,6 +31,7 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.regex.Pattern;
 
 /**
@@ -88,8 +89,8 @@ public class SetDestinationCommand {
                     plugin.getMessenger().sendColouredCommand(player, "AREA_NO_SETDEST", "/tardistravel area [area name]", plugin);
                     return;
                 }
-                String world = l.getWorld().getName();
-                if (!plugin.getConfig().getBoolean("travel.include_default_world") && plugin.getConfig().getBoolean("creation.default_world") && world.equals(plugin.getConfig().getString("creation.default_world_name"))) {
+                String world = l.getWorld().getKey().getKey();
+                if (!plugin.getConfig().getBoolean("travel.include_default_world") && plugin.getConfig().getBoolean("creation.default_world") && world.equals(plugin.getConfig().getString("creation.default_world_name", "tardis_timevortex").toLowerCase(Locale.ROOT))) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_WORLD_TRAVEL");
                     return;
                 }
@@ -108,7 +109,7 @@ public class SetDestinationCommand {
                         return;
                     }
                 }
-                String dw = l.getWorld().getName();
+                String dw = l.getWorld().getKey().asString();
                 int dx = l.getBlockX();
                 int dy = l.getBlockY() + 1;
                 int dz = l.getBlockZ();

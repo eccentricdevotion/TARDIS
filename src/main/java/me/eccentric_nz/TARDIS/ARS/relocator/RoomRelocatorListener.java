@@ -282,7 +282,7 @@ public class RoomRelocatorListener extends ARSMethods implements Listener {
         ItemStack is = view.getItem(slot);
         if (is != null) {
             ItemMeta im = is.getItemMeta();
-            String name = ComponentUtils.stripColour(im.displayName());
+            String name = ComponentUtils.stripColour(im.customName());
             for (TARDISARS ars : TARDISARS.values()) {
                 if (name.equals(ars.getDescriptiveName())) {
                     return ars.toString();
@@ -306,7 +306,7 @@ public class RoomRelocatorListener extends ARSMethods implements Listener {
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             ItemStack tnt = ItemStack.of(Material.TNT, 1);
             ItemMeta j = tnt.getItemMeta();
-            j.displayName(Component.text("Jettison"));
+            j.customName(Component.text("Jettison"));
             tnt.setItemMeta(j);
             setSlot(view, slot, tnt, uuid, true);
         }, 2L);

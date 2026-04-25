@@ -60,19 +60,19 @@ public class TVMCommandCoords {
             l = plugin.getTardisAPI().getRandomLocation(plugin.getTardisAPI().getWorlds(), null, params);
         } else if (pos == null) {
             // check world is enabled for travel
-            if (!containsIgnoreCase(world.getName(), plugin.getTardisAPI().getWorlds())) {
+            if (!containsIgnoreCase(world.getKey().getKey(), plugin.getTardisAPI().getWorlds())) {
                 plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_NO_TRAVEL");
                 return;
             }
             required = plugin.getVortexConfig().getInt("tachyon_use.travel.world");
             // only world specified (or incomplete setting)
-            worlds.add(world.getName());
+            worlds.add(world.getKey().getKey());
             l = plugin.getTardisAPI().getRandomLocation(worlds, null, params);
         } else {
             required = plugin.getVortexConfig().getInt("tachyon_use.travel.coords");
             // world, x, y, z specified
             // check world is enabled for travel
-            if (!containsIgnoreCase(world.getName(), plugin.getTardisAPI().getWorlds())) {
+            if (!containsIgnoreCase(world.getKey().getKey(), plugin.getTardisAPI().getWorlds())) {
                 plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_NO_TRAVEL");
                 return;
             }

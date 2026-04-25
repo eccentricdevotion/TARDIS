@@ -85,7 +85,7 @@ class SaveLocationCommand {
                     return;
                 }
                 Current current = rsc.getCurrent();
-                String w = current.location().getWorld().getName();
+                String w = current.location().getWorld().getKey().asString();
                 if (w.startsWith("TARDIS_")) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "SAVE_NO_TARDIS");
                     return;

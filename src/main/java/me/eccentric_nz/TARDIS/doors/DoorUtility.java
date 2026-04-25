@@ -49,7 +49,7 @@ public class DoorUtility {
             return;
         }
         ItemMeta im = is.getItemMeta();
-        if (!im.hasDisplayName() || !im.getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.STRING) || !im.hasItemModel()) {
+        if (!im.hasCustomName() || !im.getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.STRING) || !im.hasItemModel()) {
             return;
         }
         // set an Interaction
@@ -94,7 +94,7 @@ public class DoorUtility {
         // get open portals
         for (Map.Entry<Location, TARDISTeleportLocation> map : TARDIS.plugin.getTrackerKeeper().getPortals().entrySet()) {
             // only portals in police box worlds
-            if (map.getKey().getWorld().getName().contains("TARDIS")) {
+            if (map.getKey().getWorld().getKey().getKey().contains("tardis")) {
                 continue;
             }
             if (map.getValue().isAbandoned()) {

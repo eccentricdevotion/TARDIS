@@ -61,7 +61,7 @@ public class FobWatchListener implements Listener {
             return;
         }
         ItemMeta im = is.getItemMeta();
-        if (!im.hasDisplayName() || !ComponentUtils.endsWith(im.displayName(), "Fob Watch")) {
+        if (!im.hasCustomName() || !ComponentUtils.endsWith(im.customName(), "Fob Watch")) {
             return;
         }
         Player player = event.getPlayer();

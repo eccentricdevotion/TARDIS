@@ -51,7 +51,7 @@ public class TVCompanionsInventory extends TVGUI {
                 SkinUtils.getHeadProfile(companion).thenAccept(playerProfile -> {
                     is.setData(DataComponentTypes.PROFILE, ResolvableProfile.resolvableProfile(playerProfile));
                     im.setPlayerProfile(playerProfile);
-                    im.displayName(Component.text(companion.name()));
+                    im.customName(Component.text(companion.name()));
                     is.setItemMeta(im);
                     // cache the item stack
                     PlayerHeadCache.COMPANIONS.add(is);

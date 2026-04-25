@@ -67,10 +67,10 @@ public class FormulaViewerListener extends TARDISMenuListener {
                     close(player);
                 } else if (event.getRawSlot() != 0) {
                     ItemStack is = event.getCurrentItem();
-                    if (is != null && is.hasItemMeta() && Objects.requireNonNull(is.getItemMeta()).hasDisplayName()) {
+                    if (is != null && is.hasItemMeta() && Objects.requireNonNull(is.getItemMeta()).hasCustomName()) {
                         // is it a compound?
                         try {
-                            Compound compound = Compound.valueOf(ComponentUtils.stripColour(is.getItemMeta().displayName()).replace(" ", "_"));
+                            Compound compound = Compound.valueOf(ComponentUtils.stripColour(is.getItemMeta().customName()).replace(" ", "_"));
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new FormulaViewer(plugin, player).getCompoundFormula(compound), 2L);
                         } catch (IllegalArgumentException e) {
                             // don't know what it is

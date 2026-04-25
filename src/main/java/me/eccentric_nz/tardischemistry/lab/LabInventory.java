@@ -49,7 +49,7 @@ public class LabInventory implements InventoryHolder {
         // info
         ItemStack info = ItemStack.of(GUIChemistry.INFO.material(), 1);
         ItemMeta info_im = info.getItemMeta();
-        info_im.displayName(Component.text("Info"));
+        info_im.customName(Component.text("Info"));
         info_im.lore(List.of(
                 Component.text("Combine elements and compounds"),
                 Component.text("to create bleach, ice bombs"),
@@ -65,14 +65,14 @@ public class LabInventory implements InventoryHolder {
         // check recipe
         ItemStack check = ItemStack.of(GUIChemistry.CHECK.material(), 1);
         ItemMeta check_im = check.getItemMeta();
-        check_im.displayName(Component.text("Check product"));
+        check_im.customName(Component.text("Check product"));
         check_im.setItemModel(GUIChemistry.CHECK.key());
         check.setItemMeta(check_im);
         stack[GUIChemistry.CHECK.slot()] = check;
         // close
         ItemStack close = ItemStack.of(GUIChemistry.CLOSE.material(), 1);
         ItemMeta close_im = close.getItemMeta();
-        close_im.displayName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
+        close_im.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
         close_im.setItemModel(GUIChemistry.CLOSE.key());
         close.setItemMeta(close_im);
         stack[GUIChemistry.CLOSE.slot()] = close;

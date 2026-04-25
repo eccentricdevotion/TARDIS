@@ -80,7 +80,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener {
         Player player = (Player) event.getWhoClicked();
         UUID uuid = player.getUniqueId();
         ItemMeta im = is.getItemMeta();
-        if (slot == GUIPlayerPreferences.FLIGHT_MODE.getSlot() && ComponentUtils.stripColour(im.displayName()).equals("Flight Mode")) {
+        if (slot == GUIPlayerPreferences.FLIGHT_MODE.getSlot() && ComponentUtils.stripColour(im.customName()).equals("Flight Mode")) {
             List<Component> lore = im.lore();
             // cycle through flight modes
             FlightMode flight = FlightMode.valueOf(ComponentUtils.stripColour(lore.getFirst()));
@@ -100,7 +100,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener {
             plugin.getQueryFactory().doUpdate("player_prefs", setf, wheref);
             return;
         }
-        if (slot == GUIPlayerPreferences.INTERIOR_HUM_SOUND.getSlot() && ComponentUtils.stripColour(im.displayName()).equals("Interior Hum Sound")) {
+        if (slot == GUIPlayerPreferences.INTERIOR_HUM_SOUND.getSlot() && ComponentUtils.stripColour(im.customName()).equals("Interior Hum Sound")) {
             // close this gui and load the sounds GUI
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                 // close inventory
@@ -110,7 +110,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener {
             }, 1L);
             return;
         }
-        if (slot == GUIPlayerPreferences.HANDBRAKE.getSlot() && ComponentUtils.stripColour(im.displayName()).equals("Handbrake")) {
+        if (slot == GUIPlayerPreferences.HANDBRAKE.getSlot() && ComponentUtils.stripColour(im.customName()).equals("Handbrake")) {
             // you can only set it to ON!
             List<Component> lore = im.lore();
             if (ComponentUtils.stripColour(lore.getFirst()).equals(plugin.getLanguage().getString("SET_OFF", "OFF"))) {
@@ -156,7 +156,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener {
             }
             return;
         }
-        if (slot == GUIPlayerPreferences.TARDIS_MAP.getSlot() && ComponentUtils.stripColour(im.displayName()).equals("TARDIS Map")) {
+        if (slot == GUIPlayerPreferences.TARDIS_MAP.getSlot() && ComponentUtils.stripColour(im.customName()).equals("TARDIS Map")) {
             // must be in the TARDIS
             HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", uuid.toString());
@@ -178,7 +178,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener {
             }
             return;
         }
-        if (slot == GUIPlayerPreferences.AUTONOMOUS_PREFERENCES.getSlot() && ComponentUtils.stripColour(im.displayName()).equals("Autonomous Preferences")) {
+        if (slot == GUIPlayerPreferences.AUTONOMOUS_PREFERENCES.getSlot() && ComponentUtils.stripColour(im.customName()).equals("Autonomous Preferences")) {
             // close this gui and load the TARDIS Autonomous Menu
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                 // close inventory
@@ -188,7 +188,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener {
             }, 1L);
             return;
         }
-        if (slot == GUIPlayerPreferences.FARMING_PREFERENCES.getSlot() && ComponentUtils.stripColour(im.displayName()).equals("Farming Preferences")) {
+        if (slot == GUIPlayerPreferences.FARMING_PREFERENCES.getSlot() && ComponentUtils.stripColour(im.customName()).equals("Farming Preferences")) {
             // close this gui and load the TARDIS Farming Menu
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                 // close inventory
@@ -198,7 +198,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener {
             }, 1L);
             return;
         }
-        if (slot == GUIPlayerPreferences.SONIC_CONFIGURATOR.getSlot() && ComponentUtils.stripColour(im.displayName()).equals("Sonic Configurator")) {
+        if (slot == GUIPlayerPreferences.SONIC_CONFIGURATOR.getSlot() && ComponentUtils.stripColour(im.customName()).equals("Sonic Configurator")) {
             // close this gui and load the Sonic Configurator
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                 // close inventory
@@ -208,7 +208,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener {
             }, 1L);
             return;
         }
-        if (slot == GUIPlayerPreferences.PARTICLES.getSlot() && ComponentUtils.stripColour(im.displayName()).equals("Materialisation Particles")) {
+        if (slot == GUIPlayerPreferences.PARTICLES.getSlot() && ComponentUtils.stripColour(im.customName()).equals("Materialisation Particles")) {
             // close this gui and load the Particle Preferences
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                 // close inventory
@@ -223,7 +223,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener {
         }
         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid.toString());
         boolean dialogs = rsp.resultSet() && rsp.isDialogsOn();
-        if (slot == GUIPlayerPreferences.GENERAL_PREFERENCES_MENU.getSlot() && ComponentUtils.stripColour(im.displayName()).equals("General Preferences Menu")) {
+        if (slot == GUIPlayerPreferences.GENERAL_PREFERENCES_MENU.getSlot() && ComponentUtils.stripColour(im.customName()).equals("General Preferences Menu")) {
             // close this gui and load the Admin Menu
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                 if (dialogs) {
@@ -236,7 +236,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener {
             }, 1L);
             return;
         }
-        if (slot == GUIPlayerPreferences.ADMIN_MENU.getSlot() && ComponentUtils.stripColour(im.displayName()).equals("Admin Config Menu")) {
+        if (slot == GUIPlayerPreferences.ADMIN_MENU.getSlot() && ComponentUtils.stripColour(im.customName()).equals("Admin Config Menu")) {
             // close this gui and load the Admin Menu
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                 if (dialogs) {

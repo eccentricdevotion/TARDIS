@@ -157,7 +157,7 @@ public class DevCommandNode {
                                     if (ctx.getSource().getSender() instanceof Player player) {
                                         // get target block
                                         Block block = player.getTargetBlock(null, 8);
-                                        player.sendMessage(block.getState().toString());
+                                        plugin.getMessenger().message(player, block.getState().toString());
                                     }
                                     return Command.SINGLE_SUCCESS;
                                 })))
@@ -175,14 +175,14 @@ public class DevCommandNode {
                         .then(Commands.argument("world", ArgumentTypes.world())
                                 .executes(ctx -> {
                                     World world = ctx.getArgument("world", World.class);
-                                    DevelopmentUtility.chunky(plugin, world.getName(), "250");
+                                    DevelopmentUtility.chunky(plugin, world.getKey().getKey(), "250");
                                     return Command.SINGLE_SUCCESS;
                                 })
                                 .then(Commands.argument("radius", IntegerArgumentType.integer(1))
                                         .executes(ctx -> {
                                             World world = ctx.getArgument("world", World.class);
                                             String r = Integer.toString(IntegerArgumentType.getInteger(ctx, "radius"));
-                                            DevelopmentUtility.chunky(plugin, world.getName(), r);
+                                            DevelopmentUtility.chunky(plugin, world.getKey().getKey(), r);
                                             return Command.SINGLE_SUCCESS;
                                         }))))
                 .then(Commands.literal("circuit")
@@ -801,6 +801,11 @@ public class DevCommandNode {
                 .then(Commands.literal("tips")
                         .executes(ctx -> {
                             new TIPSPreviewSlotInfo(plugin).display();
+                            return Command.SINGLE_SUCCESS;
+                        }))
+                .then(Commands.literal("trades")
+                        .executes(ctx -> {
+                            new TradeCommand(plugin).spawn(ctx.getSource().getSender());
                             return Command.SINGLE_SUCCESS;
                         }))
                 .then(Commands.literal("tree")

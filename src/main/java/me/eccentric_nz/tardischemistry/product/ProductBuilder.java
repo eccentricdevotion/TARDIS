@@ -34,7 +34,7 @@ public class ProductBuilder {
     public static ItemStack getProduct(Product product) {
         ItemStack is = ItemStack.of(product.getMaterial(), 1);
         ItemMeta im = is.getItemMeta();
-        im.displayName(Component.text(product.getName()));
+        im.customName(Component.text(product.getName()));
         im.addAttributeModifier(
                 Attribute.LUCK,
                 new AttributeModifier(

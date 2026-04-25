@@ -43,6 +43,7 @@ import me.eccentric_nz.TARDIS.hads.CloisterBell;
 import me.eccentric_nz.TARDIS.siegemode.SiegeArea;
 import me.eccentric_nz.TARDIS.travel.TARDISEPSRunnable;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
+import net.kyori.adventure.key.Key;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -116,7 +117,7 @@ public class AutonomousDeath {
                                     }
                                 }
                             }
-                            String death_world = death_loc.getWorld().getName();
+                            String death_world = death_loc.getWorld().getKey().getKey();
                             // where is the TARDIS Police Box?
                             ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
                             if (!rsc.resultSet()) {
@@ -170,7 +171,7 @@ public class AutonomousDeath {
                                 }
                                 case CLOSEST -> { // CLOSEST
                                     // if home world is NOT the death world
-                                    if (!hw.getName().equals(death_world)) {
+                                    if (!hw.getKey().getKey().equals(death_world)) {
                                         // look for a recharge location
                                         goto_loc = AutonomousUtils.getRecharger(death_world, player);
                                         if (goto_loc == null) {
@@ -202,7 +203,8 @@ public class AutonomousDeath {
                                     whered.put("autonomous", 1);
                                     ResultSetDestinations rsd = new ResultSetDestinations(plugin, whered, false);
                                     if (rsd.resultSet()) {
-                                        World world = plugin.getServer().getWorld(rsd.getWorld());
+                                        Key key = Key.key(rsd.getWorld());
+                                        World world = plugin.getServer().getWorld(key);
                                         if (world != null) {
                                             goto_loc = new Location(world, rsd.getX(), rsd.getY(), rsd.getZ());
                                         }
@@ -286,7 +288,7 @@ public class AutonomousDeath {
                                 }, 500L);
                                 // set current
                                 HashMap<String, Object> setc = new HashMap<>();
-                                setc.put("world", goto_loc.getWorld().getName());
+                                setc.put("world", goto_loc.getWorld().getKey().asString());
                                 setc.put("x", goto_loc.getBlockX());
                                 setc.put("y", goto_loc.getBlockY());
                                 setc.put("z", goto_loc.getBlockZ());
@@ -297,7 +299,7 @@ public class AutonomousDeath {
                                 plugin.getQueryFactory().doUpdate("current", setc, wherec);
                                 // set back
                                 HashMap<String, Object> setb = new HashMap<>();
-                                setb.put("world", current.location().getWorld().getName());
+                                setb.put("world", current.location().getWorld().getKey().asString());
                                 setb.put("x", current.location().getBlockX());
                                 setb.put("y", current.location().getBlockY());
                                 setb.put("z", current.location().getBlockZ());
@@ -368,20 +370,20 @@ public class AutonomousDeath {
                                 Chunk c = plugin.getLocationUtils().getTARDISChunk(id);
                                 SiegeArea tsa = new SiegeArea(id, c);
                                 if (plugin.getConfig().getInt("siege.breeding") > 0) {
-                                    List<SiegeArea> breeding_areas = plugin.getTrackerKeeper().getSiegeBreedingAreas().get(c.getWorld().getName());
+                                    List<SiegeArea> breeding_areas = plugin.getTrackerKeeper().getSiegeBreedingAreas().get(c.getWorld().getKey().getKey());
                                     if (breeding_areas == null) {
                                         breeding_areas = new ArrayList<>();
                                     }
                                     breeding_areas.add(tsa);
-                                    plugin.getTrackerKeeper().getSiegeBreedingAreas().put(c.getWorld().getName(), breeding_areas);
+                                    plugin.getTrackerKeeper().getSiegeBreedingAreas().put(c.getWorld().getKey().getKey(), breeding_areas);
                                 }
                                 if (plugin.getConfig().getInt("siege.growth") > 0) {
-                                    List<SiegeArea> growth_areas = plugin.getTrackerKeeper().getSiegeGrowthAreas().get(c.getWorld().getName());
+                                    List<SiegeArea> growth_areas = plugin.getTrackerKeeper().getSiegeGrowthAreas().get(c.getWorld().getKey().getKey());
                                     if (growth_areas == null) {
                                         growth_areas = new ArrayList<>();
                                     }
                                     growth_areas.add(tsa);
-                                    plugin.getTrackerKeeper().getSiegeGrowthAreas().put(c.getWorld().getName(), growth_areas);
+                                    plugin.getTrackerKeeper().getSiegeGrowthAreas().put(c.getWorld().getKey().getKey(), growth_areas);
                                 }
                             }
                             if (plugin.getConfig().getBoolean("siege.texture")) {

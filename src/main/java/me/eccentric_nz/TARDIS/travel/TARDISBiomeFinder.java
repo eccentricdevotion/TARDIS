@@ -99,7 +99,7 @@ public class TARDISBiomeFinder {
             }
         }
         HashMap<String, Object> set = new HashMap<>();
-        set.put("world", tb.getWorld().getName());
+        set.put("world", tb.getWorld().getKey().asString());
         set.put("x", tb.getBlockX());
         set.put("y", tb.getBlockY());
         set.put("z", tb.getBlockZ());

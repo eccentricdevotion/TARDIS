@@ -65,7 +65,7 @@ public class TARDISAreaListener implements Listener {
                 Location block_loc = block.getLocation();
                 // check if block is in an already defined area
                 if (!plugin.getTardisArea().isInExistingArea(block_loc)) {
-                    String locStr = block_loc.getWorld().getName() + ":" + block_loc.getBlockX() + ":" + block_loc.getBlockY() + ":" + block_loc.getBlockZ();
+                    String locStr = block_loc.getWorld().getKey().asString() + ":" + block_loc.getBlockX() + ":" + block_loc.getBlockY() + ":" + block_loc.getBlockZ();
                     plugin.getTrackerKeeper().getAreaStartBlock().put(uuid, locStr);
                     plugin.getMessenger().sendColouredCommand(player, "AREA_END_INFO", "/tardisarea end", plugin);
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
@@ -80,7 +80,7 @@ public class TARDISAreaListener implements Listener {
                 // check if block is in an already defined area
                 if (!plugin.getTardisArea().isInExistingArea(block_loc)) {
                     String[] firstblock = plugin.getTrackerKeeper().getAreaStartBlock().get(uuid).split(":");
-                    if (!block_loc.getWorld().getName().equals(firstblock[0])) {
+                    if (!block_loc.getWorld().getKey().getKey().equals(firstblock[1])) {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "AREA_WORLD");
                         return;
                     }

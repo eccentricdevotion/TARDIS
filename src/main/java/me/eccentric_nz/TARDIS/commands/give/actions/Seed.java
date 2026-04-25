@@ -73,7 +73,7 @@ public class Seed {
                 ItemMeta im = is.getItemMeta();
                 im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, model.getKey());
                 // set display name
-                im.displayName(ComponentUtils.toGold("TARDIS Seed Block"));
+                im.customName(ComponentUtils.toGold("TARDIS Seed Block"));
                 im.lore(List.of(
                         Component.text(type),
                         Component.text("Walls: " + wall),

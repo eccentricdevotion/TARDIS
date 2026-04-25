@@ -57,7 +57,7 @@ public class MicroscopeDamageListener implements Listener {
                 LabEquipment equipment = LabEquipment.getByMaterial().get(dye.getType());
                 ItemStack drop = ItemStack.of(equipment.getMaterial(), 1);
                 ItemMeta dropMeta = drop.getItemMeta();
-                dropMeta.displayName(Component.text(equipment.getName()));
+                dropMeta.customName(Component.text(equipment.getName()));
                 dropMeta.setItemModel(equipment.getModel());
                 drop.setItemMeta(dropMeta);
                 player.getWorld().dropItem(entity.getLocation(), drop);

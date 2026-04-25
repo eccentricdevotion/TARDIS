@@ -68,12 +68,12 @@ public class TARDISPruner {
                                 Timestamp lastuse = new Timestamp(rs.getLong("lastuse"));
                                 if (lastuse.before(prune)) {
                                     Current current = rsc.getCurrent();
-                                    String line = "Time Lord: " + rs.getString("owner") + ", Location: " + current.location().getWorld().getName() + ":" + current.location().getBlockX() + ":" + current.location().getBlockY() + ":" + current.location().getBlockZ();
+                                    String line = "Time Lord: " + rs.getString("owner") + ", Location: " + current.location().getWorld().getKey().getKey() + ":" + current.location().getBlockX() + ":" + current.location().getBlockY() + ":" + current.location().getBlockZ();
                                     // write line to file
                                     bw.write(line);
                                     bw.newLine();
                                     // display the TARDIS prune list
-                                    sender.sendMessage(line);
+                                    plugin.getMessenger().message(sender, line);
                                 }
                             } else {
                                 plugin.debug(plugin.getLanguage().getString("CURRENT_NOT_FOUND"));
@@ -104,7 +104,7 @@ public class TARDISPruner {
                     if (lastuse.before(prune)) {
                         // remove the TARDIS
                         if (te.pruneExterminate(rs.getInt("tardis_id"))) {
-                            sender.sendMessage("Pruned " + rs.getString("owner") + "'s TARDIS");
+                            plugin.getMessenger().message(sender, "Pruned " + rs.getString("owner") + "'s TARDIS");
                         }
                     }
                 }

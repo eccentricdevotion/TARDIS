@@ -24,7 +24,7 @@ import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
+import me.eccentric_nz.TARDIS.planets.TARDISWorldResolver;
 import me.eccentric_nz.TARDIS.travel.TARDISAreaCheck;
 import me.eccentric_nz.TARDIS.travel.TravelCostAndType;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
@@ -113,7 +113,7 @@ public class TARDISSavesListener extends TARDISMenuListener {
                                 event.setCancelled(true);
                             } else {
                                 ItemMeta cim = cursor.getItemMeta();
-                                String save = ComponentUtils.stripColour(cim.displayName());
+                                String save = ComponentUtils.stripColour(cim.customName());
                                 HashMap<String, Object> where = new HashMap<>();
                                 where.put("tardis_id", occupiedTardisId);
                                 where.put("dest_name", save);
@@ -236,11 +236,11 @@ public class TARDISSavesListener extends TARDISMenuListener {
                                     HashMap<String, Object> wheret = new HashMap<>();
                                     wheret.put("tardis_id", occupiedTardisId);
                                     plugin.getQueryFactory().doSyncUpdate("next", set, wheret);
-                                    TravelType travelType = (ComponentUtils.stripColour(im.displayName()).equals("Home")) ? TravelType.HOME : TravelType.SAVE;
+                                    TravelType travelType = (ComponentUtils.stripColour(im.customName()).equals("Home")) ? TravelType.HOME : TravelType.SAVE;
                                     plugin.getTrackerKeeper().getHasDestination().put(occupiedTardisId, new TravelCostAndType(travel, travelType));
                                     plugin.getTrackerKeeper().getRescue().remove(occupiedTardisId);
                                     close(player);
-                                    plugin.getMessenger().sendJoined(player, "DEST_SET_TERMINAL", ComponentUtils.stripColour(im.displayName()), !plugin.getTrackerKeeper().getDestinationVortex().containsKey(occupiedTardisId));
+                                    plugin.getMessenger().sendJoined(player, "DEST_SET_TERMINAL", ComponentUtils.stripColour(im.customName()), !plugin.getTrackerKeeper().getDestinationVortex().containsKey(occupiedTardisId));
                                     if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(occupiedTardisId)) {
                                         new TARDISLand(plugin, occupiedTardisId, player).exitVortex();
                                         plugin.getPM().callEvent(new TARDISTravelEvent(player, null, travelType, occupiedTardisId));
@@ -252,7 +252,7 @@ public class TARDISSavesListener extends TARDISMenuListener {
                                 }
                             } else {
                                 close(player);
-                                plugin.getMessenger().send(player, TardisModule.TARDIS, "DEST_NOT_VALID", ComponentUtils.stripColour(im.displayName()));
+                                plugin.getMessenger().send(player, TardisModule.TARDIS, "DEST_NOT_VALID", ComponentUtils.stripColour(im.customName()));
                             }
                         }
                     }
@@ -297,7 +297,7 @@ public class TARDISSavesListener extends TARDISMenuListener {
             for (int i = start; i < 45; i++) {
                 if (stack[i] != null) {
                     ItemMeta im = stack[i].getItemMeta();
-                    String save = ComponentUtils.stripColour(im.displayName());
+                    String save = ComponentUtils.stripColour(im.customName());
                     HashMap<String, Object> set = new HashMap<>();
                     int slot = (isPageTwo) ? 45 + i : i;
                     set.put("slot", slot);
@@ -325,7 +325,7 @@ public class TARDISSavesListener extends TARDISMenuListener {
         if (lore == null) {
             return null;
         }
-        World w = TARDISAliasResolver.getWorldFromAlias(ComponentUtils.stripColour(lore.getFirst()));
+        World w = TARDISWorldResolver.getFromString(ComponentUtils.stripColour(lore.getFirst()));
         if (w == null) {
             return null;
         }

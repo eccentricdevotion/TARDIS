@@ -23,7 +23,7 @@ import java.util.HashMap;
 
 public class GeyserItems {
 
-    // TODO add items with upcoming Custom item API v2 - https://github.com/GeyserMC/Geyser/pull/5189
+    // TODO add items with Custom item API v2 - https://geysermc.org/wiki/geyser/custom-items
     public HashMap<String, CustomItemData> init() {
         HashMap<String, CustomItemData> items = new HashMap<>();
         CustomItemOptions itemOptions = CustomItemOptions.builder()

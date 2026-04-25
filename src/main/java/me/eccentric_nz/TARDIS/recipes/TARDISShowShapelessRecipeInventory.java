@@ -17,6 +17,8 @@
 package me.eccentric_nz.TARDIS.recipes;
 
 import com.google.common.collect.Multimaps;
+import io.papermc.paper.registry.RegistryAccess;
+import io.papermc.paper.registry.RegistryKey;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.keys.SonicVariant;
 import me.eccentric_nz.TARDIS.enumeration.RecipeCategory;
@@ -61,6 +63,11 @@ public class TARDISShowShapelessRecipeInventory implements InventoryHolder {
             RecipeChoice choice = ingredients.get(i);
             if (choice instanceof RecipeChoice.ExactChoice exact) {
                 item = exact.getChoices().getFirst();
+            } else if (choice instanceof RecipeChoice.ItemTypeChoice itc) {
+                ItemType type = RegistryAccess.registryAccess()
+                        .getRegistry(RegistryKey.ITEM)
+                        .get(itc.itemTypes().values().iterator().next());
+                item = type.createItemStack();
             } else if (choice instanceof RecipeChoice.MaterialChoice mat) {
                 item = ItemStack.of(mat.getChoices().getFirst());
             }
@@ -70,16 +77,16 @@ public class TARDISShowShapelessRecipeInventory implements InventoryHolder {
             ItemMeta im = item.getItemMeta();
             if (item.getType().equals(Material.GLOWSTONE_DUST)) {
                 String dn = getDisplayName(str, glowstoneCount);
-                im.displayName(ComponentUtils.toWhite(dn));
+                im.customName(ComponentUtils.toWhite(dn));
                 glowstoneCount++;
             }
             if (item.getType().equals(Material.MUSIC_DISC_STRAD)) {
-                im.displayName(Component.text("Blank Storage Disk"));
+                im.customName(Component.text("Blank Storage Disk"));
                 im.addItemFlags(ItemFlag.values());
                 im.setAttributeModifiers(Multimaps.forMap(Map.of()));
             }
             if (item.getType().equals(Material.BLAZE_ROD)) {
-                im.displayName(Component.text("Sonic Screwdriver"));
+                im.customName(Component.text("Sonic Screwdriver"));
                 CustomModelDataComponent component = im.getCustomModelDataComponent();
                 component.setFloats(SonicVariant.TENTH.getFloats());
                 im.setCustomModelDataComponent(component);
@@ -89,7 +96,7 @@ public class TARDISShowShapelessRecipeInventory implements InventoryHolder {
         }
         ItemStack result = recipe.getResult();
         ItemMeta im = result.getItemMeta();
-        im.displayName(ComponentUtils.toWhite(str));
+        im.customName(ComponentUtils.toWhite(str));
         if (str.equals("Blank Storage Disk") || str.equals("Save Storage Disk") || str.equals("Preset Storage Disk") || str.equals("Biome Storage Disk") || str.equals("Player Storage Disk") || str.equals("Authorised Control Disk")) {
             im.addItemFlags(ItemFlag.values());
             im.setAttributeModifiers(Multimaps.forMap(Map.of()));
@@ -97,7 +104,7 @@ public class TARDISShowShapelessRecipeInventory implements InventoryHolder {
         RecipeItem recipeItem = RecipeItem.getByName(str);
         if (recipeItem != RecipeItem.NOT_FOUND) {
             if (recipeItem.getCategory().equals(RecipeCategory.SONIC_UPGRADES)) {
-                im.displayName(ComponentUtils.toWhite("Sonic Screwdriver"));
+                im.customName(ComponentUtils.toWhite("Sonic Screwdriver"));
                 im.lore(List.of(Component.text("Upgrades:"), Component.text(str)));
             }
         }

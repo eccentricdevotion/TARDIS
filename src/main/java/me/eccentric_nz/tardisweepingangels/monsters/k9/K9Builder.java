@@ -63,7 +63,7 @@ public class K9Builder implements Listener {
                     return;
                 }
                 Player player = event.getPlayer();
-                if (!plugin.getMonstersConfig().getBoolean("k9.worlds." + placed.getWorld().getName())) {
+                if (!plugin.getMonstersConfig().getBoolean("k9.worlds." + placed.getWorld().getKey().getKey())) {
                     plugin.getMessenger().send(player, TardisModule.MONSTERS, "WA_BUILD");
                     return;
                 }

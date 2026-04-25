@@ -29,7 +29,7 @@ public class PresetPermissionLister {
         TARDIS.plugin.getMessenger().message(sender, TardisModule.TARDIS, " Chameleon Preset Permissions:");
         for (ChameleonPreset preset : ChameleonPreset.values()) {
             if (preset.getSlot() != -1) {
-                sender.sendMessage("tardis.preset." + preset.toString().toLowerCase(Locale.ROOT));
+                TARDIS.plugin.getMessenger().message(sender, "tardis.preset." + preset.toString().toLowerCase(Locale.ROOT));
             }
         }
     }

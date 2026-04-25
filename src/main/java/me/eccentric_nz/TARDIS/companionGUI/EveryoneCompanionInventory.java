@@ -56,7 +56,7 @@ public class EveryoneCompanionInventory implements InventoryHolder {
                     ItemStack head = ItemStack.of(Material.PLAYER_HEAD, 1);
                     SkullMeta skull = (SkullMeta) head.getItemMeta();
                     skull.setOwningPlayer(c);
-                    skull.displayName(Component.text(c.getName()));
+                    skull.customName(Component.text(c.getName()));
                     skull.lore(List.of(Component.text(c.getUniqueId().toString())));
                     head.setItemMeta(skull);
                     heads[i] = head;
@@ -67,7 +67,7 @@ public class EveryoneCompanionInventory implements InventoryHolder {
         // add buttons
         ItemStack info = ItemStack.of(Material.BOOK, 1);
         ItemMeta ii = info.getItemMeta();
-        ii.displayName(Component.text("Info"));
+        ii.customName(Component.text("Info"));
         ii.lore(List.of(
                 Component.text("To REMOVE a companion"),
                 Component.text("select a player head"),
@@ -81,18 +81,18 @@ public class EveryoneCompanionInventory implements InventoryHolder {
         heads[45] = info;
         ItemStack add = ItemStack.of(Material.NETHER_STAR, 1);
         ItemMeta aa = add.getItemMeta();
-        aa.displayName(Component.text("Add"));
+        aa.customName(Component.text("Add"));
         add.setItemMeta(aa);
         heads[48] = add;
         ItemStack del = ItemStack.of(Material.BUCKET, 1);
         ItemMeta dd = add.getItemMeta();
-        dd.displayName(Component.text("Remove"));
+        dd.customName(Component.text("Remove"));
         del.setItemMeta(dd);
         heads[51] = del;
         // Cancel / close
         ItemStack close = ItemStack.of(Material.BOWL, 1);
         ItemMeta can = close.getItemMeta();
-        can.displayName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
+        can.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
         close.setItemMeta(can);
         heads[53] = close;
 

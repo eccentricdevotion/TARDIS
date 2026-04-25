@@ -37,7 +37,7 @@ public class ChemistryBlockRecipes {
         for (RecipeData data : ChemistryBlock.RECIPES.values()) {
             ItemStack is = ItemStack.of(data.displayItem().getMaterial(), 1);
             ItemMeta im = is.getItemMeta();
-            im.displayName(ComponentUtils.toWhite(data.displayName()));
+            im.customName(ComponentUtils.toWhite(data.displayName()));
             im.lore(data.lore());
             im.setItemModel(data.displayItem().getCustomModel());
             im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, data.displayItem().getCustomModel().getKey());

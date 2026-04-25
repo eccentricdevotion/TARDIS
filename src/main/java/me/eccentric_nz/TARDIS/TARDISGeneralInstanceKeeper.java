@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.listeners.TARDISRenderRoomListener;
 import me.eccentric_nz.TARDIS.move.DoorListener;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
+import me.eccentric_nz.TARDIS.planets.TARDISWorldResolver;
 import me.eccentric_nz.TARDIS.rooms.CondenserData;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -241,7 +241,7 @@ public class TARDISGeneralInstanceKeeper {
         if (plugin.getConfig().isConfigurationSection("rechargers")) {
             Set<String> therechargers = plugin.getConfig().getConfigurationSection("rechargers").getKeys(false);
             therechargers.forEach((s) -> {
-                World w = TARDISAliasResolver.getWorldFromAlias(plugin.getConfig().getString("rechargers." + s + ".world"));
+                World w = TARDISWorldResolver.getFromString(plugin.getConfig().getString("rechargers." + s + ".world"));
                 if (w != null) {
                     int x = plugin.getConfig().getInt("rechargers." + s + ".x");
                     int y = plugin.getConfig().getInt("rechargers." + s + ".y");

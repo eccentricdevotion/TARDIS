@@ -56,6 +56,7 @@ import org.bukkit.util.Vector;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.UUID;
 
 public class SonicDock {
@@ -154,7 +155,7 @@ public class SonicDock {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_WHILE_MAT");
                         return display;
                     }
-                    if (!plugin.getConfig().getBoolean("travel.include_default_world") && plugin.getConfig().getBoolean("creation.default_world") && destination.getWorld().getName().equals(plugin.getConfig().getString("creation.default_world_name"))) {
+                    if (!plugin.getConfig().getBoolean("travel.include_default_world") && plugin.getConfig().getBoolean("creation.default_world") && destination.getWorld().getKey().getKey().equals(plugin.getConfig().getString("creation.default_world_name", "tardis_timevortex").toLowerCase(Locale.ROOT))) {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_WORLD_TRAVEL");
                         return display;
                     }
@@ -173,7 +174,7 @@ public class SonicDock {
                         return display;
                     }
                     // check the world is not excluded
-                    String world = destination.getWorld().getName();
+                    String world = destination.getWorld().getKey().getKey();
                     if (!plugin.getPlanetsConfig().getBoolean("planets." + world + ".time_travel")) {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PB_IN_WORLD");
                         return display;
@@ -223,7 +224,7 @@ public class SonicDock {
                         HashMap<String, Object> tid = new HashMap<>();
                         tid.put("tardis_id", id);
                         HashMap<String, Object> set = new HashMap<>();
-                        set.put("world", destination.getWorld().getName());
+                        set.put("world", destination.getWorld().getKey().asString());
                         set.put("x", destination.getBlockX());
                         set.put("y", destination.getBlockY());
                         set.put("z", destination.getBlockZ());
@@ -325,7 +326,7 @@ public class SonicDock {
         ItemMeta im = dock.getItemMeta();
         im.setItemModel(model);
         if (setDisplay) {
-            im.displayName(ComponentUtils.toWhite("Sonic Dock"));
+            im.customName(ComponentUtils.toWhite("Sonic Dock"));
         }
         dock.setItemMeta(im);
         frame.setItem(dock);

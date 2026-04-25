@@ -34,7 +34,6 @@ import me.eccentric_nz.TARDIS.desktop.WallFloorRunnable;
 import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.flight.TARDISTakeoff;
 import me.eccentric_nz.TARDIS.move.TARDISTeleportLocation;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
 import me.eccentric_nz.TARDIS.travel.TravelCostAndType;
@@ -43,7 +42,6 @@ import me.eccentric_nz.tardisweepingangels.equip.Equipper;
 import me.eccentric_nz.tardisweepingangels.equip.MonsterEquipment;
 import me.eccentric_nz.tardisweepingangels.equip.RemoveEquipment;
 import me.eccentric_nz.tardisweepingangels.monsters.daleks.DalekEquipment;
-import me.eccentric_nz.tardisweepingangels.monsters.empty_child.EmptyChildEquipment;
 import me.eccentric_nz.tardisweepingangels.monsters.headless_monks.HeadlessMonkEquipment;
 import me.eccentric_nz.tardisweepingangels.monsters.k9.K9Equipment;
 import me.eccentric_nz.tardisweepingangels.monsters.silent.SilentEquipment;
@@ -163,7 +161,7 @@ public class TARDII implements TardisAPI {
             String chameleon = tardis.getPreset().toString();
             String door = "Closed";
             for (Map.Entry<Location, TARDISTeleportLocation> map : TARDIS.plugin.getTrackerKeeper().getPortals().entrySet()) {
-                if (!map.getKey().getWorld().getName().contains("TARDIS") && !map.getValue().isAbandoned()) {
+                if (!map.getKey().getWorld().getKey().getKey().contains("tardis") && !map.getValue().isAbandoned()) {
                     if (id == map.getValue().getTardisId()) {
                         door = "Open";
                         break;
@@ -240,13 +238,9 @@ public class TARDII implements TardisAPI {
     public List<String> getWorlds() {
         List<String> worlds = new ArrayList<>();
         Bukkit.getWorlds().forEach((w) -> {
-            String name = w.getName();
+            String name = w.getKey().getKey();
             if (TARDIS.plugin.getPlanetsConfig().getBoolean("planets." + name + ".time_travel")) {
-                if (!TARDIS.plugin.getPlanetsConfig().getBoolean("planets." + name + ".enabled") && TARDIS.plugin.getWorldManager() == WorldManager.MULTIVERSE) {
-                    worlds.add(TARDIS.plugin.getMVHelper().getAlias(name));
-                } else {
-                    worlds.add(TARDISAliasResolver.getWorldAlias(name));
-                }
+                worlds.add(name);
             }
         });
         return worlds;
@@ -256,13 +250,9 @@ public class TARDII implements TardisAPI {
     public List<String> getOverWorlds() {
         List<String> worlds = new ArrayList<>();
         Bukkit.getWorlds().forEach((w) -> {
-            String name = w.getName();
+            String name = w.getKey().getKey();
             if (TARDIS.plugin.getPlanetsConfig().getBoolean("planets." + name + ".time_travel") && w.getEnvironment() != Environment.NETHER && w.getEnvironment() != Environment.THE_END) {
-                if (!TARDIS.plugin.getPlanetsConfig().getBoolean("planets." + name + ".enabled") && TARDIS.plugin.getWorldManager() == WorldManager.MULTIVERSE) {
-                    worlds.add(TARDIS.plugin.getMVHelper().getAlias(name));
-                } else {
-                    worlds.add(TARDISAliasResolver.getWorldAlias(name));
-                }
+                worlds.add(name);
             }
         });
         return worlds;
@@ -505,7 +495,7 @@ public class TARDII implements TardisAPI {
             ItemMeta im = is.getItemMeta();
             im.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING, model.getKey());
             // set display name
-            im.displayName(ComponentUtils.toGold("TARDIS Seed Block"));
+            im.customName(ComponentUtils.toGold("TARDIS Seed Block"));
             List<Component> lore = new ArrayList<>();
             lore.add(Component.text(schematic));
             lore.add(Component.text("Walls: ORANGE_WOOL"));
@@ -587,7 +577,7 @@ public class TARDII implements TardisAPI {
                 PersistentDataContainer pdc = im.getPersistentDataContainer();
                 pdc.set(TARDIS.plugin.getTimeLordUuidKey(), TARDIS.plugin.getPersistentDataTypeUUID(), player.getUniqueId());
                 pdc.set(TARDIS.plugin.getBlueprintKey(), PersistentDataType.STRING, perm);
-                im.displayName(ComponentUtils.toWhite("TARDIS Blueprint Disk"));
+                im.customName(ComponentUtils.toWhite("TARDIS Blueprint Disk"));
                 List<Component> lore = List.of(
                         Component.text(TARDISStringUtils.capitalise(item)),
                         Component.text("Valid only for"),
@@ -621,7 +611,7 @@ public class TARDII implements TardisAPI {
             HashMap<String, Object> where = new HashMap<>();
             where.put("tardis_id", id);
             HashMap<String, Object> set = new HashMap<>();
-            set.put("world", location.getWorld().getName());
+            set.put("world", location.getWorld().getKey().asString());
             set.put("x", location.getBlockX());
             set.put("y", location.getBlockY());
             set.put("z", location.getBlockZ());
@@ -889,9 +879,6 @@ public class TARDII implements TardisAPI {
     @Override
     public void setEmptyChildEquipment(LivingEntity le, boolean disguise) {
         new Equipper(Monster.EMPTY_CHILD, le, disguise).setHelmetAndInvisibility();
-        if (!disguise) {
-            EmptyChildEquipment.setSpeed(le);
-        }
     }
 
     @Override

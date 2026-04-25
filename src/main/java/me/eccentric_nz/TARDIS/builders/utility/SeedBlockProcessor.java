@@ -31,8 +31,8 @@ import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.planets.TARDISSpace;
+import me.eccentric_nz.TARDIS.planets.TARDISWorldResolver;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -95,7 +95,7 @@ public class SeedBlockProcessor {
                 if (plugin.getConfig().getBoolean("creation.check_for_home")) {
                     // check it is not another Time Lords home location
                     HashMap<String, Object> where = new HashMap<>();
-                    where.put("world", location.getWorld().getName());
+                    where.put("world", location.getWorld().getKey().asString());
                     where.put("x", location.getBlockX());
                     where.put("y", location.getBlockY());
                     where.put("z", location.getBlockZ());
@@ -143,8 +143,8 @@ public class SeedBlockProcessor {
                     Chunk chunk = location.getChunk();
                     // check config to see whether we are using a default world to store TARDISes
                     if (plugin.getConfig().getBoolean("creation.default_world")) {
-                        cw = plugin.getConfig().getString("creation.default_world_name");
-                        chunkworld = TARDISAliasResolver.getWorldFromAlias(cw);
+                        cw = plugin.getConfig().getString("creation.default_world_name", "tardis_timevortex");
+                        chunkworld = TARDISWorldResolver.getFromString(cw);
                         if (chunkworld == null) {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "TARDIS_WORLD_NOT_LOADED");
                             return false;
@@ -152,7 +152,7 @@ public class SeedBlockProcessor {
                         tips = true;
                     } else {
                         chunkworld = chunk.getWorld();
-                        cw = chunkworld.getName();
+                        cw = chunkworld.getKey().asString();
                     }
                     // get this chunk co-ords
                     cx = chunk.getX();
@@ -224,7 +224,7 @@ public class SeedBlockProcessor {
                 // populate home, current, next and back tables
                 HashMap<String, Object> setlocs = new HashMap<>();
                 setlocs.put("tardis_id", lastInsertId);
-                setlocs.put("world", location.getWorld().getName());
+                setlocs.put("world", location.getWorld().getKey().asString());
                 setlocs.put("x", location.getBlockX());
                 setlocs.put("y", location.getBlockY());
                 setlocs.put("z", location.getBlockZ());
@@ -292,7 +292,7 @@ public class SeedBlockProcessor {
                 ResultSetCurrentFromId rscl = new ResultSetCurrentFromId(plugin, rs.getTardisId());
                 if (rscl.resultSet()) {
                     Current current = rscl.getCurrent();
-                    plugin.getMessenger().send(player, TardisModule.TARDIS, "TARDIS_HAVE", current.location().getWorld().getName() + " at x:" + current.location().getBlockX() + " y:" + current.location().getBlockY() + " z:" + current.location().getBlockZ());
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "TARDIS_HAVE", current.location().getWorld().getKey().getKey() + " at x:" + current.location().getBlockX() + " y:" + current.location().getBlockY() + " z:" + current.location().getBlockZ());
                 } else {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "HAVE_TARDIS");
                 }

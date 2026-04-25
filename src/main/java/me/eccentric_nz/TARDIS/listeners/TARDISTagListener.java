@@ -25,7 +25,7 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
@@ -105,7 +105,7 @@ public class TARDISTagListener implements Listener {
      * @param event a player right-clicking another player
      */
     @EventHandler(ignoreCancelled = true)
-    public void onTagPlayerInteractTagPlayer(PlayerInteractEntityEvent event) {
+    public void onTagPlayerInteractTagPlayer(PlayerInteractAtEntityEvent event) {
         if (event.getRightClicked() instanceof Player clicked && eggcal.after(plugin.getBeforeCal()) && eggcal.before(plugin.getAfterCal())) {
             String p = clicked.getName();
             if (clicked.getName().equals(plugin.getTagConfig().getString("it"))) {

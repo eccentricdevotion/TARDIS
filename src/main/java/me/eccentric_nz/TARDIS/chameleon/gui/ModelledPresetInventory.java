@@ -78,7 +78,7 @@ public class ModelledPresetInventory implements InventoryHolder {
                 String dye = underscored.toUpperCase(Locale.ROOT) + "_DYE";
                 ItemStack is = ItemStack.of(Material.valueOf(dye), 1);
                 ItemMeta im = is.getItemMeta();
-                im.displayName(Component.text(s + " Police Box"));
+                im.customName(Component.text(s + " Police Box"));
                 switch (s) {
                     case "Blue" -> im.setItemModel(ChameleonVariant.BLUE_CLOSED.getKey());
                     case "White" -> im.setItemModel(ChameleonVariant.WHITE_CLOSED.getKey());
@@ -106,7 +106,7 @@ public class ModelledPresetInventory implements InventoryHolder {
         if (TARDISPermission.hasPermission(player, "tardis.preset.police_box_tennant")) {
             ItemStack david = ItemStack.of(Material.CYAN_STAINED_GLASS_PANE, 1);
             ItemMeta tennant = david.getItemMeta();
-            tennant.displayName(Component.text("Tennant Era Police Box"));
+            tennant.customName(Component.text("Tennant Era Police Box"));
             tennant.setItemModel(ChameleonVariant.TENNANT_CLOSED.getKey());
             david.setItemMeta(tennant);
             boxes[i] = david;
@@ -116,7 +116,7 @@ public class ModelledPresetInventory implements InventoryHolder {
         if (TARDISPermission.hasPermission(player, "tardis.preset.weeping_angel")) {
             ItemStack is = ItemStack.of(Material.GRAY_STAINED_GLASS_PANE, 1);
             ItemMeta im = is.getItemMeta();
-            im.displayName(Component.text("Weeping Angel"));
+            im.customName(Component.text("Weeping Angel"));
             im.setItemModel(ChameleonVariant.WEEPING_ANGEL_CLOSED.getKey());
             is.setItemMeta(im);
             boxes[i] = is;
@@ -126,7 +126,7 @@ public class ModelledPresetInventory implements InventoryHolder {
         if (TARDISPermission.hasPermission(player, "tardis.preset.pandorica")) {
             ItemStack pan = ItemStack.of(Material.ENDER_PEARL, 1);
             ItemMeta ica = pan.getItemMeta();
-            ica.displayName(Component.text("Pandorica"));
+            ica.customName(Component.text("Pandorica"));
             ica.setItemModel(ChameleonVariant.PANDORICA_CLOSED.getKey());
             pan.setItemMeta(ica);
             boxes[i] = pan;
@@ -136,7 +136,7 @@ public class ModelledPresetInventory implements InventoryHolder {
         if (TARDISPermission.hasPermission(player, "tardis.preset.sidrat")) {
             ItemStack sid = ItemStack.of(Material.GREEN_STAINED_GLASS_PANE, 1);
             ItemMeta rat = sid.getItemMeta();
-            rat.displayName(Component.text("SIDRAT"));
+            rat.customName(Component.text("SIDRAT"));
             rat.setItemModel(ChameleonVariant.SIDRAT_CLOSED.getKey());
             sid.setItemMeta(rat);
             boxes[i] = sid;
@@ -146,7 +146,7 @@ public class ModelledPresetInventory implements InventoryHolder {
         if (TARDISPermission.hasPermission(player, "tardis.preset.battle")) {
             ItemStack bat = ItemStack.of(Material.RED_STAINED_GLASS_PANE, 1);
             ItemMeta tle = bat.getItemMeta();
-            tle.displayName(Component.text("Battle TARDIS"));
+            tle.customName(Component.text("Battle TARDIS"));
             tle.setItemModel(ChameleonVariant.BATTLE_CLOSED.getKey());
             bat.setItemMeta(tle);
             boxes[i] = bat;
@@ -155,7 +155,7 @@ public class ModelledPresetInventory implements InventoryHolder {
         if (TARDISPermission.hasPermission(player, "tardis.preset.police_box_tinted")) {
             ItemStack any = ItemStack.of(Material.LEATHER_HORSE_ARMOR, 1);
             ItemMeta colour = any.getItemMeta();
-            colour.displayName(Component.text("Pick a colour Police Box"));
+            colour.customName(Component.text("Pick a colour Police Box"));
             colour.setItemModel(ColouredVariant.TINTED_CLOSED.getKey());
             any.setItemMeta(colour);
             boxes[i] = any;
@@ -167,7 +167,7 @@ public class ModelledPresetInventory implements InventoryHolder {
                     Material cm = Material.valueOf(plugin.getCustomModelConfig().getString("models." + custom + ".item"));
                     ItemStack cis = ItemStack.of(cm);
                     ItemMeta cim = cis.getItemMeta();
-                    cim.displayName(Component.text(custom));
+                    cim.customName(Component.text(custom));
                     String key = TARDISStringUtils.toUnderscoredLowercase(custom);
                     cim.setItemModel(new NamespacedKey(plugin, key + "_closed"));
                     cis.setItemMeta(cim);
@@ -181,25 +181,25 @@ public class ModelledPresetInventory implements InventoryHolder {
         // custom page
         ItemStack custom = ItemStack.of(GUIChameleonPresets.CUSTOM.material(), 1);
         ItemMeta customMeta = custom.getItemMeta();
-        customMeta.displayName(Component.text("Custom presets"));
+        customMeta.customName(Component.text("Custom presets"));
         custom.setItemMeta(customMeta);
         boxes[GUIChameleonPresets.CUSTOM.slot()] = custom;
         // page one
         ItemStack page = ItemStack.of(GUIChameleonPoliceBoxes.GO_TO_PAGE_1.material(), 1);
         ItemMeta one = page.getItemMeta();
-        one.displayName(Component.text(plugin.getLanguage().getString("BUTTON_PAGE_1")));
+        one.customName(Component.text(plugin.getLanguage().getString("BUTTON_PAGE_1")));
         page.setItemMeta(one);
         boxes[GUIChameleonPoliceBoxes.GO_TO_PAGE_1.slot()] = page;
         // back
         ItemStack back = ItemStack.of(GUIChameleonPoliceBoxes.BACK.material(), 1);
         ItemMeta but = back.getItemMeta();
-        but.displayName(Component.text("Back"));
+        but.customName(Component.text("Back"));
         back.setItemMeta(but);
         boxes[GUIChameleonPoliceBoxes.BACK.slot()] = back;
         // Cancel / close
         ItemStack close = ItemStack.of(GUIChameleonPoliceBoxes.CLOSE.material(), 1);
         ItemMeta can = close.getItemMeta();
-        can.displayName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
+        can.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
         close.setItemMeta(can);
         boxes[GUIChameleonPoliceBoxes.CLOSE.slot()] = close;
         return boxes;

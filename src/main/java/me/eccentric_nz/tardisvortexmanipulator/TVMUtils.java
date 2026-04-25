@@ -76,7 +76,7 @@ public class TVMUtils {
      */
     public static void sendSaveList(Player p, TVMResultSetSaves rss, int page) {
         TARDIS.plugin.getMessenger().sendWithColour(p, TardisModule.VORTEX_MANIPULATOR, "Saves (page " + page + ":", "#55FFFF");
-        rss.getSaves().forEach((s) -> p.sendMessage(s.getName() + " - " + s.getWorld() + ":" + s.getX() + ":" + s.getY() + ":" + s.getZ()));
+        rss.getSaves().forEach((s) -> TARDIS.plugin.getMessenger().message(p, s.getName() + " - " + s.getWorld() + ":" + s.getX() + ":" + s.getY() + ":" + s.getZ()));
     }
 
     /**
@@ -106,7 +106,7 @@ public class TVMUtils {
         TARDIS.plugin.getMessenger().sendWithColour(p, TardisModule.VORTEX_MANIPULATOR, "Outbox (page " + page + "):", "#55FFFF");
         rso.getMail().forEach((m) -> {
             int len = Math.min(m.getMessage().length(), 12);
-            p.sendMessage(m.getId() + " - " + m.getDate() + " - " + m.getMessage().substring(0, len));
+            TARDIS.plugin.getMessenger().message(p, m.getId() + " - " + m.getDate() + " - " + m.getMessage().substring(0, len));
         });
     }
 
@@ -118,7 +118,7 @@ public class TVMUtils {
      */
     public static void readMessage(Player p, TVMMessage m) {
         TARDIS.plugin.getMessenger().sendWithColour(p, TardisModule.VORTEX_MANIPULATOR, Bukkit.getOfflinePlayer(m.getWho()).getName() + " - " + m.getDate(), "#55FFFF");
-        p.sendMessage(m.getMessage());
+        TARDIS.plugin.getMessenger().message(p, m.getMessage());
     }
 
     /**

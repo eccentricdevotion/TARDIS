@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.artron.ArtronFurnaceParticle;
 import me.eccentric_nz.TARDIS.artron.ArtronPoweredRunnable;
 import me.eccentric_nz.TARDIS.artron.StandbyMode;
+import me.eccentric_nz.TARDIS.blueprints.trader.TraderRunnable;
 import me.eccentric_nz.TARDIS.console.ControlMonitor;
 import me.eccentric_nz.TARDIS.control.ControlRunnable;
 import me.eccentric_nz.TARDIS.desktop.DesktopPreview;
@@ -99,9 +100,13 @@ public class TARDISRunnables {
             long delay = plugin.getConfig().getLong("junk.return") * 20;
             plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new JunkReturnRunnable(plugin), delay, delay);
         }
+        // spawn time lord traders
+        if (plugin.getConfig().getBoolean("modules.blueprints")) {
+            plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new TraderRunnable(plugin), 600, 2400);
+        }
         // update control menu signs
         plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new ControlRunnable(plugin), 200, 200);
-        // update modelled console screens
+        // update modeled console screens
         plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new ControlMonitor(plugin), 300, 200);
         // check TARDIS advancements
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {

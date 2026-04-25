@@ -107,7 +107,7 @@ public class TARDISGeneralPrefsListener extends TARDISMenuListener {
             close(player);
             return;
         }
-        if (slot == GUIPlayerPreferences.FORCE_FIELD.getSlot() && ComponentUtils.stripColour(im.displayName()).equals("Force Field")) {
+        if (slot == GUIPlayerPreferences.FORCE_FIELD.getSlot() && ComponentUtils.stripColour(im.customName()).equals("Force Field")) {
             // toggle force field on / off
             if (TARDISPermission.hasPermission(player, "tardis.forcefield")) {
                 // check they have upgrade
@@ -146,7 +146,7 @@ public class TARDISGeneralPrefsListener extends TARDISMenuListener {
         boolean bool = (ComponentUtils.stripColour(lore.getFirst()).equals(plugin.getLanguage().getString("SET_ON", "ON")));
         String value = (bool) ? plugin.getLanguage().getString("SET_OFF", "OFF") : plugin.getLanguage().getString("SET_ON", "ON");
         int b = (bool) ? 0 : 1;
-        String which = ComponentUtils.stripColour(im.displayName());
+        String which = ComponentUtils.stripColour(im.customName());
         // get tardis record
         Tardis tardis = null;
         HashMap<String, Object> wherep = new HashMap<>();
@@ -264,11 +264,11 @@ public class TARDISGeneralPrefsListener extends TARDISMenuListener {
                 HashMap<String, Object> set = new HashMap<>();
                 HashMap<String, Object> where = new HashMap<>();
                 where.put("uuid", uuid.toString());
-                if (ComponentUtils.stripColour(im.displayName()).equals("HADS Type")) {
+                if (ComponentUtils.stripColour(im.customName()).equals("HADS Type")) {
                     value = (ComponentUtils.stripColour(lore.getFirst()).equals("DISPLACEMENT")) ? "DISPERSAL" : "DISPLACEMENT";
                     set.put("hads_type", value);
                 } else {
-                    set.put(lookup.get(ComponentUtils.stripColour(im.displayName())), b);
+                    set.put(lookup.get(ComponentUtils.stripColour(im.customName())), b);
                 }
                 plugin.getQueryFactory().doUpdate("player_prefs", set, where);
             }
@@ -280,7 +280,7 @@ public class TARDISGeneralPrefsListener extends TARDISMenuListener {
         component.setFloats(value.equals(plugin.getLanguage().getString("SET_ON", "ON")) ? gui.getOnFloats() : gui.getOffFloats());
         im.setCustomModelDataComponent(component);
         is.setItemMeta(im);
-        if (ComponentUtils.stripColour(im.displayName()).equals("Beacon")) {
+        if (ComponentUtils.stripColour(im.customName()).equals("Beacon")) {
             // get tardis id
             ResultSetTardisID rsi = new ResultSetTardisID(plugin);
             if (rsi.fromUUID(uuid.toString())) {

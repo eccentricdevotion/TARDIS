@@ -48,13 +48,13 @@ public class AcidBatteryRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.NETHER_BRICK, 1);
         ItemMeta im = is.getItemMeta();
-        im.displayName(ComponentUtils.toWhite("Acid Battery"));
+        im.customName(ComponentUtils.toWhite("Acid Battery"));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "acid_battery");
         ShapedRecipe r = new ShapedRecipe(key, is);
         ItemStack exact = ItemStack.of(Material.WATER_BUCKET, 1);
         ItemMeta em = exact.getItemMeta();
-        em.displayName(ComponentUtils.toWhite("Acid Bucket"));
+        em.customName(ComponentUtils.toWhite("Acid Bucket"));
         exact.setItemMeta(em);
         if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             r.shape(" A ", "ARA", " A ");

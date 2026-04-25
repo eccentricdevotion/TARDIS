@@ -68,7 +68,7 @@ public class ConsoleCustomRecipe {
                     ItemStack is = ItemStack.of(material, 1);
                     ItemMeta im = is.getItemMeta();
                     String dn = TARDISStringUtils.capitalise(console) + " Console";
-                    im.displayName(ComponentUtils.toWhite(dn));
+                    im.customName(ComponentUtils.toWhite(dn));
                     im.lore(List.of(Component.text("Integration with interaction")));
                     String pdc = "console_" + console;
                     im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, pdc);

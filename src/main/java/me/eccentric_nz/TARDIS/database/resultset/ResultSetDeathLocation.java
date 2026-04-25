@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.database.resultset;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
+import me.eccentric_nz.TARDIS.planets.TARDISWorldResolver;
 import org.bukkit.World;
 
 import java.sql.Connection;
@@ -76,7 +76,7 @@ public class ResultSetDeathLocation {
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
                 rs.next();
-                world = TARDISAliasResolver.getWorldFromAlias(rs.getString("world"));
+                world = TARDISWorldResolver.getFromString(rs.getString("world"));
                 if (world == null) {
                     return false;
                 }

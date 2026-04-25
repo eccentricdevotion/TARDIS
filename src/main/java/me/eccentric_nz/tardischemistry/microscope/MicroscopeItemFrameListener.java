@@ -96,7 +96,7 @@ public class MicroscopeItemFrameListener implements Listener {
                     ItemStack slide = ItemStack.of(Material.GLASS, 1);
                     ItemMeta slideMeta = slide.getItemMeta();
                     String[] split = key.split("/");
-                    slideMeta.displayName(Component.text(TARDISStringUtils.sentenceCase(split[1])));
+                    slideMeta.customName(Component.text(TARDISStringUtils.sentenceCase(split[1])));
                     slideMeta.setItemModel(new NamespacedKey(plugin, key));
                     slide.setItemMeta(slideMeta);
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.getInventory().setItemInMainHand(slide), 1L);
@@ -127,7 +127,7 @@ public class MicroscopeItemFrameListener implements Listener {
                     ItemStack screen = ItemStack.of(Material.LIME_STAINED_GLASS, 1);
                     ItemMeta screenMeta = screen.getItemMeta();
                     String[] split = key.split("/");
-                    screenMeta.displayName(Component.text(TARDISStringUtils.sentenceCase(split[1])));
+                    screenMeta.customName(Component.text(TARDISStringUtils.sentenceCase(split[1])));
                     screenMeta.setItemModel(new NamespacedKey(plugin, key));
                     screen.setItemMeta(screenMeta);
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.getInventory().setItemInMainHand(screen), 1L);
@@ -158,7 +158,7 @@ public class MicroscopeItemFrameListener implements Listener {
                     ItemStack helmet = ItemStack.of(Material.GRAY_STAINED_GLASS, 1);
                     ItemMeta helmetMeta = helmet.getItemMeta();
                     String[] split = key.split("/");
-                    helmetMeta.displayName(Component.text(TARDISStringUtils.sentenceCase(split[1])));
+                    helmetMeta.customName(Component.text(TARDISStringUtils.sentenceCase(split[1])));
                     helmetMeta.setItemModel(new NamespacedKey(plugin, key));
                     helmet.setItemMeta(helmetMeta);
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.getInventory().setItemInMainHand(helmet), 1L);

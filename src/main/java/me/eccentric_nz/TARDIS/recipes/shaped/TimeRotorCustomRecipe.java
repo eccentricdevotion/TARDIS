@@ -56,7 +56,7 @@ public class TimeRotorCustomRecipe {
                 ItemStack is = ItemStack.of(Material.LIGHT_GRAY_DYE, 1);
                 ItemMeta im = is.getItemMeta();
                 String dn = TARDISStringUtils.capitalise(r);
-                im.displayName(ComponentUtils.toWhite("Time Rotor " + dn));
+                im.customName(ComponentUtils.toWhite("Time Rotor " + dn));
                 im.setItemModel(new NamespacedKey(plugin, "time_rotor_" + r + "_off"));
                 is.setItemMeta(im);
                 NamespacedKey key = new NamespacedKey(plugin, "time_rotor_" + r);

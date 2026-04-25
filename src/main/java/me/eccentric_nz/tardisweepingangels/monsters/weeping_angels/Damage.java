@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.utils.MonsterTargetListener;
+import net.kyori.adventure.key.Key;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -52,7 +53,7 @@ public class Damage implements Listener {
         this.plugin = plugin;
         mat = Material.valueOf(plugin.getMonstersConfig().getString("angels.weapon"));
         plugin.getMonstersConfig().getStringList("angels.teleport_worlds").forEach((w) -> {
-            World world = plugin.getServer().getWorld(w);
+            World world = plugin.getServer().getWorld(Key.key(w));
             if (world != null) {
                 angel_tp_worlds.add(world);
             }
@@ -133,7 +134,8 @@ public class Damage implements Listener {
         List<String> locations = plugin.getMonstersConfig().getStringList("angels.teleport_locations");
         String l = locations.get(TARDISConstants.RANDOM.nextInt(locations.size()));
         String[] split = l.split(",");
-        World w = plugin.getServer().getWorld(split[0]);
+        Key key = Key.key(split[0]);
+        World w = plugin.getServer().getWorld(key);
         // use the middle of the block
         double x = TARDISNumberParsers.parseDouble(split[1]) + 0.5d;
         double z = TARDISNumberParsers.parseDouble(split[3]) + 0.5d;
@@ -148,7 +150,7 @@ public class Damage implements Listener {
             if (stack != null) {
                 if (stack.hasItemMeta()) {
                     ItemMeta im = stack.getItemMeta();
-                    if (im.hasDisplayName() && ComponentUtils.endsWith(im.displayName(), "TARDIS Key")) {
+                    if (im.hasCustomName() && ComponentUtils.endsWith(im.customName(), "TARDIS Key")) {
                         int amount = stack.getAmount();
                         if (amount > 1) {
                             stack.setAmount(amount - 1);

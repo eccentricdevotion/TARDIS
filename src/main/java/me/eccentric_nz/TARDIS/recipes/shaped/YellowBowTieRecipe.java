@@ -53,7 +53,7 @@ public class YellowBowTieRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.LEATHER_HELMET, 1);
         ItemMeta im = is.getItemMeta();
-        im.displayName(ComponentUtils.toWhite("Yellow Bow Tie"));
+        im.customName(ComponentUtils.toWhite("Yellow Bow Tie"));
         im.lore(List.of(Component.text("Bow ties are cool!")));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "yellow_bow_tie");

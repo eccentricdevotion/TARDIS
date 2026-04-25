@@ -51,7 +51,7 @@ public class TVCharactersInventory extends TVGUI {
                 SkinUtils.getHeadProfile(character).thenAccept(playerProfile -> {
                     is.setData(DataComponentTypes.PROFILE, ResolvableProfile.resolvableProfile(playerProfile));
                     im.setPlayerProfile(playerProfile);
-                    im.displayName(Component.text(character.name()));
+                    im.customName(Component.text(character.name()));
                     is.setItemMeta(im);
                     // cache the item stack
                     PlayerHeadCache.CHARACTERS.add(is);

@@ -80,7 +80,7 @@ public class SiegeListener implements Listener {
         }
         ItemMeta im = is.getItemMeta();
         if (im != null) {
-            return (im.hasDisplayName() && ComponentUtils.endsWith(im.displayName(), "Siege Cube")) || (im.hasItemModel() && Whoniverse.SIEGE_CUBE.getKey().equals(im.getItemModel()));
+            return (im.hasCustomName() && ComponentUtils.endsWith(im.customName(), "Siege Cube")) || (im.hasItemModel() && Whoniverse.SIEGE_CUBE.getKey().equals(im.getItemModel()));
         }
         return false;
     }
@@ -105,7 +105,7 @@ public class SiegeListener implements Listener {
         }
         // check location
         HashMap<String, Object> where = new HashMap<>();
-        where.put("world", b.getWorld().getName());
+        where.put("world", b.getWorld().getKey().asString());
         where.put("x", b.getX());
         where.put("y", b.getY());
         where.put("z", b.getZ());
@@ -144,7 +144,7 @@ public class SiegeListener implements Listener {
         String tl = tardis.getOwner();
         ItemStack is = ItemStack.of(TARDISBlockDisplayItem.SIEGE_CUBE.getMaterial(), 1);
         ItemMeta im = is.getItemMeta();
-        im.displayName(ComponentUtils.toWhite("TARDIS Siege Cube"));
+        im.customName(ComponentUtils.toWhite("TARDIS Siege Cube"));
         im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, TARDISBlockDisplayItem.SIEGE_CUBE.getCustomModel().getKey());
         List<Component> lore = new ArrayList<>();
         lore.add(Component.text("Time Lord: " + tl));
@@ -195,7 +195,7 @@ public class SiegeListener implements Listener {
             plugin.getMessenger().send(p, TardisModule.TARDIS, "SIEGE_NO_TARDIS");
             return;
         }
-        if (!plugin.getPlanetsConfig().getBoolean("planets." + p.getLocation().getWorld().getName() + ".time_travel")) {
+        if (!plugin.getPlanetsConfig().getBoolean("planets." + p.getLocation().getWorld().getKey().getKey() + ".time_travel")) {
             event.setCancelled(true);
             plugin.getMessenger().send(p, TardisModule.TARDIS, "SIEGE_NO_WORLD");
             return;
@@ -229,7 +229,7 @@ public class SiegeListener implements Listener {
             HashMap<String, Object> where = new HashMap<>();
             where.put("tardis_id", id);
             HashMap<String, Object> set = new HashMap<>();
-            set.put("world", loc.getWorld().getName());
+            set.put("world", loc.getWorld().getKey().asString());
             set.put("x", loc.getBlockX());
             set.put("y", loc.getBlockY());
             set.put("z", loc.getBlockZ());
@@ -256,7 +256,7 @@ public class SiegeListener implements Listener {
             plugin.getMessenger().send(p, TardisModule.TARDIS, "SIEGE_NO_TARDIS");
             return;
         }
-        String w = p.getLocation().getWorld().getName();
+        String w = p.getLocation().getWorld().getKey().getKey();
         if (!plugin.getPlanetsConfig().getBoolean("planets." + w + ".time_travel")) {
             event.setCancelled(true);
             plugin.getMessenger().send(p, TardisModule.TARDIS, "SIEGE_NO_WORLD");
@@ -281,7 +281,7 @@ public class SiegeListener implements Listener {
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
         HashMap<String, Object> set = new HashMap<>();
-        set.put("world", loc.getWorld().getName());
+        set.put("world", loc.getWorld().getKey().asString());
         set.put("x", loc.getBlockX());
         set.put("y", loc.getBlockY());
         set.put("z", loc.getBlockZ());
@@ -313,7 +313,7 @@ public class SiegeListener implements Listener {
         UUID uuid = p.getUniqueId();
         // check location
         HashMap<String, Object> wherec = new HashMap<>();
-        wherec.put("world", b.getWorld().getName());
+        wherec.put("world", b.getWorld().getKey().asString());
         wherec.put("x", b.getX());
         wherec.put("y", b.getY());
         wherec.put("z", b.getZ());
@@ -416,6 +416,6 @@ public class SiegeListener implements Listener {
     }
 
     private boolean hasSiegeCubeName(ItemStack is) {
-        return (is.hasItemMeta() && is.getItemMeta().hasDisplayName() && ComponentUtils.endsWith(is.getItemMeta().displayName(), "Siege Cube"));
+        return (is.hasItemMeta() && is.getItemMeta().hasCustomName() && ComponentUtils.endsWith(is.getItemMeta().customName(), "Siege Cube"));
     }
 }

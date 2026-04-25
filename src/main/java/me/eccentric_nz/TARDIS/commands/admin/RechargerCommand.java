@@ -61,7 +61,7 @@ public class RechargerCommand {
             return;
         }
         Location l = b.getLocation();
-        plugin.getConfig().set("rechargers." + name + ".world", l.getWorld().getName());
+        plugin.getConfig().set("rechargers." + name + ".world", l.getWorld().getKey().getKey());
         plugin.getConfig().set("rechargers." + name + ".x", l.getBlockX());
         plugin.getConfig().set("rechargers." + name + ".y", l.getBlockY());
         plugin.getConfig().set("rechargers." + name + ".z", l.getBlockZ());

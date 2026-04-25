@@ -30,12 +30,16 @@ import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.WorldManager;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
+import net.kyori.adventure.key.Key;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 import java.io.File;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * The Daleks were a warlike race who waged war across whole civilisations and races all over the universe. Advance and
@@ -107,7 +111,7 @@ public class Exterminator {
                     plugin.debug("The server could not find the TARDIS world, has it been deleted?");
                     return false;
                 }
-                if (!cw.getName().toUpperCase(Locale.ROOT).contains("TARDIS_WORLD_")) {
+                if (!cw.getKey().getKey().contains("tardis_world_")) {
                     plugin.getInteriorDestroyer().destroyInner(schm, id, cw, tips);
                 }
                 cleanWorlds(cw, owner);
@@ -179,7 +183,7 @@ public class Exterminator {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "WORLD_DELETED");
                 return;
             }
-            if (!cw.getName().toUpperCase(Locale.ROOT).contains("TARDIS_WORLD_")) {
+            if (!cw.getKey().getKey().contains("tardis_world_")) {
                 plugin.getInteriorDestroyer().destroyInner(schm, id, cw, tips);
             }
             cleanHashMaps(id);
@@ -242,8 +246,8 @@ public class Exterminator {
             plugin.getWorldGuardUtils().removeRoomRegion(w, owner, "renderer");
         }
         // unload and remove the world if it's a `TARDIS_WORLD_` world
-        if (w.getName().toUpperCase(Locale.ROOT).contains("TARDIS_WORLD_")) {
-            String name = w.getName();
+        if (w.getKey().getKey().contains("tardis_world_")) {
+            String name = w.getKey().getKey();
             List<Player> players = w.getPlayers();
             Location spawn = plugin.getServer().getWorlds().getFirst().getSpawnLocation();
             players.forEach((p) -> {
@@ -258,7 +262,7 @@ public class Exterminator {
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "wb " + name + " clear");
             }
             plugin.getServer().unloadWorld(w, true);
-            File world_folder = new File(plugin.getServer().getWorldContainer() + File.separator + name + File.separator);
+            File world_folder = new File(plugin.getServer().getLevelDirectory() + File.separator + "dimensions" + File.separator + "minecraft" + File.separator + name + File.separator);
             if (!deleteFolder(world_folder)) {
                 plugin.debug("Could not delete world <" + name + ">");
             }
@@ -269,7 +273,7 @@ public class Exterminator {
         if (slot != -1000001 && plugin.getConfig().getBoolean("allow.zero_room") && hasZero) {
             TARDISInteriorPostioning tips = new TARDISInteriorPostioning(plugin);
             TIPSData coords = tips.getTIPSData(slot);
-            World w = plugin.getServer().getWorld("TARDIS_Zero_Room");
+            World w = plugin.getServer().getWorld(Key.key("tardis_zero_room"));
             if (w != null) {
                 tips.reclaimZeroChunk(w, coords);
             }

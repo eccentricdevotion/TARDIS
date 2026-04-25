@@ -38,7 +38,7 @@ public class VortexManipulatorTransfer {
 
     public VortexManipulatorTransfer(TARDIS plugin) {
         this.plugin = plugin;
-        basePath = this.plugin.getServer().getWorldContainer() + File.separator + "plugins" + File.separator + "TARDISVortexManipulator" + File.separator;
+        basePath = this.plugin.getServer().getLevelDirectory() + File.separator + "plugins" + File.separator + "TARDISVortexManipulator" + File.separator;
         prefix = this.plugin.getPrefix();
         vm_prefix = getVMPrefix();
     }

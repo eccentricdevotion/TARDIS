@@ -49,7 +49,7 @@ public class VillagerCuredListener implements Listener {
         }
         Entity entity = event.getTransformedEntity();
         World world = entity.getWorld();
-        if (!plugin.getMonstersConfig().getBoolean("ood.worlds." + world.getName())) {
+        if (!plugin.getMonstersConfig().getBoolean("ood.worlds." + world.getKey().getKey())) {
             return;
         }
         if (TARDISConstants.RANDOM.nextInt(100) < plugin.getMonstersConfig().getInt("ood.spawn_from_cured")) {

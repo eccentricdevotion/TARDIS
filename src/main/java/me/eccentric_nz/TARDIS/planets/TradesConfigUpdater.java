@@ -37,9 +37,18 @@ public class TradesConfigUpdater {
         for (BlueprintRoom bpr : BlueprintRoom.values()) {
             if (bpr != BlueprintRoom.JETTISON && !tradesConfig.contains("rooms." + bpr)) {
                 tradesConfig.set("rooms." + bpr + ".material", roomsConfig.get("rooms." + bpr + ".seed"));
-                tradesConfig.set("rooms." + bpr + ".amount", roomsConfig.getInt("rooms." + bpr + ".cost") / 20);
+                tradesConfig.set("rooms." + bpr + ".amount", Math.min(roomsConfig.getInt("rooms." + bpr + ".cost") / 20, 128));
                 i++;
             }
+        }
+        if (tradesConfig.getString("rooms.APIARY.material").equals("BEE_HIVE") || tradesConfig.getString("rooms.APIARY.material").equals("BEE_NEST")) {
+            tradesConfig.set("rooms.APIARY.material", "BEEHIVE");
+            i++;
+        }
+        // maximum trade is 128 blocks
+        if (tradesConfig.getInt("rooms.OBSERVATORY.amount") == 197) {
+            tradesConfig.set("rooms.OBSERVATORY.amount", 128);
+            i++;
         }
         if (i > 0) {
             try {

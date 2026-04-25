@@ -28,6 +28,8 @@ import me.eccentric_nz.TARDIS.artron.ArtronCondenserListener;
 import me.eccentric_nz.TARDIS.artron.ArtronFurnaceListener;
 import me.eccentric_nz.TARDIS.artron.BucketListener;
 import me.eccentric_nz.TARDIS.autonomous.AutonomousGUIListener;
+import me.eccentric_nz.TARDIS.blueprints.trader.MerchantListener;
+import me.eccentric_nz.TARDIS.blueprints.trader.TimeLordTradeListener;
 import me.eccentric_nz.TARDIS.camera.DismountListener;
 import me.eccentric_nz.TARDIS.chameleon.construct.ChameleonConstructorListener;
 import me.eccentric_nz.TARDIS.chameleon.construct.ChameleonConstructorOpenCloseListener;
@@ -135,6 +137,7 @@ import me.eccentric_nz.tardischemistry.product.GlowStickListener;
 import me.eccentric_nz.tardischemistry.product.ProductGUIListener;
 import me.eccentric_nz.tardischemistry.product.SparklerListener;
 import me.eccentric_nz.tardischemistry.reducer.ReducerGUIListener;
+import net.kyori.adventure.key.Key;
 import org.bukkit.World;
 
 /**
@@ -182,6 +185,8 @@ class TARDISListenerRegisterer {
         plugin.getPM().registerEvents(new ARSMapListener(plugin), plugin);
         if (plugin.getConfig().getBoolean("modules.blueprints")) {
             plugin.getPM().registerEvents(new ArchitecturalBlueprintsListener(plugin), plugin);
+            plugin.getPM().registerEvents(new TimeLordTradeListener(plugin), plugin);
+            plugin.getPM().registerEvents(new MerchantListener(plugin), plugin);
         }
         if (plugin.getConfig().getBoolean("allow.autonomous")) {
             plugin.getPM().registerEvents(new AutonomousGUIListener(plugin), plugin);
@@ -394,7 +399,7 @@ class TARDISListenerRegisterer {
                 plugin.getPM().registerEvents(new TARDISTelosSpawnListener(plugin), plugin);
             }
             // set world time to twilight
-            World telos = plugin.getServer().getWorld("telos");
+            World telos = plugin.getServer().getWorld(Key.key("telos"));
             if (telos!= null) {
                 telos.setTime(13000L);
             }

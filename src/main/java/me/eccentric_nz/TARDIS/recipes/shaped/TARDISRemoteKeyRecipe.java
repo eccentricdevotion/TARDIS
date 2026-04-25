@@ -59,7 +59,7 @@ public class TARDISRemoteKeyRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.OMINOUS_TRIAL_KEY, 1);
         ItemMeta im = is.getItemMeta();
-        im.displayName(ComponentUtils.toWhite("TARDIS Remote Key"));
+        im.customName(ComponentUtils.toWhite("TARDIS Remote Key"));
         im.lore(List.of(Component.text("Deadlock & unlock"), Component.text("Hide & rebuild")));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "tardis_remote_key");
@@ -71,7 +71,7 @@ public class TARDISRemoteKeyRecipe {
         if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             ItemStack exact = ItemStack.of(Material.GLOWSTONE_DUST, 1);
             ItemMeta em = exact.getItemMeta();
-            em.displayName(ComponentUtils.toWhite("TARDIS Materialisation Circuit"));
+            em.customName(ComponentUtils.toWhite("TARDIS Materialisation Circuit"));
             CustomModelDataComponent component = em.getCustomModelDataComponent();
             component.setFloats(CircuitVariant.MATERIALISATION.getFloats());
             em.setCustomModelDataComponent(component);

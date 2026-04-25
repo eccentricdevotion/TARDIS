@@ -77,7 +77,7 @@ public class UpgradeCommand {
         // it must be their own TARDIS
         boolean own;
         Location pl = player.getLocation();
-        String current_world = pl.getWorld().getName();
+        String current_world = pl.getWorld().getKey().getKey();
         String[] split = tardis.getChunk().split(":");
         if (plugin.getConfig().getBoolean("creation.default_world")) {
             if (plugin.getConfig().getBoolean("creation.create_worlds_with_perms") && TARDISPermission.hasPermission(player, "tardis.create_world")) {

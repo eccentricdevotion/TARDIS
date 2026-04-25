@@ -64,7 +64,7 @@ public class FloodgateDesktopArchiveForm {
             builder.title("TARDIS Archive");
             for (ItemStack is : rs.getButtons()) {
                 ItemMeta im = is.getItemMeta();
-                builder.button(ComponentUtils.stripColour(im.displayName()), FormImage.Type.PATH, String.format(path, FloodgateColouredBlocks.IMAGES.get(i)));
+                builder.button(ComponentUtils.stripColour(im.customName()), FormImage.Type.PATH, String.format(path, FloodgateColouredBlocks.IMAGES.get(i)));
                 i++;
             }
         }

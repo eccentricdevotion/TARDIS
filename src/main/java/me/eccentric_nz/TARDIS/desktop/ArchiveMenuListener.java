@@ -115,7 +115,7 @@ public class ArchiveMenuListener extends TARDISMenuListener {
                     UUID uuid = p.getUniqueId();
                     UpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(uuid);
                     ItemMeta im = template.getItemMeta();
-                    String dn = ComponentUtils.stripColour(im.displayName());
+                    String dn = ComponentUtils.stripColour(im.customName());
                     String size = dn.toLowerCase(Locale.ROOT);
                     int upgrade = plugin.getArtronConfig().getInt("upgrades.template." + size);
                     if (tud.getLevel() >= upgrade) {
@@ -155,7 +155,7 @@ public class ArchiveMenuListener extends TARDISMenuListener {
                         }
                     }
                     if (tud.getLevel() >= upgrade) {
-                        new ArchiveUpdate(plugin, uuid.toString(), ComponentUtils.stripColour(im.displayName())).setInUse();
+                        new ArchiveUpdate(plugin, uuid.toString(), ComponentUtils.stripColour(im.customName())).setInUse();
                         tud.setSchematic(schm);
                         tud.setWall("ORANGE_WOOL");
                         tud.setFloor("LIGHT_GRAY_WOOL");

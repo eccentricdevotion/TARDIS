@@ -47,38 +47,38 @@ public class CommandsLister {
      */
     public void listTARDISCommands(CommandSender sender) {
         int i = 0;
-        sender.sendMessage("<table>");
-        sender.sendMessage("<tr><th>Sub command</th><th>Description</th><th>Usage</th><th>Permission</th></tr>");
+        plugin.getMessenger().message(sender, "<table>");
+        plugin.getMessenger().message(sender, "<tr><th>Sub command</th><th>Description</th><th>Usage</th><th>Permission</th></tr>");
         for (TardisCommand tc : TardisCommand.values()) {
             String lighter = (i % 2 == 1) ? " class=\"lighter\"" : "";
             if (plugin.getGeneralKeeper().getPluginYAML().contains("commands.tardis." + tc)) {
                 String perm = plugin.getGeneralKeeper().getPluginYAML().getString("commands.tardis." + tc + ".permission");
-                sender.sendMessage("<tr" + lighter + "><td id=\"" + tc + "\"><code>" + tc
+                plugin.getMessenger().message(sender, "<tr" + lighter + "><td id=\"" + tc + "\"><code>" + tc
                         + "</code></td><td>" + plugin.getGeneralKeeper().getPluginYAML().getString("commands.tardis." + tc + ".description")
                         + "</td><td class=\"usage\"><code>" + plugin.getGeneralKeeper().getPluginYAML().getString("commands.tardis." + tc + ".usage").replace("/<command>", "/tardis").replace("<", "&lt;").replace(">", "&gt;")
                         + "</code></td><td>" + (perm == null ? "none" : perm)
                         + "</td></tr>");
             } else if (tc == TardisCommand.colorize) {
-                sender.sendMessage("<tr><td id=\"" + tc + "\"><code>" + tc + "</code></td><td colspan=\"3\">Alias to the <a href=\"#colourise\"><code>colourise</code></a> sub command.</td></tr>");
+                plugin.getMessenger().message(sender, "<tr><td id=\"" + tc + "\"><code>" + tc + "</code></td><td colspan=\"3\">Alias to the <a href=\"#colourise\"><code>colourise</code></a> sub command.</td></tr>");
             } else if (tc == TardisCommand.set_home) {
-                sender.sendMessage("<tr><td id=\"" + tc + "\"><code>" + tc + "</code></td><td colspan=\"3\">Alias to the <a href=\"#home\"><code>home</code></a> sub command.</td></tr>");
+                plugin.getMessenger().message(sender, "<tr><td id=\"" + tc + "\"><code>" + tc + "</code></td><td colspan=\"3\">Alias to the <a href=\"#home\"><code>home</code></a> sub command.</td></tr>");
             } else if (tc == TardisCommand.theme || tc == TardisCommand.upgrade) {
-                sender.sendMessage("<tr><td id=\"" + tc + "\"><code>" + tc + "</code></td><td colspan=\"3\">Alias to the <a href=\"#desktop\"><code>desktop</code></a> sub command.</td></tr>");
+                plugin.getMessenger().message(sender, "<tr><td id=\"" + tc + "\"><code>" + tc + "</code></td><td colspan=\"3\">Alias to the <a href=\"#desktop\"><code>desktop</code></a> sub command.</td></tr>");
             } else {
-                sender.sendMessage("<tr><td colspan=\"4\">********</td></tr>");
-                sender.sendMessage("<tr><td colspan=\"4\">plugin.yml does not contain an entry for " + tc + "!</td></tr>");
-                sender.sendMessage("<tr><td colspan=\"4\">********</td></tr>");
+                plugin.getMessenger().message(sender, "<tr><td colspan=\"4\">********</td></tr>");
+                plugin.getMessenger().message(sender, "<tr><td colspan=\"4\">plugin.yml does not contain an entry for " + tc + "!</td></tr>");
+                plugin.getMessenger().message(sender, "<tr><td colspan=\"4\">********</td></tr>");
             }
             i++;
         }
-        sender.sendMessage("</table>");
+        plugin.getMessenger().message(sender, "</table>");
     }
 
     public void listOtherTARDISCommands(CommandSender sender) {
         int i = 0;
         Set<String> commands = plugin.getGeneralKeeper().getPluginYAML().getConfigurationSection("commands").getKeys(false);
-        sender.sendMessage("<table>");
-        sender.sendMessage("<tr><th>Command</th><th>Aliases</th><th>Description</th><th>Permission</th></tr>");
+        plugin.getMessenger().message(sender, "<table>");
+        plugin.getMessenger().message(sender, "<tr><th>Command</th><th>Aliases</th><th>Description</th><th>Permission</th></tr>");
         for (String c : commands) {
             if (!c.equals("tardis")) {
                 String lighter = (i % 2 == 1) ? " class=\"lighter\"" : "";
@@ -88,29 +88,29 @@ public class CommandsLister {
                 if (size <= 0) {
                     size = 2;
                 }
-                sender.sendMessage("<tr" + lighter + "><td rowspan=\"" + size + "\" id=\"" + c + "\"><strong>" + c + "</strong></td>");
+                plugin.getMessenger().message(sender, "<tr" + lighter + "><td rowspan=\"" + size + "\" id=\"" + c + "\"><strong>" + c + "</strong></td>");
                 for (String k : keys) {
                     switch (k) {
-                        case "aliases" -> sender.sendMessage("<td><code>" + plugin.getGeneralKeeper().getPluginYAML().getString("commands." + c + ".aliases") + "</code></td>");
-                        case "description" -> sender.sendMessage("<td>" + plugin.getGeneralKeeper().getPluginYAML().getString("commands." + c + ".description") + "</td>");
-                        case "permission" -> sender.sendMessage("<td>" + (perm == null ? "none" : perm) + "</td></tr>");
+                        case "aliases" -> plugin.getMessenger().message(sender, "<td><code>" + plugin.getGeneralKeeper().getPluginYAML().getString("commands." + c + ".aliases") + "</code></td>");
+                        case "description" -> plugin.getMessenger().message(sender, "<td>" + plugin.getGeneralKeeper().getPluginYAML().getString("commands." + c + ".description") + "</td>");
+                        case "permission" -> plugin.getMessenger().message(sender, "<td>" + (perm == null ? "none" : perm) + "</td></tr>");
                         case "permission-message" -> {
                             // do nothing
                         }
-                        case "usage" -> sender.sendMessage("<tr" + lighter + "><td colspan=\"3\" class=\"usage\"><code>" + plugin.getGeneralKeeper().getPluginYAML().getString("commands." + c + ".usage").replace("/<command>", "/" + c).replace("<", "&lt;").replace(">", "&gt;") + "</code></td></tr>");
+                        case "usage" -> plugin.getMessenger().message(sender, "<tr" + lighter + "><td colspan=\"3\" class=\"usage\"><code>" + plugin.getGeneralKeeper().getPluginYAML().getString("commands." + c + ".usage").replace("/<command>", "/" + c).replace("<", "&lt;").replace(">", "&gt;") + "</code></td></tr>");
                         default -> {
                             String subperm = plugin.getGeneralKeeper().getPluginYAML().getString("commands." + c + "." + k + ".permission");
                             // get sub commands
-                            sender.sendMessage("<tr" + lighter + "><td rowspan=\"2\"><code>" + c + " " + k + "</code></td>");
-                            sender.sendMessage("<td>" + plugin.getGeneralKeeper().getPluginYAML().getString("commands." + c + "." + k + ".description") + "</td>");
-                            sender.sendMessage("<td>" + (subperm == null ? perm : subperm) + "</td></tr>");
-                            sender.sendMessage("<tr" + lighter + "><td colspan=\"2\" class=\"usage\"><code>" + plugin.getGeneralKeeper().getPluginYAML().getString("commands." + c + "." + k + ".usage").replace("/<command>", "/" + c).replace("<", "&lt;").replace(">", "&gt;") + "</code></td></tr>");
+                            plugin.getMessenger().message(sender, "<tr" + lighter + "><td rowspan=\"2\"><code>" + c + " " + k + "</code></td>");
+                            plugin.getMessenger().message(sender, "<td>" + plugin.getGeneralKeeper().getPluginYAML().getString("commands." + c + "." + k + ".description") + "</td>");
+                            plugin.getMessenger().message(sender, "<td>" + (subperm == null ? perm : subperm) + "</td></tr>");
+                            plugin.getMessenger().message(sender, "<tr" + lighter + "><td colspan=\"2\" class=\"usage\"><code>" + plugin.getGeneralKeeper().getPluginYAML().getString("commands." + c + "." + k + ".usage").replace("/<command>", "/" + c).replace("<", "&lt;").replace(">", "&gt;") + "</code></td></tr>");
                         }
                     }
                 }
                 i++;
             }
         }
-        sender.sendMessage("</table>");
+        plugin.getMessenger().message(sender, "</table>");
     }
 }

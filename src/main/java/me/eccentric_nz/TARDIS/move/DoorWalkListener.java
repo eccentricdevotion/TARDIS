@@ -97,7 +97,7 @@ public class DoorWalkListener extends DoorListener implements Listener {
                     UUID playerUUID = player.getUniqueId();
                     World playerWorld = player.getLocation().getWorld();
                     Location block_loc = block.getLocation();
-                    String bw = block_loc.getWorld().getName();
+                    String bw = block_loc.getWorld().getKey().getKey();
                     int bx = block_loc.getBlockX();
                     int by = block_loc.getBlockY();
                     int bz = block_loc.getBlockZ();
@@ -448,7 +448,7 @@ public class DoorWalkListener extends DoorListener implements Listener {
                                             if (plugin.getConfig().getBoolean("allow.mob_farming") && TARDISPermission.hasPermission(player, "tardis.farm") && !plugin.getTrackerKeeper().getFarming().contains(playerUUID) && willFarm) {
                                                 plugin.getTrackerKeeper().getFarming().add(playerUUID);
                                                 TARDISFarmer tf = new TARDISFarmer(plugin);
-                                                petsAndFollowers = tf.farmAnimals(block_loc, d, id, player.getPlayer(), tardis_loc.getWorld().getName(), playerWorld.getName());
+                                                petsAndFollowers = tf.farmAnimals(block_loc, d, id, player.getPlayer(), tardis_loc.getWorld().getKey().getKey(), playerWorld.getKey().getKey());
                                             }
                                             // if WorldGuard is on the server check for TARDIS region protection and add admin as member
                                             if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard") && TARDISPermission.hasPermission(player, "tardis.skeletonkey")) {

@@ -25,7 +25,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.files.TARDISBlockLoader;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
+import me.eccentric_nz.TARDIS.planets.TARDISWorldResolver;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
@@ -54,7 +54,10 @@ public class DeleteTARDISCommand {
     public static void cleanDatabase(int id) {
         TARDISBlockLoader bl = new TARDISBlockLoader(TARDIS.plugin);
         bl.unloadProtectedBlocks(id);
-        List<String> tables = List.of("ars", "back", "chunks", "controls", "current", "destinations", "doors", "gravity_well", "homes", "junk", "lamps", "next", "tardis", "thevoid", "travellers", "vaults");
+        List<String> tables = List.of(
+                "ars", "back", "chunks", "controls", "current", "destinations", "doors", "gravity_well",
+                "homes", "junk", "lamps", "next", "tardis", "thevoid", "travellers", "vaults"
+        );
         // remove record from database tables
         tables.forEach((table) -> {
             HashMap<String, Object> where = new HashMap<>();
@@ -65,10 +68,9 @@ public class DeleteTARDISCommand {
 
     public void deleteTARDIS(CommandSender sender, Player player, int abandoned) {
         HashMap<String, Object> where = new HashMap<>();
-            // Look up this player's UUID
+        // look up this player's UUID
         UUID uuid = player.getUniqueId();
-            where.put("uuid", uuid.toString());
-
+        where.put("uuid", uuid.toString());
         where.put("abandoned", abandoned);
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (rs.resultSet()) {
@@ -92,17 +94,6 @@ public class DeleteTARDISCommand {
         }
     }
 
-    public void deleteJunk(CommandSender sender) {
-        HashMap<String, Object> where = new HashMap<>();
-        where.put("uuid", "00000000-aaaa-bbbb-cccc-000000000000");
-        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
-        if (rs.resultSet()) {
-            process(rs.getTardis(), sender, null);
-        } else {
-            plugin.getMessenger().send(sender, TardisModule.TARDIS, "PLAYER_NOT_FOUND_DB", "junk");
-        }
-    }
-
     private void process(Tardis tardis, CommandSender sender, Player player) {
         int id = tardis.getTardisId();
         int tips = tardis.getTIPS();
@@ -111,7 +102,7 @@ public class DeleteTARDISCommand {
         boolean hidden = tardis.isHidden();
         String[] cdata = chunkLoc.split(":");
         String wname = cdata[0];
-        World cw = TARDISAliasResolver.getWorldFromAlias(wname);
+        World cw = TARDISWorldResolver.getFromString(wname);
         if (cw == null) {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "WORLD_DELETED");
             return;
@@ -157,7 +148,7 @@ public class DeleteTARDISCommand {
                     plugin.getServer().dispatchCommand(plugin.getConsole(), "mv remove " + wname);
                 }
                 plugin.getServer().unloadWorld(cw, true);
-                File world_folder = new File(plugin.getServer().getWorldContainer() + File.separator + wname + File.separator);
+                File world_folder = new File(plugin.getServer().getLevelDirectory() + File.separator + "dimensions" + File.separator + "minecraft" + File.separator + wname + File.separator);
                 if (!deleteFolder(world_folder)) {
                     plugin.debug("Could not delete world <" + wname + ">");
                 }

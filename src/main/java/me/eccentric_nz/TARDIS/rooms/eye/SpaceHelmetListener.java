@@ -24,10 +24,10 @@ public class SpaceHelmetListener implements Listener {
             return false;
         }
         ItemMeta im = helmet.getItemMeta();
-        if (!im.hasDisplayName() || !im.hasMaxStackSize()) {
+        if (!im.hasCustomName() || !im.hasMaxStackSize()) {
             return false;
         }
-        return ComponentUtils.endsWith(im.displayName(), "TARDIS Space Helmet") && im.getMaxStackSize() == 1;
+        return ComponentUtils.endsWith(im.customName(), "TARDIS Space Helmet") && im.getMaxStackSize() == 1;
     }
 
     @EventHandler(priority = EventPriority.MONITOR)

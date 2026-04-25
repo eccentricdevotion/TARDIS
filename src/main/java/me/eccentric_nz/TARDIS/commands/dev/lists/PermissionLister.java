@@ -40,7 +40,7 @@ public class PermissionLister {
             String perm = perms.get(i);
             if (perm.contains(".") && notThese(perm)) {
                 if (!lastPerm.contains(perm)) {
-                    sender.sendMessage(perm);
+                    plugin.getMessenger().message(sender, perm);
                     lastPerm = perm;
                 }
             }
@@ -85,7 +85,7 @@ public class PermissionLister {
         }
         Collections.reverse(lines);
         for (String l : lines) {
-            sender.sendMessage(l);
+            plugin.getMessenger().message(sender, l);
         }
     }
 

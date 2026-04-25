@@ -119,7 +119,7 @@ public class SudoUpdate {
                             // reinstate display name
                             ItemStack glass = itemFrame.getItem();
                             ItemMeta im = glass.getItemMeta();
-                            im.displayName(ComponentUtils.toWhite("Monitor Frame"));
+                            im.customName(ComponentUtils.toWhite("Monitor Frame"));
                             glass.setItemMeta(im);
                         }
                         default -> {

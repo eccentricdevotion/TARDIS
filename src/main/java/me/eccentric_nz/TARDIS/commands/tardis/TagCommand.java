@@ -42,9 +42,9 @@ public class TagCommand {
         plugin.getMessenger().message(player, TardisModule.TARDIS,  "Here are the stats:");
         String who = (!plugin.getTagConfig().getString("it").isEmpty()) ? plugin.getTagConfig().getString("it") : "No one";
         plugin.getMessenger().sendWithColours(player, who + " is currently the ", "#FFFFFF", "'OOD'", "#FF0000");
-        player.sendMessage("-----------");
+        plugin.getMessenger().message(player, "-----------");
         plugin.getMessenger().messageWithColour(player, "Top 5 OODs", "#FFAA00");
-        player.sendMessage("-----------");
+        plugin.getMessenger().message(player, "-----------");
         if (rs.resultSet()) {
             ArrayList<HashMap<String, String>> data = rs.getData();
             data.forEach((map) -> {
@@ -53,9 +53,9 @@ public class TagCommand {
                 plugin.getMessenger().sendWithColours(player, p + ": ", "#FFFFFF", getHoursMinutesSeconds(t), "#55FF55");
             });
         } else {
-            player.sendMessage("The are no stats yet :(");
+            plugin.getMessenger().message(player, "The are no stats yet :(");
         }
-        player.sendMessage("-----------");
+        plugin.getMessenger().message(player, "-----------");
     }
 
     private String getHoursMinutesSeconds(long millis) {

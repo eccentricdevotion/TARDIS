@@ -20,7 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
+import me.eccentric_nz.TARDIS.planets.TARDISWorldResolver;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import net.kyori.adventure.text.Component;
 import org.bukkit.World;
@@ -79,7 +79,7 @@ public class CompanionGUIListener extends TARDISMenuListener {
     }
 
     public static void removeFromRegion(String world, String owner, UUID uuid) {
-        World w = TARDISAliasResolver.getWorldFromAlias(world);
+        World w = TARDISWorldResolver.getFromString(world);
         if (w != null) {
             TARDIS.plugin.getWorldGuardUtils().removeMemberFromRegion(w, owner, uuid);
         }

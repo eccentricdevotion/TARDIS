@@ -50,7 +50,7 @@ class FileCabinetInventory implements InventoryHolder {
         for (ScopeView view : ScopeView.values()) {
             ItemStack is = ItemStack.of(Material.GRAY_STAINED_GLASS, 1);
             ItemMeta im = is.getItemMeta();
-            im.displayName(Component.text(view.getName()));
+            im.customName(Component.text(view.getName()));
             im.setItemModel(ChemistryEquipment.FOLDER.getKey());
             im.getPersistentDataContainer().set(plugin.getMicroscopeKey(), PersistentDataType.STRING, view.getModel().getKey());
             is.setItemMeta(im);
@@ -59,7 +59,7 @@ class FileCabinetInventory implements InventoryHolder {
         // Cancel / close
         ItemStack close = ItemStack.of(Material.BOWL, 1);
         ItemMeta can = close.getItemMeta();
-        can.displayName(Component.text("Close"));
+        can.customName(Component.text("Close"));
         can.setItemModel(GuiVariant.CLOSE.getKey());
         close.setItemMeta(can);
         stacks[53] = close;

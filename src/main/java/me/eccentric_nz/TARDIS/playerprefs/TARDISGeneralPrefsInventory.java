@@ -27,6 +27,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.HADS;
+import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Location;
@@ -130,9 +131,9 @@ public class TARDISGeneralPrefsInventory implements InventoryHolder {
             values.add(false); // 19
         }
         if (plugin.isWorldGuardOnServer()) {
-            String chunk = tardis != null ? rst.getTardis().getChunk() : "TARDIS_TimeVortex:1";
+            String chunk = tardis != null ? rst.getTardis().getChunk() : "minecraft:tardis_timevortex:1";
             String[] split = chunk.split(":");
-            World world = plugin.getServer().getWorld(split[0]);
+            World world = plugin.getServer().getWorld(Key.key(split[1]));
             values.add(!plugin.getWorldGuardUtils().queryContainers(world, player.getName())); // lock containers - 20
         } else {
             values.add(false); // 20
@@ -151,7 +152,7 @@ public class TARDISGeneralPrefsInventory implements InventoryHolder {
             if (pref.getMaterial() == Material.REPEATER) {
                 ItemStack is = ItemStack.of(pref.getMaterial(), 1);
                 ItemMeta im = is.getItemMeta();
-                im.displayName(Component.text(pref.getName()));
+                im.customName(Component.text(pref.getName()));
                 boolean v = values.get(pref.getSlot());
                 if (pref.getOffFloats() != null) {
                     CustomModelDataComponent component = im.getCustomModelDataComponent();
@@ -177,13 +178,13 @@ public class TARDISGeneralPrefsInventory implements InventoryHolder {
         // back
         ItemStack back = ItemStack.of(GUIChameleonPresets.BACK.material(), 1);
         ItemMeta but = back.getItemMeta();
-        but.displayName(Component.text("Back"));
+        but.customName(Component.text("Back"));
         back.setItemMeta(but);
         stack[33] = back;
         // close
         ItemStack close = ItemStack.of(GUIWeather.CLOSE.material(), 1);
         ItemMeta can = close.getItemMeta();
-        can.displayName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
+        can.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
         close.setItemMeta(can);
         stack[35] = close;
         return stack;

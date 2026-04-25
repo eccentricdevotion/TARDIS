@@ -20,11 +20,13 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.equip.Equipper;
-import me.eccentric_nz.tardisweepingangels.monsters.empty_child.EmptyChildEquipment;
 import me.eccentric_nz.tardisweepingangels.monsters.headless_monks.HeadlessFlameRunnable;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.entity.*;
+import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.Drowned;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Skeleton;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -58,19 +60,13 @@ public class ChunkListener implements Listener {
                 case Drowned drowned -> {
                     if (drowned.getEquipment().getHelmet() != null) {
                         ItemMeta im = drowned.getEquipment().getHelmet().getItemMeta();
-                        if (im != null && im.hasDisplayName() && ComponentUtils.endsWith(im.displayName(), " Head")) {
+                        if (im != null && im.hasCustomName() && ComponentUtils.endsWith(im.customName(), " Head")) {
                             if (pdc.has(TARDISWeepingAngels.DEVIL, PersistentDataType.INTEGER)) {
                                 new Equipper(Monster.SEA_DEVIL, drowned, false).setHelmetAndInvisibility();
                             } else {
                                 Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, drowned::remove, 2L);
                             }
                         }
-                    }
-                }
-                case Zombie zombie -> {
-                    if (pdc.has(TARDISWeepingAngels.EMPTY, PersistentDataType.INTEGER)) {
-                        new Equipper(Monster.EMPTY_CHILD, zombie, false).setHelmetAndInvisibility();
-                        EmptyChildEquipment.setSpeed(zombie);
                     }
                 }
                 case ArmorStand stand when (stand.getPersistentDataContainer().has(TARDISWeepingAngels.FLAME_TASK, PersistentDataType.INTEGER)) -> {
@@ -82,8 +78,7 @@ public class ChunkListener implements Listener {
                         pdc.set(TARDISWeepingAngels.FLAME_TASK, PersistentDataType.INTEGER, -1);
                     }
                 }
-                default -> {
-                }
+                default -> { }
             }
         }
     }

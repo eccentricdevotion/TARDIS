@@ -63,7 +63,7 @@ class TARDISHumInventory implements InventoryHolder {
         for (Hum hum : Hum.values()) {
             ItemStack is = ItemStack.of(Material.BOWL, 1);
             ItemMeta im = is.getItemMeta();
-            im.displayName(Component.text(hum.toString()));
+            im.customName(Component.text(hum.toString()));
             is.setItemMeta(im);
             options.add(is);
         }
@@ -79,14 +79,14 @@ class TARDISHumInventory implements InventoryHolder {
         // play / save
         ItemStack play = ItemStack.of(GUIInteriorSounds.ACTION.material(), 1);
         ItemMeta save = play.getItemMeta();
-        save.displayName(Component.text("Action"));
+        save.customName(Component.text("Action"));
         save.lore(List.of(Component.text("PLAY")));
         play.setItemMeta(save);
         stack[GUIInteriorSounds.ACTION.slot()] = play;
         // close
         ItemStack close = ItemStack.of(GUIInteriorSounds.CLOSE.material(), 1);
         ItemMeta c_im = close.getItemMeta();
-        c_im.displayName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
+        c_im.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
         close.setItemMeta(c_im);
         stack[GUIInteriorSounds.CLOSE.slot()] = close;
 

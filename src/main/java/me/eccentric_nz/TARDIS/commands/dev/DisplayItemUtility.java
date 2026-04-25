@@ -132,7 +132,7 @@ public class DisplayItemUtility {
             ItemMeta im = is.getItemMeta();
             im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, tdi.getCustomModel().getKey());
             im.setItemModel(tdi.getCustomModel());
-            im.displayName(Component.text(TARDISStringUtils.capitalise(item)));
+            im.customName(Component.text(TARDISStringUtils.capitalise(item)));
             is.setItemMeta(im);
             Block up = block.getRelative(BlockFace.UP);
             if (tdi.isClosedDoor() || tdi.isLight()) {

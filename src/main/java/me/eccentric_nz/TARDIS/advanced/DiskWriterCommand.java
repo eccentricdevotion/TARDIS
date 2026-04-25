@@ -59,7 +59,7 @@ public class DiskWriterCommand {
         if (makeAndSaveDisk) {
             is = ItemStack.of(Material.MUSIC_DISC_CHIRP, 1);
             ItemMeta im = is.getItemMeta();
-            im.displayName(Component.text("Save Storage Disk"));
+            im.customName(Component.text("Save Storage Disk"));
             im.lore(List.of(Component.text("Blank")));
             is.setItemMeta(im);
         } else {
@@ -67,7 +67,7 @@ public class DiskWriterCommand {
         }
         if (is.hasItemMeta()) {
             ItemMeta im = is.getItemMeta();
-            if (im.hasDisplayName() && ComponentUtils.endsWith(im.displayName(), "Save Storage Disk")) {
+            if (im.hasCustomName() && ComponentUtils.endsWith(im.customName(), "Save Storage Disk")) {
                 List<Component> lore = im.lore();
                 if (!ComponentUtils.stripColour(lore.getFirst()).equals("Blank")) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "DISK_ONLY_BLANK");
@@ -104,7 +104,7 @@ public class DiskWriterCommand {
                     }
                     Current current = rsc.getCurrent();
                     lore.set(0, Component.text(name));
-                    lore.add(1, Component.text(current.location().getWorld().getName()));
+                    lore.add(1, Component.text(current.location().getWorld().getKey().getKey()));
                     lore.add(2, Component.text(current.location().getBlockX()));
                     lore.add(3, Component.text(current.location().getBlockY()));
                     lore.add(4, Component.text(current.location().getBlockZ()));
@@ -185,7 +185,7 @@ public class DiskWriterCommand {
         ItemStack is = player.getInventory().getItemInMainHand();
         if (is.hasItemMeta()) {
             ItemMeta im = is.getItemMeta();
-            if (im.hasDisplayName() && ComponentUtils.endsWith(im.displayName(), "Player Storage Disk")) {
+            if (im.hasCustomName() && ComponentUtils.endsWith(im.customName(), "Player Storage Disk")) {
                 List<Component> lore = im.lore();
                 if (!ComponentUtils.stripColour(lore.getFirst()).equals("Blank")) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "DISK_ONLY_BLANK");
@@ -212,7 +212,7 @@ public class DiskWriterCommand {
 
     public void eraseDisk(Player player) {
         ItemStack is = player.getInventory().getItemInMainHand();
-        if (is.hasItemMeta() && disks.contains(ComponentUtils.stripColour(is.getItemMeta().displayName()))) {
+        if (is.hasItemMeta() && disks.contains(ComponentUtils.stripColour(is.getItemMeta().customName()))) {
             ItemMeta im = is.getItemMeta();
             im.lore(List.of(Component.text("Blank")));
             is.setItemMeta(im);
@@ -226,7 +226,7 @@ public class DiskWriterCommand {
         ItemStack is = player.getInventory().getItemInMainHand();
         if (is.hasItemMeta()) {
             ItemMeta im = is.getItemMeta();
-            if (im.hasDisplayName() && ComponentUtils.endsWith(im.displayName(), "Authorised Control Disk")
+            if (im.hasCustomName() && ComponentUtils.endsWith(im.customName(), "Authorised Control Disk")
                     && im.getPersistentDataContainer().has(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID())) {
                 ResultSetTardisID rs = new ResultSetTardisID(plugin);
                 if (!rs.fromUUID(player.getUniqueId().toString())) {

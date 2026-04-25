@@ -74,9 +74,9 @@ public class SchematicWandListener implements Listener {
             return false;
         }
         ItemMeta im = is.getItemMeta();
-        if (!im.hasDisplayName()) {
+        if (!im.hasCustomName()) {
             return false;
         }
-        return ComponentUtils.endsWith(im.displayName(), "TARDIS Schematic Wand");
+        return ComponentUtils.endsWith(im.customName(), "TARDIS Schematic Wand");
     }
 }

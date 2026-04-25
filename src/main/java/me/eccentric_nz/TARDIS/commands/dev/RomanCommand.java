@@ -32,7 +32,7 @@ public class RomanCommand {
             as.getPersistentDataContainer().set(TARDIS.plugin.getHeadBlockKey(), PersistentDataType.INTEGER, 1);
             ItemStack head = ItemStack.of(Material.CHISELED_QUARTZ_BLOCK, 1);
             ItemMeta headMeta = head.getItemMeta();
-            headMeta.displayName(Component.text(TARDISStringUtils.capitalise(which)));
+            headMeta.customName(Component.text(TARDISStringUtils.capitalise(which)));
             headMeta.setItemModel(new NamespacedKey(TARDIS.plugin, which));
             head.setItemMeta(headMeta);
             ArmourStandEquipment.setHelmetOnly(as, head);

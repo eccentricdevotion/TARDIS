@@ -29,7 +29,7 @@ import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 
 import java.util.HashMap;
 
@@ -45,7 +45,7 @@ public class TARDISDirectionFrameListener implements Listener {
     }
 
     @EventHandler(ignoreCancelled = true)
-    public void onDirectionFrameClick(PlayerInteractEntityEvent event) {
+    public void onDirectionFrameClick(PlayerInteractAtEntityEvent event) {
         if (event.getRightClicked() instanceof ItemFrame frame) {
             // check if it is a TARDIS direction item frame
             String l = frame.getLocation().toString();

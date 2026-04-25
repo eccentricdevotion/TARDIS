@@ -131,7 +131,7 @@ public class ChameleonListener extends TARDISMenuListener {
                 set.put("adapti_on", 0);
                 ItemStack frb = view.getItem(20);
                 ItemMeta fact = frb.getItemMeta();
-                Component ory = fact.displayName();
+                Component ory = fact.customName();
                 if (ory != null && ory.equals(Component.text(plugin.getLanguage().getString("SET_ON", "ON"), NamedTextColor.GREEN))) {
                     set.put("chameleon_preset", "FACTORY");
                     toggleOthers(ChameleonOption.FACTORY, view);
@@ -177,7 +177,7 @@ public class ChameleonListener extends TARDISMenuListener {
                 set.put("adapti_on", ca);
                 ItemStack arb = view.getItem(21);
                 ItemMeta bio = arb.getItemMeta();
-                bio.displayName(Component.text(a.toString(), a.getColour()));
+                bio.customName(Component.text(a.toString(), a.getColour()));
                 arb.setItemMeta(bio);
             }
             case 13 -> {
@@ -185,7 +185,7 @@ public class ChameleonListener extends TARDISMenuListener {
                 set.put("adapti_on", 0);
                 ItemStack irb = view.getItem(22);
                 ItemMeta invis = irb.getItemMeta();
-                Component ible = invis.displayName();
+                Component ible = invis.customName();
                 if (ible != null && ible.equals(Component.text(plugin.getLanguage().getString("SET_OFF", "OFF"), NamedTextColor.RED))) {
                     // check they have an Invisibility Circuit
                     CircuitChecker tcc = new CircuitChecker(plugin, id);
@@ -244,7 +244,7 @@ public class ChameleonListener extends TARDISMenuListener {
                             // set preset lore
                             ItemStack p = view.getItem(23);
                             ItemMeta pim = p.getItemMeta();
-                            pim.displayName(Component.text(which.toString(), NamedTextColor.GREEN));
+                            pim.customName(Component.text(which.toString(), NamedTextColor.GREEN));
                             p.setItemMeta(pim);
                             // remove button
                             view.setItem(3, null);
@@ -269,7 +269,7 @@ public class ChameleonListener extends TARDISMenuListener {
         // set preset lore
         ItemStack p = view.getItem(23);
         ItemMeta pim = p.getItemMeta();
-        pim.displayName(Component.text("POLICE_BOX_BLUE", NamedTextColor.GREEN));
+        pim.customName(Component.text("POLICE_BOX_BLUE", NamedTextColor.GREEN));
         p.setItemMeta(pim);
         TARDISStaticUtils.setSign(chameleon, 3, "POLICE_BOX_BLUE", player);
         plugin.getMessenger().sendInsertedColour(player, "CHAM_SET", "Blue Police Box", plugin);
@@ -288,7 +288,7 @@ public class ChameleonListener extends TARDISMenuListener {
                 onoff = Component.text(plugin.getLanguage().getString(co.getOn()), co.getOnColour());
                 m = Material.LIME_WOOL;
             }
-            im.displayName(onoff);
+            im.customName(onoff);
             ItemStack sub = ItemStack.of(m);
             sub.setItemMeta(im);
             view.setItem(co.getSlot(), sub);
@@ -305,7 +305,7 @@ public class ChameleonListener extends TARDISMenuListener {
         ItemStack adaption = view.getItem(21);
         ItemMeta im = adaption.getItemMeta();
         PlainTextComponentSerializer plainSerializer = PlainTextComponentSerializer.plainText();
-        String dn = plainSerializer.serialize(im.displayName());
+        String dn = plainSerializer.serialize(im.customName());
         return dn.equals("BIOME");
     }
 

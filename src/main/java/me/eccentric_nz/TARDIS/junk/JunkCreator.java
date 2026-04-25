@@ -26,7 +26,7 @@ import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.Desktops;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
+import me.eccentric_nz.TARDIS.planets.TARDISWorldResolver;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -67,7 +67,7 @@ public class JunkCreator {
         // get player's target block
         Location l = p.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 16).getLocation().add(0.0d, 1.0d, 0.0d);
         // save a tardis record
-        String cw = plugin.getConfig().getString("creation.default_world_name");
+        String cw = plugin.getConfig().getString("creation.default_world_name", "tardis_timevortex");
         HashMap<String, Object> set = new HashMap<>();
         set.put("uuid", "00000000-aaaa-bbbb-cccc-000000000000");
         set.put("owner", "junk");
@@ -97,11 +97,11 @@ public class JunkCreator {
             setpp.put("floor", "LIGHT_GRAY_WOOL");
             plugin.getQueryFactory().doInsert("player_prefs", setpp);
         }
-        World chunkworld = TARDISAliasResolver.getWorldFromAlias(cw);
+        World chunkworld = TARDISWorldResolver.getFromString(cw);
         // populate home, current, next and back tables
         HashMap<String, Object> setlocs = new HashMap<>();
         setlocs.put("tardis_id", lastInsertId);
-        setlocs.put("world", l.getWorld().getName());
+        setlocs.put("world", l.getWorld().getKey().asString());
         setlocs.put("x", l.getBlockX());
         setlocs.put("y", l.getBlockY());
         setlocs.put("z", l.getBlockZ());

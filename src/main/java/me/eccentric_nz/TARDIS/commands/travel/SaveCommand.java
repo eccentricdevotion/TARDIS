@@ -27,7 +27,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDestinations;
 import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
+import me.eccentric_nz.TARDIS.planets.TARDISWorldResolver;
 import me.eccentric_nz.TARDIS.travel.TARDISAreaCheck;
 import me.eccentric_nz.TARDIS.travel.TravelCostAndType;
 import me.eccentric_nz.TARDIS.upgrades.SystemTree;
@@ -78,9 +78,9 @@ public class SaveCommand {
                 int uses_left = tcc.getMaterialisationUses();
                 new CircuitDamager(plugin, DiskCircuit.MEMORY, uses_left, id, player).damage();
             }
-            World w = TARDISAliasResolver.getWorldFromAlias(rsd.getWorld());
+            World w = TARDISWorldResolver.getFromString(rsd.getWorld());
             if (w != null) {
-                if (w.getName().startsWith("TARDIS_")) {
+                if (w.getKey().getKey().startsWith("tardis_")) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "SAVE_NO_TARDIS");
                     return;
                 }

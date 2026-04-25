@@ -48,7 +48,7 @@ public class TARDISArtronFurnaceRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.FURNACE, 1);
         ItemMeta im = is.getItemMeta();
-        im.displayName(ComponentUtils.toWhite("TARDIS Artron Furnace"));
+        im.customName(ComponentUtils.toWhite("TARDIS Artron Furnace"));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "tardis_artron_furnace");
         ShapedRecipe r = new ShapedRecipe(key, is);

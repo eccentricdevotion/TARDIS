@@ -50,7 +50,7 @@ public class BreedingListener implements Listener {
             return;
         }
         Location l = ent.getLocation();
-        String w = l.getWorld().getName();
+        String w = l.getWorld().getKey().getKey();
         if (!plugin.getTrackerKeeper().getSiegeBreedingAreas().containsKey(w)) {
             return;
         }

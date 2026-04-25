@@ -61,7 +61,7 @@ public class TARDISInfoMenuButton {
         } else {
             plugin.getTrackerKeeper().getInfoMenu().put(player.getUniqueId(), TARDISInfoMenu.TIS);
             plugin.getMessenger().messageWithColour(player, "-----------TARDIS Information System-----------", "#FFAA00");
-            player.sendMessage(plugin.getLanguage().getString("TIS_INFO", "Type a white letter in chat, or click an info entry to proceed."));
+            plugin.getMessenger().message(player, plugin.getLanguage().getString("TIS_INFO", "Type a white letter in chat, or click an info entry to proceed."));
             plugin.getMessenger().sendInfo(player, "> TARDIS ", "M", "anual");
             plugin.getMessenger().sendInfo(player, "> ", "I", "tems");
             plugin.getMessenger().sendInfo(player, "> ", "C", "omponents");

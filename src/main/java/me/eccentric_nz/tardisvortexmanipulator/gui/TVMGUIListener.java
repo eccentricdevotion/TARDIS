@@ -13,6 +13,7 @@ import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import me.eccentric_nz.tardisvortexmanipulator.TVMUtils;
 import me.eccentric_nz.tardisvortexmanipulator.database.TVMQueryFactory;
+import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -291,8 +292,8 @@ public class TVMGUIListener extends TARDISMenuListener {
         ItemStack is = view.getItem(6);
         ItemMeta im = is.getItemMeta();
         for (World w : plugin.getServer().getWorlds()) {
-            String world = w.getName();
-            if (w.getName().toLowerCase(Locale.ROOT).startsWith(stub)) {
+            String world = w.getKey().getKey();
+            if (world.toLowerCase(Locale.ROOT).startsWith(stub)) {
                 im.lore(List.of(Component.text(world)));
                 is.setItemMeta(im);
                 break;
@@ -357,7 +358,7 @@ public class TVMGUIListener extends TARDISMenuListener {
         HashMap<String, Object> set = new HashMap<>();
         set.put("uuid", player.getUniqueId().toString());
         set.put("save_name", ComponentUtils.stripColour(lore.getFirst()));
-        set.put("world", l.getWorld().getName());
+        set.put("world", l.getWorld().getKey().asString());
         set.put("x", l.getX());
         set.put("y", l.getY());
         set.put("z", l.getZ());
@@ -420,11 +421,11 @@ public class TVMGUIListener extends TARDISMenuListener {
                         playernames.forEach((pn) -> buf.append(", ").append(pn));
                         message = " (" + buf.substring(2) + ")";
                     }
-                    player.sendMessage("    " + key + ": " + value + message);
+                    plugin.getMessenger().message(player, "    " + key + ": " + value + message);
                 });
                 scannedentities.clear();
             } else {
-                player.sendMessage("SCAN_NONE");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "SCAN_NONE");
             }
         } else {
             Player scanned = plugin.getServer().getPlayer(pname);
@@ -442,10 +443,10 @@ public class TVMGUIListener extends TARDISMenuListener {
             float hunger = (scanned.getFoodLevel() / 20F) * 100;
             int air = scanned.getRemainingAir();
             plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_LIFESIGNS", pname);
-            player.sendMessage("Has been alive for: " + TVMUtils.convertTicksToTime(scanned.getTicksLived()));
-            player.sendMessage("Health: " + String.format("%.1f", health / 2) + " hearts");
-            player.sendMessage("Hunger bar: " + String.format("%.2f", hunger) + "%");
-            player.sendMessage("Air: ~" + (air / 20) + " seconds remaining");
+            plugin.getMessenger().message(player, "Has been alive for: " + TVMUtils.convertTicksToTime(scanned.getTicksLived()));
+            plugin.getMessenger().message(player, "Health: " + String.format("%.1f", health / 2) + " hearts");
+            plugin.getMessenger().message(player, "Hunger bar: " + String.format("%.2f", hunger) + "%");
+            plugin.getMessenger().message(player, "Air: ~" + (air / 20) + " seconds remaining");
         }
     }
 
@@ -555,7 +556,7 @@ public class TVMGUIListener extends TARDISMenuListener {
                 required = plugin.getVortexConfig().getInt("tachyon_use.travel.world");
                 // only world specified (or incomplete setting)
                 // check world is an actual world
-                if (plugin.getServer().getWorld(dest.getFirst()) == null) {
+                if (plugin.getServer().getWorld(Key.key(dest.getFirst().toLowerCase(Locale.ROOT))) == null) {
                     close(player);
                     plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_NO_WORLD");
                     return;
@@ -577,7 +578,7 @@ public class TVMGUIListener extends TARDISMenuListener {
                     // relative location
                     w = player.getLocation().getWorld();
                 } else {
-                    w = plugin.getServer().getWorld(dest.getFirst());
+                    w = plugin.getServer().getWorld(Key.key(dest.getFirst().toLowerCase(Locale.ROOT)));
                     if (w == null) {
                         close(player);
                         plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_NO_WORLD");

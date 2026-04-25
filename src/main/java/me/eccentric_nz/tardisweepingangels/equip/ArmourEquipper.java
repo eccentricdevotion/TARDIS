@@ -67,14 +67,14 @@ public class ArmourEquipper {
             case MIRE -> "Mire Helmet";
             default -> monster.getName() + " Head";
         };
-        headMeta.displayName(ComponentUtils.toWhite(name));
+        headMeta.customName(ComponentUtils.toWhite(name));
         head.setItemMeta(headMeta);
         entity.getEquipment().setHelmet(head);
         // chest
         ItemStack body = ItemStack.of(monster.getMaterial());
         ItemMeta bodyMeta = body.getItemMeta();
         bodyMeta.setItemModel(ArmourVariant.CHESTPLATE.getKey());
-        bodyMeta.displayName(Component.text(monster.getName() + " Chestplate"));
+        bodyMeta.customName(Component.text(monster.getName() + " Chestplate"));
         EquippableComponent bodyComponent = bodyMeta.getEquippable();
         bodyComponent.setDamageOnHurt(false);
         bodyComponent.setAllowedEntities(List.of(monster.getEntityType(), EntityType.PLAYER));
@@ -88,7 +88,7 @@ public class ArmourEquipper {
         ItemStack legs = ItemStack.of(monster.getMaterial());
         ItemMeta legsMeta = legs.getItemMeta();
         legsMeta.setItemModel(ArmourVariant.LEGGINGS.getKey());
-        legsMeta.displayName(Component.text(monster.getName() + " Leggings"));
+        legsMeta.customName(Component.text(monster.getName() + " Leggings"));
         EquippableComponent legsComponent = legsMeta.getEquippable();
         legsComponent.setDamageOnHurt(false);
         legsComponent.setAllowedEntities(List.of(monster.getEntityType(), EntityType.PLAYER));

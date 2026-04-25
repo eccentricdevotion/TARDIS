@@ -72,7 +72,7 @@ public class TARDISUtils {
         ChunkGenerator gen = room_world.getGenerator();
         String dn = "TARDIS_TimeVortex";
         if (plugin.getConfig().getBoolean("creation.default_world")) {
-            dn = plugin.getConfig().getString("creation.default_world_name");
+            dn = plugin.getConfig().getString("creation.default_world_name", "tardis_timevortex");
         }
         boolean special = (data[0].equalsIgnoreCase(dn) && gen instanceof TARDISChunkGenerator);
         return (data[0].contains("TARDIS_WORLD_") || special);
@@ -84,30 +84,30 @@ public class TARDISUtils {
         String name = "";
         if (player != null && player.isOnline()) {
             world = player.getLocation().getWorld();
-            name = world.getName();
+            name = world.getKey().getKey();
         }
         ChunkGenerator gen = world.getGenerator();
         // get default world name
-        String dn = "TARDIS_TimeVortex";
+        String dn = "tardis_timevortex";
         if (plugin.getConfig().getBoolean("creation.default_world")) {
-            dn = plugin.getConfig().getString("creation.default_world_name");
+            dn = plugin.getConfig().getString("creation.default_world_name", "tardis_timevortex");
         }
-        boolean special = ((name.equals(dn) || name.equals("TARDIS_Zero_Room")) && gen instanceof TARDISChunkGenerator);
-        return name.equals("TARDIS_WORLD_" + player.getName()) || special;
+        boolean special = ((name.equals(dn) || name.equals("tardis_zero_room")) && gen instanceof TARDISChunkGenerator);
+        return name.equalsIgnoreCase("tardis_world_" + player.getName()) || special;
     }
 
     public boolean inTARDISWorld(Location loc) {
         // check they are still in the TARDIS world
         World world = loc.getWorld();
-        String name = world.getName();
+        String name = world.getKey().getKey();
         ChunkGenerator gen = world.getGenerator();
         // get default world name
-        String dn = "TARDIS_TimeVortex";
+        String dn = "tardis_timevortex";
         if (plugin.getConfig().getBoolean("creation.default_world")) {
-            dn = plugin.getConfig().getString("creation.default_world_name");
+            dn = plugin.getConfig().getString("creation.default_world_name", "tardis_timevortex").toLowerCase(Locale.ROOT);
         }
         boolean special = (name.equals(dn) && gen instanceof TARDISChunkGenerator);
-        return name.startsWith("TARDIS_WORLD_") || special;
+        return name.startsWith("tardis_world_") || special;
     }
 
     /**
@@ -158,7 +158,7 @@ public class TARDISUtils {
             air++;
         }
         Material mat = startBlock.getType();
-        if (air >= 4 && (plugin.getGeneralKeeper().getGoodNether().contains(mat) || plugin.getPlanetsConfig().getBoolean("planets." + w.getName() + ".false_nether"))) {
+        if (air >= 4 && (plugin.getGeneralKeeper().getGoodNether().contains(mat) || plugin.getPlanetsConfig().getBoolean("planets." + w.getKey().getKey() + ".false_nether"))) {
             y = startBlock.getLocation().getBlockY() + 1;
         }
         return y;
@@ -259,10 +259,10 @@ public class TARDISUtils {
             case TARGET_BLOCK -> displayType.getFormat()
                     .replace("%TARGET_BLOCK%", player.getTargetBlock(null, 5).getType().toString());
             case WORLD -> displayType.getFormat()
-                    .replace("%WORLD%", player.getLocation().getWorld().getName());
+                    .replace("%WORLD%", player.getLocation().getWorld().getKey().getKey());
             // ALL
             default -> plugin.getConfig().getString("display.all", "&6X&7%X% &6Y&7%Y% &6Z&7%Z% &6F&7%FACING% (%FACING_XZ%) %TARGET_BLOCK%")
-                    .replace("%WORLD%", player.getLocation().getWorld().getName())
+                    .replace("%WORLD%", player.getLocation().getWorld().getKey().getKey())
                     .replace("%X%", String.format("%,d", player.getLocation().getBlockX()))
                     .replace("%Y%", String.format("%,d", player.getLocation().getBlockY()))
                     .replace("%Z%", String.format("%,d", player.getLocation().getBlockZ()))
@@ -286,7 +286,7 @@ public class TARDISUtils {
         Location tardis = plugin.getTrackerKeeper().getLocators().get(player.getUniqueId());
         // check same world
         if (location.getWorld() != tardis.getWorld()) {
-            return "TARDIS is located in " + tardis.getWorld().getName();
+            return "TARDIS is located in " + tardis.getWorld().getKey().getKey();
         }
         Vector playerToEntity = tardis.clone().subtract(location).toVector();
         Vector playerLooking = location.getDirection();

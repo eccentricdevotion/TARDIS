@@ -31,44 +31,44 @@ public class UpdateChatGUI {
     public void showInterface(Player player, String arg) {
         if (arg.isEmpty()) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_SECTION");
-            player.sendMessage("------");
+            plugin.getMessenger().message(player, "------");
             plugin.getJsonKeeper().getSections().forEach(player::sendMessage);
-            player.sendMessage("------");
+            plugin.getMessenger().message(player, "------");
             return;
         }
         if (arg.equalsIgnoreCase("controls")) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_CONTROL");
-            player.sendMessage("------");
+            plugin.getMessenger().message(player, "------");
             plugin.getJsonKeeper().getControls().forEach(player::sendMessage);
-            player.sendMessage("------");
+            plugin.getMessenger().message(player, "------");
             return;
         }
         if (arg.equalsIgnoreCase("interfaces")) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_INTERFACE");
-            player.sendMessage("------");
+            plugin.getMessenger().message(player, "------");
             plugin.getJsonKeeper().getInterfaces().forEach(player::sendMessage);
-            player.sendMessage("------");
+            plugin.getMessenger().message(player, "------");
             return;
         }
         if (arg.equalsIgnoreCase("locations")) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_LOCATION");
-            player.sendMessage("------");
+            plugin.getMessenger().message(player, "------");
             plugin.getJsonKeeper().getLocations().forEach(player::sendMessage);
-            player.sendMessage("------");
+            plugin.getMessenger().message(player, "------");
             return;
         }
         if (arg.equalsIgnoreCase("sensors")) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_SENSOR");
-            player.sendMessage("------");
+            plugin.getMessenger().message(player, "------");
             plugin.getJsonKeeper().getSensors().forEach(player::sendMessage);
-            player.sendMessage("------");
+            plugin.getMessenger().message(player, "------");
             return;
         }
         if (arg.equalsIgnoreCase("others")) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_OTHER");
-            player.sendMessage("------");
+            plugin.getMessenger().message(player, "------");
             plugin.getJsonKeeper().getOthers().forEach(player::sendMessage);
-            player.sendMessage("------");
+            plugin.getMessenger().message(player, "------");
         }
     }
 }

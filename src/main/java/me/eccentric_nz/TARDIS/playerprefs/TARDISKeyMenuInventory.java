@@ -73,11 +73,11 @@ public class TARDISKeyMenuInventory implements InventoryHolder {
             if (key == GUIKeyPreferences.CLOSE || key == GUIKeyPreferences.INSTRUCTIONS || key == GUIKeyPreferences.NAME || key == GUIKeyPreferences.DISPLAY_NAME_COLOUR) {
                 is = ItemStack.of(key.getMaterial(), 1);
                 im = is.getItemMeta();
-                im.displayName(Component.text(key.getName()));
+                im.customName(Component.text(key.getName()));
             } else {
                 is = ItemStack.of(material);
                 im = is.getItemMeta();
-                im.displayName(ComponentUtils.toWhite("TARDIS Key"));
+                im.customName(ComponentUtils.toWhite("TARDIS Key"));
             }
             if (!key.getLore().isEmpty()) {
                 if (key.getLore().contains("~")) {

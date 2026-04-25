@@ -1867,8 +1867,8 @@ public class TARDISInformationSystemListener implements Listener {
      */
     private static void processKey(Player p, TARDISInfoMenu item, TARDIS plugin) {
         plugin.getTrackerKeeper().getInfoMenu().put(p.getUniqueId(), item);
-        p.sendMessage("---");
-        p.sendMessage("[" + item.getName() + "]");
+        plugin.getMessenger().message(p, "---");
+        plugin.getMessenger().message(p, "[" + item.getName() + "]");
         TARDISInfoMenu.getChildren(item.toString()).forEach((key, value) -> {
             String[] split = key.split(value, 2);
             if (split.length > 1) {
@@ -1897,8 +1897,8 @@ public class TARDISInformationSystemListener implements Listener {
             desc = plugin.getGeneralKeeper().getPluginYAML().getString("commands." + c[0] + ".description");
             usage = plugin.getGeneralKeeper().getPluginYAML().getString("commands." + c[0] + ".usage", "/" + c[0]).replace("<command>", c[0]);
         }
-        p.sendMessage("---");
-        p.sendMessage("[" + item.getName() + "]");
+        plugin.getMessenger().message(p, "---");
+        plugin.getMessenger().message(p, "[" + item.getName() + "]");
         plugin.getMessenger().messageWithColour(p, "Description: " + desc, "#FFAA00");
         plugin.getMessenger().messageWithColour(p, "Usage: " + usage, "#FFAA00");
         exit(p, plugin);

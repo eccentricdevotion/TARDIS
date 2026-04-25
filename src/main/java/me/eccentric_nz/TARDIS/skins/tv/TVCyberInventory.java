@@ -50,7 +50,7 @@ public class TVCyberInventory extends TVGUI {
                 SkinUtils.getHeadProfile(variant).thenAccept(playerProfile -> {
                     is.setData(DataComponentTypes.PROFILE, ResolvableProfile.resolvableProfile(playerProfile));
                     im.setPlayerProfile(playerProfile);
-                    im.displayName(Component.text(variant.name()));
+                    im.customName(Component.text(variant.name()));
                     is.setItemMeta(im);
                     // cache the item stack
                     PlayerHeadCache.CYBERS.add(is);

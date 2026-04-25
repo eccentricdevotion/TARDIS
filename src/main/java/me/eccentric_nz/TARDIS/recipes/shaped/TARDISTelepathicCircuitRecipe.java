@@ -58,7 +58,7 @@ public class TARDISTelepathicCircuitRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.GLOWSTONE_DUST, 1);
         ItemMeta im = is.getItemMeta();
-        im.displayName(ComponentUtils.toWhite("TARDIS Telepathic Circuit"));
+        im.customName(ComponentUtils.toWhite("TARDIS Telepathic Circuit"));
         CustomModelDataComponent component = im.getCustomModelDataComponent();
         component.setFloats(CircuitVariant.TELEPATHIC.getFloats());
         im.setCustomModelDataComponent(component);

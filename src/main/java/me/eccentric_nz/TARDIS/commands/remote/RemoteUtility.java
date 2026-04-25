@@ -23,6 +23,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.UUID;
 
 public class RemoteUtility {
@@ -90,7 +91,7 @@ public class RemoteUtility {
             return;
         }
         HashMap<String, Object> set = new HashMap<>();
-        set.put("world", rsh.getWorld().getName());
+        set.put("world", rsh.getWorld().getKey().asString());
         set.put("x", rsh.getX());
         set.put("y", rsh.getY());
         set.put("z", rsh.getZ());
@@ -168,7 +169,7 @@ public class RemoteUtility {
             return;
         }
         HashMap<String, Object> set = new HashMap<>();
-        set.put("world", l.getWorld().getName());
+        set.put("world", l.getWorld().getKey().asString());
         set.put("x", l.getBlockX());
         set.put("y", l.getBlockY());
         set.put("z", l.getBlockZ());
@@ -207,11 +208,11 @@ public class RemoteUtility {
             plugin.getMessenger().sendColouredCommand(sender, "WORLD_NOT_FOUND", "/tardisworld", plugin);
             return;
         }
-        if (!plugin.getPlanetsConfig().getBoolean("planets." + w.getName() + ".time_travel")) {
+        if (!plugin.getPlanetsConfig().getBoolean("planets." + w.getKey().getKey() + ".time_travel")) {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "NO_WORLD_TRAVEL");
             return;
         }
-        if (!plugin.getConfig().getBoolean("travel.include_default_world") && plugin.getConfig().getBoolean("creation.default_world") && w.getName().equals(plugin.getConfig().getString("creation.default_world_name"))) {
+        if (!plugin.getConfig().getBoolean("travel.include_default_world") && plugin.getConfig().getBoolean("creation.default_world") && w.getKey().getKey().equals(plugin.getConfig().getString("creation.default_world_name", "tardis_timevortex").toLowerCase(Locale.ROOT))) {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "NO_WORLD_TRAVEL");
             return;
         }
@@ -246,7 +247,7 @@ public class RemoteUtility {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "NOT_SAFE");
         } else {
             HashMap<String, Object> set = new HashMap<>();
-            set.put("world", location.getWorld().getName());
+            set.put("world", location.getWorld().getKey().asString());
             set.put("x", location.getBlockX());
             set.put("y", location.getBlockY());
             set.put("z", location.getBlockZ());

@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.utility;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import net.kyori.adventure.key.Key;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.World;
@@ -26,35 +27,14 @@ import org.mvplugins.multiverse.core.world.LoadedMultiverseWorld;
 import org.mvplugins.multiverse.core.world.MultiverseWorld;
 import org.mvplugins.multiverse.external.vavr.control.Option;
 
+import java.util.Locale;
+
 /**
  * @author eccentric_nz
  */
 public class TARDISMultiverseHelper {
 
     final MultiverseCoreApi coreApi = MultiverseCoreApi.get();
-
-    public String getAlias(World world) {
-        Option<MultiverseWorld> option = coreApi.getWorldManager().getWorld(world);
-        if (option.isDefined()) {
-            MultiverseWorld mvw = option.get();
-            return mvw.getAlias();
-        } else {
-            return world.getName();
-        }
-    }
-
-    public String getAlias(String world) {
-        if (Bukkit.getWorld(world) != null) {
-            Option<MultiverseWorld> option = coreApi.getWorldManager().getWorld(world);
-            if (option.isDefined()) {
-                MultiverseWorld mvw = option.get();
-                return mvw.getAlias();
-            } else {
-                return world;
-            }
-        }
-        return world;
-    }
 
     public boolean isWorldSurvival(World world) {
         GameMode gm;
@@ -72,9 +52,9 @@ public class TARDISMultiverseHelper {
         Option<LoadedMultiverseWorld> option = coreApi.getWorldManager().getLoadedWorld(w);
         if (option.isDefined()) {
             LoadedMultiverseWorld mvw = option.get();
-            return (mvw.getBukkitWorld().isDefined()) ? mvw.getBukkitWorld().get() : Bukkit.getServer().getWorld(w);
+            return (mvw.getBukkitWorld().isDefined()) ? mvw.getBukkitWorld().get() : Bukkit.getServer().getWorld(Key.key(w.toLowerCase(Locale.ROOT)));
         }
-        return Bukkit.getServer().getWorld(w);
+        return Bukkit.getServer().getWorld(Key.key(w.toLowerCase(Locale.ROOT)));
     }
 
     public void importWorlds(CommandSender sender) {

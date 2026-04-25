@@ -59,7 +59,7 @@ public class MicroscopeInteractListener implements Listener {
             if (im == null) {
                 return;
             }
-            if (!im.hasDisplayName()) {
+            if (!im.hasCustomName()) {
                 return;
             }
             if (!im.hasItemModel()) {

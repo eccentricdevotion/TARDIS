@@ -115,11 +115,11 @@ public class AddCompanionCommand {
                             // remove all members
                             plugin.getWorldGuardUtils().removeAllMembersFromRegion(w, player.getName(), player.getUniqueId());
                             // set entry and exit flags to allow
-                            plugin.getWorldGuardUtils().setEntryExitFlags(w.getName(), player.getName(), true);
+                            plugin.getWorldGuardUtils().setEntryExitFlags(w.getKey().getKey(), player.getName(), true);
                         } else {
                             plugin.getWorldGuardUtils().addMemberToRegion(w, owner, companion.getUniqueId());
                             // set entry and exit flags to deny
-                            plugin.getWorldGuardUtils().setEntryExitFlags(w.getName(), player.getName(), false);
+                            plugin.getWorldGuardUtils().setEntryExitFlags(w.getKey().getKey(), player.getName(), false);
                         }
                     }
                 }

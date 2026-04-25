@@ -32,7 +32,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -52,7 +52,7 @@ public class SonicEntityListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onInteract(PlayerInteractEntityEvent event) {
+    public void onInteract(PlayerInteractAtEntityEvent event) {
         if (event.getHand().equals(EquipmentSlot.OFF_HAND)) {
             return;
         }
@@ -62,7 +62,7 @@ public class SonicEntityListener implements Listener {
         Entity ent = event.getRightClicked();
         if (is.getType().equals(Material.BLAZE_ROD) && is.hasItemMeta()) {
             ItemMeta im = player.getInventory().getItemInMainHand().getItemMeta();
-            if (ComponentUtils.endsWith(im.displayName(), "Sonic Screwdriver")) {
+            if (ComponentUtils.endsWith(im.customName(), "Sonic Screwdriver")) {
                 List<Component> lore = im.lore();
                 if (ent instanceof Player scanned) {
                     SonicSound.playSonicSound(plugin, player, now, 3050L, "sonic_screwdriver");

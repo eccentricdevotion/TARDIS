@@ -16,15 +16,18 @@
  */
 package me.eccentric_nz.TARDIS.desktop;
 
+import io.papermc.paper.registry.RegistryAccess;
+import io.papermc.paper.registry.RegistryKey;
+import io.papermc.paper.registry.TypedKey;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUIWallFloor;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
-import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.ItemType;
 import org.bukkit.inventory.meta.ItemMeta;
 
 /**
@@ -62,11 +65,14 @@ public class WallsInventory implements InventoryHolder {
         ItemStack[] stack = new ItemStack[54];
         int i = 0;
         // get BLOCKS
-        for (Material entry : TARDISWalls.BLOCKS) {
+        for (TypedKey<ItemType> entry : TARDISWalls.BLOCKS) {
             if (i > 52) {
                 break;
             }
-            ItemStack is = ItemStack.of(entry, 1);
+            ItemType type = RegistryAccess.registryAccess()
+                    .getRegistry(RegistryKey.ITEM)
+                    .get(entry);
+            ItemStack is = type.createItemStack(1);
             stack[i] = is;
             if (i % 9 == 7) {
                 i += 2;
@@ -78,31 +84,31 @@ public class WallsInventory implements InventoryHolder {
         // scroll up
         ItemStack scroll_up = ItemStack.of(GUIWallFloor.BUTTON_SCROLL_U.material(), 1);
         ItemMeta uim = scroll_up.getItemMeta();
-        uim.displayName(Component.text(plugin.getLanguage().getString("BUTTON_SCROLL_U")));
+        uim.customName(Component.text(plugin.getLanguage().getString("BUTTON_SCROLL_U")));
         scroll_up.setItemMeta(uim);
         stack[GUIWallFloor.BUTTON_SCROLL_U.slot()] = scroll_up;
         // scroll down
         ItemStack scroll_down = ItemStack.of(GUIWallFloor.BUTTON_SCROLL_D.material(), 1);
         ItemMeta dim = scroll_down.getItemMeta();
-        dim.displayName(Component.text(plugin.getLanguage().getString("BUTTON_SCROLL_D")));
+        dim.customName(Component.text(plugin.getLanguage().getString("BUTTON_SCROLL_D")));
         scroll_down.setItemMeta(dim);
         stack[GUIWallFloor.BUTTON_SCROLL_D.slot()] = scroll_down;
         // default wall
         ItemStack wall = ItemStack.of(GUIWallFloor.WALL.material(), 1);
         ItemMeta wim = wall.getItemMeta();
-        wim.displayName(Component.text("Default Wall Block"));
+        wim.customName(Component.text("Default Wall Block"));
         wall.setItemMeta(wim);
         stack[GUIWallFloor.WALL.slot()] = wall;
         // default floor
         ItemStack floor = ItemStack.of(GUIWallFloor.FLOOR.material(), 1);
         ItemMeta fim = floor.getItemMeta();
-        fim.displayName(Component.text("Default Floor Block"));
+        fim.customName(Component.text("Default Floor Block"));
         floor.setItemMeta(fim);
         stack[GUIWallFloor.FLOOR.slot()] = floor;
         // close
         ItemStack close = ItemStack.of(GUIWallFloor.BUTTON_ABORT.material(), 1);
         ItemMeta close_im = close.getItemMeta();
-        close_im.displayName(Component.text("Abort upgrade"));
+        close_im.customName(Component.text("Abort upgrade"));
         close.setItemMeta(close_im);
         stack[GUIWallFloor.BUTTON_ABORT.slot()] = close;
 

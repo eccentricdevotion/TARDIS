@@ -25,7 +25,7 @@ public class ArtronCombine {
                 return;
             }
             ItemMeta offMeta = offhand.getItemMeta();
-            if (!offMeta.hasDisplayName() || !ComponentUtils.endsWith(offMeta.displayName(), "Artron Storage Cell")) {
+            if (!offMeta.hasCustomName() || !ComponentUtils.endsWith(offMeta.customName(), "Artron Storage Cell")) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "CELL_IN_HAND");
                 return;
             }

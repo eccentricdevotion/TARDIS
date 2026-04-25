@@ -57,11 +57,7 @@ public class Equipper {
         EntityEquipment ee = setArmour(le, monster);
         // set age
         if (le instanceof Ageable ageable) {
-            if (monster == Monster.EMPTY_CHILD) {
-                ageable.setBaby();
-            } else {
-                ageable.setAdult();
-            }
+            ageable.setAdult();
         }
         if (!(le instanceof Player)) {
             // make the entity invisible
@@ -166,6 +162,12 @@ public class Equipper {
                     }
                     default -> {
                     }
+                }
+            }
+            case EMPTY_CHILD -> {
+                if (!disguise) {
+                    // set entity scale
+                    entity.getAttribute(Attribute.SCALE).setBaseValue(0.725d);
                 }
             }
             case HATH -> {

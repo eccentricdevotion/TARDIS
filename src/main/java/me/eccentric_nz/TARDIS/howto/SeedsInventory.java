@@ -71,7 +71,7 @@ public class SeedsInventory implements InventoryHolder {
                 Material m = Material.getMaterial(a.getSeed());
                 ItemStack is = ItemStack.of(m, 1);
                 ItemMeta im = is.getItemMeta();
-                im.displayName(Component.text(a.getDescription()));
+                im.customName(Component.text(a.getDescription()));
                 im.lore(List.of(Component.text("Click to see recipe...")));
                 is.setItemMeta(im);
                 stack[i] = is;
@@ -81,7 +81,7 @@ public class SeedsInventory implements InventoryHolder {
         // close
         ItemStack close = ItemStack.of(Material.BOWL, 1);
         ItemMeta close_im = close.getItemMeta();
-        close_im.displayName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
+        close_im.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
         close.setItemMeta(close_im);
         stack[44] = close;
         return stack;

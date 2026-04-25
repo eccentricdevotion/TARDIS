@@ -46,7 +46,7 @@ public class BeeSpawnListener implements Listener {
             return;
         }
         World world = entity.getWorld();
-        int limit = plugin.getMonstersConfig().getInt("tocalane.worlds." + world.getName());
+        int limit = plugin.getMonstersConfig().getInt("tocalane.worlds." + world.getKey().getKey());
         if (limit < 1) {
             return;
         }

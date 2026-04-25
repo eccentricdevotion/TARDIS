@@ -16,16 +16,19 @@
  */
 package me.eccentric_nz.TARDIS.howto;
 
+import io.papermc.paper.registry.RegistryAccess;
+import io.papermc.paper.registry.RegistryKey;
+import io.papermc.paper.registry.TypedKey;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUIChameleonPresets;
 import me.eccentric_nz.TARDIS.custommodels.GUIWallFloor;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
-import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.ItemType;
 import org.bukkit.inventory.meta.ItemMeta;
 
 /**
@@ -61,11 +64,14 @@ class HowtoWallsInventory implements InventoryHolder {
         ItemStack[] stack = new ItemStack[54];
         int i = 0;
         // get BLOCKS
-        for (Material entry : TARDISWalls.BLOCKS) {
+        for (TypedKey<ItemType> entry : TARDISWalls.BLOCKS) {
             if (i > 52) {
                 break;
             }
-            ItemStack is = ItemStack.of(entry, 1);
+            ItemType type = RegistryAccess.registryAccess()
+                    .getRegistry(RegistryKey.ITEM)
+                    .get(entry);
+            ItemStack is = type.createItemStack(1);
             stack[i] = is;
             if (i % 9 == 7) {
                 i += 2;
@@ -77,25 +83,25 @@ class HowtoWallsInventory implements InventoryHolder {
         // scroll up
         ItemStack scroll_up = ItemStack.of(GUIWallFloor.BUTTON_SCROLL_U.material(), 1);
         ItemMeta uim = scroll_up.getItemMeta();
-        uim.displayName(Component.text(plugin.getLanguage().getString("BUTTON_SCROLL_U")));
+        uim.customName(Component.text(plugin.getLanguage().getString("BUTTON_SCROLL_U")));
         scroll_up.setItemMeta(uim);
         stack[GUIWallFloor.BUTTON_SCROLL_U.slot()] = scroll_up;
         // scroll down
         ItemStack scroll_down = ItemStack.of(GUIWallFloor.BUTTON_SCROLL_D.material(), 1);
         ItemMeta dim = scroll_down.getItemMeta();
-        dim.displayName(Component.text(plugin.getLanguage().getString("BUTTON_SCROLL_D")));
+        dim.customName(Component.text(plugin.getLanguage().getString("BUTTON_SCROLL_D")));
         scroll_down.setItemMeta(dim);
         stack[26] = scroll_down;
         // back
         ItemStack back = ItemStack.of(GUIChameleonPresets.BACK.material(), 1);
         ItemMeta back_im = back.getItemMeta();
-        back_im.displayName(Component.text("Back"));
+        back_im.customName(Component.text("Back"));
         back.setItemMeta(back_im);
         stack[44] = back;
         // close
         ItemStack close = ItemStack.of(GUIChameleonPresets.CLOSE.material(), 1);
         ItemMeta close_im = close.getItemMeta();
-        close_im.displayName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
+        close_im.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
         close.setItemMeta(close_im);
         stack[GUIChameleonPresets.CLOSE.slot()] = close;
 

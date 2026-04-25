@@ -686,7 +686,7 @@ public class RoomRunnable implements Runnable {
                 }
                 if (type.equals(Material.BEEHIVE) && room.equals("APIARY")) {
                     HashMap<String, Object> seta = new HashMap<>();
-                    seta.put("apiary", world.getName() + ":" + startx + ":" + (starty + 1) + ":" + startz);
+                    seta.put("apiary", world.getKey().asString() + ":" + startx + ":" + (starty + 1) + ":" + startz);
                     ResultSetFarming rsa = new ResultSetFarming(plugin, tardis_id);
                     if (rsa.resultSet()) {
                         HashMap<String, Object> wherea = new HashMap<>();
@@ -746,7 +746,7 @@ public class RoomRunnable implements Runnable {
                     ItemDisplay display = (ItemDisplay) world.spawnEntity(item, EntityType.ITEM_DISPLAY);
                     ItemStack is = ItemStack.of(Material.MAGMA_BLOCK);
                     ItemMeta im = is.getItemMeta();
-                    im.displayName(Component.text("Sphere Normal"));
+                    im.customName(Component.text("Sphere Normal"));
                     is.setItemMeta(im);
                     display.setItemStack(is);
                     display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.GROUND);
@@ -801,7 +801,7 @@ public class RoomRunnable implements Runnable {
                 if (type.equals(Material.SPAWNER) && room.equals("FARM")) {
                     // do they have a farm record?
                     HashMap<String, Object> setf = new HashMap<>();
-                    setf.put("farm", world.getName() + ":" + startx + ":" + starty + ":" + startz);
+                    setf.put("farm", world.getKey().asString() + ":" + startx + ":" + starty + ":" + startz);
                     ResultSetFarming rsf = new ResultSetFarming(plugin, tardis_id);
                     if (rsf.resultSet()) {
                         HashMap<String, Object> wheref = new HashMap<>();
@@ -844,7 +844,7 @@ public class RoomRunnable implements Runnable {
                                 || room.equals("BIRDCAGE") || room.equals("MAZE") || room.equals("GARDEN")
                                 || room.equals("HAPPY") || room.equals("NAUTILUS") || room.equals("ARCADE"))) {
                     HashMap<String, Object> sets = new HashMap<>();
-                    sets.put(room.toLowerCase(Locale.ROOT), world.getName() + ":" + (startx + (room.equals("NAUTILUS") ? 1 : 0)) + ":" + starty + ":" + startz);
+                    sets.put(room.toLowerCase(Locale.ROOT), world.getKey().asString() + ":" + (startx + (room.equals("NAUTILUS") ? 1 : 0)) + ":" + starty + ":" + startz);
                     HashMap<String, Object> wheres = new HashMap<>();
                     wheres.put("tardis_id", tardis_id);
                     switch (room) {
@@ -892,7 +892,7 @@ public class RoomRunnable implements Runnable {
                             // save garden coords
                             HashMap<String, Object> setG = new HashMap<>();
                             setG.put("tardis_id", tardis_id);
-                            setG.put("world", world.getName());
+                            setG.put("world", world.getKey().asString());
                             setG.put("minx", startx - 6);
                             setG.put("maxx", startx + 6);
                             setG.put("y", starty);
@@ -1025,7 +1025,7 @@ public class RoomRunnable implements Runnable {
                 }
                 if (type.equals(Material.DEAD_HORN_CORAL_BLOCK) && room.equals("AQUARIUM")) {
                     HashMap<String, Object> setaqua = new HashMap<>();
-                    setaqua.put("aquarium", world.getName() + ":" + startx + ":" + starty + ":" + startz);
+                    setaqua.put("aquarium", world.getKey().asString() + ":" + startx + ":" + starty + ":" + startz);
                     ResultSetFarming rsf = new ResultSetFarming(plugin, tardis_id);
                     if (rsf.resultSet()) {
                         HashMap<String, Object> wheres = new HashMap<>();
@@ -1051,13 +1051,13 @@ public class RoomRunnable implements Runnable {
                 if (type.equals(Material.OAK_DOOR) && (room.equals("VILLAGE") || room.equals("SHELL"))) {
                     Block door = world.getBlockAt(startx, starty, startz);
                     doorBlocks.put(door, data);
-                    rd.getPostBlocks().add(world.getName() + ":" + startx + ":" + starty + ":" + startz + "~" + data.getAsString());
+                    rd.getPostBlocks().add(world.getKey().asString() + ":" + startx + ":" + starty + ":" + startz + "~" + data.getAsString());
                 }
                 // remember torches
                 if (type.equals(Material.TORCH)) {
                     Block torch = world.getBlockAt(startx, starty, startz);
                     torchBlocks.put(torch, data);
-                    rd.getPostBlocks().add(world.getName() + ":" + startx + ":" + starty + ":" + startz + "~" + data.getAsString());
+                    rd.getPostBlocks().add(world.getKey().asString() + ":" + startx + ":" + starty + ":" + startz + "~" + data.getAsString());
                 }
                 // remember levers
                 if (type.equals(Material.LEVER)) {
@@ -1068,13 +1068,13 @@ public class RoomRunnable implements Runnable {
                 if (type.equals(Material.IRON_TRAPDOOR)) {
                     Block trap = world.getBlockAt(startx, starty, startz);
                     trapdoorBlocks.put(trap, data);
-                    rd.getPostBlocks().add(world.getName() + ":" + startx + ":" + starty + ":" + startz + "~" + data.getAsString());
+                    rd.getPostBlocks().add(world.getKey().asString() + ":" + startx + ":" + starty + ":" + startz + "~" + data.getAsString());
                 }
                 // remember redstone torches
                 if (type.equals(Material.REDSTONE_TORCH)) {
                     Block torch = world.getBlockAt(startx, starty, startz);
                     redstoneTorchBlocks.put(torch, data);
-                    rd.getPostBlocks().add(world.getName() + ":" + startx + ":" + starty + ":" + startz + "~" + data.getAsString());
+                    rd.getPostBlocks().add(world.getKey().asString() + ":" + startx + ":" + starty + ":" + startz + "~" + data.getAsString());
                 }
                 // remember banners
                 if (Tag.BANNERS.isTagged(type)) {
@@ -1088,56 +1088,56 @@ public class RoomRunnable implements Runnable {
                 if (type.equals(Material.FARMLAND)) {
                     Block farmland = world.getBlockAt(startx, starty, startz);
                     farmlandBlocks.add(farmland);
-                    rd.getPostBlocks().add(world.getName() + ":" + startx + ":" + starty + ":" + startz + "~" + Material.FARMLAND.createBlockData().getAsString());
+                    rd.getPostBlocks().add(world.getKey().asString() + ":" + startx + ":" + starty + ":" + startz + "~" + Material.FARMLAND.createBlockData().getAsString());
                 }
                 // remember lava
                 if (type.equals(Material.LAVA)) {
                     Block lava = world.getBlockAt(startx, starty, startz);
                     lavaBlocks.add(lava);
-                    rd.getPostBlocks().add(world.getName() + ":" + startx + ":" + starty + ":" + startz + "~" + TARDISConstants.LAVA.getAsString());
+                    rd.getPostBlocks().add(world.getKey().asString() + ":" + startx + ":" + starty + ":" + startz + "~" + TARDISConstants.LAVA.getAsString());
                 }
                 if (room.equals("ARBORETUM") || room.equals("GREENHOUSE")) {
                     // remember sugar cane
                     if (type.equals(Material.SUGAR_CANE)) {
                         Block cane = world.getBlockAt(startx, starty, startz);
                         caneBlocks.add(cane);
-                        rd.getPostBlocks().add(world.getName() + ":" + startx + ":" + starty + ":" + startz + "~" + Material.SUGAR_CANE.createBlockData().getAsString());
+                        rd.getPostBlocks().add(world.getKey().asString() + ":" + startx + ":" + starty + ":" + startz + "~" + Material.SUGAR_CANE.createBlockData().getAsString());
                     }
                     // remember cocoa
                     if (type.equals(Material.COCOA)) {
                         Block cocoa = world.getBlockAt(startx, starty, startz);
                         cocoaBlocks.put(cocoa, data);
-                        rd.getPostBlocks().add(world.getName() + ":" + startx + ":" + starty + ":" + startz + "~" + Material.COCOA.createBlockData().getAsString());
+                        rd.getPostBlocks().add(world.getKey().asString() + ":" + startx + ":" + starty + ":" + startz + "~" + Material.COCOA.createBlockData().getAsString());
                     }
                     // remember wheat
                     if (type.equals(Material.WHEAT)) {
                         Block crops = world.getBlockAt(startx, starty, startz);
                         wheatBlocks.add(crops);
-                        rd.getPostBlocks().add(world.getName() + ":" + startx + ":" + starty + ":" + startz + "~" + Material.WHEAT.createBlockData().getAsString());
+                        rd.getPostBlocks().add(world.getKey().asString() + ":" + startx + ":" + starty + ":" + startz + "~" + Material.WHEAT.createBlockData().getAsString());
                     }
                     // remember melon
                     if (type.equals(Material.MELON_STEM)) {
                         Block melon = world.getBlockAt(startx, starty, startz);
                         melonBlocks.add(melon);
-                        rd.getPostBlocks().add(world.getName() + ":" + startx + ":" + starty + ":" + startz + "~" + Material.MELON_STEM.createBlockData().getAsString());
+                        rd.getPostBlocks().add(world.getKey().asString() + ":" + startx + ":" + starty + ":" + startz + "~" + Material.MELON_STEM.createBlockData().getAsString());
                     }
                     // remember pumpkin
                     if (type.equals(Material.PUMPKIN_STEM)) {
                         Block pumpkin = world.getBlockAt(startx, starty, startz);
                         pumpkinBlocks.add(pumpkin);
-                        rd.getPostBlocks().add(world.getName() + ":" + startx + ":" + starty + ":" + startz + "~" + Material.PUMPKIN_STEM.createBlockData().getAsString());
+                        rd.getPostBlocks().add(world.getKey().asString() + ":" + startx + ":" + starty + ":" + startz + "~" + Material.PUMPKIN_STEM.createBlockData().getAsString());
                     }
                     // remember carrots
                     if (type.equals(Material.CARROTS)) {
                         Block carrot = world.getBlockAt(startx, starty, startz);
                         carrotBlocks.add(carrot);
-                        rd.getPostBlocks().add(world.getName() + ":" + startx + ":" + starty + ":" + startz + "~" + Material.CARROTS.createBlockData().getAsString());
+                        rd.getPostBlocks().add(world.getKey().asString() + ":" + startx + ":" + starty + ":" + startz + "~" + Material.CARROTS.createBlockData().getAsString());
                     }
                     // remember potatoes
                     if (type.equals(Material.POTATOES)) {
                         Block potato = world.getBlockAt(startx, starty, startz);
                         potatoBlocks.add(potato);
-                        rd.getPostBlocks().add(world.getName() + ":" + startx + ":" + starty + ":" + startz + "~" + Material.POTATOES.createBlockData().getAsString());
+                        rd.getPostBlocks().add(world.getKey().asString() + ":" + startx + ":" + starty + ":" + startz + "~" + Material.POTATOES.createBlockData().getAsString());
                     }
                     if (level == 4 && room.equals("GREENHOUSE")) {
                         // set all the ice to water
@@ -1147,19 +1147,19 @@ public class RoomRunnable implements Runnable {
                 }
                 if (type.equals(Material.MANGROVE_PROPAGULE)) {
                     propagules.put(world.getBlockAt(startx, starty, startz), data);
-                    rd.getPostBlocks().add(world.getName() + ":" + startx + ":" + starty + ":" + startz + "~" + data.getAsString());
+                    rd.getPostBlocks().add(world.getKey().asString() + ":" + startx + ":" + starty + ":" + startz + "~" + data.getAsString());
                 }
                 if (type.equals(Material.BIG_DRIPLEAF) || type.equals(Material.BIG_DRIPLEAF_STEM)) {
                     dripLeafBlocks.put(world.getBlockAt(startx, starty, startz), data);
-                    rd.getPostBlocks().add(world.getName() + ":" + startx + ":" + starty + ":" + startz + "~" + data.getAsString());
+                    rd.getPostBlocks().add(world.getKey().asString() + ":" + startx + ":" + starty + ":" + startz + "~" + data.getAsString());
                 }
                 if (type.equals(Material.SEAGRASS) || type.equals(Material.TALL_SEAGRASS)) {
                     seagrass.put(world.getBlockAt(startx, starty, startz), data);
-                    rd.getPostBlocks().add(world.getName() + ":" + startx + ":" + starty + ":" + startz + "~" + data.getAsString());
+                    rd.getPostBlocks().add(world.getKey().asString() + ":" + startx + ":" + starty + ":" + startz + "~" + data.getAsString());
                 }
                 if (room.equals("RAIL") && type.equals(Material.OAK_FENCE)) {
                     // remember fence location so we can teleport the storage minecart
-                    String loc = world.getName() + ":" + startx + ":" + starty + ":" + startz;
+                    String loc = world.getKey().asString() + ":" + startx + ":" + starty + ":" + startz;
                     HashMap<String, Object> set = new HashMap<>();
                     set.put("rail", loc);
                     HashMap<String, Object> where = new HashMap<>();
@@ -1232,7 +1232,7 @@ public class RoomRunnable implements Runnable {
                 if ((type.equals(Material.WATER) || type.equals(Material.ICE)) && !room.equals("IGLOO")) {
                     Block icy = world.getBlockAt(startx, starty, startz);
                     iceBlocks.add(icy);
-                    rd.getPostBlocks().add(world.getName() + ":" + startx + ":" + starty + ":" + startz + "~" + TARDISConstants.ICE.getAsString());
+                    rd.getPostBlocks().add(world.getKey().asString() + ":" + startx + ":" + starty + ":" + startz + "~" + TARDISConstants.ICE.getAsString());
                 }
                 // remember lamp blocks
                 if (type.equals(Material.REDSTONE_LAMP)) {
@@ -1250,7 +1250,7 @@ public class RoomRunnable implements Runnable {
                         task = 0;
                         return;
                     }
-                    rd.getPostBlocks().add(world.getName() + ":" + startx + ":" + starty + ":" + startz + "~" + TARDISConstants.LAMP.getAsString());
+                    rd.getPostBlocks().add(world.getKey().asString() + ":" + startx + ":" + starty + ":" + startz + "~" + TARDISConstants.LAMP.getAsString());
                 }
                 if (room.equals("GRAVITY") || room.equals("ANTIGRAVITY")) {
                     String loc;
@@ -1300,7 +1300,7 @@ public class RoomRunnable implements Runnable {
                             }
                             case MUSHROOM_STEM -> { // repeater
                                 control_type = repeaterOrder.get(r);
-                                loc_str = world.getName() + ":" + startx + ":" + starty + ":" + startz;
+                                loc_str = world.getKey().asString() + ":" + startx + ":" + starty + ":" + startz;
                                 Block rb = world.getBlockAt(startx, starty, startz);
                                 mushroomBlocks.put(rb, repeaterData[r]);
                                 r++;
@@ -1367,7 +1367,7 @@ public class RoomRunnable implements Runnable {
 
     private Transmat getTransmat(Chunk chunk) {
         Location location = new Location(chunk.getWorld(), resetx, resety, resetz).add(3.5d, 5.0d, 8.5d);
-        return new Transmat(room, location.getWorld().getName(), (float) location.getX(), (float) location.getY(), (float) location.getZ(), 0.0f);
+        return new Transmat(room, location.getWorld().getKey().asString(), (float) location.getX(), (float) location.getY(), (float) location.getZ(), 0.0f);
     }
 
     private void turnOnFarming(Player p) {

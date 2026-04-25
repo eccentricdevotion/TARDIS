@@ -25,7 +25,7 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -41,7 +41,7 @@ public class TARDISLightLevelFrameListener implements Listener {
     }
 
     @EventHandler(ignoreCancelled = true)
-    public void onLightLevelClick(PlayerInteractEntityEvent event) {
+    public void onLightLevelClick(PlayerInteractAtEntityEvent event) {
         if (event.getRightClicked() instanceof ItemFrame frame) {
             // check if it is a light level item frame
             Location location = frame.getLocation();

@@ -55,19 +55,19 @@ public class ChameleonConstructorInventory implements InventoryHolder {
         // back
         ItemStack back = ItemStack.of(GUIChameleonConstructor.BACK_TO_CHAMELEON_CIRCUIT.material(), 1);
         ItemMeta bk = back.getItemMeta();
-        bk.displayName(Component.text(plugin.getChameleonGuis().getString("BACK_CHAM_OPTS", "Back to Chameleon Circuit")));
+        bk.customName(Component.text(plugin.getChameleonGuis().getString("BACK_CHAM_OPTS", "Back to Chameleon Circuit")));
         back.setItemMeta(bk);
         is[GUIChameleonConstructor.BACK_TO_CHAMELEON_CIRCUIT.slot()] = back;
         // help
         ItemStack help = ItemStack.of(GUIChameleonConstructor.HELP.material(), 1);
         ItemMeta hp = help.getItemMeta();
-        hp.displayName(Component.text(plugin.getChameleonGuis().getString("HELP", "Help")));
+        hp.customName(Component.text(plugin.getChameleonGuis().getString("HELP", "Help")));
         help.setItemMeta(hp);
         is[GUIChameleonConstructor.HELP.slot()] = help;
         // info
         ItemStack info = ItemStack.of(GUIChameleonConstructor.INFO.material(), 1);
         ItemMeta io = info.getItemMeta();
-        io.displayName(Component.text(plugin.getChameleonGuis().getString("INFO", "Info")));
+        io.customName(Component.text(plugin.getChameleonGuis().getString("INFO", "Info")));
         List<Component> ioLore = new ArrayList<>();
         for (String s : plugin.getChameleonGuis().getStringList("INFO_CONSTRUCT")) {
             ioLore.add(Component.text(s));
@@ -78,19 +78,19 @@ public class ChameleonConstructorInventory implements InventoryHolder {
         // abort
         ItemStack abort = ItemStack.of(GUIChameleonConstructor.ABORT.material(), 1);
         ItemMeta at = abort.getItemMeta();
-        at.displayName(Component.text(plugin.getChameleonGuis().getString("ABORT", "Abort")));
+        at.customName(Component.text(plugin.getChameleonGuis().getString("ABORT", "Abort")));
         abort.setItemMeta(at);
         is[GUIChameleonConstructor.ABORT.slot()] = abort;
         // load button
         ItemStack load = ItemStack.of(GUIChameleonConstructor.USE_LAST_SAVED_CONSTRUCT.material(), 1);
         ItemMeta ld = load.getItemMeta();
-        ld.displayName(Component.text(plugin.getChameleonGuis().getString("USE_PREV", "Use last saved construct")));
+        ld.customName(Component.text(plugin.getChameleonGuis().getString("USE_PREV", "Use last saved construct")));
         load.setItemMeta(ld);
         is[GUIChameleonConstructor.USE_LAST_SAVED_CONSTRUCT.slot()] = load;
         // save button
         ItemStack save = ItemStack.of(GUIChameleonConstructor.SAVE_CONSTRUCT.material(), 1);
         ItemMeta se = save.getItemMeta();
-        se.displayName(Component.text(plugin.getChameleonGuis().getString("SAVE", "Save construct")));
+        se.customName(Component.text(plugin.getChameleonGuis().getString("SAVE", "Save construct")));
         save.setItemMeta(se);
         is[GUIChameleonConstructor.SAVE_CONSTRUCT.slot()] = save;
         // lamp button

@@ -44,13 +44,13 @@ public class WorldRemover {
             service.testConnection(connection);
             statement = connection.createStatement();
             // blocks
-            String blocksQuery = "DELETE FROM " + prefix + "blocks WHERE location LIKE 'Location{world=CraftWorld{name=" + w + "}%'";
+            String blocksQuery = "DELETE FROM " + prefix + "blocks WHERE location LIKE 'Location{world=CraftWorld{key=minecraft:" + w + "}%'";
             int numBlocks = statement.executeUpdate(blocksQuery);
             if (numBlocks > 0) {
                 plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Removed " + numBlocks + " block record for non-existent world ->" + w);
             }
             // portals
-            String portalsQuery = "DELETE FROM " + prefix + "portals WHERE portal LIKE 'Location{world=CraftWorld{name=" + w + "}%' OR teleport LIKE 'Location{world=CraftWorld{name=" + w + "}%'";
+            String portalsQuery = "DELETE FROM " + prefix + "portals WHERE portal LIKE 'Location{world=CraftWorld{key=minecraft:" + w + "}%' OR teleport LIKE 'Location{world=CraftWorld{key=minecraft:" + w + "}%'";
             int numPortals = statement.executeUpdate(portalsQuery);
             if (numPortals > 0) {
                 plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Removed " + numPortals + " portal record for non-existent world ->" + w);

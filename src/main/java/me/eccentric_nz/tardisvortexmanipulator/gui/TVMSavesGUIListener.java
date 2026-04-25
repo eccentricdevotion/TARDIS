@@ -84,7 +84,7 @@ public class TVMSavesGUIListener extends TARDISMenuListener {
         if (selectedSlot != -1) {
             ItemStack is = view.getItem(selectedSlot);
             ItemMeta im = is.getItemMeta();
-            String save_name = ComponentUtils.stripColour(im.displayName());
+            String save_name = ComponentUtils.stripColour(im.customName());
             TVMResultSetWarpByName rss = new TVMResultSetWarpByName(plugin, player.getUniqueId().toString(), save_name);
             if (rss.resultSet()) {
                 close(player);
@@ -102,7 +102,7 @@ public class TVMSavesGUIListener extends TARDISMenuListener {
         if (selectedSlot != -1) {
             ItemStack is = view.getItem(selectedSlot);
             ItemMeta im = is.getItemMeta();
-            String save_name = ComponentUtils.stripColour(im.displayName());
+            String save_name = ComponentUtils.stripColour(im.customName());
             TVMResultSetWarpByName rss = new TVMResultSetWarpByName(plugin, player.getUniqueId().toString(), save_name);
             if (rss.resultSet()) {
                 close(player);

@@ -95,7 +95,7 @@ public class DebugPopulator {
             HashMap<String, Object> set = new HashMap<>();
             set.put("tardis_id", -50);
             set.put("name", "debug_preview");
-            set.put("world", world.getName());
+            set.put("world", world.getKey().asString());
             set.put("x", x + 0.5d);
             set.put("y", 65);
             set.put("z", z + 0.5d);
@@ -551,7 +551,7 @@ public class DebugPopulator {
         ItemStack is = ItemStack.of(material, 1);
         ItemMeta im = is.getItemMeta();
         im.setItemModel(model);
-        im.displayName(name);
+        im.customName(name);
         is.setItemMeta(im);
         ItemDisplay display = (ItemDisplay) location.getWorld().spawnEntity(location.clone().add(0.5d, 1.25d, 0.5d), EntityType.ITEM_DISPLAY);
         display.setItemStack(is);
@@ -570,7 +570,7 @@ public class DebugPopulator {
         CustomModelDataComponent cmd = im.getCustomModelDataComponent();
         cmd.setFloats(floats);
         im.setCustomModelDataComponent(cmd);
-        im.displayName(name);
+        im.customName(name);
         is.setItemMeta(im);
         ItemDisplay display = (ItemDisplay) location.getWorld().spawnEntity(location.clone().add(0.5d, 1.25d, 0.5d), EntityType.ITEM_DISPLAY);
         display.setItemStack(is);

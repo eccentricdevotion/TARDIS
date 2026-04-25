@@ -44,8 +44,8 @@ public class TARDISResourcePackSwitcher implements Listener {
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onResourcePackWorldChange(PlayerChangedWorldEvent event) {
         Player player = event.getPlayer();
-        String world = player.getWorld().getName();
-        String from = plugin.getPlanetsConfig().getString("planets." + event.getFrom().getName() + ".resource_pack");
+        String world = player.getWorld().getKey().getKey();
+        String from = plugin.getPlanetsConfig().getString("planets." + event.getFrom().getKey().getKey() + ".resource_pack");
         if (from == null) {
             from = "default";
         }
@@ -63,7 +63,7 @@ public class TARDISResourcePackSwitcher implements Listener {
     public void onPlayerJoin(PlayerJoinEvent event) {
         if (plugin.getPlanetsConfig().getBoolean("set_pack_on_join")) {
             Player player = event.getPlayer();
-            String world = player.getWorld().getName();
+            String world = player.getWorld().getKey().getKey();
             String path = plugin.getPlanetsConfig().getString("planets." + world + ".resource_pack");
             setResourcePack(player, path);
         }

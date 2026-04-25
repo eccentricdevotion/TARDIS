@@ -44,7 +44,7 @@ class RegulatorSlot {
     RegulatorSlot() {
         box = ItemStack.of(Material.BLUE_WOOL, 1);
         ItemMeta ler = box.getItemMeta();
-        ler.displayName(Component.text("Regulator"));
+        ler.customName(Component.text("Regulator"));
         box.setItemMeta(ler);
         vortex = ItemStack.of(Material.BLACK_STAINED_GLASS_PANE, 1);
     }

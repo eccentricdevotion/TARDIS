@@ -28,8 +28,8 @@ public class TISInfo {
     }
 
     public void show(Player p, TARDISInfoMenu item) {
-        p.sendMessage("---");
-        p.sendMessage("[" + item.getName() + "]");
+        plugin.getMessenger().message(p, "---");
+        plugin.getMessenger().message(p, "[" + item.getName() + "]");
         plugin.getMessenger().messageWithColour(p, TARDISDescription.valueOf(item.toString()).getDesc(), "#FFAA00");
     }
 }

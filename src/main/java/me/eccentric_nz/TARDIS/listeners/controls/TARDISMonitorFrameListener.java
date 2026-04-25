@@ -37,7 +37,7 @@ import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -56,7 +56,7 @@ public class TARDISMonitorFrameListener implements Listener {
     }
 
     @EventHandler(ignoreCancelled = true)
-    public void onMonitorFrameClick(PlayerInteractEntityEvent event) {
+    public void onMonitorFrameClick(PlayerInteractAtEntityEvent event) {
         if (event.getRightClicked() instanceof ItemFrame frame) {
             Player player = event.getPlayer();
             // check if it is a TARDIS monitor item frame

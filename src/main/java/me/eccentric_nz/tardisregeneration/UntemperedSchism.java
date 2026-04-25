@@ -38,7 +38,7 @@ public class UntemperedSchism {
         ItemStack untempered = ItemStack.of(Material.ANCIENT_DEBRIS);
         ItemMeta im = untempered.getItemMeta();
         im.setItemModel(Schism.UNTEMPERED_SCHISM_BLOCK.getKey());
-        im.displayName(ComponentUtils.toWhite("Untempered Schism"));
+        im.customName(ComponentUtils.toWhite("Untempered Schism"));
         im.lore(List.of(
                 Component.text("Renew regenerations when"),
                 Component.text("you have used them all.")
@@ -52,9 +52,9 @@ public class UntemperedSchism {
             return false;
         }
         ItemMeta im = is.getItemMeta();
-        if (!im.hasDisplayName() || !im.hasItemModel()) {
+        if (!im.hasCustomName() || !im.hasItemModel()) {
             return false;
         }
-        return ComponentUtils.endsWith(im.displayName(), "Untempered Schism");
+        return ComponentUtils.endsWith(im.customName(), "Untempered Schism");
     }
 }

@@ -16,13 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.commands.dev;
 
+import io.papermc.paper.registry.TypedKey;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.inventory.FurnaceRecipe;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.Recipe;
-import org.bukkit.inventory.RecipeChoice;
+import org.bukkit.inventory.*;
 
 import java.util.Iterator;
 
@@ -39,9 +36,9 @@ public class FurnaceCommand {
             Recipe r = recipes.next();
             if (r instanceof FurnaceRecipe f) {
                 RecipeChoice c = f.getInputChoice();
-                if (c instanceof RecipeChoice.MaterialChoice m) {
-                    for (Material a : m.getChoices()) {
-                        plugin.debug(a.toString());
+                if (c instanceof RecipeChoice.ItemTypeChoice m) {
+                    for (TypedKey<ItemType> a : m.itemTypes()) {
+                        plugin.debug(a.key().asString());
                     }
                 } else if (c instanceof RecipeChoice.ExactChoice e) {
                     plugin.debug(e.getChoices().toString());

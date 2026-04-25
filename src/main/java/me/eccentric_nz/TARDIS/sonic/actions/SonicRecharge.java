@@ -118,7 +118,7 @@ public class SonicRecharge implements Runnable {
             ItemStack dock = frame.getItem();
             ItemMeta dim = dock.getItemMeta();
             String name = (amount > 0) ? "Sonic Dock: " + amount : "Sonic Dock";
-            dim.displayName(Component.text(name));
+            dim.customName(Component.text(name));
             dock.setItemMeta(dim);
             frame.setItem(dock);
         }

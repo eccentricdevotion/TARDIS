@@ -165,7 +165,7 @@ public class AdvancedConsoleCloseListener implements Listener {
                                     plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_MORE_SPOTS");
                                     continue;
                                 }
-                                set_next.put("world", l.getWorld().getName());
+                                set_next.put("world", l.getWorld().getKey().asString());
                                 set_next.put("x", l.getBlockX());
                                 set_next.put("y", l.getBlockY());
                                 set_next.put("z", l.getBlockZ());
@@ -225,7 +225,7 @@ public class AdvancedConsoleCloseListener implements Listener {
                                             break;
                                         }
                                     }
-                                    set_next.put("world", nsob.getWorld().getName());
+                                    set_next.put("world", nsob.getWorld().getKey().asString());
                                     set_next.put("x", nsob.getBlockX());
                                     set_next.put("y", nsob.getBlockY());
                                     set_next.put("z", nsob.getBlockZ());
@@ -271,11 +271,11 @@ public class AdvancedConsoleCloseListener implements Listener {
                             }
                             case MUSIC_DISC_CHIRP -> { // save
                                 if (TARDISPermission.hasPermission(player, "tardis.save")) {
-                                    String world = ComponentUtils.stripColour(lore.get(1));
+                                    String world = ComponentUtils.stripColour(lore.get(1)).toLowerCase(Locale.ROOT);
                                     int x = TARDISNumberParsers.parseInt(ComponentUtils.stripColour(lore.get(2)));
                                     int y = TARDISNumberParsers.parseInt(ComponentUtils.stripColour(lore.get(3)));
                                     int z = TARDISNumberParsers.parseInt(ComponentUtils.stripColour(lore.get(4)));
-                                    if (current.location().getWorld().getName().equals(world) && current.location().getBlockX() == x && current.location().getBlockZ() == z) {
+                                    if (current.location().getWorld().getKey().getKey().equals(world) && current.location().getBlockX() == x && current.location().getBlockZ() == z) {
                                         continue;
                                     }
                                     // read the lore from the disk
@@ -339,7 +339,7 @@ public class AdvancedConsoleCloseListener implements Listener {
                     } else {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "ADV_BLANK");
                     }
-                } else if (mat.equals(Material.MUSIC_DISC_STRAD) && is.hasItemMeta() && is.getItemMeta().hasDisplayName() && ComponentUtils.endsWith(is.getItemMeta().displayName(), "Blank Storage Disk")) {
+                } else if (mat.equals(Material.MUSIC_DISC_STRAD) && is.hasItemMeta() && is.getItemMeta().hasCustomName() && ComponentUtils.endsWith(is.getItemMeta().customName(), "Blank Storage Disk")) {
                     // Blank Disk - get a random location
                     Location l = new TARDISRandomiserCircuit(plugin).getRandomlocation(player, current.direction());
                     if (l == null) {
@@ -348,7 +348,7 @@ public class AdvancedConsoleCloseListener implements Listener {
                     }
                     HashMap<String, Object> set_next = new HashMap<>();
                     HashMap<String, Object> where_next = new HashMap<>();
-                    set_next.put("world", l.getWorld().getName());
+                    set_next.put("world", l.getWorld().getKey().asString());
                     set_next.put("x", l.getBlockX());
                     set_next.put("y", l.getBlockY());
                     set_next.put("z", l.getBlockZ());

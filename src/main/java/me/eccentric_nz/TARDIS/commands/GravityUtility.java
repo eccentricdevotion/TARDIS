@@ -28,7 +28,7 @@ public class GravityUtility {
         if (!plugin.getConfig().getBoolean("allow.external_gravity")) {
             // check they are still in the TARDIS world
             if (!plugin.getUtils().inTARDISWorld(player)) {
-                String mess_stub = (player.getLocation().getWorld().getName().toUpperCase(Locale.ROOT).contains("TARDIS_WORLD_")) ? "GRAVITY_OWN_WORLD" : "GRAVITY_A_WORLD";
+                String mess_stub = (player.getLocation().getWorld().getKey().getKey().toLowerCase(Locale.ROOT).contains("tardis_world_")) ? "GRAVITY_OWN_WORLD" : "GRAVITY_A_WORLD";
                 plugin.getMessenger().send(player, TardisModule.TARDIS, mess_stub);
                 return;
             }

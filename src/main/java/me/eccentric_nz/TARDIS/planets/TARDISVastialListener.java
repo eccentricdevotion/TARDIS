@@ -21,7 +21,7 @@ public class TARDISVastialListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onWhiteConcretePowderMine(BlockBreakEvent event) {
         Location location = event.getBlock().getLocation();
-        if (!location.getWorld().getName().equalsIgnoreCase("telos")) {
+        if (!location.getWorld().getKey().getKey().equalsIgnoreCase("telos")) {
             return;
         }
         if (!event.getBlock().getType().equals(Material.WHITE_CONCRETE_POWDER)) {

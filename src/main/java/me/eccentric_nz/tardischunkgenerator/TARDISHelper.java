@@ -76,8 +76,7 @@ public class TARDISHelper {
         // should we filter the log?
         if (plugin.getConfig().getBoolean("debug")) {
             // yes we should!
-            String basePath = plugin.getServer().getWorldContainer() + File.separator + "plugins" + File.separator + "TARDIS" + File.separator;
-            filterLog(basePath + "filtered.log");
+            filterLog(plugin.getDataFolder().getAbsolutePath() + File.separator + "filtered.log");
             plugin.getMessenger().message(plugin.getConsole(), TardisModule.HELPER, "Starting filtered logging for TARDIS...");
             plugin.getMessenger().message(plugin.getConsole(), TardisModule.HELPER, "Log file located at 'plugins/TARDIS/filtered.log'");
         }
@@ -119,47 +118,30 @@ public class TARDISHelper {
         return false;
     }
 
+    private final String basePath = Bukkit.getServer().getLevelDirectory() + File.separator + "dimensions" + File.separator + NamespacedKey.MINECRAFT_NAMESPACE + File.separator;
+
     public void setLevelName(String oldName, String newName) {
-        File file = new File(Bukkit.getWorldContainer().getAbsolutePath() + File.separator + oldName + File.separator + "level.dat");
+        File file = new File(basePath + oldName + File.separator + "data" + File.separator + "paper" + File.separator + "level_overrides.dat");
         if (file.exists()) {
-            try {
-                CompoundTag tagCompound;
-                CompoundTag data;
-                try (FileInputStream fileinputstream = new FileInputStream(file)) {
-                    tagCompound = NbtIo.readCompressed(fileinputstream, NbtAccounter.unlimitedHeap());
-                    if (tagCompound.getCompound("Data").isPresent()) {
-                        data = tagCompound.getCompound("Data").get();
-                        // set LevelName tag
-                        data.putString("LevelName", newName);
-                        tagCompound.put("Data", data);
-                        FileOutputStream fileoutputstream = new FileOutputStream(file);
-                        NbtIo.writeCompressed(tagCompound, fileoutputstream);
-                        fileoutputstream.close();
-                        plugin.getMessenger().message(plugin.getConsole(), TardisModule.HELPER, "Renamed level to " + newName);
-                        // rename the directory
-                        File directory = new File(Bukkit.getWorldContainer().getAbsolutePath() + File.separator + oldName);
-                        File folder = new File(Bukkit.getWorldContainer().getAbsolutePath() + File.separator + newName);
-                        if (directory.renameTo(folder)) {
-                            plugin.getMessenger().message(plugin.getConsole(), TardisModule.HELPER, "Renamed directory to " + newName);
-                        }
-                    }
-                }
-            } catch (IOException ex) {
-                plugin.getMessenger().message(plugin.getConsole(), TardisModule.HELPER_SEVERE, ex.getMessage());
+            // rename the directory
+            File directory = new File(basePath + oldName);
+            File folder = new File(basePath + newName);
+            if (directory.renameTo(folder)) {
+                plugin.getMessenger().message(plugin.getConsole(), TardisModule.HELPER, "Renamed directory to " + newName);
             }
         }
     }
 
     public void setWorldGameMode(String world, GameMode gm) {
-        File file = new File(Bukkit.getWorldContainer().getAbsolutePath() + File.separator + world + File.separator + "level.dat");
+        File file = new File(basePath + world + File.separator + "data" + File.separator + "paper" + File.separator + "level_overrides.dat");
         if (file.exists()) {
             try {
                 CompoundTag tagCompound;
                 CompoundTag data;
                 try (FileInputStream fileinputstream = new FileInputStream(file)) {
                     tagCompound = NbtIo.readCompressed(fileinputstream, NbtAccounter.unlimitedHeap());
-                    if (tagCompound.getCompound("Data").isPresent()) {
-                        data = tagCompound.getCompound("Data").get();
+                    if (tagCompound.getCompound("data").isPresent()) {
+                        data = tagCompound.getCompound("data").get();
                         int mode = switch (gm) {
                             case CREATIVE -> 1;
                             case ADVENTURE -> 2;
@@ -167,8 +149,8 @@ public class TARDISHelper {
                             default -> 0; // SURVIVAL
                         };
                         // set GameType tag
-                        data.putInt("GameType", mode);
-                        tagCompound.put("Data", data);
+                        data.putInt("game_type", mode);
+                        tagCompound.put("data", data);
                         FileOutputStream fileoutputstream = new FileOutputStream(file);
                         NbtIo.writeCompressed(tagCompound, fileoutputstream);
                         fileoutputstream.close();
@@ -181,7 +163,7 @@ public class TARDISHelper {
     }
 
     public TARDISPlanetData getLevelData(String world) {
-        File file = new File(Bukkit.getWorldContainer().getAbsolutePath() + File.separator + world + File.separator + "level.dat");
+        File file = new File(basePath + world + File.separator + "data" + File.separator + "paper" + File.separator + "level_overrides.dat");
         if (file.exists()) {
             try {
                 FileInputStream fileinputstream = new FileInputStream(file);
@@ -191,11 +173,11 @@ public class TARDISHelper {
                 WorldType worldType = WorldType.NORMAL;
                 World.Environment environment = World.Environment.NORMAL;
                 Difficulty difficulty = Difficulty.NORMAL;
-                if (tagCompound.getCompound("Data").isPresent()) {
-                    CompoundTag data = tagCompound.getCompound("Data").get();
+                if (tagCompound.getCompound("data").isPresent()) {
+                    CompoundTag data = tagCompound.getCompound("data").get();
                     // get GameType tag
-                    if (data.getInt("GameType").isPresent()) {
-                        int gm = data.getInt("GameType").get();
+                    if (data.getInt("game_type").isPresent()) {
+                        int gm = data.getInt("game_type").get();
                         gameMode = switch (gm) {
                             case 1 -> GameMode.CREATIVE;
                             case 2 -> GameMode.ADVENTURE;
@@ -213,23 +195,17 @@ public class TARDISHelper {
                             default -> WorldType.NORMAL; // default or unknown
                         };
                     }
-                    File dimDashOne = new File(Bukkit.getWorldContainer().getAbsolutePath() + File.separator + world + File.separator + "DIM-1");
-                    File dimOne = new File(Bukkit.getWorldContainer().getAbsolutePath() + File.separator + world + File.separator + "DIM1");
-                    if (dimDashOne.exists() && !dimOne.exists()) {
+                    if (world.endsWith("nether")) {
                         environment = World.Environment.NETHER;
                     }
-                    if (dimOne.exists() && !dimDashOne.exists()) {
+                    if (world.endsWith("_end")) {
                         environment = World.Environment.THE_END;
                     }
-                    // 0 is Peaceful, 1 is Easy, 2 is Normal, and 3 is Hard
-                    if (data.getInt("Difficulty").isPresent()) {
-                        int diff = data.getInt("Difficulty").get();
-                        switch (diff) {
-                            case 0 -> difficulty = Difficulty.PEACEFUL;
-                            case 1 -> difficulty = Difficulty.EASY;
-                            case 3 -> difficulty = Difficulty.HARD;
-                            default -> {
-                            }
+                    if (data.getCompound("difficulty_settings").isPresent()) {
+                        CompoundTag difficulty_settings = data.getCompound("difficulty_settings").get();
+                        if (difficulty_settings.getString("difficulty").isPresent()) {
+                            String diff = difficulty_settings.getString("difficulty").get();
+                            difficulty = Difficulty.valueOf(diff.toUpperCase(Locale.ROOT));
                         }
                     }
                 }

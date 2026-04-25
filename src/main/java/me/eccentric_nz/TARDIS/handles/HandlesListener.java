@@ -67,7 +67,7 @@ public class HandlesListener implements Listener {
         // drop a custom BIRCH_BUTTON
         ItemStack is = ItemStack.of(Material.BIRCH_BUTTON, 1);
         ItemMeta im = is.getItemMeta();
-        im.displayName(Component.text("Handles"));
+        im.customName(Component.text("Handles"));
         im.lore(List.of(Component.text("Cyberhead from the"), Component.text("Maldovar Market")));
         im.setItemModel(Whoniverse.HANDLES_OFF.getKey());
         im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, 1);
@@ -86,7 +86,7 @@ public class HandlesListener implements Listener {
             return;
         }
         ItemMeta im = is.getItemMeta();
-        if (im.hasDisplayName() && ComponentUtils.endsWith(im.displayName(), "Handles")) {
+        if (im.hasCustomName() && ComponentUtils.endsWith(im.customName(), "Handles")) {
             // can only be placed in an item frame
             event.setCancelled(true);
             plugin.getMessenger().send(event.getPlayer(), TardisModule.TARDIS, "HANDLES_FRAME");

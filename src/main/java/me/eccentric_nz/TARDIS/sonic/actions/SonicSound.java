@@ -58,7 +58,7 @@ public class SonicSound {
                 ItemStack is = player.getInventory().getItemInMainHand();
                 if (is.hasItemMeta()) {
                     ItemMeta meta = is.getItemMeta();
-                    if (meta.hasDisplayName() && ComponentUtils.endsWith(meta.displayName(), "Sonic Screwdriver")) {
+                    if (meta.hasCustomName() && ComponentUtils.endsWith(meta.customName(), "Sonic Screwdriver")) {
                         player.getInventory().getItemInMainHand().getEnchantments().keySet().forEach((e) -> player.getInventory().getItemInMainHand().removeEnchantment(e));
                         meta.setEnchantmentGlintOverride(null);
                         CustomModelDataComponent scomponent = meta.getCustomModelDataComponent();
@@ -87,7 +87,7 @@ public class SonicSound {
             return;
         }
         ItemMeta meta = stack.getItemMeta();
-        if (meta.hasDisplayName() && ComponentUtils.endsWith(meta.displayName(), "Sonic Screwdriver")) {
+        if (meta.hasCustomName() && ComponentUtils.endsWith(meta.customName(), "Sonic Screwdriver")) {
             CustomModelDataComponent component = meta.getCustomModelDataComponent();
             component.setFloats(model);
             meta.setCustomModelDataComponent(component);

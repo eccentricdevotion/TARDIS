@@ -68,7 +68,7 @@ public class Sphere extends ParticleRunnable {
         }
         ItemStack is = ItemStack.of(Material.MAGMA_BLOCK);
         ItemMeta im = is.getItemMeta();
-        im.displayName(Component.text("Sphere " + TARDISStringUtils.capitalise(capacitor.toString())));
+        im.customName(Component.text("Sphere " + TARDISStringUtils.capitalise(capacitor.toString())));
         is.setItemMeta(im);
         display.setItemStack(is);
         display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.GROUND);

@@ -36,9 +36,9 @@ public class LegacyDataPack {
     public void remove() {
         // get server's main world folder
         // is there a world container?
-        File container = plugin.getServer().getWorldContainer();
-        String s_world = plugin.getServer().getWorlds().getFirst().getName();
-        String dataPacksTardis = container.getAbsolutePath() + File.separator + s_world + File.separator + "datapacks" + File.separator + "tardis";
+        String dataPacksTardis = plugin.getServer().getLevelDirectory()
+                + File.separator + "datapacks"
+                + File.separator + "tardis";
         File tardisOldDir = new File(dataPacksTardis);
         // check if the directory exists
         if (tardisOldDir.exists()) {

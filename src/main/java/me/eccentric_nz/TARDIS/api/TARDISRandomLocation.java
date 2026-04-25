@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.api;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
+import me.eccentric_nz.TARDIS.planets.TARDISWorldResolver;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.WorldBorder;
@@ -40,7 +40,7 @@ class TARDISRandomLocation {
     final List<World> getWorlds(List<String> list) {
         List<World> worlds = new ArrayList<>();
         list.forEach((s) -> {
-            World o = TARDISAliasResolver.getWorldFromAlias(s);
+            World o = TARDISWorldResolver.getFromString(s);
             if (o != null) {
                 worlds.add(o);
             }

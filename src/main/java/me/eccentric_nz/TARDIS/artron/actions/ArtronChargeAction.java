@@ -52,7 +52,7 @@ public class ArtronChargeAction {
                         }
                     }
                     case NONE -> {
-                        if (plugin.getPlanetsConfig().getString("planets." + location.getWorld().getName() + ".gamemode").equalsIgnoreCase("CREATIVE")) {
+                        if (plugin.getPlanetsConfig().getString("planets." + location.getWorld().getKey().getKey() + ".gamemode").equalsIgnoreCase("CREATIVE")) {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "ARTRON_FULL_CREATIVE");
                             return;
                         }
@@ -80,7 +80,7 @@ public class ArtronChargeAction {
             ItemStack is = player.getInventory().getItemInMainHand();
             if (is.hasItemMeta()) {
                 ItemMeta im = is.getItemMeta();
-                String name = ComponentUtils.stripColour(im.displayName());
+                String name = ComponentUtils.stripColour(im.customName());
                 if (!name.endsWith("Artron Storage Cell")) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "CELL_NOT_VALID");
                     return;

@@ -23,8 +23,8 @@ public class ItemStackGetter {
                 if (im.hasItemModel()) {
                     object.addProperty("cmd", im.getItemModel().getKey());
                 }
-                if (im.hasDisplayName()) {
-                    object.addProperty("name", ComponentUtils.stripColour(im.displayName()));
+                if (im.hasCustomName()) {
+                    object.addProperty("name", ComponentUtils.stripColour(im.customName()));
                 }
                 if (im.hasLore()) {
                     JsonArray lore = new JsonArray();

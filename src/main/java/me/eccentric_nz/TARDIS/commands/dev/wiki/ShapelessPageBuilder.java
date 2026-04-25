@@ -106,8 +106,8 @@ public class ShapelessPageBuilder extends PageBuilder {
         String dashed = "";
         List<RecipeChoice> shapeless = plugin.getIncomposita().getShapelessRecipes().get(item).getChoiceList();
         for (RecipeChoice choice : shapeless) {
-            if (choice instanceof RecipeChoice.MaterialChoice mat) {
-                dashed = TARDISStringUtils.toLowercaseDashed(TARDISStringUtils.capitalise(mat.getChoices().getFirst().toString()));
+            if (choice instanceof RecipeChoice.ItemTypeChoice mat) {
+                dashed = TARDISStringUtils.toLowercaseDashed(TARDISStringUtils.capitalise(List.copyOf(mat.itemTypes().values()).getFirst().value()));
             }
             if (choice instanceof RecipeChoice.ExactChoice exact) {
                 ItemStack is = exact.getChoices().getFirst();
@@ -125,7 +125,7 @@ public class ShapelessPageBuilder extends PageBuilder {
                     }
                     default -> {
                         ItemMeta im = is.getItemMeta();
-                        dashed = TARDISStringUtils.toLowercaseDashed(ComponentUtils.stripColour(im.displayName()));
+                        dashed = TARDISStringUtils.toLowercaseDashed(ComponentUtils.stripColour(im.customName()));
                     }
                 }
             }

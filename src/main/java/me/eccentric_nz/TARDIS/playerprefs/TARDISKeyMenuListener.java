@@ -134,11 +134,11 @@ public class TARDISKeyMenuListener extends TARDISMenuListener {
                     return;
                 }
                 ItemMeta meta = cursor.getItemMeta();
-                if (!meta.hasDisplayName()) {
+                if (!meta.hasCustomName()) {
                     return;
                 }
                 // set wool colour from display name of placed key
-                NamedTextColor color = TARDISStaticUtils.getColor(meta.displayName());
+                NamedTextColor color = TARDISStaticUtils.getColor(meta.customName());
                 Material wool = TARDISKeyMenuListener.REVERSE_LOOKUP.getOrDefault(color, Material.WHITE_WOOL);
                 view.setItem(19, ItemStack.of(wool));
             }
@@ -157,7 +157,7 @@ public class TARDISKeyMenuListener extends TARDISMenuListener {
                 // set key display name colour
                 NamedTextColor display = COLOUR_LOOKUP.get(wool);
                 ItemMeta key_im = key.getItemMeta();
-                key_im.displayName(Component.text("TARDIS Key", display).decorationIfAbsent(TextDecoration.ITALIC, TextDecoration.State.FALSE));
+                key_im.customName(Component.text("TARDIS Key", display).decorationIfAbsent(TextDecoration.ITALIC, TextDecoration.State.FALSE));
                 key.setItemMeta(key_im);
             }
             case 26 -> {

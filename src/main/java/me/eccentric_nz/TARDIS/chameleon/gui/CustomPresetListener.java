@@ -119,7 +119,7 @@ public class CustomPresetListener extends TARDISMenuListener {
                 wheret.put("tardis_id", id);
                 plugin.getQueryFactory().doUpdate("tardis", set, wheret);
                 // update the custom_preset table
-                String name = ComponentUtils.stripColour(selected.displayName()).toLowerCase(Locale.ROOT);
+                String name = ComponentUtils.stripColour(selected.customName()).toLowerCase(Locale.ROOT);
                 plugin.getQueryFactory().upsertCustomPreset(tardis.getTardisId(), name);
                 // damage the circuit if configured
                 DamageUtility.run(plugin, DiskCircuit.CHAMELEON, id, player);

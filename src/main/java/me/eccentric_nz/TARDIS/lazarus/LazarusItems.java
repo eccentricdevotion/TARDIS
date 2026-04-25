@@ -56,20 +56,20 @@ public class LazarusItems {
         // previous
         ItemStack previous = ItemStack.of(GUIGeneticManipulator.BUTTON_PREVIOUS.material(), 1);
         ItemMeta previousItemMeta = previous.getItemMeta();
-        previousItemMeta.displayName(Component.text("Previous page"));
+        previousItemMeta.customName(Component.text("Previous page"));
         previousItemMeta.lore(List.of(Component.text(previousLore)));
         previous.setItemMeta(previousItemMeta);
         stacks[GUIGeneticManipulator.BUTTON_PREVIOUS.slot()] = previous;
         // back to Lazarus choices button
         ItemStack back = ItemStack.of(GUIGeneticManipulator.BUTTON_BACK.material(), 1);
         ItemMeta backItemMeta = back.getItemMeta();
-        backItemMeta.displayName(Component.text("Back"));
+        backItemMeta.customName(Component.text("Back"));
         back.setItemMeta(backItemMeta);
         stacks[GUIGeneticManipulator.BUTTON_BACK.slot()] = back;
         // next
         ItemStack next = ItemStack.of(GUIGeneticManipulator.BUTTON_NEXT.material(), 1);
         ItemMeta nextItemMeta = next.getItemMeta();
-        nextItemMeta.displayName(Component.text("Next page"));
+        nextItemMeta.customName(Component.text("Next page"));
         nextItemMeta.lore(List.of(Component.text(nextLore)));
         next.setItemMeta(nextItemMeta);
         stacks[GUIGeneticManipulator.BUTTON_NEXT.slot()] = next;
@@ -78,21 +78,21 @@ public class LazarusItems {
             // adult
             ItemStack adult = ItemStack.of(GUIGeneticManipulator.BUTTON_AGE.material(), 1);
             ItemMeta baby = adult.getItemMeta();
-            baby.displayName(Component.text(plugin.getLanguage().getString("BUTTON_AGE", "Age")));
+            baby.customName(Component.text(plugin.getLanguage().getString("BUTTON_AGE", "Age")));
             baby.lore(List.of(Component.text("ADULT")));
             adult.setItemMeta(baby);
             stacks[GUIGeneticManipulator.BUTTON_AGE.slot()] = adult;
             // type
             ItemStack typ = ItemStack.of(GUIGeneticManipulator.BUTTON_TYPE.material(), 1);
             ItemMeta col = typ.getItemMeta();
-            col.displayName(Component.text(plugin.getLanguage().getString("BUTTON_TYPE", "Type/Colour")));
+            col.customName(Component.text(plugin.getLanguage().getString("BUTTON_TYPE", "Type/Colour")));
             col.lore(List.of(Component.text("WHITE")));
             typ.setItemMeta(col);
             stacks[GUIGeneticManipulator.BUTTON_TYPE.slot()] = typ;
             // tamed
             ItemStack tamed = ItemStack.of(GUIGeneticManipulator.BUTTON_OPTS.material(), 1);
             ItemMeta tf = tamed.getItemMeta();
-            tf.displayName(Component.text(plugin.getLanguage().getString("BUTTON_OPTS", "Disguise Options")));
+            tf.customName(Component.text(plugin.getLanguage().getString("BUTTON_OPTS", "Disguise Options")));
             List<Component> opts = new ArrayList<>();
             for (String o : plugin.getLanguage().getString("BUTTON_OPTS_LIST", "Tamed/Flying/Blazing/Powered/Beaming/Aggressive/Chest carrying/Decorated")
                     .split("/")) {
@@ -106,19 +106,19 @@ public class LazarusItems {
         // add buttons
         ItemStack rem = ItemStack.of(GUIGeneticManipulator.BUTTON_RESTORE.material(), 1);
         ItemMeta ove = rem.getItemMeta();
-        ove.displayName(Component.text(plugin.getLanguage().getString("BUTTON_RESTORE", "Restore my original genetic material")));
+        ove.customName(Component.text(plugin.getLanguage().getString("BUTTON_RESTORE", "Restore my original genetic material")));
         rem.setItemMeta(ove);
         stacks[GUIGeneticManipulator.BUTTON_RESTORE.slot()] = rem;
         // set
         ItemStack s = ItemStack.of(GUIGeneticManipulator.BUTTON_DNA.material(), 1);
         ItemMeta sim = s.getItemMeta();
-        sim.displayName(Component.text(plugin.getLanguage().getString("BUTTON_DNA", "Modify my genetic material")));
+        sim.customName(Component.text(plugin.getLanguage().getString("BUTTON_DNA", "Modify my genetic material")));
         s.setItemMeta(sim);
         stacks[GUIGeneticManipulator.BUTTON_DNA.slot()] = s;
         // cancel
         ItemStack can = ItemStack.of(GUIGeneticManipulator.BUTTON_CANCEL.material(), 1);
         ItemMeta cel = can.getItemMeta();
-        cel.displayName(Component.text(plugin.getLanguage().getString("BUTTON_CANCEL", "Cancel")));
+        cel.customName(Component.text(plugin.getLanguage().getString("BUTTON_CANCEL", "Cancel")));
         can.setItemMeta(cel);
         stacks[GUIGeneticManipulator.BUTTON_CANCEL.slot()] = can;
     }

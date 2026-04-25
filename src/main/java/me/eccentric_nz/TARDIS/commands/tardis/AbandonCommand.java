@@ -295,7 +295,7 @@ public class AbandonCommand {
                                     default -> pb = "Police Box";
                                 }
                                 Component custom = Component.text("Abandoned " + pb);
-                                im.displayName(custom);
+                                im.customName(custom);
                                 is.setItemMeta(im);
                                 EntityEquipment ee = stand.getEquipment();
                                 ee.setHelmet(is, true);

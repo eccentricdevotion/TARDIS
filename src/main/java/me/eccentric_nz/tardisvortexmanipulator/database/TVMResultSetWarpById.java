@@ -5,6 +5,7 @@ package me.eccentric_nz.tardisvortexmanipulator.database;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
+import net.kyori.adventure.key.Key;
 import org.bukkit.Location;
 import org.bukkit.World;
 
@@ -48,7 +49,7 @@ public class TVMResultSetWarpById {
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
                 rs.next();
-                World world = plugin.getServer().getWorld(rs.getString("world"));
+                World world = plugin.getServer().getWorld(Key.key(rs.getString("world")));
                 float x = rs.getFloat("x");
                 float y = rs.getFloat("y");
                 float z = rs.getFloat("z");

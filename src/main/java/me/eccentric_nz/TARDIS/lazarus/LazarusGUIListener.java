@@ -109,7 +109,7 @@ public class LazarusGUIListener extends TARDISMenuListener {
             if (is != null) {
                 ItemMeta im = is.getItemMeta();
                 // remember selection
-                String display = (is.getType() == Material.PLAYER_HEAD) ? "PLAYER" : ComponentUtils.stripColour(im.displayName());
+                String display = (is.getType() == Material.PLAYER_HEAD) ? "PLAYER" : ComponentUtils.stripColour(im.customName());
                 plugin.getTrackerKeeper().getDisguises().put(uuid, display);
                 setSlotFortyEight(view, display, uuid);
             } else {

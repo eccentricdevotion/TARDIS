@@ -40,6 +40,7 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.UUID;
 
 /**
@@ -71,7 +72,7 @@ public class TARDISCallRequestCommand {
         int level = tardis.getArtronLevel();
         // get location
         Location eyeLocation = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getLocation();
-        if (!plugin.getConfig().getBoolean("travel.include_default_world") && plugin.getConfig().getBoolean("creation.default_world") && eyeLocation.getWorld().getName().equals(plugin.getConfig().getString("creation.default_world_name"))) {
+        if (!plugin.getConfig().getBoolean("travel.include_default_world") && plugin.getConfig().getBoolean("creation.default_world") && eyeLocation.getWorld().getKey().getKey().equals(plugin.getConfig().getString("creation.default_world_name", "tardis_timevortex").toLowerCase(Locale.ROOT))) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_WORLD_TRAVEL");
             return;
         }
@@ -99,7 +100,7 @@ public class TARDISCallRequestCommand {
             eyeLocation.setY(yplusone + 1);
         }
         // check the world is not excluded
-        String world = eyeLocation.getWorld().getName();
+        String world = eyeLocation.getWorld().getKey().getKey();
         if (!plugin.getPlanetsConfig().getBoolean("planets." + world + ".time_travel")) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PB_IN_WORLD");
             return;
