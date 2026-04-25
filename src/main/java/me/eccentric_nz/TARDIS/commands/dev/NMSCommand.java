@@ -21,7 +21,6 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.data.Follower;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.equip.Equipper;
-import me.eccentric_nz.tardisweepingangels.monsters.empty_child.EmptyChildEquipment;
 import me.eccentric_nz.tardisweepingangels.monsters.headless_monks.HeadlessMonkEquipment;
 import me.eccentric_nz.tardisweepingangels.monsters.ice_warriors.IceWarriorEquipment;
 import me.eccentric_nz.tardisweepingangels.monsters.judoon.JudoonEquipment;
@@ -86,9 +85,6 @@ public class NMSCommand {
                     new Equipper(monster, le, false).setHelmetAndInvisibility();
                     if (monster == Monster.SILENT) {
                         SilentEquipment.setGuardian(le);
-                    }
-                    if (monster == Monster.EMPTY_CHILD) {
-                        EmptyChildEquipment.setSpeed(le);
                     }
                     if (monster == Monster.HEADLESS_MONK) {
                         HeadlessMonkEquipment.setTasks(le);

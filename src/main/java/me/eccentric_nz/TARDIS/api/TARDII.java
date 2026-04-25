@@ -42,7 +42,6 @@ import me.eccentric_nz.tardisweepingangels.equip.Equipper;
 import me.eccentric_nz.tardisweepingangels.equip.MonsterEquipment;
 import me.eccentric_nz.tardisweepingangels.equip.RemoveEquipment;
 import me.eccentric_nz.tardisweepingangels.monsters.daleks.DalekEquipment;
-import me.eccentric_nz.tardisweepingangels.monsters.empty_child.EmptyChildEquipment;
 import me.eccentric_nz.tardisweepingangels.monsters.headless_monks.HeadlessMonkEquipment;
 import me.eccentric_nz.tardisweepingangels.monsters.k9.K9Equipment;
 import me.eccentric_nz.tardisweepingangels.monsters.silent.SilentEquipment;
@@ -880,9 +879,6 @@ public class TARDII implements TardisAPI {
     @Override
     public void setEmptyChildEquipment(LivingEntity le, boolean disguise) {
         new Equipper(Monster.EMPTY_CHILD, le, disguise).setHelmetAndInvisibility();
-        if (!disguise) {
-            EmptyChildEquipment.setSpeed(le);
-        }
     }
 
     @Override
