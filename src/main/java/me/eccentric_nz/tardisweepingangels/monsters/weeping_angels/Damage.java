@@ -53,7 +53,7 @@ public class Damage implements Listener {
         this.plugin = plugin;
         mat = Material.valueOf(plugin.getMonstersConfig().getString("angels.weapon"));
         plugin.getMonstersConfig().getStringList("angels.teleport_worlds").forEach((w) -> {
-            World world = plugin.getServer().getWorld(w);
+            World world = plugin.getServer().getWorld(Key.key(w));
             if (world != null) {
                 angel_tp_worlds.add(world);
             }
@@ -135,7 +135,7 @@ public class Damage implements Listener {
         String l = locations.get(TARDISConstants.RANDOM.nextInt(locations.size()));
         String[] split = l.split(",");
         Key key = Key.key(split[0]);
-        World w = plugin.getServer().getWorld(split[0]);
+        World w = plugin.getServer().getWorld(key);
         // use the middle of the block
         double x = TARDISNumberParsers.parseDouble(split[1]) + 0.5d;
         double z = TARDISNumberParsers.parseDouble(split[3]) + 0.5d;

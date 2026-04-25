@@ -51,7 +51,7 @@ public class SontaranRunnable implements Runnable {
     public void run() {
         plugin.getServer().getWorlds().forEach((w) -> {
             // only configured worlds
-            String name = WorldProcessor.sanitiseName(w.getName());
+            String name = w.getKey().getKey();
             if (plugin.getMonstersConfig().getInt("sontarans.worlds." + name) > 0) {
                 long time = w.getTime();
                 // only spawn in day - times according to http://minecraft.gamepedia.com/Day-night_cycle

@@ -151,6 +151,6 @@ public class CountCommand {
                 default -> { }
             }
         }
-        plugin.getMessenger().send(sender, TardisModule.MONSTERS, "WA_COUNT", count, what, w.getName());
+        plugin.getMessenger().send(sender, TardisModule.MONSTERS, "WA_COUNT", count, what, w.getKey().getKey());
     }
 }

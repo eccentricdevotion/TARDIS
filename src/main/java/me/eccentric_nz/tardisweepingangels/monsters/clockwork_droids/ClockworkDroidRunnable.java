@@ -51,7 +51,7 @@ public class ClockworkDroidRunnable implements Runnable {
     public void run() {
         plugin.getServer().getWorlds().forEach((w) -> {
             // only configured worlds
-            String name = WorldProcessor.sanitiseName(w.getName());
+            String name = w.getKey().getKey();
             if (plugin.getMonstersConfig().getInt("clockwork_droids.worlds." + name) > 0) {
                 // get the current droid count
                 int clockwork_droids = 0;

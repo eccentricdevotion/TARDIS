@@ -49,7 +49,7 @@ public class VillagerSpawnListener implements Listener {
             return;
         }
         World world = entity.getWorld();
-        if (!plugin.getMonstersConfig().getBoolean("ood.worlds." + world.getName())) {
+        if (!plugin.getMonstersConfig().getBoolean("ood.worlds." + world.getKey().getKey())) {
             return;
         }
         // not from spawners

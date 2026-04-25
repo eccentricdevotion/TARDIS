@@ -51,7 +51,7 @@ public class HathRunnable implements Runnable {
     public void run() {
         plugin.getServer().getWorlds().forEach((w) -> {
             // only configured worlds
-            String name = WorldProcessor.sanitiseName(w.getName());
+            String name = w.getKey().getKey();
             if (plugin.getMonstersConfig().getInt("hath.worlds." + name) > 0) {
                 // get the current hath count
                 int hath = 0;

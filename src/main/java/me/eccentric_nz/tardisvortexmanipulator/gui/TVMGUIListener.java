@@ -13,6 +13,7 @@ import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import me.eccentric_nz.tardisvortexmanipulator.TVMUtils;
 import me.eccentric_nz.tardisvortexmanipulator.database.TVMQueryFactory;
+import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -291,8 +292,8 @@ public class TVMGUIListener extends TARDISMenuListener {
         ItemStack is = view.getItem(6);
         ItemMeta im = is.getItemMeta();
         for (World w : plugin.getServer().getWorlds()) {
-            String world = w.getName();
-            if (w.getName().toLowerCase(Locale.ROOT).startsWith(stub)) {
+            String world = w.getKey().getKey();
+            if (world.toLowerCase(Locale.ROOT).startsWith(stub)) {
                 im.lore(List.of(Component.text(world)));
                 is.setItemMeta(im);
                 break;
@@ -555,7 +556,7 @@ public class TVMGUIListener extends TARDISMenuListener {
                 required = plugin.getVortexConfig().getInt("tachyon_use.travel.world");
                 // only world specified (or incomplete setting)
                 // check world is an actual world
-                if (plugin.getServer().getWorld(dest.getFirst()) == null) {
+                if (plugin.getServer().getWorld(Key.key(dest.getFirst().toLowerCase(Locale.ROOT))) == null) {
                     close(player);
                     plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_NO_WORLD");
                     return;
@@ -577,7 +578,7 @@ public class TVMGUIListener extends TARDISMenuListener {
                     // relative location
                     w = player.getLocation().getWorld();
                 } else {
-                    w = plugin.getServer().getWorld(dest.getFirst());
+                    w = plugin.getServer().getWorld(Key.key(dest.getFirst().toLowerCase(Locale.ROOT)));
                     if (w == null) {
                         close(player);
                         plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_NO_WORLD");
