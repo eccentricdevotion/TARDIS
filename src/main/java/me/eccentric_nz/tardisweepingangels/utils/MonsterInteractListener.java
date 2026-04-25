@@ -32,6 +32,7 @@ import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.EquipmentSlot;
@@ -62,7 +63,7 @@ public class MonsterInteractListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
-    public void onMonsterInteract(PlayerInteractEntityEvent event) {
+    public void onMonsterInteract(PlayerInteractAtEntityEvent event) {
         Entity entity = event.getRightClicked();
         if (!(entity instanceof org.bukkit.entity.Monster monster)) {
             return;

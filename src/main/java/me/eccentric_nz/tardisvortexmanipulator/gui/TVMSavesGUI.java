@@ -85,14 +85,14 @@ public class TVMSavesGUI implements InventoryHolder {
         // close
         ItemStack close = ItemStack.of(Material.BOWL, 1);
         ItemMeta win = close.getItemMeta();
-        win.displayName(Component.text("Close"));
+        win.customName(Component.text("Close"));
         close.setItemMeta(win);
         stack[46] = close;
         // previous screen (only if needed)
         if (start > 0) {
             ItemStack prev = ItemStack.of(Material.ARROW, 1);
             ItemMeta een = prev.getItemMeta();
-            een.displayName(Component.text("Previous Page"));
+            een.customName(Component.text("Previous Page"));
             prev.setItemMeta(een);
             stack[48] = prev;
         }
@@ -100,20 +100,20 @@ public class TVMSavesGUI implements InventoryHolder {
         if (finish > 44) {
             ItemStack next = ItemStack.of(Material.ARROW, 1);
             ItemMeta scr = next.getItemMeta();
-            scr.displayName(Component.text("Next page"));
+            scr.customName(Component.text("Next page"));
             next.setItemMeta(scr);
             stack[49] = next;
         }
         // delete
         ItemStack del = ItemStack.of(Material.BUCKET, 1);
         ItemMeta ete = del.getItemMeta();
-        ete.displayName(Component.text("Delete"));
+        ete.customName(Component.text("Delete"));
         del.setItemMeta(ete);
         stack[51] = del;
         // warp
         ItemStack warp = ItemStack.of(Material.BOWL, 1);
         ItemMeta to = warp.getItemMeta();
-        to.displayName(Component.text("Enter Vortex"));
+        to.customName(Component.text("Enter Vortex"));
         warp.setItemMeta(to);
         stack[53] = warp;
 
