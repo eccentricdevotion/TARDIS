@@ -22,7 +22,6 @@ import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelSpawnEvent;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import me.eccentric_nz.tardisweepingangels.utils.WaterChecker;
 import me.eccentric_nz.tardisweepingangels.utils.WorldGuardChecker;
-import me.eccentric_nz.tardisweepingangels.utils.WorldProcessor;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;

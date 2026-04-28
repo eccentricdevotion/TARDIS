@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.blueprints.trader;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.tardisweepingangels.utils.WorldProcessor;
 import org.bukkit.World;
 
 public class TraderRunnable implements Runnable {

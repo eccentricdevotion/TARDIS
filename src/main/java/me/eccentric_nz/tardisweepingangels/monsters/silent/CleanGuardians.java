@@ -17,7 +17,6 @@
 package me.eccentric_nz.tardisweepingangels.monsters.silent;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.tardisweepingangels.utils.WorldProcessor;
 import org.bukkit.entity.Guardian;
 import org.bukkit.potion.PotionEffectType;
 
