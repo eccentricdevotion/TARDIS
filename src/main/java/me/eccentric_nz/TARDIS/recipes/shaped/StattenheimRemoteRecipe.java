@@ -58,7 +58,7 @@ public class StattenheimRemoteRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.FLINT, 1);
         ItemMeta im = is.getItemMeta();
-        im.customName(ComponentUtils.toWhite("Stattenheim Remote"));
+        im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Stattenheim Remote"));
         String uses = plugin.getConfig().getString("circuits.uses.stattenheim", "15");
         if (uses.equals("0")) {
             uses = "1000";
@@ -76,7 +76,7 @@ public class StattenheimRemoteRecipe {
             r.shape("OBO", "OLO", "RRR");
             ItemStack exact = ItemStack.of(Material.GLOWSTONE_DUST, 1);
             ItemMeta em = exact.getItemMeta();
-            em.customName(ComponentUtils.toWhite("TARDIS Stattenheim Circuit"));
+            em.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("TARDIS Stattenheim Circuit"));
             CustomModelDataComponent component = em.getCustomModelDataComponent();
             component.setFloats(CircuitVariant.STATTENHEIM.getFloats());
             em.setCustomModelDataComponent(component);

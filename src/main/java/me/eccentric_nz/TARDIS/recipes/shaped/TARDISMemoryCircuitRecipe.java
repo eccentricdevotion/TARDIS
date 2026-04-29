@@ -55,7 +55,7 @@ public class TARDISMemoryCircuitRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.GLOWSTONE_DUST, 1);
         ItemMeta im = is.getItemMeta();
-        im.customName(ComponentUtils.toWhite("TARDIS Memory Circuit"));
+        im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("TARDIS Memory Circuit"));
         CustomModelDataComponent component = im.getCustomModelDataComponent();
         component.setFloats(CircuitVariant.MEMORY.getFloats());
         im.setCustomModelDataComponent(component);

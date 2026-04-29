@@ -75,7 +75,7 @@ public class SonicLore {
             lore.add(Component.text(upgrade));
         }
         ItemMeta rim = result.getItemMeta();
-        rim.customName(Component.text(dn));
+        rim.setData(DataComponentTypes.CUSTOM_NAME, Component.text(dn));
         CustomModelDataComponent component = rim.getCustomModelDataComponent();
         component.setFloats(floats);
         rim.setCustomModelDataComponent(component);

@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.recipes;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemRegistry;
@@ -31,11 +33,9 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.World;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 
 public class TARDISSeedRecipe {
@@ -72,11 +72,10 @@ public class TARDISSeedRecipe {
                 is = ItemStack.of(TARDISSeedDisplayItem.CUSTOM.getMaterial(), 1);
             }
         }
-        ItemMeta im = is.getItemMeta();
-        im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, model.getKey());
-        im.customName(ComponentUtils.toGold("TARDIS Seed Block"));
-        im.lore(List.of(Component.text(s.getPermission().toUpperCase(Locale.ROOT))));
-        is.setItemMeta(im);
+        NamespacedKey finalModel = model;
+        is.editPersistentDataContainer(pdc -> pdc.set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING, finalModel.getKey()));
+        is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toGold("TARDIS Seed Block"));
+        is.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text(s.getPermission().toUpperCase(Locale.ROOT))).build());
         NamespacedKey key = new NamespacedKey(plugin, s.getPermission() + "_seed");
         ShapedRecipe r = new ShapedRecipe(key, is);
         // set shape

@@ -112,7 +112,7 @@ public class GallifreyBlueprintTrade {
         PersistentDataContainer pdc = im.getPersistentDataContainer();
         pdc.set(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID(), UUID.randomUUID());
         pdc.set(plugin.getBlueprintKey(), PersistentDataType.STRING, perm);
-        im.customName(ComponentUtils.toWhite("TARDIS Blueprint Disk"));
+        im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("TARDIS Blueprint Disk"));
         List<Component> lore = List.of(
                 ComponentUtils.toWhite(TARDISStringUtils.capitalise(name)),
                 Component.text("Valid only for"),

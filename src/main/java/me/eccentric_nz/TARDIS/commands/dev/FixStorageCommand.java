@@ -58,13 +58,13 @@ public class FixStorageCommand {
                             if (!component.children().isEmpty()) {
                                 stripped = ComponentUtils.stripColour(component.children().getFirst());
                             }
-                            im.customName(Component.text(stripped));
+                            im.setData(DataComponentTypes.CUSTOM_NAME, Component.text(stripped));
                             if (is.getType() == Material.GLOWSTONE_DUST) {
                                 CustomModelDataComponent cmd = im.getCustomModelDataComponent();
                                 cmd.setFloats(CircuitVariant.GALLIFREY.getFloats());
                                 im.setCustomModelDataComponent(cmd);
                             }
-                            im.setItemModel(null);
+                            im.setData(DataComponentTypes.ITEM_MODEL, null);
                             im.addItemFlags(ItemFlag.values());
                             im.setAttributeModifiers(Multimaps.forMap(Map.of()));
                             is.setItemMeta(im);

@@ -265,7 +265,7 @@ public class TARDISTerminalListener implements Listener {
             default -> ItemStack.of(Material.PURPLE_WOOL, 1);
         };
         ItemMeta im = is.getItemMeta();
-        im.customName(Component.text(row));
+        im.setData(DataComponentTypes.CUSTOM_NAME, Component.text(row));
         List<Component> lore = getLoreValue(max, new_slot, signed, uuid);
         im.lore(lore);
         is.setItemMeta(im);
@@ -375,7 +375,7 @@ public class TARDISTerminalListener implements Listener {
         int slotm = getValue(34, getSlot(view, 28, 34), false, uuid) * plugin.getConfig().getInt("travel.terminal_step");
         int slotx = getValue(16, getSlot(view, 10, 16), true, uuid) * slotm;
         int slotz = getValue(25, getSlot(view, 19, 25), true, uuid) * slotm;
-        List<Component> lore = new ArrayList<>();
+        ItemLore.Builder lore = ItemLore.lore();
         COMPASS d = terminalUsers.get(uuid).direction();
         // what kind of world is it?
         Environment e;

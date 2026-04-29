@@ -45,7 +45,7 @@ public class SaveStorageDiskRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.MUSIC_DISC_CHIRP, 1);
         ItemMeta im = is.getItemMeta();
-        im.customName(ComponentUtils.toWhite("Save Storage Disk"));
+        im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Save Storage Disk"));
         im.lore(List.of(Component.text("Blank")));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "save_storage_disk");

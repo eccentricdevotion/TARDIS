@@ -168,7 +168,7 @@ public class ArchitecturalBlueprintsListener extends TARDISMenuListener {
         ItemStack head = ItemStack.of(Material.PLAYER_HEAD, 1);
         SkullMeta skull = (SkullMeta) head.getItemMeta();
         skull.setOwningPlayer(player);
-        skull.customName(Component.text(player.getName()));
+        skull.setData(DataComponentTypes.CUSTOM_NAME, Component.text(player.getName()));
         skull.lore(List.of(Component.text(player.getUniqueId().toString())));
         head.setItemMeta(skull);
         view.setItem(slot, head);

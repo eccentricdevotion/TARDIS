@@ -64,8 +64,8 @@ public class GasMask implements Listener {
             // set helmet to mask
             ItemStack gasmask = ItemStack.of(Material.SUGAR, 1);
             ItemMeta im = gasmask.getItemMeta();
-            im.customName(Component.text("Gas Mask"));
-            im.setItemModel(EmptyChildVariant.EMPTY_CHILD_MASK.getKey());
+            im.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Gas Mask"));
+            im.setData(DataComponentTypes.ITEM_MODEL, EmptyChildVariant.EMPTY_CHILD_MASK.getKey());
             EquippableComponent component = im.getEquippable();
             component.setCameraOverlay(EmptyChildVariant.EMPTY_CHILD_OVERLAY.getKey());
             im.setEquippable(component);

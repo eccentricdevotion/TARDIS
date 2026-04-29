@@ -62,9 +62,9 @@ public class SystemTreeInventory implements InventoryHolder {
                 ItemStack is = ItemStack.of(g.getMaterial(), 1);
                 ItemMeta im = is.getItemMeta();
                 if (g.getBranch().equals("branch")) {
-                    im.customName(Component.text(g.getName(), NamedTextColor.GOLD).decorate(TextDecoration.ITALIC));
+                    im.setData(DataComponentTypes.CUSTOM_NAME, Component.text(g.getName(), NamedTextColor.GOLD).decorate(TextDecoration.ITALIC));
                 } else {
-                    im.customName(Component.text(g.getName()));
+                    im.setData(DataComponentTypes.CUSTOM_NAME, Component.text(g.getName()));
                 }
                 List<Component> lore = new ArrayList<>(g.getLore());
                 boolean has = sysData.getUpgrades().get(g);
@@ -84,7 +84,7 @@ public class SystemTreeInventory implements InventoryHolder {
                 }
                 im.lore(lore);
                 // does the player have this system upgrade?
-                im.setItemModel((has) ? g.getUnlocked() : g.getLocked());
+                im.setData(DataComponentTypes.ITEM_MODEL, (has) ? g.getUnlocked() : g.getLocked());
                 is.setItemMeta(im);
                 stacks[g.getSlot()] = is;
             }
@@ -92,16 +92,16 @@ public class SystemTreeInventory implements InventoryHolder {
         // left_down
         ItemStack ld = ItemStack.of(SystemTree.LEFT_DOWN.getMaterial(), 1);
         ItemMeta eft = ld.getItemMeta();
-        eft.customName(ComponentUtils.toWhite(""));
-        eft.setItemModel(SystemTree.LEFT_DOWN.getLocked());
+        eft.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(""));
+        eft.setData(DataComponentTypes.ITEM_MODEL, SystemTree.LEFT_DOWN.getLocked());
         ld.setItemMeta(eft);
         stacks[0] = ld;
         // horizontal
         int[] horizontal = new int[]{1, 3, 5, 7};
         ItemStack his = ItemStack.of(SystemTree.H_LINE.getMaterial(), 1);
         ItemMeta him = his.getItemMeta();
-        him.customName(ComponentUtils.toWhite(""));
-        him.setItemModel(SystemTree.H_LINE.getLocked());
+        him.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(""));
+        him.setData(DataComponentTypes.ITEM_MODEL, SystemTree.H_LINE.getLocked());
         his.setItemMeta(him);
         for (int h : horizontal) {
             stacks[h] = his;
@@ -110,8 +110,8 @@ public class SystemTreeInventory implements InventoryHolder {
         int[] both_down = new int[]{2, 6};
         ItemStack bd = ItemStack.of(SystemTree.BOTH_DOWN.getMaterial(), 1);
         ItemMeta bdim = bd.getItemMeta();
-        bdim.customName(ComponentUtils.toWhite(""));
-        bdim.setItemModel(SystemTree.BOTH_DOWN.getLocked());
+        bdim.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(""));
+        bdim.setData(DataComponentTypes.ITEM_MODEL, SystemTree.BOTH_DOWN.getLocked());
         bd.setItemMeta(bdim);
         for (int d : both_down) {
             stacks[d] = bd;
@@ -119,22 +119,22 @@ public class SystemTreeInventory implements InventoryHolder {
         // right_down
         ItemStack rd = ItemStack.of(SystemTree.RIGHT_DOWN.getMaterial(), 1);
         ItemMeta own = rd.getItemMeta();
-        own.customName(ComponentUtils.toWhite(""));
-        own.setItemModel(SystemTree.RIGHT_DOWN.getLocked());
+        own.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(""));
+        own.setData(DataComponentTypes.ITEM_MODEL, SystemTree.RIGHT_DOWN.getLocked());
         rd.setItemMeta(own);
         stacks[8] = rd;
         // background
         ItemStack is = ItemStack.of(SystemTree.BLANK.getMaterial(), 1);
         ItemMeta im = is.getItemMeta();
-        im.customName(ComponentUtils.toWhite(""));
-        im.setItemModel(SystemTree.BLANK.getLocked());
+        im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(""));
+        im.setData(DataComponentTypes.ITEM_MODEL, SystemTree.BLANK.getLocked());
         is.setItemMeta(im);
         stacks[10] = is;
         // vertical
         ItemStack vert = ItemStack.of(SystemTree.VERTICAL.getMaterial(), 1);
         ItemMeta ical = vert.getItemMeta();
-        ical.customName(ComponentUtils.toWhite(""));
-        ical.setItemModel(SystemTree.VERTICAL.getLocked());
+        ical.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(""));
+        ical.setData(DataComponentTypes.ITEM_MODEL, SystemTree.VERTICAL.getLocked());
         vert.setItemMeta(ical);
         stacks[13] = vert;
         // close

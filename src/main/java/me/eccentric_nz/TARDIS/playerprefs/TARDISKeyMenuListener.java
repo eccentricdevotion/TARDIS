@@ -157,7 +157,7 @@ public class TARDISKeyMenuListener extends TARDISMenuListener {
                 // set key display name colour
                 NamedTextColor display = COLOUR_LOOKUP.get(wool);
                 ItemMeta key_im = key.getItemMeta();
-                key_im.customName(Component.text("TARDIS Key", display).decorationIfAbsent(TextDecoration.ITALIC, TextDecoration.State.FALSE));
+                key_im.setData(DataComponentTypes.CUSTOM_NAME, Component.text("TARDIS Key", display).decorationIfAbsent(TextDecoration.ITALIC, TextDecoration.State.FALSE));
                 key.setItemMeta(key_im);
             }
             case 26 -> {

@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.tardischemistry.microscope;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
 import me.eccentric_nz.TARDIS.custommodels.keys.ChemistryEquipment;
@@ -50,15 +51,13 @@ class FileCabinetInventory implements InventoryHolder {
         // make screens
         for (ScopeView view : ScopeView.values()) {
             ItemStack is = ItemStack.of(Material.GRAY_STAINED_GLASS, 1);
-            ItemMeta im = is.getItemMeta();
-            im.customName(Component.text(view.getName()));
-            im.setItemModel(ChemistryEquipment.FOLDER.getKey());
-            im.getPersistentDataContainer().set(plugin.getMicroscopeKey(), PersistentDataType.STRING, view.getModel().getKey());
-            is.setItemMeta(im);
+            is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(view.getName()));
+            is.setData(DataComponentTypes.ITEM_MODEL, ChemistryEquipment.FOLDER.getKey());
+            is.editPersistentDataContainer(pdc -> pdc.set(plugin.getMicroscopeKey(), PersistentDataType.STRING, view.getModel().getKey()));
             stacks[view.ordinal()] = is;
         }
         // Cancel / close
-        stacks[53] = GUIItemFactory.close();;
+        stacks[53] = GUIItemFactory.close();
         return stacks;
     }
 }

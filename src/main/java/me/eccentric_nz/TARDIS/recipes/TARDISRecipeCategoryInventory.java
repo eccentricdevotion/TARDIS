@@ -53,7 +53,7 @@ public class TARDISRecipeCategoryInventory implements InventoryHolder {
         // info
         ItemStack info = ItemStack.of(Material.BOWL, 1);
         ItemMeta info_im = info.getItemMeta();
-        info_im.customName(Component.text("Info"));
+        info_im.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Info"));
         info_im.lore(List.of(
                 Component.text("Click a button below"),
                 Component.text("to see the items"),
@@ -65,7 +65,7 @@ public class TARDISRecipeCategoryInventory implements InventoryHolder {
             if (!category.equals(RecipeCategory.UNUSED) && category != RecipeCategory.UNCRAFTABLE && category != RecipeCategory.CHEMISTRY) {
                 ItemStack cat = ItemStack.of(category.getMaterial(), 1);
                 ItemMeta egory = cat.getItemMeta();
-                egory.customName(Component.text(category.getName()));
+                egory.setData(DataComponentTypes.CUSTOM_NAME, Component.text(category.getName()));
                 if (category == RecipeCategory.ITEMS) {
                     CustomModelDataComponent component = egory.getCustomModelDataComponent();
                     component.setFloats(KeyVariant.BRASS_STRING.getFloats());
@@ -92,7 +92,7 @@ public class TARDISRecipeCategoryInventory implements InventoryHolder {
                     egory.setCustomModelDataComponent(component);
                 }
                 if (category == RecipeCategory.ROTORS) {
-                    egory.setItemModel(category.getModel());
+                    egory.setData(DataComponentTypes.ITEM_MODEL, category.getModel());
                 }
                 egory.addItemFlags(ItemFlag.values());
                 egory.setAttributeModifiers(Multimaps.forMap(Map.of()));

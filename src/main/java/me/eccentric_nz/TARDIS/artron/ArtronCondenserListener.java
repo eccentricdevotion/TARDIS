@@ -346,7 +346,7 @@ public class ArtronCondenserListener implements Listener {
             List<Component> lore = lim.lore();
             lore.set(1, Component.text(remainder));
             lim.lore(lore);
-            lim.setEnchantmentGlintOverride(true);
+            lis.setData(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE, true);
             lim.addItemFlags(ItemFlag.values());
             lim.setAttributeModifiers(Multimaps.forMap(Map.of()));
             leftover.setItemMeta(lim);
@@ -359,7 +359,7 @@ public class ArtronCondenserListener implements Listener {
             List<Component> lore = im.lore();
             lore.set(1, Component.text(full));
             im.lore(lore);
-            im.setEnchantmentGlintOverride(true);
+            is.setData(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE, true);
             im.addItemFlags(ItemFlag.values());
             im.setAttributeModifiers(Multimaps.forMap(Map.of()));
             result.setItemMeta(im);

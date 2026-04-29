@@ -77,7 +77,7 @@ public class CompanionInventory implements InventoryHolder {
                         // lookup name
                         name = getPlayerNameFromMojang(c);
                     }
-                    skull.customName(Component.text(name));
+                    skull.setData(DataComponentTypes.CUSTOM_NAME, Component.text(name));
                     skull.lore(List.of(Component.text(c)));
                     skull.addItemFlags(ItemFlag.values());
                     skull.setAttributeModifiers(Multimaps.forMap(Map.of()));
@@ -92,7 +92,7 @@ public class CompanionInventory implements InventoryHolder {
         // add buttons
         ItemStack info = ItemStack.of(GUICompanion.INFO.material(), 1);
         ItemMeta ii = info.getItemMeta();
-        ii.customName(Component.text("Info"));
+        ii.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Info"));
         ii.lore(List.of(
                 Component.text("To REMOVE a companion"),
                 Component.text("select a player head"),
@@ -106,12 +106,12 @@ public class CompanionInventory implements InventoryHolder {
         heads[GUICompanion.INFO.slot()] = info;
         ItemStack add = ItemStack.of(GUICompanion.ADD_COMPANION.material(), 1);
         ItemMeta aa = add.getItemMeta();
-        aa.customName(Component.text("Add"));
+        aa.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Add"));
         add.setItemMeta(aa);
         heads[GUICompanion.ADD_COMPANION.slot()] = add;
         ItemStack del = ItemStack.of(GUICompanion.DELETE_COMPANION.material(), 1);
         ItemMeta dd = del.getItemMeta();
-        dd.customName(Component.text("Remove"));
+        dd.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Remove"));
         del.setItemMeta(dd);
         heads[GUICompanion.DELETE_COMPANION.slot()] = del;
         // Cancel / close

@@ -3,7 +3,10 @@
  */
 package me.eccentric_nz.tardisvortexmanipulator.gui;
 
-import com.google.common.collect.Multimaps;
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.CustomModelData;
+import io.papermc.paper.datacomponent.item.ItemLore;
+import io.papermc.paper.datacomponent.item.TooltipDisplay;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
 import me.eccentric_nz.TARDIS.custommodels.keys.VortexManipulatorVariant;
@@ -12,14 +15,7 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.Damageable;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.components.CustomModelDataComponent;
-
-import java.util.List;
-import java.util.Map;
 
 /**
  * @author eccentric_nz
@@ -49,191 +45,138 @@ public class TVMGUI implements InventoryHolder {
      */
     private ItemStack[] getItemStack() {
         // display
-        ItemStack dis = ItemStack.of(Material.BOWL, 1);
-        ItemMeta play = dis.getItemMeta();
-        play.customName(Component.text("Display"));
-        play.lore(List.of(Component.empty()));
-        dis.setItemMeta(play);
+        ItemStack display = ItemStack.of(Material.BOWL, 1);
+        display.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Display"));
+        display.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.empty()));
         // predictive world
         ItemStack pred = ItemStack.of(Material.BOWL, 1);
-        ItemMeta ict = dis.getItemMeta();
-        ict.customName(Component.text("Predictive text"));
-        ict.lore(List.of(Component.empty()));
-        pred.setItemMeta(ict);
+        pred.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Predictive text"));
+        pred.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.empty()));
         // keypad pad
         // 1
         ItemStack one = ItemStack.of(Material.BOWL, 1);
-        ItemMeta none = one.getItemMeta();
-        none.customName(Component.text("1"));
-        one.setItemMeta(none);
+        one.setData(DataComponentTypes.CUSTOM_NAME, Component.text("1"));
         // 2 abc
         ItemStack two = ItemStack.of(Material.BOWL, 1);
-        ItemMeta abc = two.getItemMeta();
-        abc.customName(Component.text("2"));
-        abc.lore(List.of(Component.text("abc")));
-        two.setItemMeta(abc);
+        two.setData(DataComponentTypes.CUSTOM_NAME, Component.text("2"));
+        two.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text("abc")).build());
         // 3 def
         ItemStack three = ItemStack.of(Material.BOWL, 1);
-        ItemMeta def = three.getItemMeta();
-        def.customName(Component.text("3"));
-        def.lore(List.of(Component.text("def")));
-        three.setItemMeta(def);
+        three.setData(DataComponentTypes.CUSTOM_NAME, Component.text("3"));
+        three.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text("def")).build());
         // 4 ghi
         ItemStack four = ItemStack.of(Material.BOWL, 1);
-        ItemMeta ghi = four.getItemMeta();
-        ghi.customName(Component.text("4"));
-        ghi.lore(List.of(Component.text("ghi")));
-        four.setItemMeta(ghi);
+        four.setData(DataComponentTypes.CUSTOM_NAME, Component.text("4"));
+        four.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text("ghi")).build());
         // 5 jkl
         ItemStack five = ItemStack.of(Material.BOWL, 1);
-        ItemMeta jkl = five.getItemMeta();
-        jkl.customName(Component.text("5"));
-        jkl.lore(List.of(Component.text("jkl")));
-        five.setItemMeta(jkl);
+        five.setData(DataComponentTypes.CUSTOM_NAME, Component.text("5"));
+        five.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text("jkl")).build());
         // 6 mno
         ItemStack six = ItemStack.of(Material.BOWL, 1);
-        ItemMeta mno = six.getItemMeta();
-        mno.customName(Component.text("6"));
-        mno.lore(List.of(Component.text("mno")));
-        six.setItemMeta(mno);
+        six.setData(DataComponentTypes.CUSTOM_NAME, Component.text("6"));
+        six.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text("mno")).build());
         // 7 pqrs
         ItemStack seven = ItemStack.of(Material.BOWL, 1);
-        ItemMeta pqrs = seven.getItemMeta();
-        pqrs.customName(Component.text("7"));
-        pqrs.lore(List.of(Component.text("pqrs")));
-        seven.setItemMeta(pqrs);
+        seven.setData(DataComponentTypes.CUSTOM_NAME, Component.text("7"));
+        seven.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text("pqrs")).build());
         // 8 tuv
         ItemStack eight = ItemStack.of(Material.BOWL, 1);
-        ItemMeta tuv = eight.getItemMeta();
-        tuv.customName(Component.text("8"));
-        tuv.lore(List.of(Component.text("tuv")));
-        eight.setItemMeta(tuv);
+        eight.setData(DataComponentTypes.CUSTOM_NAME, Component.text("8"));
+        eight.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text("tuv")).build());
         // 9 wxyz
         ItemStack nine = ItemStack.of(Material.BOWL, 1);
-        ItemMeta wxyz = nine.getItemMeta();
-        wxyz.customName(Component.text("9"));
-        wxyz.lore(List.of(Component.text("wxyz")));
-        nine.setItemMeta(wxyz);
+        nine.setData(DataComponentTypes.CUSTOM_NAME, Component.text("9"));
+        nine.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text("wxyz")).build());
         // 0
         ItemStack zero = ItemStack.of(Material.BOWL, 1);
-        ItemMeta nada = zero.getItemMeta();
-        nada.customName(Component.text("0"));
-        zero.setItemMeta(nada);
+        zero.setData(DataComponentTypes.CUSTOM_NAME, Component.text("0"));
         // symbols -_*~
         ItemStack hash = ItemStack.of(Material.BOWL, 1);
-        ItemMeta symbols = hash.getItemMeta();
-        symbols.customName(Component.text("#"));
-        symbols.lore(List.of(Component.text("~_-")));
-        hash.setItemMeta(symbols);
+        hash.setData(DataComponentTypes.CUSTOM_NAME, Component.text("#"));
+        hash.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text("~_-")).build());
         // space
         ItemStack star = ItemStack.of(Material.BOWL, 1);
-        ItemMeta space = star.getItemMeta();
-        space.customName(Component.text("*"));
-        space.lore(List.of(Component.text("Space")));
-        star.setItemMeta(space);
+        star.setData(DataComponentTypes.CUSTOM_NAME, Component.text("*"));
+        star.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text("Space")).build());
         // world
         ItemStack world = ItemStack.of(Material.BOWL, 1);
-        ItemMeta but = world.getItemMeta();
-        but.customName(Component.text("World"));
-        world.setItemMeta(but);
+        world.setData(DataComponentTypes.CUSTOM_NAME, Component.text("World"));
         // x
         ItemStack x = ItemStack.of(Material.BOWL, 1);
-        ItemMeta sel = x.getItemMeta();
-        sel.customName(Component.text("X"));
-        x.setItemMeta(sel);
+        x.setData(DataComponentTypes.CUSTOM_NAME, Component.text("X"));
         // y
         ItemStack y = ItemStack.of(Material.BOWL, 1);
-        ItemMeta hei = y.getItemMeta();
-        hei.customName(Component.text("Y"));
-        y.setItemMeta(hei);
+        y.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Y"));
         // z
         ItemStack z = ItemStack.of(Material.BOWL, 1);
-        ItemMeta coord = z.getItemMeta();
-        coord.customName(Component.text("Z"));
-        z.setItemMeta(coord);
+        z.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Z"));
         // tachyon level - show different levels depening on % full
         double percent = tachyonLevel / plugin.getVortexConfig().getDouble("tachyon_use.max");
-        short durability = (short) (1562 - (percent * 1562));
+        int durability = (int) (1562 - (percent * 1562));
         ItemStack tach = ItemStack.of(Material.DIAMOND_PICKAXE, 1);
-        ItemMeta yon = tach.getItemMeta();
-        yon.customName(Component.text("Tachyon Level"));
+        tach.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Tachyon Level"));
         int level = (int) (percent * 100);
-        CustomModelDataComponent component = yon.getCustomModelDataComponent();
+        CustomModelData.Builder component = CustomModelData.customModelData();
         if (level == 0) {
-            component.setFloats(VortexManipulatorVariant.PERCENT_ZERO.getFloats());
+            component.addFloats(VortexManipulatorVariant.PERCENT_ZERO.getFloats());
         } else if (level < 11) {
-            component.setFloats(VortexManipulatorVariant.PERCENT_TEN.getFloats());
+            component.addFloats(VortexManipulatorVariant.PERCENT_TEN.getFloats());
         } else if (level < 21) {
-            component.setFloats(VortexManipulatorVariant.PERCENT_TWENTY.getFloats());
+            component.addFloats(VortexManipulatorVariant.PERCENT_TWENTY.getFloats());
         } else if (level < 31) {
-            component.setFloats(VortexManipulatorVariant.PERCENT_THIRTY.getFloats());
+            component.addFloats(VortexManipulatorVariant.PERCENT_THIRTY.getFloats());
         } else if (level < 41) {
-            component.setFloats(VortexManipulatorVariant.PERCENT_FORTY.getFloats());
+            component.addFloats(VortexManipulatorVariant.PERCENT_FORTY.getFloats());
         } else if (level < 51) {
-            component.setFloats(VortexManipulatorVariant.PERCENT_FIFTY.getFloats());
+            component.addFloats(VortexManipulatorVariant.PERCENT_FIFTY.getFloats());
         } else if (level < 61) {
-            component.setFloats(VortexManipulatorVariant.PERCENT_SIXTY.getFloats());
+            component.addFloats(VortexManipulatorVariant.PERCENT_SIXTY.getFloats());
         } else if (level < 71) {
-            component.setFloats(VortexManipulatorVariant.PERCENT_SEVENTY.getFloats());
+            component.addFloats(VortexManipulatorVariant.PERCENT_SEVENTY.getFloats());
         } else if (level < 81) {
-            component.setFloats(VortexManipulatorVariant.PERCENT_EIGHTY.getFloats());
+            component.addFloats(VortexManipulatorVariant.PERCENT_EIGHTY.getFloats());
         } else if (level < 91) {
-            component.setFloats(VortexManipulatorVariant.PERCENT_NINETY.getFloats());
+            component.addFloats(VortexManipulatorVariant.PERCENT_NINETY.getFloats());
         } else {
-            component.setFloats(VortexManipulatorVariant.PERCENT_HUNDRED.getFloats());
+            component.addFloats(VortexManipulatorVariant.PERCENT_HUNDRED.getFloats());
         }
-        yon.setCustomModelDataComponent(component);
-        yon.lore(List.of(Component.text(level + "%")));
-        yon.addItemFlags(ItemFlag.values());
-        yon.setAttributeModifiers(Multimaps.forMap(Map.of()));
-        Damageable damageable = (Damageable) yon;
-        damageable.setDamage(durability);
-        tach.setItemMeta(damageable);
+        tach.setData(DataComponentTypes.CUSTOM_MODEL_DATA, component.build());
+        tach.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text(level + "%")));
+        tach.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
+                .addHiddenComponents(DataComponentTypes.ATTRIBUTE_MODIFIERS)
+                .hideTooltip(true)
+                .build());
+        tach.setData(DataComponentTypes.DAMAGE, durability);
         // lifesigns
         ItemStack life = ItemStack.of(Material.BOWL, 1);
-        ItemMeta signs = life.getItemMeta();
-        signs.customName(Component.text("Lifesigns"));
-        life.setItemMeta(signs);
+        life.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Lifesigns"));
         // warp
         ItemStack warp = ItemStack.of(Material.BOWL, 1);
-        ItemMeta tol = warp.getItemMeta();
-        tol.customName(Component.text("Enter Vortex / Save location / Check lifesigns"));
-        warp.setItemMeta(tol);
+        warp.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Enter Vortex / Save location / Check lifesigns"));
         // beacon
         ItemStack bea = ItemStack.of(Material.BOWL, 1);
-        ItemMeta con = bea.getItemMeta();
-        con.customName(Component.text("Beacon signal"));
-        bea.setItemMeta(con);
+        bea.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Beacon signal"));
         // message
         ItemStack mess = ItemStack.of(Material.BOWL, 1);
-        ItemMeta age = mess.getItemMeta();
-        age.customName(Component.text("Messages"));
-        mess.setItemMeta(age);
+        mess.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Messages"));
         // save
         ItemStack save = ItemStack.of(Material.BOWL, 1);
-        ItemMeta curr = save.getItemMeta();
-        curr.customName(Component.text("Save current location"));
-        save.setItemMeta(curr);
+        save.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Save current location"));
         // load
         ItemStack load = ItemStack.of(Material.BOWL, 1);
-        ItemMeta disk = load.getItemMeta();
-        disk.customName(Component.text("Load saved location"));
-        load.setItemMeta(disk);
+        load.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Load saved location"));
         // close
         ItemStack close = GUIItemFactory.close();
         // next
         ItemStack next = ItemStack.of(Material.BOWL, 1);
-        ItemMeta cha = next.getItemMeta();
-        cha.customName(Component.text("Next character"));
-        next.setItemMeta(cha);
+        next.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Next character"));
         // back
         ItemStack prev = ItemStack.of(Material.BOWL, 1);
-        ItemMeta let = prev.getItemMeta();
-        let.customName(Component.text("Previous character"));
-        prev.setItemMeta(let);
+        prev.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Previous character"));
 
         return new ItemStack[]{
-                null, null, null, null, dis, null, pred, null, null,
+                null, null, null, null, display, null, pred, null, null,
                 tach, null, world, one, two, three, null, save, null,
                 life, null, x, four, five, six, null, load, null,
                 null, null, y, seven, eight, nine, null, mess, null,

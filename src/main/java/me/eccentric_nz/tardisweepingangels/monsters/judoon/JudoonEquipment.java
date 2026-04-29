@@ -37,7 +37,7 @@ public class JudoonEquipment {
             // weapon
             ItemStack hand = ItemStack.of(Material.END_ROD);
             ItemMeta tim = hand.getItemMeta();
-            tim.setItemModel(JudoonVariant.JUDOON_WEAPON_RESTING.getKey());
+            tim.setData(DataComponentTypes.ITEM_MODEL, JudoonVariant.JUDOON_WEAPON_RESTING.getKey());
             hand.setItemMeta(tim);
             entity.getEquipment().setItemInMainHand(hand);
             new FollowerEquipper().setOptionsAndInvisibilty(player, entity, Monster.JUDOON);

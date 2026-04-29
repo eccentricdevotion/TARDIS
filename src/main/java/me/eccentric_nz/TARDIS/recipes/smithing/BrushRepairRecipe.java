@@ -50,7 +50,7 @@ public class BrushRepairRecipe {
         // addition
         ItemStack isa = ItemStack.of(Material.GLOWSTONE_DUST, 1);
         ItemMeta ima = isa.getItemMeta();
-        ima.customName(ComponentUtils.toWhite("Brush Circuit"));
+        ima.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Brush Circuit"));
         CustomModelDataComponent ecomponent = ima.getCustomModelDataComponent();
         ecomponent.setFloats(CircuitVariant.BRUSH.getFloats());
         ima.setCustomModelDataComponent(ecomponent);

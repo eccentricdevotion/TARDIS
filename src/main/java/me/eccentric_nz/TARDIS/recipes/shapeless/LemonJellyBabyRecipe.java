@@ -41,7 +41,7 @@ public class LemonJellyBabyRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.MELON_SLICE, 4);
         ItemMeta im = is.getItemMeta();
-        im.customName(ComponentUtils.toWhite("Lemon Jelly Baby"));
+        im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Lemon Jelly Baby"));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "lemon_jelly_baby");
         ShapelessRecipe r = new ShapelessRecipe(key, is);

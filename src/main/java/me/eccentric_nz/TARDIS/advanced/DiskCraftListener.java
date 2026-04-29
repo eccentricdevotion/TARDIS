@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.advanced;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.BiomeLookup;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
@@ -32,7 +34,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,12 +76,13 @@ public class DiskCraftListener implements Listener {
                 if (is == null || !is.hasItemMeta()) {
                     return;
                 }
-                ItemMeta im = is.getItemMeta();
-                if (!im.hasCustomName() || !ComponentUtils.endsWith(im.customName(), "Biome Storage Disk") || !im.hasLore()) {
+                if (!is.hasData(DataComponentTypes.CUSTOM_NAME)
+                        || !ComponentUtils.endsWith(is.getData(DataComponentTypes.CUSTOM_NAME), "Biome Storage Disk")
+                        || !is.hasData(DataComponentTypes.LORE)) {
                     return;
                 }
-                List<Component> lore = im.lore();
-                if (!ComponentUtils.stripColour(lore.getFirst()).equals("Blank")) {
+                Component lore = is.getData(DataComponentTypes.LORE).lines().getFirst();
+                if (!ComponentUtils.stripColour(lore).equals("Blank")) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "DISK_BLANK_BIOME");
                     return;
                 }
@@ -95,10 +97,8 @@ public class DiskCraftListener implements Listener {
                     return;
                 }
                 disk = ItemStack.of(Material.MUSIC_DISC_CAT, 1);
-                ItemMeta dim = disk.getItemMeta();
-                dim.customName(Component.text("Biome Storage Disk"));
-                dim.lore(disk_lore);
-                disk.setItemMeta(dim);
+                disk.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Biome Storage Disk"));
+                disk.setData(DataComponentTypes.LORE, ItemLore.lore(disk_lore));
                 inv.setItem(0, disk);
                 player.updateInventory();
             } else {
@@ -107,12 +107,13 @@ public class DiskCraftListener implements Listener {
                 if (is == null || !is.hasItemMeta()) {
                     return;
                 }
-                ItemMeta im = is.getItemMeta();
-                if (!im.hasCustomName() || !ComponentUtils.endsWith(im.customName(), "Preset Storage Disk") || !im.hasLore()) {
+                if (!is.hasData(DataComponentTypes.CUSTOM_NAME)
+                        || !ComponentUtils.endsWith(is.getData(DataComponentTypes.CUSTOM_NAME), "Preset Storage Disk")
+                        || !is.hasData(DataComponentTypes.LORE)) {
                     return;
                 }
-                List<Component> lore = im.lore();
-                if (!ComponentUtils.stripColour(lore.getFirst()).equals("Blank")) {
+                Component lore = is.getData(DataComponentTypes.LORE).lines().getFirst();
+                if (!ComponentUtils.stripColour(lore).equals("Blank")) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "DISK_BLANK_PRESET");
                     return;
                 }
@@ -129,10 +130,8 @@ public class DiskCraftListener implements Listener {
                     return;
                 }
                 disk = ItemStack.of(Material.MUSIC_DISC_MALL, 1);
-                ItemMeta dim = disk.getItemMeta();
-                dim.customName(Component.text("Preset Storage Disk"));
-                dim.lore(List.of(Component.text(preset)));
-                disk.setItemMeta(dim);
+                disk.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Preset Storage Disk"));
+                disk.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text(preset)));
                 inv.setItem(0, disk);
                 player.updateInventory();
             }

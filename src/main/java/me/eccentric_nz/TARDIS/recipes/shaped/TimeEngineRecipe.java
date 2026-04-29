@@ -52,8 +52,8 @@ public class TimeEngineRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.LIGHT_GRAY_DYE, 1);
         ItemMeta im = is.getItemMeta();
-        im.customName(ComponentUtils.toWhite("Time Engine"));
-        im.setItemModel(RecipeItem.TIME_ENGINE.getModel());
+        im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Time Engine"));
+        im.setData(DataComponentTypes.ITEM_MODEL, RecipeItem.TIME_ENGINE.getModel());
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "time_engine");
         ShapedRecipe r = new ShapedRecipe(key, is);

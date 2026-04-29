@@ -73,7 +73,7 @@ public class JudoonGuardRunnable implements Runnable {
                             entity.setRotation(yaw,0);
                             ammo -= 1;
                             if (ammo > 0) {
-                                entity.customName(Component.text("Ammunition: " + ammo));
+                                entity.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Ammunition: " + ammo));
                                 entity.setCustomNameVisible(true);
                                 judoon.setAmmo(ammo);
                             }

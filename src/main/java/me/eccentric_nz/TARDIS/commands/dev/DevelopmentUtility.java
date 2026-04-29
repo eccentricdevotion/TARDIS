@@ -39,7 +39,7 @@ public class DevelopmentUtility {
         ItemStack cube = player.getInventory().getItemInMainHand();
         ItemMeta im = cube.getItemMeta();
         im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, TARDISBlockDisplayItem.SIEGE_CUBE.getCustomModel().getKey());
-        List<Component> lore = new ArrayList<>();
+        ItemLore.Builder lore = ItemLore.lore();
         lore.add(Component.text("Time Lord: eccentric_nz"));
         lore.add(Component.text("ID: 1"));
         im.lore(lore);
@@ -119,7 +119,7 @@ public class DevelopmentUtility {
         EntityEquipment ee = skeleton.getEquipment();
         ItemStack head = ItemStack.of(Material.SLIME_BALL);
         ItemMeta him = head.getItemMeta();
-        him.setItemModel(new NamespacedKey(plugin, "dalek_independent_head"));
+        him.setData(DataComponentTypes.ITEM_MODEL, new NamespacedKey(plugin, "dalek_independent_head"));
         EquippableComponent component = him.getEquippable();
         component.setSlot(EquipmentSlot.HEAD);
         component.setAllowedEntities(EntityType.SKELETON);
@@ -128,7 +128,7 @@ public class DevelopmentUtility {
         ee.setHelmet(head);
         ItemStack body = ItemStack.of(Material.SLIME_BALL);
         ItemMeta bim = body.getItemMeta();
-        bim.setItemModel(new NamespacedKey(plugin, "dalek_body"));
+        bim.setData(DataComponentTypes.ITEM_MODEL, new NamespacedKey(plugin, "dalek_body"));
         body.setItemMeta(bim);
         ee.setItemInMainHand(body);
         PotionEffect invisibility = new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 1, false, false);

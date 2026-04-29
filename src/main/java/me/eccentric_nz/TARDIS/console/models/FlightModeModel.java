@@ -30,10 +30,10 @@ public class FlightModeModel {
         ItemStack is = display.getItemStack();
         ItemMeta im = is.getItemMeta();
         switch (state) {
-            case 1 -> im.setItemModel(ModelledControl.RELATIVITY_DIFFERENTIATOR_0A.getKey());
-            case 2 -> im.setItemModel(ModelledControl.RELATIVITY_DIFFERENTIATOR_1A.getKey());
-            case 3 -> im.setItemModel(ModelledControl.RELATIVITY_DIFFERENTIATOR_2A.getKey());
-            default -> im.setItemModel(ModelledControl.RELATIVITY_DIFFERENTIATOR_3A.getKey());
+            case 1 -> im.setData(DataComponentTypes.ITEM_MODEL, ModelledControl.RELATIVITY_DIFFERENTIATOR_0A.getKey());
+            case 2 -> im.setData(DataComponentTypes.ITEM_MODEL, ModelledControl.RELATIVITY_DIFFERENTIATOR_1A.getKey());
+            case 3 -> im.setData(DataComponentTypes.ITEM_MODEL, ModelledControl.RELATIVITY_DIFFERENTIATOR_2A.getKey());
+            default -> im.setData(DataComponentTypes.ITEM_MODEL, ModelledControl.RELATIVITY_DIFFERENTIATOR_3A.getKey());
         }
         is.setItemMeta(im);
         display.setItemStack(is);

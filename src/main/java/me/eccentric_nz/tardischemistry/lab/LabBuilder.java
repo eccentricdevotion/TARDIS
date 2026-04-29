@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.tardischemistry.lab;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import net.kyori.adventure.text.Component;
 import org.bukkit.inventory.ItemStack;
@@ -26,11 +27,9 @@ public class LabBuilder {
 
     public static ItemStack getLabProduct(Lab lab) {
         ItemStack is = ItemStack.of(lab.getItemMaterial(), 1);
-        ItemMeta im = is.getItemMeta();
-        im.customName(Component.text(lab.getName()));
-        im.setItemModel(lab.getModel());
-        im.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING, lab.getModel().getKey());
-        is.setItemMeta(im);
+        is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(lab.getName()));
+        is.setData(DataComponentTypes.ITEM_MODEL, lab.getModel());
+        is.editPersistentDataContainer(pdc -> pdc.set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING, lab.getModel().getKey()));
         return is;
     }
 }

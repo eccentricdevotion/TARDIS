@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.tardisregeneration;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.custommodels.keys.Schism;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import net.kyori.adventure.text.Component;
@@ -36,14 +38,12 @@ public class UntemperedSchism {
 
     public static ItemStack create() {
         ItemStack untempered = ItemStack.of(Material.ANCIENT_DEBRIS);
-        ItemMeta im = untempered.getItemMeta();
-        im.setItemModel(Schism.UNTEMPERED_SCHISM_BLOCK.getKey());
-        im.customName(ComponentUtils.toWhite("Untempered Schism"));
-        im.lore(List.of(
+        untempered.setData(DataComponentTypes.ITEM_MODEL, Schism.UNTEMPERED_SCHISM_BLOCK.getKey());
+        untempered.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Untempered Schism"));
+        untempered.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(
                 Component.text("Renew regenerations when"),
                 Component.text("you have used them all.")
-        ));
-        untempered.setItemMeta(im);
+        )));
         return untempered;
     }
 

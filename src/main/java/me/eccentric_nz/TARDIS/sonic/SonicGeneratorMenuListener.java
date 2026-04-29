@@ -174,7 +174,7 @@ public class SonicGeneratorMenuListener extends TARDISMenuListener {
                 }
                 sonic_im = sonic.getItemMeta();
                 if (slotWasNull) {
-                    sonic_im.customName(ComponentUtils.toWhite("Sonic Screwdriver"));
+                    sonic_im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Sonic Screwdriver"));
                     view.setItem(49, sonic);
                 } else {
                     // remove lore

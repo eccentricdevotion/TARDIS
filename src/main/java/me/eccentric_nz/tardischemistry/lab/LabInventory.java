@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.tardischemistry.lab;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUIChemistry;
 import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
@@ -25,7 +27,6 @@ import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
 
@@ -49,9 +50,8 @@ public class LabInventory implements InventoryHolder {
         ItemStack[] stack = new ItemStack[27];
         // info
         ItemStack info = ItemStack.of(GUIChemistry.INFO.material(), 1);
-        ItemMeta info_im = info.getItemMeta();
-        info_im.customName(Component.text("Info"));
-        info_im.lore(List.of(
+        info.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Info"));
+        info.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(
                 Component.text("Combine elements and compounds"),
                 Component.text("to create bleach, ice bombs"),
                 Component.text("heat blocks and fertiliser."),
@@ -59,19 +59,17 @@ public class LabInventory implements InventoryHolder {
                 Component.text("use the ").append(Component.text("/tardischemistry formula", NamedTextColor.GREEN).decorate(TextDecoration.ITALIC)).append(Component.text(" command.", NamedTextColor.DARK_PURPLE).decorate(TextDecoration.ITALIC)),
                 Component.text("Place items in the bottom"),
                 Component.text("row from left to right.")
-        ));
-        info_im.setItemModel(GUIChemistry.INFO.key());
-        info.setItemMeta(info_im);
+        )));
+        info.setData(DataComponentTypes.ITEM_MODEL, GUIChemistry.INFO.key());
         stack[GUIChemistry.INFO.slot()] = info;
         // check recipe
         ItemStack check = ItemStack.of(GUIChemistry.CHECK.material(), 1);
-        ItemMeta check_im = check.getItemMeta();
-        check_im.customName(Component.text("Check product"));
-        check_im.setItemModel(GUIChemistry.CHECK.key());
-        check.setItemMeta(check_im);
+        check.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Check product"));
+        check.setData(DataComponentTypes.ITEM_MODEL, GUIChemistry.CHECK.key());
         stack[GUIChemistry.CHECK.slot()] = check;
         // close
-        stack[GUIChemistry.CLOSE.slot()] = GUIItemFactory.close();;
+        stack[GUIChemistry.CLOSE.slot()] = GUIItemFactory.close();
+        ;
         return stack;
     }
 }

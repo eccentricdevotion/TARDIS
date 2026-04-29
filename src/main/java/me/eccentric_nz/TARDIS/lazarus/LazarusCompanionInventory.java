@@ -58,7 +58,7 @@ public class LazarusCompanionInventory extends LazarusItems implements Inventory
                 SkinUtils.getHeadProfile(companion).thenAccept(playerProfile -> {
                     is.setData(DataComponentTypes.PROFILE, ResolvableProfile.resolvableProfile(playerProfile));
                     im.setPlayerProfile(playerProfile);
-                    im.customName(Component.text(companion.name()));
+                    im.setData(DataComponentTypes.CUSTOM_NAME, Component.text(companion.name()));
                     is.setItemMeta(im);
                     // cache the item stack
                     PlayerHeadCache.COMPANIONS.add(is);

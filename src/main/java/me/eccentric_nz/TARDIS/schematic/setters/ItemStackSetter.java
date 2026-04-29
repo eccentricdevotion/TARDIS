@@ -3,6 +3,9 @@ package me.eccentric_nz.TARDIS.schematic.setters;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.BannerPatternLayers;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import io.papermc.paper.registry.RegistryAccess;
 import io.papermc.paper.registry.RegistryKey;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -15,9 +18,6 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.block.banner.Pattern;
 import org.bukkit.block.banner.PatternType;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.BannerMeta;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.ShieldMeta;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,36 +29,31 @@ public class ItemStackSetter {
         if (!json.isEmpty()) {
             Material material = Material.valueOf(json.get("item").getAsString());
             ItemStack is = ItemStack.of(material);
-            ItemMeta im = is.getItemMeta();
             // needed for Time Rotors / Doors
             if (json.has("cmd")) {
                 String cmd = json.get("cmd").getAsString();
                 if (!cmd.equals("st_johns")) {
                     NamespacedKey key = new NamespacedKey(TARDIS.plugin, cmd);
-                    im.setItemModel(key);
+                    is.setData(DataComponentTypes.ITEM_MODEL, key);
                 } else {
-                    im.customName(Component.text("St John's Logo"));
+                    is.setData(DataComponentTypes.CUSTOM_NAME, Component.text("St John's Logo"));
                 }
             }
             if (json.has("name")) {
-                im.customName(ComponentUtils.fromJson(json.get("name")));
+                is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.fromJson(json.get("name")));
             }
             if (json.has("lore")) {
-                List<Component> lore = new ArrayList<>();
+                ItemLore.Builder lore = ItemLore.lore();
                 for (JsonElement element : json.get("lore").getAsJsonArray()) {
-                    lore.add(Component.text(element.getAsString()));
+                    lore.addLine(Component.text(element.getAsString()));
                 }
-                im.lore(lore);
+                is.setData(DataComponentTypes.LORE, lore.build());
             }
             if (json.has("banner")) {
                 try {
                     JsonObject banner = json.get("banner").getAsJsonObject();
-                    BannerMeta bm = (BannerMeta) im;
-                    ShieldMeta sm = null;
                     if (material == Material.SHIELD) {
-                        DyeColor baseColour = DyeColor.valueOf(banner.get("base_colour").getAsString());
-                        sm = (ShieldMeta) bm;
-                        sm.setBaseColor(baseColour);
+                        is.setData(DataComponentTypes.BASE_COLOR, DyeColor.valueOf(banner.get("base_colour").getAsString()));
                     }
                     JsonArray patterns = banner.get("patterns").getAsJsonArray();
                     List<Pattern> plist = new ArrayList<>();
@@ -73,18 +68,12 @@ public class ItemStackSetter {
                             plist.add(p);
                         }
                     }
-                    if (material == Material.SHIELD) {
-                        sm.setPatterns(plist);
-                        is.setItemMeta(sm);
-                    } else { // banner
-                        bm.setPatterns(plist);
-                        is.setItemMeta(bm);
-                    }
+                    is.setData(DataComponentTypes.BANNER_PATTERNS, BannerPatternLayers.bannerPatternLayers()
+                            .addAll(plist)
+                            .build());
                 } catch (IllegalArgumentException e) {
                     TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.WARNING, "Could not create item stack for schematic item frame!");
                 }
-            } else {
-                is.setItemMeta(im);
             }
             return is;
         }

@@ -17,6 +17,10 @@
 package me.eccentric_nz.tardischemistry.product;
 
 import com.google.common.collect.Multimaps;
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemAttributeModifiers;
+import io.papermc.paper.datacomponent.item.TooltipDisplay;
+import io.papermc.paper.datacomponent.item.attribute.AttributeModifierDisplay;
 import me.eccentric_nz.TARDIS.TARDIS;
 import net.kyori.adventure.text.Component;
 import org.bukkit.attribute.Attribute;
@@ -33,22 +37,24 @@ public class ProductBuilder {
 
     public static ItemStack getProduct(Product product) {
         ItemStack is = ItemStack.of(product.getMaterial(), 1);
-        ItemMeta im = is.getItemMeta();
-        im.customName(Component.text(product.getName()));
-        im.addAttributeModifier(
+        is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(product.getName()));
+        is.setData(DataComponentTypes.ATTRIBUTE_MODIFIERS, ItemAttributeModifiers.itemAttributes()
+                .addModifier(
                 Attribute.LUCK,
                 new AttributeModifier(
                         product.getModel(),
                         0.0d,
                         AttributeModifier.Operation.ADD_NUMBER,
                         EquipmentSlotGroup.ANY
-                )
+                ))
+                .build()
         );
-        im.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        im.setAttributeModifiers(Multimaps.forMap(Map.of()));
-        im.setItemModel(product.getModel());
-        im.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING, product.getModel().getKey());
-        is.setItemMeta(im);
+        is.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
+                .addHiddenComponents(DataComponentTypes.ATTRIBUTE_MODIFIERS)
+                .hideTooltip(true)
+                .build());
+        is.setData(DataComponentTypes.ITEM_MODEL, product.getModel());
+        is.editPersistentDataContainer(pdc->pdc.set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING, product.getModel().getKey()));
         return is;
     }
 }

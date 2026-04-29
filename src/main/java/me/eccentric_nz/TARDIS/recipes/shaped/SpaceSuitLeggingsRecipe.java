@@ -42,7 +42,7 @@ public class SpaceSuitLeggingsRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.CHAINMAIL_LEGGINGS, 1);
         ItemMeta im = is.getItemMeta();
-        im.customName(ComponentUtils.toWhite("TARDIS Space Suit Leggings"));
+        im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("TARDIS Space Suit Leggings"));
         im.setMaxStackSize(1);
         EquippableComponent equippable = im.getEquippable();
         equippable.setSlot(EquipmentSlot.LEGS);

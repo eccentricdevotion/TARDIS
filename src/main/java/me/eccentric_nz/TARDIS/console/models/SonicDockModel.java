@@ -31,7 +31,7 @@ public class SonicDockModel {
         display.getWorld().playSound(display, Sound.BLOCK_BAMBOO_WOOD_BUTTON_CLICK_ON, 1, 1);
         ItemStack is = display.getItemStack();
         ItemMeta im = is.getItemMeta();
-        im.setItemModel(activate ? SonicItem.SONIC_DOCK_CHARGING.getKey() : SonicItem.SONIC_DOCK.getKey());
+        im.setData(DataComponentTypes.ITEM_MODEL, activate ? SonicItem.SONIC_DOCK_CHARGING.getKey() : SonicItem.SONIC_DOCK.getKey());
         is.setItemMeta(im);
         display.setItemStack(is);
     }

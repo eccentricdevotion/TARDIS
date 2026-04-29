@@ -51,7 +51,7 @@ public class BioscannerCircuitRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.GLOWSTONE_DUST, 1);
         ItemMeta im = is.getItemMeta();
-        im.customName(ComponentUtils.toWhite("Bio-scanner Circuit"));
+        im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Bio-scanner Circuit"));
         CustomModelDataComponent component = im.getCustomModelDataComponent();
         component.setFloats(CircuitVariant.BIO.getFloats());
         im.setCustomModelDataComponent(component);

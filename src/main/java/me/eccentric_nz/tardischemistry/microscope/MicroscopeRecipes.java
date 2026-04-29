@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.tardischemistry.microscope;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
@@ -54,10 +55,8 @@ public class MicroscopeRecipes {
         for (LabEquipment equipment : LabEquipment.values()) {
             String name = equipment.getName();
             ItemStack is = ItemStack.of(equipment.getMaterial(), 1);
-            ItemMeta im = is.getItemMeta();
-            im.customName(ComponentUtils.toWhite(name));
-            im.setItemModel(equipment.getModel());
-            is.setItemMeta(im);
+            is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(name));
+            is.setData(DataComponentTypes.ITEM_MODEL, equipment.getModel());
             NamespacedKey key = new NamespacedKey(plugin, equipment.toString().toLowerCase(Locale.ROOT));
             ShapedRecipe r = new ShapedRecipe(key, is);
             r.shape(" A ", "RER", "GGG");

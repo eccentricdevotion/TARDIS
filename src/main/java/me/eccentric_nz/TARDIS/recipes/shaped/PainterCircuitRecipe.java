@@ -51,7 +51,7 @@ public class PainterCircuitRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.GLOWSTONE_DUST, 1);
         ItemMeta im = is.getItemMeta();
-        im.customName(ComponentUtils.toWhite("Painter Circuit"));
+        im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Painter Circuit"));
         CustomModelDataComponent component = im.getCustomModelDataComponent();
         component.setFloats(CircuitVariant.PAINTER.getFloats());
         im.setCustomModelDataComponent(component);

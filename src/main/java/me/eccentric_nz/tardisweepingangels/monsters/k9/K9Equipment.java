@@ -34,8 +34,8 @@ public class K9Equipment {
     public static void set(OfflinePlayer player, LivingEntity entity, boolean disguise) {
         ItemStack head = ItemStack.of(Material.BONE);
         ItemMeta headMeta = head.getItemMeta();
-        headMeta.customName(Component.text("K9 Head"));
-        headMeta.setItemModel(K9Variant.K9.getKey());
+        headMeta.setData(DataComponentTypes.CUSTOM_NAME, Component.text("K9 Head"));
+        headMeta.setData(DataComponentTypes.ITEM_MODEL, K9Variant.K9.getKey());
         head.setItemMeta(headMeta);
         entity.getEquipment().setHelmet(head);
         if (entity instanceof Husk) {

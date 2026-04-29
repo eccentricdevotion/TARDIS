@@ -56,7 +56,7 @@ public class SpaceHelmetRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.GLASS, 1);
         ItemMeta im = is.getItemMeta();
-        im.customName(ComponentUtils.toWhite("TARDIS Space Helmet"));
+        im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("TARDIS Space Helmet"));
         im.setMaxStackSize(1);
         EquippableComponent equippable = im.getEquippable();
         equippable.setAllowedEntities(EntityType.PLAYER);

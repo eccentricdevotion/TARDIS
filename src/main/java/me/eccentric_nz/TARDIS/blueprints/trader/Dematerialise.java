@@ -16,12 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.blueprints.trader;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.keys.ChameleonVariant;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Mannequin;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 public class Dematerialise implements Runnable {
 
@@ -49,9 +49,7 @@ public class Dematerialise implements Runnable {
                 model = ChameleonVariant.TYPE_40_OPEN.getKey();
             }
             i++;
-            ItemMeta im = is.getItemMeta();
-            im.setItemModel(model);
-            is.setItemMeta(im);
+            is.setData(DataComponentTypes.ITEM_MODEL, model);
             mannequin.getEquipment().setHelmet(is);
         } else {
             plugin.getServer().getScheduler().cancelTask(task);

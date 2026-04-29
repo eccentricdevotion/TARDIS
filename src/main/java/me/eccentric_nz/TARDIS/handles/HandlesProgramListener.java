@@ -16,6 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.handles;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
+import io.papermc.paper.datacomponent.item.TooltipDisplay;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.SerializeInventory;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -27,9 +30,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.InventoryView;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
 import java.util.List;
@@ -132,11 +133,16 @@ public class HandlesProgramListener implements Listener {
                 if (pid != -1) {
                     close(player);
                     ItemStack is = ItemStack.of(Material.MUSIC_DISC_WARD, 1);
-                    ItemMeta im = is.getItemMeta();
-                    im.customName(Component.text("Handles Program Disk"));
-                    im.lore(List.of(Component.text("Untitled Disk"), Component.text(pid), Component.text("Checked OUT")));
-                    im.addItemFlags(ItemFlag.values());
-                    is.setItemMeta(im);
+                    is.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Handles Program Disk"));
+                    is.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(
+                            Component.text("Untitled Disk"),
+                            Component.text(pid),
+                            Component.text("Checked OUT")
+                    )));
+                    is.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
+                            .addHiddenComponents(DataComponentTypes.ATTRIBUTE_MODIFIERS)
+                            .hideTooltip(true)
+                            .build());
                     player.getWorld().dropItemNaturally(player.getLocation(), is);
                     plugin.getMessenger().sendColouredCommand(player, "HANDLES_SAVED", "/tardishandles disk [name]", plugin);
                 } else {
@@ -226,12 +232,10 @@ public class HandlesProgramListener implements Listener {
      */
     private void setSlot(InventoryView view, int slot, HandlesBlock block) {
         ItemStack is = ItemStack.of(Material.PAPER, 1);
-        ItemMeta im = is.getItemMeta();
-        im.customName(Component.text(block.getDisplayName()));
+        is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(block.getDisplayName()));
         if (block.getLore() != null) {
-            im.lore(block.getLore());
+            is.setData(DataComponentTypes.LORE, ItemLore.lore(block.getLore()));
         }
-        is.setItemMeta(im);
         view.setItem(slot, is);
     }
 

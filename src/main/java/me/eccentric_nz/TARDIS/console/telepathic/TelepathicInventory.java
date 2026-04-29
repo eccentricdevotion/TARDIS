@@ -62,7 +62,7 @@ public class TelepathicInventory implements InventoryHolder {
         // toggling telepathic circuit on/off
         ItemStack toggle = ItemStack.of(Material.REPEATER);
         ItemMeta tim = toggle.getItemMeta();
-        tim.customName(Component.text("Telepathic Circuit"));
+        tim.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Telepathic Circuit"));
         tim.lore(List.of(onOff));
         CustomModelDataComponent component = tim.getCustomModelDataComponent();
         component.setFloats(on ? SwitchVariant.TELEPATHIC_CIRCUIT_ON.getFloats() : SwitchVariant.TELEPATHIC_CIRCUIT_OFF.getFloats());
@@ -73,7 +73,7 @@ public class TelepathicInventory implements InventoryHolder {
         if (TARDISPermission.hasPermission(player, "tardis.timetravel.cave")) {
             ItemStack cave = ItemStack.of(Material.DRIPSTONE_BLOCK);
             ItemMeta cim = cave.getItemMeta();
-            cim.customName(Component.text("Cave Finder"));
+            cim.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Cave Finder"));
             cim.lore(List.of(
                     Component.text("Search for a cave"),
                     Component.text("to travel to.")
@@ -85,7 +85,7 @@ public class TelepathicInventory implements InventoryHolder {
         if (TARDISPermission.hasPermission(player, "tardis.timetravel.village")) {
             ItemStack structure = ItemStack.of(Material.HAY_BLOCK);
             ItemMeta sim = structure.getItemMeta();
-            sim.customName(Component.text("Structure Finder"));
+            sim.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Structure Finder"));
             sim.lore(List.of(
                     Component.text("Search for a structure"),
                     Component.text("to travel to.")
@@ -97,7 +97,7 @@ public class TelepathicInventory implements InventoryHolder {
         if (TARDISPermission.hasPermission(player, "tardis.timetravel.biome")) {
             ItemStack biome = ItemStack.of(Material.BAMBOO_MOSAIC);
             ItemMeta bim = biome.getItemMeta();
-            bim.customName(Component.text("Biome Finder"));
+            bim.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Biome Finder"));
             bim.lore(List.of(
                     Component.text("Search for a biome"),
                     Component.text("to travel to.")

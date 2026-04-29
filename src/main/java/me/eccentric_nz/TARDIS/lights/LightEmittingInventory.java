@@ -58,7 +58,7 @@ public class LightEmittingInventory implements InventoryHolder {
         // back button
         ItemStack back = ItemStack.of(GUIChameleonTemplate.BACK_HELP.material(), 1);
         ItemMeta bk = back.getItemMeta();
-        bk.customName(Component.text("Back"));
+        bk.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Back"));
         back.setItemMeta(bk);
         stacks[24] = back;
         // 26 close

@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.customblocks;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.ARS.GrowSlot;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -30,7 +31,6 @@ import org.bukkit.entity.Interaction;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -95,15 +95,14 @@ public class TARDISDisplayBlockRoomConverter implements Runnable {
                 // get the item stack
                 ItemStack is = display.getItemStack();
                 // if the item stack is not null
-                if (is.getType().isAir() || !is.hasItemMeta()) {
+                if (is.getType().isAir()) {
                     continue;
                 }
-                ItemMeta im = is.getItemMeta();
                 // get the custom name
-                if (!im.hasCustomName()) {
+                if (!is.hasData(DataComponentTypes.CUSTOM_NAME)) {
                     continue;
                 }
-                Component component = im.customName();
+                Component component = is.getData(DataComponentTypes.CUSTOM_NAME);
                 if (component == null) {
                     continue;
                 }
@@ -115,15 +114,14 @@ public class TARDISDisplayBlockRoomConverter implements Runnable {
                 try {
                     TARDISDisplayItem tdi = TARDISDisplayItemRegistry.valueOf(name);
                     // set the displayname
-                    im.customName(ComponentUtils.toWhite(tdi.getDisplayName()));
+                    is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(tdi.getDisplayName()));
                     if (name.toLowerCase(Locale.ROOT).contains("door")) {
                         // set the item model from TDI
-                        im.setItemModel(tdi.getCustomModel());
+                        is.setData(DataComponentTypes.ITEM_MODEL, tdi.getCustomModel());
                     } else {
                         // remove item model
-                        im.setItemModel(null);
+                        is.unsetData(DataComponentTypes.ITEM_MODEL);
                     }
-                    is.setItemMeta(im);
                     // set the display item's item stack
                     display.setItemStack(is);
                 } catch (IllegalArgumentException ignored) {

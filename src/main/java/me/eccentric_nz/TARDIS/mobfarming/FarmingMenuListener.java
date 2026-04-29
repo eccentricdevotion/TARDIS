@@ -86,13 +86,13 @@ public class FarmingMenuListener extends TARDISMenuListener {
         switch (material) {
             case LIME_WOOL -> {
                 // disable
-                im.customName(Component.text("Disabled"));
+                im.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Disabled"));
                 m = Material.RED_WOOL;
                 onOff = 0;
             }
             case RED_WOOL -> {
                 // enable
-                im.customName(Component.text("Enabled"));
+                im.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Enabled"));
                 onOff = 1;
                 // get item in slot above
                 ItemStack above = view.getItem(slot - 9);

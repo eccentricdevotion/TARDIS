@@ -74,7 +74,7 @@ public class TARDISPaperBagListener implements Listener {
                 // create a random flavoured Jelly Baby
                 ItemStack jb = ItemStack.of(Material.MELON_SLICE, 1);
                 ItemMeta jim = jb.getItemMeta();
-                jim.customName(Component.text(flavour + " Jelly Baby"));
+                jim.setData(DataComponentTypes.CUSTOM_NAME, Component.text(flavour + " Jelly Baby"));
                 jb.setItemMeta(jim);
                 int slot = inv.firstEmpty();
                 if (slot != -1) {

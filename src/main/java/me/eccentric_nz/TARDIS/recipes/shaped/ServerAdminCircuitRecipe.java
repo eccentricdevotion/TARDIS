@@ -49,7 +49,7 @@ public class ServerAdminCircuitRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.GLOWSTONE_DUST, 1);
         ItemMeta im = is.getItemMeta();
-        im.customName(ComponentUtils.toWhite("Server Admin Circuit"));
+        im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Server Admin Circuit"));
         CustomModelDataComponent component = im.getCustomModelDataComponent();
         component.setFloats(CircuitVariant.ADMIN.getFloats());
         im.setCustomModelDataComponent(component);
@@ -58,7 +58,7 @@ public class ServerAdminCircuitRecipe {
         ShapedRecipe r = new ShapedRecipe(key, is);
         ItemStack exact = ItemStack.of(Material.GLOWSTONE_DUST, 1);
         ItemMeta em = exact.getItemMeta();
-        em.customName(ComponentUtils.toWhite("Sonic Oscillator"));
+        em.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Sonic Oscillator"));
         CustomModelDataComponent ecomponent = em.getCustomModelDataComponent();
         ecomponent.setFloats(CircuitVariant.SONIC.getFloats());
         em.setCustomModelDataComponent(ecomponent);

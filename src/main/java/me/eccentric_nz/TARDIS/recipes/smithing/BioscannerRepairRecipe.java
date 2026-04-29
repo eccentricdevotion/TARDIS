@@ -50,7 +50,7 @@ public class BioscannerRepairRecipe {
         // addition
         ItemStack isa = ItemStack.of(Material.GLOWSTONE_DUST, 1);
         ItemMeta ima = isa.getItemMeta();
-        ima.customName(ComponentUtils.toWhite("Bio-scanner Circuit"));
+        ima.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Bio-scanner Circuit"));
         CustomModelDataComponent ecomponent = ima.getCustomModelDataComponent();
         ecomponent.setFloats(CircuitVariant.BIO.getFloats());
         ima.setCustomModelDataComponent(ecomponent);

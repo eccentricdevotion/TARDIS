@@ -49,7 +49,7 @@ public class KnockbackUpgradeRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.BLAZE_ROD, 1);
         ItemMeta im = is.getItemMeta();
-        im.customName(ComponentUtils.toWhite("Knockback Upgrade"));
+        im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Knockback Upgrade"));
         List<Float> sonicModel = SonicScrewdriverRecipe.sonicModelLookup.getOrDefault(plugin.getConfig().getString("sonic.default_model").toLowerCase(Locale.ROOT), SonicVariant.ELEVENTH.getFloats());
         CustomModelDataComponent component = im.getCustomModelDataComponent();
         component.setFloats(sonicModel);
@@ -60,7 +60,7 @@ public class KnockbackUpgradeRecipe {
         r.addIngredient(Material.BLAZE_ROD);
         ItemStack exact = ItemStack.of(Material.GLOWSTONE_DUST, 1);
         ItemMeta em = exact.getItemMeta();
-        em.customName(ComponentUtils.toWhite("Knockback Circuit"));
+        em.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Knockback Circuit"));
         CustomModelDataComponent ecomponent = em.getCustomModelDataComponent();
         ecomponent.setFloats(CircuitVariant.KNOCKBACK.getFloats());
         em.setCustomModelDataComponent(ecomponent);

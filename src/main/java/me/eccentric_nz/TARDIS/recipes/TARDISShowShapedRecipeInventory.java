@@ -77,7 +77,7 @@ public class TARDISShowShapedRecipeInventory implements InventoryHolder {
                 ItemMeta im = item.getItemMeta();
                 if (item.getType().equals(Material.GLOWSTONE_DUST) && !str.endsWith("Tie")) {
                     String dn = getDisplayName(str, glowstoneCount);
-                    im.customName(ComponentUtils.toWhite(dn));
+                    im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(dn));
                     glowstoneCount++;
                 }
                 if (str.endsWith("TARDIS Remote Key")) {
@@ -88,17 +88,17 @@ public class TARDISShowShapedRecipeInventory implements InventoryHolder {
                         material = Material.GOLD_NUGGET;
                     }
                     if (item.getType().equals(material)) {
-                        im.customName(ComponentUtils.toWhite("TARDIS Key"));
+                        im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("TARDIS Key"));
                     }
                 }
                 if (str.equals("Acid Battery") && item.getType().equals(Material.WATER_BUCKET)) {
-                    im.customName(ComponentUtils.toWhite("Acid Bucket"));
+                    im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Acid Bucket"));
                 }
                 if (str.equals("Rift Manipulator") && item.getType().equals(Material.NETHER_BRICK)) {
-                    im.customName(ComponentUtils.toWhite("Acid Battery"));
+                    im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Acid Battery"));
                 }
                 if (str.equals("Rust Plague Sword") && item.getType().equals(Material.LAVA_BUCKET)) {
-                    im.customName(ComponentUtils.toWhite("Rust Bucket"));
+                    im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Rust Bucket"));
                 }
                 item.setItemMeta(im);
                 stacks[j * 9 + k] = item;
@@ -106,7 +106,7 @@ public class TARDISShowShapedRecipeInventory implements InventoryHolder {
         }
         ItemStack result = recipe.getResult();
         ItemMeta im = result.getItemMeta();
-        im.customName(ComponentUtils.toWhite(str));
+        im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(str));
         if (str.equals("TARDIS Invisibility Circuit")) {
             // set the second line of lore
             List<Component> lore = im.lore();
@@ -125,11 +125,11 @@ public class TARDISShowShapedRecipeInventory implements InventoryHolder {
             if (r.equals("door")) {
                 r = "tardis_door";
             }
-            im.setItemModel(new NamespacedKey(plugin, r + "_closed"));
+            im.setData(DataComponentTypes.ITEM_MODEL, new NamespacedKey(plugin, r + "_closed"));
         }
         if (str.startsWith("Time Rotor")) {
             String r = str.replace("Time Rotor ", "").toLowerCase(Locale.ROOT);
-            im.setItemModel(new NamespacedKey(plugin, "time_rotor_" + r + "_off"));
+            im.setData(DataComponentTypes.ITEM_MODEL, new NamespacedKey(plugin, "time_rotor_" + r + "_off"));
         }
         result.setAmount(1);
         result.setItemMeta(im);

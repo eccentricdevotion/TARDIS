@@ -18,6 +18,8 @@ package me.eccentric_nz.TARDIS.chameleon.shell;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUIChameleonPresets;
 import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
@@ -30,7 +32,6 @@ import org.bukkit.block.data.BlockData;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.ArrayList;
@@ -39,7 +40,7 @@ import java.util.List;
 
 /**
  * A TARDIS with a functioning chameleon circuit can appear as almost anything desired. The owner can program the
- * circuit to make it assume a specific shape. If no appearance is specified, the TARDIS automatically choses its own
+ * circuit to make it assume a specific shape. If no appearance is specified, the TARDIS automatically chooses its own
  * shape. When a TARDIS materialises in a new location, within the first nanosecond of landing, its chameleon circuit
  * analyses the surrounding area, calculates a twelve-dimensional data map of all objects within a thousand-mile radius
  * and then determines which outer shell will best blend in with the environment. According to the Eleventh Doctor, the
@@ -101,19 +102,17 @@ public class ShellInventory implements InventoryHolder {
                     material = GUIChameleonPresets.SAVED.material();
                 }
                 ItemStack saved = ItemStack.of(material, 1);
-                ItemMeta con = saved.getItemMeta();
-                con.customName(Component.text("Saved Construct"));
-                List<Component> lore = new ArrayList<>();
-                lore.add(Component.text(map.get("line1")));
-                lore.add(Component.text(map.get("line2")));
-                lore.add(Component.text(map.get("line3")));
-                lore.add(Component.text(map.get("line4")));
+                saved.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Saved Construct"));
+                ItemLore.Builder lore = ItemLore.lore();
+                lore.addLine(Component.text(map.get("line1")));
+                lore.addLine(Component.text(map.get("line2")));
+                lore.addLine(Component.text(map.get("line3")));
+                lore.addLine(Component.text(map.get("line4")));
                 if (map.get("active").equals("1")) {
-                    lore.add(Component.text("Active shell", NamedTextColor.AQUA));
+                    lore.addLine(Component.text("Active shell", NamedTextColor.AQUA));
                 }
-                con.lore(lore);
-                con.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, TARDISNumberParsers.parseInt(map.get("chameleon_id")));
-                saved.setItemMeta(con);
+                saved.setData(DataComponentTypes.LORE, lore.build());
+                saved.editPersistentDataContainer(pdc -> pdc.set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, TARDISNumberParsers.parseInt(map.get("chameleon_id"))));
                 stacks[i] = saved;
                 i++;
                 // only first 5 rows
@@ -124,49 +123,39 @@ public class ShellInventory implements InventoryHolder {
         }
         // use selected shell
         ItemStack use = ItemStack.of(GUIChameleonPresets.USE_SELECTED.material(), 1);
-        ItemMeta uim = use.getItemMeta();
-        uim.customName(Component.text("Use selected shell"));
-        uim.lore(List.of(
+        use.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Use selected shell"));
+        use.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(
                 Component.text("Will apply shell to"),
                 Component.text("the Chameleon Circuit"),
                 Component.text("and rebuild the exterior.")
-        ));
-        use.setItemMeta(uim);
+        )));
         stacks[GUIChameleonPresets.USE_SELECTED.slot()] = use;
         // delete selected shell
         ItemStack delete = ItemStack.of(GUIChameleonPresets.DELETE_SELECTED.material(), 1);
-        ItemMeta dim = delete.getItemMeta();
-        dim.customName(Component.text("Delete selected shell"));
-        delete.setItemMeta(dim);
+        delete.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Delete selected shell"));
         stacks[GUIChameleonPresets.DELETE_SELECTED.slot()] = delete;
         // update selected shell
         ItemStack update = ItemStack.of(GUIChameleonPresets.UPDATE_SELECTED.material(), 1);
-        ItemMeta upim = update.getItemMeta();
-        upim.customName(Component.text("Update selected shell"));
-        update.setItemMeta(upim);
+        update.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Update selected shell"));
         stacks[GUIChameleonPresets.UPDATE_SELECTED.slot()] = update;
         // clear shell on platform
         ItemStack newShell = ItemStack.of(GUIChameleonPresets.NEW.material(), 1);
-        ItemMeta ns = newShell.getItemMeta();
-        ns.customName(Component.text("New Chameleon shell"));
-        ns.lore(List.of(
+        newShell.setData(DataComponentTypes.CUSTOM_NAME, Component.text("New Chameleon shell"));
+        newShell.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(
                 Component.text("Will clear the shell platform"),
                 Component.text("ready for building.")
-        ));
-        newShell.setItemMeta(ns);
+        )));
         stacks[GUIChameleonPresets.NEW.slot()] = newShell;
         // Save current shell on platform
         ItemStack save = ItemStack.of(GUIChameleonPresets.SAVE.material(), 1);
-        ItemMeta pre = save.getItemMeta();
-        pre.customName(Component.text("Save Chameleon shell"));
-        ns.lore(List.of(
+        save.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Save Chameleon shell"));
+        save.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(
                 Component.text("Will save shell and"),
                 Component.text("rebuild the exterior.")
-        ));
-        save.setItemMeta(pre);
+        )));
         stacks[GUIChameleonPresets.SAVE.slot()] = save;
         // Cancel / close
-        stacks[GUIChameleonPresets.CLOSE.slot()] = GUIItemFactory.close();;
+        stacks[GUIChameleonPresets.CLOSE.slot()] = GUIItemFactory.close();
 
         return stacks;
     }

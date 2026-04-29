@@ -72,8 +72,8 @@ public class TransmatInventory implements InventoryHolder {
                 }
                 ItemStack is = ItemStack.of(Material.MAP, 1);
                 ItemMeta im = is.getItemMeta();
-                im.customName(Component.text(t.name()));
-                List<Component> lore = new ArrayList<>();
+                im.setData(DataComponentTypes.CUSTOM_NAME, Component.text(t.name()));
+                ItemLore.Builder lore = ItemLore.lore();
                 lore.add(Component.text(String.format("X: %.2f", t.x())));
                 lore.add(Component.text(String.format("Y: %.2f", t.y())));
                 lore.add(Component.text(String.format("Z: %.2f", t.z())));
@@ -90,7 +90,7 @@ public class TransmatInventory implements InventoryHolder {
             // info
             ItemStack info = ItemStack.of(GUITransmat.INFO.material(), 1);
             ItemMeta meta = info.getItemMeta();
-            meta.customName(Component.text(plugin.getChameleonGuis().getString("INFO", "Info")));
+            meta.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getChameleonGuis().getString("INFO", "Info")));
             List<Component> metaLore = new ArrayList<>();
             for (String s : plugin.getChameleonGuis().getStringList("INFO_TRANSMAT")) {
                 metaLore.add(Component.text(s));
@@ -101,21 +101,21 @@ public class TransmatInventory implements InventoryHolder {
             // delete
             ItemStack delete = ItemStack.of(GUITransmat.DELETE.material(), 1);
             ItemMeta dim = delete.getItemMeta();
-            dim.customName(Component.text(plugin.getLanguage().getString("BUTTON_DELETE", "Delete")));
+            dim.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_DELETE", "Delete")));
             delete.setItemMeta(dim);
             stack[GUITransmat.DELETE.slot()] = delete;
         }
         // teleport
         ItemStack tele = ItemStack.of(GUITransmat.TRANSMAT.material(), 1);
         ItemMeta port = tele.getItemMeta();
-        port.customName(Component.text(plugin.getLanguage().getString("BUTTON_TRANSMAT", "Transmat")));
+        port.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_TRANSMAT", "Transmat")));
         tele.setItemMeta(port);
         stack[GUITransmat.TRANSMAT.slot()] = tele;
         // rooms world
         if (plugin.getPlanetsConfig().getBoolean("planets.rooms.enabled") && plugin.getServer().getWorld(Key.key("rooms")) != null && TARDISPermission.hasPermission(player, "tardis.transmat.rooms")) {
             ItemStack rooms = ItemStack.of(GUITransmat.ROOMS.material(), 1);
             ItemMeta world = rooms.getItemMeta();
-            world.customName(Component.text("Rooms World"));
+            world.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Rooms World"));
             rooms.setItemMeta(world);
             stack[GUITransmat.ROOMS.slot()] = rooms;
         }

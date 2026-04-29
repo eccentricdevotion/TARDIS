@@ -52,7 +52,7 @@ public class FuelCell {
         int max = plugin.getArtronConfig().getInt("full_charge");
         lore.set(1, Component.text( max));
         im.lore(lore);
-        im.setEnchantmentGlintOverride(true);
+        is.setData(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE, true);
         im.addItemFlags(ItemFlag.values());
         im.setAttributeModifiers(Multimaps.forMap(Map.of()));
         result.setItemMeta(im);

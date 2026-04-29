@@ -57,7 +57,7 @@ class SonicActivatorInventory implements InventoryHolder {
      */
 
     private ItemStack[] getItemStack() {
-        List<Component> lore = new ArrayList<>();
+        ItemLore.Builder lore = ItemLore.lore();
         lore.add(Component.text("To activate the generator"));
         lore.add(Component.text("add 1 of each of the following"));
         lore.add(Component.text("items to this inventory:"));
@@ -75,7 +75,7 @@ class SonicActivatorInventory implements InventoryHolder {
         // info
         ItemStack info = ItemStack.of(GUISonicActivator.INSTRUCTIONS.material(), 1);
         ItemMeta info_im = info.getItemMeta();
-        info_im.customName(Component.text("Instructions"));
+        info_im.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Instructions"));
         info_im.lore(lore);
         info.setItemMeta(info_im);
         // close

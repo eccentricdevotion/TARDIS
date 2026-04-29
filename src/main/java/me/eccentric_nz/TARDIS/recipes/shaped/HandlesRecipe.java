@@ -54,7 +54,7 @@ public class HandlesRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.BIRCH_BUTTON, 1);
         ItemMeta im = is.getItemMeta();
-        im.customName(ComponentUtils.toWhite("Handles"));
+        im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Handles"));
         im.lore(List.of(
                 Component.text("Cyberhead from the"),
                 Component.text("Maldovar Market")

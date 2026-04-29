@@ -50,7 +50,7 @@ public class DiamondRepairRecipe {
         // addition
         ItemStack isa = ItemStack.of(Material.GLOWSTONE_DUST, 1);
         ItemMeta ima = isa.getItemMeta();
-        ima.customName(ComponentUtils.toWhite("Diamond Disruptor Circuit"));
+        ima.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Diamond Disruptor Circuit"));
         CustomModelDataComponent ecomponent = ima.getCustomModelDataComponent();
         ecomponent.setFloats(CircuitVariant.DIAMOND.getFloats());
         ima.setCustomModelDataComponent(ecomponent);

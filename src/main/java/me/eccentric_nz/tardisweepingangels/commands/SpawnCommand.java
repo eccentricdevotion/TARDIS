@@ -124,8 +124,8 @@ public class SpawnCommand {
                                 }
                                 ItemStack helmet = ItemStack.of(Material.SLIME_BALL, 1);
                                 ItemMeta headMeta = helmet.getItemMeta();
-                                headMeta.customName(Component.text("Dalek Head"));
-                                headMeta.setItemModel(head);
+                                headMeta.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Dalek Head"));
+                                headMeta.setData(DataComponentTypes.ITEM_MODEL, head);
                                 helmet.setItemMeta(headMeta);
                                 EntityEquipment ee = a.getEquipment();
                                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> ee.setHelmet(helmet), 2L);
@@ -161,7 +161,7 @@ public class SpawnCommand {
                     PigZombie strax = (PigZombie) a;
                     strax.setAngry(false);
                     new Equipper(monster, a, false).setHelmetAndInvisibility();
-                    a.customName(Component.text("Strax"));
+                    a.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Strax"));
                 }
                 case TOCLAFANE -> ToclafaneEquipment.set(a, false);
                 // WEEPING_ANGEL, CYBERMAN, CYBERSHADE, EMPTY_CHILD, HATH, HEAVENLY_HOST, MIRE, NIMON, OMEGA, SEA_DEVIL,

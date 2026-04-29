@@ -113,7 +113,7 @@ public class HappyGhastLeashListener implements Listener {
         if (pdc.has(HappyGhastUtils.NAME)) {
             String name = pdc.get(HappyGhastUtils.NAME, PersistentDataType.STRING);
             if (name != null && !name.isEmpty()) {
-                skies.customName(Component.text(name));
+                skies.setData(DataComponentTypes.CUSTOM_NAME, Component.text(name));
             }
         }
         // remove the passengers

@@ -42,15 +42,15 @@ public class ConnectFourListener extends TARDISMenuListener {
         COLUMNS.add(List.of(6, 15, 24, 33, 42, 51));
         hole = ItemStack.of(Material.BLUE_CONCRETE_POWDER);
         ItemMeta holeMeta = hole.getItemMeta();
-        holeMeta.customName(Component.text(" "));
+        holeMeta.setData(DataComponentTypes.CUSTOM_NAME, Component.text(" "));
         hole.setItemMeta(holeMeta);
         red = ItemStack.of(Material.RED_CONCRETE_POWDER);
         ItemMeta redMeta = red.getItemMeta();
-        redMeta.customName(Component.text("Red"));
+        redMeta.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Red"));
         red.setItemMeta(redMeta);
         yellow = ItemStack.of(Material.YELLOW_CONCRETE_POWDER);
         ItemMeta yellowMeta = yellow.getItemMeta();
-        yellowMeta.customName(Component.text("Yellow"));
+        yellowMeta.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Yellow"));
         yellow.setItemMeta(yellowMeta);
         state = MatchState.PLAYER_TURN;
         grid = new Grid();
@@ -179,7 +179,7 @@ public class ConnectFourListener extends TARDISMenuListener {
         }
         if (result != null) {
             ItemMeta im = banner.getItemMeta();
-            im.customName(Component.text(display));
+            im.setData(DataComponentTypes.CUSTOM_NAME, Component.text(display));
             banner.setItemMeta(im);
             player.playSound(player.getLocation(), result.getSound(), 0.8f, 0.8f);
             view.setItem(26, banner);

@@ -62,12 +62,12 @@ public class TARDISTemporalLocatorInventory implements InventoryHolder {
             ItemStack is = ItemStack.of(clock.getMaterial(), 1);
             ItemMeta im = is.getItemMeta();
             if (clock.ordinal() < 4) {
-                im.customName(Component.text(plugin.getLanguage().getString(clock.toString())));
+                im.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString(clock.toString())));
             } else {
-                im.customName(Component.text(clock.getName()));
+                im.setData(DataComponentTypes.CUSTOM_NAME, Component.text(clock.getName()));
             }
             if (clock.getLore().contains("~")) {
-                List<Component> lore = new ArrayList<>();
+                ItemLore.Builder lore = ItemLore.lore();
                 for (String s : clock.getLore().split("~")) {
                     lore.add(Component.text(s));
                 }
@@ -75,7 +75,7 @@ public class TARDISTemporalLocatorInventory implements InventoryHolder {
             } else {
                 im.lore(List.of(Component.text(clock.getLore())));
             }
-            im.setItemModel(clock.getModel());
+            im.setData(DataComponentTypes.ITEM_MODEL, clock.getModel());
             is.setItemMeta(im);
             clocks[clock.getSlot()] = is;
         }

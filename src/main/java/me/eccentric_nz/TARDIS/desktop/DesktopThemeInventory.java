@@ -66,12 +66,12 @@ public class DesktopThemeInventory implements InventoryHolder {
         if (m != null && !m.equals(Material.COBBLESTONE)) {
             is = ItemStack.of(m, 1);
             ItemMeta im = is.getItemMeta();
-            im.customName(Component.text(schematic.getDescription()));
+            im.setData(DataComponentTypes.CUSTOM_NAME, Component.text(schematic.getDescription()));
             int cost = plugin.getArtronConfig().getInt("upgrades." + schematic.getPermission());
             if (currentConsole.equals(schematic.getPermission())) {
                 cost = Math.round((plugin.getArtronConfig().getInt("just_wall_floor") / 100F) * cost);
             }
-            List<Component> lore = new ArrayList<>();
+            ItemLore.Builder lore = ItemLore.lore();
             lore.add(Component.text("Cost: " + cost));
             if (!TARDISPermission.hasPermission(player, "tardis." + schematic.getPermission())) {
                 lore.add(Component.text(plugin.getLanguage().getString("NO_PERM_CONSOLE", "No permission!"), NamedTextColor.RED));

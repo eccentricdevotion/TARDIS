@@ -56,9 +56,9 @@ public class TARDISItemRenamer {
         if (im == null) {
             TARDIS.plugin.debug("ItemMeta was null for ItemStack: " + itemStack);
         } else {
-            im.customName(Component.text(name));
+            im.setData(DataComponentTypes.CUSTOM_NAME, Component.text(name));
             if (setlore) {
-                List<Component> lore = new ArrayList<>();
+                ItemLore.Builder lore = ItemLore.lore();
                 lore.add(Component.text("Enter and exit your TARDIS"));
                 lore.add(Component.text("This key belongs to", NamedTextColor.AQUA).decorate(TextDecoration.ITALIC));
                 lore.add(Component.text(player.getName(), NamedTextColor.AQUA).decorate(TextDecoration.ITALIC));

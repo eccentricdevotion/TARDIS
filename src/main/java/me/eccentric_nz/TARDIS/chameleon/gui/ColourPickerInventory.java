@@ -16,7 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.chameleon.gui;
 
-import com.google.common.collect.Multimaps;
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.DyedItemColor;
+import io.papermc.paper.datacomponent.item.ItemLore;
+import io.papermc.paper.datacomponent.item.TooltipDisplay;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
 import me.eccentric_nz.TARDIS.custommodels.keys.ColouredVariant;
@@ -26,13 +29,9 @@ import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.LeatherArmorMeta;
 
 import java.util.List;
-import java.util.Map;
 
 public class ColourPickerInventory implements InventoryHolder {
 
@@ -52,80 +51,76 @@ public class ColourPickerInventory implements InventoryHolder {
 
     private ItemStack[] getItemStack() {
         // display
-        ItemStack dis = ItemStack.of(Material.LEATHER_HORSE_ARMOR, 1);
-        LeatherArmorMeta play = (LeatherArmorMeta) dis.getItemMeta();
-        play.customName(Component.text("Colour"));
-        play.lore(List.of(
+        ItemStack display = ItemStack.of(Material.LEATHER_HORSE_ARMOR, 1);
+        display.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Colour"));
+        display.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(
                 Component.text("Red: 255"),
                 Component.text("Green: 255"),
                 Component.text("Blue: 255")
-        ));
-        play.setItemModel(ColouredVariant.TINT.getKey());
-        play.setColor(Color.fromRGB(255, 255, 255)); // white
-        play.addItemFlags(ItemFlag.values());
-        play.setAttributeModifiers(Multimaps.forMap(Map.of()));
-        dis.setItemMeta(play);
+        )));
+        display.setData(DataComponentTypes.ITEM_MODEL, ColouredVariant.TINT.getKey());
+        display.setData(DataComponentTypes.DYED_COLOR, DyedItemColor.dyedItemColor()
+                .color(Color.fromRGB(255, 255, 255)) // white
+                .build());
+        display.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
+                .addHiddenComponents(DataComponentTypes.ATTRIBUTE_MODIFIERS)
+                .hideTooltip(true)
+                .build());
         // red
         ItemStack red = ItemStack.of(Material.RED_WOOL, 1);
-        ItemMeta rrr = red.getItemMeta();
-        rrr.customName(Component.text("Red"));
-        red.setItemMeta(rrr);
+        red.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Red"));
         // green
         ItemStack green = ItemStack.of(Material.LIME_WOOL, 1);
-        ItemMeta ggg = green.getItemMeta();
-        ggg.customName(Component.text("Green"));
-        green.setItemMeta(ggg);
+        green.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Green"));
         // blue
         ItemStack blue = ItemStack.of(Material.LIGHT_BLUE_WOOL, 1);
-        ItemMeta bbb = blue.getItemMeta();
-        bbb.customName(Component.text("Blue"));
-        blue.setItemMeta(bbb);
+        blue.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Blue"));
         // red tint
         ItemStack redtint = ItemStack.of(Material.LEATHER_HORSE_ARMOR, 1);
-        LeatherArmorMeta rrrtint = (LeatherArmorMeta) redtint.getItemMeta();
-        rrrtint.setColor(Color.fromRGB(255, 0, 0)); // red
-        rrrtint.setItemModel(ColouredVariant.TINT.getKey());
-        rrrtint.customName(Component.text("Red"));
-        rrrtint.addItemFlags(ItemFlag.values());
-        rrrtint.setAttributeModifiers(Multimaps.forMap(Map.of()));
-        redtint.setItemMeta(rrrtint);
+        redtint.setData(DataComponentTypes.DYED_COLOR, DyedItemColor.dyedItemColor()
+                .color(Color.fromRGB(255, 0, 0)) // red
+                .build());
+        redtint.setData(DataComponentTypes.ITEM_MODEL, ColouredVariant.TINT.getKey());
+        redtint.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Red"));
+        redtint.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
+                .addHiddenComponents(DataComponentTypes.ATTRIBUTE_MODIFIERS)
+                .hideTooltip(true)
+                .build());
         // green tint
         ItemStack greentint = ItemStack.of(Material.LEATHER_HORSE_ARMOR, 1);
-        LeatherArmorMeta gggtint = (LeatherArmorMeta) greentint.getItemMeta();
-        gggtint.setColor(Color.fromRGB(0, 255, 0)); // green
-        gggtint.setItemModel(ColouredVariant.TINT.getKey());
-        gggtint.customName(Component.text("Green"));
-        gggtint.addItemFlags(ItemFlag.values());
-        gggtint.setAttributeModifiers(Multimaps.forMap(Map.of()));
-        greentint.setItemMeta(gggtint);
+        greentint.setData(DataComponentTypes.DYED_COLOR, DyedItemColor.dyedItemColor()
+                .color(Color.fromRGB(0, 255, 0)) // green
+                .build());
+        greentint.setData(DataComponentTypes.ITEM_MODEL, ColouredVariant.TINT.getKey());
+        greentint.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Green"));
+        greentint.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
+                .addHiddenComponents(DataComponentTypes.ATTRIBUTE_MODIFIERS)
+                .hideTooltip(true)
+                .build());
         // blue tint
         ItemStack bluetint = ItemStack.of(Material.LEATHER_HORSE_ARMOR, 1);
-        LeatherArmorMeta bbbtint = (LeatherArmorMeta) bluetint.getItemMeta();
-        bbbtint.setColor(Color.fromRGB(0, 0, 255)); // blue
-        bbbtint.setItemModel(ColouredVariant.TINT.getKey());
-        bbbtint.customName(Component.text("Blue"));
-        bbbtint.addItemFlags(ItemFlag.values());
-        bbbtint.setAttributeModifiers(Multimaps.forMap(Map.of()));
-        bluetint.setItemMeta(bbbtint);
+        bluetint.setData(DataComponentTypes.DYED_COLOR, DyedItemColor.dyedItemColor()
+                .color(Color.fromRGB(0, 0, 255)) // blue
+                .build());
+        bluetint.setData(DataComponentTypes.ITEM_MODEL, ColouredVariant.TINT.getKey());
+        bluetint.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Blue"));
+        bluetint.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
+                .addHiddenComponents(DataComponentTypes.ATTRIBUTE_MODIFIERS)
+                .hideTooltip(true)
+                .build());
         // less
         ItemStack less = ItemStack.of(Material.ARROW, 1);
-        ItemMeta lll = less.getItemMeta();
-        lll.customName(Component.text("Less"));
-        less.setItemMeta(lll);
+        less.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Less"));
         // more
         ItemStack more = ItemStack.of(Material.ARROW, 1);
-        ItemMeta mmm = more.getItemMeta();
-        mmm.customName(Component.text("More"));
-        more.setItemMeta(mmm);
+        more.setData(DataComponentTypes.CUSTOM_NAME, Component.text("More"));
         // select
         ItemStack select = ItemStack.of(Material.BOWL, 1);
-        ItemMeta sss = select.getItemMeta();
-        sss.customName(Component.text("Select colour"));
-        select.setItemMeta(sss);
+        select.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Select colour"));
         // close
         ItemStack close = GUIItemFactory.close();
         return new ItemStack[]{
-                null, null, null, null, dis, null, null, null, null,
+                null, null, null, null, display, null, null, null, null,
                 null, null, null, null, null, null, null, null, null,
                 red, null, less, null, redtint, null, more, null, null,
                 green, null, less, null, greentint, null, more, null, select,

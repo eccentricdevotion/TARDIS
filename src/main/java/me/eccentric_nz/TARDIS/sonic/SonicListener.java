@@ -191,12 +191,12 @@ public class SonicListener implements Listener {
                                     plugin.getTrackerKeeper().getSonicDoorToggle().remove(uuid);
                                     // close door
                                     NamespacedKey closed = NamespacedKey.fromString(value.replace("open", "closed"), plugin);
-                                    meta.setItemModel(closed);
+                                    meta.setData(DataComponentTypes.ITEM_MODEL, closed);
                                 } else {
                                     plugin.getTrackerKeeper().getSonicDoorToggle().add(uuid);
                                     // open door
                                     NamespacedKey open = NamespacedKey.fromString(value.replace("closed", "open"), plugin);
-                                    meta.setItemModel(open);
+                                    meta.setData(DataComponentTypes.ITEM_MODEL, open);
                                 }
                                 box.setItemMeta(meta);
                                 display.setItemStack(box);

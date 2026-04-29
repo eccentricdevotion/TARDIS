@@ -62,13 +62,13 @@ public class TARDISRecipeInventory implements InventoryHolder {
         // back
         ItemStack back = ItemStack.of(Material.BOWL, 1);
         ItemMeta but = back.getItemMeta();
-        but.customName(Component.text("Back"));
+        but.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Back"));
         back.setItemMeta(but);
         stack[0] = back;
         // info
         ItemStack info = ItemStack.of(Material.BOWL, 1);
         ItemMeta info_im = info.getItemMeta();
-        info_im.customName(Component.text("Info"));
+        info_im.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Info"));
         info_im.lore(List.of(
                 Component.text("Click a button below"),
                 Component.text("to see the recipe"),
@@ -103,7 +103,7 @@ public class TARDISRecipeInventory implements InventoryHolder {
                         }
                     }
                     ItemMeta im = result.getItemMeta();
-                    im.customName(ComponentUtils.toWhite(str));
+                    im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(str));
                     im.lore(List.of(Component.text("/trecipe " + arg)));
                     im.addItemFlags(ItemFlag.values());
                     im.setAttributeModifiers(Multimaps.forMap(Map.of()));

@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.builders.exterior;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.DyedItemColor;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.keys.ChameleonVariant;
 import me.eccentric_nz.TARDIS.custommodels.keys.ColouredVariant;
@@ -113,12 +115,24 @@ public class BuilderUtility {
                     return Material.BLUE_DYE;
                 }
             }
-            case WEEPING_ANGEL -> { return Material.GRAY_STAINED_GLASS_PANE; }
-            case POLICE_BOX_TENNANT -> { return Material.CYAN_STAINED_GLASS_PANE; }
-            case COLOURED -> { return Material.LEATHER_HORSE_ARMOR; }
-            case PANDORICA -> { return Material.ENDER_PEARL; }
-            case SIDRAT -> { return Material.GREEN_STAINED_GLASS_PANE; }
-            case BATTLE -> { return Material.RED_STAINED_GLASS_PANE; }
+            case WEEPING_ANGEL -> {
+                return Material.GRAY_STAINED_GLASS_PANE;
+            }
+            case POLICE_BOX_TENNANT -> {
+                return Material.CYAN_STAINED_GLASS_PANE;
+            }
+            case COLOURED -> {
+                return Material.LEATHER_HORSE_ARMOR;
+            }
+            case PANDORICA -> {
+                return Material.ENDER_PEARL;
+            }
+            case SIDRAT -> {
+                return Material.GREEN_STAINED_GLASS_PANE;
+            }
+            case BATTLE -> {
+                return Material.RED_STAINED_GLASS_PANE;
+            }
             default -> {
                 String split = preset.toString().replace("POLICE_BOX_", "");
                 String dye = split + "_DYE";
@@ -130,33 +144,40 @@ public class BuilderUtility {
     public static void setPoliceBoxHelmet(TARDIS plugin, ChameleonPreset preset, BuildData bd, ArmorStand stand) {
         Material dye = BuilderUtility.getMaterialForArmourStand(preset, bd.getTardisID(), true);
         ItemStack is = ItemStack.of(dye, 1);
-        ItemMeta im = is.getItemMeta();
         switch (dye) {
-            case BLACK_DYE -> im.setItemModel(ChameleonVariant.BLACK_CLOSED.getKey());
-            case RED_DYE -> im.setItemModel(ChameleonVariant.RED_CLOSED.getKey());
-            case BROWN_DYE -> im.setItemModel(ChameleonVariant.BROWN_CLOSED.getKey());
-            case GREEN_DYE -> im.setItemModel(ChameleonVariant.GREEN_CLOSED.getKey());
-            case BLUE_DYE -> im.setItemModel(ChameleonVariant.BLUE_CLOSED.getKey());
-            case PURPLE_DYE -> im.setItemModel(ChameleonVariant.PURPLE_CLOSED.getKey());
-            case CYAN_DYE -> im.setItemModel(ChameleonVariant.CYAN_CLOSED.getKey());
-            case LIGHT_GRAY_DYE -> im.setItemModel(ChameleonVariant.LIGHT_GRAY_CLOSED.getKey());
-            case GRAY_DYE -> im.setItemModel(ChameleonVariant.GRAY_CLOSED.getKey());
-            case PINK_DYE -> im.setItemModel(ChameleonVariant.PINK_CLOSED.getKey());
-            case LIME_DYE -> im.setItemModel(ChameleonVariant.LIME_CLOSED.getKey());
-            case YELLOW_DYE -> im.setItemModel(ChameleonVariant.YELLOW_CLOSED.getKey());
-            case LIGHT_BLUE_DYE -> im.setItemModel(ChameleonVariant.LIGHT_BLUE_CLOSED.getKey());
-            case MAGENTA_DYE -> im.setItemModel(ChameleonVariant.MAGENTA_CLOSED.getKey());
-            case ORANGE_DYE -> im.setItemModel(ChameleonVariant.ORANGE_CLOSED.getKey());
-            case WHITE_DYE -> im.setItemModel(ChameleonVariant.WHITE_CLOSED.getKey());
-            case CYAN_STAINED_GLASS_PANE -> im.setItemModel(ChameleonVariant.TENNANT_CLOSED.getKey());
-            case LEATHER_HORSE_ARMOR -> im.setItemModel(ColouredVariant.TINTED_CLOSED.getKey());
-            case WOLF_SPAWN_EGG -> im.setItemModel(ChameleonVariant.BAD_WOLF_CLOSED.getKey());
-            case ENDER_PEARL -> im.setItemModel(ChameleonVariant.PANDORICA_CLOSED.getKey());
-            case GREEN_STAINED_GLASS_PANE -> im.setItemModel(ChameleonVariant.SIDRAT_CLOSED.getKey());
-            case GRAY_STAINED_GLASS_PANE -> im.setItemModel(ChameleonVariant.WEEPING_ANGEL_CLOSED.getKey());
-            case RED_STAINED_GLASS_PANE -> im.setItemModel(ChameleonVariant.BATTLE_CLOSED.getKey());
+            case BLACK_DYE -> is.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.BLACK_CLOSED.getKey());
+            case RED_DYE -> is.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.RED_CLOSED.getKey());
+            case BROWN_DYE -> is.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.BROWN_CLOSED.getKey());
+            case GREEN_DYE -> is.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.GREEN_CLOSED.getKey());
+            case BLUE_DYE -> is.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.BLUE_CLOSED.getKey());
+            case PURPLE_DYE -> is.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.PURPLE_CLOSED.getKey());
+            case CYAN_DYE -> is.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.CYAN_CLOSED.getKey());
+            case LIGHT_GRAY_DYE ->
+                    is.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.LIGHT_GRAY_CLOSED.getKey());
+            case GRAY_DYE -> is.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.GRAY_CLOSED.getKey());
+            case PINK_DYE -> is.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.PINK_CLOSED.getKey());
+            case LIME_DYE -> is.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.LIME_CLOSED.getKey());
+            case YELLOW_DYE -> is.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.YELLOW_CLOSED.getKey());
+            case LIGHT_BLUE_DYE ->
+                    is.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.LIGHT_BLUE_CLOSED.getKey());
+            case MAGENTA_DYE -> is.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.MAGENTA_CLOSED.getKey());
+            case ORANGE_DYE -> is.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.ORANGE_CLOSED.getKey());
+            case WHITE_DYE -> is.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.WHITE_CLOSED.getKey());
+            case CYAN_STAINED_GLASS_PANE ->
+                    is.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.TENNANT_CLOSED.getKey());
+            case LEATHER_HORSE_ARMOR ->
+                    is.setData(DataComponentTypes.ITEM_MODEL, ColouredVariant.TINTED_CLOSED.getKey());
+            case WOLF_SPAWN_EGG -> is.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.BAD_WOLF_CLOSED.getKey());
+            case ENDER_PEARL -> is.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.PANDORICA_CLOSED.getKey());
+            case GREEN_STAINED_GLASS_PANE ->
+                    is.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.SIDRAT_CLOSED.getKey());
+            case GRAY_STAINED_GLASS_PANE ->
+                    is.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.WEEPING_ANGEL_CLOSED.getKey());
+            case RED_STAINED_GLASS_PANE ->
+                    is.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.BATTLE_CLOSED.getKey());
             // CUSTOM
-            default -> im.setItemModel(new NamespacedKey(plugin, getCustomModelPath(dye.toString()) + "_closed"));
+            default ->
+                    is.setData(DataComponentTypes.ITEM_MODEL, new NamespacedKey(plugin, getCustomModelPath(dye.toString()) + "_closed"));
         }
         if (bd.shouldAddSign() && bd.getPlayer() != null) {
             String pb = "";
@@ -177,7 +198,7 @@ public class BuilderUtility {
             }
             String name = bd.getPlayer().getName() + "'s " + pb;
             Component custom = Component.text(name);
-            im.customName(custom);
+            is.setData(DataComponentTypes.CUSTOM_NAME, custom);
             stand.customName(custom);
             stand.setCustomNameVisible(true);
         }
@@ -185,12 +206,10 @@ public class BuilderUtility {
             // get the colour
             ResultSetColour rsc = new ResultSetColour(plugin, bd.getTardisID());
             if (rsc.resultSet()) {
-                LeatherArmorMeta leatherArmorMeta = (LeatherArmorMeta) im;
-                leatherArmorMeta.setColor(Color.fromRGB(rsc.getRed(), rsc.getGreen(), rsc.getBlue()));
-                is.setItemMeta(leatherArmorMeta);
+                is.setData(DataComponentTypes.DYED_COLOR, DyedItemColor.dyedItemColor()
+                        .color(Color.fromRGB(rsc.getRed(), rsc.getGreen(), rsc.getBlue()))
+                        .build());
             }
-        } else {
-            is.setItemMeta(im);
         }
         EntityEquipment ee = stand.getEquipment();
         ee.setHelmet(is, true);

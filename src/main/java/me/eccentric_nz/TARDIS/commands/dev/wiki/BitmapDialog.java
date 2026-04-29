@@ -34,7 +34,7 @@ public class BitmapDialog {
     public Dialog create() {
         ItemStack blue = ItemStack.of(Material.BLUE_DYE);
         ItemMeta im = blue.getItemMeta();
-        im.setItemModel(ChameleonVariant.BLUE_CLOSED.getKey());
+        im.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.BLUE_CLOSED.getKey());
         blue.setItemMeta(im);
         List<DialogBody> body = List.of(
                 DialogBody.item(blue, DialogBody.plainMessage(Component.text("ㇺ")), false, false, 16, 139),

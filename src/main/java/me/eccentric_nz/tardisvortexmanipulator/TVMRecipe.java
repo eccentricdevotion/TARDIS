@@ -3,6 +3,8 @@
  */
 package me.eccentric_nz.tardisvortexmanipulator;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import net.kyori.adventure.text.Component;
@@ -10,9 +12,6 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.List;
 
 /**
  * @author eccentric_nz
@@ -27,10 +26,8 @@ public class TVMRecipe {
 
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.CLOCK, 1);
-        ItemMeta im = is.getItemMeta();
-        im.customName(ComponentUtils.toWhite("Vortex Manipulator"));
-        im.lore(List.of(Component.text("Cheap and nasty time travel")));
-        is.setItemMeta(im);
+        is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Vortex Manipulator"));
+        is.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text("Cheap and nasty time travel")).build());
         NamespacedKey key = new NamespacedKey(plugin, "vortex-manipulator");
         ShapedRecipe r = new ShapedRecipe(key, is);
         // get shape

@@ -48,7 +48,7 @@ public class ArtronUtility {
         // add glint if missing
         if (main && !im.hasEnchantmentGlintOverride()) {
             im.removeEnchant(Enchantment.UNBREAKING);
-            im.setEnchantmentGlintOverride(true);
+            is.setData(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE, true);
         }
         if (main) {
             is.setItemMeta(im);
@@ -79,7 +79,7 @@ public class ArtronUtility {
         }
         lore.set(1, Component.text(new_amount));
         im.lore(lore);
-        im.setEnchantmentGlintOverride(true);
+        is.setData(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE, true);
         im.addItemFlags(ItemFlag.values());
         im.setAttributeModifiers(Multimaps.forMap(Map.of()));
         is.setItemMeta(im);

@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.tardischemistry.product;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -58,12 +59,9 @@ public class SparklerRunnable implements Runnable {
                 ItemStack sparkler = inventory.getItemInMainHand();
                 int amount = sparkler.getAmount();
                 if (amount > 1) {
-                    ItemMeta im = sparkler.getItemMeta();
-                    Product cmd = Product.getByName().get(ComponentUtils.stripColour(im.customName()));
-                    im.setItemModel(cmd.getModel());
-                    im.removeEnchant(Enchantment.LOYALTY);
-                    im.setEnchantmentGlintOverride(null);
-                    sparkler.setItemMeta(im);
+                    Product cmd = Product.getByName().get(ComponentUtils.stripColour(sparkler.getData(DataComponentTypes.CUSTOM_NAME)));
+                    sparkler.setData(DataComponentTypes.ITEM_MODEL, cmd.getModel());
+                    sparkler.unsetData(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE);
                     sparkler.setAmount(amount - 1);
                     inventory.setItemInMainHand(sparkler);
                 } else {

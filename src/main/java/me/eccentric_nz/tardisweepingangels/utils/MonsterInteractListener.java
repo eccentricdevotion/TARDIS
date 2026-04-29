@@ -99,7 +99,7 @@ public class MonsterInteractListener implements Listener {
                             strax.setAngry(false);
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                                 new Equipper(Monster.STRAX, strax, false).setHelmetAndInvisibility();
-                                strax.customName(Component.text("Strax"));
+                                strax.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Strax"));
                                 strax.getPersistentDataContainer().set(TARDISWeepingAngels.STRAX, PersistentDataType.INTEGER, Monster.STRAX.ordinal());
                                 strax.getPersistentDataContainer().remove(TARDISWeepingAngels.SONTARAN);
                                 plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(strax, EntityType.ZOMBIFIED_PIGLIN, Monster.STRAX, l));
@@ -120,7 +120,7 @@ public class MonsterInteractListener implements Listener {
                             p.playSound(zombie.getLocation(), "milk", 1.0f, 1.0f);
                             ItemStack milk = ItemStack.of(Material.MILK_BUCKET);
                             ItemMeta m = milk.getItemMeta();
-                            m.customName(ComponentUtils.toWhite("Sontaran Lactic Fluid"));
+                            m.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Sontaran Lactic Fluid"));
                             milk.setItemMeta(m);
                             p.getEquipment().setItemInMainHand(milk);
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> milkers.remove(uuid), 3000L);

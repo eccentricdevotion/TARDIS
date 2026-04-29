@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.tardischemistry.product;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import org.bukkit.Material;
@@ -55,13 +56,12 @@ public class SparklerListener implements Listener {
                 ItemMeta im = is.getItemMeta();
                 if (im.hasCustomName()) {
                     String which = ComponentUtils.stripColour(im.customName());
-                    if (which.endsWith("Sparkler") && im.hasItemModel() && !im.hasEnchant(Enchantment.LOYALTY)) {
+                    if (which.endsWith("Sparkler") && im.hasItemModel()) {
                         player.playSound(player.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_TWINKLE, 1.0f, 1.0f);
                         // switch custom data models
                         Product sparkler = Product.getByName().get(which);
-                        im.setItemModel(sparkler.getActive());
-                        im.setEnchantmentGlintOverride(true);
-                        is.setItemMeta(im);
+                        is.setData(DataComponentTypes.ITEM_MODEL, sparkler.getActive());
+                        is.setData(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE, true);
                         // start sparkler runnable
                         BlockData colour = colours.get(ComponentUtils.stripColour(im.customName()));
                         SparklerRunnable runnable = new SparklerRunnable(player, colour, System.currentTimeMillis());

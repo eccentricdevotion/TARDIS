@@ -53,7 +53,7 @@ public class PaperBagRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.PAPER, 1);
         ItemMeta im = is.getItemMeta();
-        im.customName(ComponentUtils.toWhite("Paper Bag"));
+        im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Paper Bag"));
         im.lore(List.of(Component.text("Smaller on the outside")));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "paper_bag");

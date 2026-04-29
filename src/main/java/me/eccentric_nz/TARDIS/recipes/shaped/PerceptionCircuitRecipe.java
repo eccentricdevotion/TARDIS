@@ -56,7 +56,7 @@ public class PerceptionCircuitRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.GLOWSTONE_DUST, 1);
         ItemMeta im = is.getItemMeta();
-        im.customName(ComponentUtils.toWhite("Perception Circuit"));
+        im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Perception Circuit"));
         CustomModelDataComponent component = im.getCustomModelDataComponent();
         component.setFloats(CircuitVariant.PERCEPTION.getFloats());
         im.setCustomModelDataComponent(component);

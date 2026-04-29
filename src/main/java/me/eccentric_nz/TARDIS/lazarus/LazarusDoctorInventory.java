@@ -60,7 +60,7 @@ public class LazarusDoctorInventory extends LazarusItems implements InventoryHol
                 SkinUtils.getHeadProfile(doctor).thenAccept(playerProfile -> {
                     is.setData(DataComponentTypes.PROFILE, ResolvableProfile.resolvableProfile(playerProfile));
                     String[] name = doctor.name().split(" - ");
-                    im.customName(Component.text(name[0]));
+                    im.setData(DataComponentTypes.CUSTOM_NAME, Component.text(name[0]));
                     im.lore(List.of(Component.text(name[1])));
                     im.setPlayerProfile(playerProfile);
                     is.setItemMeta(im);

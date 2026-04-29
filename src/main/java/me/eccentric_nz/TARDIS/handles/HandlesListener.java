@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.handles;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.custommodels.keys.Whoniverse;
@@ -66,12 +68,13 @@ public class HandlesListener implements Listener {
         b.setBlockData(TARDISConstants.AIR);
         // drop a custom BIRCH_BUTTON
         ItemStack is = ItemStack.of(Material.BIRCH_BUTTON, 1);
-        ItemMeta im = is.getItemMeta();
-        im.customName(Component.text("Handles"));
-        im.lore(List.of(Component.text("Cyberhead from the"), Component.text("Maldovar Market")));
-        im.setItemModel(Whoniverse.HANDLES_OFF.getKey());
-        im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, 1);
-        is.setItemMeta(im);
+        is.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Handles"));
+        is.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(
+                Component.text("Cyberhead from the"),
+                Component.text("Maldovar Market")
+        )));
+        is.setData(DataComponentTypes.ITEM_MODEL, Whoniverse.HANDLES_OFF.getKey());
+        is.editPersistentDataContainer(pdc -> pdc.set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, 1));
         b.getWorld().dropItemNaturally(b.getLocation(), is);
         // remove control record
         HashMap<String, Object> wherec = new HashMap<>();

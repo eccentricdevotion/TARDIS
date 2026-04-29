@@ -56,12 +56,12 @@ public class InnerDisplayDoorCloser {
                     ItemMeta im = itemStack.getItemMeta();
                     if ((tdi.toString().endsWith("OPEN") || tdi == TARDISBlockDisplayItem.CUSTOM_DOOR)) {
                         switch (tdi.getMaterial()) {
-                            case IRON_DOOR -> im.setItemModel(TardisDoorVariant.TARDIS_DOOR_CLOSED.getKey());
-                            case BIRCH_DOOR -> im.setItemModel(BoneDoorVariant.BONE_DOOR_CLOSED.getKey());
-                            case CHERRY_DOOR -> im.setItemModel(ClassicDoorVariant.CLASSIC_DOOR_CLOSED.getKey());
-                            case PALE_OAK_DOOR -> im.setItemModel(SidratDoorVariant.SIDRAT_DOOR_CLOSED.getKey());
-                            case CRIMSON_DOOR -> im.setItemModel(DinerDoorVariant.DINER_DOOR_CLOSED.getKey());
-                            default -> im.setItemModel(Door.getClosedModel(tdi.getMaterial()));
+                            case IRON_DOOR -> im.setData(DataComponentTypes.ITEM_MODEL, TardisDoorVariant.TARDIS_DOOR_CLOSED.getKey());
+                            case BIRCH_DOOR -> im.setData(DataComponentTypes.ITEM_MODEL, BoneDoorVariant.BONE_DOOR_CLOSED.getKey());
+                            case CHERRY_DOOR -> im.setData(DataComponentTypes.ITEM_MODEL, ClassicDoorVariant.CLASSIC_DOOR_CLOSED.getKey());
+                            case PALE_OAK_DOOR -> im.setData(DataComponentTypes.ITEM_MODEL, SidratDoorVariant.SIDRAT_DOOR_CLOSED.getKey());
+                            case CRIMSON_DOOR -> im.setData(DataComponentTypes.ITEM_MODEL, DinerDoorVariant.DINER_DOOR_CLOSED.getKey());
+                            default -> im.setData(DataComponentTypes.ITEM_MODEL, Door.getClosedModel(tdi.getMaterial()));
                         }
                     }
                     itemStack.setItemMeta(im);

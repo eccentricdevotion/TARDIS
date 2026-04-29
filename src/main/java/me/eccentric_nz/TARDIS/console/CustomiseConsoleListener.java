@@ -211,8 +211,8 @@ public class CustomiseConsoleListener extends TARDISMenuListener {
     void setRotorSlot(InventoryView view, int slot, Map.Entry<String, Rotor> rotor) {
         ItemStack is = ItemStack.of(Material.LIGHT_GRAY_DYE, 1);
         ItemMeta im = is.getItemMeta();
-        im.setItemModel(rotor.getValue().offModel());
-        im.customName(Component.text(TARDISStringUtils.capitalise(rotor.getKey())));
+        im.setData(DataComponentTypes.ITEM_MODEL, rotor.getValue().offModel());
+        im.setData(DataComponentTypes.CUSTOM_NAME, Component.text(TARDISStringUtils.capitalise(rotor.getKey())));
         is.setItemMeta(im);
         view.setItem(slot, is);
     }
@@ -222,7 +222,7 @@ public class CustomiseConsoleListener extends TARDISMenuListener {
         ItemStack is = ItemStack.of(colour.getKey(), 1);
         ItemMeta im = is.getItemMeta();
         String dn = TARDISStringUtils.capitalise(name) + " Console";
-        im.customName(ComponentUtils.toWhite(dn));
+        im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(dn));
         is.setItemMeta(im);
         view.setItem(slot, is);
     }

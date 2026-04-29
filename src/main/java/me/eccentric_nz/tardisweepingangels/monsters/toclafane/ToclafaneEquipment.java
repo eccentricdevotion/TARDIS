@@ -33,8 +33,8 @@ public class ToclafaneEquipment {
     public static void set(Entity entity, boolean disguise) {
         ItemStack head = ItemStack.of(Material.GUNPOWDER);
         ItemMeta headMeta = head.getItemMeta();
-        headMeta.customName(Component.text("Toclafane"));
-        headMeta.setItemModel((disguise) ? ToclafaneVariant.TOCLAFANE.getKey() : ToclafaneVariant.TOCLAFANE_ATTACK.getKey());
+        headMeta.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Toclafane"));
+        headMeta.setData(DataComponentTypes.ITEM_MODEL, (disguise) ? ToclafaneVariant.TOCLAFANE.getKey() : ToclafaneVariant.TOCLAFANE_ATTACK.getKey());
         head.setItemMeta(headMeta);
         if (!disguise) {
             ArmorStand armorStand = (ArmorStand) entity;

@@ -17,6 +17,9 @@
 package me.eccentric_nz.TARDIS.api;
 
 import com.google.common.collect.Multimaps;
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
+import io.papermc.paper.datacomponent.item.TooltipDisplay;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISTrackerInstanceKeeper;
 import me.eccentric_nz.TARDIS.blueprints.*;
@@ -492,17 +495,19 @@ public class TARDII implements TardisAPI {
                     is = ItemStack.of(TARDISSeedDisplayItem.CUSTOM.getMaterial(), 1);
                 }
             }
-            ItemMeta im = is.getItemMeta();
-            im.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING, model.getKey());
+            NamespacedKey finalModel = model;
+            is.editPersistentDataContainer(pdc -> {
+                pdc.set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING, finalModel.getKey());
+            });
             // set display name
-            im.customName(ComponentUtils.toGold("TARDIS Seed Block"));
-            List<Component> lore = new ArrayList<>();
-            lore.add(Component.text(schematic));
-            lore.add(Component.text("Walls: ORANGE_WOOL"));
-            lore.add(Component.text("Floors: LIGHT_GRAY_WOOL"));
-            lore.add(Component.text("Chameleon: FACTORY"));
-            im.lore(lore);
-            is.setItemMeta(im);
+            is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toGold("TARDIS Seed Block"));
+            ItemLore lore = ItemLore.lore()
+                    .addLine(Component.text(schematic))
+            .addLine(Component.text("Walls: ORANGE_WOOL"))
+            .addLine(Component.text("Floors: LIGHT_GRAY_WOOL"))
+            .addLine(Component.text("Chameleon: FACTORY"))
+                    .build();
+            is.setData(DataComponentTypes.LORE, lore);
             return is;
         }
         return null;
@@ -573,20 +578,21 @@ public class TARDII implements TardisAPI {
             }
             if (perm != null) {
                 ItemStack is = ItemStack.of(Material.MUSIC_DISC_MELLOHI, 1);
-                ItemMeta im = is.getItemMeta();
-                PersistentDataContainer pdc = im.getPersistentDataContainer();
-                pdc.set(TARDIS.plugin.getTimeLordUuidKey(), TARDIS.plugin.getPersistentDataTypeUUID(), player.getUniqueId());
-                pdc.set(TARDIS.plugin.getBlueprintKey(), PersistentDataType.STRING, perm);
-                im.customName(ComponentUtils.toWhite("TARDIS Blueprint Disk"));
-                List<Component> lore = List.of(
-                        Component.text(TARDISStringUtils.capitalise(item)),
-                        Component.text("Valid only for"),
-                        Component.text(player.getName())
-                );
-                im.lore(lore);
-                im.addItemFlags(ItemFlag.values());
-                im.setAttributeModifiers(Multimaps.forMap(Map.of()));
-                is.setItemMeta(im);
+                is.editPersistentDataContainer(pdc -> {
+                    pdc.set(TARDIS.plugin.getTimeLordUuidKey(), TARDIS.plugin.getPersistentDataTypeUUID(), player.getUniqueId());
+                    pdc.set(TARDIS.plugin.getBlueprintKey(), PersistentDataType.STRING, perm);
+                });
+                is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("TARDIS Blueprint Disk"));
+                ItemLore lore = ItemLore.lore()
+                        .addLine(Component.text(TARDISStringUtils.capitalise(item)))
+                        .addLine(Component.text("Valid only for"))
+                        .addLine(Component.text(player.getName()))
+                        .build();
+                is.setData(DataComponentTypes.LORE, lore);
+                is.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
+                        .addHiddenComponents(DataComponentTypes.ATTRIBUTE_MODIFIERS)
+                        .hideTooltip(true)
+                        .build());
                 return is;
             }
             return null;

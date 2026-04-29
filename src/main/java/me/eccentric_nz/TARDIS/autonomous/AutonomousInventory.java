@@ -47,7 +47,7 @@ public class AutonomousInventory implements InventoryHolder {
         this.uuid = uuid;
         off = ItemStack.of(Material.LIGHT_GRAY_CARPET, 1);
         ItemMeta offMeta = off.getItemMeta();
-        offMeta.customName(Component.text(plugin.getLanguage().getString("SET_OFF", "OFF"), NamedTextColor.RED));
+        offMeta.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("SET_OFF", "OFF"), NamedTextColor.RED));
         off.setItemMeta(offMeta);
         this.inventory = plugin.getServer().createInventory(this, 36, Component.text("TARDIS Autonomous Menu", NamedTextColor.DARK_RED));
         this.inventory.setContents(getItemStack());

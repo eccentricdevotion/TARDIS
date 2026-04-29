@@ -60,7 +60,7 @@ public class TARDISInvisibilityCircuitRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.GLOWSTONE_DUST, 1);
         ItemMeta im = is.getItemMeta();
-        im.customName(ComponentUtils.toWhite("TARDIS Invisibility Circuit"));
+        im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("TARDIS Invisibility Circuit"));
         CustomModelDataComponent component = im.getCustomModelDataComponent();
         component.setFloats(CircuitVariant.INVISIBILITY.getFloats());
         im.setCustomModelDataComponent(component);
@@ -73,7 +73,7 @@ public class TARDISInvisibilityCircuitRecipe {
         ShapedRecipe r = new ShapedRecipe(key, is);
         ItemStack exact = ItemStack.of(Material.GLOWSTONE_DUST, 1);
         ItemMeta em = exact.getItemMeta();
-        em.customName(ComponentUtils.toWhite("Perception Circuit"));
+        em.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Perception Circuit"));
         CustomModelDataComponent ecomponent = em.getCustomModelDataComponent();
         ecomponent.setFloats(CircuitVariant.PERCEPTION.getFloats());
         em.setCustomModelDataComponent(ecomponent);

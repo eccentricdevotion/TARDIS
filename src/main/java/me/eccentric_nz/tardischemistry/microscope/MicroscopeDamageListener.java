@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.tardischemistry.microscope;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Entity;
@@ -26,7 +27,6 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 public class MicroscopeDamageListener implements Listener {
@@ -56,10 +56,8 @@ public class MicroscopeDamageListener implements Listener {
             if (event.getDamager() instanceof Player player) {
                 LabEquipment equipment = LabEquipment.getByMaterial().get(dye.getType());
                 ItemStack drop = ItemStack.of(equipment.getMaterial(), 1);
-                ItemMeta dropMeta = drop.getItemMeta();
-                dropMeta.customName(Component.text(equipment.getName()));
-                dropMeta.setItemModel(equipment.getModel());
-                drop.setItemMeta(dropMeta);
+                drop.setData(DataComponentTypes.CUSTOM_NAME, Component.text(equipment.getName()));
+                drop.setData(DataComponentTypes.ITEM_MODEL, equipment.getModel());
                 player.getWorld().dropItem(entity.getLocation(), drop);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, frame::remove, 1L);
             }

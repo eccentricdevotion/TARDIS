@@ -57,7 +57,7 @@ public class TARDISStattenheimCircuitRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.GLOWSTONE_DUST, 1);
         ItemMeta im = is.getItemMeta();
-        im.customName(ComponentUtils.toWhite("TARDIS Stattenheim Circuit"));
+        im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("TARDIS Stattenheim Circuit"));
         CustomModelDataComponent component = im.getCustomModelDataComponent();
         component.setFloats(CircuitVariant.STATTENHEIM.getFloats());
         im.setCustomModelDataComponent(component);
@@ -66,7 +66,7 @@ public class TARDISStattenheimCircuitRecipe {
         ShapedRecipe r = new ShapedRecipe(key, is);
         ItemStack exact = ItemStack.of(Material.GLOWSTONE_DUST, 1);
         ItemMeta em = exact.getItemMeta();
-        em.customName(ComponentUtils.toWhite("TARDIS Materialisation Circuit"));
+        em.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("TARDIS Materialisation Circuit"));
         CustomModelDataComponent ecomponent = em.getCustomModelDataComponent();
         ecomponent.setFloats(CircuitVariant.MATERIALISATION.getFloats());
         em.setCustomModelDataComponent(ecomponent);
@@ -78,7 +78,7 @@ public class TARDISStattenheimCircuitRecipe {
         exact.setItemMeta(em);
         ItemStack locator = ItemStack.of(Material.GLOWSTONE_DUST, 1);
         ItemMeta lim = locator.getItemMeta();
-        lim.customName(ComponentUtils.toWhite("TARDIS Locator Circuit"));
+        lim.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("TARDIS Locator Circuit"));
         CustomModelDataComponent lcomponent = lim.getCustomModelDataComponent();
         lcomponent.setFloats(CircuitVariant.LOCATOR.getFloats());
         lim.setCustomModelDataComponent(lcomponent);

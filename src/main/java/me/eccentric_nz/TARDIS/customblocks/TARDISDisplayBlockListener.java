@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.customblocks;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.commands.sudo.TARDISSudoTracker;
@@ -64,7 +66,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.Vector;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -368,12 +369,10 @@ public class TARDISDisplayBlockListener implements Listener {
                                     // open right hand door as well
                                     ItemStack itemStack = display.getItemStack();
                                     if (itemStack != null) {
-                                        ItemMeta im = itemStack.getItemMeta();
                                         // get custom model data
                                         NamespacedKey cmd = tdi == TARDISBlockDisplayItem.DOOR_OPEN ? TardisDoorVariant.TARDIS_DOOR_OPEN.getKey() : Door.getExtraModel(itemStack.getType());
                                         if (cmd != null) {
-                                            im.setItemModel(cmd);
-                                            itemStack.setItemMeta(im);
+                                            itemStack.setData(DataComponentTypes.ITEM_MODEL, cmd);
                                             display.setItemStack(itemStack);
                                             // close doors / deactivate portal
                                             new InnerDisplayDoorExtra(plugin).deactivate(block, id, playerUUID);
@@ -453,20 +452,15 @@ public class TARDISDisplayBlockListener implements Listener {
                     } else if (plugin.getTrackerKeeper().getUpdatePlayers().containsKey(player.getUniqueId())) {
                         // check if display is double door
                         ItemStack is = display.getItemStack();
-                        if (!is.hasItemMeta()) {
+                        if (!is.hasData(DataComponentTypes.ITEM_MODEL)) {
                             return;
                         }
-                        ItemMeta im = is.getItemMeta();
-                        if (!im.hasItemModel()) {
-                            return;
-                        }
-                        String model = im.getItemModel().getKey();
+                        String model = is.getData(DataComponentTypes.ITEM_MODEL).value();
                         String[] split = model.split("_");
                         String last = split[split.length - 1];
                         NamespacedKey key = new NamespacedKey(plugin, model.replace(last, "closed"));
                         // set custom model to closed
-                        im.setItemModel(key);
-                        is.setItemMeta(im);
+                        is.setData(DataComponentTypes.ITEM_MODEL, key);
                         display.setItemStack(is);
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_DOUBLE_DOOR");
                         plugin.getTrackerKeeper().getUpdatePlayers().remove(player.getUniqueId());
@@ -508,7 +502,7 @@ public class TARDISDisplayBlockListener implements Listener {
 
     private void processInteraction(ItemDisplay fake, ItemDisplay breaking, Player player, Location l, Block block, Interaction interaction) {
         if (fake != null && player.getGameMode().equals(GameMode.CREATIVE)) {
-            if (SiegeListener.isSiegeCube(fake.getItemStack())){
+            if (SiegeListener.isSiegeCube(fake.getItemStack())) {
                 return;
             }
             fake.remove();
@@ -546,11 +540,9 @@ public class TARDISDisplayBlockListener implements Listener {
                                     if (vis != null) {
                                         Material variable = vis.getType();
                                         ItemStack ret = ItemStack.of(Material.GLASS, 1);
-                                        ItemMeta im = ret.getItemMeta();
-                                        im.customName(ComponentUtils.toWhite("Variable Light"));
-                                        im.lore(List.of(Component.text(variable.toString())));
-                                        im.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.INTEGER, 1003);
-                                        ret.setItemMeta(im);
+                                        ret.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Variable Light"));
+                                        ret.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text(variable.toString())).build());
+                                        ret.editPersistentDataContainer(pdc -> pdc.set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.INTEGER, 1003));
                                         l.getWorld().dropItemNaturally(l, ret);
                                     }
                                 }
@@ -578,9 +570,9 @@ public class TARDISDisplayBlockListener implements Listener {
                                     ItemStack cube = item.getItemStack();
                                     ItemMeta im = cube.getItemMeta();
                                     im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, TARDISBlockDisplayItem.SIEGE_CUBE.getCustomModel().getKey());
-                                    List<Component> lore = new ArrayList<>();
-                                    lore.add(Component.text("Time Lord: " + rs.getTardis().getOwner()));
-                                    lore.add(Component.text("ID: " + id));
+                                    ItemLore.Builder lore = ItemLore.lore();
+                                    lore.addLine(Component.text("Time Lord: " + rs.getTardis().getOwner()));
+                                    lore.addLine(Component.text("ID: " + id));
                                     // get occupants
                                     HashMap<String, Object> wherec = new HashMap<>();
                                     wherec.put("tardis_id", id);
@@ -590,11 +582,11 @@ public class TARDISDisplayBlockListener implements Listener {
                                             Player p = plugin.getServer().getPlayer(tuuid);
                                             if (p != null && tuuid != rs.getTardis().getUuid()) {
                                                 String c = p.getName();
-                                                lore.add(Component.text("Companion: " + c));
+                                                lore.addLine(Component.text("Companion: " + c));
                                             }
                                         });
                                     }
-                                    im.lore(lore);
+                                    is.setData(DataComponentTypes.LORE, lore.build());
                                     cube.setItemMeta(im);
                                     item.setItemStack(cube);
                                     // track it
@@ -627,11 +619,9 @@ public class TARDISDisplayBlockListener implements Listener {
                     }
                 } else {
                     // update breaking item stack
-                    ItemMeta im = is.getItemMeta();
                     NamespacedKey model = new NamespacedKey(plugin, "destroy_" + (destroy + 1));
-                    im.getPersistentDataContainer().set(plugin.getDestroyKey(), PersistentDataType.INTEGER, destroy + 1);
-                    im.setItemModel(model);
-                    is.setItemMeta(im);
+                    is.editPersistentDataContainer(pdc -> pdc.set(plugin.getDestroyKey(), PersistentDataType.INTEGER, destroy + 1));
+                    is.setData(DataComponentTypes.ITEM_MODEL, model);
                     breaking.setItemStack(is);
                     // set a delayed task to reset the breaking animation
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, breaking::remove, 60);
@@ -645,10 +635,8 @@ public class TARDISDisplayBlockListener implements Listener {
             // only one item display entity...
             // so spawn a destroy entity
             ItemStack destroy = ItemStack.of(Material.GRAVEL);
-            ItemMeta dim = destroy.getItemMeta();
-            dim.getPersistentDataContainer().set(plugin.getDestroyKey(), PersistentDataType.INTEGER, 0);
-            dim.setItemModel(BlockBreak.DESTROY_0.getKey());
-            destroy.setItemMeta(dim);
+            destroy.editPersistentDataContainer(pdc -> pdc.set(plugin.getDestroyKey(), PersistentDataType.INTEGER, 0));
+            destroy.setData(DataComponentTypes.ITEM_MODEL, BlockBreak.DESTROY_0.getKey());
             Vector v = (interaction != null) ? new Vector(0, 0.5d, 0) : new Vector(0.5d, 0.5d, 0.5d);
             ItemDisplay display = (ItemDisplay) l.getWorld().spawnEntity(l.clone().add(v), EntityType.ITEM_DISPLAY);
             display.setItemStack(destroy);

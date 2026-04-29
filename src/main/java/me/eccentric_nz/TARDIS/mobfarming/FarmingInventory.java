@@ -44,11 +44,11 @@ public class FarmingInventory implements InventoryHolder {
         this.uuid = uuid;
         off = ItemStack.of(GUIFarming.OFF.getMaterial(), 1);
         ItemMeta offMeta = off.getItemMeta();
-        offMeta.customName(Component.text("Disabled"));
+        offMeta.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Disabled"));
         off.setItemMeta(offMeta);
         on = ItemStack.of(GUIFarming.ON.getMaterial(), 1);
         ItemMeta onMeta = on.getItemMeta();
-        onMeta.customName(Component.text("Enabled"));
+        onMeta.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Enabled"));
         on.setItemMeta(onMeta);
         this.inventory = plugin.getServer().createInventory(this, 54, Component.text("TARDIS Farming Menu", NamedTextColor.DARK_RED));
         this.inventory.setContents(getItemStack());
@@ -120,7 +120,7 @@ public class FarmingInventory implements InventoryHolder {
             if (f != GUIFarming.ON && f != GUIFarming.OFF) {
                 ItemStack is = ItemStack.of(f.getMaterial(), 1);
                 ItemMeta im = is.getItemMeta();
-                im.customName(Component.text(f.getMob()));
+                im.setData(DataComponentTypes.CUSTOM_NAME, Component.text(f.getMob()));
                 if (f != GUIFarming.CLOSE) {
                     im.lore(List.of(Component.text(f.getRoomName())));
                 }

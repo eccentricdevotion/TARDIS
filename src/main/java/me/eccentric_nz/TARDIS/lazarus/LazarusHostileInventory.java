@@ -102,7 +102,7 @@ class LazarusHostileInventory extends LazarusItems implements InventoryHolder, L
         for (Material m : hostile) {
             ItemStack egg = ItemStack.of(m, 1);
             ItemMeta me = egg.getItemMeta();
-            me.customName(Component.text(m.toString().replace("_SPAWN_EGG", "")));
+            me.setData(DataComponentTypes.CUSTOM_NAME, Component.text(m.toString().replace("_SPAWN_EGG", "")));
             egg.setItemMeta(me);
             stacks[i] = egg;
             i++;

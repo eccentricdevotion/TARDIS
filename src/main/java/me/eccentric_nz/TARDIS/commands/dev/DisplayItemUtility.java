@@ -58,7 +58,7 @@ public class DisplayItemUtility {
             ItemDisplay display = (ItemDisplay) block.getWorld().spawnEntity(block.getLocation().clone().add(0.5d, 1.25d, 0.5d), EntityType.ITEM_DISPLAY);
             ItemStack is = ItemStack.of(shopItem.getMaterial());
             ItemMeta im = is.getItemMeta();
-            im.setItemModel(shopItem.getModel());
+            im.setData(DataComponentTypes.ITEM_MODEL, shopItem.getModel());
             is.setItemMeta(im);
             display.setItemStack(is);
             display.setItemDisplayTransform(transform);
@@ -80,7 +80,7 @@ public class DisplayItemUtility {
             if (!b) {
                 ItemStack box = ItemStack.of(Material.BLUE_DYE, 1);
                 ItemMeta im = box.getItemMeta();
-                im.setItemModel(ChameleonVariant.BLUE_CLOSED.getKey());
+                im.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.BLUE_CLOSED.getKey());
                 box.setItemMeta(im);
                 ItemDisplay display = VehicleUtility.getItemDisplay(player, box, 1.75f);
                 int period = 40;
@@ -130,9 +130,10 @@ public class DisplayItemUtility {
         if (tdi != null) {
             ItemStack is = ItemStack.of(tdi.getMaterial());
             ItemMeta im = is.getItemMeta();
-            im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, tdi.getCustomModel().getKey());
-            im.setItemModel(tdi.getCustomModel());
-            im.customName(Component.text(TARDISStringUtils.capitalise(item)));
+            
+is.editPersistentDataContainer(pdc -> pdc.set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING, tdi.getCustomModel().getKey()));
+            im.setData(DataComponentTypes.ITEM_MODEL, tdi.getCustomModel());
+            im.setData(DataComponentTypes.CUSTOM_NAME, Component.text(TARDISStringUtils.capitalise(item)));
             is.setItemMeta(im);
             Block up = block.getRelative(BlockFace.UP);
             if (tdi.isClosedDoor() || tdi.isLight()) {

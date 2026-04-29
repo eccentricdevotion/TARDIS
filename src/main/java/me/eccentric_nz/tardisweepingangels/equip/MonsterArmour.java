@@ -38,8 +38,8 @@ public class MonsterArmour {
         TARDIS.plugin.debug(key.toString());
         ItemStack armour = ItemStack.of(monster.getMaterial(), 1);
         ItemMeta meta = armour.getItemMeta();
-        meta.customName(Component.text(monster.getName() + " " + TARDISStringUtils.uppercaseFirst(slot.name())));
-        meta.setItemModel(slot == EquipmentSlot.CHEST ? ArmourVariant.CHESTPLATE.getKey() : ArmourVariant.LEGGINGS.getKey());
+        meta.setData(DataComponentTypes.CUSTOM_NAME, Component.text(monster.getName() + " " + TARDISStringUtils.uppercaseFirst(slot.name())));
+        meta.setData(DataComponentTypes.ITEM_MODEL, slot == EquipmentSlot.CHEST ? ArmourVariant.CHESTPLATE.getKey() : ArmourVariant.LEGGINGS.getKey());
         EquippableComponent equippable = meta.getEquippable();
         equippable.setAllowedEntities(List.of(monster.getEntityType(), EntityType.PLAYER));
         equippable.setSlot(slot);

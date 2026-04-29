@@ -43,7 +43,7 @@ public class GamesInventory implements InventoryHolder {
         // 0 info
         ItemStack info = ItemStack.of(GUIChameleonConstructor.INFO.material(), 1);
         ItemMeta io = info.getItemMeta();
-        io.customName(Component.text(plugin.getChameleonGuis().getString("INFO", "Info")));
+        io.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getChameleonGuis().getString("INFO", "Info")));
         io.lore(List.of(
                 Component.text("Click the disk for"),
                 Component.text("the game you want to play."),
@@ -57,7 +57,7 @@ public class GamesInventory implements InventoryHolder {
         // 1 connect four
         ItemStack connect = ItemStack.of(Material.MUSIC_DISC_OTHERSIDE, 1);
         ItemMeta four = connect.getItemMeta();
-        four.customName(Component.text("Connect 4"));
+        four.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Connect 4"));
         four.addItemFlags(ItemFlag.values());
         four.setAttributeModifiers(Multimaps.forMap(Map.of()));
         connect.setItemMeta(four);
@@ -68,7 +68,7 @@ public class GamesInventory implements InventoryHolder {
             // 2 pong
             ItemStack pong = ItemStack.of(Material.MUSIC_DISC_OTHERSIDE, 1);
             ItemMeta pim = pong.getItemMeta();
-            pim.customName(Component.text("Pong"));
+            pim.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Pong"));
             pim.addItemFlags(ItemFlag.values());
             pim.setAttributeModifiers(Multimaps.forMap(Map.of()));
             pong.setItemMeta(pim);
@@ -77,7 +77,7 @@ public class GamesInventory implements InventoryHolder {
         // 3 stone magma ice
         ItemStack stonemagmaice = ItemStack.of(Material.MUSIC_DISC_OTHERSIDE, 1);
         ItemMeta smiim = stonemagmaice.getItemMeta();
-        smiim.customName(Component.text("Stone Magma Ice"));
+        smiim.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Stone Magma Ice"));
         smiim.addItemFlags(ItemFlag.values());
         smiim.setAttributeModifiers(Multimaps.forMap(Map.of()));
         stonemagmaice.setItemMeta(smiim);
@@ -85,7 +85,7 @@ public class GamesInventory implements InventoryHolder {
         // 4 tic tac toe
         ItemStack tictactoe = ItemStack.of(Material.MUSIC_DISC_OTHERSIDE, 1);
         ItemMeta ncim = tictactoe.getItemMeta();
-        ncim.customName(Component.text("Tic Tac Toe"));
+        ncim.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Tic Tac Toe"));
         ncim.addItemFlags(ItemFlag.values());
         ncim.setAttributeModifiers(Multimaps.forMap(Map.of()));
         tictactoe.setItemMeta(ncim);
@@ -94,7 +94,7 @@ public class GamesInventory implements InventoryHolder {
             // 5 tetris
             ItemStack tetris = ItemStack.of(Material.MUSIC_DISC_OTHERSIDE, 1);
             ItemMeta tim = tetris.getItemMeta();
-            tim.customName(Component.text("Tetris"));
+            tim.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Tetris"));
             tim.addItemFlags(ItemFlag.values());
             tim.setAttributeModifiers(Multimaps.forMap(Map.of()));
             tetris.setItemMeta(tim);
@@ -102,7 +102,7 @@ public class GamesInventory implements InventoryHolder {
             // 6 tetris start level = up tp 30
             ItemStack level = ItemStack.of(Material.FIREWORK_ROCKET, 1);
             ItemMeta lim = level.getItemMeta();
-            lim.customName(Component.text("Start level"));
+            lim.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Start level"));
             lim.lore(List.of(Component.text("0")));
             lim.addItemFlags(ItemFlag.values());
             lim.setAttributeModifiers(Multimaps.forMap(Map.of()));

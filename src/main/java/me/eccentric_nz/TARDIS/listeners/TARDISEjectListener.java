@@ -280,7 +280,7 @@ public class TARDISEjectListener implements Listener {
                 attribute.setBaseValue(tmlla.getHorseHealth());
                 String name = tmlla.getName();
                 if (name != null && !name.isEmpty()) {
-                    llama.customName(Component.text(name));
+                    llama.setData(DataComponentTypes.CUSTOM_NAME, Component.text(name));
                 }
                 if (tmlla.isTamed()) {
                     llama.setTamed(true);

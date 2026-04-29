@@ -233,7 +233,7 @@ public class TARDISItemFrameUpdateListener implements Listener {
                                     case Control.LIGHT_LEVEL -> "Light";
                                     default -> "Console";
                                 };
-                                im.customName(Component.text(dn));
+                                im.setData(DataComponentTypes.CUSTOM_NAME, Component.text(dn));
                                 sp.lamp().setItemMeta(im);
                                 frame.setItem(sp.lamp());
                                 plugin.getTrackerKeeper().getUpdatePlayers().remove(uuid);

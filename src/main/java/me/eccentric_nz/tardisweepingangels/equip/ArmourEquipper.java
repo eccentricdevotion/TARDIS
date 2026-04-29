@@ -53,7 +53,7 @@ public class ArmourEquipper {
             case DAVROS -> headModel = DavrosVariant.DAVROS.getKey();
             default -> headModel = monster.getHeadModel();
         }
-        headMeta.setItemModel(headModel);
+        headMeta.setData(DataComponentTypes.ITEM_MODEL, headModel);
         EquippableComponent headComponent = headMeta.getEquippable();
         headComponent.setDamageOnHurt(false);
         headComponent.setAllowedEntities(List.of(monster.getEntityType(), EntityType.PLAYER));
@@ -67,14 +67,14 @@ public class ArmourEquipper {
             case MIRE -> "Mire Helmet";
             default -> monster.getName() + " Head";
         };
-        headMeta.customName(ComponentUtils.toWhite(name));
+        headMeta.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(name));
         head.setItemMeta(headMeta);
         entity.getEquipment().setHelmet(head);
         // chest
         ItemStack body = ItemStack.of(monster.getMaterial());
         ItemMeta bodyMeta = body.getItemMeta();
-        bodyMeta.setItemModel(ArmourVariant.CHESTPLATE.getKey());
-        bodyMeta.customName(Component.text(monster.getName() + " Chestplate"));
+        bodyMeta.setData(DataComponentTypes.ITEM_MODEL, ArmourVariant.CHESTPLATE.getKey());
+        bodyMeta.setData(DataComponentTypes.CUSTOM_NAME, Component.text(monster.getName() + " Chestplate"));
         EquippableComponent bodyComponent = bodyMeta.getEquippable();
         bodyComponent.setDamageOnHurt(false);
         bodyComponent.setAllowedEntities(List.of(monster.getEntityType(), EntityType.PLAYER));
@@ -87,8 +87,8 @@ public class ArmourEquipper {
         // leggings
         ItemStack legs = ItemStack.of(monster.getMaterial());
         ItemMeta legsMeta = legs.getItemMeta();
-        legsMeta.setItemModel(ArmourVariant.LEGGINGS.getKey());
-        legsMeta.customName(Component.text(monster.getName() + " Leggings"));
+        legsMeta.setData(DataComponentTypes.ITEM_MODEL, ArmourVariant.LEGGINGS.getKey());
+        legsMeta.setData(DataComponentTypes.CUSTOM_NAME, Component.text(monster.getName() + " Leggings"));
         EquippableComponent legsComponent = legsMeta.getEquippable();
         legsComponent.setDamageOnHurt(false);
         legsComponent.setAllowedEntities(List.of(monster.getEntityType(), EntityType.PLAYER));

@@ -73,7 +73,7 @@ public class TelepathicBiome implements InventoryHolder {
                 if (material != null) {
                     ItemStack is = ItemStack.of(material, 1);
                     ItemMeta im = is.getItemMeta();
-                    im.customName(Component.text(biome.getKey().toString()));
+                    im.setData(DataComponentTypes.CUSTOM_NAME, Component.text(biome.getKey().toString()));
                     is.setItemMeta(im);
                     stack[i] = is;
                     if (i % 9 == 7) {
@@ -87,15 +87,15 @@ public class TelepathicBiome implements InventoryHolder {
                 // scroll up
                 ItemStack scroll_up = ItemStack.of(GUIWallFloor.BUTTON_SCROLL_U.material(), 1);
                 ItemMeta uim = scroll_up.getItemMeta();
-                uim.customName(Component.text(plugin.getLanguage().getString("BUTTON_SCROLL_U", "Scroll up")));
-                uim.setItemModel(GUIWallFloor.BUTTON_SCROLL_U.key());
+                uim.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_SCROLL_U", "Scroll up")));
+                uim.setData(DataComponentTypes.ITEM_MODEL, GUIWallFloor.BUTTON_SCROLL_U.key());
                 scroll_up.setItemMeta(uim);
                 stack[GUIWallFloor.BUTTON_SCROLL_U.slot()] = scroll_up;
                 // scroll down
                 ItemStack scroll_down = ItemStack.of(GUIWallFloor.BUTTON_SCROLL_D.material(), 1);
                 ItemMeta dim = scroll_down.getItemMeta();
-                dim.customName(Component.text(plugin.getLanguage().getString("BUTTON_SCROLL_D", "Scroll down")));
-                dim.setItemModel(GUIWallFloor.BUTTON_SCROLL_D.key());
+                dim.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_SCROLL_D", "Scroll down")));
+                dim.setData(DataComponentTypes.ITEM_MODEL, GUIWallFloor.BUTTON_SCROLL_D.key());
                 scroll_down.setItemMeta(dim);
                 stack[GUIWallFloor.BUTTON_SCROLL_D.slot()] = scroll_down;
             }

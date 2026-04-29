@@ -16,8 +16,11 @@
  */
 package me.eccentric_nz.tardischemistry.block;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -36,12 +39,14 @@ public class ChemistryBlockRecipes {
     public void addRecipes() {
         for (RecipeData data : ChemistryBlock.RECIPES.values()) {
             ItemStack is = ItemStack.of(data.displayItem().getMaterial(), 1);
-            ItemMeta im = is.getItemMeta();
-            im.customName(ComponentUtils.toWhite(data.displayName()));
-            im.lore(data.lore());
-            im.setItemModel(data.displayItem().getCustomModel());
-            im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, data.displayItem().getCustomModel().getKey());
-            is.setItemMeta(im);
+            is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(data.displayName()));
+            ItemLore.Builder lore = ItemLore.lore();
+            for (Component l : data.lore()) {
+                lore.addLine(l);
+            }
+            is.setData(DataComponentTypes.LORE, lore.build());
+            is.setData(DataComponentTypes.ITEM_MODEL, data.displayItem().getCustomModel());
+            is.editPersistentDataContainer(pdc -> pdc.set(plugin.getCustomBlockKey(), PersistentDataType.STRING, data.displayItem().getCustomModel().getKey()));
             NamespacedKey key = new NamespacedKey(plugin, data.nameSpacedKey());
             ShapedRecipe recipe = new ShapedRecipe(key, is);
             recipe.shape("AAA", "ACA", "AAA");

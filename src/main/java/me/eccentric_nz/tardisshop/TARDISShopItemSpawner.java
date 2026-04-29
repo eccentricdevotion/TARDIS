@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.tardisshop;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.CustomModelData;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
@@ -27,8 +29,6 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.TextDisplay;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.Transformation;
 
@@ -45,18 +45,17 @@ public class TARDISShopItemSpawner {
         try {
             ShopItem si = ShopItem.valueOf(toEnum);
             ItemStack is = ItemStack.of(si.getMaterial(), 1);
-            ItemMeta im = is.getItemMeta();
             if (si.getRecipeType() == ShopItemRecipe.MODELLED || si.getRecipeType() == ShopItemRecipe.TWA) {
-                im.setItemModel(si.getModel());
+                is.setData(DataComponentTypes.ITEM_MODEL, si.getModel());
             }
             if (si.getFloats() != null) {
-                CustomModelDataComponent component = im.getCustomModelDataComponent();
-                component.setFloats(si.getFloats());
-                im.setCustomModelDataComponent(component);
+                CustomModelData component = CustomModelData.customModelData()
+                        .addFloats(si.getFloats())
+                        .build();
+                is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, component);
             }
-            im.customName(Component.text(what.item()));
-            im.getPersistentDataContainer().set(plugin.getShopSettings().getItemKey(), PersistentDataType.INTEGER, 10001);
-            is.setItemMeta(im);
+            is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(what.item()));
+            is.editPersistentDataContainer(pdc -> pdc.set(plugin.getShopSettings().getItemKey(), PersistentDataType.INTEGER, 10001));
             ItemDisplay display = (ItemDisplay) location.getWorld().spawnEntity(location.clone().add(0.5d, 1.25d, 0.5d), EntityType.ITEM_DISPLAY);
             display.setItemStack(is);
             display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.GROUND);
@@ -64,7 +63,7 @@ public class TARDISShopItemSpawner {
             display.setInvulnerable(true);
             TextDisplay text = (TextDisplay) location.getWorld().spawnEntity(location.clone().add(0.5d, 1.65d, 0.5d), EntityType.TEXT_DISPLAY);
             text.setAlignment(TextDisplay.TextAlignment.CENTER);
-            text.text(Component.text(what.item(), NamedTextColor.WHITE).append(Component.newline()).append( Component.text("Cost:", NamedTextColor.RED)).append(Component.text(String.format(" %.2f", what.cost()), NamedTextColor.WHITE)));
+            text.text(Component.text(what.item(), NamedTextColor.WHITE).append(Component.newline()).append(Component.text("Cost:", NamedTextColor.RED)).append(Component.text(String.format(" %.2f", what.cost()), NamedTextColor.WHITE)));
             text.setTransformation(new Transformation(TARDISConstants.VECTOR_ZERO, TARDISConstants.AXIS_ANGLE_ZERO, TARDISConstants.VECTOR_QUARTER, TARDISConstants.AXIS_ANGLE_ZERO));
             text.setBillboard(Display.Billboard.VERTICAL);
         } catch (IllegalArgumentException e) {

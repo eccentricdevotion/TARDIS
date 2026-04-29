@@ -16,7 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.handles;
 
-import com.google.common.collect.Multimaps;
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
+import io.papermc.paper.datacomponent.item.TooltipDisplay;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
 import me.eccentric_nz.TARDIS.database.data.Program;
@@ -26,12 +28,9 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author eccentric_nz
@@ -69,26 +68,26 @@ class HandlesSavedInventory implements InventoryHolder {
         if (rs.resultSet()) {
             for (Program p : rs.getPrograms()) {
                 ItemStack is = ItemStack.of(Material.MUSIC_DISC_WARD, 1);
-                ItemMeta im = is.getItemMeta();
-                im.customName(Component.text("Handles Program Disk"));
+                is.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Handles Program Disk"));
                 String checked = (p.isCheckedOut()) ? "Checked OUT" : "Checked IN";
                 if (!p.getParsed().isEmpty()) {
-                    im.lore(List.of(
+                    is.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(
                             Component.text(p.getName()),
                             Component.text(p.getProgram_id()),
                             Component.text(checked),
                             Component.text("Running", NamedTextColor.AQUA)
-                    ));
+                    )));
                 } else {
-                    im.lore(List.of(
+                    is.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(
                             Component.text(p.getName()),
                             Component.text(p.getProgram_id()),
                             Component.text(checked)
-                    ));
+                    )));
                 }
-                im.addItemFlags(ItemFlag.values());
-                im.setAttributeModifiers(Multimaps.forMap(Map.of()));
-                is.setItemMeta(im);
+                is.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
+                        .addHiddenComponents(DataComponentTypes.ATTRIBUTE_MODIFIERS)
+                        .hideTooltip(true)
+                        .build());
                 stack[i] = is;
                 i++;
                 if (i > 44) {
@@ -98,36 +97,26 @@ class HandlesSavedInventory implements InventoryHolder {
         }
         // back
         ItemStack back = ItemStack.of(Material.ARROW, 1);
-        ItemMeta bk = back.getItemMeta();
-        bk.customName(Component.text("Back to editor"));
-        back.setItemMeta(bk);
+        back.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Back to editor"));
         stack[45] = back;
         // load button
         ItemStack load = ItemStack.of(Material.BOWL, 1);
-        ItemMeta ld = load.getItemMeta();
-        ld.customName(Component.text("Load selected program in editor"));
-        load.setItemMeta(ld);
+        load.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Load selected program in editor"));
         stack[47] = load;
         // deactivate
         ItemStack deactivate = ItemStack.of(Material.BUCKET, 1);
-        ItemMeta dem = deactivate.getItemMeta();
-        dem.customName(Component.text("Deactivate selected program"));
-        deactivate.setItemMeta(dem);
+        deactivate.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Deactivate selected program"));
         stack[48] = deactivate;
         // delete
         ItemStack delete = ItemStack.of(Material.BUCKET, 1);
-        ItemMeta dm = delete.getItemMeta();
-        dm.customName(Component.text("Delete selected program"));
-        delete.setItemMeta(dm);
+        delete.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Delete selected program"));
         stack[49] = delete;
         // check out
         ItemStack checked = ItemStack.of(Material.BOWL, 1);
-        ItemMeta km = checked.getItemMeta();
-        km.customName(Component.text("Check out selected program"));
-        checked.setItemMeta(km);
+        checked.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Check out selected program"));
         stack[51] = checked;
         // close
-        stack[53] = GUIItemFactory.close();;
+        stack[53] = GUIItemFactory.close();
         return stack;
     }
 }

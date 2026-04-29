@@ -43,7 +43,7 @@ public class InfoDialog {
                 InfoIcon infoIcon = ItemLookup.ITEMS.get(tardisInfoMenu);
                 ItemStack icon = ItemStack.of(infoIcon.item());
                 ItemMeta im = icon.getItemMeta();
-                im.setItemModel(infoIcon.model());
+                im.setData(DataComponentTypes.ITEM_MODEL, infoIcon.model());
                 icon.setItemMeta(im);
                 // set custom name
                 body.add(DialogBody.item(icon, null, false, false, 16, 16));

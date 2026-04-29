@@ -41,7 +41,7 @@ public class CategoryDialog {
     public Dialog create() {
         ItemStack blue = ItemStack.of(Material.BLUE_DYE);
         ItemMeta im = blue.getItemMeta();
-        im.setItemModel(ChameleonVariant.BLUE_CLOSED.getKey());
+        im.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.BLUE_CLOSED.getKey());
         blue.setItemMeta(im);
         List<DialogBody> body = (List.of(DialogBody.item(blue, null, false, false, 16, 16), DialogBody.plainMessage(Component.text("Choose a category below:"), 150)));
         DialogBase dialogData = DialogBase.create(Component.text("TARDIS Information System"), null, true, true, DialogBase.DialogAfterAction.CLOSE, body, List.of());

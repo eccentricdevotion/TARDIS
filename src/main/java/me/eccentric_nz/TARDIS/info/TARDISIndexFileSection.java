@@ -97,7 +97,7 @@ public class TARDISIndexFileSection implements InventoryHolder {
         // back
         ItemStack back = ItemStack.of(GUIChameleonPoliceBoxes.BACK.material(), 1);
         ItemMeta but = back.getItemMeta();
-        but.customName(Component.text("Back"));
+        but.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Back"));
         back.setItemMeta(but);
         stack[45] = back;
         // close
@@ -108,7 +108,7 @@ public class TARDISIndexFileSection implements InventoryHolder {
     private ItemStack makeButton(TARDISInfoMenu tim) {
         ItemStack is = ItemStack.of(Material.WRITTEN_BOOK, 1);
         ItemMeta im = is.getItemMeta();
-        im.customName(Component.text(TARDISStringUtils.capitalise(tim.toString())));
+        im.setData(DataComponentTypes.CUSTOM_NAME, Component.text(TARDISStringUtils.capitalise(tim.toString())));
         is.setItemMeta(im);
         return is;
     }

@@ -56,7 +56,7 @@ public class ConsoleRusticRecipe {
         ItemStack is = ItemStack.of(Material.WAXED_OXIDIZED_COPPER, 1);
         ItemMeta im = is.getItemMeta();
         String dn = "Rustic Console";
-        im.customName(ComponentUtils.toWhite(dn));
+        im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(dn));
         im.lore(List.of(Component.text("Integration with interaction")));
         im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, "console_rustic");
         is.setItemMeta(im);

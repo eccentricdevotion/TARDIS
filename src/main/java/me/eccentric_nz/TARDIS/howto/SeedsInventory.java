@@ -72,7 +72,7 @@ public class SeedsInventory implements InventoryHolder {
                 Material m = Material.getMaterial(a.getSeed());
                 ItemStack is = ItemStack.of(m, 1);
                 ItemMeta im = is.getItemMeta();
-                im.customName(Component.text(a.getDescription()));
+                im.setData(DataComponentTypes.CUSTOM_NAME, Component.text(a.getDescription()));
                 im.lore(List.of(Component.text("Click to see recipe...")));
                 is.setItemMeta(im);
                 stack[i] = is;

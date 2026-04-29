@@ -1,6 +1,7 @@
 package me.eccentric_nz.TARDIS.blueprints.trader;
 
 import com.destroystokyo.paper.profile.ProfileProperty;
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.ResolvableProfile;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
@@ -27,7 +28,6 @@ import org.bukkit.entity.Mannequin;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.MainHand;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.*;
@@ -44,10 +44,8 @@ public class TimeLordTraderSpawner {
 
     private ItemStack getType40() {
         ItemStack is = ItemStack.of(Material.CLAY_BALL);
-        ItemMeta im = is.getItemMeta();
-        im.getPersistentDataContainer().set(plugin.getTimeLordUuidKey(), PersistentDataType.BOOLEAN, true);
-        im.setItemModel(ChameleonVariant.TYPE_40_OPEN.getKey());
-        is.setItemMeta(im);
+        is.editPersistentDataContainer(pdc -> pdc.set(plugin.getTimeLordUuidKey(), PersistentDataType.BOOLEAN, true));
+        is.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.TYPE_40_OPEN.getKey());
         return is;
     }
 
@@ -74,7 +72,7 @@ public class TimeLordTraderSpawner {
     public void spawn(Location location) {
         Mannequin mannequin = location.getWorld().spawn(location, Mannequin.class);
         // play a sound
-        location.getWorld().playSound(location, Sound.ENTITY_ALLAY_AMBIENT_WITHOUT_ITEM, 1f,0.5f);
+        location.getWorld().playSound(location, Sound.ENTITY_ALLAY_AMBIENT_WITHOUT_ITEM, 1f, 0.5f);
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             mannequin.setProfile(ResolvableProfile.resolvableProfile().name("").uuid(UUID.randomUUID())
                     .addProperty(new ProfileProperty("textures", CharacterSkins.RASSILON.value(), CharacterSkins.RASSILON.signature()))

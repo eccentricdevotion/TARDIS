@@ -84,17 +84,17 @@ public class EquipCommand {
                             int flameID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new HeadlessFlameRunnable(as), 1, 20);
                             as.getPersistentDataContainer().set(TARDISWeepingAngels.FLAME_TASK, PersistentDataType.INTEGER, flameID);
                             // set helmet to sword version
-                            meta.setItemModel(MonkVariant.HEADLESS_MONK_STATIC.getKey());
+                            meta.setData(DataComponentTypes.ITEM_MODEL, MonkVariant.HEADLESS_MONK_STATIC.getKey());
                         } else {
-                            meta.setItemModel(MonkVariant.HEADLESS_MONK_ALTERNATE.getKey());
+                            meta.setData(DataComponentTypes.ITEM_MODEL, MonkVariant.HEADLESS_MONK_ALTERNATE.getKey());
                         }
                     }
                     if (monster == Monster.MIRE || monster == Monster.SLITHEEN) {
                         // set no helmet!
-                        meta.setItemModel((monster == Monster.MIRE ? MireVariant.THE_MIRE_HELMETLESS.getKey() : SlitheenVariant.SLITHEEN_SUIT.getKey()));
+                        meta.setData(DataComponentTypes.ITEM_MODEL, (monster == Monster.MIRE ? MireVariant.THE_MIRE_HELMETLESS.getKey() : SlitheenVariant.SLITHEEN_SUIT.getKey()));
                     }
                     if (monster == Monster.CLOCKWORK_DROID) {
-                        meta.setItemModel(DroidVariant.CLOCKWORK_DROID_FEMALE_STATIC.getKey());
+                        meta.setData(DataComponentTypes.ITEM_MODEL, DroidVariant.CLOCKWORK_DROID_FEMALE_STATIC.getKey());
                     }
                     if (monster == Monster.DALEK) {
                         try {
@@ -118,19 +118,19 @@ public class EquipCommand {
                                 case MAGENTA -> c = DalekVariant.DALEK_MAGENTA.getKey();
                                 case ORANGE -> c = DalekVariant.DALEK_ORANGE.getKey();
                             }
-                            meta.setItemModel(c);
+                            meta.setData(DataComponentTypes.ITEM_MODEL, c);
                         } catch (IllegalArgumentException ignored) {
                         }
                     }
                     if (monster == Monster.CYBERMAN) {
                         try {
                             CybermanVariant variant = CybermanVariant.valueOf(extra.toUpperCase(Locale.ROOT) + "_STATIC");
-                            meta.setItemModel(variant.getKey());
+                            meta.setData(DataComponentTypes.ITEM_MODEL, variant.getKey());
                         } catch (IllegalArgumentException ignored) {
                         }
                     }
                     if (monster == Monster.TOCLAFANE) {
-                        meta.setItemModel(ToclafaneVariant.TOCLAFANE_ATTACK.getKey());
+                        meta.setData(DataComponentTypes.ITEM_MODEL, ToclafaneVariant.TOCLAFANE_ATTACK.getKey());
                     }
                     head.setItemMeta(meta);
                     ee.setHelmet(head);

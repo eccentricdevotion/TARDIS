@@ -50,7 +50,7 @@ public class SonicOscillatorRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.GLOWSTONE_DUST, 1);
         ItemMeta im = is.getItemMeta();
-        im.customName(ComponentUtils.toWhite("Sonic Oscillator"));
+        im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Sonic Oscillator"));
         CustomModelDataComponent component = im.getCustomModelDataComponent();
         component.setFloats(CircuitVariant.SONIC.getFloats());
         im.setCustomModelDataComponent(component);

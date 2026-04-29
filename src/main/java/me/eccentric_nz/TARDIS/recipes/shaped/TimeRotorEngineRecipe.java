@@ -52,8 +52,8 @@ public class TimeRotorEngineRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.LIGHT_GRAY_DYE, 1);
         ItemMeta im = is.getItemMeta();
-        im.customName(ComponentUtils.toWhite("Time Rotor Engine"));
-        im.setItemModel(RecipeItem.TIME_ROTOR_ENGINE.getModel());
+        im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Time Rotor Engine"));
+        im.setData(DataComponentTypes.ITEM_MODEL, RecipeItem.TIME_ROTOR_ENGINE.getModel());
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "time_rotor_engine");
         ShapedRecipe r = new ShapedRecipe(key, is);

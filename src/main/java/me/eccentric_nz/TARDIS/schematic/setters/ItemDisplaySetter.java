@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.schematic.setters;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemRegistry;
@@ -124,9 +125,7 @@ public class ItemDisplaySetter {
                 ItemDisplay display = TARDISDisplayItemUtils.set(tdi, block, id);
                 if (json.has("name")) {
                     ItemStack is = display.getItemStack();
-                    ItemMeta im = is.getItemMeta();
-                    im.customName(ComponentUtils.fromJson(json.get("name")));
-                    is.setItemMeta(im);
+                    is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.fromJson(json.get("name")));
                     display.setItemStack(is);
                 }
                 if (json.has("rotation")) {
@@ -175,9 +174,7 @@ public class ItemDisplaySetter {
             JsonObject stack = json.get("stack").getAsJsonObject();
             Material material = Material.valueOf(stack.get("type").getAsString());
             ItemStack is = ItemStack.of(material);
-            ItemMeta im = is.getItemMeta();
-            im.customName(Component.text(stack.get("display_name").getAsString()));
-            is.setItemMeta(im);
+            is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(stack.get("display_name").getAsString()));
             display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.HEAD);
             display.setItemStack(is);
             display.setInvulnerable(true);

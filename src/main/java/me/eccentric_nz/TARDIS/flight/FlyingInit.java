@@ -34,7 +34,7 @@ public class FlyingInit {
         ItemStack is = ee.getHelmet();
         ItemMeta im = is.getItemMeta();
         // remove the current custom model - we'll use a rotating item display while flying
-        im.setItemModel(null);
+        im.setData(DataComponentTypes.ITEM_MODEL, null);
         is.setItemMeta(im);
         ee.setHelmet(is);
     }

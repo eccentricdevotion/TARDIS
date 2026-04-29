@@ -86,11 +86,11 @@ public class TWAK9 extends TWAFollower {
             org.bukkit.inventory.ItemStack bukkit = CraftItemStack.asBukkitCopy(is);
             ItemMeta im = bukkit.getItemMeta();
             if (oldX == getX() && oldZ == getZ()) {
-                im.setItemModel(K9Variant.K9.getKey());
+                im.setData(DataComponentTypes.ITEM_MODEL, K9Variant.K9.getKey());
                 i = 0;
             } else {
                 // play move animation
-                im.setItemModel(frames[i]);
+                im.setData(DataComponentTypes.ITEM_MODEL, frames[i]);
                 i++;
                 if (i == frames.length) {
                     i = 0;

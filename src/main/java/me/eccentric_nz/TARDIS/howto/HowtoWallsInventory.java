@@ -84,19 +84,19 @@ class HowtoWallsInventory implements InventoryHolder {
         // scroll up
         ItemStack scroll_up = ItemStack.of(GUIWallFloor.BUTTON_SCROLL_U.material(), 1);
         ItemMeta uim = scroll_up.getItemMeta();
-        uim.customName(Component.text(plugin.getLanguage().getString("BUTTON_SCROLL_U")));
+        uim.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_SCROLL_U")));
         scroll_up.setItemMeta(uim);
         stack[GUIWallFloor.BUTTON_SCROLL_U.slot()] = scroll_up;
         // scroll down
         ItemStack scroll_down = ItemStack.of(GUIWallFloor.BUTTON_SCROLL_D.material(), 1);
         ItemMeta dim = scroll_down.getItemMeta();
-        dim.customName(Component.text(plugin.getLanguage().getString("BUTTON_SCROLL_D")));
+        dim.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_SCROLL_D")));
         scroll_down.setItemMeta(dim);
         stack[26] = scroll_down;
         // back
         ItemStack back = ItemStack.of(GUIChameleonPresets.BACK.material(), 1);
         ItemMeta back_im = back.getItemMeta();
-        back_im.customName(Component.text("Back"));
+        back_im.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Back"));
         back.setItemMeta(back_im);
         stack[44] = back;
         // close

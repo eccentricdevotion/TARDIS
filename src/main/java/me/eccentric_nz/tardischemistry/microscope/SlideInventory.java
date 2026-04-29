@@ -16,17 +16,16 @@
  */
 package me.eccentric_nz.tardischemistry.microscope;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
 import me.eccentric_nz.TARDIS.custommodels.keys.ChemistryEquipment;
-import me.eccentric_nz.TARDIS.custommodels.keys.GuiVariant;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 class SlideInventory implements InventoryHolder {
@@ -50,15 +49,14 @@ class SlideInventory implements InventoryHolder {
         // make slides
         for (Slide slide : Slide.values()) {
             ItemStack is = ItemStack.of(Material.GLASS, 1);
-            ItemMeta im = is.getItemMeta();
-            im.customName(Component.text(slide.getName()));
-            im.setItemModel(ChemistryEquipment.GLASS_SLIDE.getKey());
-            im.getPersistentDataContainer().set(plugin.getMicroscopeKey(), PersistentDataType.STRING, slide.getModel().getKey());
-            is.setItemMeta(im);
+            is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(slide.getName()));
+            is.setData(DataComponentTypes.ITEM_MODEL, ChemistryEquipment.GLASS_SLIDE.getKey());
+            is.editPersistentDataContainer(pdc -> pdc.set(plugin.getMicroscopeKey(), PersistentDataType.STRING, slide.getModel().getKey()));
             stacks[slide.ordinal()] = is;
         }
         // Cancel / close
-        stacks[53] = GUIItemFactory.close();;
+        stacks[53] = GUIItemFactory.close();
+        ;
         return stacks;
     }
 }

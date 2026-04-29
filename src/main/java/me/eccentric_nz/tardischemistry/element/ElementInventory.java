@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.tardischemistry.element;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUIChemistry;
 import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
@@ -24,16 +25,13 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 public class ElementInventory implements InventoryHolder {
 
-    private final TARDIS plugin;
     private final Inventory inventory;
 
 
     public ElementInventory(TARDIS plugin) {
-        this.plugin = plugin;
         this.inventory = plugin.getServer().createInventory(this, 54, Component.text("Atomic elements", NamedTextColor.DARK_RED));
         this.inventory.setContents(getItemStack());
     }
@@ -61,31 +59,23 @@ public class ElementInventory implements InventoryHolder {
         }
         // scroll up
         ItemStack scroll_up = ItemStack.of(GUIChemistry.SCROLL_UP.material(), 1);
-        ItemMeta uim = scroll_up.getItemMeta();
-        uim.customName(Component.text("Scroll up"));
-        uim.setItemModel(GUIChemistry.SCROLL_UP.key());
-        scroll_up.setItemMeta(uim);
+        scroll_up.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Scroll up"));
+        scroll_up.setData(DataComponentTypes.ITEM_MODEL, GUIChemistry.SCROLL_UP.key());
         stack[8] = scroll_up;
         // scroll down
         ItemStack scroll_down = ItemStack.of(GUIChemistry.SCROLL_DOWN.material(), 1);
-        ItemMeta dim = scroll_down.getItemMeta();
-        dim.customName(Component.text("Scroll down"));
-        dim.setItemModel(GUIChemistry.SCROLL_DOWN.key());
-        scroll_down.setItemMeta(dim);
+        scroll_down.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Scroll down"));
+        scroll_down.setData(DataComponentTypes.ITEM_MODEL, GUIChemistry.SCROLL_DOWN.key());
         stack[17] = scroll_down;
         // compounds
         ItemStack compounds = ItemStack.of(GUIChemistry.COMPOUNDS.material(), 1);
-        ItemMeta cim = compounds.getItemMeta();
-        cim.customName(Component.text("Compounds"));
-        cim.setItemModel(GUIChemistry.COMPOUNDS.key());
-        compounds.setItemMeta(cim);
+        compounds.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Compounds"));
+        compounds.setData(DataComponentTypes.ITEM_MODEL, GUIChemistry.COMPOUNDS.key());
         stack[35] = compounds;
         // products
         ItemStack products = ItemStack.of(GUIChemistry.PRODUCTS.material(), 1);
-        ItemMeta pim = products.getItemMeta();
-        pim.customName(Component.text("Products"));
-        pim.setItemModel(GUIChemistry.PRODUCTS.key());
-        products.setItemMeta(pim);
+        products.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Products"));
+        products.setData(DataComponentTypes.ITEM_MODEL, GUIChemistry.PRODUCTS.key());
         stack[GUIChemistry.PRODUCTS.slot()] = products;
         // close
         stack[53] = GUIItemFactory.close();;

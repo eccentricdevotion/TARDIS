@@ -54,25 +54,25 @@ public class WeatherInventory implements InventoryHolder {
         // clear
         ItemStack clear = ItemStack.of(GUIWeather.CLEAR.material(), 1);
         ItemMeta sun = clear.getItemMeta();
-        sun.customName(Component.text(TARDISStringUtils.uppercaseFirst(plugin.getLanguage().getString("WEATHER_CLEAR"))));
+        sun.setData(DataComponentTypes.CUSTOM_NAME, Component.text(TARDISStringUtils.uppercaseFirst(plugin.getLanguage().getString("WEATHER_CLEAR"))));
         clear.setItemMeta(sun);
         stack[GUIWeather.CLEAR.slot()] = clear;
         // rain
         ItemStack rain = ItemStack.of(GUIWeather.RAIN.material(), 1);
         ItemMeta ing = rain.getItemMeta();
-        ing.customName(Component.text(TARDISStringUtils.uppercaseFirst(plugin.getLanguage().getString("WEATHER_RAIN"))));
+        ing.setData(DataComponentTypes.CUSTOM_NAME, Component.text(TARDISStringUtils.uppercaseFirst(plugin.getLanguage().getString("WEATHER_RAIN"))));
         rain.setItemMeta(ing);
         stack[GUIWeather.RAIN.slot()] = rain;
         // thunder
         ItemStack thunder = ItemStack.of(GUIWeather.THUNDER.material(), 1);
         ItemMeta storm = thunder.getItemMeta();
-        storm.customName(Component.text(plugin.getLanguage().getString("WEATHER_THUNDER")));
+        storm.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("WEATHER_THUNDER")));
         thunder.setItemMeta(storm);
         stack[GUIWeather.THUNDER.slot()] = thunder;
         // excite
         ItemStack excit = ItemStack.of(GUIWeather.EXCITE.material(), 1);
         ItemMeta ation = excit.getItemMeta();
-        ation.customName(Component.text(plugin.getLanguage().getString("WEATHER_EXCITE")));
+        ation.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("WEATHER_EXCITE")));
         excit.setItemMeta(ation);
         stack[GUIWeather.EXCITE.slot()] = excit;
         // close

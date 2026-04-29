@@ -16,7 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.skins.tv;
 
-import me.eccentric_nz.TARDIS.TARDIS;
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.CustomModelData;
 import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
 import me.eccentric_nz.TARDIS.custommodels.GUITelevision;
 import me.eccentric_nz.TARDIS.custommodels.keys.SwitchVariant;
@@ -24,8 +25,6 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
 public class TVGUI implements InventoryHolder {
 
@@ -38,27 +37,21 @@ public class TVGUI implements InventoryHolder {
 
     public void addDefaults(ItemStack[] stack) {
         // download
-        ItemStack down = ItemStack.of(GUITelevision.DOWNLOAD.material(), 1);
-        ItemMeta load = down.getItemMeta();
-        load.customName(Component.text("Toggle skin download"));
-        CustomModelDataComponent component = load.getCustomModelDataComponent();
-        component.setFloats(SwitchVariant.DOWNLOAD_OFF.getFloats());
-        load.setCustomModelDataComponent(component);
-        down.setItemMeta(load);
-        stack[GUITelevision.DOWNLOAD.slot()] = down;
+        ItemStack download = ItemStack.of(GUITelevision.DOWNLOAD.material(), 1);
+        download.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Toggle skin download"));
+        download.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                .addFloats(SwitchVariant.DOWNLOAD_OFF.getFloats())
+                .build());
+        stack[GUITelevision.DOWNLOAD.slot()] = download;
         // remove
         ItemStack remove = ItemStack.of(GUITelevision.REMOVE.material(), 1);
-        ItemMeta rim = remove.getItemMeta();
-        rim.customName(Component.text("Remove skin"));
-        remove.setItemMeta(rim);
+        remove.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Remove skin"));
         stack[GUITelevision.REMOVE.slot()] = remove;
         // back
         ItemStack back = ItemStack.of(GUITelevision.BACK.material(), 1);
-        ItemMeta but = back.getItemMeta();
-        but.customName(Component.text("Back"));
-        back.setItemMeta(but);
+        back.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Back"));
         stack[GUITelevision.BACK.slot()] = back;
         // close
-        stack[GUITelevision.CLOSE.slot()] = GUIItemFactory.close();;
+        stack[GUITelevision.CLOSE.slot()] = GUIItemFactory.close();
     }
 }

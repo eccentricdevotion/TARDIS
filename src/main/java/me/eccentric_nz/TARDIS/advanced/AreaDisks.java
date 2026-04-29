@@ -16,7 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.advanced;
 
-import com.google.common.collect.Multimaps;
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
+import io.papermc.paper.datacomponent.item.TooltipDisplay;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.data.Area;
@@ -28,7 +30,6 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -36,7 +37,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * The visual stabiliser circuit controlled the TARDIS' outward appearance. Its removal rendered the ship invisible.
@@ -69,15 +69,15 @@ class AreaDisks {
                 String name = a.areaName();
                 if (TARDISPermission.hasPermission(p, "tardis.area." + name) || TARDISPermission.hasPermission(p, "tardis.area.*")) {
                     ItemStack is = ItemStack.of(Material.MUSIC_DISC_BLOCKS, 1);
-                    ItemMeta im = is.getItemMeta();
-                    im.customName(Component.text("Area Storage Disk"));
-                    im.lore(List.of(
+                    is.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Area Storage Disk"));
+                    is.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(
                             Component.text(name),
                             Component.text(a.world())
-                    ));
-                    im.addItemFlags(ItemFlag.values());
-                    im.setAttributeModifiers(Multimaps.forMap(Map.of()));
-                    is.setItemMeta(im);
+                    )));
+                    is.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
+                            .addHiddenComponents(DataComponentTypes.ATTRIBUTE_MODIFIERS)
+                            .hideTooltip(true)
+                            .build());
                     areas.add(is);
                 }
             });
@@ -157,15 +157,15 @@ class AreaDisks {
                             int empty = getNextEmptySlot(inv);
                             if (empty != -1) {
                                 ItemStack is = ItemStack.of(Material.MUSIC_DISC_BLOCKS, 1);
-                                ItemMeta im = is.getItemMeta();
-                                im.customName(Component.text("Area Storage Disk"));
-                                im.lore(List.of(
+                                is.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Area Storage Disk"));
+                                is.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(
                                         Component.text(name),
                                         Component.text(map.world())
-                                ));
-                                im.addItemFlags(ItemFlag.values());
-                                im.setAttributeModifiers(Multimaps.forMap(Map.of()));
-                                is.setItemMeta(im);
+                                )));
+                                is.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
+                                        .addHiddenComponents(DataComponentTypes.ATTRIBUTE_MODIFIERS)
+                                        .hideTooltip(true)
+                                        .build());
                                 inv.setItem(empty, is);
                                 count++;
                             }

@@ -457,7 +457,7 @@ public class Death implements Listener {
                         plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(e, EntityType.ZOMBIE, Monster.CYBERMAN, l));
                         if (event.getEntity() instanceof Player) {
                             String name = event.getEntity().getName();
-                            e.customName(Component.text(name));
+                            e.setData(DataComponentTypes.CUSTOM_NAME, Component.text(name));
                             e.setCustomNameVisible(true);
                         }
                         return;

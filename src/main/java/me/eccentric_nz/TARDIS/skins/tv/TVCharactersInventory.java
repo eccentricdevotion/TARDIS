@@ -47,15 +47,10 @@ public class TVCharactersInventory extends TVGUI {
         if (PlayerHeadCache.CHARACTERS.isEmpty()) {
             for (Skin character : CharacterSkins.CHARACTERS) {
                 ItemStack is = ItemStack.of(Material.PLAYER_HEAD, 1);
-                SkullMeta im = (SkullMeta) is.getItemMeta();
-                SkinUtils.getHeadProfile(character).thenAccept(playerProfile -> {
-                    is.setData(DataComponentTypes.PROFILE, ResolvableProfile.resolvableProfile(playerProfile));
-                    im.setPlayerProfile(playerProfile);
-                    im.customName(Component.text(character.name()));
-                    is.setItemMeta(im);
-                    // cache the item stack
-                    PlayerHeadCache.CHARACTERS.add(is);
-                });
+                is.setData(DataComponentTypes.PROFILE, SkinUtils.getHeadProfile(character));
+                is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(character.name()));
+                // cache the item stack
+                PlayerHeadCache.CHARACTERS.add(is);
                 stack[i] = is;
                 i++;
             }

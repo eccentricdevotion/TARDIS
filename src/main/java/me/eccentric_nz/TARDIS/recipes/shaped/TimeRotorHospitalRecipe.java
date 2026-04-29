@@ -52,8 +52,8 @@ public class TimeRotorHospitalRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.LIGHT_GRAY_DYE, 1);
         ItemMeta im = is.getItemMeta();
-        im.customName(ComponentUtils.toWhite("Time Rotor Hospital"));
-        im.setItemModel(RecipeItem.TIME_ROTOR_HOSPITAL.getModel());
+        im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Time Rotor Hospital"));
+        im.setData(DataComponentTypes.ITEM_MODEL, RecipeItem.TIME_ROTOR_HOSPITAL.getModel());
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "time_rotor_hospital");
         ShapedRecipe r = new ShapedRecipe(key, is);

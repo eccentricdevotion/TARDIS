@@ -46,7 +46,7 @@ public class CustardCreamRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.COOKIE, 8);
         ItemMeta im = is.getItemMeta();
-        im.customName(ComponentUtils.toWhite("Custard Cream"));
+        im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Custard Cream"));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "custard_cream");
         ShapedRecipe r = new ShapedRecipe(key, is);

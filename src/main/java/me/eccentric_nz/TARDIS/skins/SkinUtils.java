@@ -16,13 +16,13 @@
  */
 package me.eccentric_nz.TARDIS.skins;
 
-import com.destroystokyo.paper.profile.PlayerProfile;
 import com.destroystokyo.paper.profile.ProfileProperty;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.ResolvableProfile;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.keys.CybermanVariant;
@@ -39,33 +39,31 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
 
 public class SkinUtils {
 
     public static final HashMap<UUID, Skin> SKINNED = new HashMap<>();
     private static final UUID uuid = UUID.fromString("622bb234-0a3e-46d7-9e1d-ed1f03c76011");
 
-    public static CompletableFuture<PlayerProfile> getHeadProfile(Skin skin) {
+    public static ResolvableProfile getHeadProfile(Skin skin) {
         ResolvableProfile profile = ResolvableProfile.resolvableProfile()
                 .uuid(uuid)
                 .name("TARDIS_Skin")
                 .addProperty(new ProfileProperty("textures", skin.value(), skin.signature()))
                 .build();
-        CompletableFuture<PlayerProfile> futureProfile = profile.resolve();
-        return futureProfile.thenApply(playerProfile -> {
-            playerProfile.getProperties().removeIf(profileProperty -> profileProperty.getName().equals("textures"));
-            playerProfile.getProperties().add(new ProfileProperty("textures", skin.value(), skin.signature()));
+//        CompletableFuture<PlayerProfile> futureProfile = profile.resolve();
+//        return futureProfile.thenApply(playerProfile -> {
+//            playerProfile.getProperties().removeIf(profileProperty -> profileProperty.getName().equals("textures"));
+//            playerProfile.getProperties().add(new ProfileProperty("textures", skin.value(), skin.signature()));
 //        PlayerTextures.SkinModel model = (skin.slim()) ? PlayerTextures.SkinModel.SLIM : PlayerTextures.SkinModel.CLASSIC;
-            return playerProfile;
-        });
+        return profile;
+//        });
     }
 
     public static boolean isAlexSkin(Player player) {
@@ -149,10 +147,8 @@ public class SkinUtils {
                 key = Features.ANGEL_OF_LIBERTY_CROWN.getKey();
                 // + 5 torch
                 ItemStack torch = ItemStack.of(Material.TORCH, 1);
-                ItemMeta tim = torch.getItemMeta();
-                tim.customName(Component.text("Liberty Torch"));
-                tim.setItemModel(Features.ANGEL_OF_LIBERTY_TORCH.getKey());
-                torch.setItemMeta(tim);
+                torch.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Liberty Torch"));
+                torch.setData(DataComponentTypes.ITEM_MODEL, Features.ANGEL_OF_LIBERTY_TORCH.getKey());
                 setOrSwapItem(torch, player, EquipmentSlot.HAND);
             }
             case "Bannakaffalatta" -> {
@@ -165,10 +161,8 @@ public class SkinUtils {
                 key = Features.CYBERMAN_FEATURES.getKey();
                 // + 7 weapon
                 ItemStack weapon = ItemStack.of(material, 1);
-                ItemMeta cwim = weapon.getItemMeta();
-                cwim.customName(Component.text("Cyber Weapon"));
-                cwim.setItemModel(CybermanVariant.CYBER_WEAPON.getKey());
-                weapon.setItemMeta(cwim);
+                weapon.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Cyber Weapon"));
+                weapon.setData(DataComponentTypes.ITEM_MODEL, CybermanVariant.CYBER_WEAPON.getKey());
                 setOrSwapItem(weapon, player, EquipmentSlot.HAND);
             }
             case "Wooden Cyberman" -> {
@@ -176,10 +170,8 @@ public class SkinUtils {
                 key = Features.WOOD_CYBERMAN_FEATURES.getKey();
                 // + weapon
                 ItemStack weapon = ItemStack.of(material, 1);
-                ItemMeta cwim = weapon.getItemMeta();
-                cwim.customName(Component.text("Wood Cyber Weapon"));
-                cwim.setItemModel(CybermanVariant.WOOD_CYBER_WEAPON.getKey());
-                weapon.setItemMeta(cwim);
+                weapon.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Wood Cyber Weapon"));
+                weapon.setData(DataComponentTypes.ITEM_MODEL, CybermanVariant.WOOD_CYBER_WEAPON.getKey());
                 setOrSwapItem(weapon, player, EquipmentSlot.HAND);
             }
             case "Black Cyberman" -> {
@@ -191,10 +183,8 @@ public class SkinUtils {
                 key = Features.CYBERMAN_INVASION_FEATURES.getKey();
                 // + arm decor
                 ItemStack arm = ItemStack.of(material, 1);
-                ItemMeta cwim = arm.getItemMeta();
-                cwim.customName(Component.text("Cyber Arm"));
-                cwim.setItemModel(CybermanVariant.CYBERMAN_INVASION_ARM.getKey());
-                arm.setItemMeta(cwim);
+                arm.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Cyber Arm"));
+                arm.setData(DataComponentTypes.ITEM_MODEL, CybermanVariant.CYBERMAN_INVASION_ARM.getKey());
                 setOrSwapItem(arm, player, EquipmentSlot.HAND);
                 setOrSwapItem(arm, player, EquipmentSlot.OFF_HAND);
             }
@@ -207,10 +197,8 @@ public class SkinUtils {
                 };
                 // + arm decor
                 ItemStack arm = ItemStack.of(material, 1);
-                ItemMeta cwim = arm.getItemMeta();
-                cwim.customName(Component.text("Cyber Arm"));
-                cwim.setItemModel(CybermanVariant.CYBERMAN_RISE_ARM.getKey());
-                arm.setItemMeta(cwim);
+                arm.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Cyber Arm"));
+                arm.setData(DataComponentTypes.ITEM_MODEL, CybermanVariant.CYBERMAN_RISE_ARM.getKey());
                 setOrSwapItem(arm, player, EquipmentSlot.HAND);
                 setOrSwapItem(arm, player, EquipmentSlot.OFF_HAND);
             }
@@ -253,10 +241,8 @@ public class SkinUtils {
                 key = null;
                 // 17 off-hand katana
                 ItemStack katana = ItemStack.of(material, 1);
-                ItemMeta kim = katana.getItemMeta();
-                kim.customName(Component.text("Katana"));
-                kim.setItemModel(Features.JENNY_FLINT_KATANA.getKey());
-                katana.setItemMeta(kim);
+                katana.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Katana"));
+                katana.setData(DataComponentTypes.ITEM_MODEL, Features.JENNY_FLINT_KATANA.getKey());
                 setOrSwapItem(katana, player, EquipmentSlot.OFF_HAND);
             }
             case "Jo Grant" -> key = Features.JO_GRANT_HAIR.getKey();
@@ -268,15 +254,11 @@ public class SkinUtils {
             case "Melanie Bush" -> {
                 key = Features.MELANIE_BUSH_HAIR.getKey();
                 ItemStack leftArm = ItemStack.of(material, 1);
-                ItemMeta laim = leftArm.getItemMeta();
-                laim.customName(Component.text(skin.name()));
-                laim.setItemModel(Features.MELANIE_BUSH_ARM_LEFT.getKey());
-                leftArm.setItemMeta(laim);
+                leftArm.setData(DataComponentTypes.CUSTOM_NAME, Component.text(skin.name()));
+                leftArm.setData(DataComponentTypes.ITEM_MODEL, Features.MELANIE_BUSH_ARM_LEFT.getKey());
                 ItemStack rightArm = ItemStack.of(material, 1);
-                ItemMeta raim = rightArm.getItemMeta();
-                raim.customName(Component.text(skin.name()));
-                raim.setItemModel(Features.MELANIE_BUSH_ARM_RIGHT.getKey());
-                rightArm.setItemMeta(raim);
+                rightArm.setData(DataComponentTypes.CUSTOM_NAME, Component.text(skin.name()));
+                rightArm.setData(DataComponentTypes.ITEM_MODEL, Features.MELANIE_BUSH_ARM_RIGHT.getKey());
                 setOrSwapItem(leftArm, player, EquipmentSlot.OFF_HAND);
                 setOrSwapItem(rightArm, player, EquipmentSlot.HAND);
             }
@@ -285,15 +267,11 @@ public class SkinUtils {
                 key = Features.MIRE_HELMET.getKey();
                 // + 7, 8 left, right arms
                 ItemStack leftArm = ItemStack.of(material, 1);
-                ItemMeta laim = leftArm.getItemMeta();
-                laim.customName(Component.text(skin.name()));
-                laim.setItemModel(MireVariant.MIRE_LEFT_ARM.getKey());
-                leftArm.setItemMeta(laim);
+                leftArm.setData(DataComponentTypes.CUSTOM_NAME, Component.text(skin.name()));
+                leftArm.setData(DataComponentTypes.ITEM_MODEL, MireVariant.MIRE_LEFT_ARM.getKey());
                 ItemStack rightArm = ItemStack.of(material, 1);
-                ItemMeta raim = rightArm.getItemMeta();
-                raim.customName(Component.text(skin.name()));
-                raim.setItemModel(MireVariant.MIRE_RIGHT_ARM.getKey());
-                rightArm.setItemMeta(raim);
+                rightArm.setData(DataComponentTypes.CUSTOM_NAME, Component.text(skin.name()));
+                rightArm.setData(DataComponentTypes.ITEM_MODEL, MireVariant.MIRE_RIGHT_ARM.getKey());
                 setOrSwapItem(leftArm, player, EquipmentSlot.OFF_HAND);
                 setOrSwapItem(rightArm, player, EquipmentSlot.HAND);
             }
@@ -332,15 +310,11 @@ public class SkinUtils {
                 key = Features.SLITHEEN_HEAD.getKey();
                 // + 7, 8 left, right claws
                 ItemStack leftClaw = ItemStack.of(material, 1);
-                ItemMeta lhim = leftClaw.getItemMeta();
-                lhim.customName(Component.text(skin.name()));
-                lhim.setItemModel(SlitheenVariant.SLITHEEN_CLAW_LEFT.getKey());
-                leftClaw.setItemMeta(lhim);
+                leftClaw.setData(DataComponentTypes.CUSTOM_NAME, Component.text(skin.name()));
+                leftClaw.setData(DataComponentTypes.ITEM_MODEL, SlitheenVariant.SLITHEEN_CLAW_LEFT.getKey());
                 ItemStack rightClaw = ItemStack.of(material, 1);
-                ItemMeta rhim = rightClaw.getItemMeta();
-                rhim.customName(Component.text(skin.name()));
-                rhim.setItemModel(SlitheenVariant.SLITHEEN_CLAW_RIGHT.getKey());
-                rightClaw.setItemMeta(rhim);
+                rightClaw.setData(DataComponentTypes.CUSTOM_NAME, Component.text(skin.name()));
+                rightClaw.setData(DataComponentTypes.ITEM_MODEL, SlitheenVariant.SLITHEEN_CLAW_RIGHT.getKey());
                 setOrSwapItem(leftClaw, player, EquipmentSlot.OFF_HAND);
                 setOrSwapItem(rightClaw, player, EquipmentSlot.HAND);
             }
@@ -376,13 +350,11 @@ public class SkinUtils {
         }
         if (!skin.name().equals("Jenny Flint")) {
             ItemStack head = ItemStack.of(material, 1);
-            ItemMeta im = head.getItemMeta();
-            im.customName(Component.text(skin.name()));
+            head.setData(DataComponentTypes.CUSTOM_NAME, Component.text(skin.name()));
             if (key != null) {
-                im.setItemModel(key);
+                head.setData(DataComponentTypes.ITEM_MODEL, key);
             }
-            im.getPersistentDataContainer().set(TARDIS.plugin.getTimeLordUuidKey(), PersistentDataType.BOOLEAN, true);
-            head.setItemMeta(im);
+            head.editPersistentDataContainer(pdc -> pdc.set(TARDIS.plugin.getTimeLordUuidKey(), PersistentDataType.BOOLEAN, true));
             setOrSwapItem(head, player, EquipmentSlot.HEAD);
         }
     }

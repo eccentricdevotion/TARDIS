@@ -59,31 +59,31 @@ class RegulatorInventory implements InventoryHolder {
         // direction pad up
         ItemStack pad_up = ItemStack.of(Material.LIME_WOOL, 1);
         ItemMeta up = pad_up.getItemMeta();
-        up.customName(Component.text("Up"));
+        up.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Up"));
         pad_up.setItemMeta(up);
         is[16] = pad_up;
         // regulator
         ItemStack wobb = ItemStack.of(Material.BLUE_WOOL, 1);
         ItemMeta ler = wobb.getItemMeta();
-        ler.customName(Component.text("Regulator"));
+        ler.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Regulator"));
         wobb.setItemMeta(ler);
         is[20] = wobb;
         // direction pad left
         ItemStack pad_left = ItemStack.of(Material.LIME_WOOL, 1);
         ItemMeta left = pad_left.getItemMeta();
-        left.customName(Component.text("Left"));
+        left.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Left"));
         pad_left.setItemMeta(left);
         is[24] = pad_left;
         // direction pad right
         ItemStack pad_right = ItemStack.of(Material.LIME_WOOL, 1);
         ItemMeta right = pad_right.getItemMeta();
-        right.customName(Component.text("Right"));
+        right.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Right"));
         pad_right.setItemMeta(right);
         is[26] = pad_right;
         // direction pad down
         ItemStack pad_down = ItemStack.of(Material.LIME_WOOL, 1);
         ItemMeta down = pad_down.getItemMeta();
-        down.customName(Component.text("Down"));
+        down.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Down"));
         pad_down.setItemMeta(down);
         is[34] = pad_down;
 

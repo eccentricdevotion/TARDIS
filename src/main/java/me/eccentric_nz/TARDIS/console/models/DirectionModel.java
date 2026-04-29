@@ -30,14 +30,14 @@ public class DirectionModel {
         ItemStack is = display.getItemStack();
         ItemMeta im = is.getItemMeta();
         switch (state) {
-            case 0 -> im.setItemModel(DirectionVariant.DIRECTION_NORTH.getKey());
-            case 1 -> im.setItemModel(DirectionVariant.DIRECTION_NORTH_EAST.getKey());
-            case 2 -> im.setItemModel(DirectionVariant.DIRECTION_EAST.getKey());
-            case 3 -> im.setItemModel(DirectionVariant.DIRECTION_SOUTH_EAST.getKey());
-            case 4 -> im.setItemModel(DirectionVariant.DIRECTION_SOUTH.getKey());
-            case 5 -> im.setItemModel(DirectionVariant.DIRECTION_SOUTH_WEST.getKey());
-            case 6 -> im.setItemModel(DirectionVariant.DIRECTION_WEST.getKey());
-            default -> im.setItemModel(DirectionVariant.DIRECTION_NORTH_WEST.getKey());
+            case 0 -> im.setData(DataComponentTypes.ITEM_MODEL, DirectionVariant.DIRECTION_NORTH.getKey());
+            case 1 -> im.setData(DataComponentTypes.ITEM_MODEL, DirectionVariant.DIRECTION_NORTH_EAST.getKey());
+            case 2 -> im.setData(DataComponentTypes.ITEM_MODEL, DirectionVariant.DIRECTION_EAST.getKey());
+            case 3 -> im.setData(DataComponentTypes.ITEM_MODEL, DirectionVariant.DIRECTION_SOUTH_EAST.getKey());
+            case 4 -> im.setData(DataComponentTypes.ITEM_MODEL, DirectionVariant.DIRECTION_SOUTH.getKey());
+            case 5 -> im.setData(DataComponentTypes.ITEM_MODEL, DirectionVariant.DIRECTION_SOUTH_WEST.getKey());
+            case 6 -> im.setData(DataComponentTypes.ITEM_MODEL, DirectionVariant.DIRECTION_WEST.getKey());
+            default -> im.setData(DataComponentTypes.ITEM_MODEL, DirectionVariant.DIRECTION_NORTH_WEST.getKey());
         }
         is.setItemMeta(im);
         display.setItemStack(is);

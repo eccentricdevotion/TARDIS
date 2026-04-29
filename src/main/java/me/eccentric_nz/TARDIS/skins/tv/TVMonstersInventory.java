@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.skins.tv;
 
 import io.papermc.paper.datacomponent.DataComponentTypes;
-import io.papermc.paper.datacomponent.item.ResolvableProfile;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.skins.MonsterSkins;
 import me.eccentric_nz.TARDIS.skins.Skin;
@@ -26,7 +25,6 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.SkullMeta;
 
 public class TVMonstersInventory extends TVGUI {
 
@@ -46,15 +44,10 @@ public class TVMonstersInventory extends TVGUI {
         if (PlayerHeadCache.MONSTERS.isEmpty()) {
             for (Skin monster : MonsterSkins.MONSTERS) {
                 ItemStack is = ItemStack.of(Material.PLAYER_HEAD, 1);
-                SkullMeta im = (SkullMeta) is.getItemMeta();
-                SkinUtils.getHeadProfile(monster).thenAccept(playerProfile -> {
-                    is.setData(DataComponentTypes.PROFILE, ResolvableProfile.resolvableProfile(playerProfile));
-                    im.setPlayerProfile(playerProfile);
-                    im.customName(Component.text(monster.name()));
-                    is.setItemMeta(im);
-                    // cache the item stack
-                    PlayerHeadCache.MONSTERS.add(is);
-                });
+                is.setData(DataComponentTypes.PROFILE, SkinUtils.getHeadProfile(monster));
+                is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(monster.name()));
+                // cache the item stack
+                PlayerHeadCache.MONSTERS.add(is);
                 stack[i] = is;
                 i++;
             }

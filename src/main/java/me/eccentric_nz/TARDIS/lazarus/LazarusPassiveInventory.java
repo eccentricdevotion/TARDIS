@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.lazarus;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -23,7 +24,6 @@ import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -100,13 +100,11 @@ class LazarusPassiveInventory extends LazarusItems implements InventoryHolder, L
         int i = 0;
         for (Material m : passive) {
             ItemStack egg = ItemStack.of(m, 1);
-            ItemMeta me = egg.getItemMeta();
             if (m == Material.MOOSHROOM_SPAWN_EGG) {
-                me.customName(Component.text("MUSHROOM_COW"));
+                egg.setData(DataComponentTypes.CUSTOM_NAME, Component.text("MUSHROOM_COW"));
             } else {
-                me.customName(Component.text(m.toString().replace("_SPAWN_EGG", "")));
+                egg.setData(DataComponentTypes.CUSTOM_NAME, Component.text(m.toString().replace("_SPAWN_EGG", "")));
             }
-            egg.setItemMeta(me);
             stacks[i] = egg;
             i++;
         }

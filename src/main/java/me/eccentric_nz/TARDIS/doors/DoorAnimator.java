@@ -59,7 +59,7 @@ public class DoorAnimator {
                 model = data.animation()[frame];
             }
             ItemMeta im = is.getItemMeta();
-            im.setItemModel(model);
+            im.setData(DataComponentTypes.ITEM_MODEL, model);
             is.setItemMeta(im);
             display.setItemStack(is);
             frame++;

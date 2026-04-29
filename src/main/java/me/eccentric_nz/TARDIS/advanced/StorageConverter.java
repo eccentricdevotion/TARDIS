@@ -17,6 +17,9 @@
 package me.eccentric_nz.TARDIS.advanced;
 
 import com.google.common.collect.Multimaps;
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.CustomModelData;
+import io.papermc.paper.datacomponent.item.TooltipDisplay;
 import me.eccentric_nz.TARDIS.custommodels.keys.CircuitVariant;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import net.kyori.adventure.text.Component;
@@ -34,27 +37,27 @@ public class StorageConverter {
     public static ItemStack[] updateDisks(String serialized) {
         try {
             ItemStack[] stacks = SerializeInventory.itemStacksFromString(serialized);
-            // convert stacks to component display names
+            // convert stacks to component custom names
             for (ItemStack is : stacks) {
-                if (is != null && is.hasItemMeta()) {
-                    ItemMeta im = is.getItemMeta();
-                    if (im.hasCustomName()) {
-                        Component component = im.customName();
+                if (is != null) {
+                    if (is.hasData(DataComponentTypes.CUSTOM_NAME)) {
+                        Component component = is.getData(DataComponentTypes.CUSTOM_NAME);
                         // strip color codes
                         String stripped = ComponentUtils.stripColour(component);
                         if (!component.children().isEmpty()) {
                             stripped = ComponentUtils.stripColour(component.children().getFirst());
                         }
-                        im.customName(Component.text(stripped));
+                        is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(stripped));
                         if (is.getType() == Material.GLOWSTONE_DUST) {
-                            CustomModelDataComponent cmd = im.getCustomModelDataComponent();
-                            cmd.setFloats(CircuitVariant.GALLIFREY.getFloats());
-                            im.setCustomModelDataComponent(cmd);
+                            is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                                    .addFloats(CircuitVariant.GALLIFREY.getFloats())
+                                    .build());
                         }
-                        im.setItemModel(null);
-                        im.addItemFlags(ItemFlag.values());
-                        im.setAttributeModifiers(Multimaps.forMap(Map.of()));
-                        is.setItemMeta(im);
+                        is.unsetData(DataComponentTypes.ITEM_MODEL);
+                        is.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
+                                .addHiddenComponents(DataComponentTypes.ATTRIBUTE_MODIFIERS)
+                                .hideTooltip(true)
+                                .build());
                     }
                 }
             }
@@ -67,27 +70,27 @@ public class StorageConverter {
     public static ItemStack[] updateCircuits(String serialized) {
         try {
             ItemStack[] stacks = SerializeInventory.itemStacksFromString(serialized);
-            // convert stacks to component display names
+            // convert stacks to component custom names
             for (ItemStack is : stacks) {
                 if (is != null && is.hasItemMeta()) {
-                    ItemMeta im = is.getItemMeta();
-                    if (im.hasCustomName()) {
-                        Component component = im.customName();
+                    if (is.hasData(DataComponentTypes.CUSTOM_NAME)) {
+                        Component component = is.getData(DataComponentTypes.CUSTOM_NAME);
                         // strip color codes
                         String stripped = ComponentUtils.stripColour(component);
                         if (!component.children().isEmpty()) {
                             stripped = ComponentUtils.stripColour(component.children().getFirst());
                         }
-                        im.customName(Component.text(stripped));
+                        is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(stripped));
                         if (is.getType() == Material.GLOWSTONE_DUST) {
-                            CustomModelDataComponent cmd = im.getCustomModelDataComponent();
-                            cmd.setFloats(CircuitVariant.fromDisplayName(stripped).getFloats());
-                            im.setCustomModelDataComponent(cmd);
+                            is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                                    .addFloats(CircuitVariant.fromDisplayName(stripped).getFloats())
+                                    .build());
                         }
-                        im.setItemModel(null);
-                        im.addItemFlags(ItemFlag.values());
-                        im.setAttributeModifiers(Multimaps.forMap(Map.of()));
-                        is.setItemMeta(im);
+                        is.unsetData(DataComponentTypes.ITEM_MODEL);
+                        is.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
+                                .addHiddenComponents(DataComponentTypes.ATTRIBUTE_MODIFIERS)
+                                .hideTooltip(true)
+                                .build());
                     }
                 }
             }

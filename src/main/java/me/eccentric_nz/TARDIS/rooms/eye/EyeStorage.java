@@ -52,7 +52,7 @@ public class EyeStorage implements InventoryHolder {
         // info
         ItemStack info = ItemStack.of(GUIArtronStorage.INFO.material(), 1);
         ItemMeta info_im = info.getItemMeta();
-        info_im.customName(Component.text("Info"));
+        info_im.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Info"));
         info_im.lore(List.of(
                 Component.text("Increase the Artron storage"),
                 Component.text("capacity by placing"),
@@ -64,7 +64,7 @@ public class EyeStorage implements InventoryHolder {
         // right arrow
         ItemStack r_arrow = ItemStack.of(GUIArtronStorage.ARROW_RIGHT.material(), 1);
         ItemMeta r_arrow_im = r_arrow.getItemMeta();
-        r_arrow_im.customName(ComponentUtils.toWhite(""));
+        r_arrow_im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(""));
         r_arrow.setItemMeta(r_arrow_im);
         stacks[GUIArtronStorage.ARROW_RIGHT.slot()] = r_arrow;
         ResultSetArtronStorage rs = new ResultSetArtronStorage(plugin);
@@ -75,7 +75,7 @@ public class EyeStorage implements InventoryHolder {
             for (int i = 2; i < 2 + count; i++) {
                 ItemStack is = ItemStack.of(Material.BUCKET, 1);
                 ItemMeta im = is.getItemMeta();
-                im.customName(ComponentUtils.toWhite(i > (2 + count) - damaged ? "Damaged Artron Capacitor" : "Artron Capacitor"));
+                im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(i > (2 + count) - damaged ? "Damaged Artron Capacitor" : "Artron Capacitor"));
                 is.setItemMeta(im);
                 stacks[i] = is;
             }
@@ -83,7 +83,7 @@ public class EyeStorage implements InventoryHolder {
         // left arrow
         ItemStack l_arrow = ItemStack.of(GUIArtronStorage.ARROW_LEFT.material(), 1);
         ItemMeta l_arrow_im = l_arrow.getItemMeta();
-        l_arrow_im.customName(ComponentUtils.toWhite(" "));
+        l_arrow_im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(" "));
         l_arrow.setItemMeta(l_arrow_im);
         stacks[GUIArtronStorage.ARROW_LEFT.slot()] = l_arrow;
         // close

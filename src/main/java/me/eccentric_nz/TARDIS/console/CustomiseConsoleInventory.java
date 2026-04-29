@@ -41,7 +41,7 @@ public class CustomiseConsoleInventory implements InventoryHolder {
         // info
         ItemStack info = ItemStack.of(Material.BOOK, 1);
         ItemMeta info_im = info.getItemMeta();
-        info_im.customName(Component.text("Instructions"));
+        info_im.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Instructions"));
         info_im.lore(List.of(
                 Component.text("Choose your desired time rotor"),
                 Component.text("Choose your desired console"),
@@ -55,8 +55,8 @@ public class CustomiseConsoleInventory implements InventoryHolder {
         for (Map.Entry<String,Rotor> rotor: Rotor.byName.entrySet()) {
             ItemStack is = ItemStack.of(Material.LIGHT_GRAY_DYE);
             ItemMeta im = is.getItemMeta();
-            im.setItemModel(rotor.getValue().offModel());
-            im.customName(Component.text(TARDISStringUtils.capitalise(rotor.getKey())));
+            im.setData(DataComponentTypes.ITEM_MODEL, rotor.getValue().offModel());
+            im.setData(DataComponentTypes.CUSTOM_NAME, Component.text(TARDISStringUtils.capitalise(rotor.getKey())));
             is.setItemMeta(im);
             consoles[r] = is;
             r++;
@@ -68,13 +68,13 @@ public class CustomiseConsoleInventory implements InventoryHolder {
         // scroll left
         ItemStack scroll_left = ItemStack.of(GUIArs.BUTTON_SCROLL_L.material(), 1);
         ItemMeta nim = scroll_left.getItemMeta();
-        nim.customName(Component.text(plugin.getLanguage().getString("BUTTON_SCROLL_L", "Scroll left")));
+        nim.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_SCROLL_L", "Scroll left")));
         scroll_left.setItemMeta(nim);
         consoles[18] = scroll_left;
         // scroll right
         ItemStack scroll_right = ItemStack.of(GUIArs.BUTTON_SCROLL_R.material(), 1);
         ItemMeta pim = scroll_right.getItemMeta();
-        pim.customName(Component.text(plugin.getLanguage().getString("BUTTON_SCROLL_R", "Scroll right")));
+        pim.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_SCROLL_R", "Scroll right")));
         scroll_right.setItemMeta(pim);
         consoles[26] = scroll_right;
         // consoles
@@ -85,7 +85,7 @@ public class CustomiseConsoleInventory implements InventoryHolder {
             ItemStack is = ItemStack.of(colour.getKey(), 1);
             ItemMeta im = is.getItemMeta();
             String dn = TARDISStringUtils.capitalise(name) + " Console";
-            im.customName(ComponentUtils.toWhite(dn));
+            im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(dn));
             is.setItemMeta(im);
             consoles[c] = is;
             c++;
@@ -100,7 +100,7 @@ public class CustomiseConsoleInventory implements InventoryHolder {
         // save
         ItemStack save = ItemStack.of(Material.BOWL, 1);
         ItemMeta se = save.getItemMeta();
-        se.customName(Component.text("Save"));
+        se.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Save"));
         save.setItemMeta(se);
         consoles[49] = save;
         // close

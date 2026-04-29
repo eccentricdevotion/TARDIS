@@ -58,7 +58,7 @@ public class EditAreasInventory implements InventoryHolder {
                 if (i < 45) {
                     ItemStack is = ItemStack.of(Material.MAP);
                     ItemMeta im = is.getItemMeta();
-                    im.customName(Component.text("Location " + (i + 1)));
+                    im.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Location " + (i + 1)));
                     im.lore(List.of(
                             Component.text(l.getWorld().getKey().getKey()),
                             Component.text("x: " + l.getBlockX()),
@@ -75,7 +75,7 @@ public class EditAreasInventory implements InventoryHolder {
         // Info
         ItemStack info = ItemStack.of(Material.BOOK, 1);
         ItemMeta ii = info.getItemMeta();
-        ii.customName(Component.text("Info"));
+        ii.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Info"));
         ii.lore(List.of(
                 Component.text("To REMOVE a location"),
                 Component.text("select a location map"),
@@ -91,14 +91,14 @@ public class EditAreasInventory implements InventoryHolder {
         // add
         ItemStack add = ItemStack.of(Material.NETHER_STAR, 1);
         ItemMeta er = add.getItemMeta();
-        er.customName(Component.text("Add"));
+        er.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Add"));
         er.lore(List.of(Component.text("area_id: " + area_id)));
         add.setItemMeta(er);
         stacks[48] = add;
         // remove
         ItemStack del = ItemStack.of(Material.BUCKET, 1);
         ItemMeta dd = del.getItemMeta();
-        dd.customName(Component.text("Remove"));
+        dd.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Remove"));
         del.setItemMeta(dd);
         stacks[50] = del;
         // close

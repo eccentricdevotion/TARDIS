@@ -110,8 +110,8 @@ public class TARDISSavesInventory implements InventoryHolder {
                         }
                         ItemStack is = ItemStack.of(material, 1);
                         ItemMeta im = is.getItemMeta();
-                        im.customName(Component.text(map.dest_name()));
-                        List<Component> lore = new ArrayList<>();
+                        im.setData(DataComponentTypes.CUSTOM_NAME, Component.text(map.dest_name()));
+                        ItemLore.Builder lore = ItemLore.lore();
                         String world = map.world().split(":")[1];
                         lore.add(Component.text(world));
                         lore.add(Component.text("" + map.x()));
@@ -136,17 +136,17 @@ public class TARDISSavesInventory implements InventoryHolder {
         // add button to allow rearranging saves
         ItemStack tool = ItemStack.of(GUISaves.REARRANGE_SAVES.material(), 1);
         ItemMeta rearrange = tool.getItemMeta();
-        rearrange.customName(Component.text("Rearrange saves"));
+        rearrange.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Rearrange saves"));
         tool.setItemMeta(rearrange);
         // add button to allow deleting saves
         ItemStack bucket = ItemStack.of(GUISaves.DELETE_SAVE.material(), 1);
         ItemMeta delete = bucket.getItemMeta();
-        delete.customName(Component.text("Delete save"));
+        delete.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Delete save"));
         bucket.setItemMeta(delete);
         // add button to go back to planets
         ItemStack planet = ItemStack.of(GUISaves.BACK_TO_PLANETS.material(), 1);
         ItemMeta map = planet.getItemMeta();
-        map.customName(Component.text("Back to Dimension Map"));
+        map.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Back to Dimension Map"));
         planet.setItemMeta(map);
         for (int m = 45; m < 54; m++) {
             switch (m) {

@@ -74,7 +74,7 @@ public class TARDISAreasInventory implements InventoryHolder {
                 if (TARDISPermission.hasPermission(p, "tardis.area." + name) || TARDISPermission.hasPermission(p, "tardis.area.*")) {
                     ItemStack is = ItemStack.of(TARDISConstants.GUI_IDS.get(i), 1);
                     ItemMeta im = is.getItemMeta();
-                    im.customName(Component.text(name));
+                    im.setData(DataComponentTypes.CUSTOM_NAME, Component.text(name));
                     im.lore(List.of(Component.text(a.world())));
                     is.setItemMeta(im);
                     areas.add(is);
@@ -94,7 +94,7 @@ public class TARDISAreasInventory implements InventoryHolder {
         // add button to load TARDIS areas
         ItemStack map = ItemStack.of(Material.MAP, 1);
         ItemMeta switchto = map.getItemMeta();
-        switchto.customName(Component.text("Load TARDIS saves"));
+        switchto.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Load TARDIS saves"));
         map.setItemMeta(switchto);
         for (int m = 45; m < 54; m++) {
             if (m == 49) {

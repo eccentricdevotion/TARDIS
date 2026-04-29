@@ -76,7 +76,7 @@ public class TWAJudoon extends TWAFollower {
             ItemStack is = getItemBySlot(EquipmentSlot.MAINHAND);
             org.bukkit.inventory.ItemStack bukkit = CraftItemStack.asBukkitCopy(is);
             ItemMeta im = bukkit.getItemMeta();
-            im.setItemModel(this.guard ? JudoonVariant.JUDOON_WEAPON_ACTIVE.getKey() : JudoonVariant.JUDOON_WEAPON_RESTING.getKey());
+            im.setData(DataComponentTypes.ITEM_MODEL, this.guard ? JudoonVariant.JUDOON_WEAPON_ACTIVE.getKey() : JudoonVariant.JUDOON_WEAPON_RESTING.getKey());
             bukkit.setItemMeta(im);
             setItemSlot(EquipmentSlot.MAINHAND, CraftItemStack.asNMSCopy(bukkit));
         }

@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.customblocks;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.custommodels.keys.LightVariant;
@@ -29,7 +30,6 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Interaction;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.Transformation;
 import org.joml.Vector3f;
@@ -59,9 +59,7 @@ public class VariableLight {
         ItemDisplay roundel = (ItemDisplay) world.spawnEntity(location, EntityType.ITEM_DISPLAY);
         roundel.getPersistentDataContainer().set(TARDIS.plugin.getTardisIdKey(), PersistentDataType.BOOLEAN, true);
         ItemStack r = ItemStack.of(Material.GLASS);
-        ItemMeta rim = r.getItemMeta();
-        rim.setItemModel(model);
-        r.setItemMeta(rim);
+        r.setData(DataComponentTypes.ITEM_MODEL, model);
         roundel.setItemStack(r);
         if (material != null) {
             ItemDisplay inner = (ItemDisplay) world.spawnEntity(location, EntityType.ITEM_DISPLAY);
@@ -85,9 +83,7 @@ public class VariableLight {
         for (ItemDisplay display : TARDISDisplayItemUtils.getAll(block)) {
             if (display.getPersistentDataContainer().has(TARDIS.plugin.getTardisIdKey(), PersistentDataType.BOOLEAN)) {
                 ItemStack roundel = display.getItemStack();
-                ItemMeta rim = roundel.getItemMeta();
-                rim.setItemModel(model);
-                roundel.setItemMeta(rim);
+                roundel.setData(DataComponentTypes.ITEM_MODEL, model);
                 display.setItemStack(roundel);
             }
         }

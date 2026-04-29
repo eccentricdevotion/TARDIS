@@ -49,7 +49,7 @@ public class EmeraldUpgradeRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.BLAZE_ROD, 1);
         ItemMeta im = is.getItemMeta();
-        im.customName(ComponentUtils.toWhite("Emerald Upgrade"));
+        im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Emerald Upgrade"));
         List<Float> sonicModel = SonicScrewdriverRecipe.sonicModelLookup.getOrDefault(plugin.getConfig().getString("sonic.default_model").toLowerCase(Locale.ROOT), SonicVariant.ELEVENTH.getFloats());
         CustomModelDataComponent component = im.getCustomModelDataComponent();
         component.setFloats(sonicModel);
@@ -60,7 +60,7 @@ public class EmeraldUpgradeRecipe {
         r.addIngredient(Material.BLAZE_ROD);
         ItemStack exact = ItemStack.of(Material.GLOWSTONE_DUST, 1);
         ItemMeta em = exact.getItemMeta();
-        em.customName(ComponentUtils.toWhite("Emerald Environment Circuit"));
+        em.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Emerald Environment Circuit"));
         CustomModelDataComponent ecomponent = em.getCustomModelDataComponent();
         ecomponent.setFloats(CircuitVariant.EMERALD.getFloats());
         em.setCustomModelDataComponent(ecomponent);

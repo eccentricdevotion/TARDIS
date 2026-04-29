@@ -59,7 +59,7 @@ public class TARDISChameleonCircuitRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.GLOWSTONE_DUST, 1);
         ItemMeta im = is.getItemMeta();
-        im.customName(ComponentUtils.toWhite("TARDIS Chameleon Circuit"));
+        im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("TARDIS Chameleon Circuit"));
         CustomModelDataComponent component = im.getCustomModelDataComponent();
         component.setFloats(CircuitVariant.CHAMELEON.getFloats());
         im.setCustomModelDataComponent(component);
@@ -75,7 +75,7 @@ public class TARDISChameleonCircuitRecipe {
             r.setIngredient('D', Material.REPEATER);
             ItemStack exact = ItemStack.of(Material.GLOWSTONE_DUST, 1);
             ItemMeta em = exact.getItemMeta();
-            em.customName(ComponentUtils.toWhite("TARDIS Materialisation Circuit"));
+            em.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("TARDIS Materialisation Circuit"));
             CustomModelDataComponent mcomponent = em.getCustomModelDataComponent();
             mcomponent.setFloats(CircuitVariant.MATERIALISATION.getFloats());
             em.setCustomModelDataComponent(mcomponent);

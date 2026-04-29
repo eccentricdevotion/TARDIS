@@ -3,6 +3,8 @@
  */
 package me.eccentric_nz.tardisvortexmanipulator.gui;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
 import me.eccentric_nz.tardisvortexmanipulator.database.TVMResultSetSaves;
@@ -13,7 +15,6 @@ import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
 import java.util.List;
@@ -62,15 +63,13 @@ public class TVMSavesGUI implements InventoryHolder {
             for (TVMSave s : saves) {
                 // save
                 ItemStack save = ItemStack.of(blocks.get(s.getEnv()), 1);
-                ItemMeta warp = save.getItemMeta();
-                warp.customName(Component.text(s.getName()));
-                warp.lore(List.of(
+                save.setData(DataComponentTypes.CUSTOM_NAME, Component.text(s.getName()));
+                save.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(
                         Component.text("World: " + s.getWorld()),
                         Component.text("x: " + oneDecimal(s.getX())),
                         Component.text("y: " + s.getY()),
                         Component.text("z: " + oneDecimal(s.getZ()))
-                ));
-                save.setItemMeta(warp);
+                )));
                 stack[i] = save;
                 i++;
             }
@@ -79,39 +78,29 @@ public class TVMSavesGUI implements InventoryHolder {
         int n = start / 44 + 1;
         // page number
         ItemStack page = ItemStack.of(Material.BOWL, 1);
-        ItemMeta num = page.getItemMeta();
-        num.customName(Component.text("Page " + n));
-        page.setItemMeta(num);
+        page.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Page " + n));
         stack[45] = page;
         // close
-        stack[46] = GUIItemFactory.close();;
+        stack[46] = GUIItemFactory.close();
         // previous screen (only if needed)
         if (start > 0) {
             ItemStack prev = ItemStack.of(Material.ARROW, 1);
-            ItemMeta een = prev.getItemMeta();
-            een.customName(Component.text("Previous Page"));
-            prev.setItemMeta(een);
+            prev.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Previous Page"));
             stack[48] = prev;
         }
         // next screen (only if needed)
         if (finish > 44) {
             ItemStack next = ItemStack.of(Material.ARROW, 1);
-            ItemMeta scr = next.getItemMeta();
-            scr.customName(Component.text("Next page"));
-            next.setItemMeta(scr);
+            next.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Next page"));
             stack[49] = next;
         }
         // delete
-        ItemStack del = ItemStack.of(Material.BUCKET, 1);
-        ItemMeta ete = del.getItemMeta();
-        ete.customName(Component.text("Delete"));
-        del.setItemMeta(ete);
-        stack[51] = del;
+        ItemStack delete = ItemStack.of(Material.BUCKET, 1);
+        delete.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Delete"));
+        stack[51] = delete;
         // warp
         ItemStack warp = ItemStack.of(Material.BOWL, 1);
-        ItemMeta to = warp.getItemMeta();
-        to.customName(Component.text("Enter Vortex"));
-        warp.setItemMeta(to);
+        warp.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Enter Vortex"));
         stack[53] = warp;
 
         return stack;

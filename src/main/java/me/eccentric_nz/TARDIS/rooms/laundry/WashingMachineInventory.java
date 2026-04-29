@@ -40,7 +40,7 @@ public class WashingMachineInventory implements InventoryHolder {
         // 18 info
         ItemStack info = ItemStack.of(GUIChameleonConstructor.INFO.material(), 1);
         ItemMeta io = info.getItemMeta();
-        io.customName(Component.text(plugin.getChameleonGuis().getString("INFO", "Info")));
+        io.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getChameleonGuis().getString("INFO", "Info")));
         io.lore(List.of(
                 Component.text("Place items you want to launder"),
                 Component.text("in the first row, then click"),
@@ -52,13 +52,13 @@ public class WashingMachineInventory implements InventoryHolder {
         // 21 wash trims
         ItemStack wash = ItemStack.of(Material.CAULDRON, 1);
         ItemMeta trim = wash.getItemMeta();
-        trim.customName(Component.text("Wash"));
+        trim.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Wash"));
         wash.setItemMeta(trim);
         items[21] = wash;
         // 23 remove dye
         ItemStack remove = ItemStack.of(Material.CAULDRON, 1);
         ItemMeta dye = remove.getItemMeta();
-        dye.customName(Component.text("Bleach"));
+        dye.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Bleach"));
         remove.setItemMeta(dye);
         items[23] = remove;
         // 26 close

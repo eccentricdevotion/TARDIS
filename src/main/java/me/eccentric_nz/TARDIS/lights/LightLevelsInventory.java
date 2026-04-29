@@ -66,7 +66,7 @@ public class LightLevelsInventory implements InventoryHolder {
         // interior info
         ItemStack i_info = ItemStack.of(GUILights.INTERIOR_INFO.material(), 1);
         ItemMeta iiim = i_info.getItemMeta();
-        iiim.customName(Component.text("Interior Lights"));
+        iiim.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Interior Lights"));
         iiim.lore(List.of(
                 Component.text("Set the light level"),
                 Component.text("of the interior lights")
@@ -75,13 +75,13 @@ public class LightLevelsInventory implements InventoryHolder {
         // interior
         ItemStack interior = ItemStack.of(GUILights.INTERIOR.material(), 1);
         ItemMeta inim = interior.getItemMeta();
-        inim.customName(Component.text("Interior Lights"));
+        inim.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Interior Lights"));
         inim.lore(List.of(Component.text(interior_level)));
         interior.setItemMeta(inim);
         // exterior info
         ItemStack e_info = ItemStack.of(GUILights.EXTERIOR_INFO.material(), 1);
         ItemMeta eiim = e_info.getItemMeta();
-        eiim.customName(Component.text("Exterior Lamp"));
+        eiim.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Exterior Lamp"));
         eiim.lore(List.of(
                 Component.text("Set the light level"),
                 Component.text("of the exterior lamp")
@@ -90,13 +90,13 @@ public class LightLevelsInventory implements InventoryHolder {
         // exterior
         ItemStack exterior = ItemStack.of(GUILights.EXTERIOR.material(), 1);
         ItemMeta exim = exterior.getItemMeta();
-        exim.customName(Component.text("Exterior Lamp"));
+        exim.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Exterior Lamp"));
         exim.lore(List.of(Component.text(exterior_level)));
         exterior.setItemMeta(exim);
         // console info
         ItemStack c_info = ItemStack.of(GUILights.CONSOLE_INFO.material(), 1);
         ItemMeta ciim = c_info.getItemMeta();
-        ciim.customName(Component.text("Console Lamp"));
+        ciim.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Console Lamp"));
         ciim.lore(List.of(
                 Component.text("Set the light level"),
                 Component.text("of the console lamp")
@@ -105,23 +105,23 @@ public class LightLevelsInventory implements InventoryHolder {
         // console
         ItemStack console = ItemStack.of(GUILights.CONSOLE.material(), 1);
         ItemMeta lamp = console.getItemMeta();
-        lamp.customName(Component.text("Console Lamp"));
+        lamp.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Console Lamp"));
         lamp.lore(List.of(Component.text(console_level)));
         console.setItemMeta(lamp);
         // minus
         ItemStack minus = ItemStack.of(GUIParticle.MINUS.material(), 1);
         ItemMeta mim = minus.getItemMeta();
-        mim.customName(Component.text(plugin.getLanguage().getString("BUTTON_LESS")));
+        mim.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_LESS")));
         minus.setItemMeta(mim);
         // plus
         ItemStack plus = ItemStack.of(GUIParticle.PLUS.material(), 1);
         ItemMeta pim = plus.getItemMeta();
-        pim.customName(Component.text(plugin.getLanguage().getString("BUTTON_MORE")));
+        pim.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_MORE")));
         plus.setItemMeta(pim);
         // back button
         ItemStack back = ItemStack.of(GUIChameleonTemplate.BACK_HELP.material(), 1);
         ItemMeta bk = back.getItemMeta();
-        bk.customName(Component.text("Back"));
+        bk.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Back"));
         back.setItemMeta(bk);
         // close
         ItemStack close = GUIItemFactory.close();

@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.advanced;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -58,71 +60,66 @@ public class DiskWriterCommand {
         boolean makeAndSaveDisk = !plugin.getConfig().getBoolean("difficulty.disk_in_hand_for_write");
         if (makeAndSaveDisk) {
             is = ItemStack.of(Material.MUSIC_DISC_CHIRP, 1);
-            ItemMeta im = is.getItemMeta();
-            im.customName(Component.text("Save Storage Disk"));
-            im.lore(List.of(Component.text("Blank")));
-            is.setItemMeta(im);
+            is.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Save Storage Disk"));
+            is.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text("Blank")).build());
         } else {
             is = player.getInventory().getItemInMainHand();
         }
-        if (is.hasItemMeta()) {
-            ItemMeta im = is.getItemMeta();
-            if (im.hasCustomName() && ComponentUtils.endsWith(im.customName(), "Save Storage Disk")) {
-                List<Component> lore = im.lore();
-                if (!ComponentUtils.stripColour(lore.getFirst()).equals("Blank")) {
-                    plugin.getMessenger().send(player, TardisModule.TARDIS, "DISK_ONLY_BLANK");
+        if (is.hasData(DataComponentTypes.CUSTOM_NAME) && ComponentUtils.endsWith(is.getData(DataComponentTypes.CUSTOM_NAME), "Save Storage Disk")) {
+            Component lore = is.getData(DataComponentTypes.LORE).lines().getFirst();
+            if (!ComponentUtils.stripColour(lore).equals("Blank")) {
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "DISK_ONLY_BLANK");
+                return;
+            }
+            if (!LETTERS_NUMBERS.matcher(name).matches()) {
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "SAVE_NAME_NOT_VALID");
+                return;
+            }
+            HashMap<String, Object> where = new HashMap<>();
+            where.put("uuid", player.getUniqueId().toString());
+            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+            if (!rs.resultSet()) {
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
+            } else {
+                Tardis tardis = rs.getTardis();
+                int id = tardis.getTardisId();
+                ChameleonPreset preset = tardis.getPreset();
+                // check has unique name - this will always return false in HARD & MEDIUM difficulty
+                HashMap<String, Object> wherename = new HashMap<>();
+                wherename.put("tardis_id", id);
+                wherename.put("dest_name", name);
+                wherename.put("type", 0);
+                ResultSetDestinations rsd = new ResultSetDestinations(plugin, wherename, false);
+                if (rsd.resultSet()) {
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "SAVE_EXISTS");
                     return;
                 }
-                if (!LETTERS_NUMBERS.matcher(name).matches()) {
-                    plugin.getMessenger().send(player, TardisModule.TARDIS, "SAVE_NAME_NOT_VALID");
+                // get current destination
+                ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
+                if (!rsc.resultSet()) {
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
                     return;
                 }
-                HashMap<String, Object> where = new HashMap<>();
-                where.put("uuid", player.getUniqueId().toString());
-                ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
-                if (!rs.resultSet()) {
-                    plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
-                } else {
-                    Tardis tardis = rs.getTardis();
-                    int id = tardis.getTardisId();
-                    ChameleonPreset preset = tardis.getPreset();
-                    // check has unique name - this will always return false in HARD & MEDIUM difficulty
-                    HashMap<String, Object> wherename = new HashMap<>();
-                    wherename.put("tardis_id", id);
-                    wherename.put("dest_name", name);
-                    wherename.put("type", 0);
-                    ResultSetDestinations rsd = new ResultSetDestinations(plugin, wherename, false);
-                    if (rsd.resultSet()) {
-                        plugin.getMessenger().send(player, TardisModule.TARDIS, "SAVE_EXISTS");
+                Current current = rsc.getCurrent();
+                is.setData(DataComponentTypes.LORE, ItemLore.lore()
+                        .addLine(Component.text(name))
+                        .addLine(Component.text(current.location().getWorld().getKey().getKey()))
+                        .addLine(Component.text(current.location().getBlockX()))
+                        .addLine(Component.text(current.location().getBlockY()))
+                        .addLine(Component.text(current.location().getBlockZ()))
+                        .addLine(Component.text(preset.toString()))
+                        .addLine(Component.text(current.direction().toString()))
+                        .addLine(Component.text((current.submarine()) ? "true" : "false"))
+                        .build());
+                if (makeAndSaveDisk) {
+                    // save the disk to storage
+                    boolean isSpace = saveDiskToStorage(player, is);
+                    if (!isSpace) {
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "SAVE_STORAGE_FULL");
                         return;
                     }
-                    // get current destination
-                    ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
-                    if (!rsc.resultSet()) {
-                        plugin.getMessenger().send(player, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
-                        return;
-                    }
-                    Current current = rsc.getCurrent();
-                    lore.set(0, Component.text(name));
-                    lore.add(1, Component.text(current.location().getWorld().getKey().getKey()));
-                    lore.add(2, Component.text(current.location().getBlockX()));
-                    lore.add(3, Component.text(current.location().getBlockY()));
-                    lore.add(4, Component.text(current.location().getBlockZ()));
-                    lore.add(5, Component.text(preset.toString()));
-                    lore.add(6, Component.text(current.direction().toString()));
-                    lore.add(7, Component.text((current.submarine()) ? "true" : "false"));
-                    im.lore(lore);
-                    is.setItemMeta(im);
-                    if (makeAndSaveDisk) {
-                        // save the disk to storage
-                        boolean isSpace = saveDiskToStorage(player, is);
-                        if (!isSpace) {
-                            plugin.getMessenger().send(player, TardisModule.TARDIS, "SAVE_STORAGE_FULL");
-                            return;
-                        }
-                    }
-                    plugin.getMessenger().send(player, TardisModule.TARDIS, "DISK_LOC_SAVED");
                 }
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "DISK_LOC_SAVED");
             }
         }
     }
@@ -225,9 +222,9 @@ public class DiskWriterCommand {
     public void writeSaveToControlDisk(Player player, String name) {
         ItemStack is = player.getInventory().getItemInMainHand();
         if (is.hasItemMeta()) {
-            ItemMeta im = is.getItemMeta();
-            if (im.hasCustomName() && ComponentUtils.endsWith(im.customName(), "Authorised Control Disk")
-                    && im.getPersistentDataContainer().has(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID())) {
+//            ItemMeta im = is.getItemMeta();
+            if (is.hasData(DataComponentTypes.CUSTOM_NAME) && ComponentUtils.endsWith(is.getData(DataComponentTypes.CUSTOM_NAME), "Authorised Control Disk")
+                    && is.getPersistentDataContainer().has(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID())) {
                 ResultSetTardisID rs = new ResultSetTardisID(plugin);
                 if (!rs.fromUUID(player.getUniqueId().toString())) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
@@ -247,10 +244,10 @@ public class DiskWriterCommand {
                         }
                         save = name;
                     }
-                    List<Component> lore = im.lore();
-                    lore.add(Component.text(save));
-                    im.lore(lore);
-                    is.setItemMeta(im);
+                    ItemLore.Builder lore = ItemLore.lore();
+                    lore.lines(is.getData(DataComponentTypes.LORE).lines());
+                    lore.addLine(Component.text(save));
+                    is.setData(DataComponentTypes.LORE, lore.build());
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "DISK_LOC_SAVED");
                 }
             }

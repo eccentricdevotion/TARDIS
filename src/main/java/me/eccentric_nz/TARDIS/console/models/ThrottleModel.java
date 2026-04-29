@@ -30,10 +30,10 @@ public class ThrottleModel {
         ItemStack is = display.getItemStack();
         ItemMeta im = is.getItemMeta();
         switch (state) {
-            case 1 -> im.setItemModel(ModelledControl.THROTTLE_WARP.getKey());
-            case 2 -> im.setItemModel(ModelledControl.THROTTLE_RAPID.getKey());
-            case 3 -> im.setItemModel(ModelledControl.THROTTLE_FASTER.getKey());
-            default -> im.setItemModel(ModelledControl.THROTTLE_NORMAL.getKey());
+            case 1 -> im.setData(DataComponentTypes.ITEM_MODEL, ModelledControl.THROTTLE_WARP.getKey());
+            case 2 -> im.setData(DataComponentTypes.ITEM_MODEL, ModelledControl.THROTTLE_RAPID.getKey());
+            case 3 -> im.setData(DataComponentTypes.ITEM_MODEL, ModelledControl.THROTTLE_FASTER.getKey());
+            default -> im.setData(DataComponentTypes.ITEM_MODEL, ModelledControl.THROTTLE_NORMAL.getKey());
         }
         is.setItemMeta(im);
         display.setItemStack(is);

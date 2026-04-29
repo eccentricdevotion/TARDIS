@@ -61,7 +61,7 @@ public class LazarusMonstersInventory extends LazarusItems implements InventoryH
                 SkinUtils.getHeadProfile(monster).thenAccept(playerProfile -> {
                     is.setData(DataComponentTypes.PROFILE, ResolvableProfile.resolvableProfile(playerProfile));
                     im.setPlayerProfile(playerProfile);
-                    im.customName(Component.text(monster.name()));
+                    im.setData(DataComponentTypes.CUSTOM_NAME, Component.text(monster.name()));
                     is.setItemMeta(im);
                     // cache the item stack
                     PlayerHeadCache.MONSTERS.add(is);
@@ -82,7 +82,7 @@ public class LazarusMonstersInventory extends LazarusItems implements InventoryH
             SkinUtils.getHeadProfile(monster).thenAccept(playerProfile -> {
                 is.setData(DataComponentTypes.PROFILE, ResolvableProfile.resolvableProfile(playerProfile));
                 im.setPlayerProfile(playerProfile);
-                im.customName(Component.text(monster.name()));
+                im.setData(DataComponentTypes.CUSTOM_NAME, Component.text(monster.name()));
                 is.setItemMeta(im);
             });
             stacks[i] = is;
@@ -95,7 +95,7 @@ public class LazarusMonstersInventory extends LazarusItems implements InventoryH
             SkinUtils.getHeadProfile(monster).thenAccept(playerProfile -> {
                 is.setData(DataComponentTypes.PROFILE, ResolvableProfile.resolvableProfile(playerProfile));
                 im.setPlayerProfile(playerProfile);
-                im.customName(Component.text(monster.name()));
+                im.setData(DataComponentTypes.CUSTOM_NAME, Component.text(monster.name()));
                 is.setItemMeta(im);
             });
             stacks[i] = is;

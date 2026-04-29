@@ -114,7 +114,7 @@ public class SonicGeneratorListener implements Listener {
             int level = rs.getArtronLevel();
             ItemStack sonic = ItemStack.of(Material.BLAZE_ROD, 1);
             ItemMeta screw = sonic.getItemMeta();
-            screw.customName(ComponentUtils.toWhite("Sonic Screwdriver"));
+            screw.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Sonic Screwdriver"));
             List<Component> upgrades = new ArrayList<>();
             if (s.hasKnockback()) {
                 upgrades.add(Component.text("Knockback Upgrade"));
@@ -213,8 +213,8 @@ public class SonicGeneratorListener implements Listener {
             // drop a custom FLOWER_POT_ITEM
             ItemStack is = ItemStack.of(Material.FLOWER_POT, 1);
             ItemMeta im = is.getItemMeta();
-            im.customName(Component.text("Sonic Generator"));
-            im.setItemModel(SonicItem.SONIC_GENERATOR.getKey());
+            im.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Sonic Generator"));
+            im.setData(DataComponentTypes.ITEM_MODEL, SonicItem.SONIC_GENERATOR.getKey());
             is.setItemMeta(im);
             b.getWorld().dropItemNaturally(b.getLocation(), is);
         }

@@ -84,7 +84,7 @@ public class HeadCommand {
             ItemStack washingMachine = ItemStack.of(Material.PLAYER_HEAD);
             SkullMeta washingMachineMeta = (SkullMeta) washingMachine.getItemMeta();
             washingMachineMeta.setPlayerProfile(washingMachineProfile);
-            washingMachineMeta.customName(Component.text("Washing Machine"));
+            washingMachineMeta.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Washing Machine"));
             washingMachine.setItemMeta(washingMachineMeta);
             player.give(washingMachine);
         }

@@ -52,8 +52,8 @@ public class TimeRotorEarlyRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.LIGHT_GRAY_DYE, 1);
         ItemMeta im = is.getItemMeta();
-        im.customName(ComponentUtils.toWhite("Time Rotor Early"));
-        im.setItemModel(RecipeItem.TIME_ROTOR_EARLY.getModel());
+        im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Time Rotor Early"));
+        im.setData(DataComponentTypes.ITEM_MODEL, RecipeItem.TIME_ROTOR_EARLY.getModel());
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "time_rotor_early");
         ShapedRecipe r = new ShapedRecipe(key, is);

@@ -71,9 +71,10 @@ public class Seed {
                     }
                 }
                 ItemMeta im = is.getItemMeta();
-                im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, model.getKey());
+                NamespacedKey finalModel = model;
+        is.editPersistentDataContainer(pdc -> pdc.set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING, finalModel.getKey()));
                 // set display name
-                im.customName(ComponentUtils.toGold("TARDIS Seed Block"));
+                im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toGold("TARDIS Seed Block"));
                 im.lore(List.of(
                         Component.text(type),
                         Component.text("Walls: " + wall),

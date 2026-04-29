@@ -110,7 +110,7 @@ public class HappyGhastRelease {
                 skies.setHealth(happy.getHealth());
                 String name = happy.getName();
                 if (name != null && !name.isEmpty()) {
-                    skies.customName(Component.text(name));
+                    skies.setData(DataComponentTypes.CUSTOM_NAME, Component.text(name));
                 }
                 // teleport passengers
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {

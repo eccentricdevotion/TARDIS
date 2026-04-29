@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.siegemode;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.exterior.BuildData;
@@ -57,7 +59,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -143,12 +144,11 @@ public class SiegeListener implements Listener {
         }
         String tl = tardis.getOwner();
         ItemStack is = ItemStack.of(TARDISBlockDisplayItem.SIEGE_CUBE.getMaterial(), 1);
-        ItemMeta im = is.getItemMeta();
-        im.customName(ComponentUtils.toWhite("TARDIS Siege Cube"));
-        im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, TARDISBlockDisplayItem.SIEGE_CUBE.getCustomModel().getKey());
-        List<Component> lore = new ArrayList<>();
-        lore.add(Component.text("Time Lord: " + tl));
-        lore.add(Component.text("ID: " + id));
+        is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("TARDIS Siege Cube"));
+        is.editPersistentDataContainer(pdc -> pdc.set(plugin.getCustomBlockKey(), PersistentDataType.STRING, TARDISBlockDisplayItem.SIEGE_CUBE.getCustomModel().getKey()));
+        ItemLore.Builder lore = ItemLore.lore();
+        lore.addLine(Component.text("Time Lord: " + tl));
+        lore.addLine(Component.text("ID: " + id));
         // get occupants
         HashMap<String, Object> wherec = new HashMap<>();
         wherec.put("tardis_id", id);
@@ -158,12 +158,11 @@ public class SiegeListener implements Listener {
                 Player p = plugin.getServer().getPlayer(tuuid);
                 if (p != null && tuuid != tluuid) {
                     String c = p.getName();
-                    lore.add(Component.text("Companion: " + c));
+                    lore.addLine(Component.text("Companion: " + c));
                 }
             });
         }
-        im.lore(lore);
-        is.setItemMeta(im);
+        is.setData(DataComponentTypes.LORE, lore.build());
         // set block to AIR
         b.setBlockData(TARDISConstants.AIR);
         Item item = b.getWorld().dropItemNaturally(b.getLocation(), is);

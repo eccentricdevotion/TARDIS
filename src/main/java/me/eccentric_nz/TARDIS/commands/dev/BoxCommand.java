@@ -265,7 +265,7 @@ public class BoxCommand {
                             }
                         }
                     }
-                    im.setItemModel(model);
+                    im.setData(DataComponentTypes.ITEM_MODEL, model);
                     is.setItemMeta(im);
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                         EntityEquipment ee = as.getEquipment();

@@ -153,7 +153,7 @@ public class TARDISGeneralPrefsInventory implements InventoryHolder {
             if (pref.getMaterial() == Material.REPEATER) {
                 ItemStack is = ItemStack.of(pref.getMaterial(), 1);
                 ItemMeta im = is.getItemMeta();
-                im.customName(Component.text(pref.getName()));
+                im.setData(DataComponentTypes.CUSTOM_NAME, Component.text(pref.getName()));
                 boolean v = values.get(pref.getSlot());
                 if (pref.getOffFloats() != null) {
                     CustomModelDataComponent component = im.getCustomModelDataComponent();
@@ -179,7 +179,7 @@ public class TARDISGeneralPrefsInventory implements InventoryHolder {
         // back
         ItemStack back = ItemStack.of(GUIChameleonPresets.BACK.material(), 1);
         ItemMeta but = back.getItemMeta();
-        but.customName(Component.text("Back"));
+        but.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Back"));
         back.setItemMeta(but);
         stack[33] = back;
         // close

@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.particles;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
@@ -31,7 +32,6 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.Vector;
 
 import java.util.HashSet;
@@ -67,9 +67,7 @@ public class Sphere extends ParticleRunnable {
             display = (ItemDisplay) location.getWorld().spawnEntity(location, EntityType.ITEM_DISPLAY);
         }
         ItemStack is = ItemStack.of(Material.MAGMA_BLOCK);
-        ItemMeta im = is.getItemMeta();
-        im.customName(Component.text("Sphere " + TARDISStringUtils.capitalise(capacitor.toString())));
-        is.setItemMeta(im);
+        is.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Sphere " + TARDISStringUtils.capitalise(capacitor.toString())));
         display.setItemStack(is);
         display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.GROUND);
     }

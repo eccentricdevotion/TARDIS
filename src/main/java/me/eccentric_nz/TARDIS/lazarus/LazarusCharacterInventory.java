@@ -58,7 +58,7 @@ public class LazarusCharacterInventory extends LazarusItems implements Inventory
                 SkinUtils.getHeadProfile(character).thenAccept(playerProfile -> {
                     is.setData(DataComponentTypes.PROFILE, ResolvableProfile.resolvableProfile(playerProfile));
                     im.setPlayerProfile(playerProfile);
-                    im.customName(Component.text(character.name()));
+                    im.setData(DataComponentTypes.CUSTOM_NAME, Component.text(character.name()));
                     is.setItemMeta(im);
                     // cache the item stack
                     PlayerHeadCache.LAZARUS_CHARACTERS.add(is);

@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.chameleon.shell;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.custommodels.GUIChameleonPresets;
@@ -28,7 +29,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -75,18 +75,14 @@ public class ShellPresetInventory implements InventoryHolder {
             if (!ChameleonPreset.NOT_THESE.contains(preset.getCraftMaterial()) && !preset.usesArmourStand()) {
                 if (TARDISPermission.hasPermission(player, "tardis.preset." + preset.toString().toLowerCase(Locale.ROOT))) {
                     ItemStack is = ItemStack.of(preset.getGuiDisplay(), 1);
-                    ItemMeta im = is.getItemMeta();
-                    im.customName(Component.text(preset.getDisplayName()));
-                    is.setItemMeta(im);
+                    is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(preset.getDisplayName()));
                     stacks[preset.getSlot()] = is;
                 }
             }
         }
         // load current preset
         ItemStack current = ItemStack.of(GUIChameleonPresets.CURRENT.material(), 1);
-        ItemMeta pre = current.getItemMeta();
-        pre.customName(Component.text("Current Chameleon preset"));
-        current.setItemMeta(pre);
+        current.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Current Chameleon preset"));
         stacks[GUIChameleonPresets.CURRENT.slot()] = current;
         // saved construct
         HashMap<String, Object> wherec = new HashMap<>();
@@ -94,9 +90,7 @@ public class ShellPresetInventory implements InventoryHolder {
         ResultSetChameleon rsc = new ResultSetChameleon(plugin, wherec);
         if (rsc.resultSet()) {
             ItemStack saved = ItemStack.of(GUIChameleonPresets.SAVED.material(), 1);
-            ItemMeta con = saved.getItemMeta();
-            con.customName(Component.text("Saved Construct"));
-            saved.setItemMeta(con);
+            saved.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Saved Construct"));
             stacks[GUIChameleonPresets.SAVED.slot()] = saved;
         }
         // Cancel / close

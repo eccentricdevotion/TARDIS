@@ -69,27 +69,27 @@ public class ConsoleBuilder {
             ItemStack shard = ItemStack.of(Material.AMETHYST_SHARD);
             ItemMeta im = shard.getItemMeta();
             switch (colour) {
-                case "console_rustic" -> im.setItemModel(ConsolePart.CONSOLE_RUSTIC.getKey());
-                case "console_brown" -> im.setItemModel(ConsolePart.CONSOLE_BROWN.getKey());
-                case "console_pink" -> im.setItemModel(ConsolePart.CONSOLE_PINK.getKey());
-                case "console_magenta" -> im.setItemModel(ConsolePart.CONSOLE_MAGENTA.getKey());
-                case "console_purple" -> im.setItemModel(ConsolePart.CONSOLE_PURPLE.getKey());
-                case "console_blue" -> im.setItemModel(ConsolePart.CONSOLE_BLUE.getKey());
-                case "console_light_blue" -> im.setItemModel(ConsolePart.CONSOLE_LIGHT_BLUE.getKey());
-                case "console_light_gray" -> im.setItemModel(ConsolePart.CONSOLE_LIGHT_GRAY.getKey());
-                case "console_cyan" -> im.setItemModel(ConsolePart.CONSOLE_CYAN.getKey());
-                case "console_green" -> im.setItemModel(ConsolePart.CONSOLE_GREEN.getKey());
-                case "console_lime" -> im.setItemModel(ConsolePart.CONSOLE_LIME.getKey());
-                case "console_yellow" -> im.setItemModel(ConsolePart.CONSOLE_YELLOW.getKey());
-                case "console_orange" -> im.setItemModel(ConsolePart.CONSOLE_ORANGE.getKey());
-                case "console_red" -> im.setItemModel(ConsolePart.CONSOLE_RED.getKey());
-                case "console_white" -> im.setItemModel(ConsolePart.CONSOLE_WHITE.getKey());
-                case "console_black" -> im.setItemModel(ConsolePart.CONSOLE_BLACK.getKey());
-                case "console_gray" -> im.setItemModel(ConsolePart.CONSOLE_GRAY.getKey());
+                case "console_rustic" -> im.setData(DataComponentTypes.ITEM_MODEL, ConsolePart.CONSOLE_RUSTIC.getKey());
+                case "console_brown" -> im.setData(DataComponentTypes.ITEM_MODEL, ConsolePart.CONSOLE_BROWN.getKey());
+                case "console_pink" -> im.setData(DataComponentTypes.ITEM_MODEL, ConsolePart.CONSOLE_PINK.getKey());
+                case "console_magenta" -> im.setData(DataComponentTypes.ITEM_MODEL, ConsolePart.CONSOLE_MAGENTA.getKey());
+                case "console_purple" -> im.setData(DataComponentTypes.ITEM_MODEL, ConsolePart.CONSOLE_PURPLE.getKey());
+                case "console_blue" -> im.setData(DataComponentTypes.ITEM_MODEL, ConsolePart.CONSOLE_BLUE.getKey());
+                case "console_light_blue" -> im.setData(DataComponentTypes.ITEM_MODEL, ConsolePart.CONSOLE_LIGHT_BLUE.getKey());
+                case "console_light_gray" -> im.setData(DataComponentTypes.ITEM_MODEL, ConsolePart.CONSOLE_LIGHT_GRAY.getKey());
+                case "console_cyan" -> im.setData(DataComponentTypes.ITEM_MODEL, ConsolePart.CONSOLE_CYAN.getKey());
+                case "console_green" -> im.setData(DataComponentTypes.ITEM_MODEL, ConsolePart.CONSOLE_GREEN.getKey());
+                case "console_lime" -> im.setData(DataComponentTypes.ITEM_MODEL, ConsolePart.CONSOLE_LIME.getKey());
+                case "console_yellow" -> im.setData(DataComponentTypes.ITEM_MODEL, ConsolePart.CONSOLE_YELLOW.getKey());
+                case "console_orange" -> im.setData(DataComponentTypes.ITEM_MODEL, ConsolePart.CONSOLE_ORANGE.getKey());
+                case "console_red" -> im.setData(DataComponentTypes.ITEM_MODEL, ConsolePart.CONSOLE_RED.getKey());
+                case "console_white" -> im.setData(DataComponentTypes.ITEM_MODEL, ConsolePart.CONSOLE_WHITE.getKey());
+                case "console_black" -> im.setData(DataComponentTypes.ITEM_MODEL, ConsolePart.CONSOLE_BLACK.getKey());
+                case "console_gray" -> im.setData(DataComponentTypes.ITEM_MODEL, ConsolePart.CONSOLE_GRAY.getKey());
                 default -> {
                     // custom console side
                     NamespacedKey side = new NamespacedKey(plugin, colour.replace("_", "_side_"));
-                    im.setItemModel(side);
+                    im.setData(DataComponentTypes.ITEM_MODEL, side);
                 }
             }
             im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, i);
@@ -111,27 +111,27 @@ public class ConsoleBuilder {
             ItemStack shard = ItemStack.of(Material.AMETHYST_SHARD);
             ItemMeta im = shard.getItemMeta();
             switch (colour) {
-                case "console_rustic" -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_RUSTIC.getKey());
-                case "console_brown" -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_BROWN.getKey());
-                case "console_pink" -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_PINK.getKey());
-                case "console_magenta" -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_MAGENTA.getKey());
-                case "console_purple" -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_PURPLE.getKey());
-                case "console_blue" -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_BLUE.getKey());
-                case "console_light_blue" -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_LIGHT_BLUE.getKey());
-                case "console_light_gray" -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_LIGHT_GRAY.getKey());
-                case "console_cyan" -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_CYAN.getKey());
-                case "console_green" -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_GREEN.getKey());
-                case "console_lime" -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_LIME.getKey());
-                case "console_yellow" -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_YELLOW.getKey());
-                case "console_orange" -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_ORANGE.getKey());
-                case "console_red" -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_RED.getKey());
-                case "console_white" -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_WHITE.getKey());
-                case "console_black" -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_BLACK.getKey());
-                case "console_gray" -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_GRAY.getKey());
+                case "console_rustic" -> im.setData(DataComponentTypes.ITEM_MODEL, ConsolePart.CONSOLE_DIVISION_RUSTIC.getKey());
+                case "console_brown" -> im.setData(DataComponentTypes.ITEM_MODEL, ConsolePart.CONSOLE_DIVISION_BROWN.getKey());
+                case "console_pink" -> im.setData(DataComponentTypes.ITEM_MODEL, ConsolePart.CONSOLE_DIVISION_PINK.getKey());
+                case "console_magenta" -> im.setData(DataComponentTypes.ITEM_MODEL, ConsolePart.CONSOLE_DIVISION_MAGENTA.getKey());
+                case "console_purple" -> im.setData(DataComponentTypes.ITEM_MODEL, ConsolePart.CONSOLE_DIVISION_PURPLE.getKey());
+                case "console_blue" -> im.setData(DataComponentTypes.ITEM_MODEL, ConsolePart.CONSOLE_DIVISION_BLUE.getKey());
+                case "console_light_blue" -> im.setData(DataComponentTypes.ITEM_MODEL, ConsolePart.CONSOLE_DIVISION_LIGHT_BLUE.getKey());
+                case "console_light_gray" -> im.setData(DataComponentTypes.ITEM_MODEL, ConsolePart.CONSOLE_DIVISION_LIGHT_GRAY.getKey());
+                case "console_cyan" -> im.setData(DataComponentTypes.ITEM_MODEL, ConsolePart.CONSOLE_DIVISION_CYAN.getKey());
+                case "console_green" -> im.setData(DataComponentTypes.ITEM_MODEL, ConsolePart.CONSOLE_DIVISION_GREEN.getKey());
+                case "console_lime" -> im.setData(DataComponentTypes.ITEM_MODEL, ConsolePart.CONSOLE_DIVISION_LIME.getKey());
+                case "console_yellow" -> im.setData(DataComponentTypes.ITEM_MODEL, ConsolePart.CONSOLE_DIVISION_YELLOW.getKey());
+                case "console_orange" -> im.setData(DataComponentTypes.ITEM_MODEL, ConsolePart.CONSOLE_DIVISION_ORANGE.getKey());
+                case "console_red" -> im.setData(DataComponentTypes.ITEM_MODEL, ConsolePart.CONSOLE_DIVISION_RED.getKey());
+                case "console_white" -> im.setData(DataComponentTypes.ITEM_MODEL, ConsolePart.CONSOLE_DIVISION_WHITE.getKey());
+                case "console_black" -> im.setData(DataComponentTypes.ITEM_MODEL, ConsolePart.CONSOLE_DIVISION_BLACK.getKey());
+                case "console_gray" -> im.setData(DataComponentTypes.ITEM_MODEL, ConsolePart.CONSOLE_DIVISION_GRAY.getKey());
                 default -> {
                     // custom console division
                     NamespacedKey division = new NamespacedKey(plugin, colour.replace("_", "_division_"));
-                    im.setItemModel(division);
+                    im.setData(DataComponentTypes.ITEM_MODEL, division);
                 }
             }
             im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, i);
@@ -212,7 +212,7 @@ public class ConsoleBuilder {
         // spawn a control
         ItemStack is = ItemStack.of(material);
         ItemMeta im = is.getItemMeta();
-        im.setItemModel(key);
+        im.setData(DataComponentTypes.ITEM_MODEL, key);
         im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, key.getKey());
         is.setItemMeta(im);
         ItemDisplay display = (ItemDisplay) location.getWorld().spawnEntity(location.add(0.5d, 1.25d, 0.5d), EntityType.ITEM_DISPLAY);
@@ -274,8 +274,9 @@ public class ConsoleBuilder {
             // custom console centre
             default -> model = new NamespacedKey(plugin, type.replace("_", "_centre_"));
         }
-        im.setItemModel(model);
-        im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, model.getKey());
+        im.setData(DataComponentTypes.ITEM_MODEL, model);
+        NamespacedKey finalModel = model;
+        is.editPersistentDataContainer(pdc -> pdc.set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING, finalModel.getKey()));
         shard.setItemMeta(im);
         ItemDisplay display = (ItemDisplay) up.getWorld().spawnEntity(up.add(0.5d, 0.25d, 0.5d), EntityType.ITEM_DISPLAY);
         display.setItemStack(shard);

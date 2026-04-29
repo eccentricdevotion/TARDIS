@@ -324,9 +324,9 @@ public class SonicDock {
     private void updateModel(ItemFrame frame, NamespacedKey model, boolean setDisplay) {
         ItemStack dock = frame.getItem();
         ItemMeta im = dock.getItemMeta();
-        im.setItemModel(model);
+        im.setData(DataComponentTypes.ITEM_MODEL, model);
         if (setDisplay) {
-            im.customName(ComponentUtils.toWhite("Sonic Dock"));
+            im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Sonic Dock"));
         }
         dock.setItemMeta(im);
         frame.setItem(dock);

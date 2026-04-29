@@ -16,15 +16,14 @@
  */
 package me.eccentric_nz.tardischemistry.product;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.persistence.PersistentDataContainerView;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
 public class GlowStickRunnable implements Runnable {
@@ -54,8 +53,7 @@ public class GlowStickRunnable implements Runnable {
     }
 
     private void damage(ItemStack glowStick, Player player, PlayerInventory inventory, boolean main) {
-        ItemMeta im = glowStick.getItemMeta();
-        PersistentDataContainer pdk = im.getPersistentDataContainer();
+        PersistentDataContainerView pdk = glowStick.getPersistentDataContainer();
         if (pdk.has(namespacedKey, PersistentDataType.INTEGER)) {
             int damage = pdk.get(namespacedKey, PersistentDataType.INTEGER) - 5;
             if (damage <= 0) {
@@ -66,8 +64,7 @@ public class GlowStickRunnable implements Runnable {
                 }
                 player.playSound(player.getLocation(), Sound.ENTITY_ITEM_BREAK, 1.0f, 1.0f);
             } else {
-                pdk.set(namespacedKey, PersistentDataType.INTEGER, damage);
-                glowStick.setItemMeta(im);
+                glowStick.editPersistentDataContainer(pdc->pdc.set(namespacedKey, PersistentDataType.INTEGER, damage));
             }
             player.updateInventory();
         }
@@ -77,12 +74,10 @@ public class GlowStickRunnable implements Runnable {
         if (glowStick == null) {
             return false;
         }
-        if (!glowStick.hasItemMeta()) {
+        if (!glowStick.hasData(DataComponentTypes.ITEM_MODEL)) {
             return false;
         }
-        ItemMeta im = glowStick.getItemMeta();
         return GlowStickMaterial.isCorrectMaterial(glowStick.getType())
-                && im.hasItemModel()
-                && (im.hasEnchantmentGlintOverride() || glowStick.containsEnchantment(Enchantment.LOYALTY));
+                && glowStick.hasData(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE);
     }
 }

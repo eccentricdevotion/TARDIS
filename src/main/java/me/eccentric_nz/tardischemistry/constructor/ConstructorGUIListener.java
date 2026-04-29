@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.tardischemistry.constructor;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.keys.HandlesVariant;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
@@ -141,19 +142,15 @@ public class ConstructorGUIListener extends TARDISMenuListener {
         int tenInt = (amount / 10) % 10;
         int hundredInt = (amount / 100) % 10;
         ItemStack ones = view.getItem(3 + offset);
-        ItemMeta oneMeta = ones.getItemMeta();
-        oneMeta.customName(Component.text(oneInt));
-        oneMeta.setItemModel(HandlesVariant.values()[25 + oneInt].getKey());
-        ones.setItemMeta(oneMeta);
+        ones.setData(DataComponentTypes.CUSTOM_NAME, Component.text(oneInt));
+        ones.setData(DataComponentTypes.ITEM_MODEL, HandlesVariant.values()[25 + oneInt].getKey());
         ItemStack tens = view.getItem(2 + offset);
         if (tenInt > 0 || tenInt == 0 && hundredInt > 0) {
             if (tens == null) {
                 tens = ItemStack.of(Material.PAPER, 1);
             }
-            ItemMeta tenMeta = tens.getItemMeta();
-            tenMeta.customName(Component.text(tenInt));
-            tenMeta.setItemModel(HandlesVariant.values()[25 + tenInt].getKey());
-            tens.setItemMeta(tenMeta);
+            tens.setData(DataComponentTypes.CUSTOM_NAME, Component.text(tenInt));
+            tens.setData(DataComponentTypes.ITEM_MODEL, HandlesVariant.values()[25 + tenInt].getKey());
             view.setItem(2 + offset, tens);
         } else {
             view.setItem(2 + offset, null);
@@ -163,10 +160,8 @@ public class ConstructorGUIListener extends TARDISMenuListener {
             if (hundreds == null) {
                 hundreds = ItemStack.of(Material.PAPER, 1);
             }
-            ItemMeta hundredMeta = hundreds.getItemMeta();
-            hundredMeta.customName(Component.text(hundredInt));
-            hundredMeta.setItemModel(HandlesVariant.values()[25 + hundredInt].getKey());
-            hundreds.setItemMeta(hundredMeta);
+            hundreds.setData(DataComponentTypes.CUSTOM_NAME, Component.text(hundredInt));
+            hundreds.setData(DataComponentTypes.ITEM_MODEL, HandlesVariant.values()[25 + hundredInt].getKey());
             view.setItem(1 + offset, hundreds);
         } else {
             view.setItem(1 + offset, null);

@@ -82,7 +82,7 @@ public class TelepathicStructure implements InventoryHolder {
             component.setColors(List.of(Color.GREEN));
             im.setCustomModelDataComponent(component);
         }
-        im.customName(Component.text(structures.getKey(structure).toString()));
+        im.setData(DataComponentTypes.CUSTOM_NAME, Component.text(structures.getKey(structure).toString()));
         is.setItemMeta(im);
         return is;
     }

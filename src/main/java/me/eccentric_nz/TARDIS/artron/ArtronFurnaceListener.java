@@ -68,7 +68,7 @@ public class ArtronFurnaceListener implements Listener {
         if (display != null) {
             ItemStack itemStack = display.getItemStack();
             ItemMeta im = itemStack.getItemMeta();
-            im.setItemModel(lit ? Whoniverse.ARTRON_FURNACE_LIT.getKey() : Whoniverse.ARTRON_FURNACE.getKey());
+            im.setData(DataComponentTypes.ITEM_MODEL, lit ? Whoniverse.ARTRON_FURNACE_LIT.getKey() : Whoniverse.ARTRON_FURNACE.getKey());
             itemStack.setItemMeta(im);
             display.setItemStack(itemStack);
             display.setBrightness(new Display.Brightness(15, 15));
@@ -192,7 +192,7 @@ public class ArtronFurnaceListener implements Listener {
             }
             ItemStack is = ItemStack.of(Material.FURNACE, 1);
             ItemMeta im = is.getItemMeta();
-            im.customName(ComponentUtils.toWhite("TARDIS Artron Furnace"));
+            im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("TARDIS Artron Furnace"));
             is.setItemMeta(im);
             TARDISDisplayItemUtils.remove(block);
             block.setBlockData(TARDISConstants.AIR);

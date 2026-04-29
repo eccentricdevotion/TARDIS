@@ -41,7 +41,7 @@ public class LicoriceJellyBabyRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.MELON_SLICE, 4);
         ItemMeta im = is.getItemMeta();
-        im.customName(ComponentUtils.toWhite("Licorice Jelly Baby"));
+        im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Licorice Jelly Baby"));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "licorice_jelly_baby");
         ShapelessRecipe r = new ShapelessRecipe(key, is);

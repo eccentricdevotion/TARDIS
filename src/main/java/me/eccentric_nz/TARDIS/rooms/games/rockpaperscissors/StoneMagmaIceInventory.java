@@ -37,7 +37,7 @@ public class StoneMagmaIceInventory implements InventoryHolder {
         // 0 info
         ItemStack info = ItemStack.of(GUIChameleonConstructor.INFO.material(), 1);
         ItemMeta io = info.getItemMeta();
-        io.customName(Component.text(plugin.getChameleonGuis().getString("INFO", "Info")));
+        io.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getChameleonGuis().getString("INFO", "Info")));
         io.lore(List.of(
             Component.text("Click the block to make your choice."),
             Component.text("The TARDIS will choose at the same time."),
@@ -60,7 +60,7 @@ public class StoneMagmaIceInventory implements InventoryHolder {
         // 27 reset
         ItemStack reset = ItemStack.of(GUIArs.BUTTON_RESET.material(), 1);
         ItemMeta cobble = reset.getItemMeta();
-        cobble.customName(Component.text("Reset game"));
+        cobble.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Reset game"));
         reset.setItemMeta(cobble);
         items[27] = reset;
         // 35 close

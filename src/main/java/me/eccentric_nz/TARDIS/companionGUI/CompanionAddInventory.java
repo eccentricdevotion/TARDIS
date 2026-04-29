@@ -75,7 +75,7 @@ public class CompanionAddInventory implements InventoryHolder {
                     ItemStack head = ItemStack.of(Material.PLAYER_HEAD, 1);
                     SkullMeta skull = (SkullMeta) head.getItemMeta();
                     skull.setOwningPlayer(p);
-                    skull.customName(Component.text(p.getName()));
+                    skull.setData(DataComponentTypes.CUSTOM_NAME, Component.text(p.getName()));
                     skull.lore(List.of(Component.text(p.getUniqueId().toString())));
                     head.setItemMeta(skull);
                     heads[i] = head;
@@ -86,7 +86,7 @@ public class CompanionAddInventory implements InventoryHolder {
         // add buttons
         ItemStack info = ItemStack.of(GUICompanion.INFO.material(), 1);
         ItemMeta ii = info.getItemMeta();
-        ii.customName(Component.text("Info"));
+        ii.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Info"));
         ii.lore(List.of(
                 Component.text("Click a player head to"),
                 Component.text("add them as a companion.")
@@ -95,12 +95,12 @@ public class CompanionAddInventory implements InventoryHolder {
         heads[GUICompanion.INFO.slot()] = info;
         ItemStack list = ItemStack.of(GUICompanion.LIST_COMPANIONS.material(), 1);
         ItemMeta ll = list.getItemMeta();
-        ll.customName(Component.text("List companions"));
+        ll.setData(DataComponentTypes.CUSTOM_NAME, Component.text("List companions"));
         list.setItemMeta(ll);
         heads[GUICompanion.LIST_COMPANIONS.slot()] = list;
         ItemStack every = ItemStack.of(GUICompanion.ALL_COMPANIONS.material(), 1);
         ItemMeta one = every.getItemMeta();
-        one.customName(Component.text("Add all online players"));
+        one.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Add all online players"));
         every.setItemMeta(one);
         heads[GUICompanion.ALL_COMPANIONS.slot()] = every;
         // Cancel / close

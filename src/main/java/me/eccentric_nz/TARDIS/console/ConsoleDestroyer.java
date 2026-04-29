@@ -158,7 +158,7 @@ public class ConsoleDestroyer {
             ItemStack console = ItemStack.of(material, 1);
             ItemMeta im = console.getItemMeta();
             String dn = ((isRustic) ? "Rustic" : TARDISStringUtils.capitalise(colour)) + " Console";
-            im.customName(ComponentUtils.toWhite(dn));
+            im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(dn));
             im.lore(List.of(Component.text("Integration with interaction")));
             String which = model.getKey()
                     .replace("division_", "")

@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.tardischemistry.creative;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUIChemistry;
 import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
@@ -75,17 +76,13 @@ public class ProductsCreativeInventory implements InventoryHolder {
         }
         // elements
         ItemStack elements = ItemStack.of(GUIChemistry.ELEMENTS.material(), 1);
-        ItemMeta eim = elements.getItemMeta();
-        eim.customName(Component.text("Elements"));
-        eim.setItemModel(GUIChemistry.ELEMENTS.key());
-        elements.setItemMeta(eim);
+        elements.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Elements"));
+        elements.setData(DataComponentTypes.ITEM_MODEL, GUIChemistry.ELEMENTS.key());
         stack[GUIChemistry.ELEMENTS.slot()] = elements;
         // compounds
         ItemStack compounds = ItemStack.of(GUIChemistry.COMPOUNDS.material(), 1);
-        ItemMeta cim = compounds.getItemMeta();
-        cim.customName(Component.text("Compounds"));
-        cim.setItemModel(GUIChemistry.COMPOUNDS.key());
-        compounds.setItemMeta(cim);
+        compounds.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Compounds"));
+        compounds.setData(DataComponentTypes.ITEM_MODEL, GUIChemistry.COMPOUNDS.key());
         stack[GUIChemistry.COMPOUNDS.slot()] = compounds;
         // close
         stack[53] = GUIItemFactory.close();;

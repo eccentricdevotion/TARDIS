@@ -152,7 +152,7 @@ public class TARDISTelepathicListener implements Listener {
         // drop a custom GLOWSTONE_DUST
         ItemStack is = ItemStack.of(Material.GLOWSTONE_DUST, 1);
         ItemMeta im = is.getItemMeta();
-        im.customName(ComponentUtils.toWhite("TARDIS Telepathic Circuit"));
+        im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("TARDIS Telepathic Circuit"));
         Component uses = (plugin.getConfig().getString("circuits.uses.telepathic", "20").equals("0") || !plugin.getConfig().getBoolean("circuits.damage"))
                 ? Component.text("unlimited", NamedTextColor.YELLOW)
                 : Component.text(plugin.getConfig().getString("circuits.uses.telepathic", "20"), NamedTextColor.YELLOW);
