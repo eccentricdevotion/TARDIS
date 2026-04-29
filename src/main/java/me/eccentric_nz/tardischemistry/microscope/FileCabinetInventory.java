@@ -17,6 +17,7 @@
 package me.eccentric_nz.tardischemistry.microscope;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
 import me.eccentric_nz.TARDIS.custommodels.keys.ChemistryEquipment;
 import me.eccentric_nz.TARDIS.custommodels.keys.GuiVariant;
 import net.kyori.adventure.text.Component;
@@ -57,12 +58,7 @@ class FileCabinetInventory implements InventoryHolder {
             stacks[view.ordinal()] = is;
         }
         // Cancel / close
-        ItemStack close = ItemStack.of(Material.BOWL, 1);
-        ItemMeta can = close.getItemMeta();
-        can.customName(Component.text("Close"));
-        can.setItemModel(GuiVariant.CLOSE.getKey());
-        close.setItemMeta(can);
-        stacks[53] = close;
+        stacks[53] = GUIItemFactory.close();;
         return stacks;
     }
 }

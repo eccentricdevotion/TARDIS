@@ -18,6 +18,7 @@ package me.eccentric_nz.tardischemistry.element;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUIChemistry;
+import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.inventory.Inventory;
@@ -87,12 +88,7 @@ public class ElementInventory implements InventoryHolder {
         products.setItemMeta(pim);
         stack[GUIChemistry.PRODUCTS.slot()] = products;
         // close
-        ItemStack close = ItemStack.of(GUIChemistry.CLOSE.material(), 1);
-        ItemMeta close_im = close.getItemMeta();
-        close_im.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
-        close_im.setItemModel(GUIChemistry.CLOSE.key());
-        close.setItemMeta(close_im);
-        stack[53] = close;
+        stack[53] = GUIItemFactory.close();;
         return stack;
     }
 }

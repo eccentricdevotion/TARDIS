@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.transmat;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
+import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
 import me.eccentric_nz.TARDIS.custommodels.GUITransmat;
 import me.eccentric_nz.TARDIS.database.data.Transmat;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTransmatList;
@@ -119,11 +120,7 @@ public class TransmatInventory implements InventoryHolder {
             stack[GUITransmat.ROOMS.slot()] = rooms;
         }
         // close
-        ItemStack close = ItemStack.of(GUITransmat.CLOSE.material(), 1);
-        ItemMeta close_im = close.getItemMeta();
-        close_im.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
-        close.setItemMeta(close_im);
-        stack[GUITransmat.CLOSE.slot()] = close;
+        stack[GUITransmat.CLOSE.slot()] = GUIItemFactory.close();;
 
         return stack;
     }

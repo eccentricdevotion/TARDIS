@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.chameleon.shell;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.custommodels.GUIChameleonPresets;
+import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetChameleon;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import net.kyori.adventure.text.Component;
@@ -99,11 +100,7 @@ public class ShellPresetInventory implements InventoryHolder {
             stacks[GUIChameleonPresets.SAVED.slot()] = saved;
         }
         // Cancel / close
-        ItemStack close = ItemStack.of(GUIChameleonPresets.CLOSE.material(), 1);
-        ItemMeta can = close.getItemMeta();
-        can.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
-        close.setItemMeta(can);
-        stacks[GUIChameleonPresets.CLOSE.slot()] = close;
+        stacks[GUIChameleonPresets.CLOSE.slot()] = GUIItemFactory.close();;
 
         return stacks;
     }

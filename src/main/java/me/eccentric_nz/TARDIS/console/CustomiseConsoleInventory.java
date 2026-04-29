@@ -4,6 +4,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.console.models.ColourType;
 import me.eccentric_nz.TARDIS.custommodels.GUIArs;
 import me.eccentric_nz.TARDIS.custommodels.GUICompanion;
+import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
 import me.eccentric_nz.TARDIS.rotors.Rotor;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
@@ -103,11 +104,7 @@ public class CustomiseConsoleInventory implements InventoryHolder {
         save.setItemMeta(se);
         consoles[49] = save;
         // close
-        ItemStack close = ItemStack.of(GUICompanion.BUTTON_CLOSE.material(), 1);
-        ItemMeta can = close.getItemMeta();
-        can.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
-        close.setItemMeta(can);
-        consoles[GUICompanion.BUTTON_CLOSE.slot()] = close;
+        consoles[GUICompanion.BUTTON_CLOSE.slot()] = GUIItemFactory.close();;
 
         return consoles;
     }

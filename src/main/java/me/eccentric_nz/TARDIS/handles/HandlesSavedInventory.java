@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.handles;
 
 import com.google.common.collect.Multimaps;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
 import me.eccentric_nz.TARDIS.database.data.Program;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPrograms;
 import net.kyori.adventure.text.Component;
@@ -126,11 +127,7 @@ class HandlesSavedInventory implements InventoryHolder {
         checked.setItemMeta(km);
         stack[51] = checked;
         // close
-        ItemStack close = ItemStack.of(Material.BOWL, 1);
-        ItemMeta cm = close.getItemMeta();
-        cm.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
-        close.setItemMeta(cm);
-        stack[53] = close;
+        stack[53] = GUIItemFactory.close();;
         return stack;
     }
 }

@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.sonic;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
 import me.eccentric_nz.TARDIS.custommodels.GUISonicActivator;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import net.kyori.adventure.text.Component;
@@ -78,10 +79,7 @@ class SonicActivatorInventory implements InventoryHolder {
         info_im.lore(lore);
         info.setItemMeta(info_im);
         // close
-        ItemStack close = ItemStack.of(GUISonicActivator.CLOSE.material(), 1);
-        ItemMeta close_im = close.getItemMeta();
-        close_im.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
-        close.setItemMeta(close_im);
+        ItemStack close = GUIItemFactory.close();
 
         return new ItemStack[]{null, null, null, null, null, null, null, info, close};
     }

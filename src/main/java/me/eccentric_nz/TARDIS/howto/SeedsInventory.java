@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.howto;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
+import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
 import me.eccentric_nz.TARDIS.enumeration.Desktops;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import net.kyori.adventure.text.Component;
@@ -79,11 +80,7 @@ public class SeedsInventory implements InventoryHolder {
             }
         }
         // close
-        ItemStack close = ItemStack.of(Material.BOWL, 1);
-        ItemMeta close_im = close.getItemMeta();
-        close_im.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
-        close.setItemMeta(close_im);
-        stack[44] = close;
+        stack[44] = GUIItemFactory.close();;
         return stack;
     }
 }

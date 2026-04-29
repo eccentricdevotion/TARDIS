@@ -17,7 +17,10 @@
 package me.eccentric_nz.TARDIS.info;
 
 import com.google.common.collect.Multimaps;
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.TooltipDisplay;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -51,8 +54,9 @@ public class TARDISIndexFileEntry implements InventoryHolder {
     private ItemStack[] getItemStack() {
         ItemStack[] stack = new ItemStack[27];
         ItemStack entry = ItemStack.of(Material.WRITTEN_BOOK, 1);
-        ItemMeta entryMeta = entry.getItemMeta();
-        entryMeta.customName(Component.text(TARDISStringUtils.capitalise(tardisInfoMenu.toString())));
+//        ItemMeta entryMeta = entry.getItemMeta();
+        entry.setData(DataComponentTypes.CUSTOM_NAME, Component.text(TARDISStringUtils.capitalise(tardisInfoMenu.toString())));
+        entry.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay().hideTooltip(true).build());
         entryMeta.addItemFlags(ItemFlag.values());
         entryMeta.setAttributeModifiers(Multimaps.forMap(Map.of()));
         entry.setItemMeta(entryMeta);
@@ -60,18 +64,12 @@ public class TARDISIndexFileEntry implements InventoryHolder {
         int i = 9;
         for (String key : TARDISInfoMenu.getChildren(tardisInfoMenu.toString()).keySet()) {
             ItemStack is = ItemStack.of(Material.BOOK);
-            ItemMeta im = is.getItemMeta();
-            im.customName(Component.text(key));
-            is.setItemMeta(im);
+            is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(key));
             stack[i] = is;
             i++;
         }
         // close
-        ItemStack close = ItemStack.of(Material.BOWL, 1);
-        ItemMeta close_im = close.getItemMeta();
-        close_im.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
-        close.setItemMeta(close_im);
-        stack[26] = close;
+        stack[26] = GUIItemFactory.close();;
         return stack;
     }
 }

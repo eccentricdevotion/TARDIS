@@ -2,6 +2,7 @@ package me.eccentric_nz.TARDIS.rooms.laundry;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUIChameleonConstructor;
+import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
 import me.eccentric_nz.TARDIS.custommodels.GUIMap;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -61,11 +62,7 @@ public class WashingMachineInventory implements InventoryHolder {
         remove.setItemMeta(dye);
         items[23] = remove;
         // 26 close
-        ItemStack close = ItemStack.of(GUIMap.BUTTON_CLOSE.material(), 1);
-        ItemMeta gui = close.getItemMeta();
-        gui.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
-        close.setItemMeta(gui);
-        items[26] = close;
+        items[26] = GUIItemFactory.close();;
         return items;
     }
 }

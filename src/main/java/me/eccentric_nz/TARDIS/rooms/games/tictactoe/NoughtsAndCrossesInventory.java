@@ -3,6 +3,7 @@ package me.eccentric_nz.TARDIS.rooms.games.tictactoe;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUIArs;
 import me.eccentric_nz.TARDIS.custommodels.GUIChameleonConstructor;
+import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
 import me.eccentric_nz.TARDIS.custommodels.GUIMap;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -80,11 +81,7 @@ public class NoughtsAndCrossesInventory implements InventoryHolder {
         reset.setItemMeta(cobble);
         items[45] = reset;
         // 35 close
-        ItemStack close = ItemStack.of(GUIMap.BUTTON_CLOSE.material(), 1);
-        ItemMeta gui = close.getItemMeta();
-        gui.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
-        close.setItemMeta(gui);
-        items[53] = close;
+        items[53] = GUIItemFactory.close();;
         return items;
     }
 }

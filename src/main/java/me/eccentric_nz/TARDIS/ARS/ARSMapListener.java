@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.ARS;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.builders.interior.TIPSData;
@@ -128,8 +129,7 @@ public class ARSMapListener extends ARSMethods implements Listener {
                     ARSMapData md = map_data.get(playerUUID);
                     ItemStack is = view.getItem(slot);
                     if (is != null) {
-                        ItemMeta im = is.getItemMeta();
-                        String dn = ComponentUtils.stripColour(im.customName());
+                        String dn = ComponentUtils.stripColour(is.getData(DataComponentTypes.CUSTOM_NAME));
                         if (!dn.equals("Empty slot")) {
                             selectedLocation.put(playerUUID, is.getType().toString());
                             // get selected slot

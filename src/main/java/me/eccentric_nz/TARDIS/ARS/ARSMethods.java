@@ -20,6 +20,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.DamageUtility;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
@@ -35,7 +37,6 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.*;
 
@@ -156,24 +157,22 @@ public class ARSMethods {
      */
     void setSlot(InventoryView view, int slot, Material material, String room, UUID playerUUID, boolean showPerms) {
         ItemStack is = ItemStack.of(material, 1);
-        ItemMeta im = is.getItemMeta();
-        im.customName(Component.text(room));
+        is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(room));
         if (!room.equals("Empty slot")) {
             ARS ars = TARDISARS.ARSFor(material.toString());
             String config_path = ars.getConfigPath();
-            List<Component> lore = new ArrayList<>();
-            lore.add(Component.text("Cost: " + plugin.getRoomsConfig().getInt("rooms." + config_path + ".cost")));
+            ItemLore.Builder lore = ItemLore.lore();
+            lore.addLine(Component.text("Cost: " + plugin.getRoomsConfig().getInt("rooms." + config_path + ".cost")));
             if (showPerms) {
                 Player player = plugin.getServer().getPlayer(playerUUID);
                 if (player != null && !TARDISPermission.hasPermission(player, "tardis.room." + config_path.toLowerCase(Locale.ROOT))) {
-                    lore.add(Component.text(plugin.getLanguage().getString("NO_PERM_CONSOLE", "No permission!"), NamedTextColor.RED));
+                    lore.addLine(Component.text(plugin.getLanguage().getString("NO_PERM_CONSOLE", "No permission!"), NamedTextColor.RED));
                 }
             }
-            im.lore(lore);
+            is.setData(DataComponentTypes.LORE, lore.build());
         } else {
-            im.lore(null);
+            is.unsetData(DataComponentTypes.LORE);
         }
-        is.setItemMeta(im);
         view.setItem(slot, is);
     }
 
@@ -262,11 +261,12 @@ public class ARSMethods {
      * @param str  the lore to set
      */
     public void setLore(InventoryView view, int slot, String str) {
-        List<Component> lore = (str != null) ? List.of(Component.text(str)) : null;
         ItemStack is = view.getItem(slot);
-        ItemMeta im = is.getItemMeta();
-        im.lore(lore);
-        is.setItemMeta(im);
+        if (str != null) {
+            is.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text(str)).build());
+        } else {
+            is.unsetData(DataComponentTypes.LORE);
+        }
     }
 
     /**
@@ -286,9 +286,7 @@ public class ARSMethods {
                 map_data.put(playerUUID, md);
             }
             ItemStack is = ItemStack.of(material, 1);
-            ItemMeta im = is.getItemMeta();
-            im.customName(Component.text(levels[i - 27]));
-            is.setItemMeta(im);
+            is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(levels[i - 27]));
             setSlot(view, i, is, playerUUID, false);
         }
     }
@@ -371,7 +369,7 @@ public class ARSMethods {
      * @param playerUUID the UUID of the player using the GUI
      */
     public void loadMap(InventoryView view, UUID playerUUID, boolean check) {
-        if (check && view.getItem(10).getItemMeta().hasLore()) {
+        if (check && view.getItem(10).hasData(DataComponentTypes.LORE)) {
             setLore(view, 10, plugin.getLanguage().getString("ARS_MAP_ERROR", "Map already loaded!"));
             return;
         }

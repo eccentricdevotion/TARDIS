@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.ARS;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.ARS.relocator.RoomRelocatorInventory;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
@@ -34,7 +35,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.*;
 
@@ -121,9 +121,7 @@ public class ARSListener extends ARSMethods implements Listener {
                         setLore(view, slot, plugin.getLanguage().getString("ARS_RESET_SLOT", "You cannot reset the selected slot!"));
                     } else {
                         ItemStack stone = ItemStack.of(Material.STONE, 1);
-                        ItemMeta s1 = stone.getItemMeta();
-                        s1.customName(Component.text("Empty slot"));
-                        stone.setItemMeta(s1);
+                        stone.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Empty slot"));
                         setSlot(view, selected_slot.get(playerUUID), stone, playerUUID, true);
                         setLore(view, slot, null);
                     }
@@ -171,9 +169,7 @@ public class ARSListener extends ARSMethods implements Listener {
                 if (selected_slot.containsKey(playerUUID)) {
                     // need to check for gravity wells, and jettison both layers...
                     ItemStack tnt = ItemStack.of(Material.TNT, 1);
-                    ItemMeta j = tnt.getItemMeta();
-                    j.customName(Component.text("Jettison"));
-                    tnt.setItemMeta(j);
+                    tnt.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Jettison"));
                     setSlot(view, selected_slot.get(playerUUID), tnt, playerUUID, true);
                     setLore(view, slot, null);
                 } else {
@@ -196,7 +192,7 @@ public class ARSListener extends ARSMethods implements Listener {
                         setLore(view, slot, "Jettison existing room first!");
                     } else {
                         ItemStack ris = view.getItem(slot);
-                        String displayName = ComponentUtils.stripColour(ris.getItemMeta().customName());
+                        String displayName = ComponentUtils.stripColour(ris.getData(DataComponentTypes.CUSTOM_NAME));
                         String room = TARDISARS.ARSFor(ris.getType().toString()).getConfigPath();
                         if (!TARDISPermission.hasPermission(player, "tardis.room." + room.toLowerCase(Locale.ROOT))) {
                             break;

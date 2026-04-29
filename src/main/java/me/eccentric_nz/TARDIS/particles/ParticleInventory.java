@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.particles;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
 import me.eccentric_nz.TARDIS.custommodels.GUIParticle;
 import me.eccentric_nz.TARDIS.custommodels.keys.SwitchVariant;
 import me.eccentric_nz.TARDIS.database.data.ParticleData;
@@ -206,11 +207,7 @@ public class ParticleInventory implements InventoryHolder {
         stacks[47] = plus;
         stacks[51] = plus;
         // close
-        ItemStack close = ItemStack.of(GUIParticle.CLOSE.material(), 1);
-        ItemMeta clim = close.getItemMeta();
-        clim.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
-        close.setItemMeta(clim);
-        stacks[GUIParticle.CLOSE.slot()] = close;
+        stacks[GUIParticle.CLOSE.slot()] = GUIItemFactory.close();;
         return stacks;
     }
 }

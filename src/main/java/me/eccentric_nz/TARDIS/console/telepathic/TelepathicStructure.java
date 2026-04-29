@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.console.telepathic;
 import io.papermc.paper.registry.RegistryAccess;
 import io.papermc.paper.registry.RegistryKey;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
 import me.eccentric_nz.TARDIS.custommodels.GUIMap;
 import me.eccentric_nz.TARDIS.travel.TARDISStructureTravel;
 import net.kyori.adventure.text.Component;
@@ -69,12 +70,7 @@ public class TelepathicStructure implements InventoryHolder {
         ItemStack end = make(Structure.END_CITY, Material.PURPUR_BLOCK);
         stack[i] = end;
         // close
-        ItemStack close = ItemStack.of(GUIMap.BUTTON_CLOSE.material(), 1);
-        ItemMeta gui = close.getItemMeta();
-        gui.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
-        gui.setItemModel(GUIMap.BUTTON_CLOSE.key());
-        close.setItemMeta(gui);
-        stack[53] = close;
+        stack[53] = GUIItemFactory.close();;
         return stack;
     }
 

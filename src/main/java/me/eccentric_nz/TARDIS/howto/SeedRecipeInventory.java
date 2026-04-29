@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.howto;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
@@ -105,11 +106,7 @@ class SeedRecipeInventory implements InventoryHolder {
         stack[18] = tardis;
         stack[20] = in_floor;
         // close
-        ItemStack close = ItemStack.of(Material.BOWL, 1);
-        ItemMeta close_im = close.getItemMeta();
-        close_im.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
-        close.setItemMeta(close_im);
-        stack[26] = close;
+        stack[26] = GUIItemFactory.close();;
         // back
         ItemStack back = ItemStack.of(Material.BOWL, 1);
         ItemMeta back_im = back.getItemMeta();

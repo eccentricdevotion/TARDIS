@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.utility.LightLevel;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
+import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
 import me.eccentric_nz.TARDIS.custommodels.GUILights;
 import me.eccentric_nz.TARDIS.custommodels.keys.SwitchVariant;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -240,11 +241,7 @@ public class LightsInventory implements InventoryHolder {
         edit.setItemMeta(eim);
         stacks[GUILights.EDIT_LIGHT_SEQUENCE.slot()] = edit;
         // close
-        ItemStack close = ItemStack.of(GUILights.CLOSE.material(), 1);
-        ItemMeta clim = close.getItemMeta();
-        clim.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
-        close.setItemMeta(clim);
-        stacks[GUILights.CLOSE.slot()] = close;
+        stacks[GUILights.CLOSE.slot()] = GUIItemFactory.close();;
         return stacks;
     }
 

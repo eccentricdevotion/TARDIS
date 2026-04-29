@@ -18,6 +18,7 @@ package me.eccentric_nz.tardischemistry.compound;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUIChemistry;
+import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
@@ -71,12 +72,7 @@ public class CompoundInventory implements InventoryHolder {
         check.setItemMeta(check_im);
         stack[GUIChemistry.CHECK.slot()] = check;
         // close
-        ItemStack close = ItemStack.of(GUIChemistry.CLOSE.material(), 1);
-        ItemMeta close_im = close.getItemMeta();
-        close_im.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
-        close_im.setItemModel(GUIChemistry.CLOSE.key());
-        close.setItemMeta(close_im);
-        stack[GUIChemistry.CLOSE.slot()] = close;
+        stack[GUIChemistry.CLOSE.slot()] = GUIItemFactory.close();;
         return stack;
     }
 }

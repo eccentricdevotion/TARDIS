@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.custommodels.GUIChameleonPoliceBoxes;
 import me.eccentric_nz.TARDIS.custommodels.GUIChameleonPresets;
+import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
 import me.eccentric_nz.TARDIS.custommodels.keys.ChameleonVariant;
 import me.eccentric_nz.TARDIS.custommodels.keys.ColouredVariant;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
@@ -197,11 +198,7 @@ public class ModelledPresetInventory implements InventoryHolder {
         back.setItemMeta(but);
         boxes[GUIChameleonPoliceBoxes.BACK.slot()] = back;
         // Cancel / close
-        ItemStack close = ItemStack.of(GUIChameleonPoliceBoxes.CLOSE.material(), 1);
-        ItemMeta can = close.getItemMeta();
-        can.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
-        close.setItemMeta(can);
-        boxes[GUIChameleonPoliceBoxes.CLOSE.slot()] = close;
+        boxes[GUIChameleonPoliceBoxes.CLOSE.slot()] = GUIItemFactory.close();;
         return boxes;
     }
 }

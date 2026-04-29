@@ -4,6 +4,7 @@
 package me.eccentric_nz.tardisvortexmanipulator.gui;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
 import me.eccentric_nz.tardisvortexmanipulator.database.TVMResultSetInbox;
 import me.eccentric_nz.tardisvortexmanipulator.storage.TVMMessage;
 import net.kyori.adventure.text.Component;
@@ -83,11 +84,7 @@ public class TVMMessageGUI implements InventoryHolder {
         page.setItemMeta(num);
         stack[45] = page;
         // close
-        ItemStack close = ItemStack.of(Material.BOWL, 1);
-        ItemMeta win = close.getItemMeta();
-        win.customName(Component.text("Close"));
-        close.setItemMeta(win);
-        stack[46] = close;
+        stack[46] = GUIItemFactory.close();;
         // previous screen (only if needed)
         if (start > 0) {
             ItemStack prev = ItemStack.of(Material.ARROW, 1);

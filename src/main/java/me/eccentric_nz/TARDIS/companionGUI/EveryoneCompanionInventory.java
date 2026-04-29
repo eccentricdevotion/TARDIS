@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.companionGUI;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
@@ -90,11 +91,7 @@ public class EveryoneCompanionInventory implements InventoryHolder {
         del.setItemMeta(dd);
         heads[51] = del;
         // Cancel / close
-        ItemStack close = ItemStack.of(Material.BOWL, 1);
-        ItemMeta can = close.getItemMeta();
-        can.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
-        close.setItemMeta(can);
-        heads[53] = close;
+        heads[53] = GUIItemFactory.close();;
 
         return heads;
     }

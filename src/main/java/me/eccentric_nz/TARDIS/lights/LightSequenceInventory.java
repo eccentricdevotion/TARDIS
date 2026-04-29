@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.lights;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUIChameleonConstructor;
 import me.eccentric_nz.TARDIS.custommodels.GUIChameleonTemplate;
+import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
 import me.eccentric_nz.TARDIS.custommodels.GUILights;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetLightPrefs;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
@@ -131,11 +132,7 @@ public class LightSequenceInventory implements InventoryHolder {
         back.setItemMeta(bk);
         stacks[42] = back;
         // 44 close
-        ItemStack close = ItemStack.of(GUILights.CLOSE.material(), 1);
-        ItemMeta clim = close.getItemMeta();
-        clim.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
-        close.setItemMeta(clim);
-        stacks[44] = close;
+        stacks[44] = GUIItemFactory.close();;
         return stacks;
     }
 }

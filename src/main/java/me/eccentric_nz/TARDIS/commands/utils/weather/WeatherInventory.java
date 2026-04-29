@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.commands.utils.weather;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
 import me.eccentric_nz.TARDIS.custommodels.GUIWeather;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import net.kyori.adventure.text.Component;
@@ -75,11 +76,7 @@ public class WeatherInventory implements InventoryHolder {
         excit.setItemMeta(ation);
         stack[GUIWeather.EXCITE.slot()] = excit;
         // close
-        ItemStack close = ItemStack.of(GUIWeather.CLOSE.material(), 1);
-        ItemMeta can = close.getItemMeta();
-        can.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
-        close.setItemMeta(can);
-        stack[GUIWeather.CLOSE.slot()] = close;
+        stack[GUIWeather.CLOSE.slot()] = GUIItemFactory.close();;
 
         return stack;
     }

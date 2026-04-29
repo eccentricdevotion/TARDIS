@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.rooms.eye;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUIArtronStorage;
+import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetArtronStorage;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import net.kyori.adventure.text.Component;
@@ -86,11 +87,7 @@ public class EyeStorage implements InventoryHolder {
         l_arrow.setItemMeta(l_arrow_im);
         stacks[GUIArtronStorage.ARROW_LEFT.slot()] = l_arrow;
         // close
-        ItemStack close = ItemStack.of(GUIArtronStorage.CLOSE.material(), 1);
-        ItemMeta can = close.getItemMeta();
-        can.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
-        close.setItemMeta(can);
-        stacks[GUIArtronStorage.CLOSE.slot()] = close;
+        stacks[GUIArtronStorage.CLOSE.slot()] = GUIItemFactory.close();;
         return stacks;
     }
 }

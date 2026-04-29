@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.lights;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.utility.LightLevel;
 import me.eccentric_nz.TARDIS.custommodels.GUIChameleonTemplate;
+import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
 import me.eccentric_nz.TARDIS.custommodels.GUILights;
 import me.eccentric_nz.TARDIS.custommodels.GUIParticle;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAllLightLevels;
@@ -123,10 +124,7 @@ public class LightLevelsInventory implements InventoryHolder {
         bk.customName(Component.text("Back"));
         back.setItemMeta(bk);
         // close
-        ItemStack close = ItemStack.of(GUILights.CLOSE.material(), 1);
-        ItemMeta clim = close.getItemMeta();
-        clim.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
-        close.setItemMeta(clim);
+        ItemStack close = GUIItemFactory.close();
         return new ItemStack[]{
                 null, i_info, null, null, null, null, null, e_info, null,
                 minus, interior, plus, null, null, null, minus, exterior, plus,

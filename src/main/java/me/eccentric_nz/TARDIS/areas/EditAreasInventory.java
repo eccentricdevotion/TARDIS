@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.areas;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
 import me.eccentric_nz.TARDIS.custommodels.GUIMap;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreaLocations;
 import net.kyori.adventure.text.Component;
@@ -101,11 +102,7 @@ public class EditAreasInventory implements InventoryHolder {
         del.setItemMeta(dd);
         stacks[50] = del;
         // close
-        ItemStack close = ItemStack.of(GUIMap.BUTTON_CLOSE.material(), 1);
-        ItemMeta close_im = close.getItemMeta();
-        close_im.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
-        close.setItemMeta(close_im);
-        stacks[53] = close;
+        stacks[53] = GUIItemFactory.close();;
         return stacks;
     }
 }

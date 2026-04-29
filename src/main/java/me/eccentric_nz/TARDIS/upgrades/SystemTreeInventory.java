@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.upgrades;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
 import me.eccentric_nz.TARDIS.database.data.SystemUpgrade;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import net.kyori.adventure.text.Component;
@@ -137,12 +138,7 @@ public class SystemTreeInventory implements InventoryHolder {
         vert.setItemMeta(ical);
         stacks[13] = vert;
         // close
-        ItemStack close = ItemStack.of(SystemTree.CLOSE.getMaterial(), 1);
-        ItemMeta close_im = close.getItemMeta();
-        close_im.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
-        close_im.setItemModel(SystemTree.CLOSE.getLocked());
-        close.setItemMeta(close_im);
-        stacks[45] = close;
+        stacks[45] = GUIItemFactory.close();;
         return stacks;
     }
 }

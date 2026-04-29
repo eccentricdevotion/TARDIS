@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.skins.tv;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
 import me.eccentric_nz.TARDIS.custommodels.GUITelevision;
 import me.eccentric_nz.TARDIS.custommodels.keys.SwitchVariant;
 import net.kyori.adventure.text.Component;
@@ -58,10 +59,6 @@ public class TVGUI implements InventoryHolder {
         back.setItemMeta(but);
         stack[GUITelevision.BACK.slot()] = back;
         // close
-        ItemStack close = ItemStack.of(GUITelevision.CLOSE.material(), 1);
-        ItemMeta close_im = close.getItemMeta();
-        close_im.customName(Component.text(TARDIS.plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
-        close.setItemMeta(close_im);
-        stack[GUITelevision.CLOSE.slot()] = close;
+        stack[GUITelevision.CLOSE.slot()] = GUIItemFactory.close();;
     }
 }

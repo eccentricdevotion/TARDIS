@@ -3,6 +3,7 @@ package me.eccentric_nz.TARDIS.rooms.games.connect_four;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUIArs;
 import me.eccentric_nz.TARDIS.custommodels.GUIChameleonConstructor;
+import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
 import me.eccentric_nz.TARDIS.custommodels.GUIMap;
 import me.eccentric_nz.TARDIS.rooms.games.rockpaperscissors.Letters;
 import net.kyori.adventure.text.Component;
@@ -77,11 +78,7 @@ public class ConnectFourInventory implements InventoryHolder {
         reset.setItemMeta(cobble);
         items[44] = reset;
         // 53 close
-        ItemStack close = ItemStack.of(GUIMap.BUTTON_CLOSE.material(), 1);
-        ItemMeta gui = close.getItemMeta();
-        gui.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
-        close.setItemMeta(gui);
-        items[53] = close;
+        items[53] = GUIItemFactory.close();;
         return items;
     }
 }

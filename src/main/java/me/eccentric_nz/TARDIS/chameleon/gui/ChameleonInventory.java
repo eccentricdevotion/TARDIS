@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.chameleon.gui;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUIChameleon;
+import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
 import me.eccentric_nz.TARDIS.enumeration.Adaption;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import net.kyori.adventure.text.Component;
@@ -204,10 +205,7 @@ public class ChameleonInventory implements InventoryHolder {
         lder.customName(conoff);
         bui.setItemMeta(lder);
         // Cancel / close
-        ItemStack close = ItemStack.of(GUIChameleon.BUTTON_CLOSE.material(), 1);
-        ItemMeta can = close.getItemMeta();
-        can.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
-        close.setItemMeta(can);
+        ItemStack close = GUIItemFactory.close();
 
         return new ItemStack[]{
                 apply, null, null, lock, null, null, null, null, null,

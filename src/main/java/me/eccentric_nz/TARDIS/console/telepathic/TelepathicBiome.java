@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.console.telepathic;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
 import me.eccentric_nz.TARDIS.custommodels.GUIMap;
 import me.eccentric_nz.TARDIS.custommodels.GUIWallFloor;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
@@ -100,12 +101,7 @@ public class TelepathicBiome implements InventoryHolder {
             }
         }
         // close
-        ItemStack close = ItemStack.of(GUIMap.BUTTON_CLOSE.material(), 1);
-        ItemMeta gui = close.getItemMeta();
-        gui.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
-        gui.setItemModel(GUIMap.BUTTON_CLOSE.key());
-        close.setItemMeta(gui);
-        stack[53] = close;
+        stack[53] = GUIItemFactory.close();;
         return stack;
     }
 }

@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.desktop;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUIArchive;
+import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisSize;
 import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
 import me.eccentric_nz.TARDIS.schematic.archive.ResultSetArchiveButtons;
@@ -134,11 +135,7 @@ class ArchiveInventory implements InventoryHolder {
             }
         }
         // close
-        ItemStack close = ItemStack.of(GUIArchive.CLOSE.material(), 1);
-        ItemMeta close_im = close.getItemMeta();
-        close_im.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
-        close.setItemMeta(close_im);
-        stack[GUIArchive.CLOSE.slot()] = close;
+        stack[GUIArchive.CLOSE.slot()] = GUIItemFactory.close();;
 
         return stack;
     }

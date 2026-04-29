@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.chameleon.gui;
 
 import com.google.common.collect.Multimaps;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
 import me.eccentric_nz.TARDIS.custommodels.keys.ColouredVariant;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -122,10 +123,7 @@ public class ColourPickerInventory implements InventoryHolder {
         sss.customName(Component.text("Select colour"));
         select.setItemMeta(sss);
         // close
-        ItemStack close = ItemStack.of(Material.BOWL, 1);
-        ItemMeta win = close.getItemMeta();
-        win.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
-        close.setItemMeta(win);
+        ItemStack close = GUIItemFactory.close();
         return new ItemStack[]{
                 null, null, null, null, dis, null, null, null, null,
                 null, null, null, null, null, null, null, null, null,

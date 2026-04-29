@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.recipes;
 
 import com.google.common.collect.Multimaps;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
 import me.eccentric_nz.TARDIS.enumeration.RecipeCategory;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -76,11 +77,7 @@ public class TARDISRecipeInventory implements InventoryHolder {
         info.setItemMeta(info_im);
         stack[4] = info;
         // close
-        ItemStack close = ItemStack.of(Material.BOWL, 1);
-        ItemMeta close_im = close.getItemMeta();
-        close_im.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
-        close.setItemMeta(close_im);
-        stack[8] = close;
+        stack[8] = GUIItemFactory.close();;
         int i = 9;
         for (RecipeItem item : RecipeItem.values()) {
             if (item.getCategory() == category) {

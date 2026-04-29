@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.playerprefs;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
+import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
 import me.eccentric_nz.TARDIS.custommodels.GUIPlayerPreferences;
 import me.eccentric_nz.TARDIS.custommodels.GUIWeather;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -165,11 +166,7 @@ public class TARDISPrefsMenuInventory implements InventoryHolder {
             stack[GUIPlayerPreferences.ADMIN_MENU.getSlot()] = ad;
         }
         // close
-        ItemStack close = ItemStack.of(GUIWeather.CLOSE.material(), 1);
-        ItemMeta can = close.getItemMeta();
-        can.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
-        close.setItemMeta(can);
-        stack[18] = close;
+        stack[18] = GUIItemFactory.close();;
         return stack;
     }
 }

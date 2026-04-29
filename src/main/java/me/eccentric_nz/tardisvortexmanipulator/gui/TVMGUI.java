@@ -5,6 +5,7 @@ package me.eccentric_nz.tardisvortexmanipulator.gui;
 
 import com.google.common.collect.Multimaps;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
 import me.eccentric_nz.TARDIS.custommodels.keys.VortexManipulatorVariant;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -219,10 +220,7 @@ public class TVMGUI implements InventoryHolder {
         disk.customName(Component.text("Load saved location"));
         load.setItemMeta(disk);
         // close
-        ItemStack close = ItemStack.of(Material.BOWL, 1);
-        ItemMeta win = close.getItemMeta();
-        win.customName(Component.text("Close"));
-        close.setItemMeta(win);
+        ItemStack close = GUIItemFactory.close();
         // next
         ItemStack next = ItemStack.of(Material.BOWL, 1);
         ItemMeta cha = next.getItemMeta();

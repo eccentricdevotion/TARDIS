@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.playerprefs;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
 import me.eccentric_nz.TARDIS.custommodels.GUISonicPreferences;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import net.kyori.adventure.text.Component;
@@ -106,11 +107,7 @@ public class TARDISSonicMenuInventory implements InventoryHolder {
         name.setItemMeta(name_im);
         stack[32] = name;
         // close
-        ItemStack close = ItemStack.of(Material.BOWL, 1);
-        ItemMeta close_im = close.getItemMeta();
-        close_im.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
-        close.setItemMeta(close_im);
-        stack[35] = close;
+        stack[35] = GUIItemFactory.close();;
 
         return stack;
     }

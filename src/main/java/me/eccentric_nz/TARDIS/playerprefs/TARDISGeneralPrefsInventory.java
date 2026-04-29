@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.playerprefs;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.console.ConsoleInteraction;
 import me.eccentric_nz.TARDIS.custommodels.GUIChameleonPresets;
+import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
 import me.eccentric_nz.TARDIS.custommodels.GUIPlayerPreferences;
 import me.eccentric_nz.TARDIS.custommodels.GUIWeather;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -182,11 +183,7 @@ public class TARDISGeneralPrefsInventory implements InventoryHolder {
         back.setItemMeta(but);
         stack[33] = back;
         // close
-        ItemStack close = ItemStack.of(GUIWeather.CLOSE.material(), 1);
-        ItemMeta can = close.getItemMeta();
-        can.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
-        close.setItemMeta(can);
-        stack[35] = close;
+        stack[35] = GUIItemFactory.close();;
         return stack;
     }
 

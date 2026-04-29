@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.control;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUIControlCentre;
+import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
 import me.eccentric_nz.TARDIS.custommodels.keys.SwitchVariant;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
@@ -286,10 +287,7 @@ public class ControlInventory implements InventoryHolder {
             system.setItemMeta(upgrades);
         }
         // close
-        ItemStack close = ItemStack.of(GUIControlCentre.BUTTON_CLOSE.material(), 1);
-        ItemMeta can = close.getItemMeta();
-        can.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
-        close.setItemMeta(can);
+        ItemStack close = GUIItemFactory.close();
 
         return new ItemStack[]{
                 ran, null, ars, null, cham, null, art, null, zero,

@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.chameleon.gui;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.custommodels.GUIChameleonPresets;
+import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -93,11 +94,7 @@ public class BlockPresetInventory implements InventoryHolder {
         page.setItemMeta(two);
         stacks[GUIChameleonPresets.GO_TO_PAGE_2.slot()] = page;
         // Cancel / close
-        ItemStack close = ItemStack.of(GUIChameleonPresets.CLOSE.material(), 1);
-        ItemMeta can = close.getItemMeta();
-        can.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
-        close.setItemMeta(can);
-        stacks[GUIChameleonPresets.CLOSE.slot()] = close;
+        stacks[GUIChameleonPresets.CLOSE.slot()] = GUIItemFactory.close();;
         return stacks;
     }
 }

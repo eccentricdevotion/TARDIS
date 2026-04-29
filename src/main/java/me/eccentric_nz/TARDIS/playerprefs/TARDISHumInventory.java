@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.playerprefs;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUIInteriorSounds;
+import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
 import me.eccentric_nz.TARDIS.enumeration.Hum;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -84,11 +85,7 @@ class TARDISHumInventory implements InventoryHolder {
         play.setItemMeta(save);
         stack[GUIInteriorSounds.ACTION.slot()] = play;
         // close
-        ItemStack close = ItemStack.of(GUIInteriorSounds.CLOSE.material(), 1);
-        ItemMeta c_im = close.getItemMeta();
-        c_im.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
-        close.setItemMeta(c_im);
-        stack[GUIInteriorSounds.CLOSE.slot()] = close;
+        stack[GUIInteriorSounds.CLOSE.slot()] = GUIItemFactory.close();;
 
         return stack;
     }

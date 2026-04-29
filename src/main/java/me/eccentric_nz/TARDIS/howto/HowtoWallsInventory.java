@@ -21,6 +21,7 @@ import io.papermc.paper.registry.RegistryKey;
 import io.papermc.paper.registry.TypedKey;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUIChameleonPresets;
+import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
 import me.eccentric_nz.TARDIS.custommodels.GUIWallFloor;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import net.kyori.adventure.text.Component;
@@ -99,11 +100,7 @@ class HowtoWallsInventory implements InventoryHolder {
         back.setItemMeta(back_im);
         stack[44] = back;
         // close
-        ItemStack close = ItemStack.of(GUIChameleonPresets.CLOSE.material(), 1);
-        ItemMeta close_im = close.getItemMeta();
-        close_im.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
-        close.setItemMeta(close_im);
-        stack[GUIChameleonPresets.CLOSE.slot()] = close;
+        stack[GUIChameleonPresets.CLOSE.slot()] = GUIItemFactory.close();;
 
         return stack;
     }

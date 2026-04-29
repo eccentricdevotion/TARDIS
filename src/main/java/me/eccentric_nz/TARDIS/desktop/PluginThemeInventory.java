@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.custommodels.GUIChameleonConstructor;
 import me.eccentric_nz.TARDIS.custommodels.GUIChameleonPresets;
+import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
 import me.eccentric_nz.TARDIS.custommodels.GUIUpgrade;
 import me.eccentric_nz.TARDIS.enumeration.Desktops;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
@@ -127,11 +128,7 @@ public class PluginThemeInventory extends DesktopThemeInventory {
         custom.setItemMeta(custom_im);
         stack[51] = custom;
         // close
-        ItemStack close = ItemStack.of(GUIUpgrade.CLOSE.material(), 1);
-        ItemMeta close_im = close.getItemMeta();
-        close_im.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
-        close.setItemMeta(close_im);
-        stack[GUIUpgrade.CLOSE.slot()] = close;
+        stack[GUIUpgrade.CLOSE.slot()] = GUIItemFactory.close();;
 
         return stack;
     }

@@ -16,14 +16,15 @@
  */
 package me.eccentric_nz.TARDIS.ARS;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
 import me.eccentric_nz.TARDIS.custommodels.GUIMap;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 /**
  * During his exile on Earth, the Third Doctor altered the TARDIS' Architectural Configuration software to relocate the
@@ -56,72 +57,47 @@ public class ARSMapInventory implements InventoryHolder {
         // direction pad
         // up
         ItemStack pad_up = ItemStack.of(GUIMap.BUTTON_UP.material(), 1);
-        ItemMeta up = pad_up.getItemMeta();
-        up.customName(Component.text(plugin.getLanguage().getString("BUTTON_UP", "Up")));
-        pad_up.setItemMeta(up);
+        pad_up.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_UP", "Up")));
         // down
         ItemStack pad_down = ItemStack.of(GUIMap.BUTTON_DOWN.material(), 1);
-        ItemMeta down = pad_down.getItemMeta();
-        down.customName(Component.text(plugin.getLanguage().getString("BUTTON_DOWN", "Down")));
-        pad_down.setItemMeta(down);
+        pad_down.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_DOWN", "Down")));
         // left
         ItemStack pad_left = ItemStack.of(GUIMap.BUTTON_LEFT.material(), 1);
-        ItemMeta left = pad_left.getItemMeta();
-        left.customName(Component.text(plugin.getLanguage().getString("BUTTON_LEFT", "Left")));
-        pad_left.setItemMeta(left);
+        pad_left.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_LEFT", "Left")));
         // right
         ItemStack pad_right = ItemStack.of(GUIMap.BUTTON_RIGHT.material(), 1);
-        ItemMeta right = pad_right.getItemMeta();
-        right.customName(Component.text(plugin.getLanguage().getString("BUTTON_RIGHT", "Right")));
-        pad_right.setItemMeta(right);
+        pad_right.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_RIGHT", "Right")));
         // level selected
         ItemStack level_sel = ItemStack.of(GUIMap.BUTTON_LEVEL.material(), 1);
-        ItemMeta main = level_sel.getItemMeta();
-        main.customName(Component.text(plugin.getLanguage().getString("BUTTON_LEVEL", "Main level")));
-        level_sel.setItemMeta(main);
+        level_sel.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_LEVEL", "Main level")));
         // level top
         ItemStack level_top = ItemStack.of(GUIMap.BUTTON_LEVEL_T.material(), 1);
-        ItemMeta top = level_top.getItemMeta();
-        top.customName(Component.text(plugin.getLanguage().getString("BUTTON_LEVEL_T", "Top level")));
-        level_top.setItemMeta(top);
+        level_top.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_LEVEL_T", "Top level")));
         // level top
         ItemStack level_bot = ItemStack.of(GUIMap.BUTTON_LEVEL_B.material(), 1);
-        ItemMeta bot = level_bot.getItemMeta();
-        bot.customName(Component.text(plugin.getLanguage().getString("BUTTON_LEVEL_B", "Bottom level")));
-        level_bot.setItemMeta(bot);
+        level_bot.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_LEVEL_B", "Bottom level")));
         // stone
         ItemStack black = ItemStack.of(GUIMap.BUTTON_MAP_ON.material(), 1);
-        ItemMeta wool = black.getItemMeta();
-        wool.customName(Component.text(plugin.getLanguage().getString("BUTTON_MAP", "Load map")));
-        black.setItemMeta(wool);
+        black.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_MAP", "Load map")));
         // load map
-        ItemStack loa = ItemStack.of(GUIMap.BUTTON_MAP.material(), 1);
-        ItemMeta der = loa.getItemMeta();
-        der.customName(Component.text(plugin.getLanguage().getString("BUTTON_MAP_NO", "Load the map!")));
-        loa.setItemMeta(der);
+        ItemStack loader = ItemStack.of(GUIMap.BUTTON_MAP.material(), 1);
+        loader.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_MAP_NO", "Load the map!")));
         // close
-        ItemStack close = ItemStack.of(GUIMap.BUTTON_CLOSE.material(), 1);
-        ItemMeta gui = close.getItemMeta();
-        gui.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
-        close.setItemMeta(gui);
+        ItemStack close = GUIItemFactory.close();
         // transmat
-        ItemStack tran = ItemStack.of(GUIMap.BUTTON_TRANSMAT.material(), 1);
-        ItemMeta smat = tran.getItemMeta();
-        smat.customName(Component.text(plugin.getLanguage().getString("BUTTON_TRANSMAT", "Transmat")));
-        tran.setItemMeta(smat);
+        ItemStack transmat = ItemStack.of(GUIMap.BUTTON_TRANSMAT.material(), 1);
+        transmat.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_TRANSMAT", "Transmat")));
         // where am I?
         ItemStack where = ItemStack.of(GUIMap.BUTTON_WHERE.material(), 1);
-        ItemMeta ami = where.getItemMeta();
-        ami.customName(Component.text(plugin.getLanguage().getString("BUTTON_WHERE", "Where am I?")));
-        where.setItemMeta(ami);
+        where.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_WHERE", "Where am I?")));
 
         return new ItemStack[]{
                 null, pad_up, null, null, black, black, black, black, black,
-                pad_left, loa, pad_right, null, black, black, black, black, black,
+                pad_left, loader, pad_right, null, black, black, black, black, black,
                 null, pad_down, null, null, black, black, black, black, black,
                 level_bot, level_sel, level_top, null, black, black, black, black, black,
                 null, null, null, null, black, black, black, black, black,
-                close, tran, where, null, null, null, null, null, null
+                close, transmat, where, null, null, null, null, null, null
         };
     }
 }

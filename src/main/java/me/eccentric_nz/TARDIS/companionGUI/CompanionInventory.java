@@ -21,6 +21,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUICompanion;
+import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
@@ -114,11 +115,7 @@ public class CompanionInventory implements InventoryHolder {
         del.setItemMeta(dd);
         heads[GUICompanion.DELETE_COMPANION.slot()] = del;
         // Cancel / close
-        ItemStack close = ItemStack.of(GUICompanion.BUTTON_CLOSE.material(), 1);
-        ItemMeta can = close.getItemMeta();
-        can.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
-        close.setItemMeta(can);
-        heads[GUICompanion.BUTTON_CLOSE.slot()] = close;
+        heads[GUICompanion.BUTTON_CLOSE.slot()] = GUIItemFactory.close();;
 
         return heads;
     }
