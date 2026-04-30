@@ -36,8 +36,8 @@ public class JudoonAmmoRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.ARROW, 2);
         ItemMeta im = is.getItemMeta();
-        im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Judoon Ammunition"));
-        im.setData(DataComponentTypes.ITEM_MODEL, ArrowVariant.JUDOON_AMMO.getKey());
+        is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Judoon Ammunition"));
+        is.setData(DataComponentTypes.ITEM_MODEL, ArrowVariant.JUDOON_AMMO.getKey());
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "judoon_ammunition");
         ShapelessRecipe r = new ShapelessRecipe(key, is);

@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.flight;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
@@ -32,10 +33,8 @@ public class FlyingInit {
     public void run() {
         EntityEquipment ee = stand.getEquipment();
         ItemStack is = ee.getHelmet();
-        ItemMeta im = is.getItemMeta();
         // remove the current custom model - we'll use a rotating item display while flying
-        im.setData(DataComponentTypes.ITEM_MODEL, null);
-        is.setItemMeta(im);
+        is.unsetData(DataComponentTypes.ITEM_MODEL);
         ee.setHelmet(is);
     }
 }

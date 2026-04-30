@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.mobfarming;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUIFarming;
 import me.eccentric_nz.TARDIS.database.data.FarmPrefs;
@@ -25,10 +27,8 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.UUID;
 
 public class FarmingInventory implements InventoryHolder {
@@ -43,13 +43,9 @@ public class FarmingInventory implements InventoryHolder {
         this.plugin = plugin;
         this.uuid = uuid;
         off = ItemStack.of(GUIFarming.OFF.getMaterial(), 1);
-        ItemMeta offMeta = off.getItemMeta();
-        offMeta.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Disabled"));
-        off.setItemMeta(offMeta);
+        off.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Disabled"));
         on = ItemStack.of(GUIFarming.ON.getMaterial(), 1);
-        ItemMeta onMeta = on.getItemMeta();
-        onMeta.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Enabled"));
-        on.setItemMeta(onMeta);
+        on.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Enabled"));
         this.inventory = plugin.getServer().createInventory(this, 54, Component.text("TARDIS Farming Menu", NamedTextColor.DARK_RED));
         this.inventory.setContents(getItemStack());
     }
@@ -119,12 +115,10 @@ public class FarmingInventory implements InventoryHolder {
         for (GUIFarming f : GUIFarming.values()) {
             if (f != GUIFarming.ON && f != GUIFarming.OFF) {
                 ItemStack is = ItemStack.of(f.getMaterial(), 1);
-                ItemMeta im = is.getItemMeta();
-                im.setData(DataComponentTypes.CUSTOM_NAME, Component.text(f.getMob()));
+                is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(f.getMob()));
                 if (f != GUIFarming.CLOSE) {
-                    im.lore(List.of(Component.text(f.getRoomName())));
+                    is.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text(f.getRoomName())).build());
                 }
-                is.setItemMeta(im);
                 stack[f.getSlot()] = is;
             }
         }

@@ -55,8 +55,8 @@ public class CustomiseConsoleInventory implements InventoryHolder {
         for (Map.Entry<String,Rotor> rotor: Rotor.byName.entrySet()) {
             ItemStack is = ItemStack.of(Material.LIGHT_GRAY_DYE);
             ItemMeta im = is.getItemMeta();
-            im.setData(DataComponentTypes.ITEM_MODEL, rotor.getValue().offModel());
-            im.setData(DataComponentTypes.CUSTOM_NAME, Component.text(TARDISStringUtils.capitalise(rotor.getKey())));
+            is.setData(DataComponentTypes.ITEM_MODEL, rotor.getValue().offModel());
+            is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(TARDISStringUtils.capitalise(rotor.getKey())));
             is.setItemMeta(im);
             consoles[r] = is;
             r++;
@@ -85,7 +85,7 @@ public class CustomiseConsoleInventory implements InventoryHolder {
             ItemStack is = ItemStack.of(colour.getKey(), 1);
             ItemMeta im = is.getItemMeta();
             String dn = TARDISStringUtils.capitalise(name) + " Console";
-            im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(dn));
+            is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(dn));
             is.setItemMeta(im);
             consoles[c] = is;
             c++;

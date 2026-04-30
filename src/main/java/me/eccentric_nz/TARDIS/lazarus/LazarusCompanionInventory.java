@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.lazarus;
 
 import io.papermc.paper.datacomponent.DataComponentTypes;
-import io.papermc.paper.datacomponent.item.ResolvableProfile;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.skins.CompanionSkins;
 import me.eccentric_nz.TARDIS.skins.Skin;
@@ -29,7 +28,6 @@ import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.SkullMeta;
 
 public class LazarusCompanionInventory extends LazarusItems implements InventoryHolder, LazarusGUI {
 
@@ -54,15 +52,10 @@ public class LazarusCompanionInventory extends LazarusItems implements Inventory
         if (PlayerHeadCache.COMPANIONS.isEmpty()) {
             for (Skin companion : CompanionSkins.COMPANIONS) {
                 ItemStack is = ItemStack.of(Material.PLAYER_HEAD, 1);
-                SkullMeta im = (SkullMeta) is.getItemMeta();
-                SkinUtils.getHeadProfile(companion).thenAccept(playerProfile -> {
-                    is.setData(DataComponentTypes.PROFILE, ResolvableProfile.resolvableProfile(playerProfile));
-                    im.setPlayerProfile(playerProfile);
-                    im.setData(DataComponentTypes.CUSTOM_NAME, Component.text(companion.name()));
-                    is.setItemMeta(im);
-                    // cache the item stack
-                    PlayerHeadCache.COMPANIONS.add(is);
-                });
+                is.setData(DataComponentTypes.PROFILE, SkinUtils.getHeadProfile(companion));
+                is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(companion.name()));
+                // cache the item stack
+                PlayerHeadCache.COMPANIONS.add(is);
                 stacks[i] = is;
                 i++;
             }

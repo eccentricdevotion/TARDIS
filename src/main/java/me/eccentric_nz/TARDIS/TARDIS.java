@@ -213,7 +213,7 @@ public class TARDIS extends JavaPlugin {
         versions.put("Multiverse-Core", "5.0");
         versions.put("Multiverse-Inventories", "5.0");
         versions.put("Towny", "0.101");
-        versions.put("WorldGuard", "7.0.14");
+        versions.put("WorldGuard", "7.0.17");
     }
 
     public TARDISMessage getMessenger() {

@@ -54,7 +54,7 @@ public class ArtronCapacitorStorageRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.GRAY_SHULKER_BOX, 1);
         ItemMeta im = is.getItemMeta();
-        im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Artron Capacitor Storage"));
+        is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Artron Capacitor Storage"));
         im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, RecipeItem.ARTRON_CAPACITOR_STORAGE.getModel().getKey());
         is.setItemMeta(im);
         // exact choice

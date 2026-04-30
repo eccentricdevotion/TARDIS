@@ -232,7 +232,7 @@ public class MonsterTargetListener implements Listener {
                 ItemStack head = ee.getHelmet();
                 if (head != null) {
                     ItemMeta im = head.getItemMeta();
-                    im.setData(DataComponentTypes.ITEM_MODEL, SmilerVariant.SMILER_ANGRY_HEAD.getKey());
+                    is.setData(DataComponentTypes.ITEM_MODEL, SmilerVariant.SMILER_ANGRY_HEAD.getKey());
                     head.setItemMeta(im);
                     ee.setHelmet(head);
                 }
@@ -243,7 +243,7 @@ public class MonsterTargetListener implements Listener {
                 ItemStack head = ee.getHelmet();
                 if (head != null) {
                     ItemMeta im = head.getItemMeta();
-                    im.setData(DataComponentTypes.ITEM_MODEL, SmilerVariant.SMILER_HEAD.getKey());
+                    is.setData(DataComponentTypes.ITEM_MODEL, SmilerVariant.SMILER_HEAD.getKey());
                     head.setItemMeta(im);
                     ee.setHelmet(head);
                 }

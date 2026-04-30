@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.desktop;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUIChameleonConstructor;
 import me.eccentric_nz.TARDIS.custommodels.GUIChameleonPoliceBoxes;
@@ -27,7 +29,6 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
 
@@ -77,27 +78,23 @@ public class CustomThemeInventory extends DesktopThemeInventory {
         if (plugin.getConfig().getBoolean("desktop.previews")) {
             // info
             ItemStack info = ItemStack.of(GUIChameleonConstructor.INFO.material(), 1);
-            ItemMeta io = info.getItemMeta();
-            io.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Info"));
-            io.lore(List.of(
+            info.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Info"));
+            info.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(
                     Component.text("Shift-left click"),
                     Component.text("a console block"),
                     Component.text("to transmat to a"),
                     Component.text("desktop preview."),
                     Component.text("Type 'done' in"),
                     Component.text("chat to return.")
-            ));
-            info.setItemMeta(io);
+            )));
             stack[GUIUpgrade.INFO.slot()] = info;
         }
         // built-in consoles page
         ItemStack custom = ItemStack.of(GUIChameleonPoliceBoxes.GO_TO_PAGE_1.material(), 1);
-        ItemMeta custom_im = custom.getItemMeta();
-        custom_im.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_PAGE_1")));
-        custom.setItemMeta(custom_im);
+        custom.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_PAGE_1")));
         stack[GUIChameleonPoliceBoxes.GO_TO_PAGE_1.slot()] = custom;
         // close
-        stack[GUIChameleonPoliceBoxes.CLOSE.slot()] = GUIItemFactory.close();;
+        stack[GUIChameleonPoliceBoxes.CLOSE.slot()] = GUIItemFactory.close();
 
         return stack;
     }

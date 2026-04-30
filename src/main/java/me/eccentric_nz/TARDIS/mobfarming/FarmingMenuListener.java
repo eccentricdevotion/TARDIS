@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.mobfarming;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.ARS.ARSSound;
 import me.eccentric_nz.TARDIS.ARS.TARDISARS;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -79,20 +80,19 @@ public class FarmingMenuListener extends TARDISMenuListener {
 
     private void toggleOption(Player player, InventoryView view, int slot) {
         ItemStack option = view.getItem(slot);
-        ItemMeta im = option.getItemMeta();
         Material material = option.getType();
         Material m = Material.LIME_WOOL;
         int onOff = -1;
         switch (material) {
             case LIME_WOOL -> {
                 // disable
-                im.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Disabled"));
+                option.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Disabled"));
                 m = Material.RED_WOOL;
                 onOff = 0;
             }
             case RED_WOOL -> {
                 // enable
-                im.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Enabled"));
+                option.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Enabled"));
                 onOff = 1;
                 // get item in slot above
                 ItemStack above = view.getItem(slot - 9);
@@ -105,9 +105,8 @@ public class FarmingMenuListener extends TARDISMenuListener {
                 }
             }
         }
-        ItemStack sub = ItemStack.of(m);
-        sub.setItemMeta(im);
-        view.setItem(slot, sub);
+        option.setType(m);
+        view.setItem(slot, option);
         // update database
         plugin.getQueryFactory().updateFarmingPref(player.getUniqueId(), rooms.get(slot), onOff);
     }

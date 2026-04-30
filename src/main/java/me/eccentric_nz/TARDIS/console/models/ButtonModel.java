@@ -38,7 +38,7 @@ public class ButtonModel {
             model = interaction.getCustomModel();
         } else if (model.getKey().endsWith("_0")) {
             NamespacedKey pressed = new NamespacedKey(plugin, model.getKey().replace("_0", "_1"));
-            im.setData(DataComponentTypes.ITEM_MODEL, pressed);
+            is.setData(DataComponentTypes.ITEM_MODEL, pressed);
             is.setItemMeta(im);
             display.setItemStack(is);
         } else {
@@ -47,7 +47,7 @@ public class ButtonModel {
         NamespacedKey released = model;
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             display.getWorld().playSound(display, Sound.BLOCK_BAMBOO_WOOD_BUTTON_CLICK_OFF, 1, 1);
-            im.setData(DataComponentTypes.ITEM_MODEL, released);
+            is.setData(DataComponentTypes.ITEM_MODEL, released);
             is.setItemMeta(im);
             display.setItemStack(is);
         }, 10);

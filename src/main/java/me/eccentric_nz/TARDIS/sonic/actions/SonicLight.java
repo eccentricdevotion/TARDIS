@@ -104,7 +104,7 @@ public class SonicLight {
                 // set light level to zero
                 LampToggler.setLightlevel(light, 0);
             }
-            im.setData(DataComponentTypes.ITEM_MODEL, toggled.getCustomModel());
+            is.setData(DataComponentTypes.ITEM_MODEL, toggled.getCustomModel());
             change.setItemMeta(im);
             display.setItemStack(change);
         }

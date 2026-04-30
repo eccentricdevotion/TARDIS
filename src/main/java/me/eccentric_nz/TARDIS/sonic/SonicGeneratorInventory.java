@@ -65,7 +65,7 @@ class SonicGeneratorInventory implements InventoryHolder {
             if (sonic.getMaterial() == Material.BLAZE_ROD) {
                 ItemStack is = ItemStack.of(Material.BLAZE_ROD, 1);
                 ItemMeta im = is.getItemMeta();
-                im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Sonic Screwdriver"));
+                is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Sonic Screwdriver"));
                 im.lore(List.of(Component.text(sonic.getName())));
                 CustomModelDataComponent component = im.getCustomModelDataComponent();
                 component.setFloats(sonic.getFloats());
@@ -76,7 +76,7 @@ class SonicGeneratorInventory implements InventoryHolder {
             if (sonic.getMaterial() == Material.BOWL && sonic.getSlot() != 45) {
                 ItemStack is = ItemStack.of(Material.BOWL, 1);
                 ItemMeta im = is.getItemMeta();
-                im.setData(DataComponentTypes.CUSTOM_NAME, Component.text(sonic.getName()));
+                is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(sonic.getName()));
                 if (!sonic.getLore().isEmpty()) {
                     ItemLore.Builder lore = ItemLore.lore();
                     for (String s : sonic.getLore().split("~")) {

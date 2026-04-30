@@ -54,7 +54,7 @@ public class PerceptionFilterRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.OMINOUS_TRIAL_KEY, 1);
         ItemMeta im = is.getItemMeta();
-        im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Perception Filter"));
+        is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Perception Filter"));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "perception_filter");
         ShapedRecipe r = new ShapedRecipe(key, is);

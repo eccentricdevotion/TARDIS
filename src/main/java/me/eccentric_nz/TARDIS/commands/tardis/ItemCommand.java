@@ -67,8 +67,8 @@ public class ItemCommand {
                 // look up display name
                 RecipeItem recipeItem = RecipeItem.getByName(stripped);
                 if (!recipeItem.equals(RecipeItem.NOT_FOUND)) {
-                    im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(stripped));
-                    im.setData(DataComponentTypes.ITEM_MODEL, null);
+                    is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(stripped));
+                    is.setData(DataComponentTypes.ITEM_MODEL, null);
                     inHand.setItemMeta(im);
                     player.updateInventory();
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "ITEM_UPDATED");
@@ -89,8 +89,8 @@ public class ItemCommand {
                             // look up display name
                             RecipeItem recipeItem = RecipeItem.getByName(stripped);
                             if (!recipeItem.equals(RecipeItem.NOT_FOUND)) {
-                                im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(stripped));
-                                im.setData(DataComponentTypes.ITEM_MODEL, null);
+                                is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(stripped));
+                                is.setData(DataComponentTypes.ITEM_MODEL, null);
                                 is.setItemMeta(im);
                                 i++;
                             }
@@ -120,8 +120,8 @@ public class ItemCommand {
                             // look up display name
                             RecipeItem recipeItem = RecipeItem.getByName(stripped);
                             if (recipeItem.equals(RecipeItem.ARTRON_STORAGE_CELL)) {
-                                im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(stripped));
-                                im.setData(DataComponentTypes.ITEM_MODEL, null);
+                                is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(stripped));
+                                is.setData(DataComponentTypes.ITEM_MODEL, null);
                                 if (im.hasLore()) {
                                     // get / set lore
                                     List<Component> lore = im.lore();

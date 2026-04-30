@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.info;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUIChameleonPoliceBoxes;
 import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
@@ -26,7 +27,6 @@ import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 public class TARDISIndexFileSection implements InventoryHolder {
 
@@ -96,20 +96,16 @@ public class TARDISIndexFileSection implements InventoryHolder {
         }
         // back
         ItemStack back = ItemStack.of(GUIChameleonPoliceBoxes.BACK.material(), 1);
-        ItemMeta but = back.getItemMeta();
-        but.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Back"));
-        back.setItemMeta(but);
+        back.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Back"));
         stack[45] = back;
         // close
-        stack[53] = GUIItemFactory.close();;
+        stack[53] = GUIItemFactory.close();
         return stack;
     }
 
     private ItemStack makeButton(TARDISInfoMenu tim) {
         ItemStack is = ItemStack.of(Material.WRITTEN_BOOK, 1);
-        ItemMeta im = is.getItemMeta();
-        im.setData(DataComponentTypes.CUSTOM_NAME, Component.text(TARDISStringUtils.capitalise(tim.toString())));
-        is.setItemMeta(im);
+        is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(TARDISStringUtils.capitalise(tim.toString())));
         return is;
     }
 }

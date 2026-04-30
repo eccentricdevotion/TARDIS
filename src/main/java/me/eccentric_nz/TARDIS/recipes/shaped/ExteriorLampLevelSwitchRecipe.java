@@ -52,8 +52,8 @@ public class ExteriorLampLevelSwitchRecipe {
         // add exterior recipe
         ItemStack is = ItemStack.of(Material.LEVER, 1);
         ItemMeta im = is.getItemMeta();
-        im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Exterior Lamp Level Switch"));
-        im.setData(DataComponentTypes.ITEM_MODEL, RecipeItem.EXTERIOR_LAMP_LEVEL_SWITCH.getModel());
+        is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Exterior Lamp Level Switch"));
+        is.setData(DataComponentTypes.ITEM_MODEL, RecipeItem.EXTERIOR_LAMP_LEVEL_SWITCH.getModel());
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "exterior_lamp_level_switch");
         ShapedRecipe r = new ShapedRecipe(key, is);

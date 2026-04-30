@@ -48,7 +48,7 @@ public class AcidBatteryRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.NETHER_BRICK, 1);
         ItemMeta im = is.getItemMeta();
-        im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Acid Battery"));
+        is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Acid Battery"));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "acid_battery");
         ShapedRecipe r = new ShapedRecipe(key, is);

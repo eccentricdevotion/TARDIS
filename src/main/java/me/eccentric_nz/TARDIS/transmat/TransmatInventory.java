@@ -72,7 +72,7 @@ public class TransmatInventory implements InventoryHolder {
                 }
                 ItemStack is = ItemStack.of(Material.MAP, 1);
                 ItemMeta im = is.getItemMeta();
-                im.setData(DataComponentTypes.CUSTOM_NAME, Component.text(t.name()));
+                is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(t.name()));
                 ItemLore.Builder lore = ItemLore.lore();
                 lore.add(Component.text(String.format("X: %.2f", t.x())));
                 lore.add(Component.text(String.format("Y: %.2f", t.y())));

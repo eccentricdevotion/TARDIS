@@ -78,7 +78,7 @@ public class TWAOod extends TWAFollower {
             ItemStack is = getItemBySlot(EquipmentSlot.HEAD);
             org.bukkit.inventory.ItemStack bukkit = CraftItemStack.asBukkitCopy(is);
             ItemMeta im = bukkit.getItemMeta();
-            im.setData(DataComponentTypes.ITEM_MODEL, (redeye) ?OodVariant.OOD_REDEYE_HEAD.getKey() : OodVariant.OOD_HEAD.getKey());
+            is.setData(DataComponentTypes.ITEM_MODEL, (redeye) ?OodVariant.OOD_REDEYE_HEAD.getKey() : OodVariant.OOD_HEAD.getKey());
             bukkit.setItemMeta(im);
             setItemSlot(EquipmentSlot.HEAD, CraftItemStack.asNMSCopy(bukkit));
         }

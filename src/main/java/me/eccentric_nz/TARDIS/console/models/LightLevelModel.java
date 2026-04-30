@@ -30,14 +30,14 @@ public class LightLevelModel {
         ItemStack is = display.getItemStack();
         ItemMeta im = is.getItemMeta();
         switch (state) {
-            case 7 -> im.setData(DataComponentTypes.ITEM_MODEL, interior ? ModelledControl.MODELLED_LIGHT_7.getKey() : ModelledControl.MODELLED_LAMP_7.getKey());
-            case 6 -> im.setData(DataComponentTypes.ITEM_MODEL, interior ? ModelledControl.MODELLED_LIGHT_6.getKey() : ModelledControl.MODELLED_LAMP_6.getKey());
-            case 5 -> im.setData(DataComponentTypes.ITEM_MODEL, interior ? ModelledControl.MODELLED_LIGHT_5.getKey() : ModelledControl.MODELLED_LAMP_5.getKey());
-            case 4 -> im.setData(DataComponentTypes.ITEM_MODEL, interior ? ModelledControl.MODELLED_LIGHT_4.getKey() : ModelledControl.MODELLED_LAMP_4.getKey());
-            case 3 -> im.setData(DataComponentTypes.ITEM_MODEL, interior ? ModelledControl.MODELLED_LIGHT_3.getKey() : ModelledControl.MODELLED_LAMP_3.getKey());
-            case 2 -> im.setData(DataComponentTypes.ITEM_MODEL, interior ? ModelledControl.MODELLED_LIGHT_2.getKey() : ModelledControl.MODELLED_LAMP_2.getKey());
-            case 1 -> im.setData(DataComponentTypes.ITEM_MODEL, interior ? ModelledControl.MODELLED_LIGHT_1.getKey() : ModelledControl.MODELLED_LAMP_1.getKey());
-            default -> im.setData(DataComponentTypes.ITEM_MODEL, interior ? ModelledControl.MODELLED_LIGHT_0.getKey() : ModelledControl.MODELLED_LAMP_0.getKey());
+            case 7 -> is.setData(DataComponentTypes.ITEM_MODEL, interior ? ModelledControl.MODELLED_LIGHT_7.getKey() : ModelledControl.MODELLED_LAMP_7.getKey());
+            case 6 -> is.setData(DataComponentTypes.ITEM_MODEL, interior ? ModelledControl.MODELLED_LIGHT_6.getKey() : ModelledControl.MODELLED_LAMP_6.getKey());
+            case 5 -> is.setData(DataComponentTypes.ITEM_MODEL, interior ? ModelledControl.MODELLED_LIGHT_5.getKey() : ModelledControl.MODELLED_LAMP_5.getKey());
+            case 4 -> is.setData(DataComponentTypes.ITEM_MODEL, interior ? ModelledControl.MODELLED_LIGHT_4.getKey() : ModelledControl.MODELLED_LAMP_4.getKey());
+            case 3 -> is.setData(DataComponentTypes.ITEM_MODEL, interior ? ModelledControl.MODELLED_LIGHT_3.getKey() : ModelledControl.MODELLED_LAMP_3.getKey());
+            case 2 -> is.setData(DataComponentTypes.ITEM_MODEL, interior ? ModelledControl.MODELLED_LIGHT_2.getKey() : ModelledControl.MODELLED_LAMP_2.getKey());
+            case 1 -> is.setData(DataComponentTypes.ITEM_MODEL, interior ? ModelledControl.MODELLED_LIGHT_1.getKey() : ModelledControl.MODELLED_LAMP_1.getKey());
+            default -> is.setData(DataComponentTypes.ITEM_MODEL, interior ? ModelledControl.MODELLED_LIGHT_0.getKey() : ModelledControl.MODELLED_LAMP_0.getKey());
         }
         is.setItemMeta(im);
         display.setItemStack(is);

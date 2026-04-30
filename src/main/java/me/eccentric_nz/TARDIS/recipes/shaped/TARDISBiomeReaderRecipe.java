@@ -57,7 +57,7 @@ public class TARDISBiomeReaderRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.BRICK, 1);
         ItemMeta im = is.getItemMeta();
-        im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("TARDIS Biome Reader"));
+        is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("TARDIS Biome Reader"));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "tardis_biome_reader");
         ShapedRecipe r = new ShapedRecipe(key, is);

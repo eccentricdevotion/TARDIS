@@ -76,7 +76,7 @@ public class ToclafaneListener implements Listener {
                             ItemStack head = ee.getHelmet();
                             ItemMeta im = head.getItemMeta();
                             player.playSound(stand.getLocation(), "toclafane", 1.0f, 1.0f);
-                            im.setData(DataComponentTypes.ITEM_MODEL, ToclafaneVariant.TOCLAFANE_ATTACK.getKey());
+                            is.setData(DataComponentTypes.ITEM_MODEL, ToclafaneVariant.TOCLAFANE_ATTACK.getKey());
                             head.setItemMeta(im);
                             ee.setHelmet(head);
                             bee.setHasStung(false);

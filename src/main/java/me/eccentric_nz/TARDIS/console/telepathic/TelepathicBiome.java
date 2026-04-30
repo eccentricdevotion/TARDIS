@@ -73,7 +73,7 @@ public class TelepathicBiome implements InventoryHolder {
                 if (material != null) {
                     ItemStack is = ItemStack.of(material, 1);
                     ItemMeta im = is.getItemMeta();
-                    im.setData(DataComponentTypes.CUSTOM_NAME, Component.text(biome.getKey().toString()));
+                    is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(biome.getKey().toString()));
                     is.setItemMeta(im);
                     stack[i] = is;
                     if (i % 9 == 7) {

@@ -265,7 +265,7 @@ public class TARDISTerminalListener implements Listener {
             default -> ItemStack.of(Material.PURPLE_WOOL, 1);
         };
         ItemMeta im = is.getItemMeta();
-        im.setData(DataComponentTypes.CUSTOM_NAME, Component.text(row));
+        is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(row));
         List<Component> lore = getLoreValue(max, new_slot, signed, uuid);
         im.lore(lore);
         is.setItemMeta(im);

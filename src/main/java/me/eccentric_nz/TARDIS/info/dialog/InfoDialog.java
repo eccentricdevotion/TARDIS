@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.info.dialog;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.dialog.Dialog;
 import io.papermc.paper.registry.data.dialog.ActionButton;
 import io.papermc.paper.registry.data.dialog.DialogBase;
@@ -29,7 +30,6 @@ import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,9 +42,7 @@ public class InfoDialog {
             if (ItemLookup.ITEMS.containsKey(tardisInfoMenu)) {
                 InfoIcon infoIcon = ItemLookup.ITEMS.get(tardisInfoMenu);
                 ItemStack icon = ItemStack.of(infoIcon.item());
-                ItemMeta im = icon.getItemMeta();
-                im.setData(DataComponentTypes.ITEM_MODEL, infoIcon.model());
-                icon.setItemMeta(im);
+                icon.setData(DataComponentTypes.ITEM_MODEL, infoIcon.model());
                 // set custom name
                 body.add(DialogBody.item(icon, null, false, false, 16, 16));
             }

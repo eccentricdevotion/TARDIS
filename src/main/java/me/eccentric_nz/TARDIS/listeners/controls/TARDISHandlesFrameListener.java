@@ -81,12 +81,12 @@ public class TARDISHandlesFrameListener implements Listener {
                     talkingHandles.add(handlesId); // add this handles to the list of currently talking handleses (by tardis id)
                     TARDISSounds.playTARDISSound(player, "handles", 5L);
                     ItemMeta im = is.getItemMeta();
-                    im.setData(DataComponentTypes.ITEM_MODEL, Whoniverse.HANDLES_ON.getKey());
+                    is.setData(DataComponentTypes.ITEM_MODEL, Whoniverse.HANDLES_ON.getKey());
                     is.setItemMeta(im);
                     frame.setItem(is, false);
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                         talkingHandles.remove(handlesId); // remove this handles from the list of talking handles
-                        im.setData(DataComponentTypes.ITEM_MODEL, Whoniverse.HANDLES_OFF.getKey());
+                        is.setData(DataComponentTypes.ITEM_MODEL, Whoniverse.HANDLES_OFF.getKey());
                         is.setItemMeta(im);
                         frame.setItem(is, false);
                     }, 20L);
@@ -181,12 +181,12 @@ public class TARDISHandlesFrameListener implements Listener {
                         event.setCancelled(true);
                         TARDISSounds.playTARDISSound(player, "handles", 5L);
                         ItemMeta im = is.getItemMeta();
-                        im.setData(DataComponentTypes.ITEM_MODEL, Whoniverse.HANDLES_ON.getKey());
+                        is.setData(DataComponentTypes.ITEM_MODEL, Whoniverse.HANDLES_ON.getKey());
                         is.setItemMeta(im);
                         frame.setItem(is, false);
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                             talkingHandles.remove(handlesId); // remove this handles from the list of talking handles
-                            im.setData(DataComponentTypes.ITEM_MODEL, Whoniverse.HANDLES_OFF.getKey());
+                            is.setData(DataComponentTypes.ITEM_MODEL, Whoniverse.HANDLES_OFF.getKey());
                             is.setItemMeta(im);
                             frame.setItem(is, false);
                         }, 40L);

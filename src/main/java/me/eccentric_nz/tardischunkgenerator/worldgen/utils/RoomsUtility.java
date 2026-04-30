@@ -74,7 +74,7 @@ public class RoomsUtility {
         ItemStack is = ItemStack.of(material);
         if (model != null) {
             ItemMeta im = is.getItemMeta();
-            im.setData(DataComponentTypes.ITEM_MODEL, model);
+            is.setData(DataComponentTypes.ITEM_MODEL, model);
             is.setItemMeta(im);
         }
         display.setItemStack(is);
@@ -106,10 +106,10 @@ public class RoomsUtility {
                 if (json.has("cmd")) {
                     cmd = json.get("cmd").getAsString();
                     NamespacedKey key = new NamespacedKey(TARDIS.plugin, cmd);
-                    im.setData(DataComponentTypes.ITEM_MODEL, key);
+                    is.setData(DataComponentTypes.ITEM_MODEL, key);
                 }
                 if (json.has("name")) {
-                    im.setData(DataComponentTypes.CUSTOM_NAME, Component.text(json.get("name").getAsString()));
+                    is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(json.get("name").getAsString()));
                 }
                 if (json.has("lore")) {
                     ItemLore.Builder lore = ItemLore.lore();

@@ -171,12 +171,12 @@ public class SonicConfiguratorMenuListener extends TARDISMenuListener {
         switch (cmd) {
             case LIME_WOOL -> {
                 // disable
-                im.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Disabled"));
+                is.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Disabled"));
                 m = Material.RED_WOOL;
             }
             case RED_WOOL -> {
                 // enable
-                im.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Enabled"));
+                is.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Enabled"));
             }
             default -> m = Material.RED_WOOL; // not upgraded, do nothing
         }

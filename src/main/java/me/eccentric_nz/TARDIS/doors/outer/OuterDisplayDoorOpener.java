@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.doors.outer;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.chameleon.utils.PandoricaOpens;
@@ -35,7 +36,6 @@ import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -57,9 +57,8 @@ public class OuterDisplayDoorOpener {
         if (dye == null) {
             return;
         }
-        if ((TARDISConstants.DYES.contains(dye.getType()) || plugin.getUtils().isCustomModel(dye)) && dye.hasItemMeta()) {
-            ItemMeta dim = dye.getItemMeta();
-            if (!dim.hasItemModel()) {
+        if ((TARDISConstants.DYES.contains(dye.getType()) || plugin.getUtils().isCustomModel(dye))) {
+            if (!dye.hasData(DataComponentTypes.ITEM_MODEL)) {
                 return;
             }
             // exterior portal
@@ -73,35 +72,34 @@ public class OuterDisplayDoorOpener {
                 new SidratOpens(plugin).animate(stand, true);
             } else {
                 switch (dye.getType()) {
-                    case CYAN_STAINED_GLASS_PANE -> dim.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.TENNANT_OPEN.getKey());
-                    case GRAY_STAINED_GLASS_PANE -> dim.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.WEEPING_ANGEL_OPEN.getKey());
-                    case RED_STAINED_GLASS_PANE -> dim.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.BATTLE_OPEN.getKey());
-                    case WHITE_DYE -> dim.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.WHITE_OPEN.getKey());
-                    case ORANGE_DYE -> dim.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.ORANGE_OPEN.getKey());
-                    case MAGENTA_DYE -> dim.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.MAGENTA_OPEN.getKey());
-                    case LIGHT_BLUE_DYE -> dim.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.LIGHT_BLUE_OPEN.getKey());
-                    case YELLOW_DYE -> dim.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.YELLOW_OPEN.getKey());
-                    case LIME_DYE -> dim.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.LIME_OPEN.getKey());
-                    case PINK_DYE -> dim.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.PINK_OPEN.getKey());
-                    case GRAY_DYE -> dim.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.GRAY_OPEN.getKey());
-                    case LIGHT_GRAY_DYE -> dim.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.LIGHT_GRAY_OPEN.getKey());
-                    case CYAN_DYE -> dim.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.CYAN_OPEN.getKey());
-                    case PURPLE_DYE -> dim.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.PURPLE_OPEN.getKey());
-                    case BLUE_DYE -> dim.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.BLUE_OPEN.getKey());
-                    case BROWN_DYE -> dim.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.BROWN_OPEN.getKey());
-                    case GREEN_DYE -> dim.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.GREEN_OPEN.getKey());
-                    case RED_DYE -> dim.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.RED_OPEN.getKey());
-                    case BLACK_DYE -> dim.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.BLACK_OPEN.getKey());
-                    case LEATHER_HORSE_ARMOR -> dim.setData(DataComponentTypes.ITEM_MODEL, ColouredVariant.TINTED_OPEN.getKey());
+                    case CYAN_STAINED_GLASS_PANE -> dye.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.TENNANT_OPEN.getKey());
+                    case GRAY_STAINED_GLASS_PANE -> dye.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.WEEPING_ANGEL_OPEN.getKey());
+                    case RED_STAINED_GLASS_PANE -> dye.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.BATTLE_OPEN.getKey());
+                    case WHITE_DYE -> dye.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.WHITE_OPEN.getKey());
+                    case ORANGE_DYE -> dye.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.ORANGE_OPEN.getKey());
+                    case MAGENTA_DYE -> dye.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.MAGENTA_OPEN.getKey());
+                    case LIGHT_BLUE_DYE -> dye.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.LIGHT_BLUE_OPEN.getKey());
+                    case YELLOW_DYE -> dye.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.YELLOW_OPEN.getKey());
+                    case LIME_DYE -> dye.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.LIME_OPEN.getKey());
+                    case PINK_DYE -> dye.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.PINK_OPEN.getKey());
+                    case GRAY_DYE -> dye.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.GRAY_OPEN.getKey());
+                    case LIGHT_GRAY_DYE -> dye.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.LIGHT_GRAY_OPEN.getKey());
+                    case CYAN_DYE -> dye.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.CYAN_OPEN.getKey());
+                    case PURPLE_DYE -> dye.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.PURPLE_OPEN.getKey());
+                    case BLUE_DYE -> dye.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.BLUE_OPEN.getKey());
+                    case BROWN_DYE -> dye.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.BROWN_OPEN.getKey());
+                    case GREEN_DYE -> dye.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.GREEN_OPEN.getKey());
+                    case RED_DYE -> dye.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.RED_OPEN.getKey());
+                    case BLACK_DYE -> dye.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.BLACK_OPEN.getKey());
+                    case LEATHER_HORSE_ARMOR -> dye.setData(DataComponentTypes.ITEM_MODEL, ColouredVariant.TINTED_OPEN.getKey());
                     default -> {
                         // get the custom model config
                         NamespacedKey c = plugin.getUtils().getCustomModel(dye.getType(), "_open");
                         if (c != null) {
-                            dim.setData(DataComponentTypes.ITEM_MODEL, c);
+                            dye.setData(DataComponentTypes.ITEM_MODEL, c);
                         }
                     }
                 }
-                dye.setItemMeta(dim);
                 ee.setHelmet(dye, true);
                 TARDISSounds.playDoorSound(true, portal);
             }

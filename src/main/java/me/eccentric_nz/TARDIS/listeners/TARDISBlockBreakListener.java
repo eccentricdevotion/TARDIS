@@ -136,7 +136,7 @@ public class TARDISBlockBreakListener implements Listener {
                             event.getBlock().setBlockData(TARDISConstants.AIR);
                             ItemStack rm = ItemStack.of(Material.BEACON, 1);
                             ItemMeta im = rm.getItemMeta();
-                            im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Rift Manipulator"));
+                            is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Rift Manipulator"));
                             rm.setItemMeta(im);
                             w.dropItem(loc, rm);
                         } else {

@@ -77,7 +77,7 @@ class TARDISConfigPageTwoInventory implements InventoryHolder {
             ) {
                 ItemStack is = ItemStack.of(Material.REPEATER, 1);
                 ItemMeta im = is.getItemMeta();
-                im.setData(DataComponentTypes.CUSTOM_NAME, Component.text(c));
+                is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(c));
                 GUIConfiguration gui = GUIConfiguration.valueOf(c.split("\\.")[0].toUpperCase(Locale.ROOT));
                 CustomModelDataComponent component = im.getCustomModelDataComponent();
                 component.setFloats(value.equals("false") ? gui.getOffFloats() : gui.getOnFloats());

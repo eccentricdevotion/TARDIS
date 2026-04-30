@@ -53,8 +53,8 @@ public class MagentaBowTieRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.LEATHER_HELMET, 1);
         ItemMeta im = is.getItemMeta();
-        im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Magenta Bow Tie"));
-        im.lore(List.of(Component.text("Bow ties are cool!")));
+        is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Magenta Bow Tie"));
+        is.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text("Bow ties are cool!")).build());
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "magenta_bow_tie");
         ShapedRecipe r = new ShapedRecipe(key, is);

@@ -74,7 +74,7 @@ public class Seed {
                 NamespacedKey finalModel = model;
         is.editPersistentDataContainer(pdc -> pdc.set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING, finalModel.getKey()));
                 // set display name
-                im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toGold("TARDIS Seed Block"));
+                is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toGold("TARDIS Seed Block"));
                 im.lore(List.of(
                         Component.text(type),
                         Component.text("Walls: " + wall),

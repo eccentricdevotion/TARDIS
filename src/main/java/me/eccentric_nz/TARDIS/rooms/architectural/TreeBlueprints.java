@@ -46,7 +46,7 @@ public class TreeBlueprints {
                 PersistentDataContainer pdc = im.getPersistentDataContainer();
                 pdc.set(TARDIS.plugin.getTimeLordUuidKey(), TARDIS.plugin.getPersistentDataTypeUUID(), UUID.randomUUID());
                 pdc.set(TARDIS.plugin.getBlueprintKey(), PersistentDataType.STRING, perm);
-                im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("TARDIS Blueprint Disk"));
+                is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("TARDIS Blueprint Disk"));
                 List<Component> lore = List.of(
                         Component.text(TARDISStringUtils.capitalise(room.toString()))
                 );

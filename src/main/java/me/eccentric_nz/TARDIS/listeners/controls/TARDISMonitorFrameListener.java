@@ -90,10 +90,10 @@ public class TARDISMonitorFrameListener implements Listener {
                         // switch the switches
                         NamespacedKey cmd = im.getItemModel();
                         switch (cmd.getKey().split("_")[2]) {
-                            case "left" -> im.setData(DataComponentTypes.ITEM_MODEL, ModelledControl.MONITOR_FRAME_MIDDLE.getKey());
-                            case "middle" -> im.setData(DataComponentTypes.ITEM_MODEL, ModelledControl.MONITOR_FRAME_RIGHT.getKey());
+                            case "left" -> is.setData(DataComponentTypes.ITEM_MODEL, ModelledControl.MONITOR_FRAME_MIDDLE.getKey());
+                            case "middle" -> is.setData(DataComponentTypes.ITEM_MODEL, ModelledControl.MONITOR_FRAME_RIGHT.getKey());
                             // right
-                            default -> im.setData(DataComponentTypes.ITEM_MODEL, ModelledControl.MONITOR_FRAME_LEFT.getKey());
+                            default -> is.setData(DataComponentTypes.ITEM_MODEL, ModelledControl.MONITOR_FRAME_LEFT.getKey());
                         }
                         is.setItemMeta(im);
                         frame.setItem(is);

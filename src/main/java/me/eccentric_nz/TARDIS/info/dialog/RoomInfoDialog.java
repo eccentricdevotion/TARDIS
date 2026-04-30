@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.info.dialog;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.dialog.Dialog;
 import io.papermc.paper.registry.data.dialog.ActionButton;
 import io.papermc.paper.registry.data.dialog.DialogBase;
@@ -46,9 +47,7 @@ public class RoomInfoDialog {
             InfoIcon infoIcon = ItemLookup.ITEMS.get(tardisInfoMenu);
             ItemStack icon = ItemStack.of(infoIcon.item());
             // set custom name
-            ItemMeta im = icon.getItemMeta();
-            im.setData(DataComponentTypes.CUSTOM_NAME, Component.text(infoIcon.name()));
-            icon.setItemMeta(im);
+            icon.setData(DataComponentTypes.CUSTOM_NAME, Component.text(infoIcon.name()));
             body.add(DialogBody.item(icon, null, false, false, 16, 16));
         }
         Component desc = Component.text(description.getDesc());

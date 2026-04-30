@@ -74,7 +74,7 @@ public class TARDISAreasInventory implements InventoryHolder {
                 if (TARDISPermission.hasPermission(p, "tardis.area." + name) || TARDISPermission.hasPermission(p, "tardis.area.*")) {
                     ItemStack is = ItemStack.of(TARDISConstants.GUI_IDS.get(i), 1);
                     ItemMeta im = is.getItemMeta();
-                    im.setData(DataComponentTypes.CUSTOM_NAME, Component.text(name));
+                    is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(name));
                     im.lore(List.of(Component.text(a.world())));
                     is.setItemMeta(im);
                     areas.add(is);

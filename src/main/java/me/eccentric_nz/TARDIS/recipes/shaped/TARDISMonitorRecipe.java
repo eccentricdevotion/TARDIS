@@ -50,8 +50,8 @@ public class TARDISMonitorRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.MAP, 1);
         ItemMeta im = is.getItemMeta();
-        im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("TARDIS Monitor"));
-        im.setData(DataComponentTypes.ITEM_MODEL, RecipeItem.TARDIS_MONITOR.getModel());
+        is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("TARDIS Monitor"));
+        is.setData(DataComponentTypes.ITEM_MODEL, RecipeItem.TARDIS_MONITOR.getModel());
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "tardis_monitor");
         ShapedRecipe r = new ShapedRecipe(key, is);

@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
@@ -24,10 +26,7 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
-
-import java.util.List;
 
 /*
 easy_shape:CBC,LWL,CBC
@@ -54,12 +53,10 @@ public class ConsoleRusticRecipe {
 
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.WAXED_OXIDIZED_COPPER, 1);
-        ItemMeta im = is.getItemMeta();
         String dn = "Rustic Console";
-        im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(dn));
-        im.lore(List.of(Component.text("Integration with interaction")));
-        im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, "console_rustic");
-        is.setItemMeta(im);
+        is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(dn));
+        is.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text("Integration with interaction")).build());
+        is.editPersistentDataContainer(pdc -> pdc.set(plugin.getCustomBlockKey(), PersistentDataType.STRING, "console_rustic"));
         NamespacedKey key = new NamespacedKey(plugin, "rustic_console");
         ShapedRecipe r = new ShapedRecipe(key, is);
         if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {

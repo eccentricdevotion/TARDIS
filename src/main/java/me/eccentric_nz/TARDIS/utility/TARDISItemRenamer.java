@@ -56,7 +56,7 @@ public class TARDISItemRenamer {
         if (im == null) {
             TARDIS.plugin.debug("ItemMeta was null for ItemStack: " + itemStack);
         } else {
-            im.setData(DataComponentTypes.CUSTOM_NAME, Component.text(name));
+            is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(name));
             if (setlore) {
                 ItemLore.Builder lore = ItemLore.lore();
                 lore.add(Component.text("Enter and exit your TARDIS"));

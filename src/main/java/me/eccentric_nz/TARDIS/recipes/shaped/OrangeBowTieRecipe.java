@@ -26,8 +26,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.List;
-
 /*
 easy_shape:---,SWS,---
 easy_ingredients.S:STRING
@@ -53,8 +51,8 @@ public class OrangeBowTieRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.LEATHER_HELMET, 1);
         ItemMeta im = is.getItemMeta();
-        im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Orange Bow Tie"));
-        im.lore(List.of(Component.text("Bow ties are cool!")));
+        is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Orange Bow Tie"));
+        is.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text("Bow ties are cool!")).build());
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "orange_bow_tie");
         ShapedRecipe r = new ShapedRecipe(key, is);

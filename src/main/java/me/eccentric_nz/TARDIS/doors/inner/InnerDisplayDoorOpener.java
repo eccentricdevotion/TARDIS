@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.doors.inner;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
@@ -34,7 +35,6 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -55,18 +55,16 @@ public class InnerDisplayDoorOpener {
             if (tdi != null) {
                 // animate door opening
                 ItemStack itemStack = display.getItemStack();
-                ItemMeta im = itemStack.getItemMeta();
                 Material type = itemStack.getType();
                 if (outside) {
                     switch (type) {
-                        case IRON_DOOR -> im.setData(DataComponentTypes.ITEM_MODEL, TardisDoorVariant.TARDIS_DOOR_OPEN.getKey());
-                        case BIRCH_DOOR -> im.setData(DataComponentTypes.ITEM_MODEL, BoneDoorVariant.BONE_DOOR_OPEN.getKey());
-                        case CHERRY_DOOR -> im.setData(DataComponentTypes.ITEM_MODEL, ClassicDoorVariant.CLASSIC_DOOR_OPEN.getKey());
-                        case PALE_OAK_DOOR -> im.setData(DataComponentTypes.ITEM_MODEL, SidratDoorVariant.SIDRAT_DOOR_OPEN.getKey());
-                        case CRIMSON_DOOR -> im.setData(DataComponentTypes.ITEM_MODEL, DinerDoorVariant.DINER_DOOR_OPEN.getKey());
-                        default -> im.setData(DataComponentTypes.ITEM_MODEL, Door.getOpenModel(itemStack.getType()));
+                        case IRON_DOOR -> itemStack.setData(DataComponentTypes.ITEM_MODEL, TardisDoorVariant.TARDIS_DOOR_OPEN.getKey());
+                        case BIRCH_DOOR -> itemStack.setData(DataComponentTypes.ITEM_MODEL, BoneDoorVariant.BONE_DOOR_OPEN.getKey());
+                        case CHERRY_DOOR -> itemStack.setData(DataComponentTypes.ITEM_MODEL, ClassicDoorVariant.CLASSIC_DOOR_OPEN.getKey());
+                        case PALE_OAK_DOOR -> itemStack.setData(DataComponentTypes.ITEM_MODEL, SidratDoorVariant.SIDRAT_DOOR_OPEN.getKey());
+                        case CRIMSON_DOOR -> itemStack.setData(DataComponentTypes.ITEM_MODEL, DinerDoorVariant.DINER_DOOR_OPEN.getKey());
+                        default -> itemStack.setData(DataComponentTypes.ITEM_MODEL, Door.getOpenModel(itemStack.getType()));
                     }
-                    itemStack.setItemMeta(im);
                     display.setItemStack(itemStack);
                 } else {
                     new DoorAnimator(plugin, display).animate(false);

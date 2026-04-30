@@ -66,7 +66,7 @@ public class TARDISSonicMenuInventory implements InventoryHolder {
             if (sonic.getMaterial() == Material.BLAZE_ROD) {
                 ItemStack is = ItemStack.of(sonic.getMaterial(), 1);
                 ItemMeta im = is.getItemMeta();
-                im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Sonic Screwdriver"));
+                is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Sonic Screwdriver"));
                 im.lore(List.of(Component.text(sonic.getName())));
                 CustomModelDataComponent component = im.getCustomModelDataComponent();
                 component.setFloats(sonic.getFloats());

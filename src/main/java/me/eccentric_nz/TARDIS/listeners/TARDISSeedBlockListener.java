@@ -173,7 +173,7 @@ public class TARDISSeedBlockListener implements Listener {
                 }
                 NamespacedKey finalModel = model;
         is.editPersistentDataContainer(pdc -> pdc.set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING, finalModel.getKey()));
-                im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toGold("TARDIS Seed Block"));
+                is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toGold("TARDIS Seed Block"));
                 ItemLore.Builder lore = ItemLore.lore();
                 lore.add(Component.text(console));
                 lore.add(Component.text("Walls: " + data.getWallType().toString()));

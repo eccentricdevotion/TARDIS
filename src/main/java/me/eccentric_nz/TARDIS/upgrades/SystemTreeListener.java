@@ -160,7 +160,7 @@ public class SystemTreeListener extends TARDISMenuListener {
                 new SystemUpgradeUpdate(plugin).set(uuid, id, clicked);
                 // set custom model data for clicked upgrade
                 ItemMeta im = is.getItemMeta();
-                im.setData(DataComponentTypes.ITEM_MODEL, clicked.getUnlocked());
+                is.setData(DataComponentTypes.ITEM_MODEL, clicked.getUnlocked());
                 List<Component> lore = im.lore();
                 lore.set(lore.size() - 1, Component.text("Unlocked", NamedTextColor.GREEN).decorate(TextDecoration.ITALIC));
                 im.lore(lore);

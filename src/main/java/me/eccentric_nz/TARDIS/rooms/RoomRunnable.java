@@ -746,7 +746,7 @@ public class RoomRunnable implements Runnable {
                     ItemDisplay display = (ItemDisplay) world.spawnEntity(item, EntityType.ITEM_DISPLAY);
                     ItemStack is = ItemStack.of(Material.MAGMA_BLOCK);
                     ItemMeta im = is.getItemMeta();
-                    im.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Sphere Normal"));
+                    is.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Sphere Normal"));
                     is.setItemMeta(im);
                     display.setItemStack(is);
                     display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.GROUND);

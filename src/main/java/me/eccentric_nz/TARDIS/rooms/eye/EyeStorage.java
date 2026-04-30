@@ -75,7 +75,7 @@ public class EyeStorage implements InventoryHolder {
             for (int i = 2; i < 2 + count; i++) {
                 ItemStack is = ItemStack.of(Material.BUCKET, 1);
                 ItemMeta im = is.getItemMeta();
-                im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(i > (2 + count) - damaged ? "Damaged Artron Capacitor" : "Artron Capacitor"));
+                is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(i > (2 + count) - damaged ? "Damaged Artron Capacitor" : "Artron Capacitor"));
                 is.setItemMeta(im);
                 stacks[i] = is;
             }

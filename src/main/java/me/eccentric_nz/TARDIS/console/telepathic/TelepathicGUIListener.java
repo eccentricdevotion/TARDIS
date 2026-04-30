@@ -95,7 +95,7 @@ public class TelepathicGUIListener extends TARDISMenuListener {
                     plugin.getQueryFactory().doUpdate("player_prefs", set, whereu);
                     // set item model
                     NamespacedKey model = im.getItemModel();
-                    im.setData(DataComponentTypes.ITEM_MODEL, (model == SwitchVariant.TELEPATHIC_CIRCUIT_OFF.getKey()) ? SwitchVariant.TELEPATHIC_CIRCUIT_ON.getKey() : SwitchVariant.TELEPATHIC_CIRCUIT_OFF.getKey());
+                    is.setData(DataComponentTypes.ITEM_MODEL, (model == SwitchVariant.TELEPATHIC_CIRCUIT_OFF.getKey()) ? SwitchVariant.TELEPATHIC_CIRCUIT_ON.getKey() : SwitchVariant.TELEPATHIC_CIRCUIT_OFF.getKey());
                     choice.setItemMeta(im);
                     plugin.getMessenger().announceRepeater(player, "Telepathic Circuit " + (b == 1 ? "ON" : "OFF"));
                     close(player);

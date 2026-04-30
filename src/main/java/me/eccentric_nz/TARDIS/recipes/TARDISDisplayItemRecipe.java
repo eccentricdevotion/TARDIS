@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.recipes;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.customblocks.TARDISBlockDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
@@ -26,7 +27,6 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 /**
@@ -49,15 +49,13 @@ public class TARDISDisplayItemRecipe {
                 } else {
                     is = ItemStack.of(tdi.getMaterial(), 1);
                 }
-                ItemMeta im = is.getItemMeta();
-                im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(tdi.getDisplayName()));
+                is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(tdi.getDisplayName()));
                 if (tdi.getCustomModel() != null) {
-                    im.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING, tdi.getCustomModel().getKey());
+                    is.editPersistentDataContainer(pdc -> pdc.set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING, tdi.getCustomModel().getKey()));
                     if (tdi.isDoor()) {
-                        im.setData(DataComponentTypes.ITEM_MODEL, tdi.getCustomModel());
+                        is.setData(DataComponentTypes.ITEM_MODEL, tdi.getCustomModel());
                     }
                 }
-                is.setItemMeta(im);
                 NamespacedKey key = new NamespacedKey(plugin, tdi.getName());
                 ShapedRecipe r = new ShapedRecipe(key, is);
                 r.shape("#A#", "#D#", "###");

@@ -49,7 +49,7 @@ public class AuthorisedControlDiskRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.MUSIC_DISC_FAR, 1);
         ItemMeta im = is.getItemMeta();
-        im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Authorised Control Disk"));
+        is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Authorised Control Disk"));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "authorised_control_disk");
         ShapedRecipe r = new ShapedRecipe(key, is);

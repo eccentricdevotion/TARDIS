@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.recipes.shapeless;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import net.kyori.adventure.text.Component;
@@ -23,7 +25,6 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapelessRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
 
@@ -44,13 +45,11 @@ public class TARDISSchematicWandRecipe {
 
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.BONE, 1);
-        ItemMeta im = is.getItemMeta();
-        im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("TARDIS Schematic Wand"));
-        im.lore(List.of(
+        is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("TARDIS Schematic Wand"));
+        is.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(
                 Component.text("Right-click start"),
                 Component.text("Left-click end")
-        ));
-        is.setItemMeta(im);
+        )));
         NamespacedKey key = new NamespacedKey(plugin, "tardis_schematic_wand");
         ShapelessRecipe r = new ShapelessRecipe(key, is);
         r.addIngredient(Material.BONE);

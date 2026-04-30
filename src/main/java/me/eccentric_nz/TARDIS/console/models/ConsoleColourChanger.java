@@ -63,7 +63,7 @@ public class ConsoleColourChanger {
                                 } else {
                                     model = new NamespacedKey(plugin, "console_side_" + colour);
                                 }
-                                im.setData(DataComponentTypes.ITEM_MODEL, model);
+                                is.setData(DataComponentTypes.ITEM_MODEL, model);
                                 is.setItemMeta(im);
                                 display.setItemStack(is);
                             }

@@ -49,7 +49,7 @@ public class JammyDodgerRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.COOKIE, 8);
         ItemMeta im = is.getItemMeta();
-        im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Jammy Dodger"));
+        is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Jammy Dodger"));
         im.lore(List.of(Component.text("Best eaten with custard!")));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "jammy_dodger");

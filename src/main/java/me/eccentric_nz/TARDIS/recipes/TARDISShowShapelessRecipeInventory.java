@@ -16,7 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.recipes;
 
-import com.google.common.collect.Multimaps;
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.CustomModelData;
+import io.papermc.paper.datacomponent.item.ItemLore;
+import io.papermc.paper.datacomponent.item.TooltipDisplay;
 import io.papermc.paper.registry.RegistryAccess;
 import io.papermc.paper.registry.RegistryKey;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -28,21 +31,16 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.*;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
 import java.util.List;
-import java.util.Map;
 
 public class TARDISShowShapelessRecipeInventory implements InventoryHolder {
 
-    private final TARDIS plugin;
     private final ShapelessRecipe recipe;
     private final Inventory inventory;
     private final String str;
 
     public TARDISShowShapelessRecipeInventory(TARDIS plugin, ShapelessRecipe recipe, String str) {
-        this.plugin = plugin;
         this.recipe = recipe;
         this.str = str;
         this.inventory = plugin.getServer().createInventory(this, 27, Component.text(str + " recipe", NamedTextColor.DARK_RED));
@@ -74,42 +72,45 @@ public class TARDISShowShapelessRecipeInventory implements InventoryHolder {
             if (item == null) {
                 continue;
             }
-            ItemMeta im = item.getItemMeta();
             if (item.getType().equals(Material.GLOWSTONE_DUST)) {
                 String dn = getDisplayName(str, glowstoneCount);
-                im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(dn));
+                item.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(dn));
                 glowstoneCount++;
             }
             if (item.getType().equals(Material.MUSIC_DISC_STRAD)) {
-                im.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Blank Storage Disk"));
-                im.addItemFlags(ItemFlag.values());
-                im.setAttributeModifiers(Multimaps.forMap(Map.of()));
+                item.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Blank Storage Disk"));
+                item.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
+                        .addHiddenComponents(DataComponentTypes.ATTRIBUTE_MODIFIERS)
+                        .hideTooltip(true)
+                        .build());
             }
             if (item.getType().equals(Material.BLAZE_ROD)) {
-                im.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Sonic Screwdriver"));
-                CustomModelDataComponent component = im.getCustomModelDataComponent();
-                component.setFloats(SonicVariant.TENTH.getFloats());
-                im.setCustomModelDataComponent(component);
+                item.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Sonic Screwdriver"));
+                item.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                        .addFloats(SonicVariant.TENTH.getFloats())
+                        .build());
             }
-            item.setItemMeta(im);
             stacks[i * 9] = item;
         }
         ItemStack result = recipe.getResult();
-        ItemMeta im = result.getItemMeta();
-        im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(str));
+        result.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(str));
         if (str.equals("Blank Storage Disk") || str.equals("Save Storage Disk") || str.equals("Preset Storage Disk") || str.equals("Biome Storage Disk") || str.equals("Player Storage Disk") || str.equals("Authorised Control Disk")) {
-            im.addItemFlags(ItemFlag.values());
-            im.setAttributeModifiers(Multimaps.forMap(Map.of()));
+            result.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
+                    .addHiddenComponents(DataComponentTypes.ATTRIBUTE_MODIFIERS)
+                    .hideTooltip(true)
+                    .build());
         }
         RecipeItem recipeItem = RecipeItem.getByName(str);
         if (recipeItem != RecipeItem.NOT_FOUND) {
             if (recipeItem.getCategory().equals(RecipeCategory.SONIC_UPGRADES)) {
-                im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Sonic Screwdriver"));
-                im.lore(List.of(Component.text("Upgrades:"), Component.text(str)));
+                result.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Sonic Screwdriver"));
+                result.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(
+                        Component.text("Upgrades:"),
+                        Component.text(str)
+                )));
             }
         }
         result.setAmount(1);
-        result.setItemMeta(im);
         stacks[17] = result;
         return stacks;
     }

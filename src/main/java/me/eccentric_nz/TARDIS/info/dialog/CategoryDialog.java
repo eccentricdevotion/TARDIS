@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.info.dialog;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.dialog.Dialog;
 import io.papermc.paper.registry.data.dialog.ActionButton;
 import io.papermc.paper.registry.data.dialog.DialogBase;
@@ -40,9 +41,7 @@ public class CategoryDialog {
 
     public Dialog create() {
         ItemStack blue = ItemStack.of(Material.BLUE_DYE);
-        ItemMeta im = blue.getItemMeta();
-        im.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.BLUE_CLOSED.getKey());
-        blue.setItemMeta(im);
+        blue.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.BLUE_CLOSED.getKey());
         List<DialogBody> body = (List.of(DialogBody.item(blue, null, false, false, 16, 16), DialogBody.plainMessage(Component.text("Choose a category below:"), 150)));
         DialogBase dialogData = DialogBase.create(Component.text("TARDIS Information System"), null, true, true, DialogBase.DialogAfterAction.CLOSE, body, List.of());
         List<ActionButton> actions = new ArrayList<>();

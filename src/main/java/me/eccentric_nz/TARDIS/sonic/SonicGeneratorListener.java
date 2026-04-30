@@ -213,8 +213,8 @@ public class SonicGeneratorListener implements Listener {
             // drop a custom FLOWER_POT_ITEM
             ItemStack is = ItemStack.of(Material.FLOWER_POT, 1);
             ItemMeta im = is.getItemMeta();
-            im.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Sonic Generator"));
-            im.setData(DataComponentTypes.ITEM_MODEL, SonicItem.SONIC_GENERATOR.getKey());
+            is.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Sonic Generator"));
+            is.setData(DataComponentTypes.ITEM_MODEL, SonicItem.SONIC_GENERATOR.getKey());
             is.setItemMeta(im);
             b.getWorld().dropItemNaturally(b.getLocation(), is);
         }

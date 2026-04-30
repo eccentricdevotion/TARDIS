@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.desktop;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUIArchive;
 import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
@@ -28,7 +30,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
 
@@ -76,14 +77,11 @@ class ArchiveInventory implements InventoryHolder {
         }
         // back
         ItemStack back = ItemStack.of(GUIArchive.BACK.material(), 1);
-        ItemMeta back_im = back.getItemMeta();
-        back_im.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Back"));
-        back.setItemMeta(back_im);
+        back.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Back"));
         stack[17] = back;
         // size
         ItemStack size = ItemStack.of(GUIArchive.SET_SIZE.material(), 1);
-        ItemMeta size_im = size.getItemMeta();
-        size_im.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Set size"));
+        size.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Set size"));
         String s = "SMALL";
         String b = "16 x 16 x 16 blocks";
 
@@ -93,49 +91,42 @@ class ArchiveInventory implements InventoryHolder {
             s = rss.getConsoleSize().toString();
             b = rss.getConsoleSize().getBlocks();
         }
-        size_im.lore(List.of(
+        size.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(
                 Component.text(s),
                 Component.text(b),
                 Component.text("Click to change", NamedTextColor.AQUA)
-        ));
-        size.setItemMeta(size_im);
+        )));
         stack[18] = size;
         // scan
         ItemStack scan = ItemStack.of(GUIArchive.SCAN_CONSOLE.material(), 1);
-        ItemMeta but_im = scan.getItemMeta();
-        but_im.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Scan console"));
-        scan.setItemMeta(but_im);
+        scan.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Scan console"));
         stack[19] = scan;
         // archive
-        ItemStack arc = ItemStack.of(GUIArchive.ARCHIVE_CURRENT_CONSOLE.material(), 1);
-        ItemMeta hive_im = arc.getItemMeta();
-        hive_im.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Archive current console"));
-        hive_im.lore(List.of(
+        ItemStack archive = ItemStack.of(GUIArchive.ARCHIVE_CURRENT_CONSOLE.material(), 1);
+        archive.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Archive current console"));
+        archive.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(
                 Component.text("A random name will"),
                 Component.text("be generated - use the"),
                 Component.text("/tardis archive command"),
                 Component.text("to set your own.")
-        ));
-        arc.setItemMeta(hive_im);
-        stack[20] = arc;
+        )));
+        stack[20] = archive;
         // templates
         int t = 22;
         for (ConsoleSize c : ConsoleSize.values()) {
             if (!c.equals(ConsoleSize.MASSIVE) && !c.equals(ConsoleSize.WIDE)) {
-                ItemStack temp = ItemStack.of(GUIArchive.SMALL.material(), 1);
-                ItemMeta late = temp.getItemMeta();
-                late.setData(DataComponentTypes.CUSTOM_NAME, Component.text(c.toString()));
-                late.lore(List.of(
+                ItemStack template = ItemStack.of(GUIArchive.SMALL.material(), 1);
+                template.setData(DataComponentTypes.CUSTOM_NAME, Component.text(c.toString()));
+                template.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(
                         Component.text("Cobblestone template"),
                         Component.text(c.getBlocks())
-                ));
-                temp.setItemMeta(late);
-                stack[t] = temp;
+                )));
+                stack[t] = template;
                 t++;
             }
         }
         // close
-        stack[GUIArchive.CLOSE.slot()] = GUIItemFactory.close();;
+        stack[GUIArchive.CLOSE.slot()] = GUIItemFactory.close();
 
         return stack;
     }

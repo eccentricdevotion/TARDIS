@@ -56,7 +56,7 @@ public class CustardCreamAction {
         if (artronLevels.checkLevel(id, plugin.getArtronConfig().getInt("custard_cream"), player)) {
             ItemStack cookie = ItemStack.of(Material.COOKIE, 1);
             ItemMeta im = cookie.getItemMeta();
-            im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Custard Cream"));
+            is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Custard Cream"));
             cookie.setItemMeta(im);
             // put cookie on top of the block
             Location location = block.getLocation().add(0.5, 1.0, 0.5);

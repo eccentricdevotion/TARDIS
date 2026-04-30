@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.recipes.shapeless;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import net.kyori.adventure.text.Component;
@@ -44,10 +46,8 @@ public class BiomeStorageDiskRecipe {
 
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.MUSIC_DISC_CAT, 1);
-        ItemMeta im = is.getItemMeta();
-        im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Biome Storage Disk"));
-        im.lore(List.of(Component.text("Blank")));
-        is.setItemMeta(im);
+        is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Biome Storage Disk"));
+        is.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text("Blank")).build());
         NamespacedKey key = new NamespacedKey(plugin, "biome_storage_disk");
         ShapelessRecipe r = new ShapelessRecipe(key, is);
         r.addIngredient(Material.MUSIC_DISC_STRAD);

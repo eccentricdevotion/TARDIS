@@ -50,7 +50,7 @@ public class FishFingerRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.COOKED_COD, 3);
         ItemMeta im = is.getItemMeta();
-        im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Fish Finger"));
+        is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Fish Finger"));
         im.lore(List.of(Component.text("Best eaten with custard!")));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "fish_finger");

@@ -36,8 +36,8 @@ public class K9Recipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.BONE);
         ItemMeta im = is.getItemMeta();
-        im.setData(DataComponentTypes.CUSTOM_NAME, Component.text("K9"));
-        im.setData(DataComponentTypes.ITEM_MODEL, K9Variant.K9.getKey());
+        is.setData(DataComponentTypes.CUSTOM_NAME, Component.text("K9"));
+        is.setData(DataComponentTypes.ITEM_MODEL, K9Variant.K9.getKey());
         is.setItemMeta(im);
         ShapedRecipe recipe = new ShapedRecipe(TARDISWeepingAngels.K9, is);
         recipe.shape("III", "RRR", "BBB");

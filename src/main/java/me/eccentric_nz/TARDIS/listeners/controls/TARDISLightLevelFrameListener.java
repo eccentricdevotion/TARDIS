@@ -68,7 +68,7 @@ public class TARDISLightLevelFrameListener implements Listener {
                         key += "_off";
                     }
                     NamespacedKey model = new NamespacedKey(plugin, key);
-                    im.setData(DataComponentTypes.ITEM_MODEL, model);
+                    is.setData(DataComponentTypes.ITEM_MODEL, model);
                     is.setItemMeta(im);
                     frame.setItem(is);
                     if (type == 49 || type == 50) {

@@ -153,7 +153,7 @@ public class TARDISGeneralPrefsInventory implements InventoryHolder {
             if (pref.getMaterial() == Material.REPEATER) {
                 ItemStack is = ItemStack.of(pref.getMaterial(), 1);
                 ItemMeta im = is.getItemMeta();
-                im.setData(DataComponentTypes.CUSTOM_NAME, Component.text(pref.getName()));
+                is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(pref.getName()));
                 boolean v = values.get(pref.getSlot());
                 if (pref.getOffFloats() != null) {
                     CustomModelDataComponent component = im.getCustomModelDataComponent();

@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.lazarus;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -23,7 +24,6 @@ import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,32 +86,24 @@ class LazarusAdjacentInventory extends LazarusItems implements InventoryHolder, 
         int i = 0;
         for (Material m : adjacent) {
             ItemStack egg = ItemStack.of(m, 1);
-            ItemMeta me = egg.getItemMeta();
-            me.setData(DataComponentTypes.CUSTOM_NAME, Component.text(m.toString().replace("_SPAWN_EGG", "")));
-            egg.setItemMeta(me);
+            egg.setData(DataComponentTypes.CUSTOM_NAME, Component.text(m.toString().replace("_SPAWN_EGG", "")));
             stacks[i] = egg;
             i++;
         }
         // giant
-        ItemStack gi = ItemStack.of(Material.ZOMBIE_HEAD, 1);
-        ItemMeta ant = gi.getItemMeta();
-        ant.setData(DataComponentTypes.CUSTOM_NAME, Component.text("GIANT"));
-        gi.setItemMeta(ant);
-        stacks[i] = gi;
+        ItemStack giant = ItemStack.of(Material.ZOMBIE_HEAD, 1);
+        giant.setData(DataComponentTypes.CUSTOM_NAME, Component.text("GIANT"));
+        stacks[i] = giant;
         i++;
         // illusioner
-        ItemStack ill = ItemStack.of(Material.BOWL, 1);
-        ItemMeta usi = ill.getItemMeta();
-        usi.setData(DataComponentTypes.CUSTOM_NAME, Component.text("ILLUSIONER"));
-        ill.setItemMeta(usi);
-        stacks[i] = ill;
+        ItemStack illusioner = ItemStack.of(Material.BOWL, 1);
+        illusioner.setData(DataComponentTypes.CUSTOM_NAME, Component.text("ILLUSIONER"));
+        stacks[i] = illusioner;
         i++;
         // herobrine
-        ItemStack hero = ItemStack.of(Material.PLAYER_HEAD, 1);
-        ItemMeta brine = hero.getItemMeta();
-        brine.setData(DataComponentTypes.CUSTOM_NAME, Component.text("HEROBRINE"));
-        hero.setItemMeta(brine);
-        stacks[i] = hero;
+        ItemStack herobrine = ItemStack.of(Material.PLAYER_HEAD, 1);
+        herobrine.setData(DataComponentTypes.CUSTOM_NAME, Component.text("HEROBRINE"));
+        stacks[i] = herobrine;
         // add standard buttons
         addItems(plugin, stacks, 4);
 

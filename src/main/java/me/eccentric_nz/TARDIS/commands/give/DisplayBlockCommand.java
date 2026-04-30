@@ -47,7 +47,7 @@ public class DisplayBlockCommand {
             Door door = Door.byName.get(display);
             ItemStack is = ItemStack.of(door.getMaterial(), 1);
             ItemMeta im = is.getItemMeta();
-            im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Door " + TARDISStringUtils.capitalise(door.getName())));
+            is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Door " + TARDISStringUtils.capitalise(door.getName())));
             NamespacedKey key = switch (door.getMaterial()) {
                 case IRON_DOOR -> TardisDoorVariant.TARDIS_DOOR_CLOSED.getKey();
                 case BIRCH_DOOR -> BoneDoorVariant.BONE_DOOR_CLOSED.getKey();
@@ -56,16 +56,16 @@ public class DisplayBlockCommand {
                 default -> Door.getClosedModel(door.getMaterial());
             };
             im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, key.getKey());
-            im.setData(DataComponentTypes.ITEM_MODEL, key);
+            is.setData(DataComponentTypes.ITEM_MODEL, key);
             is.setItemMeta(im);
             return is;
         } else if (display.startsWith("TIME_")) {
             Rotor rotor = Rotor.byName.get(display);
             ItemStack is = ItemStack.of(Material.LIGHT_GRAY_DYE, 1);
             ItemMeta im = is.getItemMeta();
-            im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Time Rotor " + rotor.name()));
+            is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Time Rotor " + rotor.name()));
             im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, rotor.offModel().getKey());
-            im.setData(DataComponentTypes.ITEM_MODEL, rotor.offModel());
+            is.setData(DataComponentTypes.ITEM_MODEL, rotor.offModel());
             is.setItemMeta(im);
             return is;
         } else {
@@ -73,7 +73,7 @@ public class DisplayBlockCommand {
                 TARDISDisplayItem tdi = TARDISDisplayItemRegistry.valueOf(display);
                 ItemStack is = ItemStack.of(tdi.getMaterial(), 1);
                 ItemMeta im = is.getItemMeta();
-                im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(tdi.getDisplayName()));
+                is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(tdi.getDisplayName()));
                 if (tdi.getCustomModel() != null) {
                     
 is.editPersistentDataContainer(pdc -> pdc.set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING, tdi.getCustomModel().getKey()));

@@ -62,9 +62,9 @@ public class SystemTreeInventory implements InventoryHolder {
                 ItemStack is = ItemStack.of(g.getMaterial(), 1);
                 ItemMeta im = is.getItemMeta();
                 if (g.getBranch().equals("branch")) {
-                    im.setData(DataComponentTypes.CUSTOM_NAME, Component.text(g.getName(), NamedTextColor.GOLD).decorate(TextDecoration.ITALIC));
+                    is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(g.getName(), NamedTextColor.GOLD).decorate(TextDecoration.ITALIC));
                 } else {
-                    im.setData(DataComponentTypes.CUSTOM_NAME, Component.text(g.getName()));
+                    is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(g.getName()));
                 }
                 List<Component> lore = new ArrayList<>(g.getLore());
                 boolean has = sysData.getUpgrades().get(g);
@@ -84,7 +84,7 @@ public class SystemTreeInventory implements InventoryHolder {
                 }
                 im.lore(lore);
                 // does the player have this system upgrade?
-                im.setData(DataComponentTypes.ITEM_MODEL, (has) ? g.getUnlocked() : g.getLocked());
+                is.setData(DataComponentTypes.ITEM_MODEL, (has) ? g.getUnlocked() : g.getLocked());
                 is.setItemMeta(im);
                 stacks[g.getSlot()] = is;
             }
@@ -126,8 +126,8 @@ public class SystemTreeInventory implements InventoryHolder {
         // background
         ItemStack is = ItemStack.of(SystemTree.BLANK.getMaterial(), 1);
         ItemMeta im = is.getItemMeta();
-        im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(""));
-        im.setData(DataComponentTypes.ITEM_MODEL, SystemTree.BLANK.getLocked());
+        is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(""));
+        is.setData(DataComponentTypes.ITEM_MODEL, SystemTree.BLANK.getLocked());
         is.setItemMeta(im);
         stacks[10] = is;
         // vertical

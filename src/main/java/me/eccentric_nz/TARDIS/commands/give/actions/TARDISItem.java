@@ -158,7 +158,7 @@ public class TARDISItem {
                 im = result.getItemMeta();
             }
             if (!item.equals("bleach")) {
-                im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(Give.items.get(item)));
+                is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(Give.items.get(item)));
             }
             result.setItemMeta(im);
             result.setAmount(amount);

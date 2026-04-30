@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.flight;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -23,7 +24,6 @@ import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 /**
  * The Directional Unit is part of the Main Time Mechanism. It takes the Space-Time Coordinates for departure and
@@ -58,33 +58,23 @@ class RegulatorInventory implements InventoryHolder {
         }
         // direction pad up
         ItemStack pad_up = ItemStack.of(Material.LIME_WOOL, 1);
-        ItemMeta up = pad_up.getItemMeta();
-        up.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Up"));
-        pad_up.setItemMeta(up);
+        pad_up.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Up"));
         is[16] = pad_up;
         // regulator
-        ItemStack wobb = ItemStack.of(Material.BLUE_WOOL, 1);
-        ItemMeta ler = wobb.getItemMeta();
-        ler.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Regulator"));
-        wobb.setItemMeta(ler);
-        is[20] = wobb;
+        ItemStack wobbler = ItemStack.of(Material.BLUE_WOOL, 1);
+        wobbler.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Regulator"));
+        is[20] = wobbler;
         // direction pad left
         ItemStack pad_left = ItemStack.of(Material.LIME_WOOL, 1);
-        ItemMeta left = pad_left.getItemMeta();
-        left.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Left"));
-        pad_left.setItemMeta(left);
+        pad_left.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Left"));
         is[24] = pad_left;
         // direction pad right
         ItemStack pad_right = ItemStack.of(Material.LIME_WOOL, 1);
-        ItemMeta right = pad_right.getItemMeta();
-        right.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Right"));
-        pad_right.setItemMeta(right);
+        pad_right.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Right"));
         is[26] = pad_right;
         // direction pad down
         ItemStack pad_down = ItemStack.of(Material.LIME_WOOL, 1);
-        ItemMeta down = pad_down.getItemMeta();
-        down.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Down"));
-        pad_down.setItemMeta(down);
+        pad_down.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Down"));
         is[34] = pad_down;
 
         return is;

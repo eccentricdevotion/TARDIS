@@ -50,7 +50,7 @@ public class IgniteCircuitRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.GLOWSTONE_DUST, 1);
         ItemMeta im = is.getItemMeta();
-        im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Ignite Circuit"));
+        is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Ignite Circuit"));
         CustomModelDataComponent component = im.getCustomModelDataComponent();
         component.setFloats(CircuitVariant.IGNITE.getFloats());
         im.setCustomModelDataComponent(component);

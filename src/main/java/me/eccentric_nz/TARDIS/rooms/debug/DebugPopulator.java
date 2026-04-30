@@ -419,7 +419,7 @@ public class DebugPopulator {
             // set item
             ItemStack is = ItemStack.of(Material.LIGHT_GRAY_DYE);
             ItemMeta im = is.getItemMeta();
-            im.setData(DataComponentTypes.ITEM_MODEL, rotor.offModel());
+            is.setData(DataComponentTypes.ITEM_MODEL, rotor.offModel());
             is.setItemMeta(im);
             frame.setItem(is);
             // lock
@@ -448,7 +448,7 @@ public class DebugPopulator {
                 Material material = (tdi.toString().contains("OPEN")) ? tdi.getMaterial() : tdi.getCraftMaterial();
                 ItemStack is = ItemStack.of(material);
                 ItemMeta im = is.getItemMeta();
-                im.setData(DataComponentTypes.ITEM_MODEL, tdi.getCustomModel());
+                is.setData(DataComponentTypes.ITEM_MODEL, tdi.getCustomModel());
                 is.setItemMeta(im);
                 display.setItemStack(is);
                 // loop x z - spaced over 24 x 24 with empty blocks between
@@ -470,7 +470,7 @@ public class DebugPopulator {
             Material material = d.getMaterial();
             ItemStack is = ItemStack.of(material);
             ItemMeta im = is.getItemMeta();
-            im.setData(DataComponentTypes.ITEM_MODEL, new NamespacedKey(plugin, key + "_closed"));
+            is.setData(DataComponentTypes.ITEM_MODEL, new NamespacedKey(plugin, key + "_closed"));
             is.setItemMeta(im);
             // remember item stack for chest population
             stacks.add(is);
@@ -485,7 +485,7 @@ public class DebugPopulator {
             ItemDisplay o = (ItemDisplay) world.spawnEntity(open, EntityType.ITEM_DISPLAY);
             ItemStack ois = ItemStack.of(material);
             ItemMeta oim = is.getItemMeta();
-            im.setData(DataComponentTypes.ITEM_MODEL, new NamespacedKey(plugin, key + "_open"));
+            is.setData(DataComponentTypes.ITEM_MODEL, new NamespacedKey(plugin, key + "_open"));
             ois.setItemMeta(oim);
             o.setItemStack(ois);
             // remember item stack for chest population
@@ -550,7 +550,7 @@ public class DebugPopulator {
         location.getBlock().setType(Material.WHITE_CONCRETE);
         ItemStack is = ItemStack.of(material, 1);
         ItemMeta im = is.getItemMeta();
-        im.setData(DataComponentTypes.ITEM_MODEL, model);
+        is.setData(DataComponentTypes.ITEM_MODEL, model);
         im.customName(name);
         is.setItemMeta(im);
         ItemDisplay display = (ItemDisplay) location.getWorld().spawnEntity(location.clone().add(0.5d, 1.25d, 0.5d), EntityType.ITEM_DISPLAY);
@@ -613,7 +613,7 @@ public class DebugPopulator {
             // set item
             ItemStack is = ItemStack.of(le.getMaterial());
             ItemMeta im = is.getItemMeta();
-            im.setData(DataComponentTypes.ITEM_MODEL, le.getModel());
+            is.setData(DataComponentTypes.ITEM_MODEL, le.getModel());
             is.setItemMeta(im);
             frame.setItem(is);
             // lock
@@ -707,7 +707,7 @@ public class DebugPopulator {
             // create the regeneration item model
             ItemStack totem = ItemStack.of(Material.TOTEM_OF_UNDYING, 1);
             ItemMeta im = totem.getItemMeta();
-            im.setData(DataComponentTypes.ITEM_MODEL, t.getKey());
+            is.setData(DataComponentTypes.ITEM_MODEL, t.getKey());
             totem.setItemMeta(im);
             // spawn a display entity
             ItemDisplay display = (ItemDisplay) world.spawnEntity(location, EntityType.ITEM_DISPLAY);

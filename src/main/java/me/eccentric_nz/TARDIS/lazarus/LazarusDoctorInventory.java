@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.lazarus;
 
 import io.papermc.paper.datacomponent.DataComponentTypes;
-import io.papermc.paper.datacomponent.item.ResolvableProfile;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.skins.DoctorSkins;
 import me.eccentric_nz.TARDIS.skins.Skin;
@@ -29,9 +29,6 @@ import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.SkullMeta;
-
-import java.util.List;
 
 public class LazarusDoctorInventory extends LazarusItems implements InventoryHolder, LazarusGUI {
 
@@ -56,17 +53,12 @@ public class LazarusDoctorInventory extends LazarusItems implements InventoryHol
         if (PlayerHeadCache.DOCTORS.isEmpty()) {
             for (Skin doctor : DoctorSkins.DOCTORS) {
                 ItemStack is = ItemStack.of(Material.PLAYER_HEAD, 1);
-                SkullMeta im = (SkullMeta) is.getItemMeta();
-                SkinUtils.getHeadProfile(doctor).thenAccept(playerProfile -> {
-                    is.setData(DataComponentTypes.PROFILE, ResolvableProfile.resolvableProfile(playerProfile));
-                    String[] name = doctor.name().split(" - ");
-                    im.setData(DataComponentTypes.CUSTOM_NAME, Component.text(name[0]));
-                    im.lore(List.of(Component.text(name[1])));
-                    im.setPlayerProfile(playerProfile);
-                    is.setItemMeta(im);
-                    // cache the item stack
-                    PlayerHeadCache.DOCTORS.add(is);
-                });
+                is.setData(DataComponentTypes.PROFILE, SkinUtils.getHeadProfile(doctor));
+                String[] name = doctor.name().split(" - ");
+                is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(name[0]));
+                is.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text(name[1])).build());
+                // cache the item stack
+                PlayerHeadCache.DOCTORS.add(is);
                 stacks[i] = is;
                 i++;
             }

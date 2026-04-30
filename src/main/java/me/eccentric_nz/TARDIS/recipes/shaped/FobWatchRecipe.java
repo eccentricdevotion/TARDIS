@@ -16,6 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.CustomModelData;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.keys.CircuitVariant;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
@@ -27,8 +30,6 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
 import java.util.List;
 
@@ -56,23 +57,22 @@ public class FobWatchRecipe {
 
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.CLOCK, 1);
-        ItemMeta im = is.getItemMeta();
-        im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Fob Watch"));
-        is.setItemMeta(im);
+        is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Fob Watch"));
         NamespacedKey key = new NamespacedKey(plugin, "fob_watch");
         ShapedRecipe r = new ShapedRecipe(key, is);
         ItemStack exact = ItemStack.of(Material.GLOWSTONE_DUST, 1);
-        ItemMeta em = exact.getItemMeta();
-        em.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("TARDIS Chameleon Circuit"));
-        CustomModelDataComponent component = em.getCustomModelDataComponent();
-        component.setFloats(CircuitVariant.CHAMELEON.getFloats());
-        em.setCustomModelDataComponent(component);
+        exact.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("TARDIS Chameleon Circuit"));
+        exact.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                .addFloats(CircuitVariant.CHAMELEON.getFloats())
+                .build());
         // set the second line of lore
         Component uses = (plugin.getConfig().getString("circuits.uses.chameleon", "25").equals("0") || !plugin.getConfig().getBoolean("circuits.damage"))
                 ? Component.text("unlimited", NamedTextColor.YELLOW)
                 : Component.text(plugin.getConfig().getString("circuits.uses.chameleon", "25"), NamedTextColor.YELLOW);
-        em.lore(List.of(Component.text("Uses left"), uses));
-        exact.setItemMeta(em);
+        exact.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(
+                Component.text("Uses left"),
+                uses
+        )));
         if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             r.shape(" C ", "IWI", "R R");
             r.setIngredient('I', Material.IRON_INGOT);

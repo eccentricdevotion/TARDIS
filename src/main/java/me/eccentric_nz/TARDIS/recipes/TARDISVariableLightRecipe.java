@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.recipes;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.keys.LightVariant;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
@@ -25,7 +26,6 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 /**
@@ -42,11 +42,9 @@ public class TARDISVariableLightRecipe {
     public void addRecipe() {
         ItemStack is;
         is = ItemStack.of(Material.GLASS, 1);
-        ItemMeta im = is.getItemMeta();
-        im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Variable Light"));
-        im.setData(DataComponentTypes.ITEM_MODEL, LightVariant.VARIABLE.getKey());
-        im.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.INTEGER, 1003);
-        is.setItemMeta(im);
+        is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Variable Light"));
+        is.setData(DataComponentTypes.ITEM_MODEL, LightVariant.VARIABLE.getKey());
+        is.editPersistentDataContainer(pdc -> pdc.set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.INTEGER, 1003));
         NamespacedKey key = new NamespacedKey(plugin, "variable_light");
         ShapedRecipe r = new ShapedRecipe(key, is);
         r.shape("###", "TDT", "###");

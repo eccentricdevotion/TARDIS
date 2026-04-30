@@ -109,7 +109,7 @@ public class TARDISSavesPlanetInventory implements InventoryHolder {
             for (Planet planet : rsd.getData()) {
                 ItemStack is = ItemStack.of(planet.material(), 1);
                 ItemMeta im = is.getItemMeta();
-                im.setData(DataComponentTypes.CUSTOM_NAME, Component.text(planet.name()));
+                is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(planet.name()));
                 is.setItemMeta(im);
                 stack[i] = is;
                 i += 2;

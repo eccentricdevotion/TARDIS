@@ -76,7 +76,7 @@ public class TARDISKeyRecipe {
         }
         ItemStack is = ItemStack.of(material, 1);
         ItemMeta im = is.getItemMeta();
-        im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("TARDIS Key"));
+        is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("TARDIS Key"));
         im.lore(List.of(Component.text("Enter and exit your TARDIS")));
         CustomModelDataComponent component = im.getCustomModelDataComponent();
         component.setFloats(floats);

@@ -16,13 +16,13 @@
  */
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
 
 /*
 easy_shape:---,OFO,RRR
@@ -47,9 +47,7 @@ public class TARDISArtronFurnaceRecipe {
 
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.FURNACE, 1);
-        ItemMeta im = is.getItemMeta();
-        im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("TARDIS Artron Furnace"));
-        is.setItemMeta(im);
+        is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("TARDIS Artron Furnace"));
         NamespacedKey key = new NamespacedKey(plugin, "tardis_artron_furnace");
         ShapedRecipe r = new ShapedRecipe(key, is);
         r.shape("OFO", "RRR");

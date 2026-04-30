@@ -64,7 +64,7 @@ class TARDISHumInventory implements InventoryHolder {
         for (Hum hum : Hum.values()) {
             ItemStack is = ItemStack.of(Material.BOWL, 1);
             ItemMeta im = is.getItemMeta();
-            im.setData(DataComponentTypes.CUSTOM_NAME, Component.text(hum.toString()));
+            is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(hum.toString()));
             is.setItemMeta(im);
             options.add(is);
         }

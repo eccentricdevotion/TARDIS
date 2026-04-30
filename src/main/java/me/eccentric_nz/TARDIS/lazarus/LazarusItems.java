@@ -1,12 +1,13 @@
 package me.eccentric_nz.TARDIS.lazarus;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUIGeneticManipulator;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,71 +56,53 @@ public class LazarusItems {
         }
         // previous
         ItemStack previous = ItemStack.of(GUIGeneticManipulator.BUTTON_PREVIOUS.material(), 1);
-        ItemMeta previousItemMeta = previous.getItemMeta();
-        previousItemMeta.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Previous page"));
-        previousItemMeta.lore(List.of(Component.text(previousLore)));
-        previous.setItemMeta(previousItemMeta);
+        previous.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Previous page"));
+        previous.lore(List.of(Component.text(previousLore)));
         stacks[GUIGeneticManipulator.BUTTON_PREVIOUS.slot()] = previous;
         // back to Lazarus choices button
         ItemStack back = ItemStack.of(GUIGeneticManipulator.BUTTON_BACK.material(), 1);
-        ItemMeta backItemMeta = back.getItemMeta();
-        backItemMeta.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Back"));
-        back.setItemMeta(backItemMeta);
+        back.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Back"));
         stacks[GUIGeneticManipulator.BUTTON_BACK.slot()] = back;
         // next
         ItemStack next = ItemStack.of(GUIGeneticManipulator.BUTTON_NEXT.material(), 1);
-        ItemMeta nextItemMeta = next.getItemMeta();
-        nextItemMeta.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Next page"));
-        nextItemMeta.lore(List.of(Component.text(nextLore)));
-        next.setItemMeta(nextItemMeta);
+        next.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Next page"));
+        next.lore(List.of(Component.text(nextLore)));
         stacks[GUIGeneticManipulator.BUTTON_NEXT.slot()] = next;
         // add options
         if (current < 5) {
             // adult
             ItemStack adult = ItemStack.of(GUIGeneticManipulator.BUTTON_AGE.material(), 1);
-            ItemMeta baby = adult.getItemMeta();
-            baby.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_AGE", "Age")));
-            baby.lore(List.of(Component.text("ADULT")));
-            adult.setItemMeta(baby);
+            adult.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_AGE", "Age")));
+            adult.lore(List.of(Component.text("ADULT")));
             stacks[GUIGeneticManipulator.BUTTON_AGE.slot()] = adult;
             // type
             ItemStack typ = ItemStack.of(GUIGeneticManipulator.BUTTON_TYPE.material(), 1);
-            ItemMeta col = typ.getItemMeta();
-            col.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_TYPE", "Type/Colour")));
-            col.lore(List.of(Component.text("WHITE")));
-            typ.setItemMeta(col);
+            typ.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_TYPE", "Type/Colour")));
+            typ.lore(List.of(Component.text("WHITE")));
             stacks[GUIGeneticManipulator.BUTTON_TYPE.slot()] = typ;
             // tamed
             ItemStack tamed = ItemStack.of(GUIGeneticManipulator.BUTTON_OPTS.material(), 1);
-            ItemMeta tf = tamed.getItemMeta();
-            tf.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_OPTS", "Disguise Options")));
+            tamed.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_OPTS", "Disguise Options")));
             List<Component> opts = new ArrayList<>();
             for (String o : plugin.getLanguage().getString("BUTTON_OPTS_LIST", "Tamed/Flying/Blazing/Powered/Beaming/Aggressive/Chest carrying/Decorated")
                     .split("/")) {
                 opts.add(Component.text(o).decorate(TextDecoration.ITALIC));
             }
             opts.add(Component.text("FALSE", NamedTextColor.RED));
-            tf.lore(opts);
-            tamed.setItemMeta(tf);
+            tamed.setData(DataComponentTypes.LORE, ItemLore.lore(opts));
             stacks[GUIGeneticManipulator.BUTTON_OPTS.slot()] = tamed;
         }
         // add buttons
-        ItemStack rem = ItemStack.of(GUIGeneticManipulator.BUTTON_RESTORE.material(), 1);
-        ItemMeta ove = rem.getItemMeta();
-        ove.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_RESTORE", "Restore my original genetic material")));
-        rem.setItemMeta(ove);
-        stacks[GUIGeneticManipulator.BUTTON_RESTORE.slot()] = rem;
+        ItemStack remove = ItemStack.of(GUIGeneticManipulator.BUTTON_RESTORE.material(), 1);
+        remove.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_RESTORE", "Restore my original genetic material")));
+        stacks[GUIGeneticManipulator.BUTTON_RESTORE.slot()] = remove;
         // set
-        ItemStack s = ItemStack.of(GUIGeneticManipulator.BUTTON_DNA.material(), 1);
-        ItemMeta sim = s.getItemMeta();
-        sim.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_DNA", "Modify my genetic material")));
-        s.setItemMeta(sim);
-        stacks[GUIGeneticManipulator.BUTTON_DNA.slot()] = s;
+        ItemStack set = ItemStack.of(GUIGeneticManipulator.BUTTON_DNA.material(), 1);
+        set.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_DNA", "Modify my genetic material")));
+        stacks[GUIGeneticManipulator.BUTTON_DNA.slot()] = set;
         // cancel
-        ItemStack can = ItemStack.of(GUIGeneticManipulator.BUTTON_CANCEL.material(), 1);
-        ItemMeta cel = can.getItemMeta();
-        cel.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_CANCEL", "Cancel")));
-        can.setItemMeta(cel);
-        stacks[GUIGeneticManipulator.BUTTON_CANCEL.slot()] = can;
+        ItemStack cancel = ItemStack.of(GUIGeneticManipulator.BUTTON_CANCEL.material(), 1);
+        cancel.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_CANCEL", "Cancel")));
+        stacks[GUIGeneticManipulator.BUTTON_CANCEL.slot()] = cancel;
     }
 }

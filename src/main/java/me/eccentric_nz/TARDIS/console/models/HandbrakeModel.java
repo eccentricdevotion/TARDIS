@@ -30,9 +30,9 @@ public class HandbrakeModel {
         ItemStack is = display.getItemStack();
         ItemMeta im = is.getItemMeta();
         if (state == 0) {
-            im.setData(DataComponentTypes.ITEM_MODEL, ModelledControl.HANDBRAKE_0.getKey());
+            is.setData(DataComponentTypes.ITEM_MODEL, ModelledControl.HANDBRAKE_0.getKey());
         } else {
-            im.setData(DataComponentTypes.ITEM_MODEL, ModelledControl.HANDBRAKE_1.getKey());
+            is.setData(DataComponentTypes.ITEM_MODEL, ModelledControl.HANDBRAKE_1.getKey());
         }
         is.setItemMeta(im);
         display.setItemStack(is);

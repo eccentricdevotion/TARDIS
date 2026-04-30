@@ -53,8 +53,8 @@ public class HeadBuilder {
             case MIRE -> "Mire Helmet";
             default -> monster.getName() + " Head";
         };
-        im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(head));
-        im.setData(DataComponentTypes.ITEM_MODEL, model);
+        is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(head));
+        is.setData(DataComponentTypes.ITEM_MODEL, model);
         EquippableComponent component = im.getEquippable();
         component.setSlot(EquipmentSlot.HEAD);
         // add overlays
@@ -72,8 +72,8 @@ public class HeadBuilder {
     public static ItemStack getK9() {
         ItemStack is = ItemStack.of(Material.BONE);
         ItemMeta im = is.getItemMeta();
-        im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("K9"));
-        im.setData(DataComponentTypes.ITEM_MODEL, K9Variant.K9.getKey());
+        is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("K9"));
+        is.setData(DataComponentTypes.ITEM_MODEL, K9Variant.K9.getKey());
         is.setItemMeta(im);
         return is;
     }

@@ -29,7 +29,6 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -117,7 +116,6 @@ public class TARDISCamera {
             // reset police box model
             EntityEquipment ee = stand.getEquipment();
             ItemStack is = ee.getHelmet();
-            ItemMeta im = is.getItemMeta();
             NamespacedKey notviewing = switch (is.getType()) {
                 case BLACK_DYE -> ChameleonVariant.BLACK_CLOSED.getKey();
                 case RED_DYE -> ChameleonVariant.RED_CLOSED.getKey();
@@ -143,9 +141,8 @@ public class TARDISCamera {
                 default -> null; // don't change for BATTLE, PANDORICA, SIDRAT, WEEPING_ANGEL or CUSTOM
             };
             if (notviewing != null) {
-                im.setData(DataComponentTypes.ITEM_MODEL, notviewing);
+                is.setData(DataComponentTypes.ITEM_MODEL, notviewing);
             }
-            is.setItemMeta(im);
             ee.setHelmet(is);
             // teleport player to interior
             Location interior = data.location();

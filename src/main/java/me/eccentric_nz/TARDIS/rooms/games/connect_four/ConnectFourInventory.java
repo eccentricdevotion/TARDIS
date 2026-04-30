@@ -68,7 +68,7 @@ public class ConnectFourInventory implements InventoryHolder {
         // 26 playing
         ItemStack banner = Letters.P(DyeColor.ORANGE, DyeColor.WHITE);
         ItemMeta im = banner.getItemMeta();
-        im.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Playing"));
+        is.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Playing"));
         banner.setItemMeta(im);
         items[26] = banner;
         // 44 reset

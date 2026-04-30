@@ -179,7 +179,7 @@ public class ConnectFourListener extends TARDISMenuListener {
         }
         if (result != null) {
             ItemMeta im = banner.getItemMeta();
-            im.setData(DataComponentTypes.CUSTOM_NAME, Component.text(display));
+            is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(display));
             banner.setItemMeta(im);
             player.playSound(player.getLocation(), result.getSound(), 0.8f, 0.8f);
             view.setItem(26, banner);

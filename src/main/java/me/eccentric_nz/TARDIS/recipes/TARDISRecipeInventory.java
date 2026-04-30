@@ -16,7 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.recipes;
 
-import com.google.common.collect.Multimaps;
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
+import io.papermc.paper.datacomponent.item.TooltipDisplay;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
 import me.eccentric_nz.TARDIS.enumeration.RecipeCategory;
@@ -27,11 +29,9 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.*;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class TARDISRecipeInventory implements InventoryHolder {
 
@@ -61,23 +61,20 @@ public class TARDISRecipeInventory implements InventoryHolder {
         ItemStack[] stack = new ItemStack[27];
         // back
         ItemStack back = ItemStack.of(Material.BOWL, 1);
-        ItemMeta but = back.getItemMeta();
-        but.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Back"));
-        back.setItemMeta(but);
+        back.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Back"));
         stack[0] = back;
         // info
         ItemStack info = ItemStack.of(Material.BOWL, 1);
-        ItemMeta info_im = info.getItemMeta();
-        info_im.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Info"));
-        info_im.lore(List.of(
+        info.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Info"));
+        info.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(
                 Component.text("Click a button below"),
                 Component.text("to see the recipe"),
                 Component.text("for that item")
-        ));
-        info.setItemMeta(info_im);
+        )));
         stack[4] = info;
         // close
-        stack[8] = GUIItemFactory.close();;
+        stack[8] = GUIItemFactory.close();
+        ;
         int i = 9;
         for (RecipeItem item : RecipeItem.values()) {
             if (item.getCategory() == category) {
@@ -102,12 +99,12 @@ public class TARDISRecipeInventory implements InventoryHolder {
                             result = shaped.getResult();
                         }
                     }
-                    ItemMeta im = result.getItemMeta();
-                    im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(str));
-                    im.lore(List.of(Component.text("/trecipe " + arg)));
-                    im.addItemFlags(ItemFlag.values());
-                    im.setAttributeModifiers(Multimaps.forMap(Map.of()));
-                    result.setItemMeta(im);
+                    result.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(str));
+                    result.lore(List.of(Component.text("/trecipe " + arg)));
+                    result.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
+                            .addHiddenComponents(DataComponentTypes.ATTRIBUTE_MODIFIERS)
+                            .hideTooltip(true)
+                            .build());
                     stack[i] = result;
                     i++;
                 }

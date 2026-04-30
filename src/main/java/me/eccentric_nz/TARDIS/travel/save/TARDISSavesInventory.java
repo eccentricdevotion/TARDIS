@@ -110,7 +110,7 @@ public class TARDISSavesInventory implements InventoryHolder {
                         }
                         ItemStack is = ItemStack.of(material, 1);
                         ItemMeta im = is.getItemMeta();
-                        im.setData(DataComponentTypes.CUSTOM_NAME, Component.text(map.dest_name()));
+                        is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(map.dest_name()));
                         ItemLore.Builder lore = ItemLore.lore();
                         String world = map.world().split(":")[1];
                         lore.add(Component.text(world));

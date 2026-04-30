@@ -111,7 +111,7 @@ public class PresetLampToggler {
                             } else {
                                 ItemStack is = ItemStack.of(material);
                                 ItemMeta im = is.getItemMeta();
-                                im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(light.getOff().getDisplayName()));
+                                is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(light.getOff().getDisplayName()));
                                 is.setItemMeta(im);
                                 display.setItemStack(is);
                             }
@@ -137,7 +137,7 @@ public class PresetLampToggler {
                         } else {
                             ItemStack is = ItemStack.of(material);
                             ItemMeta im = is.getItemMeta();
-                            im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(light.getOn().getDisplayName()));
+                            is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(light.getOn().getDisplayName()));
                             is.setItemMeta(im);
                             display.setItemStack(is);
                         }

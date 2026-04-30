@@ -33,7 +33,7 @@ public class MountCommand {
             if (as != null) {
                 ItemStack box = ItemStack.of(Material.BLUE_DYE, 1);
                 ItemMeta im = box.getItemMeta();
-                im.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.BLUE_CLOSED.getKey());
+                is.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.BLUE_CLOSED.getKey());
                 box.setItemMeta(im);
                 ItemDisplay display = VehicleUtility.getItemDisplay(player, box, 1.75f);
                 int period = 40;
