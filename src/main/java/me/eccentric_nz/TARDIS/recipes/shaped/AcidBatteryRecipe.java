@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
@@ -24,7 +25,6 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
 
 /*
 easy_shape:-A-,ARA,-A-
@@ -47,15 +47,11 @@ public class AcidBatteryRecipe {
 
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.NETHER_BRICK, 1);
-        ItemMeta im = is.getItemMeta();
         is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Acid Battery"));
-        is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "acid_battery");
         ShapedRecipe r = new ShapedRecipe(key, is);
         ItemStack exact = ItemStack.of(Material.WATER_BUCKET, 1);
-        ItemMeta em = exact.getItemMeta();
-        em.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Acid Bucket"));
-        exact.setItemMeta(em);
+        exact.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Acid Bucket"));
         if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             r.shape(" A ", "ARA", " A ");
             r.setIngredient('R', Material.REDSTONE_BLOCK);

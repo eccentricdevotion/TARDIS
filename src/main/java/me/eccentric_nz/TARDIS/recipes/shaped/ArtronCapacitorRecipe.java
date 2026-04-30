@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
@@ -25,7 +27,6 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
 
@@ -57,18 +58,14 @@ public class ArtronCapacitorRecipe {
 
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.BUCKET, 1);
-        ItemMeta im = is.getItemMeta();
         is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Artron Capacitor"));
-        is.setItemMeta(im);
         // exact choice
         ItemStack storage = ItemStack.of(Material.BUCKET, 1);
-        ItemMeta cell = storage.getItemMeta();
-        cell.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Artron Storage Cell"));
-        cell.lore(List.of(
+        storage.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Artron Storage Cell"));
+        storage.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(
                 Component.text("Charge Level"),
                 Component.text("0")
-        ));
-        storage.setItemMeta(cell);
+        )));
         NamespacedKey key = new NamespacedKey(plugin, "artron_capacitor");
         ShapedRecipe r = new ShapedRecipe(key, is);
         r.shape("OOO", "EEE", "RBC");

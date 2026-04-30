@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
@@ -25,7 +26,6 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 /*
@@ -53,19 +53,15 @@ public class ArtronCapacitorStorageRecipe {
 
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.GRAY_SHULKER_BOX, 1);
-        ItemMeta im = is.getItemMeta();
         is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Artron Capacitor Storage"));
-        im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, RecipeItem.ARTRON_CAPACITOR_STORAGE.getModel().getKey());
-        is.setItemMeta(im);
+        is.editPersistentDataContainer(pdc -> pdc.set(plugin.getCustomBlockKey(), PersistentDataType.STRING, RecipeItem.ARTRON_CAPACITOR_STORAGE.getModel().getKey()));
         // exact choice
-        ItemStack capac = ItemStack.of(Material.BUCKET, 1);
-        ItemMeta itor = capac.getItemMeta();
-        itor.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Artron Capacitor"));
-        capac.setItemMeta(itor);
+        ItemStack capacitor = ItemStack.of(Material.BUCKET, 1);
+        capacitor.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Artron Capacitor"));
         NamespacedKey key = new NamespacedKey(plugin, "artron_capacitor_storage");
         ShapedRecipe r = new ShapedRecipe(key, is);
         r.shape("RRR", "EDE", "CCC");
-        r.setIngredient('E', new RecipeChoice.ExactChoice(capac));
+        r.setIngredient('E', new RecipeChoice.ExactChoice(capacitor));
         if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             r.setIngredient('R', Material.COMPARATOR);
             r.setIngredient('D', Material.DIAMOND_BLOCK);
