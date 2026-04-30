@@ -17,6 +17,9 @@
 package me.eccentric_nz.TARDIS.artron;
 
 import com.google.common.collect.Multimaps;
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
+import io.papermc.paper.datacomponent.item.TooltipDisplay;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.blueprints.BlueprintProcessor;
@@ -342,24 +345,24 @@ public class ArtronCondenserListener implements Listener {
         if (remainder > 0) {
             // give one partially filled cell
             ItemStack leftover = result.clone();
-            ItemMeta lim = leftover.getItemMeta();
-            List<Component> lore = lim.lore();
+            List<Component> lore = new ArrayList<>(leftover.getData(DataComponentTypes.LORE).lines());
             lore.set(1, Component.text(remainder));
-            lim.lore(lore);
-            lis.setData(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE, true);
-            lim.addItemFlags(ItemFlag.values());
-            lim.setAttributeModifiers(Multimaps.forMap(Map.of()));
-            leftover.setItemMeta(lim);
+            leftover.setData(DataComponentTypes.LORE, ItemLore.lore(lore));
+            leftover.setData(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE, true);
+            leftover.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
+                    .addHiddenComponents(DataComponentTypes.ATTRIBUTE_MODIFIERS)
+                    .hideTooltip(true)
+                    .build());
             player.getInventory().addItem(leftover);
         }
         if (finalFullCellCount > 0) {
             // give full cells
             result.setAmount(finalFullCellCount);
             ItemMeta im = result.getItemMeta();
-            List<Component> lore = im.lore();
+            List<Component> lore = new ArrayList<>(result.getData(DataComponentTypes.LORE).lines());
             lore.set(1, Component.text(full));
-            im.lore(lore);
-            is.setData(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE, true);
+            result.setData(DataComponentTypes.LORE, ItemLore.lore(lore));
+            result.setData(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE, true);
             im.addItemFlags(ItemFlag.values());
             im.setAttributeModifiers(Multimaps.forMap(Map.of()));
             result.setItemMeta(im);
@@ -412,7 +415,7 @@ public class ArtronCondenserListener implements Listener {
         if (is.hasItemMeta()) {
             ItemMeta im = is.getItemMeta();
             if (im.hasCustomName()) {
-                return ComponentUtils.endsWith(im.customName(),"TARDIS Blueprint Disk");
+                return ComponentUtils.endsWith(im.customName(), "TARDIS Blueprint Disk");
             }
         }
         return false;

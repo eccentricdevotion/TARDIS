@@ -1,20 +1,19 @@
 package me.eccentric_nz.TARDIS.commands.artron;
 
-import com.google.common.collect.Multimaps;
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
+import io.papermc.paper.datacomponent.item.TooltipDisplay;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import net.kyori.adventure.text.Component;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class ArtronUtility {
 
@@ -28,45 +27,39 @@ public class ArtronUtility {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "CELL_ONE");
             return null;
         }
-        ItemMeta im = is.getItemMeta();
-        if (!im.hasCustomName() || !ComponentUtils.endsWith(im.customName(), "Artron Storage Cell")) {
+        if (!is.hasData(DataComponentTypes.CUSTOM_NAME) || !ComponentUtils.endsWith(is.getData(DataComponentTypes.CUSTOM_NAME), "Artron Storage Cell")) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "CELL_IN_HAND");
             return null;
         }
         return is;
     }
 
-    public static int getLevel(ItemMeta im) {
-        String lore = ComponentUtils.stripColour(im.lore().get(1));
+    public static int getLevel(ItemStack is) {
+        String lore = ComponentUtils.stripColour(is.getData(DataComponentTypes.LORE).lines().get(1));
         return TARDISNumberParsers.parseInt(lore);
     }
 
-    public static void setLevel(ItemStack is, ItemMeta im, int level, Player player, boolean main) {
-        List<Component> lore = im.lore();
+    public static void setLevel(ItemStack is, int level, Player player, boolean main) {
+        List<Component> lore = new ArrayList<>(is.getData(DataComponentTypes.LORE).lines());
         lore.set(1, Component.text(level));
-        im.lore(lore);
+        is.setData(DataComponentTypes.LORE, ItemLore.lore(lore));
         // add glint if missing
-        if (main && !im.hasEnchantmentGlintOverride()) {
-            im.removeEnchant(Enchantment.UNBREAKING);
+        if (main && !is.hasData(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE)) {
             is.setData(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE, true);
         }
         if (main) {
-            is.setItemMeta(im);
             player.getInventory().setItemInMainHand(is);
         } else {
-            // remove enchant if level <= 0
+            // remove enchantment glint if level <= 0
             if (level <= 0) {
-                is.getEnchantments().keySet().forEach(is::removeEnchantment);
-                im.setEnchantmentGlintOverride(null);
-                is.setItemMeta(im);
+                is.unsetData(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE);
             }
             player.getInventory().setItemInOffHand(is);
         }
     }
 
     public static void chargeCell(TARDIS plugin, ItemStack is, Player player, int amount, String table) {
-        ItemMeta im = is.getItemMeta();
-        List<Component> lore = im.lore();
+        List<Component> lore = new ArrayList<>(is.getData(DataComponentTypes.LORE).lines());
         int level = TARDISNumberParsers.parseInt(ComponentUtils.stripColour(lore.get(1)));
         if (level < 0) {
             level = 0;
@@ -78,11 +71,12 @@ public class ArtronUtility {
             return;
         }
         lore.set(1, Component.text(new_amount));
-        im.lore(lore);
+        is.setData(DataComponentTypes.LORE, ItemLore.lore(lore));
         is.setData(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE, true);
-        im.addItemFlags(ItemFlag.values());
-        im.setAttributeModifiers(Multimaps.forMap(Map.of()));
-        is.setItemMeta(im);
+        is.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
+                .addHiddenComponents(DataComponentTypes.ATTRIBUTE_MODIFIERS)
+                .hideTooltip(true)
+                .build());
         // remove the energy from the tardis/timelord
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", player.getUniqueId().toString());

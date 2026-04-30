@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.artron;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
@@ -67,9 +68,7 @@ public class ArtronFurnaceListener implements Listener {
         ItemDisplay display = TARDISDisplayItemUtils.get(block);
         if (display != null) {
             ItemStack itemStack = display.getItemStack();
-            ItemMeta im = itemStack.getItemMeta();
-            im.setData(DataComponentTypes.ITEM_MODEL, lit ? Whoniverse.ARTRON_FURNACE_LIT.getKey() : Whoniverse.ARTRON_FURNACE.getKey());
-            itemStack.setItemMeta(im);
+            itemStack.setData(DataComponentTypes.ITEM_MODEL, lit ? Whoniverse.ARTRON_FURNACE_LIT.getKey() : Whoniverse.ARTRON_FURNACE.getKey());
             display.setItemStack(itemStack);
             display.setBrightness(new Display.Brightness(15, 15));
         }
@@ -191,9 +190,7 @@ public class ArtronFurnaceListener implements Listener {
                 ArtronFurnaceUtils.remove(block.getLocation().toString(), event.getPlayer(), plugin);
             }
             ItemStack is = ItemStack.of(Material.FURNACE, 1);
-            ItemMeta im = is.getItemMeta();
-            im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("TARDIS Artron Furnace"));
-            is.setItemMeta(im);
+            is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("TARDIS Artron Furnace"));
             TARDISDisplayItemUtils.remove(block);
             block.setBlockData(TARDISConstants.AIR);
             block.getWorld().dropItemNaturally(event.getPlayer().getLocation(), is);

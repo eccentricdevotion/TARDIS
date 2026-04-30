@@ -17,6 +17,8 @@
 package me.eccentric_nz.TARDIS.autonomous;
 
 import com.mojang.datafixers.util.Pair;
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreas;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAutonomousSave;
@@ -31,8 +33,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -46,13 +48,9 @@ public class AutonomousGUIListener extends TARDISMenuListener {
         super(plugin);
         this.plugin = plugin;
         on = ItemStack.of(Material.LIME_WOOL, 1);
-        ItemMeta onMeta = on.getItemMeta();
-        onMeta.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("SET_ON", "ON"), NamedTextColor.GREEN));
-        on.setItemMeta(onMeta);
+        on.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("SET_ON", "ON"), NamedTextColor.GREEN));
         off = ItemStack.of(Material.LIGHT_GRAY_CARPET, 1);
-        ItemMeta offMeta = off.getItemMeta();
-        offMeta.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("SET_OFF", "OFF"), NamedTextColor.RED));
-        off.setItemMeta(offMeta);
+        off.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("SET_OFF", "OFF"), NamedTextColor.RED));
     }
 
     /**
@@ -144,12 +142,10 @@ public class AutonomousGUIListener extends TARDISMenuListener {
                             i = 0;
                         }
                         Pair<String, Integer> next = rsa.getData().get(i);
-                        ItemMeta im = is.getItemMeta();
-                        List<Component> lore = im.lore();
-                        if (lore != null && lore.size() > 3) {
+                        List<Component> lore = new ArrayList<>(is.getData(DataComponentTypes.LORE).lines());
+                        if (lore.size() > 3) {
                             lore.set(3, Component.text(next.getFirst(), NamedTextColor.GREEN));
-                            im.lore(lore);
-                            is.setItemMeta(im);
+                            is.setData(DataComponentTypes.LORE, ItemLore.lore(lore));
                             view.setItem(25, is);
                         }
                         // update destination table
