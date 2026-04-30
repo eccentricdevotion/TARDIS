@@ -12,7 +12,7 @@ plugins {
 
 group = "me.eccentric_nz"
 val buildNumber = "-b${System.getenv("BUILD_NUMBER") ?: (System.getenv("SHORT_SHA") ?: ".local")}"
-version = "7.0.1${buildNumber}"
+version = "7.0.2${buildNumber}"
 
 repositories {
     mavenCentral()
@@ -84,16 +84,16 @@ repositories {
 
 dependencies {
     paperweight.paperDevBundle("26.1.2.build.+")
-    compileOnly("com.sk89q.worldedit:worldedit-core:8.0.0-SNAPSHOT") {
+    compileOnly("com.sk89q.worldedit:worldedit-core:7.4.3-SNAPSHOT") {
         isTransitive = false
     }
-    compileOnly("com.sk89q.worldedit:worldedit-bukkit:8.0.0-SNAPSHOT") {
+    compileOnly("com.sk89q.worldedit:worldedit-bukkit:7.4.3-SNAPSHOT") {
         isTransitive = false
     }
-    compileOnly("com.sk89q.worldguard:worldguard-core:7.1.0-SNAPSHOT") {
+    compileOnly("com.sk89q.worldguard:worldguard-core:7.0.17-SNAPSHOT") {
         isTransitive = false
     }
-    compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.1.0-SNAPSHOT") {
+    compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.17-SNAPSHOT") {
         isTransitive = false
     }
     compileOnly("net.citizensnpcs:citizensapi:2.0.42-SNAPSHOT") {

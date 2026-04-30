@@ -8,7 +8,7 @@ loadbefore: [ Citizens ]
 website: http://tardis.pages.dev/
 dev-url: http://github.com/eccentricdevotion/TARDIS/
 url: http://tardis.pages.dev/
-version: 7.0.1@buildNumber@
+version: 7.0.2@buildNumber@
 api-version: '26.1.2'
 libraries:
   - org.jsoup:jsoup:1.21.1
