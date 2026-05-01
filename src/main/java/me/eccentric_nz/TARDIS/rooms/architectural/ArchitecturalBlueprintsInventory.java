@@ -121,7 +121,7 @@ public class ArchitecturalBlueprintsInventory implements InventoryHolder {
         give.setItemMeta(gim);
         items[49] = give;
         // close
-        items[53] = GUIItemFactory.close();;
+        items[53] = GUIItemFactory.close();
         return items;
     }
 }

@@ -107,7 +107,7 @@ public class TARDISSonicMenuInventory implements InventoryHolder {
         name.setItemMeta(name_im);
         stack[32] = name;
         // close
-        stack[35] = GUIItemFactory.close();;
+        stack[35] = GUIItemFactory.close();
 
         return stack;
     }

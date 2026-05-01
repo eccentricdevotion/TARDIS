@@ -16,7 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.commands.dev;
 
-import com.google.common.collect.Multimaps;
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.CustomModelData;
+import io.papermc.paper.datacomponent.item.TooltipDisplay;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.SerializeInventory;
 import me.eccentric_nz.TARDIS.custommodels.keys.CircuitVariant;
@@ -24,16 +26,12 @@ import me.eccentric_nz.TARDIS.enumeration.Storage;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Map;
 
 public class FixStorageCommand {
 
@@ -50,9 +48,8 @@ public class FixStorageCommand {
                 // convert stacks to component display names
                 for (ItemStack is : stacks) {
                     if (is != null && is.hasItemMeta()) {
-                        ItemMeta im = is.getItemMeta();
-                        if (im.hasCustomName()) {
-                            Component component = im.customName();
+                        if (is.hasData(DataComponentTypes.CUSTOM_NAME)) {
+                            Component component = is.getData(DataComponentTypes.CUSTOM_NAME);
                             // strip color codes
                             String stripped = ComponentUtils.stripColour(component);
                             if (!component.children().isEmpty()) {
@@ -60,14 +57,15 @@ public class FixStorageCommand {
                             }
                             is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(stripped));
                             if (is.getType() == Material.GLOWSTONE_DUST) {
-                                CustomModelDataComponent cmd = im.getCustomModelDataComponent();
-                                cmd.setFloats(CircuitVariant.GALLIFREY.getFloats());
-                                im.setCustomModelDataComponent(cmd);
+                                is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                                        .addFloats(CircuitVariant.GALLIFREY.getFloats())
+                                        .build());
                             }
-                            is.setData(DataComponentTypes.ITEM_MODEL, null);
-                            im.addItemFlags(ItemFlag.values());
-                            im.setAttributeModifiers(Multimaps.forMap(Map.of()));
-                            is.setItemMeta(im);
+                            is.unsetData(DataComponentTypes.ITEM_MODEL);
+                            is.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
+                                    .addHiddenComponents(DataComponentTypes.ATTRIBUTE_MODIFIERS)
+                                    .hideTooltip(true)
+                                    .build());
                         }
                     }
                 }

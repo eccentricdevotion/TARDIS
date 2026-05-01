@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.SerializeInventory;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDiskStorage;
@@ -34,10 +36,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -55,10 +58,9 @@ public class TARDISBiomeReaderListener implements Listener {
         for (int s = 27; s < stack.length; s++) {
             ItemStack disk = stack[s];
             if (disk != null && disk.hasItemMeta()) {
-                ItemMeta diskim = disk.getItemMeta();
-                if (diskim.hasLore()) {
-                    List<Component> lore = diskim.lore();
-                    if (lore != null && lore.contains(Component.text(biome.toUpperCase(Locale.ROOT)))) {
+                if (disk.hasData(DataComponentTypes.LORE)) {
+                    ItemLore lore = disk.getData(DataComponentTypes.LORE);
+                    if (lore != null && lore.lines().contains(Component.text(biome.toUpperCase(Locale.ROOT)))) {
                         found = true;
                         break;
                     }
@@ -80,8 +82,7 @@ public class TARDISBiomeReaderListener implements Listener {
         Player player = event.getPlayer();
         ItemStack is = player.getInventory().getItemInMainHand();
         if (is.getType().equals(Material.BRICK) && is.hasItemMeta()) {
-            ItemMeta im = is.getItemMeta();
-            if (im.hasCustomName() && ComponentUtils.endsWith(im.customName(), "TARDIS Biome Reader")) {
+            if (is.hasData(DataComponentTypes.CUSTOM_NAME) && ComponentUtils.endsWith(is.getData(DataComponentTypes.CUSTOM_NAME), "TARDIS Biome Reader")) {
                 UUID uuid = player.getUniqueId();
                 Biome biome = b.getBiome();
                 if (biome.equals(Biome.THE_VOID)) {
@@ -110,12 +111,8 @@ public class TARDISBiomeReaderListener implements Listener {
                             }
                             if (!hasBiomeDisk(disks2, biomeKey)) {
                                 ItemStack bd = ItemStack.of(Material.MUSIC_DISC_CAT, 1);
-                                ItemMeta dim = bd.getItemMeta();
-                                dim.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Biome Storage Disk"));
-                                List<Component> disk_lore = new ArrayList<>();
-                                disk_lore.add(Component.text(biomeKey));
-                                dim.lore(disk_lore);
-                                bd.setItemMeta(dim);
+                                bd.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Biome Storage Disk"));
+                                bd.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text(biomeKey)).build());
                                 int slot = getNextFreeSlot(disks1);
                                 if (slot != -1) {
                                     disks1[slot] = bd;

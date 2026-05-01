@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.commands.sudo;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.customblocks.TARDISBlockDisplayItem;
@@ -37,7 +38,6 @@ import org.bukkit.block.data.type.Door;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -118,9 +118,7 @@ public class SudoUpdate {
                             itemFrame = MonitorUtils.getItemFrameFromLocation(tardis.getTardisId(), false);
                             // reinstate display name
                             ItemStack glass = itemFrame.getItem();
-                            ItemMeta im = glass.getItemMeta();
-                            is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Monitor Frame"));
-                            glass.setItemMeta(im);
+                            glass.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Monitor Frame"));
                         }
                         default -> {
                         }

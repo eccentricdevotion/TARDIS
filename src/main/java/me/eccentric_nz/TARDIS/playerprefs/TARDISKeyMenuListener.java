@@ -16,6 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.playerprefs;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.CustomModelData;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
@@ -31,8 +34,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
 import java.util.*;
 
@@ -104,18 +105,15 @@ public class TARDISKeyMenuListener extends TARDISMenuListener {
                 }
                 // get display name of selected key
                 ItemStack choice = view.getItem(slot);
-                ItemMeta choiceMeta = choice.getItemMeta();
-                ItemMeta keyMeta = key.getItemMeta();
-                CustomModelDataComponent component = choiceMeta.getCustomModelDataComponent();
-                CustomModelDataComponent transfer = keyMeta.getCustomModelDataComponent();
-                transfer.setFloats(component.getFloats());
-                keyMeta.setCustomModelDataComponent(transfer);
+                key.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                        .addFloats(choice.getData(DataComponentTypes.CUSTOM_MODEL_DATA).floats())
+                        .build());
                 // personalise
-                keyMeta.getPersistentDataContainer().set(TARDIS.plugin.getTimeLordUuidKey(), TARDIS.plugin.getPersistentDataTypeUUID(), player.getUniqueId());
+                key.editPersistentDataContainer(pdc -> pdc.set(TARDIS.plugin.getTimeLordUuidKey(), TARDIS.plugin.getPersistentDataTypeUUID(), player.getUniqueId()));
                 // set lore
                 List<Component> lore;
-                if (keyMeta.hasLore()) {
-                    lore = keyMeta.lore();
+                if (key.hasData(DataComponentTypes.LORE)) {
+                    lore = new ArrayList<>(key.getData(DataComponentTypes.LORE).lines());
                 } else {
                     lore = new ArrayList<>();
                 }
@@ -123,9 +121,8 @@ public class TARDISKeyMenuListener extends TARDISMenuListener {
                 if (lore != null && !lore.contains(belongs)) {
                     lore.add(belongs);
                     lore.add(Component.text(player.getName(), NamedTextColor.AQUA).decorate(TextDecoration.ITALIC));
-                    keyMeta.lore(lore);
+                    key.setData(DataComponentTypes.LORE, ItemLore.lore(lore));
                 }
-                key.setItemMeta(keyMeta);
             }
             case 18 -> {
                 // get item on cursor
@@ -133,12 +130,11 @@ public class TARDISKeyMenuListener extends TARDISMenuListener {
                 if (!cursor.getType().equals(Material.BLAZE_ROD) || !cursor.hasItemMeta()) {
                     return;
                 }
-                ItemMeta meta = cursor.getItemMeta();
-                if (!meta.hasCustomName()) {
+                if (!cursor.hasData(DataComponentTypes.CUSTOM_NAME)) {
                     return;
                 }
                 // set wool colour from display name of placed key
-                NamedTextColor color = TARDISStaticUtils.getColor(meta.customName());
+                NamedTextColor color = TARDISStaticUtils.getColor(cursor.getData(DataComponentTypes.CUSTOM_NAME));
                 Material wool = TARDISKeyMenuListener.REVERSE_LOOKUP.getOrDefault(color, Material.WHITE_WOOL);
                 view.setItem(19, ItemStack.of(wool));
             }
@@ -156,9 +152,7 @@ public class TARDISKeyMenuListener extends TARDISMenuListener {
                 view.setItem(19, ItemStack.of(wool));
                 // set key display name colour
                 NamedTextColor display = COLOUR_LOOKUP.get(wool);
-                ItemMeta key_im = key.getItemMeta();
-                key_im.setData(DataComponentTypes.CUSTOM_NAME, Component.text("TARDIS Key", display).decorationIfAbsent(TextDecoration.ITALIC, TextDecoration.State.FALSE));
-                key.setItemMeta(key_im);
+                key.setData(DataComponentTypes.CUSTOM_NAME, Component.text("TARDIS Key", display).decorationIfAbsent(TextDecoration.ITALIC, TextDecoration.State.FALSE));
             }
             case 26 -> {
                 // close

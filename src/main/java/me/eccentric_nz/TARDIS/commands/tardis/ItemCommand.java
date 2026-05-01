@@ -16,7 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.commands.tardis;
 
-import com.google.common.collect.Multimaps;
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
+import io.papermc.paper.datacomponent.item.TooltipDisplay;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -25,13 +27,12 @@ import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 public class ItemCommand {
 
@@ -49,16 +50,11 @@ public class ItemCommand {
         switch (which.toLowerCase(Locale.ROOT)) {
             case "hand" -> {
                 ItemStack inHand = player.getInventory().getItemInMainHand();
-                if (!inHand.hasItemMeta()) {
+                if (!inHand.hasData(DataComponentTypes.CUSTOM_NAME)) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "ITEM_IN_HAND");
                     return;
                 }
-                ItemMeta im = inHand.getItemMeta();
-                if (!im.hasCustomName()) {
-                    plugin.getMessenger().send(player, TardisModule.TARDIS, "ITEM_IN_HAND");
-                    return;
-                }
-                Component component = im.customName();
+                Component component = inHand.getData(DataComponentTypes.CUSTOM_NAME);
                 // strip color codes
                 String stripped = ComponentUtils.stripColour(component);
                 if (!component.children().isEmpty()) {
@@ -67,9 +63,8 @@ public class ItemCommand {
                 // look up display name
                 RecipeItem recipeItem = RecipeItem.getByName(stripped);
                 if (!recipeItem.equals(RecipeItem.NOT_FOUND)) {
-                    is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(stripped));
-                    is.setData(DataComponentTypes.ITEM_MODEL, null);
-                    inHand.setItemMeta(im);
+                    inHand.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(stripped));
+                    inHand.unsetData(DataComponentTypes.ITEM_MODEL);
                     player.updateInventory();
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "ITEM_UPDATED");
                 }
@@ -90,7 +85,7 @@ public class ItemCommand {
                             RecipeItem recipeItem = RecipeItem.getByName(stripped);
                             if (!recipeItem.equals(RecipeItem.NOT_FOUND)) {
                                 is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(stripped));
-                                is.setData(DataComponentTypes.ITEM_MODEL, null);
+                                is.unsetData(DataComponentTypes.ITEM_MODEL);
                                 is.setItemMeta(im);
                                 i++;
                             }
@@ -105,13 +100,12 @@ public class ItemCommand {
             case "cell" -> {
                 int i = 0;
                 for (ItemStack is : player.getInventory()) {
-                    if (is != null && is.hasItemMeta()) {
+                    if (is != null) {
                         if (is.getType() != Material.BUCKET) {
                             continue;
                         }
-                        ItemMeta im = is.getItemMeta();
-                        if (im.hasCustomName()) {
-                            Component component = im.customName();
+                        if (is.hasData(DataComponentTypes.CUSTOM_NAME)) {
+                            Component component = is.getData(DataComponentTypes.CUSTOM_NAME);
                             // strip color codes
                             String stripped = ComponentUtils.stripColour(component);
                             if (!component.children().isEmpty()) {
@@ -121,22 +115,27 @@ public class ItemCommand {
                             RecipeItem recipeItem = RecipeItem.getByName(stripped);
                             if (recipeItem.equals(RecipeItem.ARTRON_STORAGE_CELL)) {
                                 is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(stripped));
-                                is.setData(DataComponentTypes.ITEM_MODEL, null);
-                                if (im.hasLore()) {
+                                is.unsetData(DataComponentTypes.ITEM_MODEL);
+                                if (is.hasData(DataComponentTypes.LORE)) {
                                     // get / set lore
-                                    List<Component> lore = im.lore();
+                                    List<Component> lore = new ArrayList<>(is.getData(DataComponentTypes.LORE).lines());
                                     int level = TARDISNumberParsers.parseInt(ComponentUtils.stripColour(lore.get(1)));
                                     if (level < 0) {
                                         level = 0;
                                     }
                                     lore.set(0, Component.text("Charge Level"));
                                     lore.set(1, Component.text(level));
-                                    im.lore(lore);
-                                    im.setEnchantmentGlintOverride(level > 0);
-                                    im.addItemFlags(ItemFlag.values());
-                                    im.setAttributeModifiers(Multimaps.forMap(Map.of()));
+                                    is.setData(DataComponentTypes.LORE, ItemLore.lore(lore));
+                                    if (level > 0) {
+                                        is.setData(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE, true);
+                                    } else {
+                                        is.unsetData(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE);
+                                    }
+                                    is.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
+                                            .addHiddenComponents(DataComponentTypes.ATTRIBUTE_MODIFIERS)
+                                            .hideTooltip(true)
+                                            .build());
                                 }
-                                is.setItemMeta(im);
                                 i++;
                             }
                         }

@@ -1,5 +1,6 @@
 package me.eccentric_nz.TARDIS.commands.dev;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
@@ -9,7 +10,6 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 public class BleachCommand {
@@ -24,10 +24,8 @@ public class BleachCommand {
         Block block = player.getTargetBlock(null, 4);
         Location location = block.getLocation().add(0.75d, 0.5d, 1.0d);
         ItemStack bleach = ItemStack.of(Material.WHITE_DYE);
-        ItemMeta im = bleach.getItemMeta();
-        is.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Bleach"));
-        im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, 1);
-        bleach.setItemMeta(im);
+        bleach.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Bleach"));
+        bleach.editPersistentDataContainer(pdc -> pdc.set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, 1));
         ItemDisplay display = (ItemDisplay) block.getWorld().spawnEntity(location, EntityType.ITEM_DISPLAY);
         display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.HEAD);
         display.setItemStack(bleach);

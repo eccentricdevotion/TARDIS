@@ -16,12 +16,14 @@
  */
 package me.eccentric_nz.TARDIS.playerprefs;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.CustomModelData;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.console.ConsoleInteraction;
 import me.eccentric_nz.TARDIS.custommodels.GUIChameleonPresets;
 import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
 import me.eccentric_nz.TARDIS.custommodels.GUIPlayerPreferences;
-import me.eccentric_nz.TARDIS.custommodels.GUIWeather;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetConsoleLabel;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
@@ -41,8 +43,6 @@ import org.bukkit.entity.TextDisplay;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.ArrayList;
@@ -152,24 +152,22 @@ public class TARDISGeneralPrefsInventory implements InventoryHolder {
         for (GUIPlayerPreferences pref : GUIPlayerPreferences.values()) {
             if (pref.getMaterial() == Material.REPEATER) {
                 ItemStack is = ItemStack.of(pref.getMaterial(), 1);
-                ItemMeta im = is.getItemMeta();
                 is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(pref.getName()));
                 boolean v = values.get(pref.getSlot());
                 if (pref.getOffFloats() != null) {
-                    CustomModelDataComponent component = im.getCustomModelDataComponent();
-                    component.setFloats(v ? pref.getOnFloats() : pref.getOffFloats());
-                    im.setCustomModelDataComponent(component);
+                    is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                            .addFloats(v ? pref.getOnFloats() : pref.getOffFloats())
+                            .build());
                 }
                 if (pref == GUIPlayerPreferences.HADS_TYPE) {
-                    im.lore(List.of(Component.text(v ? "DISPERSAL" : "DISPLACEMENT")));
+                    is.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text(v ? "DISPERSAL" : "DISPLACEMENT")).build());
                 } else {
-                    im.lore(List.of(
+                    is.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(
                             Component.text(v
                                     ? plugin.getLanguage().getString("SET_ON", "ON")
                                     : plugin.getLanguage().getString("SET_OFF", "OFF"))
-                    ));
+                    )));
                 }
-                is.setItemMeta(im);
                 stack[pref.getSlot()] = is;
             }
         }
@@ -178,12 +176,10 @@ public class TARDISGeneralPrefsInventory implements InventoryHolder {
         }
         // back
         ItemStack back = ItemStack.of(GUIChameleonPresets.BACK.material(), 1);
-        ItemMeta but = back.getItemMeta();
-        but.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Back"));
-        back.setItemMeta(but);
+        back.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Back"));
         stack[33] = back;
         // close
-        stack[35] = GUIItemFactory.close();;
+        stack[35] = GUIItemFactory.close();
         return stack;
     }
 

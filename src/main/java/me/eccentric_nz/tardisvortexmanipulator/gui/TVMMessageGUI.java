@@ -81,7 +81,7 @@ public class TVMMessageGUI implements InventoryHolder {
         page.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Page " + n));
         stack[45] = page;
         // close
-        stack[46] = GUIItemFactory.close();;
+        stack[46] = GUIItemFactory.close();
         // previous screen (only if needed)
         if (start > 0) {
             ItemStack prev = ItemStack.of(Material.ARROW, 1);

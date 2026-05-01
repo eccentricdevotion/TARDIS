@@ -1,5 +1,7 @@
 package me.eccentric_nz.TARDIS.console;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.console.models.ColourType;
 import me.eccentric_nz.TARDIS.custommodels.GUIArs;
@@ -15,7 +17,6 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
 import java.util.Map;
@@ -40,24 +41,20 @@ public class CustomiseConsoleInventory implements InventoryHolder {
         ItemStack[] consoles = new ItemStack[54];
         // info
         ItemStack info = ItemStack.of(Material.BOOK, 1);
-        ItemMeta info_im = info.getItemMeta();
-        info_im.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Instructions"));
-        info_im.lore(List.of(
+        info.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Instructions"));
+        info.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(
                 Component.text("Choose your desired time rotor"),
                 Component.text("Choose your desired console"),
                 Component.text("Click on the Save button"),
                 Component.text("to apply your choices.")
-        ));
-        info.setItemMeta(info_im);
+        )));
         consoles[0] = info;
         // rotors
         int r = 9;
         for (Map.Entry<String,Rotor> rotor: Rotor.byName.entrySet()) {
             ItemStack is = ItemStack.of(Material.LIGHT_GRAY_DYE);
-            ItemMeta im = is.getItemMeta();
             is.setData(DataComponentTypes.ITEM_MODEL, rotor.getValue().offModel());
             is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(TARDISStringUtils.capitalise(rotor.getKey())));
-            is.setItemMeta(im);
             consoles[r] = is;
             r++;
             if (r > 17) {
@@ -67,15 +64,11 @@ public class CustomiseConsoleInventory implements InventoryHolder {
         // prev next
         // scroll left
         ItemStack scroll_left = ItemStack.of(GUIArs.BUTTON_SCROLL_L.material(), 1);
-        ItemMeta nim = scroll_left.getItemMeta();
-        nim.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_SCROLL_L", "Scroll left")));
-        scroll_left.setItemMeta(nim);
+        scroll_left.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_SCROLL_L", "Scroll left")));
         consoles[18] = scroll_left;
         // scroll right
         ItemStack scroll_right = ItemStack.of(GUIArs.BUTTON_SCROLL_R.material(), 1);
-        ItemMeta pim = scroll_right.getItemMeta();
-        pim.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_SCROLL_R", "Scroll right")));
-        scroll_right.setItemMeta(pim);
+        scroll_right.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_SCROLL_R", "Scroll right")));
         consoles[26] = scroll_right;
         // consoles
         int c = 27;
@@ -83,10 +76,8 @@ public class CustomiseConsoleInventory implements InventoryHolder {
             // get colour name
             String name = colour.getValue().getKey().replace("console_", "");
             ItemStack is = ItemStack.of(colour.getKey(), 1);
-            ItemMeta im = is.getItemMeta();
             String dn = TARDISStringUtils.capitalise(name) + " Console";
             is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(dn));
-            is.setItemMeta(im);
             consoles[c] = is;
             c++;
             if (c > 35) {
@@ -99,12 +90,10 @@ public class CustomiseConsoleInventory implements InventoryHolder {
         consoles[44] = scroll_right;
         // save
         ItemStack save = ItemStack.of(Material.BOWL, 1);
-        ItemMeta se = save.getItemMeta();
-        se.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Save"));
-        save.setItemMeta(se);
+        save.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Save"));
         consoles[49] = save;
         // close
-        consoles[GUICompanion.BUTTON_CLOSE.slot()] = GUIItemFactory.close();;
+        consoles[GUICompanion.BUTTON_CLOSE.slot()] = GUIItemFactory.close();
 
         return consoles;
     }

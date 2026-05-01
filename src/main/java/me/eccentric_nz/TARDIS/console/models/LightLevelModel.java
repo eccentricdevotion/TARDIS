@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.console.models;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.custommodels.keys.ModelledControl;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 public class LightLevelModel {
 
@@ -28,7 +28,6 @@ public class LightLevelModel {
             return;
         }
         ItemStack is = display.getItemStack();
-        ItemMeta im = is.getItemMeta();
         switch (state) {
             case 7 -> is.setData(DataComponentTypes.ITEM_MODEL, interior ? ModelledControl.MODELLED_LIGHT_7.getKey() : ModelledControl.MODELLED_LAMP_7.getKey());
             case 6 -> is.setData(DataComponentTypes.ITEM_MODEL, interior ? ModelledControl.MODELLED_LIGHT_6.getKey() : ModelledControl.MODELLED_LAMP_6.getKey());
@@ -39,7 +38,6 @@ public class LightLevelModel {
             case 1 -> is.setData(DataComponentTypes.ITEM_MODEL, interior ? ModelledControl.MODELLED_LIGHT_1.getKey() : ModelledControl.MODELLED_LAMP_1.getKey());
             default -> is.setData(DataComponentTypes.ITEM_MODEL, interior ? ModelledControl.MODELLED_LIGHT_0.getKey() : ModelledControl.MODELLED_LAMP_0.getKey());
         }
-        is.setItemMeta(im);
         display.setItemStack(is);
     }
 }

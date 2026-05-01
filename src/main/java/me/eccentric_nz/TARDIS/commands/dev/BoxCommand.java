@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.commands.dev;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.exterior.BuilderUtility;
 import me.eccentric_nz.TARDIS.custommodels.keys.ChameleonVariant;
@@ -63,7 +64,6 @@ public class BoxCommand {
                 if (as != null) {
                     Material dye = BuilderUtility.getMaterialForArmourStand(preset, -1, true);
                     ItemStack is = ItemStack.of(dye, 1);
-                    ItemMeta im = is.getItemMeta();
                     NamespacedKey model = ChameleonVariant.BLUE_CLOSED.getKey();
                     if (!state.isEmpty()) {
                         switch (dye) {
@@ -266,7 +266,6 @@ public class BoxCommand {
                         }
                     }
                     is.setData(DataComponentTypes.ITEM_MODEL, model);
-                    is.setItemMeta(im);
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                         EntityEquipment ee = as.getEquipment();
                         ee.setHelmet(is);

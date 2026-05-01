@@ -6,7 +6,6 @@ import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 public class ArtronCombine {
 
@@ -41,8 +40,8 @@ public class ArtronCombine {
                 remainder = combined - max;
                 combined = max;
             }
-            ArtronUtility.setLevel(is, im, combined, player, true);
-            ArtronUtility.setLevel(offhand, offMeta, remainder, player, false);
+            ArtronUtility.setLevel(is, combined, player, true);
+            ArtronUtility.setLevel(offhand, remainder, player, false);
         }
     }
 }

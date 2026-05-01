@@ -81,7 +81,7 @@ public class NoughtsAndCrossesInventory implements InventoryHolder {
         reset.setItemMeta(cobble);
         items[45] = reset;
         // 35 close
-        items[53] = GUIItemFactory.close();;
+        items[53] = GUIItemFactory.close();
         return items;
     }
 }

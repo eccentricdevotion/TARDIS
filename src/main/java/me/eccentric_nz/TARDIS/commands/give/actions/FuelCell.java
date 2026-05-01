@@ -16,19 +16,19 @@
  */
 package me.eccentric_nz.TARDIS.commands.give.actions;
 
-import com.google.common.collect.Multimaps;
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
+import io.papermc.paper.datacomponent.item.TooltipDisplay;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import net.kyori.adventure.text.Component;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class FuelCell {
 
@@ -47,15 +47,15 @@ public class FuelCell {
         ItemStack result = recipe.getResult();
         result.setAmount(amount);
         // add lore and enchantment
-        ItemMeta im = result.getItemMeta();
-        List<Component> lore = im.lore();
+        List<Component> lore = new ArrayList<>(result.getData(DataComponentTypes.LORE).lines());
         int max = plugin.getArtronConfig().getInt("full_charge");
         lore.set(1, Component.text( max));
-        im.lore(lore);
-        is.setData(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE, true);
-        im.addItemFlags(ItemFlag.values());
-        im.setAttributeModifiers(Multimaps.forMap(Map.of()));
-        result.setItemMeta(im);
+        result.setData(DataComponentTypes.LORE, ItemLore.lore(lore));
+        result.setData(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE, true);
+        result.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
+                .addHiddenComponents(DataComponentTypes.ATTRIBUTE_MODIFIERS)
+                .hideTooltip(true)
+                .build());
         player.getInventory().addItem(result);
         player.updateInventory();
         plugin.getMessenger().send(player, TardisModule.TARDIS, "GIVE_ITEM", sender.getName(), amount + " Full Artron Storage Cell");

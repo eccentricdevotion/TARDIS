@@ -16,6 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.playerprefs;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.CustomModelData;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUIKeyPreferences;
 import me.eccentric_nz.TARDIS.custommodels.keys.KeyVariant;
@@ -26,8 +29,6 @@ import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,14 +70,11 @@ public class TARDISKeyMenuInventory implements InventoryHolder {
         }
         for (GUIKeyPreferences key : GUIKeyPreferences.values()) {
             ItemStack is;
-            ItemMeta im;
             if (key == GUIKeyPreferences.CLOSE || key == GUIKeyPreferences.INSTRUCTIONS || key == GUIKeyPreferences.NAME || key == GUIKeyPreferences.DISPLAY_NAME_COLOUR) {
                 is = ItemStack.of(key.getMaterial(), 1);
-                im = is.getItemMeta();
                 is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(key.getName()));
             } else {
                 is = ItemStack.of(material);
-                im = is.getItemMeta();
                 is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("TARDIS Key"));
             }
             if (!key.getLore().isEmpty()) {
@@ -86,21 +84,20 @@ public class TARDISKeyMenuInventory implements InventoryHolder {
                     for (String s : split) {
                         components.add(Component.text(s));
                     }
-                    im.lore(components);
+                    is.setData(DataComponentTypes.LORE, ItemLore.lore(components));
                 } else {
-                    im.lore(List.of(Component.text(key.getLore())));
+                    is.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text(key.getLore())).build());
                 }
             }
             if (key.getSlot() < 17) {
                 try {
                     KeyVariant variant = KeyVariant.valueOf(key.toString());
-                    CustomModelDataComponent component = im.getCustomModelDataComponent();
-                    component.setFloats(variant.getFloats());
-                    im.setCustomModelDataComponent(component);
+                    is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                            .addFloats(variant.getFloats())
+                            .build());
                 } catch (IllegalArgumentException ignored) {
                 }
             }
-            is.setItemMeta(im);
             itemStacks[key.getSlot()] = is;
         }
         return itemStacks;

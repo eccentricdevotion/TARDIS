@@ -94,7 +94,7 @@ public class ShellPresetInventory implements InventoryHolder {
             stacks[GUIChameleonPresets.SAVED.slot()] = saved;
         }
         // Cancel / close
-        stacks[GUIChameleonPresets.CLOSE.slot()] = GUIItemFactory.close();;
+        stacks[GUIChameleonPresets.CLOSE.slot()] = GUIItemFactory.close();
 
         return stacks;
     }

@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.commands.give.actions;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemRegistry;
@@ -30,7 +32,6 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.List;
@@ -70,18 +71,16 @@ public class Seed {
                         return;
                     }
                 }
-                ItemMeta im = is.getItemMeta();
                 NamespacedKey finalModel = model;
-        is.editPersistentDataContainer(pdc -> pdc.set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING, finalModel.getKey()));
+                is.editPersistentDataContainer(pdc -> pdc.set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING, finalModel.getKey()));
                 // set display name
                 is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toGold("TARDIS Seed Block"));
-                im.lore(List.of(
+                is.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(
                         Component.text(type),
                         Component.text("Walls: " + wall),
                         Component.text("Floors: " + floor),
                         Component.text("Chameleon: FACTORY")
-                ));
-                is.setItemMeta(im);
+                )));
                 player.getInventory().addItem(is);
                 player.updateInventory();
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "GIVE_ITEM", sender.getName(), "a " + type + " seed block");

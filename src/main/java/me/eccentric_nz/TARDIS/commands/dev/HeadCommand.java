@@ -18,6 +18,8 @@ package me.eccentric_nz.TARDIS.commands.dev;
 
 import com.destroystokyo.paper.profile.PlayerProfile;
 import com.destroystokyo.paper.profile.ProfileProperty;
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ResolvableProfile;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.skins.WashingMachineSkin;
 import net.kyori.adventure.text.Component;
@@ -52,13 +54,11 @@ public class HeadCommand {
             UUID uuid = UUID.fromString(withDashes);
             PlayerProfile profile = plugin.getServer().createProfile(uuid);
             PlayerTextures textures = profile.getTextures();
-            URL url = URI.create("http://textures.minecraft.net/texture/3583ce755f1fc238393e11f64b7214d9602075c214b9ed99cec4e35cf1e24c4").toURL();
+            URL url = URI.create("https://textures.minecraft.net/texture/3583ce755f1fc238393e11f64b7214d9602075c214b9ed99cec4e35cf1e24c4").toURL();
             textures.setSkin(url);
             profile.setTextures(textures);
             ItemStack is = ItemStack.of(Material.PLAYER_HEAD);
-            SkullMeta im = (SkullMeta) is.getItemMeta();
-            im.setPlayerProfile(profile);
-            is.setItemMeta(im);
+            is.setData(DataComponentTypes.PROFILE, ResolvableProfile.resolvableProfile(profile));
             player.getInventory().addItem(is);
         } catch (IllegalArgumentException | MalformedURLException e) {
             plugin.debug("Bad UUID or URL");
@@ -82,10 +82,8 @@ public class HeadCommand {
             PlayerProfile washingMachineProfile = plugin.getServer().createProfile(UUID.fromString(WashingMachineSkin.WASHING_MACHINE.signature()));
             washingMachineProfile.setProperty(new ProfileProperty("textures", WashingMachineSkin.WASHING_MACHINE.value(), null));
             ItemStack washingMachine = ItemStack.of(Material.PLAYER_HEAD);
-            SkullMeta washingMachineMeta = (SkullMeta) washingMachine.getItemMeta();
-            washingMachineMeta.setPlayerProfile(washingMachineProfile);
-            washingMachineMeta.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Washing Machine"));
-            washingMachine.setItemMeta(washingMachineMeta);
+            washingMachine.setData(DataComponentTypes.PROFILE, ResolvableProfile.resolvableProfile(washingMachineProfile));
+            washingMachine.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Washing Machine"));
             player.give(washingMachine);
         }
     }

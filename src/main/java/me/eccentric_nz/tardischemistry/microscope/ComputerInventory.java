@@ -57,7 +57,7 @@ class ComputerInventory implements InventoryHolder {
             stacks[screen.ordinal()] = is;
         }
         // Cancel / close
-        stacks[53] = GUIItemFactory.close();;
+        stacks[53] = GUIItemFactory.close();
         return stacks;
     }
 }

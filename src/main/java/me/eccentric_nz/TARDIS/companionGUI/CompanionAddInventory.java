@@ -16,6 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.companionGUI;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
+import io.papermc.paper.datacomponent.item.ResolvableProfile;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUICompanion;
 import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
@@ -27,8 +30,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.SkullMeta;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,11 +74,10 @@ public class CompanionAddInventory implements InventoryHolder {
                 UUID puid = p.getUniqueId();
                 if (puid != uuid && !comps.contains(puid.toString()) && VanishChecker.canSee(player, p)) {
                     ItemStack head = ItemStack.of(Material.PLAYER_HEAD, 1);
-                    SkullMeta skull = (SkullMeta) head.getItemMeta();
-                    skull.setOwningPlayer(p);
-                    skull.setData(DataComponentTypes.CUSTOM_NAME, Component.text(p.getName()));
-                    skull.lore(List.of(Component.text(p.getUniqueId().toString())));
-                    head.setItemMeta(skull);
+                    // TODO check this
+                    head.setData(DataComponentTypes.PROFILE, ResolvableProfile.resolvableProfile(p.getPlayerProfile()));
+                    head.setData(DataComponentTypes.CUSTOM_NAME, Component.text(p.getName()));
+                    head.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text(p.getUniqueId().toString())));
                     heads[i] = head;
                     i++;
                 }
@@ -85,26 +85,20 @@ public class CompanionAddInventory implements InventoryHolder {
         }
         // add buttons
         ItemStack info = ItemStack.of(GUICompanion.INFO.material(), 1);
-        ItemMeta ii = info.getItemMeta();
-        ii.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Info"));
-        ii.lore(List.of(
+        info.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Info"));
+        info.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(
                 Component.text("Click a player head to"),
                 Component.text("add them as a companion.")
-        ));
-        info.setItemMeta(ii);
+        )));
         heads[GUICompanion.INFO.slot()] = info;
         ItemStack list = ItemStack.of(GUICompanion.LIST_COMPANIONS.material(), 1);
-        ItemMeta ll = list.getItemMeta();
-        ll.setData(DataComponentTypes.CUSTOM_NAME, Component.text("List companions"));
-        list.setItemMeta(ll);
+        list.setData(DataComponentTypes.CUSTOM_NAME, Component.text("List companions"));
         heads[GUICompanion.LIST_COMPANIONS.slot()] = list;
-        ItemStack every = ItemStack.of(GUICompanion.ALL_COMPANIONS.material(), 1);
-        ItemMeta one = every.getItemMeta();
-        one.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Add all online players"));
-        every.setItemMeta(one);
-        heads[GUICompanion.ALL_COMPANIONS.slot()] = every;
+        ItemStack everyone = ItemStack.of(GUICompanion.ALL_COMPANIONS.material(), 1);
+        everyone.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Add all online players"));
+        heads[GUICompanion.ALL_COMPANIONS.slot()] = everyone;
         // Cancel / close
-        heads[GUICompanion.BUTTON_CLOSE.slot()] = GUIItemFactory.close();;
+        heads[GUICompanion.BUTTON_CLOSE.slot()] = GUIItemFactory.close();
 
         return heads;
     }

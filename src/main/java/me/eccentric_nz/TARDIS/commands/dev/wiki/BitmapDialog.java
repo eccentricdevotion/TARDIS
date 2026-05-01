@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.commands.dev.wiki;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.dialog.Dialog;
 import io.papermc.paper.registry.data.dialog.ActionButton;
 import io.papermc.paper.registry.data.dialog.DialogBase;
@@ -33,9 +34,7 @@ public class BitmapDialog {
 
     public Dialog create() {
         ItemStack blue = ItemStack.of(Material.BLUE_DYE);
-        ItemMeta im = blue.getItemMeta();
-        is.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.BLUE_CLOSED.getKey());
-        blue.setItemMeta(im);
+        blue.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.BLUE_CLOSED.getKey());
         List<DialogBody> body = List.of(
                 DialogBody.item(blue, DialogBody.plainMessage(Component.text("ㇺ")), false, false, 16, 139),
                 DialogBody.plainMessage(Component.text("Other text"), 200)

@@ -78,7 +78,7 @@ public class ConnectFourInventory implements InventoryHolder {
         reset.setItemMeta(cobble);
         items[44] = reset;
         // 53 close
-        items[53] = GUIItemFactory.close();;
+        items[53] = GUIItemFactory.close();
         return items;
     }
 }

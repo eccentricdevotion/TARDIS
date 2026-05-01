@@ -64,7 +64,7 @@ public class StoneMagmaIceInventory implements InventoryHolder {
         reset.setItemMeta(cobble);
         items[27] = reset;
         // 35 close
-        items[35] = GUIItemFactory.close();;
+        items[35] = GUIItemFactory.close();
         return items;
     }
 }

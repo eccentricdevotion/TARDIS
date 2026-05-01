@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.console.models;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.custommodels.keys.ModelledControl;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 public class ThrottleModel {
 
@@ -28,14 +28,12 @@ public class ThrottleModel {
             return;
         }
         ItemStack is = display.getItemStack();
-        ItemMeta im = is.getItemMeta();
         switch (state) {
             case 1 -> is.setData(DataComponentTypes.ITEM_MODEL, ModelledControl.THROTTLE_WARP.getKey());
             case 2 -> is.setData(DataComponentTypes.ITEM_MODEL, ModelledControl.THROTTLE_RAPID.getKey());
             case 3 -> is.setData(DataComponentTypes.ITEM_MODEL, ModelledControl.THROTTLE_FASTER.getKey());
             default -> is.setData(DataComponentTypes.ITEM_MODEL, ModelledControl.THROTTLE_NORMAL.getKey());
         }
-        is.setItemMeta(im);
         display.setItemStack(is);
     }
 }

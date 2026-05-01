@@ -64,7 +64,7 @@ public class ReducerInventory implements InventoryHolder {
         check.setData(DataComponentTypes.ITEM_MODEL, GUIChemistry.REDUCE.key());
         stack[GUIChemistry.REDUCE.slot()] = check;
         // close
-        stack[GUIChemistry.CLOSE.slot()] = GUIItemFactory.close();;
+        stack[GUIChemistry.CLOSE.slot()] = GUIItemFactory.close();
         return stack;
     }
 }

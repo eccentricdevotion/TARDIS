@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.listeners.controls;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.camera.TARDISCamera;
@@ -30,16 +31,15 @@ import me.eccentric_nz.TARDIS.monitor.Snapshot;
 import me.eccentric_nz.TARDIS.upgrades.SystemTree;
 import me.eccentric_nz.TARDIS.upgrades.SystemUpgradeChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import net.kyori.adventure.key.Key;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -85,17 +85,15 @@ public class TARDISMonitorFrameListener implements Listener {
                     }
                 } else {
                     ItemStack is = frame.getItem();
-                    ItemMeta im = is.getItemMeta();
-                    if (im.hasItemModel()) {
+                    if (is.hasData(DataComponentTypes.ITEM_MODEL)) {
                         // switch the switches
-                        NamespacedKey cmd = im.getItemModel();
-                        switch (cmd.getKey().split("_")[2]) {
+                        Key cmd = is.getData(DataComponentTypes.ITEM_MODEL);
+                        switch (cmd.value().split("_")[2]) {
                             case "left" -> is.setData(DataComponentTypes.ITEM_MODEL, ModelledControl.MONITOR_FRAME_MIDDLE.getKey());
                             case "middle" -> is.setData(DataComponentTypes.ITEM_MODEL, ModelledControl.MONITOR_FRAME_RIGHT.getKey());
                             // right
                             default -> is.setData(DataComponentTypes.ITEM_MODEL, ModelledControl.MONITOR_FRAME_LEFT.getKey());
                         }
-                        is.setItemMeta(im);
                         frame.setItem(is);
                         // get the monitor item frame, from the same block location
                         ItemFrame mapFrame = MonitorUtils.getItemFrameFromLocation(l, frame.getUniqueId());

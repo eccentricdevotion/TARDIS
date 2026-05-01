@@ -16,6 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.commands.config;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.CustomModelData;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUIConfiguration;
 import net.kyori.adventure.text.Component;
@@ -24,8 +27,6 @@ import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
 import java.util.*;
 
@@ -76,14 +77,12 @@ class TARDISConfigPageTwoInventory implements InventoryHolder {
                             c.startsWith("blueprints"))
             ) {
                 ItemStack is = ItemStack.of(Material.REPEATER, 1);
-                ItemMeta im = is.getItemMeta();
                 is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(c));
                 GUIConfiguration gui = GUIConfiguration.valueOf(c.split("\\.")[0].toUpperCase(Locale.ROOT));
-                CustomModelDataComponent component = im.getCustomModelDataComponent();
-                component.setFloats(value.equals("false") ? gui.getOffFloats() : gui.getOnFloats());
-                im.setCustomModelDataComponent(component);
-                im.lore(List.of(Component.text(value)));
-                is.setItemMeta(im);
+                is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                        .addFloats(value.equals("false") ? gui.getOffFloats() : gui.getOnFloats())
+                        .build());
+                is.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text(value)).build());
                 options.add(is);
             }
         });
@@ -97,15 +96,11 @@ class TARDISConfigPageTwoInventory implements InventoryHolder {
         }
         // previous page
         ItemStack next = ItemStack.of(Material.BOWL, 1);
-        ItemMeta page = next.getItemMeta();
-        page.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Previous page"));
-        next.setItemMeta(page);
+        next.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Previous page"));
         stack[52] = next;
         // player prefs
         ItemStack play = ItemStack.of(Material.NETHER_STAR, 1);
-        ItemMeta prefs = play.getItemMeta();
-        prefs.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Player Preferences"));
-        play.setItemMeta(prefs);
+        play.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Player Preferences"));
         stack[53] = play;
         return stack;
     }

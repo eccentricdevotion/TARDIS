@@ -110,7 +110,7 @@ public class GamesInventory implements InventoryHolder {
             items[6] = level;
         }
         // 8 close
-        items[8] = GUIItemFactory.close();;
+        items[8] = GUIItemFactory.close();
         return items;
     }
 }

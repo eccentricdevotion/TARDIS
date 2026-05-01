@@ -62,7 +62,7 @@ public class WashingMachineInventory implements InventoryHolder {
         remove.setItemMeta(dye);
         items[23] = remove;
         // 26 close
-        items[26] = GUIItemFactory.close();;
+        items[26] = GUIItemFactory.close();
         return items;
     }
 }

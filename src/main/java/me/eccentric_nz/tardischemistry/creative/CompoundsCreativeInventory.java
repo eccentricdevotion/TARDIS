@@ -71,7 +71,7 @@ public class CompoundsCreativeInventory implements InventoryHolder {
         products.setData(DataComponentTypes.ITEM_MODEL, GUIChemistry.PRODUCTS.key());
         stack[GUIChemistry.PRODUCTS.slot()] = products;
         // close
-        stack[53] = GUIItemFactory.close();;
+        stack[53] = GUIItemFactory.close();
         return stack;
     }
 }

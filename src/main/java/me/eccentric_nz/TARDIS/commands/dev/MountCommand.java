@@ -1,5 +1,6 @@
 package me.eccentric_nz.TARDIS.commands.dev;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.keys.ChameleonVariant;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -9,7 +10,6 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.RayTraceResult;
 
 public class MountCommand {
@@ -32,9 +32,7 @@ public class MountCommand {
             ArmorStand as = (ArmorStand) result.getHitEntity();
             if (as != null) {
                 ItemStack box = ItemStack.of(Material.BLUE_DYE, 1);
-                ItemMeta im = box.getItemMeta();
-                is.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.BLUE_CLOSED.getKey());
-                box.setItemMeta(im);
+                box.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.BLUE_CLOSED.getKey());
                 ItemDisplay display = VehicleUtility.getItemDisplay(player, box, 1.75f);
                 int period = 40;
                 plugin.getTrackerKeeper().setAnimateTask(plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new InterpolatedAnimation(display, period), 5, period));

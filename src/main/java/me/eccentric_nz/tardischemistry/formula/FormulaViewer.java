@@ -147,7 +147,7 @@ public class FormulaViewer implements InventoryHolder {
 
     private void showView() {
         // close
-        stack[26] = GUIItemFactory.close();;
+        stack[26] = GUIItemFactory.close();
         inventory.setContents(stack);
     }
 }

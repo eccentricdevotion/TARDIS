@@ -234,7 +234,7 @@ public class TARDISRideableMobListener implements Listener {
                                 equine.setJumpStrength(tmhor.getJumpStrength());
                                 String name = tmhor.getName();
                                 if (!name.isEmpty()) {
-                                    equine.setData(DataComponentTypes.CUSTOM_NAME, Component.text(name));
+                                    equine.customName(Component.text(name));
                                 }
                                 if (tmhor.hasChest()) {
                                     ChestedHorse chested = (ChestedHorse) equine;
@@ -267,7 +267,7 @@ public class TARDISRideableMobListener implements Listener {
                                 llama.setHealth(tmlla.getHealth());
                                 String name = tmlla.getName();
                                 if (!name.isEmpty()) {
-                                    llama.setData(DataComponentTypes.CUSTOM_NAME, Component.text(name));
+                                    llama.customName(Component.text(name));
                                 }
                                 if (tmlla.isTamed()) {
                                     llama.setTamed(true);
@@ -293,7 +293,7 @@ public class TARDISRideableMobListener implements Listener {
                                 }
                                 String name = e.getName();
                                 if (!name.isEmpty()) {
-                                    pig.setData(DataComponentTypes.CUSTOM_NAME, Component.text(name));
+                                    pig.customName(Component.text(name));
                                 }
                                 pig.setSaddle(true);
                                 pig.setRemoveWhenFarAway(false);
@@ -305,7 +305,7 @@ public class TARDISRideableMobListener implements Listener {
                                 humped.setJumpStrength(tmcamel.getJumpStrength());
                                 String name = tmcamel.getName();
                                 if (!name.isEmpty()) {
-                                    humped.setData(DataComponentTypes.CUSTOM_NAME, Component.text(name));
+                                    humped.customName(Component.text(name));
                                 }
                                 AttributeInstance attribute = humped.getAttribute(Attribute.MAX_HEALTH);
                                 attribute.setBaseValue(tmcamel.getHorseHealth());
@@ -324,7 +324,7 @@ public class TARDISRideableMobListener implements Listener {
                                 }
                                 String name = e.getName();
                                 if (!name.isEmpty()) {
-                                    strider.setData(DataComponentTypes.CUSTOM_NAME, Component.text(name));
+                                    strider.customName(Component.text(name));
                                 }
                                 strider.setRemoveWhenFarAway(false);
                             }

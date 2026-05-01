@@ -16,11 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.console.telepathic;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.CustomModelData;
 import io.papermc.paper.registry.RegistryAccess;
 import io.papermc.paper.registry.RegistryKey;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
-import me.eccentric_nz.TARDIS.custommodels.GUIMap;
 import me.eccentric_nz.TARDIS.travel.TARDISStructureTravel;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -31,19 +32,15 @@ import org.bukkit.generator.structure.Structure;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
 import java.util.List;
 
 public class TelepathicStructure implements InventoryHolder {
 
-    private final TARDIS plugin;
     private final Registry<Structure> structures = RegistryAccess.registryAccess().getRegistry(RegistryKey.STRUCTURE);
     private final Inventory inventory;
 
     public TelepathicStructure(TARDIS plugin) {
-        this.plugin = plugin;
         this.inventory = plugin.getServer().createInventory(this, 54, Component.text("Telepathic Structure Finder", NamedTextColor.DARK_RED));
         this.inventory.setContents(getButtons());
     }
@@ -70,20 +67,18 @@ public class TelepathicStructure implements InventoryHolder {
         ItemStack end = make(Structure.END_CITY, Material.PURPUR_BLOCK);
         stack[i] = end;
         // close
-        stack[53] = GUIItemFactory.close();;
+        stack[53] = GUIItemFactory.close();
         return stack;
     }
 
     private ItemStack make(Structure structure, Material material) {
         ItemStack is = ItemStack.of(material, 1);
-        ItemMeta im = is.getItemMeta();
         if (material == Material.GRASS_BLOCK) {
-            CustomModelDataComponent component = im.getCustomModelDataComponent();
-            component.setColors(List.of(Color.GREEN));
-            im.setCustomModelDataComponent(component);
+            is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                    .addColors(List.of(Color.GREEN))
+                    .build());
         }
         is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(structures.getKey(structure).toString()));
-        is.setItemMeta(im);
         return is;
     }
 }

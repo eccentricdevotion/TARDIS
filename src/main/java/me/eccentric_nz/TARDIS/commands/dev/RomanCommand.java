@@ -1,5 +1,6 @@
 package me.eccentric_nz.TARDIS.commands.dev;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
@@ -12,7 +13,6 @@ import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.RayTraceResult;
 
@@ -31,10 +31,8 @@ public class RomanCommand {
             as.setArms(false);
             as.getPersistentDataContainer().set(TARDIS.plugin.getHeadBlockKey(), PersistentDataType.INTEGER, 1);
             ItemStack head = ItemStack.of(Material.CHISELED_QUARTZ_BLOCK, 1);
-            ItemMeta headMeta = head.getItemMeta();
-            headMeta.setData(DataComponentTypes.CUSTOM_NAME, Component.text(TARDISStringUtils.capitalise(which)));
-            headMeta.setData(DataComponentTypes.ITEM_MODEL, new NamespacedKey(TARDIS.plugin, which));
-            head.setItemMeta(headMeta);
+            head.setData(DataComponentTypes.CUSTOM_NAME, Component.text(TARDISStringUtils.capitalise(which)));
+            head.setData(DataComponentTypes.ITEM_MODEL, new NamespacedKey(TARDIS.plugin, which));
             ArmourStandEquipment.setHelmetOnly(as, head);
         }
     }

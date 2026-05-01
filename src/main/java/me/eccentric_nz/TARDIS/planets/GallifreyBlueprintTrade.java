@@ -16,7 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.planets;
 
-import com.google.common.collect.Multimaps;
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
+import io.papermc.paper.datacomponent.item.TooltipDisplay;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.BlueprintConsole;
@@ -25,16 +27,12 @@ import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Merchant;
 import org.bukkit.inventory.MerchantRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 public class GallifreyBlueprintTrade {
@@ -108,20 +106,21 @@ public class GallifreyBlueprintTrade {
 
     public static ItemStack buildResult(TARDIS plugin, String perm, String name) {
         ItemStack is = ItemStack.of(Material.MUSIC_DISC_MELLOHI, 1);
-        ItemMeta im = is.getItemMeta();
-        PersistentDataContainer pdc = im.getPersistentDataContainer();
-        pdc.set(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID(), UUID.randomUUID());
-        pdc.set(plugin.getBlueprintKey(), PersistentDataType.STRING, perm);
+        is.editPersistentDataContainer(pdc -> {
+            pdc.set(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID(), UUID.randomUUID());
+            pdc.set(plugin.getBlueprintKey(), PersistentDataType.STRING, perm);
+        });
         is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("TARDIS Blueprint Disk"));
         List<Component> lore = List.of(
                 ComponentUtils.toWhite(TARDISStringUtils.capitalise(name)),
                 Component.text("Valid only for"),
                 Component.text("the trading player")
         );
-        im.lore(lore);
-        im.addItemFlags(ItemFlag.values());
-        im.setAttributeModifiers(Multimaps.forMap(Map.of()));
-        is.setItemMeta(im);
+        is.setData(DataComponentTypes.LORE, ItemLore.lore(lore));
+        is.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
+                .addHiddenComponents(DataComponentTypes.ATTRIBUTE_MODIFIERS)
+                .hideTooltip(true)
+                .build());
         return is;
     }
 }

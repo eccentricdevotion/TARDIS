@@ -16,10 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.console.telepathic;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.CustomModelData;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
-import me.eccentric_nz.TARDIS.custommodels.GUIMap;
 import me.eccentric_nz.TARDIS.custommodels.keys.SwitchVariant;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import net.kyori.adventure.text.Component;
@@ -29,8 +31,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
 import java.util.List;
 
@@ -61,52 +61,44 @@ public class TelepathicInventory implements InventoryHolder {
         Component onOff = on ? Component.text("ON", NamedTextColor.GREEN) : Component.text("OFF", NamedTextColor.RED);
         // toggling telepathic circuit on/off
         ItemStack toggle = ItemStack.of(Material.REPEATER);
-        ItemMeta tim = toggle.getItemMeta();
-        tim.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Telepathic Circuit"));
-        tim.lore(List.of(onOff));
-        CustomModelDataComponent component = tim.getCustomModelDataComponent();
-        component.setFloats(on ? SwitchVariant.TELEPATHIC_CIRCUIT_ON.getFloats() : SwitchVariant.TELEPATHIC_CIRCUIT_OFF.getFloats());
-        tim.setCustomModelDataComponent(component);
-        toggle.setItemMeta(tim);
+        toggle.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Telepathic Circuit"));
+        toggle.setData(DataComponentTypes.LORE, ItemLore.lore().addLine((onOff)).build());
+        toggle.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                .addFloats(on ? SwitchVariant.TELEPATHIC_CIRCUIT_ON.getFloats() : SwitchVariant.TELEPATHIC_CIRCUIT_OFF.getFloats())
+                .build());
         stack[0] = toggle;
         // cave finder
         if (TARDISPermission.hasPermission(player, "tardis.timetravel.cave")) {
             ItemStack cave = ItemStack.of(Material.DRIPSTONE_BLOCK);
-            ItemMeta cim = cave.getItemMeta();
-            cim.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Cave Finder"));
-            cim.lore(List.of(
+            cave.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Cave Finder"));
+            cave.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(
                     Component.text("Search for a cave"),
                     Component.text("to travel to.")
-            ));
-            cave.setItemMeta(cim);
+            )));
             stack[2] = cave;
         }
         // structure finder
         if (TARDISPermission.hasPermission(player, "tardis.timetravel.village")) {
             ItemStack structure = ItemStack.of(Material.HAY_BLOCK);
-            ItemMeta sim = structure.getItemMeta();
-            sim.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Structure Finder"));
-            sim.lore(List.of(
+            structure.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Structure Finder"));
+            structure.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(
                     Component.text("Search for a structure"),
                     Component.text("to travel to.")
-            ));
-            structure.setItemMeta(sim);
+            )));
             stack[4] = structure;
         }
         // biome finder
         if (TARDISPermission.hasPermission(player, "tardis.timetravel.biome")) {
             ItemStack biome = ItemStack.of(Material.BAMBOO_MOSAIC);
-            ItemMeta bim = biome.getItemMeta();
-            bim.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Biome Finder"));
-            bim.lore(List.of(
+            biome.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Biome Finder"));
+            biome.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(
                     Component.text("Search for a biome"),
                     Component.text("to travel to.")
-            ));
-            biome.setItemMeta(bim);
+            )));
             stack[6] = biome;
         }
         // close
-        stack[8] = GUIItemFactory.close();;
+        stack[8] = GUIItemFactory.close();
         return stack;
     }
 }

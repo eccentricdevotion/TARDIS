@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.commands.tardis;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.commands.sudo.TARDISSudoTracker;
@@ -32,7 +33,6 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -67,7 +67,7 @@ public class DecommissionCommand {
                 updateable = Updateable.valueOf(tardis_block);
                 if (updateable.equals(Updateable.ROTOR)) {
                     // use update unlock command
-                    plugin.getMessenger().sendColouredCommand(player,"ROTOR_UNLOCK", "/tardis update rotor unlock", plugin);
+                    plugin.getMessenger().sendColouredCommand(player, "ROTOR_UNLOCK", "/tardis update rotor unlock", plugin);
                     return;
                 }
                 if (updateable.equals(Updateable.STORAGE)) {
@@ -86,7 +86,7 @@ public class DecommissionCommand {
                     faces:
                     for (BlockFace face : plugin.getGeneralKeeper().getBlockFaces()) {
                         Block b = block.getRelative(face);
-                        for (Entity e : b.getWorld().getNearbyEntities(b.getLocation(), 1,1,1, (d) -> d.getType() == EntityType.ITEM_FRAME)) {
+                        for (Entity e : b.getWorld().getNearbyEntities(b.getLocation(), 1, 1, 1, (d) -> d.getType() == EntityType.ITEM_FRAME)) {
                             if (e instanceof ItemFrame frame) {
                                 itemFrame = frame;
                                 break faces;
@@ -97,17 +97,13 @@ public class DecommissionCommand {
                         switch (updateable) {
                             case MONITOR -> {
                                 ItemStack monitor = ItemStack.of(Material.MAP);
-                                ItemMeta im = monitor.getItemMeta();
-                                is.setData(DataComponentTypes.CUSTOM_NAME, Component.text("TARDIS Monitor"));
-                                monitor.setItemMeta(im);
+                                monitor.setData(DataComponentTypes.CUSTOM_NAME, Component.text("TARDIS Monitor"));
                                 itemFrame.setItem(monitor);
                             }
                             case MONITOR_FRAME -> {
                                 // reinstate display name
                                 ItemStack glass = itemFrame.getItem();
-                                ItemMeta im = glass.getItemMeta();
-                                is.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Monitor Frame"));
-                                glass.setItemMeta(im);
+                                glass.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Monitor Frame"));
                             }
                             case SONIC_DOCK -> {
                                 ItemDisplay display = TARDISDisplayItemUtils.getFromBoundingBox(itemFrame.getLocation().getBlock());

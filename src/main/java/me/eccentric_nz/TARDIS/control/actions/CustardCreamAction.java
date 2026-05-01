@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.control.actions;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.artron.ArtronLevels;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -26,7 +27,6 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.Vector;
 
 import java.util.HashMap;
@@ -55,9 +55,7 @@ public class CustardCreamAction {
         ArtronLevels artronLevels = new ArtronLevels(plugin);
         if (artronLevels.checkLevel(id, plugin.getArtronConfig().getInt("custard_cream"), player)) {
             ItemStack cookie = ItemStack.of(Material.COOKIE, 1);
-            ItemMeta im = cookie.getItemMeta();
-            is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Custard Cream"));
-            cookie.setItemMeta(im);
+            cookie.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Custard Cream"));
             // put cookie on top of the block
             Location location = block.getLocation().add(0.5, 1.0, 0.5);
             Item cream = location.getWorld().dropItem(location, cookie);

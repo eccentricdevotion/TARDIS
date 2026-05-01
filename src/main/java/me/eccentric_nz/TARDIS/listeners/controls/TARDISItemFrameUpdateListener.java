@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.listeners.controls;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.control.TARDISScannerMap;
@@ -39,7 +40,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.*;
 
@@ -156,9 +156,7 @@ public class TARDISItemFrameUpdateListener implements Listener {
                                 // does it have a Monitor frame?
                                 if (glass.getType() == Material.GLASS && glass.hasItemMeta() && glass.getItemMeta().hasItemModel()) {
                                     // remove display name
-                                    ItemMeta gm = glass.getItemMeta();
-                                    gm.customName(null);
-                                    glass.setItemMeta(gm);
+                                    glass.unsetData(DataComponentTypes.CUSTOM_NAME);
                                     // get the monitor item frame, from the same block location
                                     ItemFrame mapFrame = MonitorUtils.getItemFrameFromLocation(l, frame.getUniqueId());
                                     if (mapFrame != null) {
@@ -227,14 +225,12 @@ public class TARDISItemFrameUpdateListener implements Listener {
                                 frame.setFixed(true);
                                 frame.setVisible(false);
                                 // set display to shorter version
-                                ItemMeta im = sp.lamp().getItemMeta();
                                 String dn = switch (control) {
                                     case Control.EXTERIOR_LAMP -> "Lamp";
                                     case Control.LIGHT_LEVEL -> "Light";
                                     default -> "Console";
                                 };
-                                is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(dn));
-                                sp.lamp().setItemMeta(im);
+                                sp.lamp().setData(DataComponentTypes.CUSTOM_NAME, Component.text(dn));
                                 frame.setItem(sp.lamp());
                                 plugin.getTrackerKeeper().getUpdatePlayers().remove(uuid);
                                 which = switch (control) {
@@ -270,29 +266,27 @@ public class TARDISItemFrameUpdateListener implements Listener {
 
     private boolean isDock(ItemFrame frame) {
         ItemStack dock = frame.getItem();
-        if (dock.getType() != Material.FLOWER_POT || !dock.hasItemMeta()) {
+        if (dock.getType() != Material.FLOWER_POT) {
             return false;
         }
-        ItemMeta im = dock.getItemMeta();
-        return im.hasItemModel() && (im.getItemModel().getKey().contains("sonic_dock"));
+        return dock.hasData(DataComponentTypes.ITEM_MODEL) && (dock.getData(DataComponentTypes.ITEM_MODEL).value().contains("sonic_dock"));
     }
 
     private SwitchPair isLevelSwitch(ItemFrame frame) {
         ItemStack lampSwitch = frame.getItem();
-        if (lampSwitch.getType() != Material.LEVER || !lampSwitch.hasItemMeta()) {
+        if (lampSwitch.getType() != Material.LEVER) {
             return new SwitchPair(false, lampSwitch);
         }
-        ItemMeta im = lampSwitch.getItemMeta();
-        if (!im.hasCustomName()) {
+        if (!lampSwitch.hasData(DataComponentTypes.CUSTOM_NAME)) {
             return new SwitchPair(false, lampSwitch);
         }
-        return new SwitchPair(im.hasItemModel() && ComponentUtils.endsWith(im.customName(), "Switch"), lampSwitch);
+        return new SwitchPair(lampSwitch.hasData(DataComponentTypes.ITEM_MODEL) && ComponentUtils.endsWith(lampSwitch.getData(DataComponentTypes.CUSTOM_NAME), "Switch"), lampSwitch);
     }
 
     private record SwitchPair(boolean b, ItemStack lamp) {
 
         public boolean isSwitch() {
-                return b;
-            }
+            return b;
         }
+    }
 }

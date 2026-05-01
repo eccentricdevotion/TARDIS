@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.howto;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.registry.RegistryAccess;
 import io.papermc.paper.registry.RegistryKey;
 import io.papermc.paper.registry.TypedKey;
@@ -30,7 +31,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ItemType;
-import org.bukkit.inventory.meta.ItemMeta;
 
 /**
  * By the time of his eleventh incarnation, the Doctor's console room had gone through at least twelve redesigns, though
@@ -83,24 +83,18 @@ class HowtoWallsInventory implements InventoryHolder {
 
         // scroll up
         ItemStack scroll_up = ItemStack.of(GUIWallFloor.BUTTON_SCROLL_U.material(), 1);
-        ItemMeta uim = scroll_up.getItemMeta();
-        uim.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_SCROLL_U")));
-        scroll_up.setItemMeta(uim);
+        scroll_up.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_SCROLL_U")));
         stack[GUIWallFloor.BUTTON_SCROLL_U.slot()] = scroll_up;
         // scroll down
         ItemStack scroll_down = ItemStack.of(GUIWallFloor.BUTTON_SCROLL_D.material(), 1);
-        ItemMeta dim = scroll_down.getItemMeta();
-        dim.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_SCROLL_D")));
-        scroll_down.setItemMeta(dim);
+        scroll_down.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_SCROLL_D")));
         stack[26] = scroll_down;
         // back
         ItemStack back = ItemStack.of(GUIChameleonPresets.BACK.material(), 1);
-        ItemMeta back_im = back.getItemMeta();
-        back_im.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Back"));
-        back.setItemMeta(back_im);
+        back.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Back"));
         stack[44] = back;
         // close
-        stack[GUIChameleonPresets.CLOSE.slot()] = GUIItemFactory.close();;
+        stack[GUIChameleonPresets.CLOSE.slot()] = GUIItemFactory.close();
 
         return stack;
     }

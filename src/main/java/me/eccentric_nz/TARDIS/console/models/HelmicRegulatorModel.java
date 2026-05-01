@@ -16,16 +16,15 @@
  */
 package me.eccentric_nz.TARDIS.console.models;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.custommodels.keys.ModelledControl;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 public class HelmicRegulatorModel {
 
     public void setState(ItemDisplay display, int state) {
         ItemStack is = display.getItemStack();
-        ItemMeta im = is.getItemMeta();
         switch (state) {
             case 7 -> is.setData(DataComponentTypes.ITEM_MODEL, ModelledControl.HELMIC_REGULATOR_7.getKey());
             case 6 -> is.setData(DataComponentTypes.ITEM_MODEL, ModelledControl.HELMIC_REGULATOR_6.getKey());
@@ -36,7 +35,6 @@ public class HelmicRegulatorModel {
             case 1 -> is.setData(DataComponentTypes.ITEM_MODEL, ModelledControl.HELMIC_REGULATOR_1.getKey());
             default -> is.setData(DataComponentTypes.ITEM_MODEL, ModelledControl.HELMIC_REGULATOR_0.getKey());
         }
-        is.setItemMeta(im);
         display.setItemStack(is);
     }
 }

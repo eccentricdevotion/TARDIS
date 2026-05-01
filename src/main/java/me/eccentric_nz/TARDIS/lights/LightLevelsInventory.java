@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.lights;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.utility.LightLevel;
 import me.eccentric_nz.TARDIS.custommodels.GUIChameleonTemplate;
@@ -28,7 +30,6 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
 
@@ -65,64 +66,46 @@ public class LightLevelsInventory implements InventoryHolder {
     private ItemStack[] getItemStack() {
         // interior info
         ItemStack i_info = ItemStack.of(GUILights.INTERIOR_INFO.material(), 1);
-        ItemMeta iiim = i_info.getItemMeta();
-        iiim.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Interior Lights"));
-        iiim.lore(List.of(
+        i_info.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Interior Lights"));
+        i_info.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(
                 Component.text("Set the light level"),
                 Component.text("of the interior lights")
-        ));
-        i_info.setItemMeta(iiim);
+        )));
         // interior
         ItemStack interior = ItemStack.of(GUILights.INTERIOR.material(), 1);
-        ItemMeta inim = interior.getItemMeta();
-        inim.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Interior Lights"));
-        inim.lore(List.of(Component.text(interior_level)));
-        interior.setItemMeta(inim);
+        interior.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Interior Lights"));
+        interior.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text(interior_level)).build());
         // exterior info
         ItemStack e_info = ItemStack.of(GUILights.EXTERIOR_INFO.material(), 1);
-        ItemMeta eiim = e_info.getItemMeta();
-        eiim.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Exterior Lamp"));
-        eiim.lore(List.of(
+        e_info.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Exterior Lamp"));
+        e_info.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(
                 Component.text("Set the light level"),
                 Component.text("of the exterior lamp")
-        ));
-        e_info.setItemMeta(eiim);
+        )));
         // exterior
         ItemStack exterior = ItemStack.of(GUILights.EXTERIOR.material(), 1);
-        ItemMeta exim = exterior.getItemMeta();
-        exim.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Exterior Lamp"));
-        exim.lore(List.of(Component.text(exterior_level)));
-        exterior.setItemMeta(exim);
+        exterior.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Exterior Lamp"));
+        exterior.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text(exterior_level)).build());
         // console info
         ItemStack c_info = ItemStack.of(GUILights.CONSOLE_INFO.material(), 1);
-        ItemMeta ciim = c_info.getItemMeta();
-        ciim.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Console Lamp"));
-        ciim.lore(List.of(
+        c_info.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Console Lamp"));
+        c_info.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(
                 Component.text("Set the light level"),
                 Component.text("of the console lamp")
-        ));
-        c_info.setItemMeta(ciim);
+        )));
         // console
         ItemStack console = ItemStack.of(GUILights.CONSOLE.material(), 1);
-        ItemMeta lamp = console.getItemMeta();
-        lamp.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Console Lamp"));
-        lamp.lore(List.of(Component.text(console_level)));
-        console.setItemMeta(lamp);
+        console.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Console Lamp"));
+        console.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text(console_level)).build());
         // minus
         ItemStack minus = ItemStack.of(GUIParticle.MINUS.material(), 1);
-        ItemMeta mim = minus.getItemMeta();
-        mim.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_LESS")));
-        minus.setItemMeta(mim);
+        minus.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_LESS")));
         // plus
         ItemStack plus = ItemStack.of(GUIParticle.PLUS.material(), 1);
-        ItemMeta pim = plus.getItemMeta();
-        pim.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_MORE")));
-        plus.setItemMeta(pim);
+        plus.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_MORE")));
         // back button
         ItemStack back = ItemStack.of(GUIChameleonTemplate.BACK_HELP.material(), 1);
-        ItemMeta bk = back.getItemMeta();
-        bk.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Back"));
-        back.setItemMeta(bk);
+        back.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Back"));
         // close
         ItemStack close = GUIItemFactory.close();
         return new ItemStack[]{

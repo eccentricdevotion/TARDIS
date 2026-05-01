@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.lights;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUIChameleonConstructor;
 import me.eccentric_nz.TARDIS.custommodels.GUIChameleonTemplate;
@@ -29,7 +31,6 @@ import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
 
@@ -60,14 +61,12 @@ public class LightSequenceInventory implements InventoryHolder {
         ItemStack[] stacks = new ItemStack[45];
         // 4 info
         ItemStack lights = ItemStack.of(GUILights.SEQUENCE_INFO.material(), 1);
-        ItemMeta sim = lights.getItemMeta();
-        sim.setData(DataComponentTypes.CUSTOM_NAME, Component.text("TARDIS Light Sequence"));
-        sim.lore(List.of(
+        lights.setData(DataComponentTypes.CUSTOM_NAME, Component.text("TARDIS Light Sequence"));
+        lights.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(
                 Component.text("Click a block in"),
                 Component.text("the second row to"),
                 Component.text("change its colour.")
-        ));
-        lights.setItemMeta(sim);
+        )));
         stacks[GUILights.SEQUENCE_INFO.slot()] = lights;
         // get light sequence, delay, level from light prefs
         ResultSetLightPrefs rs = new ResultSetLightPrefs(plugin);
@@ -87,9 +86,7 @@ public class LightSequenceInventory implements InventoryHolder {
                     amount = 5;
                 }
                 ItemStack delay = ItemStack.of(Material.COAL_BLOCK, 1);
-                ItemMeta dim = delay.getItemMeta();
-                dim.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Display time"));
-                delay.setItemMeta(dim);
+                delay.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Display time"));
                 delay.setAmount(amount);
                 stacks[i] = delay;
             }
@@ -101,38 +98,30 @@ public class LightSequenceInventory implements InventoryHolder {
                     amount = 15;
                 }
                 ItemStack level = ItemStack.of(Material.COAL_BLOCK, 1);
-                ItemMeta lim = level.getItemMeta();
-                lim.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Light level"));
-                level.setItemMeta(lim);
+                level.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Light level"));
                 level.setAmount(amount);
                 stacks[i] = level;
             }
         }
         // 36 preset (cycle)
         ItemStack preset = ItemStack.of(GUILights.BUTTON_LIGHT_SEQUENCE.material(), 1);
-        ItemMeta pim = preset.getItemMeta();
-        pim.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Preset Sequence"));
-        pim.lore(List.of(
+        preset.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Preset Sequence"));
+        preset.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(
                 Component.text("Click to cycle through"),
                 Component.text("various light sequences."),
                 Component.text("1")
-        ));
-        preset.setItemMeta(pim);
+        )));
         stacks[36] = preset;
         // 40 save
         ItemStack save = ItemStack.of(GUIChameleonConstructor.SAVE_CONSTRUCT.material(), 1);
-        ItemMeta se = save.getItemMeta();
-        se.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Save Sequence"));
-        save.setItemMeta(se);
+        save.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Save Sequence"));
         stacks[40] = save;
         // back button
         ItemStack back = ItemStack.of(GUIChameleonTemplate.BACK_HELP.material(), 1);
-        ItemMeta bk = back.getItemMeta();
-        bk.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Back"));
-        back.setItemMeta(bk);
+        back.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Back"));
         stacks[42] = back;
         // 44 close
-        stacks[44] = GUIItemFactory.close();;
+        stacks[44] = GUIItemFactory.close();
         return stacks;
     }
 }

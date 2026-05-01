@@ -87,7 +87,7 @@ public class EyeStorage implements InventoryHolder {
         l_arrow.setItemMeta(l_arrow_im);
         stacks[GUIArtronStorage.ARROW_LEFT.slot()] = l_arrow;
         // close
-        stacks[GUIArtronStorage.CLOSE.slot()] = GUIItemFactory.close();;
+        stacks[GUIArtronStorage.CLOSE.slot()] = GUIItemFactory.close();
         return stacks;
     }
 }

@@ -72,7 +72,7 @@ public class ProductInventory implements InventoryHolder {
         craft.setData(DataComponentTypes.ITEM_MODEL, GUIChemistry.CRAFT.key());
         stack[GUIChemistry.CRAFT.slot()] = craft;
         // close
-        stack[GUIChemistry.CLOSE.slot()] = GUIItemFactory.close();;
+        stack[GUIChemistry.CLOSE.slot()] = GUIItemFactory.close();
         return stack;
     }
 }

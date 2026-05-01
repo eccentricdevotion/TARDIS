@@ -16,16 +16,15 @@
  */
 package me.eccentric_nz.TARDIS.lights;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUIChameleonTemplate;
 import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
-import me.eccentric_nz.TARDIS.custommodels.GUILights;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 public class LightEmittingInventory implements InventoryHolder {
 
@@ -57,12 +56,10 @@ public class LightEmittingInventory implements InventoryHolder {
         }
         // back button
         ItemStack back = ItemStack.of(GUIChameleonTemplate.BACK_HELP.material(), 1);
-        ItemMeta bk = back.getItemMeta();
-        bk.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Back"));
-        back.setItemMeta(bk);
+        back.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Back"));
         stacks[24] = back;
         // 26 close
-        stacks[26] = GUIItemFactory.close();;
+        stacks[26] = GUIItemFactory.close();
         return stacks;
     }
 }

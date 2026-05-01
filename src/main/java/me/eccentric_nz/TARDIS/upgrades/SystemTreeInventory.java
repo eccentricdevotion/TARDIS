@@ -138,7 +138,7 @@ public class SystemTreeInventory implements InventoryHolder {
         vert.setItemMeta(ical);
         stacks[13] = vert;
         // close
-        stacks[45] = GUIItemFactory.close();;
+        stacks[45] = GUIItemFactory.close();
         return stacks;
     }
 }

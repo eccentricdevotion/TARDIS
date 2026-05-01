@@ -85,7 +85,7 @@ class TARDISHumInventory implements InventoryHolder {
         play.setItemMeta(save);
         stack[GUIInteriorSounds.ACTION.slot()] = play;
         // close
-        stack[GUIInteriorSounds.CLOSE.slot()] = GUIItemFactory.close();;
+        stack[GUIInteriorSounds.CLOSE.slot()] = GUIItemFactory.close();
 
         return stack;
     }

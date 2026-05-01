@@ -120,7 +120,7 @@ public class TransmatInventory implements InventoryHolder {
             stack[GUITransmat.ROOMS.slot()] = rooms;
         }
         // close
-        stack[GUITransmat.CLOSE.slot()] = GUIItemFactory.close();;
+        stack[GUITransmat.CLOSE.slot()] = GUIItemFactory.close();
 
         return stack;
     }

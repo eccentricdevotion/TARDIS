@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.console.models;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.custommodels.keys.DirectionVariant;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 public class DirectionModel {
 
@@ -28,7 +28,6 @@ public class DirectionModel {
             return;
         }
         ItemStack is = display.getItemStack();
-        ItemMeta im = is.getItemMeta();
         switch (state) {
             case 0 -> is.setData(DataComponentTypes.ITEM_MODEL, DirectionVariant.DIRECTION_NORTH.getKey());
             case 1 -> is.setData(DataComponentTypes.ITEM_MODEL, DirectionVariant.DIRECTION_NORTH_EAST.getKey());
@@ -39,7 +38,6 @@ public class DirectionModel {
             case 6 -> is.setData(DataComponentTypes.ITEM_MODEL, DirectionVariant.DIRECTION_WEST.getKey());
             default -> is.setData(DataComponentTypes.ITEM_MODEL, DirectionVariant.DIRECTION_NORTH_WEST.getKey());
         }
-        is.setItemMeta(im);
         display.setItemStack(is);
     }
 }

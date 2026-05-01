@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.console.telepathic;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.CircuitChecker;
 import me.eccentric_nz.TARDIS.custommodels.keys.SwitchVariant;
@@ -31,7 +32,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
 
@@ -85,8 +85,7 @@ public class TelepathicGUIListener extends TARDISMenuListener {
             switch (slot) {
                 // toggle telepathy on/off
                 case 0 -> {
-                    ItemMeta im = choice.getItemMeta();
-                    int b = (im.hasLore() && ComponentUtils.endsWith(im.lore().getFirst(), "ON")) ? 0 : 1;
+                    int b = (choice.hasData(DataComponentTypes.LORE) && ComponentUtils.endsWith(choice.getData(DataComponentTypes.LORE).lines().getFirst(), "ON")) ? 0 : 1;
                     // update database
                     HashMap<String, Object> set = new HashMap<>();
                     HashMap<String, Object> whereu = new HashMap<>();
@@ -94,9 +93,8 @@ public class TelepathicGUIListener extends TARDISMenuListener {
                     set.put("telepathy_on", b);
                     plugin.getQueryFactory().doUpdate("player_prefs", set, whereu);
                     // set item model
-                    NamespacedKey model = im.getItemModel();
-                    is.setData(DataComponentTypes.ITEM_MODEL, (model == SwitchVariant.TELEPATHIC_CIRCUIT_OFF.getKey()) ? SwitchVariant.TELEPATHIC_CIRCUIT_ON.getKey() : SwitchVariant.TELEPATHIC_CIRCUIT_OFF.getKey());
-                    choice.setItemMeta(im);
+                    NamespacedKey model = NamespacedKey.fromString(choice.getData(DataComponentTypes.ITEM_MODEL).asString());
+                    choice.setData(DataComponentTypes.ITEM_MODEL, (model == SwitchVariant.TELEPATHIC_CIRCUIT_OFF.getKey()) ? SwitchVariant.TELEPATHIC_CIRCUIT_ON.getKey() : SwitchVariant.TELEPATHIC_CIRCUIT_OFF.getKey());
                     plugin.getMessenger().announceRepeater(player, "Telepathic Circuit " + (b == 1 ? "ON" : "OFF"));
                     close(player);
                 }
