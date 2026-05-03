@@ -57,7 +57,7 @@ public class OuterDisplayDoorCloser {
         if (dye == null) {
             return;
         }
-        if ((TARDISConstants.DYES.contains(dye.getType()) || plugin.getUtils().isCustomModel(dye)) && dye.hasItemMeta()) {
+        if ((TARDISConstants.DYES.contains(dye.getType()) || plugin.getUtils().isCustomModel(dye))) {
             if (!dye.hasData(DataComponentTypes.ITEM_MODEL)) {
                 return;
             }

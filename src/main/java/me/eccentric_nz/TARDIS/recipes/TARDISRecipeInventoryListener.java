@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.recipes;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
@@ -56,7 +57,7 @@ public class TARDISRecipeInventoryListener extends TARDISMenuListener {
             case 4 -> { } // info
             case 8 -> close(player); // close
             default -> {
-                String command = ComponentUtils.stripColour(is.getItemMeta().lore().getFirst()).substring(1);
+                String command = ComponentUtils.stripColour(is.getData(DataComponentTypes.LORE).lines().getFirst()).substring(1);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     player.performCommand(command);
                     plugin.getTrackerKeeper().getRecipeViewers().add(player.getUniqueId());

@@ -23,7 +23,6 @@ import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
 
@@ -48,13 +47,12 @@ public class UntemperedSchism {
     }
 
     public static boolean is(ItemStack is) {
-        if (is == null || is.getType() != Material.ANCIENT_DEBRIS || !is.hasItemMeta()) {
+        if (is == null || is.getType() != Material.ANCIENT_DEBRIS) {
             return false;
         }
-        ItemMeta im = is.getItemMeta();
-        if (!im.hasCustomName() || !im.hasItemModel()) {
+        if (!is.hasData(DataComponentTypes.ITEM_MODEL)) {
             return false;
         }
-        return ComponentUtils.endsWith(im.customName(), "Untempered Schism");
+        return ComponentUtils.isNamed(is, "Untempered Schism");
     }
 }

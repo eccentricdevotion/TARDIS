@@ -117,7 +117,7 @@ public class DevelopmentUtility {
         head.setData(DataComponentTypes.ITEM_MODEL, new NamespacedKey(plugin, "dalek_independent_head"));
         head.setData(DataComponentTypes.EQUIPPABLE, Equippable.equippable(EquipmentSlot.HEAD)
                 // TODO check this
-                .allowedEntities(RegistrySet.keySet(RegistryKey.ENTITY_TYPE, TypedKey.create(RegistryKey.ENTITY_TYPE, "minecraft:skeleton")))
+                .allowedEntities(RegistrySet.keySet(RegistryKey.ENTITY_TYPE, TypedKey.create(RegistryKey.ENTITY_TYPE, EntityType.SKELETON.getKey())))
                 .build());
         ee.setHelmet(head);
         ItemStack body = ItemStack.of(Material.SLIME_BALL);
@@ -191,11 +191,18 @@ public class DevelopmentUtility {
 
     public static void brush(Player player) {
         ItemStack sand = ItemStack.of(Material.SUSPICIOUS_SAND);
-        BlockStateMeta sandMeta = (BlockStateMeta) sand.getItemMeta();
-        BrushableBlock blockState = (BrushableBlock) sandMeta.getBlockState();
-        blockState.setItem(player.getInventory().getItemInMainHand());
-        sandMeta.setBlockState(blockState);
-        sand.setItemMeta(sandMeta);
+//        BlockStateMeta sandMeta = (BlockStateMeta) sand.getItemMeta();
+//        BrushableBlock blockState = (BrushableBlock) sandMeta.getBlockState();
+//        blockState.setItem(player.getInventory().getItemInMainHand());
+//        sandMeta.setBlockState(blockState);
+//        sand.setItemMeta(sandMeta);
+        sand.editMeta(BlockStateMeta.class, meta -> {
+            // only proceed if it's actually a brushable block
+            if (meta.getBlockState() instanceof BrushableBlock brushable) {
+                brushable.setItem(player.getInventory().getItemInMainHand());
+                meta.setBlockState(brushable);
+            }
+        });
         player.getInventory().addItem(sand);
     }
 

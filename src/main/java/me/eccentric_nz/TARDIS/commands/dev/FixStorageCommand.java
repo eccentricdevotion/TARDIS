@@ -47,26 +47,24 @@ public class FixStorageCommand {
                 ItemStack[] stacks = SerializeInventory.itemStacksFromString(storage.getEmpty());
                 // convert stacks to component display names
                 for (ItemStack is : stacks) {
-                    if (is != null && is.hasItemMeta()) {
-                        if (is.hasData(DataComponentTypes.CUSTOM_NAME)) {
-                            Component component = is.getData(DataComponentTypes.CUSTOM_NAME);
-                            // strip color codes
-                            String stripped = ComponentUtils.stripColour(component);
-                            if (!component.children().isEmpty()) {
-                                stripped = ComponentUtils.stripColour(component.children().getFirst());
-                            }
-                            is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(stripped));
-                            if (is.getType() == Material.GLOWSTONE_DUST) {
-                                is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
-                                        .addFloats(CircuitVariant.GALLIFREY.getFloats())
-                                        .build());
-                            }
-                            is.unsetData(DataComponentTypes.ITEM_MODEL);
-                            is.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
-                                    .addHiddenComponents(DataComponentTypes.ATTRIBUTE_MODIFIERS)
-                                    .hideTooltip(true)
+                    if (is != null && is.hasData(DataComponentTypes.CUSTOM_NAME)) {
+                        Component component = is.getData(DataComponentTypes.CUSTOM_NAME);
+                        // strip color codes
+                        String stripped = ComponentUtils.stripColour(component);
+                        if (!component.children().isEmpty()) {
+                            stripped = ComponentUtils.stripColour(component.children().getFirst());
+                        }
+                        is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(stripped));
+                        if (is.getType() == Material.GLOWSTONE_DUST) {
+                            is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                                    .addFloats(CircuitVariant.GALLIFREY.getFloats())
                                     .build());
                         }
+                        is.unsetData(DataComponentTypes.ITEM_MODEL);
+                        is.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
+                                .addHiddenComponents(DataComponentTypes.ATTRIBUTE_MODIFIERS)
+                                .hideTooltip(true)
+                                .build());
                     }
                 }
                 // rewrite serialised string

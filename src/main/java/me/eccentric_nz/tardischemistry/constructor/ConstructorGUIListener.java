@@ -31,7 +31,6 @@ import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 public class ConstructorGUIListener extends TARDISMenuListener {
 
@@ -122,17 +121,14 @@ public class ConstructorGUIListener extends TARDISMenuListener {
     private int getCount(InventoryView view, int offset) {
         int oneInt, tenInt = 0, hundredInt = 0;
         ItemStack ones = view.getItem(3 + offset);
-        ItemMeta oneMeta = ones.getItemMeta();
-        oneInt = ComponentUtils.parseInt(oneMeta.customName());
+        oneInt = ComponentUtils.parseInt(ones.getData(DataComponentTypes.CUSTOM_NAME));
         ItemStack tens = view.getItem(2 + offset);
         if (tens != null) {
-            ItemMeta tenMeta = tens.getItemMeta();
-            tenInt = ComponentUtils.parseInt(tenMeta.customName()) * 10;
+            tenInt = ComponentUtils.parseInt(tens.getData(DataComponentTypes.CUSTOM_NAME)) * 10;
         }
         ItemStack hundreds = view.getItem(1 + offset);
         if (hundreds != null) {
-            ItemMeta hundredMeta = hundreds.getItemMeta();
-            hundredInt = ComponentUtils.parseInt(hundredMeta.customName()) * 100;
+            hundredInt = ComponentUtils.parseInt(hundreds.getData(DataComponentTypes.CUSTOM_NAME)) * 100;
         }
         return oneInt + tenInt + hundredInt;
     }

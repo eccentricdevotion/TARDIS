@@ -41,7 +41,6 @@ import org.bukkit.block.Biome;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.*;
 import java.util.regex.Matcher;
@@ -121,7 +120,7 @@ public class HandlesRequest {
                     }
                     PlayerInventory pi = player.getInventory();
                     ItemStack communicator = pi.getHelmet();
-                    if (communicator == null || !communicator.hasItemMeta() || !communicator.getType().equals(Material.LEATHER_HELMET) || !ComponentUtils.endsWith(communicator.getItemMeta().customName(), "TARDIS Communicator")) {
+                    if (!communicator.getType().equals(Material.LEATHER_HELMET) || !ComponentUtils.isNamed(communicator, "TARDIS Communicator")) {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "HANDLES_COMMUNICATOR");
                         return;
                     }
@@ -130,11 +129,10 @@ public class HandlesRequest {
                 // Handles must be in inventory
                 boolean found = false;
                 for (ItemStack is : player.getInventory().getContents()) {
-                    if (is != null && is.getType().equals(Material.BIRCH_BUTTON) && is.hasItemMeta()) {
-                        ItemMeta im = is.getItemMeta();
-                        if (im.hasCustomName() && ComponentUtils.endsWith(im.customName(), "Handles")) {
-                            found = true;
-                        }
+                    if (is != null
+                            && is.getType().equals(Material.BIRCH_BUTTON)
+                            && ComponentUtils.isNamed(is, "Handles")) {
+                        found = true;
                     }
                 }
                 if (!found) {

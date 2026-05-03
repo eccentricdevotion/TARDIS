@@ -16,6 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.commands.dev.wiki;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemEnchantments;
+import io.papermc.paper.datacomponent.item.PotionContents;
 import io.papermc.paper.registry.TypedKey;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
@@ -25,9 +28,6 @@ import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ItemType;
 import org.bukkit.inventory.RecipeChoice;
-import org.bukkit.inventory.meta.EnchantmentStorageMeta;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.PotionMeta;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -68,7 +68,7 @@ public class PageBuilder {
         String MINECRAFT = "[%s](https://minecraft.wiki/w/%s)";
         String link = MINECRAFT;
         if (choice instanceof RecipeChoice.ItemTypeChoice mat) {
-           TypedKey<ItemType> firstItem = List.copyOf(mat.itemTypes().values()).getFirst();
+            TypedKey<ItemType> firstItem = List.copyOf(mat.itemTypes().values()).getFirst();
             ingredient = TARDISStringUtils.capitalise(firstItem.value());
             // MINECRAFT = "[%s](https://minecraft.wiki/w/%s)";
             link = String.format(MINECRAFT, ingredient, ingredient.replaceAll(" ", "_"));
@@ -77,21 +77,20 @@ public class PageBuilder {
             ItemStack is = exact.getChoices().getFirst();
             switch (is.getType()) {
                 case POTION -> {
-                    PotionMeta pm = (PotionMeta) is.getItemMeta();
-                    String potion = pm.getBasePotionType().name();
+                    PotionContents pm = is.getData(DataComponentTypes.POTION_CONTENTS);
+                    String potion = pm.potion().name();
                     ingredient = "Potion of " + TARDISStringUtils.capitalise(potion);
                     link = String.format(MINECRAFT, ingredient, ingredient.replaceAll(" ", "_"));
                 }
                 case ENCHANTED_BOOK -> {
-                    EnchantmentStorageMeta bm = (EnchantmentStorageMeta) is.getItemMeta();
-                    String enchant = bm.getEnchants().keySet().stream().findFirst().toString();
+                    ItemEnchantments bm = is.getData(DataComponentTypes.STORED_ENCHANTMENTS);
+                    String enchant = bm.enchantments().keySet().stream().findFirst().toString();
                     String cap = TARDISStringUtils.capitalise(enchant);
                     ingredient = "Enchanted Book of " + cap;
                     link = String.format(MINECRAFT, ingredient, ingredient.replaceAll(" ", "_"));
                 }
                 default -> {
-                    ItemMeta im = is.getItemMeta();
-                    String dn = ComponentUtils.stripColour(im.customName());
+                    String dn = ComponentUtils.stripColour(is.getData(DataComponentTypes.CUSTOM_NAME));
                     RecipeItem recipeItem = RecipeItem.getByName(dn);
                     String folder = recipeItem.getCategory().toString().toLowerCase(Locale.ROOT);
                     String WIKI = "[%s](/recipes/%s/%s)";

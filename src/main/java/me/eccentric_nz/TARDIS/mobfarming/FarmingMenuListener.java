@@ -29,7 +29,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -105,8 +104,9 @@ public class FarmingMenuListener extends TARDISMenuListener {
                 }
             }
         }
-        option.setType(m);
-        view.setItem(slot, option);
+        ItemStack sub = ItemStack.of(m);
+        sub.copyDataFrom(option, dataComponentType -> true);
+        view.setItem(slot, sub);
         // update database
         plugin.getQueryFactory().updateFarmingPref(player.getUniqueId(), rooms.get(slot), onOff);
     }

@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.DamageUtility;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
@@ -28,7 +29,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
 
@@ -62,9 +62,8 @@ public class TARDISTemporalLocatorListener extends TARDISMenuListener {
             return;
         }
         ItemStack is = event.getView().getItem(slot);
-        if (is.hasItemMeta()) {
-            ItemMeta im = is.getItemMeta();
-            List<Component> lore = im.lore();
+        if (is.hasData(DataComponentTypes.LORE)) {
+            List<Component> lore = is.getData(DataComponentTypes.LORE).lines();
             long time = getTime(lore);
             plugin.getTrackerKeeper().getSetTime().put(player.getUniqueId(), time);
             plugin.getMessenger().send(player, TardisModule.TARDIS, "TEMPORAL_SET", String.format("%d", time));

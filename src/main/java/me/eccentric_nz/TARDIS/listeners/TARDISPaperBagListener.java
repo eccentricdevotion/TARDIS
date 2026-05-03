@@ -62,7 +62,7 @@ public class TARDISPaperBagListener implements Listener {
         if (is == null || !is.getType().equals(Material.PAPER)) {
             return;
         }
-        if (!is.hasData(DataComponentTypes.CUSTOM_NAME) || !ComponentUtils.endsWith(is.getData(DataComponentTypes.CUSTOM_NAME), "Paper Bag")) {
+        if (!ComponentUtils.isNamed(is, "Paper Bag")) {
             return;
         }
         if (event.isRightClick()) {

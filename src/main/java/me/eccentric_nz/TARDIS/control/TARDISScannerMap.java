@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.control;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.MapId;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -23,7 +25,6 @@ import org.bukkit.Rotation;
 import org.bukkit.World;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.MapMeta;
 import org.bukkit.map.MapView;
 
 public class TARDISScannerMap {
@@ -47,9 +48,8 @@ public class TARDISScannerMap {
         view.setTrackingPosition(true);
         view.setLocked(true);
         ItemStack map = ItemStack.of(Material.FILLED_MAP, 1);
-        MapMeta meta = (MapMeta) map.getItemMeta();
-        meta.setMapView(view);
-        map.setItemMeta(meta);
+        // TODO test this
+        map.setData(DataComponentTypes.MAP_ID, MapId.mapId(view.getId()));
         itemFrame.setItem(map, false);
         itemFrame.setRotation(Rotation.NONE);
         plugin.getTardisHelper().updateMap(world, view);

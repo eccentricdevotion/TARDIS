@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.travel;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
@@ -28,7 +30,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,10 +74,8 @@ public class TARDISAreasInventory implements InventoryHolder {
                 String name = a.areaName();
                 if (TARDISPermission.hasPermission(p, "tardis.area." + name) || TARDISPermission.hasPermission(p, "tardis.area.*")) {
                     ItemStack is = ItemStack.of(TARDISConstants.GUI_IDS.get(i), 1);
-                    ItemMeta im = is.getItemMeta();
                     is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(name));
-                    im.lore(List.of(Component.text(a.world())));
-                    is.setItemMeta(im);
+                    is.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text(a.world())).build());
                     areas.add(is);
                     i++;
                 }
@@ -93,9 +92,7 @@ public class TARDISAreasInventory implements InventoryHolder {
         }
         // add button to load TARDIS areas
         ItemStack map = ItemStack.of(Material.MAP, 1);
-        ItemMeta switchto = map.getItemMeta();
-        switchto.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Load TARDIS saves"));
-        map.setItemMeta(switchto);
+        map.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Load TARDIS saves"));
         for (int m = 45; m < 54; m++) {
             if (m == 49) {
                 stack[m] = map;

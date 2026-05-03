@@ -35,7 +35,6 @@ import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -83,11 +82,9 @@ public class StorageListener extends TARDISMenuListener {
             // scan the inventory for area disks and spit them out
             for (int i = 0; i < event.getInventory().getSize(); i++) {
                 ItemStack stack = view.getItem(i);
-                if (stack == null || !stack.getType().equals(Material.MUSIC_DISC_BLOCKS) || !stack.hasItemMeta()) {
-                    return;
-                }
-                ItemMeta ims = stack.getItemMeta();
-                if (!ims.hasCustomName() || !ComponentUtils.endsWith(ims.customName(), "Area Storage Disk")) {
+                if (stack == null
+                        || !stack.getType().equals(Material.MUSIC_DISC_BLOCKS)
+                        || !ComponentUtils.isNamed(stack, "Area Storage Disk")) {
                     return;
                 }
                 Player p = (Player) event.getPlayer();
@@ -208,11 +205,10 @@ public class StorageListener extends TARDISMenuListener {
     public void onPlayerDropAreaDisk(PlayerDropItemEvent event) {
         Player player = event.getPlayer();
         ItemStack is = event.getItemDrop().getItemStack();
-        if (!is.getType().equals(Material.MUSIC_DISC_BLOCKS) || !is.hasItemMeta()) {
+        if (is == null || !is.getType().equals(Material.MUSIC_DISC_BLOCKS)) {
             return;
         }
-        ItemMeta im = is.getItemMeta();
-        if (im == null || !im.hasCustomName() || !ComponentUtils.endsWith(im.customName(), "Area Storage Disk")) {
+        if (!ComponentUtils.isNamed(is, "Area Storage Disk")) {
             return;
         }
         event.setCancelled(true);

@@ -26,13 +26,13 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.profile.PlayerTextures;
 
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 
 public class HeadCommand {
 
@@ -69,22 +69,23 @@ public class HeadCommand {
         // get the head in the player's hand
         ItemStack head = player.getInventory().getItemInMainHand();
         if (head.getType() == Material.PLAYER_HEAD) {
-            SkullMeta meta = (SkullMeta) head.getItemMeta();
-            PlayerProfile profile = meta.getPlayerProfile();
-            for (ProfileProperty property : profile.getProperties()) {
-                plugin.debug("n " + property.getName());
-                plugin.debug("s " + property.getSignature());
-                plugin.debug("v " + property.getValue());
-            }
-            if (profile.getTextures().getSkin() != null) {
-                plugin.debug("u " + profile.getTextures().getSkin().toString());
-            }
-            PlayerProfile washingMachineProfile = plugin.getServer().createProfile(UUID.fromString(WashingMachineSkin.WASHING_MACHINE.signature()));
-            washingMachineProfile.setProperty(new ProfileProperty("textures", WashingMachineSkin.WASHING_MACHINE.value(), null));
-            ItemStack washingMachine = ItemStack.of(Material.PLAYER_HEAD);
-            washingMachine.setData(DataComponentTypes.PROFILE, ResolvableProfile.resolvableProfile(washingMachineProfile));
-            washingMachine.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Washing Machine"));
-            player.give(washingMachine);
+            CompletableFuture<PlayerProfile> futureProfile = head.getData(DataComponentTypes.PROFILE).resolve();
+            futureProfile.thenAccept(profile -> {
+                for (ProfileProperty property : profile.getProperties()) {
+                    plugin.debug("n " + property.getName());
+                    plugin.debug("s " + property.getSignature());
+                    plugin.debug("v " + property.getValue());
+                }
+                if (profile.getTextures().getSkin() != null) {
+                    plugin.debug("u " + profile.getTextures().getSkin().toString());
+                }
+                PlayerProfile washingMachineProfile = plugin.getServer().createProfile(UUID.fromString(WashingMachineSkin.WASHING_MACHINE.signature()));
+                washingMachineProfile.setProperty(new ProfileProperty("textures", WashingMachineSkin.WASHING_MACHINE.value(), null));
+                ItemStack washingMachine = ItemStack.of(Material.PLAYER_HEAD);
+                washingMachine.setData(DataComponentTypes.PROFILE, ResolvableProfile.resolvableProfile(washingMachineProfile));
+                washingMachine.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Washing Machine"));
+                player.give(washingMachine);
+            });
         }
     }
 }

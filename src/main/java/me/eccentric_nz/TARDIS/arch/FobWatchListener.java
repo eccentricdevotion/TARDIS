@@ -33,7 +33,6 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.UUID;
 
@@ -57,11 +56,10 @@ public class FobWatchListener implements Listener {
             return;
         }
         ItemStack is = event.getItem();
-        if (is == null || !is.getType().equals(Material.CLOCK) || !is.hasItemMeta()) {
+        if (is == null || !is.getType().equals(Material.CLOCK)) {
             return;
         }
-        ItemMeta im = is.getItemMeta();
-        if (!im.hasCustomName() || !ComponentUtils.endsWith(im.customName(), "Fob Watch")) {
+        if (!ComponentUtils.isNamed(is, "Fob Watch")) {
             return;
         }
         Player player = event.getPlayer();

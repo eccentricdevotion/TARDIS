@@ -3,6 +3,7 @@
  */
 package me.eccentric_nz.TARDIS.rooms.eye;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -12,7 +13,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 /**
  * @author eccentric_nz
@@ -20,14 +20,13 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class SpaceHelmetListener implements Listener {
 
     public static boolean isSpaceHelmet(ItemStack helmet) {
-        if (helmet == null || helmet.getType() != Material.GLASS || !helmet.hasItemMeta()) {
+        if (helmet == null || helmet.getType() != Material.GLASS) {
             return false;
         }
-        ItemMeta im = helmet.getItemMeta();
-        if (!im.hasCustomName() || !im.hasMaxStackSize()) {
+        if (!helmet.hasData(DataComponentTypes.MAX_STACK_SIZE)) {
             return false;
         }
-        return ComponentUtils.endsWith(im.customName(), "TARDIS Space Helmet") && im.getMaxStackSize() == 1;
+        return ComponentUtils.isNamed(helmet, "TARDIS Space Helmet") && helmet.getData(DataComponentTypes.MAX_STACK_SIZE) == 1;
     }
 
     @EventHandler(priority = EventPriority.MONITOR)

@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.commands.dev;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
@@ -26,7 +28,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,18 +47,17 @@ public class CircuitCommand {
     }
 
     public void give(CommandSender sender) {
+        // TODO test this
         if (sender instanceof Player player) {
             // get a random circuit
             String c = circuits.get(TARDISConstants.RANDOM.nextInt(circuits.size()));
             ShapedRecipe recipe = plugin.getFigura().getShapedRecipes().get(c);
             ItemStack result = recipe.getResult();
             // set the second line of lore
-            ItemMeta im = result.getItemMeta();
-            List<Component> lore = im.lore();
+            List<Component> lore = new ArrayList<>(result.getData(DataComponentTypes.LORE).lines());
             Component uses = Component.text(plugin.getConfig().getInt("circuits.uses.invisibility") - 3, NamedTextColor.YELLOW);
             lore.set(1, uses);
-            im.lore(lore);
-            result.setItemMeta(im);
+            result.setData(DataComponentTypes.LORE, ItemLore.lore(lore));
             player.getInventory().addItem(result);
         }
     }

@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.lazarus;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import io.papermc.paper.world.WeatheringCopperState;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISGeneticManipulatorDisguiseEvent;
@@ -40,8 +42,8 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -107,9 +109,8 @@ public class LazarusGUIListener extends TARDISMenuListener {
             // get selection
             ItemStack is = view.getItem(slot);
             if (is != null) {
-                ItemMeta im = is.getItemMeta();
                 // remember selection
-                String display = (is.getType() == Material.PLAYER_HEAD) ? "PLAYER" : ComponentUtils.stripColour(im.customName());
+                String display = (is.getType() == Material.PLAYER_HEAD) ? "PLAYER" : ComponentUtils.stripColour(is.getData(DataComponentTypes.CUSTOM_NAME));
                 plugin.getTrackerKeeper().getDisguises().put(uuid, display);
                 setSlotFortyEight(view, display, uuid);
             } else {
@@ -122,9 +123,9 @@ public class LazarusGUIListener extends TARDISMenuListener {
                 case 36, 44 -> {
                     LazarusUtils.pagers.add(uuid);
                     ItemStack pageButton = view.getItem(slot);
-                    ItemMeta pageMeta = pageButton.getItemMeta();
+                    ItemLore itemLore = pageButton.getData(DataComponentTypes.LORE);
                     // check the lore
-                    String which = ComponentUtils.stripColour(pageMeta.lore().getFirst());
+                    String which = ComponentUtils.stripColour(itemLore != null ? itemLore.lines().getFirst() : null);
                     plugin.debug(which);
                     switch (which) {
                         case "Passive Mobs" -> ih = new LazarusPassiveInventory(plugin);
@@ -146,10 +147,8 @@ public class LazarusGUIListener extends TARDISMenuListener {
                 }
                 case 47 -> { // adult / baby
                     ItemStack ageButton = view.getItem(slot);
-                    ItemMeta ageMeta = ageButton.getItemMeta();
-                    String onoff = (ComponentUtils.stripColour(ageMeta.lore().getFirst()).equals("ADULT")) ? "BABY" : "ADULT";
-                    ageMeta.lore(List.of(Component.text(onoff)));
-                    ageButton.setItemMeta(ageMeta);
+                    String onoff = (ComponentUtils.stripColour(ageButton.getData(DataComponentTypes.LORE).lines().getFirst()).equals("ADULT")) ? "BABY" : "ADULT";
+                    ageButton.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text(onoff)).build());
                 }
                 case 48 -> { // type / colour
                     if (plugin.getTrackerKeeper().getDisguises().containsKey(uuid)) {
@@ -158,13 +157,11 @@ public class LazarusGUIListener extends TARDISMenuListener {
                 }
                 case 49 -> { // Tamed / Flying / Blazing / Powered / Beaming / Aggressive / Decorated / Chest carrying : TRUE | FALSE
                     ItemStack optionsButton = view.getItem(slot);
-                    ItemMeta optionsMeta = optionsButton.getItemMeta();
-                    List<Component> lore = optionsMeta.lore();
+                    List<Component> lore = new ArrayList<>(optionsButton.getData(DataComponentTypes.LORE).lines());
                     int pos = lore.size() - 1;
                     Component truefalse = (ComponentUtils.stripColour(lore.get(pos)).equals("FALSE")) ? Component.text("TRUE", NamedTextColor.GREEN) : Component.text("FALSE", NamedTextColor.RED);
                     lore.set(pos, truefalse);
-                    optionsMeta.lore(lore);
-                    optionsButton.setItemMeta(optionsMeta);
+                    optionsButton.setData(DataComponentTypes.LORE, ItemLore.lore(lore));
                 }
                 case 51 -> { // remove disguise
                     LazarusUtils.pagers.remove(uuid);
@@ -626,17 +623,15 @@ public class LazarusGUIListener extends TARDISMenuListener {
         }
         if (t != null) {
             ItemStack is = i.getItem(48);
-            ItemMeta im = is.getItemMeta();
-            im.lore(List.of(Component.text(t)));
-            is.setItemMeta(im);
+            is.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text(t)).build());
         }
     }
 
     private DyeColor getColor(InventoryView i) {
         ItemStack is = i.getItem(48);
-        ItemMeta im = is.getItemMeta();
+        ItemLore lore = is.getData(DataComponentTypes.LORE);
         try {
-            return DyeColor.valueOf(ComponentUtils.stripColour(im.lore().getFirst()));
+            return DyeColor.valueOf(ComponentUtils.stripColour(lore.lines().getFirst()));
         } catch (IllegalArgumentException e) {
             return DyeColor.WHITE;
         }
@@ -644,9 +639,9 @@ public class LazarusGUIListener extends TARDISMenuListener {
 
     private Horse.Color getHorseColor(InventoryView i) {
         ItemStack is = i.getItem(48);
-        ItemMeta im = is.getItemMeta();
+        ItemLore lore = is.getData(DataComponentTypes.LORE);
         try {
-            return Horse.Color.valueOf(ComponentUtils.stripColour(im.lore().getFirst()));
+            return Horse.Color.valueOf(ComponentUtils.stripColour(lore.lines().getFirst()));
         } catch (IllegalArgumentException e) {
             return Horse.Color.WHITE;
         }
@@ -654,9 +649,9 @@ public class LazarusGUIListener extends TARDISMenuListener {
 
     private MushroomCow.Variant getMushroomCowVariant(InventoryView i) {
         ItemStack is = i.getItem(48);
-        ItemMeta im = is.getItemMeta();
+        ItemLore lore = is.getData(DataComponentTypes.LORE);
         try {
-            return MushroomCow.Variant.valueOf(ComponentUtils.stripColour(im.lore().getFirst()));
+            return MushroomCow.Variant.valueOf(ComponentUtils.stripColour(lore.lines().getFirst()));
         } catch (IllegalArgumentException e) {
             return MushroomCow.Variant.RED;
         }
@@ -664,9 +659,9 @@ public class LazarusGUIListener extends TARDISMenuListener {
 
     private Llama.Color getLlamaColor(InventoryView i) {
         ItemStack is = i.getItem(48);
-        ItemMeta im = is.getItemMeta();
+        ItemLore lore = is.getData(DataComponentTypes.LORE);
         try {
-            return Llama.Color.valueOf(ComponentUtils.stripColour(im.lore().getFirst()));
+            return Llama.Color.valueOf(ComponentUtils.stripColour(lore.lines().getFirst()));
         } catch (IllegalArgumentException e) {
             return org.bukkit.entity.Llama.Color.CREAMY;
         }
@@ -674,9 +669,9 @@ public class LazarusGUIListener extends TARDISMenuListener {
 
     private Axolotl.Variant getAxolotlVariant(InventoryView i) {
         ItemStack is = i.getItem(48);
-        ItemMeta im = is.getItemMeta();
+        ItemLore lore = is.getData(DataComponentTypes.LORE);
         try {
-            return Axolotl.Variant.valueOf(ComponentUtils.stripColour(im.lore().getFirst()));
+            return Axolotl.Variant.valueOf(ComponentUtils.stripColour(lore.lines().getFirst()));
         } catch (IllegalArgumentException e) {
             return Axolotl.Variant.WILD;
         }
@@ -684,21 +679,21 @@ public class LazarusGUIListener extends TARDISMenuListener {
 
     private Frog.Variant getFrogVariant(InventoryView i) {
         ItemStack is = i.getItem(48);
-        ItemMeta im = is.getItemMeta();
-        return LazarusVariants.FROG_VARIANTS.getOrDefault(ComponentUtils.stripColour(im.lore().getFirst()), Frog.Variant.TEMPERATE);
+        ItemLore lore = is.getData(DataComponentTypes.LORE);
+        return LazarusVariants.FROG_VARIANTS.getOrDefault(ComponentUtils.stripColour(lore.lines().getFirst()), Frog.Variant.TEMPERATE);
     }
 
     private Cat.Type getCatType(InventoryView i) {
         ItemStack is = i.getItem(48);
-        ItemMeta im = is.getItemMeta();
-        return LazarusVariants.CAT_VARIANTS.getOrDefault(ComponentUtils.stripColour(im.lore().getFirst()), Cat.Type.TABBY);
+        ItemLore lore = is.getData(DataComponentTypes.LORE);
+        return LazarusVariants.CAT_VARIANTS.getOrDefault(ComponentUtils.stripColour(lore.lines().getFirst()), Cat.Type.TABBY);
     }
 
     private Fox.Type getFoxType(InventoryView i) {
         ItemStack is = i.getItem(48);
-        ItemMeta im = is.getItemMeta();
+        ItemLore lore = is.getData(DataComponentTypes.LORE);
         try {
-            return Fox.Type.valueOf(ComponentUtils.stripColour(im.lore().getFirst()));
+            return Fox.Type.valueOf(ComponentUtils.stripColour(lore.lines().getFirst()));
         } catch (IllegalArgumentException e) {
             return Fox.Type.RED;
         }
@@ -706,9 +701,9 @@ public class LazarusGUIListener extends TARDISMenuListener {
 
     private Panda.Gene getGene(InventoryView i) {
         ItemStack is = i.getItem(48);
-        ItemMeta im = is.getItemMeta();
+        ItemLore lore = is.getData(DataComponentTypes.LORE);
         try {
-            return Panda.Gene.valueOf(ComponentUtils.stripColour(im.lore().getFirst()));
+            return Panda.Gene.valueOf(ComponentUtils.stripColour(lore.lines().getFirst()));
         } catch (IllegalArgumentException e) {
             return Panda.Gene.NORMAL;
         }
@@ -716,9 +711,9 @@ public class LazarusGUIListener extends TARDISMenuListener {
 
     private WeatheringCopperState getGolemState(InventoryView i) {
         ItemStack is = i.getItem(48);
-        ItemMeta im = is.getItemMeta();
+        ItemLore lore = is.getData(DataComponentTypes.LORE);
         try {
-            return WeatheringCopperState.valueOf(ComponentUtils.stripColour(im.lore().getFirst()));
+            return WeatheringCopperState.valueOf(ComponentUtils.stripColour(lore.lines().getFirst()));
         } catch (IllegalArgumentException e) {
             return WeatheringCopperState.UNAFFECTED;
         }
@@ -726,9 +721,9 @@ public class LazarusGUIListener extends TARDISMenuListener {
 
     private Parrot.Variant getParrotVariant(InventoryView i) {
         ItemStack is = i.getItem(48);
-        ItemMeta im = is.getItemMeta();
+        ItemLore lore = is.getData(DataComponentTypes.LORE);
         try {
-            return Parrot.Variant.valueOf(ComponentUtils.stripColour(im.lore().getFirst()));
+            return Parrot.Variant.valueOf(ComponentUtils.stripColour(lore.lines().getFirst()));
         } catch (IllegalArgumentException e) {
             return Parrot.Variant.GRAY;
         }
@@ -736,9 +731,9 @@ public class LazarusGUIListener extends TARDISMenuListener {
 
     private Rabbit.Type getRabbitType(InventoryView i) {
         ItemStack is = i.getItem(48);
-        ItemMeta im = is.getItemMeta();
+        ItemLore lore = is.getData(DataComponentTypes.LORE);
         try {
-            return Rabbit.Type.valueOf(ComponentUtils.stripColour(im.lore().getFirst()));
+            return Rabbit.Type.valueOf(ComponentUtils.stripColour(lore.lines().getFirst()));
         } catch (IllegalArgumentException e) {
             return Rabbit.Type.BROWN;
         }
@@ -746,51 +741,51 @@ public class LazarusGUIListener extends TARDISMenuListener {
 
     private Wolf.Variant getWolfVariant(InventoryView i) {
         ItemStack is = i.getItem(48);
-        ItemMeta im = is.getItemMeta();
-        return LazarusVariants.WOLF_VARIANTS.getOrDefault(ComponentUtils.stripColour(im.lore().getFirst()), Wolf.Variant.PALE);
+        ItemLore lore = is.getData(DataComponentTypes.LORE);
+        return LazarusVariants.WOLF_VARIANTS.getOrDefault(ComponentUtils.stripColour(lore.lines().getFirst()), Wolf.Variant.PALE);
     }
 
     private Chicken.Variant getChickenVariant(InventoryView i) {
         ItemStack is = i.getItem(48);
-        ItemMeta im = is.getItemMeta();
-        return LazarusVariants.CHICKEN_VARIANTS.getOrDefault(ComponentUtils.stripColour(im.lore().getFirst()), Chicken.Variant.TEMPERATE);
+        ItemLore lore = is.getData(DataComponentTypes.LORE);
+        return LazarusVariants.CHICKEN_VARIANTS.getOrDefault(ComponentUtils.stripColour(lore.lines().getFirst()), Chicken.Variant.TEMPERATE);
     }
 
     private Cow.Variant getCowVariant(InventoryView i) {
         ItemStack is = i.getItem(48);
-        ItemMeta im = is.getItemMeta();
-        return LazarusVariants.COW_VARIANTS.getOrDefault(ComponentUtils.stripColour(im.lore().getFirst()), Cow.Variant.TEMPERATE);
+        ItemLore lore = is.getData(DataComponentTypes.LORE);
+        return LazarusVariants.COW_VARIANTS.getOrDefault(ComponentUtils.stripColour(lore.lines().getFirst()), Cow.Variant.TEMPERATE);
     }
 
     private Pig.Variant getPigVariant(InventoryView i) {
         ItemStack is = i.getItem(48);
-        ItemMeta im = is.getItemMeta();
-        return LazarusVariants.PIG_VARIANTS.getOrDefault(ComponentUtils.stripColour(im.lore().getFirst()), Pig.Variant.TEMPERATE);
+        ItemLore lore = is.getData(DataComponentTypes.LORE);
+        return LazarusVariants.PIG_VARIANTS.getOrDefault(ComponentUtils.stripColour(lore.lines().getFirst()), Pig.Variant.TEMPERATE);
     }
 
     private Villager.Profession getProfession(InventoryView i) {
         ItemStack is = i.getItem(48);
-        ItemMeta im = is.getItemMeta();
-        return LazarusVariants.PROFESSIONS.getOrDefault(ComponentUtils.stripColour(im.lore().getFirst()), Villager.Profession.FARMER);
+        ItemLore lore = is.getData(DataComponentTypes.LORE);
+        return LazarusVariants.PROFESSIONS.getOrDefault(ComponentUtils.stripColour(lore.lines().getFirst()), Villager.Profession.FARMER);
     }
 
     private int getSlimeSize(InventoryView i) {
         ItemStack is = i.getItem(48);
-        ItemMeta im = is.getItemMeta();
-        int size = TARDISNumberParsers.parseInt(ComponentUtils.stripColour(im.lore().getFirst()));
+        ItemLore lore = is.getData(DataComponentTypes.LORE);
+        int size = TARDISNumberParsers.parseInt(ComponentUtils.stripColour(lore.lines().getFirst()));
         return (size == 0) ? 2 : size;
     }
 
     private boolean getBaby(InventoryView i) {
         ItemStack is = i.getItem(47);
-        ItemMeta im = is.getItemMeta();
-        return ComponentUtils.stripColour(im.lore().getFirst()).equals("BABY");
+        ItemLore lore = is.getData(DataComponentTypes.LORE);
+        return ComponentUtils.stripColour(lore.lines().getFirst()).equals("BABY");
     }
 
     private boolean getBoolean(InventoryView i) {
         ItemStack is = i.getItem(49);
-        ItemMeta im = is.getItemMeta();
-        List<Component> lore = im.lore();
+        ItemLore itemLore = is.getData(DataComponentTypes.LORE);
+        List<Component> lore = itemLore.lines();
         int pos = lore.size() - 1;
         return ComponentUtils.stripColour(lore.get(pos)).equals("TRUE");
     }

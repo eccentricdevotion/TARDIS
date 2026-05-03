@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.recipes.shaped;
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.CustomModelData;
 import io.papermc.paper.datacomponent.item.ItemLore;
+import io.papermc.paper.datacomponent.item.PotionContents;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.keys.CircuitVariant;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
@@ -29,7 +30,6 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionType;
 
 import java.util.List;
@@ -79,9 +79,9 @@ public class TARDISInvisibilityCircuitRecipe {
                 .addFloats(CircuitVariant.PERCEPTION.getFloats())
                 .build());
         ItemStack potion = ItemStack.of(Material.POTION, 1);
-        PotionMeta pm = (PotionMeta) potion.getItemMeta();
-        pm.setBasePotionType(PotionType.INVISIBILITY);
-        potion.setItemMeta(pm);
+        potion.setData(DataComponentTypes.POTION_CONTENTS, PotionContents.potionContents()
+                .potion(PotionType.INVISIBILITY)
+                .build());
         r.shape(" D ", "P E", " W ");
         r.setIngredient('D', Material.DIAMOND);
         r.setIngredient('P', new RecipeChoice.ExactChoice(exact));

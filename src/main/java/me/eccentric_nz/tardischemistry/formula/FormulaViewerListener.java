@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.tardischemistry.formula;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
@@ -32,7 +33,6 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
 
 public class FormulaViewerListener extends TARDISMenuListener {
@@ -67,10 +67,11 @@ public class FormulaViewerListener extends TARDISMenuListener {
                     close(player);
                 } else if (event.getRawSlot() != 0) {
                     ItemStack is = event.getCurrentItem();
-                    if (is != null && is.hasItemMeta() && Objects.requireNonNull(is.getItemMeta()).hasCustomName()) {
+                    // TODO check this
+                    if (is != null && is.hasData(DataComponentTypes.CUSTOM_NAME)) {
                         // is it a compound?
                         try {
-                            Compound compound = Compound.valueOf(ComponentUtils.stripColour(is.getItemMeta().customName()).replace(" ", "_"));
+                            Compound compound = Compound.valueOf(ComponentUtils.stripColour(is.getData(DataComponentTypes.CUSTOM_NAME)).replace(" ", "_"));
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new FormulaViewer(plugin, player).getCompoundFormula(compound), 2L);
                         } catch (IllegalArgumentException e) {
                             // don't know what it is

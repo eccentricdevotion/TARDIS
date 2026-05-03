@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.upgrades;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
 import me.eccentric_nz.TARDIS.database.data.SystemUpgrade;
@@ -26,7 +28,6 @@ import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,7 +61,6 @@ public class SystemTreeInventory implements InventoryHolder {
         for (SystemTree g : SystemTree.values()) {
             if (g.getSlot() != -1) {
                 ItemStack is = ItemStack.of(g.getMaterial(), 1);
-                ItemMeta im = is.getItemMeta();
                 if (g.getBranch().equals("branch")) {
                     is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(g.getName(), NamedTextColor.GOLD).decorate(TextDecoration.ITALIC));
                 } else {
@@ -82,60 +82,47 @@ public class SystemTreeInventory implements InventoryHolder {
                     // add players current Artron level to UPGRADE_TREE
                     lore.add(Component.text("Artron Level: " + sysData.getArtronLevel(), NamedTextColor.AQUA).decorate(TextDecoration.ITALIC));
                 }
-                im.lore(lore);
+                is.setData(DataComponentTypes.LORE, ItemLore.lore(lore));
                 // does the player have this system upgrade?
                 is.setData(DataComponentTypes.ITEM_MODEL, (has) ? g.getUnlocked() : g.getLocked());
-                is.setItemMeta(im);
                 stacks[g.getSlot()] = is;
             }
         }
         // left_down
         ItemStack ld = ItemStack.of(SystemTree.LEFT_DOWN.getMaterial(), 1);
-        ItemMeta eft = ld.getItemMeta();
-        eft.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(""));
-        eft.setData(DataComponentTypes.ITEM_MODEL, SystemTree.LEFT_DOWN.getLocked());
-        ld.setItemMeta(eft);
+        ld.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(""));
+        ld.setData(DataComponentTypes.ITEM_MODEL, SystemTree.LEFT_DOWN.getLocked());
         stacks[0] = ld;
         // horizontal
         int[] horizontal = new int[]{1, 3, 5, 7};
         ItemStack his = ItemStack.of(SystemTree.H_LINE.getMaterial(), 1);
-        ItemMeta him = his.getItemMeta();
-        him.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(""));
-        him.setData(DataComponentTypes.ITEM_MODEL, SystemTree.H_LINE.getLocked());
-        his.setItemMeta(him);
+        his.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(""));
+        his.setData(DataComponentTypes.ITEM_MODEL, SystemTree.H_LINE.getLocked());
         for (int h : horizontal) {
             stacks[h] = his;
         }
         // both_down
         int[] both_down = new int[]{2, 6};
         ItemStack bd = ItemStack.of(SystemTree.BOTH_DOWN.getMaterial(), 1);
-        ItemMeta bdim = bd.getItemMeta();
-        bdim.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(""));
-        bdim.setData(DataComponentTypes.ITEM_MODEL, SystemTree.BOTH_DOWN.getLocked());
-        bd.setItemMeta(bdim);
+        bd.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(""));
+        bd.setData(DataComponentTypes.ITEM_MODEL, SystemTree.BOTH_DOWN.getLocked());
         for (int d : both_down) {
             stacks[d] = bd;
         }
         // right_down
         ItemStack rd = ItemStack.of(SystemTree.RIGHT_DOWN.getMaterial(), 1);
-        ItemMeta own = rd.getItemMeta();
-        own.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(""));
-        own.setData(DataComponentTypes.ITEM_MODEL, SystemTree.RIGHT_DOWN.getLocked());
-        rd.setItemMeta(own);
+        rd.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(""));
+        rd.setData(DataComponentTypes.ITEM_MODEL, SystemTree.RIGHT_DOWN.getLocked());
         stacks[8] = rd;
         // background
         ItemStack is = ItemStack.of(SystemTree.BLANK.getMaterial(), 1);
-        ItemMeta im = is.getItemMeta();
         is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(""));
         is.setData(DataComponentTypes.ITEM_MODEL, SystemTree.BLANK.getLocked());
-        is.setItemMeta(im);
         stacks[10] = is;
         // vertical
         ItemStack vert = ItemStack.of(SystemTree.VERTICAL.getMaterial(), 1);
-        ItemMeta ical = vert.getItemMeta();
-        ical.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(""));
-        ical.setData(DataComponentTypes.ITEM_MODEL, SystemTree.VERTICAL.getLocked());
-        vert.setItemMeta(ical);
+        vert.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(""));
+        vert.setData(DataComponentTypes.ITEM_MODEL, SystemTree.VERTICAL.getLocked());
         stacks[13] = vert;
         // close
         stacks[45] = GUIItemFactory.close();

@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.advanced;
 
-import com.google.common.collect.Multimaps;
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.CustomModelData;
 import io.papermc.paper.datacomponent.item.TooltipDisplay;
@@ -24,13 +23,9 @@ import me.eccentric_nz.TARDIS.custommodels.keys.CircuitVariant;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
 import java.io.IOException;
-import java.util.Map;
 
 public class StorageConverter {
 
@@ -72,26 +67,24 @@ public class StorageConverter {
             ItemStack[] stacks = SerializeInventory.itemStacksFromString(serialized);
             // convert stacks to component custom names
             for (ItemStack is : stacks) {
-                if (is != null && is.hasItemMeta()) {
-                    if (is.hasData(DataComponentTypes.CUSTOM_NAME)) {
-                        Component component = is.getData(DataComponentTypes.CUSTOM_NAME);
-                        // strip color codes
-                        String stripped = ComponentUtils.stripColour(component);
-                        if (!component.children().isEmpty()) {
-                            stripped = ComponentUtils.stripColour(component.children().getFirst());
-                        }
-                        is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(stripped));
-                        if (is.getType() == Material.GLOWSTONE_DUST) {
-                            is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
-                                    .addFloats(CircuitVariant.fromDisplayName(stripped).getFloats())
-                                    .build());
-                        }
-                        is.unsetData(DataComponentTypes.ITEM_MODEL);
-                        is.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
-                                .addHiddenComponents(DataComponentTypes.ATTRIBUTE_MODIFIERS)
-                                .hideTooltip(true)
+                if (is != null && is.hasData(DataComponentTypes.CUSTOM_NAME)) {
+                    Component component = is.getData(DataComponentTypes.CUSTOM_NAME);
+                    // strip color codes
+                    String stripped = ComponentUtils.stripColour(component);
+                    if (!component.children().isEmpty()) {
+                        stripped = ComponentUtils.stripColour(component.children().getFirst());
+                    }
+                    is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(stripped));
+                    if (is.getType() == Material.GLOWSTONE_DUST) {
+                        is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                                .addFloats(CircuitVariant.fromDisplayName(stripped).getFloats())
                                 .build());
                     }
+                    is.unsetData(DataComponentTypes.ITEM_MODEL);
+                    is.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
+                            .addHiddenComponents(DataComponentTypes.ATTRIBUTE_MODIFIERS)
+                            .hideTooltip(true)
+                            .build());
                 }
             }
             return stacks;

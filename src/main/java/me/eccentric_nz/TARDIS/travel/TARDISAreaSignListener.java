@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.travel;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreas;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
@@ -30,7 +31,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
 
@@ -73,8 +73,7 @@ public class TARDISAreaSignListener extends TARDISMenuListener {
             if (is == null) {
                 return;
             }
-            ItemMeta im = is.getItemMeta();
-            String area = ComponentUtils.stripColour(im.customName());
+            String area = ComponentUtils.stripColour(is.getData(DataComponentTypes.CUSTOM_NAME));
             HashMap<String, Object> wherea = new HashMap<>();
             wherea.put("area_name", area);
             ResultSetAreas rsa = new ResultSetAreas(plugin, wherea, false, false);

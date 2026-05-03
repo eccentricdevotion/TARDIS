@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.handles;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
@@ -29,8 +31,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -72,8 +74,7 @@ public class HandlesSavedListener extends TARDISMenuListener {
                 if (record.getType().equals(Material.MUSIC_DISC_WARD)) {
                     ItemStack disk = view.getItem(slot);
                     if (disk != null && record.isSimilar(disk)) {
-                        ItemMeta im = disk.getItemMeta();
-                        List<Component> lore = im.lore();
+                        List<Component> lore = new ArrayList<>(disk.getData(DataComponentTypes.LORE).lines());
                         // ckeck in
                         int pid = TARDISNumberParsers.parseInt(ComponentUtils.stripColour(lore.get(1)));
                         HashMap<String, Object> set = new HashMap<>();
@@ -83,8 +84,7 @@ public class HandlesSavedListener extends TARDISMenuListener {
                         plugin.getQueryFactory().doUpdate("programs", set, where);
                         player.setItemOnCursor(null);
                         lore.set(2, Component.text("Checked IN"));
-                        im.lore(lore);
-                        disk.setItemMeta(im);
+                        disk.setData(DataComponentTypes.LORE, ItemLore.lore(lore));
                     }
                 }
             } else {
@@ -102,7 +102,7 @@ public class HandlesSavedListener extends TARDISMenuListener {
             // load program
             if (selectedSlot.containsKey(uuid)) {
                 ItemStack is = view.getItem(selectedSlot.get(uuid));
-                int pid = TARDISNumberParsers.parseInt(ComponentUtils.stripColour(is.getItemMeta().lore().get(1)));
+                int pid = TARDISNumberParsers.parseInt(ComponentUtils.stripColour(is.getData(DataComponentTypes.LORE).lines().get(1)));
                 selectedSlot.put(uuid, null);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () ->
                         player.openInventory(new HandlesProgramInventory(plugin, pid).getInventory()), 2L);
@@ -114,18 +114,16 @@ public class HandlesSavedListener extends TARDISMenuListener {
             // deactivate program
             if (selectedSlot.containsKey(uuid)) {
                 ItemStack is = view.getItem(selectedSlot.get(uuid));
-                int pid = TARDISNumberParsers.parseInt(ComponentUtils.stripColour(is.getItemMeta().lore().get(1)));
+                int pid = TARDISNumberParsers.parseInt(ComponentUtils.stripColour(is.getData(DataComponentTypes.LORE).lines().get(1)));
                 HashMap<String, Object> where = new HashMap<>();
                 where.put("program_id", pid);
                 HashMap<String, Object> set = new HashMap<>();
                 set.put("parsed", "");
                 plugin.getQueryFactory().doUpdate("programs", set, where);
                 // update lore
-                ItemMeta im = is.getItemMeta();
-                List<Component> lore = im.lore();
+                List<Component> lore = new ArrayList<>(is.getData(DataComponentTypes.LORE).lines());
                 lore.remove(3);
-                im.lore(lore);
-                is.setItemMeta(im);
+                is.setData(DataComponentTypes.LORE, ItemLore.lore(lore));
                 selectedSlot.put(uuid, null);
             } else {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "HANDLES_SELECT");
@@ -135,7 +133,7 @@ public class HandlesSavedListener extends TARDISMenuListener {
             // delete program
             if (selectedSlot.containsKey(uuid)) {
                 ItemStack is = view.getItem(selectedSlot.get(uuid));
-                int pid = TARDISNumberParsers.parseInt(ComponentUtils.stripColour(is.getItemMeta().lore().get(1)));
+                int pid = TARDISNumberParsers.parseInt(ComponentUtils.stripColour(is.getData(DataComponentTypes.LORE).lines().get(1)));
                 HashMap<String, Object> where = new HashMap<>();
                 where.put("program_id", pid);
                 plugin.getQueryFactory().doDelete("programs", where);
@@ -152,15 +150,13 @@ public class HandlesSavedListener extends TARDISMenuListener {
             if (selectedSlot.containsKey(uuid)) {
                 ItemStack is = view.getItem(selectedSlot.get(uuid));
                 if (is != null) {
-                    ItemMeta im = is.getItemMeta();
-                    List<Component> lore = im.lore();
+                    List<Component> lore = new ArrayList<>(is.getData(DataComponentTypes.LORE).lines());
                     if (ComponentUtils.stripColour(lore.get(2)).equals("Checked OUT")) {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "HANDLES_CHECKED");
                         return;
                     }
                     lore.set(2, Component.text("Checked OUT"));
-                    im.lore(lore);
-                    is.setItemMeta(im);
+                    is.setData(DataComponentTypes.LORE, ItemLore.lore(lore));
                     setSlots(view, -1);
                     selectedSlot.put(uuid, null);
                     ItemStack clone = is.clone();
@@ -194,8 +190,7 @@ public class HandlesSavedListener extends TARDISMenuListener {
         for (int s = 0; s < 45; s++) {
             ItemStack is = view.getItem(s);
             if (is != null) {
-                ItemMeta im = is.getItemMeta();
-                List<Component> lore = im.lore();
+                List<Component> lore = new ArrayList<>(is.getData(DataComponentTypes.LORE).lines());
                 if (s == slot && lore != null) {
                     if (lore.contains(Component.text("Selected", NamedTextColor.GREEN))) {
                         if (lore.contains(Component.text("Running", NamedTextColor.AQUA))) {
@@ -207,8 +202,7 @@ public class HandlesSavedListener extends TARDISMenuListener {
                         lore.add(Component.text("Selected", NamedTextColor.GREEN));
                     }
                 }
-                im.lore(lore);
-                is.setItemMeta(im);
+                is.setData(DataComponentTypes.LORE, ItemLore.lore(lore));
             }
         }
     }

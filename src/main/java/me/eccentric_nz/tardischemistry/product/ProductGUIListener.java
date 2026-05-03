@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.tardischemistry.product;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import org.bukkit.Material;
@@ -26,7 +27,6 @@ import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
 
@@ -76,11 +76,9 @@ public class ProductGUIListener extends TARDISMenuListener {
             ItemStack is = inventory.getItem(slot);
             if (is != null) {
                 Material material = is.getType();
-                if ((material.equals(Material.GLASS_BOTTLE) || material.equals(Material.FEATHER)) && is.hasItemMeta()) {
-                    ItemMeta im = is.getItemMeta();
-                    if (im.hasCustomName()) {
-                        builder.append(im.customName()).append(pipe.contains(slot) ? "|" : ",");
-                    }
+                if ((material.equals(Material.GLASS_BOTTLE) || material.equals(Material.FEATHER))
+                        && is.hasData(DataComponentTypes.CUSTOM_NAME)) {
+                    builder.append(is.getData(DataComponentTypes.CUSTOM_NAME)).append(pipe.contains(slot) ? "|" : ",");
                 } else {
                     builder.append(is.getType()).append(pipe.contains(slot) ? "|" : ",");
                 }

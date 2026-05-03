@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.rooms.library;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemEnchantments;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -25,7 +27,6 @@ import org.bukkit.block.ChiseledBookshelf;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,6 +37,7 @@ public class LibrarySorter {
 
     private final TARDIS plugin;
 
+    // TODO check this
     public LibrarySorter(TARDIS plugin) {
         this.plugin = plugin;
     }
@@ -46,12 +48,11 @@ public class LibrarySorter {
             if (is == null) {
                 continue;
             }
-            if (is.getType() == Material.ENCHANTED_BOOK && is.hasItemMeta()) {
-                EnchantmentStorageMeta esm = (EnchantmentStorageMeta) is.getItemMeta();
-                Map<Enchantment, Integer> enchantments = esm.getStoredEnchants();
-                if (!enchantments.isEmpty()) {
+            if (is.getType() == Material.ENCHANTED_BOOK) {
+                ItemEnchantments enchantments = is.getData(DataComponentTypes.ENCHANTMENTS);
+                if (enchantments != null) {
                     // store the book on the outside shelves
-                    Map.Entry<Enchantment, Integer> entry = enchantments.entrySet().iterator().next();
+                    Map.Entry<Enchantment, Integer> entry = enchantments.enchantments().entrySet().iterator().next();
                     Enchantment enchantment = entry.getKey();
                     int level = entry.getValue();
                     // get the shelf based on the first enchantment

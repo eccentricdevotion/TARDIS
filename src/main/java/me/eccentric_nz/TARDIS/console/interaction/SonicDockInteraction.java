@@ -25,7 +25,6 @@ import org.bukkit.entity.Interaction;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.UUID;
 
@@ -43,12 +42,9 @@ public class SonicDockInteraction {
         }
         boolean activate = false;
         ItemStack is = player.getInventory().getItemInMainHand();
-        if (is.getType().equals(Material.BLAZE_ROD) && is.hasItemMeta()) {
-            ItemMeta im = player.getInventory().getItemInMainHand().getItemMeta();
-            if (ComponentUtils.endsWith(im.customName(), "Sonic Screwdriver")) {
-                new SonicDock(plugin).dock(id, interaction, player, is);
-                activate = true;
-            }
+        if (is.getType().equals(Material.BLAZE_ROD) && ComponentUtils.isNamed(is, "Sonic Screwdriver")) {
+            new SonicDock(plugin).dock(id, interaction, player, is);
+            activate = true;
         } else if (is.getType() == Material.AIR) {
             new SonicDock(plugin).undock(interaction, player);
         }

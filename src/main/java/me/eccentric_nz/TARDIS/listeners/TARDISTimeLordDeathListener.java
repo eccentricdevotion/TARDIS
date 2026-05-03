@@ -81,7 +81,7 @@ public class TARDISTimeLordDeathListener implements Listener {
             new Equipper(Monster.OSSIFIED, e, false).setHelmetAndInvisibility();
             plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(e, EntityType.ZOMBIE, Monster.OSSIFIED, l));
             String name = player.getName();
-            e.setData(DataComponentTypes.CUSTOM_NAME, Component.text(name));
+            e.customName(Component.text(name));
             e.setCustomNameVisible(true);
         }
         // always remove player from eye damage list

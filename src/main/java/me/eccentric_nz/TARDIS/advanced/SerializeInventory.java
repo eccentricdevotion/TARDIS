@@ -16,10 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.advanced;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.CustomModelData;
+import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 import org.bukkit.util.io.BukkitObjectInputStream;
 import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
 
@@ -49,13 +50,12 @@ public class SerializeInventory {
                     for (int i = 0; i < stack.length; i++) {
                         ItemStack is = (ItemStack) dataInput.readObject();
                         if (is != null && is.getType() == Material.GLOWSTONE_DUST) {
-                            ItemMeta im = is.getItemMeta();
-                            if (im.hasCustomName() && im.customName().equals("Circuits")) {
-                                CustomModelDataComponent component = im.getCustomModelDataComponent();
-                                if (!component.getFloats().isEmpty() && component.getFloats().getFirst() != 130.0f) {
-                                    component.setFloats(List.of(130.0f));
-                                    im.setCustomModelDataComponent(component);
-                                    is.setItemMeta(im);
+                            if (is.hasData(DataComponentTypes.CUSTOM_NAME) && ComponentUtils.stripColour(is.getData(DataComponentTypes.CUSTOM_NAME)).equals("Circuits")) {
+                                CustomModelData component = is.getData(DataComponentTypes.CUSTOM_MODEL_DATA);
+                                if (component != null && !component.floats().isEmpty() && component.floats().getFirst() != 130.0f) {
+                                    is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                                            .addFloats(List.of(130.0f))
+                                            .build());
                                 }
                             }
                         }

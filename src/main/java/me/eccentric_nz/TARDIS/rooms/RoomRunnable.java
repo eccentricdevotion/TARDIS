@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.rooms;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
@@ -53,7 +54,6 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.*;
 
@@ -745,9 +745,7 @@ public class RoomRunnable implements Runnable {
                     Location item = new Location(world, sx, sy, sz);
                     ItemDisplay display = (ItemDisplay) world.spawnEntity(item, EntityType.ITEM_DISPLAY);
                     ItemStack is = ItemStack.of(Material.MAGMA_BLOCK);
-                    ItemMeta im = is.getItemMeta();
                     is.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Sphere Normal"));
-                    is.setItemMeta(im);
                     display.setItemStack(is);
                     display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.GROUND);
                     // save location to controls

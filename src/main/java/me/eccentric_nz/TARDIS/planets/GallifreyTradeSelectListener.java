@@ -16,6 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.planets;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
+import io.papermc.paper.persistence.PersistentDataContainerView;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import net.kyori.adventure.text.Component;
@@ -29,11 +32,10 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.MenuType;
 import org.bukkit.inventory.Merchant;
 import org.bukkit.inventory.MerchantRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.view.MerchantView;
-import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GallifreyTradeSelectListener implements Listener {
@@ -53,20 +55,16 @@ public class GallifreyTradeSelectListener implements Listener {
         MerchantRecipe recipe = merchant.getRecipe(index);
         if (recipe.getUses() == recipe.getMaxUses() && event.getWhoClicked() instanceof Player player) {
             // is it a blueprint?
-            ItemMeta im = recipe.getResult().getItemMeta();
-            PersistentDataContainer check = im.getPersistentDataContainer();
+            PersistentDataContainerView check = recipe.getResult().getPersistentDataContainer();
             if (check.has(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID()) && check.has(plugin.getBlueprintKey(), PersistentDataType.STRING)) {
                 // add a new trade option
                 // index 0 = room, index 1 = console
                 MerchantRecipe trade = index < 1 ? new GallifreyBlueprintTrade(plugin).getRoom() : new GallifreyBlueprintTrade(plugin).getConsole();
                 // add the player's UUID and name
-                ItemMeta meta = trade.getResult().getItemMeta();
-                PersistentDataContainer pdc = meta.getPersistentDataContainer();
-                pdc.set(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID(), player.getUniqueId());
-                List<Component> lore = im.lore();
+                trade.getResult().editPersistentDataContainer(pdc -> pdc.set(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID(), player.getUniqueId()));
+                List<Component> lore = new ArrayList<>(trade.getResult().getData(DataComponentTypes.LORE).lines());
                 lore.set(2, Component.text(player.getName()));
-                im.lore(lore);
-                trade.getResult().setItemMeta(im);
+                trade.getResult().setData(DataComponentTypes.LORE, ItemLore.lore(lore));
                 MerchantRecipe newRecipe = new MerchantRecipe(trade.getResult(), 1);
                 newRecipe.addIngredient(trade.getIngredients().getFirst());
                 merchant.setRecipe(index, newRecipe);
@@ -90,20 +88,19 @@ public class GallifreyTradeSelectListener implements Listener {
             int i = 0;
             for (MerchantRecipe recipe : villager.getRecipes()) {
                 ItemStack result = recipe.getResult();
-                if (!result.hasItemMeta()) {
+                if (!result.hasData(DataComponentTypes.LORE)) {
                     return;
                 }
-                ItemMeta im = result.getItemMeta();
-                PersistentDataContainer pdc = im.getPersistentDataContainer();
+                PersistentDataContainerView pdcv = result.getPersistentDataContainer();
                 // is it a blueprint?
-                if (pdc.has(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID()) && pdc.has(plugin.getBlueprintKey(), PersistentDataType.STRING)) {
+                if (pdcv.has(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID()) && pdcv.has(plugin.getBlueprintKey(), PersistentDataType.STRING)) {
                     // get the player
-                    pdc.set(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID(), player.getUniqueId());
-                    List<Component> lore = im.lore();
+                    result.editPersistentDataContainer(pdc->pdc.set(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID(), player.getUniqueId()));
+                    List<Component> lore = result.getData(DataComponentTypes.LORE).lines();
                     lore.set(2, Component.text(player.getName()));
-                    im.lore(lore);
+                    result.setData(DataComponentTypes.LORE, ItemLore.lore(lore));
                     ItemStack is = result.clone();
-                    is.setItemMeta(im);
+                    is.copyDataFrom(result, dataComponentType -> true);
                     MerchantRecipe newRecipe = new MerchantRecipe(is, 1);
                     newRecipe.addIngredient(recipe.getIngredients().getFirst());
                     villager.setRecipe(i, newRecipe);

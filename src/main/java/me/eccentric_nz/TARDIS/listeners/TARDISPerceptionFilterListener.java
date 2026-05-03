@@ -31,7 +31,6 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 /**
  * Perception filters had the effect of directing attention away from the object or its bearer, rendering them
@@ -64,26 +63,23 @@ public class TARDISPerceptionFilterListener implements Listener {
         Player player = event.getPlayer();
         ItemStack is = player.getInventory().getItemInMainHand();
         if ((is.getType().equals(Material.OMINOUS_TRIAL_KEY) || is.getType().equals(material)) && event.getAction().equals(Action.RIGHT_CLICK_AIR)) {
-            if (is.hasItemMeta()) {
-                ItemMeta im = is.getItemMeta();
-                if (im.hasCustomName() && ComponentUtils.endsWith(im.customName(), "Perception Filter")) {
-                    if (TARDISPermission.hasPermission(player, "tardis.filter")) {
-                        ItemStack chestPlate = player.getInventory().getChestplate();
-                        if (chestPlate == null) {
-                            // equip the chest slot with the perception filter
-                            player.getInventory().setChestplate(is);
-                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                                player.getInventory().setItemInMainHand(null);
-                                player.updateInventory();
-                                // make the player invisible
-                                plugin.getFilter().addPerceptionFilter(player);
-                            }, 1L);
-                        } else {
-                            plugin.getMessenger().send(player, TardisModule.TARDIS, "FILTER");
-                        }
+            if (ComponentUtils.isNamed(is, "Perception Filter")) {
+                if (TARDISPermission.hasPermission(player, "tardis.filter")) {
+                    ItemStack chestPlate = player.getInventory().getChestplate();
+                    if (chestPlate == null) {
+                        // equip the chest slot with the perception filter
+                        player.getInventory().setChestplate(is);
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                            player.getInventory().setItemInMainHand(null);
+                            player.updateInventory();
+                            // make the player invisible
+                            plugin.getFilter().addPerceptionFilter(player);
+                        }, 1L);
                     } else {
-                        plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "FILTER");
                     }
+                } else {
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
                 }
             }
         }
@@ -95,14 +91,9 @@ public class TARDISPerceptionFilterListener implements Listener {
             int slot = event.getRawSlot();
             if (slot == 6) {
                 ItemStack is = event.getCurrentItem();
-                if (is != null) {
-                    if (is.hasItemMeta()) {
-                        ItemMeta im = is.getItemMeta();
-                        if (im.hasCustomName() && ComponentUtils.endsWith(im.customName(), "Perception Filter")) {
-                            if (event.getAction().equals(InventoryAction.PICKUP_ALL) || event.getAction().equals(InventoryAction.PLACE_ALL)) {
-                                plugin.getFilter().removePerceptionFilter((Player) event.getWhoClicked());
-                            }
-                        }
+                if (is != null && ComponentUtils.isNamed(is, "Perception Filter")) {
+                    if (event.getAction().equals(InventoryAction.PICKUP_ALL) || event.getAction().equals(InventoryAction.PLACE_ALL)) {
+                        plugin.getFilter().removePerceptionFilter((Player) event.getWhoClicked());
                     }
                 }
             }

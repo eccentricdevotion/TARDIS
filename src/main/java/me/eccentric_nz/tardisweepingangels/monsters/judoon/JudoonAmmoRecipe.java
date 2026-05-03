@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.tardisweepingangels.monsters.judoon;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.keys.ArrowVariant;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
@@ -23,7 +24,6 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapelessRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
 
 public class JudoonAmmoRecipe {
 
@@ -35,10 +35,8 @@ public class JudoonAmmoRecipe {
 
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.ARROW, 2);
-        ItemMeta im = is.getItemMeta();
         is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Judoon Ammunition"));
         is.setData(DataComponentTypes.ITEM_MODEL, ArrowVariant.JUDOON_AMMO.getKey());
-        is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "judoon_ammunition");
         ShapelessRecipe r = new ShapelessRecipe(key, is);
         r.addIngredient(Material.ARROW);

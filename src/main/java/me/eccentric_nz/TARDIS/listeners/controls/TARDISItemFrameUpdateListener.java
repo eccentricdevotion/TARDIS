@@ -127,7 +127,7 @@ public class TARDISItemFrameUpdateListener implements Listener {
                             case MONITOR -> {
                                 ItemStack map = frame.getItem();
                                 // does it have a TARDIS Monitor map?
-                                if (map.getType() == Material.MAP && map.hasItemMeta() && map.getItemMeta().hasItemModel()) {
+                                if (map.getType() == Material.MAP && map.hasData(DataComponentTypes.ITEM_MODEL)) {
                                     // do nothing
                                 } else {
                                     plugin.getTrackerKeeper().getUpdatePlayers().remove(uuid);
@@ -154,7 +154,7 @@ public class TARDISItemFrameUpdateListener implements Listener {
                                 ItemStack glass = frame.getItem();
                                 Rotation rotation = frame.getRotation();
                                 // does it have a Monitor frame?
-                                if (glass.getType() == Material.GLASS && glass.hasItemMeta() && glass.getItemMeta().hasItemModel()) {
+                                if (glass.getType() == Material.GLASS && glass.hasData(DataComponentTypes.ITEM_MODEL)) {
                                     // remove display name
                                     glass.unsetData(DataComponentTypes.CUSTOM_NAME);
                                     // get the monitor item frame, from the same block location

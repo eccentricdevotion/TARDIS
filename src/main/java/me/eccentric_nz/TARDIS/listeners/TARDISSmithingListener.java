@@ -16,6 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.CustomModelData;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.custommodels.keys.Whoniverse;
 import me.eccentric_nz.TARDIS.sonic.SonicUpgradeData;
@@ -23,6 +26,7 @@ import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -30,8 +34,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.PrepareSmithingEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.SmithingInventory;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,14 +55,12 @@ public class TARDISSmithingListener implements Listener {
             // get the current sonic
             ItemStack sonic = inventory.getItem(1);
             if (TARDISStaticUtils.isSonic(sonic)) {
-                ItemMeta im = sonic.getItemMeta();
                 // get the upgrade
                 boolean found = false;
                 String upgrade = "";
                 ItemStack glowstone = inventory.getItem(2);
-                if (glowstone != null && glowstone.getType().equals(Material.GLOWSTONE_DUST) && glowstone.hasItemMeta()) {
-                    ItemMeta rm = glowstone.getItemMeta();
-                    upgrade = SonicUpgradeData.displayNames.get(ComponentUtils.stripColour(rm.customName()));
+                if (glowstone != null && glowstone.getType().equals(Material.GLOWSTONE_DUST) && glowstone.hasData(DataComponentTypes.CUSTOM_NAME)) {
+                    upgrade = SonicUpgradeData.displayNames.get(ComponentUtils.stripColour(glowstone.getData(DataComponentTypes.CUSTOM_NAME)));
                     found = true;
                 }
                 // is it a valid upgrade?
@@ -79,13 +79,11 @@ public class TARDISSmithingListener implements Listener {
                     event.setResult(null);
                     return;
                 }
-                ItemMeta sim = sonic.getItemMeta();
-                CustomModelDataComponent component = sim.getCustomModelDataComponent();
-                Component dn = sim.customName();
+                Component dn = sonic.getData(DataComponentTypes.CUSTOM_NAME);
                 List<Component> lore;
-                if (sim.hasLore()) {
+                if (sonic.hasData(DataComponentTypes.LORE)) {
                     // get the current sonic's upgrades
-                    lore = sim.lore();
+                    lore = new ArrayList<>(sonic.getData(DataComponentTypes.LORE).lines());
                 } else {
                     // otherwise this is the first upgrade
                     lore = new ArrayList<>();
@@ -93,8 +91,9 @@ public class TARDISSmithingListener implements Listener {
                 }
                 // if they don't already have the upgrade
                 if (!lore.contains(Component.text(upgrade))) {
-                    im.customName(dn);
-                    im.setCustomModelDataComponent(component);
+                    is.setData(DataComponentTypes.CUSTOM_NAME, dn);
+                    is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                            .build());
                     int index = -1;
                     Component charge = null;
                     for (int i = lore.size() - 1; i >= 0; i--) {
@@ -111,8 +110,7 @@ public class TARDISSmithingListener implements Listener {
                     } else {
                         lore.add(Component.text(upgrade));
                     }
-                    im.lore(lore);
-                    is.setItemMeta(im);
+                    is.setData(DataComponentTypes.LORE, ItemLore.lore(lore));
                     // change the crafting result
                     event.setResult(is);
                 } else {
@@ -120,24 +118,19 @@ public class TARDISSmithingListener implements Listener {
                 }
             } else if (isDamagedCapacitor(sonic)) {
                 ItemStack repaired = sonic.clone();
-                ItemMeta im = repaired.getItemMeta();
-                is.setItemMeta(im);
+                is.copyDataFrom(sonic, dataComponentType -> true);
                 event.setResult(repaired);
             }
         }
     }
 
     private boolean isDamagedCapacitor(ItemStack is) {
-        if (is == null || is.getType() != Material.BUCKET || !is.hasItemMeta()) {
+        if (is == null || is.getType() != Material.BUCKET) {
             return false;
         }
-        ItemMeta im = is.getItemMeta();
-        if (!im.hasCustomName()) {
+        if (!ComponentUtils.isNamed(is, "Artron Capacitor")) {
             return false;
         }
-        if (!ComponentUtils.endsWith(im.customName(), "Artron Capacitor")) {
-            return false;
-        }
-        return !im.hasItemModel() || im.getItemModel().equals(Whoniverse.ARTRON_CAPACITOR_DAMAGED.getKey());
+        return !is.hasData(DataComponentTypes.ITEM_MODEL) || NamespacedKey.fromString(is.getData(DataComponentTypes.ITEM_MODEL).asString()).equals(Whoniverse.ARTRON_CAPACITOR_DAMAGED.getKey());
     }
 }

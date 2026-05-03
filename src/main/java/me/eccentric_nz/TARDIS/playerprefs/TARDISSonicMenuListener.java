@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.playerprefs;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.CustomModelData;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
@@ -31,8 +33,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
 /**
  * Oh, yes. Harmless is just the word. That's why I like it! Doesn't kill, doesn't wound, doesn't maim. But I'll tell
@@ -70,44 +70,41 @@ public class TARDISSonicMenuListener extends TARDISMenuListener {
                 event.setCancelled(true);
                 // set custom model data of sonic in slot 27
                 ItemStack sonic = view.getItem(27);
-                if (sonic == null || !sonic.getType().equals(Material.BLAZE_ROD) || !sonic.hasItemMeta()) {
+                if (sonic == null || !sonic.getType().equals(Material.BLAZE_ROD)) {
                     return;
                 }
                 ItemStack choice = view.getItem(slot);
-                ItemMeta choice_im = choice.getItemMeta();
-                ItemMeta sonic_im = sonic.getItemMeta();
-                if (sonic_im.hasItemModel()) {
-                    sonic_im.setData(DataComponentTypes.ITEM_MODEL, null);
+                if (sonic.hasData(DataComponentTypes.ITEM_MODEL)) {
+                    sonic.unsetData(DataComponentTypes.ITEM_MODEL);
                 }
-                CustomModelDataComponent component = sonic_im.getCustomModelDataComponent();
-                component.setFloats(choice_im.getCustomModelDataComponent().getFloats());
-                sonic_im.setCustomModelDataComponent(component);
-                sonic.setItemMeta(sonic_im);
+                sonic.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                        .addFloats(choice.getData(DataComponentTypes.CUSTOM_MODEL_DATA).floats()));
             }
             case 27 -> {
                 // get item on cursor
                 ItemStack cursor = event.getCursor();
-                if (cursor == null || !cursor.getType().equals(Material.BLAZE_ROD) || !cursor.hasItemMeta()) {
+                if (!Material.BLAZE_ROD.equals(cursor.getType())) {
                     return;
                 }
-                ItemMeta meta = cursor.getItemMeta();
-                if (!meta.hasCustomName()) {
+                if (!cursor.hasData(DataComponentTypes.CUSTOM_NAME)) {
                     return;
                 }
                 // set wool colour from display name of placed sonic
-                NamedTextColor color = TARDISStaticUtils.getColor(meta.customName());
+                NamedTextColor color = TARDISStaticUtils.getColor(cursor.getData(DataComponentTypes.CUSTOM_NAME));
                 Material material = TARDISKeyMenuListener.REVERSE_LOOKUP.getOrDefault(color, Material.WHITE_WOOL);
                 ItemStack choice = view.getItem(28);
-                ItemMeta cim = choice.getItemMeta();
+                Component c = choice.getData(DataComponentTypes.CUSTOM_NAME);
                 ItemStack wool = ItemStack.of(material);
-                wool.setItemMeta(cim);
+                if (c != null) {
+                    wool.setData(DataComponentTypes.CUSTOM_NAME, c);
+                }
                 view.setItem(28, wool);
             }
             case 28 -> {
                 event.setCancelled(true);
                 // set display name colour of sonic in slot 27
                 ItemStack sonic = view.getItem(27);
-                if (sonic == null || !sonic.getType().equals(Material.BLAZE_ROD) || !sonic.hasItemMeta()) {
+                if (sonic == null || !sonic.getType().equals(Material.BLAZE_ROD)) {
                     return;
                 }
                 // get current colour of wool
@@ -116,9 +113,7 @@ public class TARDISSonicMenuListener extends TARDISMenuListener {
                 // set wool colour to next in line
                 view.setItem(28, ItemStack.of(wool));
                 NamedTextColor display = TARDISKeyMenuListener.COLOUR_LOOKUP.get(wool);
-                ItemMeta sonic_im = sonic.getItemMeta();
-                sonic_im.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Sonic Screwdriver", display).decorationIfAbsent(TextDecoration.ITALIC, TextDecoration.State.FALSE));
-                sonic.setItemMeta(sonic_im);
+                sonic.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Sonic Screwdriver", display).decorationIfAbsent(TextDecoration.ITALIC, TextDecoration.State.FALSE));
             }
             case 35 -> {
                 // close

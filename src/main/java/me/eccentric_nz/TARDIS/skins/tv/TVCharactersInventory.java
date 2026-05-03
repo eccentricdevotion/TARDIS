@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.skins.tv;
 
 import io.papermc.paper.datacomponent.DataComponentTypes;
-import io.papermc.paper.datacomponent.item.ResolvableProfile;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.skins.CharacterSkins;
 import me.eccentric_nz.TARDIS.skins.Skin;
@@ -26,7 +25,6 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.SkullMeta;
 
 public class TVCharactersInventory extends TVGUI {
 

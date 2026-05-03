@@ -16,6 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.DyedItemColor;
+import io.papermc.paper.datacomponent.item.Equippable;
+import io.papermc.paper.registry.RegistryKey;
+import io.papermc.paper.registry.TypedKey;
+import io.papermc.paper.registry.set.RegistrySet;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.keys.Whoniverse;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
@@ -23,13 +29,11 @@ import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.LeatherArmorMeta;
-import org.bukkit.inventory.meta.components.EquippableComponent;
 
 public class SpaceSuitLeggingsRecipe {
 
@@ -41,14 +45,13 @@ public class SpaceSuitLeggingsRecipe {
 
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.CHAINMAIL_LEGGINGS, 1);
-        ItemMeta im = is.getItemMeta();
         is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("TARDIS Space Suit Leggings"));
-        im.setMaxStackSize(1);
-        EquippableComponent equippable = im.getEquippable();
-        equippable.setSlot(EquipmentSlot.LEGS);
-        equippable.setModel(Whoniverse.SPACE_SUIT.getKey());
-        im.setEquippable(equippable);
-        is.setItemMeta(im);
+        is.setData(DataComponentTypes.MAX_STACK_SIZE, 1);
+        is.setData(DataComponentTypes.EQUIPPABLE, Equippable.equippable(EquipmentSlot.LEGS)
+                .assetId(Whoniverse.SPACE_SUIT.getKey())
+                .allowedEntities(RegistrySet.keySet(RegistryKey.ENTITY_TYPE, TypedKey.create(RegistryKey.ENTITY_TYPE, EntityType.PLAYER.getKey())))
+                .dispensable(true)
+                .build());
         NamespacedKey key = new NamespacedKey(plugin, "space_suit_leggings");
         ShapedRecipe r = new ShapedRecipe(key, is);
         r.shape(" H ", "YYY", "BGB");
@@ -57,10 +60,10 @@ public class SpaceSuitLeggingsRecipe {
         r.setIngredient('B', Material.ORANGE_WOOL);
         if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             ItemStack exact = ItemStack.of(Material.LEATHER_LEGGINGS, 1);
-            LeatherArmorMeta am = (LeatherArmorMeta) exact.getItemMeta();
             Color black = Color.fromARGB(-14869215); // [argb0xFF1D1D21] not BLACK!
-            am.setColor(black);
-            exact.setItemMeta(am);
+            exact.setData(DataComponentTypes.DYED_COLOR, DyedItemColor.dyedItemColor()
+                    .color(black)
+                    .build());
             r.setIngredient('H', new RecipeChoice.ExactChoice(exact));
         } else {
             r.setIngredient('H', Material.LEATHER_LEGGINGS);

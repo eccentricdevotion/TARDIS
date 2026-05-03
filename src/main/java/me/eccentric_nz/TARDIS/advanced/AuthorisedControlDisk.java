@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.advanced;
 
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.database.data.Throticle;
@@ -67,10 +68,10 @@ public class AuthorisedControlDisk {
     private final String eps;
     private final String creeper;
 
-    AuthorisedControlDisk(TARDIS plugin, UUID uuid, List<Component> lore, int id, Player player, String eps, String creeper) {
+    AuthorisedControlDisk(TARDIS plugin, UUID uuid, ItemLore itemLore, int id, Player player, String eps, String creeper) {
         this.plugin = plugin;
         this.uuid = uuid;
-        this.lore = lore;
+        this.lore = itemLore != null ? itemLore.lines() : new ArrayList<>();
         this.id = id;
         this.player = player;
         this.eps = eps;

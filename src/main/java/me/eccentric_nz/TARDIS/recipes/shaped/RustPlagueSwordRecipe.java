@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import io.papermc.paper.datacomponent.item.Weapon;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
@@ -27,9 +28,6 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.List;
 
 /*
 easy_shape:RIR,RIR,-S-
@@ -56,10 +54,8 @@ public class RustPlagueSwordRecipe {
 
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.IRON_SWORD, 1);
-        ItemMeta im = is.getItemMeta();
         is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Rust Plague Sword"));
-        im.lore(List.of(Component.text("Dalek Virus Dispenser")));
-        is.setItemMeta(im);
+        is.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text("Dalek Virus Dispenser")).build());
         // set weapon component
         Weapon weapon = Weapon.weapon()
                 .itemDamagePerAttack(8)

@@ -32,7 +32,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.HashMap;
@@ -85,11 +84,10 @@ public class HandlesListener implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onHandlesPlace(BlockPlaceEvent event) {
         ItemStack is = event.getItemInHand();
-        if (!is.getType().equals(Material.BIRCH_BUTTON) || !is.hasItemMeta()) {
+        if (!is.getType().equals(Material.BIRCH_BUTTON)) {
             return;
         }
-        ItemMeta im = is.getItemMeta();
-        if (im.hasCustomName() && ComponentUtils.endsWith(im.customName(), "Handles")) {
+        if (ComponentUtils.isNamed(is, "Handles")) {
             // can only be placed in an item frame
             event.setCancelled(true);
             plugin.getMessenger().send(event.getPlayer(), TardisModule.TARDIS, "HANDLES_FRAME");

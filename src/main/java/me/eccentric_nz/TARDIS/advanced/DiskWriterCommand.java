@@ -29,7 +29,6 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -65,7 +64,7 @@ public class DiskWriterCommand {
         } else {
             is = player.getInventory().getItemInMainHand();
         }
-        if (is.hasData(DataComponentTypes.CUSTOM_NAME) && ComponentUtils.endsWith(is.getData(DataComponentTypes.CUSTOM_NAME), "Save Storage Disk")) {
+        if (ComponentUtils.isNamed(is, "Save Storage Disk")) {
             Component lore = is.getData(DataComponentTypes.LORE).lines().getFirst();
             if (!ComponentUtils.stripColour(lore).equals("Blank")) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "DISK_ONLY_BLANK");
@@ -180,39 +179,33 @@ public class DiskWriterCommand {
 
     public void writePlayer(Player player, Player target) {
         ItemStack is = player.getInventory().getItemInMainHand();
-        if (is.hasItemMeta()) {
-            ItemMeta im = is.getItemMeta();
-            if (im.hasCustomName() && ComponentUtils.endsWith(im.customName(), "Player Storage Disk")) {
-                List<Component> lore = im.lore();
-                if (!ComponentUtils.stripColour(lore.getFirst()).equals("Blank")) {
-                    plugin.getMessenger().send(player, TardisModule.TARDIS, "DISK_ONLY_BLANK");
-                    return;
-                }
-                if (player.getName().equalsIgnoreCase(target.getName())) {
-                    plugin.getMessenger().send(player, TardisModule.TARDIS, "DISK_NO_SAVE");
-                    return;
-                }
-                HashMap<String, Object> where = new HashMap<>();
-                where.put("uuid", player.getUniqueId().toString());
-                ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
-                if (!rs.resultSet()) {
-                    plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
-                } else {
-                    lore.set(0, Component.text(target.getName()));
-                    im.lore(lore);
-                    is.setItemMeta(im);
-                    plugin.getMessenger().send(player, TardisModule.TARDIS, "DISK_PLAYER_SAVED");
-                }
+        if (ComponentUtils.isNamed(is, "Player Storage Disk")) {
+            List<Component> lore = new ArrayList<>(is.getData(DataComponentTypes.LORE).lines());
+            if (!ComponentUtils.stripColour(lore.getFirst()).equals("Blank")) {
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "DISK_ONLY_BLANK");
+                return;
+            }
+            if (player.getName().equalsIgnoreCase(target.getName())) {
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "DISK_NO_SAVE");
+                return;
+            }
+            HashMap<String, Object> where = new HashMap<>();
+            where.put("uuid", player.getUniqueId().toString());
+            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+            if (!rs.resultSet()) {
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
+            } else {
+                lore.set(0, Component.text(target.getName()));
+                is.setData(DataComponentTypes.LORE, ItemLore.lore(lore));
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "DISK_PLAYER_SAVED");
             }
         }
     }
 
     public void eraseDisk(Player player) {
         ItemStack is = player.getInventory().getItemInMainHand();
-        if (is.hasItemMeta() && disks.contains(ComponentUtils.stripColour(is.getItemMeta().customName()))) {
-            ItemMeta im = is.getItemMeta();
-            im.lore(List.of(Component.text("Blank")));
-            is.setItemMeta(im);
+        if (is.hasData(DataComponentTypes.CUSTOM_NAME) && disks.contains(ComponentUtils.stripColour(is.getData(DataComponentTypes.CUSTOM_NAME)))) {
+            is.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text("Blank")).build());
             plugin.getMessenger().send(player, TardisModule.TARDIS, "DISK_ERASE");
         } else {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "DISK_HAND_ERASE");
@@ -221,35 +214,32 @@ public class DiskWriterCommand {
 
     public void writeSaveToControlDisk(Player player, String name) {
         ItemStack is = player.getInventory().getItemInMainHand();
-        if (is.hasItemMeta()) {
-//            ItemMeta im = is.getItemMeta();
-            if (is.hasData(DataComponentTypes.CUSTOM_NAME) && ComponentUtils.endsWith(is.getData(DataComponentTypes.CUSTOM_NAME), "Authorised Control Disk")
-                    && is.getPersistentDataContainer().has(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID())) {
-                ResultSetTardisID rs = new ResultSetTardisID(plugin);
-                if (!rs.fromUUID(player.getUniqueId().toString())) {
-                    plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
+        if (ComponentUtils.isNamed(is, "Authorised Control Disk")
+                && is.getPersistentDataContainer().has(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID())) {
+            ResultSetTardisID rs = new ResultSetTardisID(plugin);
+            if (!rs.fromUUID(player.getUniqueId().toString())) {
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
+            } else {
+                String save;
+                if (name.equalsIgnoreCase("home")) {
+                    save = "Home";
                 } else {
-                    String save;
-                    if (name.equalsIgnoreCase("home")) {
-                        save = "Home";
-                    } else {
-                        HashMap<String, Object> wherename = new HashMap<>();
-                        wherename.put("tardis_id", rs.getTardisId());
-                        wherename.put("dest_name", name);
-                        wherename.put("type", 0);
-                        ResultSetDestinations rsd = new ResultSetDestinations(plugin, wherename, false);
-                        if (!rsd.resultSet()) {
-                            plugin.getMessenger().sendColouredCommand(player, "SAVE_NOT_FOUND", "/tardis list saves", plugin);
-                            return;
-                        }
-                        save = name;
+                    HashMap<String, Object> wherename = new HashMap<>();
+                    wherename.put("tardis_id", rs.getTardisId());
+                    wherename.put("dest_name", name);
+                    wherename.put("type", 0);
+                    ResultSetDestinations rsd = new ResultSetDestinations(plugin, wherename, false);
+                    if (!rsd.resultSet()) {
+                        plugin.getMessenger().sendColouredCommand(player, "SAVE_NOT_FOUND", "/tardis list saves", plugin);
+                        return;
                     }
-                    ItemLore.Builder lore = ItemLore.lore();
-                    lore.lines(is.getData(DataComponentTypes.LORE).lines());
-                    lore.addLine(Component.text(save));
-                    is.setData(DataComponentTypes.LORE, lore.build());
-                    plugin.getMessenger().send(player, TardisModule.TARDIS, "DISK_LOC_SAVED");
+                    save = name;
                 }
+                ItemLore.Builder lore = ItemLore.lore();
+                lore.lines(is.getData(DataComponentTypes.LORE).lines());
+                lore.addLine(Component.text(save));
+                is.setData(DataComponentTypes.LORE, lore.build());
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "DISK_LOC_SAVED");
             }
         }
     }

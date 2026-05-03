@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
@@ -28,7 +29,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.AnvilInventory;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
 
@@ -60,11 +60,12 @@ public class TARDISAnvilListener implements Listener {
             // slot 2 = result item slot
             if (slot == 2) {
                 ItemStack is = event.getCurrentItem();
-                if (is != null && is.hasItemMeta()) {
-                    ItemMeta im = is.getItemMeta();
+                if (is != null && is.hasData(DataComponentTypes.CUSTOM_NAME)) {
                     ItemStack one = inv.getItem(0);
                     ItemStack two = inv.getItem(1);
-                    if (checkRepair(one, two) && im.hasCustomName() && disallow.containsKey(ComponentUtils.stripColour(im.customName())) && is.getType() == disallow.get(ComponentUtils.stripColour(im.customName()))) {
+                    if (checkRepair(one, two)
+                            && disallow.containsKey(ComponentUtils.stripColour(is.getData(DataComponentTypes.CUSTOM_NAME)))
+                            && is.getType() == disallow.get(ComponentUtils.stripColour(is.getData(DataComponentTypes.CUSTOM_NAME)))) {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_RENAME");
                         event.setCancelled(true);
                     }
@@ -77,16 +78,11 @@ public class TARDISAnvilListener implements Listener {
         if (two == null) {
             return true;
         }
-        if (!one.hasItemMeta() || !two.hasItemMeta()) {
+        if (!one.hasData(DataComponentTypes.CUSTOM_NAME) || !two.hasData(DataComponentTypes.CUSTOM_NAME)) {
             return true;
         }
-        ItemMeta im_one = one.getItemMeta();
-        ItemMeta im_two = two.getItemMeta();
-        if (!im_one.hasCustomName() || !im_two.hasCustomName()) {
-            return true;
-        }
-        String dn_one = ComponentUtils.stripColour(im_one.customName());
-        String dn_two = ComponentUtils.stripColour(im_two.customName());
+        String dn_one = ComponentUtils.stripColour(one.getData(DataComponentTypes.CUSTOM_NAME));
+        String dn_two = ComponentUtils.stripColour(two.getData(DataComponentTypes.CUSTOM_NAME));
         return !dn_one.equals(dn_two);
     }
 }

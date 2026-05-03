@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.tardisweepingangels.monsters.judoon;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemContainerContents;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.custommodels.keys.ArrowVariant;
@@ -25,9 +27,9 @@ import me.eccentric_nz.tardisweepingangels.nms.TWAJudoon;
 import me.eccentric_nz.tardisweepingangels.utils.ResetMonster;
 import net.kyori.adventure.text.Component;
 import net.minecraft.world.entity.Entity;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Tag;
-import org.bukkit.block.ShulkerBox;
 import org.bukkit.craftbukkit.entity.CraftEntity;
 import org.bukkit.entity.Husk;
 import org.bukkit.entity.Player;
@@ -37,10 +39,12 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.BlockStateMeta;
-import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class JudoonListener implements Listener {
 
@@ -67,14 +71,14 @@ public class JudoonListener implements Listener {
                         if (Tag.SHULKER_BOXES.isTagged(player.getInventory().getItemInMainHand().getType())) {
                             // top up ammo
                             ItemStack box = player.getInventory().getItemInMainHand();
-                            BlockStateMeta bsm = (BlockStateMeta) box.getItemMeta();
-                            ShulkerBox shulkerBox = (ShulkerBox) bsm.getBlockState();
-                            Inventory inv = shulkerBox.getInventory();
+                            ItemContainerContents container = box.getData(DataComponentTypes.CONTAINER);
+//                            List<ItemStack> inv = container.contents();
+                            Inventory inv = Bukkit.createInventory(null, container.contents().size(), Component.text(""));
+                            inv.setContents(container.contents().toArray(new ItemStack[0]));
                             if (inv.contains(Material.ARROW)) {
                                 int a = inv.first(Material.ARROW);
                                 ItemStack arrows = inv.getItem(a);
-                                ItemMeta aim = arrows.getItemMeta();
-                                if (aim.hasItemModel() && ArrowVariant.JUDOON_AMMO.getKey().equals(aim.getItemModel())) {
+                                if (arrows.hasData(DataComponentTypes.ITEM_MODEL) && ArrowVariant.JUDOON_AMMO.getKey().equals(arrows.getData(DataComponentTypes.ITEM_MODEL))) {
                                     int remove = plugin.getMonstersConfig().getInt("judoon.ammunition") - ammo;
                                     if (arrows.getAmount() > remove) {
                                         arrows.setAmount(arrows.getAmount() - remove);
@@ -83,11 +87,14 @@ public class JudoonListener implements Listener {
                                         arrows = null;
                                     }
                                     inv.setItem(a, arrows);
-                                    shulkerBox.update();
-                                    bsm.setBlockState(shulkerBox);
-                                    box.setItemMeta(bsm);
+                                    List<ItemStack> nonNullItems = Arrays.asList(inv.getContents()).stream()
+                                            .filter(Objects::nonNull) // Remove any potential nulls
+                                            .collect(Collectors.toList());
+                                    box.setData(DataComponentTypes.CONTAINER, ItemContainerContents.containerContents()
+                                            .addAll(nonNullItems)
+                                            .build());
                                     judoon.setAmmo(ammo + remove);
-                                    husk.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Ammunition: " + (ammo + remove)));
+                                    husk.customName(Component.text("Ammunition: " + (ammo + remove)));
                                     plugin.getMessenger().send(player, TardisModule.MONSTERS, "WA_RELOADED", remove);
                                 }
                             }
@@ -99,7 +106,7 @@ public class JudoonListener implements Listener {
                                     // point weapon
                                     judoon.setGuard(true);
                                     message = "WA_ACTION";
-                                    husk.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Ammunition: " + ammo));
+                                    husk.customName(Component.text("Ammunition: " + ammo));
                                     husk.setCustomNameVisible(true);
                                     // add to repeating task
                                     TARDISWeepingAngels.getGuards().add(judoon.getUUID());

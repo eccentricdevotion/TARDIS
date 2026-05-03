@@ -24,7 +24,6 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.HashSet;
@@ -55,11 +54,8 @@ public class LazarusUtils {
             SkinUtils.SKINNED.remove(uuid);
         } else if (TARDIS.plugin.getConfig().getBoolean("modules.weeping_angels")) {
             ItemStack helmet = player.getInventory().getHelmet();
-            if (helmet != null && helmet.hasItemMeta()) {
-                ItemMeta im = helmet.getItemMeta();
-                if (im.getPersistentDataContainer().has(TARDIS.plugin.getHeadBlockKey(), PersistentDataType.INTEGER)) {
-                    RemoveEquipment.set(player);
-                }
+            if (helmet != null && helmet.getPersistentDataContainer().has(TARDIS.plugin.getHeadBlockKey(), PersistentDataType.INTEGER)) {
+                RemoveEquipment.set(player);
             }
         }
     }

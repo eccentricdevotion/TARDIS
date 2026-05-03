@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.advanced;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDiskStorage;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
@@ -23,7 +25,6 @@ import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import net.kyori.adventure.text.Component;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -97,50 +98,47 @@ public class CircuitChecker {
             try {
                 items = SerializeInventory.itemStacksFromString(rs.getConsole());
                 for (ItemStack is : items) {
-                    if (is != null && is.hasItemMeta()) {
-                        ItemMeta im = is.getItemMeta();
-                        if (im.hasCustomName()) {
-                            String dn = ComponentUtils.stripColour(im.customName());
-                            if (dn.endsWith("TARDIS ARS Circuit")) {
-                                ars = true;
-                                arsUses = getUses(im);
-                            }
-                            if (dn.endsWith("TARDIS Chameleon Circuit")) {
-                                chameleon = true;
-                                chameleonUses = getUses(im);
-                            }
-                            if (dn.endsWith("TARDIS Input Circuit")) {
-                                input = true;
-                                inputUses = getUses(im);
-                            }
-                            if (dn.endsWith("TARDIS Invisibility Circuit")) {
-                                invisibility = true;
-                                invisibilityUses = getUses(im);
-                            }
-                            if (dn.endsWith("TARDIS Materialisation Circuit")) {
-                                materialisation = true;
-                                materialisationUses = getUses(im);
-                            }
-                            if (dn.endsWith("TARDIS Memory Circuit")) {
-                                memory = true;
-                                memoryUses = getUses(im);
-                            }
-                            if (dn.endsWith("TARDIS Randomiser Circuit")) {
-                                randomiser = true;
-                                randomiserUses = getUses(im);
-                            }
-                            if (dn.endsWith("TARDIS Scanner Circuit")) {
-                                scanner = true;
-                                scannerUses = getUses(im);
-                            }
-                            if (dn.endsWith("TARDIS Telepathic Circuit")) {
-                                telepathic = true;
-                                telepathicUses = getUses(im);
-                            }
-                            if (dn.endsWith("TARDIS Temporal Circuit")) {
-                                temporal = true;
-                                temporalUses = getUses(im);
-                            }
+                    if (is != null && is.hasData(DataComponentTypes.CUSTOM_NAME)) {
+                        String dn = ComponentUtils.stripColour(is.getData(DataComponentTypes.CUSTOM_NAME));
+                        if (dn.endsWith("TARDIS ARS Circuit")) {
+                            ars = true;
+                            arsUses = getUses(is.getData(DataComponentTypes.LORE));
+                        }
+                        if (dn.endsWith("TARDIS Chameleon Circuit")) {
+                            chameleon = true;
+                            chameleonUses = getUses(is.getData(DataComponentTypes.LORE));
+                        }
+                        if (dn.endsWith("TARDIS Input Circuit")) {
+                            input = true;
+                            inputUses = getUses(is.getData(DataComponentTypes.LORE));
+                        }
+                        if (dn.endsWith("TARDIS Invisibility Circuit")) {
+                            invisibility = true;
+                            invisibilityUses = getUses(is.getData(DataComponentTypes.LORE));
+                        }
+                        if (dn.endsWith("TARDIS Materialisation Circuit")) {
+                            materialisation = true;
+                            materialisationUses = getUses(is.getData(DataComponentTypes.LORE));
+                        }
+                        if (dn.endsWith("TARDIS Memory Circuit")) {
+                            memory = true;
+                            memoryUses = getUses(is.getData(DataComponentTypes.LORE));
+                        }
+                        if (dn.endsWith("TARDIS Randomiser Circuit")) {
+                            randomiser = true;
+                            randomiserUses = getUses(is.getData(DataComponentTypes.LORE));
+                        }
+                        if (dn.endsWith("TARDIS Scanner Circuit")) {
+                            scanner = true;
+                            scannerUses = getUses(is.getData(DataComponentTypes.LORE));
+                        }
+                        if (dn.endsWith("TARDIS Telepathic Circuit")) {
+                            telepathic = true;
+                            telepathicUses = getUses(is.getData(DataComponentTypes.LORE));
+                        }
+                        if (dn.endsWith("TARDIS Temporal Circuit")) {
+                            temporal = true;
+                            temporalUses = getUses(is.getData(DataComponentTypes.LORE));
                         }
                     }
                 }
@@ -233,13 +231,13 @@ public class CircuitChecker {
     /**
      * Get the number of uses this circuit has left.
      *
-     * @param im the ItemMeta to check
+     * @param itemLore the ItemLore to check
      * @return the number of uses
      */
-    private int getUses(ItemMeta im) {
+    private int getUses(ItemLore itemLore) {
         int uses = 0;
-        if (im.hasLore()) {
-            List<Component> lore = im.lore();
+        if (itemLore != null) {
+            List<Component> lore = itemLore.lines();
             String stripped = ComponentUtils.stripColour(lore.get(1));
             if (!stripped.equals("unlimited")) {
                 uses = TARDISNumberParsers.parseInt(stripped);

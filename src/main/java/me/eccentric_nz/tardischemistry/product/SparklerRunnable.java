@@ -23,11 +23,9 @@ import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.block.data.BlockData;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
-import org.bukkit.inventory.meta.ItemMeta;
 
 public class SparklerRunnable implements Runnable {
 
@@ -79,13 +77,9 @@ public class SparklerRunnable implements Runnable {
         if (sparkler == null) {
             return false;
         }
-        if (!sparkler.hasItemMeta()) {
-            return false;
-        }
-        ItemMeta im = sparkler.getItemMeta();
         return SparklerMaterial.isCorrectMaterial(sparkler.getType())
-                && im.hasItemModel()
-                && (im.hasEnchantmentGlintOverride() || sparkler.containsEnchantment(Enchantment.LOYALTY));
+                && sparkler.hasData(DataComponentTypes.ITEM_MODEL)
+                && sparkler.hasData(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE);
     }
 
     private Location getHandLocation() {

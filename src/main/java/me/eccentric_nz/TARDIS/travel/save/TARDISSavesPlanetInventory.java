@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.travel.save;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.custommodels.GUISaves;
@@ -29,7 +31,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -59,13 +60,12 @@ public class TARDISSavesPlanetInventory implements InventoryHolder {
         ItemStack[] stack = new ItemStack[54];
         // home stack
         ItemStack his = ItemStack.of(GUISaves.HOME.material(), 1);
-        ItemMeta him = his.getItemMeta();
         List<Component> hlore = new ArrayList<>();
         HashMap<String, Object> wherehl = new HashMap<>();
         wherehl.put("tardis_id", id);
         ResultSetHomeLocation rsh = new ResultSetHomeLocation(plugin, wherehl);
         if (rsh.resultSet()) {
-            him.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Home"));
+            his.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Home"));
             hlore.add(Component.text(rsh.getWorld().getKey().getKey()));
             hlore.add(Component.text(rsh.getX()));
             hlore.add(Component.text(rsh.getY()));
@@ -78,14 +78,12 @@ public class TARDISSavesPlanetInventory implements InventoryHolder {
         } else {
             hlore.add(Component.text("Not found!"));
         }
-        him.lore(hlore);
-        his.setItemMeta(him);
+        his.setData(DataComponentTypes.LORE, ItemLore.lore(hlore));
         stack[GUISaves.HOME.slot()] = his;
         if (TARDISPermission.hasPermission(player, "tardis.save.death")) {
             // home stack
             ItemStack death = ItemStack.of(GUISaves.DEATH.material(), 1);
-            ItemMeta dim = death.getItemMeta();
-            dim.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Death location"));
+            death.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Death location"));
             List<Component> dlore = new ArrayList<>();
             ResultSetDeathLocation rsd = new ResultSetDeathLocation(plugin, player.getUniqueId().toString());
             if (rsd.resultSet()) {
@@ -98,8 +96,7 @@ public class TARDISSavesPlanetInventory implements InventoryHolder {
             } else {
                 dlore.add(Component.text("Not found!"));
             }
-            dim.lore(dlore);
-            death.setItemMeta(dim);
+            death.setData(DataComponentTypes.LORE, ItemLore.lore(dlore));
             stack[GUISaves.DEATH.slot()] = death;
         }
         // unique planets from saved destinations
@@ -108,9 +105,7 @@ public class TARDISSavesPlanetInventory implements InventoryHolder {
             int i = 9;
             for (Planet planet : rsd.getData()) {
                 ItemStack is = ItemStack.of(planet.material(), 1);
-                ItemMeta im = is.getItemMeta();
                 is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(planet.name()));
-                is.setItemMeta(im);
                 stack[i] = is;
                 i += 2;
             }

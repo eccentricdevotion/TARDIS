@@ -16,6 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.chameleon.gui;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.DyedItemColor;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.DamageUtility;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetColour;
@@ -31,8 +34,8 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.LeatherArmorMeta;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -116,14 +119,14 @@ public class ColourPickerListener extends TARDISMenuListener {
                 close(player);
             }
             case 53 -> close(player); // close
-            default ->  event.setCancelled(true);
+            default -> event.setCancelled(true);
         }
     }
 
     private void less(InventoryView view, int r, int g, int b) {
         ItemStack display = view.getItem(4);
-        LeatherArmorMeta meta = (LeatherArmorMeta) display.getItemMeta();
-        Color color = meta.getColor();
+        DyedItemColor meta = display.getData(DataComponentTypes.DYED_COLOR);
+        Color color = meta.color();
         int rr = color.getRed() - r;
         if (rr < 0) {
             rr = 0;
@@ -136,19 +139,20 @@ public class ColourPickerListener extends TARDISMenuListener {
         if (bb < 0) {
             bb = 0;
         }
-        List<Component> lore = meta.lore();
+        List<Component> lore = new ArrayList<>();
         lore.set(0, Component.text("Red: " + rr));
         lore.set(1, Component.text("Green: " + gg));
         lore.set(2, Component.text("Blue: " + bb));
-        meta.lore(lore);
-        meta.setColor(Color.fromRGB(rr, gg, bb));
-        display.setItemMeta(meta);
+        display.setData(DataComponentTypes.LORE, ItemLore.lore(lore));
+        display.setData(DataComponentTypes.DYED_COLOR, DyedItemColor.dyedItemColor()
+                .color(Color.fromRGB(rr, gg, bb))
+                .build());
     }
 
     private void more(InventoryView view, int r, int g, int b) {
         ItemStack display = view.getItem(4);
-        LeatherArmorMeta meta = (LeatherArmorMeta) display.getItemMeta();
-        Color color = meta.getColor();
+        DyedItemColor meta = display.getData(DataComponentTypes.DYED_COLOR);
+        Color color = meta.color();
         int rr = color.getRed() + r;
         if (rr > 255) {
             rr = 255;
@@ -161,42 +165,43 @@ public class ColourPickerListener extends TARDISMenuListener {
         if (bb > 255) {
             bb = 255;
         }
-        List<Component> lore = meta.lore();
+        List<Component> lore = new ArrayList<>();
         lore.set(0, Component.text("Red: " + rr));
         lore.set(1, Component.text("Green: " + gg));
         lore.set(2, Component.text("Blue: " + bb));
-        meta.lore(lore);
-        meta.setColor(Color.fromRGB(rr, gg, bb));
-        display.setItemMeta(meta);
+        display.setData(DataComponentTypes.LORE, ItemLore.lore(lore));
+        display.setData(DataComponentTypes.DYED_COLOR, DyedItemColor.dyedItemColor()
+                .color(Color.fromRGB(rr, gg, bb))
+                .build());
     }
 
     private void setRed(InventoryView view) {
         Color color = getColour(view);
         ItemStack red = view.getItem(22);
-        LeatherArmorMeta meta = (LeatherArmorMeta) red.getItemMeta();
-        meta.setColor(Color.fromRGB(color.getRed(), 0, 0));
-        red.setItemMeta(meta);
+        red.setData(DataComponentTypes.DYED_COLOR, DyedItemColor.dyedItemColor()
+                .color(Color.fromRGB(color.getRed(), 0, 0))
+                .build());
     }
 
     private void setGreen(InventoryView view) {
         Color color = getColour(view);
         ItemStack green = view.getItem(31);
-        LeatherArmorMeta meta = (LeatherArmorMeta) green.getItemMeta();
-        meta.setColor(Color.fromRGB(0, color.getGreen(), 0));
-        green.setItemMeta(meta);
+        green.setData(DataComponentTypes.DYED_COLOR, DyedItemColor.dyedItemColor()
+                .color(Color.fromRGB(0, color.getGreen(), 0))
+                .build());
     }
 
     private void setBlue(InventoryView view) {
         Color color = getColour(view);
         ItemStack blue = view.getItem(40);
-        LeatherArmorMeta meta = (LeatherArmorMeta) blue.getItemMeta();
-        meta.setColor(Color.fromRGB(0, 0, color.getBlue()));
-        blue.setItemMeta(meta);
+        blue.setData(DataComponentTypes.DYED_COLOR, DyedItemColor.dyedItemColor()
+                .color(Color.fromRGB(0, 0, color.getBlue()))
+                .build());
     }
 
     private Color getColour(InventoryView view) {
         ItemStack display = view.getItem(4);
-        LeatherArmorMeta meta = (LeatherArmorMeta) display.getItemMeta();
-        return meta.getColor();
+        DyedItemColor meta = display.getData(DataComponentTypes.DYED_COLOR);
+        return meta.color();
     }
 }

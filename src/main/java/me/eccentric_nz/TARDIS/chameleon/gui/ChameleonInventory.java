@@ -29,7 +29,6 @@ import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -151,11 +150,9 @@ public class ChameleonInventory implements InventoryHolder {
         }
         // Disabled radio button
         boolean isFactoryOff = preset.equals(ChameleonPreset.FACTORY) && adapt.equals(Adaption.OFF);
-        ItemStack fac = isFactoryOff ? on.clone() : off.clone();
-        ItemMeta tory = fac.getItemMeta();
+        ItemStack factory = isFactoryOff ? on.clone() : off.clone();
         Component donoff = isFactoryOff ? Component.text(plugin.getLanguage().getString("DISABLED", "Disabled"), NamedTextColor.RED) : Component.text(plugin.getLanguage().getString("SET_ON", "ON"), NamedTextColor.GREEN);
-        tory.customName(donoff);
-        fac.setItemMeta(tory);
+        factory.setData(DataComponentTypes.CUSTOM_NAME, donoff);
         // Adaptive radio button
         ItemStack biome = (adapt.equals(Adaption.OFF)) ? off.clone() : on.clone();
         biome.setData(DataComponentTypes.CUSTOM_NAME, Component.text(adapt.toString(), adapt.getColour()));
@@ -172,29 +169,25 @@ public class ChameleonInventory implements InventoryHolder {
         }
         // Shorted out radio button
         boolean isNotFactoryInvisibleOrConstruct = !preset.equals(ChameleonPreset.INVISIBLE) && !preset.equals(ChameleonPreset.FACTORY) && !preset.equals(ChameleonPreset.CONSTRUCT);
-        ItemStack pre = isNotFactoryInvisibleOrConstruct ? on.clone() : off.clone();
-        ItemMeta set = pre.getItemMeta();
+        ItemStack preset = isNotFactoryInvisibleOrConstruct ? on.clone() : off.clone();
         Component shorted;
         if (isNotFactoryInvisibleOrConstruct) {
-            shorted = Component.text((preset == ChameleonPreset.ITEM) ? model : preset.toString(), NamedTextColor.GREEN);
+            shorted = Component.text((this.preset == ChameleonPreset.ITEM) ? model : this.preset.toString(), NamedTextColor.GREEN);
         } else {
             shorted = Component.text(plugin.getLanguage().getString("SET_OFF", "OFF"), NamedTextColor.RED);
         }
-        set.customName(shorted);
-        pre.setItemMeta(set);
+        preset.setData(DataComponentTypes.CUSTOM_NAME, shorted);
         // Construct radio button
-        ItemStack bui = (preset.equals(ChameleonPreset.CONSTRUCT)) ? on.clone() : off.clone();
-        ItemMeta lder = bui.getItemMeta();
-        Component conoff = (preset.equals(ChameleonPreset.CONSTRUCT)) ? Component.text(plugin.getLanguage().getString("SET_ON", "ON"), NamedTextColor.GREEN) : Component.text(plugin.getLanguage().getString("SET_OFF", "OFF"), NamedTextColor.RED);
-        lder.customName(conoff);
-        bui.setItemMeta(lder);
+        ItemStack builder = (this.preset.equals(ChameleonPreset.CONSTRUCT)) ? on.clone() : off.clone();
+        Component conoff = (this.preset.equals(ChameleonPreset.CONSTRUCT)) ? Component.text(plugin.getLanguage().getString("SET_ON", "ON"), NamedTextColor.GREEN) : Component.text(plugin.getLanguage().getString("SET_OFF", "OFF"), NamedTextColor.RED);
+        builder.setData(DataComponentTypes.CUSTOM_NAME, conoff);
         // Cancel / close
         ItemStack close = GUIItemFactory.close();
 
         return new ItemStack[]{
                 apply, null, null, lock, null, null, null, null, null,
                 null, null, disabled, adaptive, invisible, shortout, construct, null, null,
-                null, null, fac, biome, not, pre, bui, null, close
+                null, null, factory, biome, not, preset, builder, null, close
         };
     }
 }

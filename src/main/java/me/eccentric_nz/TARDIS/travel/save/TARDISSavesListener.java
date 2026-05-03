@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.travel.save;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.DamageUtility;
 import me.eccentric_nz.TARDIS.api.Parameters;
@@ -40,8 +42,8 @@ import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -112,8 +114,7 @@ public class TARDISSavesListener extends TARDISMenuListener {
                             if (cursor.getType().isAir()) {
                                 event.setCancelled(true);
                             } else {
-                                ItemMeta cim = cursor.getItemMeta();
-                                String save = ComponentUtils.stripColour(cim.customName());
+                                String save = ComponentUtils.stripColour(cursor.getData(DataComponentTypes.CUSTOM_NAME));
                                 HashMap<String, Object> where = new HashMap<>();
                                 where.put("tardis_id", occupiedTardisId);
                                 where.put("dest_name", save);
@@ -135,9 +136,8 @@ public class TARDISSavesListener extends TARDISMenuListener {
                         }
                         ItemStack is = event.getView().getItem(slot);
                         if (is != null) {
-                            ItemMeta im = is.getItemMeta();
-                            List<Component> lore = im.lore();
-                            if (lore != null && ComponentUtils.stripColour(lore.getFirst()).startsWith("TARDIS_")) {
+                            ItemLore lore = is.getData(DataComponentTypes.LORE);
+                            if (lore != null && ComponentUtils.stripColour(lore.lines().getFirst()).startsWith("TARDIS_")) {
                                 close(player);
                                 plugin.getMessenger().send(player, TardisModule.TARDIS, "SAVE_NO_TARDIS");
                                 return;
@@ -166,10 +166,10 @@ public class TARDISSavesListener extends TARDISMenuListener {
                                 if (tac.isInArea()) {
                                     // save is in a TARDIS area, so check that the spot is not occupied
                                     HashMap<String, Object> wheresave = new HashMap<>();
-                                    wheresave.put("world", ComponentUtils.stripColour(lore.getFirst()));
-                                    wheresave.put("x", ComponentUtils.stripColour(lore.get(1)));
-                                    wheresave.put("y", ComponentUtils.stripColour(lore.get(2)));
-                                    wheresave.put("z", ComponentUtils.stripColour(lore.get(3)));
+                                    wheresave.put("world", ComponentUtils.stripColour(lore.lines().getFirst()));
+                                    wheresave.put("x", ComponentUtils.stripColour(lore.lines().get(1)));
+                                    wheresave.put("y", ComponentUtils.stripColour(lore.lines().get(2)));
+                                    wheresave.put("z", ComponentUtils.stripColour(lore.lines().get(3)));
                                     ResultSetCurrentLocation rsz = new ResultSetCurrentLocation(plugin, wheresave);
                                     if (rsz.resultSet()) {
                                         plugin.getMessenger().sendColouredCommand(player, "TARDIS_IN_SPOT", "/tardistravel area [name]", plugin);
@@ -202,18 +202,18 @@ public class TARDISSavesListener extends TARDISMenuListener {
                                     // damage circuit if configured
                                     DamageUtility.run(plugin, DiskCircuit.MEMORY, occupiedTardisId, player);
                                     HashMap<String, Object> set = new HashMap<>();
-                                    set.put("world", ComponentUtils.stripColour(lore.getFirst()));
-                                    set.put("x", TARDISNumberParsers.parseInt(ComponentUtils.stripColour(lore.get(1))));
-                                    set.put("y", TARDISNumberParsers.parseInt(ComponentUtils.stripColour(lore.get(2))));
-                                    set.put("z", TARDISNumberParsers.parseInt(ComponentUtils.stripColour(lore.get(3))));
-                                    int l_size = lore.size();
+                                    set.put("world", ComponentUtils.stripColour(lore.lines().getFirst()));
+                                    set.put("x", TARDISNumberParsers.parseInt(ComponentUtils.stripColour(lore.lines().get(1))));
+                                    set.put("y", TARDISNumberParsers.parseInt(ComponentUtils.stripColour(lore.lines().get(2))));
+                                    set.put("z", TARDISNumberParsers.parseInt(ComponentUtils.stripColour(lore.lines().get(3))));
+                                    int l_size = lore.lines().size();
                                     if (l_size >= 5) {
-                                        String four = ComponentUtils.stripColour(lore.get(4));
+                                        String four = ComponentUtils.stripColour(lore.lines().get(4));
                                         if (!four.isEmpty() && !four.equals("Current location")) {
                                             set.put("direction", four);
                                         }
                                         if (l_size > 5) {
-                                            String five = ComponentUtils.stripColour(lore.get(5));
+                                            String five = ComponentUtils.stripColour(lore.lines().get(5));
                                             if (five.equals("true")) {
                                                 set.put("submarine", 1);
                                             } else {
@@ -222,7 +222,7 @@ public class TARDISSavesListener extends TARDISMenuListener {
                                         }
                                     }
                                     if (l_size >= 7) {
-                                        String six = ComponentUtils.stripColour(lore.get(6));
+                                        String six = ComponentUtils.stripColour(lore.lines().get(6));
                                         if (!six.equals("Current location")) {
                                             HashMap<String, Object> sett = new HashMap<>();
                                             sett.put("chameleon_preset", six);
@@ -236,23 +236,23 @@ public class TARDISSavesListener extends TARDISMenuListener {
                                     HashMap<String, Object> wheret = new HashMap<>();
                                     wheret.put("tardis_id", occupiedTardisId);
                                     plugin.getQueryFactory().doSyncUpdate("next", set, wheret);
-                                    TravelType travelType = (ComponentUtils.stripColour(im.customName()).equals("Home")) ? TravelType.HOME : TravelType.SAVE;
+                                    TravelType travelType = (ComponentUtils.stripColour(is.getData(DataComponentTypes.CUSTOM_NAME)).equals("Home")) ? TravelType.HOME : TravelType.SAVE;
                                     plugin.getTrackerKeeper().getHasDestination().put(occupiedTardisId, new TravelCostAndType(travel, travelType));
                                     plugin.getTrackerKeeper().getRescue().remove(occupiedTardisId);
                                     close(player);
-                                    plugin.getMessenger().sendJoined(player, "DEST_SET_TERMINAL", ComponentUtils.stripColour(im.customName()), !plugin.getTrackerKeeper().getDestinationVortex().containsKey(occupiedTardisId));
+                                    plugin.getMessenger().sendJoined(player, "DEST_SET_TERMINAL", ComponentUtils.stripColour(is.getData(DataComponentTypes.CUSTOM_NAME)), !plugin.getTrackerKeeper().getDestinationVortex().containsKey(occupiedTardisId));
                                     if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(occupiedTardisId)) {
                                         new TARDISLand(plugin, occupiedTardisId, player).exitVortex();
                                         plugin.getPM().callEvent(new TARDISTravelEvent(player, null, travelType, occupiedTardisId));
                                     }
-                                } else if (!lore.contains(Component.text("Current location", NamedTextColor.GOLD))) {
-                                    lore.add(Component.text("Current location", NamedTextColor.GOLD));
-                                    im.lore(lore);
-                                    is.setItemMeta(im);
+                                } else if (!lore.lines().contains(Component.text("Current location", NamedTextColor.GOLD))) {
+                                    List<Component> current = new ArrayList<>(lore.lines());
+                                    current.add(Component.text("Current location", NamedTextColor.GOLD));
+                                    is.setData(DataComponentTypes.LORE, ItemLore.lore(current));
                                 }
                             } else {
                                 close(player);
-                                plugin.getMessenger().send(player, TardisModule.TARDIS, "DEST_NOT_VALID", ComponentUtils.stripColour(im.customName()));
+                                plugin.getMessenger().send(player, TardisModule.TARDIS, "DEST_NOT_VALID", ComponentUtils.stripColour(is.getData(DataComponentTypes.CUSTOM_NAME)));
                             }
                         }
                     }
@@ -296,8 +296,7 @@ public class TARDISSavesListener extends TARDISMenuListener {
             int start = (isPageTwo) ? 0 : 1;
             for (int i = start; i < 45; i++) {
                 if (stack[i] != null) {
-                    ItemMeta im = stack[i].getItemMeta();
-                    String save = ComponentUtils.stripColour(im.customName());
+                    String save = ComponentUtils.stripColour(stack[i].getData(DataComponentTypes.CUSTOM_NAME));
                     HashMap<String, Object> set = new HashMap<>();
                     int slot = (isPageTwo) ? 45 + i : i;
                     set.put("slot", slot);
@@ -318,13 +317,14 @@ public class TARDISSavesListener extends TARDISMenuListener {
     /**
      * Converts an Item Stacks lore to a Location.
      *
-     * @param lore the lore to read
+     * @param itemLore the lore to read
      * @return a Location
      */
-    private Location getLocation(List<Component> lore) {
-        if (lore == null) {
+    private Location getLocation(ItemLore itemLore) {
+        if (itemLore == null) {
             return null;
         }
+        List<Component> lore = itemLore.lines();
         World w = TARDISWorldResolver.getFromString(ComponentUtils.stripColour(lore.getFirst()));
         if (w == null) {
             return null;

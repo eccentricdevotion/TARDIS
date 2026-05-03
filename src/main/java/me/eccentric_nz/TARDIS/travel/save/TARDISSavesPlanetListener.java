@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.travel.save;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
@@ -38,8 +40,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -96,8 +98,7 @@ public class TARDISSavesPlanetListener extends TARDISMenuListener {
             if (is == null) {
                 return;
             }
-            ItemMeta im = is.getItemMeta();
-            List<Component> lore = im.lore();
+            List<Component> lore = new ArrayList<>(is.getData(DataComponentTypes.LORE).lines());
             World w = TARDISWorldResolver.getFromString(ComponentUtils.stripColour(lore.getFirst()));
             if (w == null) {
                 close(player);
@@ -161,26 +162,24 @@ public class TARDISSavesPlanetListener extends TARDISMenuListener {
                 HashMap<String, Object> wheret = new HashMap<>();
                 wheret.put("tardis_id", id);
                 plugin.getQueryFactory().doSyncUpdate("next", set, wheret);
-                TravelType travelType = (ComponentUtils.stripColour(im.customName()).equals("Home")) ? TravelType.HOME : TravelType.SAVE;
+                TravelType travelType = (ComponentUtils.stripColour(is.getData(DataComponentTypes.CUSTOM_NAME)).equals("Home")) ? TravelType.HOME : TravelType.SAVE;
                 plugin.getTrackerKeeper().getHasDestination().put(id, new TravelCostAndType(travel, travelType));
                 plugin.getTrackerKeeper().getRescue().remove(id);
                 close(player);
-                plugin.getMessenger().sendJoined(player, "DEST_SET_TERMINAL", ComponentUtils.stripColour(im.customName()), !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
+                plugin.getMessenger().sendJoined(player, "DEST_SET_TERMINAL", ComponentUtils.stripColour(is.getData(DataComponentTypes.CUSTOM_NAME)), !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
                 if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
                     new TARDISLand(plugin, id, player).exitVortex();
                     plugin.getPM().callEvent(new TARDISTravelEvent(player, null, travelType, id));
                 }
             } else if (!lore.contains(Component.text("Current location", NamedTextColor.GOLD))) {
                 lore.add(Component.text("Current location", NamedTextColor.GOLD));
-                im.lore(lore);
-                is.setItemMeta(im);
+                is.setData(DataComponentTypes.LORE, ItemLore.lore(lore));
             }
         }
         if (slot >= 8 && slot < 45) {
             ItemStack is = view.getItem(slot);
             if (is != null) {
-                ItemMeta im = is.getItemMeta();
-                String world = ComponentUtils.stripColour(im.customName());
+                String world = ComponentUtils.stripColour(is.getData(DataComponentTypes.CUSTOM_NAME));
                 player.openInventory(new TARDISSavesInventory(plugin, id, world).getInventory());
             }
         }

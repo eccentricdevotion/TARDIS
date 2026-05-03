@@ -1,5 +1,8 @@
 package me.eccentric_nz.TARDIS.rooms.architectural;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
+import io.papermc.paper.datacomponent.item.ResolvableProfile;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.BlueprintRoom;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
@@ -15,9 +18,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.SkullMeta;
-import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.ArrayList;
@@ -124,26 +124,22 @@ public class ArchitecturalBlueprintsListener extends TARDISMenuListener {
                 // give
                 if (selected_slot.containsKey(uuid) && selected_player.containsKey(uuid)) {
                     ItemStack room = view.getItem(selected_slot.get(uuid));
-                    ItemMeta rim = room.getItemMeta();
-                    PersistentDataContainer pdc = rim.getPersistentDataContainer();
-                    String perm = pdc.get(TARDIS.plugin.getBlueprintKey(), PersistentDataType.STRING);
+                    String perm = room.getPersistentDataContainer().get(TARDIS.plugin.getBlueprintKey(), PersistentDataType.STRING);
                     ItemStack head = view.getItem(selected_player.get(uuid));
-                    UUID receiver = UUID.fromString(ComponentUtils.stripColour(head.getItemMeta().lore().getFirst()));
+                    UUID receiver = UUID.fromString(ComponentUtils.stripColour(head.getData(DataComponentTypes.LORE).lines().getFirst()));
                     // check receiving player doesn't have this permission already
                     if (!TARDISPermission.hasPermission(receiver, perm)) {
                         // give a Blueprint disk to the player
                         ItemStack gift = room.clone();
-                        ItemMeta gim = gift.getItemMeta();
-                        gim.getPersistentDataContainer().set(TARDIS.plugin.getTimeLordUuidKey(), TARDIS.plugin.getPersistentDataTypeUUID(), receiver);
-                        List<Component> lore = gim.lore();
+                        gift.editPersistentDataContainer(pdc -> pdc.set(TARDIS.plugin.getTimeLordUuidKey(), TARDIS.plugin.getPersistentDataTypeUUID(), receiver));
+                        List<Component> lore = new ArrayList<>(gift.getData(DataComponentTypes.LORE).lines());
                         lore.add(Component.text("Valid only for"));
                         lore.add(Component.text(player.getName()));
-                        gim.lore(lore);
-                        gift.setItemMeta(gim);
+                        gift.setData(DataComponentTypes.LORE, ItemLore.lore(lore));
                         Player recipient = plugin.getServer().getPlayer(receiver);
                         if (recipient != null && recipient.isOnline()) {
                             recipient.give(gift);
-                            String r = ComponentUtils.stripColour(gim.customName());
+                            String r = ComponentUtils.stripColour(gift.getData(DataComponentTypes.CUSTOM_NAME));
                             plugin.getMessenger().send(recipient, TardisModule.TARDIS, "GIVE_ITEM", player.getName(), "a " + r + " Blueprint Disk");
                         }
                     } else {
@@ -166,11 +162,9 @@ public class ArchitecturalBlueprintsListener extends TARDISMenuListener {
 
     private void setPlayerSlot(InventoryView view, int slot, Player player) {
         ItemStack head = ItemStack.of(Material.PLAYER_HEAD, 1);
-        SkullMeta skull = (SkullMeta) head.getItemMeta();
-        skull.setOwningPlayer(player);
-        skull.setData(DataComponentTypes.CUSTOM_NAME, Component.text(player.getName()));
-        skull.lore(List.of(Component.text(player.getUniqueId().toString())));
-        head.setItemMeta(skull);
+        head.setData(DataComponentTypes.PROFILE, ResolvableProfile.resolvableProfile(player.getPlayerProfile()));
+        head.setData(DataComponentTypes.CUSTOM_NAME, Component.text(player.getName()));
+        head.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text(player.getUniqueId().toString())).build());
         view.setItem(slot, head);
     }
 
@@ -191,9 +185,7 @@ public class ArchitecturalBlueprintsListener extends TARDISMenuListener {
             for (int c = 0; c < 9; c++) {
                 ItemStack is = blueprints[r][c];
                 if (is != null) {
-                    ItemMeta im = is.getItemMeta();
-                    PersistentDataContainer pdc = im.getPersistentDataContainer();
-                    String perm = pdc.get(TARDIS.plugin.getBlueprintKey(), PersistentDataType.STRING);
+                    String perm = is.getPersistentDataContainer().get(TARDIS.plugin.getBlueprintKey(), PersistentDataType.STRING);
                     if (!perms.contains(perm)) {
                         view.setItem(slot, is.withType(Material.MUSIC_DISC_RELIC));
                     } else {

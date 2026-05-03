@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.sonic;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.advanced.CircuitChecker;
@@ -50,7 +51,6 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.BoundingBox;
 import org.bukkit.util.Vector;
 
@@ -123,11 +123,9 @@ public class SonicDock {
     private ItemDisplay doDocking(ItemStack sonic, Location location, Vector vector, Player player, int id) {
         // remove enchantments if any
         sonic.removeEnchantment(Enchantment.UNBREAKING);
-        ItemMeta im = sonic.getItemMeta();
-        im.setEnchantmentGlintOverride(null);
-        sonic.setItemMeta(im);
+        sonic.unsetData(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE);
         // get sonic uuid
-        UUID uuid = sonic.getItemMeta().getPersistentDataContainer().get(plugin.getSonicUuidKey(), plugin.getPersistentDataTypeUUID());
+        UUID uuid = sonic.getPersistentDataContainer().get(plugin.getSonicUuidKey(), plugin.getPersistentDataTypeUUID());
         // set item display
         ItemDisplay display = (ItemDisplay) location.getWorld().spawnEntity(location.clone().add(vector), EntityType.ITEM_DISPLAY);
         display.setItemStack(sonic);
@@ -323,12 +321,10 @@ public class SonicDock {
 
     private void updateModel(ItemFrame frame, NamespacedKey model, boolean setDisplay) {
         ItemStack dock = frame.getItem();
-        ItemMeta im = dock.getItemMeta();
-        is.setData(DataComponentTypes.ITEM_MODEL, model);
+        dock.setData(DataComponentTypes.ITEM_MODEL, model);
         if (setDisplay) {
-            is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Sonic Dock"));
+            dock.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Sonic Dock"));
         }
-        dock.setItemMeta(im);
         frame.setItem(dock);
         frame.setSilent(true);
     }

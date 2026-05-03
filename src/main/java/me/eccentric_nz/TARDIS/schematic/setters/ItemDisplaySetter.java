@@ -40,7 +40,6 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
 
@@ -150,12 +149,11 @@ public class ItemDisplaySetter {
         ItemDisplay display = (ItemDisplay) block.getWorld().spawnEntity(block.getLocation().clone().add(0.5d, 0.25d, 0.5d), EntityType.ITEM_DISPLAY);
         ItemStack is = ItemStack.of(material);
         if (model != null) {
-            ItemMeta im = is.getItemMeta();
-            im.customName(model.getKey().equals("xray")
+            is.setData(DataComponentTypes.CUSTOM_NAME,
+                    model.getKey().equals("xray")
                     ? Component.text("X-ray")
                     : Component.text(TARDISStringUtils.capitalise(model.getKey()))
             );
-            is.setItemMeta(im);
             display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.GROUND);
             display.setBillboard(Display.Billboard.VERTICAL);
         }

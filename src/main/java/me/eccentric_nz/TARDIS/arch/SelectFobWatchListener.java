@@ -25,7 +25,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
-import org.bukkit.inventory.meta.ItemMeta;
 
 /**
  * @author eccentric_nz
@@ -50,11 +49,10 @@ public class SelectFobWatchListener implements Listener {
         int slot = event.getNewSlot();
         PlayerInventory inv = player.getInventory();
         ItemStack is = inv.getItem(slot);
-        if (is == null || !is.getType().equals(Material.CLOCK) || !is.hasItemMeta()) {
+        if (is == null || !is.getType().equals(Material.CLOCK)) {
             return;
         }
-        ItemMeta im = is.getItemMeta();
-        if (!im.hasCustomName() || !ComponentUtils.endsWith(im.customName(), "Fob Watch")) {
+        if (!ComponentUtils.isNamed(is, "Fob Watch")) {
             return;
         }
         // move the fob watch

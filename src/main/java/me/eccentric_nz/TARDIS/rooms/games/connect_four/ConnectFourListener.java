@@ -1,5 +1,6 @@
 package me.eccentric_nz.TARDIS.rooms.games.connect_four;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.rooms.games.GameOutcome;
@@ -13,7 +14,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
@@ -41,17 +41,11 @@ public class ConnectFourListener extends TARDISMenuListener {
         COLUMNS.add(List.of(5, 14, 23, 32, 41, 50));
         COLUMNS.add(List.of(6, 15, 24, 33, 42, 51));
         hole = ItemStack.of(Material.BLUE_CONCRETE_POWDER);
-        ItemMeta holeMeta = hole.getItemMeta();
-        holeMeta.setData(DataComponentTypes.CUSTOM_NAME, Component.text(" "));
-        hole.setItemMeta(holeMeta);
+        hole.setData(DataComponentTypes.CUSTOM_NAME, Component.text(" "));
         red = ItemStack.of(Material.RED_CONCRETE_POWDER);
-        ItemMeta redMeta = red.getItemMeta();
-        redMeta.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Red"));
-        red.setItemMeta(redMeta);
+        red.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Red"));
         yellow = ItemStack.of(Material.YELLOW_CONCRETE_POWDER);
-        ItemMeta yellowMeta = yellow.getItemMeta();
-        yellowMeta.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Yellow"));
-        yellow.setItemMeta(yellowMeta);
+        yellow.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Yellow"));
         state = MatchState.PLAYER_TURN;
         grid = new Grid();
         tardis = new Robot(grid);
@@ -178,9 +172,7 @@ public class ConnectFourListener extends TARDISMenuListener {
             }
         }
         if (result != null) {
-            ItemMeta im = banner.getItemMeta();
-            is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(display));
-            banner.setItemMeta(im);
+            banner.setData(DataComponentTypes.CUSTOM_NAME, Component.text(display));
             player.playSound(player.getLocation(), result.getSound(), 0.8f, 0.8f);
             view.setItem(26, banner);
         }

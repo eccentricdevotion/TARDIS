@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.doors;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.move.TARDISTeleportLocation;
@@ -26,7 +27,6 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.Vector;
 
@@ -45,15 +45,11 @@ public class DoorUtility {
         ItemStack is = player.getInventory().getItemInMainHand();
         ItemStack single = is.clone();
         single.setAmount(1);
-        if (!is.hasItemMeta()) {
-            return;
-        }
-        ItemMeta im = is.getItemMeta();
-        if (!im.hasCustomName() || !im.getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.STRING) || !im.hasItemModel()) {
+        if (!is.hasData(DataComponentTypes.CUSTOM_NAME) || !is.getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.STRING) || !is.hasData(DataComponentTypes.ITEM_MODEL)) {
             return;
         }
         // set an Interaction
-        TARDISDisplayItemUtils.set(location, im.getItemModel().getKey(), true);
+        TARDISDisplayItemUtils.set(location, is.getData(DataComponentTypes.ITEM_MODEL).value(), true);
         // set an ItemDisplay
         ItemDisplay display = (ItemDisplay) location.getWorld().spawnEntity(location.add(0.5d, 0.0d, 0.5d), EntityType.ITEM_DISPLAY);
         display.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, 10000);

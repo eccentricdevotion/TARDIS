@@ -19,16 +19,12 @@ public class ArtronUtility {
 
     public static ItemStack hasCell(TARDIS plugin, Player player) {
         ItemStack is = player.getInventory().getItemInMainHand();
-        if (!is.hasItemMeta()) {
+        if (!ComponentUtils.isNamed(is, "Artron Storage Cell")) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "CELL_IN_HAND");
             return null;
         }
         if (is.getAmount() > 1) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "CELL_ONE");
-            return null;
-        }
-        if (!is.hasData(DataComponentTypes.CUSTOM_NAME) || !ComponentUtils.endsWith(is.getData(DataComponentTypes.CUSTOM_NAME), "Artron Storage Cell")) {
-            plugin.getMessenger().send(player, TardisModule.TARDIS, "CELL_IN_HAND");
             return null;
         }
         return is;

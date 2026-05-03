@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.sonic;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
@@ -35,7 +36,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
 import java.util.List;
@@ -60,10 +60,9 @@ public class SonicEntityListener implements Listener {
         long now = System.currentTimeMillis();
         ItemStack is = player.getInventory().getItemInMainHand();
         Entity ent = event.getRightClicked();
-        if (is.getType().equals(Material.BLAZE_ROD) && is.hasItemMeta()) {
-            ItemMeta im = player.getInventory().getItemInMainHand().getItemMeta();
-            if (ComponentUtils.endsWith(im.customName(), "Sonic Screwdriver")) {
-                List<Component> lore = im.lore();
+        if (is.getType().equals(Material.BLAZE_ROD)) {
+            if (ComponentUtils.isNamed(is, "Sonic Screwdriver")) {
+                List<Component> lore = is.lore();
                 if (ent instanceof Player scanned) {
                     SonicSound.playSonicSound(plugin, player, now, 3050L, "sonic_screwdriver");
                     if (TARDISPermission.hasPermission(player, "tardis.sonic.admin") && lore != null && lore.contains(Component.text("Admin Upgrade")) && player.isSneaking()) {
@@ -106,11 +105,10 @@ public class SonicEntityListener implements Listener {
 
     private int isDock(ItemFrame frame) {
         ItemStack dock = frame.getItem();
-        if (dock.getType() != Material.FLOWER_POT || !dock.hasItemMeta()) {
+        if (dock.getType() != Material.FLOWER_POT) {
             return -1;
         }
-        ItemMeta im = dock.getItemMeta();
-        if (!im.hasItemModel() || !im.getItemModel().getKey().contains("sonic_dock")) {
+        if (!dock.hasData(DataComponentTypes.ITEM_MODEL) || !dock.getData(DataComponentTypes.ITEM_MODEL).value().contains("sonic_dock")) {
             return -1;
         }
         HashMap<String, Object> where = new HashMap<>();

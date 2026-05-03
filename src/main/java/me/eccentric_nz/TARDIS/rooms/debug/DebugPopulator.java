@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.rooms.debug;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.CustomModelData;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.exterior.BuilderUtility;
@@ -58,8 +60,6 @@ import org.bukkit.block.Chest;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 import org.bukkit.util.Transformation;
 
 import java.util.*;
@@ -333,9 +333,7 @@ public class DebugPopulator {
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             EntityEquipment ee = as.getEquipment();
             ItemStack head = ee.getHelmet();
-            ItemMeta meta = head.getItemMeta();
-            meta.setData(DataComponentTypes.ITEM_MODEL, key);
-            head.setItemMeta(meta);
+            head.setData(DataComponentTypes.ITEM_MODEL, key);
             ee.setHelmet(head);
             // remember item stack for chest population
             stacks.add(head);
@@ -355,15 +353,13 @@ public class DebugPopulator {
                     EntityEquipment ee = as.getEquipment();
                     Material dye = BuilderUtility.getMaterialForArmourStand(preset, -1, true);
                     ItemStack head = ItemStack.of(dye, 1);
-                    ItemMeta meta = head.getItemMeta();
                     switch (z) {
-                        case -4, -20 -> meta.setData(DataComponentTypes.ITEM_MODEL, preset.getClosed());
-                        case -8, -24 -> meta.setData(DataComponentTypes.ITEM_MODEL, preset.getOpen());
-                        case -12, -28 -> meta.setData(DataComponentTypes.ITEM_MODEL, preset.getStained());
+                        case -4, -20 -> head.setData(DataComponentTypes.ITEM_MODEL, preset.getClosed());
+                        case -8, -24 -> head.setData(DataComponentTypes.ITEM_MODEL, preset.getOpen());
+                        case -12, -28 -> head.setData(DataComponentTypes.ITEM_MODEL, preset.getStained());
                         // -16 & -32
-                        default -> meta.setData(DataComponentTypes.ITEM_MODEL, preset.getGlass());
+                        default -> head.setData(DataComponentTypes.ITEM_MODEL, preset.getGlass());
                     }
-                    head.setItemMeta(meta);
                     ee.setHelmet(head);
                     as.setInvisible(true);
                     // remember item stack for chest population
@@ -384,7 +380,6 @@ public class DebugPopulator {
                 EntityEquipment ee = as.getEquipment();
                 Material material = Material.valueOf(plugin.getCustomModelConfig().getString("models." + c + ".item"));
                 ItemStack head = ItemStack.of(material, 1);
-                ItemMeta meta = head.getItemMeta();
                 NamespacedKey key;
                 switch (z) {
                     case -4, -20 -> key = new NamespacedKey(plugin, TARDISStringUtils.toUnderscoredLowercase(c) + "_closed");
@@ -393,8 +388,7 @@ public class DebugPopulator {
                     // -16 & -32
                     default -> key = new NamespacedKey(plugin, TARDISStringUtils.toUnderscoredLowercase(c) + "_glass");
                 }
-                meta.setData(DataComponentTypes.ITEM_MODEL, key);
-                head.setItemMeta(meta);
+                head.setData(DataComponentTypes.ITEM_MODEL, key);
                 ee.setHelmet(head);
                 as.setInvisible(true);
                 // remember item stack for chest population
@@ -418,9 +412,7 @@ public class DebugPopulator {
             frame.setFacingDirection(BlockFace.UP, true);
             // set item
             ItemStack is = ItemStack.of(Material.LIGHT_GRAY_DYE);
-            ItemMeta im = is.getItemMeta();
             is.setData(DataComponentTypes.ITEM_MODEL, rotor.offModel());
-            is.setItemMeta(im);
             frame.setItem(is);
             // lock
             frame.setFixed(true);
@@ -447,9 +439,7 @@ public class DebugPopulator {
                 ItemDisplay display = (ItemDisplay) world.spawnEntity(location, EntityType.ITEM_DISPLAY);
                 Material material = (tdi.toString().contains("OPEN")) ? tdi.getMaterial() : tdi.getCraftMaterial();
                 ItemStack is = ItemStack.of(material);
-                ItemMeta im = is.getItemMeta();
                 is.setData(DataComponentTypes.ITEM_MODEL, tdi.getCustomModel());
-                is.setItemMeta(im);
                 display.setItemStack(is);
                 // loop x z - spaced over 24 x 24 with empty blocks between
                 x -= 3;
@@ -469,9 +459,7 @@ public class DebugPopulator {
             ItemDisplay c = (ItemDisplay) world.spawnEntity(closed, EntityType.ITEM_DISPLAY);
             Material material = d.getMaterial();
             ItemStack is = ItemStack.of(material);
-            ItemMeta im = is.getItemMeta();
             is.setData(DataComponentTypes.ITEM_MODEL, new NamespacedKey(plugin, key + "_closed"));
-            is.setItemMeta(im);
             // remember item stack for chest population
             stacks.add(is);
             c.setItemStack(is);
@@ -484,9 +472,7 @@ public class DebugPopulator {
             Location open = new Location(world, rx + x + 0.5d, 65.5d, rz + z + 0.5d);
             ItemDisplay o = (ItemDisplay) world.spawnEntity(open, EntityType.ITEM_DISPLAY);
             ItemStack ois = ItemStack.of(material);
-            ItemMeta oim = is.getItemMeta();
-            is.setData(DataComponentTypes.ITEM_MODEL, new NamespacedKey(plugin, key + "_open"));
-            ois.setItemMeta(oim);
+            ois.setData(DataComponentTypes.ITEM_MODEL, new NamespacedKey(plugin, key + "_open"));
             o.setItemStack(ois);
             // remember item stack for chest population
             stacks.add(ois);
@@ -500,9 +486,7 @@ public class DebugPopulator {
                 Location extra = new Location(world, rx + x + 0.5d, 65.5d, rz + z + 0.5d);
                 ItemDisplay e = (ItemDisplay) world.spawnEntity(extra, EntityType.ITEM_DISPLAY);
                 ItemStack eis = ItemStack.of(material);
-                ItemMeta eim = is.getItemMeta();
-                eim.setData(DataComponentTypes.ITEM_MODEL, new NamespacedKey(plugin, key + "_extra"));
-                eis.setItemMeta(eim);
+                eis.setData(DataComponentTypes.ITEM_MODEL, new NamespacedKey(plugin, key + "_extra"));
                 e.setItemStack(eis);
                 // remember item stack for chest population
                 stacks.add(eis);
@@ -549,10 +533,8 @@ public class DebugPopulator {
     private void setItemFromMaterial(Location location, Material material, NamespacedKey model, Component name) {
         location.getBlock().setType(Material.WHITE_CONCRETE);
         ItemStack is = ItemStack.of(material, 1);
-        ItemMeta im = is.getItemMeta();
         is.setData(DataComponentTypes.ITEM_MODEL, model);
-        im.customName(name);
-        is.setItemMeta(im);
+        is.setData(DataComponentTypes.CUSTOM_NAME, name);
         ItemDisplay display = (ItemDisplay) location.getWorld().spawnEntity(location.clone().add(0.5d, 1.25d, 0.5d), EntityType.ITEM_DISPLAY);
         display.setItemStack(is);
         display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.GROUND);
@@ -566,12 +548,10 @@ public class DebugPopulator {
     private void setItemFromMaterial(Location location, List<Float> floats, Component name) {
         location.getBlock().setType(Material.WHITE_CONCRETE);
         ItemStack is = ItemStack.of(Material.BLAZE_ROD, 1);
-        ItemMeta im = is.getItemMeta();
-        CustomModelDataComponent cmd = im.getCustomModelDataComponent();
-        cmd.setFloats(floats);
-        im.setCustomModelDataComponent(cmd);
-        im.customName(name);
-        is.setItemMeta(im);
+        is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                .addFloats(floats)
+                .build());
+        is.setData(DataComponentTypes.CUSTOM_NAME, name);
         ItemDisplay display = (ItemDisplay) location.getWorld().spawnEntity(location.clone().add(0.5d, 1.25d, 0.5d), EntityType.ITEM_DISPLAY);
         display.setItemStack(is);
         display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.GROUND);
@@ -612,9 +592,7 @@ public class DebugPopulator {
             frame.setFacingDirection(BlockFace.UP, true);
             // set item
             ItemStack is = ItemStack.of(le.getMaterial());
-            ItemMeta im = is.getItemMeta();
             is.setData(DataComponentTypes.ITEM_MODEL, le.getModel());
-            is.setItemMeta(im);
             frame.setItem(is);
             // lock
             frame.setFixed(true);
@@ -706,9 +684,7 @@ public class DebugPopulator {
             Location location = new Location(world, rx + x + 0.5d, 65.725, rz + z + 0.5d);
             // create the regeneration item model
             ItemStack totem = ItemStack.of(Material.TOTEM_OF_UNDYING, 1);
-            ItemMeta im = totem.getItemMeta();
-            is.setData(DataComponentTypes.ITEM_MODEL, t.getKey());
-            totem.setItemMeta(im);
+            totem.setData(DataComponentTypes.ITEM_MODEL, t.getKey());
             // spawn a display entity
             ItemDisplay display = (ItemDisplay) world.spawnEntity(location, EntityType.ITEM_DISPLAY);
             display.setItemStack(totem);

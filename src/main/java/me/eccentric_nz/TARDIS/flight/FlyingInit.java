@@ -20,7 +20,6 @@ import io.papermc.paper.datacomponent.DataComponentTypes;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 public class FlyingInit {
 

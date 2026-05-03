@@ -16,6 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.sonic;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.CustomModelData;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.customblocks.TARDISBlockDisplayItem;
@@ -43,8 +46,6 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
@@ -113,8 +114,7 @@ public class SonicGeneratorListener implements Listener {
             int cost = (int) (plugin.getArtronConfig().getDouble("sonic_generator.standard") * full);
             int level = rs.getArtronLevel();
             ItemStack sonic = ItemStack.of(Material.BLAZE_ROD, 1);
-            ItemMeta screw = sonic.getItemMeta();
-            screw.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Sonic Screwdriver"));
+            sonic.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Sonic Screwdriver"));
             List<Component> upgrades = new ArrayList<>();
             if (s.hasKnockback()) {
                 upgrades.add(Component.text("Knockback Upgrade"));
@@ -160,13 +160,12 @@ public class SonicGeneratorListener implements Listener {
                 List<Component> finalUps = new ArrayList<>();
                 finalUps.add(Component.text("Upgrades:"));
                 finalUps.addAll(upgrades);
-                screw.lore(finalUps);
+                sonic.setData(DataComponentTypes.LORE, ItemLore.lore(finalUps));
             }
             // set custom model data
-            CustomModelDataComponent component = screw.getCustomModelDataComponent();
-            component.setFloats(s.getModel());
-            screw.setCustomModelDataComponent(component);
-            sonic.setItemMeta(screw);
+            sonic.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                    .addFloats(s.getModel())
+                    .build());
             if (cost < level) {
                 Location loc = location.clone().add(0.5d, 0.75d, 0.5d);
                 Entity drop = location.getWorld().dropItem(loc, sonic);
@@ -212,10 +211,8 @@ public class SonicGeneratorListener implements Listener {
             b.setBlockData(TARDISConstants.AIR);
             // drop a custom FLOWER_POT_ITEM
             ItemStack is = ItemStack.of(Material.FLOWER_POT, 1);
-            ItemMeta im = is.getItemMeta();
             is.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Sonic Generator"));
             is.setData(DataComponentTypes.ITEM_MODEL, SonicItem.SONIC_GENERATOR.getKey());
-            is.setItemMeta(im);
             b.getWorld().dropItemNaturally(b.getLocation(), is);
         }
     }
@@ -223,11 +220,10 @@ public class SonicGeneratorListener implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onSonicGeneratorPlace(BlockPlaceEvent event) {
         ItemStack is = event.getItemInHand();
-        if (!is.getType().equals(Material.FLOWER_POT) || !is.hasItemMeta()) {
+        if (!is.getType().equals(Material.FLOWER_POT)) {
             return;
         }
-        ItemMeta im = is.getItemMeta();
-        if (im.hasCustomName() && ComponentUtils.endsWith(im.customName(), "Sonic Generator")) {
+        if (ComponentUtils.isNamed(is, "Sonic Generator")) {
             Player p = event.getPlayer();
             String uuid = p.getUniqueId().toString();
             Block block = event.getBlock();

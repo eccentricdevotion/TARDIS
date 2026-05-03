@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.sonic;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.custommodels.keys.SonicVariant;
@@ -30,7 +31,6 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.inventory.*;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,15 +56,13 @@ public class SonicUpgradeListener implements Listener {
         // upgrades are all shapeless so only check those
         if (recipe instanceof ShapelessRecipe) {
             // if the recipe result is the same type of material as the sonic screwdriver
-            if (is != null && is.getType().equals(Material.BLAZE_ROD) && is.hasItemMeta()) {
-                ItemMeta im = is.getItemMeta();
+            if (is != null && is.getType().equals(Material.BLAZE_ROD)) {
                 // get the upgrade
                 boolean found = false;
-                String upgrade = ComponentUtils.stripColour(im.customName());
+                String upgrade = ComponentUtils.stripColour(is.getData(DataComponentTypes.CUSTOM_NAME));
                 for (ItemStack glowstone : ci.getContents()) {
-                    if (glowstone != null && glowstone.getType().equals(Material.GLOWSTONE_DUST) && glowstone.hasItemMeta()) {
-                        ItemMeta rm = glowstone.getItemMeta();
-                        String customName = ComponentUtils.stripColour(rm.customName());
+                    if (glowstone != null && glowstone.getType().equals(Material.GLOWSTONE_DUST) && glowstone.hasData(DataComponentTypes.CUSTOM_NAME)) {
+                        String customName = ComponentUtils.stripColour(glowstone.getData(DataComponentTypes.CUSTOM_NAME));
                         upgrade = SonicUpgradeData.displayNames.get(customName);
                         found = true;
                     }
@@ -89,7 +87,7 @@ public class SonicUpgradeListener implements Listener {
                 ItemStack sonic = null;
                 for (int i = 1; i <= ci.getSize(); i++) {
                     ItemStack item = ci.getItem(i);
-                    if (item != null && item.getType().equals(Material.BLAZE_ROD) && item.hasItemMeta()) {
+                    if (item != null && item.getType().equals(Material.BLAZE_ROD) && item.hasData(DataComponentTypes.CUSTOM_MODEL_DATA)) {
                         sonic = item;
                         break;
                     }
@@ -97,16 +95,15 @@ public class SonicUpgradeListener implements Listener {
                 if (sonic == null) {
                     ci.setResult(null);
                 } else {
-                    ItemMeta sim = sonic.getItemMeta();
                     List<Float> floats = SonicVariant.ELEVENTH.getFloats();
-                    if (sim.hasCustomModelDataComponent()) {
-                        floats = sim.getCustomModelDataComponent().getFloats();
+                    if (sonic.hasData(DataComponentTypes.CUSTOM_MODEL_DATA)) {
+                        floats = sonic.getData(DataComponentTypes.CUSTOM_MODEL_DATA).floats();
                     }
-                    String dn = ComponentUtils.stripColour(sim.customName());
+                    String dn = ComponentUtils.stripColour(sonic.getData(DataComponentTypes.CUSTOM_NAME));
                     List<Component> lore;
-                    if (sim.hasLore()) {
+                    if (sonic.hasData(DataComponentTypes.LORE)) {
                         // get the current sonic's upgrades
-                        lore = sim.lore();
+                        lore = new ArrayList<>(sonic.getData(DataComponentTypes.LORE).lines());
                     } else {
                         // otherwise this is the first upgrade
                         lore = new ArrayList<>();
@@ -123,11 +120,11 @@ public class SonicUpgradeListener implements Listener {
                 }
             }
         } else if (recipe instanceof ShapedRecipe) {
-            if (is == null || !is.hasItemMeta() || !is.getItemMeta().hasCustomName() || !ComponentUtils.endsWith(is.getItemMeta().customName(), "TARDIS Remote Key")) {
+            if (is == null || !ComponentUtils.isNamed(is, "TARDIS Remote Key")) {
                 return;
             }
             ItemStack key = ci.getItem(5);
-            if (!key.hasItemMeta() || !key.getItemMeta().hasCustomName() || !ComponentUtils.endsWith(key.getItemMeta().customName(), "TARDIS Key")) {
+            if (!ComponentUtils.isNamed(key, "TARDIS Key")) {
                 ci.setResult(null);
                 TARDIS.plugin.getMessenger().send(event.getView().getPlayer(), TardisModule.TARDIS, "REMOTE_KEY");
             }

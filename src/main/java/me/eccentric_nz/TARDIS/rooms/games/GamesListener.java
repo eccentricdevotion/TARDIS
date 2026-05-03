@@ -1,5 +1,7 @@
 package me.eccentric_nz.TARDIS.rooms.games;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.rooms.games.connect_four.ConnectFourInventory;
@@ -15,8 +17,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GamesListener extends TARDISMenuListener {
@@ -57,9 +59,13 @@ public class GamesListener extends TARDISMenuListener {
             case 5 -> {
                 // get level
                 ItemStack startLevel = view.getItem(6);
-                ItemMeta sim = startLevel.getItemMeta();
-                List<Component> lore = sim.lore();
-                int level = (lore != null) ? TARDISNumberParsers.parseInt(ComponentUtils.stripColour(lore.getFirst())) : 0;
+                ItemLore itemLore = startLevel.getData(DataComponentTypes.LORE);
+                List<Component> lore;
+                int level = 0;
+                if (itemLore != null) {
+                    lore = new ArrayList<>(startLevel.getData(DataComponentTypes.LORE).lines());
+                    level = TARDISNumberParsers.parseInt(ComponentUtils.stripColour(lore.getFirst()));
+                }
                 if (level < 0) {
                     level = 0;
                 }
@@ -70,20 +76,26 @@ public class GamesListener extends TARDISMenuListener {
             case 6 -> {
                 // set level
                 ItemStack startLevel = view.getItem(6);
-                ItemMeta sim = startLevel.getItemMeta();
-                List<Component> lore = sim.lore();
-                int level = (lore != null) ? TARDISNumberParsers.parseInt(ComponentUtils.stripColour(lore.getFirst())) : 0;
+                ItemLore itemLore = startLevel.getData(DataComponentTypes.LORE);
+                List<Component> lore;
+                int level = 0;
+                if (itemLore != null) {
+                    lore = new ArrayList<>(itemLore.lines());
+                    level = TARDISNumberParsers.parseInt(ComponentUtils.stripColour(lore.getFirst()));
+                } else {
+                    lore = new ArrayList<>();
+                }
                 level++;
                 if (level > 30) {
                     level = 0;
                 }
                 lore.set(0, Component.text(level));
-                sim.lore(lore);
-                startLevel.setItemMeta(sim);
+                startLevel.setData(DataComponentTypes.LORE, ItemLore.lore(lore));
                 view.setItem(6, startLevel);
             }
             case 8 -> close(player);
-            default -> { }
+            default -> {
+            }
         }
     }
 }

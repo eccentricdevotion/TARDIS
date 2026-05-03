@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.tardisregeneration;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.PotionContents;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import org.bukkit.Material;
@@ -23,7 +25,6 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionType;
 
 /*
@@ -55,9 +56,9 @@ public class ElixirOfLifeRecipe {
             r.shape("GPG", " G ", " G ");
         }
         ItemStack potion = ItemStack.of(Material.POTION, 1);
-        PotionMeta pm = (PotionMeta) potion.getItemMeta();
-        pm.setBasePotionType(PotionType.AWKWARD);
-        potion.setItemMeta(pm);
+        potion.setData(DataComponentTypes.POTION_CONTENTS, PotionContents.potionContents()
+                .potion(PotionType.AWKWARD)
+                .build());
         r.setIngredient('G', Material.GOLD_NUGGET);
         r.setIngredient('P', new RecipeChoice.ExactChoice(potion));
         plugin.getServer().addRecipe(r);

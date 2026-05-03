@@ -1,5 +1,7 @@
 package me.eccentric_nz.TARDIS.rooms.laundry;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemArmorTrim;
 import io.papermc.paper.registry.RegistryAccess;
 import io.papermc.paper.registry.RegistryKey;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -14,10 +16,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ArmorMeta;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.LeatherArmorMeta;
-import org.bukkit.inventory.meta.trim.ArmorTrim;
 import org.bukkit.inventory.meta.trim.TrimPattern;
 import org.jetbrains.annotations.NotNull;
 
@@ -67,15 +65,13 @@ public class WashingMachineListener extends TARDISMenuListener {
             if (armour != null) {
                 Material material = armour.getType();
                 if (Tag.ITEMS_TRIMMABLE_ARMOR.isTagged(material)) {
-                    ArmorMeta meta = (ArmorMeta) armour.getItemMeta();
-                    if (meta.hasTrim()) {
-                        ArmorTrim trim = meta.getTrim();
-                        TrimPattern tp = trim.getPattern();
+                    if (armour.hasData(DataComponentTypes.TRIM)) {
+                        ItemArmorTrim trim = armour.getData(DataComponentTypes.TRIM);
+                        TrimPattern tp = trim.armorTrim().getPattern();
                         NamespacedKey key = RegistryAccess.registryAccess().getRegistry(RegistryKey.TRIM_PATTERN).getKey(tp);
                         ItemStack template = ItemStack.of(getTemplate(key));
                         view.setItem(i + 9, template);
-                        meta.setTrim(null);
-                        armour.setItemMeta(meta);
+                        armour.unsetData(DataComponentTypes.TRIM);
                         view.setItem(i, armour);
                     }
                 }
@@ -98,10 +94,8 @@ public class WashingMachineListener extends TARDISMenuListener {
             if (dyed != null) {
                 Material material = dyed.getType();
                 if (DYEABLE.contains(material)) {
-                    ItemMeta im = dyed.getItemMeta();
-                    if (im instanceof LeatherArmorMeta armorMeta) {
-                        armorMeta.setColor(null);
-                        dyed.setItemMeta(armorMeta);
+                    if (dyed.hasData(DataComponentTypes.DYED_COLOR)) {
+                        dyed.unsetData(DataComponentTypes.DYED_COLOR);
                         view.setItem(i, dyed);
                     } else {
                         ItemStack bleached = switch (dyed.getType()) {

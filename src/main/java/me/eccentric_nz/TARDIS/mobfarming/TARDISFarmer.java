@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.mobfarming;
 
 import com.destroystokyo.paper.MaterialTags;
 import com.mojang.datafixers.util.Pair;
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.entity.Leashable;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
@@ -51,7 +52,6 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.LlamaInventory;
-import org.bukkit.inventory.meta.TropicalFishBucketMeta;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
@@ -674,10 +674,9 @@ public class TARDISFarmer {
                         fish = new TARDISFish();
                         fish.setType(TARDISMaterials.fishMap.get(fishBucket.getType()));
                         if (fishBucket.getType().equals(Material.TROPICAL_FISH_BUCKET)) {
-                            TropicalFishBucketMeta fbim = (TropicalFishBucketMeta) fishBucket.getItemMeta();
-                            fish.setBodyColour(fbim.getBodyColor());
-                            fish.setPattern(fbim.getPattern());
-                            fish.setPatternColour(fbim.getPatternColor());
+                            fish.setBodyColour(fishBucket.getData(DataComponentTypes.TROPICAL_FISH_BASE_COLOR));
+                            fish.setPattern(fishBucket.getData(DataComponentTypes.TROPICAL_FISH_PATTERN));
+                            fish.setPatternColour(fishBucket.getData(DataComponentTypes.TROPICAL_FISH_PATTERN_COLOR));
                         }
                     }
                 }

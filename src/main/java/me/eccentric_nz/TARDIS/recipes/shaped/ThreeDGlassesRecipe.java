@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.Equippable;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.keys.Whoniverse;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
@@ -25,8 +27,6 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.components.EquippableComponent;
 
 /*
 easy_shape:---,P-P,CPM
@@ -53,14 +53,11 @@ public class ThreeDGlassesRecipe {
 
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.LEATHER_HELMET, 1);
-        ItemMeta im = is.getItemMeta();
         is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("3-D Glasses"));
-        EquippableComponent equippable = im.getEquippable();
-        equippable.setCameraOverlay(Whoniverse.THREE_D_GLASSES_OVERLAY.getKey());
-        equippable.setSlot(EquipmentSlot.HEAD);
-        equippable.setDispensable(true);
-        im.setEquippable(equippable);
-        is.setItemMeta(im);
+        is.setData(DataComponentTypes.EQUIPPABLE, Equippable.equippable(EquipmentSlot.HEAD)
+                .cameraOverlay(Whoniverse.THREE_D_GLASSES_OVERLAY.getKey())
+                .dispensable(true)
+                .build());
         NamespacedKey key = new NamespacedKey(plugin, "3-d_glasses");
         ShapedRecipe r = new ShapedRecipe(key, is);
         if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {

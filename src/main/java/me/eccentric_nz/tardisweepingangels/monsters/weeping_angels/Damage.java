@@ -35,7 +35,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -147,22 +146,17 @@ public class Damage implements Listener {
         // only works if the item is named "TARDIS Key"
         PlayerInventory inv = p.getInventory();
         for (ItemStack stack : inv.getContents()) {
-            if (stack != null) {
-                if (stack.hasItemMeta()) {
-                    ItemMeta im = stack.getItemMeta();
-                    if (im.hasCustomName() && ComponentUtils.endsWith(im.customName(), "TARDIS Key")) {
-                        int amount = stack.getAmount();
-                        if (amount > 1) {
-                            stack.setAmount(amount - 1);
-                        } else {
-                            int slot = inv.first(stack);
-                            inv.setItem(slot, ItemStack.of(Material.AIR));
-                        }
-                        p.updateInventory();
-                        plugin.getMessenger().message(p, TardisModule.MONSTERS, "The Weeping Angels stole your TARDIS Key");
-                        break;
-                    }
+            if (stack != null && ComponentUtils.isNamed(stack, "TARDIS Key")) {
+                int amount = stack.getAmount();
+                if (amount > 1) {
+                    stack.setAmount(amount - 1);
+                } else {
+                    int slot = inv.first(stack);
+                    inv.setItem(slot, ItemStack.of(Material.AIR));
                 }
+                p.updateInventory();
+                plugin.getMessenger().message(p, TardisModule.MONSTERS, "The Weeping Angels stole your TARDIS Key");
+                break;
             }
         }
     }

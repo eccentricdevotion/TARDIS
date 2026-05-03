@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.tardischemistry.reducer;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
@@ -30,7 +31,6 @@ import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 public class ReducerGUIListener extends TARDISMenuListener {
 
@@ -73,15 +73,12 @@ public class ReducerGUIListener extends TARDISMenuListener {
         ItemStack is = inventory.getItem(0);
         if (is != null) {
             Material material = is.getType();
-            if (material.equals(Material.GLASS_BOTTLE) && is.hasItemMeta()) {
-                ItemMeta im = is.getItemMeta();
-                if (im.hasCustomName()) {
-                    String c = ComponentUtils.stripColour(im.customName()).replace(" ", "_");
-                    for (Compound compound : Compound.values()) {
-                        if (compound.toString().equals(c)) {
-                            reduce(compound.getFormula(), inventory, player);
-                            return;
-                        }
+            if (material.equals(Material.GLASS_BOTTLE) && is.hasData(DataComponentTypes.CUSTOM_NAME)) {
+                String c = ComponentUtils.stripColour(is.getData(DataComponentTypes.CUSTOM_NAME)).replace(" ", "_");
+                for (Compound compound : Compound.values()) {
+                    if (compound.toString().equals(c)) {
+                        reduce(compound.getFormula(), inventory, player);
+                        return;
                     }
                 }
             } else {

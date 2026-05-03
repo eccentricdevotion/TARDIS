@@ -20,6 +20,9 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.BannerPatternLayers;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import io.papermc.paper.registry.RegistryAccess;
 import io.papermc.paper.registry.RegistryKey;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -37,8 +40,6 @@ import org.bukkit.block.banner.PatternType;
 import org.bukkit.entity.*;
 import org.bukkit.generator.LimitedRegion;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.BlockStateMeta;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,9 +74,7 @@ public class RoomsUtility {
         ItemDisplay display = (ItemDisplay) region.spawnEntity(location, EntityType.ITEM_DISPLAY);
         ItemStack is = ItemStack.of(material);
         if (model != null) {
-            ItemMeta im = is.getItemMeta();
             is.setData(DataComponentTypes.ITEM_MODEL, model);
-            is.setItemMeta(im);
         }
         display.setItemStack(is);
         if (inRoom) {
@@ -102,7 +101,6 @@ public class RoomsUtility {
                                 json :
                                 json.get("item").getAsJsonObject()
                 );
-                ItemMeta im = is.getItemMeta();
                 if (json.has("cmd")) {
                     cmd = json.get("cmd").getAsString();
                     NamespacedKey key = new NamespacedKey(TARDIS.plugin, cmd);
@@ -114,9 +112,9 @@ public class RoomsUtility {
                 if (json.has("lore")) {
                     ItemLore.Builder lore = ItemLore.lore();
                     for (JsonElement element : json.get("lore").getAsJsonArray()) {
-                        lore.add(Component.text(element.getAsString()));
+                        lore.addLine(Component.text(element.getAsString()));
                     }
-                    im.lore(lore);
+                    is.setData(DataComponentTypes.LORE, lore.build());
                 }
                 if (json.has("banner")) {
                     JsonObject banner = json.get("banner").getAsJsonObject();
@@ -134,13 +132,16 @@ public class RoomsUtility {
                             plist.add(p);
                         }
                     }
-                    BlockStateMeta bsm = (BlockStateMeta) im;
-                    Banner b = (Banner) bsm.getBlockState();
-                    b.setBaseColor(baseColour);
-                    b.setPatterns(plist);
-                    bsm.setBlockState(b);
+//                    BlockStateMeta bsm = (BlockStateMeta) im;
+//                    Banner b = (Banner) bsm.getBlockState();
+//                    b.setBaseColor(baseColour);
+//                    b.setPatterns(plist);
+//                    bsm.setBlockState(b);
+                    is.setData(DataComponentTypes.BASE_COLOR, baseColour);
+                    is.setData(DataComponentTypes.BANNER_PATTERNS, BannerPatternLayers.bannerPatternLayers()
+                            .addAll(plist)
+                            .build());
                 }
-                is.setItemMeta(im);
                 frame.setItem(is, false);
             } catch (IllegalArgumentException e) {
                 TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.WARNING, "Could not create item stack for schematic item frame!");

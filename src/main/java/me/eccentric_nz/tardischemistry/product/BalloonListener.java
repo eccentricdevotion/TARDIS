@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.tardischemistry.product;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -116,9 +117,8 @@ public class BalloonListener implements Listener {
     private boolean isBalloon(ItemStack is) {
         return is != null
                 && is.getType().equals(Material.CORNFLOWER)
-                && is.hasItemMeta()
-                && is.getItemMeta().hasItemModel()
-                && is.getItemMeta().getItemModel().getKey().endsWith("_balloon");
+                && is.hasData(DataComponentTypes.ITEM_MODEL)
+                && is.getData(DataComponentTypes.ITEM_MODEL).value().endsWith("_balloon");
     }
 
     private void removeJumpBoost(Player player) {

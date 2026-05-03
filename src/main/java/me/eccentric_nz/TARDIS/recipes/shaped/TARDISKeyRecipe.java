@@ -16,6 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.CustomModelData;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.keys.KeyVariant;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
@@ -25,8 +28,6 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
 import java.util.HashMap;
 import java.util.List;
@@ -75,13 +76,11 @@ public class TARDISKeyRecipe {
             material = Material.GOLD_NUGGET;
         }
         ItemStack is = ItemStack.of(material, 1);
-        ItemMeta im = is.getItemMeta();
         is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("TARDIS Key"));
-        im.lore(List.of(Component.text("Enter and exit your TARDIS")));
-        CustomModelDataComponent component = im.getCustomModelDataComponent();
-        component.setFloats(floats);
-        im.setCustomModelDataComponent(component);
-        is.setItemMeta(im);
+        is.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text("Enter and exit your TARDIS")).build());
+        is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                .addFloats(floats)
+                .build());
         NamespacedKey key = new NamespacedKey(plugin, "tardis_key");
         ShapedRecipe r = new ShapedRecipe(key, is);
         if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {

@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.tardisweepingangels.commands;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.keys.*;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -32,7 +33,6 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.RayTraceResult;
 
@@ -78,23 +78,22 @@ public class EquipCommand {
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     EntityEquipment ee = as.getEquipment();
                     ItemStack head = ee.getHelmet();
-                    ItemMeta meta = head.getItemMeta();
                     if (monster == Monster.HEADLESS_MONK) {
                         if (extra.equals("flaming")) {
                             int flameID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new HeadlessFlameRunnable(as), 1, 20);
                             as.getPersistentDataContainer().set(TARDISWeepingAngels.FLAME_TASK, PersistentDataType.INTEGER, flameID);
                             // set helmet to sword version
-                            meta.setData(DataComponentTypes.ITEM_MODEL, MonkVariant.HEADLESS_MONK_STATIC.getKey());
+                            head.setData(DataComponentTypes.ITEM_MODEL, MonkVariant.HEADLESS_MONK_STATIC.getKey());
                         } else {
-                            meta.setData(DataComponentTypes.ITEM_MODEL, MonkVariant.HEADLESS_MONK_ALTERNATE.getKey());
+                            head.setData(DataComponentTypes.ITEM_MODEL, MonkVariant.HEADLESS_MONK_ALTERNATE.getKey());
                         }
                     }
                     if (monster == Monster.MIRE || monster == Monster.SLITHEEN) {
                         // set no helmet!
-                        meta.setData(DataComponentTypes.ITEM_MODEL, (monster == Monster.MIRE ? MireVariant.THE_MIRE_HELMETLESS.getKey() : SlitheenVariant.SLITHEEN_SUIT.getKey()));
+                        head.setData(DataComponentTypes.ITEM_MODEL, (monster == Monster.MIRE ? MireVariant.THE_MIRE_HELMETLESS.getKey() : SlitheenVariant.SLITHEEN_SUIT.getKey()));
                     }
                     if (monster == Monster.CLOCKWORK_DROID) {
-                        meta.setData(DataComponentTypes.ITEM_MODEL, DroidVariant.CLOCKWORK_DROID_FEMALE_STATIC.getKey());
+                        head.setData(DataComponentTypes.ITEM_MODEL, DroidVariant.CLOCKWORK_DROID_FEMALE_STATIC.getKey());
                     }
                     if (monster == Monster.DALEK) {
                         try {
@@ -118,21 +117,20 @@ public class EquipCommand {
                                 case MAGENTA -> c = DalekVariant.DALEK_MAGENTA.getKey();
                                 case ORANGE -> c = DalekVariant.DALEK_ORANGE.getKey();
                             }
-                            meta.setData(DataComponentTypes.ITEM_MODEL, c);
+                            head.setData(DataComponentTypes.ITEM_MODEL, c);
                         } catch (IllegalArgumentException ignored) {
                         }
                     }
                     if (monster == Monster.CYBERMAN) {
                         try {
                             CybermanVariant variant = CybermanVariant.valueOf(extra.toUpperCase(Locale.ROOT) + "_STATIC");
-                            meta.setData(DataComponentTypes.ITEM_MODEL, variant.getKey());
+                            head.setData(DataComponentTypes.ITEM_MODEL, variant.getKey());
                         } catch (IllegalArgumentException ignored) {
                         }
                     }
                     if (monster == Monster.TOCLAFANE) {
-                        meta.setData(DataComponentTypes.ITEM_MODEL, ToclafaneVariant.TOCLAFANE_ATTACK.getKey());
+                        head.setData(DataComponentTypes.ITEM_MODEL, ToclafaneVariant.TOCLAFANE_ATTACK.getKey());
                     }
-                    head.setItemMeta(meta);
                     ee.setHelmet(head);
                 }, 2L);
             }

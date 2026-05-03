@@ -43,7 +43,7 @@ public class GlowStickListener implements Listener {
             Player player = event.getPlayer();
             ItemStack is = event.getItem();
             if (is != null && GlowStickMaterial.isCorrectMaterial(is.getType())) {
-                if (is.hasData(DataComponentTypes.CUSTOM_NAME) && ComponentUtils.endsWith(is.getData(DataComponentTypes.CUSTOM_NAME), "Glow Stick") && !is.hasData(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE)) {
+                if (ComponentUtils.isNamed(is, "Glow Stick") && !is.hasData(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE)) {
                     player.playSound(player.getLocation(), Sound.BLOCK_ANVIL_HIT, 1.0f, 1.0f);
                     // switch custom data models e.g. 10000008 -> 12000008
                     Product glowstick = Product.getByName().get(ComponentUtils.stripColour(is.getData(DataComponentTypes.CUSTOM_NAME)));

@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.upgrades;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.SystemUpgrade;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetSystemUpgrades;
@@ -33,8 +35,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -159,20 +161,16 @@ public class SystemTreeListener extends TARDISMenuListener {
                 // update system upgrade record
                 new SystemUpgradeUpdate(plugin).set(uuid, id, clicked);
                 // set custom model data for clicked upgrade
-                ItemMeta im = is.getItemMeta();
                 is.setData(DataComponentTypes.ITEM_MODEL, clicked.getUnlocked());
-                List<Component> lore = im.lore();
+                List<Component> lore = new ArrayList<>(is.getData(DataComponentTypes.LORE).lines());
                 lore.set(lore.size() - 1, Component.text("Unlocked", NamedTextColor.GREEN).decorate(TextDecoration.ITALIC));
-                im.lore(lore);
-                is.setItemMeta(im);
+                is.setData(DataComponentTypes.LORE, ItemLore.lore(lore));
                 // set artron level remaining for item in system tree slot
                 int remaining = current.getArtronLevel() - cost;
                 ItemStack st = view.getItem(SystemTree.UPGRADE_TREE.getSlot());
-                ItemMeta stim = st.getItemMeta();
-                List<Component> stlore = stim.lore();
+                List<Component> stlore = new ArrayList<>(st.getData(DataComponentTypes.LORE).lines());
                 stlore.set(3, Component.text("Artron Level: " + remaining, NamedTextColor.AQUA).decorate(TextDecoration.ITALIC));
-                stim.lore(stlore);
-                st.setItemMeta(stim);
+                st.setData(DataComponentTypes.LORE, ItemLore.lore(stlore));
             }
         } catch (IllegalArgumentException e) {
             // clicked upgrade tree

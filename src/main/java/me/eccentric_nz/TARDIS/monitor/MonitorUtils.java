@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.monitor;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.MapId;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
@@ -29,7 +31,6 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.MapMeta;
 import org.bukkit.map.MapRenderer;
 import org.bukkit.map.MapView;
 import org.bukkit.util.BoundingBox;
@@ -41,7 +42,6 @@ public class MonitorUtils {
 
     public static SnapshotData createMap(Location location, int distance) {
         ItemStack itemStack = ItemStack.of(Material.FILLED_MAP);
-        MapMeta mapMeta = (MapMeta) itemStack.getItemMeta();
         MapView mapView = Bukkit.createMap(location.getWorld());
         mapView.setTrackingPosition(false);
         for (MapRenderer renderer : mapView.getRenderers()) {
@@ -49,14 +49,13 @@ public class MonitorUtils {
         }
         SnapshotRenderer renderer = new SnapshotRenderer(location, distance);
         mapView.addRenderer(renderer);
-        mapMeta.setMapView(mapView);
-        itemStack.setItemMeta(mapMeta);
+        // TODO check this
+        itemStack.setData(DataComponentTypes.MAP_ID, MapId.mapId(mapView.getId()));
         return new SnapshotData(itemStack, mapView.getId());
     }
 
     public static void createSnapshot(Location location, Player player, int distance) {
         ItemStack itemStack = ItemStack.of(Material.FILLED_MAP);
-        MapMeta mapMeta = (MapMeta) itemStack.getItemMeta();
         MapView mapView = Bukkit.createMap(location.getWorld());
         mapView.setTrackingPosition(false);
         for (MapRenderer renderer : mapView.getRenderers()) {
@@ -64,17 +63,16 @@ public class MonitorUtils {
         }
         SnapshotRenderer renderer = new SnapshotRenderer(location, distance);
         mapView.addRenderer(renderer);
-        mapMeta.setMapView(mapView);
-        itemStack.setItemMeta(mapMeta);
+        itemStack.setData(DataComponentTypes.MAP_ID, MapId.mapId(mapView.getId()));
         // give the player the map
         player.getInventory().addItem(itemStack);
     }
 
     public static void updateSnapshot(Location location, int distance, ItemStack map) {
-        MapMeta mapMeta = (MapMeta) map.getItemMeta();
         MapView mapView = null;
-        if (mapMeta.hasMapView()) {
-            mapView = mapMeta.getMapView();
+        if (map.hasData(DataComponentTypes.MAP_ID)) {
+            int id = map.getData(DataComponentTypes.MAP_ID).id();
+            mapView = Bukkit.getMap(id);
         }
         if (mapView == null) {
             mapView = Bukkit.createMap(location.getWorld());
@@ -87,8 +85,7 @@ public class MonitorUtils {
         }
         SnapshotRenderer renderer = new SnapshotRenderer(location, distance);
         mapView.addRenderer(renderer);
-        mapMeta.setMapView(mapView);
-        map.setItemMeta(mapMeta);
+        map.setData(DataComponentTypes.MAP_ID, MapId.mapId(mapView.getId()));
     }
 
     public static Snapshot getLocationAndDirection(int id, boolean in) {

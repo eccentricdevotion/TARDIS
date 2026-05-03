@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.artron.actions;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetArtronStorage;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -26,8 +28,8 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -78,14 +80,13 @@ public class ArtronChargeAction {
             }
         } else {
             ItemStack is = player.getInventory().getItemInMainHand();
-            if (is.hasItemMeta()) {
-                ItemMeta im = is.getItemMeta();
-                String name = ComponentUtils.stripColour(im.customName());
+            if (is.hasData(DataComponentTypes.CUSTOM_NAME)) {
+                String name = ComponentUtils.stripColour(is.getData(DataComponentTypes.CUSTOM_NAME));
                 if (!name.endsWith("Artron Storage Cell")) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "CELL_NOT_VALID");
                     return;
                 }
-                List<Component> lore = im.lore();
+                List<Component> lore = new ArrayList<>(is.getData(DataComponentTypes.LORE).lines());
                 int charge = TARDISNumberParsers.parseInt(ComponentUtils.stripColour(lore.get(1)));
                 if (charge <= 0) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "CELL_NOT_CHARGED");
@@ -113,20 +114,18 @@ public class ArtronChargeAction {
                     int remove = max - current_level;
                     int set = charge - remove;
                     lore.set(1, Component.text(set));
-                    im.lore(lore);
+                    is.setData(DataComponentTypes.LORE, ItemLore.lore(lore));
                     if (set < 1) {
-                        im.setEnchantmentGlintOverride(null);
+                        is.unsetData(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE);
                         is.getEnchantments().keySet().forEach(is::removeEnchantment);
                     }
-                    is.setItemMeta(im);
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "CELL_TRANSFER");
                 } else {
                     // only add energy up to capacitors * max level - damage
                     if (amount <= max) {
                         lore.set(1, Component.text("0"));
-                        im.lore(lore);
-                        im.setEnchantmentGlintOverride(null);
-                        is.setItemMeta(im);
+                        is.setData(DataComponentTypes.LORE, ItemLore.lore(lore));
+                        is.getEnchantments().keySet().forEach(is::removeEnchantment);
                         is.getEnchantments().keySet().forEach(is::removeEnchantment);
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "CELL_TRANSFER");
                     } else {

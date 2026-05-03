@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.tardisweepingangels.monsters.empty_child;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.Equippable;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.keys.EmptyChildVariant;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
@@ -27,10 +29,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.components.EquippableComponent;
 
 import java.util.UUID;
 
@@ -63,13 +64,11 @@ public class GasMask implements Listener {
             }
             // set helmet to mask
             ItemStack gasmask = ItemStack.of(Material.SUGAR, 1);
-            ItemMeta im = gasmask.getItemMeta();
-            is.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Gas Mask"));
-            is.setData(DataComponentTypes.ITEM_MODEL, EmptyChildVariant.EMPTY_CHILD_MASK.getKey());
-            EquippableComponent component = im.getEquippable();
-            component.setCameraOverlay(EmptyChildVariant.EMPTY_CHILD_OVERLAY.getKey());
-            im.setEquippable(component);
-            gasmask.setItemMeta(im);
+            gasmask.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Gas Mask"));
+            gasmask.setData(DataComponentTypes.ITEM_MODEL, EmptyChildVariant.EMPTY_CHILD_MASK.getKey());
+            gasmask.setData(DataComponentTypes.EQUIPPABLE, Equippable.equippable(EquipmentSlot.HEAD)
+                    .cameraOverlay(EmptyChildVariant.EMPTY_CHILD_OVERLAY.getKey())
+                    .build());
             inv.setHelmet(gasmask);
             player.updateInventory();
             // schedule delayed task

@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.desktop;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.console.CustomiseConsoleInventory;
@@ -28,6 +29,7 @@ import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.schematic.archive.ArchiveUpdate;
+import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Sound;
@@ -104,7 +106,7 @@ public class DesktopThemeMenuListener extends TARDISMenuListener {
                 UpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(player.getUniqueId());
                 InventoryHolder consoles;
                 // switch page
-                if (GUIChameleonPresets.GO_TO_PAGE_2.name().equals(choice.getItemMeta().customName())) {
+                if (GUIChameleonPresets.GO_TO_PAGE_2.name().equals(ComponentUtils.stripColour(choice.getData(DataComponentTypes.CUSTOM_NAME)))) {
                     // page 2
                     consoles = new CustomThemeInventory(plugin, player, tud.getPrevious().getPermission(), tud.getLevel());
                 } else {

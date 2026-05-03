@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.tardisweepingangels.monsters.k9;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.custommodels.keys.K9Variant;
 import me.eccentric_nz.tardisweepingangels.equip.FollowerEquipper;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
@@ -25,7 +26,6 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Husk;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -33,10 +33,8 @@ public class K9Equipment {
 
     public static void set(OfflinePlayer player, LivingEntity entity, boolean disguise) {
         ItemStack head = ItemStack.of(Material.BONE);
-        ItemMeta headMeta = head.getItemMeta();
-        headMeta.setData(DataComponentTypes.CUSTOM_NAME, Component.text("K9 Head"));
-        headMeta.setData(DataComponentTypes.ITEM_MODEL, K9Variant.K9.getKey());
-        head.setItemMeta(headMeta);
+        head.setData(DataComponentTypes.CUSTOM_NAME, Component.text("K9 Head"));
+        head.setData(DataComponentTypes.ITEM_MODEL, K9Variant.K9.getKey());
         entity.getEquipment().setHelmet(head);
         if (entity instanceof Husk) {
             new FollowerEquipper().setOptionsAndInvisibilty(player, entity, Monster.K9);

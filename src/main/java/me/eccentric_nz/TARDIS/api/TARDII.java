@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.api;
 
-import com.google.common.collect.Multimaps;
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.ItemLore;
 import io.papermc.paper.datacomponent.item.TooltipDisplay;
@@ -61,12 +60,9 @@ import org.bukkit.World.Environment;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.ShapelessRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.sql.Connection;
@@ -441,33 +437,32 @@ public class TARDII implements TardisAPI {
         }
         if (item.endsWith("TARDIS Invisibility Circuit")) {
             // set the second line of lore
-            ItemMeta im = result.getItemMeta();
-            List<Component> lore = im.lore();
+            List<Component> lore = new ArrayList<>(result.getData(DataComponentTypes.LORE).lines());
             Component uses = (TARDIS.plugin.getConfig().getInt("circuits.uses.invisibility", 5) == 0 || !TARDIS.plugin.getConfig().getBoolean("circuits.damage"))
                     ? Component.text("unlimited", NamedTextColor.YELLOW)
                     : Component.text(TARDIS.plugin.getConfig().getString("circuits.uses.invisibility", "5"), NamedTextColor.YELLOW);
             lore.set(1, uses);
-            im.lore(lore);
-            result.setItemMeta(im);
+            result.setData(DataComponentTypes.LORE, ItemLore.lore(lore));
         }
         if (item.endsWith("Blank Storage Disk") || item.endsWith("Save Storage Disk") || item.endsWith("Preset Storage Disk") || item.endsWith("Biome Storage Disk") || item.endsWith("Player Storage Disk") || item.endsWith("Authorised Control Disk")) {
-            ItemMeta im = result.getItemMeta();
-            im.addItemFlags(ItemFlag.values());
-            im.setAttributeModifiers(Multimaps.forMap(Map.of()));
-            result.setItemMeta(im);
+            result.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
+                    .addHiddenComponents(DataComponentTypes.ATTRIBUTE_MODIFIERS)
+                    .hideTooltip(true)
+                    .build());
         }
         if (item.endsWith("TARDIS Key") || item.endsWith("Authorised Control Disk")) {
-            ItemMeta im = result.getItemMeta();
-            im.getPersistentDataContainer().set(TARDIS.plugin.getTimeLordUuidKey(), TARDIS.plugin.getPersistentDataTypeUUID(), player.getUniqueId());
-            List<Component> lore = im.lore();
-            if (lore == null) {
+            result.editPersistentDataContainer(pdc -> pdc.set(TARDIS.plugin.getTimeLordUuidKey(), TARDIS.plugin.getPersistentDataTypeUUID(), player.getUniqueId()));
+            List<Component> lore;
+            ItemLore itemLore = result.getData(DataComponentTypes.LORE);
+            if (itemLore == null) {
                 lore = new ArrayList<>();
+            } else {
+                lore = new ArrayList<>(result.getData(DataComponentTypes.LORE).lines());
             }
             String what = item.endsWith("TARDIS Key") ? "key" : "disk";
             lore.add(Component.text("This " + what + " belongs to", NamedTextColor.AQUA).decorate(TextDecoration.ITALIC));
             lore.add(Component.text(player.getName(), NamedTextColor.AQUA).decorate(TextDecoration.ITALIC));
-            im.lore(lore);
-            result.setItemMeta(im);
+            result.setData(DataComponentTypes.LORE, ItemLore.lore(lore));
         }
         return result;
     }
@@ -503,9 +498,9 @@ public class TARDII implements TardisAPI {
             is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toGold("TARDIS Seed Block"));
             ItemLore lore = ItemLore.lore()
                     .addLine(Component.text(schematic))
-            .addLine(Component.text("Walls: ORANGE_WOOL"))
-            .addLine(Component.text("Floors: LIGHT_GRAY_WOOL"))
-            .addLine(Component.text("Chameleon: FACTORY"))
+                    .addLine(Component.text("Walls: ORANGE_WOOL"))
+                    .addLine(Component.text("Floors: LIGHT_GRAY_WOOL"))
+                    .addLine(Component.text("Chameleon: FACTORY"))
                     .build();
             is.setData(DataComponentTypes.LORE, lore);
             return is;

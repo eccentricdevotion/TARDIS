@@ -31,7 +31,6 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -117,31 +116,22 @@ class AreaDisks {
                 // check storage inventory
                 ItemStack[] areas = SerializeInventory.itemStacksFromString(serialized_areas);
                 for (ItemStack a : areas) {
-                    if (a != null && a.getType().equals(Material.MUSIC_DISC_BLOCKS) && a.hasItemMeta()) {
-                        ItemMeta ima = a.getItemMeta();
-                        if (ima.hasLore()) {
-                            player_has.add(ComponentUtils.stripColour(ima.lore().getFirst()));
-                        }
+                    if (a != null && a.getType().equals(Material.MUSIC_DISC_BLOCKS) && a.hasData(DataComponentTypes.LORE)) {
+                        player_has.add(ComponentUtils.stripColour(a.getData(DataComponentTypes.LORE).lines().getFirst()));
                     }
                 }
                 // check console inventory
                 ItemStack[] console = SerializeInventory.itemStacksFromString(rs.getConsole());
                 for (ItemStack c : console) {
-                    if (c != null && c.getType().equals(Material.MUSIC_DISC_BLOCKS) && c.hasItemMeta()) {
-                        ItemMeta imc = c.getItemMeta();
-                        if (imc.hasLore()) {
-                            player_has.add(ComponentUtils.stripColour(imc.lore().getFirst()));
-                        }
+                    if (c != null && c.getType().equals(Material.MUSIC_DISC_BLOCKS) && c.hasData(DataComponentTypes.LORE)) {
+                        player_has.add(ComponentUtils.stripColour(c.getData(DataComponentTypes.LORE).lines().getFirst()));
                     }
                 }
                 // check player inventory
                 ItemStack[] player = p.getInventory().getContents();
                 for (ItemStack y : player) {
-                    if (y != null && y.getType().equals(Material.MUSIC_DISC_BLOCKS) && y.hasItemMeta()) {
-                        ItemMeta imy = y.getItemMeta();
-                        if (imy.hasLore()) {
-                            player_has.add(ComponentUtils.stripColour(imy.lore().getFirst()));
-                        }
+                    if (y != null && y.getType().equals(Material.MUSIC_DISC_BLOCKS) && y.hasData(DataComponentTypes.LORE)) {
+                        player_has.add(ComponentUtils.stripColour(y.getData(DataComponentTypes.LORE).lines().getFirst()));
                     }
                 }
                 Inventory inv = plugin.getServer().createInventory(p, 54);

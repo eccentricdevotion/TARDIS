@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.chameleon.gui;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.DamageUtility;
 import me.eccentric_nz.TARDIS.chameleon.utils.ChameleonFrame;
@@ -123,7 +124,7 @@ public class ModelledPresetListener extends TARDISMenuListener {
             case 53 -> close(player);
             default -> {
                 // custom model exterior
-                String custom = ComponentUtils.stripColour(is.getItemMeta().customName());
+                String custom = ComponentUtils.stripColour(is.getData(DataComponentTypes.CUSTOM_NAME));
                 set.put("chameleon_preset", "ITEM:" + custom);
                 if (hasSign) {
                     updateChameleonSign(rsc.getData(), custom, player);

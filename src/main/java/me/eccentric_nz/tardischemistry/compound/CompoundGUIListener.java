@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.tardischemistry.compound;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
@@ -28,7 +29,6 @@ import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 public class CompoundGUIListener extends TARDISMenuListener {
 
@@ -71,16 +71,13 @@ public class CompoundGUIListener extends TARDISMenuListener {
         StringBuilder formula = new StringBuilder();
         for (int i = 18; i < 26; i++) {
             ItemStack is = inventory.getItem(i);
-            if (is != null && is.getType().equals(Material.FEATHER) && is.hasItemMeta()) {
-                ItemMeta im = is.getItemMeta();
-                if (im.hasCustomName()) {
-                    try {
-                        Element element = Element.valueOf(ComponentUtils.stripColour(im.customName()));
-                        int amount = is.getAmount();
-                        formula.append(element).append(":").append(amount).append("-");
-                    } catch (IllegalArgumentException e) {
-                        // ignore
-                    }
+            if (is != null && is.getType().equals(Material.FEATHER) && is.hasData(DataComponentTypes.CUSTOM_NAME)) {
+                try {
+                    Element element = Element.valueOf(ComponentUtils.stripColour(is.getData(DataComponentTypes.CUSTOM_NAME)));
+                    int amount = is.getAmount();
+                    formula.append(element).append(":").append(amount).append("-");
+                } catch (IllegalArgumentException e) {
+                    // ignore
                 }
             }
         }

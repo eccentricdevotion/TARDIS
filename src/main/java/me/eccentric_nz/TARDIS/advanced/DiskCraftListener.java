@@ -73,11 +73,8 @@ public class DiskCraftListener implements Listener {
             if (inv.contains(Material.MUSIC_DISC_CAT)) {
                 // check it is a Biome Storage Disk
                 ItemStack is = inv.getItem(inv.first(Material.MUSIC_DISC_CAT));
-                if (is == null || !is.hasItemMeta()) {
-                    return;
-                }
-                if (!is.hasData(DataComponentTypes.CUSTOM_NAME)
-                        || !ComponentUtils.endsWith(is.getData(DataComponentTypes.CUSTOM_NAME), "Biome Storage Disk")
+                if (is == null
+                        || !ComponentUtils.isNamed(is, "Biome Storage Disk")
                         || !is.hasData(DataComponentTypes.LORE)) {
                     return;
                 }
@@ -104,11 +101,8 @@ public class DiskCraftListener implements Listener {
             } else {
                 // check if it is a Preset Storage Disk
                 ItemStack is = inv.getItem(inv.first(Material.MUSIC_DISC_MALL));
-                if (is == null || !is.hasItemMeta()) {
-                    return;
-                }
-                if (!is.hasData(DataComponentTypes.CUSTOM_NAME)
-                        || !ComponentUtils.endsWith(is.getData(DataComponentTypes.CUSTOM_NAME), "Preset Storage Disk")
+                if (is == null
+                        || !ComponentUtils.isNamed(is, "Preset Storage Disk")
                         || !is.hasData(DataComponentTypes.LORE)) {
                     return;
                 }

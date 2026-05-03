@@ -16,6 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.DyedItemColor;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
@@ -33,8 +36,6 @@ import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.inventory.CraftingInventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.ArrayList;
@@ -58,79 +59,67 @@ public class TARDISCraftListener implements Listener {
         if (recipe != null) {
             ItemStack is = recipe.getResult();
             CraftingInventory ci = event.getInventory();
-            if (is.hasItemMeta()) {
-                ItemMeta im = is.getItemMeta();
-                if (im.hasCustomName()) {
-                    String dn = ComponentUtils.stripColour(im.customName());
-                    if (dn.equals("TARDIS Seed Block")) {
-                        List<Component> lore = im.lore();
-                        lore.add(Component.text("Walls: " + ci.getItem(6).getType()));
-                        lore.add(Component.text("Floors: " + ci.getItem(9).getType()));
-                        lore.add(Component.text("Chameleon: FACTORY"));
-                        im.lore(lore);
-                        is.setItemMeta(im);
-                        ci.setResult(is);
-                    } else if (is.getType().equals(Material.GLOWSTONE_DUST)) {
-                        if (DiskCircuit.getCircuitNames().contains(dn)) {
-                            // which circuit is it?
-                            String[] split = dn.split(" ");
-                            String which = split[1].toLowerCase(Locale.ROOT);
-                            // set the second line of lore
-                            List<Component> lore;
-                            Component uses = (plugin.getConfig().getString("circuits.uses." + which, "20").equals("0") || !plugin.getConfig().getBoolean("circuits.damage"))
-                                    ? Component.text("unlimited", NamedTextColor.YELLOW)
-                                    : Component.text(plugin.getConfig().getString("circuits.uses." + which, "20"), NamedTextColor.YELLOW);
-                            if (im.hasLore()) {
-                                lore = im.lore();
-                                lore.set(1, uses);
-                            } else {
-                                lore = List.of(Component.text("Uses left"), uses);
-                            }
-                            im.lore(lore);
-                            is.setItemMeta(im);
-                            ci.setResult(is);
+            if (is.hasData(DataComponentTypes.CUSTOM_NAME)) {
+                String dn = ComponentUtils.stripColour(is.getData(DataComponentTypes.CUSTOM_NAME));
+                if (dn.equals("TARDIS Seed Block")) {
+                    List<Component> lore = new ArrayList<>(is.getData(DataComponentTypes.LORE).lines());
+                    lore.add(Component.text("Walls: " + ci.getItem(6).getType()));
+                    lore.add(Component.text("Floors: " + ci.getItem(9).getType()));
+                    lore.add(Component.text("Chameleon: FACTORY"));
+                    is.setData(DataComponentTypes.LORE, ItemLore.lore(lore));
+                    ci.setResult(is);
+                } else if (is.getType().equals(Material.GLOWSTONE_DUST)) {
+                    if (DiskCircuit.getCircuitNames().contains(dn)) {
+                        // which circuit is it?
+                        String[] split = dn.split(" ");
+                        String which = split[1].toLowerCase(Locale.ROOT);
+                        // set the second line of lore
+                        List<Component> lore;
+                        Component uses = (plugin.getConfig().getString("circuits.uses." + which, "20").equals("0") || !plugin.getConfig().getBoolean("circuits.damage"))
+                                ? Component.text("unlimited", NamedTextColor.YELLOW)
+                                : Component.text(plugin.getConfig().getString("circuits.uses." + which, "20"), NamedTextColor.YELLOW);
+                        if (is.hasData(DataComponentTypes.LORE)) {
+                            lore = new ArrayList<>(is.getData(DataComponentTypes.LORE).lines());
+                            lore.set(1, uses);
+                        } else {
+                            lore = List.of(Component.text("Uses left"), uses);
                         }
-                    } else if (is.getType().equals(Material.IRON_SWORD) && dn.endsWith("Rust Plague Sword")) {
-                        // enchant the result
-                        is.addEnchantment(Enchantment.SMITE, 2);
-                        ci.setResult(is);
-                    } else if (is.getType().equals(Material.LEATHER_HELMET) && dn.endsWith("3-D Glasses") || dn.endsWith("TARDIS Communicator")) {
-                        LeatherArmorMeta lam = (LeatherArmorMeta) im;
-                        lam.setColor(Color.WHITE);
-                        is.setItemMeta(lam);
-                        ci.setResult(is);
-                    } else if (dn.contains("Key") || dn.contains("Authorised Control")) {
-                        HumanEntity human = event.getView().getPlayer();
-                        if (human instanceof Player) {
-                            im.getPersistentDataContainer().set(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID(), human.getUniqueId());
-                            List<Component> lore = im.lore();
-                            if (lore == null) {
-                                lore = new ArrayList<>();
-                            }
-                            String what = dn.contains("Key") ? "key" : "disk";
-                            lore.add(Component.text("This " + what + " belongs to", NamedTextColor.AQUA).decorate(TextDecoration.ITALIC));
-                            lore.add(Component.text(human.getName(), NamedTextColor.AQUA).decorate(TextDecoration.ITALIC));
-                            im.lore(lore);
-                            is.setItemMeta(im);
-                            ci.setResult(is);
-                        }
-                    } else if (dn.startsWith("Door ") && im.hasItemModel()) {
-                        // add custom block key to PDC
-                        im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, 10000);
-                        is.setItemMeta(im);
-                        ci.setResult(is);
-                    } else if (dn.contains("Stattenheim")) {
-                        int uses = plugin.getConfig().getInt("circuits.uses.stattenheim", 15);
-                        im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, uses > 0 ? uses : 1000);
-                        is.setItemMeta(im);
-                        ci.setResult(is);
-                    } else if (is.getType() == Material.GLASS && dn.endsWith("Variable Light")) {
-                        // set the lore to the material in the centre
-                        Material variable = ci.getItem(5).getType();
-                        im.lore(List.of(Component.text(variable.toString())));
-                        is.setItemMeta(im);
+                        is.setData(DataComponentTypes.LORE, ItemLore.lore(lore));
                         ci.setResult(is);
                     }
+                } else if (is.getType().equals(Material.IRON_SWORD) && dn.endsWith("Rust Plague Sword")) {
+                    // enchant the result
+                    is.addEnchantment(Enchantment.SMITE, 2);
+                    ci.setResult(is);
+                } else if (is.getType().equals(Material.LEATHER_HELMET) && dn.endsWith("3-D Glasses") || dn.endsWith("TARDIS Communicator")) {
+                    is.setData(DataComponentTypes.DYED_COLOR, DyedItemColor.dyedItemColor()
+                            .color(Color.WHITE)
+                            .build());
+                    ci.setResult(is);
+                } else if (dn.contains("Key") || dn.contains("Authorised Control")) {
+                    HumanEntity human = event.getView().getPlayer();
+                    if (human instanceof Player) {
+                        is.editPersistentDataContainer(pdc -> pdc.set(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID(), human.getUniqueId()));
+                        List<Component> lore = new ArrayList<>();
+                        String what = dn.contains("Key") ? "key" : "disk";
+                        lore.add(Component.text("This " + what + " belongs to", NamedTextColor.AQUA).decorate(TextDecoration.ITALIC));
+                        lore.add(Component.text(human.getName(), NamedTextColor.AQUA).decorate(TextDecoration.ITALIC));
+                        is.setData(DataComponentTypes.LORE, ItemLore.lore(lore));
+                        ci.setResult(is);
+                    }
+                } else if (dn.startsWith("Door ")) {
+                    // add custom block key to PDC
+                    is.editPersistentDataContainer(pdc -> pdc.set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, 10000));
+                    ci.setResult(is);
+                } else if (dn.contains("Stattenheim")) {
+                    int uses = plugin.getConfig().getInt("circuits.uses.stattenheim", 15);
+                    is.editPersistentDataContainer(pdc -> pdc.set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, uses > 0 ? uses : 1000));
+                    ci.setResult(is);
+                } else if (is.getType() == Material.GLASS && dn.endsWith("Variable Light")) {
+                    // set the lore to the material in the centre
+                    Material variable = ci.getItem(5).getType();
+                    is.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text(variable.toString())).build());
+                    ci.setResult(is);
                 }
             }
         }

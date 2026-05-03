@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.rooms.eye;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUIArtronStorage;
 import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
@@ -27,7 +29,6 @@ import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
 
@@ -51,21 +52,17 @@ public class EyeStorage implements InventoryHolder {
         ItemStack[] stacks = new ItemStack[9];
         // info
         ItemStack info = ItemStack.of(GUIArtronStorage.INFO.material(), 1);
-        ItemMeta info_im = info.getItemMeta();
-        info_im.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Info"));
-        info_im.lore(List.of(
+        info.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Info"));
+        info.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(
                 Component.text("Increase the Artron storage"),
                 Component.text("capacity by placing"),
                 Component.text("up to 5 Artron Capacitors"),
                 Component.text("in the slots to the right.")
-        ));
-        info.setItemMeta(info_im);
+        )));
         stacks[GUIArtronStorage.INFO.slot()] = info;
         // right arrow
         ItemStack r_arrow = ItemStack.of(GUIArtronStorage.ARROW_RIGHT.material(), 1);
-        ItemMeta r_arrow_im = r_arrow.getItemMeta();
-        r_arrow_im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(""));
-        r_arrow.setItemMeta(r_arrow_im);
+        r_arrow.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(""));
         stacks[GUIArtronStorage.ARROW_RIGHT.slot()] = r_arrow;
         ResultSetArtronStorage rs = new ResultSetArtronStorage(plugin);
         if (rs.fromID(id)) {
@@ -74,17 +71,13 @@ public class EyeStorage implements InventoryHolder {
             // capacitors
             for (int i = 2; i < 2 + count; i++) {
                 ItemStack is = ItemStack.of(Material.BUCKET, 1);
-                ItemMeta im = is.getItemMeta();
                 is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(i > (2 + count) - damaged ? "Damaged Artron Capacitor" : "Artron Capacitor"));
-                is.setItemMeta(im);
                 stacks[i] = is;
             }
         }
         // left arrow
         ItemStack l_arrow = ItemStack.of(GUIArtronStorage.ARROW_LEFT.material(), 1);
-        ItemMeta l_arrow_im = l_arrow.getItemMeta();
-        l_arrow_im.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(" "));
-        l_arrow.setItemMeta(l_arrow_im);
+        l_arrow.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(" "));
         stacks[GUIArtronStorage.ARROW_LEFT.slot()] = l_arrow;
         // close
         stacks[GUIArtronStorage.CLOSE.slot()] = GUIItemFactory.close();

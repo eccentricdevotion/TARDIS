@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.sonic;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.sonic.actions.SonicReplant;
@@ -32,7 +33,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
-import org.bukkit.inventory.meta.ItemMeta;
 
 public class SonicFarmBlockListener implements Listener {
 
@@ -70,9 +70,10 @@ public class SonicFarmBlockListener implements Listener {
         }
         PlayerInventory inv = player.getInventory();
         ItemStack stack = inv.getItemInMainHand();
-        if (stack.getType().equals(Material.BLAZE_ROD) && stack.hasItemMeta()) {
-            ItemMeta im = stack.getItemMeta();
-            if (im.hasCustomName() && ComponentUtils.endsWith(im.customName(), "Sonic Screwdriver") && im.hasLore() && im.lore().contains(Component.text("Emerald Upgrade"))) {
+        if (stack.getType().equals(Material.BLAZE_ROD)) {
+            if (ComponentUtils.isNamed(stack, "Sonic Screwdriver")
+                    && stack.hasData(DataComponentTypes.LORE)
+                    && stack.getData(DataComponentTypes.LORE).lines().contains(Component.text("Emerald Upgrade"))) {
                 if ((material.equals(sc)) && inv.contains(sc)) {
                     // SUGAR_CANE
                     processHarvest(player, sc, block);

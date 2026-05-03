@@ -22,14 +22,12 @@ import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.data.BlockData;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
 
@@ -52,22 +50,19 @@ public class SparklerListener implements Listener {
         if (event.getAction().equals(Action.RIGHT_CLICK_AIR)) {
             Player player = event.getPlayer();
             ItemStack is = event.getItem();
-            if (is != null && SparklerMaterial.isCorrectMaterial(is.getType()) && is.hasItemMeta()) {
-                ItemMeta im = is.getItemMeta();
-                if (im.hasCustomName()) {
-                    String which = ComponentUtils.stripColour(im.customName());
-                    if (which.endsWith("Sparkler") && im.hasItemModel()) {
-                        player.playSound(player.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_TWINKLE, 1.0f, 1.0f);
-                        // switch custom data models
-                        Product sparkler = Product.getByName().get(which);
-                        is.setData(DataComponentTypes.ITEM_MODEL, sparkler.getActive());
-                        is.setData(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE, true);
-                        // start sparkler runnable
-                        BlockData colour = colours.get(ComponentUtils.stripColour(im.customName()));
-                        SparklerRunnable runnable = new SparklerRunnable(player, colour, System.currentTimeMillis());
-                        int taskId = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 1L, 2L);
-                        runnable.setTaskId(taskId);
-                    }
+            if (is != null && SparklerMaterial.isCorrectMaterial(is.getType()) && is.hasData(DataComponentTypes.CUSTOM_NAME)) {
+                String which = ComponentUtils.stripColour(is.getData(DataComponentTypes.CUSTOM_NAME));
+                if (which.endsWith("Sparkler") && is.hasData(DataComponentTypes.ITEM_MODEL)) {
+                    player.playSound(player.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_TWINKLE, 1.0f, 1.0f);
+                    // switch custom data models
+                    Product sparkler = Product.getByName().get(which);
+                    is.setData(DataComponentTypes.ITEM_MODEL, sparkler.getActive());
+                    is.setData(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE, true);
+                    // start sparkler runnable
+                    BlockData colour = colours.get(which);
+                    SparklerRunnable runnable = new SparklerRunnable(player, colour, System.currentTimeMillis());
+                    int taskId = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 1L, 2L);
+                    runnable.setTaskId(taskId);
                 }
             }
         }

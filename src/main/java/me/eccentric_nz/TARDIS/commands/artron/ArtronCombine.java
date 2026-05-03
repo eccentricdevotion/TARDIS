@@ -1,6 +1,5 @@
 package me.eccentric_nz.TARDIS.commands.artron;
 
-import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
@@ -15,16 +14,12 @@ public class ArtronCombine {
         if (is != null) {
             int max = plugin.getArtronConfig().getInt("full_charge");
             ItemStack offhand = player.getInventory().getItemInOffHand();
-            if (!offhand.hasData(DataComponentTypes.CUSTOM_NAME)) {
+            if (!ComponentUtils.isNamed(offhand, "Artron Storage Cell")) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "CELL_IN_HAND");
                 return;
             }
             if (offhand.getAmount() > 1) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "CELL_ONE");
-                return;
-            }
-            if (!ComponentUtils.endsWith(offhand.getData(DataComponentTypes.CUSTOM_NAME), "Artron Storage Cell")) {
-                plugin.getMessenger().send(player, TardisModule.TARDIS, "CELL_IN_HAND");
                 return;
             }
             // get the artron levels of each storage cell

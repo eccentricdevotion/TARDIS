@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.sonic.actions;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.customblocks.LampToggler;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
@@ -28,7 +29,6 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
 
@@ -93,7 +93,6 @@ public class SonicLight {
         // check the block is a TARDIS light block
         if (tdi != null && tdi.isLight()) {
             TARDISDisplayItem toggled = TardisLight.getToggled(tdi);
-            ItemMeta im = lamp.getItemMeta();
             ItemStack change = ItemStack.of(toggled.getMaterial(), 1);
             if (toggled.isLit()) {
                 // create light source
@@ -104,8 +103,7 @@ public class SonicLight {
                 // set light level to zero
                 LampToggler.setLightlevel(light, 0);
             }
-            is.setData(DataComponentTypes.ITEM_MODEL, toggled.getCustomModel());
-            change.setItemMeta(im);
+            lamp.setData(DataComponentTypes.ITEM_MODEL, toggled.getCustomModel());
             display.setItemStack(change);
         }
     }

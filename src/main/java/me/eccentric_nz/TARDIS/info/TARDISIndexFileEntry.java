@@ -47,7 +47,6 @@ public class TARDISIndexFileEntry implements InventoryHolder {
     private ItemStack[] getItemStack() {
         ItemStack[] stack = new ItemStack[27];
         ItemStack entry = ItemStack.of(Material.WRITTEN_BOOK, 1);
-//        ItemMeta entryMeta = entry.getItemMeta();
         entry.setData(DataComponentTypes.CUSTOM_NAME, Component.text(TARDISStringUtils.capitalise(tardisInfoMenu.toString())));
         entry.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
                 .addHiddenComponents(DataComponentTypes.ATTRIBUTE_MODIFIERS)

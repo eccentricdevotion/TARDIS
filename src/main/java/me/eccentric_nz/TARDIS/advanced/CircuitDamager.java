@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.advanced;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDiskStorage;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
@@ -25,9 +27,9 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -80,28 +82,27 @@ public class CircuitDamager {
             try {
                 items = SerializeInventory.itemStacksFromString(rs.getConsole());
                 for (ItemStack is : items) {
-                    if (is != null && is.hasItemMeta()) {
-                        ItemMeta im = is.getItemMeta();
-                        if (im.hasCustomName()) {
-                            String dn = ComponentUtils.stripColour(im.customName());
-                            if (dn.endsWith(c)) {
-                                if (destroy) {
-                                    clone[i] = null;
-                                } else {
-                                    // set uses
-                                    List<Component> lore = im.lore();
-                                    if (lore == null) {
-                                        lore = List.of(Component.text("Uses left"), Component.text(""));
-                                    }
-                                    Component yellow = Component.text(decremented, NamedTextColor.YELLOW);
-                                    lore.set(1, yellow);
-                                    im.lore(lore);
-                                    is.setItemMeta(im);
-                                    clone[i] = is;
-                                }
+                    if (is != null && is.hasData(DataComponentTypes.CUSTOM_NAME)) {
+                        String dn = ComponentUtils.stripColour(is.getData(DataComponentTypes.CUSTOM_NAME));
+                        if (dn.endsWith(c)) {
+                            if (destroy) {
+                                clone[i] = null;
                             } else {
+                                // set uses
+                                ItemLore itemLore = is.getData(DataComponentTypes.LORE);
+                                List<Component> lore;
+                                if (itemLore == null) {
+                                    lore = List.of(Component.text("Uses left"), Component.text(""));
+                                } else {
+                                    lore = new ArrayList<>(itemLore.lines());
+                                }
+                                Component yellow = Component.text(decremented, NamedTextColor.YELLOW);
+                                lore.set(1, yellow);
+                                is.setData(DataComponentTypes.LORE, ItemLore.lore(lore));
                                 clone[i] = is;
                             }
+                        } else {
+                            clone[i] = is;
                         }
                     }
                     i++;

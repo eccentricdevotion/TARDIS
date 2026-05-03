@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.Equippable;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.keys.Whoniverse;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
@@ -25,8 +27,6 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.components.EquippableComponent;
 
 /*
 easy_shape:N--,IIH,--I
@@ -52,14 +52,11 @@ public class TARDISCommunicatorRecipe {
 
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.LEATHER_HELMET, 1);
-        ItemMeta im = is.getItemMeta();
         is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("TARDIS Communicator"));
-        EquippableComponent equippable = im.getEquippable();
-        equippable.setSlot(EquipmentSlot.HEAD);
-        equippable.setDispensable(true);
-        equippable.setCameraOverlay(Whoniverse.COMMUNICATOR_OVERLAY.getKey());
-        im.setEquippable(equippable);
-        is.setItemMeta(im);
+        is.setData(DataComponentTypes.EQUIPPABLE, Equippable.equippable(EquipmentSlot.HEAD)
+                .cameraOverlay(Whoniverse.COMMUNICATOR_OVERLAY.getKey())
+                .dispensable(true)
+                .build());
         NamespacedKey key = new NamespacedKey(plugin, "tardis_communicator");
         ShapedRecipe r = new ShapedRecipe(key, is);
         if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {

@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.tardischemistry.lab;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.DyedItemColor;
 import io.papermc.paper.registry.keys.tags.ItemTypeTagKeys;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.*;
@@ -23,7 +25,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ItemType;
 import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapelessRecipe;
-import org.bukkit.inventory.meta.LeatherArmorMeta;
 
 import java.util.List;
 
@@ -101,7 +102,7 @@ public class BleachRecipe {
                 .toList();
         // pass them to the varargs method (first item + remaining as array)
         RecipeChoice colouredPowder = RecipeChoice.itemType(
-                powderTypes.get(0),
+                powderTypes.getFirst(),
                 powderTypes.subList(1, powderTypes.size()).toArray(new ItemType[0])
         );
         powderRecipe.addIngredient(colouredPowder);
@@ -110,9 +111,7 @@ public class BleachRecipe {
         // bleached armour - all types
         // leather helmet
         ItemStack helmet = ItemStack.of(Material.LEATHER_HELMET, 1);
-        LeatherArmorMeta helmetItemMeta = (LeatherArmorMeta) helmet.getItemMeta();
-        helmetItemMeta.setColor(Color.WHITE);
-        helmet.setItemMeta(helmetItemMeta);
+        helmet.setData(DataComponentTypes.DYED_COLOR, DyedItemColor.dyedItemColor().color(Color.WHITE).build());
         ShapelessRecipe helmetRecipe = new ShapelessRecipe(helmetKey, helmet);
         helmetRecipe.addIngredient(new RecipeChoice.ExactChoice(bleach));
         RecipeChoice colouredHelmet = RecipeChoice.itemType(ItemType.LEATHER_HELMET);
@@ -121,9 +120,7 @@ public class BleachRecipe {
         plugin.getIncomposita().getShapelessRecipes().put("Bleached Helmet", helmetRecipe);
         // leather chestplate
         ItemStack chestplate = ItemStack.of(Material.LEATHER_CHESTPLATE, 1);
-        LeatherArmorMeta chestplateItemMeta = (LeatherArmorMeta) chestplate.getItemMeta();
-        chestplateItemMeta.setColor(Color.WHITE);
-        chestplate.setItemMeta(chestplateItemMeta);
+        chestplate.setData(DataComponentTypes.DYED_COLOR, DyedItemColor.dyedItemColor().color(Color.WHITE).build());
         ShapelessRecipe chestplateRecipe = new ShapelessRecipe(chestplateKey, chestplate);
         chestplateRecipe.addIngredient(new RecipeChoice.ExactChoice(bleach));
         RecipeChoice colouredChestplate = RecipeChoice.itemType(ItemType.LEATHER_CHESTPLATE);
@@ -132,9 +129,7 @@ public class BleachRecipe {
         plugin.getIncomposita().getShapelessRecipes().put("Bleached Chestplate", chestplateRecipe);
         // leather leggings
         ItemStack leggings = ItemStack.of(Material.LEATHER_LEGGINGS, 1);
-        LeatherArmorMeta leggingsItemMeta = (LeatherArmorMeta) leggings.getItemMeta();
-        leggingsItemMeta.setColor(Color.WHITE);
-        leggings.setItemMeta(leggingsItemMeta);
+        leggings.setData(DataComponentTypes.DYED_COLOR, DyedItemColor.dyedItemColor().color(Color.WHITE).build());
         ShapelessRecipe leggingsRecipe = new ShapelessRecipe(leggingsKey, leggings);
         leggingsRecipe.addIngredient(new RecipeChoice.ExactChoice(bleach));
         RecipeChoice colouredLeggings = RecipeChoice.itemType(ItemType.LEATHER_LEGGINGS);
@@ -143,9 +138,7 @@ public class BleachRecipe {
         plugin.getIncomposita().getShapelessRecipes().put("Bleached Leggings", leggingsRecipe);
         // leather boots
         ItemStack boots = ItemStack.of(Material.LEATHER_BOOTS, 1);
-        LeatherArmorMeta bootsItemMeta = (LeatherArmorMeta) boots.getItemMeta();
-        bootsItemMeta.setColor(Color.WHITE);
-        boots.setItemMeta(bootsItemMeta);
+        boots.setData(DataComponentTypes.DYED_COLOR, DyedItemColor.dyedItemColor().color(Color.WHITE).build());
         ShapelessRecipe bootsRecipe = new ShapelessRecipe(bootsKey, boots);
         bootsRecipe.addIngredient(new RecipeChoice.ExactChoice(bleach));
         RecipeChoice colouredBoots = RecipeChoice.itemType(ItemType.LEATHER_BOOTS);
@@ -154,9 +147,7 @@ public class BleachRecipe {
         plugin.getIncomposita().getShapelessRecipes().put("Bleached Boots", bootsRecipe);
         // leather horse armour
         ItemStack horseArmour = ItemStack.of(Material.LEATHER_HORSE_ARMOR, 1);
-        LeatherArmorMeta horseItemMeta = (LeatherArmorMeta) horseArmour.getItemMeta();
-        horseItemMeta.setColor(Color.WHITE);
-        horseArmour.setItemMeta(horseItemMeta);
+        horseArmour.setData(DataComponentTypes.DYED_COLOR, DyedItemColor.dyedItemColor().color(Color.WHITE).build());
         ShapelessRecipe horseRecipe = new ShapelessRecipe(horseArmourKey, horseArmour);
         horseRecipe.addIngredient(new RecipeChoice.ExactChoice(bleach));
         RecipeChoice colouredHorseArmour = RecipeChoice.itemType(ItemType.LEATHER_HORSE_ARMOR);
@@ -165,9 +156,7 @@ public class BleachRecipe {
         plugin.getIncomposita().getShapelessRecipes().put("Bleached Horse Armour", horseRecipe);
         // wolf armour
         ItemStack wolfArmour = ItemStack.of(Material.WOLF_ARMOR, 1);
-        LeatherArmorMeta wolfItemMeta = (LeatherArmorMeta) wolfArmour.getItemMeta();
-        wolfItemMeta.setColor(Color.WHITE);
-        wolfArmour.setItemMeta(wolfItemMeta);
+        wolfArmour.setData(DataComponentTypes.DYED_COLOR, DyedItemColor.dyedItemColor().color(Color.WHITE).build());
         ShapelessRecipe wolfRecipe = new ShapelessRecipe(wolfArmourKey, wolfArmour);
         wolfRecipe.addIngredient(new RecipeChoice.ExactChoice(bleach));
         RecipeChoice colouredWolfArmour = RecipeChoice.itemType(ItemType.WOLF_ARMOR);

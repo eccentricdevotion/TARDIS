@@ -1,11 +1,11 @@
 package me.eccentric_nz.TARDIS.customblocks;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import net.kyori.adventure.text.Component;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -97,12 +97,11 @@ public final class TARDISDisplayItemRegistry {
 
     public static TARDISDisplayItem getByItemDisplay(ItemDisplay display) {
         ItemStack is = display.getItemStack();
-        ItemMeta im = is.getItemMeta();
-        if (im.hasItemModel()) {
-            return getByModel(im.getItemModel());
+        if (is.hasData(DataComponentTypes.ITEM_MODEL)) {
+            return getByModel(NamespacedKey.fromString(is.getData(DataComponentTypes.ITEM_MODEL).asString()));
         }
-        if (im.hasCustomName()) {
-            return getByDisplayName(im.customName());
+        if (is.hasData(DataComponentTypes.CUSTOM_NAME)) {
+            return getByDisplayName(is.getData(DataComponentTypes.CUSTOM_NAME));
         }
         return null;
     }

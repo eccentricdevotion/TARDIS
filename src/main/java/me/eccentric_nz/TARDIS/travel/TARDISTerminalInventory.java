@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.travel;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -23,9 +25,6 @@ import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.List;
 
 /**
  * John Lumic was a business tycoon, owner of Cybus Industries and the creator of the Cybermen. Though he publicly
@@ -59,63 +58,41 @@ public class TARDISTerminalInventory implements InventoryHolder {
         int step = plugin.getConfig().getInt("travel.terminal_step");
         // 10
         ItemStack ten = ItemStack.of(Material.WHITE_WOOL, 1);
-        ItemMeta im10 = ten.getItemMeta();
-        im10.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_STEP") + ": " + (10 * step)));
-        ten.setItemMeta(im10);
+        ten.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_STEP") + ": " + (10 * step)));
         // 25
         ItemStack twentyfive = ItemStack.of(Material.LIGHT_GRAY_WOOL, 1);
-        ItemMeta im25 = twentyfive.getItemMeta();
-        im25.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_STEP") + ": " + (25 * step)));
-        twentyfive.setItemMeta(im25);
+        twentyfive.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_STEP") + ": " + (25 * step)));
         // 50
         ItemStack fifty = ItemStack.of(Material.GRAY_WOOL, 1);
-        ItemMeta im50 = fifty.getItemMeta();
-        im50.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_STEP") + ": " + (50 * step)));
-        fifty.setItemMeta(im50);
+        fifty.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_STEP") + ": " + (50 * step)));
         // 100
         ItemStack onehundred = ItemStack.of(Material.BLACK_WOOL, 1);
-        ItemMeta im100 = onehundred.getItemMeta();
-        im100.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_STEP") + ": " + (100 * step)));
-        onehundred.setItemMeta(im100);
+        onehundred.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_STEP") + ": " + (100 * step)));
         // -ve
         ItemStack neg = ItemStack.of(Material.RED_WOOL, 1);
-        ItemMeta nim = neg.getItemMeta();
-        nim.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_NEG")));
-        neg.setItemMeta(nim);
+        neg.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_NEG")));
         // +ve
         ItemStack pos = ItemStack.of(Material.LIME_WOOL, 1);
-        ItemMeta pim = pos.getItemMeta();
-        pim.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_POS")));
-        pos.setItemMeta(pim);
+        pos.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_POS")));
         // x
         ItemStack x = ItemStack.of(Material.LIGHT_BLUE_WOOL, 1);
-        ItemMeta xim = x.getItemMeta();
-        xim.setData(DataComponentTypes.CUSTOM_NAME, Component.text("X"));
-        xim.lore(List.of(Component.text("0")));
-        x.setItemMeta(xim);
+        x.setData(DataComponentTypes.CUSTOM_NAME, Component.text("X"));
+        x.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text("0")).build());
         // z
         ItemStack z = ItemStack.of(Material.YELLOW_WOOL, 1);
-        ItemMeta zim = z.getItemMeta();
-        zim.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Z"));
-        zim.lore(List.of(Component.text("0")));
-        z.setItemMeta(zim);
+        z.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Z"));
+        z.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text("0")).build());
         // multiplier
         ItemStack m = ItemStack.of(Material.PURPLE_WOOL, 1);
-        ItemMeta mim = m.getItemMeta();
-        mim.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_MULTI")));
-        mim.lore(List.of(Component.text("x1")));
-        m.setItemMeta(mim);
+        m.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_MULTI")));
+        m.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text("x1")).build());
         // environments
         // current
         ItemStack u = ItemStack.of(Material.OAK_LEAVES, 1);
-        ItemMeta uim = u.getItemMeta();
-        uim.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_CURRENT")));
-        u.setItemMeta(uim);
+        u.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_CURRENT")));
         // normal
         ItemStack w = ItemStack.of(Material.DIRT, 1);
-        ItemMeta wim = w.getItemMeta();
-        wim.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_NORM")));
-        w.setItemMeta(wim);
+        w.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_NORM")));
         // nether
         ItemStack r;
         String ndn;
@@ -126,9 +103,7 @@ public class TARDISTerminalInventory implements InventoryHolder {
             r = ItemStack.of(Material.PODZOL, 1);
             ndn = plugin.getConfig().getString("travel.terminal.nether");
         }
-        ItemMeta rim = r.getItemMeta();
-        rim.setData(DataComponentTypes.CUSTOM_NAME, Component.text(ndn));
-        r.setItemMeta(rim);
+        r.setData(DataComponentTypes.CUSTOM_NAME, Component.text(ndn));
         // the end
         ItemStack e;
         String edn;
@@ -139,29 +114,19 @@ public class TARDISTerminalInventory implements InventoryHolder {
             e = ItemStack.of(Material.COARSE_DIRT, 1);
             edn = plugin.getConfig().getString("travel.terminal.the_end");
         }
-        ItemMeta eim = e.getItemMeta();
-        eim.setData(DataComponentTypes.CUSTOM_NAME, Component.text(edn));
-        e.setItemMeta(eim);
+        e.setData(DataComponentTypes.CUSTOM_NAME, Component.text(edn));
         // submarine
         ItemStack sub = ItemStack.of(Material.WATER_BUCKET, 1);
-        ItemMeta subim = sub.getItemMeta();
-        subim.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_SUB")));
-        sub.setItemMeta(subim);
+        sub.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_SUB")));
         // test
         ItemStack t = ItemStack.of(Material.PISTON, 1);
-        ItemMeta tim = t.getItemMeta();
-        tim.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_CHECK")));
-        t.setItemMeta(tim);
+        t.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_CHECK")));
         // set
         ItemStack s = ItemStack.of(Material.BOOKSHELF, 1);
-        ItemMeta sim = s.getItemMeta();
-        sim.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_DEST")));
-        s.setItemMeta(sim);
+        s.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_DEST")));
         // cancel
         ItemStack c = ItemStack.of(Material.TNT, 1);
-        ItemMeta cim = c.getItemMeta();
-        cim.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_CANCEL", "Cancel")));
-        c.setItemMeta(cim);
+        c.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_CANCEL", "Cancel")));
 
         return new ItemStack[]{
                 null, ten, null, twentyfive, null, fifty, null, onehundred, null,

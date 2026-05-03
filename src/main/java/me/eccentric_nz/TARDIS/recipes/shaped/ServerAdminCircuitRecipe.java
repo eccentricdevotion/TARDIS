@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.CustomModelData;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.keys.CircuitVariant;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
@@ -24,8 +26,6 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
 /*
 easy_shape:BBB,BOB,BBB
@@ -48,21 +48,17 @@ public class ServerAdminCircuitRecipe {
 
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.GLOWSTONE_DUST, 1);
-        ItemMeta im = is.getItemMeta();
         is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Server Admin Circuit"));
-        CustomModelDataComponent component = im.getCustomModelDataComponent();
-        component.setFloats(CircuitVariant.ADMIN.getFloats());
-        im.setCustomModelDataComponent(component);
-        is.setItemMeta(im);
+        is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                .addFloats(CircuitVariant.ADMIN.getFloats())
+                .build());
         NamespacedKey key = new NamespacedKey(plugin, "server_admin_circuit");
         ShapedRecipe r = new ShapedRecipe(key, is);
         ItemStack exact = ItemStack.of(Material.GLOWSTONE_DUST, 1);
-        ItemMeta em = exact.getItemMeta();
-        em.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Sonic Oscillator"));
-        CustomModelDataComponent ecomponent = em.getCustomModelDataComponent();
-        ecomponent.setFloats(CircuitVariant.SONIC.getFloats());
-        em.setCustomModelDataComponent(ecomponent);
-        exact.setItemMeta(em);
+        exact.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Sonic Oscillator"));
+        exact.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                .addFloats(CircuitVariant.SONIC.getFloats())
+                .build());
         r.shape("BBB", "BOB", "BBB");
         r.setIngredient('B', Material.BEDROCK);
         r.setIngredient('O', new RecipeChoice.ExactChoice(exact));

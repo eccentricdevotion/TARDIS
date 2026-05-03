@@ -1,17 +1,17 @@
 package me.eccentric_nz.TARDIS.rooms.games.rockpaperscissors;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUIArs;
 import me.eccentric_nz.TARDIS.custommodels.GUIChameleonConstructor;
 import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
-import me.eccentric_nz.TARDIS.custommodels.GUIMap;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -36,17 +36,15 @@ public class StoneMagmaIceInventory implements InventoryHolder {
         ItemStack[] items = new ItemStack[36];
         // 0 info
         ItemStack info = ItemStack.of(GUIChameleonConstructor.INFO.material(), 1);
-        ItemMeta io = info.getItemMeta();
-        io.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getChameleonGuis().getString("INFO", "Info")));
-        io.lore(List.of(
-            Component.text("Click the block to make your choice."),
-            Component.text("The TARDIS will choose at the same time."),
-            Component.text("STONE smashes ICE."),
-            Component.text("ICE cools MAGMA."),
-            Component.text("MAGMA melts STONE."),
-            Component.text("Click the reset button to play again.")
-        ));
-        info.setItemMeta(io);
+        info.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getChameleonGuis().getString("INFO", "Info")));
+        info.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(
+                Component.text("Click the block to make your choice."),
+                Component.text("The TARDIS will choose at the same time."),
+                Component.text("STONE smashes ICE."),
+                Component.text("ICE cools MAGMA."),
+                Component.text("MAGMA melts STONE."),
+                Component.text("Click the reset button to play again.")
+        )));
         items[0] = info;
         // 11 stone
         ItemStack stone = ItemStack.of(Material.STONE);
@@ -59,9 +57,7 @@ public class StoneMagmaIceInventory implements InventoryHolder {
         items[15] = ice;
         // 27 reset
         ItemStack reset = ItemStack.of(GUIArs.BUTTON_RESET.material(), 1);
-        ItemMeta cobble = reset.getItemMeta();
-        cobble.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Reset game"));
-        reset.setItemMeta(cobble);
+        reset.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Reset game"));
         items[27] = reset;
         // 35 close
         items[35] = GUIItemFactory.close();

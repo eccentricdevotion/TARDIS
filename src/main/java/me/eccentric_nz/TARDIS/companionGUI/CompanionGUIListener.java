@@ -16,23 +16,21 @@
  */
 package me.eccentric_nz.TARDIS.companionGUI;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.planets.TARDISWorldResolver;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
-import net.kyori.adventure.text.Component;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.UUID;
 
 /**
@@ -118,9 +116,7 @@ public class CompanionGUIListener extends TARDISMenuListener {
                         int id = tardis.getTardisId();
                         String comps = tardis.getCompanions();
                         ItemStack h = event.getView().getItem(selected_head.get(uuid));
-                        ItemMeta m = h.getItemMeta();
-                        List<Component> l = m.lore();
-                        String u = ComponentUtils.stripColour(l.getFirst());
+                        String u = ComponentUtils.stripColour(h.getData(DataComponentTypes.LORE).lines().getFirst());
                         removeCompanion(id, comps, u, player);
                         if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
                             if (!comps.equalsIgnoreCase("everyone")) {

@@ -140,8 +140,8 @@ public class TARDISMonsterRunnable implements Runnable {
                             tm.setAggressive(pigzombie.isAngry());
                             tm.setAnger(pigzombie.getAnger());
                             tm.setEquipment(pigzombie.getEquipment());
-                            if (twa && pigzombie.getEquipment().getHelmet() != null && pigzombie.getEquipment().getHelmet().hasItemMeta() && pigzombie.getEquipment().getHelmet().getItemMeta().hasCustomName()) {
-                                String name = ComponentUtils.stripColour(pigzombie.getEquipment().getHelmet().getItemMeta().customName());
+                            if (twa  && pigzombie.getEquipment().getHelmet().hasData(DataComponentTypes.CUSTOM_NAME)) {
+                                String name = ComponentUtils.stripColour(pigzombie.getEquipment().getHelmet().getData(DataComponentTypes.CUSTOM_NAME));
                                 if (name.equals("Ice Warrior Head") || name.equals("Strax Head")) {
                                     dn = name.substring(0, name.length() - 5);
                                 }
@@ -152,8 +152,8 @@ public class TARDISMonsterRunnable implements Runnable {
                         case SKELETON, STRAY, WITHER_SKELETON -> {
                             AbstractSkeleton skeleton = (AbstractSkeleton) e;
                             tm.setEquipment(skeleton.getEquipment());
-                            if (twa && skeleton.getEquipment().getHelmet() != null && skeleton.getEquipment().getHelmet().hasItemMeta() && skeleton.getEquipment().getHelmet().getItemMeta().hasCustomName()) {
-                                String name = ComponentUtils.stripColour(skeleton.getEquipment().getHelmet().getItemMeta().customName());
+                            if (twa  && skeleton.getEquipment().getHelmet().hasData(DataComponentTypes.CUSTOM_NAME)) {
+                                String name = ComponentUtils.stripColour(skeleton.getEquipment().getHelmet().getData(DataComponentTypes.CUSTOM_NAME));
                                 if (name.equals("Dalek Head") || name.equals("Silurian Head") || name.equals("Weeping Angel Head")) {
                                     dn = name.substring(0, name.length() - 5);
                                 }
@@ -170,8 +170,8 @@ public class TARDISMonsterRunnable implements Runnable {
                             Zombie zombie = (Zombie) e;
                             tm.setBaby(!zombie.isAdult());
                             tm.setEquipment(zombie.getEquipment());
-                            if (twa && zombie.getEquipment().getHelmet() != null && zombie.getEquipment().getHelmet().hasItemMeta() && zombie.getEquipment().getHelmet().getItemMeta().hasCustomName()) {
-                                String name = ComponentUtils.stripColour(zombie.getEquipment().getHelmet().getItemMeta().customName());
+                            if (twa  && zombie.getEquipment().getHelmet().hasData(DataComponentTypes.CUSTOM_NAME)) {
+                                String name = ComponentUtils.stripColour(zombie.getEquipment().getHelmet().getData(DataComponentTypes.CUSTOM_NAME));
                                 if (name.equals("Cyberman Head") || name.equals("Empty Child Head") || name.equals("Sontaran Head") || name.equals("Vashta Nerada Head") || name.equals("Zygon Head")) {
                                     dn = name.substring(0, name.length() - 5);
                                 }

@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.companionGUI;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
@@ -23,7 +24,6 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisCompanions;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.planets.TARDISWorldResolver;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
-import net.kyori.adventure.text.Component;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -31,10 +31,8 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * @author eccentric_nz
@@ -122,13 +120,11 @@ public class CompanionAddGUIListener extends TARDISMenuListener {
                     Tardis tardis = rs.getTardis();
                     int id = tardis.getTardisId();
                     String comps = tardis.getCompanions();
-                    ItemMeta m = is.getItemMeta();
-                    List<Component> l = m.lore();
-                    String u = ComponentUtils.stripColour(l.getFirst());
+                    String u = ComponentUtils.stripColour(is.getData(DataComponentTypes.LORE).lines().getFirst());
                     addCompanion(id, comps, u);
                     if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
                         String[] data = tardis.getChunk().split(":");
-                        addToRegion(data[0], tardis.getOwner(), ComponentUtils.stripColour(m.customName()));
+                        addToRegion(data[0], tardis.getOwner(), ComponentUtils.stripColour(is.getData(DataComponentTypes.CUSTOM_NAME)));
                         // set entry and exit flags to deny
                         plugin.getWorldGuardUtils().setEntryExitFlags(data[0], player.getName(), false);
                     }

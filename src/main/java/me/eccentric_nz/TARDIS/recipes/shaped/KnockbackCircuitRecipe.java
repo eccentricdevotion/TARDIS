@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.CustomModelData;
+import io.papermc.paper.datacomponent.item.ItemEnchantments;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.keys.CircuitVariant;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
@@ -28,7 +29,6 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 
 /*
 easy_shape:-K-,RSR,-R-
@@ -62,10 +62,9 @@ public class KnockbackCircuitRecipe {
         if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             r.shape(" K ", "RSR", " R ");
             ItemStack book = ItemStack.of(Material.ENCHANTED_BOOK, 1);
-            EnchantmentStorageMeta pm = (EnchantmentStorageMeta) book.getItemMeta();
-            Enchantment enchantment = Enchantment.KNOCKBACK;
-            pm.addStoredEnchant(enchantment, 1, false);
-            book.setItemMeta(pm);
+            book.setData(DataComponentTypes.STORED_ENCHANTMENTS, ItemEnchantments.itemEnchantments()
+                    .add(Enchantment.KNOCKBACK, 1)
+                    .build());
             r.setIngredient('K', new RecipeChoice.ExactChoice(book));
         } else {
             r.shape(" K ", "RSR", " R ");

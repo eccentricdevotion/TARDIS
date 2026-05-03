@@ -56,11 +56,9 @@ import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.UUID;
 
 /**
@@ -79,11 +77,8 @@ public class SiegeListener implements Listener {
         if (!m.equals(Material.BROWN_MUSHROOM_BLOCK) && !m.equals(Material.CYAN_CONCRETE)) {
             return false;
         }
-        ItemMeta im = is.getItemMeta();
-        if (im != null) {
-            return (im.hasCustomName() && ComponentUtils.endsWith(im.customName(), "Siege Cube")) || (im.hasItemModel() && Whoniverse.SIEGE_CUBE.getKey().equals(im.getItemModel()));
-        }
-        return false;
+        return (ComponentUtils.isNamed(is, "Siege Cube"))
+                || (is.hasData(DataComponentTypes.ITEM_MODEL) && Whoniverse.SIEGE_CUBE.getKey().getKey().equals(is.getData(DataComponentTypes.ITEM_MODEL).value()));
     }
 
     @EventHandler(ignoreCancelled = true)
@@ -92,7 +87,7 @@ public class SiegeListener implements Listener {
         if (!isSiegeCube(is)) {
             return;
         }
-        if (!hasSiegeCubeName(is)) {
+        if (!ComponentUtils.isNamed(is, "Siege Cube")) {
             return;
         }
         event.setCancelled(true);
@@ -186,7 +181,7 @@ public class SiegeListener implements Listener {
         if (!isSiegeCube(is)) {
             return;
         }
-        if (!hasSiegeCubeName(is)) {
+        if (!ComponentUtils.isNamed(is, "Siege Cube")) {
             return;
         }
         if (plugin.getUtils().inTARDISWorld(p)) {
@@ -210,12 +205,12 @@ public class SiegeListener implements Listener {
                 plugin.getMessenger().send(p, TardisModule.TARDIS, "SIEGE_NO_SPACE");
                 return;
             }
-            List<Component> lore = is.getItemMeta().lore();
-            if (lore == null || lore.size() < 2) {
+            ItemLore lore = is.getData(DataComponentTypes.LORE);
+            if (lore == null || lore.lines().size() < 2) {
                 plugin.getMessenger().send(p, TardisModule.TARDIS, "SIEGE_NO_ID");
                 return;
             }
-            String[] line2 = ComponentUtils.stripColour(lore.get(1)).split(": ");
+            String[] line2 = ComponentUtils.stripColour(lore.lines().get(1)).split(": ");
             int id = TARDISNumberParsers.parseInt(line2[1]);
             // turn the drop into a block
             item.remove();
@@ -272,7 +267,7 @@ public class SiegeListener implements Listener {
         }
         ItemStack single = is.clone();
         single.setAmount(1);
-        if (!is.hasItemMeta()) {
+        if (!is.hasData(DataComponentTypes.CUSTOM_NAME)) {
             return;
         }
         // update the current location
@@ -412,9 +407,5 @@ public class SiegeListener implements Listener {
             }
         }
         return false;
-    }
-
-    private boolean hasSiegeCubeName(ItemStack is) {
-        return (is.hasItemMeta() && is.getItemMeta().hasCustomName() && ComponentUtils.endsWith(is.getItemMeta().customName(), "Siege Cube"));
     }
 }

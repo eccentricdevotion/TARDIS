@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.tardisweepingangels.utils;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.Equippable;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.keys.DalekVariant;
 import me.eccentric_nz.TARDIS.custommodels.keys.EmptyChildVariant;
@@ -26,8 +28,6 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.components.EquippableComponent;
 import org.bukkit.persistence.PersistentDataType;
 
 public class HeadBuilder {
@@ -46,8 +46,7 @@ public class HeadBuilder {
             return null;
         }
         ItemStack is = ItemStack.of(material, 1);
-        ItemMeta im = is.getItemMeta();
-        im.getPersistentDataContainer().set(TARDIS.plugin.getHeadBlockKey(), PersistentDataType.INTEGER, 99);
+        is.editPersistentDataContainer(pdc -> pdc.set(TARDIS.plugin.getHeadBlockKey(), PersistentDataType.INTEGER, 99));
         String head = switch (monster) {
             case HEADLESS_MONK -> "Headless Monk Hood";
             case MIRE -> "Mire Helmet";
@@ -55,26 +54,22 @@ public class HeadBuilder {
         };
         is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(head));
         is.setData(DataComponentTypes.ITEM_MODEL, model);
-        EquippableComponent component = im.getEquippable();
-        component.setSlot(EquipmentSlot.HEAD);
+        Equippable.Builder equippable = Equippable.equippable(EquipmentSlot.HEAD);
         // add overlays
         if (monster.equals(Monster.DALEK)) {
-            component.setCameraOverlay(DalekVariant.DALEK_OVERLAY.getKey());
+            equippable.cameraOverlay(DalekVariant.DALEK_OVERLAY.getKey());
         }
         if (monster.equals(Monster.EMPTY_CHILD)) {
-            component.setCameraOverlay(EmptyChildVariant.EMPTY_CHILD_OVERLAY.getKey());
+            equippable.cameraOverlay(EmptyChildVariant.EMPTY_CHILD_OVERLAY.getKey());
         }
-        im.setEquippable(component);
-        is.setItemMeta(im);
+        is.setData(DataComponentTypes.EQUIPPABLE, equippable.build());
         return is;
     }
 
     public static ItemStack getK9() {
         ItemStack is = ItemStack.of(Material.BONE);
-        ItemMeta im = is.getItemMeta();
         is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("K9"));
         is.setData(DataComponentTypes.ITEM_MODEL, K9Variant.K9.getKey());
-        is.setItemMeta(im);
         return is;
     }
 }

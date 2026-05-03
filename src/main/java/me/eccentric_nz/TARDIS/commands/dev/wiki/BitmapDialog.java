@@ -26,7 +26,6 @@ import me.eccentric_nz.TARDIS.custommodels.keys.ChameleonVariant;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
 

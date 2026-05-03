@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.transmat;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTransmat;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
@@ -29,7 +30,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -129,8 +129,7 @@ public class TransmatGUIListener extends TARDISMenuListener {
                 break;
             default:
                 // select
-                ItemMeta im = is.getItemMeta();
-                selectedLocation.put(player.getUniqueId(), ComponentUtils.stripColour(im.customName()));
+                selectedLocation.put(player.getUniqueId(), ComponentUtils.stripColour(is.getData(DataComponentTypes.CUSTOM_NAME)));
                 break;
         }
     }

@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.recipes;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.RecipeCategory;
 import me.eccentric_nz.TARDIS.howto.SeedsInventory;
@@ -26,7 +27,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 public class TARDISRecipeCategoryListener extends TARDISMenuListener {
 
@@ -50,8 +50,7 @@ public class TARDISRecipeCategoryListener extends TARDISMenuListener {
         }
         ItemStack is = event.getView().getItem(slot);
         if (is != null) {
-            ItemMeta im = is.getItemMeta();
-            String cat = ComponentUtils.toEnumUppercase(im.customName());
+            String cat = ComponentUtils.toEnumUppercase(is.getData(DataComponentTypes.CUSTOM_NAME));
             RecipeCategory category = RecipeCategory.valueOf(cat);
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                 InventoryHolder recipes;

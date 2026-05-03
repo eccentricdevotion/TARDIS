@@ -94,9 +94,7 @@ public class TardisUtility {
         boolean complexBool = false;
         if (is == null) {
             complexBool = true;
-        } else if (!is.hasData(DataComponentTypes.CUSTOM_NAME)) {
-            complexBool = true;
-        } else if (!ComponentUtils.endsWith(is.getData(DataComponentTypes.CUSTOM_NAME), dn)) {
+        } else if (!ComponentUtils.isNamed(is, dn)) {
             complexBool = true;
         }
         return complexBool;

@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.sudo.TARDISSudoTracker;
 import me.eccentric_nz.TARDIS.enumeration.Storage;
@@ -30,7 +31,6 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
 import java.util.Set;
@@ -84,8 +84,7 @@ public class TARDISMenuListener implements Listener {
 
     public int getPageNumber(InventoryView view) {
         ItemStack is = view.getItem(45);
-        ItemMeta im = is.getItemMeta();
-        String[] split = ComponentUtils.stripColour(im.customName()).split(" ");
+        String[] split = ComponentUtils.stripColour(is.getData(DataComponentTypes.CUSTOM_NAME)).split(" ");
         return TARDISNumberParsers.parseInt(split[1]);
     }
 

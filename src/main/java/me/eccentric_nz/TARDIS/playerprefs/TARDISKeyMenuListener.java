@@ -100,7 +100,7 @@ public class TARDISKeyMenuListener extends TARDISMenuListener {
                 event.setCancelled(true);
                 // set display name of key in slot 18
                 ItemStack key = view.getItem(18);
-                if (key == null || !key.getType().equals(material) || !key.hasItemMeta()) {
+                if (key == null || !key.getType().equals(material) || !key.hasData(DataComponentTypes.CUSTOM_MODEL_DATA)) {
                     return;
                 }
                 // get display name of selected key
@@ -127,10 +127,7 @@ public class TARDISKeyMenuListener extends TARDISMenuListener {
             case 18 -> {
                 // get item on cursor
                 ItemStack cursor = event.getCursor();
-                if (!cursor.getType().equals(Material.BLAZE_ROD) || !cursor.hasItemMeta()) {
-                    return;
-                }
-                if (!cursor.hasData(DataComponentTypes.CUSTOM_NAME)) {
+                if (!cursor.getType().equals(Material.BLAZE_ROD) || !cursor.hasData(DataComponentTypes.CUSTOM_NAME)) {
                     return;
                 }
                 // set wool colour from display name of placed key
@@ -142,7 +139,7 @@ public class TARDISKeyMenuListener extends TARDISMenuListener {
                 event.setCancelled(true);
                 // set display name colour of key in slot 18
                 ItemStack key = view.getItem(18);
-                if (key == null || !key.getType().equals(material) || !key.hasItemMeta()) {
+                if (key == null || !key.getType().equals(material) || !key.hasData(DataComponentTypes.CUSTOM_NAME)) {
                     return;
                 }
                 // get current colour of wool

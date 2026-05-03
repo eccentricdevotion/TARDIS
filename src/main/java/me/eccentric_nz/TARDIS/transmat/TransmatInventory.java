@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.transmat;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
@@ -30,7 +32,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,15 +72,13 @@ public class TransmatInventory implements InventoryHolder {
                     break;
                 }
                 ItemStack is = ItemStack.of(Material.MAP, 1);
-                ItemMeta im = is.getItemMeta();
                 is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(t.name()));
                 ItemLore.Builder lore = ItemLore.lore();
-                lore.add(Component.text(String.format("X: %.2f", t.x())));
-                lore.add(Component.text(String.format("Y: %.2f", t.y())));
-                lore.add(Component.text(String.format("Z: %.2f", t.z())));
-                lore.add(Component.text(String.format("Yaw: %.2f", t.yaw())));
-                im.lore(lore);
-                is.setItemMeta(im);
+                lore.addLine(Component.text(String.format("X: %.2f", t.x())));
+                lore.addLine(Component.text(String.format("Y: %.2f", t.y())));
+                lore.addLine(Component.text(String.format("Z: %.2f", t.z())));
+                lore.addLine(Component.text(String.format("Yaw: %.2f", t.yaw())));
+                is.setData(DataComponentTypes.LORE, lore.build());
                 stack[i] = is;
                 if (i % 9 == 7) {
                     i += 2;
@@ -89,34 +88,26 @@ public class TransmatInventory implements InventoryHolder {
             }
             // info
             ItemStack info = ItemStack.of(GUITransmat.INFO.material(), 1);
-            ItemMeta meta = info.getItemMeta();
-            meta.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getChameleonGuis().getString("INFO", "Info")));
+            info.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getChameleonGuis().getString("INFO", "Info")));
             List<Component> metaLore = new ArrayList<>();
             for (String s : plugin.getChameleonGuis().getStringList("INFO_TRANSMAT")) {
                 metaLore.add(Component.text(s));
             }
-            meta.lore(metaLore);
-            info.setItemMeta(meta);
+            info.setData(DataComponentTypes.LORE, ItemLore.lore(metaLore));
             stack[GUITransmat.INFO.slot()] = info;
             // delete
             ItemStack delete = ItemStack.of(GUITransmat.DELETE.material(), 1);
-            ItemMeta dim = delete.getItemMeta();
-            dim.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_DELETE", "Delete")));
-            delete.setItemMeta(dim);
+            delete.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_DELETE", "Delete")));
             stack[GUITransmat.DELETE.slot()] = delete;
         }
         // teleport
-        ItemStack tele = ItemStack.of(GUITransmat.TRANSMAT.material(), 1);
-        ItemMeta port = tele.getItemMeta();
-        port.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_TRANSMAT", "Transmat")));
-        tele.setItemMeta(port);
-        stack[GUITransmat.TRANSMAT.slot()] = tele;
+        ItemStack teleport = ItemStack.of(GUITransmat.TRANSMAT.material(), 1);
+        teleport.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_TRANSMAT", "Transmat")));
+        stack[GUITransmat.TRANSMAT.slot()] = teleport;
         // rooms world
         if (plugin.getPlanetsConfig().getBoolean("planets.rooms.enabled") && plugin.getServer().getWorld(Key.key("rooms")) != null && TARDISPermission.hasPermission(player, "tardis.transmat.rooms")) {
             ItemStack rooms = ItemStack.of(GUITransmat.ROOMS.material(), 1);
-            ItemMeta world = rooms.getItemMeta();
-            world.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Rooms World"));
-            rooms.setItemMeta(world);
+            rooms.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Rooms World"));
             stack[GUITransmat.ROOMS.slot()] = rooms;
         }
         // close

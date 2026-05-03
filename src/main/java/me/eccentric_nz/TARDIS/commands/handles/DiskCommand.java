@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.commands.handles;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -25,8 +27,8 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -46,27 +48,23 @@ public class DiskCommand {
         }
         // check if item in hand is a Handles program disk
         ItemStack disk = player.getInventory().getItemInMainHand();
-        if (disk.getType().equals(Material.MUSIC_DISC_WARD) && disk.hasItemMeta()) {
-            ItemMeta dim = disk.getItemMeta();
-            if (dim.hasCustomName() && ComponentUtils.stripColour(dim.customName()).equals("Handles Program Disk")) {
-                // get the program_id from the disk
-                int pid = TARDISNumberParsers.parseInt(ComponentUtils.stripColour(dim.lore().get(1)));
-                // get the name - must be 32 chars or fewer
-                if (name.length() < 3 || name.length() > 32) {
-                    plugin.getMessenger().send(player, TardisModule.TARDIS, "SAVE_NAME_NOT_VALID");
-                    return;
-                }
-                // rename the disk
-                HashMap<String, Object> set = new HashMap<>();
-                set.put("name", name);
-                HashMap<String, Object> wherep = new HashMap<>();
-                wherep.put("program_id", pid);
-                plugin.getQueryFactory().doUpdate("programs", set, wherep);
-                List<Component> lore = dim.lore();
-                lore.set(0, Component.text(name));
-                dim.lore(lore);
-                disk.setItemMeta(dim);
+        if (disk.getType().equals(Material.MUSIC_DISC_WARD) && disk.hasData(DataComponentTypes.CUSTOM_NAME) && ComponentUtils.stripColour(disk.getData(DataComponentTypes.CUSTOM_NAME)).equals("Handles Program Disk")) {
+            // get the program_id from the disk
+            int pid = TARDISNumberParsers.parseInt(ComponentUtils.stripColour(disk.getData(DataComponentTypes.LORE).lines().get(1)));
+            // get the name - must be 32 chars or fewer
+            if (name.length() < 3 || name.length() > 32) {
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "SAVE_NAME_NOT_VALID");
+                return;
             }
+            // rename the disk
+            HashMap<String, Object> set = new HashMap<>();
+            set.put("name", name);
+            HashMap<String, Object> wherep = new HashMap<>();
+            wherep.put("program_id", pid);
+            plugin.getQueryFactory().doUpdate("programs", set, wherep);
+            List<Component> lore = new ArrayList<>(disk.getData(DataComponentTypes.LORE).lines());
+            lore.set(0, Component.text(name));
+            disk.setData(DataComponentTypes.LORE, ItemLore.lore(lore));
         } else {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "HANDLES_DISK");
         }

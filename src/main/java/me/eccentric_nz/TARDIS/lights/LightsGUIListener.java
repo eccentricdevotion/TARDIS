@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.lights;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.control.actions.LightSwitchAction;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -34,10 +36,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
-import java.util.List;
 
 public class LightsGUIListener extends TARDISMenuListener {
 
@@ -141,9 +141,8 @@ public class LightsGUIListener extends TARDISMenuListener {
                         case 53 -> close(player);
                         // select and save light type
                         default -> {
-                            ItemMeta im = is.getItemMeta();
                             // save preference
-                            String light = TARDISStringUtils.toUnderscoredUppercase(ComponentUtils.stripColour(im.customName()));
+                            String light = TARDISStringUtils.toUnderscoredUppercase(ComponentUtils.stripColour(is.getData(DataComponentTypes.CUSTOM_NAME)));
                             HashMap<String, Object> set = new HashMap<>();
                             set.put("light", light);
                             HashMap<String, Object> wheret = new HashMap<>();
@@ -159,13 +158,11 @@ public class LightsGUIListener extends TARDISMenuListener {
                             for (int l = 1; l <= TardisLight.values().length + 2; l++) {
                                 ItemStack isl = view.getItem(l);
                                 if (isl != null) {
-                                    ItemMeta iml = isl.getItemMeta();
-                                    if (!iml.customName().equals(im.customName())) {
-                                        iml.lore(null);
+                                    if (!isl.getData(DataComponentTypes.CUSTOM_NAME).equals(is.getData(DataComponentTypes.CUSTOM_NAME))) {
+                                        isl.unsetData(DataComponentTypes.LORE);
                                     } else {
-                                        iml.lore(List.of(Component.text("Current light")));
+                                        isl.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text("Current light")));
                                     }
-                                    isl.setItemMeta(iml);
                                 }
                             }
                         }

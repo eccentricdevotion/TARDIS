@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.playerprefs;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUIInteriorSounds;
 import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
@@ -26,7 +28,6 @@ import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,9 +64,7 @@ class TARDISHumInventory implements InventoryHolder {
         // get HUM sounds
         for (Hum hum : Hum.values()) {
             ItemStack is = ItemStack.of(Material.BOWL, 1);
-            ItemMeta im = is.getItemMeta();
             is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(hum.toString()));
-            is.setItemMeta(im);
             options.add(is);
         }
         // add to stack
@@ -79,10 +78,8 @@ class TARDISHumInventory implements InventoryHolder {
         }
         // play / save
         ItemStack play = ItemStack.of(GUIInteriorSounds.ACTION.material(), 1);
-        ItemMeta save = play.getItemMeta();
-        save.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Action"));
-        save.lore(List.of(Component.text("PLAY")));
-        play.setItemMeta(save);
+        play.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Action"));
+        play.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text("PLAY")).build());
         stack[GUIInteriorSounds.ACTION.slot()] = play;
         // close
         stack[GUIInteriorSounds.CLOSE.slot()] = GUIItemFactory.close();

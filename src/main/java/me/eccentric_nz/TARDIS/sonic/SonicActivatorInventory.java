@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.sonic;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
 import me.eccentric_nz.TARDIS.custommodels.GUISonicActivator;
@@ -26,10 +28,6 @@ import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author eccentric_nz
@@ -58,26 +56,24 @@ class SonicActivatorInventory implements InventoryHolder {
 
     private ItemStack[] getItemStack() {
         ItemLore.Builder lore = ItemLore.lore();
-        lore.add(Component.text("To activate the generator"));
-        lore.add(Component.text("add 1 of each of the following"));
-        lore.add(Component.text("items to this inventory:"));
+        lore.addLine(Component.text("To activate the generator"));
+        lore.addLine(Component.text("add 1 of each of the following"));
+        lore.addLine(Component.text("items to this inventory:"));
         // get the Sonic Generator recipe
         if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
-            lore.add(Component.text("GOLD_INGOT", NamedTextColor.AQUA));
-            lore.add(Component.text("REDSTONE_BLOCK", NamedTextColor.AQUA));
+            lore.addLine(Component.text("GOLD_INGOT", NamedTextColor.AQUA));
+            lore.addLine(Component.text("REDSTONE_BLOCK", NamedTextColor.AQUA));
         } else {
-            lore.add(Component.text("GOLD_NUGGET", NamedTextColor.AQUA));
-            lore.add(Component.text("REDSTONE", NamedTextColor.AQUA));
+            lore.addLine(Component.text("GOLD_NUGGET", NamedTextColor.AQUA));
+            lore.addLine(Component.text("REDSTONE", NamedTextColor.AQUA));
         }
-        lore.add(Component.text("FLOWER_POT", NamedTextColor.AQUA));
-        lore.add(Component.text("BLAZE_ROD", NamedTextColor.AQUA));
-        lore.add(Component.text("Then close the GUI.", NamedTextColor.DARK_PURPLE).decorate(TextDecoration.ITALIC));
+        lore.addLine(Component.text("FLOWER_POT", NamedTextColor.AQUA));
+        lore.addLine(Component.text("BLAZE_ROD", NamedTextColor.AQUA));
+        lore.addLine(Component.text("Then close the GUI.", NamedTextColor.DARK_PURPLE).decorate(TextDecoration.ITALIC));
         // info
         ItemStack info = ItemStack.of(GUISonicActivator.INSTRUCTIONS.material(), 1);
-        ItemMeta info_im = info.getItemMeta();
-        info_im.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Instructions"));
-        info_im.lore(lore);
-        info.setItemMeta(info_im);
+        info.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Instructions"));
+        info.setData(DataComponentTypes.LORE, lore.build());
         // close
         ItemStack close = GUIItemFactory.close();
 

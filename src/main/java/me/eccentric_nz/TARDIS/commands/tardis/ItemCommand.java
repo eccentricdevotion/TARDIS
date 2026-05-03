@@ -28,7 +28,6 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,23 +71,19 @@ public class ItemCommand {
             case "inventory" -> {
                 int i = 0;
                 for (ItemStack is : player.getInventory()) {
-                    if (is != null && is.hasItemMeta()) {
-                        ItemMeta im = is.getItemMeta();
-                        if (im.hasCustomName()) {
-                            Component component = im.customName();
-                            // strip color codes
-                            String stripped = ComponentUtils.stripColour(component);
-                            if (!component.children().isEmpty()) {
-                                stripped = ComponentUtils.stripColour(component.children().getFirst());
-                            }
-                            // look up display name
-                            RecipeItem recipeItem = RecipeItem.getByName(stripped);
-                            if (!recipeItem.equals(RecipeItem.NOT_FOUND)) {
-                                is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(stripped));
-                                is.unsetData(DataComponentTypes.ITEM_MODEL);
-                                is.setItemMeta(im);
-                                i++;
-                            }
+                    if (is != null && is.hasData(DataComponentTypes.CUSTOM_NAME)) {
+                        Component component = is.getData(DataComponentTypes.CUSTOM_NAME);
+                        // strip color codes
+                        String stripped = ComponentUtils.stripColour(component);
+                        if (!component.children().isEmpty()) {
+                            stripped = ComponentUtils.stripColour(component.children().getFirst());
+                        }
+                        // look up display name
+                        RecipeItem recipeItem = RecipeItem.getByName(stripped);
+                        if (!recipeItem.equals(RecipeItem.NOT_FOUND)) {
+                            is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(stripped));
+                            is.unsetData(DataComponentTypes.ITEM_MODEL);
+                            i++;
                         }
                     }
                 }

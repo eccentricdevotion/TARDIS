@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.control;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.CircuitChecker;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -58,8 +59,8 @@ class TARDISSaveSign {
         }
         if (plugin.getTrackerKeeper().getJunkPlayers().containsKey(uuid) && plugin.getConfig().getBoolean("difficulty.disks")) {
             ItemStack disk = player.getInventory().getItemInMainHand();
-            if (disk.hasItemMeta() && disk.getItemMeta().hasCustomName() && ComponentUtils.endsWith(disk.getItemMeta().customName(), "Save Storage Disk")) {
-                List<Component> lore = disk.getItemMeta().lore();
+            if (ComponentUtils.isNamed(disk, "Save Storage Disk")) {
+                List<Component> lore = disk.getData(DataComponentTypes.LORE).lines();
                 if (!ComponentUtils.stripColour(lore.getFirst()).equals("Blank")) {
                     // read the lore from the disk
                     String world = ComponentUtils.stripColour(lore.get(1));

@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.listeners.controls;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.custommodels.keys.Whoniverse;
@@ -37,7 +38,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -80,14 +80,11 @@ public class TARDISHandlesFrameListener implements Listener {
                     // play sound
                     talkingHandles.add(handlesId); // add this handles to the list of currently talking handleses (by tardis id)
                     TARDISSounds.playTARDISSound(player, "handles", 5L);
-                    ItemMeta im = is.getItemMeta();
                     is.setData(DataComponentTypes.ITEM_MODEL, Whoniverse.HANDLES_ON.getKey());
-                    is.setItemMeta(im);
                     frame.setItem(is, false);
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                         talkingHandles.remove(handlesId); // remove this handles from the list of talking handles
                         is.setData(DataComponentTypes.ITEM_MODEL, Whoniverse.HANDLES_OFF.getKey());
-                        is.setItemMeta(im);
                         frame.setItem(is, false);
                     }, 20L);
                     if (!TARDISPermission.hasPermission(player, "tardis.handles.program")) {
@@ -100,24 +97,23 @@ public class TARDISHandlesFrameListener implements Listener {
                     } else {
                         // check if item in hand is a Handles program disk
                         ItemStack disk = player.getInventory().getItemInMainHand();
-                        if (disk.getType().equals(Material.MUSIC_DISC_WARD) && disk.hasItemMeta()) {
-                            ItemMeta dim = disk.getItemMeta();
-                            if (dim.hasCustomName() && ComponentUtils.stripColour(dim.customName()).equals("Handles Program Disk")) {
-                                // get the program_id from the disk
-                                int pid = TARDISNumberParsers.parseInt(ComponentUtils.stripColour(dim.lore().get(1)));
-                                // query the database
-                                ResultSetProgram rsp = new ResultSetProgram(plugin, pid);
-                                if (rsp.resultSet()) {
-                                    // send program to processor
-                                    new HandlesProcessor(plugin, rsp.getProgram(), player, pid).processDisk();
-                                    // check in the disk
-                                    HashMap<String, Object> set = new HashMap<>();
-                                    set.put("checked", 0);
-                                    HashMap<String, Object> wherep = new HashMap<>();
-                                    wherep.put("program_id", pid);
-                                    plugin.getQueryFactory().doUpdate("programs", set, wherep);
-                                    player.getInventory().setItemInMainHand(null);
-                                }
+                        if (disk.getType().equals(Material.MUSIC_DISC_WARD)
+                                && disk.hasData(DataComponentTypes.CUSTOM_NAME)
+                                && ComponentUtils.stripColour(disk.getData(DataComponentTypes.CUSTOM_NAME)).equals("Handles Program Disk")) {
+                            // get the program_id from the disk
+                            int pid = TARDISNumberParsers.parseInt(ComponentUtils.stripColour(disk.getData(DataComponentTypes.LORE).lines().get(1)));
+                            // query the database
+                            ResultSetProgram rsp = new ResultSetProgram(plugin, pid);
+                            if (rsp.resultSet()) {
+                                // send program to processor
+                                new HandlesProcessor(plugin, rsp.getProgram(), player, pid).processDisk();
+                                // check in the disk
+                                HashMap<String, Object> set = new HashMap<>();
+                                set.put("checked", 0);
+                                HashMap<String, Object> wherep = new HashMap<>();
+                                wherep.put("program_id", pid);
+                                plugin.getQueryFactory().doUpdate("programs", set, wherep);
+                                player.getInventory().setItemInMainHand(null);
                             }
                         }
                     }
@@ -180,14 +176,11 @@ public class TARDISHandlesFrameListener implements Listener {
                         talkingHandles.add(handlesId); // add this handles to the list of currently talking handleses (by tardis id)
                         event.setCancelled(true);
                         TARDISSounds.playTARDISSound(player, "handles", 5L);
-                        ItemMeta im = is.getItemMeta();
                         is.setData(DataComponentTypes.ITEM_MODEL, Whoniverse.HANDLES_ON.getKey());
-                        is.setItemMeta(im);
                         frame.setItem(is, false);
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                             talkingHandles.remove(handlesId); // remove this handles from the list of talking handles
                             is.setData(DataComponentTypes.ITEM_MODEL, Whoniverse.HANDLES_OFF.getKey());
-                            is.setItemMeta(im);
                             frame.setItem(is, false);
                         }, 40L);
                     } else {
@@ -231,10 +224,8 @@ public class TARDISHandlesFrameListener implements Listener {
     }
 
     private boolean isHandles(ItemStack is) {
-        if (is != null && is.getType().equals(Material.BIRCH_BUTTON) && is.hasItemMeta()) {
-            ItemMeta im = is.getItemMeta();
-            return im.hasCustomName() && ComponentUtils.endsWith(im.customName(), "Handles");
-        }
-        return false;
+        return is != null
+                && is.getType().equals(Material.BIRCH_BUTTON)
+                && ComponentUtils.isNamed(is, "Handles");
     }
 }

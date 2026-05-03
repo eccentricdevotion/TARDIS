@@ -96,7 +96,7 @@ public class ConsoleDestroyer {
                     if (e instanceof ItemDisplay display) {
                         // get colour
                         ItemStack is = display.getItemStack();
-                        if (colour.isEmpty() && is.hasItemMeta()) {
+                        if (colour.isEmpty() && is.hasData(DataComponentTypes.ITEM_MODEL)) {
                             model = is.getData(DataComponentTypes.ITEM_MODEL);
                             if (model == null && is.hasData(DataComponentTypes.CUSTOM_MODEL_DATA)) {
                                 float convertedCMD = is.getData(DataComponentTypes.CUSTOM_MODEL_DATA).floats().getFirst();

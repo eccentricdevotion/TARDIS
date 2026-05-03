@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.commands.book;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.WrittenBookContent;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import net.kyori.adventure.text.Component;
@@ -23,7 +25,6 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.BookMeta;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -53,8 +54,8 @@ public class TARDISBook {
      * the player's inventory.
      *
      * @param author Who wrote the book
-     * @param name The name of the book and text file
-     * @param p The player who will receive the book
+     * @param name   The name of the book and text file
+     * @param p      The player who will receive the book
      */
     public void writeBook(String author, String name, Player p) {
         // read the file
@@ -80,12 +81,10 @@ public class TARDISBook {
         }
         // make the book
         ItemStack book = ItemStack.of(Material.WRITTEN_BOOK);
-        BookMeta meta = (BookMeta) book.getItemMeta();
         String title = plugin.getAchievementConfig().getString(name + ".name");
-        meta.setTitle(title);
-        meta.setAuthor(author);
-        meta.pages(pages);
-        book.setItemMeta(meta);
+        book.setData(DataComponentTypes.WRITTEN_BOOK_CONTENT, WrittenBookContent.writtenBookContent(title, author)
+                .addPages(pages)
+                .build());
         // put the book in the player's inventory
         Inventory inv = p.getInventory();
         inv.addItem(book);

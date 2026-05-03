@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
@@ -24,9 +26,6 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.List;
 
 /*
 easy_shape:---,PLP,-P-
@@ -52,10 +51,8 @@ public class PaperBagRecipe {
 
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.PAPER, 1);
-        ItemMeta im = is.getItemMeta();
         is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Paper Bag"));
-        im.lore(List.of(Component.text("Smaller on the outside")));
-        is.setItemMeta(im);
+        is.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text("Smaller on the outside")).build());
         NamespacedKey key = new NamespacedKey(plugin, "paper_bag");
         ShapedRecipe r = new ShapedRecipe(key, is);
         if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {

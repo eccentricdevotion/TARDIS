@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.ARS;
 
 import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.builders.interior.TIPSData;
@@ -37,10 +38,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.UUID;
 
 /**
@@ -197,10 +196,10 @@ public class ARSMapListener extends ARSMethods implements Listener {
                 // get itemstack to change lore
                 int slot = ((row - south) * 9) + 4 + (col - east);
                 ItemStack is = view.getItem(slot);
+                // TODO check this
                 ItemStack sub = ItemStack.of(Material.SPECTRAL_ARROW);
-                ItemMeta im = is.getItemMeta();
-                im.lore(List.of(Component.text(plugin.getLanguage().getString("ARS_MAP_HERE", "You are here!"))));
-                sub.setItemMeta(im);
+                is.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text(plugin.getLanguage().getString("ARS_MAP_HERE", "You are here!"))).build());
+                sub.copyDataFrom(is, dataComponentType -> true);
                 view.setItem(slot, sub);
             }
         } else {

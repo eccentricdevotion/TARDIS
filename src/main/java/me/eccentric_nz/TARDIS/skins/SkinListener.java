@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.skins;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -30,7 +31,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.List;
@@ -46,8 +46,7 @@ public class SkinListener implements Listener {
         UUID uuid = p.getUniqueId();
         ItemStack stack = event.getItemDrop().getItemStack();
         if (SkinUtils.SKINNED.containsKey(uuid) && MATERIALS.contains(stack.getType())) {
-            ItemMeta im = stack.getItemMeta();
-            event.setCancelled(im != null && im.hasItemModel());
+            event.setCancelled(stack.hasData(DataComponentTypes.ITEM_MODEL));
         }
     }
 
@@ -71,11 +70,10 @@ public class SkinListener implements Listener {
         if (!MATERIALS.contains(stack.getType())) {
             return;
         }
-        ItemMeta im = stack.getItemMeta();
-        if (im == null || !im.hasItemModel()) {
+        if (!stack.hasData(DataComponentTypes.ITEM_MODEL)) {
             return;
         }
-        if (im.getPersistentDataContainer().has(TARDIS.plugin.getTimeLordUuidKey(), PersistentDataType.BOOLEAN)) {
+        if (stack.getPersistentDataContainer().has(TARDIS.plugin.getTimeLordUuidKey(), PersistentDataType.BOOLEAN)) {
             SkinUtils.setOrSwapItem(stack, p, EquipmentSlot.HEAD);
             p.getInventory().setItemInMainHand(null);
         }
@@ -89,8 +87,7 @@ public class SkinListener implements Listener {
             UUID uuid = event.getWhoClicked().getUniqueId();
             if (SkinUtils.SKINNED.containsKey(uuid) && MATERIALS.contains(current.getType())) {
                 if (slotType == InventoryType.SlotType.ARMOR) {
-                    ItemMeta im = current.getItemMeta();
-                    event.setCancelled(im != null && im.hasItemModel());
+                    event.setCancelled(current.hasData(DataComponentTypes.ITEM_MODEL));
                 }
                 if (slotType == InventoryType.SlotType.QUICKBAR) {
                     Skin skin = SkinUtils.SKINNED.get(uuid);

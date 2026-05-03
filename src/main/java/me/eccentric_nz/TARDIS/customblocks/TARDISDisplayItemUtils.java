@@ -28,7 +28,6 @@ import org.bukkit.block.Block;
 import org.bukkit.block.data.Levelled;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.BoundingBox;
 
@@ -50,25 +49,24 @@ public class TARDISDisplayItemUtils {
     public static TARDISDisplayItem get(ItemDisplay display) {
         ItemStack is = display.getItemStack();
         if (is != null) {
-            ItemMeta im = is.getItemMeta();
             // Try to get by model
-            if (im.hasItemModel()) {
+            if (is.hasData(DataComponentTypes.ITEM_MODEL)) {
                 if (Tag.ITEMS_DECORATED_POT_SHERDS.isTagged(is.getType())) {
                     return TARDISBlockDisplayItem.CUSTOM_DOOR;
                 } else {
-                    return TARDISDisplayItemRegistry.getByModel(im.getItemModel());
+                    return TARDISDisplayItemRegistry.getByModel(NamespacedKey.fromString(is.getData(DataComponentTypes.ITEM_MODEL).asString()));
                 }
             }
             // Try to get by Display Name
-            if (im.hasCustomName()) {
-                TARDISDisplayItem displayItem = TARDISDisplayItemRegistry.getByDisplayName(im.customName());
+            if (is.hasData(DataComponentTypes.CUSTOM_NAME)) {
+                TARDISDisplayItem displayItem = TARDISDisplayItemRegistry.getByDisplayName(is.getData(DataComponentTypes.CUSTOM_NAME));
                 if (displayItem != null) {
                     return displayItem;
                 }
             }
             // Try to get by Block key
-            if (im.getPersistentDataContainer().has(TARDIS.plugin.getCustomBlockKey())) {
-                String str = im.getPersistentDataContainer().get(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING);
+            if (is.getPersistentDataContainer().has(TARDIS.plugin.getCustomBlockKey())) {
+                String str = is.getPersistentDataContainer().get(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING);
                 NamespacedKey nsk = new NamespacedKey(TARDIS.plugin, str);
                 return TARDISDisplayItemRegistry.getByModel(nsk);
             }
@@ -346,7 +344,7 @@ public class TARDISDisplayItemUtils {
         ItemStack is = ItemStack.of(material, 1);
         is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(tdi.getDisplayName()));
         NamespacedKey finalNamespacedKey = namespacedKey;
-        is.editPersistentDataContainer(pdc->pdc.set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING, finalNamespacedKey.getKey()));
+        is.editPersistentDataContainer(pdc -> pdc.set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING, finalNamespacedKey.getKey()));
         if (tdi.isDoor()) {
             is.setData(DataComponentTypes.ITEM_MODEL, tdi.getCustomModel());
         }
@@ -371,12 +369,12 @@ public class TARDISDisplayItemUtils {
      *
      * @param tdi   the TARDISDisplayItem to determine the ItemStack to display
      * @param block the block location to spawn the entity at
-     * @param im    the ItemMeta to set on the display ItemStack
+     * @param stack    the ItemStack to copy data from
      */
-    public static void setSeed(TARDISDisplayItem tdi, Block block, ItemMeta im) {
+    public static void setSeed(TARDISDisplayItem tdi, Block block, ItemStack stack) {
         block.setBlockData(TARDISConstants.BARRIER);
         ItemStack is = ItemStack.of(tdi.getMaterial(), 1);
-        is.setItemMeta(im);
+        is.copyDataFrom(stack, dataComponentType -> true);
         ItemDisplay display = (ItemDisplay) block.getWorld().spawnEntity(block.getLocation().add(0.5d, 0.5d, 0.5d), EntityType.ITEM_DISPLAY);
         display.setItemStack(is);
         display.setPersistent(true);

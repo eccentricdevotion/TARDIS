@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.desktop;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.control.TARDISThemeButton;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -36,7 +38,6 @@ import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
 import java.util.List;
@@ -89,8 +90,7 @@ public class ArchiveMenuListener extends TARDISMenuListener {
             case 18 -> {
                 // size
                 ItemStack iss = view.getItem(18);
-                ItemMeta ims = iss.getItemMeta();
-                List<Component> lores = ims.lore();
+                List<Component> lores = iss.getData(DataComponentTypes.LORE).lines();
                 String t;
                 String b;
                 int s;
@@ -99,12 +99,11 @@ public class ArchiveMenuListener extends TARDISMenuListener {
                 t = ConsoleSize.values()[s].toString();
                 b = ConsoleSize.values()[s].getBlocks();
                 if (t != null) {
-                    ims.lore(List.of(
+                    iss.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(
                             Component.text(t),
                             Component.text(b),
                             Component.text("Click to change", NamedTextColor.AQUA)
-                    ));
-                    iss.setItemMeta(ims);
+                    )));
                 }
             }
             case 19 -> scan(p, view); // scan
@@ -114,8 +113,7 @@ public class ArchiveMenuListener extends TARDISMenuListener {
                 if (template != null) {
                     UUID uuid = p.getUniqueId();
                     UpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(uuid);
-                    ItemMeta im = template.getItemMeta();
-                    String dn = ComponentUtils.stripColour(im.customName());
+                    String dn = ComponentUtils.stripColour(template.getData(DataComponentTypes.CUSTOM_NAME));
                     String size = dn.toLowerCase(Locale.ROOT);
                     int upgrade = plugin.getArtronConfig().getInt("upgrades.template." + size);
                     if (tud.getLevel() >= upgrade) {
@@ -141,21 +139,20 @@ public class ArchiveMenuListener extends TARDISMenuListener {
                     Schematic schm = Desktops.schematicFor("archive");
                     UUID uuid = p.getUniqueId();
                     UpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(uuid);
-                    ItemMeta im = choice.getItemMeta();
-                    List<Component> lore = im.lore();
-                    if (lore == null || lore.contains(Component.text(plugin.getLanguage().getString("CURRENT_CONSOLE", ""), NamedTextColor.GREEN))) {
+                    ItemLore lore = choice.getData(DataComponentTypes.LORE);
+                    if (lore == null || lore.lines().contains(Component.text(plugin.getLanguage().getString("CURRENT_CONSOLE", ""), NamedTextColor.GREEN))) {
                         plugin.getMessenger().send(p, TardisModule.TARDIS, "ARCHIVE_NOT_CURRENT");
                         return;
                     }
                     int upgrade = plugin.getArtronConfig().getInt("upgrades.archive.tall");
-                    for (Component l : lore) {
+                    for (Component l : lore.lines()) {
                         String c = ComponentUtils.stripColour(l);
                         if (c.startsWith("Cost")) {
                             upgrade = TARDISNumberParsers.parseInt(c.replace("Cost: ", ""));
                         }
                     }
                     if (tud.getLevel() >= upgrade) {
-                        new ArchiveUpdate(plugin, uuid.toString(), ComponentUtils.stripColour(im.customName())).setInUse();
+                        new ArchiveUpdate(plugin, uuid.toString(), ComponentUtils.stripColour(choice.getData(DataComponentTypes.CUSTOM_NAME))).setInUse();
                         tud.setSchematic(schm);
                         tud.setWall("ORANGE_WOOL");
                         tud.setFloor("LIGHT_GRAY_WOOL");
@@ -214,7 +211,7 @@ public class ArchiveMenuListener extends TARDISMenuListener {
 
     private List<Component> getSizeLore(InventoryView view) {
         ItemStack is = view.getItem(18);
-        ItemMeta im = is.getItemMeta();
-        return im.lore();
+        ItemLore lore = is.getData(DataComponentTypes.LORE);
+        return lore != null ? lore.lines() : List.of(Component.text("small"));
     }
 }

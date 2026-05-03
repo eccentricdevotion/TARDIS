@@ -21,9 +21,7 @@ public class VortexManipulatorUtility {
             return false;
         }
         ItemStack is = player.getInventory().getItemInMainHand();
-        return is.hasItemMeta()
-                && is.getItemMeta().hasCustomName()
-                && ComponentUtils.endsWith(is.getItemMeta().customName(), "Vortex Manipulator");
+        return ComponentUtils.isNamed(is, "Vortex Manipulator");
     }
 
     public static void message(TARDIS plugin, Player player, OfflinePlayer ofp, String message) {

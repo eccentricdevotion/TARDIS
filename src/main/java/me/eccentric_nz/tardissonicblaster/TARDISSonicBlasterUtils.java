@@ -21,7 +21,6 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 /**
  *
@@ -31,14 +30,10 @@ public class TARDISSonicBlasterUtils {
 
     public static boolean checkBlasterInHand(Player p) {
         ItemStack is = p.getInventory().getItemInMainHand();
-        if (is == null || !is.getType().equals(Material.GOLDEN_HOE) || !is.hasItemMeta()) {
+        if (is == null || !is.getType().equals(Material.GOLDEN_HOE)) {
             return false;
         }
-        ItemMeta im = is.getItemMeta();
-        if (!im.hasCustomName()) {
-            return false;
-        }
-        return ComponentUtils.endsWith(im.customName(), "Sonic Blaster");
+        return ComponentUtils.isNamed(is, "Sonic Blaster");
     }
 
     public static float getLineOfSightAngle(Player p) {

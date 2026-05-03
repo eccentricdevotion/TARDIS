@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.sonic;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.ConfiguredSonic;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetConfiguredSonic;
@@ -33,7 +35,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -84,10 +85,9 @@ public class SonicConfiguratorMenuListener extends TARDISMenuListener {
         if (!TARDISStaticUtils.isSonic(sonic)) {
             return;
         }
-        ItemMeta im = sonic.getItemMeta();
         ConfiguredSonic configuredSonic;
-        if (im.getPersistentDataContainer().has(plugin.getSonicUuidKey(), plugin.getPersistentDataTypeUUID())) {
-            configuredSonic = getConfiguredSonic(im.getPersistentDataContainer().get(plugin.getSonicUuidKey(), plugin.getPersistentDataTypeUUID()), im);
+        if (sonic.getPersistentDataContainer().has(plugin.getSonicUuidKey(), plugin.getPersistentDataTypeUUID())) {
+            configuredSonic = getConfiguredSonic(sonic.getPersistentDataContainer().get(plugin.getSonicUuidKey(), plugin.getPersistentDataTypeUUID()), sonic.getData(DataComponentTypes.LORE));
         } else {
             configuredSonic = createConfiguredSonic(player, view);
         }
@@ -102,96 +102,75 @@ public class SonicConfiguratorMenuListener extends TARDISMenuListener {
             return;
         }
         ItemStack bio = view.getItem(9);
-        ItemMeta bim = bio.getItemMeta();
-        bim.setData(DataComponentTypes.CUSTOM_NAME, Component.text(configuredSonic.getBio().getName()));
+        bio.setData(DataComponentTypes.CUSTOM_NAME, Component.text(configuredSonic.getBio().getName()));
         ItemStack biosub = ItemStack.of(configuredSonic.getBio().getMaterial());
-        biosub.setItemMeta(bim);
         view.setItem(9, biosub);
-        ItemStack dia = view.getItem(10);
-        ItemMeta dim = dia.getItemMeta();
-        dim.setData(DataComponentTypes.CUSTOM_NAME, Component.text(configuredSonic.getDiamond().getName()));
+        ItemStack diamond = view.getItem(10);
+        diamond.setData(DataComponentTypes.CUSTOM_NAME, Component.text(configuredSonic.getDiamond().getName()));
         ItemStack diasub = ItemStack.of(configuredSonic.getDiamond().getMaterial());
-        diasub.setItemMeta(dim);
         view.setItem(10, diasub);
-        ItemStack eme = view.getItem(11);
-        ItemMeta eim = eme.getItemMeta();
-        eim.setData(DataComponentTypes.CUSTOM_NAME, Component.text(configuredSonic.getEmerald().getName()));
+        ItemStack emerald = view.getItem(11);
+        emerald.setData(DataComponentTypes.CUSTOM_NAME, Component.text(configuredSonic.getEmerald().getName()));
         ItemStack emesub = ItemStack.of(configuredSonic.getEmerald().getMaterial());
-        emesub.setItemMeta(eim);
         view.setItem(11, emesub);
-        ItemStack red = view.getItem(12);
-        ItemMeta rim = red.getItemMeta();
-        rim.setData(DataComponentTypes.CUSTOM_NAME, Component.text(configuredSonic.getRedstone().getName()));
+        ItemStack redstone = view.getItem(12);
+        redstone.setData(DataComponentTypes.CUSTOM_NAME, Component.text(configuredSonic.getRedstone().getName()));
         ItemStack redsub = ItemStack.of(configuredSonic.getRedstone().getMaterial());
-        redsub.setItemMeta(rim);
         view.setItem(12, redsub);
-        ItemStack pai = view.getItem(13);
-        ItemMeta pim = pai.getItemMeta();
-        pim.setData(DataComponentTypes.CUSTOM_NAME, Component.text(configuredSonic.getPainter().getName()));
+        ItemStack painter = view.getItem(13);
+        painter.setData(DataComponentTypes.CUSTOM_NAME, Component.text(configuredSonic.getPainter().getName()));
         ItemStack paisub = ItemStack.of(configuredSonic.getPainter().getMaterial());
-        paisub.setItemMeta(pim);
         view.setItem(13, paisub);
-        ItemStack ign = view.getItem(14);
-        ItemMeta iim = ign.getItemMeta();
-        iim.setData(DataComponentTypes.CUSTOM_NAME, Component.text(configuredSonic.getIgnite().getName()));
+        ItemStack ignite = view.getItem(14);
+        ignite.setData(DataComponentTypes.CUSTOM_NAME, Component.text(configuredSonic.getIgnite().getName()));
         ItemStack ignsub = ItemStack.of(configuredSonic.getIgnite().getMaterial());
-        ignsub.setItemMeta(iim);
         view.setItem(14, ignsub);
         ItemStack arr = view.getItem(15);
-        ItemMeta aim = arr.getItemMeta();
-        aim.setData(DataComponentTypes.CUSTOM_NAME, Component.text(configuredSonic.getArrow().getName()));
+        arr.setData(DataComponentTypes.CUSTOM_NAME, Component.text(configuredSonic.getArrow().getName()));
         ItemStack arrsub = ItemStack.of(configuredSonic.getArrow().getMaterial());
-        arrsub.setItemMeta(aim);
         view.setItem(15, arrsub);
-        ItemStack kno = view.getItem(16);
-        ItemMeta kim = kno.getItemMeta();
-        kim.setData(DataComponentTypes.CUSTOM_NAME, Component.text(configuredSonic.getKnockback().getName()));
-        ItemStack knosub = ItemStack.of(configuredSonic.getKnockback().getMaterial());
-        knosub.setItemMeta(kim);
-        view.setItem(16, knosub);
-        ItemStack bru = view.getItem(17);
-        ItemMeta sh = bru.getItemMeta();
-        sh.setData(DataComponentTypes.CUSTOM_NAME, Component.text(configuredSonic.getBrush().getName()));
+        ItemStack knockback = view.getItem(16);
+        knockback.setData(DataComponentTypes.CUSTOM_NAME, Component.text(configuredSonic.getKnockback().getName()));
+        ItemStack knocksub = ItemStack.of(configuredSonic.getKnockback().getMaterial());
+        view.setItem(16, knocksub);
+        ItemStack brush = view.getItem(17);
+        brush.setData(DataComponentTypes.CUSTOM_NAME, Component.text(configuredSonic.getBrush().getName()));
         ItemStack brusub = ItemStack.of(configuredSonic.getBrush().getMaterial());
-        brusub.setItemMeta(sh);
         view.setItem(17, brusub);
-        ItemStack con = view.getItem(27);
-        ItemMeta ver = con.getItemMeta();
-        ver.setData(DataComponentTypes.CUSTOM_NAME, Component.text(configuredSonic.getConversion().getName()));
+        ItemStack conversion = view.getItem(27);
+        conversion.setData(DataComponentTypes.CUSTOM_NAME, Component.text(configuredSonic.getConversion().getName()));
         ItemStack consub = ItemStack.of(configuredSonic.getConversion().getMaterial());
-        consub.setItemMeta(ver);
         view.setItem(27, consub);
     }
 
     private void toggleOption(InventoryView view, int slot) {
         ItemStack option = view.getItem(slot);
-        ItemMeta im = option.getItemMeta();
         Material cmd = option.getType();
         Material m = Material.LIME_WOOL;
         switch (cmd) {
             case LIME_WOOL -> {
                 // disable
-                is.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Disabled"));
+                option.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Disabled"));
                 m = Material.RED_WOOL;
             }
             case RED_WOOL -> {
                 // enable
-                is.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Enabled"));
+                option.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Enabled"));
             }
             default -> m = Material.RED_WOOL; // not upgraded, do nothing
         }
         ItemStack sub = ItemStack.of(m);
-        sub.setItemMeta(im);
+        sub.copyDataFrom(option, dataComponentType -> true);
         view.setItem(slot, sub);
     }
 
-    private ConfiguredSonic getConfiguredSonic(UUID sonic_uuid, ItemMeta im) {
+    private ConfiguredSonic getConfiguredSonic(UUID sonic_uuid, ItemLore im) {
         ResultSetConfiguredSonic rscs = new ResultSetConfiguredSonic(plugin, sonic_uuid);
         if (rscs.resultSet()) {
             ConfiguredSonic configuredSonic = rscs.getConfiguredSonic();
             // check if there are any new upgrades
-            List<Component> lore = im.lore();
-            if (lore != null) {
+            if (im != null) {
+                List<Component> lore = im.lines();
                 for (int i = 1; i < lore.size(); i++) {
                     String upgrade = ComponentUtils.stripColour(lore.get(i));
                     switch (upgrade) {
@@ -205,7 +184,8 @@ public class SonicConfiguratorMenuListener extends TARDISMenuListener {
                         case "Knockback Upgrade" -> configuredSonic.setKnockback(SonicConfig.ENABLED);
                         case "Brush Upgrade" -> configuredSonic.setBrush(SonicConfig.ENABLED);
                         case "Conversion Upgrade" -> configuredSonic.setConversion(SonicConfig.ENABLED);
-                        default -> { }
+                        default -> {
+                        }
                     }
                 }
             }
@@ -290,13 +270,11 @@ public class SonicConfiguratorMenuListener extends TARDISMenuListener {
         // set sonic lore
         ItemStack sonic = view.getItem(45);
         if (TARDISStaticUtils.isSonic(sonic)) {
-            ItemMeta im = sonic.getItemMeta();
             if (upgrades.size() > 1) {
-                im.lore(upgrades);
+                sonic.setData(DataComponentTypes.LORE, ItemLore.lore(upgrades));
             } else {
-                im.lore(null);
+                sonic.unsetData(DataComponentTypes.LORE);
             }
-            sonic.setItemMeta(im);
         }
     }
 
@@ -313,25 +291,23 @@ public class SonicConfiguratorMenuListener extends TARDISMenuListener {
         // get sonic in slot 45
         ItemStack is = view.getItem(45);
         if (TARDISStaticUtils.isSonic(is)) {
-            ItemMeta im = is.getItemMeta();
             // get the upgrades from the lore
-            List<Component> lore = im.lore();
+            ItemLore lore = is.getData(DataComponentTypes.LORE);
             UUID uuid = player.getUniqueId();
-            int bio = lore != null && lore.contains(Component.text("Bio-scanner Upgrade")) ? 1 : 0;
-            int diamond = lore != null && lore.contains(Component.text("Diamond Upgrade")) ? 1 : 0;
-            int emerald = lore != null && lore.contains(Component.text("Emerald Upgrade")) ? 1 : 0;
-            int redstone = lore != null && lore.contains(Component.text("Redstone Upgrade")) ? 1 : 0;
-            int painter = lore != null && lore.contains(Component.text("Painter Upgrade")) ? 1 : 0;
-            int ignite = lore != null && lore.contains(Component.text("Ignite Upgrade")) ? 1 : 0;
-            int arrow = lore != null && lore.contains(Component.text("Pickup Arrows Upgrade")) ? 1 : 0;
-            int knockback = lore != null && lore.contains(Component.text("Knockback Upgrade")) ? 1 : 0;
-            int brush = lore != null && lore.contains(Component.text("Brush Upgrade")) ? 1 : 0;
-            int conversion = lore != null && lore.contains(Component.text("Conversion Upgrade")) ? 1 : 0;
+            int bio = lore != null && lore.lines().contains(Component.text("Bio-scanner Upgrade")) ? 1 : 0;
+            int diamond = lore != null && lore.lines().contains(Component.text("Diamond Upgrade")) ? 1 : 0;
+            int emerald = lore != null && lore.lines().contains(Component.text("Emerald Upgrade")) ? 1 : 0;
+            int redstone = lore != null && lore.lines().contains(Component.text("Redstone Upgrade")) ? 1 : 0;
+            int painter = lore != null && lore.lines().contains(Component.text("Painter Upgrade")) ? 1 : 0;
+            int ignite = lore != null && lore.lines().contains(Component.text("Ignite Upgrade")) ? 1 : 0;
+            int arrow = lore != null && lore.lines().contains(Component.text("Pickup Arrows Upgrade")) ? 1 : 0;
+            int knockback = lore != null && lore.lines().contains(Component.text("Knockback Upgrade")) ? 1 : 0;
+            int brush = lore != null && lore.lines().contains(Component.text("Brush Upgrade")) ? 1 : 0;
+            int conversion = lore != null && lore.lines().contains(Component.text("Conversion Upgrade")) ? 1 : 0;
             // create a new UUID
             UUID sonic_uuid = UUID.randomUUID();
             // set the UUID to the sonic
-            im.getPersistentDataContainer().set(plugin.getSonicUuidKey(), plugin.getPersistentDataTypeUUID(), sonic_uuid);
-            is.setItemMeta(im);
+            is.editPersistentDataContainer(pdc ->pdc.set(plugin.getSonicUuidKey(), plugin.getPersistentDataTypeUUID(), sonic_uuid));
             // prepare data for database insertion
             HashMap<String, Object> set = new HashMap<>();
             set.put("uuid", uuid.toString());

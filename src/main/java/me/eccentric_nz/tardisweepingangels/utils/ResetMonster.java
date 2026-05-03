@@ -146,7 +146,7 @@ public class ResetMonster {
                 case STRAX -> {
                     PigZombie strax = (PigZombie) a;
                     strax.setAngry(false);
-                    a.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Strax"));
+                    a.customName(Component.text("Strax"));
                 }
                 default -> { }
             }

@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.commands.tardis;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISAbandonEvent;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
@@ -52,7 +53,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -277,7 +277,6 @@ public class AbandonCommand {
                         for (Entity e : world.getNearbyEntities(current.location(), 1.1d, 1.1d, 1.1d)) {
                             if (e instanceof ArmorStand stand) {
                                 ItemStack is = stand.getItem(EquipmentSlot.HEAD);
-                                ItemMeta im = is.getItemMeta();
                                 String pb = "";
                                 switch (preset) {
                                     case WEEPING_ANGEL -> pb = "Weeping Angel";
@@ -295,8 +294,7 @@ public class AbandonCommand {
                                     default -> pb = "Police Box";
                                 }
                                 Component custom = Component.text("Abandoned " + pb);
-                                im.customName(custom);
-                                is.setItemMeta(im);
+                                is.setData(DataComponentTypes.CUSTOM_NAME, custom);
                                 EntityEquipment ee = stand.getEquipment();
                                 ee.setHelmet(is, true);
                                 stand.customName(custom);

@@ -1,16 +1,16 @@
 package me.eccentric_nz.TARDIS.rooms.laundry;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUIChameleonConstructor;
 import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
-import me.eccentric_nz.TARDIS.custommodels.GUIMap;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
 
@@ -39,27 +39,21 @@ public class WashingMachineInventory implements InventoryHolder {
         ItemStack[] items = new ItemStack[27];
         // 18 info
         ItemStack info = ItemStack.of(GUIChameleonConstructor.INFO.material(), 1);
-        ItemMeta io = info.getItemMeta();
-        io.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getChameleonGuis().getString("INFO", "Info")));
-        io.lore(List.of(
+        info.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getChameleonGuis().getString("INFO", "Info")));
+        info.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(
                 Component.text("Place items you want to launder"),
                 Component.text("in the first row, then click"),
                 Component.text("'Wash' to remove armour trims"),
                 Component.text("or 'Bleach' to remove dye colours.")
-        ));
-        info.setItemMeta(io);
+        )));
         items[18] = info;
         // 21 wash trims
         ItemStack wash = ItemStack.of(Material.CAULDRON, 1);
-        ItemMeta trim = wash.getItemMeta();
-        trim.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Wash"));
-        wash.setItemMeta(trim);
+        wash.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Wash"));
         items[21] = wash;
         // 23 remove dye
         ItemStack remove = ItemStack.of(Material.CAULDRON, 1);
-        ItemMeta dye = remove.getItemMeta();
-        dye.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Bleach"));
-        remove.setItemMeta(dye);
+        remove.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Bleach"));
         items[23] = remove;
         // 26 close
         items[26] = GUIItemFactory.close();

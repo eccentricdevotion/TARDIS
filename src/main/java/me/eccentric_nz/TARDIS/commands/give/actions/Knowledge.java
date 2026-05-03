@@ -16,16 +16,18 @@
  */
 package me.eccentric_nz.TARDIS.commands.give.actions;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.give.Give;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import net.kyori.adventure.key.Key;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.KnowledgeBookMeta;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -40,7 +42,7 @@ public class Knowledge {
 
     public void giveAll(CommandSender sender, Player player) {
         ItemStack book = ItemStack.of(Material.KNOWLEDGE_BOOK, 1);
-        KnowledgeBookMeta kbm = (KnowledgeBookMeta) book.getItemMeta();
+        List<Key> kbm = new ArrayList<>();
         for (Map.Entry<String, String> map : Give.items.entrySet()) {
             if (!map.getValue().isEmpty()) {
                 switch (map.getKey()) {
@@ -48,24 +50,24 @@ public class Knowledge {
                         List<String> colours = List.of("white", "orange", "magenta", "light_blue", "yellow", "lime", "pink", "grey", "light_grey", "cyan", "purple", "blue", "brown", "green", "red", "black");
                         colours.forEach((bt) -> {
                             NamespacedKey nsk = new NamespacedKey(plugin, bt + "_bow_tie");
-                            kbm.addRecipe(nsk);
+                            kbm.add(nsk);
                         });
                     }
                     case "jelly-baby" -> {
                         List<String> flavours = List.of("vanilla", "orange", "watermelon", "bubblegum", "lemon", "lime", "strawberry", "earl_grey", "vodka", "island_punch", "grape", "blueberry", "cappuccino", "apple", "raspberry", "licorice");
                         flavours.forEach((jelly) -> {
                             NamespacedKey nsk = new NamespacedKey(plugin, jelly + "_jelly_baby");
-                            kbm.addRecipe(nsk);
+                            kbm.add(nsk);
                         });
                     }
                     default -> {
                         NamespacedKey nsk = new NamespacedKey(plugin, map.getValue().replace(" ", "_").toLowerCase(Locale.ROOT));
-                        kbm.addRecipe(nsk);
+                        kbm.add(nsk);
                     }
                 }
             }
         }
-        book.setItemMeta(kbm);
+        book.setData(DataComponentTypes.RECIPES, kbm);
         player.getInventory().addItem(book);
         player.updateInventory();
         plugin.getMessenger().send(player, TardisModule.TARDIS, "GIVE_KNOWLEDGE", sender.getName(), "all TARDIS recipes");
@@ -74,14 +76,14 @@ public class Knowledge {
     public void give(CommandSender sender, String item, Player player) {
         String item_to_give = (item.endsWith("_seed")) ? item : Give.items.get(item);
         ItemStack book = ItemStack.of(Material.KNOWLEDGE_BOOK, 1);
-        KnowledgeBookMeta kbm = (KnowledgeBookMeta) book.getItemMeta();
+        List<Key> kbm = new ArrayList<>();
         String message = item_to_give;
         switch (item) {
             case "bow-tie" -> {
                 List<String> colours = List.of("white", "orange", "magenta", "light_blue", "yellow", "lime", "pink", "grey", "light_grey", "cyan", "purple", "blue", "brown", "green", "red", "black");
                 colours.forEach((bt) -> {
                     NamespacedKey nsk = new NamespacedKey(plugin, bt + "_bow_tie");
-                    kbm.addRecipe(nsk);
+                    kbm.add(nsk);
                 });
                 message = "Bow Ties";
             }
@@ -89,16 +91,16 @@ public class Knowledge {
                 List<String> flavours = List.of("vanilla", "orange", "watermelon", "bubblegum", "lemon", "lime", "strawberry", "earl_grey", "vodka", "island_punch", "grape", "blueberry", "cappuccino", "apple", "raspberry", "licorice");
                 flavours.forEach((jelly) -> {
                     NamespacedKey nsk = new NamespacedKey(plugin, jelly + "_jelly_baby");
-                    kbm.addRecipe(nsk);
+                    kbm.add(nsk);
                 });
                 message = "Jelly Babies";
             }
             default -> {
                 NamespacedKey nsk = new NamespacedKey(plugin, item_to_give.replace(" ", "_").toLowerCase(Locale.ROOT));
-                kbm.addRecipe(nsk);
+                kbm.add(nsk);
             }
         }
-        book.setItemMeta(kbm);
+        book.setData(DataComponentTypes.RECIPES, kbm);
         player.getInventory().addItem(book);
         player.updateInventory();
         plugin.getMessenger().send(player, TardisModule.TARDIS, "GIVE_KNOWLEDGE", sender.getName(), message);

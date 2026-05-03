@@ -62,12 +62,10 @@ import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.Vector;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.UUID;
 
 /**
@@ -92,17 +90,13 @@ public class TARDISDisplayBlockListener implements Listener {
         ItemStack is = player.getInventory().getItemInMainHand();
         ItemStack single = is.clone();
         single.setAmount(1);
-        if (!is.hasItemMeta()) {
+        if (!is.hasData(DataComponentTypes.CUSTOM_NAME) || !is.getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.STRING)) {
             return;
         }
-        ItemMeta im = is.getItemMeta();
-        if (!im.hasCustomName() || !im.getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.STRING)) {
+        if (ComponentUtils.endsWith(is.getData(DataComponentTypes.CUSTOM_NAME), "TARDIS Seed Block") || ComponentUtils.endsWith(is.getData(DataComponentTypes.CUSTOM_NAME), "Console")) {
             return;
         }
-        if (ComponentUtils.endsWith(im.customName(), "TARDIS Seed Block") || ComponentUtils.endsWith(im.customName(), "Console")) {
-            return;
-        }
-        String key = im.getPersistentDataContainer().get(plugin.getCustomBlockKey(), PersistentDataType.STRING);
+        String key = is.getPersistentDataContainer().get(plugin.getCustomBlockKey(), PersistentDataType.STRING);
         NamespacedKey model = new NamespacedKey(plugin, key);
         TARDISDisplayItem which = TARDISDisplayItemRegistry.getByModel(model);
         if (which == null) {
@@ -228,15 +222,11 @@ public class TARDISDisplayBlockListener implements Listener {
                     for (Entity e : l.getWorld().getNearbyEntities(block.getBoundingBox().expand(0.1d), (d) -> d.getType() == EntityType.ITEM_DISPLAY)) {
                         if (e instanceof ItemDisplay display) {
                             ItemStack is = display.getItemStack();
-                            if (is != null) {
-                                if (is.hasItemMeta()) {
-                                    if (is.getItemMeta().getPersistentDataContainer().has(plugin.getDestroyKey(), PersistentDataType.INTEGER)) {
-                                        breaking = display;
-                                    }
-                                    if (is.getItemMeta().getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.STRING)) {
-                                        fake = display;
-                                    }
-                                }
+                            if (is.getPersistentDataContainer().has(plugin.getDestroyKey(), PersistentDataType.INTEGER)) {
+                                breaking = display;
+                            }
+                            if (is.getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.STRING)) {
+                                fake = display;
                             }
                         }
                     }
@@ -245,11 +235,7 @@ public class TARDISDisplayBlockListener implements Listener {
             }
             if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) && Tag.ITEMS_DECORATED_POT_SHERDS.isTagged(player.getInventory().getItemInMainHand().getType())) {
                 ItemStack dis = player.getInventory().getItemInMainHand();
-                if (!dis.hasItemMeta()) {
-                    return;
-                }
-                ItemMeta dim = dis.getItemMeta();
-                if (!dim.hasItemModel() || !dim.getItemModel().getKey().contains("_closed")) {
+                if (!dis.hasData(DataComponentTypes.ITEM_MODEL) || !dis.getData(DataComponentTypes.ITEM_MODEL).value().contains("_closed")) {
                     return;
                 }
                 // set a door
@@ -321,10 +307,8 @@ public class TARDISDisplayBlockListener implements Listener {
                     for (Entity e : l.getWorld().getNearbyEntities(l, 0.55d, 0.55d, 0.55d, (d) -> d.getType() == EntityType.ITEM_DISPLAY)) {
                         if (e instanceof ItemDisplay item) {
                             ItemStack stack = item.getItemStack();
-                            if (stack != null && stack.hasItemMeta()) {
-                                if (stack.getItemMeta().getPersistentDataContainer().has(plugin.getDestroyKey(), PersistentDataType.INTEGER)) {
-                                    breaking = item;
-                                }
+                            if (stack.getPersistentDataContainer().has(plugin.getDestroyKey(), PersistentDataType.INTEGER)) {
+                                breaking = item;
                             }
                         }
                     }
@@ -390,8 +374,7 @@ public class TARDISDisplayBlockListener implements Listener {
                                 }
                                 ItemStack itemStack = display.getItemStack();
                                 if (itemStack != null) {
-                                    ItemMeta im = itemStack.getItemMeta();
-                                    boolean open = !im.getItemModel().getKey().contains("_closed");
+                                    boolean open = !itemStack.getData(DataComponentTypes.ITEM_MODEL).value().contains("_closed");
                                     new DoorAnimator(plugin, display).animate(open);
                                     if (open) {
                                         // close inner
@@ -478,8 +461,7 @@ public class TARDISDisplayBlockListener implements Listener {
         if (is == null) {
             return false;
         }
-        ItemMeta im = is.getItemMeta();
-        String cmd = im.hasItemModel() ? im.getItemModel().getKey() : "null";
+        String cmd = is.hasData(DataComponentTypes.ITEM_MODEL) ? is.getData(DataComponentTypes.ITEM_MODEL).value() : "null";
         return cmd.endsWith("_open");
     }
 
@@ -488,14 +470,9 @@ public class TARDISDisplayBlockListener implements Listener {
     }
 
     private boolean isRedstoneSonic(ItemStack is) {
-        if (is.hasItemMeta()) {
-            ItemMeta im = is.getItemMeta();
-            if (im.hasCustomName()) {
-                if (ComponentUtils.endsWith(im.customName(), "Sonic Screwdriver")) {
-                    List<Component> lore = im.lore();
-                    return lore != null && lore.contains(Component.text("Redstone Upgrade"));
-                }
-            }
+        if (ComponentUtils.isNamed(is, "Sonic Screwdriver")) {
+            ItemLore lore = is.getData(DataComponentTypes.LORE);
+            return lore != null && lore.lines().contains(Component.text("Redstone Upgrade"));
         }
         return false;
     }
@@ -527,7 +504,7 @@ public class TARDISDisplayBlockListener implements Listener {
             boolean isSiege = SiegeListener.isSiegeCube(fake.getItemStack());
             ItemStack is = breaking.getItemStack();
             if (is != null) {
-                int destroy = is.getItemMeta().getPersistentDataContainer().get(plugin.getDestroyKey(), PersistentDataType.INTEGER);
+                int destroy = is.getPersistentDataContainer().get(plugin.getDestroyKey(), PersistentDataType.INTEGER);
                 if (destroy == 9) {
                     TARDISDisplayItem tdi = TARDISDisplayItemUtils.get(fake);
                     if (player.getGameMode().equals(GameMode.SURVIVAL) && fake.getItemStack() != null) {
@@ -568,8 +545,7 @@ public class TARDISDisplayBlockListener implements Listener {
                                         return;
                                     }
                                     ItemStack cube = item.getItemStack();
-                                    ItemMeta im = cube.getItemMeta();
-                                    im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, TARDISBlockDisplayItem.SIEGE_CUBE.getCustomModel().getKey());
+                                    cube.editPersistentDataContainer(pdc -> pdc.set(plugin.getCustomBlockKey(), PersistentDataType.STRING, TARDISBlockDisplayItem.SIEGE_CUBE.getCustomModel().getKey()));
                                     ItemLore.Builder lore = ItemLore.lore();
                                     lore.addLine(Component.text("Time Lord: " + rs.getTardis().getOwner()));
                                     lore.addLine(Component.text("ID: " + id));
@@ -587,7 +563,6 @@ public class TARDISDisplayBlockListener implements Listener {
                                         });
                                     }
                                     is.setData(DataComponentTypes.LORE, lore.build());
-                                    cube.setItemMeta(im);
                                     item.setItemStack(cube);
                                     // track it
                                     plugin.getTrackerKeeper().getIsSiegeCube().add(id);
