@@ -533,7 +533,9 @@ public class DebugPopulator {
     private void setItemFromMaterial(Location location, Material material, NamespacedKey model, Component name) {
         location.getBlock().setType(Material.WHITE_CONCRETE);
         ItemStack is = ItemStack.of(material, 1);
-        is.setData(DataComponentTypes.ITEM_MODEL, model);
+        if (model != null) {
+            is.setData(DataComponentTypes.ITEM_MODEL, model);
+        }
         is.setData(DataComponentTypes.CUSTOM_NAME, name);
         ItemDisplay display = (ItemDisplay) location.getWorld().spawnEntity(location.clone().add(0.5d, 1.25d, 0.5d), EntityType.ITEM_DISPLAY);
         display.setItemStack(is);
