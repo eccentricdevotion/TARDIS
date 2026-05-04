@@ -16,15 +16,19 @@
  */
 package me.eccentric_nz.TARDIS.ARS;
 
+import io.papermc.paper.datacomponent.DataComponentType;
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.ItemLore;
 import io.papermc.paper.datacomponent.item.TooltipDisplay;
+import io.papermc.paper.registry.RegistryAccess;
+import io.papermc.paper.registry.RegistryKey;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.custommodels.GUIArs;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
@@ -135,8 +139,11 @@ public class ARSInventory implements InventoryHolder {
                 ItemStack room = ItemStack.of(Material.getMaterial(a.getMaterial()), 1);
                 room.setData(DataComponentTypes.CUSTOM_NAME, Component.text(a.getDescriptiveName()));
                 if (a == TARDISARS.APIARY) {
+                    DataComponentType beesComponent = RegistryAccess.registryAccess()
+                            .getRegistry(RegistryKey.DATA_COMPONENT_TYPE)
+                            .get(NamespacedKey.minecraft("bees"));
                     room.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
-                            .addHiddenComponents(DataComponentTypes.BLOCK_DATA)
+                            .addHiddenComponents(beesComponent, DataComponentTypes.BLOCK_DATA)
                             .build());
                 }
                 ItemLore.Builder lore = ItemLore.lore();

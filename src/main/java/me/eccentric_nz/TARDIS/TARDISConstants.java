@@ -41,7 +41,9 @@ public class TARDISConstants {
     /**
      * Item Display entity zero rotation angle for transformations
      */
-    public static final DataComponentType[] HIDE = new DataComponentType[]{DataComponentTypes.ATTRIBUTE_MODIFIERS, DataComponentTypes.UNBREAKABLE, DataComponentTypes.JUKEBOX_PLAYABLE};
+    public static final DataComponentType[] HIDE = new DataComponentType[]{
+            DataComponentTypes.ATTRIBUTE_MODIFIERS, DataComponentTypes.UNBREAKABLE,
+            DataComponentTypes.JUKEBOX_PLAYABLE, DataComponentTypes.BLOCK_DATA};
 
     /**
      * Item Display entity zero rotation angle for transformations

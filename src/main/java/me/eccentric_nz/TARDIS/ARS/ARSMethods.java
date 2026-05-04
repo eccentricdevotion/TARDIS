@@ -20,9 +20,12 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
+import io.papermc.paper.datacomponent.DataComponentType;
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.ItemLore;
 import io.papermc.paper.datacomponent.item.TooltipDisplay;
+import io.papermc.paper.registry.RegistryAccess;
+import io.papermc.paper.registry.RegistryKey;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.DamageUtility;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
@@ -35,6 +38,7 @@ import me.eccentric_nz.TARDIS.rooms.RoomRequiredLister;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
@@ -172,8 +176,11 @@ public class ARSMethods {
             }
             is.setData(DataComponentTypes.LORE, lore.build());
             if (room.equals("Apiary")) {
+                DataComponentType beesComponent = RegistryAccess.registryAccess()
+                        .getRegistry(RegistryKey.DATA_COMPONENT_TYPE)
+                        .get(NamespacedKey.minecraft("bees"));
                 is.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
-                        .addHiddenComponents(DataComponentTypes.BLOCK_DATA)
+                        .addHiddenComponents(beesComponent, DataComponentTypes.BLOCK_DATA)
                         .build());
             }
         } else {
