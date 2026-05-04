@@ -29,7 +29,6 @@ import me.eccentric_nz.tardischemistry.product.ProductBuilder;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
@@ -37,15 +36,12 @@ import org.bukkit.inventory.ItemStack;
 public class FormulaViewer implements InventoryHolder {
 
     private final TARDIS plugin;
-    private final Player player;
     private final ItemStack[] stack = new ItemStack[27];
-    private final Inventory inventory;
+    private Inventory inventory;
     private String formula;
 
-    public FormulaViewer(TARDIS plugin, Player player) {
+    public FormulaViewer(TARDIS plugin) {
         this.plugin = plugin;
-        this.player = player;
-        this.inventory = plugin.getServer().createInventory(this, 27, Component.text(formula.replace("_", " ") + " Formula", NamedTextColor.DARK_RED));
     }
 
     @Override
@@ -146,6 +142,7 @@ public class FormulaViewer implements InventoryHolder {
     private void showView() {
         // close
         stack[26] = GUIItemFactory.close();
+        inventory = plugin.getServer().createInventory(this, 27, Component.text(formula.replace("_", " ") + " Formula", NamedTextColor.DARK_RED));
         inventory.setContents(stack);
     }
 }

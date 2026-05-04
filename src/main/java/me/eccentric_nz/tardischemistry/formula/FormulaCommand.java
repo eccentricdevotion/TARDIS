@@ -32,7 +32,7 @@ public class FormulaCommand {
 
     public void show(Player player, String which) {
         // do stuff
-        FormulaViewer holder = new FormulaViewer(plugin, player);
+        FormulaViewer holder = new FormulaViewer(plugin);
         try {
             Compound compound = Compound.valueOf(which);
             holder.getCompoundFormula(compound);
