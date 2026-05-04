@@ -59,7 +59,6 @@ public class TARDISSonicMenuListener extends TARDISMenuListener {
         if (slot < 0 || slot > 35) {
             ClickType click = event.getClick();
             if (click.equals(ClickType.SHIFT_RIGHT) || click.equals(ClickType.SHIFT_LEFT) || click.equals(ClickType.DOUBLE_CLICK)) {
-                TARDIS.plugin.debug("TARDISonicMenuListener");
                 event.setCancelled(true);
             }
             return;
@@ -74,11 +73,9 @@ public class TARDISSonicMenuListener extends TARDISMenuListener {
                     return;
                 }
                 ItemStack choice = view.getItem(slot);
-                if (sonic.hasData(DataComponentTypes.ITEM_MODEL)) {
-                    sonic.unsetData(DataComponentTypes.ITEM_MODEL);
-                }
                 sonic.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
-                        .addFloats(choice.getData(DataComponentTypes.CUSTOM_MODEL_DATA).floats()));
+                        .addFloats(choice.getData(DataComponentTypes.CUSTOM_MODEL_DATA).floats())
+                        .build());
             }
             case 27 -> {
                 // get item on cursor
