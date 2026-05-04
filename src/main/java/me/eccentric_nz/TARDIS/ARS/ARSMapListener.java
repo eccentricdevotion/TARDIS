@@ -193,13 +193,12 @@ public class ARSMapListener extends ARSMethods implements Listener {
                 setMap(level - 27, east, south, playerUUID, view);
                 setLore(view, level, null);
                 map_data.put(playerUUID, md);
-                // get itemstack to change lore
+                // get item stack to change lore
                 int slot = ((row - south) * 9) + 4 + (col - east);
                 ItemStack is = view.getItem(slot);
-                // TODO check this
                 ItemStack sub = ItemStack.of(Material.SPECTRAL_ARROW);
-                is.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text(plugin.getLanguage().getString("ARS_MAP_HERE", "You are here!"))).build());
-                sub.copyDataFrom(is, dataComponentType -> true);
+                sub.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text(plugin.getLanguage().getString("ARS_MAP_HERE", "You are here!"))).build());
+                sub.setData(DataComponentTypes.CUSTOM_NAME, is.getData(DataComponentTypes.CUSTOM_NAME));
                 view.setItem(slot, sub);
             }
         } else {

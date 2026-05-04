@@ -93,7 +93,7 @@ public class ARSListener extends ARSMethods implements Listener {
                     selected_slot.put(playerUUID, slot);
                 }
             }
-            case 10 ->loadMap(view, playerUUID, true); // load map
+            case 10 -> loadMap(view, playerUUID, true); // load map
             case 12 -> {
                 // reconfigure
                 if (!plugin.getBuildKeeper().getRoomProgress().containsKey(player.getUniqueId())) {

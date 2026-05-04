@@ -369,7 +369,7 @@ public class ARSMethods {
      * @param playerUUID the UUID of the player using the GUI
      */
     public void loadMap(InventoryView view, UUID playerUUID, boolean check) {
-        if (check && view.getItem(10).hasData(DataComponentTypes.LORE)) {
+        if (check && view.getItem(10).getData(DataComponentTypes.LORE).lines().size() > 0) {
             setLore(view, 10, plugin.getLanguage().getString("ARS_MAP_ERROR", "Map already loaded!"));
             return;
         }
