@@ -16,14 +16,19 @@
  */
 package me.eccentric_nz.TARDIS.mobfarming;
 
+import io.papermc.paper.datacomponent.DataComponentType;
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.ItemLore;
+import io.papermc.paper.datacomponent.item.TooltipDisplay;
+import io.papermc.paper.registry.RegistryAccess;
+import io.papermc.paper.registry.RegistryKey;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUIFarming;
 import me.eccentric_nz.TARDIS.database.data.FarmPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetFarmingPrefs;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
+import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
@@ -116,6 +121,14 @@ public class FarmingInventory implements InventoryHolder {
             if (f != GUIFarming.ON && f != GUIFarming.OFF) {
                 ItemStack is = ItemStack.of(f.getMaterial(), 1);
                 is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(f.getMob()));
+                if (f == GUIFarming.APIARY) {
+                    DataComponentType beesComponent = RegistryAccess.registryAccess()
+                            .getRegistry(RegistryKey.DATA_COMPONENT_TYPE)
+                            .get(NamespacedKey.minecraft("bees"));
+                    is.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
+                            .addHiddenComponents(beesComponent, DataComponentTypes.BLOCK_DATA)
+                            .build());
+                }
                 if (f != GUIFarming.CLOSE) {
                     is.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text(f.getRoomName())).build());
                 }
