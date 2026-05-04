@@ -334,6 +334,7 @@ public class DebugPopulator {
             EntityEquipment ee = as.getEquipment();
             ItemStack head = ee.getHelmet();
             head.setData(DataComponentTypes.ITEM_MODEL, key);
+            head.setData(DataComponentTypes.CUSTOM_NAME, Component.text(key.getKey()));
             ee.setHelmet(head);
             // remember item stack for chest population
             stacks.add(head);
@@ -354,11 +355,23 @@ public class DebugPopulator {
                     Material dye = BuilderUtility.getMaterialForArmourStand(preset, -1, true);
                     ItemStack head = ItemStack.of(dye, 1);
                     switch (z) {
-                        case -4, -20 -> head.setData(DataComponentTypes.ITEM_MODEL, preset.getClosed());
-                        case -8, -24 -> head.setData(DataComponentTypes.ITEM_MODEL, preset.getOpen());
-                        case -12, -28 -> head.setData(DataComponentTypes.ITEM_MODEL, preset.getStained());
+                        case -4, -20 -> {
+                            head.setData(DataComponentTypes.ITEM_MODEL, preset.getClosed());
+                            head.setData(DataComponentTypes.CUSTOM_NAME, Component.text(preset.getDisplayName() + " closed"));
+                        }
+                        case -8, -24 -> {
+                            head.setData(DataComponentTypes.ITEM_MODEL, preset.getOpen());
+                            head.setData(DataComponentTypes.CUSTOM_NAME, Component.text(preset.getDisplayName() + " open"));
+                        }
+                        case -12, -28 -> {
+                            head.setData(DataComponentTypes.ITEM_MODEL, preset.getStained());
+                            head.setData(DataComponentTypes.CUSTOM_NAME, Component.text(preset.getDisplayName() + " stained"));
+                        }
                         // -16 & -32
-                        default -> head.setData(DataComponentTypes.ITEM_MODEL, preset.getGlass());
+                        default -> {
+                            head.setData(DataComponentTypes.ITEM_MODEL, preset.getGlass());
+                            head.setData(DataComponentTypes.CUSTOM_NAME, Component.text(preset.getDisplayName() + " glass"));
+                        }
                     }
                     ee.setHelmet(head);
                     as.setInvisible(true);
@@ -389,6 +402,7 @@ public class DebugPopulator {
                     default -> key = new NamespacedKey(plugin, TARDISStringUtils.toUnderscoredLowercase(c) + "_glass");
                 }
                 head.setData(DataComponentTypes.ITEM_MODEL, key);
+                head.setData(DataComponentTypes.CUSTOM_NAME, Component.text(key.value()));
                 ee.setHelmet(head);
                 as.setInvisible(true);
                 // remember item stack for chest population
@@ -413,6 +427,7 @@ public class DebugPopulator {
             // set item
             ItemStack is = ItemStack.of(Material.LIGHT_GRAY_DYE);
             is.setData(DataComponentTypes.ITEM_MODEL, rotor.offModel());
+            is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(rotor.name() + "time rotor"));
             frame.setItem(is);
             // lock
             frame.setFixed(true);
@@ -440,6 +455,7 @@ public class DebugPopulator {
                 Material material = (tdi.toString().contains("OPEN")) ? tdi.getMaterial() : tdi.getCraftMaterial();
                 ItemStack is = ItemStack.of(material);
                 is.setData(DataComponentTypes.ITEM_MODEL, tdi.getCustomModel());
+                is.setData(DataComponentTypes.CUSTOM_NAME, Component.text("door " + tdi.getName()));
                 display.setItemStack(is);
                 // loop x z - spaced over 24 x 24 with empty blocks between
                 x -= 3;
@@ -460,6 +476,7 @@ public class DebugPopulator {
             Material material = d.getMaterial();
             ItemStack is = ItemStack.of(material);
             is.setData(DataComponentTypes.ITEM_MODEL, new NamespacedKey(plugin, key + "_closed"));
+            is.setData(DataComponentTypes.CUSTOM_NAME, Component.text("door " + d.getName() + " closed"));
             // remember item stack for chest population
             stacks.add(is);
             c.setItemStack(is);
@@ -473,6 +490,7 @@ public class DebugPopulator {
             ItemDisplay o = (ItemDisplay) world.spawnEntity(open, EntityType.ITEM_DISPLAY);
             ItemStack ois = ItemStack.of(material);
             ois.setData(DataComponentTypes.ITEM_MODEL, new NamespacedKey(plugin, key + "_open"));
+            ois.setData(DataComponentTypes.CUSTOM_NAME, Component.text("door " + d.getName() + " open"));
             o.setItemStack(ois);
             // remember item stack for chest population
             stacks.add(ois);
@@ -487,6 +505,7 @@ public class DebugPopulator {
                 ItemDisplay e = (ItemDisplay) world.spawnEntity(extra, EntityType.ITEM_DISPLAY);
                 ItemStack eis = ItemStack.of(material);
                 eis.setData(DataComponentTypes.ITEM_MODEL, new NamespacedKey(plugin, key + "_extra"));
+                eis.setData(DataComponentTypes.CUSTOM_NAME, Component.text("door " + d.getName() + " extra"));
                 e.setItemStack(eis);
                 // remember item stack for chest population
                 stacks.add(eis);
@@ -595,6 +614,7 @@ public class DebugPopulator {
             // set item
             ItemStack is = ItemStack.of(le.getMaterial());
             is.setData(DataComponentTypes.ITEM_MODEL, le.getModel());
+            is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(le.getName()));
             frame.setItem(is);
             // lock
             frame.setFixed(true);
