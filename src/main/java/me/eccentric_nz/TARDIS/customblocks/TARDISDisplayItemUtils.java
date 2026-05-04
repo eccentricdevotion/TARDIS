@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.database.data.Lamp;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetLamps;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import net.kyori.adventure.text.Component;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Levelled;
@@ -248,6 +249,8 @@ public class TARDISDisplayItemUtils {
         ItemStack is = ItemStack.of(tdi.getMaterial(), 1);
         if (tdi.isSeed()) {
             is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toGold(tdi.getDisplayName()));
+        } else if (tdi.isPipe() || tdi.isVariable()) {
+            is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(tdi.getDisplayName()));
         } else {
             is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(tdi.getDisplayName()));
         }
@@ -275,6 +278,8 @@ public class TARDISDisplayItemUtils {
         ItemStack is = ItemStack.of(tdi.getMaterial(), 1);
         if (tdi.isSeed()) {
             is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toGold(tdi.getDisplayName()));
+        } else if (tdi.isPipe() || tdi.isVariable()) {
+            is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(tdi.getDisplayName()));
         } else {
             is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(tdi.getDisplayName()));
         }
