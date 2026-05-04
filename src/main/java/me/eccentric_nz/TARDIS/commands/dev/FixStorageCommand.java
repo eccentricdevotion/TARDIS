@@ -20,6 +20,7 @@ import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.CustomModelData;
 import io.papermc.paper.datacomponent.item.TooltipDisplay;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.advanced.SerializeInventory;
 import me.eccentric_nz.TARDIS.custommodels.keys.CircuitVariant;
 import me.eccentric_nz.TARDIS.enumeration.Storage;
@@ -62,8 +63,7 @@ public class FixStorageCommand {
                         }
                         is.unsetData(DataComponentTypes.ITEM_MODEL);
                         is.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
-                                .addHiddenComponents(DataComponentTypes.ATTRIBUTE_MODIFIERS)
-                                .hideTooltip(true)
+                                .addHiddenComponents(TARDISConstants.HIDE)
                                 .build());
                     }
                 }

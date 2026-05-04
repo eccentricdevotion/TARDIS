@@ -20,6 +20,7 @@ import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.ItemLore;
 import io.papermc.paper.datacomponent.item.TooltipDisplay;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
@@ -127,8 +128,7 @@ public class ItemCommand {
                                         is.unsetData(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE);
                                     }
                                     is.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
-                                            .addHiddenComponents(DataComponentTypes.ATTRIBUTE_MODIFIERS)
-                                            .hideTooltip(true)
+                                            .addHiddenComponents(TARDISConstants.HIDE)
                                             .build());
                                 }
                                 i++;

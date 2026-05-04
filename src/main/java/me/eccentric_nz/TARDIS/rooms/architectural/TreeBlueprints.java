@@ -4,6 +4,7 @@ import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.ItemLore;
 import io.papermc.paper.datacomponent.item.TooltipDisplay;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.BlueprintRoom;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
@@ -46,8 +47,7 @@ public class TreeBlueprints {
                 is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("TARDIS Blueprint Disk"));
                 is.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text(TARDISStringUtils.capitalise(room.toString()))).build());
                 is.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
-                        .addHiddenComponents(DataComponentTypes.ATTRIBUTE_MODIFIERS)
-                        .hideTooltip(true)
+                        .addHiddenComponents(TARDISConstants.HIDE)
                         .build());
                 return is;
             }

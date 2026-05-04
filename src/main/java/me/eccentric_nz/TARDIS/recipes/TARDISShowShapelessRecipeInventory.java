@@ -23,6 +23,7 @@ import io.papermc.paper.datacomponent.item.TooltipDisplay;
 import io.papermc.paper.registry.RegistryAccess;
 import io.papermc.paper.registry.RegistryKey;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.custommodels.keys.SonicVariant;
 import me.eccentric_nz.TARDIS.enumeration.RecipeCategory;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
@@ -80,8 +81,7 @@ public class TARDISShowShapelessRecipeInventory implements InventoryHolder {
             if (item.getType().equals(Material.MUSIC_DISC_STRAD)) {
                 item.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Blank Storage Disk"));
                 item.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
-                        .addHiddenComponents(DataComponentTypes.ATTRIBUTE_MODIFIERS)
-                        .hideTooltip(true)
+                        .addHiddenComponents(TARDISConstants.HIDE)
                         .build());
             }
             if (item.getType().equals(Material.BLAZE_ROD)) {
@@ -96,8 +96,7 @@ public class TARDISShowShapelessRecipeInventory implements InventoryHolder {
         result.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(str));
         if (str.equals("Blank Storage Disk") || str.equals("Save Storage Disk") || str.equals("Preset Storage Disk") || str.equals("Biome Storage Disk") || str.equals("Player Storage Disk") || str.equals("Authorised Control Disk")) {
             result.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
-                    .addHiddenComponents(DataComponentTypes.ATTRIBUTE_MODIFIERS)
-                    .hideTooltip(true)
+                    .addHiddenComponents(TARDISConstants.HIDE)
                     .build());
         }
         RecipeItem recipeItem = RecipeItem.getByName(str);

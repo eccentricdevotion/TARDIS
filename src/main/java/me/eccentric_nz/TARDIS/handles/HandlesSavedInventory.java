@@ -20,6 +20,7 @@ import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.ItemLore;
 import io.papermc.paper.datacomponent.item.TooltipDisplay;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
 import me.eccentric_nz.TARDIS.database.data.Program;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPrograms;
@@ -85,8 +86,7 @@ class HandlesSavedInventory implements InventoryHolder {
                     )));
                 }
                 is.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
-                        .addHiddenComponents(DataComponentTypes.ATTRIBUTE_MODIFIERS)
-                        .hideTooltip(true)
+                        .addHiddenComponents(TARDISConstants.HIDE)
                         .build());
                 stack[i] = is;
                 i++;

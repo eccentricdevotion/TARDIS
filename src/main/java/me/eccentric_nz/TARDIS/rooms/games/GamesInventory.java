@@ -4,6 +4,7 @@ import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.ItemLore;
 import io.papermc.paper.datacomponent.item.TooltipDisplay;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.custommodels.GUIChameleonConstructor;
 import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
 import net.kyori.adventure.text.Component;
@@ -54,8 +55,7 @@ public class GamesInventory implements InventoryHolder {
         ItemStack connect = ItemStack.of(Material.MUSIC_DISC_OTHERSIDE, 1);
         connect.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Connect 4"));
         connect.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
-                .addHiddenComponents(DataComponentTypes.ATTRIBUTE_MODIFIERS)
-                .hideTooltip(true)
+                .addHiddenComponents(TARDISConstants.HIDE)
                 .build());
         items[1] = connect;
         // pong & tetris require tardis_zero_room world
@@ -65,8 +65,7 @@ public class GamesInventory implements InventoryHolder {
             ItemStack pong = ItemStack.of(Material.MUSIC_DISC_OTHERSIDE, 1);
             pong.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Pong"));
             pong.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
-                    .addHiddenComponents(DataComponentTypes.ATTRIBUTE_MODIFIERS)
-                    .hideTooltip(true)
+                    .addHiddenComponents(TARDISConstants.HIDE)
                     .build());
             items[2] = pong;
         }
@@ -74,16 +73,14 @@ public class GamesInventory implements InventoryHolder {
         ItemStack stonemagmaice = ItemStack.of(Material.MUSIC_DISC_OTHERSIDE, 1);
         stonemagmaice.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Stone Magma Ice"));
         stonemagmaice.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
-                .addHiddenComponents(DataComponentTypes.ATTRIBUTE_MODIFIERS)
-                .hideTooltip(true)
+                .addHiddenComponents(TARDISConstants.HIDE)
                 .build());
         items[3] = stonemagmaice;
         // 4 tic tac toe
         ItemStack tictactoe = ItemStack.of(Material.MUSIC_DISC_OTHERSIDE, 1);
         tictactoe.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Tic Tac Toe"));
         tictactoe.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
-                .addHiddenComponents(DataComponentTypes.ATTRIBUTE_MODIFIERS)
-                .hideTooltip(true)
+                .addHiddenComponents(TARDISConstants.HIDE)
                 .build());
         items[4] = tictactoe;
         if (zero) {
@@ -91,8 +88,7 @@ public class GamesInventory implements InventoryHolder {
             ItemStack tetris = ItemStack.of(Material.MUSIC_DISC_OTHERSIDE, 1);
             tetris.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Tetris"));
             tetris.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
-                    .addHiddenComponents(DataComponentTypes.ATTRIBUTE_MODIFIERS)
-                    .hideTooltip(true)
+                    .addHiddenComponents(TARDISConstants.HIDE)
                     .build());
             items[5] = tetris;
             // 6 tetris start level = up tp 30
@@ -100,8 +96,7 @@ public class GamesInventory implements InventoryHolder {
             level.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Start level"));
             level.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text("0")).build());
             level.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
-                    .addHiddenComponents(DataComponentTypes.ATTRIBUTE_MODIFIERS)
-                    .hideTooltip(true)
+                    .addHiddenComponents(TARDISConstants.HIDE)
                     .build());
             items[6] = level;
         }

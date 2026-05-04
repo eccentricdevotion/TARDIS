@@ -22,6 +22,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.ItemLore;
+import io.papermc.paper.datacomponent.item.TooltipDisplay;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.DamageUtility;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
@@ -170,6 +171,11 @@ public class ARSMethods {
                 }
             }
             is.setData(DataComponentTypes.LORE, lore.build());
+            if (room.equals("Apiary")) {
+                is.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
+                        .addHiddenComponents(DataComponentTypes.BLOCK_DATA)
+                        .build());
+            }
         } else {
             is.unsetData(DataComponentTypes.LORE);
         }

@@ -20,6 +20,7 @@ import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.ItemLore;
 import io.papermc.paper.datacomponent.item.TooltipDisplay;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.TARDISTrackerInstanceKeeper;
 import me.eccentric_nz.TARDIS.blueprints.*;
 import me.eccentric_nz.TARDIS.builders.exterior.BuildData;
@@ -446,8 +447,7 @@ public class TARDII implements TardisAPI {
         }
         if (item.endsWith("Blank Storage Disk") || item.endsWith("Save Storage Disk") || item.endsWith("Preset Storage Disk") || item.endsWith("Biome Storage Disk") || item.endsWith("Player Storage Disk") || item.endsWith("Authorised Control Disk")) {
             result.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
-                    .addHiddenComponents(DataComponentTypes.ATTRIBUTE_MODIFIERS)
-                    .hideTooltip(true)
+                    .addHiddenComponents(TARDISConstants.HIDE)
                     .build());
         }
         if (item.endsWith("TARDIS Key") || item.endsWith("Authorised Control Disk")) {
@@ -585,8 +585,7 @@ public class TARDII implements TardisAPI {
                         .build();
                 is.setData(DataComponentTypes.LORE, lore);
                 is.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
-                        .addHiddenComponents(DataComponentTypes.ATTRIBUTE_MODIFIERS)
-                        .hideTooltip(true)
+                        .addHiddenComponents(TARDISConstants.HIDE)
                         .build());
                 return is;
             }

@@ -118,8 +118,7 @@ public class GallifreyBlueprintTrade {
         );
         is.setData(DataComponentTypes.LORE, ItemLore.lore(lore));
         is.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
-                .addHiddenComponents(DataComponentTypes.ATTRIBUTE_MODIFIERS)
-                .hideTooltip(true)
+                .addHiddenComponents(TARDISConstants.HIDE)
                 .build());
         return is;
     }

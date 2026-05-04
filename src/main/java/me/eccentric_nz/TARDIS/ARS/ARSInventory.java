@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.ARS;
 
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.ItemLore;
+import io.papermc.paper.datacomponent.item.TooltipDisplay;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.custommodels.GUIArs;
@@ -133,6 +134,11 @@ public class ARSInventory implements InventoryHolder {
             if (a.isInGUI() && i < 54) {
                 ItemStack room = ItemStack.of(Material.getMaterial(a.getMaterial()), 1);
                 room.setData(DataComponentTypes.CUSTOM_NAME, Component.text(a.getDescriptiveName()));
+                if (a == TARDISARS.APIARY) {
+                    room.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
+                            .addHiddenComponents(DataComponentTypes.BLOCK_DATA)
+                            .build());
+                }
                 ItemLore.Builder lore = ItemLore.lore();
                 lore.addLine(Component.text("Cost: " + plugin.getRoomsConfig().getInt("rooms." + a + ".cost")));
                 String roomName = TARDISARS.ARSFor(room.getType().toString()).getConfigPath();

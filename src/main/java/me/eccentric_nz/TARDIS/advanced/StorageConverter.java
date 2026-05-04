@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.advanced;
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.CustomModelData;
 import io.papermc.paper.datacomponent.item.TooltipDisplay;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.custommodels.keys.CircuitVariant;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import net.kyori.adventure.text.Component;
@@ -50,8 +51,7 @@ public class StorageConverter {
                         }
                         is.unsetData(DataComponentTypes.ITEM_MODEL);
                         is.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
-                                .addHiddenComponents(DataComponentTypes.ATTRIBUTE_MODIFIERS)
-                                .hideTooltip(true)
+                                .addHiddenComponents(TARDISConstants.HIDE)
                                 .build());
                     }
                 }
@@ -82,8 +82,7 @@ public class StorageConverter {
                     }
                     is.unsetData(DataComponentTypes.ITEM_MODEL);
                     is.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
-                            .addHiddenComponents(DataComponentTypes.ATTRIBUTE_MODIFIERS)
-                            .hideTooltip(true)
+                            .addHiddenComponents(TARDISConstants.HIDE)
                             .build());
                 }
             }

@@ -20,6 +20,7 @@ import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.ItemLore;
 import io.papermc.paper.datacomponent.item.TooltipDisplay;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import net.kyori.adventure.text.Component;
 import org.bukkit.command.CommandSender;
@@ -53,8 +54,7 @@ public class FuelCell {
         result.setData(DataComponentTypes.LORE, ItemLore.lore(lore));
         result.setData(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE, true);
         result.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
-                .addHiddenComponents(DataComponentTypes.ATTRIBUTE_MODIFIERS)
-                .hideTooltip(true)
+                .addHiddenComponents(TARDISConstants.HIDE)
                 .build());
         player.getInventory().addItem(result);
         player.updateInventory();

@@ -20,6 +20,7 @@ import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.ItemAttributeModifiers;
 import io.papermc.paper.datacomponent.item.TooltipDisplay;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import net.kyori.adventure.text.Component;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
@@ -44,8 +45,7 @@ public class ProductBuilder {
                 .build()
         );
         is.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
-                .addHiddenComponents(DataComponentTypes.ATTRIBUTE_MODIFIERS)
-                .hideTooltip(true)
+                .addHiddenComponents(TARDISConstants.HIDE)
                 .build());
         is.setData(DataComponentTypes.ITEM_MODEL, product.getModel());
         is.editPersistentDataContainer(pdc->pdc.set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING, product.getModel().getKey()));

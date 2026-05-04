@@ -8,6 +8,7 @@ import io.papermc.paper.datacomponent.item.CustomModelData;
 import io.papermc.paper.datacomponent.item.ItemLore;
 import io.papermc.paper.datacomponent.item.TooltipDisplay;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
 import me.eccentric_nz.TARDIS.custommodels.keys.VortexManipulatorVariant;
 import net.kyori.adventure.text.Component;
@@ -144,8 +145,7 @@ public class TVMGUI implements InventoryHolder {
         tach.setData(DataComponentTypes.CUSTOM_MODEL_DATA, component.build());
         tach.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text(level + "%")));
         tach.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
-                .addHiddenComponents(DataComponentTypes.ATTRIBUTE_MODIFIERS)
-                .hideTooltip(true)
+                .addHiddenComponents(TARDISConstants.HIDE)
                 .build());
         tach.setData(DataComponentTypes.DAMAGE, durability);
         // lifesigns

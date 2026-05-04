@@ -20,6 +20,7 @@ import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.ItemLore;
 import io.papermc.paper.datacomponent.item.TooltipDisplay;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
 import me.eccentric_nz.TARDIS.enumeration.RecipeCategory;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
@@ -102,8 +103,7 @@ public class TARDISRecipeInventory implements InventoryHolder {
                     result.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(str));
                     result.lore(List.of(Component.text("/trecipe " + arg)));
                     result.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
-                            .addHiddenComponents(DataComponentTypes.ATTRIBUTE_MODIFIERS)
-                            .hideTooltip(true)
+                            .addHiddenComponents(TARDISConstants.HIDE)
                             .build());
                     stack[i] = result;
                     i++;

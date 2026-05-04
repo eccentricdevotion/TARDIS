@@ -18,7 +18,9 @@ package me.eccentric_nz.TARDIS.advanced;
 
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.ItemLore;
+import io.papermc.paper.datacomponent.item.TooltipDisplay;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
@@ -61,6 +63,9 @@ public class DiskWriterCommand {
             is = ItemStack.of(Material.MUSIC_DISC_CHIRP, 1);
             is.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Save Storage Disk"));
             is.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text("Blank")).build());
+            is.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
+                    .addHiddenComponents(TARDISConstants.HIDE)
+                    .build());
         } else {
             is = player.getInventory().getItemInMainHand();
         }
@@ -109,6 +114,9 @@ public class DiskWriterCommand {
                         .addLine(Component.text(preset.toString()))
                         .addLine(Component.text(current.direction().toString()))
                         .addLine(Component.text((current.submarine()) ? "true" : "false"))
+                        .build());
+                is.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
+                        .addHiddenComponents(TARDISConstants.HIDE)
                         .build());
                 if (makeAndSaveDisk) {
                     // save the disk to storage

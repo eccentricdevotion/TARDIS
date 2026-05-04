@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS;
 
+import io.papermc.paper.datacomponent.DataComponentType;
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.*;
 import org.bukkit.block.data.BlockData;
@@ -35,6 +37,11 @@ import java.util.*;
  * @author eccentric_nz
  */
 public class TARDISConstants {
+
+    /**
+     * Item Display entity zero rotation angle for transformations
+     */
+    public static final DataComponentType[] HIDE = new DataComponentType[]{DataComponentTypes.ATTRIBUTE_MODIFIERS, DataComponentTypes.UNBREAKABLE, DataComponentTypes.JUKEBOX_PLAYABLE};
 
     /**
      * Item Display entity zero rotation angle for transformations

@@ -20,6 +20,7 @@ import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.ItemLore;
 import io.papermc.paper.datacomponent.item.TooltipDisplay;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.data.Area;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreas;
@@ -74,8 +75,7 @@ class AreaDisks {
                             Component.text(a.world())
                     )));
                     is.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
-                            .addHiddenComponents(DataComponentTypes.ATTRIBUTE_MODIFIERS)
-                            .hideTooltip(true)
+                            .addHiddenComponents(TARDISConstants.HIDE)
                             .build());
                     areas.add(is);
                 }
@@ -153,8 +153,7 @@ class AreaDisks {
                                         Component.text(map.world())
                                 )));
                                 is.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
-                                        .addHiddenComponents(DataComponentTypes.ATTRIBUTE_MODIFIERS)
-                                        .hideTooltip(true)
+                                        .addHiddenComponents(TARDISConstants.HIDE)
                                         .build());
                                 inv.setItem(empty, is);
                                 count++;

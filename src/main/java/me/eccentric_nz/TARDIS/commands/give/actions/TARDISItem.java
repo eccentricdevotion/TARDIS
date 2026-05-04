@@ -20,6 +20,7 @@ import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.ItemLore;
 import io.papermc.paper.datacomponent.item.TooltipDisplay;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.commands.give.DisplayBlockCommand;
 import me.eccentric_nz.TARDIS.commands.give.Give;
 import me.eccentric_nz.TARDIS.enumeration.RecipeCategory;
@@ -138,8 +139,7 @@ public class TARDISItem {
             }
             if (item.equals("blank") || item.equals("save-disk") || item.equals("preset-disk") || item.equals("biome-disk") || item.equals("player-disk") || item.equals("blaster") || item.equals("control")) {
                 result.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
-                        .addHiddenComponents(DataComponentTypes.ATTRIBUTE_MODIFIERS)
-                        .hideTooltip(true)
+                        .addHiddenComponents(TARDISConstants.HIDE)
                         .build());
             }
             if (item.equals("key") || item.equals("control")) {

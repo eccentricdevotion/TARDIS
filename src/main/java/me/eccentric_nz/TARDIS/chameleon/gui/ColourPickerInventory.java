@@ -21,6 +21,7 @@ import io.papermc.paper.datacomponent.item.DyedItemColor;
 import io.papermc.paper.datacomponent.item.ItemLore;
 import io.papermc.paper.datacomponent.item.TooltipDisplay;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
 import me.eccentric_nz.TARDIS.custommodels.keys.ColouredVariant;
 import net.kyori.adventure.text.Component;
@@ -63,8 +64,7 @@ public class ColourPickerInventory implements InventoryHolder {
                 .color(Color.fromRGB(255, 255, 255)) // white
                 .build());
         display.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
-                .addHiddenComponents(DataComponentTypes.ATTRIBUTE_MODIFIERS)
-                .hideTooltip(true)
+                .addHiddenComponents(TARDISConstants.HIDE)
                 .build());
         // red
         ItemStack red = ItemStack.of(Material.RED_WOOL, 1);
@@ -83,8 +83,7 @@ public class ColourPickerInventory implements InventoryHolder {
         redtint.setData(DataComponentTypes.ITEM_MODEL, ColouredVariant.TINT.getKey());
         redtint.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Red"));
         redtint.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
-                .addHiddenComponents(DataComponentTypes.ATTRIBUTE_MODIFIERS)
-                .hideTooltip(true)
+                .addHiddenComponents(TARDISConstants.HIDE)
                 .build());
         // green tint
         ItemStack greentint = ItemStack.of(Material.LEATHER_HORSE_ARMOR, 1);
@@ -94,8 +93,7 @@ public class ColourPickerInventory implements InventoryHolder {
         greentint.setData(DataComponentTypes.ITEM_MODEL, ColouredVariant.TINT.getKey());
         greentint.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Green"));
         greentint.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
-                .addHiddenComponents(DataComponentTypes.ATTRIBUTE_MODIFIERS)
-                .hideTooltip(true)
+                .addHiddenComponents(TARDISConstants.HIDE)
                 .build());
         // blue tint
         ItemStack bluetint = ItemStack.of(Material.LEATHER_HORSE_ARMOR, 1);
@@ -105,8 +103,7 @@ public class ColourPickerInventory implements InventoryHolder {
         bluetint.setData(DataComponentTypes.ITEM_MODEL, ColouredVariant.TINT.getKey());
         bluetint.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Blue"));
         bluetint.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
-                .addHiddenComponents(DataComponentTypes.ATTRIBUTE_MODIFIERS)
-                .hideTooltip(true)
+                .addHiddenComponents(TARDISConstants.HIDE)
                 .build());
         // less
         ItemStack less = ItemStack.of(Material.ARROW, 1);

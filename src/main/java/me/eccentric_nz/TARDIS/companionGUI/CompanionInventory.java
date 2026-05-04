@@ -23,6 +23,7 @@ import io.papermc.paper.datacomponent.item.ItemLore;
 import io.papermc.paper.datacomponent.item.ResolvableProfile;
 import io.papermc.paper.datacomponent.item.TooltipDisplay;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.custommodels.GUICompanion;
 import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
 import net.kyori.adventure.text.Component;
@@ -79,8 +80,7 @@ public class CompanionInventory implements InventoryHolder {
                     head.setData(DataComponentTypes.CUSTOM_NAME, Component.text(name));
                     head.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text(c)).build());
                     head.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
-                            .addHiddenComponents(DataComponentTypes.ATTRIBUTE_MODIFIERS)
-                            .hideTooltip(true)
+                            .addHiddenComponents(TARDISConstants.HIDE)
                             .build());
                     heads[i] = head;
                     i++;

@@ -7,6 +7,7 @@ import io.papermc.paper.registry.RegistryKey;
 import io.papermc.paper.registry.TypedKey;
 import io.papermc.paper.registry.set.RegistrySet;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.bStats.ARSRoomCounts;
 import me.eccentric_nz.TARDIS.blueprints.BlueprintRoom;
 import me.eccentric_nz.TARDIS.customblocks.TARDISBlockDisplayItem;
@@ -116,7 +117,6 @@ public class DevelopmentUtility {
         ItemStack head = ItemStack.of(Material.SLIME_BALL);
         head.setData(DataComponentTypes.ITEM_MODEL, new NamespacedKey(plugin, "dalek_independent_head"));
         head.setData(DataComponentTypes.EQUIPPABLE, Equippable.equippable(EquipmentSlot.HEAD)
-                // TODO check this
                 .allowedEntities(RegistrySet.keySet(RegistryKey.ENTITY_TYPE, TypedKey.create(RegistryKey.ENTITY_TYPE, EntityType.SKELETON.getKey())))
                 .build());
         ee.setHelmet(head);
@@ -133,8 +133,7 @@ public class DevelopmentUtility {
         ItemStack is = ItemStack.of(Material.LEATHER_HORSE_ARMOR);
         is.setData(DataComponentTypes.DYED_COLOR, DyedItemColor.dyedItemColor().color(Color.fromRGB(255, 0, 0)));
         is.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
-                .addHiddenComponents(DataComponentTypes.ATTRIBUTE_MODIFIERS)
-                .hideTooltip(true)
+                .addHiddenComponents(TARDISConstants.HIDE)
                 .build());
         is.unsetData(DataComponentTypes.EQUIPPABLE);
         is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()

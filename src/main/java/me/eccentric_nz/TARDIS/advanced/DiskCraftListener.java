@@ -18,7 +18,9 @@ package me.eccentric_nz.TARDIS.advanced;
 
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.ItemLore;
+import io.papermc.paper.datacomponent.item.TooltipDisplay;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.enumeration.BiomeLookup;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -96,6 +98,9 @@ public class DiskCraftListener implements Listener {
                 disk = ItemStack.of(Material.MUSIC_DISC_CAT, 1);
                 disk.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Biome Storage Disk"));
                 disk.setData(DataComponentTypes.LORE, ItemLore.lore(disk_lore));
+                disk.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
+                        .addHiddenComponents(TARDISConstants.HIDE)
+                        .build());
                 inv.setItem(0, disk);
                 player.updateInventory();
             } else {
@@ -126,6 +131,9 @@ public class DiskCraftListener implements Listener {
                 disk = ItemStack.of(Material.MUSIC_DISC_MALL, 1);
                 disk.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Preset Storage Disk"));
                 disk.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text(preset)));
+                disk.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
+                        .addHiddenComponents(TARDISConstants.HIDE)
+                        .build());
                 inv.setItem(0, disk);
                 player.updateInventory();
             }

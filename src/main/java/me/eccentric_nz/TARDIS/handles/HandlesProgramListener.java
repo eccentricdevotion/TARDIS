@@ -20,6 +20,7 @@ import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.ItemLore;
 import io.papermc.paper.datacomponent.item.TooltipDisplay;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.advanced.SerializeInventory;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import net.kyori.adventure.text.Component;
@@ -140,8 +141,7 @@ public class HandlesProgramListener implements Listener {
                             Component.text("Checked OUT")
                     )));
                     is.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
-                            .addHiddenComponents(DataComponentTypes.ATTRIBUTE_MODIFIERS)
-                            .hideTooltip(true)
+                            .addHiddenComponents(TARDISConstants.HIDE)
                             .build());
                     player.getWorld().dropItemNaturally(player.getLocation(), is);
                     plugin.getMessenger().sendColouredCommand(player, "HANDLES_SAVED", "/tardishandles disk [name]", plugin);

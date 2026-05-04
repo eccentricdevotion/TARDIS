@@ -20,6 +20,7 @@ import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.CustomModelData;
 import io.papermc.paper.datacomponent.item.TooltipDisplay;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.custommodels.keys.CircuitVariant;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import net.kyori.adventure.text.Component;
@@ -60,10 +61,8 @@ public class TARDISSonicBlasterRecipe {
         ItemStack blaster = ItemStack.of(Material.GOLDEN_HOE, 1);
         blaster.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Sonic Blaster"));
         blaster.lore(List.of(Component.text("The Squareness Gun")));
-//        blaster.setData(DataComponentTypes.ITEM_MODEL, RecipeItem.SONIC_BLASTER.getModel());
         blaster.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
-                .addHiddenComponents(DataComponentTypes.ATTRIBUTE_MODIFIERS)
-                .hideTooltip(true)
+                .addHiddenComponents(TARDISConstants.HIDE)
                 .build());
         NamespacedKey key = new NamespacedKey(TARDIS.plugin, "sonic_blaster");
         ShapedRecipe sbr = new ShapedRecipe(key, blaster);

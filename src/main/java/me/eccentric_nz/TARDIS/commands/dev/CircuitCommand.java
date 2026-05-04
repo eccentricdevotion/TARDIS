@@ -47,7 +47,6 @@ public class CircuitCommand {
     }
 
     public void give(CommandSender sender) {
-        // TODO test this
         if (sender instanceof Player player) {
             // get a random circuit
             String c = circuits.get(TARDISConstants.RANDOM.nextInt(circuits.size()));
