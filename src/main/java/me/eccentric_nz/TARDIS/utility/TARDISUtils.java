@@ -74,8 +74,8 @@ public class TARDISUtils {
         if (plugin.getConfig().getBoolean("creation.default_world")) {
             dn = plugin.getConfig().getString("creation.default_world_name", "tardis_timevortex");
         }
-        boolean special = (data[0].equalsIgnoreCase(dn) && gen instanceof TARDISChunkGenerator);
-        return (data[0].contains("TARDIS_WORLD_") || special);
+        boolean special = (data[1].equalsIgnoreCase(dn) && gen instanceof TARDISChunkGenerator);
+        return (data[1].contains("TARDIS_WORLD_") || special);
     }
 
     public boolean inTARDISWorld(Player player) {

@@ -44,9 +44,9 @@ public class TARDISLocationGetters {
         if (rs.fromID(id)) {
             String c = rs.getChunk();
             String[] data = c.split(":");
-            World w = TARDISWorldResolver.getFromString(data[0]);
-            int cx = TARDISNumberParsers.parseInt(data[1]);
-            int cz = TARDISNumberParsers.parseInt(data[2]);
+            World w = TARDISWorldResolver.getFromString(data[1]);
+            int cx = TARDISNumberParsers.parseInt(data[2]);
+            int cz = TARDISNumberParsers.parseInt(data[3]);
             return w.getChunkAt(cx, cz);
         }
         return null;
