@@ -79,7 +79,7 @@ public class SchematicRemove {
                         if (display != null) {
                             ItemStack is = display.getItemStack();
                             if (is.hasData(DataComponentTypes.ITEM_MODEL)) {
-                                is.unsetData(DataComponentTypes.ITEM_MODEL);
+                                is.resetData(DataComponentTypes.ITEM_MODEL);
                                 display.setItemStack(is);
                             }
                         }

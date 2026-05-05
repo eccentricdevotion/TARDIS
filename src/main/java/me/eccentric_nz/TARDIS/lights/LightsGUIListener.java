@@ -159,7 +159,7 @@ public class LightsGUIListener extends TARDISMenuListener {
                                 ItemStack isl = view.getItem(l);
                                 if (isl != null) {
                                     if (!isl.getData(DataComponentTypes.CUSTOM_NAME).equals(is.getData(DataComponentTypes.CUSTOM_NAME))) {
-                                        isl.unsetData(DataComponentTypes.LORE);
+                                        isl.resetData(DataComponentTypes.LORE);
                                     } else {
                                         isl.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text("Current light")));
                                     }

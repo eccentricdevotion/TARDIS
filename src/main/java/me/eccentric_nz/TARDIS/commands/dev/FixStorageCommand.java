@@ -61,7 +61,7 @@ public class FixStorageCommand {
                                     .addFloats(CircuitVariant.GALLIFREY.getFloats())
                                     .build());
                         }
-                        is.unsetData(DataComponentTypes.ITEM_MODEL);
+                        is.resetData(DataComponentTypes.ITEM_MODEL);
                         is.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
                                 .addHiddenComponents(TARDISConstants.HIDE)
                                 .build());

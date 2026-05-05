@@ -95,7 +95,7 @@ public class WashingMachineListener extends TARDISMenuListener {
                 Material material = dyed.getType();
                 if (DYEABLE.contains(material)) {
                     if (dyed.hasData(DataComponentTypes.DYED_COLOR)) {
-                        dyed.unsetData(DataComponentTypes.DYED_COLOR);
+                        dyed.resetData(DataComponentTypes.DYED_COLOR);
                         view.setItem(i, dyed);
                     } else {
                         ItemStack bleached = switch (dyed.getType()) {

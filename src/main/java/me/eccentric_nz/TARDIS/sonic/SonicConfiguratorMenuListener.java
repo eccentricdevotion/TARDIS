@@ -273,7 +273,7 @@ public class SonicConfiguratorMenuListener extends TARDISMenuListener {
             if (upgrades.size() > 1) {
                 sonic.setData(DataComponentTypes.LORE, ItemLore.lore(upgrades));
             } else {
-                sonic.unsetData(DataComponentTypes.LORE);
+                sonic.resetData(DataComponentTypes.LORE);
             }
         }
     }

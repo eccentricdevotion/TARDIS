@@ -155,8 +155,8 @@ public class TARDISItemFrameUpdateListener implements Listener {
                                 Rotation rotation = frame.getRotation();
                                 // does it have a Monitor frame?
                                 if (glass.getType() == Material.GLASS && glass.hasData(DataComponentTypes.ITEM_MODEL)) {
-                                    // remove display name
-                                    glass.unsetData(DataComponentTypes.CUSTOM_NAME);
+                                    // remove custom name
+                                    glass.resetData(DataComponentTypes.CUSTOM_NAME);
                                     // get the monitor item frame, from the same block location
                                     ItemFrame mapFrame = MonitorUtils.getItemFrameFromLocation(l, frame.getUniqueId());
                                     if (mapFrame != null) {

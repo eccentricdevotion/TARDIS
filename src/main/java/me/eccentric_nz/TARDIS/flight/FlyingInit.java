@@ -33,7 +33,7 @@ public class FlyingInit {
         EntityEquipment ee = stand.getEquipment();
         ItemStack is = ee.getHelmet();
         // remove the current custom model - we'll use a rotating item display while flying
-        is.unsetData(DataComponentTypes.ITEM_MODEL);
+        is.resetData(DataComponentTypes.ITEM_MODEL);
         ee.setHelmet(is);
     }
 }

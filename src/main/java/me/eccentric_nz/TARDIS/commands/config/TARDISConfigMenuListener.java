@@ -108,7 +108,7 @@ public class TARDISConfigMenuListener implements Listener {
         if (str != null) {
             is.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text(str)).build());
         } else {
-            is.unsetData(DataComponentTypes.LORE);
+            is.resetData(DataComponentTypes.LORE);
         }
         GUIConfiguration gui = GUIConfiguration.valueOf(option.split("\\.")[0].toUpperCase(Locale.ROOT));
         is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()

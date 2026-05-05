@@ -171,7 +171,7 @@ public class SonicGeneratorMenuListener extends TARDISMenuListener {
                     view.setItem(49, sonic);
                 } else {
                     // remove lore
-                    sonic.unsetData(DataComponentTypes.LORE);
+                    sonic.resetData(DataComponentTypes.LORE);
                 }
                 List<Float> sonicModel = SonicScrewdriverRecipe.sonicModelLookup.getOrDefault(plugin.getConfig().getString("sonic.default_model").toLowerCase(Locale.ROOT), SonicVariant.ELEVENTH.getFloats());
                 sonic.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()

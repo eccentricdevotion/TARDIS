@@ -64,7 +64,7 @@ public class ItemCommand {
                 RecipeItem recipeItem = RecipeItem.getByName(stripped);
                 if (!recipeItem.equals(RecipeItem.NOT_FOUND)) {
                     inHand.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(stripped));
-                    inHand.unsetData(DataComponentTypes.ITEM_MODEL);
+                    inHand.resetData(DataComponentTypes.ITEM_MODEL);
                     player.updateInventory();
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "ITEM_UPDATED");
                 }
@@ -83,7 +83,7 @@ public class ItemCommand {
                         RecipeItem recipeItem = RecipeItem.getByName(stripped);
                         if (!recipeItem.equals(RecipeItem.NOT_FOUND)) {
                             is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(stripped));
-                            is.unsetData(DataComponentTypes.ITEM_MODEL);
+                            is.resetData(DataComponentTypes.ITEM_MODEL);
                             i++;
                         }
                     }
@@ -111,7 +111,7 @@ public class ItemCommand {
                             RecipeItem recipeItem = RecipeItem.getByName(stripped);
                             if (recipeItem.equals(RecipeItem.ARTRON_STORAGE_CELL)) {
                                 is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(stripped));
-                                is.unsetData(DataComponentTypes.ITEM_MODEL);
+                                is.resetData(DataComponentTypes.ITEM_MODEL);
                                 if (is.hasData(DataComponentTypes.LORE)) {
                                     // get / set lore
                                     List<Component> lore = new ArrayList<>(is.getData(DataComponentTypes.LORE).lines());

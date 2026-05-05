@@ -120,7 +120,7 @@ public class TARDISDisplayBlockRoomConverter implements Runnable {
                         is.setData(DataComponentTypes.ITEM_MODEL, tdi.getCustomModel());
                     } else {
                         // remove item model
-                        is.unsetData(DataComponentTypes.ITEM_MODEL);
+                        is.resetData(DataComponentTypes.ITEM_MODEL);
                     }
                     // set the display item's item stack
                     display.setItemStack(is);

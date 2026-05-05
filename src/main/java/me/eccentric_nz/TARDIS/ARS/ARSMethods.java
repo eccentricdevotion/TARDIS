@@ -184,7 +184,7 @@ public class ARSMethods {
                         .build());
             }
         } else {
-            is.unsetData(DataComponentTypes.LORE);
+            is.resetData(DataComponentTypes.LORE);
         }
         view.setItem(slot, is);
     }
@@ -278,7 +278,7 @@ public class ARSMethods {
         if (str != null) {
             is.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text(str)).build());
         } else {
-            is.unsetData(DataComponentTypes.LORE);
+            is.resetData(DataComponentTypes.LORE);
         }
     }
 
