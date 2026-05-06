@@ -97,7 +97,7 @@ public class DoorWalkListener extends DoorListener implements Listener {
                     UUID playerUUID = player.getUniqueId();
                     World playerWorld = player.getLocation().getWorld();
                     Location block_loc = block.getLocation();
-                    String bw = block_loc.getWorld().getKey().getKey();
+                    String bw = block_loc.getWorld().getKey().asString();
                     int bx = block_loc.getBlockX();
                     int by = block_loc.getBlockY();
                     int bz = block_loc.getBlockZ();
