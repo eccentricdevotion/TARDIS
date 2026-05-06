@@ -49,16 +49,15 @@ public class TARDISStaticLocationGetters {
      * @return a Location.
      */
     public static Location getLocationFromDB(String s) {
-        double savedX, savedY, savedZ;
         // compile location from string
         String[] data = s.split(":");
         World savedWorld = Bukkit.getServer().getWorld(Key.key(data[0], data[1]));
         if (savedWorld == null) {
             return null;
         }
-        savedX = TARDISNumberParsers.parseDouble(data[2]);
-        savedY = TARDISNumberParsers.parseDouble(data[3]);
-        savedZ = TARDISNumberParsers.parseDouble(data[4]);
+        double savedX = TARDISNumberParsers.parseDouble(data[2]);
+        double savedY = TARDISNumberParsers.parseDouble(data[3]);
+        double savedZ = TARDISNumberParsers.parseDouble(data[4]);
         return new Location(savedWorld, savedX, savedY, savedZ);
     }
 

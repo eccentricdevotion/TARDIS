@@ -297,12 +297,12 @@ public class PlanetsConfigUpdater {
             planets_config.set("planets.rooms.transmat_location.z", 2.5d);
             save++;
         }
-        if (planets_config.getString("planets.tardis_timevortex.generator").equals("TARDISChunkGenerator")) {
+        if (planets_config.contains("planets.tardis_timevortex") && planets_config.getString("planets.tardis_timevortex.generator").equals("TARDISChunkGenerator")) {
             planets_config.set("planets.tardis_timevortex.generator", "TARDIS:void");
             planets_config.set("planets.tardis_zero_room.generator", "TARDIS:void");
             save++;
         }
-        if (planets_config.getString("planets.tardis_timevortex.generator").equals("TARDISChunkGenerator:void")) {
+        if (planets_config.contains("planets.tardis_timevortex") && planets_config.getString("planets.tardis_timevortex.generator").equals("TARDISChunkGenerator:void")) {
             for (String w : worlds) {
                 String gen = planets_config.getString("planets." + w + ".generator");
                 if (gen != null && gen.contains("TARDISChunkGenerator")) {
@@ -336,7 +336,7 @@ public class PlanetsConfigUpdater {
             save++;
         }
         // convert game rules to 1.21.11+
-        if (planets_config.contains("planets.tardis_timevortex.gamerules.doWardenSpawning")) {
+        if (planets_config.contains("planets.tardis_timevortex") && planets_config.contains("planets.tardis_timevortex.gamerules.doWardenSpawning")) {
             for (String w : worlds) {
                 if (planets_config.contains("planets." + w + ".gamerules") && planets_config.getConfigurationSection("planets." + w + ".gamerules") != null) {
                     for (String rule : planets_config.getConfigurationSection("planets." + w + ".gamerules").getKeys(false)) {
