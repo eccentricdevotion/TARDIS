@@ -63,8 +63,8 @@ public class LightChanger implements Runnable {
         plugin.getTrackerKeeper().getLightChangers().add(uuid);
         // get the TARDIS console chunk
         String[] tc = chunk.split(":");
-        int cx = TARDISNumberParsers.parseInt(tc[1]);
-        int cz = TARDISNumberParsers.parseInt(tc[2]);
+        int cx = TARDISNumberParsers.parseInt(tc[2]);
+        int cz = TARDISNumberParsers.parseInt(tc[3]);
         World world = TARDISWorldResolver.getFromString(tc[1]);
         if (world != null) {
             // get ARS chunks - 3 high x 9 wide x 9 deep

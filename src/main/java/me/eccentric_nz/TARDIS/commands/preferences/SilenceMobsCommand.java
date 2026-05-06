@@ -30,9 +30,9 @@ public class SilenceMobsCommand {
             boolean on_off = arg.equalsIgnoreCase("on");
             // get ARS chunks
             String[] tc = rst.getTardis().getChunk().split(":");
-            int cx = TARDISNumberParsers.parseInt(tc[1]);
-            int cz = TARDISNumberParsers.parseInt(tc[2]);
-            World world = TARDISWorldResolver.getFromString(tc[0]);
+            int cx = TARDISNumberParsers.parseInt(tc[2]);
+            int cz = TARDISNumberParsers.parseInt(tc[3]);
+            World world = TARDISWorldResolver.getFromString(tc[1]);
             if (world != null) {
                 // get ARS chunks - 3 high x 9 wide x 9 deep
                 for (int x = -4; x < 5; x++) {

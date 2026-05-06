@@ -44,9 +44,9 @@ public class TARDISLocationGetters {
         if (rs.fromID(id)) {
             String c = rs.getChunk();
             String[] data = c.split(":");
-            World w = TARDISWorldResolver.getFromString(data[0]);
-            int cx = TARDISNumberParsers.parseInt(data[1]);
-            int cz = TARDISNumberParsers.parseInt(data[2]);
+            World w = TARDISWorldResolver.getFromString(data[1]);
+            int cx = TARDISNumberParsers.parseInt(data[2]);
+            int cz = TARDISNumberParsers.parseInt(data[3]);
             return w.getChunkAt(cx, cz);
         }
         return null;
@@ -65,9 +65,9 @@ public class TARDISLocationGetters {
         if (rs.fromID(id)) {
             String chunkstr = rs.getChunk();
             String[] split = chunkstr.split(":");
-            World w = TARDISWorldResolver.getFromString(split[0]);
-            cx = TARDISNumberParsers.parseInt(split[1]);
-            cz = TARDISNumberParsers.parseInt(split[2]);
+            World w = TARDISWorldResolver.getFromString(split[1]);
+            cx = TARDISNumberParsers.parseInt(split[2]);
+            cz = TARDISNumberParsers.parseInt(split[3]);
             Chunk chunk = w.getChunkAt(cx, cz);
             startLoc[0] = (chunk.getBlock(0, 64, 0).getX());
             startLoc[1] = startLoc[0];

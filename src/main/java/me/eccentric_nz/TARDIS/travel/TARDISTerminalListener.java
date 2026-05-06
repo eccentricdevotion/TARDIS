@@ -141,11 +141,11 @@ public class TARDISTerminalListener implements Listener {
                 if (terminalDestination.containsKey(uuid)) {
                     HashMap<String, Object> set = new HashMap<>();
                     String[] data = terminalDestination.get(uuid).split(":");
-                    String ww = (!plugin.getPlanetsConfig().getBoolean("planets." + data[0] + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMVHelper().getWorld(data[0]).getKey().getKey() : data[0];
+                    String ww = (!plugin.getPlanetsConfig().getBoolean("planets." + data[1] + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMVHelper().getWorld(data[0]).getKey().getKey() : data[0];
                     set.put("world", ww);
-                    set.put("x", data[1]);
-                    set.put("y", data[2]);
-                    set.put("z", data[3]);
+                    set.put("x", data[2]);
+                    set.put("y", data[3]);
+                    set.put("z", data[4]);
                     set.put("direction", terminalUsers.get(uuid).direction().toString());
                     set.put("submarine", (terminalSub.containsKey(uuid)) ? 1 : 0);
                     HashMap<String, Object> wheret = new HashMap<>();

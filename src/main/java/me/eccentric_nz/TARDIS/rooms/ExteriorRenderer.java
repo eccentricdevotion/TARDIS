@@ -54,10 +54,10 @@ public class ExteriorRenderer {
         int epbz = exterior.getBlockZ();
         String isRendered = ew.getKey().asString() + ":" + epbx + ":" + epby + ":" + epbz;
         String[] idata = interior.split(":");
-        World iw = TARDISWorldResolver.getFromString(idata[0]);
-        int ipbx = TARDISNumberParsers.parseInt(idata[1]);
-        int ipby = TARDISNumberParsers.parseInt(idata[2]) + 2;
-        int ipbz = TARDISNumberParsers.parseInt(idata[3]);
+        World iw = TARDISWorldResolver.getFromString(idata[1]);
+        int ipbx = TARDISNumberParsers.parseInt(idata[2]);
+        int ipby = TARDISNumberParsers.parseInt(idata[3]) + 2;
+        int ipbz = TARDISNumberParsers.parseInt(idata[4]);
         Location location = new Location(iw, ipbx, ipby, ipbz);
         if (plugin.getTrackerKeeper().getRenderer().containsKey(id) && plugin.getTrackerKeeper().getRenderer().get(id).equals(isRendered)) {
             plugin.getMessenger().send(p, TardisModule.TARDIS, "DEST_NO_CHANGE");

@@ -93,9 +93,9 @@ public class LampsCommand {
             }
             // get the TARDIS console chunk
             String[] tc = tardis.getChunk().split(":");
-            int cx = TARDISNumberParsers.parseInt(tc[1]);
-            int cz = TARDISNumberParsers.parseInt(tc[2]);
-            World world = TARDISWorldResolver.getFromString(tc[0]);
+            int cx = TARDISNumberParsers.parseInt(tc[2]);
+            int cz = TARDISNumberParsers.parseInt(tc[3]);
+            World world = TARDISWorldResolver.getFromString(tc[1]);
             Chunk startChunk = world.getChunkAt(cx, cz);
             int starty, endy;
             Schematic schm = tardis.getSchematic();

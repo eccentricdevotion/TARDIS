@@ -118,6 +118,10 @@ public class ControlsConverter {
 
     private String getLocationFromString(String s) {
         String[] split = s.split(":");
-        return TARDISStaticLocationGetters.makeLocationStr(split[0], split[1], split[2], split[3]);
+        if (split.length == 5) {
+            return TARDISStaticLocationGetters.makeLocationStr(split[1], split[2], split[3], split[4]);
+        } else {
+            return TARDISStaticLocationGetters.makeLocationStr(split[0], split[1], split[2], split[3]);
+        }
     }
 }

@@ -88,8 +88,8 @@ public class TARDISEPSRunnable implements Runnable {
                 // set yaw if npc spawn location has been changed
                 if (!eps.isEmpty()) {
                     String[] creep = creeper.split(":");
-                    double cx = TARDISNumberParsers.parseDouble(creep[1]);
-                    double cz = TARDISNumberParsers.parseDouble(creep[3]);
+                    double cx = TARDISNumberParsers.parseDouble(creep[2]);
+                    double cz = TARDISNumberParsers.parseDouble(creep[4]);
                     float yaw = getCorrectYaw(cx, cz, location.getX(), location.getZ());
                     location.setYaw(yaw);
                 }

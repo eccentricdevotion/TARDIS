@@ -124,10 +124,10 @@ public class TARDISMinecartListener implements Listener {
                         }
                     }
                 }
-                if (data != null && data.length > 3) {
+                if (data != null && data.length > 4) {
                     boolean shouldPrevent;
                     if (plugin.getInvManager() == InventoryManager.MULTIVERSE) {
-                        shouldPrevent = (!TARDISMultiverseInventoriesChecker.checkWorldsCanShare(bw, data[0]));
+                        shouldPrevent = (!TARDISMultiverseInventoriesChecker.checkWorldsCanShare(bw, data[1]));
                     } else {
                         shouldPrevent = false;
                     }
@@ -137,10 +137,10 @@ public class TARDISMinecartListener implements Listener {
                         }
                         plugin.getTrackerKeeper().getMinecart().remove(id);
                     } else {
-                        World w = TARDISWorldResolver.getFromString(data[0]);
-                        int x = TARDISNumberParsers.parseInt(data[1]);
-                        int y = TARDISNumberParsers.parseInt(data[2]);
-                        int z = TARDISNumberParsers.parseInt(data[3]);
+                        World w = TARDISWorldResolver.getFromString(data[1]);
+                        int x = TARDISNumberParsers.parseInt(data[2]);
+                        int y = TARDISNumberParsers.parseInt(data[3]);
+                        int z = TARDISNumberParsers.parseInt(data[4]);
                         Location in_out = new Location(w, x, y, z);
                         if (Tag.DOORS.isTagged(material)) {
                             d = getDirection(in_out);

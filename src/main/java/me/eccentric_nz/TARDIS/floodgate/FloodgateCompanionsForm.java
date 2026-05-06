@@ -93,7 +93,7 @@ public class FloodgateCompanionsForm {
                     if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
                         if (!comps.equalsIgnoreCase("everyone")) {
                             String[] data = tardis.getChunk().split(":");
-                            CompanionGUIListener.removeFromRegion(data[0], tardis.getOwner(), u);
+                            CompanionGUIListener.removeFromRegion(data[1], tardis.getOwner(), u);
                         }
                     }
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "COMPANIONS_REMOVE_ONE", label);

@@ -58,8 +58,8 @@ public class ChunksCommand {
                 if (rst.resultSet()) {
                     Tardis tardis = rst.getTardis();
                     String[] tc = tardis.getChunk().split(":");
-                    int cx = TARDISNumberParsers.parseInt(tc[1]);
-                    int cz = TARDISNumberParsers.parseInt(tc[2]);
+                    int cx = TARDISNumberParsers.parseInt(tc[2]);
+                    int cz = TARDISNumberParsers.parseInt(tc[3]);
                     World world = player.getLocation().getWorld();
                     Chunk chunk = world.getChunkAt(cx, cz);
                     Schematic schematic = tardis.getSchematic();
