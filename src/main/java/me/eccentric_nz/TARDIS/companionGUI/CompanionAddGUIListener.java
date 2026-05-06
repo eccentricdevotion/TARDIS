@@ -106,7 +106,7 @@ public class CompanionAddGUIListener extends TARDISMenuListener {
                         String[] data = tardis.getChunk().split(":");
                         plugin.getWorldGuardUtils().removeAllMembersFromRegion(TARDISWorldResolver.getFromString(data[0]), player.getName(), player.getUniqueId());
                         // set entry and exit flags to allow
-                        plugin.getWorldGuardUtils().setEntryExitFlags(data[0], player.getName(), true);
+                        plugin.getWorldGuardUtils().setEntryExitFlags(data[1], player.getName(), true);
                     }
                     list(player);
                 }
@@ -126,7 +126,7 @@ public class CompanionAddGUIListener extends TARDISMenuListener {
                         String[] data = tardis.getChunk().split(":");
                         addToRegion(data[0], tardis.getOwner(), ComponentUtils.stripColour(is.getData(DataComponentTypes.CUSTOM_NAME)));
                         // set entry and exit flags to deny
-                        plugin.getWorldGuardUtils().setEntryExitFlags(data[0], player.getName(), false);
+                        plugin.getWorldGuardUtils().setEntryExitFlags(data[1], player.getName(), false);
                     }
                     list(player);
                 }

@@ -112,17 +112,17 @@ public class SchematicBuilder {
             String beacon = rs.getTardis().getBeacon();
             if (!beacon.isEmpty()) {
                 String[] split = beacon.split(":");
-                bx = TARDISNumberParsers.parseInt(split[1]);
-                by = TARDISNumberParsers.parseInt(split[2]);
-                bz = TARDISNumberParsers.parseInt(split[3]);
+                bx = TARDISNumberParsers.parseInt(split[2]);
+                by = TARDISNumberParsers.parseInt(split[3]);
+                bz = TARDISNumberParsers.parseInt(split[4]);
             }
             // and the creeper location...
             String creeper = rs.getTardis().getCreeper();
             if (!creeper.isEmpty()) {
                 String[] csplit = creeper.split(":");
-                cx = TARDISNumberParsers.parseInt(csplit[1].substring(0, csplit[1].length() - 2));
-                cy = TARDISNumberParsers.parseInt(csplit[2]);
-                cz = TARDISNumberParsers.parseInt(csplit[3].substring(0, csplit[3].length() - 2));
+                cx = TARDISNumberParsers.parseInt(csplit[2].substring(0, csplit[2].length() - 2));
+                cy = TARDISNumberParsers.parseInt(csplit[3]);
+                cz = TARDISNumberParsers.parseInt(csplit[4].substring(0, csplit[4].length() - 2));
             }
         }
 

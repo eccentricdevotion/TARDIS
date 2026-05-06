@@ -101,7 +101,7 @@ public class DeleteTARDISCommand {
         String chunkLoc = tardis.getChunk();
         boolean hidden = tardis.isHidden();
         String[] cdata = chunkLoc.split(":");
-        String wname = cdata[0];
+        String wname = cdata[1];
         World cw = TARDISWorldResolver.getFromString(wname);
         if (cw == null) {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "WORLD_DELETED");

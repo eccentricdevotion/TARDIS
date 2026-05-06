@@ -90,7 +90,7 @@ public class FloodgateAddCompanionsForm {
                     String[] data = tardis.getChunk().split(":");
                     plugin.getWorldGuardUtils().removeAllMembersFromRegion(TARDISWorldResolver.getFromString(data[0]), player.getName(), player.getUniqueId());
                     // set entry and exit flags to allow
-                    plugin.getWorldGuardUtils().setEntryExitFlags(data[0], player.getName(), true);
+                    plugin.getWorldGuardUtils().setEntryExitFlags(data[1], player.getName(), true);
                 }
                 plugin.getMessenger().sendInsertedColour(player, "COMPANIONS_ADD", "everyone", plugin);
                 plugin.getMessenger().sendColouredCommand(player, "COMPANIONS_EVERYONE", "/tardis remove all", plugin);
@@ -103,7 +103,7 @@ public class FloodgateAddCompanionsForm {
                         String[] data = tardis.getChunk().split(":");
                         CompanionAddGUIListener.addToRegion(data[0], tardis.getOwner(), label);
                         // set entry and exit flags to deny
-                        plugin.getWorldGuardUtils().setEntryExitFlags(data[0], label, false);
+                        plugin.getWorldGuardUtils().setEntryExitFlags(data[1], label, false);
                     }
                     plugin.getMessenger().sendInsertedColour(player, "COMPANIONS_ADD", label, plugin);
                 }
