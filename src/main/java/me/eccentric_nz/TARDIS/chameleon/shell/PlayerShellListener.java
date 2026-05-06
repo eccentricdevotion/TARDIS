@@ -263,7 +263,7 @@ public class PlayerShellListener extends TARDISMenuListener {
     private boolean isActive(InventoryView view, int slot) {
         // get if active
         ItemStack shell = view.getItem(slot);
-        return shell.hasData(DataComponentTypes.LORE) && shell.getData(DataComponentTypes.LORE).lines().size() > 4;
+        return shell.getData(DataComponentTypes.LORE).lines().size() > 4;
     }
 
     private Location getButton(int id) {

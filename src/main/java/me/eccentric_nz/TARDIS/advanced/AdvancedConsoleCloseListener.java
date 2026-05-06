@@ -124,7 +124,7 @@ public class AdvancedConsoleCloseListener implements Listener {
             ItemStack is = view.getItem(i);
             if (is != null) {
                 Material mat = is.getType();
-                if (!mat.equals(Material.GLOWSTONE_DUST) && is.hasData(DataComponentTypes.LORE)) {
+                if (!mat.equals(Material.GLOWSTONE_DUST) && ComponentUtils.hasLore(is)) {
                     boolean ignore = false;
                     HashMap<String, Object> set_next = new HashMap<>();
                     HashMap<String, Object> set_tardis = new HashMap<>();

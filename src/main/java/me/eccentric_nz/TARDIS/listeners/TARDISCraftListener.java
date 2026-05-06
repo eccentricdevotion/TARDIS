@@ -78,7 +78,7 @@ public class TARDISCraftListener implements Listener {
                         Component uses = (plugin.getConfig().getString("circuits.uses." + which, "20").equals("0") || !plugin.getConfig().getBoolean("circuits.damage"))
                                 ? Component.text("unlimited", NamedTextColor.YELLOW)
                                 : Component.text(plugin.getConfig().getString("circuits.uses." + which, "20"), NamedTextColor.YELLOW);
-                        if (is.hasData(DataComponentTypes.LORE)) {
+                        if (ComponentUtils.hasLore(is)) {
                             lore = new ArrayList<>(is.getData(DataComponentTypes.LORE).lines());
                             lore.set(1, uses);
                         } else {

@@ -88,7 +88,8 @@ public class GallifreyTradeSelectListener implements Listener {
             int i = 0;
             for (MerchantRecipe recipe : villager.getRecipes()) {
                 ItemStack result = recipe.getResult();
-                if (!result.hasData(DataComponentTypes.LORE)) {
+                List<Component> lines = result.getData(DataComponentTypes.LORE).lines();
+                if (lines.isEmpty()) {
                     return;
                 }
                 PersistentDataContainerView pdcv = result.getPersistentDataContainer();
@@ -96,10 +97,11 @@ public class GallifreyTradeSelectListener implements Listener {
                 if (pdcv.has(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID()) && pdcv.has(plugin.getBlueprintKey(), PersistentDataType.STRING)) {
                     // get the player
                     result.editPersistentDataContainer(pdc->pdc.set(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID(), player.getUniqueId()));
-                    List<Component> lore = result.getData(DataComponentTypes.LORE).lines();
+                    List<Component> lore = new ArrayList<>(lines);
                     lore.set(2, Component.text(player.getName()));
                     result.setData(DataComponentTypes.LORE, ItemLore.lore(lore));
                     ItemStack is = result.clone();
+                    // TODO check this
                     is.copyDataFrom(result, dataComponentType -> true);
                     MerchantRecipe newRecipe = new MerchantRecipe(is, 1);
                     newRecipe.addIngredient(recipe.getIngredients().getFirst());

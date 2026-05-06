@@ -116,21 +116,21 @@ class AreaDisks {
                 // check storage inventory
                 ItemStack[] areas = SerializeInventory.itemStacksFromString(serialized_areas);
                 for (ItemStack a : areas) {
-                    if (a != null && a.getType().equals(Material.MUSIC_DISC_BLOCKS) && a.hasData(DataComponentTypes.LORE)) {
+                    if (a != null && a.getType().equals(Material.MUSIC_DISC_BLOCKS) && ComponentUtils.hasLore(a)) {
                         player_has.add(ComponentUtils.stripColour(a.getData(DataComponentTypes.LORE).lines().getFirst()));
                     }
                 }
                 // check console inventory
                 ItemStack[] console = SerializeInventory.itemStacksFromString(rs.getConsole());
                 for (ItemStack c : console) {
-                    if (c != null && c.getType().equals(Material.MUSIC_DISC_BLOCKS) && c.hasData(DataComponentTypes.LORE)) {
+                    if (c != null && c.getType().equals(Material.MUSIC_DISC_BLOCKS) && ComponentUtils.hasLore(c)) {
                         player_has.add(ComponentUtils.stripColour(c.getData(DataComponentTypes.LORE).lines().getFirst()));
                     }
                 }
                 // check player inventory
                 ItemStack[] player = p.getInventory().getContents();
                 for (ItemStack y : player) {
-                    if (y != null && y.getType().equals(Material.MUSIC_DISC_BLOCKS) && y.hasData(DataComponentTypes.LORE)) {
+                    if (y != null && y.getType().equals(Material.MUSIC_DISC_BLOCKS) && ComponentUtils.hasLore(y)) {
                         player_has.add(ComponentUtils.stripColour(y.getData(DataComponentTypes.LORE).lines().getFirst()));
                     }
                 }

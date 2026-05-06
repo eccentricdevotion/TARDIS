@@ -126,7 +126,7 @@ public class TARDISItem {
             if (item.equals("invisibility-circuit")) {
                 // set the second line of lore
                 List<Component> lore;
-                if (result.hasData(DataComponentTypes.LORE)) {
+                if (ComponentUtils.hasLore(result)) {
                     lore = new ArrayList<>(result.getData(DataComponentTypes.LORE).lines());
                 } else {
                     lore = new ArrayList<>();
@@ -145,7 +145,7 @@ public class TARDISItem {
             if (item.equals("key") || item.equals("control")) {
                 result.editPersistentDataContainer(pdc -> pdc.set(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID(), player.getUniqueId()));
                 List<Component> lore;
-                if (result.hasData(DataComponentTypes.LORE)) {
+                if (ComponentUtils.hasLore(result)) {
                     lore = new ArrayList<>(result.getData(DataComponentTypes.LORE).lines());
                 } else {
                     lore = new ArrayList<>();

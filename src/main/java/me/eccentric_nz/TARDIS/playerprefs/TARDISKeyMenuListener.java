@@ -21,6 +21,7 @@ import io.papermc.paper.datacomponent.item.CustomModelData;
 import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
+import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -112,7 +113,7 @@ public class TARDISKeyMenuListener extends TARDISMenuListener {
                 key.editPersistentDataContainer(pdc -> pdc.set(TARDIS.plugin.getTimeLordUuidKey(), TARDIS.plugin.getPersistentDataTypeUUID(), player.getUniqueId()));
                 // set lore
                 List<Component> lore;
-                if (key.hasData(DataComponentTypes.LORE)) {
+                if (ComponentUtils.hasLore(key)) {
                     lore = new ArrayList<>(key.getData(DataComponentTypes.LORE).lines());
                 } else {
                     lore = new ArrayList<>();

@@ -146,7 +146,7 @@ public class ArtronCondenserListener implements Listener {
                     double full = plugin.getArtronConfig().getDouble("full_charge") / 75.0d;
                     amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.standard") * full);
                     // add extra artron for any sonic upgrades
-                    if (is.hasData(DataComponentTypes.LORE)) {
+                    if (ComponentUtils.hasLore(is)) {
                         List<Component> lore = is.getData(DataComponentTypes.LORE).lines();
                         if (lore.contains(Component.text("Bio-scanner Upgrade"))) {
                             amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.bio") * full);

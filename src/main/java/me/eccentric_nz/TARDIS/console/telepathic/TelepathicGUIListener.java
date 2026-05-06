@@ -85,7 +85,7 @@ public class TelepathicGUIListener extends TARDISMenuListener {
             switch (slot) {
                 // toggle telepathy on/off
                 case 0 -> {
-                    int b = (choice.hasData(DataComponentTypes.LORE) && ComponentUtils.endsWith(choice.getData(DataComponentTypes.LORE).lines().getFirst(), "ON")) ? 0 : 1;
+                    int b = (ComponentUtils.hasLore(choice) && ComponentUtils.endsWith(choice.getData(DataComponentTypes.LORE).lines().getFirst(), "ON")) ? 0 : 1;
                     // update database
                     HashMap<String, Object> set = new HashMap<>();
                     HashMap<String, Object> whereu = new HashMap<>();

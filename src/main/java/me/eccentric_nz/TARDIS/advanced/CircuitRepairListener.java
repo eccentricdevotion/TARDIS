@@ -88,7 +88,7 @@ public class CircuitRepairListener implements Listener {
         }
         // get the display name
         String dnf = ComponentUtils.stripColour(first.getData(DataComponentTypes.CUSTOM_NAME));
-        if (dnf.startsWith("TARDIS") && dnf.endsWith("Circuit") && first.hasData(DataComponentTypes.LORE)) {
+        if (dnf.startsWith("TARDIS") && dnf.endsWith("Circuit") && ComponentUtils.hasLore(first)) {
             // get the lore
             List<Component> flore = first.getData(DataComponentTypes.LORE).lines();
             String stripped = ComponentUtils.stripColour(flore.get(1));

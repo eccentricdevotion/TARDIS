@@ -37,7 +37,7 @@ public class SonicLore {
             int charge = pdc.get(TARDIS.plugin.getSonicChargeKey(), PersistentDataType.INTEGER);
             List<Component> lore;
             int index = -1;
-            if (sonic.hasData(DataComponentTypes.LORE)) {
+            if (ComponentUtils.hasLore(sonic)) {
                 lore = new ArrayList<>(sonic.getData(DataComponentTypes.LORE).lines());
                 for (int i = lore.size() - 1; i >= 0; i--) {
                     if (ComponentUtils.stripColour(lore.get(i)).startsWith("Charge: ")) {

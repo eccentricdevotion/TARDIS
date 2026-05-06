@@ -35,6 +35,7 @@ import me.eccentric_nz.TARDIS.enumeration.Desktops;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.rooms.RoomRequiredLister;
+import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
@@ -382,7 +383,7 @@ public class ARSMethods {
      * @param playerUUID the UUID of the player using the GUI
      */
     public void loadMap(InventoryView view, UUID playerUUID, boolean check) {
-        if (check && view.getItem(10).getData(DataComponentTypes.LORE).lines().size() > 0) {
+        if (check && ComponentUtils.hasLore(view.getItem(10))) {
             setLore(view, 10, plugin.getLanguage().getString("ARS_MAP_ERROR", "Map already loaded!"));
             return;
         }

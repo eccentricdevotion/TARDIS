@@ -112,7 +112,7 @@ public class ItemCommand {
                             if (recipeItem.equals(RecipeItem.ARTRON_STORAGE_CELL)) {
                                 is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(stripped));
                                 is.resetData(DataComponentTypes.ITEM_MODEL);
-                                if (is.hasData(DataComponentTypes.LORE)) {
+                                if (ComponentUtils.hasLore(is)) {
                                     // get / set lore
                                     List<Component> lore = new ArrayList<>(is.getData(DataComponentTypes.LORE).lines());
                                     int level = TARDISNumberParsers.parseInt(ComponentUtils.stripColour(lore.get(1)));

@@ -77,7 +77,7 @@ public class DiskCraftListener implements Listener {
                 ItemStack is = inv.getItem(inv.first(Material.MUSIC_DISC_CAT));
                 if (is == null
                         || !ComponentUtils.isNamed(is, "Biome Storage Disk")
-                        || !is.hasData(DataComponentTypes.LORE)) {
+                        || is.getData(DataComponentTypes.LORE).lines().isEmpty()) {
                     return;
                 }
                 Component lore = is.getData(DataComponentTypes.LORE).lines().getFirst();
@@ -108,7 +108,7 @@ public class DiskCraftListener implements Listener {
                 ItemStack is = inv.getItem(inv.first(Material.MUSIC_DISC_MALL));
                 if (is == null
                         || !ComponentUtils.isNamed(is, "Preset Storage Disk")
-                        || !is.hasData(DataComponentTypes.LORE)) {
+                        || is.getData(DataComponentTypes.LORE).lines().isEmpty()) {
                     return;
                 }
                 Component lore = is.getData(DataComponentTypes.LORE).lines().getFirst();

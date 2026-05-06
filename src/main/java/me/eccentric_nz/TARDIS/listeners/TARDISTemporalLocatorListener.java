@@ -62,7 +62,7 @@ public class TARDISTemporalLocatorListener extends TARDISMenuListener {
             return;
         }
         ItemStack is = event.getView().getItem(slot);
-        if (is.hasData(DataComponentTypes.LORE)) {
+        if (ComponentUtils.hasLore(is)) {
             List<Component> lore = is.getData(DataComponentTypes.LORE).lines();
             long time = getTime(lore);
             plugin.getTrackerKeeper().getSetTime().put(player.getUniqueId(), time);

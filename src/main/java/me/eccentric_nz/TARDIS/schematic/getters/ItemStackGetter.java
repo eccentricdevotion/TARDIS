@@ -22,7 +22,7 @@ public class ItemStackGetter {
             if (item.hasData(DataComponentTypes.CUSTOM_NAME)) {
                 object.addProperty("name", ComponentUtils.stripColour(item.getData(DataComponentTypes.CUSTOM_NAME)));
             }
-            if (item.hasData(DataComponentTypes.LORE)) {
+            if (ComponentUtils.hasLore(item)) {
                 JsonArray lore = new JsonArray();
                 for (Component component : item.getData(DataComponentTypes.LORE).lines()) {
                     lore.add(ComponentUtils.stripColour(component));

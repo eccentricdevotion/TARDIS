@@ -48,13 +48,11 @@ public class Kit {
                 String dn = ComponentUtils.stripColour(result.getData(DataComponentTypes.CUSTOM_NAME));
                 if (dn.contains("Key") || dn.contains("Authorised Control Disk")) {
                     result.editPersistentDataContainer(pdc -> pdc.set(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID(), player.getUniqueId()));
-                    if (result.hasData(DataComponentTypes.LORE)) {
-                        ItemLore.Builder lore = ItemLore.lore();
-                        String what = dn.contains("Key") ? "key" : "disk";
-                        lore.addLine(Component.text("This " + what + " belongs to", NamedTextColor.AQUA).decorate(TextDecoration.ITALIC));
-                        lore.addLine(Component.text(player.getName(), NamedTextColor.AQUA).decorate(TextDecoration.ITALIC));
-                        result.setData(DataComponentTypes.LORE, lore.build());
-                    }
+                    ItemLore.Builder lore = ItemLore.lore();
+                    String what = dn.contains("Key") ? "key" : "disk";
+                    lore.addLine(Component.text("This " + what + " belongs to", NamedTextColor.AQUA).decorate(TextDecoration.ITALIC));
+                    lore.addLine(Component.text(player.getName(), NamedTextColor.AQUA).decorate(TextDecoration.ITALIC));
+                    result.setData(DataComponentTypes.LORE, lore.build());
                 }
             }
         } else {

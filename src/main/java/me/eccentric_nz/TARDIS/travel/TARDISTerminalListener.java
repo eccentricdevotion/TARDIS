@@ -375,7 +375,7 @@ public class TARDISTerminalListener implements Listener {
         int[] slots = new int[]{36, 38, 40, 42};
         boolean found = false;
         for (int i : slots) {
-            if (view.getItem(i).hasData(DataComponentTypes.LORE)) {
+            if (ComponentUtils.hasLore(view.getItem(i))) {
                 String world = ComponentUtils.stripColour(view.getItem(i).getData(DataComponentTypes.LORE).lines().getFirst());
                 if (!world.equals("No permission")) {
                     found = true;
@@ -442,9 +442,9 @@ public class TARDISTerminalListener implements Listener {
                             }
                             int safe;
                             // check submarine
-                            ItemStack subim = view.getItem(44);
+                            ItemStack sub = view.getItem(44);
                             loc.setY(starty);
-                            if (subim.hasData(DataComponentTypes.LORE) && ComponentUtils.stripColour(subim.getData(DataComponentTypes.LORE).lines().getFirst()).equals("true") && TARDISStaticUtils.isOceanBiome(loc.getBlock().getBiome())) {
+                            if (ComponentUtils.hasLore(sub) && ComponentUtils.stripColour(sub.getData(DataComponentTypes.LORE).lines().getFirst()).equals("true") && TARDISStaticUtils.isOceanBiome(loc.getBlock().getBiome())) {
                                 Location subloc = tt.submarine(loc.getBlock(), d);
                                 if (subloc != null) {
                                     safe = 0;

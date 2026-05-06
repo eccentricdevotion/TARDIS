@@ -57,7 +57,7 @@ public class TARDISBiomeReaderListener implements Listener {
         boolean found = false;
         for (int s = 27; s < stack.length; s++) {
             ItemStack disk = stack[s];
-            if (disk != null && disk.hasData(DataComponentTypes.LORE)) {
+            if (disk != null && ComponentUtils.hasLore(disk)) {
                 ItemLore lore = disk.getData(DataComponentTypes.LORE);
                 if (lore != null && lore.lines().contains(Component.text(biome.toUpperCase(Locale.ROOT)))) {
                     found = true;

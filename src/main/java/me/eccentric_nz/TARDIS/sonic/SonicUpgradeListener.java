@@ -101,7 +101,7 @@ public class SonicUpgradeListener implements Listener {
                     }
                     String dn = ComponentUtils.stripColour(sonic.getData(DataComponentTypes.CUSTOM_NAME));
                     List<Component> lore;
-                    if (sonic.hasData(DataComponentTypes.LORE)) {
+                    if (ComponentUtils.hasLore(sonic)) {
                         // get the current sonic's upgrades
                         lore = new ArrayList<>(sonic.getData(DataComponentTypes.LORE).lines());
                     } else {

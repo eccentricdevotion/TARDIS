@@ -203,7 +203,7 @@ public class SchematicBuilder {
                                         plugin.debug(element.toString());
                                         frame.add("name", element);
                                     }
-                                    if (item.hasData(DataComponentTypes.LORE)) {
+                                    if (ComponentUtils.hasLore(item)) {
                                         JsonArray lore = new JsonArray();
                                         for (Component s : item.getData(DataComponentTypes.LORE).lines()) {
                                             lore.add(ComponentUtils.stripColour(s));

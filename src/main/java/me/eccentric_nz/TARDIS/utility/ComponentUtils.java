@@ -53,6 +53,10 @@ public class ComponentUtils {
         return is != null && is.hasData(DataComponentTypes.ITEM_MODEL) && is.getData(DataComponentTypes.ITEM_MODEL).namespace().equals("tardis");
     }
 
+    public static boolean hasLore(ItemStack is) {
+        return is != null && is.hasData(DataComponentTypes.LORE) && is.getData(DataComponentTypes.LORE).lines().size() > 0;
+    }
+
     public static boolean startsWith(Component component, String start) {
         return stripColour(component).startsWith(start);
     }

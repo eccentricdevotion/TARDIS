@@ -72,7 +72,7 @@ public class SonicFarmBlockListener implements Listener {
         ItemStack stack = inv.getItemInMainHand();
         if (stack.getType().equals(Material.BLAZE_ROD)) {
             if (ComponentUtils.isNamed(stack, "Sonic Screwdriver")
-                    && stack.hasData(DataComponentTypes.LORE)
+                    && ComponentUtils.hasLore(stack)
                     && stack.getData(DataComponentTypes.LORE).lines().contains(Component.text("Emerald Upgrade"))) {
                 if ((material.equals(sc)) && inv.contains(sc)) {
                     // SUGAR_CANE

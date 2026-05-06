@@ -135,7 +135,7 @@ public class SonicListener implements Listener {
                         set.put("sonic_uuid", sonic_uuid.toString());
                         // get sonic data
                         set.put("uuid", player.getUniqueId().toString());
-                        if (is.hasData(DataComponentTypes.LORE)) {
+                        if (ComponentUtils.hasLore(is)) {
                             List<Integer> settings = SonicData.getSonicData(is.getData(DataComponentTypes.LORE));
                             for (int i = 0; i < settings.size(); i++) {
                                 set.put(SonicUpgradeData.upgrades.get(SonicUpgradeData.sonicKeys.get(i)), settings.get(i));

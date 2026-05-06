@@ -141,7 +141,7 @@ public class SonicGeneratorMenuListener extends TARDISMenuListener {
                     slotWasNull = true;
                 }
                 List<Component> lore;
-                if (sonic.hasData(DataComponentTypes.LORE)) {
+                if (ComponentUtils.hasLore(sonic)) {
                     // get the current sonic's upgrades
                     lore = new ArrayList<>(sonic.getData(DataComponentTypes.LORE).lines());
                 } else {
@@ -210,7 +210,7 @@ public class SonicGeneratorMenuListener extends TARDISMenuListener {
         Float model = floats.getFirst();
         String split = SonicVariant.getByFloat(model).toString().toLowerCase(Locale.ROOT);
         set.put("model", split);
-        if (is.hasData(DataComponentTypes.LORE)) {
+        if (ComponentUtils.hasLore(is)) {
             List<Component> lore = new ArrayList<>(is.getData(DataComponentTypes.LORE).lines());
             fields.forEach((key, value) -> set.put(value, (lore.contains(Component.text(key))) ? 1 : 0));
         } else {
