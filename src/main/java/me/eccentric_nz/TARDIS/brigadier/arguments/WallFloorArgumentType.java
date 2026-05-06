@@ -25,7 +25,7 @@ public class WallFloorArgumentType implements CustomArgumentType<String, String>
     private static final Set<String> MATERIAL_SUBS = new HashSet<>();
 
     static {
-        TARDISWalls.BLOCKS.forEach((m) -> MATERIAL_SUBS.add(m.toString()));
+        TARDISWalls.BLOCKS.forEach((m) -> MATERIAL_SUBS.add(m.value()));
     }
 
     @Override
