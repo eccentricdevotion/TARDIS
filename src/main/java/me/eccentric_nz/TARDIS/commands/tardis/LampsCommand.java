@@ -183,7 +183,8 @@ public class LampsCommand {
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
-            String dimension = rs.getTardis().getChunk().split(":")[0];
+            String[] split = rs.getTardis().getChunk().split(":");
+            String dimension = split[0] + ":" + split[1];
             int id = tardis.getTardisId();
             HashMap<String, Object> wherel = new HashMap<>();
             wherel.put("tardis_id", id);
