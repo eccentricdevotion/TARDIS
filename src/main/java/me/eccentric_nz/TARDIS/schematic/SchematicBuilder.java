@@ -195,7 +195,7 @@ public class SchematicBuilder {
                                 Material type = item.getType();
                                 if (!type.isAir()) {
                                     frame.addProperty("item", type.toString());
-                                    if (item.hasData(DataComponentTypes.ITEM_MODEL)) {
+                                    if (ComponentUtils.isModelled(item)) {
                                         frame.addProperty("cmd", item.getData(DataComponentTypes.ITEM_MODEL).value());
                                     }
                                     if (item.hasData(DataComponentTypes.CUSTOM_NAME)) {
@@ -238,8 +238,8 @@ public class SchematicBuilder {
                                 JsonObject stack = new JsonObject();
                                 Material material = display.getItemStack().getType();
                                 stack.addProperty("type", material.toString());
-                                if (display.hasData(DataComponentTypes.ITEM_MODEL)) {
-                                    Key model = display.getData(DataComponentTypes.ITEM_MODEL);
+                                if (ComponentUtils.isModelled(display.getItemStack())) {
+                                    Key model = display.getItemStack().getData(DataComponentTypes.ITEM_MODEL);
                                     stack.addProperty("cmd", model.value());
                                     TARDISDisplayItem tdi = TARDISDisplayItemRegistry.getByModel(NamespacedKey.fromString(model.asString()));
                                     if (tdi != null) {
@@ -248,8 +248,8 @@ public class SchematicBuilder {
                                     }
                                 }
                                 // save custom name
-                                if (display.hasData(DataComponentTypes.CUSTOM_NAME)) {
-                                    JsonElement element = ComponentUtils.getJson(display.getData(DataComponentTypes.CUSTOM_NAME));
+                                if (display.getItemStack().hasData(DataComponentTypes.CUSTOM_NAME)) {
+                                    JsonElement element = ComponentUtils.getJson(display.getItemStack().getData(DataComponentTypes.CUSTOM_NAME));
                                     stack.add("name", element);
                                 }
                                 item.add("stack", stack);

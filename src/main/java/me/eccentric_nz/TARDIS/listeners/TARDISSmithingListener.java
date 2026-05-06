@@ -131,6 +131,6 @@ public class TARDISSmithingListener implements Listener {
         if (!ComponentUtils.isNamed(is, "Artron Capacitor")) {
             return false;
         }
-        return !is.hasData(DataComponentTypes.ITEM_MODEL) || NamespacedKey.fromString(is.getData(DataComponentTypes.ITEM_MODEL).asString()).equals(Whoniverse.ARTRON_CAPACITOR_DAMAGED.getKey());
+        return !ComponentUtils.isModelled(is) || NamespacedKey.fromString(is.getData(DataComponentTypes.ITEM_MODEL).asString()).equals(Whoniverse.ARTRON_CAPACITOR_DAMAGED.getKey());
     }
 }

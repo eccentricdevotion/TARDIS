@@ -100,7 +100,7 @@ public class CureBrewingListener implements Listener {
                                     ItemStack is = i.getItemStack();
                                     Material type = is.getType();
                                     if (type.equals(Material.FEATHER)) {
-                                        if (is.hasData(DataComponentTypes.CUSTOM_NAME) && is.hasData(DataComponentTypes.ITEM_MODEL)) {
+                                        if (is.hasData(DataComponentTypes.CUSTOM_NAME) && ComponentUtils.isModelled(is)) {
                                             String dn = ComponentUtils.stripColour(is.getData(DataComponentTypes.CUSTOM_NAME));
                                             items.add(type + (elements.contains(dn) ? ":" + dn : ""));
                                         } else {

@@ -4,6 +4,7 @@ import com.destroystokyo.paper.profile.PlayerProfile;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import io.papermc.paper.datacomponent.DataComponentTypes;
+import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import org.bukkit.Location;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.inventory.EntityEquipment;
@@ -64,7 +65,7 @@ public class ArmourStandGetter {
         ItemStack helmet = equipment.getHelmet();
         if (helmet != null) {
             JsonObject head = new JsonObject();
-            if (helmet.hasData(DataComponentTypes.ITEM_MODEL)) {
+            if (ComponentUtils.isModelled(helmet)) {
                 head.addProperty("model", helmet.getData(DataComponentTypes.ITEM_MODEL).asString());
             }
             if (helmet.hasData(DataComponentTypes.PROFILE)) {

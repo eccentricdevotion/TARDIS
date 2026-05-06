@@ -51,7 +51,7 @@ public class TARDISDisplayItemUtils {
         ItemStack is = display.getItemStack();
         if (is != null) {
             // Try to get by model
-            if (is.hasData(DataComponentTypes.ITEM_MODEL)) {
+            if (ComponentUtils.isModelled(is)) {
                 if (Tag.ITEMS_DECORATED_POT_SHERDS.isTagged(is.getType())) {
                     return TARDISBlockDisplayItem.CUSTOM_DOOR;
                 } else {

@@ -37,6 +37,7 @@ import me.eccentric_nz.TARDIS.mobfarming.TARDISFarmer;
 import me.eccentric_nz.TARDIS.move.DoorListener;
 import me.eccentric_nz.TARDIS.sonic.actions.SonicSound;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
+import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
@@ -63,7 +64,7 @@ public class OuterDisplayDoorAction extends DoorListener {
         EntityEquipment ee = stand.getEquipment();
         ItemStack dye = ee.getHelmet();
         if (dye != null && (TARDISConstants.DYES.contains(dye.getType()) || plugin.getUtils().isCustomModel(dye))) {
-            if (dye.hasData(DataComponentTypes.ITEM_MODEL)) {
+            if (ComponentUtils.isModelled(dye)) {
                 String model = dye.getData(DataComponentTypes.ITEM_MODEL).value();
                 if ((model.contains("_open") || model.contains("_closed")) && TARDISPermission.hasPermission(player, "tardis.enter")) {
                     UUID uuid = player.getUniqueId();

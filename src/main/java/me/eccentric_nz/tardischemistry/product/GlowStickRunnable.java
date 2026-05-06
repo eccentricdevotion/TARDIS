@@ -19,6 +19,7 @@ package me.eccentric_nz.tardischemistry.product;
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.persistence.PersistentDataContainerView;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -74,7 +75,7 @@ public class GlowStickRunnable implements Runnable {
         if (glowStick == null) {
             return false;
         }
-        if (!glowStick.hasData(DataComponentTypes.ITEM_MODEL)) {
+        if (!ComponentUtils.isModelled(glowStick)) {
             return false;
         }
         return GlowStickMaterial.isCorrectMaterial(glowStick.getType())

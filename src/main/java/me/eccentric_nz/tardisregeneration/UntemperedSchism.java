@@ -50,7 +50,7 @@ public class UntemperedSchism {
         if (is == null || is.getType() != Material.ANCIENT_DEBRIS) {
             return false;
         }
-        if (!is.hasData(DataComponentTypes.ITEM_MODEL)) {
+        if (!ComponentUtils.isModelled(is)) {
             return false;
         }
         return ComponentUtils.isNamed(is, "Untempered Schism");

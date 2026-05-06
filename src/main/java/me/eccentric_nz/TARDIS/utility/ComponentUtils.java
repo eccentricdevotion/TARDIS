@@ -46,7 +46,11 @@ public class ComponentUtils {
     }
 
     public static boolean isNamed(ItemStack is, String name) {
-        return is.hasData(DataComponentTypes.CUSTOM_NAME) && endsWith(is.getData(DataComponentTypes.CUSTOM_NAME), name);
+        return is != null && is.hasData(DataComponentTypes.CUSTOM_NAME) && endsWith(is.getData(DataComponentTypes.CUSTOM_NAME), name);
+    }
+
+    public static boolean isModelled(ItemStack is) {
+        return is != null && is.hasData(DataComponentTypes.ITEM_MODEL) && is.getData(DataComponentTypes.ITEM_MODEL).namespace().equals("tardis");
     }
 
     public static boolean startsWith(Component component, String start) {

@@ -16,7 +16,7 @@ public class ItemStackGetter {
         if (item != null) {
             Material type = item.getType();
             object.addProperty("item", type.toString());
-            if (item.hasData(DataComponentTypes.ITEM_MODEL)) {
+            if (ComponentUtils.isModelled(item)) {
                 object.addProperty("cmd", item.getData(DataComponentTypes.ITEM_MODEL).value());
             }
             if (item.hasData(DataComponentTypes.CUSTOM_NAME)) {

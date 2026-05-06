@@ -108,7 +108,7 @@ public class SonicEntityListener implements Listener {
         if (dock.getType() != Material.FLOWER_POT) {
             return -1;
         }
-        if (!dock.hasData(DataComponentTypes.ITEM_MODEL) || !dock.getData(DataComponentTypes.ITEM_MODEL).value().contains("sonic_dock")) {
+        if (!ComponentUtils.isModelled(dock) || !dock.getData(DataComponentTypes.ITEM_MODEL).value().contains("sonic_dock")) {
             return -1;
         }
         HashMap<String, Object> where = new HashMap<>();

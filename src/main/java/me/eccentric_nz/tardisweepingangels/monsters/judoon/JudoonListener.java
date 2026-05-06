@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.custommodels.keys.ArrowVariant;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.nms.TWAJudoon;
 import me.eccentric_nz.tardisweepingangels.utils.ResetMonster;
@@ -78,7 +79,7 @@ public class JudoonListener implements Listener {
                             if (inv.contains(Material.ARROW)) {
                                 int a = inv.first(Material.ARROW);
                                 ItemStack arrows = inv.getItem(a);
-                                if (arrows.hasData(DataComponentTypes.ITEM_MODEL) && ArrowVariant.JUDOON_AMMO.getKey().equals(arrows.getData(DataComponentTypes.ITEM_MODEL))) {
+                                if (ComponentUtils.isModelled(arrows) && ArrowVariant.JUDOON_AMMO.getKey().getKey().equals(arrows.getData(DataComponentTypes.ITEM_MODEL).value())) {
                                     int remove = plugin.getMonstersConfig().getInt("judoon.ammunition") - ammo;
                                     if (arrows.getAmount() > remove) {
                                         arrows.setAmount(arrows.getAmount() - remove);

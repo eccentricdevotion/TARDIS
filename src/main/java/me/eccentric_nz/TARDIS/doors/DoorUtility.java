@@ -20,6 +20,7 @@ import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.move.TARDISTeleportLocation;
+import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Location;
 import org.bukkit.Sound;
@@ -45,7 +46,7 @@ public class DoorUtility {
         ItemStack is = player.getInventory().getItemInMainHand();
         ItemStack single = is.clone();
         single.setAmount(1);
-        if (!is.hasData(DataComponentTypes.CUSTOM_NAME) || !is.getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.STRING) || !is.hasData(DataComponentTypes.ITEM_MODEL)) {
+        if (!is.hasData(DataComponentTypes.CUSTOM_NAME) || !is.getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.STRING) || !ComponentUtils.isModelled(is)) {
             return;
         }
         // set an Interaction

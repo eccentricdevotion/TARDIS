@@ -21,6 +21,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.control.actions.ConsoleLampAction;
 import me.eccentric_nz.TARDIS.control.actions.LightLevelAction;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetLightLevel;
+import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.ItemFrame;
@@ -51,7 +52,7 @@ public class TARDISLightLevelFrameListener implements Listener {
                 int type = rs.getType();
                 int start = 0;
                 ItemStack is = frame.getItem();
-                if (is.hasData(DataComponentTypes.ITEM_MODEL)) {
+                if (ComponentUtils.isModelled(is)) {
                     // switch the switches
                     String current = is.getData(DataComponentTypes.ITEM_MODEL).value();
                     boolean isOff = current.endsWith("_off");

@@ -217,8 +217,8 @@ public class SchematicSave {
                                 JsonObject stack = new JsonObject();
                                 Material material = display.getItemStack().getType();
                                 NamespacedKey model = null;
-                                if (display.hasData(DataComponentTypes.CUSTOM_NAME) && !display.hasData(DataComponentTypes.ITEM_MODEL)) {
-                                    stack.addProperty("display_name", ComponentUtils.stripColour(display.getData(DataComponentTypes.CUSTOM_NAME)));
+                                if (display.getItemStack().hasData(DataComponentTypes.CUSTOM_NAME) && !ComponentUtils.isModelled(display.getItemStack())) {
+                                    stack.addProperty("display_name", ComponentUtils.stripColour(display.getItemStack().getData(DataComponentTypes.CUSTOM_NAME)));
                                 } else if (display.getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.STRING)) {
                                     String key = display.getPersistentDataContainer().get(plugin.getCustomBlockKey(), PersistentDataType.STRING);
                                     model = new NamespacedKey(plugin, key);

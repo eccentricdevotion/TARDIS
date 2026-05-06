@@ -27,6 +27,7 @@ import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.doors.DoorUtility;
 import me.eccentric_nz.TARDIS.move.TARDISTeleportLocation;
+import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -58,7 +59,7 @@ public class OuterDisplayDoorCloser {
             return;
         }
         if ((TARDISConstants.DYES.contains(dye.getType()) || plugin.getUtils().isCustomModel(dye))) {
-            if (!dye.hasData(DataComponentTypes.ITEM_MODEL)) {
+            if (!ComponentUtils.isModelled(dye)) {
                 return;
             }
             // exterior portal

@@ -52,7 +52,7 @@ public class SparklerListener implements Listener {
             ItemStack is = event.getItem();
             if (is != null && SparklerMaterial.isCorrectMaterial(is.getType()) && is.hasData(DataComponentTypes.CUSTOM_NAME)) {
                 String which = ComponentUtils.stripColour(is.getData(DataComponentTypes.CUSTOM_NAME));
-                if (which.endsWith("Sparkler") && is.hasData(DataComponentTypes.ITEM_MODEL)) {
+                if (which.endsWith("Sparkler") && ComponentUtils.isModelled(is)) {
                     player.playSound(player.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_TWINKLE, 1.0f, 1.0f);
                     // switch custom data models
                     Product sparkler = Product.getByName().get(which);

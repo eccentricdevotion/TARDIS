@@ -97,7 +97,7 @@ public final class TARDISDisplayItemRegistry {
 
     public static TARDISDisplayItem getByItemDisplay(ItemDisplay display) {
         ItemStack is = display.getItemStack();
-        if (is.hasData(DataComponentTypes.ITEM_MODEL)) {
+        if (ComponentUtils.isModelled(is)) {
             return getByModel(NamespacedKey.fromString(is.getData(DataComponentTypes.ITEM_MODEL).asString()));
         }
         if (is.hasData(DataComponentTypes.CUSTOM_NAME)) {

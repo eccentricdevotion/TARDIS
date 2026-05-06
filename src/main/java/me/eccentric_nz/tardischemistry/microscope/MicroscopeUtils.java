@@ -18,6 +18,7 @@ package me.eccentric_nz.tardischemistry.microscope;
 
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -38,7 +39,7 @@ class MicroscopeUtils {
             return false;
         }
         // does it have data components
-        if (!is.hasData(DataComponentTypes.CUSTOM_NAME) || !is.hasData(DataComponentTypes.ITEM_MODEL)) {
+        if (!is.hasData(DataComponentTypes.CUSTOM_NAME) || !ComponentUtils.isModelled(is)) {
             return false;
         }
         return is.getPersistentDataContainer().has(plugin.getMicroscopeKey(), PersistentDataType.STRING);

@@ -20,6 +20,7 @@ import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.CustomModelData;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.keys.RotorVariant;
+import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
@@ -87,7 +88,7 @@ public class TimeRotor {
 
     public static NamespacedKey getRotorModel(ItemFrame itemFrame) {
         ItemStack is = itemFrame.getItem();
-        if (is.hasData(DataComponentTypes.ITEM_MODEL)) {
+        if (ComponentUtils.isModelled(is)) {
             Key key = is.getData(DataComponentTypes.ITEM_MODEL);
             return new NamespacedKey(key.namespace(), key.value());
         } else {

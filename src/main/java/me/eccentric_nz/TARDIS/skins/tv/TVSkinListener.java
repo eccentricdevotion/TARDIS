@@ -124,7 +124,7 @@ public class TVSkinListener extends TARDISMenuListener {
     private boolean isDownload(InventoryView view) {
         // get item in download slot
         ItemStack is = view.getItem(GUITelevision.DOWNLOAD.slot());
-        if (is != null && is.hasData(DataComponentTypes.ITEM_MODEL)) {
+        if (is != null && ComponentUtils.isModelled(is)) {
             return SwitchVariant.DOWNLOAD_ON.getKey().equals(is.getData(DataComponentTypes.ITEM_MODEL));
         }
         return false;

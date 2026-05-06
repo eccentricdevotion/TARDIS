@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.tardischemistry.lab;
 
-import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.Parameters;
@@ -84,7 +83,7 @@ public class SuperFertisliserListener implements Listener {
             ItemStack is = player.getInventory().getItemInMainHand();
             if (is.getType() == Material.BONE_MEAL
                     && ComponentUtils.isNamed(is, "Super Fertiliser")
-                    && is.hasData(DataComponentTypes.ITEM_MODEL)) {
+                    && ComponentUtils.isModelled(is)) {
                 event.setCancelled(true);
                 Block block = event.getBlock();
                 boolean removeItem = false;
@@ -145,7 +144,7 @@ public class SuperFertisliserListener implements Listener {
             ItemStack is = player.getInventory().getItemInMainHand();
             if (is.getType() == Material.BONE_MEAL
                     && ComponentUtils.isNamed(is, "Super Fertiliser")
-                    && is.hasData(DataComponentTypes.ITEM_MODEL)) {
+                    && ComponentUtils.isModelled(is)) {
                 event.setCancelled(true);
                 TreeType treeType = TREE_LOOKUP.get(block.getType());
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {

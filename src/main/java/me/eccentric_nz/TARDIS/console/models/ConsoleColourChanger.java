@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.console.models;
 
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import net.kyori.adventure.key.Key;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
@@ -54,7 +55,7 @@ public class ConsoleColourChanger {
                         ItemStack is = display.getItemStack();
                         if (is != null) {
                             Key model;
-                            if (is.hasData(DataComponentTypes.ITEM_MODEL)) {
+                            if (ComponentUtils.isModelled(is)) {
                                 String[] key = is.getData(DataComponentTypes.ITEM_MODEL).value().split("_");
                                 if (key[1].equals("centre")) {
                                     model = new NamespacedKey(plugin, "console_centre_" + colour);

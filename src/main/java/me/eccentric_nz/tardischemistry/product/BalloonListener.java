@@ -18,6 +18,7 @@ package me.eccentric_nz.tardischemistry.product;
 
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -117,7 +118,7 @@ public class BalloonListener implements Listener {
     private boolean isBalloon(ItemStack is) {
         return is != null
                 && is.getType().equals(Material.CORNFLOWER)
-                && is.hasData(DataComponentTypes.ITEM_MODEL)
+                && ComponentUtils.isModelled(is)
                 && is.getData(DataComponentTypes.ITEM_MODEL).value().endsWith("_balloon");
     }
 

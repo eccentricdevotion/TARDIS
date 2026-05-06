@@ -235,7 +235,7 @@ public class TARDISDisplayBlockListener implements Listener {
             }
             if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) && Tag.ITEMS_DECORATED_POT_SHERDS.isTagged(player.getInventory().getItemInMainHand().getType())) {
                 ItemStack dis = player.getInventory().getItemInMainHand();
-                if (!dis.hasData(DataComponentTypes.ITEM_MODEL) || !dis.getData(DataComponentTypes.ITEM_MODEL).value().contains("_closed")) {
+                if (!ComponentUtils.isModelled(dis) || !dis.getData(DataComponentTypes.ITEM_MODEL).value().contains("_closed")) {
                     return;
                 }
                 // set a door
@@ -435,7 +435,7 @@ public class TARDISDisplayBlockListener implements Listener {
                     } else if (plugin.getTrackerKeeper().getUpdatePlayers().containsKey(player.getUniqueId())) {
                         // check if display is double door
                         ItemStack is = display.getItemStack();
-                        if (!is.hasData(DataComponentTypes.ITEM_MODEL)) {
+                        if (!ComponentUtils.isModelled(is)) {
                             return;
                         }
                         String model = is.getData(DataComponentTypes.ITEM_MODEL).value();
@@ -461,7 +461,7 @@ public class TARDISDisplayBlockListener implements Listener {
         if (is == null) {
             return false;
         }
-        String cmd = is.hasData(DataComponentTypes.ITEM_MODEL) ? is.getData(DataComponentTypes.ITEM_MODEL).value() : "null";
+        String cmd = ComponentUtils.isModelled(is) ? is.getData(DataComponentTypes.ITEM_MODEL).value() : "null";
         return cmd.endsWith("_open");
     }
 

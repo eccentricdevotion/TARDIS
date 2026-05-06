@@ -78,7 +78,7 @@ public class SiegeListener implements Listener {
             return false;
         }
         return (ComponentUtils.isNamed(is, "Siege Cube"))
-                || (is.hasData(DataComponentTypes.ITEM_MODEL) && Whoniverse.SIEGE_CUBE.getKey().getKey().equals(is.getData(DataComponentTypes.ITEM_MODEL).value()));
+                || (ComponentUtils.isModelled(is) && Whoniverse.SIEGE_CUBE.getKey().getKey().equals(is.getData(DataComponentTypes.ITEM_MODEL).value()));
     }
 
     @EventHandler(ignoreCancelled = true)

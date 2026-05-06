@@ -236,7 +236,7 @@ public class TARDISStaticUtils {
     }
 
     private static boolean isCustomDoorOpen(ItemDisplay display) {
-        if (display.hasData(DataComponentTypes.ITEM_MODEL)) {
+        if (ComponentUtils.isModelled(display.getItemStack())) {
             return display.getItemStack().getData(DataComponentTypes.ITEM_MODEL).value().endsWith("_open");
         } else if (display.getPersistentDataContainer().has(TARDIS.plugin.getCustomBlockKey())) {
             String str = display.getPersistentDataContainer().get(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING);

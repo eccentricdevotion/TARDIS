@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.skins;
 
-import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -46,7 +46,7 @@ public class SkinListener implements Listener {
         UUID uuid = p.getUniqueId();
         ItemStack stack = event.getItemDrop().getItemStack();
         if (SkinUtils.SKINNED.containsKey(uuid) && MATERIALS.contains(stack.getType())) {
-            event.setCancelled(stack.hasData(DataComponentTypes.ITEM_MODEL));
+            event.setCancelled(ComponentUtils.isModelled(stack));
         }
     }
 
@@ -70,7 +70,7 @@ public class SkinListener implements Listener {
         if (!MATERIALS.contains(stack.getType())) {
             return;
         }
-        if (!stack.hasData(DataComponentTypes.ITEM_MODEL)) {
+        if (!ComponentUtils.isModelled(stack)) {
             return;
         }
         if (stack.getPersistentDataContainer().has(TARDIS.plugin.getTimeLordUuidKey(), PersistentDataType.BOOLEAN)) {
@@ -87,7 +87,7 @@ public class SkinListener implements Listener {
             UUID uuid = event.getWhoClicked().getUniqueId();
             if (SkinUtils.SKINNED.containsKey(uuid) && MATERIALS.contains(current.getType())) {
                 if (slotType == InventoryType.SlotType.ARMOR) {
-                    event.setCancelled(current.hasData(DataComponentTypes.ITEM_MODEL));
+                    event.setCancelled(ComponentUtils.isModelled(current));
                 }
                 if (slotType == InventoryType.SlotType.QUICKBAR) {
                     Skin skin = SkinUtils.SKINNED.get(uuid);

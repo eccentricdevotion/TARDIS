@@ -30,6 +30,7 @@ import me.eccentric_nz.TARDIS.monitor.MonitorUtils;
 import me.eccentric_nz.TARDIS.monitor.Snapshot;
 import me.eccentric_nz.TARDIS.upgrades.SystemTree;
 import me.eccentric_nz.TARDIS.upgrades.SystemUpgradeChecker;
+import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import net.kyori.adventure.key.Key;
 import org.bukkit.Location;
@@ -85,7 +86,7 @@ public class TARDISMonitorFrameListener implements Listener {
                     }
                 } else {
                     ItemStack is = frame.getItem();
-                    if (is.hasData(DataComponentTypes.ITEM_MODEL)) {
+                    if (ComponentUtils.isModelled(is)) {
                         // switch the switches
                         Key cmd = is.getData(DataComponentTypes.ITEM_MODEL);
                         switch (cmd.value().split("_")[2]) {

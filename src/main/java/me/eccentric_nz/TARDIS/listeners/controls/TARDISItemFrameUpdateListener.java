@@ -127,7 +127,7 @@ public class TARDISItemFrameUpdateListener implements Listener {
                             case MONITOR -> {
                                 ItemStack map = frame.getItem();
                                 // does it have a TARDIS Monitor map?
-                                if (map.getType() == Material.MAP && map.hasData(DataComponentTypes.ITEM_MODEL)) {
+                                if (map.getType() == Material.MAP && ComponentUtils.isModelled(map)) {
                                     // do nothing
                                 } else {
                                     plugin.getTrackerKeeper().getUpdatePlayers().remove(uuid);
@@ -154,7 +154,7 @@ public class TARDISItemFrameUpdateListener implements Listener {
                                 ItemStack glass = frame.getItem();
                                 Rotation rotation = frame.getRotation();
                                 // does it have a Monitor frame?
-                                if (glass.getType() == Material.GLASS && glass.hasData(DataComponentTypes.ITEM_MODEL)) {
+                                if (glass.getType() == Material.GLASS && ComponentUtils.isModelled(glass)) {
                                     // remove custom name
                                     glass.resetData(DataComponentTypes.CUSTOM_NAME);
                                     // get the monitor item frame, from the same block location
@@ -269,7 +269,7 @@ public class TARDISItemFrameUpdateListener implements Listener {
         if (dock.getType() != Material.FLOWER_POT) {
             return false;
         }
-        return dock.hasData(DataComponentTypes.ITEM_MODEL) && (dock.getData(DataComponentTypes.ITEM_MODEL).value().contains("sonic_dock"));
+        return ComponentUtils.isModelled(dock) && (dock.getData(DataComponentTypes.ITEM_MODEL).value().contains("sonic_dock"));
     }
 
     private SwitchPair isLevelSwitch(ItemFrame frame) {
@@ -280,7 +280,7 @@ public class TARDISItemFrameUpdateListener implements Listener {
         if (!lampSwitch.hasData(DataComponentTypes.CUSTOM_NAME)) {
             return new SwitchPair(false, lampSwitch);
         }
-        return new SwitchPair(lampSwitch.hasData(DataComponentTypes.ITEM_MODEL) && ComponentUtils.endsWith(lampSwitch.getData(DataComponentTypes.CUSTOM_NAME), "Switch"), lampSwitch);
+        return new SwitchPair(ComponentUtils.isModelled(lampSwitch) && ComponentUtils.endsWith(lampSwitch.getData(DataComponentTypes.CUSTOM_NAME), "Switch"), lampSwitch);
     }
 
     private record SwitchPair(boolean b, ItemStack lamp) {

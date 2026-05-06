@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.tardisweepingangels.monsters.k9;
 
-import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.data.Follower;
@@ -98,7 +97,7 @@ public class K9Listener implements Listener {
             if (is != null
                     && is.getType().equals(Material.BONE)
                     && ComponentUtils.isNamed(is, "K9")
-                    && is.hasData(DataComponentTypes.ITEM_MODEL)) {
+                    && ComponentUtils.isModelled(is)) {
                 event.setCancelled(true);
                 Player player = event.getPlayer();
                 Location location = event.getClickedBlock().getLocation().add(0.5d, 1.0d, 0.5d);

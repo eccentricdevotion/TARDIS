@@ -70,15 +70,14 @@ public class ArtronCapacitorStorageListener extends TARDISMenuListener {
             if (!ComponentUtils.isNamed(stack, "Artron Capacitor")) {
                 continue;
             }
-            if (!stack.hasData(DataComponentTypes.ITEM_MODEL)) {
+            if (!ComponentUtils.isModelled(stack)) {
                 // check name
                 if (ComponentUtils.startsWith(stack.getData(DataComponentTypes.CUSTOM_NAME), "Damaged")) {
                     damaged++;
                 }
             } else {
                 Key model = stack.getData(DataComponentTypes.ITEM_MODEL);
-                // TODO check key comparison
-                if (!Whoniverse.ARTRON_CAPACITOR.getKey().equals(model) && !Whoniverse.ARTRON_CAPACITOR_DAMAGED.getKey().equals(model)) {
+                if (!Whoniverse.ARTRON_CAPACITOR.getKey().getKey().equals(model.value()) && !Whoniverse.ARTRON_CAPACITOR_DAMAGED.getKey().getKey().equals(model.value())) {
                     continue;
                 }
                 if (Whoniverse.ARTRON_CAPACITOR_DAMAGED.getKey().equals(model)) {

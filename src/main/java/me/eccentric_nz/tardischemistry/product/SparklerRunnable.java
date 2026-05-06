@@ -78,7 +78,7 @@ public class SparklerRunnable implements Runnable {
             return false;
         }
         return SparklerMaterial.isCorrectMaterial(sparkler.getType())
-                && sparkler.hasData(DataComponentTypes.ITEM_MODEL)
+                && ComponentUtils.isModelled(sparkler)
                 && sparkler.hasData(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE);
     }
 
