@@ -64,14 +64,26 @@ public class WorldNameConverter {
     }
 
     private String checkDefault(String w) {
-        if (w.equalsIgnoreCase(defaultWorld)) {
-            return "overworld";
-        } else if (w.equalsIgnoreCase(defaultWorld + "_nether")) {
-            return "the_nether";
-        } else if (w.equalsIgnoreCase(defaultWorld + "_the_end")) {
-            return "the_end";
+        if (w.contains(":")) {
+            String[] data = w.split(":");
+            if (data[0].equalsIgnoreCase(defaultWorld)) {
+                data[0] = "overworld";
+            } else if (data[0].equalsIgnoreCase(defaultWorld + "_nether")) {
+                data[0] = "the_nether";
+            } else if (data[0].equalsIgnoreCase(defaultWorld + "_the_end")) {
+                data[0] = "the_end";
+            }
+            return String.join(":", data);
         } else {
-            return w;
+            if (w.equalsIgnoreCase(defaultWorld)) {
+                return "overworld";
+            } else if (w.equalsIgnoreCase(defaultWorld + "_nether")) {
+                return "the_nether";
+            } else if (w.equalsIgnoreCase(defaultWorld + "_the_end")) {
+                return "the_end";
+            } else {
+                return w;
+            }
         }
     }
 
@@ -317,4 +329,3 @@ public class WorldNameConverter {
         return true;
     }
 }
-
