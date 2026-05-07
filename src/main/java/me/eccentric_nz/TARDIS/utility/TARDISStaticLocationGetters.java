@@ -142,7 +142,7 @@ public class TARDISStaticLocationGetters {
      * @return a String in the style of world:x:y:z
      */
     public static String makeLocationStr(Location location) {
-        return location.getWorld().getKey().getKey() + ":" + location.getBlockX() + ":" + location.getBlockY() + ":" + location.getBlockZ() + ":" + location.getYaw();
+        return location.getWorld().getKey().asString() + ":" + location.getBlockX() + ":" + location.getBlockY() + ":" + location.getBlockZ() + ":" + location.getYaw();
     }
 
     /**
