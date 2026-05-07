@@ -110,7 +110,7 @@ public class WorldNameConverter {
             for (SQLTable entry : locationTables) {
                 String locationQuery = "SELECT " + entry.id() + ", " + entry.column() + " FROM " + prefix + entry.table();
                 if (entry.table().equals("controls")) {
-                    locationQuery += " WHERE `type` IN (2,3,4,5) AND location LIKE '%:%'";
+                    locationQuery += " WHERE `type` IN (2,3,4,5) AND location NOT LIKE '%key=%'";
                 }
                 if (entry.table().equals("interactions")) {
                     locationQuery += " WHERE control = 'CENTRE'";
