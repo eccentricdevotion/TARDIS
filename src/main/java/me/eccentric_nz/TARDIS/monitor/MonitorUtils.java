@@ -49,7 +49,6 @@ public class MonitorUtils {
         }
         SnapshotRenderer renderer = new SnapshotRenderer(location, distance);
         mapView.addRenderer(renderer);
-        // TODO check this
         itemStack.setData(DataComponentTypes.MAP_ID, MapId.mapId(mapView.getId()));
         return new SnapshotData(itemStack, mapView.getId());
     }

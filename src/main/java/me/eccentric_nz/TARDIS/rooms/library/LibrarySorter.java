@@ -37,7 +37,6 @@ public class LibrarySorter {
 
     private final TARDIS plugin;
 
-    // TODO check this
     public LibrarySorter(TARDIS plugin) {
         this.plugin = plugin;
     }

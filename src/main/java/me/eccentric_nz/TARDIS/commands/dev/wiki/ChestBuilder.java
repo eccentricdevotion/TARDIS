@@ -70,7 +70,6 @@ public class ChestBuilder {
             }
             is = s.getResult();
             is.setAmount(1);
-            // TODO check this
             if (is.hasData(DataComponentTypes.DAMAGE)) {
                 is.setData(DataComponentTypes.DAMAGE, 0);
                 is.setData(DataComponentTypes.UNBREAKABLE);

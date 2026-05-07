@@ -101,7 +101,6 @@ public class GallifreyTradeSelectListener implements Listener {
                     lore.set(2, Component.text(player.getName()));
                     result.setData(DataComponentTypes.LORE, ItemLore.lore(lore));
                     ItemStack is = result.clone();
-                    // TODO check this
                     is.copyDataFrom(result, dataComponentType -> true);
                     MerchantRecipe newRecipe = new MerchantRecipe(is, 1);
                     newRecipe.addIngredient(recipe.getIngredients().getFirst());

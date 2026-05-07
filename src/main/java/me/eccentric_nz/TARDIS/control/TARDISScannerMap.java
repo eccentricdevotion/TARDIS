@@ -48,7 +48,6 @@ public class TARDISScannerMap {
         view.setTrackingPosition(true);
         view.setLocked(true);
         ItemStack map = ItemStack.of(Material.FILLED_MAP, 1);
-        // TODO test this
         map.setData(DataComponentTypes.MAP_ID, MapId.mapId(view.getId()));
         itemFrame.setItem(map, false);
         itemFrame.setRotation(Rotation.NONE);
