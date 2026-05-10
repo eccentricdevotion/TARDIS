@@ -122,7 +122,6 @@ public class TARDISTimeTravel {
                         } else if (w.getKey().getKey().equals("siluria") && mat.equals(Material.BAMBOO)) {
                             // do nothing
                         } else {
-                            TARDIS.plugin.debug("count++ else");
                             count++;
                         }
                     }
@@ -190,7 +189,6 @@ public class TARDISTimeTravel {
                         } else if (w.getKey().getKey().equals("siluria") && mat.equals(Material.BAMBOO)) {
                             // do nothing
                         } else {
-                            TARDIS.plugin.debug("count++ else");
                             count++;
                         }
                     }

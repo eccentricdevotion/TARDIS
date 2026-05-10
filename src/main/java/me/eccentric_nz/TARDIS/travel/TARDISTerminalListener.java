@@ -142,11 +142,13 @@ public class TARDISTerminalListener implements Listener {
                 if (terminalDestination.containsKey(uuid)) {
                     HashMap<String, Object> set = new HashMap<>();
                     String[] data = terminalDestination.get(uuid).split(":");
-                    String ww = (!plugin.getPlanetsConfig().getBoolean("planets." + data[1] + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMVHelper().getWorld(data[0]).getKey().getKey() : data[0];
+                    String ww = (!plugin.getPlanetsConfig().getBoolean("planets." + data[0] + ".enabled")
+                            && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ?
+                            plugin.getMVHelper().getWorld(data[0]).getKey().getKey() : data[0];
                     set.put("world", ww);
-                    set.put("x", data[2]);
-                    set.put("y", data[3]);
-                    set.put("z", data[4]);
+                    set.put("x", data[1]);
+                    set.put("y", data[2]);
+                    set.put("z", data[3]);
                     set.put("direction", terminalUsers.get(uuid).direction().toString());
                     set.put("submarine", (terminalSub.containsKey(uuid)) ? 1 : 0);
                     HashMap<String, Object> wheret = new HashMap<>();
@@ -318,12 +320,12 @@ public class TARDISTerminalListener implements Listener {
         }
     }
 
-    private String getWorld(String e, String this_world, Player p) {
+    private String getWorld(String e, String current, Player p) {
         List<String> allowedWorlds = new ArrayList<>();
         String world;
         Set<String> worldlist = plugin.getPlanetsConfig().getConfigurationSection("planets").getKeys(false);
         worldlist.forEach((o) -> {
-            World ww = Bukkit.getServer().getWorld(Key.key(this_world));
+            World ww = Bukkit.getServer().getWorld(Key.key(o));
             if (ww != null) {
                 String env = ww.getEnvironment().toString();
                 if (e.equalsIgnoreCase(env)) {
@@ -338,12 +340,12 @@ public class TARDISTerminalListener implements Listener {
                     }
                 }
                 // remove the world the Police Box is in
-                if (allowedWorlds.size() > 1 || !plugin.getPlanetsConfig().getBoolean("planets." + this_world + ".time_travel")) {
-                    allowedWorlds.remove(this_world);
+                if (allowedWorlds.size() > 1 || !plugin.getPlanetsConfig().getBoolean("planets." + current + ".time_travel")) {
+                    allowedWorlds.remove(current);
                 }
                 // remove the world if the player doesn't have permission
                 if (allowedWorlds.size() > 1 && plugin.getConfig().getBoolean("travel.per_world_perms") && !TARDISPermission.hasPermission(p, "tardis.travel." + o)) {
-                    allowedWorlds.remove(this_world);
+                    allowedWorlds.remove(current);
                 }
             }
         });
@@ -357,7 +359,7 @@ public class TARDISTerminalListener implements Listener {
             world = allowedWorlds.get(rw);
         } else {
             // if all else fails return the current world
-            world = this_world;
+            world = current;
         }
         return world;
     }
