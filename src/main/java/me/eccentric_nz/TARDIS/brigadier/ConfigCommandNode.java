@@ -114,14 +114,14 @@ public class ConfigCommandNode {
                                     return Command.SINGLE_SUCCESS;
                                 })))
                 .then(Commands.literal("include")
-                        .then(Commands.argument("option", ArgumentTypes.world())
+                        .then(Commands.argument("world", ArgumentTypes.world())
                                 .executes(ctx -> {
                                     World world = ctx.getArgument("world", World.class);
                                     new SetWorldInclusionCommand(plugin).setWorldStatus(ctx.getSource().getSender(), "include", world);
                                     return Command.SINGLE_SUCCESS;
                                 })))
                 .then(Commands.literal("exclude")
-                        .then(Commands.argument("option", ArgumentTypes.world())
+                        .then(Commands.argument("world", ArgumentTypes.world())
                                 .executes(ctx -> {
                                     World world = ctx.getArgument("world", World.class);
                                     new SetWorldInclusionCommand(plugin).setWorldStatus(ctx.getSource().getSender(), "exclude", world);
