@@ -337,6 +337,7 @@ public class TARDIS extends JavaPlugin {
             loadHelper();
             // load configs
             loadCustomConfigs();
+            new TARDISConfiguration(this).checkConfig();
             // update world keys in configs
             if (!getConfig().getBoolean("conversions.keyed_worlds")) {
                 new WorldKeyConfigUpdater(this).convert();
@@ -351,7 +352,6 @@ public class TARDIS extends JavaPlugin {
             loadSigns();
             loadChameleonGUIs();
             // world loading happens here
-            new TARDISConfiguration(this).checkConfig();
             prefix = getConfig().getString("storage.mysql.prefix", "");
             loadDatabase();
             queryFactory = new QueryFactory(this);
