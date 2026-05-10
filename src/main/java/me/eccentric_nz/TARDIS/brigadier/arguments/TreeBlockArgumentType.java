@@ -15,6 +15,7 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
@@ -52,9 +53,9 @@ public class TreeBlockArgumentType implements CustomArgumentType<String, String>
 
     @Override
     public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
-        for (String d : BLOCKS) {
-            builder.suggest(d);
-        }
+        BLOCKS.stream()
+                .filter(b -> b.toLowerCase(Locale.ROOT).startsWith(builder.getRemainingLowerCase()))
+                .forEach(builder::suggest);
         return builder.buildFuture();
     }
 }

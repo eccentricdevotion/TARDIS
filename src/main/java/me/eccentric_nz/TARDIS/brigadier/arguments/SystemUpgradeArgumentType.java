@@ -14,6 +14,7 @@ import me.eccentric_nz.TARDIS.upgrades.SystemTree;
 import net.kyori.adventure.text.Component;
 
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
@@ -52,9 +53,9 @@ public class SystemUpgradeArgumentType implements CustomArgumentType<String, Str
 
     @Override
     public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
-        for (String d : SYS_SUBS) {
-            builder.suggest(d);
-        }
+        SYS_SUBS.stream()
+                .filter(s -> s.toLowerCase(Locale.ROOT).startsWith(builder.getRemainingLowerCase()))
+                .forEach(builder::suggest);
         return builder.buildFuture();
     }
 }

@@ -15,6 +15,7 @@ import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import net.kyori.adventure.text.Component;
 
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
@@ -37,6 +38,7 @@ public class PresetArgumentType implements CustomArgumentType<String, String> {
         for (ChameleonPreset p : ChameleonPreset.values()) {
             PRESET_SUBS.add(p.toString());
         }
+        PRESET_SUBS.addAll(TARDIS.plugin.getCustomModelConfig().getConfigurationSection("models").getKeys(false));
     }
 
     @Override
@@ -60,12 +62,9 @@ public class PresetArgumentType implements CustomArgumentType<String, String> {
 
     @Override
     public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
-        for (String d : PRESET_SUBS) {
-            builder.suggest(d);
-        }
-        for (String m : TARDIS.plugin.getCustomModelConfig().getConfigurationSection("models").getKeys(false)) {
-            builder.suggest(m);
-        }
+        PRESET_SUBS.stream()
+                .filter(p -> p.toLowerCase(Locale.ROOT).startsWith(builder.getRemainingLowerCase()))
+                .forEach(builder::suggest);
         return builder.buildFuture();
     }
 }

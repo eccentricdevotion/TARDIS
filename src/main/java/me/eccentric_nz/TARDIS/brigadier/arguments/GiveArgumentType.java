@@ -64,9 +64,9 @@ public class GiveArgumentType implements CustomArgumentType<String, String> {
 
     @Override
     public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
-        for (String d : GIVE_SUBS) {
-            builder.suggest(d);
-        }
+        GIVE_SUBS.stream()
+                .filter(g -> g.toLowerCase(Locale.ROOT).startsWith(builder.getRemainingLowerCase()))
+                .forEach(builder::suggest);
         return builder.buildFuture();
     }
 }

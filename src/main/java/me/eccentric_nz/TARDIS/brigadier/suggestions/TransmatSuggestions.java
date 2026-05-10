@@ -5,12 +5,12 @@ import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.data.Transmat;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTransmatList;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.concurrent.CompletableFuture;
 
 public class TransmatSuggestions {
@@ -23,9 +23,9 @@ public class TransmatSuggestions {
         if (rst.resultSet()) {
             ResultSetTransmatList rs = new ResultSetTransmatList(TARDIS.plugin, rst.getTardis_id());
             if (rs.resultSet()) {
-                for (Transmat t : rs.getData()) {
-                    builder.suggest(t.name());
-                }
+                rs.getData().stream()
+                        .filter(t -> t.name().toLowerCase(Locale.ROOT).startsWith(builder.getRemainingLowerCase()))
+                        .forEach(t -> builder.suggest(t.name()));
             }
         }
         return builder.buildFuture();
