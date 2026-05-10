@@ -47,7 +47,7 @@ public class SonicLight {
         where.put("uuid", player.getUniqueId().toString());
         ResultSetTravellers rs = new ResultSetTravellers(plugin, where, false);
         if (rs.resultSet()) {
-            // TARDIS_TimeVortex:500:66:504
+            // tardis_timevortex:500:66:504
             int x = light.getLocation().getBlockX();
             int y = light.getLocation().getBlockY();
             int z = light.getLocation().getBlockZ();

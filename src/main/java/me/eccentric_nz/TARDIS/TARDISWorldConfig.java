@@ -46,7 +46,7 @@ public class TARDISWorldConfig {
                 plugin.saveConfig();
                 plugin.getLogger().log(Level.SEVERE, "default_world was disabled as create_worlds is true!");
             }
-            // disable TARDIS_TimeVortex world
+            // disable tardis_timevortex world
             plugin.getPlanetsConfig().set("planets.tardis_timevortex.enabled", false);
             try {
                 plugin.getPlanetsConfig().save(new File(plugin.getDataFolder(), "planets.yml"));

@@ -245,7 +245,7 @@ public class Exterminator {
             plugin.getWorldGuardUtils().removeRegion(w, owner);
             plugin.getWorldGuardUtils().removeRoomRegion(w, owner, "renderer");
         }
-        // unload and remove the world if it's a `TARDIS_WORLD_` world
+        // unload and remove the world if it's a `tardis_world_` world
         if (w.getKey().getKey().contains("tardis_world_")) {
             String name = w.getKey().getKey();
             List<Player> players = w.getPlayers();
