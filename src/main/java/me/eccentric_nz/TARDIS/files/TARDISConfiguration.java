@@ -234,7 +234,7 @@ public class TARDISConfiguration {
         integerOptions.put("travel.tp_radius", 500);
         // string
         stringOptions.put("creation.area", "none");
-        stringOptions.put("creation.default_world_name", "TARDIS_TimeVortex");
+        stringOptions.put("creation.default_world_name", "tardis_timevortex");
         stringOptions.put("creation.use_clay", "WOOL");
         stringOptions.put("creation.seed_block.easy", "REDSTONE_TORCH");
         stringOptions.put("creation.seed_block.normal", "SOUL_LANTERN");
@@ -294,7 +294,7 @@ public class TARDISConfiguration {
     public void checkConfig() {
         int i = 0;
         if (config.getString("creation.default_world_name", "tardis_timevortex").equals("tardis_time_vortex")) {
-            plugin.getConfig().set("creation.default_world_name", "TARDIS_TimeVortex");
+            plugin.getConfig().set("creation.default_world_name", "tardis_timevortex");
             i++;
         }
         if (!config.contains("rechargers")) {

@@ -122,7 +122,7 @@ public class SeedBlockProcessor {
                     if (TARDISFloodgate.shouldReplacePrefix(uniqueId)) {
                         cw = TARDISFloodgate.getPlayerWorldName(playerNameStr);
                     } else {
-                        cw = "TARDIS_WORLD_" + playerNameStr;
+                        cw = "tardis_world_" + playerNameStr;
                     }
                     TARDISSpace space = new TARDISSpace(plugin);
                     chunkworld = space.getTardisWorld(cw);
@@ -133,7 +133,7 @@ public class SeedBlockProcessor {
                     if (TARDISFloodgate.shouldReplacePrefix(uniqueId)) {
                         cw = TARDISFloodgate.getPlayerWorldName(playerNameStr);
                     } else {
-                        cw = "TARDIS_WORLD_" + playerNameStr;
+                        cw = "tardis_world_" + playerNameStr;
                     }
                     TARDISSpace space = new TARDISSpace(plugin);
                     chunkworld = space.getTardisWorld(cw);

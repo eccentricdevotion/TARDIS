@@ -70,12 +70,12 @@ public class TARDISUtils {
         String[] data = chunk.split(":");
         World room_world = TARDISStaticLocationGetters.getWorldFromSplitString(chunk);
         ChunkGenerator gen = room_world.getGenerator();
-        String dn = "TARDIS_TimeVortex";
+        String dn = "tardis_timevortex";
         if (plugin.getConfig().getBoolean("creation.default_world")) {
             dn = plugin.getConfig().getString("creation.default_world_name", "tardis_timevortex");
         }
         boolean special = (data[1].equalsIgnoreCase(dn) && gen instanceof TARDISChunkGenerator);
-        return (data[1].contains("TARDIS_WORLD_") || special);
+        return (data[1].contains("tardis_world_") || special);
     }
 
     public boolean inTARDISWorld(Player player) {
