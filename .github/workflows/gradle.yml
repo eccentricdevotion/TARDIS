@@ -88,7 +88,7 @@ jobs:
           paper
         # list of versions of Minecraft that this version supports
         game-versions: |-
-          ${{ env.RELEASE_TAG }}
+          ${{ env.RELEASE_TAG }}.x
         # list of file paths to upload
         files: |-
           build/libs/TARDIS-${{ env.VERSION }}-b${{ env.SHORT_SHA }}.jar
