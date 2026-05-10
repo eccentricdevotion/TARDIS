@@ -13,6 +13,7 @@ import io.papermc.paper.command.brigadier.argument.CustomArgumentType;
 import me.eccentric_nz.TARDIS.commands.config.ConfigUtility;
 import net.kyori.adventure.text.Component;
 
+import java.util.Locale;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
@@ -44,9 +45,9 @@ public class ConfigOptionArgumentType implements CustomArgumentType<String, Stri
 
     @Override
     public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
-        for (String d : CONFIG_SUBS) {
-            builder.suggest(d);
-        }
+        CONFIG_SUBS.stream()
+                .filter(c -> c.toLowerCase(Locale.ROOT).startsWith(builder.getRemainingLowerCase()))
+                .forEach(builder::suggest);
         return builder.buildFuture();
     }
 }

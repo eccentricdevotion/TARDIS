@@ -16,6 +16,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreas;
 import net.kyori.adventure.text.Component;
 
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
@@ -57,9 +58,9 @@ public class AreasArgumentType implements CustomArgumentType<String, String> {
 
     @Override
     public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
-        for (String a : AREA_SUBS) {
-            builder.suggest(a);
-        }
+        AREA_SUBS.stream()
+                .filter(a -> a.toLowerCase(Locale.ROOT).startsWith(builder.getRemainingLowerCase()))
+                .forEach(builder::suggest);
         return builder.buildFuture();
     }
 }

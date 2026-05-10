@@ -13,6 +13,7 @@ import io.papermc.paper.command.brigadier.argument.CustomArgumentType;
 import me.eccentric_nz.TARDIS.enumeration.Desktops;
 import net.kyori.adventure.text.Component;
 
+import java.util.Locale;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
@@ -44,9 +45,9 @@ public class SeedArgumentType implements CustomArgumentType<String, String> {
 
     @Override
     public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
-        for (String d : SEED_SUBS) {
-            builder.suggest(d);
-        }
+        SEED_SUBS.stream()
+                .filter(s -> s.toLowerCase(Locale.ROOT).startsWith(builder.getRemainingLowerCase()))
+                .forEach(builder::suggest);
         return builder.buildFuture();
     }
 }

@@ -14,6 +14,7 @@ import me.eccentric_nz.TARDIS.particles.ParticleShape;
 import net.kyori.adventure.text.Component;
 
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
@@ -51,9 +52,9 @@ public class ParticleShapeArgumentType implements CustomArgumentType<String, Str
 
     @Override
     public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
-        for (String d : SHAPES) {
-            builder.suggest(d);
-        }
+        SHAPES.stream()
+                .filter(s -> s.toLowerCase(Locale.ROOT).startsWith(builder.getRemainingLowerCase()))
+                .forEach(builder::suggest);
         return builder.buildFuture();
     }
 }

@@ -14,6 +14,7 @@ import me.eccentric_nz.TARDIS.enumeration.Updateable;
 import net.kyori.adventure.text.Component;
 
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
@@ -26,7 +27,7 @@ public class UpdateableArgumentType implements CustomArgumentType<String, String
 
     public UpdateableArgumentType() {
         for (Updateable u : Updateable.values()) {
-            UPDATEABLES.add(u.toString());
+            UPDATEABLES.add(u.toString().toLowerCase(Locale.ROOT));
         }
     }
 
@@ -54,6 +55,9 @@ public class UpdateableArgumentType implements CustomArgumentType<String, String
         for (String u : UPDATEABLES) {
             builder.suggest(u);
         }
+        UPDATEABLES.stream()
+                .filter(u -> u.toLowerCase(Locale.ROOT).startsWith(builder.getRemainingLowerCase()))
+                .forEach(builder::suggest);
         return builder.buildFuture();
     }
 }

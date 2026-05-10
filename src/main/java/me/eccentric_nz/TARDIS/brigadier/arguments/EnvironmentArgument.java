@@ -14,6 +14,7 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.World;
 
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
@@ -51,9 +52,9 @@ public class EnvironmentArgument implements CustomArgumentType<String, String> {
 
     @Override
     public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
-        for (String d : ENVIRONS) {
-            builder.suggest(d);
-        }
+        ENVIRONS.stream()
+                .filter(e -> e.toLowerCase(Locale.ROOT).startsWith(builder.getRemainingLowerCase()))
+                .forEach(builder::suggest);
         return builder.buildFuture();
     }
 }

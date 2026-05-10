@@ -14,6 +14,7 @@ import me.eccentric_nz.TARDIS.enumeration.Hum;
 import net.kyori.adventure.text.Component;
 
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
@@ -51,9 +52,9 @@ public class HumArgumentType implements CustomArgumentType<String, String> {
 
     @Override
     public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
-        for (String d : HUMS) {
-            builder.suggest(d);
-        }
+        HUMS.stream()
+                .filter(h -> h.toLowerCase(Locale.ROOT).startsWith(builder.getRemainingLowerCase()))
+                .forEach(builder::suggest);
         return builder.buildFuture();
     }
 }
