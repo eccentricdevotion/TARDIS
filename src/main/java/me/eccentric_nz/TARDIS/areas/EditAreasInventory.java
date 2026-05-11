@@ -16,8 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.areas;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodels.GUIMap;
+import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreaLocations;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -26,7 +28,6 @@ import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
 
@@ -56,16 +57,14 @@ public class EditAreasInventory implements InventoryHolder {
             for (Location l : rs.getLocations()) {
                 if (i < 45) {
                     ItemStack is = ItemStack.of(Material.MAP);
-                    ItemMeta im = is.getItemMeta();
-                    im.customName(Component.text("Location " + (i + 1)));
-                    im.lore(List.of(
+                    is.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Location " + (i + 1)));
+                    is.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(
                             Component.text(l.getWorld().getKey().getKey()),
                             Component.text("x: " + l.getBlockX()),
                             Component.text("y: " + l.getBlockY()),
                             Component.text("z: " + l.getBlockZ()),
                             Component.text("id: " + area_id)
-                    ));
-                    is.setItemMeta(im);
+                    )));
                     stacks[i] = is;
                     i++;
                 }
@@ -73,9 +72,8 @@ public class EditAreasInventory implements InventoryHolder {
         }
         // Info
         ItemStack info = ItemStack.of(Material.BOOK, 1);
-        ItemMeta ii = info.getItemMeta();
-        ii.customName(Component.text("Info"));
-        ii.lore(List.of(
+        info.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Info"));
+        info.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(
                 Component.text("To REMOVE a location"),
                 Component.text("select a location map"),
                 Component.text("then click the Remove"),
@@ -84,28 +82,20 @@ public class EditAreasInventory implements InventoryHolder {
                 Component.text("where you are standing"),
                 Component.text("click the Add button"),
                 Component.text("(nether star).")
-        ));
-        info.setItemMeta(ii);
+        )));
         stacks[45] = info;
         // add
         ItemStack add = ItemStack.of(Material.NETHER_STAR, 1);
-        ItemMeta er = add.getItemMeta();
-        er.customName(Component.text("Add"));
-        er.lore(List.of(Component.text("area_id: " + area_id)));
-        add.setItemMeta(er);
+        add.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Add"));
+        add.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text("area_id: " + area_id)).build());
         stacks[48] = add;
         // remove
         ItemStack del = ItemStack.of(Material.BUCKET, 1);
-        ItemMeta dd = del.getItemMeta();
-        dd.customName(Component.text("Remove"));
-        del.setItemMeta(dd);
+        del.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Remove"));
         stacks[50] = del;
         // close
-        ItemStack close = ItemStack.of(GUIMap.BUTTON_CLOSE.material(), 1);
-        ItemMeta close_im = close.getItemMeta();
-        close_im.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
-        close.setItemMeta(close_im);
-        stacks[53] = close;
+        stacks[53] = GUIItemFactory.close();
+        ;
         return stacks;
     }
 }

@@ -16,28 +16,29 @@
  */
 package me.eccentric_nz.TARDIS.companionGUI;
 
-import com.google.common.collect.Multimaps;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
+import io.papermc.paper.datacomponent.item.ResolvableProfile;
+import io.papermc.paper.datacomponent.item.TooltipDisplay;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.custommodels.GUICompanion;
+import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.SkullMeta;
 
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -69,18 +70,18 @@ public class CompanionInventory implements InventoryHolder {
                 OfflinePlayer op = plugin.getServer().getOfflinePlayer(UUID.fromString(c));
                 try {
                     ItemStack head = ItemStack.of(Material.PLAYER_HEAD, 1);
-                    SkullMeta skull = (SkullMeta) head.getItemMeta();
-                    skull.setOwningPlayer(op);
+                    // TODO check this
+                    head.setData(DataComponentTypes.PROFILE, ResolvableProfile.resolvableProfile(op.getPlayerProfile()));
                     String name = op.getName();
                     if (!op.hasPlayedBefore() || name == null) {
                         // lookup name
                         name = getPlayerNameFromMojang(c);
                     }
-                    skull.customName(Component.text(name));
-                    skull.lore(List.of(Component.text(c)));
-                    skull.addItemFlags(ItemFlag.values());
-                    skull.setAttributeModifiers(Multimaps.forMap(Map.of()));
-                    head.setItemMeta(skull);
+                    head.setData(DataComponentTypes.CUSTOM_NAME, Component.text(name));
+                    head.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text(c)).build());
+                    head.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
+                            .addHiddenComponents(TARDISConstants.HIDE)
+                            .build());
                     heads[i] = head;
                     i++;
                 } catch (Exception e) {
@@ -90,9 +91,8 @@ public class CompanionInventory implements InventoryHolder {
         }
         // add buttons
         ItemStack info = ItemStack.of(GUICompanion.INFO.material(), 1);
-        ItemMeta ii = info.getItemMeta();
-        ii.customName(Component.text("Info"));
-        ii.lore(List.of(
+        info.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Info"));
+        info.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(
                 Component.text("To REMOVE a companion"),
                 Component.text("select a player head"),
                 Component.text("then click the Remove"),
@@ -100,25 +100,16 @@ public class CompanionInventory implements InventoryHolder {
                 Component.text("To ADD a companion"),
                 Component.text("click the Add button"),
                 Component.text("(nether star).")
-        ));
-        info.setItemMeta(ii);
+        )));
         heads[GUICompanion.INFO.slot()] = info;
         ItemStack add = ItemStack.of(GUICompanion.ADD_COMPANION.material(), 1);
-        ItemMeta aa = add.getItemMeta();
-        aa.customName(Component.text("Add"));
-        add.setItemMeta(aa);
+        add.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Add"));
         heads[GUICompanion.ADD_COMPANION.slot()] = add;
         ItemStack del = ItemStack.of(GUICompanion.DELETE_COMPANION.material(), 1);
-        ItemMeta dd = del.getItemMeta();
-        dd.customName(Component.text("Remove"));
-        del.setItemMeta(dd);
+        del.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Remove"));
         heads[GUICompanion.DELETE_COMPANION.slot()] = del;
         // Cancel / close
-        ItemStack close = ItemStack.of(GUICompanion.BUTTON_CLOSE.material(), 1);
-        ItemMeta can = close.getItemMeta();
-        can.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
-        close.setItemMeta(can);
-        heads[GUICompanion.BUTTON_CLOSE.slot()] = close;
+        heads[GUICompanion.BUTTON_CLOSE.slot()] = GUIItemFactory.close();
 
         return heads;
     }

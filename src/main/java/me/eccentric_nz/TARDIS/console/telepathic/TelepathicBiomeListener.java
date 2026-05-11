@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.console.telepathic;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.registry.RegistryAccess;
 import io.papermc.paper.registry.RegistryKey;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -35,7 +36,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -109,8 +109,7 @@ public class TelepathicBiomeListener extends TARDISMenuListener {
                 ItemStack choice = view.getItem(slot);
                 if (choice != null) {
                     // get the biome
-                    ItemMeta im = choice.getItemMeta();
-                    String[] keyStr = ComponentUtils.stripColour(im.customName()).split(":");
+                    String[] keyStr = ComponentUtils.stripColour(choice.getData(DataComponentTypes.CUSTOM_NAME)).split(":");
                     int id = getIdFromTravellers(player);
                     Biome biome = RegistryAccess.registryAccess().getRegistry(RegistryKey.BIOME).get(new NamespacedKey(keyStr[0], keyStr[1]));
                     new BiomeCommand(plugin).action(player, biome, null, id);
@@ -152,9 +151,7 @@ public class TelepathicBiomeListener extends TARDISMenuListener {
             Material material = EnvironmentBiomes.BIOME_BLOCKS.get(biome.getKey().getKey());
             if (material != null) {
                 ItemStack is = ItemStack.of(material, 1);
-                ItemMeta im = is.getItemMeta();
-                im.customName(Component.text(biome.getKey().toString()));
-                is.setItemMeta(im);
+                is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(biome.getKey().toString()));
                 stacks[r][c] = is;
                 c++;
                 if (c == 8) {

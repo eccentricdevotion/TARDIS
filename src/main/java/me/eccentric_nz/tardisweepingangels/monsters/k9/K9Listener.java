@@ -38,7 +38,6 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityTameEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.UUID;
 
@@ -95,29 +94,29 @@ public class K9Listener implements Listener {
     public void onK9BoneEgg(PlayerInteractEvent event) {
         if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) || event.getAction().equals(Action.RIGHT_CLICK_AIR)) {
             ItemStack is = event.getItem();
-            if (is != null && is.getType().equals(Material.BONE) && is.hasItemMeta()) {
-                ItemMeta im = is.getItemMeta();
-                if (im.hasCustomName() && ComponentUtils.endsWith(im.customName(), "K9") && im.hasItemModel()) {
-                    event.setCancelled(true);
-                    Player player = event.getPlayer();
-                    Location location = event.getClickedBlock().getLocation().add(0.5d, 1.0d, 0.5d);
-                    if (!plugin.getMonstersConfig().getBoolean("k9.worlds." + location.getWorld().getKey().getKey())) {
-                        plugin.getMessenger().send(player, TardisModule.MONSTERS, "WA_SPAWN");
-                        return;
-                    }
-                    // remove bone form inventory
-                    if (is.getAmount() == 1) {
-                        player.getInventory().setItemInMainHand(null);
-                    } else {
-                        is.setAmount(is.getAmount() - 1);
-                        player.getInventory().setItemInMainHand(is);
-                    }
-                    // spawn a K9 instead
-                    LivingEntity k9 = (LivingEntity) new MonsterSpawner().createFollower(location, new Follower(UUID.randomUUID(), player.getUniqueId(), Monster.K9)).getBukkitEntity();
-                    K9Equipment.set(player, k9, false);
-                    player.playSound(k9.getLocation(), "k9", 1.0f, 1.0f);
-                    plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(k9, EntityType.HUSK, Monster.K9, location));
+            if (is != null
+                    && is.getType().equals(Material.BONE)
+                    && ComponentUtils.isNamed(is, "K9")
+                    && ComponentUtils.isModelled(is)) {
+                event.setCancelled(true);
+                Player player = event.getPlayer();
+                Location location = event.getClickedBlock().getLocation().add(0.5d, 1.0d, 0.5d);
+                if (!plugin.getMonstersConfig().getBoolean("k9.worlds." + location.getWorld().getKey().getKey())) {
+                    plugin.getMessenger().send(player, TardisModule.MONSTERS, "WA_SPAWN");
+                    return;
                 }
+                // remove bone form inventory
+                if (is.getAmount() == 1) {
+                    player.getInventory().setItemInMainHand(null);
+                } else {
+                    is.setAmount(is.getAmount() - 1);
+                    player.getInventory().setItemInMainHand(is);
+                }
+                // spawn a K9 instead
+                LivingEntity k9 = (LivingEntity) new MonsterSpawner().createFollower(location, new Follower(UUID.randomUUID(), player.getUniqueId(), Monster.K9)).getBukkitEntity();
+                K9Equipment.set(player, k9, false);
+                player.playSound(k9.getLocation(), "k9", 1.0f, 1.0f);
+                plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(k9, EntityType.HUSK, Monster.K9, location));
             }
         }
     }

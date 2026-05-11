@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.ARS.relocator;
 
 import com.google.gson.JsonObject;
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.ARS.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.DamageUtility;
@@ -42,7 +43,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -281,8 +281,7 @@ public class RoomRelocatorListener extends ARSMethods implements Listener {
     private String getRoomName(InventoryView view, int slot) {
         ItemStack is = view.getItem(slot);
         if (is != null) {
-            ItemMeta im = is.getItemMeta();
-            String name = ComponentUtils.stripColour(im.customName());
+            String name = ComponentUtils.stripColour(is.getData(DataComponentTypes.CUSTOM_NAME));
             for (TARDISARS ars : TARDISARS.values()) {
                 if (name.equals(ars.getDescriptiveName())) {
                     return ars.toString();
@@ -295,9 +294,7 @@ public class RoomRelocatorListener extends ARSMethods implements Listener {
     private void setRelocationSlot(InventoryView view, UUID uuid) {
         int to_slot = relocation_slot.get(uuid);
         ItemStack is = level_switch.get(uuid).clone();
-        ItemMeta im = is.getItemMeta();
-        im.setEnchantmentGlintOverride(true);
-        is.setItemMeta(im);
+        is.setData(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE, true);
         setSlot(view, to_slot, is, uuid, true);
     }
 
@@ -305,9 +302,7 @@ public class RoomRelocatorListener extends ARSMethods implements Listener {
         level_switch.put(uuid, view.getItem(slot));
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             ItemStack tnt = ItemStack.of(Material.TNT, 1);
-            ItemMeta j = tnt.getItemMeta();
-            j.customName(Component.text("Jettison"));
-            tnt.setItemMeta(j);
+            tnt.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Jettison"));
             setSlot(view, slot, tnt, uuid, true);
         }, 2L);
     }

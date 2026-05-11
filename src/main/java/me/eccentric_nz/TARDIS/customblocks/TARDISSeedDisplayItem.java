@@ -51,8 +51,7 @@ public enum TARDISSeedDisplayItem implements TARDISDisplayItem {
     LEGACY_REDSTONE(SeedBlock.LEGACY_REDSTONE.getKey(), Material.RED_GLAZED_TERRACOTTA),
     CUSTOM(SeedBlock.CUSTOM.getKey(), Material.POLISHED_BLACKSTONE),
     // growing seed block
-    GROW(SeedBlock.GROW.getKey(), Material.LIGHT_GRAY_TERRACOTTA, Material.NETHERITE_BLOCK),
-    ;
+    GROW(SeedBlock.GROW.getKey(), Material.LIGHT_GRAY_TERRACOTTA, Material.NETHERITE_BLOCK);
 
     private final NamespacedKey customModel;
     private final Material material;
@@ -102,7 +101,7 @@ public enum TARDISSeedDisplayItem implements TARDISDisplayItem {
 
     @Override
     public boolean isSeed() {
-        return true;
+        return this != GROW;
     }
 
     @Override

@@ -1,9 +1,13 @@
 package me.eccentric_nz.TARDIS.commands.dev;
 
-import com.google.common.collect.Multimaps;
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.*;
 import io.papermc.paper.registry.RegistryAccess;
 import io.papermc.paper.registry.RegistryKey;
+import io.papermc.paper.registry.TypedKey;
+import io.papermc.paper.registry.set.RegistrySet;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.bStats.ARSRoomCounts;
 import me.eccentric_nz.TARDIS.blueprints.BlueprintRoom;
 import me.eccentric_nz.TARDIS.customblocks.TARDISBlockDisplayItem;
@@ -20,13 +24,8 @@ import org.bukkit.block.BrushableBlock;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.EquipmentSlot;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BlockStateMeta;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.LeatherArmorMeta;
-import org.bukkit.inventory.meta.components.CustomModelDataComponent;
-import org.bukkit.inventory.meta.components.EquippableComponent;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -37,13 +36,11 @@ public class DevelopmentUtility {
 
     public static void siege(TARDIS plugin, Player player) {
         ItemStack cube = player.getInventory().getItemInMainHand();
-        ItemMeta im = cube.getItemMeta();
-        im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, TARDISBlockDisplayItem.SIEGE_CUBE.getCustomModel().getKey());
-        List<Component> lore = new ArrayList<>();
-        lore.add(Component.text("Time Lord: eccentric_nz"));
-        lore.add(Component.text("ID: 1"));
-        im.lore(lore);
-        cube.setItemMeta(im);
+        cube.editPersistentDataContainer(pdc -> pdc.set(plugin.getCustomBlockKey(), PersistentDataType.STRING, TARDISBlockDisplayItem.SIEGE_CUBE.getCustomModel().getKey()));
+        ItemLore.Builder lore = ItemLore.lore();
+        lore.addLine(Component.text("Time Lord: eccentric_nz"));
+        lore.addLine(Component.text("ID: 1"));
+        cube.setData(DataComponentTypes.LORE, lore.build());
         // track it
         plugin.getTrackerKeeper().getIsSiegeCube().add(1);
         // track the player as well
@@ -118,18 +115,13 @@ public class DevelopmentUtility {
         Skeleton skeleton = (Skeleton) eyeLocation.getWorld().spawnEntity(eyeLocation, EntityType.SKELETON);
         EntityEquipment ee = skeleton.getEquipment();
         ItemStack head = ItemStack.of(Material.SLIME_BALL);
-        ItemMeta him = head.getItemMeta();
-        him.setItemModel(new NamespacedKey(plugin, "dalek_independent_head"));
-        EquippableComponent component = him.getEquippable();
-        component.setSlot(EquipmentSlot.HEAD);
-        component.setAllowedEntities(EntityType.SKELETON);
-        him.setEquippable(component);
-        head.setItemMeta(him);
+        head.setData(DataComponentTypes.ITEM_MODEL, new NamespacedKey(plugin, "dalek_independent_head"));
+        head.setData(DataComponentTypes.EQUIPPABLE, Equippable.equippable(EquipmentSlot.HEAD)
+                .allowedEntities(RegistrySet.keySet(RegistryKey.ENTITY_TYPE, TypedKey.create(RegistryKey.ENTITY_TYPE, EntityType.SKELETON.getKey())))
+                .build());
         ee.setHelmet(head);
         ItemStack body = ItemStack.of(Material.SLIME_BALL);
-        ItemMeta bim = body.getItemMeta();
-        bim.setItemModel(new NamespacedKey(plugin, "dalek_body"));
-        body.setItemMeta(bim);
+        body.setData(DataComponentTypes.ITEM_MODEL, new NamespacedKey(plugin, "dalek_body"));
         ee.setItemInMainHand(body);
         PotionEffect invisibility = new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 1, false, false);
         skeleton.addPotionEffect(invisibility);
@@ -139,16 +131,14 @@ public class DevelopmentUtility {
 
     public static void leather(Player player) {
         ItemStack is = ItemStack.of(Material.LEATHER_HORSE_ARMOR);
-        LeatherArmorMeta im = (LeatherArmorMeta) is.getItemMeta();
-        im.setColor(Color.fromRGB(255, 0, 0));
-        im.addItemFlags(ItemFlag.values());
-        im.setAttributeModifiers(Multimaps.forMap(Map.of()));
-        im.setEquippable(null);
-        CustomModelDataComponent cmdc = im.getCustomModelDataComponent();
-        List<String> strings = List.of("chameleon_tint");
-        cmdc.setStrings(strings);
-        im.setCustomModelDataComponent(cmdc);
-        is.setItemMeta(im);
+        is.setData(DataComponentTypes.DYED_COLOR, DyedItemColor.dyedItemColor().color(Color.fromRGB(255, 0, 0)));
+        is.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
+                .addHiddenComponents(TARDISConstants.HIDE)
+                .build());
+        is.unsetData(DataComponentTypes.EQUIPPABLE);
+        is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                .addStrings(List.of("chameleon_tint"))
+                .build());
         player.getInventory().addItem(is);
     }
 
@@ -200,11 +190,18 @@ public class DevelopmentUtility {
 
     public static void brush(Player player) {
         ItemStack sand = ItemStack.of(Material.SUSPICIOUS_SAND);
-        BlockStateMeta sandMeta = (BlockStateMeta) sand.getItemMeta();
-        BrushableBlock blockState = (BrushableBlock) sandMeta.getBlockState();
-        blockState.setItem(player.getInventory().getItemInMainHand());
-        sandMeta.setBlockState(blockState);
-        sand.setItemMeta(sandMeta);
+//        BlockStateMeta sandMeta = (BlockStateMeta) sand.getItemMeta();
+//        BrushableBlock blockState = (BrushableBlock) sandMeta.getBlockState();
+//        blockState.setItem(player.getInventory().getItemInMainHand());
+//        sandMeta.setBlockState(blockState);
+//        sand.setItemMeta(sandMeta);
+        sand.editMeta(BlockStateMeta.class, meta -> {
+            // only proceed if it's actually a brushable block
+            if (meta.getBlockState() instanceof BrushableBlock brushable) {
+                brushable.setItem(player.getInventory().getItemInMainHand());
+                meta.setBlockState(brushable);
+            }
+        });
         player.getInventory().addItem(sand);
     }
 

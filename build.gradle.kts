@@ -12,7 +12,7 @@ plugins {
 
 group = "me.eccentric_nz"
 val buildNumber = "-b${System.getenv("BUILD_NUMBER") ?: (System.getenv("SHORT_SHA") ?: ".local")}"
-version = "7.0.1${buildNumber}"
+version = "7.0.2${buildNumber}"
 
 repositories {
     mavenCentral()
@@ -84,16 +84,16 @@ repositories {
 
 dependencies {
     paperweight.paperDevBundle("26.1.2.build.+")
-    compileOnly("com.sk89q.worldedit:worldedit-core:8.0.0-SNAPSHOT") {
+    compileOnly("com.sk89q.worldedit:worldedit-core:7.4.3-SNAPSHOT") {
         isTransitive = false
     }
-    compileOnly("com.sk89q.worldedit:worldedit-bukkit:8.0.0-SNAPSHOT") {
+    compileOnly("com.sk89q.worldedit:worldedit-bukkit:7.4.3-SNAPSHOT") {
         isTransitive = false
     }
-    compileOnly("com.sk89q.worldguard:worldguard-core:7.1.0-SNAPSHOT") {
+    compileOnly("com.sk89q.worldguard:worldguard-core:7.0.17-SNAPSHOT") {
         isTransitive = false
     }
-    compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.1.0-SNAPSHOT") {
+    compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.17-SNAPSHOT") {
         isTransitive = false
     }
     compileOnly("net.citizensnpcs:citizensapi:2.0.42-SNAPSHOT") {
@@ -147,12 +147,12 @@ dependencies {
     }
     compileOnly(files("libs/VaultAPI.jar"))
     compileOnly("org.geysermc.floodgate:api:2.2.5-SNAPSHOT")
-    compileOnly("org.geysermc.geyser:api:2.9.5-SNAPSHOT")
+    compileOnly("org.geysermc.geyser:api:2.9.6-SNAPSHOT")
     compileOnly("org.jsoup:jsoup:1.22.2") {
         isTransitive = false
     }
-    compileOnly("org.popcraft:chunky-common:1.4.58")
-    compileOnly("org.popcraft:chunky-bukkit:1.4.58")
+    compileOnly("org.popcraft:chunky-common:1.5.3")
+    compileOnly("org.popcraft:chunky-bukkit:1.5.3")
     compileOnly("org.popcraft:chunkyborder-common:1.2.33")
     compileOnly("net.luckperms:api:5.5")
     compileOnly("org.apache.commons:commons-lang3:3.20.0")

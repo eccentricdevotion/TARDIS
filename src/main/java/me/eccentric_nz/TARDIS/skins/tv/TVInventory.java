@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.skins.tv;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.CustomModelData;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUIData;
 import me.eccentric_nz.TARDIS.custommodels.GUITelevision;
@@ -25,8 +27,6 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
 public class TVInventory implements InventoryHolder {
 
@@ -58,14 +58,12 @@ public class TVInventory implements InventoryHolder {
          */
         for (GUIData tv : GUITelevision.values()) {
             ItemStack is = ItemStack.of(tv.material(), 1);
-            ItemMeta im = is.getItemMeta();
-            im.customName(Component.text(tv.name()));
+            is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(tv.name()));
             if (tv == GUITelevision.DOWNLOAD) {
-                CustomModelDataComponent component = im.getCustomModelDataComponent();
-                component.setFloats(SwitchVariant.DOWNLOAD_OFF.getFloats());
-                im.setCustomModelDataComponent(component);
+                is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                        .addFloats(SwitchVariant.DOWNLOAD_OFF.getFloats())
+                        .build());
             }
-            is.setItemMeta(im);
             stack[tv.slot()] = is;
         }
         return stack;

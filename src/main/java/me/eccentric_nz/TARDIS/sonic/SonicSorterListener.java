@@ -21,6 +21,7 @@
  */
 package me.eccentric_nz.TARDIS.sonic;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -40,8 +41,6 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.Damageable;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -87,9 +86,10 @@ public class SonicSorterListener implements Listener {
                         continue;
                     }
                     if (item2.getType() == item1.getType()) {
-                        if (item1.getItemMeta() instanceof Damageable d1) {
-                            Damageable d2 = (Damageable) item2.getItemMeta();
-                            if (d1.getDamage() == d2.getDamage() && item1.getEnchantments().equals(item2.getEnchantments()) && item1.getItemMeta().equals(item2.getItemMeta())) {
+                        if (item1.hasData(DataComponentTypes.DAMAGE) && item2.hasData(DataComponentTypes.DAMAGE)) {
+                            int d1 = item1.getData(DataComponentTypes.DAMAGE);
+                            int d2 = item2.getData(DataComponentTypes.DAMAGE);
+                            if (d1 == d2 && item1.getEnchantments().equals(item2.getEnchantments()) && item1.getItemMeta().equals(item2.getItemMeta())) {
                                 if (item2.getAmount() > needed) {
                                     item1.setAmount(maxStackSize);
                                     item2.setAmount(item2.getAmount() - needed);
@@ -133,9 +133,7 @@ public class SonicSorterListener implements Listener {
         Player player = event.getPlayer();
         if (event.getAction() == Action.LEFT_CLICK_BLOCK && TARDISPermission.hasPermission(player, "tardis.sonic.sort")) {
             ItemStack is = player.getInventory().getItemInMainHand();
-            if (is.hasItemMeta()) {
-                ItemMeta im = is.getItemMeta();
-                if (im.hasCustomName() && ComponentUtils.endsWith(im.customName(), "Sonic Screwdriver")) {
+                if (ComponentUtils.isNamed(is, "Sonic Screwdriver")) {
                     Block block = event.getClickedBlock();
                     if (block != null && sortables.contains(block.getType())) {
                         boolean allow = true;
@@ -158,7 +156,6 @@ public class SonicSorterListener implements Listener {
                         }
                     }
                 }
-            }
         }
     }
 }

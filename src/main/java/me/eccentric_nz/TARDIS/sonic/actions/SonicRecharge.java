@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.sonic.actions;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.persistence.PersistentDataContainerView;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetArtronLeveID;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -26,8 +28,6 @@ import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.HashMap;
@@ -59,7 +59,7 @@ public class SonicRecharge implements Runnable {
         Entity entity = plugin.getServer().getEntity(display_uuid);
         if (entity instanceof ItemDisplay display) {
             ItemStack is = display.getItemStack();
-            if (is == null || !is.hasItemMeta()) {
+            if (is == null) {
                 cancel();
             }
             // check TARDIS has energy to recharge
@@ -74,24 +74,20 @@ public class SonicRecharge implements Runnable {
                 where.put("tardis_id", id);
                 plugin.getQueryFactory().alterEnergyLevel("tardis", -amount, where, null);
             }
-            ItemMeta im = is.getItemMeta();
-            PersistentDataContainer pdc = im.getPersistentDataContainer();
-            if (!pdc.has(plugin.getSonicChargeKey(), PersistentDataType.INTEGER)) {
-                pdc.set(plugin.getSonicChargeKey(), PersistentDataType.INTEGER, amount);
-                is.setItemMeta(im);
+            PersistentDataContainerView pdcv = is.getPersistentDataContainer();
+            if (!pdcv.has(plugin.getSonicChargeKey(), PersistentDataType.INTEGER)) {
+                is.editPersistentDataContainer(pdc -> pdc.set(plugin.getSonicChargeKey(), PersistentDataType.INTEGER, amount));
                 display.setItemStack(is);
                 setFrameDisplay(frame, amount);
             } else {
-                int current = pdc.get(plugin.getSonicChargeKey(), PersistentDataType.INTEGER);
+                int current = pdcv.get(plugin.getSonicChargeKey(), PersistentDataType.INTEGER);
                 if (current < full - amount) {
                     int charge = current + amount;
-                    pdc.set(plugin.getSonicChargeKey(), PersistentDataType.INTEGER, charge);
-                    is.setItemMeta(im);
+                    is.editPersistentDataContainer(pdc -> pdc.set(plugin.getSonicChargeKey(), PersistentDataType.INTEGER, charge));
                     display.setItemStack(is);
                     setFrameDisplay(frame, charge);
                 } else {
-                    pdc.set(plugin.getSonicChargeKey(), PersistentDataType.INTEGER, full);
-                    is.setItemMeta(im);
+                    is.editPersistentDataContainer(pdc -> pdc.set(plugin.getSonicChargeKey(), PersistentDataType.INTEGER, full));
                     display.setItemStack(is);
                     setFrameDisplay(frame, full);
                     // play charge done sound
@@ -116,10 +112,8 @@ public class SonicRecharge implements Runnable {
     private void setFrameDisplay(ItemFrame frame, int amount) {
         if (frame.isValid()) {
             ItemStack dock = frame.getItem();
-            ItemMeta dim = dock.getItemMeta();
             String name = (amount > 0) ? "Sonic Dock: " + amount : "Sonic Dock";
-            dim.customName(Component.text(name));
-            dock.setItemMeta(dim);
+            dock.setData(DataComponentTypes.CUSTOM_NAME, Component.text(name));
             frame.setItem(dock);
         }
     }

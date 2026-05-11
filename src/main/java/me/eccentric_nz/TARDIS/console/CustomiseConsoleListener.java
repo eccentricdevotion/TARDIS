@@ -1,5 +1,6 @@
 package me.eccentric_nz.TARDIS.console;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.console.models.ColourType;
 import me.eccentric_nz.TARDIS.console.models.ConsoleColourChanger;
@@ -22,7 +23,6 @@ import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.*;
@@ -196,8 +196,7 @@ public class CustomiseConsoleListener extends TARDISMenuListener {
     private Rotor getRotorType(InventoryView view, UUID playerUUID) {
         int slot = selectedRotors.get(playerUUID);
         ItemStack is = view.getItem(slot);
-        ItemMeta im = is.getItemMeta();
-        String r = TARDISStringUtils.toEnumUppercase(ComponentUtils.stripColour(im.customName()));
+        String r = TARDISStringUtils.toEnumUppercase(ComponentUtils.stripColour(is.getData(DataComponentTypes.CUSTOM_NAME)));
         return Rotor.byName.get(r);
     }
 
@@ -210,20 +209,16 @@ public class CustomiseConsoleListener extends TARDISMenuListener {
 
     void setRotorSlot(InventoryView view, int slot, Map.Entry<String, Rotor> rotor) {
         ItemStack is = ItemStack.of(Material.LIGHT_GRAY_DYE, 1);
-        ItemMeta im = is.getItemMeta();
-        im.setItemModel(rotor.getValue().offModel());
-        im.customName(Component.text(TARDISStringUtils.capitalise(rotor.getKey())));
-        is.setItemMeta(im);
+        is.setData(DataComponentTypes.ITEM_MODEL, rotor.getValue().offModel());
+        is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(TARDISStringUtils.capitalise(rotor.getKey())));
         view.setItem(slot, is);
     }
 
     void setConsoleSlot(InventoryView view, int slot, Map.Entry<Material, NamespacedKey> colour) {
         String name = colour.getValue().getKey().replace("console_", "");
         ItemStack is = ItemStack.of(colour.getKey(), 1);
-        ItemMeta im = is.getItemMeta();
         String dn = TARDISStringUtils.capitalise(name) + " Console";
-        im.customName(ComponentUtils.toWhite(dn));
-        is.setItemMeta(im);
+        is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(dn));
         view.setItem(slot, is);
     }
 

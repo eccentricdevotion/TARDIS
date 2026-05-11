@@ -16,27 +16,25 @@
  */
 package me.eccentric_nz.TARDIS.console.models;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.custommodels.keys.ModelledControl;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 public class HelmicRegulatorModel {
 
     public void setState(ItemDisplay display, int state) {
         ItemStack is = display.getItemStack();
-        ItemMeta im = is.getItemMeta();
         switch (state) {
-            case 7 -> im.setItemModel(ModelledControl.HELMIC_REGULATOR_7.getKey());
-            case 6 -> im.setItemModel(ModelledControl.HELMIC_REGULATOR_6.getKey());
-            case 5 -> im.setItemModel(ModelledControl.HELMIC_REGULATOR_5.getKey());
-            case 4 -> im.setItemModel(ModelledControl.HELMIC_REGULATOR_4.getKey());
-            case 3 -> im.setItemModel(ModelledControl.HELMIC_REGULATOR_3.getKey());
-            case 2 -> im.setItemModel(ModelledControl.HELMIC_REGULATOR_2.getKey());
-            case 1 -> im.setItemModel(ModelledControl.HELMIC_REGULATOR_1.getKey());
-            default -> im.setItemModel(ModelledControl.HELMIC_REGULATOR_0.getKey());
+            case 7 -> is.setData(DataComponentTypes.ITEM_MODEL, ModelledControl.HELMIC_REGULATOR_7.getKey());
+            case 6 -> is.setData(DataComponentTypes.ITEM_MODEL, ModelledControl.HELMIC_REGULATOR_6.getKey());
+            case 5 -> is.setData(DataComponentTypes.ITEM_MODEL, ModelledControl.HELMIC_REGULATOR_5.getKey());
+            case 4 -> is.setData(DataComponentTypes.ITEM_MODEL, ModelledControl.HELMIC_REGULATOR_4.getKey());
+            case 3 -> is.setData(DataComponentTypes.ITEM_MODEL, ModelledControl.HELMIC_REGULATOR_3.getKey());
+            case 2 -> is.setData(DataComponentTypes.ITEM_MODEL, ModelledControl.HELMIC_REGULATOR_2.getKey());
+            case 1 -> is.setData(DataComponentTypes.ITEM_MODEL, ModelledControl.HELMIC_REGULATOR_1.getKey());
+            default -> is.setData(DataComponentTypes.ITEM_MODEL, ModelledControl.HELMIC_REGULATOR_0.getKey());
         }
-        is.setItemMeta(im);
         display.setItemStack(is);
     }
 }

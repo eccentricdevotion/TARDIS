@@ -16,20 +16,19 @@
  */
 package me.eccentric_nz.TARDIS.schematic.archive;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -67,25 +66,23 @@ public class ResultSetArchiveButtons {
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
                     ItemStack is = ItemStack.of(terracotta[i], 1);
-                    ItemMeta im = is.getItemMeta();
-                    im.customName(Component.text(rs.getString("name")));
-                    List<Component> lore = new ArrayList<>();
+                    is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(rs.getString("name")));
+                    ItemLore.Builder lore = ItemLore.lore();
                     if (!rs.getString("description").isEmpty()) {
                         Pattern p = Pattern.compile("\\G\\s*(.{1,25})(?=\\s|$)", Pattern.DOTALL);
                         Matcher m = p.matcher(rs.getString("description"));
                         while (m.find()) {
-                            lore.add(Component.text(m.group(1)));
+                            lore.addLine(Component.text(m.group(1)));
                         }
                     }
                     // add cost
                     int cost = plugin.getArtronConfig().getInt("upgrades.archive." + rs.getString("console_size").toLowerCase(Locale.ROOT));
-                    lore.add(Component.text("Cost: " + cost));
+                    lore.addLine(Component.text("Cost: " + cost));
                     // add current
                     if (rs.getInt("use") == 1) {
-                        lore.add(Component.text(plugin.getLanguage().getString("CURRENT_CONSOLE", "Your current console"), NamedTextColor.GREEN));
+                        lore.addLine(Component.text(plugin.getLanguage().getString("CURRENT_CONSOLE", "Your current console"), NamedTextColor.GREEN));
                     }
-                    im.lore(lore);
-                    is.setItemMeta(im);
+                    is.setData(DataComponentTypes.LORE, lore.build());
                     buttons[i] = is;
                     i++;
                     if (i > 15) {

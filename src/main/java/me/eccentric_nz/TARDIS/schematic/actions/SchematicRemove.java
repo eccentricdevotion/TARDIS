@@ -16,16 +16,17 @@
  */
 package me.eccentric_nz.TARDIS.schematic.actions;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.UUID;
 
@@ -78,10 +79,8 @@ public class SchematicRemove {
                         ItemDisplay display = TARDISDisplayItemUtils.get(b);
                         if (display != null) {
                             ItemStack is = display.getItemStack();
-                            ItemMeta im = is.getItemMeta();
-                            if (im.hasItemModel()) {
-                                im.setItemModel(null);
-                                is.setItemMeta(im);
+                            if (ComponentUtils.isModelled(is)) {
+                                is.resetData(DataComponentTypes.ITEM_MODEL);
                                 display.setItemStack(is);
                             }
                         }

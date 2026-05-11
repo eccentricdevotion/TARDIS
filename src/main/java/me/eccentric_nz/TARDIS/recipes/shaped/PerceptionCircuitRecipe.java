@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.CustomModelData;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.keys.CircuitVariant;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
@@ -23,8 +25,6 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
 /*
 easy_shape:IGI,CEC,DTD
@@ -55,12 +55,10 @@ public class PerceptionCircuitRecipe {
 
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.GLOWSTONE_DUST, 1);
-        ItemMeta im = is.getItemMeta();
-        im.customName(ComponentUtils.toWhite("Perception Circuit"));
-        CustomModelDataComponent component = im.getCustomModelDataComponent();
-        component.setFloats(CircuitVariant.PERCEPTION.getFloats());
-        im.setCustomModelDataComponent(component);
-        is.setItemMeta(im);
+        is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Perception Circuit"));
+        is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                .addFloats(CircuitVariant.PERCEPTION.getFloats())
+                .build());
         NamespacedKey key = new NamespacedKey(plugin, "perception_circuit");
         ShapedRecipe r = new ShapedRecipe(key, is);
         r.shape("IGI", "CEC", "DTD");

@@ -42,15 +42,15 @@ public class ChemistryCommandNode {
                                     return Command.SINGLE_SUCCESS;
                                 })))
                 .then(Commands.literal("formula")
-                        .then(Commands.argument("item", new FormulaArgumentType()))
-                        .executes(ctx -> {
-                            Player player = (Player) ctx.getSource().getSender();
-                            if (TARDISPermission.hasPermission(player, "tardis.formula.show")) {
-                                String w = ctx.getArgument("item", String.class);
-                                new FormulaCommand(plugin).show(player, w);
-                            }
-                            return Command.SINGLE_SUCCESS;
-                        }))
+                        .then(Commands.argument("item", new FormulaArgumentType())
+                                .executes(ctx -> {
+                                    Player player = (Player) ctx.getSource().getSender();
+                                    if (TARDISPermission.hasPermission(player, "tardis.formula.show")) {
+                                        String w = ctx.getArgument("item", String.class);
+                                        new FormulaCommand(plugin).show(player, w);
+                                    }
+                                    return Command.SINGLE_SUCCESS;
+                                })))
                 .then(Commands.literal("recipe")
                         .then(Commands.argument("block", new ChemistryGuiArgumentType())
                                 .executes(ctx -> {

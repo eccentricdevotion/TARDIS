@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.tardisweepingangels.monsters.toclafane;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.custommodels.keys.ToclafaneVariant;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import net.kyori.adventure.text.Component;
@@ -23,7 +24,6 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -32,10 +32,8 @@ public class ToclafaneEquipment {
 
     public static void set(Entity entity, boolean disguise) {
         ItemStack head = ItemStack.of(Material.GUNPOWDER);
-        ItemMeta headMeta = head.getItemMeta();
-        headMeta.customName(Component.text("Toclafane"));
-        headMeta.setItemModel((disguise) ? ToclafaneVariant.TOCLAFANE.getKey() : ToclafaneVariant.TOCLAFANE_ATTACK.getKey());
-        head.setItemMeta(headMeta);
+        head.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Toclafane"));
+        head.setData(DataComponentTypes.ITEM_MODEL, (disguise) ? ToclafaneVariant.TOCLAFANE.getKey() : ToclafaneVariant.TOCLAFANE_ATTACK.getKey());
         if (!disguise) {
             ArmorStand armorStand = (ArmorStand) entity;
             Location location = armorStand.getLocation();

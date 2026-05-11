@@ -16,6 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.CustomModelData;
+import io.papermc.paper.datacomponent.item.ItemEnchantments;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.keys.CircuitVariant;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
@@ -26,9 +29,6 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.meta.EnchantmentStorageMeta;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
 /*
 easy_shape:-K-,RSR,-R-
@@ -53,21 +53,18 @@ public class KnockbackCircuitRecipe {
 
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.GLOWSTONE_DUST, 1);
-        ItemMeta im = is.getItemMeta();
-        im.customName(ComponentUtils.toWhite("Knockback Circuit"));
-        CustomModelDataComponent component = im.getCustomModelDataComponent();
-        component.setFloats(CircuitVariant.KNOCKBACK.getFloats());
-        im.setCustomModelDataComponent(component);
-        is.setItemMeta(im);
+        is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Knockback Circuit"));
+        is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                .addFloats(CircuitVariant.KNOCKBACK.getFloats())
+                .build());
         NamespacedKey key = new NamespacedKey(plugin, "knockback_circuit");
         ShapedRecipe r = new ShapedRecipe(key, is);
         if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             r.shape(" K ", "RSR", " R ");
             ItemStack book = ItemStack.of(Material.ENCHANTED_BOOK, 1);
-            EnchantmentStorageMeta pm = (EnchantmentStorageMeta) book.getItemMeta();
-            Enchantment enchantment = Enchantment.KNOCKBACK;
-            pm.addStoredEnchant(enchantment, 1, false);
-            book.setItemMeta(pm);
+            book.setData(DataComponentTypes.STORED_ENCHANTMENTS, ItemEnchantments.itemEnchantments()
+                    .add(Enchantment.KNOCKBACK, 1)
+                    .build());
             r.setIngredient('K', new RecipeChoice.ExactChoice(book));
         } else {
             r.shape(" K ", "RSR", " R ");

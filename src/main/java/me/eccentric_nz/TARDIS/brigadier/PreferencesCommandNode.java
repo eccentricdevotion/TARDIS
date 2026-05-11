@@ -9,6 +9,8 @@ import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 import io.papermc.paper.command.brigadier.argument.ArgumentTypes;
 import io.papermc.paper.command.brigadier.argument.resolvers.selector.PlayerSelectorArgumentResolver;
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.text.Filtered;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.brigadier.arguments.*;
 import me.eccentric_nz.TARDIS.commands.preferences.*;
@@ -19,7 +21,6 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.BookMeta;
 
 import java.util.List;
 
@@ -58,13 +59,16 @@ public class PreferencesCommandNode {
                         .executes(ctx -> {
                             Player player = (Player) ctx.getSource().getSender();
                             ItemStack bq = player.getInventory().getItemInMainHand();
-                            if (bq.getType().equals(Material.WRITABLE_BOOK) || bq.getType().equals(Material.WRITTEN_BOOK)) {
-                                BookMeta bm = (BookMeta) bq.getItemMeta();
-                                List<Component> pages = bm.pages();
-                                StringBuilder sb = new StringBuilder();
-                                pages.forEach((s) -> sb.append(ComponentUtils.stripColour(s)).append(" "));
-                                new EPSMessageCommand(plugin).setMessage(player, sb.toString());
+                            StringBuilder sb = new StringBuilder();
+                            if (bq.getType().equals(Material.WRITABLE_BOOK)) {
+                                List<Filtered<String>> pages = bq.getData(DataComponentTypes.WRITABLE_BOOK_CONTENT).pages();
+                                pages.forEach((s) -> sb.append(s.filtered()).append(" "));
                             }
+                            if (bq.getType().equals(Material.WRITTEN_BOOK)) {
+                                List<Filtered<Component>> pages = bq.getData(DataComponentTypes.WRITTEN_BOOK_CONTENT).pages();
+                                pages.forEach((s) -> sb.append(ComponentUtils.stripColour(s.filtered())).append(" "));
+                            }
+                            new EPSMessageCommand(plugin).setMessage(player, sb.toString());
                             return Command.SINGLE_SUCCESS;
                         })
                         .then(Commands.argument("text", StringArgumentType.greedyString())

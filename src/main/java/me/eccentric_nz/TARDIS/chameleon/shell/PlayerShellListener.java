@@ -18,6 +18,8 @@ package me.eccentric_nz.TARDIS.chameleon.shell;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.persistence.PersistentDataContainerView;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.exterior.ShellBuilder;
@@ -42,8 +44,6 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.HashMap;
@@ -253,8 +253,7 @@ public class PlayerShellListener extends TARDISMenuListener {
     private int getChameleonId(InventoryView view, int slot) {
         // get the chameleon_id
         ItemStack shell = view.getItem(slot);
-        ItemMeta im = shell.getItemMeta();
-        PersistentDataContainer pdc = im.getPersistentDataContainer();
+        PersistentDataContainerView pdc = shell.getPersistentDataContainer();
         if (!pdc.has(plugin.getCustomBlockKey(), PersistentDataType.INTEGER)) {
             return -1;
         }
@@ -264,8 +263,7 @@ public class PlayerShellListener extends TARDISMenuListener {
     private boolean isActive(InventoryView view, int slot) {
         // get if active
         ItemStack shell = view.getItem(slot);
-        ItemMeta im = shell.getItemMeta();
-        return im.hasLore() && im.lore().size() > 4;
+        return shell.getData(DataComponentTypes.LORE).lines().size() > 4;
     }
 
     private Location getButton(int id) {

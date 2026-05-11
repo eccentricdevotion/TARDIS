@@ -16,8 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.commands.give.actions;
 
-import com.google.common.collect.Multimaps;
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
+import io.papermc.paper.datacomponent.item.TooltipDisplay;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.commands.give.DisplayBlockCommand;
 import me.eccentric_nz.TARDIS.commands.give.Give;
 import me.eccentric_nz.TARDIS.enumeration.RecipeCategory;
@@ -35,13 +38,10 @@ import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class TARDISItem {
 
@@ -77,7 +77,6 @@ public class TARDISItem {
         } catch (IllegalArgumentException ignored) {
         }
         ItemStack result = null;
-        ItemMeta im = null;
         if (category == RecipeCategory.CHEMISTRY) {
             if (!plugin.getConfig().getBoolean("modules.chemistry")) {
                 plugin.getMessenger().send(sender, TardisModule.TARDIS, "RECIPE_CHEMISTRY");
@@ -114,7 +113,6 @@ public class TARDISItem {
             }
             if (item.equals("acid-bucket") || item.equals("rust-bucket")) {
                 result = ItemStack.of((item.equals("acid-bucket") ? Material.WATER_BUCKET : Material.LAVA_BUCKET), 1);
-                im = result.getItemMeta();
             } else if (item.equals("save-storage-disk") || item.equals("preset-storage-disk") || item.equals("biome-storage-disk") || item.equals("player-storage-disk") || item.equals("bowl-of-custard") || item.equals("jelly-baby") || item.equals("schematic-wand") || item.equals("judoon-ammunition")) {
                 result = plugin.getIncomposita().getShapelessRecipes().get(item_to_give).getResult();
             } else if (Give.custom.contains(item)) {
@@ -127,40 +125,41 @@ public class TARDISItem {
             }
             if (item.equals("invisibility-circuit")) {
                 // set the second line of lore
-                im = result.getItemMeta();
-                List<Component> lore = im.lore();
+                List<Component> lore;
+                if (ComponentUtils.hasLore(result)) {
+                    lore = new ArrayList<>(result.getData(DataComponentTypes.LORE).lines());
+                } else {
+                    lore = new ArrayList<>();
+                }
                 Component uses = (plugin.getConfig().getString("circuits.uses.invisibility", "5").equals("0") || !plugin.getConfig().getBoolean("circuits.damage"))
                         ? Component.text("unlimited", NamedTextColor.YELLOW)
                         : Component.text(plugin.getConfig().getString("circuits.uses.invisibility", "5"), NamedTextColor.YELLOW);
                 lore.set(1, uses);
-                im.lore(lore);
+                result.setData(DataComponentTypes.LORE, ItemLore.lore(lore));
             }
             if (item.equals("blank") || item.equals("save-disk") || item.equals("preset-disk") || item.equals("biome-disk") || item.equals("player-disk") || item.equals("blaster") || item.equals("control")) {
-                im = result.getItemMeta();
-                im.addItemFlags(ItemFlag.values());
-                im.setAttributeModifiers(Multimaps.forMap(Map.of()));
+                result.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
+                        .addHiddenComponents(TARDISConstants.HIDE)
+                        .build());
             }
             if (item.equals("key") || item.equals("control")) {
-                im = result.getItemMeta();
-                im.getPersistentDataContainer().set(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID(), player.getUniqueId());
-                List<Component> lore = im.lore();
-                if (lore == null) {
+                result.editPersistentDataContainer(pdc -> pdc.set(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID(), player.getUniqueId()));
+                List<Component> lore;
+                if (ComponentUtils.hasLore(result)) {
+                    lore = new ArrayList<>(result.getData(DataComponentTypes.LORE).lines());
+                } else {
                     lore = new ArrayList<>();
                 }
                 String what = item.equals("key") ? "key" : "disk";
                 lore.add(Component.text("This " + what + " belongs to", NamedTextColor.AQUA).decorate(TextDecoration.ITALIC));
                 lore.add(Component.text(player.getName(), NamedTextColor.AQUA).decorate(TextDecoration.ITALIC));
-                im.lore(lore);
+                result.setData(DataComponentTypes.LORE, ItemLore.lore(lore));
             }
         }
         if (result != null) {
-            if (im == null) {
-                im = result.getItemMeta();
-            }
             if (!item.equals("bleach")) {
-                im.customName(ComponentUtils.toWhite(Give.items.get(item)));
+                result.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(Give.items.get(item)));
             }
-            result.setItemMeta(im);
             result.setAmount(amount);
             player.getInventory().addItem(result);
             player.updateInventory();

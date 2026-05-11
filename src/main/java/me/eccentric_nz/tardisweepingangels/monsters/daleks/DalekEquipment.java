@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.tardisweepingangels.monsters.daleks;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.custommodels.keys.DalekVariant;
@@ -30,7 +31,6 @@ import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -40,10 +40,8 @@ public class DalekEquipment {
     public static void set(LivingEntity le, boolean disguise) {
         le.getPersistentDataContainer().set(TARDISWeepingAngels.DALEK, PersistentDataType.INTEGER, Monster.DALEK.ordinal());
         ItemStack helmet = ItemStack.of(Material.SLIME_BALL, 1);
-        ItemMeta headMeta = helmet.getItemMeta();
-        headMeta.customName(Component.text("Dalek Head"));
-        headMeta.setItemModel(getRandomModel());
-        helmet.setItemMeta(headMeta);
+        helmet.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Dalek Head"));
+        helmet.setData(DataComponentTypes.ITEM_MODEL, getRandomModel());
         EntityEquipment ee = le.getEquipment();
         ee.setHelmet(helmet);
         ee.setChestplate(null);
@@ -58,9 +56,7 @@ public class DalekEquipment {
         if (!disguise) {
             ee.setHelmetDropChance(0);
             ItemStack bow = ItemStack.of(Material.BOW, 1);
-            ItemMeta bim = bow.getItemMeta();
-            bim.setItemModel(DalekVariant.DALEK_BOW.getKey());
-            bow.setItemMeta(bim);
+            bow.setData(DataComponentTypes.ITEM_MODEL, DalekVariant.DALEK_BOW.getKey());
             ee.setItemInMainHand(bow);
             ee.setItemInMainHandDropChance(0);
             Bukkit.getScheduler().scheduleSyncDelayedTask(TARDIS.plugin, () -> {

@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.tardisweepingangels.utils;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.PotionContents;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
@@ -36,8 +38,6 @@ import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionType;
@@ -69,21 +69,17 @@ public class MonsterInteractListener implements Listener {
         }
         EntityEquipment ee = monster.getEquipment();
         ItemStack h = ee.getHelmet();
-        if (!h.hasItemMeta()) {
-            return;
-        }
-        ItemMeta im = h.getItemMeta();
-        if (!im.hasCustomName()) {
+        if (!h.hasData(DataComponentTypes.CUSTOM_NAME)) {
             return;
         }
         if (entity instanceof Zombie zombie) {
             if (h.getType().equals(Material.POTATO)) {
-                if (ComponentUtils.stripColour(im.customName()).startsWith("Sontaran")) {
+                if (ComponentUtils.stripColour(h.getData(DataComponentTypes.CUSTOM_NAME)).startsWith("Sontaran")) {
                     Player p = event.getPlayer();
                     ItemStack is = p.getInventory().getItemInMainHand();
                     if (is.getType().equals(Material.POTION)) {
-                        PotionMeta potionMeta = (PotionMeta) is.getItemMeta();
-                        if (potionMeta != null && potionMeta.getBasePotionType() != null && potionMeta.getBasePotionType().equals(PotionType.WEAKNESS)) {
+                        PotionContents potionContents = is.getData(DataComponentTypes.POTION_CONTENTS);
+                        if (potionContents != null && potionContents.potion() != null && potionContents.potion().equals(PotionType.WEAKNESS)) {
                             // remove the potion
                             int a = p.getInventory().getItemInMainHand().getAmount();
                             int a2 = a - 1;
@@ -110,7 +106,7 @@ public class MonsterInteractListener implements Listener {
                 }
             }
             if (ee.getHelmet().getType().equals(Material.BAKED_POTATO)) {
-                if (ComponentUtils.stripColour(im.customName()).startsWith("Strax")) {
+                if (ComponentUtils.stripColour(h.getData(DataComponentTypes.CUSTOM_NAME)).startsWith("Strax")) {
                     Player p = event.getPlayer();
                     UUID uuid = p.getUniqueId();
                     ItemStack is = p.getInventory().getItemInMainHand();
@@ -119,9 +115,7 @@ public class MonsterInteractListener implements Listener {
                             milkers.add(uuid);
                             p.playSound(zombie.getLocation(), "milk", 1.0f, 1.0f);
                             ItemStack milk = ItemStack.of(Material.MILK_BUCKET);
-                            ItemMeta m = milk.getItemMeta();
-                            m.customName(ComponentUtils.toWhite("Sontaran Lactic Fluid"));
-                            milk.setItemMeta(m);
+                            milk.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Sontaran Lactic Fluid"));
                             p.getEquipment().setItemInMainHand(milk);
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> milkers.remove(uuid), 3000L);
                         } else {

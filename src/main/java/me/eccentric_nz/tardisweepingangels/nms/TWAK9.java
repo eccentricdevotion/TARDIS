@@ -18,6 +18,7 @@ package me.eccentric_nz.tardisweepingangels.nms;
 
 import com.mojang.datafixers.DataFixUtils;
 import com.mojang.datafixers.types.Type;
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.custommodels.keys.K9Variant;
 import net.minecraft.SharedConstants;
 import net.minecraft.core.Registry;
@@ -38,7 +39,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.craftbukkit.inventory.CraftItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Map;
 
@@ -84,19 +84,17 @@ public class TWAK9 extends TWAFollower {
         if (hasItemInSlot(EquipmentSlot.HEAD) && tickCount % 3 == 0) {
             ItemStack is = getItemBySlot(EquipmentSlot.HEAD);
             org.bukkit.inventory.ItemStack bukkit = CraftItemStack.asBukkitCopy(is);
-            ItemMeta im = bukkit.getItemMeta();
             if (oldX == getX() && oldZ == getZ()) {
-                im.setItemModel(K9Variant.K9.getKey());
+                bukkit.setData(DataComponentTypes.ITEM_MODEL, K9Variant.K9.getKey());
                 i = 0;
             } else {
                 // play move animation
-                im.setItemModel(frames[i]);
+                bukkit.setData(DataComponentTypes.ITEM_MODEL, frames[i]);
                 i++;
                 if (i == frames.length) {
                     i = 0;
                 }
             }
-            bukkit.setItemMeta(im);
             setItemSlot(EquipmentSlot.HEAD, CraftItemStack.asNMSCopy(bukkit));
             oldX = getX();
             oldZ = getZ();

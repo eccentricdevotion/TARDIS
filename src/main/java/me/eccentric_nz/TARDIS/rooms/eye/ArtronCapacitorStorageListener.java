@@ -16,20 +16,20 @@
  */
 package me.eccentric_nz.TARDIS.rooms.eye;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.keys.Whoniverse;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
+import net.kyori.adventure.key.Key;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -64,21 +64,20 @@ public class ArtronCapacitorStorageListener extends TARDISMenuListener {
         int damaged = 0;
         for (int i = 2; i < 7; i++) {
             ItemStack stack = view.getItem(i);
-            if (stack == null || !stack.getType().equals(Material.BUCKET) || !stack.hasItemMeta()) {
+            if (stack == null || !stack.getType().equals(Material.BUCKET)) {
                 continue;
             }
-            ItemMeta im = stack.getItemMeta();
-            if (!im.hasCustomName() || !ComponentUtils.endsWith(im.customName(), "Artron Capacitor")) {
+            if (!ComponentUtils.isNamed(stack, "Artron Capacitor")) {
                 continue;
             }
-            if (!im.hasItemModel()) {
+            if (!ComponentUtils.isModelled(stack)) {
                 // check name
-                if (ComponentUtils.startsWith(im.customName(), "Damaged")) {
+                if (ComponentUtils.startsWith(stack.getData(DataComponentTypes.CUSTOM_NAME), "Damaged")) {
                     damaged++;
                 }
             } else {
-                NamespacedKey model = im.getItemModel();
-                if (!Whoniverse.ARTRON_CAPACITOR.getKey().equals(model) && !Whoniverse.ARTRON_CAPACITOR_DAMAGED.getKey().equals(model)) {
+                Key model = stack.getData(DataComponentTypes.ITEM_MODEL);
+                if (!Whoniverse.ARTRON_CAPACITOR.getKey().getKey().equals(model.value()) && !Whoniverse.ARTRON_CAPACITOR_DAMAGED.getKey().getKey().equals(model.value())) {
                     continue;
                 }
                 if (Whoniverse.ARTRON_CAPACITOR_DAMAGED.getKey().equals(model)) {

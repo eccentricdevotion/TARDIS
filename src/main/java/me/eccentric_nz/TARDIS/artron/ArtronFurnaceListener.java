@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.artron;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
@@ -44,8 +46,8 @@ import org.bukkit.event.inventory.FurnaceSmeltEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.FurnaceInventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -67,9 +69,7 @@ public class ArtronFurnaceListener implements Listener {
         ItemDisplay display = TARDISDisplayItemUtils.get(block);
         if (display != null) {
             ItemStack itemStack = display.getItemStack();
-            ItemMeta im = itemStack.getItemMeta();
-            im.setItemModel(lit ? Whoniverse.ARTRON_FURNACE_LIT.getKey() : Whoniverse.ARTRON_FURNACE.getKey());
-            itemStack.setItemMeta(im);
+            itemStack.setData(DataComponentTypes.ITEM_MODEL, lit ? Whoniverse.ARTRON_FURNACE_LIT.getKey() : Whoniverse.ARTRON_FURNACE.getKey());
             display.setItemStack(itemStack);
             display.setBrightness(new Display.Brightness(15, 15));
         }
@@ -81,10 +81,8 @@ public class ArtronFurnaceListener implements Listener {
         String l = furnace.getLocation().toString();
         if (plugin.getTardisHelper().isArtronFurnace(event.getBlock())) {
             ItemStack is = event.getFuel().clone();
-            if (is.hasItemMeta()) {
-                ItemMeta im = is.getItemMeta();
-                if (im.hasCustomName() && ComponentUtils.endsWith(im.customName(), "Artron Storage Cell")) {
-                    List<Component> lore = im.lore();
+                if (ComponentUtils.isNamed(is, "Artron Storage Cell")) {
+                    List<Component> lore = new ArrayList<>(is.getData(DataComponentTypes.LORE).lines());
                     String one = ComponentUtils.stripColour(lore.get(1));
                     if (!one.equals("0")) {
                         // track furnace
@@ -101,14 +99,12 @@ public class ArtronFurnaceListener implements Listener {
                         // return an empty cell
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                             lore.set(1, Component.text("0"));
-                            im.lore(lore);
-                            im.setEnchantmentGlintOverride(null);
-                            is.setItemMeta(im);
+                            is.setData(DataComponentTypes.LORE, ItemLore.lore(lore));
+                            is.unsetData(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE);
                             is.removeEnchantment(Enchantment.UNBREAKING);
                             furnace.getInventory().setItem(1, is);
                         }, 2L);
                     }
-                }
             } else {
                 setLit(event.getBlock(), false);
                 plugin.getTrackerKeeper().getArtronFurnaces().remove(l);
@@ -146,13 +142,7 @@ public class ArtronFurnaceListener implements Listener {
         if (!event.getBlock().getType().equals(Material.FURNACE)) {
             return;
         }
-        if (!event.getItemInHand().hasItemMeta()) {
-            return;
-        }
-        if (!event.getItemInHand().getItemMeta().hasCustomName()) {
-            return;
-        }
-        if (!ComponentUtils.endsWith(event.getItemInHand().getItemMeta().customName(), "TARDIS Artron Furnace")) {
+        if (!ComponentUtils.isNamed(event.getItemInHand(), "TARDIS Artron Furnace")) {
             return;
         }
         Player player = event.getPlayer();
@@ -191,9 +181,7 @@ public class ArtronFurnaceListener implements Listener {
                 ArtronFurnaceUtils.remove(block.getLocation().toString(), event.getPlayer(), plugin);
             }
             ItemStack is = ItemStack.of(Material.FURNACE, 1);
-            ItemMeta im = is.getItemMeta();
-            im.customName(ComponentUtils.toWhite("TARDIS Artron Furnace"));
-            is.setItemMeta(im);
+            is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("TARDIS Artron Furnace"));
             TARDISDisplayItemUtils.remove(block);
             block.setBlockData(TARDISConstants.AIR);
             block.getWorld().dropItemNaturally(event.getPlayer().getLocation(), is);

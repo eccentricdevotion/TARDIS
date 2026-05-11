@@ -16,9 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.artron;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.EntityType;
@@ -28,7 +30,6 @@ import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 public class BucketListener implements Listener {
 
@@ -56,9 +57,9 @@ public class BucketListener implements Listener {
         if (material != Material.LAVA && material != Material.WATER) {
             return;
         }
-        ItemMeta im = bucket.getItemMeta();
-        if (im.hasCustomName()) {
-            if (ComponentUtils.endsWith(im.customName(), "Artron Storage Cell") || ComponentUtils.endsWith(im.customName(), "Artron Capacitor")) {
+        if (bucket.hasData(DataComponentTypes.CUSTOM_NAME)) {
+            Component component = bucket.getData(DataComponentTypes.CUSTOM_NAME);
+            if (ComponentUtils.endsWith(component, "Artron Storage Cell") || ComponentUtils.endsWith(component, "Artron Capacitor")) {
                 event.setCancelled(true);
                 plugin.getMessenger().send(event.getPlayer(), TardisModule.TARDIS, "ARTRON_FILL", material.toString());
             }
@@ -79,9 +80,9 @@ public class BucketListener implements Listener {
         if (entityType != EntityType.COW && entityType != EntityType.GOAT && entityType != EntityType.MOOSHROOM) {
             return;
         }
-        ItemMeta im = bucket.getItemMeta();
-        if (im.hasCustomName()) {
-            if (ComponentUtils.endsWith(im.customName(), "Artron Storage Cell") || ComponentUtils.endsWith(im.customName(), "Artron Capacitor")) {
+        if (bucket.hasData(DataComponentTypes.CUSTOM_NAME)) {
+            Component component = bucket.getData(DataComponentTypes.CUSTOM_NAME);
+            if (ComponentUtils.endsWith(component, "Artron Storage Cell") || ComponentUtils.endsWith(component, "Artron Capacitor")) {
                 event.setCancelled(true);
                 plugin.getMessenger().send(event.getPlayer(), TardisModule.TARDIS, "ARTRON_FILL", "MILK");
             }

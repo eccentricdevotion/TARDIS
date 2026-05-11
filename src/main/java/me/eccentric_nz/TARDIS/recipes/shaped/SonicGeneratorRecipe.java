@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
@@ -24,7 +25,6 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
 
 /*
 easy_shape:-S-,-F-,GRG
@@ -51,10 +51,8 @@ public class SonicGeneratorRecipe {
 
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.FLOWER_POT, 1);
-        ItemMeta im = is.getItemMeta();
-        im.customName(ComponentUtils.toWhite("Sonic Generator"));
-        im.setItemModel(RecipeItem.SONIC_GENERATOR.getModel());
-        is.setItemMeta(im);
+        is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Sonic Generator"));
+        is.setData(DataComponentTypes.ITEM_MODEL, RecipeItem.SONIC_GENERATOR.getModel());
         NamespacedKey key = new NamespacedKey(plugin, "sonic_generator");
         ShapedRecipe r = new ShapedRecipe(key, is);
         r.shape(" S ", " F ", "GRG");

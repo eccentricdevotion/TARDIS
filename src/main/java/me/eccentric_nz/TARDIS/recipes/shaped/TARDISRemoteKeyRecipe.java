@@ -16,6 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.CustomModelData;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.keys.CircuitVariant;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
@@ -27,8 +30,6 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
 import java.util.List;
 
@@ -58,10 +59,11 @@ public class TARDISRemoteKeyRecipe {
 
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.OMINOUS_TRIAL_KEY, 1);
-        ItemMeta im = is.getItemMeta();
-        im.customName(ComponentUtils.toWhite("TARDIS Remote Key"));
-        im.lore(List.of(Component.text("Deadlock & unlock"), Component.text("Hide & rebuild")));
-        is.setItemMeta(im);
+        is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("TARDIS Remote Key"));
+        is.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(
+                Component.text("Deadlock & unlock"),
+                Component.text("Hide & rebuild")
+        )));
         NamespacedKey key = new NamespacedKey(plugin, "tardis_remote_key");
         ShapedRecipe r = new ShapedRecipe(key, is);
         r.shape("RCR", " K ", " T ");
@@ -70,17 +72,18 @@ public class TARDISRemoteKeyRecipe {
         r.setIngredient('K', Material.GOLD_NUGGET);
         if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             ItemStack exact = ItemStack.of(Material.GLOWSTONE_DUST, 1);
-            ItemMeta em = exact.getItemMeta();
-            em.customName(ComponentUtils.toWhite("TARDIS Materialisation Circuit"));
-            CustomModelDataComponent component = em.getCustomModelDataComponent();
-            component.setFloats(CircuitVariant.MATERIALISATION.getFloats());
-            em.setCustomModelDataComponent(component);
+            exact.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("TARDIS Materialisation Circuit"));
+            exact.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                    .addFloats(CircuitVariant.MATERIALISATION.getFloats())
+                    .build());
             // set the second line of lore
             Component uses = (plugin.getConfig().getString("circuits.uses.materialisation", "50").equals("0") || !plugin.getConfig().getBoolean("circuits.damage"))
                     ? Component.text("unlimited", NamedTextColor.YELLOW)
                     : Component.text(plugin.getConfig().getString("circuits.uses.materialisation", "50"), NamedTextColor.YELLOW);
-            em.lore(List.of(Component.text("Uses left"), uses));
-            exact.setItemMeta(em);
+            exact.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(
+                    Component.text("Uses left"),
+                    uses
+            )));
             r.setIngredient('T', new RecipeChoice.ExactChoice(exact));
         } else {
             r.setIngredient('T', Material.REDSTONE_TORCH);

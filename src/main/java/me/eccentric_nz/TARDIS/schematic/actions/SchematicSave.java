@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.schematic.actions;
 import com.destroystokyo.paper.profile.PlayerProfile;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemRegistry;
@@ -36,7 +37,6 @@ import org.bukkit.block.sign.SignSide;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.MainHand;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.BoundingBox;
 
@@ -217,15 +217,12 @@ public class SchematicSave {
                                 JsonObject stack = new JsonObject();
                                 Material material = display.getItemStack().getType();
                                 NamespacedKey model = null;
-                                if (display.getItemStack().hasItemMeta()) {
-                                    ItemMeta im = display.getItemStack().getItemMeta();
-                                    if (im.hasCustomName() && !im.hasItemModel()) {
-                                        stack.addProperty("display_name", ComponentUtils.stripColour(im.customName()));
-                                    } else if (im.getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.STRING)) {
-                                        String key = im.getPersistentDataContainer().get(plugin.getCustomBlockKey(), PersistentDataType.STRING);
-                                        model = new NamespacedKey(plugin, key);
-                                        stack.addProperty("cmd", model.getKey());
-                                    }
+                                if (display.getItemStack().hasData(DataComponentTypes.CUSTOM_NAME) && !ComponentUtils.isModelled(display.getItemStack())) {
+                                    stack.addProperty("display_name", ComponentUtils.stripColour(display.getItemStack().getData(DataComponentTypes.CUSTOM_NAME)));
+                                } else if (display.getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.STRING)) {
+                                    String key = display.getPersistentDataContainer().get(plugin.getCustomBlockKey(), PersistentDataType.STRING);
+                                    model = new NamespacedKey(plugin, key);
+                                    stack.addProperty("cmd", model.getKey());
                                 }
                                 stack.addProperty("type", material.toString());
                                 TARDISDisplayItem tdi = TARDISDisplayItemRegistry.getByModel(model);

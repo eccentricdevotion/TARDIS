@@ -16,8 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.recipes;
 
-import com.google.common.collect.Multimaps;
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.CustomModelData;
+import io.papermc.paper.datacomponent.item.ItemLore;
+import io.papermc.paper.datacomponent.item.TooltipDisplay;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.custommodels.keys.KeyVariant;
 import me.eccentric_nz.TARDIS.custommodels.keys.SonicVariant;
 import me.eccentric_nz.TARDIS.enumeration.RecipeCategory;
@@ -26,13 +30,9 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
 import java.util.List;
-import java.util.Map;
 
 public class TARDISRecipeCategoryInventory implements InventoryHolder {
 
@@ -52,51 +52,48 @@ public class TARDISRecipeCategoryInventory implements InventoryHolder {
         ItemStack[] stack = new ItemStack[36];
         // info
         ItemStack info = ItemStack.of(Material.BOWL, 1);
-        ItemMeta info_im = info.getItemMeta();
-        info_im.customName(Component.text("Info"));
-        info_im.lore(List.of(
+        info.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Info"));
+        info.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(
                 Component.text("Click a button below"),
                 Component.text("to see the items"),
                 Component.text("in that recipe category")
-        ));
-        info.setItemMeta(info_im);
+        )));
         stack[0] = info;
         for (RecipeCategory category : RecipeCategory.values()) {
             if (!category.equals(RecipeCategory.UNUSED) && category != RecipeCategory.UNCRAFTABLE && category != RecipeCategory.CHEMISTRY) {
                 ItemStack cat = ItemStack.of(category.getMaterial(), 1);
-                ItemMeta egory = cat.getItemMeta();
-                egory.customName(Component.text(category.getName()));
+                cat.setData(DataComponentTypes.CUSTOM_NAME, Component.text(category.getName()));
                 if (category == RecipeCategory.ITEMS) {
-                    CustomModelDataComponent component = egory.getCustomModelDataComponent();
-                    component.setFloats(KeyVariant.BRASS_STRING.getFloats());
-                    egory.setCustomModelDataComponent(component);
+                    cat.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                            .addFloats(KeyVariant.BRASS_STRING.getFloats())
+                            .build());
                 }
                 if (category == RecipeCategory.SONIC_UPGRADES) {
-                    CustomModelDataComponent component = egory.getCustomModelDataComponent();
-                    component.setFloats(SonicVariant.NINTH.getFloats());
-                    egory.setCustomModelDataComponent(component);
+                    cat.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                            .addFloats(SonicVariant.NINTH.getFloats())
+                            .build());
                 }
                 if (category == RecipeCategory.SONIC_CIRCUITS) {
-                    CustomModelDataComponent component = egory.getCustomModelDataComponent();
-                    component.setFloats(List.of(127.0f));
-                    egory.setCustomModelDataComponent(component);
+                    cat.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                            .addFloats(List.of(127.0f))
+                            .build());
                 }
                 if (category == RecipeCategory.ITEM_CIRCUITS) {
-                    CustomModelDataComponent component = egory.getCustomModelDataComponent();
-                    component.setFloats(List.of(128.0f));
-                    egory.setCustomModelDataComponent(component);
+                    cat.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                            .addFloats(List.of(128.0f))
+                            .build());
                 }
                 if (category == RecipeCategory.CONSOLE_CIRCUITS) {
-                    CustomModelDataComponent component = egory.getCustomModelDataComponent();
-                    component.setFloats(List.of(129.0f));
-                    egory.setCustomModelDataComponent(component);
+                    cat.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                            .addFloats(List.of(129.0f))
+                            .build());
                 }
                 if (category == RecipeCategory.ROTORS) {
-                    egory.setItemModel(category.getModel());
+                    cat.setData(DataComponentTypes.ITEM_MODEL, category.getModel());
                 }
-                egory.addItemFlags(ItemFlag.values());
-                egory.setAttributeModifiers(Multimaps.forMap(Map.of()));
-                cat.setItemMeta(egory);
+                cat.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
+                        .addHiddenComponents(TARDISConstants.HIDE)
+                        .build());
                 stack[category.getSlot()] = cat;
             }
         }

@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
@@ -29,8 +30,6 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
-import org.bukkit.inventory.meta.Damageable;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -84,8 +83,7 @@ public class TARDISGlassesListener implements Listener {
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new removeFromMap(uuid), 20L);
                 } else if (is != null && g) {
                     // damage the glasses so they run out
-                    Damageable damageable = (Damageable) is.getItemMeta();
-                    int d = damageable.getDamage() + 1;
+                    int d = is.getData(DataComponentTypes.DAMAGE).intValue() + 1;
                     if (d >= 56) {
                         // if run out then remove them and the potion effect
                         pi.setHelmet(null);
@@ -94,7 +92,7 @@ public class TARDISGlassesListener implements Listener {
                         p.getWorld().dropItemNaturally(p.getLocation(), ItemStack.of(Material.PAPER, 1));
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new removeFromMap(uuid), 20L);
                     } else {
-                        damageable.setDamage(d);
+                        is.setData(DataComponentTypes.DAMAGE, d);
                     }
                     p.updateInventory();
                 }
@@ -103,11 +101,7 @@ public class TARDISGlassesListener implements Listener {
     }
 
     private boolean is3DGlasses(ItemStack is) {
-        if (is != null && is.hasItemMeta()) {
-            ItemMeta im = is.getItemMeta();
-            return im.hasCustomName() && ComponentUtils.endsWith(im.customName(), "3-D Glasses");
-        }
-        return false;
+        return is != null && ComponentUtils.isNamed(is, "3-D Glasses");
     }
 
     class removeFromMap implements Runnable {

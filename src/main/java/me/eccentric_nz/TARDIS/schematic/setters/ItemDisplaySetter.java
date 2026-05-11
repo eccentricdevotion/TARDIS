@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.schematic.setters;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemRegistry;
@@ -39,7 +40,6 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
 
@@ -124,9 +124,7 @@ public class ItemDisplaySetter {
                 ItemDisplay display = TARDISDisplayItemUtils.set(tdi, block, id);
                 if (json.has("name")) {
                     ItemStack is = display.getItemStack();
-                    ItemMeta im = is.getItemMeta();
-                    im.customName(ComponentUtils.fromJson(json.get("name")));
-                    is.setItemMeta(im);
+                    is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.fromJson(json.get("name")));
                     display.setItemStack(is);
                 }
                 if (json.has("rotation")) {
@@ -151,12 +149,11 @@ public class ItemDisplaySetter {
         ItemDisplay display = (ItemDisplay) block.getWorld().spawnEntity(block.getLocation().clone().add(0.5d, 0.25d, 0.5d), EntityType.ITEM_DISPLAY);
         ItemStack is = ItemStack.of(material);
         if (model != null) {
-            ItemMeta im = is.getItemMeta();
-            im.customName(model.getKey().equals("xray")
+            is.setData(DataComponentTypes.CUSTOM_NAME,
+                    model.getKey().equals("xray")
                     ? Component.text("X-ray")
                     : Component.text(TARDISStringUtils.capitalise(model.getKey()))
             );
-            is.setItemMeta(im);
             display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.GROUND);
             display.setBillboard(Display.Billboard.VERTICAL);
         }
@@ -175,9 +172,7 @@ public class ItemDisplaySetter {
             JsonObject stack = json.get("stack").getAsJsonObject();
             Material material = Material.valueOf(stack.get("type").getAsString());
             ItemStack is = ItemStack.of(material);
-            ItemMeta im = is.getItemMeta();
-            im.customName(Component.text(stack.get("display_name").getAsString()));
-            is.setItemMeta(im);
+            is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(stack.get("display_name").getAsString()));
             display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.HEAD);
             display.setItemStack(is);
             display.setInvulnerable(true);

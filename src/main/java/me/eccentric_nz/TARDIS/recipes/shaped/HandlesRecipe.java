@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
@@ -24,7 +26,6 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
 
@@ -53,13 +54,11 @@ public class HandlesRecipe {
 
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.BIRCH_BUTTON, 1);
-        ItemMeta im = is.getItemMeta();
-        im.customName(ComponentUtils.toWhite("Handles"));
-        im.lore(List.of(
+        is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Handles"));
+        is.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(
                 Component.text("Cyberhead from the"),
                 Component.text("Maldovar Market")
-        ));
-        is.setItemMeta(im);
+        )));
         NamespacedKey key = new NamespacedKey(plugin, "handles");
         ShapedRecipe r = new ShapedRecipe(key, is);
         if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {

@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.handles;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.Program;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetProgram;
@@ -25,7 +27,6 @@ import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 /**
  * @author eccentric_nz
@@ -71,9 +72,7 @@ public class HandlesProgramInventory implements InventoryHolder {
         i = 36;
         for (HandlesBlock b : HandlesBlock.getButtons()) {
             ItemStack is = ItemStack.of(Material.BOWL, 1);
-            ItemMeta im = is.getItemMeta();
-            im.customName(Component.text(b.getDisplayName()));
-            is.setItemMeta(im);
+            is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(b.getDisplayName()));
             stack[i] = is;
             i++;
             if (i == 45) {
@@ -84,12 +83,10 @@ public class HandlesProgramInventory implements InventoryHolder {
         i = 45;
         for (HandlesBlock b : HandlesBlock.getControls()) {
             ItemStack is = ItemStack.of(Material.PAPER, 1);
-            ItemMeta im = is.getItemMeta();
-            im.customName(Component.text(b.getDisplayName()));
+            is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(b.getDisplayName()));
             if (b.getLore() != null) {
-                im.lore(b.getLore());
+                is.setData(DataComponentTypes.LORE, ItemLore.lore(b.getLore()));
             }
-            is.setItemMeta(im);
             stack[i] = is;
             i++;
             if (i > 51) {

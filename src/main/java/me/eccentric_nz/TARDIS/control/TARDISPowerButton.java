@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.control;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.artron.AdaptiveBoxLampToggler;
 import me.eccentric_nz.TARDIS.artron.BeaconToggler;
@@ -29,6 +30,7 @@ import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.sensor.PowerSensor;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
+import net.kyori.adventure.key.Key;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
@@ -37,7 +39,6 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.BoundingBox;
 
 import java.util.HashMap;
@@ -178,17 +179,15 @@ public class TARDISPowerButton {
 
     private void setFrame(ItemFrame frame, boolean on, Control control) {
         ItemStack is = frame.getItem();
-        ItemMeta im = is.getItemMeta();
-        NamespacedKey model = im.getItemModel();
+        Key model = is.getData(DataComponentTypes.ITEM_MODEL);
         String key;
         if (control == Control.LIGHT_LEVEL) {
-            key = (model == null) ? on ? "block/control/light_0" : "block/control/light_0_off" : model.getKey();
+            key = (model == null) ? on ? "model_light_0" : "model_light_0_off" : model.value();
         } else {
-            key = (model == null) ? on ? "block/control/lamp_0" : "block/control/lamp_0_off" : model.getKey();
+            key = (model == null) ? on ? "model_lamp_0" : "model_lamp_0_off" : model.value();
         }
         NamespacedKey nsk = on ? new NamespacedKey(plugin, key.replace("_off", "")) : new NamespacedKey(plugin, key + "_off");
-        im.setItemModel(nsk);
-        is.setItemMeta(im);
+        is.setData(DataComponentTypes.ITEM_MODEL, nsk);
         frame.setItem(is);
     }
 }

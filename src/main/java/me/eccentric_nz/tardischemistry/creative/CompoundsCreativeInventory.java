@@ -16,8 +16,10 @@
  */
 package me.eccentric_nz.tardischemistry.creative;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUIChemistry;
+import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
 import me.eccentric_nz.tardischemistry.compound.Compound;
 import me.eccentric_nz.tardischemistry.compound.CompoundBuilder;
 import net.kyori.adventure.text.Component;
@@ -25,7 +27,6 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 public class CompoundsCreativeInventory implements InventoryHolder {
 
@@ -60,25 +61,16 @@ public class CompoundsCreativeInventory implements InventoryHolder {
         }
         // elements
         ItemStack elements = ItemStack.of(GUIChemistry.ELEMENTS.material(), 1);
-        ItemMeta eim = elements.getItemMeta();
-        eim.customName(Component.text("Elements"));
-        eim.setItemModel(GUIChemistry.ELEMENTS.key());
-        elements.setItemMeta(eim);
+        elements.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Elements"));
+        elements.setData(DataComponentTypes.ITEM_MODEL, GUIChemistry.ELEMENTS.key());
         stack[GUIChemistry.ELEMENTS.slot()] = elements;
         // products
         ItemStack products = ItemStack.of(GUIChemistry.PRODUCTS.material(), 1);
-        ItemMeta pim = products.getItemMeta();
-        pim.customName(Component.text("Products"));
-        pim.setItemModel(GUIChemistry.PRODUCTS.key());
-        products.setItemMeta(pim);
+        products.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Products"));
+        products.setData(DataComponentTypes.ITEM_MODEL, GUIChemistry.PRODUCTS.key());
         stack[GUIChemistry.PRODUCTS.slot()] = products;
         // close
-        ItemStack close = ItemStack.of(GUIChemistry.CLOSE.material(), 1);
-        ItemMeta close_im = close.getItemMeta();
-        close_im.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
-        close_im.setItemModel(GUIChemistry.CLOSE.key());
-        close.setItemMeta(close_im);
-        stack[53] = close;
+        stack[53] = GUIItemFactory.close();
         return stack;
     }
 }

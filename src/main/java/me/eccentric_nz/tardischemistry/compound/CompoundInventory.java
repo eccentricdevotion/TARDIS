@@ -16,25 +16,25 @@
  */
 package me.eccentric_nz.tardischemistry.compound;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUIChemistry;
+import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
 
 public class CompoundInventory implements InventoryHolder {
 
-    private final TARDIS plugin;
     private final Inventory inventory;
 
     public CompoundInventory(TARDIS plugin) {
-        this.plugin = plugin;
         this.inventory = plugin.getServer().createInventory(this, 27, Component.text("Chemical compounds", NamedTextColor.DARK_RED));
         this.inventory.setContents(getItemStack());
     }
@@ -48,35 +48,26 @@ public class CompoundInventory implements InventoryHolder {
         ItemStack[] stack = new ItemStack[27];
         // info
         ItemStack info = ItemStack.of(GUIChemistry.INFO.material(), 1);
-        ItemMeta info_im = info.getItemMeta();
-        info_im.customName(Component.text("Info"));
-        info_im.lore(List.of(
+        info.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Info"));
+        info.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(
                 Component.text("Combine elements to create"),
                 Component.text("chemical compounds."),
                 Component.text("To see a compound formula"),
                 Component.text("use the ")
-                    .append(Component.text("/tardischemistry formula", NamedTextColor.GREEN).decorate(TextDecoration.ITALIC))
-                    .append(Component.text(" command.", NamedTextColor.DARK_PURPLE).decorate(TextDecoration.ITALIC)),
+                        .append(Component.text("/tardischemistry formula", NamedTextColor.GREEN).decorate(TextDecoration.ITALIC))
+                        .append(Component.text(" command.", NamedTextColor.DARK_PURPLE).decorate(TextDecoration.ITALIC)),
                 Component.text("Place items in the bottom"),
-                Component.text("row from left to right.")
-        ));
-        info_im.setItemModel(GUIChemistry.INFO.key());
-        info.setItemMeta(info_im);
+                Component.text("row from left to right.")))
+        );
+        info.setData(DataComponentTypes.ITEM_MODEL, GUIChemistry.INFO.key());
         stack[GUIChemistry.INFO.slot()] = info;
         // check formula
         ItemStack check = ItemStack.of(GUIChemistry.CHECK.material(), 1);
-        ItemMeta check_im = check.getItemMeta();
-        check_im.customName(Component.text("Check formula"));
-        check_im.setItemModel(GUIChemistry.CHECK.key());
-        check.setItemMeta(check_im);
+        check.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Check formula"));
+        check.setData(DataComponentTypes.ITEM_MODEL, GUIChemistry.CHECK.key());
         stack[GUIChemistry.CHECK.slot()] = check;
         // close
-        ItemStack close = ItemStack.of(GUIChemistry.CLOSE.material(), 1);
-        ItemMeta close_im = close.getItemMeta();
-        close_im.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
-        close_im.setItemModel(GUIChemistry.CLOSE.key());
-        close.setItemMeta(close_im);
-        stack[GUIChemistry.CLOSE.slot()] = close;
+        stack[GUIChemistry.CLOSE.slot()] = GUIItemFactory.close();
         return stack;
     }
 }

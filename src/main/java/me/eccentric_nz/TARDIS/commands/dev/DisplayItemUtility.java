@@ -1,5 +1,6 @@
 package me.eccentric_nz.TARDIS.commands.dev;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.console.ConsoleBuilder;
@@ -20,7 +21,6 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Levelled;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.BoundingBox;
 import org.bukkit.util.RayTraceResult;
@@ -57,9 +57,7 @@ public class DisplayItemUtility {
             ItemDisplay.ItemDisplayTransform transform = ItemDisplay.ItemDisplayTransform.GROUND;
             ItemDisplay display = (ItemDisplay) block.getWorld().spawnEntity(block.getLocation().clone().add(0.5d, 1.25d, 0.5d), EntityType.ITEM_DISPLAY);
             ItemStack is = ItemStack.of(shopItem.getMaterial());
-            ItemMeta im = is.getItemMeta();
-            im.setItemModel(shopItem.getModel());
-            is.setItemMeta(im);
+            is.setData(DataComponentTypes.ITEM_MODEL, shopItem.getModel());
             display.setItemStack(is);
             display.setItemDisplayTransform(transform);
             display.setBillboard(Display.Billboard.VERTICAL);
@@ -79,9 +77,7 @@ public class DisplayItemUtility {
         if (player.getPassengers().isEmpty()) {
             if (!b) {
                 ItemStack box = ItemStack.of(Material.BLUE_DYE, 1);
-                ItemMeta im = box.getItemMeta();
-                im.setItemModel(ChameleonVariant.BLUE_CLOSED.getKey());
-                box.setItemMeta(im);
+                box.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.BLUE_CLOSED.getKey());
                 ItemDisplay display = VehicleUtility.getItemDisplay(player, box, 1.75f);
                 int period = 40;
                 plugin.getTrackerKeeper().setAnimateTask(plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new InterpolatedAnimation(display, period), 5, period));
@@ -129,11 +125,9 @@ public class DisplayItemUtility {
         TARDISDisplayItem tdi = TARDISDisplayItemRegistry.getBY_NAME().get(item);
         if (tdi != null) {
             ItemStack is = ItemStack.of(tdi.getMaterial());
-            ItemMeta im = is.getItemMeta();
-            im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, tdi.getCustomModel().getKey());
-            im.setItemModel(tdi.getCustomModel());
-            im.customName(Component.text(TARDISStringUtils.capitalise(item)));
-            is.setItemMeta(im);
+            is.editPersistentDataContainer(pdc -> pdc.set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING, tdi.getCustomModel().getKey()));
+            is.setData(DataComponentTypes.ITEM_MODEL, tdi.getCustomModel());
+            is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(TARDISStringUtils.capitalise(item)));
             Block up = block.getRelative(BlockFace.UP);
             if (tdi.isClosedDoor() || tdi.isLight()) {
                 // also set an interaction entity

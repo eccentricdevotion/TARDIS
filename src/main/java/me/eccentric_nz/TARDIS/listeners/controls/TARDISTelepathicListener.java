@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.listeners.controls;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.console.telepathic.TelepathicInventory;
@@ -40,7 +42,6 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
 import java.util.List;
@@ -109,11 +110,10 @@ public class TARDISTelepathicListener implements Listener {
             if (is == null) {
                 return;
             }
-            if (!is.getType().equals(Material.GLOWSTONE_DUST) || !is.hasItemMeta()) {
+            if (!is.getType().equals(Material.GLOWSTONE_DUST)) {
                 return;
             }
-            ItemMeta im = is.getItemMeta();
-            if (im.hasCustomName() && ComponentUtils.endsWith(im.customName(), "TARDIS Telepathic Circuit")) {
+            if (ComponentUtils.isNamed(is, "TARDIS Telepathic Circuit")) {
                 Block up = event.getClickedBlock().getRelative(BlockFace.UP);
                 if (!up.getType().isAir()) {
                     return;
@@ -151,25 +151,22 @@ public class TARDISTelepathicListener implements Listener {
         b.setBlockData(TARDISConstants.AIR);
         // drop a custom GLOWSTONE_DUST
         ItemStack is = ItemStack.of(Material.GLOWSTONE_DUST, 1);
-        ItemMeta im = is.getItemMeta();
-        im.customName(ComponentUtils.toWhite("TARDIS Telepathic Circuit"));
+        is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("TARDIS Telepathic Circuit"));
         Component uses = (plugin.getConfig().getString("circuits.uses.telepathic", "20").equals("0") || !plugin.getConfig().getBoolean("circuits.damage"))
                 ? Component.text("unlimited", NamedTextColor.YELLOW)
                 : Component.text(plugin.getConfig().getString("circuits.uses.telepathic", "20"), NamedTextColor.YELLOW);
         List<Component> lore = List.of(Component.text("Uses left"), uses);
-        im.lore(lore);
-        is.setItemMeta(im);
+        is.setData(DataComponentTypes.LORE, ItemLore.lore(lore));
         b.getWorld().dropItemNaturally(b.getLocation(), is);
     }
 
     @EventHandler(ignoreCancelled = true)
     public void onTelepathicCircuitPlace(BlockPlaceEvent event) {
         ItemStack is = event.getItemInHand();
-        if (!is.getType().equals(Material.DAYLIGHT_DETECTOR) || !is.hasItemMeta()) {
+        if (!is.getType().equals(Material.DAYLIGHT_DETECTOR)) {
             return;
         }
-        ItemMeta im = is.getItemMeta();
-        if (im.hasCustomName() && ComponentUtils.endsWith(im.customName(), "TARDIS Telepathic Circuit")) {
+        if (ComponentUtils.isNamed(is, "TARDIS Telepathic Circuit")) {
             UUID uuid = event.getPlayer().getUniqueId();
             String l = event.getBlock().getLocation().toString();
             plugin.getTrackerKeeper().getTelepathicPlacements().put(uuid, l);

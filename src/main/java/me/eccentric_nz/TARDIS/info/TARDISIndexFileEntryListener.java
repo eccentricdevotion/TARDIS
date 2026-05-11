@@ -16,15 +16,16 @@
  */
 package me.eccentric_nz.TARDIS.info;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
+import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 public class TARDISIndexFileEntryListener extends TARDISMenuListener {
 
@@ -57,12 +58,11 @@ public class TARDISIndexFileEntryListener extends TARDISMenuListener {
         } else if (slot > 8) {
             // get item from slot 0
             ItemStack zero = view.getItem(0);
-            ItemMeta zim = zero.getItemMeta();
-            ItemMeta im = is.getItemMeta();
-            String name = ComponentUtils.toEnumUppercase(zim.customName()) + "_" + ComponentUtils.toEnumUppercase(im.customName());
+            Component cn = is.getData(DataComponentTypes.CUSTOM_NAME);
+            String name = ComponentUtils.toEnumUppercase(zero.getData(DataComponentTypes.CUSTOM_NAME)) + "_" + ComponentUtils.toEnumUppercase(cn);
             try {
                 TARDISInfoMenu tim = TARDISInfoMenu.valueOf(name);
-                if (im.customName().equals("Recipe")) {
+                if (ComponentUtils.stripColour(cn).equals("Recipe")) {
                     new TISRecipe(plugin).show(p, tim);
                 } else {
                     new TISInfo(plugin).show(p, tim);

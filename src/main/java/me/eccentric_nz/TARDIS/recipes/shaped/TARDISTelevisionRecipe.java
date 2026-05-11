@@ -16,6 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.CustomModelData;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.keys.CircuitVariant;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
@@ -28,8 +31,6 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.List;
@@ -58,39 +59,36 @@ public class TARDISTelevisionRecipe {
 
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.BROWN_STAINED_GLASS, 1);
-        ItemMeta im = is.getItemMeta();
-        im.customName(ComponentUtils.toWhite("TARDIS Television"));
-        im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, RecipeItem.TARDIS_TELEVISION.getModel().getKey());
-        is.setItemMeta(im);
+        is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("TARDIS Television"));
+        is.editPersistentDataContainer(pdc -> pdc.set(plugin.getCustomBlockKey(), PersistentDataType.STRING, RecipeItem.TARDIS_TELEVISION.getModel().getKey()));
         // exact choice
-        ItemStack capac = ItemStack.of(Material.BUCKET, 1);
-        ItemMeta itor = capac.getItemMeta();
-        itor.customName(ComponentUtils.toWhite("Artron Capacitor"));
-        capac.setItemMeta(itor);
+        ItemStack capacitor = ItemStack.of(Material.BUCKET, 1);
+        capacitor.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Artron Capacitor"));
         NamespacedKey key = new NamespacedKey(plugin, "tardis_television");
         ShapedRecipe r = new ShapedRecipe(key, is);
         if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             r.shape("GGG", "GBG", "GEC");
             // exact choice
             ItemStack chameleon = ItemStack.of(Material.GLOWSTONE_DUST, 1);
-            ItemMeta circuit = chameleon.getItemMeta();
-            circuit.customName(ComponentUtils.toWhite("TARDIS Chameleon Circuit"));
-            CustomModelDataComponent ecomponent = circuit.getCustomModelDataComponent();
-            ecomponent.setFloats(CircuitVariant.CHAMELEON.getFloats());
-            circuit.setCustomModelDataComponent(ecomponent);
+            chameleon.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("TARDIS Chameleon Circuit"));
+            chameleon.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                    .addFloats(CircuitVariant.CHAMELEON.getFloats())
+                    .build());
             // set the second line of lore
             Component uses = (plugin.getConfig().getString("circuits.uses.chameleon", "25").equals("0") || !plugin.getConfig().getBoolean("circuits.damage"))
                     ? Component.text("unlimited", NamedTextColor.YELLOW)
                     : Component.text(plugin.getConfig().getString("circuits.uses.chameleon", "25"), NamedTextColor.YELLOW);
-            circuit.lore(List.of(Component.text("Uses left"), uses));
-            chameleon.setItemMeta(circuit);
+            chameleon.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(
+                    Component.text("Uses left"),
+                    uses
+            )));
             r.setIngredient('C', new RecipeChoice.ExactChoice(chameleon));
         } else {
             r.shape("GGG", "GBG", "GEG");
         }
         r.setIngredient('G', Material.GRAY_CONCRETE);
         r.setIngredient('B', Material.BROWN_STAINED_GLASS_PANE);
-        r.setIngredient('E', new RecipeChoice.ExactChoice(capac));
+        r.setIngredient('E', new RecipeChoice.ExactChoice(capacitor));
         plugin.getServer().addRecipe(r);
         plugin.getFigura().getShapedRecipes().put("TARDIS Television", r);
     }

@@ -16,15 +16,17 @@
  */
 package me.eccentric_nz.tardischemistry.product;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUIChemistry;
+import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
 
@@ -48,9 +50,8 @@ public class ProductInventory implements InventoryHolder {
         ItemStack[] stack = new ItemStack[27];
         // info
         ItemStack info = ItemStack.of(GUIChemistry.INFO.material(), 1);
-        ItemMeta info_im = info.getItemMeta();
-        info_im.customName(Component.text("Info"));
-        info_im.lore(List.of(
+        info.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Info"));
+        info.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(
                 Component.text("Combine elements and compounds"),
                 Component.text("to create sparklers, balloons,"),
                 Component.text("lamps, and glow sticks."),
@@ -62,24 +63,16 @@ public class ProductInventory implements InventoryHolder {
                 Component.text("Place items like you would"),
                 Component.text("in a crafting table"),
                 Component.text("in the 9 left slots.")
-        ));
-        info_im.setItemModel(GUIChemistry.INFO.key());
-        info.setItemMeta(info_im);
+        )));
+        info.setData(DataComponentTypes.ITEM_MODEL, GUIChemistry.INFO.key());
         stack[GUIChemistry.INFO.slot()] = info;
         // craft recipe
         ItemStack craft = ItemStack.of(GUIChemistry.CRAFT.material(), 1);
-        ItemMeta craft_im = craft.getItemMeta();
-        craft_im.customName(Component.text("Craft"));
-        craft_im.setItemModel(GUIChemistry.CRAFT.key());
-        craft.setItemMeta(craft_im);
+        craft.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Craft"));
+        craft.setData(DataComponentTypes.ITEM_MODEL, GUIChemistry.CRAFT.key());
         stack[GUIChemistry.CRAFT.slot()] = craft;
         // close
-        ItemStack close = ItemStack.of(GUIChemistry.CLOSE.material(), 1);
-        ItemMeta close_im = close.getItemMeta();
-        close_im.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
-        close_im.setItemModel(GUIChemistry.CLOSE.key());
-        close.setItemMeta(close_im);
-        stack[GUIChemistry.CLOSE.slot()] = close;
+        stack[GUIChemistry.CLOSE.slot()] = GUIItemFactory.close();
         return stack;
     }
 }

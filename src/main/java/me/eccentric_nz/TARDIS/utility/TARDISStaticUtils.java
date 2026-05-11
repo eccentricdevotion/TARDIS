@@ -20,6 +20,7 @@ import com.earth2me.essentials.Essentials;
 import com.earth2me.essentials.User;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.customblocks.TARDISBlockDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
@@ -42,7 +43,6 @@ import org.bukkit.block.sign.Side;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.HashMap;
@@ -236,11 +236,10 @@ public class TARDISStaticUtils {
     }
 
     private static boolean isCustomDoorOpen(ItemDisplay display) {
-        ItemMeta im = display.getItemStack().getItemMeta();
-        if (im.hasItemModel()) {
-            return display.getItemStack().getItemMeta().getItemModel().getKey().endsWith("_open");
-        } else if (im.getPersistentDataContainer().has(TARDIS.plugin.getCustomBlockKey())) {
-            String str = im.getPersistentDataContainer().get(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING);
+        if (ComponentUtils.isModelled(display.getItemStack())) {
+            return display.getItemStack().getData(DataComponentTypes.ITEM_MODEL).value().endsWith("_open");
+        } else if (display.getPersistentDataContainer().has(TARDIS.plugin.getCustomBlockKey())) {
+            String str = display.getPersistentDataContainer().get(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING);
             return str.endsWith("_open");
         } else {
             return false;
@@ -339,13 +338,7 @@ public class TARDISStaticUtils {
      * @return true if the ItemStack is a Sonic Screwdriver
      */
     public static boolean isSonic(ItemStack is) {
-        if (is != null && is.hasItemMeta()) {
-            ItemMeta im = is.getItemMeta();
-            if (im.hasCustomName()) {
-                return ComponentUtils.endsWith(im.customName(), "Sonic Screwdriver");
-            }
-        }
-        return false;
+        return is != null && ComponentUtils.isNamed(is, "Sonic Screwdriver");
     }
 
     /**
@@ -355,12 +348,9 @@ public class TARDISStaticUtils {
      * @return true if the ItemStack is a Sonic Screwdriver
      */
     public static boolean isKeyOrSonic(ItemStack is) {
-        if (is != null && is.hasItemMeta()) {
-            ItemMeta im = is.getItemMeta();
-            if (im.hasCustomName()) {
-                String stripped = ComponentUtils.stripColour(im.customName());
-                return stripped.endsWith("TARDIS Key") || stripped.endsWith("Sonic Screwdriver");
-            }
+        if (is != null && is.hasData(DataComponentTypes.CUSTOM_NAME)) {
+            String stripped = ComponentUtils.stripColour(is.getData(DataComponentTypes.CUSTOM_NAME));
+            return stripped.endsWith("TARDIS Key") || stripped.endsWith("Sonic Screwdriver");
         }
         return false;
     }

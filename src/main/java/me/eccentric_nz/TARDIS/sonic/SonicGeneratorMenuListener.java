@@ -16,6 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.sonic;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.CustomModelData;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.keys.SonicVariant;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisArtron;
@@ -34,8 +37,6 @@ import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
@@ -104,7 +105,6 @@ public class SonicGeneratorMenuListener extends TARDISMenuListener {
         location = plugin.getTrackerKeeper().getSonicGenerators().get(p.getUniqueId());
         int slot = event.getRawSlot();
         ItemStack sonic;
-        ItemMeta sonic_im;
         boolean slotWasNull = false;
         if (slot < 0 || slot > 53) {
             ClickType click = event.getClick();
@@ -126,10 +126,7 @@ public class SonicGeneratorMenuListener extends TARDISMenuListener {
                 }
                 // get custom model data of selected sonic
                 ItemStack choice = view.getItem(slot);
-                ItemMeta choice_im = choice.getItemMeta();
-                sonic_im = sonic.getItemMeta();
-                sonic_im.setCustomModelDataComponent(choice_im.getCustomModelDataComponent());
-                sonic.setItemMeta(sonic_im);
+                sonic.copyDataFrom(choice, dataComponentType -> true);
                 if (slotWasNull) {
                     view.setItem(49, sonic);
                     setCost(view, costs.get("Standard Sonic"));
@@ -137,30 +134,27 @@ public class SonicGeneratorMenuListener extends TARDISMenuListener {
             }
             case 26, 27, 28, 29, 30, 31, 32, 33, 34, 35 -> {
                 ItemStack upgrade = view.getItem(slot);
-                ItemMeta upgrade_im = upgrade.getItemMeta();
-                Component upgrade_name = upgrade_im.customName();
+                Component upgrade_name = upgrade.getData(DataComponentTypes.CUSTOM_NAME);
                 sonic = view.getItem(49);
                 if (sonic == null) {
                     sonic = ItemStack.of(Material.BLAZE_ROD, 1);
                     slotWasNull = true;
                 }
-                sonic_im = sonic.getItemMeta();
                 List<Component> lore;
-                if (sonic_im.hasLore()) {
+                if (ComponentUtils.hasLore(sonic)) {
                     // get the current sonic's upgrades
-                    lore = sonic_im.lore();
+                    lore = new ArrayList<>(sonic.getData(DataComponentTypes.LORE).lines());
                 } else {
                     // otherwise this is the first upgrade
                     lore = new ArrayList<>();
                     lore.add(Component.text("Upgrades:"));
                 }
                 // if they don't already have the upgrade
-                if (lore != null && !lore.contains(upgrade_name)) {
+                if (!lore.contains(upgrade_name)) {
                     lore.add(upgrade_name);
-                    sonic_im.lore(lore);
+                    sonic.setData(DataComponentTypes.LORE, ItemLore.lore(lore));
                     setCost(view, getCost(view) + costs.get(ComponentUtils.stripColour(upgrade_name)));
                 }
-                sonic.setItemMeta(sonic_im);
                 if (slotWasNull) {
                     view.setItem(49, sonic);
                 }
@@ -172,19 +166,17 @@ public class SonicGeneratorMenuListener extends TARDISMenuListener {
                     sonic = ItemStack.of(Material.BLAZE_ROD, 1);
                     slotWasNull = true;
                 }
-                sonic_im = sonic.getItemMeta();
                 if (slotWasNull) {
-                    sonic_im.customName(ComponentUtils.toWhite("Sonic Screwdriver"));
+                    sonic.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Sonic Screwdriver"));
                     view.setItem(49, sonic);
                 } else {
                     // remove lore
-                    sonic_im.lore(null);
+                    sonic.resetData(DataComponentTypes.LORE);
                 }
                 List<Float> sonicModel = SonicScrewdriverRecipe.sonicModelLookup.getOrDefault(plugin.getConfig().getString("sonic.default_model").toLowerCase(Locale.ROOT), SonicVariant.ELEVENTH.getFloats());
-                CustomModelDataComponent component = sonic_im.getCustomModelDataComponent();
-                component.setFloats(sonicModel);
-                sonic_im.setCustomModelDataComponent(component);
-                sonic.setItemMeta(sonic_im);
+                sonic.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                        .addFloats(sonicModel)
+                        .build());
                 setCost(view, costs.get("Standard Sonic"));
             }
             case 43 -> {
@@ -214,15 +206,13 @@ public class SonicGeneratorMenuListener extends TARDISMenuListener {
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", p.getUniqueId().toString());
         where.put("activated", 1);
-        ItemMeta im = is.getItemMeta();
-        CustomModelDataComponent component = im.getCustomModelDataComponent();
-        List<Float> floats = component.getFloats();
+        List<Float> floats = is.getData(DataComponentTypes.CUSTOM_MODEL_DATA).floats();
         Float model = floats.getFirst();
         String split = SonicVariant.getByFloat(model).toString().toLowerCase(Locale.ROOT);
         set.put("model", split);
-        if (im.hasLore()) {
-            List<Component> lore = im.lore();
-            fields.forEach((key, value) -> set.put(value, (lore != null && lore.contains(Component.text(key))) ? 1 : 0));
+        if (ComponentUtils.hasLore(is)) {
+            List<Component> lore = new ArrayList<>(is.getData(DataComponentTypes.LORE).lines());
+            fields.forEach((key, value) -> set.put(value, (lore.contains(Component.text(key))) ? 1 : 0));
         } else {
             // has been reset to standard sonic
             fields.forEach((key, value) -> set.put(value, 0));
@@ -258,17 +248,14 @@ public class SonicGeneratorMenuListener extends TARDISMenuListener {
 
     private int getCost(InventoryView view) {
         ItemStack is = view.getItem(45);
-        ItemMeta im = is.getItemMeta();
-        String c = ComponentUtils.stripColour(im.lore().getFirst());
+        String c = ComponentUtils.stripColour(is.getData(DataComponentTypes.LORE).lines().getFirst());
         return TARDISNumberParsers.parseInt(c);
     }
 
     private void setCost(InventoryView view, int cost) {
         ItemStack is = view.getItem(45);
-        ItemMeta im = is.getItemMeta();
-        List<Component> lore = im.lore();
+        List<Component> lore = new ArrayList<>(is.getData(DataComponentTypes.LORE).lines());
         lore.set(0, Component.text(cost));
-        im.lore(lore);
-        is.setItemMeta(im);
+        is.lore(lore);
     }
 }

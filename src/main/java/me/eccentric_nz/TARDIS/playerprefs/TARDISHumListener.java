@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.playerprefs;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
@@ -27,10 +29,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
 
@@ -77,7 +77,6 @@ public class TARDISHumListener extends TARDISMenuListener {
         }
         Player p = (Player) event.getWhoClicked();
         UUID uuid = p.getUniqueId();
-        ItemMeta im = is.getItemMeta();
         switch (slot) {
             case 11 -> {
                 HashMap<String, Object> setr = new HashMap<>();
@@ -106,7 +105,7 @@ public class TARDISHumListener extends TARDISMenuListener {
                         close(p);
                         plugin.getMessenger().send(p, TardisModule.TARDIS, "HUM_WAIT");
                     } else {
-                        TARDISSounds.playTARDISSound(p, "tardis_hum_" + ComponentUtils.stripColour(im.customName()).toLowerCase(Locale.ROOT), 5L);
+                        TARDISSounds.playTARDISSound(p, "tardis_hum_" + ComponentUtils.stripColour(is.getData(DataComponentTypes.CUSTOM_NAME)).toLowerCase(Locale.ROOT), 5L);
                         last.put(uuid, slot);
                         cooldown.put(uuid, System.currentTimeMillis());
                     }
@@ -114,7 +113,7 @@ public class TARDISHumListener extends TARDISMenuListener {
                     HashMap<String, Object> set = new HashMap<>();
                     HashMap<String, Object> where = new HashMap<>();
                     where.put("uuid", uuid.toString());
-                    set.put("hum", ComponentUtils.stripColour(im.customName()).toLowerCase(Locale.ROOT));
+                    set.put("hum", ComponentUtils.stripColour(is.getData(DataComponentTypes.CUSTOM_NAME)).toLowerCase(Locale.ROOT));
                     plugin.getQueryFactory().doUpdate("player_prefs", set, where);
                     close(p);
                     plugin.getMessenger().send(p, TardisModule.TARDIS, "HUM_SAVED");
@@ -125,14 +124,11 @@ public class TARDISHumListener extends TARDISMenuListener {
 
     private void setPlay(InventoryView view, String str) {
         ItemStack play = view.getItem(15);
-        ItemMeta save = play.getItemMeta();
-        save.lore(List.of(Component.text(str)));
-        play.setItemMeta(save);
+        play.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text(str)).build());
     }
 
     private boolean isPlay(InventoryView view) {
         ItemStack play = view.getItem(15);
-        ItemMeta save = play.getItemMeta();
-        return (ComponentUtils.endsWith(save.lore().getFirst(), "PLAY"));
+        return (ComponentUtils.endsWith(play.getData(DataComponentTypes.LORE).lines().getFirst(), "PLAY"));
     }
 }

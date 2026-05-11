@@ -16,6 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.CustomModelData;
+import io.papermc.paper.datacomponent.item.ItemLore;
+import io.papermc.paper.datacomponent.item.PotionContents;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.keys.CircuitVariant;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
@@ -27,9 +31,6 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.PotionMeta;
-import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 import org.bukkit.potion.PotionType;
 
 import java.util.List;
@@ -57,24 +58,25 @@ public class TARDISTelepathicCircuitRecipe {
 
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.GLOWSTONE_DUST, 1);
-        ItemMeta im = is.getItemMeta();
-        im.customName(ComponentUtils.toWhite("TARDIS Telepathic Circuit"));
-        CustomModelDataComponent component = im.getCustomModelDataComponent();
-        component.setFloats(CircuitVariant.TELEPATHIC.getFloats());
-        im.setCustomModelDataComponent(component);
+        is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("TARDIS Telepathic Circuit"));
+        is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                .addFloats(CircuitVariant.TELEPATHIC.getFloats())
+                .build());
         Component uses = (plugin.getConfig().getString("circuits.uses.telepathic", "20").equals("0") || !plugin.getConfig().getBoolean("circuits.damage"))
                 ? Component.text("unlimited", NamedTextColor.YELLOW)
                 : Component.text(plugin.getConfig().getString("circuits.uses.telepathic", "20"), NamedTextColor.YELLOW);
-        im.lore(List.of(Component.text("Uses left"), uses));
-        is.setItemMeta(im);
+        is.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(
+                Component.text("Uses left"),
+                uses
+        )));
         NamespacedKey key = new NamespacedKey(plugin, "tardis_telepathic_circuit");
         ShapedRecipe r = new ShapedRecipe(key, is);
         if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             r.shape(" S ", "SPS", "ESE");
             ItemStack potion = ItemStack.of(Material.POTION, 1);
-            PotionMeta pm = (PotionMeta) potion.getItemMeta();
-            pm.setBasePotionType(PotionType.AWKWARD);
-            potion.setItemMeta(pm);
+            potion.setData(DataComponentTypes.POTION_CONTENTS, PotionContents.potionContents()
+                    .potion(PotionType.AWKWARD)
+                    .build());
             r.setIngredient('P', new RecipeChoice.ExactChoice(potion));
         } else {
             r.shape(" S ", "SES", " S ");

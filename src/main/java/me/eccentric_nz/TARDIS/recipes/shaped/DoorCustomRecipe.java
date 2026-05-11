@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
@@ -24,7 +25,6 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
 
 public class DoorCustomRecipe {
 
@@ -39,11 +39,9 @@ public class DoorCustomRecipe {
             try {
                 Material material = Material.valueOf(plugin.getCustomDoorsConfig().getString(r + ".material"));
                 ItemStack is = ItemStack.of(material);
-                ItemMeta im = is.getItemMeta();
                 String dn = TARDISStringUtils.capitalise(r);
-                im.customName(ComponentUtils.toWhite("Door " + dn));
-                im.setItemModel(new NamespacedKey(plugin, r + "_closed"));
-                is.setItemMeta(im);
+                is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Door " + dn));
+                is.setData(DataComponentTypes.ITEM_MODEL, new NamespacedKey(plugin, r + "_closed"));
                 NamespacedKey key = new NamespacedKey(plugin, "door_" + r);
                 ShapedRecipe recipe = new ShapedRecipe(key, is);
                 recipe.shape("#A#", "#D#", "###");

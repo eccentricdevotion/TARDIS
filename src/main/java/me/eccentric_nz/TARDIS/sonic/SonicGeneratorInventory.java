@@ -16,6 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.sonic;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.CustomModelData;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUISonicGenerator;
 import me.eccentric_nz.TARDIS.database.data.Sonic;
@@ -26,8 +29,6 @@ import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,72 +65,61 @@ class SonicGeneratorInventory implements InventoryHolder {
         for (GUISonicGenerator sonic : GUISonicGenerator.values()) {
             if (sonic.getMaterial() == Material.BLAZE_ROD) {
                 ItemStack is = ItemStack.of(Material.BLAZE_ROD, 1);
-                ItemMeta im = is.getItemMeta();
-                im.customName(ComponentUtils.toWhite("Sonic Screwdriver"));
-                im.lore(List.of(Component.text(sonic.getName())));
-                CustomModelDataComponent component = im.getCustomModelDataComponent();
-                component.setFloats(sonic.getFloats());
-                im.setCustomModelDataComponent(component);
-                is.setItemMeta(im);
+                is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Sonic Screwdriver"));
+                is.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text(sonic.getName())).build());
+                is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                                .addFloats(sonic.getFloats())
+                        .build());
                 stack[sonic.getSlot()] = is;
             }
             if (sonic.getMaterial() == Material.BOWL && sonic.getSlot() != 45) {
                 ItemStack is = ItemStack.of(Material.BOWL, 1);
-                ItemMeta im = is.getItemMeta();
-                im.customName(Component.text(sonic.getName()));
+                is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(sonic.getName()));
                 if (!sonic.getLore().isEmpty()) {
-                    List<Component> lore = new ArrayList<>();
+                    ItemLore.Builder lore = ItemLore.lore();
                     for (String s : sonic.getLore().split("~")) {
-                        lore.add(Component.text(s));
+                        lore.addLine(Component.text(s));
                     }
-                    im.lore(lore);
+                    is.setData(DataComponentTypes.LORE, lore.build());
                 }
-                is.setItemMeta(im);
                 stack[sonic.getSlot()] = is;
             }
         }
         // info 1/3
         ItemStack info = ItemStack.of(Material.BOOK, 1);
-        ItemMeta info_im = info.getItemMeta();
-        info_im.customName(Component.text("Instructions (1/3)"));
-        info_im.lore(List.of(
+        info.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Instructions (1/3)"));
+        info.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(
                 Component.text("Select your Sonic Screwdriver"),
                 Component.text("type from the top two rows."),
                 Component.text("Click on the upgrades you"),
                 Component.text("want to add to the sonic.")
-        ));
-        info.setItemMeta(info_im);
+        )));
         stack[38] = info;
         // info 2/3
         ItemStack info1 = ItemStack.of(Material.BOOK, 1);
-        ItemMeta info1_im = info.getItemMeta();
-        info1_im.customName(Component.text("Instructions (2/3)"));
-        info1_im.lore(List.of(
+        info1.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Instructions (2/3)"));
+        info1.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(
                 Component.text("You can reset the upgrades"),
                 Component.text("by clicking the 'Standard' button."),
                 Component.text("The Artron cost for the"),
                 Component.text("sonic is shown bottom left.")
-        ));
-        info1.setItemMeta(info1_im);
+        )));
         stack[39] = info1;
         // info 3/3
         ItemStack info2 = ItemStack.of(Material.BOOK, 1);
-        ItemMeta info2_im = info.getItemMeta();
-        info2_im.customName(Component.text("Instructions (3/3)"));
-        info2_im.lore(List.of(
+        info2.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Instructions (3/3)"));
+        info2.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(
                 Component.text("The final sonic result"),
                 Component.text("is shown in the middle"),
                 Component.text("of the bottom row.")
-        ));
-        info2.setItemMeta(info2_im);
+        )));
         stack[40] = info2;
         // players preferred sonic
         ItemStack sonic = ItemStack.of(Material.BLAZE_ROD, 1);
-        ItemMeta screw = sonic.getItemMeta();
-        screw.customName(Component.text("Sonic Screwdriver"));
-        CustomModelDataComponent scomponent = screw.getCustomModelDataComponent();
-        scomponent.setFloats(data.getModel());
-        screw.setCustomModelDataComponent(scomponent);
+        sonic.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Sonic Screwdriver"));
+        sonic.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                        .addFloats(data.getModel())
+                .build());
         List<Component> upgrades = new ArrayList<>();
         double full = plugin.getArtronConfig().getDouble("full_charge") / 100.0d;
         int artron = (int) (plugin.getArtronConfig().getDouble("sonic_generator.standard") * full);
@@ -175,19 +165,16 @@ class SonicGeneratorInventory implements InventoryHolder {
         }
         // cost
         ItemStack cost = ItemStack.of(Material.BOWL, 1);
-        ItemMeta cost_im = cost.getItemMeta();
-        cost_im.customName(Component.text("Artron cost"));
-        cost_im.lore(List.of(Component.text(artron)));
-        cost.setItemMeta(cost_im);
+        cost.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Artron cost"));
+        cost.lore(List.of(Component.text(artron)));
         stack[45] = cost;
 
         if (!upgrades.isEmpty()) {
             List<Component> finalUps = new ArrayList<>();
             finalUps.add(Component.text("Upgrades:"));
             finalUps.addAll(upgrades);
-            screw.lore(finalUps);
+            sonic.setData(DataComponentTypes.LORE, ItemLore.lore(finalUps));
         }
-        sonic.setItemMeta(screw);
         stack[49] = sonic;
 
         return stack;

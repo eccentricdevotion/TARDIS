@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import net.kyori.adventure.text.Component;
@@ -23,9 +25,6 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.List;
 
 /*
 easy_shape:---,WRW,---
@@ -48,10 +47,8 @@ public class JammyDodgerRecipe {
 
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.COOKIE, 8);
-        ItemMeta im = is.getItemMeta();
-        im.customName(ComponentUtils.toWhite("Jammy Dodger"));
-        im.lore(List.of(Component.text("Best eaten with custard!")));
-        is.setItemMeta(im);
+        is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Jammy Dodger"));
+        is.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text("Best eaten with custard!")).build());
         NamespacedKey key = new NamespacedKey(plugin, "jammy_dodger");
         ShapedRecipe r = new ShapedRecipe(key, is);
         r.shape("WRW");

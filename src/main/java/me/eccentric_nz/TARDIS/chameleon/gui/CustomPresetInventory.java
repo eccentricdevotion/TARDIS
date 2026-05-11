@@ -16,12 +16,14 @@
  */
 package me.eccentric_nz.TARDIS.chameleon.gui;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.chameleon.utils.CustomPreset;
 import me.eccentric_nz.TARDIS.chameleon.utils.TARDISCustomPreset;
 import me.eccentric_nz.TARDIS.custommodels.GUIChameleonPoliceBoxes;
 import me.eccentric_nz.TARDIS.custommodels.GUIChameleonPresets;
+import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -29,7 +31,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Locale;
 import java.util.Map;
@@ -70,37 +71,25 @@ public class CustomPresetInventory implements InventoryHolder {
         for (Map.Entry<String, CustomPreset> preset : TARDISCustomPreset.CUSTOM_PRESETS.entrySet()) {
             if (TARDISPermission.hasPermission(player, "tardis.preset." + preset.toString().toLowerCase(Locale.ROOT))) {
                 ItemStack is = ItemStack.of(preset.getValue().icon(), 1);
-                ItemMeta im = is.getItemMeta();
-                im.customName(Component.text(TARDISStringUtils.capitalise(preset.getKey())));
-                is.setItemMeta(im);
+                is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(TARDISStringUtils.capitalise(preset.getKey())));
                 stacks[i] = is;
                 i++;
             }
         }
         // back
         ItemStack back = ItemStack.of(GUIChameleonPresets.BACK.material(), 1);
-        ItemMeta but = back.getItemMeta();
-        but.customName(Component.text("Back"));
-        back.setItemMeta(but);
+        back.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Back"));
         stacks[50] = back;
         // page one
-        ItemStack page1 = ItemStack.of(GUIChameleonPoliceBoxes.GO_TO_PAGE_1.material(), 1);
-        ItemMeta one = page1.getItemMeta();
-        one.customName(Component.text(plugin.getLanguage().getString("BUTTON_PAGE_1")));
-        page1.setItemMeta(one);
-        stacks[GUIChameleonPoliceBoxes.GO_TO_PAGE_1.slot()] = page1;
+        ItemStack one = ItemStack.of(GUIChameleonPoliceBoxes.GO_TO_PAGE_1.material(), 1);
+        one.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_PAGE_1", "Go to page 1")));
+        stacks[GUIChameleonPoliceBoxes.GO_TO_PAGE_1.slot()] = one;
         // page two
-        ItemStack page = ItemStack.of(GUIChameleonPresets.GO_TO_PAGE_2.material(), 1);
-        ItemMeta two = page.getItemMeta();
-        two.customName(Component.text(plugin.getLanguage().getString("BUTTON_PAGE_2", "Go to page 2")));
-        page.setItemMeta(two);
-        stacks[GUIChameleonPresets.GO_TO_PAGE_2.slot()] = page;
+        ItemStack two = ItemStack.of(GUIChameleonPresets.GO_TO_PAGE_2.material(), 1);
+        two.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_PAGE_2", "Go to page 2")));
+        stacks[GUIChameleonPresets.GO_TO_PAGE_2.slot()] = two;
         // Cancel / close
-        ItemStack close = ItemStack.of(GUIChameleonPresets.CLOSE.material(), 1);
-        ItemMeta can = close.getItemMeta();
-        can.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
-        close.setItemMeta(can);
-        stacks[GUIChameleonPresets.CLOSE.slot()] = close;
+        stacks[GUIChameleonPresets.CLOSE.slot()] = GUIItemFactory.close();
         return stacks;
     }
 }

@@ -26,7 +26,7 @@ public class ChemistryUtility {
             case "compound" -> new CompoundCommand(plugin).create(player);
             case "reduce" -> new ReduceCommand(plugin).use(player);
             case "product" -> new ProductCommand(plugin).craft(player);
-            case "" -> new LabCommand(plugin).combine(player);
+            case "lab" -> new LabCommand(plugin).combine(player);
             default -> { }
         }
     }

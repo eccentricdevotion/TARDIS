@@ -18,6 +18,7 @@ package me.eccentric_nz.tardisweepingangels.nms;
 
 import com.mojang.datafixers.DataFixUtils;
 import com.mojang.datafixers.types.Type;
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.custommodels.keys.JudoonVariant;
 import net.minecraft.SharedConstants;
 import net.minecraft.core.Registry;
@@ -37,7 +38,6 @@ import net.minecraft.world.level.storage.ValueOutput;
 import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.craftbukkit.inventory.CraftItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Map;
 
@@ -75,9 +75,7 @@ public class TWAJudoon extends TWAFollower {
         if (hasItemInSlot(EquipmentSlot.MAINHAND) && tickCount % 10 == 0) {
             ItemStack is = getItemBySlot(EquipmentSlot.MAINHAND);
             org.bukkit.inventory.ItemStack bukkit = CraftItemStack.asBukkitCopy(is);
-            ItemMeta im = bukkit.getItemMeta();
-            im.setItemModel(this.guard ? JudoonVariant.JUDOON_WEAPON_ACTIVE.getKey() : JudoonVariant.JUDOON_WEAPON_RESTING.getKey());
-            bukkit.setItemMeta(im);
+            bukkit.setData(DataComponentTypes.ITEM_MODEL, this.guard ? JudoonVariant.JUDOON_WEAPON_ACTIVE.getKey() : JudoonVariant.JUDOON_WEAPON_RESTING.getKey());
             setItemSlot(EquipmentSlot.MAINHAND, CraftItemStack.asNMSCopy(bukkit));
         }
         super.aiStep();

@@ -16,7 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.howto;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
@@ -24,7 +27,6 @@ import org.bukkit.World;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
 
@@ -81,22 +83,18 @@ class SeedRecipeInventory implements InventoryHolder {
         ItemStack lapis = ItemStack.of(Material.LAPIS_BLOCK, 1);
         // interior wall
         ItemStack in_wall = ItemStack.of(Material.ORANGE_WOOL, 1);
-        ItemMeta in_meta = in_wall.getItemMeta();
-        in_meta.customName(Component.text("Interior walls"));
-        in_meta.lore(List.of(
+        in_wall.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Interior walls"));
+        in_wall.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(
                 Component.text("Any valid Wall/Floor block"),
                 Component.text("Click to see blocks...")
-        ));
-        in_wall.setItemMeta(in_meta);
+        )));
         // interior floor
         ItemStack in_floor = ItemStack.of(Material.LIGHT_GRAY_WOOL, 1);
-        ItemMeta fl_meta = in_floor.getItemMeta();
-        fl_meta.customName(Component.text("Interior floors"));
-        fl_meta.lore(List.of(
+        in_floor.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Interior floors"));
+        in_floor.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(
                 Component.text("Any valid Wall/Floor block"),
                 Component.text("Click to see blocks...")
-        ));
-        in_floor.setItemMeta(fl_meta);
+        )));
         // tardis type
         ItemStack tardis = ItemStack.of(block, 1);
         stack[0] = red;
@@ -105,16 +103,10 @@ class SeedRecipeInventory implements InventoryHolder {
         stack[18] = tardis;
         stack[20] = in_floor;
         // close
-        ItemStack close = ItemStack.of(Material.BOWL, 1);
-        ItemMeta close_im = close.getItemMeta();
-        close_im.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
-        close.setItemMeta(close_im);
-        stack[26] = close;
+        stack[26] = GUIItemFactory.close();
         // back
         ItemStack back = ItemStack.of(Material.BOWL, 1);
-        ItemMeta back_im = back.getItemMeta();
-        back_im.customName(Component.text("Back"));
-        back.setItemMeta(back_im);
+        back.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Back"));
         stack[8] = back;
 
         return stack;

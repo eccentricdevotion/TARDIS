@@ -16,15 +16,15 @@
  */
 package me.eccentric_nz.TARDIS.commands.dev.wiki;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemEnchantments;
+import io.papermc.paper.datacomponent.item.PotionContents;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.info.TARDISDescription;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.RecipeChoice;
-import org.bukkit.inventory.meta.BookMeta;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.PotionMeta;
 
 import java.util.List;
 
@@ -113,20 +113,17 @@ public class ShapelessPageBuilder extends PageBuilder {
                 ItemStack is = exact.getChoices().getFirst();
                 switch (is.getType()) {
                     case POTION -> {
-                        PotionMeta pm = (PotionMeta) is.getItemMeta();
-                        String potion = pm.getBasePotionType().name();
+                        PotionContents pm = is.getData(DataComponentTypes.POTION_CONTENTS);
+                        String potion = pm.potion().name();
                         dashed = TARDISStringUtils.toLowercaseDashed("Potion of " + TARDISStringUtils.capitalise(potion));
                     }
                     case ENCHANTED_BOOK -> {
-                        BookMeta bm = (BookMeta) is.getItemMeta();
-                        String enchant = bm.getEnchants().keySet().stream().findFirst().toString();
+                        ItemEnchantments bm = is.getData(DataComponentTypes.STORED_ENCHANTMENTS);
+                        String enchant = bm.enchantments().keySet().stream().findFirst().toString();
                         String cap = TARDISStringUtils.capitalise(enchant);
                         dashed = TARDISStringUtils.toLowercaseDashed("Enchanted Book of " + cap);
                     }
-                    default -> {
-                        ItemMeta im = is.getItemMeta();
-                        dashed = TARDISStringUtils.toLowercaseDashed(ComponentUtils.stripColour(im.customName()));
-                    }
+                    default -> dashed = TARDISStringUtils.toLowercaseDashed(ComponentUtils.stripColour(is.getData(DataComponentTypes.CUSTOM_NAME)));
                 }
             }
             tableBuilder.append("'").append(dashed).append("'").append(",");

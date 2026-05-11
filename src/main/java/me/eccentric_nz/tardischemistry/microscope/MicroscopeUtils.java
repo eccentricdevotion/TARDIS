@@ -16,11 +16,12 @@
  */
 package me.eccentric_nz.tardischemistry.microscope;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.HashMap;
@@ -37,18 +38,11 @@ class MicroscopeUtils {
         if (!is.getType().equals(type)) {
             return false;
         }
-        // does it have item meta
-        ItemMeta im = is.getItemMeta();
-        if (im == null) {
+        // does it have data components
+        if (!is.hasData(DataComponentTypes.CUSTOM_NAME) || !ComponentUtils.isModelled(is)) {
             return false;
         }
-        if (!im.hasCustomName()) {
-            return false;
-        }
-        if (!im.hasItemModel()) {
-            return false;
-        }
-        return im.getPersistentDataContainer().has(plugin.getMicroscopeKey(), PersistentDataType.STRING);
+        return is.getPersistentDataContainer().has(plugin.getMicroscopeKey(), PersistentDataType.STRING);
     }
 
     static void reduceInHand(Player player) {

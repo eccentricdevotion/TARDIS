@@ -1,20 +1,20 @@
 package me.eccentric_nz.TARDIS.rooms.games;
 
-import com.google.common.collect.Multimaps;
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
+import io.papermc.paper.datacomponent.item.TooltipDisplay;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.custommodels.GUIChameleonConstructor;
-import me.eccentric_nz.TARDIS.custommodels.GUIMap;
+import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
-import java.util.Map;
 
 public class GamesInventory implements InventoryHolder {
 
@@ -41,79 +41,67 @@ public class GamesInventory implements InventoryHolder {
         ItemStack[] items = new ItemStack[9];
         // 0 info
         ItemStack info = ItemStack.of(GUIChameleonConstructor.INFO.material(), 1);
-        ItemMeta io = info.getItemMeta();
-        io.customName(Component.text(plugin.getChameleonGuis().getString("INFO", "Info")));
-        io.lore(List.of(
+        info.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getChameleonGuis().getString("INFO", "Info")));
+        info.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(
                 Component.text("Click the disk for"),
                 Component.text("the game you want to play."),
                 Component.text("Before playing Tetris, you"),
                 Component.text("can set the start level,"),
                 Component.text("and must have no item"),
                 Component.text("in your first hotbar slot.")
-        ));
-        info.setItemMeta(io);
+        )));
         items[0] = info;
         // 1 connect four
         ItemStack connect = ItemStack.of(Material.MUSIC_DISC_OTHERSIDE, 1);
-        ItemMeta four = connect.getItemMeta();
-        four.customName(Component.text("Connect 4"));
-        four.addItemFlags(ItemFlag.values());
-        four.setAttributeModifiers(Multimaps.forMap(Map.of()));
-        connect.setItemMeta(four);
+        connect.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Connect 4"));
+        connect.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
+                .addHiddenComponents(TARDISConstants.HIDE)
+                .build());
         items[1] = connect;
         // pong & tetris require tardis_zero_room world
         boolean zero = plugin.getConfig().getBoolean("allow.zero_room");
         if (zero) {
             // 2 pong
             ItemStack pong = ItemStack.of(Material.MUSIC_DISC_OTHERSIDE, 1);
-            ItemMeta pim = pong.getItemMeta();
-            pim.customName(Component.text("Pong"));
-            pim.addItemFlags(ItemFlag.values());
-            pim.setAttributeModifiers(Multimaps.forMap(Map.of()));
-            pong.setItemMeta(pim);
+            pong.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Pong"));
+            pong.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
+                    .addHiddenComponents(TARDISConstants.HIDE)
+                    .build());
             items[2] = pong;
         }
         // 3 stone magma ice
         ItemStack stonemagmaice = ItemStack.of(Material.MUSIC_DISC_OTHERSIDE, 1);
-        ItemMeta smiim = stonemagmaice.getItemMeta();
-        smiim.customName(Component.text("Stone Magma Ice"));
-        smiim.addItemFlags(ItemFlag.values());
-        smiim.setAttributeModifiers(Multimaps.forMap(Map.of()));
-        stonemagmaice.setItemMeta(smiim);
+        stonemagmaice.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Stone Magma Ice"));
+        stonemagmaice.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
+                .addHiddenComponents(TARDISConstants.HIDE)
+                .build());
         items[3] = stonemagmaice;
         // 4 tic tac toe
         ItemStack tictactoe = ItemStack.of(Material.MUSIC_DISC_OTHERSIDE, 1);
-        ItemMeta ncim = tictactoe.getItemMeta();
-        ncim.customName(Component.text("Tic Tac Toe"));
-        ncim.addItemFlags(ItemFlag.values());
-        ncim.setAttributeModifiers(Multimaps.forMap(Map.of()));
-        tictactoe.setItemMeta(ncim);
+        tictactoe.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Tic Tac Toe"));
+        tictactoe.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
+                .addHiddenComponents(TARDISConstants.HIDE)
+                .build());
         items[4] = tictactoe;
         if (zero) {
             // 5 tetris
             ItemStack tetris = ItemStack.of(Material.MUSIC_DISC_OTHERSIDE, 1);
-            ItemMeta tim = tetris.getItemMeta();
-            tim.customName(Component.text("Tetris"));
-            tim.addItemFlags(ItemFlag.values());
-            tim.setAttributeModifiers(Multimaps.forMap(Map.of()));
-            tetris.setItemMeta(tim);
+            tetris.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Tetris"));
+            tetris.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
+                    .addHiddenComponents(TARDISConstants.HIDE)
+                    .build());
             items[5] = tetris;
             // 6 tetris start level = up tp 30
             ItemStack level = ItemStack.of(Material.FIREWORK_ROCKET, 1);
-            ItemMeta lim = level.getItemMeta();
-            lim.customName(Component.text("Start level"));
-            lim.lore(List.of(Component.text("0")));
-            lim.addItemFlags(ItemFlag.values());
-            lim.setAttributeModifiers(Multimaps.forMap(Map.of()));
-            level.setItemMeta(lim);
+            level.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Start level"));
+            level.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text("0")).build());
+            level.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
+                    .addHiddenComponents(TARDISConstants.HIDE)
+                    .build());
             items[6] = level;
         }
         // 8 close
-        ItemStack close = ItemStack.of(GUIMap.BUTTON_CLOSE.material(), 1);
-        ItemMeta gui = close.getItemMeta();
-        gui.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
-        close.setItemMeta(gui);
-        items[8] = close;
+        items[8] = GUIItemFactory.close();
         return items;
     }
 }

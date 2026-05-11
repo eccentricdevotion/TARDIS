@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.tardischemistry.block;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
@@ -45,7 +46,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.HashSet;
@@ -160,11 +160,9 @@ public class ChemistryBlockListener implements Listener {
             TARDISDisplayItem tdi = TARDISMushroomBlock.conversionMap.get(block.getBlockData().getAsString());
             if (tdi != null) {
                 ItemStack is = ItemStack.of(tdi.getMaterial(), 1);
-                ItemMeta im = is.getItemMeta();
-                im.customName(Component.text(tdi.getDisplayName()));
-                im.setItemModel(tdi.getCustomModel());
-                im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, tdi.getCustomModel().getKey());
-                is.setItemMeta(im);
+                is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(tdi.getDisplayName()));
+                is.setData(DataComponentTypes.ITEM_MODEL, tdi.getCustomModel());
+                is.editPersistentDataContainer(pdc -> pdc.set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING, tdi.getCustomModel().getKey()));
                 block.setBlockData(TARDISConstants.AIR);
                 block.getWorld().dropItemNaturally(event.getPlayer().getLocation(), is);
                 if (tdi == TARDISChemistryDisplayItem.HEAT_BLOCK) {

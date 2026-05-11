@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.recipes.shapeless;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.CustomModelData;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.keys.CircuitVariant;
 import me.eccentric_nz.TARDIS.custommodels.keys.SonicVariant;
@@ -26,8 +28,6 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapelessRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
 import java.util.List;
 import java.util.Locale;
@@ -48,23 +48,19 @@ public class PainterUpgradeRecipe {
 
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.BLAZE_ROD, 1);
-        ItemMeta im = is.getItemMeta();
-        im.customName(ComponentUtils.toWhite("Painter Upgrade"));
+        is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Painter Upgrade"));
         List<Float> sonicModel = SonicScrewdriverRecipe.sonicModelLookup.getOrDefault(plugin.getConfig().getString("sonic.default_model").toLowerCase(Locale.ROOT), SonicVariant.ELEVENTH.getFloats());
-        CustomModelDataComponent component = im.getCustomModelDataComponent();
-        component.setFloats(sonicModel);
-        im.setCustomModelDataComponent(component);
-        is.setItemMeta(im);
+        is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                .addFloats(sonicModel)
+                .build());
         NamespacedKey key = new NamespacedKey(plugin, "painter_upgrade");
         ShapelessRecipe r = new ShapelessRecipe(key, is);
         r.addIngredient(Material.BLAZE_ROD);
         ItemStack exact = ItemStack.of(Material.GLOWSTONE_DUST, 1);
-        ItemMeta em = exact.getItemMeta();
-        em.customName(ComponentUtils.toWhite("Painter Circuit"));
-        CustomModelDataComponent ecomponent = em.getCustomModelDataComponent();
-        ecomponent.setFloats(CircuitVariant.PAINTER.getFloats());
-        em.setCustomModelDataComponent(ecomponent);
-        exact.setItemMeta(em);
+        exact.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Painter Circuit"));
+        exact.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                .addFloats(CircuitVariant.PAINTER.getFloats())
+                .build());
         r.addIngredient(new RecipeChoice.ExactChoice(exact));
         plugin.getServer().addRecipe(r);
         plugin.getIncomposita().getShapelessRecipes().put("Painter Upgrade", r);

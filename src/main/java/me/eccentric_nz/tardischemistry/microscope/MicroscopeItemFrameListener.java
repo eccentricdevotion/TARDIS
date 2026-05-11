@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.tardischemistry.microscope;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import net.kyori.adventure.text.Component;
@@ -31,7 +32,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 public class MicroscopeItemFrameListener implements Listener {
@@ -67,7 +67,6 @@ public class MicroscopeItemFrameListener implements Listener {
                 return;
             }
             ItemStack is = player.getInventory().getItemInMainHand();
-            ItemMeta im = is.getItemMeta();
             LabEquipment equipment = LabEquipment.getByMaterial().get(dye.getType());
             switch (equipment) {
                 case SLIDE_RACK -> {
@@ -84,7 +83,7 @@ public class MicroscopeItemFrameListener implements Listener {
                     String key;
                     if (MicroscopeUtils.hasItemInHand(is, Material.GLASS, plugin)) {
                         // set microscope slide
-                        key = im.getPersistentDataContainer().get(plugin.getMicroscopeKey(), PersistentDataType.STRING);
+                        key = is.getPersistentDataContainer().get(plugin.getMicroscopeKey(), PersistentDataType.STRING);
                         frame.getPersistentDataContainer().set(plugin.getMicroscopeKey(), PersistentDataType.STRING, key);
                     } else {
                         // view current slide
@@ -94,11 +93,9 @@ public class MicroscopeItemFrameListener implements Listener {
                     MicroscopeUtils.STORED_STACKS.put(player.getUniqueId(), is);
                     // set item in hand
                     ItemStack slide = ItemStack.of(Material.GLASS, 1);
-                    ItemMeta slideMeta = slide.getItemMeta();
                     String[] split = key.split("/");
-                    slideMeta.customName(Component.text(TARDISStringUtils.sentenceCase(split[1])));
-                    slideMeta.setItemModel(new NamespacedKey(plugin, key));
-                    slide.setItemMeta(slideMeta);
+                    slide.setData(DataComponentTypes.CUSTOM_NAME, Component.text(TARDISStringUtils.sentenceCase(split[1])));
+                    slide.setData(DataComponentTypes.ITEM_MODEL, new NamespacedKey(plugin, key));
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.getInventory().setItemInMainHand(slide), 1L);
                 }
                 case COMPUTER_MONITOR -> {
@@ -115,7 +112,7 @@ public class MicroscopeItemFrameListener implements Listener {
                     String key;
                     if (MicroscopeUtils.hasItemInHand(is, Material.LIME_STAINED_GLASS, plugin)) {
                         // set microscope screen
-                        key = im.getPersistentDataContainer().get(plugin.getMicroscopeKey(), PersistentDataType.STRING);
+                        key = is.getPersistentDataContainer().get(plugin.getMicroscopeKey(), PersistentDataType.STRING);
                         frame.getPersistentDataContainer().set(plugin.getMicroscopeKey(), PersistentDataType.STRING, key);
                     } else {
                         // view current slide
@@ -125,11 +122,9 @@ public class MicroscopeItemFrameListener implements Listener {
                     MicroscopeUtils.STORED_STACKS.put(player.getUniqueId(), is);
                     // set item in hand
                     ItemStack screen = ItemStack.of(Material.LIME_STAINED_GLASS, 1);
-                    ItemMeta screenMeta = screen.getItemMeta();
                     String[] split = key.split("/");
-                    screenMeta.customName(Component.text(TARDISStringUtils.sentenceCase(split[1])));
-                    screenMeta.setItemModel(new NamespacedKey(plugin, key));
-                    screen.setItemMeta(screenMeta);
+                    screen.setData(DataComponentTypes.CUSTOM_NAME, Component.text(TARDISStringUtils.sentenceCase(split[1])));
+                    screen.setData(DataComponentTypes.ITEM_MODEL, new NamespacedKey(plugin, key));
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.getInventory().setItemInMainHand(screen), 1L);
                 }
                 case FILING_CABINET -> {
@@ -146,7 +141,7 @@ public class MicroscopeItemFrameListener implements Listener {
                     String key;
                     if (MicroscopeUtils.hasItemInHand(is, Material.GRAY_STAINED_GLASS, plugin)) {
                         // set microscope screen
-                        key = im.getPersistentDataContainer().get(plugin.getMicroscopeKey(), PersistentDataType.STRING);
+                        key = is.getPersistentDataContainer().get(plugin.getMicroscopeKey(), PersistentDataType.STRING);
                         frame.getPersistentDataContainer().set(plugin.getMicroscopeKey(), PersistentDataType.STRING, key);
                     } else {
                         // view current slide
@@ -156,11 +151,9 @@ public class MicroscopeItemFrameListener implements Listener {
                     MicroscopeUtils.STORED_STACKS.put(player.getUniqueId(), is);
                     // set item in hand
                     ItemStack helmet = ItemStack.of(Material.GRAY_STAINED_GLASS, 1);
-                    ItemMeta helmetMeta = helmet.getItemMeta();
                     String[] split = key.split("/");
-                    helmetMeta.customName(Component.text(TARDISStringUtils.sentenceCase(split[1])));
-                    helmetMeta.setItemModel(new NamespacedKey(plugin, key));
-                    helmet.setItemMeta(helmetMeta);
+                    helmet.setData(DataComponentTypes.CUSTOM_NAME, Component.text(TARDISStringUtils.sentenceCase(split[1])));
+                    helmet.setData(DataComponentTypes.ITEM_MODEL, new NamespacedKey(plugin, key));
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.getInventory().setItemInMainHand(helmet), 1L);
                 }
             }

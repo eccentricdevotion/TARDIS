@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.floodgate;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.Archive;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisSize;
@@ -32,7 +33,6 @@ import me.eccentric_nz.TARDIS.schematic.archive.ResultSetArchiveByName;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.geysermc.cumulus.form.SimpleForm;
 import org.geysermc.cumulus.response.SimpleFormResponse;
 import org.geysermc.cumulus.util.FormImage;
@@ -63,8 +63,7 @@ public class FloodgateDesktopArchiveForm {
             int i = 48; // FloodgateColouredBlocks -> terracotta starts at index 48
             builder.title("TARDIS Archive");
             for (ItemStack is : rs.getButtons()) {
-                ItemMeta im = is.getItemMeta();
-                builder.button(ComponentUtils.stripColour(im.customName()), FormImage.Type.PATH, String.format(path, FloodgateColouredBlocks.IMAGES.get(i)));
+                builder.button(ComponentUtils.stripColour(is.getData(DataComponentTypes.CUSTOM_NAME)), FormImage.Type.PATH, String.format(path, FloodgateColouredBlocks.IMAGES.get(i)));
                 i++;
             }
         }

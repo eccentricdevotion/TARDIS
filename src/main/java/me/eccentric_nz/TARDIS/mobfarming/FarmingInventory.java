@@ -16,19 +16,24 @@
  */
 package me.eccentric_nz.TARDIS.mobfarming;
 
+import io.papermc.paper.datacomponent.DataComponentType;
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
+import io.papermc.paper.datacomponent.item.TooltipDisplay;
+import io.papermc.paper.registry.RegistryAccess;
+import io.papermc.paper.registry.RegistryKey;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUIFarming;
 import me.eccentric_nz.TARDIS.database.data.FarmPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetFarmingPrefs;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
+import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.UUID;
 
 public class FarmingInventory implements InventoryHolder {
@@ -43,13 +48,9 @@ public class FarmingInventory implements InventoryHolder {
         this.plugin = plugin;
         this.uuid = uuid;
         off = ItemStack.of(GUIFarming.OFF.getMaterial(), 1);
-        ItemMeta offMeta = off.getItemMeta();
-        offMeta.customName(Component.text("Disabled"));
-        off.setItemMeta(offMeta);
+        off.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Disabled"));
         on = ItemStack.of(GUIFarming.ON.getMaterial(), 1);
-        ItemMeta onMeta = on.getItemMeta();
-        onMeta.customName(Component.text("Enabled"));
-        on.setItemMeta(onMeta);
+        on.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Enabled"));
         this.inventory = plugin.getServer().createInventory(this, 54, Component.text("TARDIS Farming Menu", NamedTextColor.DARK_RED));
         this.inventory.setContents(getItemStack());
     }
@@ -119,12 +120,18 @@ public class FarmingInventory implements InventoryHolder {
         for (GUIFarming f : GUIFarming.values()) {
             if (f != GUIFarming.ON && f != GUIFarming.OFF) {
                 ItemStack is = ItemStack.of(f.getMaterial(), 1);
-                ItemMeta im = is.getItemMeta();
-                im.customName(Component.text(f.getMob()));
-                if (f != GUIFarming.CLOSE) {
-                    im.lore(List.of(Component.text(f.getRoomName())));
+                is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(f.getMob()));
+                if (f == GUIFarming.APIARY) {
+                    DataComponentType beesComponent = RegistryAccess.registryAccess()
+                            .getRegistry(RegistryKey.DATA_COMPONENT_TYPE)
+                            .get(NamespacedKey.minecraft("bees"));
+                    is.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
+                            .addHiddenComponents(beesComponent, DataComponentTypes.BLOCK_DATA)
+                            .build());
                 }
-                is.setItemMeta(im);
+                if (f != GUIFarming.CLOSE) {
+                    is.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text(f.getRoomName())).build());
+                }
                 stack[f.getSlot()] = is;
             }
         }

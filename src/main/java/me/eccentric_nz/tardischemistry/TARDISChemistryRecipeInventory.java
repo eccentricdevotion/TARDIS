@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.tardischemistry;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import me.eccentric_nz.tardischemistry.block.ChemistryBlock;
@@ -26,7 +28,6 @@ import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 public class TARDISChemistryRecipeInventory implements InventoryHolder {
 
@@ -60,11 +61,9 @@ public class TARDISChemistryRecipeInventory implements InventoryHolder {
         stacks[20] = ingredient;
         RecipeData data = ChemistryBlock.RECIPES.get(which);
         ItemStack result = ItemStack.of(data.displayItem().getMaterial(), 1);
-        ItemMeta im = result.getItemMeta();
-        im.customName(ComponentUtils.toWhite(data.displayName()));
-        im.lore(data.lore());
-        im.setItemModel(data.displayItem().getCustomModel());
-        result.setItemMeta(im);
+        result.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(data.displayName()));
+        result.setData(DataComponentTypes.LORE, ItemLore.lore(data.lore()));
+        result.setData(DataComponentTypes.ITEM_MODEL, data.displayItem().getCustomModel());
         stacks[17] = result;
         return stacks;
     }

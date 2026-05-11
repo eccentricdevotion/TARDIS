@@ -16,10 +16,11 @@
  */
 package me.eccentric_nz.tardischemistry.element;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
 
@@ -27,19 +28,20 @@ public class ElementBuilder {
 
     public static ItemStack getElement(Element element) {
         ItemStack is = ItemStack.of(Material.FEATHER, 1);
-        ItemMeta im = is.getItemMeta();
-        im.customName(Component.text(element.toString()));
+        is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(element.toString()));
         if (element.equals(Element.Unknown)) {
             Component question = Component.text("?");
-            im.lore(List.of(question, question));
+            is.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(
+                    question,
+                    question
+            )));
         } else {
-            im.lore(List.of(
+            is.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(
                     Component.text(element.getSymbol()),
                     Component.text(element.getAtomicNumber())
-            ));
+            )));
         }
-        im.setItemModel(element.getModel());
-        is.setItemMeta(im);
+        is.setData(DataComponentTypes.ITEM_MODEL, element.getModel());
         return is;
     }
 

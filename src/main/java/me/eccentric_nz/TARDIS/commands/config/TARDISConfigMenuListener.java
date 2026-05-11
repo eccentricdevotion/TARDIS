@@ -16,6 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.commands.config;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.CustomModelData;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUIConfiguration;
 import me.eccentric_nz.TARDIS.playerprefs.TARDISPrefsMenuInventory;
@@ -27,10 +30,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
-import java.util.List;
 import java.util.Locale;
 
 /**
@@ -97,22 +97,22 @@ public class TARDISConfigMenuListener implements Listener {
     private String getDisplay(InventoryView view, int slot) {
         ItemStack is = view.getItem(slot);
         if (is != null) {
-            ItemMeta im = is.getItemMeta();
-            return ComponentUtils.stripColour(im.customName());
+            return ComponentUtils.stripColour(is.getData(DataComponentTypes.CUSTOM_NAME));
         } else {
             return "";
         }
     }
 
     private void setLore(InventoryView view, int slot, String str, String option) {
-        List<Component> lore = (str != null) ? List.of(Component.text(str)) : null;
         ItemStack is = view.getItem(slot);
-        ItemMeta im = is.getItemMeta();
-        im.lore(lore);
+        if (str != null) {
+            is.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text(str)).build());
+        } else {
+            is.resetData(DataComponentTypes.LORE);
+        }
         GUIConfiguration gui = GUIConfiguration.valueOf(option.split("\\.")[0].toUpperCase(Locale.ROOT));
-        CustomModelDataComponent component = im.getCustomModelDataComponent();
-        component.setFloats("false".equals(str) ? gui.getOffFloats() : gui.getOnFloats());
-        im.setCustomModelDataComponent(component);
-        is.setItemMeta(im);
+        is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                .addFloats("false".equals(str) ? gui.getOffFloats() : gui.getOnFloats())
+                .build());
     }
 }

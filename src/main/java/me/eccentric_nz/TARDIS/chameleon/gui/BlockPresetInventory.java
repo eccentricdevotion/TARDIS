@@ -16,9 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.chameleon.gui;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.custommodels.GUIChameleonPresets;
+import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -26,7 +28,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Locale;
 
@@ -67,37 +68,25 @@ public class BlockPresetInventory implements InventoryHolder {
             if (!ChameleonPreset.NOT_THESE.contains(preset.getCraftMaterial()) && !preset.usesArmourStand()) {
                 if (TARDISPermission.hasPermission(player, "tardis.preset." + preset.toString().toLowerCase(Locale.ROOT))) {
                     ItemStack is = ItemStack.of(preset.getGuiDisplay(), 1);
-                    ItemMeta im = is.getItemMeta();
-                    im.customName(Component.text(preset.getDisplayName()));
-                    is.setItemMeta(im);
+                    is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(preset.getDisplayName()));
                     stacks[preset.getSlot()] = is;
                 }
             }
         }
         // back
         ItemStack back = ItemStack.of(GUIChameleonPresets.BACK.material(), 1);
-        ItemMeta but = back.getItemMeta();
-        but.customName(Component.text("Back"));
-        back.setItemMeta(but);
+        back.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Back"));
         stacks[GUIChameleonPresets.BACK.slot()] = back;
         // custom page
         ItemStack custom = ItemStack.of(GUIChameleonPresets.CUSTOM.material(), 1);
-        ItemMeta customMeta = custom.getItemMeta();
-        customMeta.customName(Component.text("Custom presets"));
-        custom.setItemMeta(customMeta);
+        custom.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Custom presets"));
         stacks[GUIChameleonPresets.CUSTOM.slot()] = custom;
         // page two
         ItemStack page = ItemStack.of(GUIChameleonPresets.GO_TO_PAGE_2.material(), 1);
-        ItemMeta two = page.getItemMeta();
-        two.customName(Component.text(plugin.getLanguage().getString("BUTTON_PAGE_2", "Go to page 2")));
-        page.setItemMeta(two);
+        page.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_PAGE_2", "Go to page 2")));
         stacks[GUIChameleonPresets.GO_TO_PAGE_2.slot()] = page;
         // Cancel / close
-        ItemStack close = ItemStack.of(GUIChameleonPresets.CLOSE.material(), 1);
-        ItemMeta can = close.getItemMeta();
-        can.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
-        close.setItemMeta(can);
-        stacks[GUIChameleonPresets.CLOSE.slot()] = close;
+        stacks[GUIChameleonPresets.CLOSE.slot()] = GUIItemFactory.close();
         return stacks;
     }
 }

@@ -16,8 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.commands.dev.wiki;
 
-import com.google.common.collect.Multimaps;
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemAttributeModifiers;
+import io.papermc.paper.datacomponent.item.TooltipDisplay;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
@@ -26,10 +29,10 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.block.Chest;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.*;
-import org.bukkit.inventory.meta.Damageable;
-
-import java.util.Map;
+import org.bukkit.inventory.EquipmentSlotGroup;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.ShapedRecipe;
+import org.bukkit.inventory.ShapelessRecipe;
 
 public class ChestBuilder {
 
@@ -67,21 +70,22 @@ public class ChestBuilder {
             }
             is = s.getResult();
             is.setAmount(1);
-            if (is.getItemMeta() instanceof Damageable damageable) {
-                damageable.setDamage(0);
-                damageable.setUnbreakable(true);
-                damageable.addAttributeModifier(
-                        Attribute.LUCK,
-                        new AttributeModifier(
-                                s.getKey(),
-                                0.0d,
-                                AttributeModifier.Operation.ADD_NUMBER,
-                                EquipmentSlotGroup.ANY
-                        )
-                );
-                damageable.addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_UNBREAKABLE);
-                damageable.setAttributeModifiers(Multimaps.forMap(Map.of()));
-                is.setItemMeta(damageable);
+            if (is.hasData(DataComponentTypes.DAMAGE)) {
+                is.setData(DataComponentTypes.DAMAGE, 0);
+                is.setData(DataComponentTypes.UNBREAKABLE);
+                is.setData(DataComponentTypes.ATTRIBUTE_MODIFIERS, ItemAttributeModifiers.itemAttributes()
+                        .addModifier(
+                                Attribute.LUCK,
+                                new AttributeModifier(
+                                        s.getKey(),
+                                        0.0d,
+                                        AttributeModifier.Operation.ADD_NUMBER,
+                                        EquipmentSlotGroup.ANY
+                                ))
+                        .build());
+                is.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
+                        .addHiddenComponents(TARDISConstants.HIDE)
+                        .build());
             }
             chest.getBlockInventory().addItem(is);
             count++;
@@ -98,12 +102,12 @@ public class ChestBuilder {
             }
             is = s.getResult();
             is.setAmount(1);
-            if (is.getItemMeta() instanceof Damageable damageable) {
-                damageable.setDamage(0);
-                damageable.setUnbreakable(true);
-                damageable.addItemFlags(ItemFlag.values());
-                damageable.setAttributeModifiers(Multimaps.forMap(Map.of()));
-                is.setItemMeta(damageable);
+            if (is.hasData(DataComponentTypes.DAMAGE)) {
+                is.setData(DataComponentTypes.DAMAGE, 0);
+                is.setData(DataComponentTypes.UNBREAKABLE);
+                is.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
+                        .addHiddenComponents(TARDISConstants.HIDE)
+                        .build());
             }
             chest.getBlockInventory().addItem(is);
             count++;

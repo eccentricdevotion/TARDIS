@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.desktop;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.registry.RegistryAccess;
 import io.papermc.paper.registry.RegistryKey;
 import io.papermc.paper.registry.TypedKey;
@@ -28,7 +29,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ItemType;
-import org.bukkit.inventory.meta.ItemMeta;
 
 /**
  * By the time of his eleventh incarnation, the Doctor's console room had gone through at least twelve redesigns, though
@@ -83,33 +83,23 @@ public class WallsInventory implements InventoryHolder {
 
         // scroll up
         ItemStack scroll_up = ItemStack.of(GUIWallFloor.BUTTON_SCROLL_U.material(), 1);
-        ItemMeta uim = scroll_up.getItemMeta();
-        uim.customName(Component.text(plugin.getLanguage().getString("BUTTON_SCROLL_U")));
-        scroll_up.setItemMeta(uim);
+        scroll_up.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_SCROLL_U", "Scroll up")));
         stack[GUIWallFloor.BUTTON_SCROLL_U.slot()] = scroll_up;
         // scroll down
         ItemStack scroll_down = ItemStack.of(GUIWallFloor.BUTTON_SCROLL_D.material(), 1);
-        ItemMeta dim = scroll_down.getItemMeta();
-        dim.customName(Component.text(plugin.getLanguage().getString("BUTTON_SCROLL_D")));
-        scroll_down.setItemMeta(dim);
+        scroll_down.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_SCROLL_D", "Scroll down")));
         stack[GUIWallFloor.BUTTON_SCROLL_D.slot()] = scroll_down;
         // default wall
         ItemStack wall = ItemStack.of(GUIWallFloor.WALL.material(), 1);
-        ItemMeta wim = wall.getItemMeta();
-        wim.customName(Component.text("Default Wall Block"));
-        wall.setItemMeta(wim);
+        wall.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Default Wall Block"));
         stack[GUIWallFloor.WALL.slot()] = wall;
         // default floor
         ItemStack floor = ItemStack.of(GUIWallFloor.FLOOR.material(), 1);
-        ItemMeta fim = floor.getItemMeta();
-        fim.customName(Component.text("Default Floor Block"));
-        floor.setItemMeta(fim);
+        floor.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Default Floor Block"));
         stack[GUIWallFloor.FLOOR.slot()] = floor;
         // close
         ItemStack close = ItemStack.of(GUIWallFloor.BUTTON_ABORT.material(), 1);
-        ItemMeta close_im = close.getItemMeta();
-        close_im.customName(Component.text("Abort upgrade"));
-        close.setItemMeta(close_im);
+        close.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Abort upgrade"));
         stack[GUIWallFloor.BUTTON_ABORT.slot()] = close;
 
         return stack;

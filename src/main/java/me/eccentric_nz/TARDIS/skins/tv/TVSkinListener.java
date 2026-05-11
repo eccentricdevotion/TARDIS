@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.skins.tv;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.CustomModelData;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUITelevision;
 import me.eccentric_nz.TARDIS.custommodels.keys.SwitchVariant;
@@ -28,8 +30,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
 import java.util.UUID;
 
@@ -79,7 +79,8 @@ public class TVSkinListener extends TARDISMenuListener {
                 SkinUtils.removeExtras(player, skin);
                 SkinUtils.SKINNED.remove(uuid);
             }
-            case 33 -> plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.openInventory(new TVInventory(plugin).getInventory()), 2L); // back
+            case 33 ->
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.openInventory(new TVInventory(plugin).getInventory()), 2L); // back
             case 35 -> close(player); // close
             default -> {
                 if (SkinUtils.SKINNED.containsKey(uuid)) {
@@ -110,13 +111,12 @@ public class TVSkinListener extends TARDISMenuListener {
     private void toggleDownloads(InventoryView view) {
         // get item in download slot
         ItemStack is = view.getItem(GUITelevision.DOWNLOAD.slot());
-        if (is != null && is.hasItemMeta()) {
-            ItemMeta im = is.getItemMeta();
-            CustomModelDataComponent component = im.getCustomModelDataComponent();
-            boolean on = component.getFloats().getFirst() > 200;
-            component.setFloats(on ? SwitchVariant.DOWNLOAD_OFF.getFloats() : SwitchVariant.DOWNLOAD_ON.getFloats());
-            im.setCustomModelDataComponent(component);
-            is.setItemMeta(im);
+        if (is != null && is.hasData(DataComponentTypes.CUSTOM_MODEL_DATA)) {
+            CustomModelData component = is.getData(DataComponentTypes.CUSTOM_MODEL_DATA);
+            boolean on = component.floats().getFirst() > 200;
+            is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                    .addFloats(on ? SwitchVariant.DOWNLOAD_OFF.getFloats() : SwitchVariant.DOWNLOAD_ON.getFloats())
+                    .build());
             view.setItem(GUITelevision.DOWNLOAD.slot(), is);
         }
     }
@@ -124,9 +124,8 @@ public class TVSkinListener extends TARDISMenuListener {
     private boolean isDownload(InventoryView view) {
         // get item in download slot
         ItemStack is = view.getItem(GUITelevision.DOWNLOAD.slot());
-        if (is != null && is.hasItemMeta()) {
-            ItemMeta im = is.getItemMeta();
-            return im.hasItemModel() && SwitchVariant.DOWNLOAD_ON.getKey().equals(im.getItemModel());
+        if (is != null && ComponentUtils.isModelled(is)) {
+            return SwitchVariant.DOWNLOAD_ON.getKey().equals(is.getData(DataComponentTypes.ITEM_MODEL));
         }
         return false;
     }

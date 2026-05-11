@@ -16,28 +16,25 @@
  */
 package me.eccentric_nz.TARDIS.info;
 
-import com.google.common.collect.Multimaps;
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.TooltipDisplay;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.Map;
 
 public class TARDISIndexFileEntry implements InventoryHolder {
 
-    private final TARDIS plugin;
     private final TARDISInfoMenu tardisInfoMenu;
     private final Inventory inventory;
 
     public TARDISIndexFileEntry(TARDIS plugin, TARDISInfoMenu tardisInfoMenu) {
-        this.plugin = plugin;
         this.tardisInfoMenu = tardisInfoMenu;
         this.inventory = plugin.getServer().createInventory(this, 27, Component.text("TARDIS Info Entry", NamedTextColor.DARK_RED));
         this.inventory.setContents(getItemStack());
@@ -51,27 +48,20 @@ public class TARDISIndexFileEntry implements InventoryHolder {
     private ItemStack[] getItemStack() {
         ItemStack[] stack = new ItemStack[27];
         ItemStack entry = ItemStack.of(Material.WRITTEN_BOOK, 1);
-        ItemMeta entryMeta = entry.getItemMeta();
-        entryMeta.customName(Component.text(TARDISStringUtils.capitalise(tardisInfoMenu.toString())));
-        entryMeta.addItemFlags(ItemFlag.values());
-        entryMeta.setAttributeModifiers(Multimaps.forMap(Map.of()));
-        entry.setItemMeta(entryMeta);
+        entry.setData(DataComponentTypes.CUSTOM_NAME, Component.text(TARDISStringUtils.capitalise(tardisInfoMenu.toString())));
+        entry.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
+                .addHiddenComponents(TARDISConstants.HIDE)
+                .build());
         stack[0] = entry;
         int i = 9;
         for (String key : TARDISInfoMenu.getChildren(tardisInfoMenu.toString()).keySet()) {
             ItemStack is = ItemStack.of(Material.BOOK);
-            ItemMeta im = is.getItemMeta();
-            im.customName(Component.text(key));
-            is.setItemMeta(im);
+            is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(key));
             stack[i] = is;
             i++;
         }
         // close
-        ItemStack close = ItemStack.of(Material.BOWL, 1);
-        ItemMeta close_im = close.getItemMeta();
-        close_im.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
-        close.setItemMeta(close_im);
-        stack[26] = close;
+        stack[26] = GUIItemFactory.close();
         return stack;
     }
 }

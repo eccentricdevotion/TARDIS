@@ -16,6 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.CustomModelData;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.keys.CircuitVariant;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
@@ -25,8 +28,6 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
 import java.util.List;
 
@@ -58,16 +59,17 @@ public class TARDISRandomiserCircuitRecipe {
 
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.GLOWSTONE_DUST, 1);
-        ItemMeta im = is.getItemMeta();
-        im.customName(ComponentUtils.toWhite("TARDIS Randomiser Circuit"));
-        CustomModelDataComponent component = im.getCustomModelDataComponent();
-        component.setFloats(CircuitVariant.RANDOM.getFloats());
-        im.setCustomModelDataComponent(component);
+        is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("TARDIS Randomiser Circuit"));
+        is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                .addFloats(CircuitVariant.RANDOM.getFloats())
+                .build());
         Component uses = (plugin.getConfig().getString("circuits.uses.randomiser", "50").equals("0") || !plugin.getConfig().getBoolean("circuits.damage"))
                 ? Component.text("unlimited", NamedTextColor.YELLOW)
                 : Component.text(plugin.getConfig().getString("circuits.uses.randomiser", "50"), NamedTextColor.YELLOW);
-        im.lore(List.of(Component.text("Uses left"), uses));
-        is.setItemMeta(im);
+        is.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(
+                Component.text("Uses left"),
+                uses
+        )));
         NamespacedKey key = new NamespacedKey(plugin, "tardis_randomiser_circuit");
         ShapedRecipe r = new ShapedRecipe(key, is);
         r.shape(" D ", "NCE", " W ");

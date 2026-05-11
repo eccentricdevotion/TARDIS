@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.tardischemistry.lab;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.PotionContents;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.custommodels.keys.CureVariant;
@@ -36,8 +38,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionType;
 
 import java.util.*;
@@ -99,10 +99,9 @@ public class CureBrewingListener implements Listener {
                                 if (e instanceof Item i) {
                                     ItemStack is = i.getItemStack();
                                     Material type = is.getType();
-                                    if (type.equals(Material.FEATHER) && is.hasItemMeta()) {
-                                        ItemMeta im = is.getItemMeta();
-                                        if (im.hasCustomName() && im.hasItemModel()) {
-                                            String dn = ComponentUtils.stripColour(im.customName());
+                                    if (type.equals(Material.FEATHER)) {
+                                        if (is.hasData(DataComponentTypes.CUSTOM_NAME) && ComponentUtils.isModelled(is)) {
+                                            String dn = ComponentUtils.stripColour(is.getData(DataComponentTypes.CUSTOM_NAME));
                                             items.add(type + (elements.contains(dn) ? ":" + dn : ""));
                                         } else {
                                             items.add(type.toString());
@@ -174,28 +173,25 @@ public class CureBrewingListener implements Listener {
                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                                         plugin.getServer().getScheduler().cancelTask(task);
                                         if (milk) {
-                                            ItemMeta im = is.getItemMeta();
                                             switch (potionType) {
                                                 case AWKWARD -> {
-                                                    im.customName(ComponentUtils.toWhite("Antidote"));
-                                                    im.setItemModel(CureVariant.ANTIDOTE.getKey());
+                                                    is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Antidote"));
+                                                    is.setData(DataComponentTypes.ITEM_MODEL, CureVariant.ANTIDOTE.getKey());
                                                 }
                                                 case MUNDANE -> {
-                                                    im.customName(ComponentUtils.toWhite("Elixir"));
-                                                    im.setItemModel(CureVariant.ELIXIR.getKey());
+                                                    is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Elixir"));
+                                                    is.setData(DataComponentTypes.ITEM_MODEL, CureVariant.ELIXIR.getKey());
                                                 }
                                                 case THICK -> {
-                                                    im.customName(ComponentUtils.toWhite("Eye drops"));
-                                                    im.setItemModel(CureVariant.EYEDROPS.getKey());
+                                                    is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Eye drops"));
+                                                    is.setData(DataComponentTypes.ITEM_MODEL, CureVariant.EYEDROPS.getKey());
                                                 }
                                                 default -> { // UNCRAFTABLE
-                                                    im.customName(ComponentUtils.toWhite("Tonic"));
-                                                    im.setItemModel(CureVariant.TONIC.getKey());
+                                                    is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Tonic"));
+                                                    is.setData(DataComponentTypes.ITEM_MODEL, CureVariant.TONIC.getKey());
                                                 }
                                             }
-                                            is.setItemMeta(im);
                                         } else {
-                                            PotionMeta pm = (PotionMeta) is.getItemMeta();
                                             PotionType potionName;
                                             if (extend && upgrade) {
                                                 potionName = PotionType.valueOf("STRONG_" + map.getKey().toString());
@@ -204,8 +200,9 @@ public class CureBrewingListener implements Listener {
                                             } else {
                                                 potionName = potionType;
                                             }
-                                            pm.setBasePotionType(potionName);
-                                            is.setItemMeta(pm);
+                                            is.setData(DataComponentTypes.POTION_CONTENTS, PotionContents.potionContents()
+                                                    .potion(potionName)
+                                                    .build());
                                         }
                                         location.getWorld().dropItem(location.add(0, 1.0d, 0), is);
                                         noPickUps.remove(player.getUniqueId());

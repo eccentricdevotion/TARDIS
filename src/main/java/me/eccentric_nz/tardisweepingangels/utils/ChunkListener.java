@@ -32,7 +32,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.world.ChunkLoadEvent;
 import org.bukkit.event.world.ChunkUnloadEvent;
-import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
@@ -59,8 +59,8 @@ public class ChunkListener implements Listener {
                 }
                 case Drowned drowned -> {
                     if (drowned.getEquipment().getHelmet() != null) {
-                        ItemMeta im = drowned.getEquipment().getHelmet().getItemMeta();
-                        if (im != null && im.hasCustomName() && ComponentUtils.endsWith(im.customName(), " Head")) {
+                        ItemStack helmet = drowned.getEquipment().getHelmet();
+                        if (ComponentUtils.isNamed(helmet, " Head")) {
                             if (pdc.has(TARDISWeepingAngels.DEVIL, PersistentDataType.INTEGER)) {
                                 new Equipper(Monster.SEA_DEVIL, drowned, false).setHelmetAndInvisibility();
                             } else {
@@ -78,7 +78,8 @@ public class ChunkListener implements Listener {
                         pdc.set(TARDISWeepingAngels.FLAME_TASK, PersistentDataType.INTEGER, -1);
                     }
                 }
-                default -> { }
+                default -> {
+                }
             }
         }
     }

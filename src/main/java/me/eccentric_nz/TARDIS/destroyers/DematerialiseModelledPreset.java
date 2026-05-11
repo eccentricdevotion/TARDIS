@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.destroyers;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.exterior.BuilderUtility;
@@ -38,7 +39,6 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Levelled;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Locale;
 import java.util.UUID;
@@ -215,9 +215,7 @@ public class DematerialiseModelledPreset implements Runnable {
                 }
             }
             if (is != null) {
-                ItemMeta im = is.getItemMeta();
-                im.setItemModel(model);
-                is.setItemMeta(im);
+                is.setData(DataComponentTypes.ITEM_MODEL, model);
                 stand.getEquipment().setHelmet(is, true);
                 stand.setInvulnerable(true);
                 stand.setInvisible(true);

@@ -16,7 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.companionGUI;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
+import io.papermc.paper.datacomponent.item.ResolvableProfile;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
@@ -24,8 +28,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.SkullMeta;
 
 import java.util.List;
 
@@ -54,11 +56,9 @@ public class EveryoneCompanionInventory implements InventoryHolder {
             if (i < 45) {
                 if (VanishChecker.canSee(player, c)) {
                     ItemStack head = ItemStack.of(Material.PLAYER_HEAD, 1);
-                    SkullMeta skull = (SkullMeta) head.getItemMeta();
-                    skull.setOwningPlayer(c);
-                    skull.customName(Component.text(c.getName()));
-                    skull.lore(List.of(Component.text(c.getUniqueId().toString())));
-                    head.setItemMeta(skull);
+                    head.setData(DataComponentTypes.PROFILE, ResolvableProfile.resolvableProfile(c.getPlayerProfile()));
+                    head.setData(DataComponentTypes.CUSTOM_NAME, Component.text(c.getName()));
+                    head.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text(c.getUniqueId().toString())).build());
                     heads[i] = head;
                     i++;
                 }
@@ -66,9 +66,8 @@ public class EveryoneCompanionInventory implements InventoryHolder {
         }
         // add buttons
         ItemStack info = ItemStack.of(Material.BOOK, 1);
-        ItemMeta ii = info.getItemMeta();
-        ii.customName(Component.text("Info"));
-        ii.lore(List.of(
+        info.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Info"));
+        info.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(
                 Component.text("To REMOVE a companion"),
                 Component.text("select a player head"),
                 Component.text("then click the Remove"),
@@ -76,25 +75,16 @@ public class EveryoneCompanionInventory implements InventoryHolder {
                 Component.text("To ADD a companion"),
                 Component.text("click the Add button"),
                 Component.text("(nether star).")
-        ));
-        info.setItemMeta(ii);
+        )));
         heads[45] = info;
         ItemStack add = ItemStack.of(Material.NETHER_STAR, 1);
-        ItemMeta aa = add.getItemMeta();
-        aa.customName(Component.text("Add"));
-        add.setItemMeta(aa);
+        add.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Add"));
         heads[48] = add;
         ItemStack del = ItemStack.of(Material.BUCKET, 1);
-        ItemMeta dd = add.getItemMeta();
-        dd.customName(Component.text("Remove"));
-        del.setItemMeta(dd);
+        del.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Remove"));
         heads[51] = del;
         // Cancel / close
-        ItemStack close = ItemStack.of(Material.BOWL, 1);
-        ItemMeta can = close.getItemMeta();
-        can.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
-        close.setItemMeta(can);
-        heads[53] = close;
+        heads[53] = GUIItemFactory.close();
 
         return heads;
     }

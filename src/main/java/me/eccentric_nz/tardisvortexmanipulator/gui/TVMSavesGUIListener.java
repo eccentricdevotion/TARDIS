@@ -3,6 +3,7 @@
  */
 package me.eccentric_nz.tardisvortexmanipulator.gui;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
@@ -16,7 +17,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -83,8 +83,7 @@ public class TVMSavesGUIListener extends TARDISMenuListener {
     private void delete(InventoryView view, Player player) {
         if (selectedSlot != -1) {
             ItemStack is = view.getItem(selectedSlot);
-            ItemMeta im = is.getItemMeta();
-            String save_name = ComponentUtils.stripColour(im.customName());
+            String save_name = ComponentUtils.stripColour(is.getData(DataComponentTypes.CUSTOM_NAME));
             TVMResultSetWarpByName rss = new TVMResultSetWarpByName(plugin, player.getUniqueId().toString(), save_name);
             if (rss.resultSet()) {
                 close(player);
@@ -101,8 +100,7 @@ public class TVMSavesGUIListener extends TARDISMenuListener {
     private void doWarp(InventoryView view, Player player) {
         if (selectedSlot != -1) {
             ItemStack is = view.getItem(selectedSlot);
-            ItemMeta im = is.getItemMeta();
-            String save_name = ComponentUtils.stripColour(im.customName());
+            String save_name = ComponentUtils.stripColour(is.getData(DataComponentTypes.CUSTOM_NAME));
             TVMResultSetWarpByName rss = new TVMResultSetWarpByName(plugin, player.getUniqueId().toString(), save_name);
             if (rss.resultSet()) {
                 close(player);

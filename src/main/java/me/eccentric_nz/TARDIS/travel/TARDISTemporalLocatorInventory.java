@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.travel;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUITemporalLocator;
 import net.kyori.adventure.text.Component;
@@ -23,10 +25,6 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Time travel is, as the name suggests, the (usually controlled) process of travelling through time, even in a
@@ -60,23 +58,21 @@ public class TARDISTemporalLocatorInventory implements InventoryHolder {
         ItemStack[] clocks = new ItemStack[27];
         for (GUITemporalLocator clock : GUITemporalLocator.values()) {
             ItemStack is = ItemStack.of(clock.getMaterial(), 1);
-            ItemMeta im = is.getItemMeta();
             if (clock.ordinal() < 4) {
-                im.customName(Component.text(plugin.getLanguage().getString(clock.toString())));
+                is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString(clock.toString())));
             } else {
-                im.customName(Component.text(clock.getName()));
+                is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(clock.getName()));
             }
             if (clock.getLore().contains("~")) {
-                List<Component> lore = new ArrayList<>();
+                ItemLore.Builder lore = ItemLore.lore();
                 for (String s : clock.getLore().split("~")) {
-                    lore.add(Component.text(s));
+                    lore.addLine(Component.text(s));
                 }
-                im.lore(lore);
+                is.setData(DataComponentTypes.LORE, lore.build());
             } else {
-                im.lore(List.of(Component.text(clock.getLore())));
+                is.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text(clock.getLore())).build());
             }
-            im.setItemModel(clock.getModel());
-            is.setItemMeta(im);
+            is.setData(DataComponentTypes.ITEM_MODEL, clock.getModel());
             clocks[clock.getSlot()] = is;
         }
         return clocks;

@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.tardisweepingangels.commands;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.custommodels.keys.DalekVariant;
@@ -47,7 +48,6 @@ import org.bukkit.entity.PigZombie;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.Locale;
@@ -123,10 +123,8 @@ public class SpawnCommand {
                                     case ORANGE -> head = DalekVariant.DALEK_ORANGE.getKey();
                                 }
                                 ItemStack helmet = ItemStack.of(Material.SLIME_BALL, 1);
-                                ItemMeta headMeta = helmet.getItemMeta();
-                                headMeta.customName(Component.text("Dalek Head"));
-                                headMeta.setItemModel(head);
-                                helmet.setItemMeta(headMeta);
+                                helmet.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Dalek Head"));
+                                helmet.setData(DataComponentTypes.ITEM_MODEL, head);
                                 EntityEquipment ee = a.getEquipment();
                                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> ee.setHelmet(helmet), 2L);
                             } catch (IllegalArgumentException ignored) {

@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.advanced;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.ARS.ARSInventory;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.chameleon.gui.ChameleonInventory;
@@ -39,7 +40,6 @@ import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
 import java.util.List;
@@ -92,14 +92,10 @@ public class AdvancedConsoleSwitchListener implements Listener {
             return;
         }
         ItemStack item = event.getView().getItem(slot);
-        if (item == null || !item.getType().equals(Material.GLOWSTONE_DUST) || !item.hasItemMeta()) {
+        if (item == null || !item.getType().equals(Material.GLOWSTONE_DUST) || !item.hasData(DataComponentTypes.CUSTOM_NAME)) {
             return;
         }
-        ItemMeta im = item.getItemMeta();
-        if (!im.hasCustomName()) {
-            return;
-        }
-        String dn = ComponentUtils.stripColour(im.customName());
+        String dn = ComponentUtils.stripColour(item.getData(DataComponentTypes.CUSTOM_NAME));
         if (!gui_circuits.contains(dn)) {
             return;
         }

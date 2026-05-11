@@ -18,15 +18,15 @@ package me.eccentric_nz.TARDIS.commands.dev;
 
 import com.google.gson.*;
 import com.google.gson.stream.JsonReader;
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.*;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
-import org.bukkit.NamespacedKey;
+import net.kyori.adventure.key.Key;
 import org.bukkit.command.CommandSender;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.ShapelessRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.io.*;
 import java.lang.reflect.Field;
@@ -298,8 +298,7 @@ public class ResourcePackConverterCommand {
     }
 
     private void writeFile(CommandSender sender, ItemStack result) {
-        ItemMeta im = result.getItemMeta();
-        String name = ComponentUtils.stripColour(im.customName());
+        String name = ComponentUtils.stripColour(result.getData(DataComponentTypes.CUSTOM_NAME));
         String material = result.getType().toString().toLowerCase(Locale.ROOT);
         String lowercaseName = name.toLowerCase(Locale.ROOT).replace(" ", "_");
         String filename = material + "_" + lowercaseName;
@@ -364,10 +363,10 @@ public class ResourcePackConverterCommand {
         when.add("extra", extra);
         matcher.add("when", when);
         // get the model
-        NamespacedKey nsk = im.getItemModel();
+        Key nsk = result.getData(DataComponentTypes.ITEM_MODEL);
         String key;
         if (nsk != null) {
-            key = nsk.getKey() + ".json";
+            key = nsk.value() + ".json";
         } else {
             key = lowercaseName + ".json";
         }

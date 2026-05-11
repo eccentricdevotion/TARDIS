@@ -16,6 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.autonomous;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.CustomModelData;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUIAutonomous;
 import me.eccentric_nz.TARDIS.custommodels.keys.SwitchVariant;
@@ -28,8 +31,6 @@ import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,9 +47,7 @@ public class AutonomousInventory implements InventoryHolder {
         this.plugin = plugin;
         this.uuid = uuid;
         off = ItemStack.of(Material.LIGHT_GRAY_CARPET, 1);
-        ItemMeta offMeta = off.getItemMeta();
-        offMeta.customName(Component.text(plugin.getLanguage().getString("SET_OFF", "OFF"), NamedTextColor.RED));
-        off.setItemMeta(offMeta);
+        off.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("SET_OFF", "OFF"), NamedTextColor.RED));
         this.inventory = plugin.getServer().createInventory(this, 36, Component.text("TARDIS Autonomous Menu", NamedTextColor.DARK_RED));
         this.inventory.setContents(getItemStack());
     }
@@ -77,17 +76,16 @@ public class AutonomousInventory implements InventoryHolder {
         // set GUI buttons
         for (GUIAutonomous a : GUIAutonomous.values()) {
             ItemStack is = ItemStack.of(a.getMaterial(), 1);
-            ItemMeta im = is.getItemMeta();
-            im.customName(a.getName().contains("Selected") ? Component.text(plugin.getLanguage().getString("SET_ON", "ON"), NamedTextColor.GREEN) : Component.text(a.getName()));
+            is.setData(DataComponentTypes.CUSTOM_NAME, a.getName().contains("Selected") ? Component.text(plugin.getLanguage().getString("SET_ON", "ON"), NamedTextColor.GREEN) : Component.text(a.getName()));
             if (a == GUIAutonomous.AUTONOMOUS_TYPE) {
-                CustomModelDataComponent component = im.getCustomModelDataComponent();
-                component.setFloats(SwitchVariant.AUTO_TYPE.getFloats());
-                im.setCustomModelDataComponent(component);
+                is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                        .addFloats(SwitchVariant.AUTO_TYPE.getFloats())
+                        .build());
             }
             if (a == GUIAutonomous.FALLBACK) {
-                CustomModelDataComponent component = im.getCustomModelDataComponent();
-                component.setFloats(SwitchVariant.AUTO_DEFAULT.getFloats());
-                im.setCustomModelDataComponent(component);
+                is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                        .addFloats(SwitchVariant.AUTO_DEFAULT.getFloats())
+                        .build());
             }
             if (a == GUIAutonomous.SAVE_SELECTOR) {
                 List<Component> lore = new ArrayList<>(a.getLore());
@@ -100,11 +98,10 @@ public class AutonomousInventory implements InventoryHolder {
                         lore.add(Component.text(rsd.getAutonomous(), NamedTextColor.GREEN));
                     }
                 }
-                im.lore(lore);
+                is.setData(DataComponentTypes.LORE, ItemLore.lore(lore));
             } else if (a.getLore() != null) {
-                im.lore(a.getLore());
+                is.setData(DataComponentTypes.LORE, ItemLore.lore(a.getLore()));
             }
-            is.setItemMeta(im);
             int slot = (a.getSlot() == -1) ? findSlot(a) : a.getSlot();
             stack[slot] = is;
         }

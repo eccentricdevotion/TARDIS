@@ -16,6 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.recipes.shapeless;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.CustomModelData;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.keys.CircuitVariant;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
@@ -26,8 +29,6 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapelessRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
 import java.util.List;
 
@@ -48,27 +49,21 @@ public class PresetStorageDiskRecipe {
 
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.MUSIC_DISC_MALL, 1);
-        ItemMeta im = is.getItemMeta();
-        im.customName(ComponentUtils.toWhite("Preset Storage Disk"));
-        im.lore(List.of(Component.text("Blank")));
-        is.setItemMeta(im);
+        is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Preset Storage Disk"));
+        is.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text("Blank")).build());
         NamespacedKey key = new NamespacedKey(plugin, "preset_storage_disk");
         ShapelessRecipe r = new ShapelessRecipe(key, is);
         r.addIngredient(Material.MUSIC_DISC_STRAD);
         ItemStack exact = ItemStack.of(Material.GLOWSTONE_DUST, 1);
-        ItemMeta em = exact.getItemMeta();
-        em.customName(ComponentUtils.toWhite("TARDIS Chameleon Circuit"));
-        CustomModelDataComponent ecomponent = em.getCustomModelDataComponent();
-        ecomponent.setFloats(CircuitVariant.CHAMELEON.getFloats());
-        em.setCustomModelDataComponent(ecomponent);
+        exact.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("TARDIS Chameleon Circuit"));
+        exact.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                .addFloats(CircuitVariant.CHAMELEON.getFloats())
+                .build());
         // set the second line of lore
-        List<Component> circuit;
         Component uses = (plugin.getConfig().getString("circuits.uses.chameleon", "25").equals("0") || !plugin.getConfig().getBoolean("circuits.damage"))
                 ? Component.text("unlimited", NamedTextColor.YELLOW)
                 : Component.text(plugin.getConfig().getString("circuits.uses.chameleon", "25"), NamedTextColor.YELLOW);
-        circuit = List.of(Component.text("Uses left"), uses);
-        em.lore(circuit);
-        exact.setItemMeta(em);
+        exact.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(Component.text("Uses left"), uses)));
         r.addIngredient(new RecipeChoice.ExactChoice(exact));
         plugin.getServer().addRecipe(r);
         plugin.getIncomposita().getShapelessRecipes().put("Preset Storage Disk", r);

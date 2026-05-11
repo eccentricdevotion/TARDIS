@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.handles;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.*;
 import me.eccentric_nz.TARDIS.database.data.Program;
@@ -44,7 +45,7 @@ public class HandlesEventListener implements Listener {
             for (ItemStack is : stack) {
                 // find the ARTRON / DO
                 if (is != null) {
-                    HandlesBlock thb = HandlesBlock.BY_NAME.get(ComponentUtils.stripColour(is.getItemMeta().customName()));
+                    HandlesBlock thb = HandlesBlock.BY_NAME.get(ComponentUtils.stripColour(is.getData(DataComponentTypes.CUSTOM_NAME)));
                     HandlesProcessor processor = new HandlesProcessor(TARDIS.plugin, program, player, program.getProgram_id());
                     switch (thb) {
                         case ARTRON -> {

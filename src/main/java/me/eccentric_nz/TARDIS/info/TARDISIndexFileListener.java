@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.info;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
@@ -23,7 +24,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 public class TARDISIndexFileListener extends TARDISMenuListener {
 
@@ -53,8 +53,7 @@ public class TARDISIndexFileListener extends TARDISMenuListener {
         if (slot == 26) {
             close(p);
         } else {
-            ItemMeta im = is.getItemMeta();
-            String name = ComponentUtils.toEnumUppercase(im.customName());
+            String name = ComponentUtils.toEnumUppercase(is.getData(DataComponentTypes.CUSTOM_NAME));
             try {
                 TISCategory category = TISCategory.valueOf(name);
                 plugin.getTrackerKeeper().getInfoGUI().put(p.getUniqueId(), category);

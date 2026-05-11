@@ -16,6 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.playerprefs;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.CustomModelData;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.artron.BeaconToggler;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
@@ -37,9 +40,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -96,7 +98,6 @@ public class TARDISGeneralPrefsListener extends TARDISMenuListener {
         }
         Player player = (Player) event.getWhoClicked();
         UUID uuid = player.getUniqueId();
-        ItemMeta im = is.getItemMeta();
         if (slot == 33) {
             // back
             player.openInventory(new TARDISPrefsMenuInventory(plugin, uuid).getInventory());
@@ -107,7 +108,7 @@ public class TARDISGeneralPrefsListener extends TARDISMenuListener {
             close(player);
             return;
         }
-        if (slot == GUIPlayerPreferences.FORCE_FIELD.getSlot() && ComponentUtils.stripColour(im.customName()).equals("Force Field")) {
+        if (slot == GUIPlayerPreferences.FORCE_FIELD.getSlot() && ComponentUtils.stripColour(is.getData(DataComponentTypes.CUSTOM_NAME)).equals("Force Field")) {
             // toggle force field on / off
             if (TARDISPermission.hasPermission(player, "tardis.forcefield")) {
                 // check they have upgrade
@@ -115,7 +116,7 @@ public class TARDISGeneralPrefsListener extends TARDISMenuListener {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "Force Field");
                     return;
                 }
-                List<Component> lore = im.lore();
+                List<Component> lore = is.getData(DataComponentTypes.LORE).lines();
                 boolean bool = (ComponentUtils.stripColour(lore.getFirst()).equals(plugin.getLanguage().getString("SET_OFF", "OFF")));
                 if (bool) {
                     // check power
@@ -142,11 +143,11 @@ public class TARDISGeneralPrefsListener extends TARDISMenuListener {
             }
             return;
         }
-        List<Component> lore = im.lore();
+        List<Component> lore = new ArrayList<>(is.getData(DataComponentTypes.LORE).lines());
         boolean bool = (ComponentUtils.stripColour(lore.getFirst()).equals(plugin.getLanguage().getString("SET_ON", "ON")));
         String value = (bool) ? plugin.getLanguage().getString("SET_OFF", "OFF") : plugin.getLanguage().getString("SET_ON", "ON");
         int b = (bool) ? 0 : 1;
-        String which = ComponentUtils.stripColour(im.customName());
+        String which = ComponentUtils.stripColour(is.getData(DataComponentTypes.CUSTOM_NAME));
         // get tardis record
         Tardis tardis = null;
         HashMap<String, Object> wherep = new HashMap<>();
@@ -162,7 +163,7 @@ public class TARDISGeneralPrefsListener extends TARDISMenuListener {
                 return;
             }
             case "Isometric" -> {
-                if (tardis!=null && (tardis.isIsomorphicOn() && !bool || !tardis.isIsomorphicOn() && bool)) {
+                if (tardis != null && (tardis.isIsomorphicOn() && !bool || !tardis.isIsomorphicOn() && bool)) {
                     new IsomorphicCommand(plugin).toggleIsomorphicControls(player);
                 }
             }
@@ -264,23 +265,22 @@ public class TARDISGeneralPrefsListener extends TARDISMenuListener {
                 HashMap<String, Object> set = new HashMap<>();
                 HashMap<String, Object> where = new HashMap<>();
                 where.put("uuid", uuid.toString());
-                if (ComponentUtils.stripColour(im.customName()).equals("HADS Type")) {
+                if (ComponentUtils.stripColour(is.getData(DataComponentTypes.CUSTOM_NAME)).equals("HADS Type")) {
                     value = (ComponentUtils.stripColour(lore.getFirst()).equals("DISPLACEMENT")) ? "DISPERSAL" : "DISPLACEMENT";
                     set.put("hads_type", value);
                 } else {
-                    set.put(lookup.get(ComponentUtils.stripColour(im.customName())), b);
+                    set.put(lookup.get(ComponentUtils.stripColour(is.getData(DataComponentTypes.CUSTOM_NAME))), b);
                 }
                 plugin.getQueryFactory().doUpdate("player_prefs", set, where);
             }
         }
         lore.set(0, Component.text(value));
-        im.lore(lore);
+        is.setData(DataComponentTypes.LORE, ItemLore.lore(lore));
         GUIPlayerPreferences gui = GUIPlayerPreferences.fromString(which);
-        CustomModelDataComponent component = im.getCustomModelDataComponent();
-        component.setFloats(value.equals(plugin.getLanguage().getString("SET_ON", "ON")) ? gui.getOnFloats() : gui.getOffFloats());
-        im.setCustomModelDataComponent(component);
-        is.setItemMeta(im);
-        if (ComponentUtils.stripColour(im.customName()).equals("Beacon")) {
+        is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                .addFloats(value.equals(plugin.getLanguage().getString("SET_ON", "ON")) ? gui.getOnFloats() : gui.getOffFloats())
+                .build());
+        if (ComponentUtils.stripColour(is.getData(DataComponentTypes.CUSTOM_NAME)).equals("Beacon")) {
             // get tardis id
             ResultSetTardisID rsi = new ResultSetTardisID(plugin);
             if (rsi.fromUUID(uuid.toString())) {

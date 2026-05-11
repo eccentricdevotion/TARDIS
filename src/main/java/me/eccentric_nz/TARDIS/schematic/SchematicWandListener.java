@@ -30,7 +30,6 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.UUID;
 
@@ -50,7 +49,7 @@ public class SchematicWandListener implements Listener {
         Player player = event.getPlayer();
         UUID uuid = player.getUniqueId();
         ItemStack itemStack = player.getInventory().getItemInMainHand();
-        if (!itemStack.getType().equals(Material.BONE) || !player.hasPermission("tardis.admin") || !isWand(itemStack)) {
+        if (!itemStack.getType().equals(Material.BONE) || !player.hasPermission("tardis.admin") || !ComponentUtils.isNamed(itemStack, "TARDIS Schematic Wand")) {
             return;
         }
         Block b = event.getClickedBlock();
@@ -67,16 +66,5 @@ public class SchematicWandListener implements Listener {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "SCHM_END");
         }
         event.setCancelled(true);
-    }
-
-    private boolean isWand(ItemStack is) {
-        if (!is.hasItemMeta()) {
-            return false;
-        }
-        ItemMeta im = is.getItemMeta();
-        if (!im.hasCustomName()) {
-            return false;
-        }
-        return ComponentUtils.endsWith(im.customName(), "TARDIS Schematic Wand");
     }
 }

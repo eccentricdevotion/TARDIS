@@ -17,6 +17,8 @@
 package me.eccentric_nz.TARDIS.doors.outer;
 
 import com.destroystokyo.paper.MaterialTags;
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
@@ -35,6 +37,7 @@ import me.eccentric_nz.TARDIS.mobfarming.TARDISFarmer;
 import me.eccentric_nz.TARDIS.move.DoorListener;
 import me.eccentric_nz.TARDIS.sonic.actions.SonicSound;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
+import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
@@ -47,10 +50,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.UUID;
 
 public class OuterDisplayDoorAction extends DoorListener {
@@ -62,10 +63,9 @@ public class OuterDisplayDoorAction extends DoorListener {
     public void processClick(int id, Player player, ArmorStand stand) {
         EntityEquipment ee = stand.getEquipment();
         ItemStack dye = ee.getHelmet();
-        if (dye != null && (TARDISConstants.DYES.contains(dye.getType()) || plugin.getUtils().isCustomModel(dye)) && dye.hasItemMeta()) {
-            ItemMeta dim = dye.getItemMeta();
-            if (dim.hasItemModel()) {
-                String model = dim.getItemModel().getKey();
+        if (dye != null && (TARDISConstants.DYES.contains(dye.getType()) || plugin.getUtils().isCustomModel(dye))) {
+            if (ComponentUtils.isModelled(dye)) {
+                String model = dye.getData(DataComponentTypes.ITEM_MODEL).value();
                 if ((model.contains("_open") || model.contains("_closed")) && TARDISPermission.hasPermission(player, "tardis.enter")) {
                     UUID uuid = player.getUniqueId();
                     // get TARDIS from location
@@ -181,9 +181,8 @@ public class OuterDisplayDoorAction extends DoorListener {
                                             }
                                             TARDISSounds.playDoorSound(true, location);
                                         } else if (TARDISStaticUtils.isSonic(hand) && MaterialTags.DYES.isTagged(dye.getType()) && tardis.getUuid().equals(uuid)) {
-                                            ItemMeta im = hand.getItemMeta();
-                                            List<Component> lore = im.lore();
-                                            if (TARDISPermission.hasPermission(player, "tardis.sonic.paint") && lore != null && lore.contains(Component.text("Painter Upgrade"))) {
+                                            ItemLore itemLore = hand.getData(DataComponentTypes.LORE);
+                                            if (TARDISPermission.hasPermission(player, "tardis.sonic.paint") && itemLore != null && itemLore.lines().contains(Component.text("Painter Upgrade"))) {
                                                 // check for dye in slot
                                                 PlayerInventory inv = player.getInventory();
                                                 ItemStack colour = inv.getItem(8);
@@ -199,7 +198,7 @@ public class OuterDisplayDoorAction extends DoorListener {
                                                 long now = System.currentTimeMillis();
                                                 SonicSound.playSonicSound(plugin, player, now, 600L, "sonic_short");
                                                 ItemStack sub = ItemStack.of(colour.getType());
-                                                sub.setItemMeta(colour.getItemMeta());
+                                                sub.copyDataFrom(colour, dataComponentType -> true);
                                                 ee.setHelmet(sub, true);
                                                 // remove one dye
                                                 int a = colour.getAmount();

@@ -1,5 +1,6 @@
 package me.eccentric_nz.TARDIS.rooms.games.tictactoe;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
@@ -13,7 +14,6 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -59,21 +59,13 @@ public class NoughtsAndCrossesListener extends TARDISMenuListener {
         super(plugin);
         this.plugin = plugin;
         player = ItemStack.of(Material.CYAN_GLAZED_TERRACOTTA);
-        ItemMeta pim = player.getItemMeta();
-        pim.customName(Component.text("Player"));
-        player.setItemMeta(pim);
+        player.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Player"));
         tardis = ItemStack.of(Material.RED_GLAZED_TERRACOTTA);
-        ItemMeta tim = tardis.getItemMeta();
-        tim.customName(Component.text("TARDIS"));
-        tardis.setItemMeta(tim);
+        tardis.setData(DataComponentTypes.CUSTOM_NAME, Component.text("TARDIS"));
         nought = ItemStack.of(Material.CYAN_GLAZED_TERRACOTTA);
-        ItemMeta nim = nought.getItemMeta();
-        nim.customName(Component.text("Nought"));
-        nought.setItemMeta(nim);
+        nought.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Nought"));
         cross = ItemStack.of(Material.RED_GLAZED_TERRACOTTA);
-        ItemMeta cim = cross.getItemMeta();
-        cim.customName(Component.text("Cross"));
-        cross.setItemMeta(cim);
+        cross.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Cross"));
     }
 
     @EventHandler

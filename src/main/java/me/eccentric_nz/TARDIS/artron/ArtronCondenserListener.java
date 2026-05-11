@@ -16,8 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.artron;
 
-import com.google.common.collect.Multimaps;
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
+import io.papermc.paper.datacomponent.item.TooltipDisplay;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.blueprints.BlueprintProcessor;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -44,12 +47,10 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.*;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Following his disrupted resurrection, the Master was able to offensively use energy - presumably his own artron
@@ -145,8 +146,8 @@ public class ArtronCondenserListener implements Listener {
                     double full = plugin.getArtronConfig().getDouble("full_charge") / 75.0d;
                     amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.standard") * full);
                     // add extra artron for any sonic upgrades
-                    if (is.getItemMeta().hasLore()) {
-                        List<Component> lore = is.getItemMeta().lore();
+                    if (ComponentUtils.hasLore(is)) {
+                        List<Component> lore = is.getData(DataComponentTypes.LORE).lines();
                         if (lore.contains(Component.text("Bio-scanner Upgrade"))) {
                             amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.bio") * full);
                         }
@@ -342,27 +343,25 @@ public class ArtronCondenserListener implements Listener {
         if (remainder > 0) {
             // give one partially filled cell
             ItemStack leftover = result.clone();
-            ItemMeta lim = leftover.getItemMeta();
-            List<Component> lore = lim.lore();
+            List<Component> lore = new ArrayList<>(leftover.getData(DataComponentTypes.LORE).lines());
             lore.set(1, Component.text(remainder));
-            lim.lore(lore);
-            lim.setEnchantmentGlintOverride(true);
-            lim.addItemFlags(ItemFlag.values());
-            lim.setAttributeModifiers(Multimaps.forMap(Map.of()));
-            leftover.setItemMeta(lim);
+            leftover.setData(DataComponentTypes.LORE, ItemLore.lore(lore));
+            leftover.setData(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE, true);
+            leftover.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
+                    .addHiddenComponents(TARDISConstants.HIDE)
+                    .build());
             player.getInventory().addItem(leftover);
         }
         if (finalFullCellCount > 0) {
             // give full cells
             result.setAmount(finalFullCellCount);
-            ItemMeta im = result.getItemMeta();
-            List<Component> lore = im.lore();
+            List<Component> lore = new ArrayList<>(result.getData(DataComponentTypes.LORE).lines());
             lore.set(1, Component.text(full));
-            im.lore(lore);
-            im.setEnchantmentGlintOverride(true);
-            im.addItemFlags(ItemFlag.values());
-            im.setAttributeModifiers(Multimaps.forMap(Map.of()));
-            result.setItemMeta(im);
+            result.setData(DataComponentTypes.LORE, ItemLore.lore(lore));
+            result.setData(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE, true);
+            result.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
+                    .addHiddenComponents(TARDISConstants.HIDE)
+                    .build());
             player.getInventory().addItem(result);
         }
         if (finalFullCellCount > 0 || remainder > 0) {
@@ -409,12 +408,6 @@ public class ArtronCondenserListener implements Listener {
         if (!plugin.getConfig().getBoolean("modules.blueprints")) {
             return false;
         }
-        if (is.hasItemMeta()) {
-            ItemMeta im = is.getItemMeta();
-            if (im.hasCustomName()) {
-                return ComponentUtils.endsWith(im.customName(),"TARDIS Blueprint Disk");
-            }
-        }
-        return false;
+        return ComponentUtils.isNamed(is, "TARDIS Blueprint Disk");
     }
 }

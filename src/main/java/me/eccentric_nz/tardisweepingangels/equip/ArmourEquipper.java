@@ -16,6 +16,11 @@
  */
 package me.eccentric_nz.tardisweepingangels.equip;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.Equippable;
+import io.papermc.paper.registry.RegistryKey;
+import io.papermc.paper.registry.TypedKey;
+import io.papermc.paper.registry.set.RegistrySet;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.keys.*;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
@@ -30,19 +35,14 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.components.EquippableComponent;
 import org.bukkit.persistence.PersistentDataType;
-
-import java.util.List;
 
 public class ArmourEquipper {
 
     public NamespacedKey dress(LivingEntity entity, Monster monster) {
         // helmet
         ItemStack head = ItemStack.of(monster.getMaterial());
-        ItemMeta headMeta = head.getItemMeta();
-        headMeta.getPersistentDataContainer().set(TARDIS.plugin.getHeadBlockKey(), PersistentDataType.INTEGER, 99);
+        head.editPersistentDataContainer(pdc -> pdc.set(TARDIS.plugin.getHeadBlockKey(), PersistentDataType.INTEGER, 99));
         // get armour key once, so random variants (OOD, CLOCKWORK_DROIDS, CYBERMEN) have the same chestplate and leggings
         NamespacedKey armour = monster.getArmourKey();
         // get head variant (CLOCKWORK_DROIDS, CYBERMEN)
@@ -53,50 +53,51 @@ public class ArmourEquipper {
             case DAVROS -> headModel = DavrosVariant.DAVROS.getKey();
             default -> headModel = monster.getHeadModel();
         }
-        headMeta.setItemModel(headModel);
-        EquippableComponent headComponent = headMeta.getEquippable();
-        headComponent.setDamageOnHurt(false);
-        headComponent.setAllowedEntities(List.of(monster.getEntityType(), EntityType.PLAYER));
-        headComponent.setSlot(EquipmentSlot.HEAD);
+        head.setData(DataComponentTypes.ITEM_MODEL, headModel);
+        Equippable.Builder equippable = Equippable.equippable(EquipmentSlot.HEAD);
+        equippable.damageOnHurt(false);
+        equippable.allowedEntities(RegistrySet.keySet(RegistryKey.ENTITY_TYPE,
+                TypedKey.create(RegistryKey.ENTITY_TYPE, monster.getEntityType().getKey()),
+                TypedKey.create(RegistryKey.ENTITY_TYPE, EntityType.PLAYER.getKey())
+        ));
         if (monster.equals(Monster.EMPTY_CHILD)) {
-            headComponent.setCameraOverlay(EmptyChildVariant.EMPTY_CHILD_OVERLAY.getKey());
+            equippable.cameraOverlay(EmptyChildVariant.EMPTY_CHILD_OVERLAY.getKey());
         }
-        headMeta.setEquippable(headComponent);
+        head.setData(DataComponentTypes.EQUIPPABLE, equippable.build());
         String name = switch (monster) {
             case HEADLESS_MONK -> "Headless Monk Hood";
             case MIRE -> "Mire Helmet";
             default -> monster.getName() + " Head";
         };
-        headMeta.customName(ComponentUtils.toWhite(name));
-        head.setItemMeta(headMeta);
+        head.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(name));
         entity.getEquipment().setHelmet(head);
         // chest
         ItemStack body = ItemStack.of(monster.getMaterial());
-        ItemMeta bodyMeta = body.getItemMeta();
-        bodyMeta.setItemModel(ArmourVariant.CHESTPLATE.getKey());
-        bodyMeta.customName(Component.text(monster.getName() + " Chestplate"));
-        EquippableComponent bodyComponent = bodyMeta.getEquippable();
-        bodyComponent.setDamageOnHurt(false);
-        bodyComponent.setAllowedEntities(List.of(monster.getEntityType(), EntityType.PLAYER));
-        bodyComponent.setSlot(EquipmentSlot.CHEST);
-        bodyComponent.setModel(armour);
-        bodyMeta.setEquippable(bodyComponent);
-        bodyMeta.getPersistentDataContainer().set(TARDIS.plugin.getHeadBlockKey(), PersistentDataType.INTEGER, 99);
-        body.setItemMeta(bodyMeta);
+        body.setData(DataComponentTypes.ITEM_MODEL, ArmourVariant.CHESTPLATE.getKey());
+        body.setData(DataComponentTypes.CUSTOM_NAME, Component.text(monster.getName() + " Chestplate"));
+        Equippable.Builder bodyBuilder = Equippable.equippable(EquipmentSlot.CHEST);
+        bodyBuilder.damageOnHurt(false);
+        bodyBuilder.allowedEntities(RegistrySet.keySet(RegistryKey.ENTITY_TYPE,
+                TypedKey.create(RegistryKey.ENTITY_TYPE, monster.getEntityType().getKey()),
+                TypedKey.create(RegistryKey.ENTITY_TYPE, EntityType.PLAYER.getKey())
+        ));
+        bodyBuilder.assetId(armour);
+        body.setData(DataComponentTypes.EQUIPPABLE, bodyBuilder.build());
+        body.editPersistentDataContainer(pdc -> pdc.set(TARDIS.plugin.getHeadBlockKey(), PersistentDataType.INTEGER, 99));
         entity.getEquipment().setChestplate(body);
         // leggings
         ItemStack legs = ItemStack.of(monster.getMaterial());
-        ItemMeta legsMeta = legs.getItemMeta();
-        legsMeta.setItemModel(ArmourVariant.LEGGINGS.getKey());
-        legsMeta.customName(Component.text(monster.getName() + " Leggings"));
-        EquippableComponent legsComponent = legsMeta.getEquippable();
-        legsComponent.setDamageOnHurt(false);
-        legsComponent.setAllowedEntities(List.of(monster.getEntityType(), EntityType.PLAYER));
-        legsComponent.setSlot(EquipmentSlot.LEGS);
-        legsComponent.setModel(armour);
-        legsMeta.setEquippable(legsComponent);
-        legsMeta.getPersistentDataContainer().set(TARDIS.plugin.getHeadBlockKey(), PersistentDataType.INTEGER, 99);
-        legs.setItemMeta(legsMeta);
+        legs.setData(DataComponentTypes.ITEM_MODEL, ArmourVariant.LEGGINGS.getKey());
+        legs.setData(DataComponentTypes.CUSTOM_NAME, Component.text(monster.getName() + " Leggings"));
+        Equippable.Builder legsBuilder = Equippable.equippable(EquipmentSlot.LEGS);
+        legsBuilder.damageOnHurt(false);
+        legsBuilder.allowedEntities(RegistrySet.keySet(RegistryKey.ENTITY_TYPE,
+                TypedKey.create(RegistryKey.ENTITY_TYPE, monster.getEntityType().getKey()),
+                TypedKey.create(RegistryKey.ENTITY_TYPE, EntityType.PLAYER.getKey())
+        ));
+        legsBuilder.assetId(armour);
+        legs.setData(DataComponentTypes.EQUIPPABLE, legsBuilder.build());
+        legs.editPersistentDataContainer(pdc -> pdc.set(TARDIS.plugin.getHeadBlockKey(), PersistentDataType.INTEGER, 99));
         entity.getEquipment().setLeggings(legs);
         if (!(entity instanceof Player)) {
             // give monster extra health

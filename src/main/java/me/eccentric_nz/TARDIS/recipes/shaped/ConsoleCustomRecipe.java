@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.console.models.ColourType;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
@@ -25,7 +27,6 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.List;
@@ -66,13 +67,11 @@ public class ConsoleCustomRecipe {
                 Material material = Material.valueOf(plugin.getCustomConsolesConfig().getString("consoles." + console + ".material"));
                 if (!used.contains(material)) {
                     ItemStack is = ItemStack.of(material, 1);
-                    ItemMeta im = is.getItemMeta();
                     String dn = TARDISStringUtils.capitalise(console) + " Console";
-                    im.customName(ComponentUtils.toWhite(dn));
-                    im.lore(List.of(Component.text("Integration with interaction")));
-                    String pdc = "console_" + console;
-                    im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, pdc);
-                    is.setItemMeta(im);
+                    is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(dn));
+                    is.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text("Integration with interaction")).build());
+                    String c = "console_" + console;
+                    is.editPersistentDataContainer(pdc -> pdc.set(plugin.getCustomBlockKey(), PersistentDataType.STRING, c));
                     NamespacedKey key = new NamespacedKey(plugin, console + "_console");
                     ShapedRecipe r = new ShapedRecipe(key, is);
                     r.shape("CBC", "ORO", "CBC");
@@ -82,7 +81,7 @@ public class ConsoleCustomRecipe {
                     r.setIngredient('B', Material.BAMBOO_BUTTON);
                     plugin.getServer().addRecipe(r);
                     plugin.getFigura().getShapedRecipes().put(dn, r);
-                    ColourType.BY_MATERIAL.put(material, new NamespacedKey(plugin, pdc));
+                    ColourType.BY_MATERIAL.put(material, new NamespacedKey(plugin, c));
                 } else {
                     plugin.debug("Custom console material for " + console + "is already in use!");
                 }

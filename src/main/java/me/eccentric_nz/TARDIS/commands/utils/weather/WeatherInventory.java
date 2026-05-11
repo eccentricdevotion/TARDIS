@@ -16,7 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.commands.utils.weather;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
 import me.eccentric_nz.TARDIS.custommodels.GUIWeather;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import net.kyori.adventure.text.Component;
@@ -24,7 +26,6 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 public class WeatherInventory implements InventoryHolder {
 
@@ -52,34 +53,22 @@ public class WeatherInventory implements InventoryHolder {
         ItemStack[] stack = new ItemStack[9];
         // clear
         ItemStack clear = ItemStack.of(GUIWeather.CLEAR.material(), 1);
-        ItemMeta sun = clear.getItemMeta();
-        sun.customName(Component.text(TARDISStringUtils.uppercaseFirst(plugin.getLanguage().getString("WEATHER_CLEAR"))));
-        clear.setItemMeta(sun);
+        clear.setData(DataComponentTypes.CUSTOM_NAME, Component.text(TARDISStringUtils.uppercaseFirst(plugin.getLanguage().getString("WEATHER_CLEAR"))));
         stack[GUIWeather.CLEAR.slot()] = clear;
         // rain
         ItemStack rain = ItemStack.of(GUIWeather.RAIN.material(), 1);
-        ItemMeta ing = rain.getItemMeta();
-        ing.customName(Component.text(TARDISStringUtils.uppercaseFirst(plugin.getLanguage().getString("WEATHER_RAIN"))));
-        rain.setItemMeta(ing);
+        rain.setData(DataComponentTypes.CUSTOM_NAME, Component.text(TARDISStringUtils.uppercaseFirst(plugin.getLanguage().getString("WEATHER_RAIN"))));
         stack[GUIWeather.RAIN.slot()] = rain;
         // thunder
         ItemStack thunder = ItemStack.of(GUIWeather.THUNDER.material(), 1);
-        ItemMeta storm = thunder.getItemMeta();
-        storm.customName(Component.text(plugin.getLanguage().getString("WEATHER_THUNDER")));
-        thunder.setItemMeta(storm);
+        thunder.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("WEATHER_THUNDER")));
         stack[GUIWeather.THUNDER.slot()] = thunder;
         // excite
-        ItemStack excit = ItemStack.of(GUIWeather.EXCITE.material(), 1);
-        ItemMeta ation = excit.getItemMeta();
-        ation.customName(Component.text(plugin.getLanguage().getString("WEATHER_EXCITE")));
-        excit.setItemMeta(ation);
-        stack[GUIWeather.EXCITE.slot()] = excit;
+        ItemStack excitation = ItemStack.of(GUIWeather.EXCITE.material(), 1);
+        excitation.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("WEATHER_EXCITE")));
+        stack[GUIWeather.EXCITE.slot()] = excitation;
         // close
-        ItemStack close = ItemStack.of(GUIWeather.CLOSE.material(), 1);
-        ItemMeta can = close.getItemMeta();
-        can.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
-        close.setItemMeta(can);
-        stack[GUIWeather.CLOSE.slot()] = close;
+        stack[GUIWeather.CLOSE.slot()] = GUIItemFactory.close();
 
         return stack;
     }

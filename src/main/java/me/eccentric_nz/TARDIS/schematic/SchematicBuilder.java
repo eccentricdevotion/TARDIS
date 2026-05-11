@@ -20,6 +20,7 @@ import com.destroystokyo.paper.profile.PlayerProfile;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemRegistry;
@@ -30,6 +31,7 @@ import me.eccentric_nz.TARDIS.schematic.getters.BannerGetter;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
+import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -39,8 +41,6 @@ import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.MultipleFacing;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.BlockStateMeta;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.BoundingBox;
 
 import java.util.ArrayList;
@@ -195,27 +195,28 @@ public class SchematicBuilder {
                                 Material type = item.getType();
                                 if (!type.isAir()) {
                                     frame.addProperty("item", type.toString());
-                                    if (item.hasItemMeta()) {
-                                        ItemMeta im = item.getItemMeta();
-                                        if (im.hasItemModel()) {
-                                            frame.addProperty("cmd", im.getItemModel().getKey());
+                                    if (ComponentUtils.isModelled(item)) {
+                                        frame.addProperty("cmd", item.getData(DataComponentTypes.ITEM_MODEL).value());
+                                    }
+                                    if (item.hasData(DataComponentTypes.CUSTOM_NAME)) {
+                                        JsonElement element = ComponentUtils.getJson(item.getData(DataComponentTypes.CUSTOM_NAME));
+                                        plugin.debug(element.toString());
+                                        frame.add("name", element);
+                                    }
+                                    if (ComponentUtils.hasLore(item)) {
+                                        JsonArray lore = new JsonArray();
+                                        for (Component s : item.getData(DataComponentTypes.LORE).lines()) {
+                                            lore.add(ComponentUtils.stripColour(s));
                                         }
-                                        if (im.hasCustomName()) {
-                                            JsonElement element = ComponentUtils.getJson(im.customName());
-                                            plugin.debug(element.toString());
-                                            frame.add("name", element);
-                                        }
-                                        if (im.hasLore()) {
-                                            JsonArray lore = new JsonArray();
-                                            for (Component s : im.lore()) {
-                                                lore.add(ComponentUtils.stripColour(s));
-                                            }
-                                            frame.add("lore", lore);
-                                        }
-                                        if ((Tag.ITEMS_BANNERS.isTagged(type) || type == Material.SHIELD) && im instanceof BlockStateMeta bsm) {
-                                            JsonObject state = BannerGetter.getJson(bsm.getBlockState());
-                                            frame.add("banner", state);
-                                        }
+                                        frame.add("lore", lore);
+                                    }
+                                    if (Tag.ITEMS_BANNERS.isTagged(type)) {
+                                        JsonObject state = BannerGetter.getJson(item.getData(DataComponentTypes.BANNER_PATTERNS), null);
+                                        frame.add("banner", state);
+                                    }
+                                    if (type == Material.SHIELD) {
+                                        JsonObject state = BannerGetter.getJson(item.getData(DataComponentTypes.BANNER_PATTERNS), item.getData(DataComponentTypes.BASE_COLOR));
+                                        frame.add("banner", state);
                                     }
                                 }
                                 frame.addProperty("fixed", fr.isFixed());
@@ -236,20 +237,19 @@ public class SchematicBuilder {
                                 item.add("rel_location", loc);
                                 JsonObject stack = new JsonObject();
                                 Material material = display.getItemStack().getType();
-                                ItemMeta im = display.getItemStack().getItemMeta();
                                 stack.addProperty("type", material.toString());
-                                if (im.hasItemModel()) {
-                                    NamespacedKey model = im.getItemModel();
-                                    stack.addProperty("cmd", model.getKey());
-                                    TARDISDisplayItem tdi = TARDISDisplayItemRegistry.getByModel(model);
+                                if (ComponentUtils.isModelled(display.getItemStack())) {
+                                    Key model = display.getItemStack().getData(DataComponentTypes.ITEM_MODEL);
+                                    stack.addProperty("cmd", model.value());
+                                    TARDISDisplayItem tdi = TARDISDisplayItemRegistry.getByModel(NamespacedKey.fromString(model.asString()));
                                     if (tdi != null) {
                                         stack.addProperty("light", tdi.isLight());
                                         stack.addProperty("lit", tdi.isLit());
                                     }
                                 }
                                 // save custom name
-                                if (im.hasCustomName()) {
-                                    JsonElement element = ComponentUtils.getJson(im.customName());
+                                if (display.getItemStack().hasData(DataComponentTypes.CUSTOM_NAME)) {
+                                    JsonElement element = ComponentUtils.getJson(display.getItemStack().getData(DataComponentTypes.CUSTOM_NAME));
                                     stack.add("name", element);
                                 }
                                 item.add("stack", stack);

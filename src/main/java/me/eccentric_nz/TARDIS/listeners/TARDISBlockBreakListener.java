@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
 import me.eccentric_nz.TARDIS.TARDISConstants;
@@ -35,7 +36,6 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
 
@@ -135,9 +135,7 @@ public class TARDISBlockBreakListener implements Listener {
                             // drop Rift Manipulator
                             event.getBlock().setBlockData(TARDISConstants.AIR);
                             ItemStack rm = ItemStack.of(Material.BEACON, 1);
-                            ItemMeta im = rm.getItemMeta();
-                            im.customName(ComponentUtils.toWhite("Rift Manipulator"));
-                            rm.setItemMeta(im);
+                            rm.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Rift Manipulator"));
                             w.dropItem(loc, rm);
                         } else {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "RIFT_PLAYER");

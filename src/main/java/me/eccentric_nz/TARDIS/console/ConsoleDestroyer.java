@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.console;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.console.models.ColourType;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
@@ -26,6 +28,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetInteractionsFromId;
 import me.eccentric_nz.TARDIS.sonic.SonicLore;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
+import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -33,10 +36,8 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
-import java.util.List;
 import java.util.UUID;
 
 public class ConsoleDestroyer {
@@ -49,7 +50,7 @@ public class ConsoleDestroyer {
 
     public ItemStack returnStack(String uuids, int id) {
         String colour = "";
-        NamespacedKey model = null;
+        Key model = null;
         ResultSetInteractionsFromId rs = new ResultSetInteractionsFromId(plugin, id);
         if (rs.resultSet()) {
             // interactions
@@ -95,11 +96,10 @@ public class ConsoleDestroyer {
                     if (e instanceof ItemDisplay display) {
                         // get colour
                         ItemStack is = display.getItemStack();
-                        if (colour.isEmpty() && is.hasItemMeta()) {
-                            ItemMeta im = is.getItemMeta();
-                            model = im.getItemModel();
-                            if (model == null && im.hasCustomModelDataComponent()) {
-                                float convertedCMD = im.getCustomModelDataComponent().getFloats().getFirst();
+                        if (colour.isEmpty() && ComponentUtils.isModelled(is)) {
+                            model = is.getData(DataComponentTypes.ITEM_MODEL);
+                            if (model == null && is.hasData(DataComponentTypes.CUSTOM_MODEL_DATA)) {
+                                float convertedCMD = is.getData(DataComponentTypes.CUSTOM_MODEL_DATA).floats().getFirst();
                                 if (convertedCMD == 1017.0f || convertedCMD == 2017.0f) {
                                     model = ConsolePart.CONSOLE_RUSTIC.getKey();
                                 } else if (convertedCMD == 1016.0f || convertedCMD == 2016.0f) {
@@ -136,9 +136,9 @@ public class ConsoleDestroyer {
                                     model = ConsolePart.CONSOLE_LIGHT_GRAY.getKey();
                                 }
                             } else {
-                                plugin.debug("found model -> " + model.getKey());
+                                plugin.debug("found model -> " + model.value());
                             }
-                            colour = ColourType.COLOURS.getOrDefault(model, "LIGHT_GRAY");
+                            colour = ColourType.COLOURS.getOrDefault(NamespacedKey.fromString(model.asString()), "LIGHT_GRAY");
                         }
                         // remove
                         display.remove();
@@ -156,16 +156,14 @@ public class ConsoleDestroyer {
             );
             Material material = (isRustic) ? Material.WAXED_OXIDIZED_COPPER : Material.valueOf(colour + "_CONCRETE");
             ItemStack console = ItemStack.of(material, 1);
-            ItemMeta im = console.getItemMeta();
             String dn = ((isRustic) ? "Rustic" : TARDISStringUtils.capitalise(colour)) + " Console";
-            im.customName(ComponentUtils.toWhite(dn));
-            im.lore(List.of(Component.text("Integration with interaction")));
-            String which = model.getKey()
+            console.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(dn));
+            console.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text("Integration with interaction")).build());
+            String which = model.value()
                     .replace("division_", "")
                     .replace("centre_", "");
             plugin.debug(which);
-            im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, which);
-            console.setItemMeta(im);
+            console.editPersistentDataContainer(pdc -> pdc.set(plugin.getCustomBlockKey(), PersistentDataType.STRING, which));
             return console;
         }
         return null;

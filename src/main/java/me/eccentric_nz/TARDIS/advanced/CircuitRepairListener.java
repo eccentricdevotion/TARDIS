@@ -16,6 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.advanced;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.CustomModelData;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.keys.CircuitVariant;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
@@ -29,8 +32,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.AnvilInventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -82,19 +83,14 @@ public class CircuitRepairListener implements Listener {
         ItemStack[] items = anvil.getContents();
         ItemStack first = items[0];
         // is it a glowstone dust with item meta?
-        if (first == null || !first.getType().equals(Material.GLOWSTONE_DUST) || !first.hasItemMeta() || first.getAmount() != 1) {
-            return;
-        }
-        // get the item meta
-        ItemMeta fim = first.getItemMeta();
-        if (!fim.hasCustomName()) {
+        if (first == null || !first.getType().equals(Material.GLOWSTONE_DUST) || !first.hasData(DataComponentTypes.CUSTOM_NAME) || first.getAmount() != 1) {
             return;
         }
         // get the display name
-        String dnf = ComponentUtils.stripColour(fim.customName());
-        if (dnf.startsWith("TARDIS") && dnf.endsWith("Circuit") && fim.hasLore()) {
+        String dnf = ComponentUtils.stripColour(first.getData(DataComponentTypes.CUSTOM_NAME));
+        if (dnf.startsWith("TARDIS") && dnf.endsWith("Circuit") && ComponentUtils.hasLore(first)) {
             // get the lore
-            List<Component> flore = fim.lore();
+            List<Component> flore = first.getData(DataComponentTypes.LORE).lines();
             String stripped = ComponentUtils.stripColour(flore.get(1));
             if (stripped.equals("unlimited")) {
                 return;
@@ -102,8 +98,8 @@ public class CircuitRepairListener implements Listener {
             // get the uses left
             int left = TARDISNumberParsers.parseInt(stripped);
             // get max uses for this circuit
-            CustomModelDataComponent component = fim.getCustomModelDataComponent();
-            List<Float> floats = (!component.getFloats().isEmpty()) ? component.getFloats() : CircuitVariant.ARS.getFloats();
+            CustomModelData component = first.getData(DataComponentTypes.CUSTOM_MODEL_DATA);
+            List<Float> floats = (component != null && !component.floats().isEmpty()) ? component.floats() : CircuitVariant.ARS.getFloats();
             int uses = plugin.getConfig().getInt("circuits.uses." + circuits.get(floats));
             // is it used?
             if (left >= uses) {
@@ -121,12 +117,10 @@ public class CircuitRepairListener implements Listener {
             int remaining = (amount > repair_max) ? amount - repair_max : 0;
             // clone the map
             ItemStack clone = first.clone();
-            ItemMeta cim = clone.getItemMeta();
             List<Component> clore = new ArrayList<>();
             clore.add(Component.text("Uses left"));
             clore.add(Component.text(repair_to, NamedTextColor.YELLOW));
-            cim.lore(clore);
-            clone.setItemMeta(cim);
+            clone.setData(DataComponentTypes.LORE, ItemLore.lore(clore));
             // set the item in slot 0 to the new repaired map
             anvil.setItem(0, clone);
             // set the amount in slot 1

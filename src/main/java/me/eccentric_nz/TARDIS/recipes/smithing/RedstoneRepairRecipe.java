@@ -16,14 +16,14 @@
  */
 package me.eccentric_nz.TARDIS.recipes.smithing;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.CustomModelData;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.keys.CircuitVariant;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.*;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
 /*
 base:BLAZE_ROD
@@ -48,14 +48,12 @@ public class RedstoneRepairRecipe {
         // base material to upgrade
         RecipeChoice base = RecipeChoice.itemType(ItemType.BLAZE_ROD);
         // addition
-        ItemStack isa = ItemStack.of(Material.GLOWSTONE_DUST, 1);
-        ItemMeta ima = isa.getItemMeta();
-        ima.customName(ComponentUtils.toWhite("Redstone Activator Circuit"));
-        CustomModelDataComponent ecomponent = ima.getCustomModelDataComponent();
-        ecomponent.setFloats(CircuitVariant.REDSTONE.getFloats());
-        ima.setCustomModelDataComponent(ecomponent);
-        isa.setItemMeta(ima);
-        RecipeChoice addition = new RecipeChoice.ExactChoice(isa);
+        ItemStack is = ItemStack.of(Material.GLOWSTONE_DUST, 1);
+        is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Redstone Activator Circuit"));
+        is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                .addFloats(CircuitVariant.REDSTONE.getFloats())
+                .build());
+        RecipeChoice addition = new RecipeChoice.ExactChoice(is);
         NamespacedKey key = new NamespacedKey(plugin, "redstone_repair");
         SmithingRecipe r = new SmithingTransformRecipe(key, result, template, base, addition);
         plugin.getServer().addRecipe(r);

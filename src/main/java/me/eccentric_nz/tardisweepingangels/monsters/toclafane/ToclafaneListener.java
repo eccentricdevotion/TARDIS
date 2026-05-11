@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.tardisweepingangels.monsters.toclafane;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.custommodels.keys.ToclafaneVariant;
@@ -34,7 +35,6 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -74,10 +74,8 @@ public class ToclafaneListener implements Listener {
                         EntityEquipment ee = stand.getEquipment();
                         if (ee != null) {
                             ItemStack head = ee.getHelmet();
-                            ItemMeta im = head.getItemMeta();
                             player.playSound(stand.getLocation(), "toclafane", 1.0f, 1.0f);
-                            im.setItemModel(ToclafaneVariant.TOCLAFANE_ATTACK.getKey());
-                            head.setItemMeta(im);
+                            head.setData(DataComponentTypes.ITEM_MODEL, ToclafaneVariant.TOCLAFANE_ATTACK.getKey());
                             ee.setHelmet(head);
                             bee.setHasStung(false);
                             bee.setHealth(bee.getAttribute(Attribute.MAX_HEALTH).getValue());

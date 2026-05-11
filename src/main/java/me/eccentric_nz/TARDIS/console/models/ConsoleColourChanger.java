@@ -16,14 +16,16 @@
  */
 package me.eccentric_nz.TARDIS.console.models;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.utility.ComponentUtils;
+import net.kyori.adventure.key.Key;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.UUID;
 
@@ -52,10 +54,9 @@ public class ConsoleColourChanger {
                         // get the item stack
                         ItemStack is = display.getItemStack();
                         if (is != null) {
-                            ItemMeta im = is.getItemMeta();
-                            NamespacedKey model;
-                            if (im.hasItemModel()) {
-                                String[] key = im.getItemModel().getKey().split("_");
+                            Key model;
+                            if (ComponentUtils.isModelled(is)) {
+                                String[] key = is.getData(DataComponentTypes.ITEM_MODEL).value().split("_");
                                 if (key[1].equals("centre")) {
                                     model = new NamespacedKey(plugin, "console_centre_" + colour);
                                 } else if (key[1].equals("division")) {
@@ -63,8 +64,7 @@ public class ConsoleColourChanger {
                                 } else {
                                     model = new NamespacedKey(plugin, "console_side_" + colour);
                                 }
-                                im.setItemModel(model);
-                                is.setItemMeta(im);
+                                is.setData(DataComponentTypes.ITEM_MODEL, model);
                                 display.setItemStack(is);
                             }
                         }

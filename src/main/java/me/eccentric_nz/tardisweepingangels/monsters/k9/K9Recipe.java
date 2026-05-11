@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.tardisweepingangels.monsters.k9;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.keys.K9Variant;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
@@ -23,7 +24,6 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
 
 public class K9Recipe {
 
@@ -35,10 +35,8 @@ public class K9Recipe {
 
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.BONE);
-        ItemMeta im = is.getItemMeta();
-        im.customName(Component.text("K9"));
-        im.setItemModel(K9Variant.K9.getKey());
-        is.setItemMeta(im);
+        is.setData(DataComponentTypes.CUSTOM_NAME, Component.text("K9"));
+        is.setData(DataComponentTypes.ITEM_MODEL, K9Variant.K9.getKey());
         ShapedRecipe recipe = new ShapedRecipe(TARDISWeepingAngels.K9, is);
         recipe.shape("III", "RRR", "BBB");
         // set ingredients

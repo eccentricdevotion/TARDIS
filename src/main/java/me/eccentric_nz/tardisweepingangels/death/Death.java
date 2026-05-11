@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.tardisweepingangels.death;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.PotionContents;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelSpawnEvent;
@@ -39,7 +41,6 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionType;
@@ -173,9 +174,9 @@ public class Death implements Listener {
                         stack = ItemStack.of(mire_drops.get(TARDISConstants.RANDOM.nextInt(mire_drops.size())), TARDISConstants.RANDOM.nextInt(2) + 1);
                         if (stack.getType() == Material.POTION) {
                             // make it a strength potion
-                            PotionMeta potionMeta = (PotionMeta) stack.getItemMeta();
-                            potionMeta.setBasePotionType(PotionType.STRENGTH);
-                            stack.setItemMeta(potionMeta);
+                            stack.setData(DataComponentTypes.POTION_CONTENTS, PotionContents.potionContents()
+                                    .potion(PotionType.STRENGTH)
+                                    .build());
                         }
                     }
                     event.getEntity().getWorld().dropItemNaturally(event.getEntity().getLocation(), stack);
@@ -333,9 +334,9 @@ public class Death implements Listener {
                         stack = HeadBuilder.getItemStack(Monster.EMPTY_CHILD);
                     } else if (TARDISConstants.RANDOM.nextInt(100) < 6) {
                         stack = ItemStack.of(Material.POTION);
-                        PotionMeta potionMeta = (PotionMeta) stack.getItemMeta();
-                        potionMeta.setBasePotionType(PotionType.REGENERATION);
-                        stack.setItemMeta(potionMeta);
+                        stack.setData(DataComponentTypes.POTION_CONTENTS, PotionContents.potionContents()
+                                .potion(PotionType.REGENERATION)
+                                .build());
                     } else {
                         stack = ItemStack.of(empty_drops.get(TARDISConstants.RANDOM.nextInt(empty_drops.size())), TARDISConstants.RANDOM.nextInt(1) + 1);
                     }

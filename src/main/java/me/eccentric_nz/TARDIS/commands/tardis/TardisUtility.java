@@ -1,6 +1,7 @@
 package me.eccentric_nz.TARDIS.commands.tardis;
 
 import com.mojang.datafixers.util.Pair;
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.advanced.DiskWriterCommand;
@@ -27,7 +28,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -94,11 +94,7 @@ public class TardisUtility {
         boolean complexBool = false;
         if (is == null) {
             complexBool = true;
-        } else if (!is.hasItemMeta()) {
-            complexBool = true;
-        } else if (!is.getItemMeta().hasCustomName()) {
-            complexBool = true;
-        } else if (!ComponentUtils.endsWith(is.getItemMeta().customName(), dn)) {
+        } else if (!ComponentUtils.isNamed(is, dn)) {
             complexBool = true;
         }
         return complexBool;
@@ -133,9 +129,7 @@ public class TardisUtility {
                 itemFrame = MonitorUtils.getItemFrameFromLocation(tardis.getTardisId(), false);
                 // reinstate display name
                 ItemStack glass = itemFrame.getItem();
-                ItemMeta im = glass.getItemMeta();
-                im.customName(ComponentUtils.toWhite("Monitor Frame"));
-                glass.setItemMeta(im);
+                glass.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Monitor Frame"));
             }
             case SONIC_DOCK -> itemFrame = SonicDock.getItemFrame(tardis.getTardisId());
         }

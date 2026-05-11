@@ -16,8 +16,10 @@
  */
 package me.eccentric_nz.tardischemistry.microscope;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.keys.Specimen;
+import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import org.bukkit.Rotation;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -32,7 +34,6 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 public class MicroscopeInteractListener implements Listener {
@@ -54,15 +55,8 @@ public class MicroscopeInteractListener implements Listener {
         Player player = event.getPlayer();
         ItemStack is = player.getInventory().getItemInMainHand();
         if (!is.getType().isAir() && LabEquipment.getByMaterial().containsKey(is.getType())) {
-            // does it have item meta
-            ItemMeta im = is.getItemMeta();
-            if (im == null) {
-                return;
-            }
-            if (!im.hasCustomName()) {
-                return;
-            }
-            if (!im.hasItemModel()) {
+            // does it have data components
+            if (!is.hasData(DataComponentTypes.CUSTOM_NAME) || !ComponentUtils.isModelled(is)) {
                 return;
             }
             // get the block

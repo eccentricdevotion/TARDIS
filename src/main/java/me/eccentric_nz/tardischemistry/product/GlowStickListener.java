@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.tardischemistry.product;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import org.bukkit.NamespacedKey;
@@ -26,7 +27,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 public class GlowStickListener implements Listener {
@@ -42,16 +42,14 @@ public class GlowStickListener implements Listener {
         if (event.getAction().equals(Action.RIGHT_CLICK_AIR)) {
             Player player = event.getPlayer();
             ItemStack is = event.getItem();
-            if (is != null && GlowStickMaterial.isCorrectMaterial(is.getType()) && is.hasItemMeta()) {
-                ItemMeta im = is.getItemMeta();
-                if (im.hasCustomName() && ComponentUtils.endsWith(im.customName(), "Glow Stick") && !im.hasEnchantmentGlintOverride()) {
+            if (is != null && GlowStickMaterial.isCorrectMaterial(is.getType())) {
+                if (ComponentUtils.isNamed(is, "Glow Stick") && !is.hasData(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE)) {
                     player.playSound(player.getLocation(), Sound.BLOCK_ANVIL_HIT, 1.0f, 1.0f);
                     // switch custom data models e.g. 10000008 -> 12000008
-                    Product glowstick = Product.getByName().get(ComponentUtils.stripColour(im.customName()));
-                    im.setItemModel(glowstick.getActive());
-                    im.setEnchantmentGlintOverride(true);
-                    im.getPersistentDataContainer().set(namespacedKey, PersistentDataType.INTEGER, 100);
-                    is.setItemMeta(im);
+                    Product glowstick = Product.getByName().get(ComponentUtils.stripColour(is.getData(DataComponentTypes.CUSTOM_NAME)));
+                    is.setData(DataComponentTypes.ITEM_MODEL, glowstick.getActive());
+                    is.setData(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE, true);
+                    is.editPersistentDataContainer(pdc -> pdc.set(namespacedKey, PersistentDataType.INTEGER, 100));
                 }
             }
         }

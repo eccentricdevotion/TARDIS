@@ -16,10 +16,13 @@
  */
 package me.eccentric_nz.TARDIS.desktop;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.custommodels.GUIChameleonConstructor;
 import me.eccentric_nz.TARDIS.custommodels.GUIChameleonPresets;
+import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
 import me.eccentric_nz.TARDIS.custommodels.GUIUpgrade;
 import me.eccentric_nz.TARDIS.enumeration.Desktops;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
@@ -27,7 +30,6 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
 
@@ -77,61 +79,45 @@ public class PluginThemeInventory extends DesktopThemeInventory {
         if (plugin.getConfig().getBoolean("desktop.previews")) {
             // info
             ItemStack info = ItemStack.of(GUIChameleonConstructor.INFO.material(), 1);
-            ItemMeta io = info.getItemMeta();
-            io.customName(Component.text("Info"));
-            io.lore(List.of(
+            info.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Info"));
+            info.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(
                     Component.text("Shift-left click"),
                     Component.text("a console block to"),
                     Component.text("transmat to a"),
                     Component.text("desktop preview.")
-            ));
-            info.setItemMeta(io);
+            )));
             stack[GUIUpgrade.INFO.slot()] = info;
         }
         // archive consoles
         if (TARDISPermission.hasPermission(player, "tardis.archive")) {
-            ItemStack arc = ItemStack.of(GUIUpgrade.ARCHIVE_CONSOLES.material(), 1);
-            ItemMeta hive_im = arc.getItemMeta();
-            hive_im.customName(Component.text("Archive Consoles"));
-            arc.setItemMeta(hive_im);
-            stack[GUIUpgrade.ARCHIVE_CONSOLES.slot()] = arc;
+            ItemStack archive = ItemStack.of(GUIUpgrade.ARCHIVE_CONSOLES.material(), 1);
+            archive.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Archive Consoles"));
+            stack[GUIUpgrade.ARCHIVE_CONSOLES.slot()] = archive;
         }
         if (plugin.getConfig().getBoolean("allow.repair")) {
             // repair
             if (TARDISPermission.hasPermission(player, "tardis.repair")) {
-                ItemStack rep = ItemStack.of(GUIUpgrade.REPAIR_CONSOLE.material(), 1);
-                ItemMeta air_im = rep.getItemMeta();
-                air_im.customName(Component.text("Repair Console"));
-                rep.setItemMeta(air_im);
-                stack[GUIUpgrade.REPAIR_CONSOLE.slot()] = rep;
+                ItemStack repair = ItemStack.of(GUIUpgrade.REPAIR_CONSOLE.material(), 1);
+                repair.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Repair Console"));
+                stack[GUIUpgrade.REPAIR_CONSOLE.slot()] = repair;
             }
             // clean
             if (TARDISPermission.hasPermission(player, "tardis.repair")) {
-                ItemStack cle = ItemStack.of(GUIUpgrade.CLEAN.material(), 1);
-                ItemMeta an_im = cle.getItemMeta();
-                an_im.customName(Component.text("Clean"));
-                cle.setItemMeta(an_im);
-                stack[GUIUpgrade.CLEAN.slot()] = cle;
+                ItemStack clean = ItemStack.of(GUIUpgrade.CLEAN.material(), 1);
+                clean.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Clean"));
+                stack[GUIUpgrade.CLEAN.slot()] = clean;
             }
         }
         // customise console
-        ItemStack cons = ItemStack.of(GUIUpgrade.CONSOLE_ROTOR.material(), 1);
-        ItemMeta ole_im = cons.getItemMeta();
-        ole_im.customName(Component.text("Customise Console"));
-        cons.setItemMeta(ole_im);
-        stack[GUIUpgrade.CONSOLE_ROTOR.slot()] = cons;
+        ItemStack console = ItemStack.of(GUIUpgrade.CONSOLE_ROTOR.material(), 1);
+        console.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Customise Console"));
+        stack[GUIUpgrade.CONSOLE_ROTOR.slot()] = console;
         // custom consoles page
         ItemStack custom = ItemStack.of(GUIChameleonPresets.GO_TO_PAGE_2.material(), 1);
-        ItemMeta custom_im = custom.getItemMeta();
-        custom_im.customName(Component.text(plugin.getLanguage().getString("BUTTON_PAGE_2", "Go to page 2")));
-        custom.setItemMeta(custom_im);
+        custom.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_PAGE_2", "Go to page 2")));
         stack[51] = custom;
         // close
-        ItemStack close = ItemStack.of(GUIUpgrade.CLOSE.material(), 1);
-        ItemMeta close_im = close.getItemMeta();
-        close_im.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
-        close.setItemMeta(close_im);
-        stack[GUIUpgrade.CLOSE.slot()] = close;
+        stack[GUIUpgrade.CLOSE.slot()] = GUIItemFactory.close();
 
         return stack;
     }

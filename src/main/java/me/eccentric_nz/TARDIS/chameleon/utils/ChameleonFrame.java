@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.chameleon.utils;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import net.kyori.adventure.text.Component;
@@ -23,7 +24,6 @@ import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 public class ChameleonFrame {
 
@@ -35,9 +35,7 @@ public class ChameleonFrame {
                 if (e instanceof ItemFrame frame) {
                     if (compareLocations(e.getLocation(), location)) {
                         ItemStack is = ItemStack.of(preset.getGuiDisplay());
-                        ItemMeta im = is.getItemMeta();
-                        im.customName(Component.text(preset.toString()));
-                        is.setItemMeta(im);
+                        is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(preset.toString()));
                         frame.setItem(is, true);
                         break;
                     }

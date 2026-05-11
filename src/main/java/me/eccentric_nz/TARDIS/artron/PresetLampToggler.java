@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.artron;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.utility.LightLevel;
@@ -32,7 +33,6 @@ import org.bukkit.block.Block;
 import org.bukkit.block.data.Levelled;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -110,9 +110,7 @@ public class PresetLampToggler {
                                 new VariableLight(material, b.getLocation().add(0.5, 0.5, 0.5)).change(light.getOff().getCustomModel(), 0);
                             } else {
                                 ItemStack is = ItemStack.of(material);
-                                ItemMeta im = is.getItemMeta();
-                                im.customName(ComponentUtils.toWhite(light.getOff().getDisplayName()));
-                                is.setItemMeta(im);
+                                is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(light.getOff().getDisplayName()));
                                 display.setItemStack(is);
                             }
                         }
@@ -136,9 +134,7 @@ public class PresetLampToggler {
                             new VariableLight(variable, b.getLocation().add(0.5, 0.5, 0.5)).change(light.getOn().getCustomModel(), level);
                         } else {
                             ItemStack is = ItemStack.of(material);
-                            ItemMeta im = is.getItemMeta();
-                            im.customName(ComponentUtils.toWhite(light.getOn().getDisplayName()));
-                            is.setItemMeta(im);
+                            is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(light.getOn().getDisplayName()));
                             display.setItemStack(is);
                         }
                     }

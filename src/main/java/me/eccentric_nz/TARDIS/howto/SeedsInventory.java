@@ -16,8 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.howto;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
+import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
 import me.eccentric_nz.TARDIS.enumeration.Desktops;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import net.kyori.adventure.text.Component;
@@ -27,9 +30,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.List;
 
 /**
  * By the time of his eleventh incarnation, the Doctor's console room had gone through at least twelve redesigns, though
@@ -70,20 +70,14 @@ public class SeedsInventory implements InventoryHolder {
             if (TARDISPermission.hasPermission(player, "tardis." + a.getPermission()) && !a.getSeedMaterial().equals(Material.COBBLESTONE)) {
                 Material m = Material.getMaterial(a.getSeed());
                 ItemStack is = ItemStack.of(m, 1);
-                ItemMeta im = is.getItemMeta();
-                im.customName(Component.text(a.getDescription()));
-                im.lore(List.of(Component.text("Click to see recipe...")));
-                is.setItemMeta(im);
+                is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(a.getDescription()));
+                is.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text("Click to see recipe...")).build());
                 stack[i] = is;
                 i++;
             }
         }
         // close
-        ItemStack close = ItemStack.of(Material.BOWL, 1);
-        ItemMeta close_im = close.getItemMeta();
-        close_im.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
-        close.setItemMeta(close_im);
-        stack[44] = close;
+        stack[44] = GUIItemFactory.close();
         return stack;
     }
 }

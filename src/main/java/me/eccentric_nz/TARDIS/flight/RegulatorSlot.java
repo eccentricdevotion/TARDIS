@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.flight;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
 
@@ -43,9 +43,7 @@ class RegulatorSlot {
 
     RegulatorSlot() {
         box = ItemStack.of(Material.BLUE_WOOL, 1);
-        ItemMeta ler = box.getItemMeta();
-        ler.customName(Component.text("Regulator"));
-        box.setItemMeta(ler);
+        box.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Regulator"));
         vortex = ItemStack.of(Material.BLACK_STAINED_GLASS_PANE, 1);
     }
 

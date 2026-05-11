@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
@@ -24,7 +25,6 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
 
 /*
 easy_shape:CRC,GWG,GRG
@@ -54,11 +54,9 @@ public class TimeRotorCustomRecipe {
             try {
                 Material material = Material.valueOf(plugin.getCustomRotorsConfig().getString(r + ".animated_material"));
                 ItemStack is = ItemStack.of(Material.LIGHT_GRAY_DYE, 1);
-                ItemMeta im = is.getItemMeta();
                 String dn = TARDISStringUtils.capitalise(r);
-                im.customName(ComponentUtils.toWhite("Time Rotor " + dn));
-                im.setItemModel(new NamespacedKey(plugin, "time_rotor_" + r + "_off"));
-                is.setItemMeta(im);
+                is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Time Rotor " + dn));
+                is.setData(DataComponentTypes.ITEM_MODEL, new NamespacedKey(plugin, "time_rotor_" + r + "_off"));
                 NamespacedKey key = new NamespacedKey(plugin, "time_rotor_" + r);
                 ShapedRecipe recipe = new ShapedRecipe(key, is);
                 recipe.shape("CRC", "GWG", "GRG");

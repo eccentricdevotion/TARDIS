@@ -16,18 +16,19 @@
  */
 package me.eccentric_nz.TARDIS.customblocks;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.data.Lamp;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetLamps;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import net.kyori.adventure.text.Component;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Levelled;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.BoundingBox;
 
@@ -49,25 +50,24 @@ public class TARDISDisplayItemUtils {
     public static TARDISDisplayItem get(ItemDisplay display) {
         ItemStack is = display.getItemStack();
         if (is != null) {
-            ItemMeta im = is.getItemMeta();
             // Try to get by model
-            if (im.hasItemModel()) {
+            if (ComponentUtils.isModelled(is)) {
                 if (Tag.ITEMS_DECORATED_POT_SHERDS.isTagged(is.getType())) {
                     return TARDISBlockDisplayItem.CUSTOM_DOOR;
                 } else {
-                    return TARDISDisplayItemRegistry.getByModel(im.getItemModel());
+                    return TARDISDisplayItemRegistry.getByModel(NamespacedKey.fromString(is.getData(DataComponentTypes.ITEM_MODEL).asString()));
                 }
             }
             // Try to get by Display Name
-            if (im.hasCustomName()) {
-                TARDISDisplayItem displayItem = TARDISDisplayItemRegistry.getByDisplayName(im.customName());
+            if (is.hasData(DataComponentTypes.CUSTOM_NAME)) {
+                TARDISDisplayItem displayItem = TARDISDisplayItemRegistry.getByDisplayName(is.getData(DataComponentTypes.CUSTOM_NAME));
                 if (displayItem != null) {
                     return displayItem;
                 }
             }
             // Try to get by Block key
-            if (im.getPersistentDataContainer().has(TARDIS.plugin.getCustomBlockKey())) {
-                String str = im.getPersistentDataContainer().get(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING);
+            if (is.getPersistentDataContainer().has(TARDIS.plugin.getCustomBlockKey())) {
+                String str = is.getPersistentDataContainer().get(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING);
                 NamespacedKey nsk = new NamespacedKey(TARDIS.plugin, str);
                 return TARDISDisplayItemRegistry.getByModel(nsk);
             }
@@ -247,14 +247,14 @@ public class TARDISDisplayItemUtils {
     public static void set(TARDISDisplayItem tdi, World world, int x, int y, int z) {
         // spawn an item display entity
         ItemStack is = ItemStack.of(tdi.getMaterial(), 1);
-        ItemMeta im = is.getItemMeta();
         if (tdi.isSeed()) {
-            im.customName(ComponentUtils.toGold(tdi.getDisplayName()));
+            is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toGold(tdi.getDisplayName()));
+        } else if (tdi.isPipe() || tdi.isVariable()) {
+            is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(tdi.getDisplayName()));
         } else {
-            im.customName(ComponentUtils.toWhite(tdi.getDisplayName()));
+            is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(tdi.getDisplayName()));
         }
-        im.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING, tdi.getCustomModel().getKey());
-        is.setItemMeta(im);
+        is.editPersistentDataContainer(pdc -> pdc.set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING, tdi.getCustomModel().getKey()));
         Location l = new Location(world, x + 0.5d, y + 0.5d, z + 0.5d);
         ItemDisplay display = (ItemDisplay) world.spawnEntity(l, EntityType.ITEM_DISPLAY);
         display.setItemStack(is);
@@ -276,14 +276,14 @@ public class TARDISDisplayItemUtils {
     public static ItemStack setAndReturnStack(TARDISDisplayItem tdi, World world, int x, int y, int z) {
         // spawn an item display entity
         ItemStack is = ItemStack.of(tdi.getMaterial(), 1);
-        ItemMeta im = is.getItemMeta();
         if (tdi.isSeed()) {
-            im.customName(ComponentUtils.toGold(tdi.getDisplayName()));
+            is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toGold(tdi.getDisplayName()));
+        } else if (tdi.isPipe() || tdi.isVariable()) {
+            is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(tdi.getDisplayName()));
         } else {
-            im.customName(ComponentUtils.toWhite(tdi.getDisplayName()));
+            is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(tdi.getDisplayName()));
         }
-        im.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING, tdi.getCustomModel().getKey());
-        is.setItemMeta(im);
+        is.editPersistentDataContainer(pdc -> pdc.set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING, tdi.getCustomModel().getKey()));
         Location l = new Location(world, x + 0.5d, y + 0.5d, z + 0.5d);
         ItemDisplay display = (ItemDisplay) world.spawnEntity(l, EntityType.ITEM_DISPLAY);
         display.setItemStack(is);
@@ -342,18 +342,17 @@ public class TARDISDisplayItemUtils {
         }
         Material material = (
                 tdi == TARDISBlockDisplayItem.BONE_DOOR ||
-                tdi == TARDISBlockDisplayItem.CLASSIC_DOOR ||
-                tdi == TARDISBlockDisplayItem.DINER_DOOR ||
-                tdi == TARDISBlockDisplayItem.SIDRAT_DOOR
+                        tdi == TARDISBlockDisplayItem.CLASSIC_DOOR ||
+                        tdi == TARDISBlockDisplayItem.DINER_DOOR ||
+                        tdi == TARDISBlockDisplayItem.SIDRAT_DOOR
         ) ? tdi.getCraftMaterial() : tdi.getMaterial();
         ItemStack is = ItemStack.of(material, 1);
-        ItemMeta im = is.getItemMeta();
-        im.customName(ComponentUtils.toWhite(tdi.getDisplayName()));
-        im.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING, namespacedKey.getKey());
+        is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(tdi.getDisplayName()));
+        NamespacedKey finalNamespacedKey = namespacedKey;
+        is.editPersistentDataContainer(pdc -> pdc.set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING, finalNamespacedKey.getKey()));
         if (tdi.isDoor()) {
-            im.setItemModel(tdi.getCustomModel());
+            is.setData(DataComponentTypes.ITEM_MODEL, tdi.getCustomModel());
         }
-        is.setItemMeta(im);
         double ay = (tdi.isClosedDoor()) ? 0.0d : 0.5d;
         // TODO any TARDISDisplayItems that dont have a custom model are better off as a BlockDisplay
         ItemDisplay display = (ItemDisplay) block.getWorld().spawnEntity(block.getLocation().add(0.5d, ay, 0.5d), EntityType.ITEM_DISPLAY);
@@ -375,12 +374,12 @@ public class TARDISDisplayItemUtils {
      *
      * @param tdi   the TARDISDisplayItem to determine the ItemStack to display
      * @param block the block location to spawn the entity at
-     * @param im    the ItemMeta to set on the display ItemStack
+     * @param stack    the ItemStack to copy data from
      */
-    public static void setSeed(TARDISDisplayItem tdi, Block block, ItemMeta im) {
+    public static void setSeed(TARDISDisplayItem tdi, Block block, ItemStack stack) {
         block.setBlockData(TARDISConstants.BARRIER);
         ItemStack is = ItemStack.of(tdi.getMaterial(), 1);
-        is.setItemMeta(im);
+        is.copyDataFrom(stack, dataComponentType -> true);
         ItemDisplay display = (ItemDisplay) block.getWorld().spawnEntity(block.getLocation().add(0.5d, 0.5d, 0.5d), EntityType.ITEM_DISPLAY);
         display.setItemStack(is);
         display.setPersistent(true);
@@ -408,7 +407,7 @@ public class TARDISDisplayItemUtils {
     }
 
     /**
-     * Spawn an Interaction entity for a modelled TARDIS exterior
+     * Spawn an Interaction entity for a modeled TARDIS exterior
      *
      * @param stand the armour stand to add the interaction entity to
      * @param id    the tardis id to set for the key associated with the entity

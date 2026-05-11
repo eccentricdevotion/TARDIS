@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.playerprefs;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.ARS.ARSMapInventory;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.DamageUtility;
@@ -44,11 +46,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.UUID;
 
 /**
@@ -79,19 +79,16 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener {
         }
         Player player = (Player) event.getWhoClicked();
         UUID uuid = player.getUniqueId();
-        ItemMeta im = is.getItemMeta();
-        if (slot == GUIPlayerPreferences.FLIGHT_MODE.getSlot() && ComponentUtils.stripColour(im.customName()).equals("Flight Mode")) {
-            List<Component> lore = im.lore();
+        Component cn = is.getData(DataComponentTypes.CUSTOM_NAME);
+        if (slot == GUIPlayerPreferences.FLIGHT_MODE.getSlot() && ComponentUtils.stripColour(cn).equals("Flight Mode")) {
             // cycle through flight modes
-            FlightMode flight = FlightMode.valueOf(ComponentUtils.stripColour(lore.getFirst()));
+            FlightMode flight = FlightMode.valueOf(ComponentUtils.stripColour(is.getData(DataComponentTypes.LORE).lines().getFirst()));
             int mode = flight.getMode() + 1;
             int limit = (TARDISPermission.hasPermission(player, "tardis.fly")) ? 4 : 3;
             if (mode > limit) {
                 mode = 1;
             }
-            lore.set(0, Component.text(FlightMode.getByMode().get(mode).toString()));
-            im.lore(lore);
-            is.setItemMeta(im);
+            is.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text(FlightMode.getByMode().get(mode).toString())).build());
             // set flight mode
             HashMap<String, Object> setf = new HashMap<>();
             setf.put("flying_mode", mode);
@@ -100,7 +97,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener {
             plugin.getQueryFactory().doUpdate("player_prefs", setf, wheref);
             return;
         }
-        if (slot == GUIPlayerPreferences.INTERIOR_HUM_SOUND.getSlot() && ComponentUtils.stripColour(im.customName()).equals("Interior Hum Sound")) {
+        if (slot == GUIPlayerPreferences.INTERIOR_HUM_SOUND.getSlot() && ComponentUtils.stripColour(cn).equals("Interior Hum Sound")) {
             // close this gui and load the sounds GUI
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                 // close inventory
@@ -110,10 +107,9 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener {
             }, 1L);
             return;
         }
-        if (slot == GUIPlayerPreferences.HANDBRAKE.getSlot() && ComponentUtils.stripColour(im.customName()).equals("Handbrake")) {
+        if (slot == GUIPlayerPreferences.HANDBRAKE.getSlot() && ComponentUtils.stripColour(cn).equals("Handbrake")) {
             // you can only set it to ON!
-            List<Component> lore = im.lore();
-            if (ComponentUtils.stripColour(lore.getFirst()).equals(plugin.getLanguage().getString("SET_OFF", "OFF"))) {
+            if (ComponentUtils.stripColour(is.getData(DataComponentTypes.LORE).lines().getFirst()).equals(plugin.getLanguage().getString("SET_OFF", "OFF"))) {
                 // get this player's TARDIS
                 ResultSetTardisID rs = new ResultSetTardisID(plugin);
                 if (rs.fromUUID(uuid.toString())) {
@@ -126,8 +122,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener {
                         HashMap<String, Object> set = new HashMap<>();
                         set.put("handbrake_on", 1);
                         plugin.getQueryFactory().doUpdate("tardis", set, wheret);
-                        im.lore(List.of(Component.text(plugin.getLanguage().getString("SET_ON", "ON"))));
-                        is.setItemMeta(im);
+                        is.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text(plugin.getLanguage().getString("SET_ON", "ON"))).build());
                         // Check if it's at a recharge point
                         ArtronLevels tal = new ArtronLevels(plugin);
                         tal.recharge(id);
@@ -156,7 +151,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener {
             }
             return;
         }
-        if (slot == GUIPlayerPreferences.TARDIS_MAP.getSlot() && ComponentUtils.stripColour(im.customName()).equals("TARDIS Map")) {
+        if (slot == GUIPlayerPreferences.TARDIS_MAP.getSlot() && ComponentUtils.stripColour(cn).equals("TARDIS Map")) {
             // must be in the TARDIS
             HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", uuid.toString());
@@ -178,7 +173,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener {
             }
             return;
         }
-        if (slot == GUIPlayerPreferences.AUTONOMOUS_PREFERENCES.getSlot() && ComponentUtils.stripColour(im.customName()).equals("Autonomous Preferences")) {
+        if (slot == GUIPlayerPreferences.AUTONOMOUS_PREFERENCES.getSlot() && ComponentUtils.stripColour(cn).equals("Autonomous Preferences")) {
             // close this gui and load the TARDIS Autonomous Menu
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                 // close inventory
@@ -188,7 +183,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener {
             }, 1L);
             return;
         }
-        if (slot == GUIPlayerPreferences.FARMING_PREFERENCES.getSlot() && ComponentUtils.stripColour(im.customName()).equals("Farming Preferences")) {
+        if (slot == GUIPlayerPreferences.FARMING_PREFERENCES.getSlot() && ComponentUtils.stripColour(cn).equals("Farming Preferences")) {
             // close this gui and load the TARDIS Farming Menu
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                 // close inventory
@@ -198,7 +193,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener {
             }, 1L);
             return;
         }
-        if (slot == GUIPlayerPreferences.SONIC_CONFIGURATOR.getSlot() && ComponentUtils.stripColour(im.customName()).equals("Sonic Configurator")) {
+        if (slot == GUIPlayerPreferences.SONIC_CONFIGURATOR.getSlot() && ComponentUtils.stripColour(cn).equals("Sonic Configurator")) {
             // close this gui and load the Sonic Configurator
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                 // close inventory
@@ -208,7 +203,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener {
             }, 1L);
             return;
         }
-        if (slot == GUIPlayerPreferences.PARTICLES.getSlot() && ComponentUtils.stripColour(im.customName()).equals("Materialisation Particles")) {
+        if (slot == GUIPlayerPreferences.PARTICLES.getSlot() && ComponentUtils.stripColour(cn).equals("Materialisation Particles")) {
             // close this gui and load the Particle Preferences
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                 // close inventory
@@ -223,7 +218,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener {
         }
         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid.toString());
         boolean dialogs = rsp.resultSet() && rsp.isDialogsOn();
-        if (slot == GUIPlayerPreferences.GENERAL_PREFERENCES_MENU.getSlot() && ComponentUtils.stripColour(im.customName()).equals("General Preferences Menu")) {
+        if (slot == GUIPlayerPreferences.GENERAL_PREFERENCES_MENU.getSlot() && ComponentUtils.stripColour(cn).equals("General Preferences Menu")) {
             // close this gui and load the Admin Menu
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                 if (dialogs) {
@@ -236,7 +231,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener {
             }, 1L);
             return;
         }
-        if (slot == GUIPlayerPreferences.ADMIN_MENU.getSlot() && ComponentUtils.stripColour(im.customName()).equals("Admin Config Menu")) {
+        if (slot == GUIPlayerPreferences.ADMIN_MENU.getSlot() && ComponentUtils.stripColour(cn).equals("Admin Config Menu")) {
             // close this gui and load the Admin Menu
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                 if (dialogs) {

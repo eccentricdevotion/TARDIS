@@ -1,13 +1,16 @@
 package me.eccentric_nz.TARDIS.schematic.getters;
 
+import com.destroystokyo.paper.profile.PlayerProfile;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import org.bukkit.Location;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.SkullMeta;
+
+import java.util.concurrent.CompletableFuture;
 
 public class ArmourStandGetter {
 
@@ -62,14 +65,14 @@ public class ArmourStandGetter {
         ItemStack helmet = equipment.getHelmet();
         if (helmet != null) {
             JsonObject head = new JsonObject();
-            if (helmet.hasItemMeta()) {
-                ItemMeta im = helmet.getItemMeta();
-                if (im.hasItemModel()) {
-                    head.addProperty("model", im.getItemModel().toString());
-                }
-                if (im instanceof SkullMeta skullMeta) {
-                    skullMeta.getPlayerProfile().getProperties().stream().findFirst().ifPresent(property -> head.addProperty("skull", property.getValue()));
-                }
+            if (ComponentUtils.isModelled(helmet)) {
+                head.addProperty("model", helmet.getData(DataComponentTypes.ITEM_MODEL).asString());
+            }
+            if (helmet.hasData(DataComponentTypes.PROFILE)) {
+                CompletableFuture<PlayerProfile> future = helmet.getData(DataComponentTypes.PROFILE).resolve();
+                future.thenAccept(playerProfile -> {
+                    playerProfile.getProperties().stream().findFirst().ifPresent(property -> head.addProperty("skull", property.getValue()));
+                });
             }
             head.addProperty("material", helmet.getType().toString());
             object.add("head", head);

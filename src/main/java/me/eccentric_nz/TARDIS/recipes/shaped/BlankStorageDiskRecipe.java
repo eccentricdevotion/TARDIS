@@ -16,13 +16,15 @@
  */
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.TooltipDisplay;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
 
 /*
 easy_shape:QQQ,Q-Q,QQQ
@@ -43,9 +45,10 @@ public class BlankStorageDiskRecipe {
 
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.MUSIC_DISC_STRAD, 1);
-        ItemMeta im = is.getItemMeta();
-        im.customName(ComponentUtils.toWhite("Blank Storage Disk"));
-        is.setItemMeta(im);
+        is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Blank Storage Disk"));
+        is.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
+                .addHiddenComponents(TARDISConstants.HIDE)
+                .build());
         NamespacedKey key = new NamespacedKey(plugin, "blank_storage_disk");
         ShapedRecipe r = new ShapedRecipe(key, is);
         r.shape("QQQ", "Q Q", "QQQ");

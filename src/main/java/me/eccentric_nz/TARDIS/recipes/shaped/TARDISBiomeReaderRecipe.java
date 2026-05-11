@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.CustomModelData;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.keys.CircuitVariant;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
@@ -25,8 +27,6 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
 /*
 easy_shape:---,-C-,SDT
@@ -56,18 +56,14 @@ public class TARDISBiomeReaderRecipe {
 
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.BRICK, 1);
-        ItemMeta im = is.getItemMeta();
-        im.customName(ComponentUtils.toWhite("TARDIS Biome Reader"));
-        is.setItemMeta(im);
+        is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("TARDIS Biome Reader"));
         NamespacedKey key = new NamespacedKey(plugin, "tardis_biome_reader");
         ShapedRecipe r = new ShapedRecipe(key, is);
         ItemStack exact = ItemStack.of(Material.GLOWSTONE_DUST, 1);
-        ItemMeta em = exact.getItemMeta();
-        em.customName(ComponentUtils.toWhite("Emerald Environment Circuit"));
-        CustomModelDataComponent ecomponent = em.getCustomModelDataComponent();
-        ecomponent.setFloats(CircuitVariant.EMERALD.getFloats());
-        em.setCustomModelDataComponent(ecomponent);
-        exact.setItemMeta(em);
+        exact.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Emerald Environment Circuit"));
+        exact.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                .addFloats(CircuitVariant.EMERALD.getFloats())
+                .build());
         if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             r.shape(" C ", "SDT", "LWN");
             r.setIngredient('C', new RecipeChoice.ExactChoice(exact));

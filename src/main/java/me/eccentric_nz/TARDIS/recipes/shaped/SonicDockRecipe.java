@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.CustomModelData;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.keys.CircuitVariant;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
@@ -26,8 +28,6 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
 /*
 easy_shape:RGR,GSG,BGB
@@ -54,10 +54,8 @@ public class SonicDockRecipe {
 
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.FLOWER_POT, 1);
-        ItemMeta im = is.getItemMeta();
-        im.customName(ComponentUtils.toWhite("Sonic Dock"));
-        im.setItemModel(RecipeItem.SONIC_DOCK.getModel());
-        is.setItemMeta(im);
+        is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Sonic Dock"));
+        is.setData(DataComponentTypes.ITEM_MODEL, RecipeItem.SONIC_DOCK.getModel());
         NamespacedKey key = new NamespacedKey(plugin, "sonic_dock");
         ShapedRecipe r = new ShapedRecipe(key, is);
         r.shape("RGR", "GSG", "BGB");
@@ -66,12 +64,10 @@ public class SonicDockRecipe {
         if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             r.setIngredient('G', Material.GOLD_INGOT);
             ItemStack exact = ItemStack.of(Material.GLOWSTONE_DUST, 1);
-            ItemMeta em = exact.getItemMeta();
-            em.customName(ComponentUtils.toWhite("Sonic Oscillator"));
-            CustomModelDataComponent component = em.getCustomModelDataComponent();
-            component.setFloats(CircuitVariant.SONIC.getFloats());
-            em.setCustomModelDataComponent(component);
-            exact.setItemMeta(em);
+            exact.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Sonic Oscillator"));
+            exact.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                    .addFloats(CircuitVariant.SONIC.getFloats())
+                    .build());
             r.setIngredient('S', new RecipeChoice.ExactChoice(exact));
         } else {
             r.shape("RGR", "GSG", "BGB");

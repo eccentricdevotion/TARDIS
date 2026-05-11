@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -51,7 +52,7 @@ public class TARDISTemporalListener implements Listener {
         Player p = event.getPlayer();
         ItemStack inhand = p.getInventory().getItemInMainHand();
         if (event.getAction().equals(Action.RIGHT_CLICK_AIR) && inhand.getType().equals(Material.CLOCK) && TARDISPermission.hasPermission(p, "tardis.temporal")) {
-            if (inhand.hasItemMeta() && inhand.getItemMeta().hasCustomName() && notthese.contains(ComponentUtils.stripColour(inhand.getItemMeta().customName()))) {
+            if (inhand.hasData(DataComponentTypes.CUSTOM_NAME) && notthese.contains(ComponentUtils.stripColour(inhand.getData(DataComponentTypes.CUSTOM_NAME)))) {
                 return;
             }
             p.resetPlayerTime();

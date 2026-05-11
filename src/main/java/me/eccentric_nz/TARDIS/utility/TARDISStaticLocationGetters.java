@@ -49,16 +49,15 @@ public class TARDISStaticLocationGetters {
      * @return a Location.
      */
     public static Location getLocationFromDB(String s) {
-        double savedX, savedY, savedZ;
         // compile location from string
         String[] data = s.split(":");
         World savedWorld = Bukkit.getServer().getWorld(Key.key(data[0], data[1]));
         if (savedWorld == null) {
             return null;
         }
-        savedX = TARDISNumberParsers.parseDouble(data[2]);
-        savedY = TARDISNumberParsers.parseDouble(data[3]);
-        savedZ = TARDISNumberParsers.parseDouble(data[4]);
+        double savedX = TARDISNumberParsers.parseDouble(data[2]);
+        double savedY = TARDISNumberParsers.parseDouble(data[3]);
+        double savedZ = TARDISNumberParsers.parseDouble(data[4]);
         return new Location(savedWorld, savedX, savedY, savedZ);
     }
 
@@ -116,7 +115,7 @@ public class TARDISStaticLocationGetters {
      * @param x the x coordinate of the block's location
      * @param y the y coordinate of the block's location
      * @param z the z coordinate of the block's location
-     * @return a String in the style of org.bukkit.Location.toString() e.g. 7.0.1Location{world=CraftWorld{key=minecraft:tworld},x=0.0,y=0.0,z=0.0,pitch=0.0,yaw=0.0}
+     * @return a String in the style of org.bukkit.Location.toString() e.g. Location{world=CraftWorld{key=minecraft:tworld},x=0.0,y=0.0,z=0.0,pitch=0.0,yaw=0.0}
      */
     public static String makeLocationStr(String w, String x, String y, String z) {
         return "Location{world=CraftWorld{key=minecraft:" + w.toLowerCase(Locale.ROOT) + "},x=" + x + ".0,y=" + y + ".0,z=" + z + ".0,pitch=0.0,yaw=0.0}";
@@ -129,7 +128,7 @@ public class TARDISStaticLocationGetters {
      * @param x the x coordinate of the block's location
      * @param y the y coordinate of the block's location
      * @param z the z coordinate of the block's location
-     * @return a String in the style of org.bukkit.Location.toString() e.g. 7.0.1Location{world=CraftWorld{key=minecraft:tworld},x=0.0,y=0.0,z=0.0,pitch=0.0,yaw=0.0}
+     * @return a String in the style of org.bukkit.Location.toString() e.g. Location{world=CraftWorld{key=minecraft:tworld},x=0.0,y=0.0,z=0.0,pitch=0.0,yaw=0.0}
      */
     public static String makeLocationStr(World w, int x, int y, int z) {
         String key = w.getKey().asString();

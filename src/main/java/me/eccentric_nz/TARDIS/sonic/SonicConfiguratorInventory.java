@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.sonic;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUISonicConfigurator;
 import net.kyori.adventure.text.Component;
@@ -23,10 +25,6 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class SonicConfiguratorInventory implements InventoryHolder {
 
@@ -53,31 +51,25 @@ public class SonicConfiguratorInventory implements InventoryHolder {
         for (GUISonicConfigurator gui : GUISonicConfigurator.values()) {
             if (gui.getSlot() != -1) {
                 ItemStack is = ItemStack.of(gui.getMaterial(), 1);
-                ItemMeta im = is.getItemMeta();
-                im.customName(Component.text(gui.getName()));
+                is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(gui.getName()));
                 if (!gui.getLore().isEmpty()) {
-                    List<Component> lore = new ArrayList<>();
+                    ItemLore.Builder lore = ItemLore.lore();
                     for (String s : gui.getLore().split("~")) {
-                        lore.add(Component.text(s));
+                        lore.addLine(Component.text(s));
                     }
-                    im.lore(lore);
+                    is.setData(DataComponentTypes.LORE, lore.build());
                 }
-                is.setItemMeta(im);
                 stack[gui.getSlot()] = is;
             }
         }
         ItemStack wool = ItemStack.of(GUISonicConfigurator.WAITING.getMaterial(), 1);
-        ItemMeta wim = wool.getItemMeta();
-        wim.customName(Component.text(" "));
-        wool.setItemMeta(wim);
+        wool.setData(DataComponentTypes.CUSTOM_NAME, Component.text(" "));
         for (int i = 9; i < 18; i++) {
             stack[i] = wool;
         }
         stack[27] = wool;
         ItemStack place = ItemStack.of(GUISonicConfigurator.PLACE_SONIC.getMaterial(), 1);
-        ItemMeta pim = place.getItemMeta();
-        pim.customName(Component.text(GUISonicConfigurator.PLACE_SONIC.getName()));
-        place.setItemMeta(pim);
+        place.setData(DataComponentTypes.CUSTOM_NAME, Component.text(GUISonicConfigurator.PLACE_SONIC.getName()));
         stack[36] = place;
         return stack;
     }

@@ -16,7 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.playerprefs;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.CustomModelData;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
 import me.eccentric_nz.TARDIS.custommodels.GUISonicPreferences;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import net.kyori.adventure.text.Component;
@@ -25,8 +29,6 @@ import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
 import java.util.List;
 
@@ -38,11 +40,9 @@ import java.util.List;
  */
 public class TARDISSonicMenuInventory implements InventoryHolder {
 
-    private final TARDIS plugin;
     private final Inventory inventory;
 
     public TARDISSonicMenuInventory(TARDIS plugin) {
-        this.plugin = plugin;
         this.inventory = plugin.getServer().createInventory(this, 36, Component.text("Sonic Prefs Menu", NamedTextColor.DARK_RED));
         this.inventory.setContents(getItemStack());
     }
@@ -64,53 +64,41 @@ public class TARDISSonicMenuInventory implements InventoryHolder {
         for (GUISonicPreferences sonic : GUISonicPreferences.values()) {
             if (sonic.getMaterial() == Material.BLAZE_ROD) {
                 ItemStack is = ItemStack.of(sonic.getMaterial(), 1);
-                ItemMeta im = is.getItemMeta();
-                im.customName(ComponentUtils.toWhite("Sonic Screwdriver"));
-                im.lore(List.of(Component.text(sonic.getName())));
-                CustomModelDataComponent component = im.getCustomModelDataComponent();
-                component.setFloats(sonic.getFloats());
-                im.setCustomModelDataComponent(component);
-                is.setItemMeta(im);
+                is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Sonic Screwdriver"));
+                is.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text(sonic.getName())).build());
+                is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                        .addFloats(sonic.getFloats())
+                        .build());
                 stack[sonic.getSlot()] = is;
             }
         }
         // coloured wool
         ItemStack wool = ItemStack.of(Material.WHITE_WOOL);
-        ItemMeta wool_im = wool.getItemMeta();
-        wool_im.customName(Component.text("Display name colour"));
-        wool_im.lore(List.of(Component.text("Click to select")));
-        wool.setItemMeta(wool_im);
+        wool.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Display name colour"));
+        wool.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text("Click to select")).build());
         stack[28] = wool;
         // info
         ItemStack info = ItemStack.of(Material.BOOK, 1);
-        ItemMeta info_im = info.getItemMeta();
-        info_im.customName(Component.text("Instructions"));
-        info_im.lore(List.of(
+        info.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Instructions"));
+        info.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(
                 Component.text("Put your Sonic Screwdriver"),
                 Component.text("in the bottom left most slot"),
                 Component.text("and then click on the"),
                 Component.text("Sonic of your choice.")
-        ));
-        info.setItemMeta(info_im);
+        )));
         stack[31] = info;
         // info 2
         ItemStack name = ItemStack.of(Material.BOOK, 1);
-        ItemMeta name_im = name.getItemMeta();
-        name_im.customName(Component.text("Name"));
-        name_im.lore(List.of(
+        name.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Name"));
+        name.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(
                 Component.text("If you want to have"),
                 Component.text("a coloured display name"),
                 Component.text("click the wool block"),
                 Component.text("to choose a colour.")
-        ));
-        name.setItemMeta(name_im);
+        )));
         stack[32] = name;
         // close
-        ItemStack close = ItemStack.of(Material.BOWL, 1);
-        ItemMeta close_im = close.getItemMeta();
-        close_im.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
-        close.setItemMeta(close_im);
-        stack[35] = close;
+        stack[35] = GUIItemFactory.close();
 
         return stack;
     }

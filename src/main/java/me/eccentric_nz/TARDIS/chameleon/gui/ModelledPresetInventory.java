@@ -16,10 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.chameleon.gui;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.custommodels.GUIChameleonPoliceBoxes;
 import me.eccentric_nz.TARDIS.custommodels.GUIChameleonPresets;
+import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
 import me.eccentric_nz.TARDIS.custommodels.keys.ChameleonVariant;
 import me.eccentric_nz.TARDIS.custommodels.keys.ColouredVariant;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
@@ -31,7 +33,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
 import java.util.Locale;
@@ -77,87 +78,73 @@ public class ModelledPresetInventory implements InventoryHolder {
             if (TARDISPermission.hasPermission(player, "tardis.preset.police_box_" + underscored.toLowerCase(Locale.ROOT))) {
                 String dye = underscored.toUpperCase(Locale.ROOT) + "_DYE";
                 ItemStack is = ItemStack.of(Material.valueOf(dye), 1);
-                ItemMeta im = is.getItemMeta();
-                im.customName(Component.text(s + " Police Box"));
+                is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(s + " Police Box"));
                 switch (s) {
-                    case "Blue" -> im.setItemModel(ChameleonVariant.BLUE_CLOSED.getKey());
-                    case "White" -> im.setItemModel(ChameleonVariant.WHITE_CLOSED.getKey());
-                    case "Orange" -> im.setItemModel(ChameleonVariant.ORANGE_CLOSED.getKey());
-                    case "Magenta" -> im.setItemModel(ChameleonVariant.MAGENTA_CLOSED.getKey());
-                    case "Light Blue" -> im.setItemModel(ChameleonVariant.LIGHT_BLUE_CLOSED.getKey());
-                    case "Yellow" -> im.setItemModel(ChameleonVariant.YELLOW_CLOSED.getKey());
-                    case "Lime" -> im.setItemModel(ChameleonVariant.LIME_CLOSED.getKey());
-                    case "Pink" -> im.setItemModel(ChameleonVariant.PINK_CLOSED.getKey());
-                    case "Gray" -> im.setItemModel(ChameleonVariant.GRAY_CLOSED.getKey());
-                    case "Light Gray" -> im.setItemModel(ChameleonVariant.LIGHT_GRAY_CLOSED.getKey());
-                    case "Cyan" -> im.setItemModel(ChameleonVariant.CYAN_CLOSED.getKey());
-                    case "Purple" -> im.setItemModel(ChameleonVariant.PURPLE_CLOSED.getKey());
-                    case "Brown" -> im.setItemModel(ChameleonVariant.BROWN_CLOSED.getKey());
-                    case "Green" -> im.setItemModel(ChameleonVariant.GREEN_CLOSED.getKey());
-                    case "Red" -> im.setItemModel(ChameleonVariant.RED_CLOSED.getKey());
-                    case "Black" -> im.setItemModel(ChameleonVariant.BLACK_CLOSED.getKey());
+                    case "Blue" -> is.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.BLUE_CLOSED.getKey());
+                    case "White" -> is.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.WHITE_CLOSED.getKey());
+                    case "Orange" -> is.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.ORANGE_CLOSED.getKey());
+                    case "Magenta" -> is.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.MAGENTA_CLOSED.getKey());
+                    case "Light Blue" -> is.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.LIGHT_BLUE_CLOSED.getKey());
+                    case "Yellow" -> is.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.YELLOW_CLOSED.getKey());
+                    case "Lime" -> is.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.LIME_CLOSED.getKey());
+                    case "Pink" -> is.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.PINK_CLOSED.getKey());
+                    case "Gray" -> is.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.GRAY_CLOSED.getKey());
+                    case "Light Gray" -> is.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.LIGHT_GRAY_CLOSED.getKey());
+                    case "Cyan" -> is.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.CYAN_CLOSED.getKey());
+                    case "Purple" -> is.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.PURPLE_CLOSED.getKey());
+                    case "Brown" -> is.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.BROWN_CLOSED.getKey());
+                    case "Green" -> is.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.GREEN_CLOSED.getKey());
+                    case "Red" -> is.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.RED_CLOSED.getKey());
+                    case "Black" -> is.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.BLACK_CLOSED.getKey());
                 }
-                is.setItemMeta(im);
                 boxes[i] = is;
             }
             i++;
         }
         // tennant
         if (TARDISPermission.hasPermission(player, "tardis.preset.police_box_tennant")) {
-            ItemStack david = ItemStack.of(Material.CYAN_STAINED_GLASS_PANE, 1);
-            ItemMeta tennant = david.getItemMeta();
-            tennant.customName(Component.text("Tennant Era Police Box"));
-            tennant.setItemModel(ChameleonVariant.TENNANT_CLOSED.getKey());
-            david.setItemMeta(tennant);
-            boxes[i] = david;
+            ItemStack tennant = ItemStack.of(Material.CYAN_STAINED_GLASS_PANE, 1);
+            tennant.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Tennant Era Police Box"));
+            tennant.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.TENNANT_CLOSED.getKey());
+            boxes[i] = tennant;
             i++;
         }
         // weeping angel
         if (TARDISPermission.hasPermission(player, "tardis.preset.weeping_angel")) {
             ItemStack is = ItemStack.of(Material.GRAY_STAINED_GLASS_PANE, 1);
-            ItemMeta im = is.getItemMeta();
-            im.customName(Component.text("Weeping Angel"));
-            im.setItemModel(ChameleonVariant.WEEPING_ANGEL_CLOSED.getKey());
-            is.setItemMeta(im);
+            is.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Weeping Angel"));
+            is.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.WEEPING_ANGEL_CLOSED.getKey());
             boxes[i] = is;
             i++;
         }
         // pandorica
         if (TARDISPermission.hasPermission(player, "tardis.preset.pandorica")) {
-            ItemStack pan = ItemStack.of(Material.ENDER_PEARL, 1);
-            ItemMeta ica = pan.getItemMeta();
-            ica.customName(Component.text("Pandorica"));
-            ica.setItemModel(ChameleonVariant.PANDORICA_CLOSED.getKey());
-            pan.setItemMeta(ica);
-            boxes[i] = pan;
+            ItemStack pandorica = ItemStack.of(Material.ENDER_PEARL, 1);
+            pandorica.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Pandorica"));
+            pandorica.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.PANDORICA_CLOSED.getKey());
+            boxes[i] = pandorica;
             i++;
         }
         // SIDRAT
         if (TARDISPermission.hasPermission(player, "tardis.preset.sidrat")) {
-            ItemStack sid = ItemStack.of(Material.GREEN_STAINED_GLASS_PANE, 1);
-            ItemMeta rat = sid.getItemMeta();
-            rat.customName(Component.text("SIDRAT"));
-            rat.setItemModel(ChameleonVariant.SIDRAT_CLOSED.getKey());
-            sid.setItemMeta(rat);
-            boxes[i] = sid;
+            ItemStack sidrat = ItemStack.of(Material.GREEN_STAINED_GLASS_PANE, 1);
+            sidrat.setData(DataComponentTypes.CUSTOM_NAME, Component.text("SIDRAT"));
+            sidrat.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.SIDRAT_CLOSED.getKey());
+            boxes[i] = sidrat;
             i++;
         }
         // BATTLE
         if (TARDISPermission.hasPermission(player, "tardis.preset.battle")) {
-            ItemStack bat = ItemStack.of(Material.RED_STAINED_GLASS_PANE, 1);
-            ItemMeta tle = bat.getItemMeta();
-            tle.customName(Component.text("Battle TARDIS"));
-            tle.setItemModel(ChameleonVariant.BATTLE_CLOSED.getKey());
-            bat.setItemMeta(tle);
-            boxes[i] = bat;
+            ItemStack battle = ItemStack.of(Material.RED_STAINED_GLASS_PANE, 1);
+            battle.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Battle TARDIS"));
+            battle.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.BATTLE_CLOSED.getKey());
+            boxes[i] = battle;
             i++;
         }
         if (TARDISPermission.hasPermission(player, "tardis.preset.police_box_tinted")) {
             ItemStack any = ItemStack.of(Material.LEATHER_HORSE_ARMOR, 1);
-            ItemMeta colour = any.getItemMeta();
-            colour.customName(Component.text("Pick a colour Police Box"));
-            colour.setItemModel(ColouredVariant.TINTED_CLOSED.getKey());
-            any.setItemMeta(colour);
+            any.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Pick a colour Police Box"));
+            any.setData(DataComponentTypes.ITEM_MODEL, ColouredVariant.TINTED_CLOSED.getKey());
             boxes[i] = any;
             i++;
         }
@@ -166,11 +153,9 @@ public class ModelledPresetInventory implements InventoryHolder {
                 try {
                     Material cm = Material.valueOf(plugin.getCustomModelConfig().getString("models." + custom + ".item"));
                     ItemStack cis = ItemStack.of(cm);
-                    ItemMeta cim = cis.getItemMeta();
-                    cim.customName(Component.text(custom));
+                    cis.setData(DataComponentTypes.CUSTOM_NAME, Component.text(custom));
                     String key = TARDISStringUtils.toUnderscoredLowercase(custom);
-                    cim.setItemModel(new NamespacedKey(plugin, key + "_closed"));
-                    cis.setItemMeta(cim);
+                    cis.setData(DataComponentTypes.ITEM_MODEL, new NamespacedKey(plugin, key + "_closed"));
                     boxes[i] = cis;
                     i++;
                 } catch (IllegalArgumentException e) {
@@ -180,28 +165,18 @@ public class ModelledPresetInventory implements InventoryHolder {
         }
         // custom page
         ItemStack custom = ItemStack.of(GUIChameleonPresets.CUSTOM.material(), 1);
-        ItemMeta customMeta = custom.getItemMeta();
-        customMeta.customName(Component.text("Custom presets"));
-        custom.setItemMeta(customMeta);
+        custom.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Custom presets"));
         boxes[GUIChameleonPresets.CUSTOM.slot()] = custom;
         // page one
         ItemStack page = ItemStack.of(GUIChameleonPoliceBoxes.GO_TO_PAGE_1.material(), 1);
-        ItemMeta one = page.getItemMeta();
-        one.customName(Component.text(plugin.getLanguage().getString("BUTTON_PAGE_1")));
-        page.setItemMeta(one);
+        page.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_PAGE_1", "Go to page 1")));
         boxes[GUIChameleonPoliceBoxes.GO_TO_PAGE_1.slot()] = page;
         // back
         ItemStack back = ItemStack.of(GUIChameleonPoliceBoxes.BACK.material(), 1);
-        ItemMeta but = back.getItemMeta();
-        but.customName(Component.text("Back"));
-        back.setItemMeta(but);
+        back.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Back"));
         boxes[GUIChameleonPoliceBoxes.BACK.slot()] = back;
         // Cancel / close
-        ItemStack close = ItemStack.of(GUIChameleonPoliceBoxes.CLOSE.material(), 1);
-        ItemMeta can = close.getItemMeta();
-        can.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
-        close.setItemMeta(can);
-        boxes[GUIChameleonPoliceBoxes.CLOSE.slot()] = close;
+        boxes[GUIChameleonPoliceBoxes.CLOSE.slot()] = GUIItemFactory.close();
         return boxes;
     }
 }

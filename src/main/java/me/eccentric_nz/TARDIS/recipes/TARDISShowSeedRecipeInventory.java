@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.recipes;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemRegistry;
@@ -30,11 +32,7 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class TARDISShowSeedRecipeInventory implements InventoryHolder {
 
@@ -64,16 +62,12 @@ public class TARDISShowSeedRecipeInventory implements InventoryHolder {
         ItemStack lapis = ItemStack.of(Material.LAPIS_BLOCK, 1);
         // interior wall
         ItemStack in_wall = ItemStack.of(Material.ORANGE_WOOL, 1);
-        ItemMeta in_meta = in_wall.getItemMeta();
-        in_meta.customName(Component.text("Interior walls"));
-        in_meta.lore(List.of(Component.text("Any valid Wall/Floor block")));
-        in_wall.setItemMeta(in_meta);
+        in_wall.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Interior walls"));
+        in_wall.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text("Any valid Wall/Floor block")).build());
         // interior floor
         ItemStack in_floor = ItemStack.of(Material.LIGHT_GRAY_WOOL, 1);
-        ItemMeta fl_meta = in_floor.getItemMeta();
-        fl_meta.customName(Component.text("Interior floors"));
-        fl_meta.lore(List.of(Component.text("Any valid Wall/Floor block")));
-        in_floor.setItemMeta(fl_meta);
+        in_floor.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Interior floors"));
+        in_floor.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text("Any valid Wall/Floor block")).build());
         // seed block
         ItemStack block = ItemStack.of(material, 1);
         // tardis type
@@ -91,17 +85,16 @@ public class TARDISShowSeedRecipeInventory implements InventoryHolder {
                 tardis = ItemStack.of(TARDISSeedDisplayItem.CUSTOM.getMaterial(), 1);
             }
         }
-        ItemMeta seed = tardis.getItemMeta();
-        seed.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, model.getKey());
+        NamespacedKey finalModel = model;
+        tardis.editPersistentDataContainer(pdc -> pdc.set(plugin.getCustomBlockKey(), PersistentDataType.STRING, finalModel.getKey()));
         // set display name
-        seed.customName(ComponentUtils.toGold("TARDIS Seed Block"));
-        List<Component> lore = new ArrayList<>();
-        lore.add(Component.text(type));
-        lore.add(Component.text("Walls: ORANGE_WOOL"));
-        lore.add(Component.text("Floors: LIGHT_GRAY_WOOL"));
-        lore.add(Component.text("Chameleon: FACTORY"));
-        seed.lore(lore);
-        tardis.setItemMeta(seed);
+        tardis.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toGold("TARDIS Seed Block"));
+        ItemLore.Builder lore = ItemLore.lore();
+        lore.addLine(Component.text(type));
+        lore.addLine(Component.text("Walls: ORANGE_WOOL"));
+        lore.addLine(Component.text("Floors: LIGHT_GRAY_WOOL"));
+        lore.addLine(Component.text("Chameleon: FACTORY"));
+        tardis.setData(DataComponentTypes.LORE, lore.build());
         stacks[0] = red;
         stacks[9] = lapis;
         stacks[11] = in_wall;

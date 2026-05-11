@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
@@ -35,7 +36,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 /**
@@ -55,14 +55,12 @@ public class TARDISHotbarListener implements Listener {
         PlayerInventory inv = player.getInventory();
         ItemStack is = inv.getItem(event.getNewSlot());
         if (is != null) {
-            if (is.hasItemMeta() && is.getItemMeta().hasCustomName()) {
-                ItemMeta im = is.getItemMeta();
-                if (im.getPersistentDataContainer().has(plugin.getOldBlockKey(), PersistentDataType.INTEGER)) {
-                    int which = im.getPersistentDataContainer().get(plugin.getOldBlockKey(), PersistentDataType.INTEGER);
-                    im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, which);
-                    is.setItemMeta(im);
+            if (is.hasData(DataComponentTypes.CUSTOM_NAME)) {
+                if (is.getPersistentDataContainer().has(plugin.getOldBlockKey(), PersistentDataType.INTEGER)) {
+                    int which = is.getPersistentDataContainer().get(plugin.getOldBlockKey(), PersistentDataType.INTEGER);
+                    is.editPersistentDataContainer(pdc -> pdc.set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, which));
                 }
-                if (is.getType().equals(Material.COMPASS) && ComponentUtils.endsWith(im.customName(), "TARDIS Locator")) {
+                if (is.getType().equals(Material.COMPASS) && ComponentUtils.endsWith(is.getData(DataComponentTypes.CUSTOM_NAME), "TARDIS Locator")) {
                     // get TARDIS location
                     ResultSetTardisID rs = new ResultSetTardisID(plugin);
                     if (rs.fromUUID(player.getUniqueId().toString())) {

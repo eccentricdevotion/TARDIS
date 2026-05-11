@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
@@ -25,7 +27,6 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
 
@@ -53,14 +54,12 @@ public class MonitorFrameRecipe {
 
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.GLASS, 1);
-        ItemMeta im = is.getItemMeta();
-        im.customName(ComponentUtils.toWhite("Monitor Frame"));
-        im.setItemModel(RecipeItem.MONITOR_FRAME.getModel());
-        im.lore(List.of(
+        is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Monitor Frame"));
+        is.setData(DataComponentTypes.ITEM_MODEL, RecipeItem.MONITOR_FRAME.getModel());
+        is.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(
                 Component.text("Place in an upwards"),
                 Component.text("facing item frame")
-        ));
-        is.setItemMeta(im);
+        )));
         NamespacedKey key = new NamespacedKey(plugin, "monitor_frame");
         ShapedRecipe r = new ShapedRecipe(key, is);
         if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {

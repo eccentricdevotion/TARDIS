@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
@@ -24,7 +25,6 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
 
 /*
 easy_shape:BRB,GWG,GRG
@@ -51,10 +51,8 @@ public class TimeRotorEngineRecipe {
 
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.LIGHT_GRAY_DYE, 1);
-        ItemMeta im = is.getItemMeta();
-        im.customName(ComponentUtils.toWhite("Time Rotor Engine"));
-        im.setItemModel(RecipeItem.TIME_ROTOR_ENGINE.getModel());
-        is.setItemMeta(im);
+        is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Time Rotor Engine"));
+        is.setData(DataComponentTypes.ITEM_MODEL, RecipeItem.TIME_ROTOR_ENGINE.getModel());
         NamespacedKey key = new NamespacedKey(plugin, "time_rotor_engine");
         ShapedRecipe r = new ShapedRecipe(key, is);
         r.shape("BRB", "GWG", "GRG");

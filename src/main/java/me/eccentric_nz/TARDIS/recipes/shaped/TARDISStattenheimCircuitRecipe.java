@@ -16,6 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.CustomModelData;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.keys.CircuitVariant;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
@@ -26,8 +29,6 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
 import java.util.List;
 
@@ -56,33 +57,30 @@ public class TARDISStattenheimCircuitRecipe {
 
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.GLOWSTONE_DUST, 1);
-        ItemMeta im = is.getItemMeta();
-        im.customName(ComponentUtils.toWhite("TARDIS Stattenheim Circuit"));
-        CustomModelDataComponent component = im.getCustomModelDataComponent();
-        component.setFloats(CircuitVariant.STATTENHEIM.getFloats());
-        im.setCustomModelDataComponent(component);
-        is.setItemMeta(im);
+        is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("TARDIS Stattenheim Circuit"));
+        is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                .addFloats(CircuitVariant.STATTENHEIM.getFloats())
+                .build());
         NamespacedKey key = new NamespacedKey(plugin, "tardis_stattenheim_circuit");
         ShapedRecipe r = new ShapedRecipe(key, is);
         ItemStack exact = ItemStack.of(Material.GLOWSTONE_DUST, 1);
-        ItemMeta em = exact.getItemMeta();
-        em.customName(ComponentUtils.toWhite("TARDIS Materialisation Circuit"));
-        CustomModelDataComponent ecomponent = em.getCustomModelDataComponent();
-        ecomponent.setFloats(CircuitVariant.MATERIALISATION.getFloats());
-        em.setCustomModelDataComponent(ecomponent);
+        exact.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("TARDIS Materialisation Circuit"));
+        exact.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                .addFloats(CircuitVariant.MATERIALISATION.getFloats())
+                .build());
         // set the second line of lore
         Component uses = (plugin.getConfig().getString("circuits.uses.materialisation", "50").equals("0") || !plugin.getConfig().getBoolean("circuits.damage"))
                 ? Component.text("unlimited", NamedTextColor.YELLOW)
                 : Component.text(plugin.getConfig().getString("circuits.uses.materialisation", "50"), NamedTextColor.YELLOW);
-        em.lore(List.of(Component.text("Uses left"), uses));
-        exact.setItemMeta(em);
+        exact.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(
+                Component.text("Uses left"),
+                uses
+        )));
         ItemStack locator = ItemStack.of(Material.GLOWSTONE_DUST, 1);
-        ItemMeta lim = locator.getItemMeta();
-        lim.customName(ComponentUtils.toWhite("TARDIS Locator Circuit"));
-        CustomModelDataComponent lcomponent = lim.getCustomModelDataComponent();
-        lcomponent.setFloats(CircuitVariant.LOCATOR.getFloats());
-        lim.setCustomModelDataComponent(lcomponent);
-        locator.setItemMeta(lim);
+        locator.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("TARDIS Locator Circuit"));
+        locator.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                .addFloats(CircuitVariant.LOCATOR.getFloats())
+                .build());
         r.shape("LRM", "QQQ");
         r.setIngredient('L', new RecipeChoice.ExactChoice(locator));
         r.setIngredient('R', Material.REDSTONE);

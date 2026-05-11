@@ -16,13 +16,13 @@
  */
 package me.eccentric_nz.tardisweepingangels.equip;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 public class ArmourStandEquipment {
@@ -43,10 +43,8 @@ public class ArmourStandEquipment {
         as.setArms(false);
         as.getPersistentDataContainer().set(TARDIS.plugin.getHeadBlockKey(), PersistentDataType.INTEGER, 1);
         ItemStack head = ItemStack.of(monster.getMaterial(), 1);
-        ItemMeta headMeta = head.getItemMeta();
-        headMeta.customName(Component.text(monster.getName() + " Head"));
-        headMeta.setItemModel(monster.getModel());
-        head.setItemMeta(headMeta);
+        head.setData(DataComponentTypes.CUSTOM_NAME, Component.text(monster.getName() + " Head"));
+        head.setData(DataComponentTypes.ITEM_MODEL, monster.getModel());
         setHelmetOnly(as, head);
     }
 }

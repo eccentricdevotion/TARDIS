@@ -1,10 +1,13 @@
 package me.eccentric_nz.TARDIS.rooms.architectural;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
+import io.papermc.paper.datacomponent.item.ResolvableProfile;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.companionGUI.VanishChecker;
 import me.eccentric_nz.TARDIS.custommodels.GUIArs;
 import me.eccentric_nz.TARDIS.custommodels.GUIChemistry;
-import me.eccentric_nz.TARDIS.custommodels.GUIMap;
+import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetBlueprint;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -13,9 +16,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.SkullMeta;
-import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.List;
@@ -53,9 +53,7 @@ public class ArchitecturalBlueprintsInventory implements InventoryHolder {
         for (int r = 0; r < 3; r++) {
             for (int c = 0; c < 9; c++) {
                 ItemStack is = disks[r][c];
-                ItemMeta im = is.getItemMeta();
-                PersistentDataContainer pdc = im.getPersistentDataContainer();
-                String perm = pdc.get(TARDIS.plugin.getBlueprintKey(), PersistentDataType.STRING);
+                String perm = is.getPersistentDataContainer().get(TARDIS.plugin.getBlueprintKey(), PersistentDataType.STRING);
                 if (!perms.contains(perm)) {
                     items[i] = is.withType(Material.MUSIC_DISC_RELIC);
                 } else {
@@ -66,17 +64,13 @@ public class ArchitecturalBlueprintsInventory implements InventoryHolder {
         }
         // scroll up
         ItemStack scroll_up = ItemStack.of(GUIChemistry.SCROLL_UP.material(), 1);
-        ItemMeta uim = scroll_up.getItemMeta();
-        uim.customName(Component.text("Scroll up"));
-        uim.setItemModel(GUIChemistry.SCROLL_UP.key());
-        scroll_up.setItemMeta(uim);
+        scroll_up.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Scroll up"));
+        scroll_up.setData(DataComponentTypes.ITEM_MODEL, GUIChemistry.SCROLL_UP.key());
         items[27] = scroll_up;
         // scroll down
         ItemStack scroll_down = ItemStack.of(GUIChemistry.SCROLL_DOWN.material(), 1);
-        ItemMeta dim = scroll_down.getItemMeta();
-        dim.customName(Component.text("Scroll down"));
-        dim.setItemModel(GUIChemistry.SCROLL_DOWN.key());
-        scroll_down.setItemMeta(dim);
+        scroll_down.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Scroll down"));
+        scroll_down.setData(DataComponentTypes.ITEM_MODEL, GUIChemistry.SCROLL_DOWN.key());
         items[28] = scroll_down;
         // 36-44 online players
         i = 36;
@@ -84,11 +78,9 @@ public class ArchitecturalBlueprintsInventory implements InventoryHolder {
             UUID uuid = p.getUniqueId();
             if (i < 45 && uuid != player.getUniqueId() && VanishChecker.canSee(player, p)) {
                 ItemStack head = ItemStack.of(Material.PLAYER_HEAD, 1);
-                SkullMeta skull = (SkullMeta) head.getItemMeta();
-                skull.setOwningPlayer(p);
-                skull.customName(Component.text(p.getName()));
-                skull.lore(List.of(Component.text(p.getUniqueId().toString())));
-                head.setItemMeta(skull);
+                head.setData(DataComponentTypes.PROFILE, ResolvableProfile.resolvableProfile(p.getPlayerProfile()));
+                head.setData(DataComponentTypes.CUSTOM_NAME, Component.text(p.getName()));
+                head.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text(p.getUniqueId().toString())).build());
                 items[i] = head;
                 i++;
             }
@@ -96,35 +88,23 @@ public class ArchitecturalBlueprintsInventory implements InventoryHolder {
         if (i == 36) {
             // no players online
             ItemStack players = ItemStack.of(Material.GRAY_TERRACOTTA, 1);
-            ItemMeta pim = players.getItemMeta();
-            pim.customName(Component.text("No players online"));
-            players.setItemMeta(pim);
+            players.setData(DataComponentTypes.CUSTOM_NAME, Component.text("No players online"));
             items[36] = players;
         }
         // scroll left
         ItemStack scroll_left = ItemStack.of(GUIArs.BUTTON_SCROLL_L.material(), 1);
-        ItemMeta nim = scroll_left.getItemMeta();
-        nim.customName(Component.text(plugin.getLanguage().getString("BUTTON_SCROLL_L", "Scroll left")));
-        scroll_left.setItemMeta(nim);
+        scroll_left.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_SCROLL_L", "Scroll left")));
         items[45] = scroll_left;
         // scroll right
         ItemStack scroll_right = ItemStack.of(GUIArs.BUTTON_SCROLL_R.material(), 1);
-        ItemMeta pim = scroll_right.getItemMeta();
-        pim.customName(Component.text(plugin.getLanguage().getString("BUTTON_SCROLL_R", "Scroll right")));
-        scroll_right.setItemMeta(pim);
+        scroll_right.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_SCROLL_R", "Scroll right")));
         items[46] = scroll_right;
         // give
         ItemStack give = ItemStack.of(Material.GILDED_BLACKSTONE, 1);
-        ItemMeta gim = give.getItemMeta();
-        gim.customName(Component.text("Give blueprint disc"));
-        give.setItemMeta(gim);
+        give.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Give blueprint disc"));
         items[49] = give;
         // close
-        ItemStack close = ItemStack.of(GUIMap.BUTTON_CLOSE.material(), 1);
-        ItemMeta gui = close.getItemMeta();
-        gui.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
-        close.setItemMeta(gui);
-        items[53] = close;
+        items[53] = GUIItemFactory.close();
         return items;
     }
 }

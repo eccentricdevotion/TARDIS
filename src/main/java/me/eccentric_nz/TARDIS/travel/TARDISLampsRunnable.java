@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.travel;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.customblocks.TARDISBlockDisplayItem;
@@ -31,7 +32,6 @@ import org.bukkit.block.Block;
 import org.bukkit.block.data.Levelled;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
 
@@ -84,10 +84,8 @@ class TARDISLampsRunnable implements Runnable {
                             off = new TARDISCustomLightDisplayItem(l.materialOff(), false);
                         }
                         TARDISDisplayItem tdi = (lights_on) ? on : off;
-                        ItemMeta im = display.getItemStack().getItemMeta();
-                        im.setItemModel(tdi.getCustomModel());
+                        display.getItemStack().setData(DataComponentTypes.ITEM_MODEL, tdi.getCustomModel());
                         ItemStack sub = ItemStack.of(tdi.getMaterial());
-                        sub.setItemMeta(im);
                         display.setItemStack(sub);
                     }
                 }
@@ -109,10 +107,8 @@ class TARDISLampsRunnable implements Runnable {
                         // switch the item stack
                         TARDISDisplayItem tdi = light.getCloister();
                         if (i == 0 && tdi != TARDISBlockDisplayItem.NONE) {
-                            ItemMeta im = display.getItemStack().getItemMeta();
-                            im.setItemModel(tdi.getCustomModel());
+                            display.getItemStack().setData(DataComponentTypes.ITEM_MODEL, tdi.getCustomModel());
                             ItemStack sub = ItemStack.of(tdi.getMaterial());
-                            sub.setItemMeta(im);
                             display.setItemStack(sub);
                         } else if (tdi == TARDISBlockDisplayItem.NONE) {
                             // if tdi == TARDISDisplay.NONE, flash the lights instead

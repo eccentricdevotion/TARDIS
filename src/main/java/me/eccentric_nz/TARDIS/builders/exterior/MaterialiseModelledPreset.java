@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.builders.exterior;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.DyedItemColor;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
@@ -42,8 +44,6 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.LeatherArmorMeta;
 
 import java.util.Collections;
 import java.util.Locale;
@@ -257,22 +257,19 @@ public class MaterialiseModelledPreset implements Runnable {
                     }
                 }
             }
-            ItemMeta im = is.getItemMeta();
-            im.setItemModel(model);
+            is.setData(DataComponentTypes.ITEM_MODEL, model);
             if (bd.shouldAddSign()) {
                 String name = bd.getPlayer().getName() + "'s " + pb;
                 Component custom = Component.text(name);
-                im.customName(custom);
+                is.setData(DataComponentTypes.CUSTOM_NAME, custom);
                 stand.customName(custom);
                 stand.setCustomNameVisible(true);
             }
             if (model == ColouredVariant.TINTED_CLOSED.getKey() && preset == ChameleonPreset.COLOURED && colour != null) {
                 // set the colour
-                LeatherArmorMeta leatherArmorMeta = (LeatherArmorMeta) im;
-                leatherArmorMeta.setColor(colour);
-                is.setItemMeta(leatherArmorMeta);
-            } else {
-                is.setItemMeta(im);
+                is.setData(DataComponentTypes.DYED_COLOR, DyedItemColor.dyedItemColor()
+                        .color(colour)
+                        .build());
             }
             EntityEquipment ee = stand.getEquipment();
             ee.setHelmet(is, true);

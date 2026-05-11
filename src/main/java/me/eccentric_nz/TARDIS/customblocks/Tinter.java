@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.customblocks;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.custommodels.keys.TintVariant;
@@ -29,7 +30,6 @@ import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.Transformation;
 import org.joml.Vector3f;
@@ -49,27 +49,25 @@ public class Tinter {
         String glass = dye.replace("DYE", "STAINED_GLASS");
         Material material = Material.valueOf(glass);
         ItemStack is = ItemStack.of(material, 1);
-        ItemMeta im = is.getItemMeta();
         switch (glass) {
-            case "BLACK_STAINED_GLASS" -> im.setItemModel(TintVariant.TINT_BLACK.getKey());
-            case "BLUE_STAINED_GLASS" -> im.setItemModel(TintVariant.TINT_BLUE.getKey());
-            case "BROWN_STAINED_GLASS" -> im.setItemModel(TintVariant.TINT_BROWN.getKey());
-            case "CYAN_STAINED_GLASS" -> im.setItemModel(TintVariant.TINT_CYAN.getKey());
-            case "GRAY_STAINED_GLASS" -> im.setItemModel(TintVariant.TINT_GRAY.getKey());
-            case "GREEN_STAINED_GLASS" -> im.setItemModel(TintVariant.TINT_GREEN.getKey());
-            case "LIGHT_BLUE_STAINED_GLASS" -> im.setItemModel(TintVariant.TINT_LIGHT_BLUE.getKey());
-            case "LIGHT_GRAY_STAINED_GLASS" -> im.setItemModel(TintVariant.TINT_LIGHT_GRAY.getKey());
-            case "LIME_STAINED_GLASS" -> im.setItemModel(TintVariant.TINT_LIME.getKey());
-            case "MAGENTA_STAINED_GLASS" -> im.setItemModel(TintVariant.TINT_MAGENTA.getKey());
-            case "ORANGE_STAINED_GLASS" -> im.setItemModel(TintVariant.TINT_ORANGE.getKey());
-            case "PINK_STAINED_GLASS" -> im.setItemModel(TintVariant.TINT_PINK.getKey());
-            case "PURPLE_STAINED_GLASS" -> im.setItemModel(TintVariant.TINT_PURPLE.getKey());
-            case "RED_STAINED_GLASS" -> im.setItemModel(TintVariant.TINT_RED.getKey());
-            case "WHITE_STAINED_GLASS" -> im.setItemModel(TintVariant.TINT_WHITE.getKey());
-            case "YELLOW_STAINED_GLASS" -> im.setItemModel(TintVariant.TINT_YELLOW.getKey());
+            case "BLACK_STAINED_GLASS" -> is.setData(DataComponentTypes.ITEM_MODEL, TintVariant.TINT_BLACK.getKey());
+            case "BLUE_STAINED_GLASS" -> is.setData(DataComponentTypes.ITEM_MODEL, TintVariant.TINT_BLUE.getKey());
+            case "BROWN_STAINED_GLASS" -> is.setData(DataComponentTypes.ITEM_MODEL, TintVariant.TINT_BROWN.getKey());
+            case "CYAN_STAINED_GLASS" -> is.setData(DataComponentTypes.ITEM_MODEL, TintVariant.TINT_CYAN.getKey());
+            case "GRAY_STAINED_GLASS" -> is.setData(DataComponentTypes.ITEM_MODEL, TintVariant.TINT_GRAY.getKey());
+            case "GREEN_STAINED_GLASS" -> is.setData(DataComponentTypes.ITEM_MODEL, TintVariant.TINT_GREEN.getKey());
+            case "LIGHT_BLUE_STAINED_GLASS" -> is.setData(DataComponentTypes.ITEM_MODEL, TintVariant.TINT_LIGHT_BLUE.getKey());
+            case "LIGHT_GRAY_STAINED_GLASS" -> is.setData(DataComponentTypes.ITEM_MODEL, TintVariant.TINT_LIGHT_GRAY.getKey());
+            case "LIME_STAINED_GLASS" -> is.setData(DataComponentTypes.ITEM_MODEL, TintVariant.TINT_LIME.getKey());
+            case "MAGENTA_STAINED_GLASS" -> is.setData(DataComponentTypes.ITEM_MODEL, TintVariant.TINT_MAGENTA.getKey());
+            case "ORANGE_STAINED_GLASS" -> is.setData(DataComponentTypes.ITEM_MODEL, TintVariant.TINT_ORANGE.getKey());
+            case "PINK_STAINED_GLASS" -> is.setData(DataComponentTypes.ITEM_MODEL, TintVariant.TINT_PINK.getKey());
+            case "PURPLE_STAINED_GLASS" -> is.setData(DataComponentTypes.ITEM_MODEL, TintVariant.TINT_PURPLE.getKey());
+            case "RED_STAINED_GLASS" -> is.setData(DataComponentTypes.ITEM_MODEL, TintVariant.TINT_RED.getKey());
+            case "WHITE_STAINED_GLASS" -> is.setData(DataComponentTypes.ITEM_MODEL, TintVariant.TINT_WHITE.getKey());
+            case "YELLOW_STAINED_GLASS" -> is.setData(DataComponentTypes.ITEM_MODEL, TintVariant.TINT_YELLOW.getKey());
         }
-        im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.BYTE, (byte)1);
-        is.setItemMeta(im);
+        is.editPersistentDataContainer(pdc -> pdc.set(plugin.getCustomBlockKey(), PersistentDataType.BYTE, (byte) 1));
         display.setItemStack(is);
         display.setTransformation(transformation);
         display.setInvulnerable(true);

@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.control.actions;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetProgram;
@@ -28,7 +29,6 @@ import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
 
@@ -56,24 +56,23 @@ public class HandlesAction {
         } else {
             // check if item in hand is a Handles program disk
             ItemStack disk = player.getInventory().getItemInMainHand();
-            if (disk.getType().equals(Material.MUSIC_DISC_WARD) && disk.hasItemMeta()) {
-                ItemMeta dim = disk.getItemMeta();
-                if (dim.hasCustomName() && ComponentUtils.stripColour(dim.customName()).equals("Handles Program Disk")) {
-                    // get the program_id from the disk
-                    int pid = TARDISNumberParsers.parseInt(ComponentUtils.stripColour(dim.lore().get(1)));
-                    // query the database
-                    ResultSetProgram rsp = new ResultSetProgram(plugin, pid);
-                    if (rsp.resultSet()) {
-                        // send program to processor
-                        new HandlesProcessor(plugin, rsp.getProgram(), player, pid).processDisk();
-                        // check in the disk
-                        HashMap<String, Object> set = new HashMap<>();
-                        set.put("checked", 0);
-                        HashMap<String, Object> wherep = new HashMap<>();
-                        wherep.put("program_id", pid);
-                        plugin.getQueryFactory().doUpdate("programs", set, wherep);
-                        player.getInventory().setItemInMainHand(null);
-                    }
+            if (disk.getType().equals(Material.MUSIC_DISC_WARD)
+                    && disk.hasData(DataComponentTypes.CUSTOM_NAME)
+                    && ComponentUtils.stripColour(disk.getData(DataComponentTypes.CUSTOM_NAME)).equals("Handles Program Disk")) {
+                // get the program_id from the disk
+                int pid = TARDISNumberParsers.parseInt(ComponentUtils.stripColour(disk.getData(DataComponentTypes.LORE).lines().get(1)));
+                // query the database
+                ResultSetProgram rsp = new ResultSetProgram(plugin, pid);
+                if (rsp.resultSet()) {
+                    // send program to processor
+                    new HandlesProcessor(plugin, rsp.getProgram(), player, pid).processDisk();
+                    // check in the disk
+                    HashMap<String, Object> set = new HashMap<>();
+                    set.put("checked", 0);
+                    HashMap<String, Object> wherep = new HashMap<>();
+                    wherep.put("program_id", pid);
+                    plugin.getQueryFactory().doUpdate("programs", set, wherep);
+                    player.getInventory().setItemInMainHand(null);
                 }
             }
         }

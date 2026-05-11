@@ -16,11 +16,11 @@
  */
 package me.eccentric_nz.tardischemistry.compound;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.custommodels.keys.Whoniverse;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
 
@@ -33,28 +33,22 @@ public class CompoundBuilder {
             case Charcoal -> is = ItemStack.of(Material.CHARCOAL, 1);
             case Rust -> {
                 is = ItemStack.of(Material.LAVA_BUCKET, 1);
-                ItemMeta rm = is.getItemMeta();
-                rm.customName(Component.text("Rust Bucket"));
-                rm.setItemModel(Whoniverse.RUST_BUCKET.getKey());
-                is.setItemMeta(rm);
+                is.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Rust Bucket"));
+                is.setData(DataComponentTypes.ITEM_MODEL, Whoniverse.RUST_BUCKET.getKey());
             }
             case Sugar -> is = ItemStack.of(Material.SUGAR, 1);
             case Sulphuric_Acid -> {
                 is = ItemStack.of(Material.WATER_BUCKET, 1);
-                ItemMeta am = is.getItemMeta();
-                am.customName(Component.text("Acid Bucket"));
-                am.setItemModel(Whoniverse.ACID_BUCKET.getKey());
-                is.setItemMeta(am);
+                is.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Acid Bucket"));
+                is.setData(DataComponentTypes.ITEM_MODEL, Whoniverse.ACID_BUCKET.getKey());
             }
             default -> {
                 is = ItemStack.of(Material.GLASS_BOTTLE, 1);
-                ItemMeta im = is.getItemMeta();
-                im.customName(Component.text(compound.getName()));
-                im.lore(List.of(Component.text(compound.getSymbol())));
+                is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(compound.getName()));
+                is.lore(List.of(Component.text(compound.getSymbol())));
                 if (compound.getModel() != null) {
-                    im.setItemModel(compound.getModel());
+                    is.setData(DataComponentTypes.ITEM_MODEL, compound.getModel());
                 }
-                is.setItemMeta(im);
             }
         }
         return is;

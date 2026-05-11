@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.chameleon.gui;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.DamageUtility;
 import me.eccentric_nz.TARDIS.chameleon.utils.ChameleonFrame;
@@ -33,7 +34,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -112,14 +112,13 @@ public class CustomPresetListener extends TARDISMenuListener {
             case 52 -> plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.openInventory(new ModelledPresetInventory(plugin, player).getInventory()), 2L);
             case 53 -> close(player);
             default -> {
-                ItemMeta selected = is.getItemMeta();
                 set.put("chameleon_preset", "CUSTOM");
                 set.put("adapti_on", 0);
                 HashMap<String, Object> wheret = new HashMap<>();
                 wheret.put("tardis_id", id);
                 plugin.getQueryFactory().doUpdate("tardis", set, wheret);
                 // update the custom_preset table
-                String name = ComponentUtils.stripColour(selected.customName()).toLowerCase(Locale.ROOT);
+                String name = ComponentUtils.stripColour(is.getData(DataComponentTypes.CUSTOM_NAME)).toLowerCase(Locale.ROOT);
                 plugin.getQueryFactory().upsertCustomPreset(tardis.getTardisId(), name);
                 // damage the circuit if configured
                 DamageUtility.run(plugin, DiskCircuit.CHAMELEON, id, player);

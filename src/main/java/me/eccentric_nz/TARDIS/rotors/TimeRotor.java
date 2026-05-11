@@ -16,16 +16,18 @@
  */
 package me.eccentric_nz.TARDIS.rotors;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.CustomModelData;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.keys.RotorVariant;
+import me.eccentric_nz.TARDIS.utility.ComponentUtils;
+import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.HashMap;
@@ -51,10 +53,8 @@ public class TimeRotor {
 
     public static void setRotor(NamespacedKey key, ItemFrame itemFrame) {
         ItemStack is = ItemStack.of(Material.LIGHT_GRAY_DYE, 1);
-        ItemMeta im = is.getItemMeta();
-        im.customName(Component.text("Time Rotor"));
-        im.setItemModel(key);
-        is.setItemMeta(im);
+        is.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Time Rotor"));
+        is.setData(DataComponentTypes.ITEM_MODEL, key);
         itemFrame.setItem(is, false);
         itemFrame.setFixed(true);
         itemFrame.setVisible(false);
@@ -63,10 +63,8 @@ public class TimeRotor {
 
     public static void setRotor(Rotor which, ItemFrame itemFrame) {
         ItemStack is = ItemStack.of(which.material(), 1);
-        ItemMeta im = is.getItemMeta();
-        im.customName(Component.text("Time Rotor"));
-        im.setItemModel(which.offModel());
-        is.setItemMeta(im);
+        is.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Time Rotor"));
+        is.setData(DataComponentTypes.ITEM_MODEL, which.offModel());
         itemFrame.setItem(is, false);
         itemFrame.setFixed(true);
         itemFrame.setVisible(false);
@@ -90,27 +88,25 @@ public class TimeRotor {
 
     public static NamespacedKey getRotorModel(ItemFrame itemFrame) {
         ItemStack is = itemFrame.getItem();
-        if (is.hasItemMeta()) {
-            ItemMeta im = is.getItemMeta();
-            if (im.hasItemModel()) {
-                return im.getItemModel();
-            } else {
-                CustomModelDataComponent component = im.getCustomModelDataComponent();
-                List<Float> floats = component.getFloats();
-                if (!floats.isEmpty()) {
-                    int cmd = floats.getFirst().intValue();
-                    switch (cmd) {
-                        case 10000002 -> { return RotorVariant.TIME_ROTOR_EARLY_OFF.getKey(); }
-                        case 10000003 -> { return RotorVariant.TIME_ROTOR_TENNANT_OFF.getKey(); }
-                        case 10000004 -> { return RotorVariant.TIME_ROTOR_ELEVENTH_OFF.getKey(); }
-                        case 10000005 -> { return RotorVariant.TIME_ROTOR_TWELFTH_OFF.getKey(); }
-                        case 10000006 -> { return RotorVariant.TIME_ROTOR_DELTA_OFF.getKey(); }
-                        case 10000007 -> { return RotorVariant.ENGINE_OFF.getKey(); }
-                        case 10000008 -> { return RotorVariant.ENGINE_ROTOR_OFF.getKey(); }
-                        case 10000009 -> { return RotorVariant.HOSPITAL_OFF.getKey(); }
-                        case 10000100 -> { return RotorVariant.TIME_ROTOR_CONSOLE_OFF.getKey(); }
-                        case 10000101 -> { return RotorVariant.TIME_ROTOR_RUSTIC_OFF.getKey(); }
-                    }
+        if (ComponentUtils.isModelled(is)) {
+            Key key = is.getData(DataComponentTypes.ITEM_MODEL);
+            return new NamespacedKey(key.namespace(), key.value());
+        } else {
+            CustomModelData component = is.getData(DataComponentTypes.CUSTOM_MODEL_DATA);
+            List<Float> floats = component.floats();
+            if (!floats.isEmpty()) {
+                int cmd = floats.getFirst().intValue();
+                switch (cmd) {
+                    case 10000002 -> { return RotorVariant.TIME_ROTOR_EARLY_OFF.getKey(); }
+                    case 10000003 -> { return RotorVariant.TIME_ROTOR_TENNANT_OFF.getKey(); }
+                    case 10000004 -> { return RotorVariant.TIME_ROTOR_ELEVENTH_OFF.getKey(); }
+                    case 10000005 -> { return RotorVariant.TIME_ROTOR_TWELFTH_OFF.getKey(); }
+                    case 10000006 -> { return RotorVariant.TIME_ROTOR_DELTA_OFF.getKey(); }
+                    case 10000007 -> { return RotorVariant.ENGINE_OFF.getKey(); }
+                    case 10000008 -> { return RotorVariant.ENGINE_ROTOR_OFF.getKey(); }
+                    case 10000009 -> { return RotorVariant.HOSPITAL_OFF.getKey(); }
+                    case 10000100 -> { return RotorVariant.TIME_ROTOR_CONSOLE_OFF.getKey(); }
+                    case 10000101 -> { return RotorVariant.TIME_ROTOR_RUSTIC_OFF.getKey(); }
                 }
             }
         }

@@ -16,6 +16,11 @@
  */
 package me.eccentric_nz.tardisweepingangels.equip;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.Equippable;
+import io.papermc.paper.registry.RegistryKey;
+import io.papermc.paper.registry.TypedKey;
+import io.papermc.paper.registry.set.RegistrySet;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.keys.ArmourVariant;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
@@ -26,10 +31,6 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.components.EquippableComponent;
-
-import java.util.List;
 
 public class MonsterArmour {
 
@@ -37,15 +38,15 @@ public class MonsterArmour {
         NamespacedKey key = TARDISWeepingAngels.PDC_KEYS.get(monster);
         TARDIS.plugin.debug(key.toString());
         ItemStack armour = ItemStack.of(monster.getMaterial(), 1);
-        ItemMeta meta = armour.getItemMeta();
-        meta.customName(Component.text(monster.getName() + " " + TARDISStringUtils.uppercaseFirst(slot.name())));
-        meta.setItemModel(slot == EquipmentSlot.CHEST ? ArmourVariant.CHESTPLATE.getKey() : ArmourVariant.LEGGINGS.getKey());
-        EquippableComponent equippable = meta.getEquippable();
-        equippable.setAllowedEntities(List.of(monster.getEntityType(), EntityType.PLAYER));
-        equippable.setSlot(slot);
-        equippable.setModel(key);
-        meta.setEquippable(equippable);
-        armour.setItemMeta(meta);
+        armour.setData(DataComponentTypes.CUSTOM_NAME, Component.text(monster.getName() + " " + TARDISStringUtils.uppercaseFirst(slot.name())));
+        armour.setData(DataComponentTypes.ITEM_MODEL, slot == EquipmentSlot.CHEST ? ArmourVariant.CHESTPLATE.getKey() : ArmourVariant.LEGGINGS.getKey());
+        armour.setData(DataComponentTypes.EQUIPPABLE, Equippable.equippable(slot)
+                .allowedEntities(RegistrySet.keySet(RegistryKey.ENTITY_TYPE,
+                        TypedKey.create(RegistryKey.ENTITY_TYPE, monster.getEntityType().getKey()),
+                        TypedKey.create(RegistryKey.ENTITY_TYPE, EntityType.PLAYER.getKey())
+                ))
+                .assetId(key)
+                .build());
         return armour;
     }
 }

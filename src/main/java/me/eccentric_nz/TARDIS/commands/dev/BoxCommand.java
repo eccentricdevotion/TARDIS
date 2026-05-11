@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.commands.dev;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.exterior.BuilderUtility;
 import me.eccentric_nz.TARDIS.custommodels.keys.ChameleonVariant;
@@ -30,7 +31,6 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.RayTraceResult;
 
 /**
@@ -63,7 +63,6 @@ public class BoxCommand {
                 if (as != null) {
                     Material dye = BuilderUtility.getMaterialForArmourStand(preset, -1, true);
                     ItemStack is = ItemStack.of(dye, 1);
-                    ItemMeta im = is.getItemMeta();
                     NamespacedKey model = ChameleonVariant.BLUE_CLOSED.getKey();
                     if (!state.isEmpty()) {
                         switch (dye) {
@@ -265,8 +264,7 @@ public class BoxCommand {
                             }
                         }
                     }
-                    im.setItemModel(model);
-                    is.setItemMeta(im);
+                    is.setData(DataComponentTypes.ITEM_MODEL, model);
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                         EntityEquipment ee = as.getEquipment();
                         ee.setHelmet(is);

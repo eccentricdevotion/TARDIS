@@ -5,7 +5,6 @@ import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 public class ArtronCombine {
 
@@ -13,10 +12,9 @@ public class ArtronCombine {
         // check item in hand
         ItemStack is = ArtronUtility.hasCell(plugin, player);
         if (is != null) {
-            ItemMeta im = is.getItemMeta();
             int max = plugin.getArtronConfig().getInt("full_charge");
             ItemStack offhand = player.getInventory().getItemInOffHand();
-            if (!offhand.hasItemMeta()) {
+            if (!ComponentUtils.isNamed(offhand, "Artron Storage Cell")) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "CELL_IN_HAND");
                 return;
             }
@@ -24,14 +22,9 @@ public class ArtronCombine {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "CELL_ONE");
                 return;
             }
-            ItemMeta offMeta = offhand.getItemMeta();
-            if (!offMeta.hasCustomName() || !ComponentUtils.endsWith(offMeta.customName(), "Artron Storage Cell")) {
-                plugin.getMessenger().send(player, TardisModule.TARDIS, "CELL_IN_HAND");
-                return;
-            }
             // get the artron levels of each storage cell
-            int mainLevel = ArtronUtility.getLevel(im);
-            int offLevel = ArtronUtility.getLevel(offMeta);
+            int mainLevel = ArtronUtility.getLevel(is);
+            int offLevel = ArtronUtility.getLevel(offhand);
             if (mainLevel <= 0 || offLevel <= 0) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "CELL_NOT_CHARGED");
                 return;
@@ -42,8 +35,8 @@ public class ArtronCombine {
                 remainder = combined - max;
                 combined = max;
             }
-            ArtronUtility.setLevel(is, im, combined, player, true);
-            ArtronUtility.setLevel(offhand, offMeta, remainder, player, false);
+            ArtronUtility.setLevel(is, combined, player, true);
+            ArtronUtility.setLevel(offhand, remainder, player, false);
         }
     }
 }

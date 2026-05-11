@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.chameleon.utils;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.keys.ChameleonVariant;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
@@ -24,7 +25,6 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitScheduler;
 
 public class PandoricaOpens {
@@ -56,7 +56,6 @@ public class PandoricaOpens {
         }
         EntityEquipment ee = stand.getEquipment();
         ItemStack is = ee.getHelmet();
-        ItemMeta im = is.getItemMeta();
         long delay = 5;
         for (int i = 0; i < 4; i++) {
             String sound;
@@ -70,8 +69,7 @@ public class PandoricaOpens {
             }
             TARDISSounds.playTARDISSound(stand.getLocation(), sound);
             scheduler.scheduleSyncDelayedTask(plugin, () -> {
-                im.setItemModel(model);
-                is.setItemMeta(im);
+                is.setData(DataComponentTypes.ITEM_MODEL, model);
                 ee.setHelmet(is, true);
             }, delay * i);
         }

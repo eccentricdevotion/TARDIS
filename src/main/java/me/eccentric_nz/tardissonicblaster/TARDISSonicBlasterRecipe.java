@@ -16,22 +16,21 @@
  */
 package me.eccentric_nz.tardissonicblaster;
 
-import com.google.common.collect.Multimaps;
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.CustomModelData;
+import io.papermc.paper.datacomponent.item.TooltipDisplay;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.custommodels.keys.CircuitVariant;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author eccentric_nz
@@ -47,10 +46,8 @@ public class TARDISSonicBlasterRecipe {
     public void addShapedRecipes() {
         // blaster battery
         ItemStack battery = ItemStack.of(Material.BUCKET, 1);
-        ItemMeta batteryMeta = battery.getItemMeta();
-        batteryMeta.customName(ComponentUtils.toWhite("Blaster Battery"));
-//        batteryMeta.setItemModel(RecipeItem.BLASTER_BATTERY.getModel());
-        battery.setItemMeta(batteryMeta);
+        battery.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Blaster Battery"));
+//        battery.setData(DataComponentTypes.ITEM_MODEL, RecipeItem.BLASTER_BATTERY.getModel());
         NamespacedKey batteryKey = new NamespacedKey(plugin, "blaster_battery");
         ShapedRecipe bbr = new ShapedRecipe(batteryKey, battery);
         bbr.shape("-S-", "-R-", "-B-");
@@ -62,24 +59,21 @@ public class TARDISSonicBlasterRecipe {
 
         // sonic blaster
         ItemStack blaster = ItemStack.of(Material.GOLDEN_HOE, 1);
-        ItemMeta blasterMeta = blaster.getItemMeta();
-        blasterMeta.customName(ComponentUtils.toWhite("Sonic Blaster"));
-        blasterMeta.lore(List.of(Component.text("The Squareness Gun")));
-//        blasterMeta.setItemModel(RecipeItem.SONIC_BLASTER.getModel());
-        blasterMeta.addItemFlags(ItemFlag.values());
-        blasterMeta.setAttributeModifiers(Multimaps.forMap(Map.of()));
-        blaster.setItemMeta(blasterMeta);
+        blaster.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Sonic Blaster"));
+        blaster.lore(List.of(Component.text("The Squareness Gun")));
+        blaster.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
+                .addHiddenComponents(TARDISConstants.HIDE)
+                .build());
         NamespacedKey key = new NamespacedKey(TARDIS.plugin, "sonic_blaster");
         ShapedRecipe sbr = new ShapedRecipe(key, blaster);
         // set shape
         sbr.shape("DTD", "TST", "EBE");
         ItemStack exact = ItemStack.of(Material.GLOWSTONE_DUST, 1);
-        ItemMeta em = exact.getItemMeta();
-        em.customName(ComponentUtils.toWhite("Sonic Oscillator"));
-        CustomModelDataComponent ecomponent = em.getCustomModelDataComponent();
-        ecomponent.setFloats(CircuitVariant.SONIC.getFloats());
-        em.setCustomModelDataComponent(ecomponent);
-        exact.setItemMeta(em);
+        exact.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Sonic Oscillator"));
+        CustomModelData ecomponent = CustomModelData.customModelData()
+                .addFloats(CircuitVariant.SONIC.getFloats())
+                .build();
+        exact.setData(DataComponentTypes.CUSTOM_MODEL_DATA, ecomponent);
         sbr.setIngredient('D', Material.DISPENSER);
         sbr.setIngredient('T', Material.TNT);
         sbr.setIngredient('S', new RecipeChoice.ExactChoice(exact));
@@ -89,10 +83,8 @@ public class TARDISSonicBlasterRecipe {
 
         // landing pad
         ItemStack pad = ItemStack.of(Material.SLIME_BLOCK, 1);
-        ItemMeta padMeta = pad.getItemMeta();
-        padMeta.customName(ComponentUtils.toWhite("Landing Pad"));
-//        padMeta.setItemModel(RecipeItem.LANDING_PAD.getModel());
-        pad.setItemMeta(padMeta);
+        pad.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Landing Pad"));
+//        pad.setData(DataComponentTypes.ITEM_MODEL, RecipeItem.LANDING_PAD.getModel());
         NamespacedKey padKey = new NamespacedKey(plugin, "landing_pad");
         ShapedRecipe lpr = new ShapedRecipe(padKey, pad);
         lpr.shape("-C-", "-S-", "-R-");

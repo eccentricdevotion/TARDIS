@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.ARS;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.builders.interior.TIPSData;
@@ -36,10 +38,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.UUID;
 
 /**
@@ -128,8 +128,7 @@ public class ARSMapListener extends ARSMethods implements Listener {
                     ARSMapData md = map_data.get(playerUUID);
                     ItemStack is = view.getItem(slot);
                     if (is != null) {
-                        ItemMeta im = is.getItemMeta();
-                        String dn = ComponentUtils.stripColour(im.customName());
+                        String dn = ComponentUtils.stripColour(is.getData(DataComponentTypes.CUSTOM_NAME));
                         if (!dn.equals("Empty slot")) {
                             selectedLocation.put(playerUUID, is.getType().toString());
                             // get selected slot
@@ -194,13 +193,12 @@ public class ARSMapListener extends ARSMethods implements Listener {
                 setMap(level - 27, east, south, playerUUID, view);
                 setLore(view, level, null);
                 map_data.put(playerUUID, md);
-                // get itemstack to change lore
+                // get item stack to change lore
                 int slot = ((row - south) * 9) + 4 + (col - east);
                 ItemStack is = view.getItem(slot);
                 ItemStack sub = ItemStack.of(Material.SPECTRAL_ARROW);
-                ItemMeta im = is.getItemMeta();
-                im.lore(List.of(Component.text(plugin.getLanguage().getString("ARS_MAP_HERE", "You are here!"))));
-                sub.setItemMeta(im);
+                sub.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text(plugin.getLanguage().getString("ARS_MAP_HERE", "You are here!"))).build());
+                sub.setData(DataComponentTypes.CUSTOM_NAME, is.getData(DataComponentTypes.CUSTOM_NAME));
                 view.setItem(slot, sub);
             }
         } else {

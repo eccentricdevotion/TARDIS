@@ -16,13 +16,14 @@
  */
 package me.eccentric_nz.tardisweepingangels.spawner;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelSpawnEvent;
 import me.eccentric_nz.tardisweepingangels.equip.Equipper;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
+import net.kyori.adventure.key.Key;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.CreatureSpawner;
@@ -35,7 +36,6 @@ import org.bukkit.event.entity.SpawnerSpawnEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 public class SpawnerListener implements Listener {
@@ -70,23 +70,19 @@ public class SpawnerListener implements Listener {
             return;
         }
         ItemStack is = event.getItem();
-        if (is == null || !is.hasItemMeta()) {
-            return;
-        }
-        ItemMeta im = is.getItemMeta();
-        if (im == null || !im.getPersistentDataContainer().has(plugin.getHeadBlockKey(), PersistentDataType.INTEGER)) {
+        if (is == null || !is.getPersistentDataContainer().has(plugin.getHeadBlockKey(), PersistentDataType.INTEGER)) {
             return;
         }
         if (!event.getPlayer().isOp()) {
             plugin.getMessenger().send(event.getPlayer(), TardisModule.MONSTERS, "NO_PERMS");
             return;
         }
-        NamespacedKey key = im.getItemModel();
+        Key key = is.getData(DataComponentTypes.ITEM_MODEL);
         if (key == null) {
             return;
         }
         for (Monster monster : Monster.values()) {
-            if (key.equals(monster.getHeadModel())) {
+            if (key.value().equals(monster.getHeadModel().getKey())) {
                 setCustomSpawner(block, monster);
                 break;
             }

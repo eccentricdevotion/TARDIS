@@ -16,16 +16,17 @@
  */
 package me.eccentric_nz.TARDIS.recipes.shapeless;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
+import io.papermc.paper.datacomponent.item.TooltipDisplay;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapelessRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.List;
 
 /*
 recipe:MUSIC_DISC_STRAD,LAPIS_BLOCK
@@ -44,10 +45,11 @@ public class PlayerStorageDiskRecipe {
 
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.MUSIC_DISC_WAIT, 1);
-        ItemMeta im = is.getItemMeta();
-        im.customName(ComponentUtils.toWhite("Player Storage Disk"));
-        im.lore(List.of(Component.text("Blank")));
-        is.setItemMeta(im);
+        is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Player Storage Disk"));
+        is.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text("Blank")).build());
+        is.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
+                .addHiddenComponents(TARDISConstants.HIDE)
+                .build());
         NamespacedKey key = new NamespacedKey(plugin, "player_storage_disk");
         ShapelessRecipe r = new ShapelessRecipe(key, is);
         r.addIngredient(Material.MUSIC_DISC_STRAD);

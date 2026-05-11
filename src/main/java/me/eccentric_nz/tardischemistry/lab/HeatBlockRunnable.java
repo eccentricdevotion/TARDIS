@@ -53,8 +53,8 @@ public class HeatBlockRunnable implements Runnable {
                 ItemDisplay display = TARDISDisplayItemUtils.get(location.getBlock());
                 if (display != null) {
                     ItemStack is = display.getItemStack();
-                    if (is.getType() == Material.RED_CONCRETE && is.hasItemMeta()
-                            && is.getItemMeta().getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.STRING)) {
+                    if (is.getType() == Material.RED_CONCRETE
+                            && is.getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.STRING)) {
                         // it's a heat block
                         meltBlock(location);
                     }

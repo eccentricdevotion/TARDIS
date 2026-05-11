@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
@@ -24,7 +25,6 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
 
 /*
 easy_shape: ---,WLA,CCC
@@ -52,10 +52,8 @@ public class ConsoleLampSwitchRecipe {
     public void addRecipe() {
         // add interior recipe
         ItemStack is = ItemStack.of(Material.LEVER, 1);
-        ItemMeta im = is.getItemMeta();
-        im.customName(ComponentUtils.toWhite("Console Lamp Switch"));
-        im.setItemModel(RecipeItem.CONSOLE_LAMP_SWITCH.getModel());
-        is.setItemMeta(im);
+        is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Console Lamp Switch"));
+        is.setData(DataComponentTypes.ITEM_MODEL, RecipeItem.CONSOLE_LAMP_SWITCH.getModel());
         NamespacedKey key = new NamespacedKey(plugin, "console_lamp_switch");
         ShapedRecipe r = new ShapedRecipe(key, is);
         r.shape("RTB", "CCC");

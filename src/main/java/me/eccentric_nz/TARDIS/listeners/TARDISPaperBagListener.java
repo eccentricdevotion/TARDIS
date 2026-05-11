@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPaperBag;
@@ -31,7 +32,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -62,8 +62,7 @@ public class TARDISPaperBagListener implements Listener {
         if (is == null || !is.getType().equals(Material.PAPER)) {
             return;
         }
-        ItemMeta im = is.getItemMeta();
-        if (im == null || !im.hasCustomName() || !ComponentUtils.endsWith(im.customName(), "Paper Bag")) {
+        if (!ComponentUtils.isNamed(is, "Paper Bag")) {
             return;
         }
         if (event.isRightClick()) {
@@ -73,9 +72,7 @@ public class TARDISPaperBagListener implements Listener {
             if (flavour != null) {
                 // create a random flavoured Jelly Baby
                 ItemStack jb = ItemStack.of(Material.MELON_SLICE, 1);
-                ItemMeta jim = jb.getItemMeta();
-                jim.customName(Component.text(flavour + " Jelly Baby"));
-                jb.setItemMeta(jim);
+                jb.setData(DataComponentTypes.CUSTOM_NAME, Component.text(flavour + " Jelly Baby"));
                 int slot = inv.firstEmpty();
                 if (slot != -1) {
                     // add the jelly bean to the inventory
@@ -131,50 +128,47 @@ public class TARDISPaperBagListener implements Listener {
                 HashMap<Integer, Integer> adjustments = new HashMap<>();
                 for (Map.Entry<Integer, ItemStack> entry : babies.entrySet()) {
                     // is it a jelly baby?
-                    if (entry.getValue().hasItemMeta()) {
-                        ItemMeta jim = entry.getValue().getItemMeta();
-                        if (jim.hasCustomName()) {
-                            String name = ComponentUtils.stripColour(jim.customName());
-                            if (name.endsWith("Jelly Baby")) {
-                                int amount = entry.getValue().getAmount();
-                                String flavour = name.replace(" Jelly Baby", "");
-                                int adjust;
-                                if (flavour1.isEmpty()) {
-                                    flavour1 = flavour;
-                                    amount1 = amount;
+                    if (entry.getValue().hasData(DataComponentTypes.CUSTOM_NAME)) {
+                        String name = ComponentUtils.stripColour(entry.getValue().getData(DataComponentTypes.CUSTOM_NAME));
+                        if (name.endsWith("Jelly Baby")) {
+                            int amount = entry.getValue().getAmount();
+                            String flavour = name.replace(" Jelly Baby", "");
+                            int adjust;
+                            if (flavour1.isEmpty()) {
+                                flavour1 = flavour;
+                                amount1 = amount;
+                                adjustments.put(entry.getKey(), amount);
+                            } else if (flavour1.equals(flavour) && amount1 < 64) {
+                                adjust = amount1 + amount;
+                                adjustments.put(entry.getKey(), (adjust < 65) ? 0 : 64 - amount1);
+                                amount1 = (adjust < 65) ? adjust : 64;
+                            } else {
+                                if (flavour2.isEmpty()) {
+                                    flavour2 = flavour;
+                                    amount2 = amount;
                                     adjustments.put(entry.getKey(), amount);
-                                } else if (flavour1.equals(flavour) && amount1 < 64) {
-                                    adjust = amount1 + amount;
-                                    adjustments.put(entry.getKey(), (adjust < 65) ? 0 : 64 - amount1);
-                                    amount1 = (adjust < 65) ? adjust : 64;
+                                } else if (flavour2.equals(flavour) && amount2 < 64) {
+                                    adjust = amount2 + amount;
+                                    adjustments.put(entry.getKey(), (adjust < 65) ? 0 : 64 - amount2);
+                                    amount2 = (adjust < 65) ? adjust : 64;
                                 } else {
-                                    if (flavour2.isEmpty()) {
-                                        flavour2 = flavour;
-                                        amount2 = amount;
+                                    if (flavour3.isEmpty()) {
+                                        flavour3 = flavour;
+                                        amount3 = amount;
                                         adjustments.put(entry.getKey(), amount);
-                                    } else if (flavour2.equals(flavour) && amount2 < 64) {
-                                        adjust = amount2 + amount;
-                                        adjustments.put(entry.getKey(), (adjust < 65) ? 0 : 64 - amount2);
-                                        amount2 = (adjust < 65) ? adjust : 64;
+                                    } else if (flavour3.equals(flavour) && amount3 < 64) {
+                                        adjust = amount3 + amount;
+                                        adjustments.put(entry.getKey(), (adjust < 65) ? 0 : 64 - amount3);
+                                        amount3 = (adjust < 65) ? adjust : 64;
                                     } else {
-                                        if (flavour3.isEmpty()) {
-                                            flavour3 = flavour;
-                                            amount3 = amount;
+                                        if (flavour4.isEmpty()) {
+                                            flavour4 = flavour;
+                                            amount4 = amount;
                                             adjustments.put(entry.getKey(), amount);
-                                        } else if (flavour3.equals(flavour) && amount3 < 64) {
-                                            adjust = amount3 + amount;
-                                            adjustments.put(entry.getKey(), (adjust < 65) ? 0 : 64 - amount3);
-                                            amount3 = (adjust < 65) ? adjust : 64;
-                                        } else {
-                                            if (flavour4.isEmpty()) {
-                                                flavour4 = flavour;
-                                                amount4 = amount;
-                                                adjustments.put(entry.getKey(), amount);
-                                            } else if (flavour4.equals(flavour) && amount4 < 64) {
-                                                adjust = amount4 + amount;
-                                                adjustments.put(entry.getKey(), (adjust < 65) ? 0 : 64 - amount4);
-                                                amount4 = (adjust < 65) ? adjust : 64;
-                                            }
+                                        } else if (flavour4.equals(flavour) && amount4 < 64) {
+                                            adjust = amount4 + amount;
+                                            adjustments.put(entry.getKey(), (adjust < 65) ? 0 : 64 - amount4);
+                                            amount4 = (adjust < 65) ? adjust : 64;
                                         }
                                     }
                                 }

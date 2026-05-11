@@ -16,17 +16,16 @@
  */
 package me.eccentric_nz.TARDIS.info;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class TARDISIndexFileInventory implements InventoryHolder {
 
@@ -55,23 +54,17 @@ public class TARDISIndexFileInventory implements InventoryHolder {
         // categories
         for (TISCategory category : TISCategory.values()) {
             ItemStack is = ItemStack.of(Material.BOOKSHELF, 1);
-            ItemMeta im = is.getItemMeta();
-            im.customName(Component.text(category.getName()));
-            List<Component> lore = new ArrayList<>();
+            is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(category.getName()));
+            ItemLore.Builder lore = ItemLore.lore();
             for (String s : category.getLore().split("~")) {
-                lore.add(Component.text(s));
+                lore.addLine(Component.text(s));
             }
-            im.lore(lore);
-            is.setItemMeta(im);
+            is.setData(DataComponentTypes.LORE, lore.build());
             stack[i] = is;
             i++;
         }
         // close
-        ItemStack close = ItemStack.of(Material.BOWL, 1);
-        ItemMeta close_im = close.getItemMeta();
-        close_im.customName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
-        close.setItemMeta(close_im);
-        stack[26] = close;
+        stack[26] = GUIItemFactory.close();
         return stack;
     }
 }

@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.tardisweepingangels.monsters.judoon;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.custommodels.keys.JudoonVariant;
 import me.eccentric_nz.tardisweepingangels.equip.ArmourEquipper;
 import me.eccentric_nz.tardisweepingangels.equip.FollowerEquipper;
@@ -25,7 +26,6 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -36,9 +36,7 @@ public class JudoonEquipment {
         if (!disguise) {
             // weapon
             ItemStack hand = ItemStack.of(Material.END_ROD);
-            ItemMeta tim = hand.getItemMeta();
-            tim.setItemModel(JudoonVariant.JUDOON_WEAPON_RESTING.getKey());
-            hand.setItemMeta(tim);
+            hand.setData(DataComponentTypes.ITEM_MODEL, JudoonVariant.JUDOON_WEAPON_RESTING.getKey());
             entity.getEquipment().setItemInMainHand(hand);
             new FollowerEquipper().setOptionsAndInvisibilty(player, entity, Monster.JUDOON);
             // set entity scale
