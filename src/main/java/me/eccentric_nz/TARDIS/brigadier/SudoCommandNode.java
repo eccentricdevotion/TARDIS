@@ -20,8 +20,10 @@ import me.eccentric_nz.TARDIS.commands.remote.ComehereCommand;
 import me.eccentric_nz.TARDIS.commands.remote.HideCommand;
 import me.eccentric_nz.TARDIS.commands.remote.RebuildCommand;
 import me.eccentric_nz.TARDIS.commands.sudo.*;
+import me.eccentric_nz.TARDIS.commands.travel.TravelUtilities;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
 import org.bukkit.command.ConsoleCommandSender;
@@ -229,8 +231,15 @@ public class SudoCommandNode {
                                                         OfflinePlayer offlinePlayer = plugin.getServer().getOfflinePlayer(profile.getId());
                                                         World world = ctx.getArgument("world", World.class);
                                                         BlockPositionResolver resolver = ctx.getArgument("coords", BlockPositionResolver.class);
-                                                        BlockPosition pos = resolver.resolve(ctx.getSource());
-                                                        plugin.getServer().dispatchCommand(plugin.getConsole(), "tardisremote " + offlinePlayer.getName() + " travel " + world.getKey().asString() + " " + pos.blockX() + " " + pos.blockY() + " " + pos.blockZ());
+                                                        // get current TARDIS location
+                                                        Location location = TravelUtilities.getCurrentLocation(plugin, rs.getTardisId());
+                                                        if (location != null) {
+                                                            CommandSourceStack source = ctx.getSource().withLocation(location);
+                                                            BlockPosition pos = resolver.resolve(source);
+                                                            plugin.getServer().dispatchCommand(plugin.getConsole(), "tardisremote " + offlinePlayer.getName() + " travel " + world.getKey().asString() + " " + pos.blockX() + " " + pos.blockY() + " " + pos.blockZ());
+                                                        } else {
+                                                            plugin.getMessenger().send(ctx.getSource().getSender(), TardisModule.TARDIS, "CURRENT_NOT_FOUND");
+                                                        }
                                                     }
                                                     return Command.SINGLE_SUCCESS;
                                                 }))))

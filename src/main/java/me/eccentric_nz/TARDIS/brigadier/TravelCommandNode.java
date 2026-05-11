@@ -21,6 +21,8 @@ import me.eccentric_nz.TARDIS.brigadier.arguments.AreasArgumentType;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import me.eccentric_nz.TARDIS.commands.travel.*;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.entity.Player;
@@ -299,8 +301,15 @@ public class TravelCommandNode {
                                     if (id > 0) {
                                         World world = ctx.getArgument("world", World.class);
                                         BlockPositionResolver resolver = ctx.getArgument("coords", BlockPositionResolver.class);
-                                        BlockPosition pos = resolver.resolve(ctx.getSource());
-                                        TravelUtilities.coords(plugin, player, world, pos, id);
+                                        // get current TARDIS location
+                                        Location location = TravelUtilities.getCurrentLocation(plugin, id);
+                                        if (location != null) {
+                                            CommandSourceStack source = ctx.getSource().withLocation(location);
+                                            BlockPosition pos = resolver.resolve(source);
+                                            TravelUtilities.coords(plugin, player, world, pos, id);
+                                        } else {
+                                            plugin.getMessenger().send(player, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
+                                        }
                                     }
                                     return Command.SINGLE_SUCCESS;
                                 })))
@@ -310,8 +319,15 @@ public class TravelCommandNode {
                             int id = TravelUtilities.getId(plugin, player);
                             if (id > 0) {
                                 BlockPositionResolver resolver = ctx.getArgument("coords", BlockPositionResolver.class);
-                                BlockPosition pos = resolver.resolve(ctx.getSource());
-                                TravelUtilities.coords(plugin, player, null, pos, id);
+                                // get current TARDIS location
+                                Location location = TravelUtilities.getCurrentLocation(plugin, id);
+                                if (location != null) {
+                                    CommandSourceStack source = ctx.getSource().withLocation(location);
+                                    BlockPosition pos = resolver.resolve(source);
+                                    TravelUtilities.coords(plugin, player, null, pos, id);
+                                } else {
+                                    plugin.getMessenger().send(player, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
+                                }
                             }
                             return Command.SINGLE_SUCCESS;
                         }));

@@ -141,6 +141,11 @@ public class TravelUtilities {
         }
     }
 
+    public static Location getCurrentLocation(TARDIS plugin, int id) {
+        ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
+        return rsc.resultSet() ? rsc.getCurrent().location() : null;
+    }
+
     private static World getCurrentWorld(TARDIS plugin, Player player, int id) {
         ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
         if (!rsc.resultSet()) {

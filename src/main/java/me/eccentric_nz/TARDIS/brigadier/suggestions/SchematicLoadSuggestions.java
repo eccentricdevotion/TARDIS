@@ -12,6 +12,7 @@ import me.eccentric_nz.tardischunkgenerator.worldgen.utils.SiluriaStructureUtili
 import me.eccentric_nz.tardischunkgenerator.worldgen.utils.SkaroStructureUtility;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.Locale;
 import java.util.concurrent.CompletableFuture;
 
@@ -47,11 +48,10 @@ public class SchematicLoadSuggestions {
             default -> {
                 File userDir = new File(TARDIS.plugin.getDataFolder() + File.separator + "user_schematics");
                 if (userDir.exists()) {
-                    for (String f : userDir.list()) {
-                        if (f.endsWith(".tschm")) {
-                            builder.suggest(f.substring(0, f.length() - 6));
-                        }
-                    }
+                    Arrays.stream(userDir.list())
+                            .filter(f -> f.endsWith(".tschm"))
+                            .filter(f -> f.toLowerCase(Locale.ROOT).startsWith(builder.getRemainingLowerCase()))
+                            .forEach(f -> builder.suggest(f.substring(0, f.length() - 6)));
                 }
             }
         }
