@@ -323,6 +323,8 @@ public class TARDIS extends JavaPlugin {
             }
             hasVersion = true;
             worldManager = WorldManager.getWorldManager();
+            // load Multiverse
+            loadMultiverse();
             saveDefaultConfig();
             reloadConfig();
             if (!getConfig().getBoolean("conversions.custom_presets")) {
@@ -342,8 +344,6 @@ public class TARDIS extends JavaPlugin {
             if (!getConfig().getBoolean("conversions.keyed_worlds")) {
                 new WorldKeyConfigUpdater(this).convert();
             }
-            // load Multiverse
-            loadMultiverse();
             // load worldguard
             loadWorldGuard();
             // add luckperms context

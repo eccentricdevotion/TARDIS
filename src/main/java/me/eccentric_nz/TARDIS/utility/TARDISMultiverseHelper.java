@@ -52,7 +52,9 @@ public class TARDISMultiverseHelper {
         Option<LoadedMultiverseWorld> option = coreApi.getWorldManager().getLoadedWorld(w);
         if (option.isDefined()) {
             LoadedMultiverseWorld mvw = option.get();
-            return (mvw.getBukkitWorld().isDefined()) ? mvw.getBukkitWorld().get() : Bukkit.getServer().getWorld(Key.key(w.toLowerCase(Locale.ROOT)));
+            return (mvw.getBukkitWorld().isDefined())
+                    ? mvw.getBukkitWorld().get()
+                    : Bukkit.getServer().getWorld(Key.key(w.toLowerCase(Locale.ROOT)));
         }
         return Bukkit.getServer().getWorld(Key.key(w.toLowerCase(Locale.ROOT)));
     }
