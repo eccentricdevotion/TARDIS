@@ -110,8 +110,7 @@ public class TelosStructurePopulator extends BlockPopulator {
                                     container.update();
                                 }
                             }
-                            case SPONGE -> {
-                            }
+                            case SPONGE -> { }
                             case SOUL_SAND -> {
                                 limitedRegion.setType(x, y, z, Material.SPAWNER);
                                 // change to zombie spawner
@@ -137,7 +136,7 @@ public class TelosStructurePopulator extends BlockPopulator {
             }
             if (obj.has("armour_stands")) {
                 JsonArray stands = obj.get("armour_stands").getAsJsonArray();
-                ArmourStandSetter.setStands(stands, limitedRegion.getWorld(), startX, startY, startZ);
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> ArmourStandSetter.setStands(stands, limitedRegion.getWorld(), startX, startY, startZ));
             }
         }
     }
