@@ -139,10 +139,10 @@ public class TARDISStaticLocationGetters {
      * Create a TARDIS Repeater location string from a Bukkit location.
      *
      * @param location the location to convert to a String
-     * @return a String in the style of world:x:y:z
+     * @return a String in the style of namespace:world:x:y:z
      */
     public static String makeLocationStr(Location location) {
-        return location.getWorld().getKey().asString() + ":" + location.getBlockX() + ":" + location.getBlockY() + ":" + location.getBlockZ() + ":" + location.getYaw();
+        return location.getWorld().getKey().asString() + ":" + location.getBlockX() + ":" + location.getBlockY() + ":" + location.getBlockZ();
     }
 
     /**
