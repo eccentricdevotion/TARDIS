@@ -136,7 +136,7 @@ public class TelosStructurePopulator extends BlockPopulator {
             }
             if (obj.has("armour_stands")) {
                 JsonArray stands = obj.get("armour_stands").getAsJsonArray();
-                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> ArmourStandSetter.setStands(stands, limitedRegion.getWorld(), startX, startY, startZ));
+                ArmourStandSetter.setStands(stands, limitedRegion.getWorld(), startX, startY, startZ);
             }
         }
     }
