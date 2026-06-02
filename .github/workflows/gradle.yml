@@ -76,7 +76,7 @@ jobs:
         append_body: true
 
     - name: Modrinth Publish
-      uses: cloudnode-pro/modrinth-publish@v2.3.4
+      uses: cloudnode-pro/modrinth-publish@v2.4.1
       with:
         token: ${{ secrets.MODRINTH_TOKEN }} # Modrinth API token
         project: 'ymLTIuUH' #  ID of the project this version is for

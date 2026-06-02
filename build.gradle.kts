@@ -84,16 +84,16 @@ repositories {
 
 dependencies {
     paperweight.paperDevBundle("26.1.2.build.+")
-    compileOnly("com.sk89q.worldedit:worldedit-core:7.4.3-SNAPSHOT") {
+    compileOnly("com.sk89q.worldedit:worldedit-core:7.4.4-SNAPSHOT") {
         isTransitive = false
     }
-    compileOnly("com.sk89q.worldedit:worldedit-bukkit:7.4.3-SNAPSHOT") {
+    compileOnly("com.sk89q.worldedit:worldedit-bukkit:7.4.4-SNAPSHOT") {
         isTransitive = false
     }
-    compileOnly("com.sk89q.worldguard:worldguard-core:7.0.17-SNAPSHOT") {
+    compileOnly("com.sk89q.worldguard:worldguard-core:7.0.18-SNAPSHOT") {
         isTransitive = false
     }
-    compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.17-SNAPSHOT") {
+    compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.18-SNAPSHOT") {
         isTransitive = false
     }
     compileOnly("net.citizensnpcs:citizensapi:2.0.42-SNAPSHOT") {
@@ -121,7 +121,7 @@ dependencies {
     compileOnly("com.github.retrooper:packetevents-api:2.12.1") {
         isTransitive = false
     }
-    compileOnly("me.libraryaddict.disguises:libsdisguises:11.0.16") {
+    compileOnly("me.libraryaddict.disguises:libsdisguises:11.0.18") {
         isTransitive = false
     }
     compileOnly("net.essentialsx:EssentialsX:2.22.0-SNAPSHOT") {

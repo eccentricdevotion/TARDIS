@@ -209,9 +209,9 @@ public class TARDIS extends JavaPlugin {
         worldGuardOnServer = false;
         invManager = InventoryManager.NONE;
         versions.put("GriefPrevention", "16.18");
-        versions.put("LibsDisguises", "11.0.6");
-        versions.put("Multiverse-Core", "5.0");
-        versions.put("Multiverse-Inventories", "5.0");
+        versions.put("LibsDisguises", "11.0.18");
+        versions.put("Multiverse-Core", "5.6.2");
+        versions.put("Multiverse-Inventories", "5.3.3");
         versions.put("Towny", "0.101");
         versions.put("WorldGuard", "7.0.17");
     }
@@ -243,6 +243,7 @@ public class TARDIS extends JavaPlugin {
                 PerceptionFilter.removePerceptionFilter();
                 debug("Perception Filters removed");
                 new TARDISPersister(this).save();
+                debug("Persisting data for server restart");
             }
             getServer().getScheduler().cancelTasks(this);
             debug("Cancelling all scheduled tasks");
