@@ -139,10 +139,10 @@ public class ColourPickerListener extends TARDISMenuListener {
         if (bb < 0) {
             bb = 0;
         }
-        List<Component> lore = new ArrayList<>();
-        lore.set(0, Component.text("Red: " + rr));
-        lore.set(1, Component.text("Green: " + gg));
-        lore.set(2, Component.text("Blue: " + bb));
+        List<Component> lore = new ArrayList<>(3);
+        lore.add(Component.text("Red: " + rr));
+        lore.add(Component.text("Green: " + gg));
+        lore.add(Component.text("Blue: " + bb));
         display.setData(DataComponentTypes.LORE, ItemLore.lore(lore));
         display.setData(DataComponentTypes.DYED_COLOR, DyedItemColor.dyedItemColor()
                 .color(Color.fromRGB(rr, gg, bb))
@@ -165,10 +165,10 @@ public class ColourPickerListener extends TARDISMenuListener {
         if (bb > 255) {
             bb = 255;
         }
-        List<Component> lore = new ArrayList<>();
-        lore.set(0, Component.text("Red: " + rr));
-        lore.set(1, Component.text("Green: " + gg));
-        lore.set(2, Component.text("Blue: " + bb));
+        List<Component> lore = new ArrayList<>(3);
+        lore.add(Component.text("Red: " + rr));
+        lore.add(Component.text("Green: " + gg));
+        lore.add(Component.text("Blue: " + bb));
         display.setData(DataComponentTypes.LORE, ItemLore.lore(lore));
         display.setData(DataComponentTypes.DYED_COLOR, DyedItemColor.dyedItemColor()
                 .color(Color.fromRGB(rr, gg, bb))
