@@ -98,7 +98,7 @@ public class SonicListener implements Listener {
         ignite.add(Material.SOUL_SOIL);
         suspicious.add(Material.SUSPICIOUS_GRAVEL);
         suspicious.add(Material.SUSPICIOUS_SAND);
-        converts.addAll(Tag.CONCRETE_POWDER.getValues());
+        converts.addAll(Tag.CONCRETE_POWDERS.getValues());
         converts.add(Material.MUD);
         converts.add(Material.DIRT);
         converts.add(Material.COARSE_DIRT);

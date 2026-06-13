@@ -97,7 +97,7 @@ public class BleachRecipe {
         ItemStack powder = ItemStack.of(Material.WHITE_CONCRETE_POWDER, 1);
         ShapelessRecipe powderRecipe = new ShapelessRecipe(powderKey, powder);
         powderRecipe.addIngredient(new RecipeChoice.ExactChoice(bleach));
-        List<ItemType> powderTypes = Tag.CONCRETE_POWDER.getValues().stream()
+        List<ItemType> powderTypes = Tag.CONCRETE_POWDERS.getValues().stream()
                 .map(Material::asItemType)
                 .toList();
         // pass them to the varargs method (first item + remaining as array)

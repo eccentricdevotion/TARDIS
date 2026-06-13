@@ -29,10 +29,7 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.datafix.DataFixers;
 import net.minecraft.util.datafix.fixes.References;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.storage.ValueOutput;
@@ -49,13 +46,13 @@ public class TWAOod extends TWAFollower {
     private OodColour colour;
     
     public TWAOod(Level world) {
-        super(EntityType.HUSK, world);
+        super(EntityTypes.HUSK, world);
         this.redeye = false;
         this.colour = OodColour.BLACK;
     }
 
     public TWAOod(EntityType<Entity> entityType, Level level) {
-        super(EntityType.HUSK, level);
+        super(EntityTypes.HUSK, level);
         this.redeye = false;
         this.colour = OodColour.BLACK;
     }
@@ -65,7 +62,7 @@ public class TWAOod extends TWAFollower {
         EntityRegistry.unfreeze();
         @SuppressWarnings("unchecked")
         Map<String, Type<?>> types = (Map<String, Type<?>>) DataFixers.getDataFixer().getSchema(DataFixUtils.makeKey(SharedConstants.getCurrentVersion().dataVersion().version())).findChoiceType(References.ENTITY).types();
-        types.put(mcKey.toString(), types.get(BuiltInRegistries.ENTITY_TYPE.getKey(EntityType.HUSK).toString()));
+        types.put(mcKey.toString(), types.get(BuiltInRegistries.ENTITY_TYPE.getKey(EntityTypes.HUSK).toString()));
         ResourceKey<EntityType<?>> resourceKey = ResourceKey.create(Registries.ENTITY_TYPE, Identifier.withDefaultNamespace(entityId));
         EntityType<?> type = EntityType.Builder.of(TWAOod::new, MobCategory.MONSTER).noSummon().build(resourceKey);
         entityReg.createIntrusiveHolder(type);
