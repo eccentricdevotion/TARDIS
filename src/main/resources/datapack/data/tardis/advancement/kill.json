@@ -13,8 +13,8 @@
       "trigger": "minecraft:player_killed_entity",
       "conditions": {
         "entity": {
-          "type": "minecraft:creeper",
-          "nbt": "{powered:1}"
+          "minecraft:entity_type": "minecraft:creeper",
+          "minecraft:nbt": "{powered:1b}"
         }
       }
     }
