@@ -1361,6 +1361,37 @@ public class ArtronCondensables {
             condensables.put("WAXED_WEATHERED_COPPER_GOLEM_STATUE", 256);
             condensables.put("WEATHERED_COPPER_GOLEM_STATUE", 236);
             condensables.put("WOODEN_SPEAR", 1);
+            // 26.2
+            condensables.put("CHISELED_CINNABAR", 2);
+            condensables.put("CHISELED_SULFUR", 2);
+            condensables.put("CINNABAR", 1);
+            condensables.put("CINNABAR_BRICKS", 4);
+            condensables.put("CINNABAR_BRICK_SLAB", 2);
+            condensables.put("CINNABAR_BRICK_STAIRS", 2);
+            condensables.put("CINNABAR_BRICK_WALL", 2);
+            condensables.put("CINNABAR_SLAB", 2);
+            condensables.put("CINNABAR_STAIRS", 2);
+            condensables.put("CINNABAR_WALL", 2);
+            condensables.put("MUSIC_DISC_BOUNCE", 100);
+            condensables.put("POLISHED_CINNABAR", 2);
+            condensables.put("POLISHED_CINNABAR_SLAB", 2);
+            condensables.put("POLISHED_CINNABAR_STAIRS", 2);
+            condensables.put("POLISHED_CINNABAR_WALL", 2);
+            condensables.put("POLISHED_SULFUR", 2);
+            condensables.put("POLISHED_SULFUR_SLAB", 2);
+            condensables.put("POLISHED_SULFUR_STAIRS", 2);
+            condensables.put("POLISHED_SULFUR_WALL", 2);
+            condensables.put("POTENT_SULFUR", 2);
+            condensables.put("SULFUR", 1);
+            condensables.put("SULFUR_BRICKS", 4);
+            condensables.put("SULFUR_BRICK_SLAB", 2);
+            condensables.put("SULFUR_BRICK_STAIRS", 2);
+            condensables.put("SULFUR_BRICK_WALL", 2);
+            condensables.put("SULFUR_CUBE_BUCKET", 40);
+            condensables.put("SULFUR_SLAB", 2);
+            condensables.put("SULFUR_SPIKE", 1);
+            condensables.put("SULFUR_STAIRS", 2);
+            condensables.put("SULFUR_WALL", 2);
         } else {
             Set<String> items = plugin.getCondensablesConfig().getKeys(false);
             items.forEach((item) -> condensables.put(item, plugin.getCondensablesConfig().getInt(item)));
