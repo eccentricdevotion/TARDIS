@@ -173,9 +173,9 @@ public class LazarusLibsDisguises {
                     WolfWatcher wolfWatcher = (WolfWatcher) livingWatcher;
                     if (hasOption) {
                         wolfWatcher.setTamed(true);
-                        wolfWatcher.setCollarColor((DyeColor) choice);
+                        wolfWatcher.setCollarColor(DyeColor.RED);
                     }
-//                    wolfWatcher.setVariant((Wolf.Variant) choice);
+                    wolfWatcher.setVariant((Wolf.Variant) choice);
                     wolfWatcher.setBaby(isBaby);
                 }
                 case SLIME, MAGMA_CUBE -> {

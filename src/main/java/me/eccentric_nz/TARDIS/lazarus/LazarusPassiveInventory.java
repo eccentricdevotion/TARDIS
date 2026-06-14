@@ -75,6 +75,7 @@ class LazarusPassiveInventory extends LazarusItems implements InventoryHolder, L
         passive.add(Material.SNOW_GOLEM_SPAWN_EGG);
         passive.add(Material.SQUID_SPAWN_EGG);
         passive.add(Material.STRIDER_SPAWN_EGG);
+        passive.add(Material.SULFUR_CUBE_SPAWN_EGG);
         passive.add(Material.TADPOLE_SPAWN_EGG);
         passive.add(Material.TROPICAL_FISH_SPAWN_EGG);
         passive.add(Material.TURTLE_SPAWN_EGG);

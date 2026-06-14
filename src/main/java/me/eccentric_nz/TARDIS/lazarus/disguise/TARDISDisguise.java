@@ -49,6 +49,7 @@ import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.monster.EnderMan;
 import net.minecraft.world.entity.monster.cubemob.MagmaCube;
 import net.minecraft.world.entity.monster.cubemob.Slime;
+import net.minecraft.world.entity.monster.cubemob.SulfurCube;
 import net.minecraft.world.entity.monster.illager.Pillager;
 import net.minecraft.world.entity.monster.zombie.ZombieVillager;
 import net.minecraft.world.entity.npc.villager.Villager;
@@ -180,7 +181,7 @@ public record TARDISDisguise(EntityType entityType, Object[] options) {
             }
             default -> {
                 str = CaseUtils.toCamelCase(disguise.entityType().toString(), true, '_');
-                packagePath += "animal." + disguise.entityType().toString().toLowerCase(Locale.ROOT).replace(" ","") + ".";
+                packagePath += "animal." + disguise.entityType().toString().toLowerCase(Locale.ROOT).replace(" ", "") + ".";
             }
         }
         try {
@@ -336,6 +337,13 @@ public record TARDISDisguise(EntityType entityType, Object[] options) {
                             case SLIME -> {
                                 Slime slime = (Slime) entity;
                                 slime.setSize(i, false);
+                            }
+                            case SULFUR_CUBE -> {
+                                SulfurCube sulfurCube = (SulfurCube) entity;
+                                if (i > 2) {
+                                    i = 2;
+                                }
+                                sulfurCube.setSize(i, false);
                             }
                             case PUFFERFISH -> {
                                 Pufferfish puffer = (Pufferfish) entity;

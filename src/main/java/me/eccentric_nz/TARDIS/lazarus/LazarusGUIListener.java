@@ -345,7 +345,7 @@ public class LazarusGUIListener extends TARDISMenuListener {
                                         options = new Object[]{getProfession(view), AGE.getFromBoolean(getBaby(view))};
                                     }
                                 }
-                                case SLIME, MAGMA_CUBE -> {
+                                case SLIME, MAGMA_CUBE, SULFUR_CUBE -> {
                                     if (plugin.isDisguisesOnServer()) {
                                         new LazarusLibsDisguises(player, disguise, getSlimeSize(view), false, false).createDisguise();
                                     } else {
