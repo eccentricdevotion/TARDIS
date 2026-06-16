@@ -5,14 +5,14 @@ import java.io.ByteArrayOutputStream
 plugins {
     `java-library`
     id("io.papermc.paperweight.userdev") version "2.0.0-beta.21"
-    id("com.gradleup.shadow") version "9.4.1"
+    id("com.gradleup.shadow") version "9.4.2"
     id("java")
     id("io.papermc.hangar-publish-plugin") version "0.1.4"
 }
 
 group = "me.eccentric_nz"
 val buildNumber = "-b${System.getenv("BUILD_NUMBER") ?: (System.getenv("SHORT_SHA") ?: ".local")}"
-version = "7.0.2${buildNumber}"
+version = "7.0.3${buildNumber}"
 
 repositories {
     mavenCentral()
@@ -83,7 +83,7 @@ repositories {
 }
 
 dependencies {
-    paperweight.paperDevBundle("26.1.2.build.+")
+    paperweight.paperDevBundle("26.2.build.+")
     compileOnly("com.sk89q.worldedit:worldedit-core:7.4.4-SNAPSHOT") {
         isTransitive = false
     }
@@ -147,7 +147,7 @@ dependencies {
     }
     compileOnly(files("libs/VaultAPI.jar"))
     compileOnly("org.geysermc.floodgate:api:2.2.5-SNAPSHOT")
-    compileOnly("org.geysermc.geyser:api:2.10.0-SNAPSHOT")
+    compileOnly("org.geysermc.geyser:api:2.10.1-SNAPSHOT")
     compileOnly("org.jsoup:jsoup:1.22.2") {
         isTransitive = false
     }

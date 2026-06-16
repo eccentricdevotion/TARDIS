@@ -829,6 +829,39 @@ public class CondensablesConfigUpdater {
                 plugin.getCondensablesConfig().set("QUARTZ_SLAB", 10);
                 i++;
             }
+            // 26.2
+            if (!plugin.getCondensablesConfig().contains("SULFUR")) {
+                plugin.getCondensablesConfig().set("CHISELED_CINNABAR", 2);
+                plugin.getCondensablesConfig().set("CHISELED_SULFUR", 2);
+                plugin.getCondensablesConfig().set("CINNABAR", 1);
+                plugin.getCondensablesConfig().set("CINNABAR_BRICKS", 4);
+                plugin.getCondensablesConfig().set("CINNABAR_BRICK_SLAB", 2);
+                plugin.getCondensablesConfig().set("CINNABAR_BRICK_STAIRS", 2);
+                plugin.getCondensablesConfig().set("CINNABAR_BRICK_WALL", 2);
+                plugin.getCondensablesConfig().set("CINNABAR_SLAB", 2);
+                plugin.getCondensablesConfig().set("CINNABAR_STAIRS", 2);
+                plugin.getCondensablesConfig().set("CINNABAR_WALL", 2);
+                plugin.getCondensablesConfig().set("MUSIC_DISC_BOUNCE", 100);
+                plugin.getCondensablesConfig().set("POLISHED_CINNABAR", 2);
+                plugin.getCondensablesConfig().set("POLISHED_CINNABAR_SLAB", 2);
+                plugin.getCondensablesConfig().set("POLISHED_CINNABAR_STAIRS", 2);
+                plugin.getCondensablesConfig().set("POLISHED_CINNABAR_WALL", 2);
+                plugin.getCondensablesConfig().set("POLISHED_SULFUR", 2);
+                plugin.getCondensablesConfig().set("POLISHED_SULFUR_SLAB", 2);
+                plugin.getCondensablesConfig().set("POLISHED_SULFUR_STAIRS", 2);
+                plugin.getCondensablesConfig().set("POLISHED_SULFUR_WALL", 2);
+                plugin.getCondensablesConfig().set("POTENT_SULFUR", 2);
+                plugin.getCondensablesConfig().set("SULFUR", 1);
+                plugin.getCondensablesConfig().set("SULFUR_BRICKS", 4);
+                plugin.getCondensablesConfig().set("SULFUR_BRICK_SLAB", 2);
+                plugin.getCondensablesConfig().set("SULFUR_BRICK_STAIRS", 2);
+                plugin.getCondensablesConfig().set("SULFUR_BRICK_WALL", 2);
+                plugin.getCondensablesConfig().set("SULFUR_CUBE_BUCKET", 40);
+                plugin.getCondensablesConfig().set("SULFUR_SLAB", 2);
+                plugin.getCondensablesConfig().set("SULFUR_SPIKE", 1);
+                plugin.getCondensablesConfig().set("SULFUR_STAIRS", 2);
+                plugin.getCondensablesConfig().set("SULFUR_WALL", 2);
+            }
             if (i > 0) {
                 try {
                     String listPath = plugin.getDataFolder() + File.separator + "condensables.yml";
