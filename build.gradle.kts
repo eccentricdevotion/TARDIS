@@ -83,7 +83,7 @@ repositories {
 }
 
 dependencies {
-    paperweight.paperDevBundle("26.2-rc-2.build.5-alpha")
+    paperweight.paperDevBundle("26.2.build.+")
     compileOnly("com.sk89q.worldedit:worldedit-core:7.4.4-SNAPSHOT") {
         isTransitive = false
     }
