@@ -625,6 +625,25 @@ public class BlocksConfigUpdater {
             blocks_config.set("tardis_blocks", tbs);
             i++;
         }
+        if (!tbs.contains("CINNABAR")) {
+            List<String> blocks = new ArrayList<>();
+            blocks.add("CINNABAR");
+            blocks.add("CINNABAR_BRICKS");
+            blocks.add("CHISELED_CINNABAR");
+            blocks.add("POLISHED_SULFUR");
+            blocks.add("POLISHED_CINNABAR");
+            blocks.add("SULFUR");
+            blocks.add("SULFUR_BRICKS");
+            // tardis blocks
+            tbs.addAll(blocks);
+            tbs.sort(Comparator.naturalOrder());
+            blocks_config.set("tardis_blocks", tbs);
+            List<String> under = blocks_config.getStringList("under_door_blocks");
+            under.add("SULFUR_SPIKE");
+            under.sort(Comparator.naturalOrder());
+            blocks_config.set("under_door_blocks", under);
+            i++;
+        }
         try {
             blocks_config.save(new File(plugin.getDataFolder(), "blocks.yml"));
             if (i > 0) {

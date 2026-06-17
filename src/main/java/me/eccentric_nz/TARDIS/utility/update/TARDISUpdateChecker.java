@@ -61,7 +61,7 @@ public class TARDISUpdateChecker implements Runnable {
         }
         String commit = build.split("-b")[1];
         JsonObject lastBuild = fetchLatestCommit();
-        // TARDIS-7.0.2-b21c92b20f.jar - 9 chars
+        // TARDIS-7.0.3-b21c92b20f.jar - 9 chars
         if (lastBuild == null || !lastBuild.has("sha")) {
             // couldn't get GitHub info
             if (sender == null) {
@@ -159,7 +159,7 @@ public class TARDISUpdateChecker implements Runnable {
             reader.close();
             return props.getProperty("paperVersion");
         } catch (IOException  | InterruptedException e) {
-            return "26.1.2";
+            return "26.2";
         }
     }
 }

@@ -9,8 +9,8 @@ on:
     branches: [ "master" ]
 
 env:
-  VERSION: '7.0.2'
-  RELEASE_TAG: '26.1'
+  VERSION: '7.0.3'
+  RELEASE_TAG: '26.2'
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
@@ -45,7 +45,7 @@ jobs:
     # Configure Gradle for optimal use in GitHub Actions, including caching of downloaded dependencies.
     # See: https://github.com/gradle/actions/blob/main/setup-gradle/README.md
     - name: Setup Gradle
-      uses: gradle/actions/setup-gradle@v6.1.0
+      uses: gradle/actions/setup-gradle@v6.2.0
     
     # set executable permissions on gradlew
     - name: Grant execute permission for gradlew

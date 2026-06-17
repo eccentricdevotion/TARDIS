@@ -28,6 +28,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.datafix.DataFixers;
 import net.minecraft.util.datafix.fixes.References;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.decoration.ArmorStand;
@@ -49,7 +50,7 @@ public class TARDISArmourStand extends ArmorStand {
     private double speedFactor = 3.0d;
 
     public TARDISArmourStand(EntityType<? extends ArmorStand> entityType, Level world) {
-        super(EntityType.ARMOR_STAND, world);
+        super(EntityTypes.ARMOR_STAND, world);
         this.player = null;
         this.setNoGravity(false);
         this.setInvisible(true);
@@ -62,7 +63,7 @@ public class TARDISArmourStand extends ArmorStand {
         EntityRegistry.unfreeze();
         @SuppressWarnings("unchecked")
         Map<String, Type<?>> types = (Map<String, Type<?>>) DataFixers.getDataFixer().getSchema(DataFixUtils.makeKey(SharedConstants.getCurrentVersion().dataVersion().version())).findChoiceType(References.ENTITY).types();
-        types.put(mcKey.toString(), types.get(BuiltInRegistries.ENTITY_TYPE.getKey(EntityType.ARMOR_STAND).toString()));
+        types.put(mcKey.toString(), types.get(BuiltInRegistries.ENTITY_TYPE.getKey(EntityTypes.ARMOR_STAND).toString()));
         ResourceKey<EntityType<?>> resourceKey = ResourceKey.create(Registries.ENTITY_TYPE, Identifier.withDefaultNamespace(entityId));
         EntityType<?> type = EntityType.Builder.of(TARDISArmourStand::new, MobCategory.MISC).noSummon().build(resourceKey);
         entityReg.createIntrusiveHolder(type);

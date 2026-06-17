@@ -11,7 +11,7 @@ import me.eccentric_nz.TARDIS.skins.CharacterSkins;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BiomeTags;
-import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.SpawnPlacementType;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.entity.ai.village.poi.PoiManager;
@@ -94,13 +94,13 @@ public class TimeLordTraderSpawner {
 
     private BlockPos findSpawnPositionNear(final LevelReader level, final BlockPos referencePosition) {
         BlockPos spawnPosition = null;
-        SpawnPlacementType wanderingTraderSpawnType = SpawnPlacements.getPlacementType(EntityType.WANDERING_TRADER);
+        SpawnPlacementType wanderingTraderSpawnType = SpawnPlacements.getPlacementType(EntityTypes.WANDERING_TRADER);
         for (int i = 0; i < 10; i++) {
             int xPosition = referencePosition.getX() + TARDISConstants.RANDOM.nextInt(48 * 2) - 48;
             int zPosition = referencePosition.getZ() + TARDISConstants.RANDOM.nextInt(48 * 2) - 48;
-            int yPosition = level.getHeight(SpawnPlacements.getHeightmapType(EntityType.WANDERING_TRADER), xPosition, zPosition);
+            int yPosition = level.getHeight(SpawnPlacements.getHeightmapType(EntityTypes.WANDERING_TRADER), xPosition, zPosition);
             BlockPos spawnPos = new BlockPos(xPosition, yPosition, zPosition);
-            if (wanderingTraderSpawnType.isSpawnPositionOk(level, spawnPos, EntityType.WANDERING_TRADER)) {
+            if (wanderingTraderSpawnType.isSpawnPositionOk(level, spawnPos, EntityTypes.WANDERING_TRADER)) {
                 spawnPosition = spawnPos;
                 break;
             }
