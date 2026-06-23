@@ -80,9 +80,10 @@ public class WorldLoader {
                 }
                 if (plugin.getPlanetsConfig().contains("planets." + world + ".gamerules") && plugin.getPlanetsConfig().getConfigurationSection("planets." + world + ".gamerules") != null) {
                     for (String rule : plugin.getPlanetsConfig().getConfigurationSection("planets." + world + ".gamerules").getKeys(false)) {
-                        GameRule gameRule = Registry.GAME_RULE.get(NamespacedKey.minecraft(rule.toLowerCase(Locale.ROOT)));
+                        GameRule<?> gameRule = Registry.GAME_RULE.get(NamespacedKey.minecraft(rule.toLowerCase(Locale.ROOT)));
                         if (gameRule != null) {
-                            w.setGameRule(gameRule, plugin.getPlanetsConfig().getBoolean("planets." + world + ".gamerules." + rule));
+                            boolean value = plugin.getPlanetsConfig().getBoolean("planets." + world + ".gamerules." + rule);
+                            setGameRuleHelper(w, gameRule, value);
                         } else {
                             plugin.getLogger().log(Level.WARNING, "Invalid game rule detected in planets.yml!");
                             plugin.getLogger().log(Level.WARNING, "The rule was '" + rule + "' in world '" + world + "'.");
@@ -101,5 +102,10 @@ public class WorldLoader {
         } catch (IllegalArgumentException e) {
             plugin.getMessenger().sendWithColour(plugin.getConsole(), TardisModule.DEBUG, "Could not load world '" + world + "'! " + e.getMessage(), "#FF5555");
         }
+    }
+
+    private <T> void setGameRuleHelper(World world, GameRule<T> rule, Object value) {
+        // cast the value to the rule's expected type
+        world.setGameRule(rule, rule.getType().cast(value));
     }
 }
