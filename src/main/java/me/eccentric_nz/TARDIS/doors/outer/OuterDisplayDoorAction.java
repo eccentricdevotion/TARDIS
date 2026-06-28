@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.doors.outer;
 
-import com.destroystokyo.paper.MaterialTags;
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -44,6 +43,7 @@ import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Tag;
 import org.bukkit.World;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
@@ -63,7 +63,7 @@ public class OuterDisplayDoorAction extends DoorListener {
     public void processClick(int id, Player player, ArmorStand stand) {
         EntityEquipment ee = stand.getEquipment();
         ItemStack dye = ee.getHelmet();
-        if (dye != null && (TARDISConstants.DYES.contains(dye.getType()) || plugin.getUtils().isCustomModel(dye))) {
+        if (TARDISConstants.DYES.contains(dye.getType()) || plugin.getUtils().isCustomModel(dye)) {
             if (ComponentUtils.isModelled(dye)) {
                 String model = dye.getData(DataComponentTypes.ITEM_MODEL).value();
                 if ((model.contains("_open") || model.contains("_closed")) && TARDISPermission.hasPermission(player, "tardis.enter")) {
@@ -180,13 +180,13 @@ public class OuterDisplayDoorAction extends DoorListener {
                                                 }
                                             }
                                             TARDISSounds.playDoorSound(true, location);
-                                        } else if (TARDISStaticUtils.isSonic(hand) && MaterialTags.DYES.isTagged(dye.getType()) && tardis.getUuid().equals(uuid)) {
+                                        } else if (TARDISStaticUtils.isSonic(hand) && Tag.ITEMS_DYES.isTagged(dye.getType()) && tardis.getUuid().equals(uuid)) {
                                             ItemLore itemLore = hand.getData(DataComponentTypes.LORE);
                                             if (TARDISPermission.hasPermission(player, "tardis.sonic.paint") && itemLore != null && itemLore.lines().contains(Component.text("Painter Upgrade"))) {
                                                 // check for dye in slot
                                                 PlayerInventory inv = player.getInventory();
                                                 ItemStack colour = inv.getItem(8);
-                                                if (colour == null || !MaterialTags.DYES.isTagged(colour.getType())) {
+                                                if (colour == null || !Tag.ITEMS_DYES.isTagged(colour.getType())) {
                                                     plugin.getMessenger().send(player, TardisModule.TARDIS, "SONIC_DYE");
                                                     return;
                                                 }

@@ -87,6 +87,7 @@ public class TARDISFarmer {
      * @param from the world from
      * @return a List of the player's pets (if any are nearby)
      */
+    @SuppressWarnings("deprecation")
     public PetsAndFollowers farmAnimals(Location l, COMPASS d, int id, Player p, String to, String from) {
 
         switch (d) {
@@ -1455,6 +1456,7 @@ public class TARDISFarmer {
         return new PetsAndFollowers(pets, followers);
     }
 
+    @SuppressWarnings("deprecation")
     public PetsAndFollowers exitPets(Player player) {
         List<TARDISPet> pets = new ArrayList<>();
         List<Follower> followers = new ArrayList<>();

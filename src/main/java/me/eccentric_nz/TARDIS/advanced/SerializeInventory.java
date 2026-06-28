@@ -36,6 +36,7 @@ public class SerializeInventory {
         return Base64.getEncoder().encodeToString(bytes);
     }
 
+    @SuppressWarnings("deprecation")
     public static ItemStack[] itemStacksFromString(String data) throws IOException {
         try {
             byte[] decoded = Base64.getDecoder().decode(data);

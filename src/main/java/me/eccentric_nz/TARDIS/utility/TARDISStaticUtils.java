@@ -277,6 +277,7 @@ public class TARDISStaticUtils {
 
     private static Set<Material> OTHERS = Set.of(Material.MOVING_PISTON, Material.PUMPKIN, Material.REDSTONE_ORE, Material.REDSTONE_WIRE);
 
+    @SuppressWarnings("deprecation")
     public static boolean isInteractable(Block block) {
         Material type = block.getType();
         boolean interactable = type.isInteractable();

@@ -18,7 +18,8 @@ package me.eccentric_nz.TARDIS.geyser;
 
 import org.geysermc.event.subscribe.Subscribe;
 import org.geysermc.geyser.api.event.lifecycle.GeyserDefineCustomItemsEvent;
-import org.geysermc.geyser.api.item.custom.CustomItemData;
+import org.geysermc.geyser.api.item.custom.v2.CustomItemDefinition;
+import org.geysermc.geyser.api.util.Identifier;
 
 import java.util.Map;
 
@@ -26,7 +27,7 @@ public class GeyserRegister {
 
     @Subscribe
     public void onGeyserPreInitializeEvent(GeyserDefineCustomItemsEvent event) {
-        for (Map.Entry<String, CustomItemData> data : new GeyserItems().init().entrySet()) {
+        for (Map.Entry<Identifier, CustomItemDefinition> data : new GeyserItems().init().entrySet()) {
             event.register(data.getKey(), data.getValue());
         }
     }

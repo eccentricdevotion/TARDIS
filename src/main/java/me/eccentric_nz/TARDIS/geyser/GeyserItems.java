@@ -16,25 +16,22 @@
  */
 package me.eccentric_nz.TARDIS.geyser;
 
-import org.geysermc.geyser.api.item.custom.CustomItemData;
-import org.geysermc.geyser.api.item.custom.CustomItemOptions;
+import org.geysermc.geyser.api.item.custom.v2.CustomItemDefinition;
+import org.geysermc.geyser.api.predicate.item.ItemRangeDispatchPredicate;
+import org.geysermc.geyser.api.util.Identifier;
 
 import java.util.HashMap;
 
 public class GeyserItems {
 
     // TODO add items with Custom item API v2 - https://geysermc.org/wiki/geyser/custom-items
-    public HashMap<String, CustomItemData> init() {
-        HashMap<String, CustomItemData> items = new HashMap<>();
-        CustomItemOptions itemOptions = CustomItemOptions.builder()
-                .customModelData(101)
-                .build();
-        CustomItemData tardisKey = CustomItemData.builder()
-                .name("tardis_key")
-                .customItemOptions(itemOptions)
+    public HashMap<Identifier, CustomItemDefinition> init() {
+        HashMap<Identifier, CustomItemDefinition> items = new HashMap<>();
+        CustomItemDefinition definition = CustomItemDefinition.builder(Identifier.of("tardis:tardis_key"), Identifier.of("tardis:tardis_key"))
                 .displayName("TARDIS Key")
+                .predicate(ItemRangeDispatchPredicate.customModelData(0, 101f))
                 .build();
-        items.put("minecraft:trial_key", tardisKey);
+        items.put(Identifier.of("minecraft:trial_key"), definition);
         return items;
     }
 }

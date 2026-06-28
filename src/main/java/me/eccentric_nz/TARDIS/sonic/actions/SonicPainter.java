@@ -16,13 +16,13 @@
  */
 package me.eccentric_nz.TARDIS.sonic.actions;
 
-import com.destroystokyo.paper.MaterialTags;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.customblocks.Tinter;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.tardischunkgenerator.custombiome.CubicMaterial;
 import org.bukkit.Material;
+import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.BlockData;
@@ -72,7 +72,7 @@ public class SonicPainter {
                 }
                 return;
             }
-            if (dye == null || !MaterialTags.DYES.isTagged(dye.getType())) {
+            if (dye == null || !Tag.ITEMS_DYES.isTagged(dye.getType())) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "SONIC_DYE");
                 return;
             }

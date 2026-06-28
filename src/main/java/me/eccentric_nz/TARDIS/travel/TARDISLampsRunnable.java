@@ -94,7 +94,7 @@ class TARDISLampsRunnable implements Runnable {
         } else {
             // play smoke effect
             for (int j = 0; j < 9; j++) {
-                handbrake_loc.getWorld().playEffect(handbrake_loc, Effect.SMOKE, j);
+                handbrake_loc.getWorld().playEffect(handbrake_loc, Effect.SMOKE_SHOOT, j);
             }
             lamps.forEach((l) -> {
                 Block b = l.block();
