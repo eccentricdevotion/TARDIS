@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS;
 
-import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.artron.ArtronFurnaceParticle;
 import me.eccentric_nz.TARDIS.artron.ArtronPoweredRunnable;
 import me.eccentric_nz.TARDIS.artron.StandbyMode;
@@ -24,7 +23,6 @@ import me.eccentric_nz.TARDIS.blueprints.trader.TraderRunnable;
 import me.eccentric_nz.TARDIS.console.ControlMonitor;
 import me.eccentric_nz.TARDIS.control.ControlRunnable;
 import me.eccentric_nz.TARDIS.desktop.DesktopPreview;
-import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.forcefield.ForceField;
 import me.eccentric_nz.TARDIS.handles.HandlesRunnable;
 import me.eccentric_nz.TARDIS.junk.JunkReturnRunnable;
@@ -108,12 +106,6 @@ public class TARDISRunnables {
         plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new ControlRunnable(plugin), 200, 200);
         // update modeled console screens
         plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new ControlMonitor(plugin), 300, 200);
-        // check TARDIS advancements
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-            if (!TARDISAchievementFactory.checkAdvancement("tardis")) {
-                plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, plugin.getLanguage().getString("ADVANCEMENT_RELOAD"));
-            }
-        }, 199);
         /*
          * Starts a repeating task that removes Artron Energy from the TARDIS while it is in standby mode (ie not
          * travelling). Only runs if `standby_time` in artron.yml is greater than 0 (the default is 6000 or every 5

@@ -12,7 +12,6 @@ import io.papermc.paper.command.brigadier.Commands;
 import io.papermc.paper.command.brigadier.argument.ArgumentTypes;
 import io.papermc.paper.dialog.Dialog;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.brigadier.arguments.*;
 import me.eccentric_nz.TARDIS.brigadier.suggestions.BlockSuggestions;
@@ -60,13 +59,6 @@ public class DevCommandNode {
                 .then(Commands.literal("add_regions")
                         .executes(ctx -> {
                             new AddRegionsCommand(plugin).doCheck(ctx.getSource().getSender());
-                            return Command.SINGLE_SUCCESS;
-                        }))
-                .then(Commands.literal("advancements")
-                        .then(Commands.argument("which", StringArgumentType.word()))
-                        .executes(ctx -> {
-                            String a = StringArgumentType.getString(ctx, "which");
-                            TARDISAchievementFactory.checkAdvancement(a);
                             return Command.SINGLE_SUCCESS;
                         }))
                 .then(Commands.literal("armour")

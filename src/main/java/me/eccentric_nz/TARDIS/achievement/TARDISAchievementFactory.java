@@ -29,7 +29,6 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * Rassilon was the founder of Time Lord civilisation and perhaps the single greatest figure of Gallifreyan history. He
@@ -50,18 +49,6 @@ public class TARDISAchievementFactory {
         this.player = player;
         this.advancement = advancement;
         this.size = size;
-    }
-
-    public static boolean checkAdvancement(String adv) {
-        NamespacedKey nsk = new NamespacedKey(TARDIS.plugin, adv.toLowerCase(Locale.ROOT));
-        org.bukkit.advancement.Advancement a = TARDIS.plugin.getServer().getAdvancement(nsk);
-        if (a != null) {
-            TARDIS.plugin.debug("Advancement 'tardis:" + adv + "' exists :)");
-            return true;
-        } else {
-            TARDIS.plugin.debug("There is no advancement with that key!");
-            return false;
-        }
     }
 
     public static void grantAdvancement(Advancement adv, Player player) {
