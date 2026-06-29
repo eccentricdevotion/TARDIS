@@ -163,7 +163,7 @@ dependencies {
     compileOnly("org.swinglabs:swing-layout:1.0.3") {
         isTransitive = false
     }
-    testImplementation(platform("org.junit:junit-bom:6.0.3"))
+    testImplementation(platform("org.junit:junit-bom:6.1.1"))
     testImplementation("org.junit.jupiter:junit-jupiter")
 }
 
