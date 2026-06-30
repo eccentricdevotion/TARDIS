@@ -96,7 +96,7 @@ dependencies {
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.18-SNAPSHOT") {
         isTransitive = false
     }
-    compileOnly("net.citizensnpcs:citizensapi:2.0.42-SNAPSHOT") {
+    compileOnly("net.citizensnpcs:citizensapi:2.0.43-SNAPSHOT") {
         isTransitive = false
     }
     compileOnly("com.palmergames.bukkit.towny:towny:0.103.0.4") {
