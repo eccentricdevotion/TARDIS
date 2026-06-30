@@ -124,7 +124,7 @@ dependencies {
     compileOnly("me.libraryaddict.disguises:libsdisguises:11.0.18") {
         isTransitive = false
     }
-    compileOnly("net.essentialsx:EssentialsX:2.22.0-SNAPSHOT") {
+    compileOnly("net.essentialsx:EssentialsX:2.22.1-SNAPSHOT") {
         isTransitive = false
     }
     compileOnly("me.clip:placeholderapi:2.12.2") {
