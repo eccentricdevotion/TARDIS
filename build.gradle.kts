@@ -118,7 +118,7 @@ dependencies {
     compileOnly("com.griefcraft:lwc:2.4.2") {
         isTransitive = false
     }
-    compileOnly("com.github.retrooper:packetevents-api:2.12.1") {
+    compileOnly("com.github.retrooper:packetevents-api:2.13.0") {
         isTransitive = false
     }
     compileOnly("me.libraryaddict.disguises:libsdisguises:11.0.18") {
