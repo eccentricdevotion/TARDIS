@@ -127,7 +127,7 @@ dependencies {
     compileOnly("net.essentialsx:EssentialsX:2.22.1-SNAPSHOT") {
         isTransitive = false
     }
-    compileOnly("me.clip:placeholderapi:2.12.2") {
+    compileOnly("me.clip:placeholderapi:2.12.3") {
         isTransitive = false
     }
     compileOnly("io.github.fabiozumbi12.RedProtect:RedProtect-Core:8.1.2") {
