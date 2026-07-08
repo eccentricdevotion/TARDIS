@@ -58,7 +58,7 @@ public class OuterDisplayDoorCloser {
         if (helmet.isEmpty()) {
             return;
         }
-        if (!TARDISConstants.HAS_MODEL.contains(helmet.getType()) || !plugin.getUtils().isCustomModel(helmet)) {
+        if (!TARDISConstants.HAS_MODEL.contains(helmet.getType()) && !plugin.getUtils().isCustomModel(helmet)) {
             return;
         }
         if (!ComponentUtils.isModelled(helmet)) {

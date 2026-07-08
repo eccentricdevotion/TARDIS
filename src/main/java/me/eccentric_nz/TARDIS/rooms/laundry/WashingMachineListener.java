@@ -1,5 +1,6 @@
 package me.eccentric_nz.TARDIS.rooms.laundry;
 
+import com.destroystokyo.paper.MaterialSetTag;
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.ItemArmorTrim;
 import io.papermc.paper.registry.RegistryAccess;
@@ -31,7 +32,7 @@ public class WashingMachineListener extends TARDISMenuListener {
         super(plugin);
         DYEABLE.addAll(Tag.WOOL.getValues());
         DYEABLE.addAll(Tag.WOOL_CARPETS.getValues());
-        DYEABLE.addAll(Tag.ITEMS_DYES.getValues()); // leather player / horse armour & wolf armour
+        DYEABLE.addAll(Tag.ITEMS_CAULDRON_CAN_REMOVE_DYE.getValues()); // leather player / horse / wolf armour
     }
 
     @EventHandler

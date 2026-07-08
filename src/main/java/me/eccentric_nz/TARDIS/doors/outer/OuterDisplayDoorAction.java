@@ -63,7 +63,7 @@ public class OuterDisplayDoorAction extends DoorListener {
     public void processClick(int id, Player player, ArmorStand stand) {
         EntityEquipment ee = stand.getEquipment();
         ItemStack helmet = ee.getHelmet();
-        if (!TARDISConstants.HAS_MODEL.contains(helmet.getType()) || !plugin.getUtils().isCustomModel(helmet)) {
+        if (!TARDISConstants.HAS_MODEL.contains(helmet.getType()) && !plugin.getUtils().isCustomModel(helmet)) {
             return;
         }
         if (!ComponentUtils.isModelled(helmet)) {
