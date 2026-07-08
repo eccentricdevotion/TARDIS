@@ -54,89 +54,90 @@ public class OuterDisplayDoorOpener {
             return;
         }
         EntityEquipment ee = stand.getEquipment();
-        ItemStack dye = ee.getHelmet();
-        if (dye == null) {
+        ItemStack helmet = ee.getHelmet();
+        if (helmet.isEmpty()) {
             return;
         }
-        if ((TARDISConstants.DYES.contains(dye.getType()) || plugin.getUtils().isCustomModel(dye))) {
-            if (!ComponentUtils.isModelled(dye)) {
-                return;
-            }
-            // exterior portal
-            Location portal = new Location(stand.getWorld(), stand.getLocation().getBlockX(), stand.getLocation().getBlockY(), stand.getLocation().getBlockZ());
-            // open door
-            if (dye.getType() == Material.ENDER_PEARL) {
-                // animate pandorica opening
-                new PandoricaOpens(plugin).animate(stand, true);
-            } else if (dye.getType() == Material.GREEN_STAINED_GLASS_PANE) {
-                // animate SIDRAT opening
-                new SidratOpens(plugin).animate(stand, true);
-            } else {
-                switch (dye.getType()) {
-                    case CYAN_STAINED_GLASS_PANE -> dye.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.TENNANT_OPEN.getKey());
-                    case GRAY_STAINED_GLASS_PANE -> dye.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.WEEPING_ANGEL_OPEN.getKey());
-                    case RED_STAINED_GLASS_PANE -> dye.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.BATTLE_OPEN.getKey());
-                    case WHITE_DYE -> dye.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.WHITE_OPEN.getKey());
-                    case ORANGE_DYE -> dye.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.ORANGE_OPEN.getKey());
-                    case MAGENTA_DYE -> dye.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.MAGENTA_OPEN.getKey());
-                    case LIGHT_BLUE_DYE -> dye.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.LIGHT_BLUE_OPEN.getKey());
-                    case YELLOW_DYE -> dye.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.YELLOW_OPEN.getKey());
-                    case LIME_DYE -> dye.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.LIME_OPEN.getKey());
-                    case PINK_DYE -> dye.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.PINK_OPEN.getKey());
-                    case GRAY_DYE -> dye.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.GRAY_OPEN.getKey());
-                    case LIGHT_GRAY_DYE -> dye.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.LIGHT_GRAY_OPEN.getKey());
-                    case CYAN_DYE -> dye.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.CYAN_OPEN.getKey());
-                    case PURPLE_DYE -> dye.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.PURPLE_OPEN.getKey());
-                    case BLUE_DYE -> dye.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.BLUE_OPEN.getKey());
-                    case BROWN_DYE -> dye.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.BROWN_OPEN.getKey());
-                    case GREEN_DYE -> dye.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.GREEN_OPEN.getKey());
-                    case RED_DYE -> dye.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.RED_OPEN.getKey());
-                    case BLACK_DYE -> dye.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.BLACK_OPEN.getKey());
-                    case LEATHER_HORSE_ARMOR -> dye.setData(DataComponentTypes.ITEM_MODEL, ColouredVariant.TINTED_OPEN.getKey());
-                    default -> {
-                        // get the custom model config
-                        NamespacedKey c = plugin.getUtils().getCustomModel(dye.getType(), "_open");
-                        if (c != null) {
-                            dye.setData(DataComponentTypes.ITEM_MODEL, c);
-                        }
+        if (!TARDISConstants.HAS_MODEL.contains(helmet.getType()) || !plugin.getUtils().isCustomModel(helmet)) {
+            return;
+        }
+        if (!ComponentUtils.isModelled(helmet)) {
+            return;
+        }
+        // exterior portal
+        Location portal = new Location(stand.getWorld(), stand.getLocation().getBlockX(), stand.getLocation().getBlockY(), stand.getLocation().getBlockZ());
+        // open door
+        if (helmet.getType() == Material.ENDER_PEARL) {
+            // animate pandorica opening
+            new PandoricaOpens(plugin).animate(stand, true);
+        } else if (helmet.getType() == Material.GREEN_STAINED_GLASS_PANE) {
+            // animate SIDRAT opening
+            new SidratOpens(plugin).animate(stand, true);
+        } else {
+            switch (helmet.getType()) {
+                case CYAN_STAINED_GLASS_PANE -> helmet.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.TENNANT_OPEN.getKey());
+                case GRAY_STAINED_GLASS_PANE -> helmet.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.WEEPING_ANGEL_OPEN.getKey());
+                case RED_STAINED_GLASS_PANE -> helmet.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.BATTLE_OPEN.getKey());
+                case WHITE_DYE -> helmet.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.WHITE_OPEN.getKey());
+                case ORANGE_DYE -> helmet.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.ORANGE_OPEN.getKey());
+                case MAGENTA_DYE -> helmet.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.MAGENTA_OPEN.getKey());
+                case LIGHT_BLUE_DYE -> helmet.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.LIGHT_BLUE_OPEN.getKey());
+                case YELLOW_DYE -> helmet.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.YELLOW_OPEN.getKey());
+                case LIME_DYE -> helmet.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.LIME_OPEN.getKey());
+                case PINK_DYE -> helmet.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.PINK_OPEN.getKey());
+                case GRAY_DYE -> helmet.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.GRAY_OPEN.getKey());
+                case LIGHT_GRAY_DYE -> helmet.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.LIGHT_GRAY_OPEN.getKey());
+                case CYAN_DYE -> helmet.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.CYAN_OPEN.getKey());
+                case PURPLE_DYE -> helmet.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.PURPLE_OPEN.getKey());
+                case BLUE_DYE -> helmet.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.BLUE_OPEN.getKey());
+                case BROWN_DYE -> helmet.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.BROWN_OPEN.getKey());
+                case GREEN_DYE -> helmet.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.GREEN_OPEN.getKey());
+                case RED_DYE -> helmet.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.RED_OPEN.getKey());
+                case BLACK_DYE -> helmet.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.BLACK_OPEN.getKey());
+                case LEATHER_HORSE_ARMOR -> helmet.setData(DataComponentTypes.ITEM_MODEL, ColouredVariant.TINTED_OPEN.getKey());
+                default -> {
+                    // get the custom model config
+                    NamespacedKey c = plugin.getUtils().getCustomModel(helmet.getType(), "_open");
+                    if (c != null) {
+                        helmet.setData(DataComponentTypes.ITEM_MODEL, c);
                     }
                 }
-                ee.setHelmet(dye, true);
-                TARDISSounds.playDoorSound(true, portal);
             }
-            HashMap<String, Object> where = new HashMap<>();
-            where.put("tardis_id", id);
-            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
-            if (rs.resultSet()) {
-                Tardis tardis = rs.getTardis();
-                // get interior teleport location
-                ResultSetInnerDoorLocations resultSetPortal = new ResultSetInnerDoorLocations(plugin, id);
-                if (resultSetPortal.resultSet()) {
-                    Location teleport = resultSetPortal.getTeleportLocation();
-                    TARDISTeleportLocation tp_in = new TARDISTeleportLocation();
-                    tp_in.setLocation(teleport);
-                    tp_in.setTardisId(id);
-                    tp_in.setDirection(resultSetPortal.getDirection());
-                    tp_in.setAbandoned(tardis.isAbandoned());
-                    // track portal
-                    plugin.getTrackerKeeper().getPortals().put(portal, tp_in);
-                    // add movers
-                    if (!plugin.getConfig().getBoolean("preferences.open_door_policy")) {
-                        // always add the time lord of this TARDIS - as a companion may be opening the door
-                        plugin.getTrackerKeeper().getMovers().add(tardis.getUuid());
-                        // others
-                        if (tardis.getCompanions().equalsIgnoreCase("everyone")) {
-                            // online players
-                            for (Player p : Bukkit.getServer().getOnlinePlayers()) {
-                                plugin.getTrackerKeeper().getMovers().add(p.getUniqueId());
-                            }
-                        } else {
-                            //  companion UUIDs
-                            String[] companions = tardis.getCompanions().split(":");
-                            for (String c : companions) {
-                                if (!c.isEmpty()) {
-                                    plugin.getTrackerKeeper().getMovers().add(UUID.fromString(c));
-                                }
+            ee.setHelmet(helmet, true);
+            TARDISSounds.playDoorSound(true, portal);
+        }
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("tardis_id", id);
+        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+        if (rs.resultSet()) {
+            Tardis tardis = rs.getTardis();
+            // get interior teleport location
+            ResultSetInnerDoorLocations resultSetPortal = new ResultSetInnerDoorLocations(plugin, id);
+            if (resultSetPortal.resultSet()) {
+                Location teleport = resultSetPortal.getTeleportLocation();
+                TARDISTeleportLocation tp_in = new TARDISTeleportLocation();
+                tp_in.setLocation(teleport);
+                tp_in.setTardisId(id);
+                tp_in.setDirection(resultSetPortal.getDirection());
+                tp_in.setAbandoned(tardis.isAbandoned());
+                // track portal
+                plugin.getTrackerKeeper().getPortals().put(portal, tp_in);
+                // add movers
+                if (!plugin.getConfig().getBoolean("preferences.open_door_policy")) {
+                    // always add the time lord of this TARDIS - as a companion may be opening the door
+                    plugin.getTrackerKeeper().getMovers().add(tardis.getUuid());
+                    // others
+                    if (tardis.getCompanions().equalsIgnoreCase("everyone")) {
+                        // online players
+                        for (Player p : Bukkit.getServer().getOnlinePlayers()) {
+                            plugin.getTrackerKeeper().getMovers().add(p.getUniqueId());
+                        }
+                    } else {
+                        //  companion UUIDs
+                        String[] companions = tardis.getCompanions().split(":");
+                        for (String c : companions) {
+                            if (!c.isEmpty()) {
+                                plugin.getTrackerKeeper().getMovers().add(UUID.fromString(c));
                             }
                         }
                     }
