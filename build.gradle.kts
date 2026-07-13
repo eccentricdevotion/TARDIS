@@ -136,7 +136,7 @@ dependencies {
     compileOnly("io.github.fabiozumbi12.RedProtect:RedProtect-Spigot:8.1.2") {
         isTransitive = false
     }
-    compileOnly("net.coreprotect:coreprotect:23.2") {
+    compileOnly("net.coreprotect:coreprotect:24.0") {
         isTransitive = false
     }
     compileOnly(files("libs/dynmap-api-3.8.jar"))
