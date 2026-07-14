@@ -1,5 +1,7 @@
 # TARDIS
 
+![Modrinth Version](https://img.shields.io/modrinth/v/ymLTIuUH?style=for-the-badge&label=Current%20version)
+
 TARDIS is a PaperMC plugin that allows you to create a TARDIS that lets you time travel (teleport) to random
 locations. It adds a Whovian twist to the typical `/set_home` and `/home` commands.
 
@@ -19,35 +21,36 @@ locations. It adds a Whovian twist to the typical `/set_home` and `/home` comman
 Plugin documentation can be found here:
 [https://tardis.pages.dev/](https://tardis.pages.dev/)
 
-[Join the TARDIS Community Discord server](https://discord.gg/sfuPVHh)
+[![Static Badge](https://img.shields.io/badge/Join_the_TARDIS_community-Discord-blue?style=for-the-badge&logo=discord)](https://discord.gg/sfuPVHh)
 
 GitHub continuously integrated builds (updated when changes are pushed to this repositiory) can be found on the [Releases](https://github.com/eccentricdevotion/TARDIS/releases) page.
 
-![GitHub last commit](https://img.shields.io/github/last-commit/eccentricdevotion/TARDIS?style=for-the-badge)
+![GitHub last commit](https://img.shields.io/github/last-commit/eccentricdevotion/TARDIS?style=for-the-badge)  
 
 ![GitHub top language](https://img.shields.io/github/languages/top/eccentricdevotion/TARDIS?style=for-the-badge)
 ![Open issues](https://img.shields.io/github/issues-raw/eccentricdevotion/TARDIS?style=for-the-badge)
 ![Closed issues](https://img.shields.io/github/issues-closed-raw/eccentricdevotion/TARDIS?style=for-the-badge)
 
-![Spigot rating](https://img.shields.io/spiget/stars/45729?label=Spigot%20rating&style=for-the-badge)
-![Spigot downloads](https://img.shields.io/spiget/downloads/45729?label=Spigot%20downloads&style=for-the-badge)
-![bStats Servers](https://img.shields.io/bstats/servers/11698?style=for-the-badge)
+![Modrinth Downloads](https://img.shields.io/modrinth/dt/ymLTIuUH?label=Modrinth%20downloads&style=for-the-badge&logo=modrinth)
+![Hangar Downloads](https://img.shields.io/hangar/dt/TARDIS?style=for-the-badge&label=Hangar%20downloads)
+![CurseForge Downloads](https://img.shields.io/curseforge/dt/42027?style=for-the-badge&label=Bukkit%20downloads&logo=curseforge)
+![Spigot downloads](https://img.shields.io/spiget/downloads/45729?label=Spigot%20downloads&style=for-the-badge&logo=spigotmc)
+![Spigot rating](https://img.shields.io/spiget/stars/45729?label=Spigot%20rating&style=for-the-badge&logo=spigotmc)
 
+![bStats Servers](https://img.shields.io/bstats/servers/11698?style=for-the-badge)
+![bStats Players](https://img.shields.io/bstats/players/11698?style=for-the-badge)
+
+![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/eccentricdevotion/TARDIS/total?style=for-the-badge&label=GitHub%20downloads&logo=github)
+![26.2 downloads](https://img.shields.io/github/downloads/eccentricdevotion/TARDIS/26.2/total?style=for-the-badge)
 ![26.1.2 downloads](https://img.shields.io/github/downloads/eccentricdevotion/TARDIS/26.1/total?style=for-the-badge)
 ![1.21.11 downloads](https://img.shields.io/github/downloads/eccentricdevotion/TARDIS/1.21.11/total?style=for-the-badge)
-![1.21.10 downloads](https://img.shields.io/github/downloads/eccentricdevotion/TARDIS/1.21.10/total?style=for-the-badge)
-![1.21.8 downloads](https://img.shields.io/github/downloads/eccentricdevotion/TARDIS/1.21.8/total?style=for-the-badge)
 ![1.21.5 downloads](https://img.shields.io/github/downloads/eccentricdevotion/TARDIS/1.21.5/total?style=for-the-badge)
 ![1.21.4 downloads](https://img.shields.io/github/downloads/eccentricdevotion/TARDIS/1.21.4/total?style=for-the-badge)
 ![1.21.3 downloads](https://img.shields.io/github/downloads/eccentricdevotion/TARDIS/1.21.3/total?style=for-the-badge)
 ![1.21 downloads](https://img.shields.io/github/downloads/eccentricdevotion/TARDIS/1.21/total?style=for-the-badge)
 ![1.20.6 downloads](https://img.shields.io/github/downloads/eccentricdevotion/TARDIS/1.20.6/total?style=for-the-badge)
 ![1.20.4 downloads](https://img.shields.io/github/downloads/eccentricdevotion/TARDIS/1.20.4/total?style=for-the-badge)
-![1.20.3 downloads](https://img.shields.io/github/downloads/eccentricdevotion/TARDIS/1.20.3/total?style=for-the-badge)
-![1.20.2 downloads](https://img.shields.io/github/downloads/eccentricdevotion/TARDIS/1.20.2/total?style=for-the-badge)
-![1.20.1 downloads](https://img.shields.io/github/downloads/eccentricdevotion/TARDIS/1.20.1/total?style=for-the-badge)
 ![1.19.4 downloads](https://img.shields.io/github/downloads/eccentricdevotion/TARDIS/1.19.4/total?style=for-the-badge)
-![1.19.3 downloads](https://img.shields.io/github/downloads/eccentricdevotion/TARDIS/1.19.3/total?style=for-the-badge)
 ![1.19.2 downloads](https://img.shields.io/github/downloads/eccentricdevotion/TARDIS/1.19.2/total?style=for-the-badge)
 ![1.18.2 downloads](https://img.shields.io/github/downloads/eccentricdevotion/TARDIS/1.18.2/total?style=for-the-badge)
 ![1.17.1 downloads](https://img.shields.io/github/downloads/eccentricdevotion/TARDIS/1.17.1/total?style=for-the-badge)
