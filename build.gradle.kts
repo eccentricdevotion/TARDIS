@@ -5,7 +5,7 @@ import java.io.ByteArrayOutputStream
 plugins {
     `java-library`
     id("io.papermc.paperweight.userdev") version "2.0.0-beta.21"
-    id("com.gradleup.shadow") version "9.5.1"
+    id("com.gradleup.shadow") version "9.6.0"
     id("java")
     id("io.papermc.hangar-publish-plugin") version "0.1.4"
 }
