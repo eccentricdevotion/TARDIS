@@ -22,7 +22,6 @@ import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.io.BukkitObjectInputStream;
-import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -43,7 +42,7 @@ public class SerializeInventory {
             return ItemStack.deserializeItemsFromBytes(decoded);
         } catch (IllegalArgumentException tryLegacy) {
             try {
-                ByteArrayInputStream inputStream = new ByteArrayInputStream(Base64Coder.decodeLines(data));
+                ByteArrayInputStream inputStream = new ByteArrayInputStream(Base64.getMimeDecoder().decode(data));
                 ItemStack[] stack;
                 try (BukkitObjectInputStream dataInput = new BukkitObjectInputStream(inputStream)) {
                     stack = new ItemStack[dataInput.readInt()];
