@@ -9,7 +9,7 @@ website: http://tardis.pages.dev/
 dev-url: http://github.com/eccentricdevotion/TARDIS/
 url: http://tardis.pages.dev/
 version: 7.0.3@buildNumber@
-api-version: '26.2'
+api-version: '26.3'
 libraries:
   - org.jsoup:jsoup:1.21.1
 permissions:
