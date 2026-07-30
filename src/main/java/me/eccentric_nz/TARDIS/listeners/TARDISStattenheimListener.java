@@ -25,7 +25,7 @@ import me.eccentric_nz.TARDIS.advanced.CircuitDamager;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.artron.AdaptiveBoxLampToggler;
 import me.eccentric_nz.TARDIS.artron.BeaconToggler;
-import me.eccentric_nz.TARDIS.artron.PresetLampToggler;
+import me.eccentric_nz.TARDIS.artron.LightToggler;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.exterior.BuildData;
 import me.eccentric_nz.TARDIS.builders.exterior.EmergencyRelocation;
@@ -359,7 +359,7 @@ public class TARDISStattenheimListener implements Listener {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "POWER_ON");
                     // if lights are off, turn them on
                     if (tardis.isLightsOn()) {
-                        new PresetLampToggler(plugin).flickSwitch(id, uuid, false, tardis.getSchematic().getLights());
+                        new LightToggler(plugin).flickSwitch(id, uuid, false, tardis.getSchematic().getLights());
                     }
                     // if beacon is off turn it on
                     if (beacon_on) {
