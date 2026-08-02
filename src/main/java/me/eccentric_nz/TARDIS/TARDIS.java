@@ -458,7 +458,7 @@ public class TARDIS extends JavaPlugin {
                 new TARDISStats(this).startMetrics();
             }, 200L);
         } else {
-            getLogger().log(Level.SEVERE, "This plugin requires Spigot/Paper " + minVersion + " or higher, disabling...");
+            getLogger().log(Level.SEVERE, "This plugin requires Paper " + minVersion + " or higher, disabling...");
             pm.disablePlugin(this);
         }
     }

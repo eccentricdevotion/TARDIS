@@ -706,7 +706,7 @@ LOST_IN_VORTEX: "The TARDIS is still travelling... you would get lost in the tim
 MALFUNCTION: "There was a malfunction and the emergency handbrake was engaged! Scan location before exit!"
 MAP_COPYING: "Attempting to copy map file (%s) to the correct directory..."
 MAP_NOT_FOUND: "Could not find the %s TARDIS map file..."
-MATERIAL_NOT_VALID: "That is not a valid Material! Try checking https://hub.spigotmc.org/stash/projects/SPIGOT/repos/bukkit/browse/src/main/java/org/bukkit/Material.java"
+MATERIAL_NOT_VALID: "That is not a valid Material! Try checking https://jd.papermc.io/paper/26.2/org/bukkit/Material.html"
 MAT_MISSING: "The Materialisation Circuit is missing from the console! No destination will be set."
 MODULE_NOT_ENABLED: "This command is disabled! Please enable the %s module."
 MONITOR_PLACE_FIRST: "You need to place and update a TARDIS Monitor before updating a Monitor Frame."
