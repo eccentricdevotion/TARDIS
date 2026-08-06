@@ -11,9 +11,19 @@ import java.util.concurrent.CompletableFuture;
 
 public class PermissionSuggestions {
 
+    private static final String CHILDREN_MARKER = ".children.";
+
     public static CompletableFuture<Suggestions> get(final CommandContext<CommandSourceStack> ctx, final SuggestionsBuilder builder) {
         TARDIS.plugin.getGeneralKeeper().getPluginYAML().getConfigurationSection("permissions").getKeys(true).stream()
-                .filter(p -> p.toLowerCase(Locale.ROOT).startsWith(builder.getRemainingLowerCase()))
+                .filter(p ->
+                        p.toLowerCase(Locale.ROOT).startsWith(builder.getRemainingLowerCase())
+                                && !p.toLowerCase(Locale.ROOT).endsWith("description")
+                                && !p.toLowerCase(Locale.ROOT).endsWith("default")
+                                && !p.toLowerCase(Locale.ROOT).endsWith("children"))
+                .map(p -> {
+                    int index = p.indexOf(CHILDREN_MARKER);
+                    return (index != -1) ? p.substring(index + CHILDREN_MARKER.length()) : p;
+                })
                 .forEach(builder::suggest);
         return builder.buildFuture();
     }
