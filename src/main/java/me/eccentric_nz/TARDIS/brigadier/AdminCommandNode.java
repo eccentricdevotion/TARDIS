@@ -374,6 +374,17 @@ public class AdminCommandNode {
                                             new RevokeCommand(plugin).removePermission(ctx.getSource().getSender(), player, perm);
                                             return Command.SINGLE_SUCCESS;
                                         }))))
+                .then(Commands.literal("has")
+                        .then(Commands.argument("player", ArgumentTypes.player())
+                                .then(Commands.argument("permission", StringArgumentType.word())
+                                        .suggests(PermissionSuggestions::get)
+                                        .executes(ctx -> {
+                                            PlayerSelectorArgumentResolver targetResolver = ctx.getArgument("player", PlayerSelectorArgumentResolver.class);
+                                            Player player = targetResolver.resolve(ctx.getSource()).getFirst();
+                                            String perm = StringArgumentType.getString(ctx, "permission");
+                                            new BlueprintCommand(plugin).hasPermission(ctx.getSource().getSender(), player, perm);
+                                            return Command.SINGLE_SUCCESS;
+                                        }))))
                 .then(Commands.literal("set_size")
                         .then(Commands.argument("player", ArgumentTypes.player())
                                 .then(Commands.argument("desktop", new SeedArgumentType())
