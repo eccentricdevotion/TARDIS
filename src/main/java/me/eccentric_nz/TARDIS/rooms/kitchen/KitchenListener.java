@@ -23,7 +23,7 @@ public class KitchenListener implements Listener {
         if (!(event.getEntity() instanceof Player player)) {
             return;
         }
-        if (event.getCause() !=  EntityDamageEvent.DamageCause.STARVATION) {
+        if (event.getCause() != EntityDamageEvent.DamageCause.STARVATION) {
             return;
         }
         // get the tardis the player is in
@@ -37,18 +37,18 @@ public class KitchenListener implements Listener {
                 return;
             }
             // does the kitchen chest have edible items in it
-            int slot = -1;
             for (ItemStack item : inventory.getContents()) {
-                slot++;
-                if  (item == null || item.isEmpty()) {
+                if (item == null || item.isEmpty()) {
                     continue;
                 }
+                // TODO and not rotten flesh or poisonous potato
                 if (item.getType().isEdible()) {
                     // feed the player
-player.setFoodLevel(player.getFoodLevel()+EdibleLookup.EDIBLE.get(item.getType()));
+                    player.setFoodLevel(player.getFoodLevel() + EdibleLookup.EDIBLE.get(item.getType()));
+                    // remove edible item from chest
+                    ChestUtility.removeItem(item.getType(), chestData.location());
                 }
             }
-            // remove edible item from chest
         }
     }
 }
