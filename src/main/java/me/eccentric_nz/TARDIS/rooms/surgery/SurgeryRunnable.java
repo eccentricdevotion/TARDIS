@@ -1,13 +1,11 @@
 package me.eccentric_nz.TARDIS.rooms.surgery;
 
-import com.mojang.datafixers.util.Pair;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.rooms.kitchen.ChestData;
 import me.eccentric_nz.TARDIS.rooms.kitchen.ChestUtility;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectTypeCategory;
 
@@ -35,7 +33,7 @@ public class SurgeryRunnable implements Runnable {
             if (chestData.chest()) {
                 Inventory inventory = ChestUtility.getChestInventory(chestData.location());
                 // is the surgery chest empty - return
-                if (inventory.isEmpty()) {
+                if (inventory == null || inventory.isEmpty()) {
                     continue;
                 }
                 // do they have a potion effect?
@@ -59,20 +57,15 @@ public class SurgeryRunnable implements Runnable {
                     }
                     // remove milk bucket from chest - add one empty bucket
                     ChestUtility.removeItem(Material.MILK_BUCKET, chestData.location());
-                } else if (player.getHealth() < 2.0) {
-                    // else is the player's health below 2?
+                } else if (player.getHealth() < 2.0) { // else is the player's health below 2?
                     // does the surgery chest have healing potions in it?
-                    slot = inventory.first(Material.POTION);
-                    if (slot == -1) {
-                        continue;
-                    }
                     HealingData healing = ChestUtility.getFirstHealingPotion(inventory);
                     if (healing != null) {
                         // heal the player
                         /*
                         1 => potion of healing I  4HP ❤️❤️
                         2 => potion of healing II 8HP ❤️❤️❤️❤️
-                         */
+                        */
                         player.setHealth(player.getHealth() + (healing.potency() * 4));
                         // remove healing potion
                         ChestUtility.removeItem(healing.type(), chestData.location());

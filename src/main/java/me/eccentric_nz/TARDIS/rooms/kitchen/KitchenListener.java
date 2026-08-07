@@ -6,7 +6,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -33,7 +32,7 @@ public class KitchenListener implements Listener {
         if (chestData.chest()) {
             Inventory inventory = ChestUtility.getChestInventory(chestData.location());
             // is the kitchen chest empty - return
-            if (inventory.isEmpty()) {
+            if (inventory == null || inventory.isEmpty()) {
                 return;
             }
             // does the kitchen chest have edible items in it
@@ -41,12 +40,12 @@ public class KitchenListener implements Listener {
                 if (item == null || item.isEmpty()) {
                     continue;
                 }
-                // TODO and not rotten flesh or poisonous potato
-                if (item.getType().isEdible()) {
+                Material material = item.getType();
+                if (material.isEdible() && (material != Material.ROTTEN_FLESH && material != Material.POISONOUS_POTATO)) {
                     // feed the player
-                    player.setFoodLevel(player.getFoodLevel() + EdibleLookup.EDIBLE.get(item.getType()));
+                    player.setFoodLevel(player.getFoodLevel() + EdibleLookup.EDIBLE.get(material));
                     // remove edible item from chest
-                    ChestUtility.removeItem(item.getType(), chestData.location());
+                    ChestUtility.removeItem(material, chestData.location());
                 }
             }
         }
