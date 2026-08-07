@@ -63,6 +63,7 @@ public class TARDISConfiguration {
         booleanOptions.put("allow.external_gravity", false);
         booleanOptions.put("allow.guardians", false);
         booleanOptions.put("allow.hads", true);
+        booleanOptions.put("allow.hunger_and_healing", true);
         booleanOptions.put("allow.invisibility", true);
         booleanOptions.put("allow.mob_farming", true);
         booleanOptions.put("allow.perception_filter", true);

@@ -204,6 +204,7 @@ allow:
   weather_set: false
   force_field: 8
   admin_bypass: false
+  hunger_and_healing: true
 # room related
 # https://tardis.pages.dev/configuration/growth
 growth:
