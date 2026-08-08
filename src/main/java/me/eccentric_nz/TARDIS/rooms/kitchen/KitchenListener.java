@@ -1,6 +1,9 @@
 package me.eccentric_nz.TARDIS.rooms.kitchen;
 
+import com.mojang.datafixers.util.Pair;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -25,6 +28,10 @@ public class KitchenListener implements Listener {
         if (event.getCause() != EntityDamageEvent.DamageCause.STARVATION) {
             return;
         }
+        // must be in a TARDIS
+        if (!plugin.getUtils().inTARDISWorld(player)) {
+            return;
+        }
         // get the tardis the player is in
         int id = plugin.getTardisAPI().getIdOfTARDISPlayerIsIn(player.getUniqueId());
         // if there is a kitchen room in the tardis
@@ -41,11 +48,20 @@ public class KitchenListener implements Listener {
                     continue;
                 }
                 Material material = item.getType();
-                if (material.isEdible() && (material != Material.ROTTEN_FLESH && material != Material.POISONOUS_POTATO)) {
+                if (material.isEdible()
+                        // potential negative effects given
+                        && material != Material.ROTTEN_FLESH && material != Material.POISONOUS_POTATO
+                        && material != Material.SUSPICIOUS_STEW && material != Material.SPIDER_EYE
+                        && material != Material.CHICKEN
+                ) {
+                    Pair<Integer, Float> food = EdibleLookup.getFoodValues(material);
                     // feed the player
-                    player.setFoodLevel(player.getFoodLevel() + EdibleLookup.EDIBLE.get(material));
+                    player.setFoodLevel(player.getFoodLevel() + food.getFirst());
+                    player.setSaturation(player.getSaturation() + food.getSecond());
                     // remove edible item from chest
                     ChestUtility.removeItem(material, chestData.location());
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "FEED", TARDISStringUtils.words(material.toString()));
+                    break;
                 }
             }
         }
