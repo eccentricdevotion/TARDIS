@@ -1,6 +1,5 @@
 package me.eccentric_nz.TARDIS.rooms.kitchen;
 
-import com.mojang.datafixers.util.Pair;
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.PotionContents;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -55,22 +54,20 @@ public class ChestUtility {
                     item = null;
                 }
                 chest.getInventory().setItem(slot, item);
+                // return buckets
+                if (item.getType() == Material.MILK_BUCKET) {
+                    chest.getInventory().addItem(ItemStack.of(Material.BUCKET, 1));
+                }
+                // return bowls
+                if (item.getType() == Material.MUSHROOM_STEW || item.getType() == Material.RABBIT_STEW || item.getType() == Material.BEETROOT_SOUP) {
+                    chest.getInventory().addItem(ItemStack.of(Material.BOWL, 1));
+                }
+                // return bottles
+                if (item.getType() == Material.HONEY_BOTTLE) {
+                    chest.getInventory().addItem(ItemStack.of(Material.GLASS_BOTTLE, 1));
+                }
                 chest.update();
             }
-        }
-    }
-
-    public static void removeItem(Material material, Inventory inventory) {
-        int slot = inventory.first(material);
-        if (slot != -1) {
-            ItemStack item = inventory.getItem(slot);
-            int amount = item.getAmount() - 1;
-            if (amount > 1) {
-                item.setAmount(amount);
-            } else {
-                item = null;
-            }
-            inventory.setItem(slot, item);
         }
     }
 
