@@ -85,29 +85,29 @@ public class TARDISAreaListener implements Listener {
                         return;
                     }
                     int y = block_loc.getBlockY();
-                    if (y != (TARDISNumberParsers.parseInt(firstblock[2]))) {
+                    if (y != (TARDISNumberParsers.parseInt(firstblock[3]))) {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "AREA_Y");
                         return;
                     }
                     int minx, minz, maxx, maxz;
-                    if (TARDISNumberParsers.parseInt(firstblock[1]) < block_loc.getBlockX()) {
-                        minx = TARDISNumberParsers.parseInt(firstblock[1]);
+                    if (TARDISNumberParsers.parseInt(firstblock[2]) < block_loc.getBlockX()) {
+                        minx = TARDISNumberParsers.parseInt(firstblock[2]);
                         maxx = block_loc.getBlockX();
                     } else {
                         minx = block_loc.getBlockX();
-                        maxx = TARDISNumberParsers.parseInt(firstblock[1]);
+                        maxx = TARDISNumberParsers.parseInt(firstblock[2]);
                     }
-                    if (TARDISNumberParsers.parseInt(firstblock[3]) < block_loc.getBlockZ()) {
-                        minz = TARDISNumberParsers.parseInt(firstblock[3]);
+                    if (TARDISNumberParsers.parseInt(firstblock[4]) < block_loc.getBlockZ()) {
+                        minz = TARDISNumberParsers.parseInt(firstblock[4]);
                         maxz = block_loc.getBlockZ();
                     } else {
                         minz = block_loc.getBlockZ();
-                        maxz = TARDISNumberParsers.parseInt(firstblock[3]);
+                        maxz = TARDISNumberParsers.parseInt(firstblock[4]);
                     }
                     String n = plugin.getTrackerKeeper().getArea().get(uuid);
                     HashMap<String, Object> set = new HashMap<>();
                     set.put("area_name", n);
-                    set.put("world", firstblock[0]);
+                    set.put("world", firstblock[1]);
                     set.put("minx", minx);
                     set.put("minz", minz);
                     set.put("maxx", maxx);
