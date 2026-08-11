@@ -241,7 +241,13 @@ hangarPublish {
                     .split(",")
                     .map { it.trim() }
                 platformVersions.set(versions)
-                changelog.set(changelogContent)
+                // prevent empty changelog 400 errors
+                val safeChangelog = if (changelogContent.isNullOrBlank()) {
+                    "Development snapshot build for version ${project.version}"
+                } else {
+                    changelogContent
+                }
+                changelog.set(safeChangelog)
             }
         }
     }
