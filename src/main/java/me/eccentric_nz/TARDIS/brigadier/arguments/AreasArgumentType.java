@@ -11,7 +11,6 @@ import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import io.papermc.paper.command.brigadier.MessageComponentSerializer;
 import io.papermc.paper.command.brigadier.argument.CustomArgumentType;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.data.Area;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreas;
 import net.kyori.adventure.text.Component;
 
@@ -28,12 +27,10 @@ public class AreasArgumentType implements CustomArgumentType<String, String> {
     private final Set<String> AREA_SUBS = new HashSet<>();
 
     public AreasArgumentType() {
-        ResultSetAreas rsa = new ResultSetAreas(TARDIS.plugin, null, true, false);
+        ResultSetAreas rsa = new ResultSetAreas(TARDIS.plugin, null, true, true);
         if (rsa.resultSet()) {
             // cycle through areas
-            for (Area a : rsa.getData()) {
-                AREA_SUBS.add(a.areaName());
-            }
+            AREA_SUBS.addAll(rsa.getNames());
         }
     }
 
