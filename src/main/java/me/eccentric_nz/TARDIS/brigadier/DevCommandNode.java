@@ -33,14 +33,12 @@ import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Chunk;
-import org.bukkit.Material;
+import org.bukkit.Registry;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
-
-import java.util.Locale;
 
 public class DevCommandNode {
 
@@ -619,10 +617,10 @@ public class DevCommandNode {
                         }))
                 .then(Commands.literal("plurals")
                         .executes(ctx -> {
-                            for (Material m : Material.values()) {
-                                String str = m.toString().toLowerCase(Locale.ROOT).replace("_", " ");
+                            Registry.MATERIAL.stream().forEach(m -> {
+                                String str = m.getKey().getKey().replace("_", " ");
                                 plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, str + " --> " + Pluraliser.pluralise(str));
-                            }
+                            });
                             return Command.SINGLE_SUCCESS;
                         }))
                 .then(Commands.literal("pong")
