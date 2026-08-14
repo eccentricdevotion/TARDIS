@@ -24,7 +24,8 @@ public class MannequinEquipArgumentType implements CustomArgumentType<String, St
     private final Set<String> OPTIONS = Set.of(
             "roman", "male", "female",
             "soldier_roman_static", "soldier_male_static", "soldier_female_static",
-            "venus_de_milo", "black_liberty", "marilyn_monroe", "clara_diner"
+            "venus_de_milo", "black_liberty", "marilyn_monroe", "clara_diner",
+            "balloon"
     );
 
     @Override
