@@ -1,5 +1,7 @@
 package me.eccentric_nz.TARDIS.blueprints.trader;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.BlueprintRoom;
 import me.eccentric_nz.TARDIS.planets.GallifreyBlueprintTrade;
@@ -48,7 +50,7 @@ public class TimeLordTradeListener implements Listener {
             // get recipes
             List<MerchantRecipe> recipes = new ArrayList<>();
             for (String r : t.split(",")) {
-                recipes.add(getRoom(r));
+                recipes.add(getRoom(r, event.getPlayer()));
             }
             // create a merchant
             Merchant merchant = plugin.getServer().createMerchant();
@@ -63,10 +65,17 @@ public class TimeLordTradeListener implements Listener {
         }
     }
 
-    private MerchantRecipe getRoom(String room) {
+    private MerchantRecipe getRoom(String room, Player player) {
         BlueprintRoom bpr = BlueprintRoom.valueOf(room);
         // get the blueprint item stack
         ItemStack ris = GallifreyBlueprintTrade.buildResult(plugin, bpr.getPermission(), bpr.toString());
-        return GallifreyBlueprintTrade.getRoomRecipe(plugin, room, ris, 1);
+        List<Component> lines = ris.getData(DataComponentTypes.LORE).lines();
+        ris.editPersistentDataContainer(pdc->pdc.set(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID(), player.getUniqueId()));
+        List<Component> lore = new ArrayList<>(lines);
+        lore.set(2, Component.text(player.getName()));
+        ris.setData(DataComponentTypes.LORE, ItemLore.lore(lore));
+        ItemStack is = ris.clone();
+        is.copyDataFrom(ris, dataComponentType -> true);
+        return GallifreyBlueprintTrade.getRoomRecipe(plugin, room, is, 1);
     }
 }
