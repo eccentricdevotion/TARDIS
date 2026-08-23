@@ -219,7 +219,8 @@ public class TravelCommandNode {
                                     Player player = (Player) ctx.getSource().getSender();
                                     int id = TravelUtilities.getId(plugin, player);
                                     if (id > 0) {
-                                        Structure type = ctx.getArgument("type", Structure.class);
+                                        TypedKey<Structure> key = RegistryArgumentExtractor.getTypedKey(ctx, RegistryKey.STRUCTURE, "type");
+                                        Structure type = RegistryAccess.registryAccess().getRegistry(key.registryKey()).get(key.key());
                                         StructureUtilities.search(plugin, player, type, id);
                                     }
                                     return Command.SINGLE_SUCCESS;
@@ -250,7 +251,8 @@ public class TravelCommandNode {
                                     Player player = (Player) ctx.getSource().getSender();
                                     int id = TravelUtilities.getId(plugin, player);
                                     if (id > 0) {
-                                        Structure type = ctx.getArgument("type", Structure.class);
+                                        TypedKey<Structure> key = RegistryArgumentExtractor.getTypedKey(ctx, RegistryKey.STRUCTURE, "type");
+                                        Structure type = RegistryAccess.registryAccess().getRegistry(key.registryKey()).get(key.key());
                                         StructureUtilities.search(plugin, player, type, id);
                                     }
                                     return Command.SINGLE_SUCCESS;
