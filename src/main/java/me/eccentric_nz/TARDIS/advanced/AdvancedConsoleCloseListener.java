@@ -204,7 +204,7 @@ public class AdvancedConsoleCloseListener implements Listener {
                                     }
                                 }
                                 plugin.getMessenger().sendStatus(player, "BIOME_SEARCH");
-                                Location nsob = BiomeUtilities.searchBiome(current.location().getWorld(), biome, current.location());
+                                Location nsob = BiomeUtilities.searchBiome(current.location().getWorld(), biome, current.location(), id);
                                 if (nsob == null) {
                                     plugin.getMessenger().send(player, TardisModule.TARDIS, "BIOME_NOT_FOUND");
                                     continue;

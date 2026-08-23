@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.tardischunkgenerator.custombiome;
 
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.travel.TARDISCaveFinder;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
@@ -40,8 +42,29 @@ public class BiomeUtilities {
         }
     }
 
-    public static Location searchBiome(World world, Biome biome, Location policeBox) {
+    public static Location searchBiome(World world, Biome biome, Location policeBox, int id) {
         BiomeSearchResult searchResult = world.locateNearestBiome(policeBox, 6400, biome);
-        return searchResult != null ? searchResult.getLocation() : null;
+        if (searchResult != null) {
+            if (isUnderground(biome)) {
+                // actually get an underground location
+                Location location = searchResult.getLocation();
+                // get player and id somehow
+                return new TARDISCaveFinder(TARDIS.plugin).searchCave(null, id, location);
+            } else {
+                return searchResult.getLocation();
+            }
+        }
+        return null;
+    }
+
+    public static boolean isUnderground(Biome biome) {
+        switch (biome.key().value()) {
+            case "lush_caves", "dripstone_caves", "deep_dark", "sulfur_caves" -> {
+                return true;
+            }
+            default -> {
+                return false;
+            }
+        }
     }
 }
