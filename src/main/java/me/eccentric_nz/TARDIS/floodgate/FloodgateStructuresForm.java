@@ -21,7 +21,7 @@ import io.papermc.paper.registry.RegistryKey;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisArtron;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.travel.TARDISStructureTravel;
+import me.eccentric_nz.TARDIS.travel.TARDISStructure;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Registry;
@@ -52,10 +52,10 @@ public class FloodgateStructuresForm {
         // get structures
         SimpleForm.Builder builder = SimpleForm.builder();
         builder.title("Telepathic Structure Finder");
-        for (Structure structure : TARDISStructureTravel.overworldStructures) {
+        for (Structure structure : TARDISStructure.overworldStructures) {
             builder.button(TARDISStringUtils.capitalise(structures.getKey(structure).getKey()), FormImage.Type.PATH, "textures/blocks/grass_side_carried.png");
         }
-        for (Structure structure : TARDISStructureTravel.netherStructures) {
+        for (Structure structure : TARDISStructure.netherStructures) {
             builder.button(TARDISStringUtils.capitalise(structures.getKey(structure).getKey()), FormImage.Type.PATH, "textures/blocks/crimson_nylium_side.png");
         }
         builder.button(TARDISStringUtils.capitalise(structures.getKey(Structure.END_CITY).getKey()), FormImage.Type.PATH, "textures/blocks/purpur_block.png");

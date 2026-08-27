@@ -16,7 +16,7 @@ import me.eccentric_nz.TARDIS.enumeration.Flag;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.TravelType;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
-import me.eccentric_nz.TARDIS.travel.TARDISStructureTravel;
+import me.eccentric_nz.TARDIS.travel.TARDISStructure;
 import me.eccentric_nz.TARDIS.travel.TravelCostAndType;
 import me.eccentric_nz.TARDIS.upgrades.SystemTree;
 import me.eccentric_nz.TARDIS.upgrades.SystemUpgradeChecker;
@@ -127,7 +127,6 @@ public class StructureUtilities {
         }
         StructureSearchResult structureResult = current.location().getWorld().locateNearestStructure(current.location(), structure, 64, false);
         if (structureResult != null) {
-            plugin.debug("Found structure at " + structureResult.getLocation());
             String perm = RegistryAccess.registryAccess().getRegistry(RegistryKey.STRUCTURE).getKey(structure).getKey();
             if (isUnderground(perm)) {
                 Limit limits = getLimits(perm);
@@ -239,7 +238,7 @@ public class StructureUtilities {
         String key = RegistryAccess.registryAccess().getRegistry(RegistryKey.STRUCTURE).getKey(structure).getKey();
         World.Environment env = current.getWorld().getEnvironment();
         // check structure arg is appropriate for the world environment
-        if (!env.equals(World.Environment.NETHER) && TARDISStructureTravel.netherStructures.contains(structure)) {
+        if (!env.equals(World.Environment.NETHER) && TARDISStructure.netherStructures.contains(structure)) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "VILLAGE_NO_SEARCH", key, (env.equals(World.Environment.THE_END) ? "" : "a ") + TARDISStringUtils.capitalise(env.toString()));
             return true;
         }
@@ -247,7 +246,7 @@ public class StructureUtilities {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "VILLAGE_NO_SEARCH", key, "a " + TARDISStringUtils.capitalise(env.toString()));
             return true;
         }
-        if (!env.equals(World.Environment.NORMAL) && TARDISStructureTravel.overworldStructures.contains(structure)) {
+        if (!env.equals(World.Environment.NORMAL) && TARDISStructure.overworldStructures.contains(structure)) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "VILLAGE_NO_SEARCH", key, (env.equals(World.Environment.THE_END) ? "" : "a ") + TARDISStringUtils.capitalise(env.toString()));
             return true;
         }
