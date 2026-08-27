@@ -14,22 +14,22 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.commands.travel;
+package me.eccentric_nz.TARDIS.commands.travel.cave;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.CircuitChecker;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
+import me.eccentric_nz.TARDIS.database.data.Current;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.enumeration.Flag;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.TravelType;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
-import me.eccentric_nz.TARDIS.travel.TARDISCaveFinder;
 import me.eccentric_nz.TARDIS.travel.TravelCostAndType;
 import me.eccentric_nz.TARDIS.upgrades.SystemTree;
 import me.eccentric_nz.TARDIS.upgrades.SystemUpgradeChecker;
-import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -63,35 +63,44 @@ public class CaveCommand {
                 return;
             }
         }
-        // find a cave
-        Location cave = new TARDISCaveFinder(plugin).searchCave(player, id);
-        if (cave == null) {
-            plugin.getMessenger().sendStatus(player, "CAVE_NOT_FOUND");
+        // get TARDIS current location
+        ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
+        if (!rsc.resultSet()) {
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
             return;
         }
-        // check respect
-        if (!plugin.getPluginRespect().getRespect(cave, new Parameters(player, Flag.getDefaultFlags()))) {
-            if (plugin.getConfig().getBoolean("travel.no_destination_malfunctions")) {
-                plugin.getTrackerKeeper().getMalfunction().put(id, true);
-            } else {
-                return;
-            }
-        }
-        HashMap<String, Object> set = new HashMap<>();
-        set.put("world", cave.getWorld().getKey().asString());
-        set.put("x", cave.getBlockX());
-        set.put("y", cave.getBlockY());
-        set.put("z", cave.getBlockZ());
-        set.put("submarine", 0);
-        HashMap<String, Object> tid = new HashMap<>();
-        tid.put("tardis_id", id);
-        plugin.getQueryFactory().doSyncUpdate("next", set, tid);
-        plugin.getMessenger().send(player, TardisModule.TARDIS, "TRAVEL_LOADED", "Cave", !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
-        plugin.getTrackerKeeper().getHasDestination().put(id, new TravelCostAndType(plugin.getArtronConfig().getInt("travel"), TravelType.CAVE));
-        plugin.getTrackerKeeper().getRescue().remove(id);
-        if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
-            new TARDISLand(plugin, id, player).exitVortex();
-            plugin.getPM().callEvent(new TARDISTravelEvent(player, null, TravelType.CAVE, id));
-        }
+        Current current = rsc.getCurrent();
+        // find a cave
+        AsyncCaveFinder.getSafeCave(current.location(), 128, current.direction())
+                .thenAccept(cave -> {
+                    if (cave == null) {
+                        plugin.getMessenger().sendStatus(player, "CAVE_NOT_FOUND");
+                        return;
+                    }
+                    // check respect
+                    if (!plugin.getPluginRespect().getRespect(cave, new Parameters(player, Flag.getDefaultFlags()))) {
+                        if (plugin.getConfig().getBoolean("travel.no_destination_malfunctions")) {
+                            plugin.getTrackerKeeper().getMalfunction().put(id, true);
+                        } else {
+                            return;
+                        }
+                    }
+                    HashMap<String, Object> set = new HashMap<>();
+                    set.put("world", cave.getWorld().getKey().asString());
+                    set.put("x", cave.getBlockX());
+                    set.put("y", cave.getBlockY());
+                    set.put("z", cave.getBlockZ());
+                    set.put("submarine", 0);
+                    HashMap<String, Object> tid = new HashMap<>();
+                    tid.put("tardis_id", id);
+                    plugin.getQueryFactory().doSyncUpdate("next", set, tid);
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "TRAVEL_LOADED", "Cave", !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
+                    plugin.getTrackerKeeper().getHasDestination().put(id, new TravelCostAndType(plugin.getArtronConfig().getInt("travel"), TravelType.CAVE));
+                    plugin.getTrackerKeeper().getRescue().remove(id);
+                    if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
+                        new TARDISLand(plugin, id, player).exitVortex();
+                        plugin.getPM().callEvent(new TARDISTravelEvent(player, null, TravelType.CAVE, id));
+                    }
+                });
     }
 }

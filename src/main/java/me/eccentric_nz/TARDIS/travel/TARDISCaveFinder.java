@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.travel;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -81,27 +80,14 @@ public class TARDISCaveFinder {
         ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
         if (rsc.resultSet()) {
             COMPASS d = rsc.getCurrent().direction();
-            return find(location, d, player, 16, 4);
+            return find(location, d, player);
         } else {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
         }
         return null;
     }
 
-    public Location searchCave(Player player, int id) {
-        // get the current TARDIS location
-        ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
-        if (rsc.resultSet()) {
-            Current current = rsc.getCurrent();
-            COMPASS d = current.direction();
-            return find(current.location(), d, player, 2048, 32);
-        } else {
-            plugin.getMessenger().send(player, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
-        }
-        return null;
-    }
-
-    private Location find(Location location, COMPASS direction, Player player, int limit, int step) {
+    private Location find(Location location, COMPASS direction, Player player) {
         World w = location.getWorld();
         int startx = location.getBlockX();
         int startz = location.getBlockZ();
@@ -109,10 +95,10 @@ public class TARDISCaveFinder {
         boolean hoth = (w.getGenerator() != null && w.getGenerator().getClass().getName().contains("hothgenerator"));
         if (!w.getEnvironment().equals(World.Environment.NETHER) && !w.getEnvironment().equals(World.Environment.THE_END) && !hoth) {
             if (worldCheck(w)) {
-                int plusx = startx + limit;
-                int plusz = startz + limit;
-                int minusx = startx - limit;
-                int minusz = startz - limit;
+                int plusx = startx + 16;
+                int plusz = startz + 16;
+                int minusx = startx - 16;
+                int minusz = startz - 16;
                 // search in a random direction
                 Collections.shuffle(directions);
                 for (int i = 0; i < 4; i++) {
@@ -121,7 +107,7 @@ public class TARDISCaveFinder {
                             if (player != null) {
                                 plugin.getMessenger().sendStatus(player, "LOOK_E");
                             }
-                            for (int east = startx; east < plusx; east += step) {
+                            for (int east = startx; east < plusx; east += 4) {
                                 Check chk = isThereRoom(w, east, startz, direction);
                                 if (chk.isSafe()) {
                                     if (player != null) {
@@ -135,7 +121,7 @@ public class TARDISCaveFinder {
                             if (player != null) {
                                 plugin.getMessenger().sendStatus(player, "LOOK_S");
                             }
-                            for (int south = startz; south < plusz; south += step) {
+                            for (int south = startz; south < plusz; south += 4) {
                                 Check chk = isThereRoom(w, startx, south, direction);
                                 if (chk.isSafe()) {
                                     if (player != null) {
@@ -149,7 +135,7 @@ public class TARDISCaveFinder {
                             if (player != null) {
                                 plugin.getMessenger().sendStatus(player, "LOOK_W");
                             }
-                            for (int west = startx; west > minusx; west -= step) {
+                            for (int west = startx; west > minusx; west -= 4) {
                                 Check chk = isThereRoom(w, west, startz, direction);
                                 if (chk.isSafe()) {
                                     if (player != null) {
@@ -163,7 +149,7 @@ public class TARDISCaveFinder {
                             if (player != null) {
                                 plugin.getMessenger().sendStatus(player, "LOOK_N");
                             }
-                            for (int north = startz; north > minusz; north -= step) {
+                            for (int north = startz; north > minusz; north -= 4) {
                                 Check chk = isThereRoom(w, startx, north, direction);
                                 if (chk.isSafe()) {
                                     if (player != null) {
@@ -195,7 +181,14 @@ public class TARDISCaveFinder {
                 // check there is enough height for the police box
                 if (yy <= y - 3 && Tag.BASE_STONE_OVERWORLD.isTagged(world.getBlockAt(x - 1, yy - 1, z - 1).getType())) {
                     // check there is room for the police box
-                    if (world.getBlockAt(x - 1, yy, z - 1).getType().isAir() && world.getBlockAt(x - 1, yy, z).getType().isAir() && world.getBlockAt(x - 1, yy, z + 1).getType().isAir() && world.getBlockAt(x, yy, z - 1).getType().isAir() && world.getBlockAt(x, yy, z + 1).getType().isAir() && world.getBlockAt(x + 1, yy, z - 1).getType().isAir() && world.getBlockAt(x + 1, yy, z).getType().isAir() && world.getBlockAt(x + 1, yy, z + 1).getType().isAir()) {
+                    if (world.getBlockAt(x - 1, yy, z - 1).getType().isAir()
+                            && world.getBlockAt(x - 1, yy, z).getType().isAir()
+                            && world.getBlockAt(x - 1, yy, z + 1).getType().isAir()
+                            && world.getBlockAt(x, yy, z - 1).getType().isAir()
+                            && world.getBlockAt(x, yy, z + 1).getType().isAir()
+                            && world.getBlockAt(x + 1, yy, z - 1).getType().isAir()
+                            && world.getBlockAt(x + 1, yy, z).getType().isAir()
+                            && world.getBlockAt(x + 1, yy, z + 1).getType().isAir()) {
                         // finally check there is space to exit the police box
                         boolean safe = false;
                         switch (direction) {
