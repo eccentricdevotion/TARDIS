@@ -76,6 +76,7 @@ public class TARDISStructureTravel {
         overworldStructures.add(Structure.STRONGHOLD);
         overworldStructures.add(Structure.SWAMP_HUT);
         overworldStructures.add(Structure.TRAIL_RUINS);
+        overworldStructures.add(Structure.TRIAL_CHAMBERS);
         overworldStructures.add(Structure.VILLAGE_DESERT);
         overworldStructures.add(Structure.VILLAGE_PLAINS);
         overworldStructures.add(Structure.VILLAGE_SAVANNA);

@@ -20,7 +20,7 @@ import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.registry.RegistryAccess;
 import io.papermc.paper.registry.RegistryKey;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.commands.travel.StructureUtilities;
+import me.eccentric_nz.TARDIS.commands.travel.structure.StructureUtilities;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisArtron;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;

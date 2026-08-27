@@ -1,4 +1,4 @@
-package me.eccentric_nz.TARDIS.commands.travel;
+package me.eccentric_nz.TARDIS.commands.travel.structure;
 
 import io.papermc.paper.registry.RegistryAccess;
 import io.papermc.paper.registry.RegistryKey;
@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.upgrades.SystemTree;
 import me.eccentric_nz.TARDIS.upgrades.SystemUpgradeChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -34,7 +35,7 @@ import java.util.List;
 
 public class StructureUtilities {
 
-    private static Location getCurrentLocation(TARDIS plugin, Player player, int id) {
+    private static Current getCurrentLocation(TARDIS plugin, Player player, int id) {
         ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
         if (!rsc.resultSet()) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
@@ -50,7 +51,7 @@ public class StructureUtilities {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_WORLD_TRAVEL");
             return null;
         }
-        return current.location();
+        return current;
     }
 
     private static final List<Structure> VILLAGES = List.of(Structure.VILLAGE_DESERT, Structure.VILLAGE_PLAINS, Structure.VILLAGE_SAVANNA, Structure.VILLAGE_SNOWY, Structure.VILLAGE_TAIGA);
@@ -59,19 +60,19 @@ public class StructureUtilities {
         if (doChecks(plugin, player, id)) {
             return;
         }
-        Location current = getCurrentLocation(plugin, player, id);
+        Current current = getCurrentLocation(plugin, player, id);
         if (current == null) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
             return;
         }
-        World.Environment env = current.getWorld().getEnvironment();
+        World.Environment env = current.location().getWorld().getEnvironment();
         if (!env.equals(World.Environment.NORMAL)) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "VILLAGE_NO_SEARCH", "village", (env.equals(World.Environment.THE_END) ? "" : "a ") + TARDISStringUtils.capitalise(env.toString()));
             return;
         }
         // choose a random village type
         Structure village = VILLAGES.get(TARDISConstants.RANDOM.nextInt(VILLAGES.size()));
-        StructureSearchResult villageResult = current.getWorld().locateNearestStructure(current, village, 64, false);
+        StructureSearchResult villageResult = current.location().getWorld().locateNearestStructure(current.location(), village, 64, false);
         Location loc = (villageResult != null) ? villageResult.getLocation() : null;
         if (loc == null) {
             return;
@@ -93,19 +94,20 @@ public class StructureUtilities {
         if (doChecks(plugin, player, id)) {
             return;
         }
-        Location current = getCurrentLocation(plugin, player, id);
+        Current current = getCurrentLocation(plugin, player, id);
         if (current == null) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
             return;
         }
         // choose a random structure type
         Structure structure = STRUCTURES.get(TARDISConstants.RANDOM.nextInt(STRUCTURES.size()));
-        if (validate(plugin, player, structure, current)) {
+        if (validate(plugin, player, structure, current.location())) {
             return;
         }
-        StructureSearchResult structureResult = current.getWorld().locateNearestStructure(current, structure, 64, false);
+        StructureSearchResult structureResult = current.location().getWorld().locateNearestStructure(current.location(), structure, 64, false);
         Location loc = (structureResult != null) ? structureResult.getLocation() : null;
         if (loc == null) {
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "VILLAGE_NOT_FOUND");
             return;
         }
         set(plugin, loc, player, id);
@@ -115,20 +117,93 @@ public class StructureUtilities {
         if (doChecks(plugin, player, id)) {
             return;
         }
-        Location current = getCurrentLocation(plugin, player, id);
+        Current current = getCurrentLocation(plugin, player, id);
         if (current == null) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
             return;
         }
-        if (validate(plugin, player, structure, current)) {
+        if (validate(plugin, player, structure, current.location())) {
             return;
         }
-        StructureSearchResult structureResult = current.getWorld().locateNearestStructure(current, structure, 64, false);
-        Location loc = (structureResult != null) ? structureResult.getLocation() : null;
-        if (loc == null) {
-            return;
+        StructureSearchResult structureResult = current.location().getWorld().locateNearestStructure(current.location(), structure, 64, false);
+        if (structureResult != null) {
+            plugin.debug("Found structure at " + structureResult.getLocation());
+            String perm = RegistryAccess.registryAccess().getRegistry(RegistryKey.STRUCTURE).getKey(structure).getKey();
+            if (isUnderground(perm)) {
+                Limit limits = getLimits(perm);
+                AsyncStructureFinder.getSafeLocation(structureResult.getLocation(), current.direction(), getStructureMaterial(perm), limits.min(), limits.max())
+                        .thenAccept(optionalLocation -> optionalLocation.ifPresentOrElse(
+                                value -> set(plugin, value, player, id),
+                                () -> plugin.getMessenger().send(player, TardisModule.TARDIS, "VILLAGE_NOT_FOUND")));
+            } else {
+                set(plugin, structureResult.getLocation(), player, id);
+            }
+        } else {
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "VILLAGE_NOT_FOUND");
         }
-        set(plugin, loc, player, id);
+    }
+
+    private static Material getStructureMaterial(String structure) {
+        switch (structure) {
+            case "ancient_city" -> {
+                return Material.DEEPSLATE_BRICKS;
+            }
+            case "stronghold" -> {
+                return Material.STONE_BRICKS;
+            }
+            case "trial_chambers" -> {
+                return Material.WAXED_OXIDIZED_COPPER;
+            }
+            case "bastion_remnant" -> {
+                return Material.POLISHED_BLACKSTONE_BRICKS;
+            }
+            case "fortress" -> {
+                return Material.NETHER_BRICKS;
+            }
+            case "nether_fossil" -> {
+                return Material.SOUL_SAND;
+            }
+            default -> {
+                return Material.NETHERRACK;
+            }
+        }
+    }
+
+    private static boolean isUnderground(String structure) {
+        switch (structure) {
+            case "ancient_city", "stronghold", "trial_chambers", "bastion_remnant", "fortress", "nether_fossil" -> {
+                return true;
+            }
+            default -> {
+                return false;
+            }
+        }
+    }
+
+    private static Limit getLimits(String structure) {
+        switch (structure) {
+            case "ancient_city" -> {
+                return new Limit(-51, -41);
+            }
+            case "stronghold" -> {
+                return new Limit(-40, 16);
+            }
+            case "trial_chambers" -> {
+                return new Limit(-41, 32);
+            }
+            case "bastion_remnant" -> {
+                return new Limit(32, 65);
+            }
+            case "fortress" -> {
+                return new Limit(60, 85);
+            }
+            case "nether_fossil" -> {
+                return new Limit(40, 96);
+            }
+            default -> {
+                return new Limit(0, 10);
+            }
+        }
     }
 
     private static boolean doChecks(TARDIS plugin, Player player, int id) {
