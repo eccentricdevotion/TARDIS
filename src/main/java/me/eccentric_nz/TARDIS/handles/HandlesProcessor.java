@@ -412,7 +412,7 @@ public class HandlesProcessor {
                                                     }
                                                 }
                                                 plugin.getMessenger().handlesSend(player, "BIOME_SEARCH");
-                                                Location nsob = BiomeUtilities.searchBiome(current.location().getWorld(), biome, current.location(), id);
+                                                Location nsob = BiomeUtilities.searchBiome(current.location().getWorld(), biome, current.location());
                                                 if (nsob == null) {
                                                     plugin.getMessenger().handlesSend(player, "BIOME_NOT_FOUND");
                                                     continue;
