@@ -62,7 +62,7 @@ public class TARDISLocatorRecipe {
             exact.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
                     .addFloats(CircuitVariant.LOCATOR.getFloats())
                     .build());
-            r.setIngredient('C', new RecipeChoice.ExactChoice(exact));
+            r.setIngredient('C', RecipeChoice.exactChoice(exact));
         } else {
             r.setIngredient('O', Material.GRAVEL);
             r.setIngredient('C', Material.RED_WOOL);

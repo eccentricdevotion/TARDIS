@@ -68,8 +68,8 @@ public class RiftManipulatorRecipe {
             r.shape(" A ", "ACA", "RAR");
             r.setIngredient('R', Material.REDSTONE);
         }
-        r.setIngredient('A', new RecipeChoice.ExactChoice(acid));
-        r.setIngredient('C', new RecipeChoice.ExactChoice(rift));
+        r.setIngredient('A', RecipeChoice.exactChoice(acid));
+        r.setIngredient('C', RecipeChoice.exactChoice(rift));
         plugin.getServer().addRecipe(r);
         plugin.getFigura().getShapedRecipes().put("Rift Manipulator", r);
     }

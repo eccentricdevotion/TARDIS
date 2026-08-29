@@ -68,7 +68,7 @@ public class SonicDockRecipe {
             exact.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
                     .addFloats(CircuitVariant.SONIC.getFloats())
                     .build());
-            r.setIngredient('S', new RecipeChoice.ExactChoice(exact));
+            r.setIngredient('S', RecipeChoice.exactChoice(exact));
         } else {
             r.shape("RGR", "GSG", "BGB");
             r.setIngredient('G', Material.GOLD_NUGGET);

@@ -82,9 +82,9 @@ public class TARDISStattenheimCircuitRecipe {
                 .addFloats(CircuitVariant.LOCATOR.getFloats())
                 .build());
         r.shape("LRM", "QQQ");
-        r.setIngredient('L', new RecipeChoice.ExactChoice(locator));
+        r.setIngredient('L', RecipeChoice.exactChoice(locator));
         r.setIngredient('R', Material.REDSTONE);
-        r.setIngredient('M', new RecipeChoice.ExactChoice(exact));
+        r.setIngredient('M', RecipeChoice.exactChoice(exact));
         r.setIngredient('Q', Material.QUARTZ);
         plugin.getServer().addRecipe(r);
         plugin.getFigura().getShapedRecipes().put("TARDIS Stattenheim Circuit", r);

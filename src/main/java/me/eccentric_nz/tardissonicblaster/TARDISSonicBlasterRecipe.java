@@ -76,8 +76,8 @@ public class TARDISSonicBlasterRecipe {
         exact.setData(DataComponentTypes.CUSTOM_MODEL_DATA, ecomponent);
         sbr.setIngredient('D', Material.DISPENSER);
         sbr.setIngredient('T', Material.TNT);
-        sbr.setIngredient('S', new RecipeChoice.ExactChoice(exact));
-        sbr.setIngredient('E', new RecipeChoice.ExactChoice(battery));
+        sbr.setIngredient('S', RecipeChoice.exactChoice(exact));
+        sbr.setIngredient('E', RecipeChoice.exactChoice(battery));
         sbr.setIngredient('B', Material.OAK_BUTTON);
         plugin.getFigura().getShapedRecipes().put("Sonic Blaster", sbr);
 

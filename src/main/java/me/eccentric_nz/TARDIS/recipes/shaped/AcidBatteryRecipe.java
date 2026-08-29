@@ -59,7 +59,7 @@ public class AcidBatteryRecipe {
             r.shape(" A ", "ARA", " A ");
             r.setIngredient('R', Material.REDSTONE);
         }
-        r.setIngredient('A', new RecipeChoice.ExactChoice(exact));
+        r.setIngredient('A', RecipeChoice.exactChoice(exact));
         plugin.getServer().addRecipe(r);
         plugin.getFigura().getShapedRecipes().put("Acid Battery", r);
     }

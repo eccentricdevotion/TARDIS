@@ -84,7 +84,7 @@ public class TARDISRemoteKeyRecipe {
                     Component.text("Uses left"),
                     uses
             )));
-            r.setIngredient('T', new RecipeChoice.ExactChoice(exact));
+            r.setIngredient('T', RecipeChoice.exactChoice(exact));
         } else {
             r.setIngredient('T', Material.REDSTONE_TORCH);
         }

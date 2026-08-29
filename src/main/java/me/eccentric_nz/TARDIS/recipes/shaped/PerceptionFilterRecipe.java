@@ -66,7 +66,7 @@ public class PerceptionFilterRecipe {
             exact.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
                     .addFloats(CircuitVariant.PERCEPTION.getFloats())
                     .build());
-            r.setIngredient('C', new RecipeChoice.ExactChoice(exact));
+            r.setIngredient('C', RecipeChoice.exactChoice(exact));
         } else {
             r.setIngredient('C', Material.COMPARATOR);
         }

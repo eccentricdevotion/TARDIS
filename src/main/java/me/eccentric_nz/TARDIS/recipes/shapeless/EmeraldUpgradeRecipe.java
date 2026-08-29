@@ -61,7 +61,7 @@ public class EmeraldUpgradeRecipe {
         exact.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
                 .addFloats(CircuitVariant.EMERALD.getFloats())
                 .build());
-        r.addIngredient(new RecipeChoice.ExactChoice(exact));
+        r.addIngredient(RecipeChoice.exactChoice(exact));
         plugin.getServer().addRecipe(r);
         plugin.getIncomposita().getShapelessRecipes().put("Emerald Upgrade", r);
     }

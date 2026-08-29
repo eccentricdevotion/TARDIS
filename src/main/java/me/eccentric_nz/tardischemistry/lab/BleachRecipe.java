@@ -64,7 +64,7 @@ public class BleachRecipe {
         // beds
         ItemStack bed = ItemStack.of(Material.WHITE_BED, 1);
         ShapelessRecipe bedRecipe = new ShapelessRecipe(bedKey, bed);
-        bedRecipe.addIngredient(new RecipeChoice.ExactChoice(bleach));
+        bedRecipe.addIngredient(RecipeChoice.exactChoice(bleach));
         RecipeChoice colouredBeds = RecipeChoice.itemType(Registry.ITEM.getTag(ItemTypeTagKeys.BEDS));
         bedRecipe.addIngredient(colouredBeds);
         plugin.getServer().addRecipe(bedRecipe);
@@ -72,7 +72,7 @@ public class BleachRecipe {
         // wool
         ItemStack wool = ItemStack.of(Material.WHITE_WOOL, 1);
         ShapelessRecipe woolRecipe = new ShapelessRecipe(woolKey, wool);
-        woolRecipe.addIngredient(new RecipeChoice.ExactChoice(bleach));
+        woolRecipe.addIngredient(RecipeChoice.exactChoice(bleach));
         RecipeChoice colouredWool = RecipeChoice.itemType(Registry.ITEM.getTag(ItemTypeTagKeys.WOOL));
         woolRecipe.addIngredient(colouredWool);
         plugin.getServer().addRecipe(woolRecipe);
@@ -80,7 +80,7 @@ public class BleachRecipe {
         // carpet
         ItemStack carpet = ItemStack.of(Material.WHITE_CARPET, 1);
         ShapelessRecipe carpetRecipe = new ShapelessRecipe(carpetKey, carpet);
-        carpetRecipe.addIngredient(new RecipeChoice.ExactChoice(bleach));
+        carpetRecipe.addIngredient(RecipeChoice.exactChoice(bleach));
         RecipeChoice colouredCarpet = RecipeChoice.itemType(Registry.ITEM.getTag(ItemTypeTagKeys.WOOL_CARPETS));
         carpetRecipe.addIngredient(colouredCarpet);
         plugin.getServer().addRecipe(carpetRecipe);
@@ -88,7 +88,7 @@ public class BleachRecipe {
         // banners
         ItemStack banner = ItemStack.of(Material.WHITE_BANNER, 1);
         ShapelessRecipe bannerRecipe = new ShapelessRecipe(bannerKey, banner);
-        bannerRecipe.addIngredient(new RecipeChoice.ExactChoice(bleach));
+        bannerRecipe.addIngredient(RecipeChoice.exactChoice(bleach));
         RecipeChoice colouredBanners = RecipeChoice.itemType(Registry.ITEM.getTag(ItemTypeTagKeys.BANNERS));
         bannerRecipe.addIngredient(colouredBanners);
         plugin.getServer().addRecipe(bannerRecipe);
@@ -96,7 +96,7 @@ public class BleachRecipe {
         // concrete powder
         ItemStack powder = ItemStack.of(Material.WHITE_CONCRETE_POWDER, 1);
         ShapelessRecipe powderRecipe = new ShapelessRecipe(powderKey, powder);
-        powderRecipe.addIngredient(new RecipeChoice.ExactChoice(bleach));
+        powderRecipe.addIngredient(RecipeChoice.exactChoice(bleach));
         List<ItemType> powderTypes = Tag.CONCRETE_POWDERS.getValues().stream()
                 .map(Material::asItemType)
                 .toList();
@@ -113,7 +113,7 @@ public class BleachRecipe {
         ItemStack helmet = ItemStack.of(Material.LEATHER_HELMET, 1);
         helmet.setData(DataComponentTypes.DYED_COLOR, DyedItemColor.dyedItemColor().color(Color.WHITE).build());
         ShapelessRecipe helmetRecipe = new ShapelessRecipe(helmetKey, helmet);
-        helmetRecipe.addIngredient(new RecipeChoice.ExactChoice(bleach));
+        helmetRecipe.addIngredient(RecipeChoice.exactChoice(bleach));
         RecipeChoice colouredHelmet = RecipeChoice.itemType(ItemType.LEATHER_HELMET);
         helmetRecipe.addIngredient(colouredHelmet);
         plugin.getServer().addRecipe(helmetRecipe);
@@ -122,7 +122,7 @@ public class BleachRecipe {
         ItemStack chestplate = ItemStack.of(Material.LEATHER_CHESTPLATE, 1);
         chestplate.setData(DataComponentTypes.DYED_COLOR, DyedItemColor.dyedItemColor().color(Color.WHITE).build());
         ShapelessRecipe chestplateRecipe = new ShapelessRecipe(chestplateKey, chestplate);
-        chestplateRecipe.addIngredient(new RecipeChoice.ExactChoice(bleach));
+        chestplateRecipe.addIngredient(RecipeChoice.exactChoice(bleach));
         RecipeChoice colouredChestplate = RecipeChoice.itemType(ItemType.LEATHER_CHESTPLATE);
         chestplateRecipe.addIngredient(colouredChestplate);
         plugin.getServer().addRecipe(chestplateRecipe);
@@ -131,7 +131,7 @@ public class BleachRecipe {
         ItemStack leggings = ItemStack.of(Material.LEATHER_LEGGINGS, 1);
         leggings.setData(DataComponentTypes.DYED_COLOR, DyedItemColor.dyedItemColor().color(Color.WHITE).build());
         ShapelessRecipe leggingsRecipe = new ShapelessRecipe(leggingsKey, leggings);
-        leggingsRecipe.addIngredient(new RecipeChoice.ExactChoice(bleach));
+        leggingsRecipe.addIngredient(RecipeChoice.exactChoice(bleach));
         RecipeChoice colouredLeggings = RecipeChoice.itemType(ItemType.LEATHER_LEGGINGS);
         leggingsRecipe.addIngredient(colouredLeggings);
         plugin.getServer().addRecipe(leggingsRecipe);
@@ -140,7 +140,7 @@ public class BleachRecipe {
         ItemStack boots = ItemStack.of(Material.LEATHER_BOOTS, 1);
         boots.setData(DataComponentTypes.DYED_COLOR, DyedItemColor.dyedItemColor().color(Color.WHITE).build());
         ShapelessRecipe bootsRecipe = new ShapelessRecipe(bootsKey, boots);
-        bootsRecipe.addIngredient(new RecipeChoice.ExactChoice(bleach));
+        bootsRecipe.addIngredient(RecipeChoice.exactChoice(bleach));
         RecipeChoice colouredBoots = RecipeChoice.itemType(ItemType.LEATHER_BOOTS);
         bootsRecipe.addIngredient(colouredBoots);
         plugin.getServer().addRecipe(bootsRecipe);
@@ -149,7 +149,7 @@ public class BleachRecipe {
         ItemStack horseArmour = ItemStack.of(Material.LEATHER_HORSE_ARMOR, 1);
         horseArmour.setData(DataComponentTypes.DYED_COLOR, DyedItemColor.dyedItemColor().color(Color.WHITE).build());
         ShapelessRecipe horseRecipe = new ShapelessRecipe(horseArmourKey, horseArmour);
-        horseRecipe.addIngredient(new RecipeChoice.ExactChoice(bleach));
+        horseRecipe.addIngredient(RecipeChoice.exactChoice(bleach));
         RecipeChoice colouredHorseArmour = RecipeChoice.itemType(ItemType.LEATHER_HORSE_ARMOR);
         horseRecipe.addIngredient(colouredHorseArmour);
         plugin.getServer().addRecipe(horseRecipe);
@@ -158,7 +158,7 @@ public class BleachRecipe {
         ItemStack wolfArmour = ItemStack.of(Material.WOLF_ARMOR, 1);
         wolfArmour.setData(DataComponentTypes.DYED_COLOR, DyedItemColor.dyedItemColor().color(Color.WHITE).build());
         ShapelessRecipe wolfRecipe = new ShapelessRecipe(wolfArmourKey, wolfArmour);
-        wolfRecipe.addIngredient(new RecipeChoice.ExactChoice(bleach));
+        wolfRecipe.addIngredient(RecipeChoice.exactChoice(bleach));
         RecipeChoice colouredWolfArmour = RecipeChoice.itemType(ItemType.WOLF_ARMOR);
         wolfRecipe.addIngredient(colouredWolfArmour);
         plugin.getServer().addRecipe(wolfRecipe);
