@@ -90,7 +90,7 @@ public class SonicScrewdriverRecipe {
             exact.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
                     .addFloats(CircuitVariant.SONIC.getFloats())
                     .build());
-            r.setIngredient('O', new RecipeChoice.ExactChoice(exact));
+            r.setIngredient('O', RecipeChoice.exactChoice(exact));
         } else {
             r.shape("Q", "I", "I");
         }

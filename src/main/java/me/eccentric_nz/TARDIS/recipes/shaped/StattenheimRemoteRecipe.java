@@ -78,7 +78,7 @@ public class StattenheimRemoteRecipe {
             exact.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
                     .addFloats(CircuitVariant.STATTENHEIM.getFloats())
                     .build());
-            r.setIngredient('L', new RecipeChoice.ExactChoice(exact));
+            r.setIngredient('L', RecipeChoice.exactChoice(exact));
         } else {
             r.shape("OBO", " L ", "RRR");
             r.setIngredient('L', Material.BLUE_DYE);

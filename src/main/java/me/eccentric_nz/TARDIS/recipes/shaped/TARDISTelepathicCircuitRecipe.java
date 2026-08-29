@@ -77,7 +77,7 @@ public class TARDISTelepathicCircuitRecipe {
             potion.setData(DataComponentTypes.POTION_CONTENTS, PotionContents.potionContents()
                     .potion(PotionType.AWKWARD)
                     .build());
-            r.setIngredient('P', new RecipeChoice.ExactChoice(potion));
+            r.setIngredient('P', RecipeChoice.exactChoice(potion));
         } else {
             r.shape(" S ", "SES", " S ");
         }

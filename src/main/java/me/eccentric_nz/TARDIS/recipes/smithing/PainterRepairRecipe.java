@@ -53,7 +53,7 @@ public class PainterRepairRecipe {
         is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
                 .addFloats(CircuitVariant.PAINTER.getFloats())
                 .build());
-        RecipeChoice addition = new RecipeChoice.ExactChoice(is);
+        RecipeChoice addition = RecipeChoice.exactChoice(is);
         NamespacedKey key = new NamespacedKey(plugin, "painter_repair");
         SmithingRecipe r = new SmithingTransformRecipe(key, result, template, base, addition);
         plugin.getServer().addRecipe(r);

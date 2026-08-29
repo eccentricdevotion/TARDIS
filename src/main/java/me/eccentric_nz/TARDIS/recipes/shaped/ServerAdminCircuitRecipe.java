@@ -61,7 +61,7 @@ public class ServerAdminCircuitRecipe {
                 .build());
         r.shape("BBB", "BOB", "BBB");
         r.setIngredient('B', Material.BEDROCK);
-        r.setIngredient('O', new RecipeChoice.ExactChoice(exact));
+        r.setIngredient('O', RecipeChoice.exactChoice(exact));
         plugin.getServer().addRecipe(r);
         plugin.getFigura().getShapedRecipes().put("Server Admin Circuit", r);
     }

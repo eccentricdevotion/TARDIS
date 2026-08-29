@@ -60,7 +60,7 @@ public class ElixirOfLifeRecipe {
                 .potion(PotionType.AWKWARD)
                 .build());
         r.setIngredient('G', Material.GOLD_NUGGET);
-        r.setIngredient('P', new RecipeChoice.ExactChoice(potion));
+        r.setIngredient('P', RecipeChoice.exactChoice(potion));
         plugin.getServer().addRecipe(r);
         plugin.getFigura().getShapedRecipes().put("Elixir of Life", r);
     }

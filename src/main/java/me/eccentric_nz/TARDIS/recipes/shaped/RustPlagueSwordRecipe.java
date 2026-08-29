@@ -71,7 +71,7 @@ public class RustPlagueSwordRecipe {
         } else {
             r.shape("RIR", "RIR", " S ");
         }
-        r.setIngredient('R', new RecipeChoice.ExactChoice(exact));
+        r.setIngredient('R', RecipeChoice.exactChoice(exact));
         r.setIngredient('I', Material.IRON_INGOT);
         r.setIngredient('S', Material.STICK);
         plugin.getServer().addRecipe(r);

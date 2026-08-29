@@ -88,7 +88,7 @@ public class TARDISChameleonCircuitRecipe {
                     Component.text("Uses left"),
                     mat_uses
             )));
-            r.setIngredient('M', new RecipeChoice.ExactChoice(exact));
+            r.setIngredient('M', RecipeChoice.exactChoice(exact));
         } else {
             r.shape(" G ", "RER", " G ");
         }

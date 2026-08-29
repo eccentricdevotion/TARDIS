@@ -53,7 +53,7 @@ public class DiamondRepairRecipe {
         is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
                 .addFloats(CircuitVariant.DIAMOND.getFloats())
                 .build());
-        RecipeChoice addition = new RecipeChoice.ExactChoice(is);
+        RecipeChoice addition = RecipeChoice.exactChoice(is);
         NamespacedKey key = new NamespacedKey(plugin, "diamond_repair");
         SmithingRecipe r = new SmithingTransformRecipe(key, result, template, base, addition);
         plugin.getServer().addRecipe(r);
