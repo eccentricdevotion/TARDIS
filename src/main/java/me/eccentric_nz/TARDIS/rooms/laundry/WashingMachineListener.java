@@ -1,6 +1,5 @@
 package me.eccentric_nz.TARDIS.rooms.laundry;
 
-import com.destroystokyo.paper.MaterialSetTag;
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.ItemArmorTrim;
 import io.papermc.paper.registry.RegistryAccess;

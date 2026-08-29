@@ -80,14 +80,14 @@ public class TARDISCaveFinder {
         ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
         if (rsc.resultSet()) {
             COMPASS d = rsc.getCurrent().direction();
-            return find(location, d, player);
+            return find(location, d);
         } else {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
         }
         return null;
     }
 
-    private Location find(Location location, COMPASS direction, Player player) {
+    private Location find(Location location, COMPASS direction) {
         World w = location.getWorld();
         int startx = location.getBlockX();
         int startz = location.getBlockZ();
@@ -104,68 +104,39 @@ public class TARDISCaveFinder {
                 for (int i = 0; i < 4; i++) {
                     switch (directions.get(i)) {
                         case EAST -> {
-                            if (player != null) {
-                                plugin.getMessenger().sendStatus(player, "LOOK_E");
-                            }
                             for (int east = startx; east < plusx; east += 4) {
                                 Check chk = isThereRoom(w, east, startz, direction);
                                 if (chk.isSafe()) {
-                                    if (player != null) {
-                                        plugin.getMessenger().sendStatus(player, "CAVE_E");
-                                    }
                                     return new Location(w, east, chk.getY(), startz);
                                 }
                             }
                         }
                         case SOUTH -> {
-                            if (player != null) {
-                                plugin.getMessenger().sendStatus(player, "LOOK_S");
-                            }
                             for (int south = startz; south < plusz; south += 4) {
                                 Check chk = isThereRoom(w, startx, south, direction);
                                 if (chk.isSafe()) {
-                                    if (player != null) {
-                                        plugin.getMessenger().sendStatus(player, "CAVE_S");
-                                    }
                                     return new Location(w, startx, chk.getY(), south);
                                 }
                             }
                         }
                         case WEST -> {
-                            if (player != null) {
-                                plugin.getMessenger().sendStatus(player, "LOOK_W");
-                            }
                             for (int west = startx; west > minusx; west -= 4) {
                                 Check chk = isThereRoom(w, west, startz, direction);
                                 if (chk.isSafe()) {
-                                    if (player != null) {
-                                        plugin.getMessenger().sendStatus(player, "CAVE_W");
-                                    }
                                     return new Location(w, west, chk.getY(), startz);
                                 }
                             }
                         }
                         default -> { // NORTH
-                            if (player != null) {
-                                plugin.getMessenger().sendStatus(player, "LOOK_N");
-                            }
                             for (int north = startz; north > minusz; north -= 4) {
                                 Check chk = isThereRoom(w, startx, north, direction);
                                 if (chk.isSafe()) {
-                                    if (player != null) {
-                                        plugin.getMessenger().sendStatus(player, "CAVE_N");
-                                    }
                                     return new Location(w, startx, chk.getY(), north);
                                 }
                             }
                         }
                     }
                 }
-            }
-        } else {
-            String env = (w.getGenerator().getClass().getName().contains("hothgenerator")) ? "Hoth World System" : w.getEnvironment().toString();
-            if (player != null) {
-                plugin.getMessenger().send(player, TardisModule.TARDIS, "CAVE_NO_TRAVEL", env);
             }
         }
         return null;

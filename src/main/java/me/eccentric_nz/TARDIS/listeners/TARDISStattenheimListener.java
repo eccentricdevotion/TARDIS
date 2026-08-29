@@ -74,18 +74,19 @@ import java.util.*;
 public class TARDISStattenheimListener implements Listener {
 
     private final TARDIS plugin;
-    private final List<Material> useless = new ArrayList<>();
+    private final List<Material> REPLACEABLE = new ArrayList<>();
 
     public TARDISStattenheimListener(TARDIS plugin) {
         this.plugin = plugin;
         // add useless blocks
-        useless.add(Material.SNOW);
-        useless.add(Material.MOSS_CARPET);
-        useless.addAll(Tag.WOOL_CARPETS.getValues());
-        useless.addAll(TARDISMaterials.plants);
-        useless.addAll(Tag.FLOWERS.getValues());
-        useless.addAll(MaterialTags.MUSHROOMS.getValues());
-        useless.addAll(Tag.SAPLINGS.getValues());
+        REPLACEABLE.add(Material.SNOW);
+        REPLACEABLE.add(Material.MOSS_CARPET);
+        REPLACEABLE.add(Material.PALE_MOSS_CARPET);
+        REPLACEABLE.addAll(Tag.WOOL_CARPETS.getValues());
+        REPLACEABLE.addAll(TARDISMaterials.plants);
+        REPLACEABLE.addAll(Tag.FLOWERS.getValues());
+        REPLACEABLE.addAll(MaterialTags.MUSHROOMS.getValues());
+        REPLACEABLE.addAll(Tag.SAPLINGS.getValues());
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
@@ -164,7 +165,7 @@ public class TARDISStattenheimListener implements Listener {
                         plugin.getMessenger().sendColouredCommand(player, "AREA_NO_STAT", "/tardistravel area [area name]", plugin);
                         return;
                     }
-                    if (!useless.contains(m)) {
+                    if (!REPLACEABLE.contains(m)) {
                         int yplusone = remoteLocation.getBlockY();
                         remoteLocation.setY(yplusone + 1);
                     }

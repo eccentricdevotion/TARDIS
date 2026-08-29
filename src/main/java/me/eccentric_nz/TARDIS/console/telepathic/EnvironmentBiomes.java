@@ -90,6 +90,7 @@ public class EnvironmentBiomes {
         put(Biome.SPARSE_JUNGLE.getKey().getKey(), Material.COCOA_BEANS);
         put(Biome.STONY_PEAKS.getKey().getKey(), Material.CALCITE);
         put(Biome.STONY_SHORE.getKey().getKey(), Material.STONE);
+        put(Biome.SULFUR_CAVES.getKey().getKey(), Material.SULFUR);
         put(Biome.SUNFLOWER_PLAINS.getKey().getKey(), Material.SUNFLOWER);
         put(Biome.SWAMP.getKey().getKey(), Material.LILY_PAD);
         put(Biome.TAIGA.getKey().getKey(), Material.SPRUCE_PLANKS);

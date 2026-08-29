@@ -30,6 +30,8 @@ import me.eccentric_nz.TARDIS.flight.TARDISLand;
 import me.eccentric_nz.TARDIS.travel.TravelCostAndType;
 import me.eccentric_nz.TARDIS.upgrades.SystemTree;
 import me.eccentric_nz.TARDIS.upgrades.SystemUpgradeChecker;
+import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
+import org.bukkit.World.Environment;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -70,6 +72,12 @@ public class CaveCommand {
             return;
         }
         Current current = rsc.getCurrent();
+        // return early if wrong environment
+        Environment env = current.location().getWorld().getEnvironment();
+        if (env.equals(Environment.NETHER) || env.equals(Environment.THE_END)) {
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "CAVE_NO_TRAVEL", TARDISStringUtils.capitalise(env.toString()));
+            return;
+        }
         // find a cave
         AsyncCaveFinder.getSafeCave(current.location(), 128, current.direction())
                 .thenAccept(cave -> {
