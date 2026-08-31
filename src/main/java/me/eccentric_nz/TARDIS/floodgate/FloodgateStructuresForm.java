@@ -52,10 +52,10 @@ public class FloodgateStructuresForm {
         // get structures
         SimpleForm.Builder builder = SimpleForm.builder();
         builder.title("Telepathic Structure Finder");
-        for (Structure structure : TARDISStructure.overworldStructures) {
+        for (Structure structure : TARDISStructure.overworldStructures.keySet()) {
             builder.button(TARDISStringUtils.capitalise(structures.getKey(structure).getKey()), FormImage.Type.PATH, "textures/blocks/grass_side_carried.png");
         }
-        for (Structure structure : TARDISStructure.netherStructures) {
+        for (Structure structure : TARDISStructure.netherStructures.keySet()) {
             builder.button(TARDISStringUtils.capitalise(structures.getKey(structure).getKey()), FormImage.Type.PATH, "textures/blocks/crimson_nylium_side.png");
         }
         builder.button(TARDISStringUtils.capitalise(structures.getKey(Structure.END_CITY).getKey()), FormImage.Type.PATH, "textures/blocks/purpur_block.png");
