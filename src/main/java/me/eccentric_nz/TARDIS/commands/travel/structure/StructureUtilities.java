@@ -102,6 +102,7 @@ public class StructureUtilities {
         StructureSearchResult structureResult = current.location().getWorld().locateNearestStructure(current.location(), structure, 64, false);
         Location loc = (structureResult != null) ? structureResult.getLocation() : null;
         if (loc == null) {
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "VILLAGE_NOT_FOUND");
             return;
         }
         set(plugin, loc, player, id);
