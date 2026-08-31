@@ -64,7 +64,7 @@ public class PresetStorageDiskRecipe {
                 ? Component.text("unlimited", NamedTextColor.YELLOW)
                 : Component.text(plugin.getConfig().getString("circuits.uses.chameleon", "25"), NamedTextColor.YELLOW);
         exact.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(Component.text("Uses left"), uses)));
-        r.addIngredient(new RecipeChoice.ExactChoice(exact));
+        r.addIngredient(RecipeChoice.exactChoice(exact));
         plugin.getServer().addRecipe(r);
         plugin.getIncomposita().getShapelessRecipes().put("Preset Storage Disk", r);
     }

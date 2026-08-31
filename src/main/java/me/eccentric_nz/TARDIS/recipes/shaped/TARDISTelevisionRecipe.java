@@ -82,13 +82,13 @@ public class TARDISTelevisionRecipe {
                     Component.text("Uses left"),
                     uses
             )));
-            r.setIngredient('C', new RecipeChoice.ExactChoice(chameleon));
+            r.setIngredient('C', RecipeChoice.exactChoice(chameleon));
         } else {
             r.shape("GGG", "GBG", "GEG");
         }
         r.setIngredient('G', Material.GRAY_CONCRETE);
         r.setIngredient('B', Material.BROWN_STAINED_GLASS_PANE);
-        r.setIngredient('E', new RecipeChoice.ExactChoice(capacitor));
+        r.setIngredient('E', RecipeChoice.exactChoice(capacitor));
         plugin.getServer().addRecipe(r);
         plugin.getFigura().getShapedRecipes().put("TARDIS Television", r);
     }

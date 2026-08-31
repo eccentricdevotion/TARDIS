@@ -53,7 +53,7 @@ public class BioscannerRepairRecipe {
         isa.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
                 .addFloats(CircuitVariant.BIO.getFloats())
                 .build());
-        RecipeChoice addition = new RecipeChoice.ExactChoice(isa);
+        RecipeChoice addition = RecipeChoice.exactChoice(isa);
         NamespacedKey key = new NamespacedKey(plugin, "bio-scanner_repair");
         SmithingRecipe r = new SmithingTransformRecipe(key, result, template, base, addition);
         plugin.getServer().addRecipe(r);

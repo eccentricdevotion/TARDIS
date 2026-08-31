@@ -1153,7 +1153,9 @@ public enum MaterialColour {
     YELLOW_WALL_BANNER(new Color(143, 119, 72)),
     YELLOW_WOOL(new Color(229, 229, 51)),
     ZOMBIE_HEAD(new Color(0, 124, 0)),
-    ZOMBIE_WALL_HEAD(new Color(0, 124, 0));
+    ZOMBIE_WALL_HEAD(new Color(0, 124, 0))
+    // TODO add new 26.2+26.3 blocks
+    ;
 
     private final Color color;
 

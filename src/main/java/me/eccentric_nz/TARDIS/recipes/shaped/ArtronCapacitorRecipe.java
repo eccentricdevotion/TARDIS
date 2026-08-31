@@ -69,7 +69,7 @@ public class ArtronCapacitorRecipe {
         NamespacedKey key = new NamespacedKey(plugin, "artron_capacitor");
         ShapedRecipe r = new ShapedRecipe(key, is);
         r.shape("OOO", "EEE", "RBC");
-        r.setIngredient('E', new RecipeChoice.ExactChoice(storage));
+        r.setIngredient('E', RecipeChoice.exactChoice(storage));
         if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             r.setIngredient('O', Material.COPPER_BLOCK);
             r.setIngredient('B', Material.REDSTONE_BLOCK);

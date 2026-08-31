@@ -82,7 +82,7 @@ public class FormulaViewer implements InventoryHolder {
                 if (data[i][j] != null && !data[i][j].equals("-")) {
                     ItemStack is = null;
                     try {
-                        // is it a Spigot material?
+                        // is it a Paper/Bukkit material?
                         Material material = Material.valueOf(data[i][j]);
                         is = ItemStack.of(material, 1);
                     } catch (IllegalArgumentException me) {

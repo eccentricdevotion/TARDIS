@@ -79,7 +79,7 @@ public class FobWatchRecipe {
         } else {
             r.shape(" C ", " W ", "R R");
         }
-        r.setIngredient('C', new RecipeChoice.ExactChoice(exact));
+        r.setIngredient('C', RecipeChoice.exactChoice(exact));
         r.setIngredient('W', Material.CLOCK);
         r.setIngredient('R', Material.REDSTONE);
         plugin.getServer().addRecipe(r);

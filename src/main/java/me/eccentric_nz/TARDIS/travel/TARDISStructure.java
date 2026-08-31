@@ -16,51 +16,103 @@
  */
 package me.eccentric_nz.TARDIS.travel;
 
+import io.papermc.paper.registry.RegistryAccess;
+import io.papermc.paper.registry.RegistryKey;
+import me.eccentric_nz.TARDIS.TARDISConstants;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.generator.structure.Structure;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 /**
  * @author eccentric_nz
  */
 public class TARDISStructure {
 
-    public static final List<Structure> netherStructures = new ArrayList<>();
-    public static final List<Structure> overworldStructures = new ArrayList<>();
+    private static final Comparator<Structure> STRUCTURE_COMPARATOR = Comparator.comparing(structure -> {
+        NamespacedKey key = RegistryAccess.registryAccess()
+                .getRegistry(RegistryKey.STRUCTURE).getKey(structure);
+        // Fallback to "unknown" string if the structure is dynamically generated without a key
+        return key != null ? key.asString() : "unknown";
+    });
+    public static final TreeMap<Structure, Material> netherStructures = new TreeMap<>(STRUCTURE_COMPARATOR);
+    public static final TreeMap<Structure, Material> overworldStructures = new TreeMap<>(STRUCTURE_COMPARATOR);
 
     static {
-        netherStructures.add(Structure.BASTION_REMNANT);
-        netherStructures.add(Structure.FORTRESS);
-        netherStructures.add(Structure.NETHER_FOSSIL);
-        netherStructures.add(Structure.RUINED_PORTAL_NETHER);
-        overworldStructures.add(Structure.ANCIENT_CITY);
-        overworldStructures.add(Structure.DESERT_PYRAMID);
-        overworldStructures.add(Structure.IGLOO);
-        overworldStructures.add(Structure.JUNGLE_PYRAMID);
-        overworldStructures.add(Structure.MANSION);
-        overworldStructures.add(Structure.MINESHAFT);
-        overworldStructures.add(Structure.MINESHAFT_MESA);
-        overworldStructures.add(Structure.MONUMENT);
-        overworldStructures.add(Structure.OCEAN_RUIN_COLD);
-        overworldStructures.add(Structure.OCEAN_RUIN_WARM);
-        overworldStructures.add(Structure.PILLAGER_OUTPOST);
-        overworldStructures.add(Structure.RUINED_PORTAL);
-        overworldStructures.add(Structure.RUINED_PORTAL_DESERT);
-        overworldStructures.add(Structure.RUINED_PORTAL_JUNGLE);
-        overworldStructures.add(Structure.RUINED_PORTAL_SWAMP);
-        overworldStructures.add(Structure.RUINED_PORTAL_MOUNTAIN);
-        overworldStructures.add(Structure.RUINED_PORTAL_OCEAN);
-        overworldStructures.add(Structure.SHIPWRECK);
-        overworldStructures.add(Structure.SHIPWRECK_BEACHED);
-        overworldStructures.add(Structure.STRONGHOLD);
-        overworldStructures.add(Structure.SWAMP_HUT);
-        overworldStructures.add(Structure.TRAIL_RUINS);
-        overworldStructures.add(Structure.TRIAL_CHAMBERS);
-        overworldStructures.add(Structure.VILLAGE_DESERT);
-        overworldStructures.add(Structure.VILLAGE_PLAINS);
-        overworldStructures.add(Structure.VILLAGE_SAVANNA);
-        overworldStructures.add(Structure.VILLAGE_SNOWY);
-        overworldStructures.add(Structure.VILLAGE_TAIGA);
+        netherStructures.put(Structure.BASTION_REMNANT, Material.POLISHED_BLACKSTONE_BRICKS);
+        netherStructures.put(Structure.FORTRESS, Material.NETHER_BRICKS);
+        netherStructures.put(Structure.NETHER_FOSSIL, Material. BONE_BLOCK);
+        netherStructures.put(Structure.RUINED_PORTAL_NETHER, Material.OBSIDIAN);
+        // TODO add abandoned camps - might need to add scroll buttons / separate GUIs per environment
+        /*
+        overworldStructures.put(Structure.ABANDONED_CAMP_BAMBOO_JUNGLE, Material.BAMBOO_FENCE);
+        overworldStructures.put(Structure.ABANDONED_CAMP_BIRCH_FOREST, Material.BIRCH_FENCE);
+        overworldStructures.put(Structure.ABANDONED_CAMP_CHERRY_GROVE, Material.CHERRY_FENCE);
+        overworldStructures.put(Structure.ABANDONED_CAMP_COLD_TAIGA, Material.SPRUCE_LEAVES);
+        overworldStructures.put(Structure.ABANDONED_CAMP_DAPPLED_FOREST, Material.POPLAR_FENCE);
+        overworldStructures.put(Structure.ABANDONED_CAMP_FLOWER_FOREST, Material.OAK_FENCE);
+        overworldStructures.put(Structure.ABANDONED_CAMP_FOREST, Material.OAK_LEAVES);
+        overworldStructures.put(Structure.ABANDONED_CAMP_JUNGLE_EDGE, Material.JUNGLE_FENCE);
+        overworldStructures.put(Structure.ABANDONED_CAMP_MEADOW, Material.BIRCH_LEAVES);
+        overworldStructures.put(Structure.ABANDONED_CAMP_PALE_GARDEN, Material.PALE_OAK_FENCE);
+        overworldStructures.put(Structure.ABANDONED_CAMP_SAVANNA, Material.ACACIA_FENCE);
+        overworldStructures.put(Structure.ABANDONED_CAMP_SWAMPLAND, Material.OAK_LOG);
+        overworldStructures.put(Structure.ABANDONED_CAMP_TAIGA, Material.SPRUCE_FENCE);
+         */
+        overworldStructures.put(Structure.ANCIENT_CITY, Material.DEEPSLATE_BRICKS);
+        overworldStructures.put(Structure.DESERT_PYRAMID, Material.CHISELED_SANDSTONE);
+        overworldStructures.put(Structure.IGLOO, Material.SNOW_BLOCK);
+        overworldStructures.put(Structure.JUNGLE_PYRAMID, Material.MOSSY_COBBLESTONE);
+        overworldStructures.put(Structure.MANSION, Material.DARK_OAK_LOG);
+        overworldStructures.put(Structure.MINESHAFT, Material.OAK_PLANKS);
+        overworldStructures.put(Structure.MINESHAFT_MESA, Material.DARK_OAK_PLANKS);
+        overworldStructures.put(Structure.MONUMENT, Material.PRISMARINE);
+        overworldStructures.put(Structure.OCEAN_RUIN_COLD, Material.STONE_BRICKS);
+        overworldStructures.put(Structure.OCEAN_RUIN_WARM, Material.CUT_SANDSTONE);
+        overworldStructures.put(Structure.PILLAGER_OUTPOST, Material.DARK_OAK_PLANKS);
+        overworldStructures.put(Structure.RUINED_PORTAL, Material.CHISELED_STONE_BRICKS);
+        overworldStructures.put(Structure.RUINED_PORTAL_DESERT, Material.STONE);
+        overworldStructures.put(Structure.RUINED_PORTAL_JUNGLE, Material.SAND);
+        overworldStructures.put(Structure.RUINED_PORTAL_SWAMP, Material.CRYING_OBSIDIAN);
+        overworldStructures.put(Structure.RUINED_PORTAL_MOUNTAIN, Material.NETHERRACK);
+        overworldStructures.put(Structure.RUINED_PORTAL_OCEAN, Material.MAGMA_BLOCK);
+        overworldStructures.put(Structure.SHIPWRECK, Material.OAK_PLANKS);
+        overworldStructures.put(Structure.SHIPWRECK_BEACHED, Material.SPRUCE_PLANKS);
+        overworldStructures.put(Structure.STRONGHOLD, Material.CRACKED_STONE_BRICKS);
+        overworldStructures.put(Structure.SWAMP_HUT, Material.OAK_LOG);
+        overworldStructures.put(Structure.TRAIL_RUINS, Material.LIGHT_GRAY_TERRACOTTA);
+        overworldStructures.put(Structure.TRIAL_CHAMBERS, Material.OXIDIZED_CUT_COPPER);
+        overworldStructures.put(Structure.VILLAGE_DESERT, Material.SANDSTONE);
+        overworldStructures.put(Structure.VILLAGE_PLAINS, Material.COBBLESTONE);
+        overworldStructures.put(Structure.VILLAGE_SAVANNA, Material.ACACIA_PLANKS);
+        overworldStructures.put(Structure.VILLAGE_SNOWY, Material.ICE);
+        overworldStructures.put(Structure.VILLAGE_TAIGA, Material.SPRUCE_LOG);
+    }
+
+    public static Structure getRandom(Location current) {
+            Structure structure;
+            switch (current.getWorld().getEnvironment()) {
+                case NETHER -> structure = getRandomKey(netherStructures);
+                case THE_END -> structure = Structure.END_CITY;
+                // NORMAL
+                default -> structure = getRandomKey(overworldStructures);
+            }
+            return structure;
+    }
+
+    public static <Structure, Material> Structure getRandomKey(SortedMap<Structure, Material> map) {
+        int randomIndex = TARDISConstants.RANDOM.nextInt(map.size());
+        Iterator<Structure> iterator = map.keySet().iterator();
+        // Advance the iterator to the random index
+        Structure key = null;
+        for (int i = 0; i <= randomIndex; i++) {
+            key = iterator.next();
+        }
+        return key;
     }
 }

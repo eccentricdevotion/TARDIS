@@ -53,7 +53,7 @@ public class PickupArrowsRepairRecipe {
         is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
                 .addFloats(CircuitVariant.PICKUP.getFloats())
                 .build());
-        RecipeChoice addition = new RecipeChoice.ExactChoice(is);
+        RecipeChoice addition = RecipeChoice.exactChoice(is);
         NamespacedKey key = new NamespacedKey(plugin, "pickup_arrows_repair");
         SmithingRecipe r = new SmithingTransformRecipe(key, result, template, base, addition);
         plugin.getServer().addRecipe(r);

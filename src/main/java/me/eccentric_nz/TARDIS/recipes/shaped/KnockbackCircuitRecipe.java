@@ -65,7 +65,7 @@ public class KnockbackCircuitRecipe {
             book.setData(DataComponentTypes.STORED_ENCHANTMENTS, ItemEnchantments.itemEnchantments()
                     .add(Enchantment.KNOCKBACK, 1)
                     .build());
-            r.setIngredient('K', new RecipeChoice.ExactChoice(book));
+            r.setIngredient('K', RecipeChoice.exactChoice(book));
         } else {
             r.shape(" K ", "RSR", " R ");
             r.setIngredient('K', Material.GOLDEN_SWORD);

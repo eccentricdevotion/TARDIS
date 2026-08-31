@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.monitor.MonitorSnapshot;
 import me.eccentric_nz.TARDIS.playerprefs.PreferencesDialog;
 import me.eccentric_nz.TARDIS.rooms.games.pong.GameDisplay;
 import me.eccentric_nz.TARDIS.rooms.games.rockpaperscissors.Letters;
+import me.eccentric_nz.TARDIS.rooms.kitchen.EdibleLookup;
 import me.eccentric_nz.TARDIS.utility.Pluraliser;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import me.eccentric_nz.tardisregeneration.Regenerator;
@@ -54,6 +55,11 @@ public class DevCommandNode {
                     new TARDISCommandHelper(plugin).getCommand("tardisdev", ctx.getSource().getSender());
                     return Command.SINGLE_SUCCESS;
                 })
+                .then(Commands.literal("edible")
+                        .executes(ctx -> {
+                            EdibleLookup.print();
+                            return Command.SINGLE_SUCCESS;
+                        }))
                 .then(Commands.literal("add_regions")
                         .executes(ctx -> {
                             new AddRegionsCommand(plugin).doCheck(ctx.getSource().getSender());

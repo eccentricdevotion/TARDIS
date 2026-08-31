@@ -20,7 +20,7 @@ import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.artron.AdaptiveBoxLampToggler;
 import me.eccentric_nz.TARDIS.artron.BeaconToggler;
-import me.eccentric_nz.TARDIS.artron.PresetLampToggler;
+import me.eccentric_nz.TARDIS.artron.LightToggler;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetLightLevelLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
@@ -101,7 +101,7 @@ public class TARDISPowerButton {
             }
             // if lights are on, turn them off
             if (lights) {
-                new PresetLampToggler(plugin).flickSwitch(id, uuid, true, light);
+                new LightToggler(plugin).flickSwitch(id, uuid, true, light);
             }
             // if beacon is on turn it off
             new BeaconToggler(plugin).flickSwitch(uuid, id, false);
@@ -122,7 +122,7 @@ public class TARDISPowerButton {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "POWER_ON");
             // if lights are off, turn them on
             if (lights) {
-                new PresetLampToggler(plugin).flickSwitch(id, uuid, false, light);
+                new LightToggler(plugin).flickSwitch(id, uuid, false, light);
             }
             // determine beacon prefs
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid.toString());

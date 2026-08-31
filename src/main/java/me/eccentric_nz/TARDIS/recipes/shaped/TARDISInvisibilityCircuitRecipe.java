@@ -84,9 +84,9 @@ public class TARDISInvisibilityCircuitRecipe {
                 .build());
         r.shape(" D ", "P E", " W ");
         r.setIngredient('D', Material.DIAMOND);
-        r.setIngredient('P', new RecipeChoice.ExactChoice(exact));
+        r.setIngredient('P', RecipeChoice.exactChoice(exact));
         r.setIngredient('E', Material.EMERALD);
-        r.setIngredient('W', new RecipeChoice.ExactChoice(potion));
+        r.setIngredient('W', RecipeChoice.exactChoice(potion));
         plugin.getServer().addRecipe(r);
         plugin.getFigura().getShapedRecipes().put("TARDIS Invisibility Circuit", r);
     }

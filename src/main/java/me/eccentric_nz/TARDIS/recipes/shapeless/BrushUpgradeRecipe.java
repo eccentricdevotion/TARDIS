@@ -61,7 +61,7 @@ public class BrushUpgradeRecipe {
         exact.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
                 .addFloats(CircuitVariant.BRUSH.getFloats())
                 .build());
-        r.addIngredient(new RecipeChoice.ExactChoice(exact));
+        r.addIngredient(RecipeChoice.exactChoice(exact));
         plugin.getServer().addRecipe(r);
         plugin.getIncomposita().getShapelessRecipes().put("Brush Upgrade", r);
     }

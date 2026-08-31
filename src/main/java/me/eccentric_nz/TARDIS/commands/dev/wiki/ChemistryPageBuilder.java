@@ -150,7 +150,7 @@ public class ChemistryPageBuilder extends PageBuilder {
                 } else {
                     String dashed = "";
                     try {
-                        // is it a Spigot material?
+                        // is it a Paper/Bukkit material?
                         Material material = Material.valueOf(data[i][j]);
                         ingredients.add(material.toString());
                         dashed = TARDISStringUtils.toLowercaseDashed(TARDISStringUtils.capitalise(material.toString()));

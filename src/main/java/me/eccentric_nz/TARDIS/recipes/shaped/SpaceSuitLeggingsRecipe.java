@@ -64,7 +64,7 @@ public class SpaceSuitLeggingsRecipe {
             exact.setData(DataComponentTypes.DYED_COLOR, DyedItemColor.dyedItemColor()
                     .color(black)
                     .build());
-            r.setIngredient('H', new RecipeChoice.ExactChoice(exact));
+            r.setIngredient('H', RecipeChoice.exactChoice(exact));
         } else {
             r.setIngredient('H', Material.LEATHER_LEGGINGS);
         }
