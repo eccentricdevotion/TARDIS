@@ -21,6 +21,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.material.MapColor;
 import org.bukkit.Color;
 import org.bukkit.Material;
+import org.bukkit.Registry;
 import org.bukkit.craftbukkit.util.CraftMagicNumbers;
 
 import java.util.logging.Level;
@@ -35,11 +36,11 @@ public class GetBlockColours {
 
     public static void list() {
         // output lines
-        for (Material m : Material.values()) {
-            if (m.isBlock()) {
-                Color color = getColor(m);
-                TARDIS.plugin.getLogger().log(Level.INFO, String.format("%s(new Color(%d, %d, %d)),", m, color.getRed(), color.getGreen(), color.getBlue()));
-            }
-        }
+        Registry.BLOCK.stream().forEach(block -> {
+            Material m = block.createBlockData().getMaterial();
+            Color color = getColor(m);
+            TARDIS.plugin.getLogger().log(Level.INFO, String.format("%s(new Color(%d, %d, %d)),", m, color.getRed(), color.getGreen(), color.getBlue()));
+        });
     }
 }
+
