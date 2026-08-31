@@ -32,7 +32,7 @@ import java.util.TreeMap;
 /**
  * @author eccentric_nz
  */
-public class TARDISStructureTravel {
+public class TARDISStructure {
 
     private static final Comparator<Structure> STRUCTURE_COMPARATOR = Comparator.comparing(structure -> {
         NamespacedKey key = RegistryAccess.registryAccess()

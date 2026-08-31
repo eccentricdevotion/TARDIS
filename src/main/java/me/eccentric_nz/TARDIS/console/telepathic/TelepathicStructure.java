@@ -22,7 +22,7 @@ import io.papermc.paper.registry.RegistryAccess;
 import io.papermc.paper.registry.RegistryKey;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
-import me.eccentric_nz.TARDIS.travel.TARDISStructureTravel;
+import me.eccentric_nz.TARDIS.travel.TARDISStructure;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Color;
@@ -55,12 +55,12 @@ public class TelepathicStructure implements InventoryHolder {
         // structure finder
         ItemStack[] stack = new ItemStack[54];
         int i = 0;
-        for (Map.Entry<Structure, Material> map : TARDISStructureTravel.overworldStructures.entrySet()) {
+        for (Map.Entry<Structure, Material> map : TARDISStructure.overworldStructures.entrySet()) {
             ItemStack is = make(map.getKey(), map.getValue());
             stack[i] = is;
             i++;
         }
-        for (Map.Entry<Structure, Material> map : TARDISStructureTravel.netherStructures.entrySet()) {
+        for (Map.Entry<Structure, Material> map : TARDISStructure.netherStructures.entrySet()) {
             ItemStack is = make(map.getKey(), map.getValue());
             stack[i] = is;
             i++;
