@@ -1,4 +1,4 @@
-package me.eccentric_nz.TARDIS.commands.travel;
+package me.eccentric_nz.TARDIS.commands.travel.structure;
 
 import io.papermc.paper.registry.RegistryAccess;
 import io.papermc.paper.registry.RegistryKey;
@@ -53,7 +53,12 @@ public class StructureUtilities {
         return current.location();
     }
 
-    private static final List<Structure> VILLAGES = List.of(Structure.VILLAGE_DESERT, Structure.VILLAGE_PLAINS, Structure.VILLAGE_SAVANNA, Structure.VILLAGE_SNOWY, Structure.VILLAGE_TAIGA);
+    private static final List<Structure> VILLAGES = List.of(
+            Structure.VILLAGE_DESERT,
+            Structure.VILLAGE_PLAINS,
+            Structure.VILLAGE_SAVANNA,
+            Structure.VILLAGE_SNOWY,
+            Structure.VILLAGE_TAIGA);
 
     public static void randomVillage(TARDIS plugin, Player player, int id) {
         if (doChecks(plugin, player, id)) {
@@ -78,16 +83,6 @@ public class StructureUtilities {
         }
         set(plugin, loc, player, id);
     }
-
-    private static final List<Structure> STRUCTURES = List.of(
-            Structure.ANCIENT_CITY, Structure.BASTION_REMNANT, Structure.BURIED_TREASURE, Structure.DESERT_PYRAMID,
-            Structure.END_CITY, Structure.FORTRESS, Structure.IGLOO, Structure.JUNGLE_PYRAMID, Structure.MANSION,
-            Structure.MINESHAFT, Structure.MINESHAFT_MESA, Structure.MONUMENT, Structure.NETHER_FOSSIL, Structure.OCEAN_RUIN_COLD,
-            Structure.OCEAN_RUIN_WARM, Structure.PILLAGER_OUTPOST, Structure.RUINED_PORTAL, Structure.RUINED_PORTAL_DESERT,
-            Structure.RUINED_PORTAL_JUNGLE, Structure.RUINED_PORTAL_MOUNTAIN, Structure.RUINED_PORTAL_NETHER,
-            Structure.RUINED_PORTAL_OCEAN, Structure.RUINED_PORTAL_SWAMP, Structure.SHIPWRECK, Structure.SHIPWRECK_BEACHED,
-            Structure.STRONGHOLD, Structure.SWAMP_HUT, Structure.TRAIL_RUINS, Structure.TRIAL_CHAMBERS
-    );
 
     public static void randomStructure(TARDIS plugin, Player player, int id) {
         if (doChecks(plugin, player, id)) {
