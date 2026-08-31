@@ -99,7 +99,7 @@ public class StructureUtilities {
             return;
         }
         // choose a random structure type
-        Structure structure = STRUCTURES.get(TARDISConstants.RANDOM.nextInt(STRUCTURES.size()));
+        Structure structure = TARDISStructureTravel.getRandom(current);
         if (validate(plugin, player, structure, current)) {
             return;
         }
@@ -164,7 +164,7 @@ public class StructureUtilities {
         String key = RegistryAccess.registryAccess().getRegistry(RegistryKey.STRUCTURE).getKey(structure).getKey();
         World.Environment env = current.getWorld().getEnvironment();
         // check structure arg is appropriate for the world environment
-        if (!env.equals(World.Environment.NETHER) && TARDISStructureTravel.netherStructures.contains(structure)) {
+        if (!env.equals(World.Environment.NETHER) && TARDISStructureTravel.netherStructures.containsKey(structure)) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "VILLAGE_NO_SEARCH", key, (env.equals(World.Environment.THE_END) ? "" : "a ") + TARDISStringUtils.capitalise(env.toString()));
             return true;
         }
@@ -172,7 +172,7 @@ public class StructureUtilities {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "VILLAGE_NO_SEARCH", key, "a " + TARDISStringUtils.capitalise(env.toString()));
             return true;
         }
-        if (!env.equals(World.Environment.NORMAL) && TARDISStructureTravel.overworldStructures.contains(structure)) {
+        if (!env.equals(World.Environment.NORMAL) && TARDISStructureTravel.overworldStructures.containsKey(structure)) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "VILLAGE_NO_SEARCH", key, (env.equals(World.Environment.THE_END) ? "" : "a ") + TARDISStringUtils.capitalise(env.toString()));
             return true;
         }

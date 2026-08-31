@@ -34,6 +34,7 @@ import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
+import java.util.Map;
 
 public class TelepathicStructure implements InventoryHolder {
 
@@ -54,13 +55,13 @@ public class TelepathicStructure implements InventoryHolder {
         // structure finder
         ItemStack[] stack = new ItemStack[54];
         int i = 0;
-        for (Structure structure : TARDISStructureTravel.overworldStructures) {
-            ItemStack is = make(structure, Material.GRASS_BLOCK);
+        for (Map.Entry<Structure, Material> map : TARDISStructureTravel.overworldStructures.entrySet()) {
+            ItemStack is = make(map.getKey(), map.getValue());
             stack[i] = is;
             i++;
         }
-        for (Structure structure : TARDISStructureTravel.netherStructures) {
-            ItemStack is = make(structure, Material.CRIMSON_NYLIUM);
+        for (Map.Entry<Structure, Material> map : TARDISStructureTravel.netherStructures.entrySet()) {
+            ItemStack is = make(map.getKey(), map.getValue());
             stack[i] = is;
             i++;
         }
