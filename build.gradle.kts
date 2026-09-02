@@ -5,7 +5,7 @@ import java.io.ByteArrayOutputStream
 plugins {
     `java-library`
     id("io.papermc.paperweight.userdev") version "2.0.0-beta.21"
-    id("com.gradleup.shadow") version "9.5.1"
+    id("com.gradleup.shadow") version "9.6.1"
     id("java")
     id("io.papermc.hangar-publish-plugin") version "0.1.4"
 }
@@ -99,13 +99,13 @@ dependencies {
     compileOnly("net.citizensnpcs:citizensapi:2.0.43-SNAPSHOT") {
         isTransitive = false
     }
-    compileOnly("com.palmergames.bukkit.towny:towny:0.103.0.6") {
+    compileOnly("com.palmergames.bukkit.towny:towny:0.103.1.1") {
         isTransitive = false
     }
     compileOnly("org.mvplugins.multiverse.core:multiverse-core:5.7.2") {
         isTransitive = false
     }
-    compileOnly("org.mvplugins.multiverse.inventories:multiverse-inventories:5.3.4") {
+    compileOnly("org.mvplugins.multiverse.inventories:multiverse-inventories:5.3.5") {
         isTransitive = false
     }
     compileOnly("dev.kitteh:factionsuuid:0.7.0") {
@@ -151,8 +151,8 @@ dependencies {
     compileOnly("org.jsoup:jsoup:1.22.2") {
         isTransitive = false
     }
-    compileOnly("org.popcraft:chunky-common:1.5.3")
-    compileOnly("org.popcraft:chunky-bukkit:1.5.3")
+    compileOnly("org.popcraft:chunky-common:1.5.4")
+    compileOnly("org.popcraft:chunky-bukkit:1.5.4")
     compileOnly("org.popcraft:chunkyborder-common:1.2.33")
     compileOnly("net.luckperms:api:5.5")
     compileOnly("org.apache.commons:commons-lang3:3.20.0")
