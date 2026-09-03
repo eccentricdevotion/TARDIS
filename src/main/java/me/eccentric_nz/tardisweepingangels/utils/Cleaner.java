@@ -45,7 +45,7 @@ public class Cleaner implements Runnable {
                         if (monster.hasPotionEffect(PotionEffectType.INVISIBILITY) && MonsterEquipment.isMonster(monster)) {
                             // check helmet
                             EntityEquipment ee = monster.getEquipment();
-                            if (ee != null && ee.getHelmet() == null) {
+                            if (!ee.getHelmet().isEmpty()) {
                                 monster.remove();
                             }
                         }

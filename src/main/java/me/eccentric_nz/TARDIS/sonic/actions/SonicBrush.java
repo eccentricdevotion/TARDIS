@@ -56,7 +56,7 @@ public class SonicBrush {
                         }
                     }
                 }
-                if (dusted == 4 && is != null && is.getType() != Material.AIR) {
+                if (dusted == 4 && !is.isEmpty() && is.getType() != Material.AIR) {
                     // play a sound
                     p.playSound(b.getLocation(), isSand ? Sound.BLOCK_SUSPICIOUS_SAND_BREAK : Sound.BLOCK_SUSPICIOUS_GRAVEL_BREAK, 1.0f, 1.0f);
                     // drop the item

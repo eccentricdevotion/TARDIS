@@ -58,7 +58,7 @@ public class ChunkListener implements Listener {
                     }
                 }
                 case Drowned drowned -> {
-                    if (drowned.getEquipment().getHelmet() != null) {
+                    if (!drowned.getEquipment().getHelmet().isEmpty()) {
                         ItemStack helmet = drowned.getEquipment().getHelmet();
                         if (ComponentUtils.isNamed(helmet, " Head")) {
                             if (pdc.has(TARDISWeepingAngels.DEVIL, PersistentDataType.INTEGER)) {
@@ -70,7 +70,7 @@ public class ChunkListener implements Listener {
                     }
                 }
                 case ArmorStand stand when (stand.getPersistentDataContainer().has(TARDISWeepingAngels.FLAME_TASK, PersistentDataType.INTEGER)) -> {
-                    if (stand.getEquipment().getHelmet() != null && stand.getEquipment().getHelmet().getType() == Material.RED_CANDLE) {
+                    if (!stand.getEquipment().getHelmet().isEmpty() && stand.getEquipment().getHelmet().getType() == Material.RED_CANDLE) {
                         // restart flame runnable
                         int flameID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new HeadlessFlameRunnable(stand), 1, 20);
                         pdc.set(TARDISWeepingAngels.FLAME_TASK, PersistentDataType.INTEGER, flameID);

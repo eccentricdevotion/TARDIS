@@ -37,7 +37,7 @@ public class SpaceHelmetListener implements Listener {
         }
         Player player = event.getPlayer();
         ItemStack is = player.getInventory().getItemInMainHand();
-        if (isSpaceHelmet(is) && player.getInventory().getHelmet() == null) {
+        if (isSpaceHelmet(is) && !player.getInventory().getHelmet().isEmpty()) {
             player.getInventory().setHelmet(is);
             player.getInventory().setItemInMainHand(ItemStack.of(Material.AIR));
         }

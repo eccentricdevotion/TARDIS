@@ -49,7 +49,7 @@ public class TARDISDisplayItemUtils {
      */
     public static TARDISDisplayItem get(ItemDisplay display) {
         ItemStack is = display.getItemStack();
-        if (is != null) {
+        if (!is.isEmpty()) {
             // Try to get by model
             if (ComponentUtils.isModelled(is)) {
                 if (Tag.ITEMS_DECORATED_POT_SHERDS.isTagged(is.getType())) {

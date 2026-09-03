@@ -53,7 +53,7 @@ public class GasMask implements Listener {
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             PlayerInventory inv = player.getInventory();
             ItemStack helmet = inv.getHelmet();
-            if (helmet != null) {
+            if (!helmet.isEmpty()) {
                 // move it to the first free slot
                 int free_slot = inv.firstEmpty();
                 if (free_slot != -1) {
