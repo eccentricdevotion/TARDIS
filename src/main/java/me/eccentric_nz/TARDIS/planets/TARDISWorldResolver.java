@@ -30,7 +30,14 @@ public class TARDISWorldResolver {
     private static final HashMap<String, TARDISPlanet> planets = new HashMap<>();
 
     public static World getFromString(String alias) {
-        World world = Bukkit.getServer().getWorld(Key.key(alias.toLowerCase(Locale.ROOT)));
+        Key worldKey;
+        if (alias.contains(":")) {
+            worldKey = Key.key(alias.toLowerCase(Locale.ROOT));
+        } else {
+            String namespace = TARDIS.plugin.getPlanetsConfig().getString("planets." + alias + ".namespace", Key.MINECRAFT_NAMESPACE);
+            worldKey = Key.key(namespace, alias.toLowerCase(Locale.ROOT));
+        }
+        World world = Bukkit.getServer().getWorld(worldKey);
         if (world != null) {
             return world;
         } else {
