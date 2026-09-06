@@ -102,7 +102,7 @@ public class TARDISFeatures {
         OCEAN = new TARDISTreeData(Material.PRISMARINE, Material.BIRCH_LOG, Material.BIRCH_LEAVES, Material.SEA_LANTERN, true);
         SCULK = new TARDISTreeData(Material.DEEPSLATE, Material.WARPED_STEM, Material.WARPED_HYPHAE, Material.SHROOMLIGHT, true);
         PALE = new TARDISTreeData(Material.SULFUR, Material.PALE_OAK_LOG, Material.PALE_OAK_LEAVES, Material.PEARLESCENT_FROGLIGHT, true);
-        SWAMP = new TARDISTreeData(Material.MUD, Material.MANGROVE_LOG, Material.MANGROVE_LOG, Material.VERDANT_FROGLIGHT, true);
+        SWAMP = new TARDISTreeData(Material.MUD, Material.MANGROVE_LOG, Material.MANGROVE_LEAVES, Material.VERDANT_FROGLIGHT, true);
         TAIGA = new TARDISTreeData(Material.STONE, Material.SPRUCE_LOG, Material.SPRUCE_LEAVES, Material.JACK_O_LANTERN, true);
     }
 

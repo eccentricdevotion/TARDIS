@@ -131,7 +131,7 @@ public class TreePlacer {
 
     private void placeHat(WorldGenLevel level, RandomSource random, TARDISTreeData data, BlockPos blockPos, int i, boolean b) {
         BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
-        BlockData blockData = Bukkit.createBlockData(data.stem());
+        BlockData blockData = Bukkit.createBlockData(data.hat());
         BlockState hat = ((CraftBlockData) blockData).getState();;
         if (blockData instanceof Leaves leaves) {
             leaves.setPersistent(true);
