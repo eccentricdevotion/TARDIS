@@ -11,5 +11,9 @@ public record NoiseSet(
         PerlinNoiseGenerator lavaShapeNoise,
         PerlinNoiseGenerator lavaCenterNoise,
         PerlinNoiseGenerator lavaDetailNoise,
-        PerlinNoiseGenerator lavaEdgeNoise) {
+        PerlinNoiseGenerator lavaEdgeNoise,
+        PerlinNoiseGenerator regionNoise,
+        PerlinNoiseGenerator chamberNoise,
+        PerlinNoiseGenerator rootNoise,
+        PerlinNoiseGenerator floodNoise) {
 }

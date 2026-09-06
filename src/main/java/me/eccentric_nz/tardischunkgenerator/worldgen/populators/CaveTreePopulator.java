@@ -54,7 +54,7 @@ public class CaveTreePopulator extends BlockPopulator {
                 treeY--;
                 startBlock = limitedRegion.getType(treeX, treeY, treeZ);
             }
-            Biome biome = worldInfo.vanillaBiomeProvider().getBiome(worldInfo, x, treeY, z);
+            Biome biome = worldInfo.vanillaBiomeProvider().getBiome(worldInfo, treeX, treeY, treeZ);
             BiomeStyle biomeStyle = BiomeStyle.fromBiome(biome);
             BiomeProfile biomeProfile = BiomeStyle.getProfile(biomeStyle);
             TARDISTree TREE = biomeProfile.tree();

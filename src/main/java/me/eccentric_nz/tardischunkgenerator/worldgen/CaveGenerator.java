@@ -1,9 +1,6 @@
 package me.eccentric_nz.tardischunkgenerator.worldgen;
 
-import me.eccentric_nz.tardischunkgenerator.worldgen.caves.BiomeProfile;
-import me.eccentric_nz.tardischunkgenerator.worldgen.caves.BiomeStyle;
-import me.eccentric_nz.tardischunkgenerator.worldgen.caves.NoiseCache;
-import me.eccentric_nz.tardischunkgenerator.worldgen.caves.NoiseSet;
+import me.eccentric_nz.tardischunkgenerator.worldgen.caves.*;
 import me.eccentric_nz.tardischunkgenerator.worldgen.populators.CaveTreePopulator;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -557,6 +554,11 @@ public class CaveGenerator extends ChunkGenerator {
                 }
             }
         }
+
+        // Carve large-scale biome regions after the ordinary cave pass.
+        // The region generator uses absolute world coordinates, so chambers
+        // continue across chunk boundaries instead of restarting per chunk.
+        DramaticBiomeGenerator.generate(worldInfo, chunkData, chunkX, chunkZ, noise);
 
         // Reinterpret exposed cave surfaces using the real vanilla biome map.
         // This happens after the cave/lava/special-feature passes so those

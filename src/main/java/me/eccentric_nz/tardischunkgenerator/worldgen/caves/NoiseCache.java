@@ -6,13 +6,8 @@ public class NoiseCache {
 
     /**
      * One reusable noise set per generation thread.
-     * <p>
-     * Paper requires generator callbacks to be thread-safe. PerlinNoiseGenerator
-     * exposes mutable instance state internally, so sharing one NoiseSet between
-     * generation threads would be unnecessarily risky. This cache gives each
-     * thread its own set and reuses it for subsequent chunks from the same world.
-     * <p>
-     * When a thread starts generating a different world, its cached set is replaced.
+     * Paper generation callbacks may run concurrently, so each thread gets
+     * its own mutable PerlinNoiseGenerator instances.
      */
     public static final ThreadLocal<NoiseCache> NOISE_CACHE = ThreadLocal.withInitial(NoiseCache::new);
 
@@ -25,10 +20,18 @@ public class NoiseCache {
     static final int NOISE_LAVA_CENTER = 11;
     static final int NOISE_LAVA_DETAIL = 12;
     static final int NOISE_LAVA_EDGE = 13;
-    private static long worldSeed;
-    private static NoiseSet noiseSet;
 
-    public static NoiseSet get(long seed) {
+    // large-scale regional layers
+    static final int NOISE_REGION = 20;
+    static final int NOISE_CHAMBER = 21;
+    static final int NOISE_ROOT = 22;
+    static final int NOISE_FLOOD = 23;
+
+    // instance fields- a NoiseCache instance belongs to one ThreadLocal generation thread
+    private long worldSeed;
+    private NoiseSet noiseSet;
+
+    private NoiseSet get(long seed) {
         if (noiseSet == null || worldSeed != seed) {
             worldSeed = seed;
             noiseSet = createNoiseSet(seed);
@@ -46,7 +49,11 @@ public class NoiseCache {
                 new PerlinNoiseGenerator(deriveNoiseSeed(worldSeed, NOISE_LAVA_SHAPE)),
                 new PerlinNoiseGenerator(deriveNoiseSeed(worldSeed, NOISE_LAVA_CENTER)),
                 new PerlinNoiseGenerator(deriveNoiseSeed(worldSeed, NOISE_LAVA_DETAIL)),
-                new PerlinNoiseGenerator(deriveNoiseSeed(worldSeed, NOISE_LAVA_EDGE)));
+                new PerlinNoiseGenerator(deriveNoiseSeed(worldSeed, NOISE_LAVA_EDGE)),
+                new PerlinNoiseGenerator(deriveNoiseSeed(worldSeed, NOISE_REGION)),
+                new PerlinNoiseGenerator(deriveNoiseSeed(worldSeed, NOISE_CHAMBER)),
+                new PerlinNoiseGenerator(deriveNoiseSeed(worldSeed, NOISE_ROOT)),
+                new PerlinNoiseGenerator(deriveNoiseSeed(worldSeed, NOISE_FLOOD)));
     }
 
     /**
@@ -65,7 +72,6 @@ public class NoiseCache {
     }
 
     public static NoiseSet getNoiseSet(long worldSeed) {
-        NOISE_CACHE.get();
-        return get(worldSeed);
+        return NOISE_CACHE.get().get(worldSeed);
     }
 }
