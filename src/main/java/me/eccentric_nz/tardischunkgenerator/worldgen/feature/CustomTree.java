@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.tardischunkgenerator.worldgen.feature;
 
+import me.eccentric_nz.tardischunkgenerator.worldgen.caves.BiomeProfile;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.WorldGenLevel;
@@ -54,6 +55,32 @@ public class CustomTree {
         ChunkGenerator chunkGenerator = level.getMinecraftWorld().getChunkSource().getGenerator();
         BlockPos pos = new BlockPos(x, y, z);
         new TreePlacer().place(data, level, pos, chunkGenerator);
+    }
+
+    public static void grow(TARDISTree tree, int x, int y, int z, LimitedRegion limitedRegion, BiomeProfile biomeProfile) {
+        TARDISTreeData data;
+        WorldGenLevel level = ((CraftRegionAccessor) limitedRegion).getHandle();
+        switch (tree) {
+            case ACACIA -> data = TARDISFeatures.ACACIA;
+            case CAVE -> data = TARDISFeatures.CAVE;
+            case CHERRY -> data = TARDISFeatures.CHERRY;
+            case DESERT -> data = TARDISFeatures.DESERT;
+            case DARK_OAK -> data = TARDISFeatures.DARK_OAK;
+            case FOREST -> data = TARDISFeatures.FOREST;
+            case FROZEN -> data = TARDISFeatures.FROZEN;
+            case JUNGLE -> data = TARDISFeatures.JUNGLE;
+            case LUSH -> data = TARDISFeatures.LUSH;
+            case MUSHROOM -> data = TARDISFeatures.MUSHROOM;
+            case OCEAN -> data = TARDISFeatures.OCEAN;
+            case SCULK -> data = TARDISFeatures.SCULK;
+            case PALE -> data = TARDISFeatures.PALE;
+            case SWAMP -> data = TARDISFeatures.SWAMP;
+            case TAIGA -> data = TARDISFeatures.TAIGA;
+            default -> data = TARDISFeatures.RANDOM_TREE; // RANDOM
+        }
+        ChunkGenerator chunkGenerator = level.getMinecraftWorld().getChunkSource().getGenerator();
+        BlockPos pos = new BlockPos(x, y, z);
+        new TreePlacer().place(data, level, pos, chunkGenerator, biomeProfile);
     }
 
     public static void grow(Location location, Material base, Material stem, Material hat, Material decor) {

@@ -34,6 +34,21 @@ public class TARDISFeatures {
     public static final TARDISTreeData GALLIFREY_TREE_RED_SAND;
     public static final TARDISTreeData GALLIFREY_TREE_TERRACOTTA;
     public static final TARDISTreeData RANDOM_TREE;
+    public static final TARDISTreeData LUSH;
+    public static final TARDISTreeData FOREST;
+    public static final TARDISTreeData JUNGLE;
+    public static final TARDISTreeData TAIGA;
+    public static final TARDISTreeData DESERT;
+    public static final TARDISTreeData ACACIA;
+    public static final TARDISTreeData SWAMP;
+    public static final TARDISTreeData OCEAN;
+    public static final TARDISTreeData FROZEN;
+    public static final TARDISTreeData MUSHROOM;
+    public static final TARDISTreeData CHERRY;
+    public static final TARDISTreeData SCULK;
+    public static final TARDISTreeData PALE;
+    public static final TARDISTreeData DARK_OAK;
+    public static final TARDISTreeData CAVE;
 
     static {
         // get configured materials
@@ -73,6 +88,22 @@ public class TARDISFeatures {
         GALLIFREY_TREE_RED_SAND = new TARDISTreeData(Material.RED_SAND, gallifrey_sand_wood, gallifrey_sand_leaves, gallifrey_sand_decor, true);
         GALLIFREY_TREE_TERRACOTTA = new TARDISTreeData(Material.TERRACOTTA, gallifrey_terracotta_wood, gallifrey_terracotta_leaves, gallifrey_terracotta_decor, true);
         RANDOM_TREE = new TARDISTreeData(Material.GRASS_BLOCK, getRandomMaterial(), getRandomMaterial(), getRandomMaterial(), true);
+        // Material base, Material stem, Material hat, Material decor
+        ACACIA = new TARDISTreeData(Material.TERRACOTTA, Material.ACACIA_LOG, Material.ACACIA_LEAVES, Material.VERDANT_FROGLIGHT, true);
+        CAVE = new TARDISTreeData(Material.DEEPSLATE, Material.CRIMSON_STEM, Material.CRIMSON_HYPHAE, Material.GLOWSTONE, true);
+        CHERRY = new TARDISTreeData(Material.CALCITE, Material.CHERRY_LOG, Material.CHERRY_LEAVES, Material.OCHRE_FROGLIGHT, true);
+        DESERT = new TARDISTreeData(Material.SANDSTONE, Material.CACTUS, Material.RED_SANDSTONE, Material.PEARLESCENT_FROGLIGHT, true);
+        DARK_OAK = new TARDISTreeData(Material.DRIPSTONE_BLOCK, Material.DARK_OAK_LOG, Material.DARK_OAK_LEAVES, Material.GLOWSTONE, true);
+        FOREST = new TARDISTreeData(Material.STONE, Material.OAK_LOG, Material.OAK_LEAVES, Material.SHROOMLIGHT, true);
+        FROZEN = new TARDISTreeData(Material.STONE, Material.SNOW_BLOCK, Material.BLUE_ICE, Material.SEA_LANTERN, true);
+        JUNGLE = new TARDISTreeData(Material.MOSSY_COBBLESTONE, Material.JUNGLE_LOG, Material.JUNGLE_LEAVES, Material.OCHRE_FROGLIGHT, true);
+        LUSH = new TARDISTreeData(Material.STONE, Material.DARK_OAK_LOG, Material.DARK_OAK_LEAVES, Material.GLOWSTONE, true);
+        MUSHROOM = new TARDISTreeData(Material.MYCELIUM, Material.MUSHROOM_STEM, Material.RED_MUSHROOM_BLOCK, Material.SHROOMLIGHT, true);
+        OCEAN = new TARDISTreeData(Material.PRISMARINE, Material.BIRCH_LOG, Material.BIRCH_LEAVES, Material.SEA_LANTERN, true);
+        SCULK = new TARDISTreeData(Material.DEEPSLATE, Material.WARPED_STEM, Material.WARPED_HYPHAE, Material.SHROOMLIGHT, true);
+        PALE = new TARDISTreeData(Material.SULFUR, Material.PALE_OAK_LOG, Material.PALE_OAK_LEAVES, Material.PEARLESCENT_FROGLIGHT, true);
+        SWAMP = new TARDISTreeData(Material.MUD, Material.MANGROVE_LOG, Material.MANGROVE_LOG, Material.VERDANT_FROGLIGHT, true);
+        TAIGA = new TARDISTreeData(Material.STONE, Material.SPRUCE_LOG, Material.SPRUCE_LEAVES, Material.JACK_O_LANTERN, true);
     }
 
     private static Material getRandomMaterial() {
