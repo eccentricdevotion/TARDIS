@@ -21,7 +21,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetCount;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDiskStorage;
 import me.eccentric_nz.TARDIS.display.TARDISDisplayType;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.tardischunkgenerator.worldgen.TARDISChunkGenerator;
+import me.eccentric_nz.tardischunkgenerator.worldgen.VoidGenerator;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -74,7 +74,7 @@ public class TARDISUtils {
         if (plugin.getConfig().getBoolean("creation.default_world")) {
             dn = plugin.getConfig().getString("creation.default_world_name", "tardis_timevortex");
         }
-        boolean special = (data[1].equalsIgnoreCase(dn) && gen instanceof TARDISChunkGenerator);
+        boolean special = (data[1].equalsIgnoreCase(dn) && gen instanceof VoidGenerator);
         return (data[1].contains("tardis_world_") || special);
     }
 
@@ -92,7 +92,7 @@ public class TARDISUtils {
         if (plugin.getConfig().getBoolean("creation.default_world")) {
             dn = plugin.getConfig().getString("creation.default_world_name", "tardis_timevortex");
         }
-        boolean special = ((name.equals(dn) || name.equals("tardis_zero_room")) && gen instanceof TARDISChunkGenerator);
+        boolean special = ((name.equals(dn) || name.equals("tardis_zero_room")) && gen instanceof VoidGenerator);
         return name.equalsIgnoreCase("tardis_world_" + player.getName()) || special;
     }
 
@@ -106,7 +106,7 @@ public class TARDISUtils {
         if (plugin.getConfig().getBoolean("creation.default_world")) {
             dn = plugin.getConfig().getString("creation.default_world_name", "tardis_timevortex").toLowerCase(Locale.ROOT);
         }
-        boolean special = (name.equals(dn) && gen instanceof TARDISChunkGenerator);
+        boolean special = (name.equals(dn) && gen instanceof VoidGenerator);
         return name.startsWith("tardis_world_") || special;
     }
 

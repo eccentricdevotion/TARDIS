@@ -493,9 +493,9 @@ public class TARDIS extends JavaPlugin {
             if (id.equalsIgnoreCase("rooms")) {
                 return new RoomGenerator(this);
             }
-            return new TARDISChunkGenerator();
+            return new VoidGenerator();
         }
-        return new TARDISChunkGenerator();
+        return new VoidGenerator();
     }
 
     /**
