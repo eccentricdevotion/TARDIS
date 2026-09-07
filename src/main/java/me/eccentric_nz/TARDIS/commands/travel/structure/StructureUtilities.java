@@ -82,7 +82,7 @@ public class StructureUtilities {
         if (loc == null) {
             return;
         }
-        set(plugin, loc, player, id);
+        set(plugin, loc, player, id, village);
     }
 
     public static void randomStructure(TARDIS plugin, Player player, int id) {
@@ -105,7 +105,7 @@ public class StructureUtilities {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "VILLAGE_NOT_FOUND");
             return;
         }
-        set(plugin, loc, player, id);
+        set(plugin, loc, player, id, structure);
     }
 
     public static void search(TARDIS plugin, Player player, Structure structure, int id) {
@@ -127,10 +127,10 @@ public class StructureUtilities {
                 Limit limits = getLimits(perm);
                 AsyncStructureFinder.getSafeLocation(structureResult.getLocation(), current.direction(), getStructureMaterial(perm), limits.min(), limits.max())
                         .thenAccept(optionalLocation -> optionalLocation.ifPresentOrElse(
-                                value -> set(plugin, value, player, id),
+                                value -> set(plugin, value, player, id, structure),
                                 () -> plugin.getMessenger().send(player, TardisModule.TARDIS, "VILLAGE_NOT_FOUND")));
             } else {
-                set(plugin, structureResult.getLocation(), player, id);
+                set(plugin, structureResult.getLocation(), player, id, structure);
             }
         } else {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "VILLAGE_NOT_FOUND");
@@ -248,7 +248,7 @@ public class StructureUtilities {
         return false;
     }
 
-    private static void set(TARDIS plugin, Location loc, Player player, int id) {
+    private static void set(TARDIS plugin, Location loc, Player player, int id, Structure structure) {
         // check for space
         Block b = loc.getBlock();
         boolean unsafe = true;
@@ -281,7 +281,8 @@ public class StructureUtilities {
         HashMap<String, Object> tid = new HashMap<>();
         tid.put("tardis_id", id);
         plugin.getQueryFactory().doSyncUpdate("next", set, tid);
-        plugin.getMessenger().send(player, TardisModule.TARDIS, "TRAVEL_LOADED", "village", !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
+        String which = getWhich(structure);
+        plugin.getMessenger().send(player, TardisModule.TARDIS, "TRAVEL_LOADED", which, !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
         TravelType travelType = switch (loc.getWorld().getEnvironment()) {
             case THE_END -> TravelType.VILLAGE_THE_END;
             case NETHER -> TravelType.VILLAGE_NETHER;
@@ -292,6 +293,17 @@ public class StructureUtilities {
         if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
             new TARDISLand(plugin, id, player).exitVortex();
             plugin.getPM().callEvent(new TARDISTravelEvent(player, null, travelType, id));
+        }
+    }
+
+    public static String getWhich(Structure which) {
+        String s = RegistryAccess.registryAccess().getRegistry(RegistryKey.STRUCTURE).getKey(which).getKey();
+        if (s.startsWith("ocean_ruin_") || s.startsWith("ruined_portal_") || s.startsWith("village_")) {
+            return TARDISStringUtils.switchCapitalise(s);
+        } else if (which.equals(Structure.FORTRESS)) {
+            return "Nether Fortress";
+        } else {
+            return TARDISStringUtils.capitalise(s);
         }
     }
 }

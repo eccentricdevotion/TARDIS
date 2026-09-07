@@ -28,7 +28,7 @@ import java.util.Random;
 /**
  * @author eccentric_nz
  */
-public class TARDISChunkGenerator extends ChunkGenerator {
+public class VoidGenerator extends ChunkGenerator {
 
     /**
      * Generates an empty void world!

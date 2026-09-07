@@ -466,6 +466,9 @@ public class TARDIS extends JavaPlugin {
     @Override
     public ChunkGenerator getDefaultWorldGenerator(String worldName, String id) {
         if (id != null) {
+            if (id.equalsIgnoreCase("cave")) {
+                return new CaveGenerator();
+            }
             if (id.equalsIgnoreCase("flat")) {
                 return new FlatGenerator(this);
             }
@@ -490,9 +493,9 @@ public class TARDIS extends JavaPlugin {
             if (id.equalsIgnoreCase("rooms")) {
                 return new RoomGenerator(this);
             }
-            return new TARDISChunkGenerator();
+            return new VoidGenerator();
         }
-        return new TARDISChunkGenerator();
+        return new VoidGenerator();
     }
 
     /**

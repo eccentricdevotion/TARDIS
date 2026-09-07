@@ -6,14 +6,13 @@ plugins {
     `java-library`
     id("io.papermc.paperweight.userdev") version "2.0.0-beta.21"
     id("com.gradleup.shadow") version "9.6.1"
-
     id("java")
     id("io.papermc.hangar-publish-plugin") version "0.1.4"
 }
 
 group = "me.eccentric_nz"
 val buildNumber = "-b${System.getenv("BUILD_NUMBER") ?: (System.getenv("SHORT_SHA") ?: ".local")}"
-version = "7.0.3${buildNumber}"
+version = "7.0.4${buildNumber}"
 
 repositories {
     mavenCentral()
@@ -140,8 +139,8 @@ dependencies {
     compileOnly("net.coreprotect:coreprotect:24.0") {
         isTransitive = false
     }
-    compileOnly(files("libs/dynmap-api-3.8.jar"))
-    compileOnly(files("libs/DynmapCoreAPI-3.8.jar"))
+    compileOnly(files("libs/dynmap-api-3.9.jar"))
+    compileOnly(files("libs/DynmapCoreAPI-3.9.jar"))
     compileOnly("de.bluecolored:bluemap-api:2.8.0")
     compileOnly("xyz.jpenilla:squaremap-api:1.3.14") {
         isTransitive = false

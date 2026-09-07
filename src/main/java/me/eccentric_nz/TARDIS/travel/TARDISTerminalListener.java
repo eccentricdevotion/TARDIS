@@ -325,7 +325,12 @@ public class TARDISTerminalListener implements Listener {
         String world;
         Set<String> worldlist = plugin.getPlanetsConfig().getConfigurationSection("planets").getKeys(false);
         worldlist.forEach((o) -> {
-            World ww = Bukkit.getServer().getWorld(Key.key(o));
+            String namespace = Key.MINECRAFT_NAMESPACE;
+            if (plugin.getPlanetsConfig().contains("planets." + o + ".namespace")) {
+                namespace = plugin.getPlanetsConfig().getString("planets." + o + ".namespace", "minecraft");
+            }
+            Key worldKey = Key.key(namespace, o);
+            World ww = Bukkit.getServer().getWorld(worldKey);
             if (ww != null) {
                 String env = ww.getEnvironment().toString();
                 if (e.equalsIgnoreCase(env)) {

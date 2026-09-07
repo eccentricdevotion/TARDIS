@@ -95,21 +95,21 @@ public class TARDISStructure {
     }
 
     public static Structure getRandom(Location current) {
-            Structure structure;
-            switch (current.getWorld().getEnvironment()) {
-                case NETHER -> structure = getRandomKey(netherStructures);
-                case THE_END -> structure = Structure.END_CITY;
-                // NORMAL
-                default -> structure = getRandomKey(overworldStructures);
-            }
-            return structure;
+        Structure structure;
+        switch (current.getWorld().getEnvironment()) {
+            case NETHER -> structure = getRandomKey(netherStructures);
+            case THE_END -> structure = Structure.END_CITY;
+            // NORMAL
+            default -> structure = getRandomKey(overworldStructures);
+        }
+        return structure;
     }
 
-    public static <Structure, Material> Structure getRandomKey(SortedMap<Structure, Material> map) {
+    public static <S, M> S getRandomKey(SortedMap<S, M> map) {
         int randomIndex = TARDISConstants.RANDOM.nextInt(map.size());
-        Iterator<Structure> iterator = map.keySet().iterator();
+        Iterator<S> iterator = map.keySet().iterator();
         // Advance the iterator to the random index
-        Structure key = null;
+        S key = null;
         for (int i = 0; i <= randomIndex; i++) {
             key = iterator.next();
         }
