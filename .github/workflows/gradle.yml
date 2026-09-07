@@ -9,7 +9,7 @@ on:
     branches: [ "master" ]
 
 env:
-  VERSION: '7.0.3'
+  VERSION: '7.0.4'
   RELEASE_TAG: '26.2'
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
