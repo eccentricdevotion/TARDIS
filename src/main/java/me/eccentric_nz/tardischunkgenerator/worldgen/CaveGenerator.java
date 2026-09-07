@@ -164,6 +164,7 @@ public class CaveGenerator extends ChunkGenerator {
                             chunkData.setBlock(x, y, z, Material.BEDROCK);
                         } else if (!(tunnelVal > 0.2) || !(tunnelVal < (double) 0.25F)) {
                             if (density > 0.05) {
+                                chunkData.setBlock(x, y, z, biomeProfile.wall());
                                 if (chunkData.getType(x, y + 1, z) == Material.AIR && random.nextDouble() < 0.005) {
                                     chunkData.setBlock(x, y + 1, z, Material.SCULK_SENSOR);
                                 }
