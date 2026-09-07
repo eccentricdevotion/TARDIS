@@ -16,6 +16,7 @@ public class NoiseCache {
     static final int NOISE_SCULK_HERD = 3;
     static final int NOISE_LAVA_LAKE = 4;
     static final int NOISE_TUNNEL = 5;
+    static final int NOISE_BEDROCK = 6;
     static final int NOISE_LAVA_SHAPE = 10;
     static final int NOISE_LAVA_CENTER = 11;
     static final int NOISE_LAVA_DETAIL = 12;
@@ -46,6 +47,7 @@ public class NoiseCache {
                 new PerlinNoiseGenerator(deriveNoiseSeed(worldSeed, NOISE_SCULK_HERD)),
                 new PerlinNoiseGenerator(deriveNoiseSeed(worldSeed, NOISE_LAVA_LAKE)),
                 new PerlinNoiseGenerator(deriveNoiseSeed(worldSeed, NOISE_TUNNEL)),
+                new PerlinNoiseGenerator(deriveNoiseSeed(worldSeed, NOISE_BEDROCK)),
                 new PerlinNoiseGenerator(deriveNoiseSeed(worldSeed, NOISE_LAVA_SHAPE)),
                 new PerlinNoiseGenerator(deriveNoiseSeed(worldSeed, NOISE_LAVA_CENTER)),
                 new PerlinNoiseGenerator(deriveNoiseSeed(worldSeed, NOISE_LAVA_DETAIL)),

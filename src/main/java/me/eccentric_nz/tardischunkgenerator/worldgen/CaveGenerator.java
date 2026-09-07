@@ -2,6 +2,7 @@ package me.eccentric_nz.tardischunkgenerator.worldgen;
 
 import me.eccentric_nz.tardischunkgenerator.worldgen.caves.*;
 import me.eccentric_nz.tardischunkgenerator.worldgen.populators.CaveTreePopulator;
+import me.eccentric_nz.tardischunkgenerator.worldgen.populators.VanillaOrePopulator;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
@@ -23,7 +24,7 @@ public class CaveGenerator extends ChunkGenerator {
         int originZ = chunkZ << 4;
         int generationMinY = Math.max(chunkData.getMinHeight(), 0);
         int generationMaxY = Math.min(chunkData.getMaxHeight(), 129);
-        this.generateBedrockLayer(worldInfo, chunkData, random, originX, originZ);
+        this.generateBedrockLayer(worldInfo, chunkData, random, originX, originZ, noise);
         this.generateDeepShrine(chunkData, random);
         this.generateFallenResearcher(chunkData, random);
         this.generateSealedPortal(chunkData, random);
@@ -157,13 +158,6 @@ public class CaveGenerator extends ChunkGenerator {
                             chunkData.setBlock(x, y, z, Material.BEDROCK);
                         } else if (!(tunnelVal > 0.2) || !(tunnelVal < (double) 0.25F)) {
                             if (density > 0.05) {
-                                chunkData.setBlock(x, y, z, biomeProfile.wall());
-                                if (y < 30 && random.nextDouble() < 0.01) {
-                                    chunkData.setBlock(x, y, z, Material.DEEPSLATE_COAL_ORE);
-                                }
-                                if (y < 25 && decoNoise > (double) 0.5F && random.nextDouble() < 0.1) {
-                                    chunkData.setBlock(x, y, z, Material.DEEPSLATE_IRON_ORE);
-                                }
                                 if (chunkData.getType(x, y + 1, z) == Material.AIR && random.nextDouble() < 0.005) {
                                     chunkData.setBlock(x, y + 1, z, Material.SCULK_SENSOR);
                                 }
@@ -172,9 +166,6 @@ public class CaveGenerator extends ChunkGenerator {
                                 }
                                 if (chunkData.getType(x, y + 1, z) == Material.AIR && random.nextDouble() < 0.1) {
                                     chunkData.setBlock(x, y + 1, z, biomeProfile.featureTwo());
-                                }
-                                if (random.nextDouble() < 0.002 && y < 20) {
-                                    chunkData.setBlock(x, y, z, Material.DEEPSLATE_DIAMOND_ORE);
                                 }
                                 if (random.nextDouble() < 0.001 && chunkData.getType(x, y - 1, z).isSolid()) {
                                     chunkData.setBlock(x, y, z, Material.SCULK_CATALYST);
@@ -568,25 +559,17 @@ public class CaveGenerator extends ChunkGenerator {
 
     @Override
     public void generateSurface(WorldInfo worldInfo, Random random, int chunkX, int chunkZ, ChunkData chunkData) {
-        // Terrain is fully generated in generateNoise().
+        // terrain is fully generated in generateNoise().
     }
 
     @Override
     public void generateBedrock(WorldInfo worldInfo, Random random, int chunkX, int chunkZ, ChunkData chunkData) {
-        // Bedrock is intentionally generated during generateNoise() to preserve
-        // the ordering of the original generator.
+        // bedrock is intentionally generated during generateNoise() to preserve the ordering of the original generator.
     }
 
     @Override
     public void generateCaves(WorldInfo worldInfo, Random random, int chunkX, int chunkZ, ChunkData chunkData) {
-        // Custom cave carving is part of generateNoise().
-    }
-
-    @Override
-    public BiomeProvider getDefaultBiomeProvider(WorldInfo worldInfo) {
-        // null means Paper uses the world's normal vanilla biome provider.
-        // We deliberately do not replace Minecraft's biome distribution.
-        return null;
+        // custom cave carving is part of generateNoise().
     }
 
     /* These don't need to be included if they return false as that is the default in the super class
@@ -610,23 +593,31 @@ public class CaveGenerator extends ChunkGenerator {
     public boolean shouldGenerateStructures() {
         return false;
     }
+    */
 
     @Override
     public boolean shouldGenerateDecorations() {
-        return false;
+        return true;
     }
-     */
 
     @Override
     public boolean shouldGenerateMobs() {
-        // Let normal biome-aware mob spawning remain enabled.
+        // let normal biome-aware mob spawning remain enabled.
         return true;
+    }
+
+    @Override
+    public BiomeProvider getDefaultBiomeProvider(WorldInfo worldInfo) {
+        // null means Paper uses the world's normal vanilla biome provider.
+        // We deliberately do not replace Minecraft's biome distribution.
+        return null;
     }
 
     @Override
     public List<BlockPopulator> getDefaultPopulators(World world) {
         List<BlockPopulator> populators = super.getDefaultPopulators(world);
         populators.add(new CaveTreePopulator());
+        populators.add(new VanillaOrePopulator());
         return populators;
     }
 
@@ -643,8 +634,7 @@ public class CaveGenerator extends ChunkGenerator {
             for (int z = 0; z < 16; ++z) {
                 int worldX = originX + x;
                 int worldZ = originZ + z;
-                // Sample the vanilla surface biome rather than the underground
-                // biome noise so the entire cavern region follows the surface biome.
+                // sample the vanilla surface biome rather than the underground biome noise so the entire cavern region follows the surface biome
                 Biome biome = getVanillaBiome(worldInfo, worldX, 64, worldZ);
                 BiomeStyle style = BiomeStyle.fromBiome(biome);
                 BiomeProfile profile = BiomeStyle.getProfile(style);
@@ -666,8 +656,7 @@ public class CaveGenerator extends ChunkGenerator {
                 }
             }
         }
-        // A second pass adds hanging features to cave ceilings without touching
-        // the actual roof shell.
+        // a second pass adds hanging features to cave ceilings without touching the actual roof shell
         for (int x = 0; x < 16; ++x) {
             for (int z = 0; z < 16; ++z) {
                 int worldX = originX + x;
@@ -715,27 +704,40 @@ public class CaveGenerator extends ChunkGenerator {
         return mat == Material.DEEPSLATE || mat == Material.COBBLED_DEEPSLATE || mat == Material.TUFF || mat == Material.BLACKSTONE || mat == Material.BASALT || mat == Material.SMOOTH_BASALT || mat == Material.STONE || mat == Material.ANDESITE || mat == Material.DIORITE || mat == Material.GRANITE || mat == Material.CALCITE;
     }
 
-    private void generateBedrockLayer(WorldInfo worldInfo, ChunkData chunkData, Random random, int worldX, int worldZ) {
+    private void generateBedrockLayer(WorldInfo worldInfo, ChunkData chunkData, Random random, int worldX, int worldZ, NoiseSet noiseSet) {
         BiomeStyle biomeStyle = BiomeStyle.fromBiome(getVanillaBiome(worldInfo, worldX, 64, worldZ));
         BiomeProfile biomeProfile = BiomeStyle.getProfile(biomeStyle);
-        for (int y = 0; y <= 3; ++y) {
-            for (int x = 0; x < 16; ++x) {
-                for (int z = 0; z < 16; ++z) {
+        // get Perlin noise generator from NoiseSet
+        PerlinNoiseGenerator noiseGen = noiseSet.bedrockNoise();
+        // scale controls terrain smoothness (smaller values = smoother transitions)
+        double scale = 0.04;
+        for (int x = 0; x < 16; ++x) {
+            for (int z = 0; z < 16; ++z) {
+                int absX = worldX + x;
+                int absZ = worldZ + z;
+                // generate noise in range [-1.0, 1.0], normalize to [0.0, 1.0]
+                double noise = (noiseGen.noise(absX * scale, absZ * scale) + 1.0) / 2.0;
+                // base height is 3 (solid 0-3). Additional height 0-4 calculated via noise (reaching max Y = 7)
+                int MaxHeight = 3 + (int) Math.floor(noise * 4.99);
+                for (int y = 0; y <= MaxHeight; ++y) {
                     if (y == 0) {
                         chunkData.setBlock(x, y, z, Material.BEDROCK);
                     } else {
-                        double chance;
-                        switch (y) {
-                            case 1 -> chance = 0.85;
-                            case 2 -> chance = 0.6;
-                            case 3 -> chance = 0.3;
-                            default -> chance = 0;
-                        }
+                        double chance = switch (y) {
+                            case 1 -> 0.85;
+                            case 2 -> 0.60;
+                            case 3 -> 0.30;
+                            case 4 -> 0.15;
+                            default -> 0.0;
+                        };
                         if (random.nextDouble() < chance) {
                             chunkData.setBlock(x, y, z, Material.BEDROCK);
                         } else {
                             double roll = random.nextDouble();
-                            Material base = roll < (double) 0.25F ? biomeProfile.floor() : (roll < (double) 0.5F ? biomeProfile.wall() : (roll < 0.9 ? biomeProfile.ceiling() : biomeProfile.light()));
+                            Material base = roll < 0.25 ? biomeProfile.floor()
+                                    : (roll < 0.50 ? biomeProfile.wall()
+                                    : (roll < 0.90 ? biomeProfile.ceiling()
+                                    : biomeProfile.light()));
                             chunkData.setBlock(x, y, z, base);
                         }
                     }

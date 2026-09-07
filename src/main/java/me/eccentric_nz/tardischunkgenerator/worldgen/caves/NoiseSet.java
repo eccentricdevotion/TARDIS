@@ -8,6 +8,7 @@ public record NoiseSet(
         PerlinNoiseGenerator sculkHerdNoise,
         PerlinNoiseGenerator lavaLakeNoise,
         PerlinNoiseGenerator tunnelNoise,
+        PerlinNoiseGenerator bedrockNoise,
         PerlinNoiseGenerator lavaShapeNoise,
         PerlinNoiseGenerator lavaCenterNoise,
         PerlinNoiseGenerator lavaDetailNoise,
