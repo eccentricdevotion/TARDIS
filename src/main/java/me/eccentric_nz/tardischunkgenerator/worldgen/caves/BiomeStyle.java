@@ -55,7 +55,7 @@ public enum BiomeStyle {
             case SULFUR -> new BiomeProfile(Material.SULFUR, Material.CINNABAR, Material.SULFUR, Material.DEEPSLATE, Material.SULFUR_SPIKE, Material.POTENT_SULFUR, Material.VERDANT_FROGLIGHT, TARDISTree.PALE);
             case SWAMP -> new BiomeProfile(Material.MUD, Material.MUDDY_MANGROVE_ROOTS, Material.CLAY, Material.ROOTED_DIRT, Material.MOSS_CARPET, Material.HANGING_ROOTS, Material.VERDANT_FROGLIGHT, TARDISTree.SWAMP);
             case TAIGA -> new BiomeProfile(Material.STONE, Material.PODZOL, Material.TUFF, Material.SPRUCE_LOG, Material.FERN, Material.MOSS_CARPET, Material.JACK_O_LANTERN, TARDISTree.TAIGA);
-            case WINDSWEPT -> new BiomeProfile(Material.SULFUR, Material.CINNABAR, Material.SULFUR, Material.DEEPSLATE, Material.SULFUR_SPIKE, Material.POTENT_SULFUR, Material.PEARLESCENT_FROGLIGHT, TARDISTree.DARK_OAK);
+            case WINDSWEPT -> new BiomeProfile(Material.BLACKSTONE, Material.MUD, Material.GRAY_TERRACOTTA, Material.BLACK_CONCRETE_POWDER, Material.WITHER_ROSE, Material.BLACK_CANDLE, Material.PEARLESCENT_FROGLIGHT, TARDISTree.DARK_OAK);
             case WARM_OCEAN -> new BiomeProfile(Material.DEAD_BRAIN_CORAL_BLOCK, Material.DEAD_BUBBLE_CORAL_BLOCK, Material.DEAD_HORN_CORAL_BLOCK, Material.DEAD_FIRE_CORAL_BLOCK, Material.DEAD_BRAIN_CORAL_FAN, Material.DEAD_HORN_CORAL_FAN, Material.SEA_LANTERN, TARDISTree.OCEAN);
             // CAVE
             default -> new BiomeProfile(Material.DEEPSLATE, Material.COBBLED_DEEPSLATE, Material.DEEPSLATE, Material.TUFF, Material.GLOW_LICHEN, Material.SCULK_VEIN, Material.GLOWSTONE, TARDISTree.CAVE);
