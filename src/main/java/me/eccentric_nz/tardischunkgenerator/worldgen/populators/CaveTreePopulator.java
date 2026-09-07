@@ -33,11 +33,11 @@ import java.util.Random;
 public class CaveTreePopulator extends BlockPopulator {
 
     @Override
-    public void populate(WorldInfo worldInfo, Random random, int x, int z, LimitedRegion limitedRegion) {
+    public void populate(WorldInfo worldInfo, Random random, int chunkX, int chunkZ, LimitedRegion limitedRegion) {
         int attempts = 3;
         for (int i = 0; i < attempts; ++i) {
-            int treeX = x * 16 + random.nextInt(16);
-            int treeZ = z * 16 + random.nextInt(16);
+            int treeX = chunkX * 16 + random.nextInt(16);
+            int treeZ = chunkZ * 16 + random.nextInt(16);
             int treeY = Math.min(random.nextInt(128) + 32, 128);
             if (!limitedRegion.isInRegion(treeX, treeY, treeZ)) {
                 TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.WARNING, " Tree location (" + treeX + "," + treeY + "," + treeZ + ") is not in limited region!");

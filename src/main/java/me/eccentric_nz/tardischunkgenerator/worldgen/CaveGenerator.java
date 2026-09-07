@@ -1,3 +1,9 @@
+
+/*
+ * Based heavily on https://www.spigotmc.org/resources/worlds-%E2%80%93-cave-dimension-world-management-1-21-5.124677/
+ * but updated for Paper 26.2 and modified to include all overworld biomes with custom block palettes, custom light trees,
+ * ore population and oceans.
+ */
 package me.eccentric_nz.tardischunkgenerator.worldgen;
 
 import me.eccentric_nz.tardischunkgenerator.worldgen.caves.*;
@@ -559,12 +565,12 @@ public class CaveGenerator extends ChunkGenerator {
 
     @Override
     public void generateSurface(WorldInfo worldInfo, Random random, int chunkX, int chunkZ, ChunkData chunkData) {
-        // terrain is fully generated in generateNoise().
+        // terrain is fully generated in generateNoise()
     }
 
     @Override
     public void generateBedrock(WorldInfo worldInfo, Random random, int chunkX, int chunkZ, ChunkData chunkData) {
-        // bedrock is intentionally generated during generateNoise() to preserve the ordering of the original generator.
+        // bedrock is intentionally generated during generateNoise() to preserve the ordering of the original generator
     }
 
     @Override
