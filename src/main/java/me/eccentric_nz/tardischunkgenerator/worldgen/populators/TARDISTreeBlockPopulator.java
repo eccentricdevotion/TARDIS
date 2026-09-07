@@ -39,7 +39,6 @@ public class TARDISTreeBlockPopulator extends BlockPopulator {
 
     @Override
     public void populate(WorldInfo worldInfo, Random random, int x, int z, LimitedRegion limitedRegion) {
-
         if (chance > 0 && random.nextInt(10) > chance) {
             return;
         }

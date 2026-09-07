@@ -17,5 +17,23 @@
 package me.eccentric_nz.tardischunkgenerator.worldgen.feature;
 
 public enum TARDISTree {
-    GALLIFREY_SAND, GALLIFREY_TERRACOTTA, SKARO, RANDOM
+    GALLIFREY_SAND,
+    GALLIFREY_TERRACOTTA,
+    SKARO,
+    RANDOM,
+    ACACIA,
+    CAVE,
+    CHERRY,
+    DESERT,
+    DARK_OAK,
+    FOREST,
+    FROZEN,
+    JUNGLE,
+    LUSH,
+    MUSHROOM,
+    OCEAN,
+    SCULK,
+    PALE,
+    SWAMP,
+    TAIGA
 }
