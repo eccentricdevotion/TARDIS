@@ -38,7 +38,7 @@ public enum BiomeStyle {
         return switch (style) {
             case BADLANDS -> new BiomeProfile(Material.TERRACOTTA, Material.RED_SAND, Material.ORANGE_TERRACOTTA, Material.RED_TERRACOTTA, Material.DEAD_BUSH, Material.TERRACOTTA, Material.VERDANT_FROGLIGHT, TARDISTree.ACACIA);
             case CHERRY -> new BiomeProfile(Material.CALCITE, Material.PINK_TERRACOTTA, Material.TUFF, Material.CHERRY_LOG, Material.PINK_PETALS, Material.MOSS_CARPET, Material.OCHRE_FROGLIGHT, TARDISTree.CHERRY);
-            case COLD_OCEAN -> new BiomeProfile(Material.SNOW_BLOCK, Material.GRAVEL, Material.SAND, Material.POWDER_SNOW, Material.DRIED_KELP_BLOCK, Material.SEAGRASS, Material.VERDANT_FROGLIGHT, TARDISTree.PALE);
+            case COLD_OCEAN -> new BiomeProfile(Material.SNOW_BLOCK, Material.GRAVEL, Material.SAND, Material.POWDER_SNOW, Material.DRIED_KELP_BLOCK, Material.SHORT_GRASS, Material.VERDANT_FROGLIGHT, TARDISTree.PALE);
             case DESERT -> new BiomeProfile(Material.SANDSTONE, Material.SAND, Material.SMOOTH_SANDSTONE, Material.CUT_SANDSTONE, Material.DEAD_BUSH, Material.SANDSTONE, Material.PEARLESCENT_FROGLIGHT, TARDISTree.DESERT);
             case DRIPSTONE -> new BiomeProfile(Material.DRIPSTONE_BLOCK, Material.DIORITE, Material.ANDESITE, Material.GRANITE, Material.POINTED_DRIPSTONE, Material.POINTED_DRIPSTONE, Material.GLOWSTONE, TARDISTree.DARK_OAK);
             case FOREST -> new BiomeProfile(Material.STONE, Material.ROOTED_DIRT, Material.ANDESITE, Material.MOSSY_COBBLESTONE, Material.MOSS_CARPET, Material.FERN, Material.SHROOMLIGHT, TARDISTree.FOREST);
@@ -46,7 +46,7 @@ public enum BiomeStyle {
             case JUNGLE -> new BiomeProfile(Material.MOSSY_COBBLESTONE, Material.MOSS_BLOCK, Material.MUD, Material.JUNGLE_LOG, Material.FERN, Material.MOSS_CARPET, Material.OCHRE_FROGLIGHT, TARDISTree.JUNGLE);
             case LUSH -> new BiomeProfile(Material.STONE, Material.MOSS_BLOCK, Material.TUFF, Material.MOSSY_COBBLESTONE, Material.MOSS_CARPET, Material.FERN, Material.GLOWSTONE, TARDISTree.ACACIA);
             case MUSHROOM -> new BiomeProfile(Material.MYCELIUM, Material.MYCELIUM, Material.TUFF, Material.MUSHROOM_STEM, Material.RED_MUSHROOM, Material.BROWN_MUSHROOM, Material.SHROOMLIGHT, TARDISTree.MUSHROOM);
-            case OCEAN -> new BiomeProfile(Material.PRISMARINE, Material.GRAVEL, Material.DARK_PRISMARINE, Material.SEA_LANTERN, Material.SEAGRASS, Material.PRISMARINE, Material.SEA_LANTERN, TARDISTree.OCEAN);
+            case OCEAN -> new BiomeProfile(Material.PRISMARINE, Material.GRAVEL, Material.DARK_PRISMARINE, Material.SEA_LANTERN, Material.SHORT_GRASS, Material.PRISMARINE, Material.SEA_LANTERN, TARDISTree.OCEAN);
             case PALE -> new BiomeProfile(Material.DIORITE, Material.PALE_MOSS_BLOCK, Material.ANDESITE, Material.MANGROVE_ROOTS, Material.CLOSED_EYEBLOSSOM, Material.OPEN_EYEBLOSSOM, Material.PEARLESCENT_FROGLIGHT, TARDISTree.PALE);
             case SAVANNA -> new BiomeProfile(Material.DIRT, Material.GRASS_BLOCK, Material.TUFF, Material.STRIPPED_ACACIA_LOG, Material.SHORT_GRASS, Material.GLOW_LICHEN, Material.SHROOMLIGHT, TARDISTree.ACACIA);
             case SCULK -> new BiomeProfile(Material.DEEPSLATE, Material.SCULK, Material.TUFF, Material.SCULK_CATALYST, Material.SCULK_VEIN, Material.GLOW_LICHEN, Material.SHROOMLIGHT, TARDISTree.SCULK);
@@ -56,7 +56,7 @@ public enum BiomeStyle {
             case SWAMP -> new BiomeProfile(Material.MUD, Material.MUDDY_MANGROVE_ROOTS, Material.CLAY, Material.ROOTED_DIRT, Material.MOSS_CARPET, Material.HANGING_ROOTS, Material.VERDANT_FROGLIGHT, TARDISTree.SWAMP);
             case TAIGA -> new BiomeProfile(Material.STONE, Material.PODZOL, Material.TUFF, Material.SPRUCE_LOG, Material.FERN, Material.MOSS_CARPET, Material.JACK_O_LANTERN, TARDISTree.TAIGA);
             case WINDSWEPT -> new BiomeProfile(Material.BLACKSTONE, Material.MUD, Material.GRAY_TERRACOTTA, Material.BLACK_CONCRETE_POWDER, Material.WITHER_ROSE, Material.BLACK_CANDLE, Material.PEARLESCENT_FROGLIGHT, TARDISTree.DARK_OAK);
-            case WARM_OCEAN -> new BiomeProfile(Material.DEAD_BRAIN_CORAL_BLOCK, Material.DEAD_BUBBLE_CORAL_BLOCK, Material.DEAD_HORN_CORAL_BLOCK, Material.DEAD_FIRE_CORAL_BLOCK, Material.DEAD_BRAIN_CORAL_FAN, Material.DEAD_HORN_CORAL_FAN, Material.SEA_LANTERN, TARDISTree.OCEAN);
+            case WARM_OCEAN -> new BiomeProfile(Material.BRAIN_CORAL_BLOCK, Material.SAND, Material.HORN_CORAL_BLOCK, Material.FIRE_CORAL_BLOCK, Material.FIREFLY_BUSH, Material.OAK_PLANKS, Material.SEA_LANTERN, TARDISTree.OCEAN);
             // CAVE
             default -> new BiomeProfile(Material.DEEPSLATE, Material.COBBLED_DEEPSLATE, Material.DEEPSLATE, Material.TUFF, Material.GLOW_LICHEN, Material.SCULK_VEIN, Material.GLOWSTONE, TARDISTree.CAVE);
         };

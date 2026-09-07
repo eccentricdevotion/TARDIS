@@ -79,11 +79,7 @@ public final class DramaticBiomeGenerator {
             if (current == Material.BEDROCK || current == Material.LAVA) {
                 continue;
             }
-            if (shape.flooded() && y <= shape.waterline()) {
-                chunkData.setBlock(x, y, z, Material.WATER);
-            } else {
-                chunkData.setBlock(x, y, z, Material.AIR);
-            }
+            chunkData.setBlock(x, y, z, Material.AIR);
         }
         if (!shape.flooded()) {
             int floor = findFloor(chunkData, x, z, bottom, Math.min(top, (int) verticalCenter));

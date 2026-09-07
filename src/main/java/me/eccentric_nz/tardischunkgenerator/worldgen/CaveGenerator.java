@@ -8,6 +8,7 @@ package me.eccentric_nz.tardischunkgenerator.worldgen;
 
 import me.eccentric_nz.tardischunkgenerator.worldgen.caves.*;
 import me.eccentric_nz.tardischunkgenerator.worldgen.populators.CaveTreePopulator;
+import me.eccentric_nz.tardischunkgenerator.worldgen.populators.OceanPopulator;
 import me.eccentric_nz.tardischunkgenerator.worldgen.populators.VanillaOrePopulator;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -25,12 +26,12 @@ public class CaveGenerator extends ChunkGenerator {
 
     @Override
     public void generateNoise(WorldInfo worldInfo, Random random, int chunkX, int chunkZ, ChunkData chunkData) {
-        NoiseSet noise = NoiseCache.getNoiseSet(worldInfo.getSeed());
+        NoiseSet noiseSet = NoiseCache.getNoiseSet(worldInfo.getSeed());
         int originX = chunkX << 4;
         int originZ = chunkZ << 4;
         int generationMinY = Math.max(chunkData.getMinHeight(), 0);
         int generationMaxY = Math.min(chunkData.getMaxHeight(), 129);
-        this.generateBedrockLayer(worldInfo, chunkData, random, originX, originZ, noise);
+        this.generateBedrockLayer(worldInfo, chunkData, random, originX, originZ, noiseSet);
         this.generateDeepShrine(chunkData, random);
         this.generateFallenResearcher(chunkData, random);
         this.generateSealedPortal(chunkData, random);
@@ -43,11 +44,11 @@ public class CaveGenerator extends ChunkGenerator {
             for (int wz = -16; wz <= 32; ++wz) {
                 int worldX = originX + wx;
                 int worldZ = originZ + wz;
-                double lakeValue = Math.abs(noise.lavaLakeNoise().noise((double) worldX / (double) 60.0F, (double) worldZ / (double) 60.0F));
-                double shapeValue = Math.abs(noise.lavaShapeNoise().noise((double) worldX / (double) 25.0F, (double) worldZ / (double) 25.0F));
-                double centerValue = Math.abs(noise.lavaCenterNoise().noise((double) worldX / (double) 100.0F, (double) worldZ / (double) 100.0F));
-                double detailValue = Math.abs(noise.lavaDetailNoise().noise((double) worldX / (double) 12.0F, (double) worldZ / (double) 12.0F));
-                double edgeValue = Math.abs(noise.lavaEdgeNoise().noise((double) worldX / (double) 8.0F, (double) worldZ / (double) 8.0F));
+                double lakeValue = Math.abs(noiseSet.lavaLakeNoise().noise((double) worldX / (double) 60.0F, (double) worldZ / (double) 60.0F));
+                double shapeValue = Math.abs(noiseSet.lavaShapeNoise().noise((double) worldX / (double) 25.0F, (double) worldZ / (double) 25.0F));
+                double centerValue = Math.abs(noiseSet.lavaCenterNoise().noise((double) worldX / (double) 100.0F, (double) worldZ / (double) 100.0F));
+                double detailValue = Math.abs(noiseSet.lavaDetailNoise().noise((double) worldX / (double) 12.0F, (double) worldZ / (double) 12.0F));
+                double edgeValue = Math.abs(noiseSet.lavaEdgeNoise().noise((double) worldX / (double) 8.0F, (double) worldZ / (double) 8.0F));
                 double combinedValue = lakeValue * 0.6 + shapeValue * 0.3 + detailValue * 0.1;
                 if (lakeValue > 0.45 && centerValue > (double) 0.5F) {
                     int baseRadius = 5 + (int) (centerValue * (double) 10.0F);
@@ -85,7 +86,7 @@ public class CaveGenerator extends ChunkGenerator {
                 if (lavaBase[x][z]) {
                     int worldX = originX + x;
                     int worldZ = originZ + z;
-                    double heightVar = noise.lavaDetailNoise().noise((double) worldX / (double) 8.0F, (double) worldZ / (double) 8.0F) * (double) 0.5F;
+                    double heightVar = noiseSet.lavaDetailNoise().noise((double) worldX / (double) 8.0F, (double) worldZ / (double) 8.0F) * (double) 0.5F;
                     int baseHeight = 8;
                     int topHeight = heightVar < (double) 0.0F ? 9 : 10;
                     for (int y = baseHeight; y <= topHeight; ++y) {
@@ -94,8 +95,8 @@ public class CaveGenerator extends ChunkGenerator {
                     for (int ly = topHeight + 1; ly <= 20; ++ly) {
                         lavaVolume[x][ly][z] = true;
                     }
-                    int directRadius = 3 + (int) (Math.abs(noise.lavaDetailNoise().noise((double) worldX / (double) 15.0F, (double) worldZ / (double) 15.0F)) * (double) 2.0F);
-                    int burnRadius = 10 + (int) (Math.abs(noise.lavaEdgeNoise().noise((double) worldX / (double) 20.0F, (double) worldZ / (double) 20.0F)) * (double) 4.0F);
+                    int directRadius = 3 + (int) (Math.abs(noiseSet.lavaDetailNoise().noise((double) worldX / (double) 15.0F, (double) worldZ / (double) 15.0F)) * (double) 2.0F);
+                    int burnRadius = 10 + (int) (Math.abs(noiseSet.lavaEdgeNoise().noise((double) worldX / (double) 20.0F, (double) worldZ / (double) 20.0F)) * (double) 4.0F);
                     for (int dx = -burnRadius; dx <= burnRadius; ++dx) {
                         for (int dz = -burnRadius; dz <= burnRadius; ++dz) {
                             for (int dy = -4; dy <= 10; ++dy) {
@@ -104,7 +105,7 @@ public class CaveGenerator extends ChunkGenerator {
                                 int ny = baseHeight + dy;
                                 if (nx >= 0 && nx < 16 && nz >= 0 && nz < 16 && ny >= 4 && ny <= 20) {
                                     double distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
-                                    double noiseFactor = (double) 1.0F + noise.lavaDetailNoise().noise((double) worldX / (double) 10.0F + (double) dx / (double) 5.0F, (double) worldZ / (double) 10.0F + (double) dz / (double) 5.0F) * 0.3;
+                                    double noiseFactor = (double) 1.0F + noiseSet.lavaDetailNoise().noise((double) worldX / (double) 10.0F + (double) dx / (double) 5.0F, (double) worldZ / (double) 10.0F + (double) dz / (double) 5.0F) * 0.3;
                                     if (distance < (double) directRadius * noiseFactor) {
                                         directLavaArea[nx][ny][nz] = true;
                                         lavaFloorArea[nx][nz] = true;
@@ -151,9 +152,9 @@ public class CaveGenerator extends ChunkGenerator {
                 for (int y = generationMinY; y < generationMaxY; ++y) {
                     int worldX = originX + x;
                     int worldZ = originZ + z;
-                    double density = getCaveNoise(noise.caveNoise(), worldX, y, worldZ);
-                    double decoNoise = noise.decorationNoise().noise((double) worldX / (double) 10.0F, (double) worldZ / (double) 10.0F);
-                    double tunnelVal = noise.tunnelNoise().noise((double) worldX / (double) 25.0F, (double) y / (double) 25.0F, (double) worldZ / (double) 25.0F);
+                    double density = getCaveNoise(noiseSet.caveNoise(), worldX, y, worldZ);
+                    double decoNoise = noiseSet.decorationNoise().noise((double) worldX / (double) 10.0F, (double) worldZ / (double) 10.0F);
+                    double tunnelVal = noiseSet.tunnelNoise().noise((double) worldX / (double) 25.0F, (double) y / (double) 25.0F, (double) worldZ / (double) 25.0F);
                     if (!lavaVolume[x][y][z]) {
                         int roofY = 120 + (int) (decoNoise * (double) 8.0F);
                         BiomeStyle biomeStyle = BiomeStyle.fromBiome(getVanillaBiome(worldInfo, worldX, y, worldZ));
@@ -188,7 +189,7 @@ public class CaveGenerator extends ChunkGenerator {
                                     chunkData.setBlock(x, y, z, Material.SCULK_VEIN);
                                 }
                             }
-                            double herdNoise = noise.sculkHerdNoise().noise((double) worldX / (double) 30.0F, (double) worldZ / (double) 30.0F);
+                            double herdNoise = noiseSet.sculkHerdNoise().noise((double) worldX / (double) 30.0F, (double) worldZ / (double) 30.0F);
                             if (herdNoise > 0.6 && y >= 12 && y <= 20 && random.nextDouble() < herdNoise - (double) 0.5F) {
                                 chunkData.setBlock(x, y, z, Material.SCULK);
                                 if (random.nextDouble() < 0.1 && chunkData.getType(x, y + 1, z) == Material.AIR) {
@@ -313,7 +314,7 @@ public class CaveGenerator extends ChunkGenerator {
                     }
                     int worldX = originX + x;
                     int worldZ = originZ + z;
-                    double depthVar = noise.lavaDetailNoise().noise((double) worldX / (double) 10.0F, (double) worldZ / (double) 10.0F);
+                    double depthVar = noiseSet.lavaDetailNoise().noise((double) worldX / (double) 10.0F, (double) worldZ / (double) 10.0F);
                     chunkData.setBlock(x, 8, z, Material.LAVA);
                     chunkData.setBlock(x, 9, z, Material.LAVA);
                     if (depthVar > 0.4) {
@@ -338,7 +339,7 @@ public class CaveGenerator extends ChunkGenerator {
         if (random.nextDouble() < 0.12) {
             centerX = 4 + random.nextInt(8);
             centerZ = 4 + random.nextInt(8);
-            minY = 6 + random.nextInt(6);
+            minY = 16 + random.nextInt(6);
             int maxY = 110 + random.nextInt(15);
             height = maxY - minY;
             for (int y = minY; y <= maxY; ++y) {
@@ -556,7 +557,7 @@ public class CaveGenerator extends ChunkGenerator {
         // Carve large-scale biome regions after the ordinary cave pass.
         // The region generator uses absolute world coordinates, so chambers
         // continue across chunk boundaries instead of restarting per chunk.
-        DramaticBiomeGenerator.generate(worldInfo, chunkData, chunkX, chunkZ, noise);
+        DramaticBiomeGenerator.generate(worldInfo, chunkData, chunkX, chunkZ, noiseSet);
 
         // Reinterpret exposed cave surfaces using the real vanilla biome map.
         // This happens after the cave/lava/special-feature passes so those
@@ -625,6 +626,7 @@ public class CaveGenerator extends ChunkGenerator {
         List<BlockPopulator> populators = super.getDefaultPopulators(world);
         populators.add(new CaveTreePopulator());
         populators.add(new VanillaOrePopulator());
+        populators.add(new OceanPopulator());
         return populators;
     }
 
@@ -708,25 +710,63 @@ public class CaveGenerator extends ChunkGenerator {
     }
 
     private boolean isCaveRock(Material mat) {
-        return mat == Material.DEEPSLATE || mat == Material.COBBLED_DEEPSLATE || mat == Material.TUFF || mat == Material.BLACKSTONE || mat == Material.BASALT || mat == Material.SMOOTH_BASALT || mat == Material.STONE || mat == Material.ANDESITE || mat == Material.DIORITE || mat == Material.GRANITE || mat == Material.CALCITE;
+        return mat == Material.DEEPSLATE || mat == Material.COBBLED_DEEPSLATE || mat == Material.TUFF
+                || mat == Material.BLACKSTONE || mat == Material.BASALT || mat == Material.SMOOTH_BASALT
+                || mat == Material.STONE || mat == Material.ANDESITE || mat == Material.DIORITE
+                || mat == Material.GRANITE || mat == Material.CALCITE;
+    }
+
+    /**
+     * Samples a 5x5 grid around the block coordinate to compute an ocean/river density factor.
+     */
+    private double getOceanWeight(WorldInfo worldInfo, int absX, int absZ) {
+        int oceanCount = 0;
+        int totalSamples = 0;
+        int radius = 8; // Sampling distance in blocks
+        int step = 4;
+
+        for (int dx = -radius; dx <= radius; dx += step) {
+            for (int dz = -radius; dz <= radius; dz += step) {
+                Biome biome = getVanillaBiome(worldInfo, absX + dx, 64, absZ + dz);
+                BiomeStyle style = BiomeStyle.fromBiome(biome);
+
+                if (isOceanOrRiver(style)) {
+                    oceanCount++;
+                }
+                totalSamples++;
+            }
+        }
+        return (double) oceanCount / totalSamples;
+    }
+
+    private boolean isOceanOrRiver(BiomeStyle style) {
+        return style == BiomeStyle.OCEAN // RIVER is included in OCEAN
+                || style == BiomeStyle.COLD_OCEAN
+                || style == BiomeStyle.WARM_OCEAN;
     }
 
     private void generateBedrockLayer(WorldInfo worldInfo, ChunkData chunkData, Random random, int worldX, int worldZ, NoiseSet noiseSet) {
-        BiomeStyle biomeStyle = BiomeStyle.fromBiome(getVanillaBiome(worldInfo, worldX, 64, worldZ));
-        BiomeProfile biomeProfile = BiomeStyle.getProfile(biomeStyle);
-        // get Perlin noise generator from NoiseSet
         PerlinNoiseGenerator noiseGen = noiseSet.bedrockNoise();
-        // scale controls terrain smoothness (smaller values = smoother transitions)
         double scale = 0.04;
+        int seaLevel = 19; // raised sea level
         for (int x = 0; x < 16; ++x) {
             for (int z = 0; z < 16; ++z) {
                 int absX = worldX + x;
                 int absZ = worldZ + z;
-                // generate noise in range [-1.0, 1.0], normalize to [0.0, 1.0]
+                BiomeStyle biomeStyle = BiomeStyle.fromBiome(getVanillaBiome(worldInfo, absX, 64, absZ));
+                BiomeProfile biomeProfile = BiomeStyle.getProfile(biomeStyle);
+                // calculate smooth biome transition weight (0.0 = pure land, 1.0 = pure ocean/river)
+                double oceanWeight = getOceanWeight(worldInfo, absX, absZ);
+                // base Perlin noise for surface variation [0.0, 1.0]
                 double noise = (noiseGen.noise(absX * scale, absZ * scale) + 1.0) / 2.0;
-                // base height is 3 (solid 0-3). Additional height 0-4 calculated via noise (reaching max Y = 7)
-                int MaxHeight = 3 + (int) Math.floor(noise * 4.99);
-                for (int y = 0; y <= MaxHeight; ++y) {
+
+                // define height targets
+                double landFloorHeight = 19.0 + (noise * 4.0); // Baseline floor raised by 16 (Y=19 to 23)
+                double oceanFloorHeight = 5.0 + (noise * 2.0);  // Carved basin floor (Y=5 to 7)
+                // interpolate floor height based on ocean weight to create smooth edge slopes
+                int targetFloor = (int) Math.round((landFloorHeight * (1.0 - oceanWeight)) + (oceanFloorHeight * oceanWeight));
+                // generate solid floor terrain
+                for (int y = 0; y <= targetFloor; ++y) {
                     if (y == 0) {
                         chunkData.setBlock(x, y, z, Material.BEDROCK);
                     } else {
@@ -734,8 +774,7 @@ public class CaveGenerator extends ChunkGenerator {
                             case 1 -> 0.85;
                             case 2 -> 0.60;
                             case 3 -> 0.30;
-                            case 4 -> 0.15;
-                            default -> 0.0;
+                            default -> 0.05;
                         };
                         if (random.nextDouble() < chance) {
                             chunkData.setBlock(x, y, z, Material.BEDROCK);
@@ -747,6 +786,12 @@ public class CaveGenerator extends ChunkGenerator {
                                     : biomeProfile.light()));
                             chunkData.setBlock(x, y, z, base);
                         }
+                    }
+                }
+                // fill basin with water up to sea level (Y=19) where ocean factor applies
+                if (oceanWeight > 0.0) {
+                    for (int y = targetFloor + 1; y <= seaLevel; ++y) {
+                        chunkData.setBlock(x, y, z, Material.WATER);
                     }
                 }
             }
