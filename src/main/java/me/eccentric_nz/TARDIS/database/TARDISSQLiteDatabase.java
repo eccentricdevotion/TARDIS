@@ -108,7 +108,7 @@ public class TARDISSQLiteDatabase {
             statement.executeUpdate(queryColour);
 
             // Table structure for table 'chunks'
-            String queryChunks = "CREATE TABLE IF NOT EXISTS " + prefix + "chunks (chunk_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, world TEXT, x INTEGER, z INTEGER)";
+            String queryChunks = "CREATE TABLE IF NOT EXISTS " + prefix + "chunks (chunk_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, uuid TEXT DEFAULT '', world TEXT, x INTEGER, z INTEGER, ticket INTEGER DEFAULT 0)";
             statement.executeUpdate(queryChunks);
 
             // Table structure for table 'condenser'

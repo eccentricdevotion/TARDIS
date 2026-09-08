@@ -41,6 +41,7 @@ class TARDISMySQLDatabaseUpdater {
     private final List<String> tardisupdates = new ArrayList<>();
     private final List<String> prefsupdates = new ArrayList<>();
     private final List<String> destsupdates = new ArrayList<>();
+    private final List<String> chunksupdates = new ArrayList<>();
     private final List<String> countupdates = new ArrayList<>();
     private final List<String> portalsupdates = new ArrayList<>();
     private final List<String> inventoryupdates = new ArrayList<>();
@@ -119,6 +120,8 @@ class TARDISMySQLDatabaseUpdater {
         destsupdates.add("slot int(1) DEFAULT '-1'");
         destsupdates.add("icon varchar(64) DEFAULT ''");
         destsupdates.add("autonomous int(1) DEFAULT '0'");
+        chunksupdates.add("uuid varchar(48) DEFAULT ''");
+        chunksupdates.add("ticket int(1) DEFAULT '0'");
         countupdates.add("grace int(3) DEFAULT '0'");
         portalsupdates.add("abandoned int(1) DEFAULT '0'");
         inventoryupdates.add("attributes text");
@@ -226,6 +229,16 @@ class TARDISMySQLDatabaseUpdater {
                     i++;
                     String d_alter = "ALTER TABLE " + prefix + "destinations ADD " + d;
                     statement.executeUpdate(d_alter);
+                }
+            }
+            for (String c : chunksupdates) {
+                String[] csplit = c.split(" ");
+                String c_query = "SHOW COLUMNS FROM " + prefix + "chunks LIKE '" + csplit[0] + "'";
+                ResultSet rsc = statement.executeQuery(c_query);
+                if (!rsc.next()) {
+                    i++;
+                    String c_alter = "ALTER TABLE " + prefix + "chunks ADD " + c;
+                    statement.executeUpdate(c_alter);
                 }
             }
             for (String c : countupdates) {

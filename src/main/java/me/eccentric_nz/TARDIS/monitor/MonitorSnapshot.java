@@ -48,6 +48,7 @@ public class MonitorSnapshot {
             // load all console chunks!
             HashMap<String, Object> where = new HashMap<>();
             where.put("tardis_id", id);
+            where.put("ticket", 0);
             ResultSetChunks rsc = new ResultSetChunks(plugin, where, true);
             if (rsc.resultSet()) {
                 for (HashMap<String, String> map : rsc.getData()) {
