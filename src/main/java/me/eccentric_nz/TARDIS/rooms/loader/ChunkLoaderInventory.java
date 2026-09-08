@@ -68,11 +68,11 @@ public class ChunkLoaderInventory implements InventoryHolder {
         ItemStack close = GUIItemFactory.close();
         // process
         ItemStack process = ItemStack.of(GUIArs.BUTTON_RECON.material(), 1);
-        process.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_PROCESS", "Transmat")));
+        process.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_PROCESS", "Add tickets")));
         process.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(Component.text("for selected chunks."))));
         // clear
         ItemStack clear = ItemStack.of(GUIArs.BUTTON_JETT.material(), 1);
-        clear.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_CLEAR", "Transmat")));
+        clear.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_CLEAR", "Clear chunk tickets")));
 
         return new ItemStack[]{
                 null, pad_up, null, null, black, black, black, black, black,
