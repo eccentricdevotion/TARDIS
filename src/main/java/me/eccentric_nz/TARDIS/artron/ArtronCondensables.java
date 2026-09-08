@@ -1446,6 +1446,7 @@ public class ArtronCondensables {
             condensables.put("ORANGE_CONCRETE_SLAB", 2);
             condensables.put("ORANGE_CONCRETE_STAIRS", 3);
             condensables.put("ORANGE_CUSHION", 30);
+            condensables.put("ORANGE_POPLAR_LEAVES", 2);
             condensables.put("ORANGE_WOOL_SLAB", 10);
             condensables.put("ORANGE_WOOL_STAIRS", 30);
             condensables.put("PINK_CONCRETE_SLAB", 2);
@@ -1460,7 +1461,6 @@ public class ArtronCondensables {
             condensables.put("POPLAR_FENCE", 2);
             condensables.put("POPLAR_FENCE_GATE", 5);
             condensables.put("POPLAR_HANGING_SIGN", 2);
-            condensables.put("POPLAR_LEAVES", 2);
             condensables.put("POPLAR_LOG", 2);
             condensables.put("POPLAR_PLANKS", 2);
             condensables.put("POPLAR_PRESSURE_PLATE", 1);
@@ -1479,6 +1479,7 @@ public class ArtronCondensables {
             condensables.put("RED_CONCRETE_SLAB", 2);
             condensables.put("RED_CONCRETE_STAIRS", 3);
             condensables.put("RED_CUSHION", 30);
+            condensables.put("RED_POPLAR_LEAVES", 2);
             condensables.put("RED_SHRUB", 2);
             condensables.put("RED_WOOL_SLAB", 10);
             condensables.put("RED_WOOL_STAIRS", 30);
@@ -1494,6 +1495,7 @@ public class ArtronCondensables {
             condensables.put("YELLOW_CONCRETE_SLAB", 2);
             condensables.put("YELLOW_CONCRETE_STAIRS", 3);
             condensables.put("YELLOW_CUSHION", 30);
+            condensables.put("YELLOW_POPLAR_LEAVES", 2);
             condensables.put("YELLOW_WOOL_SLAB", 10);
             condensables.put("YELLOW_WOOL_STAIRS", 30);
         } else {

@@ -917,6 +917,7 @@ public class CondensablesConfigUpdater {
                 plugin.getCondensablesConfig().set("ORANGE_CONCRETE_SLAB", 2);
                 plugin.getCondensablesConfig().set("ORANGE_CONCRETE_STAIRS", 3);
                 plugin.getCondensablesConfig().set("ORANGE_CUSHION", 30);
+                plugin.getCondensablesConfig().set("ORANGE_POPLAR_LEAVES", 2);
                 plugin.getCondensablesConfig().set("ORANGE_WOOL_SLAB", 10);
                 plugin.getCondensablesConfig().set("ORANGE_WOOL_STAIRS", 30);
                 plugin.getCondensablesConfig().set("PINK_CONCRETE_SLAB", 2);
@@ -931,7 +932,6 @@ public class CondensablesConfigUpdater {
                 plugin.getCondensablesConfig().set("POPLAR_FENCE", 2);
                 plugin.getCondensablesConfig().set("POPLAR_FENCE_GATE", 5);
                 plugin.getCondensablesConfig().set("POPLAR_HANGING_SIGN", 2);
-                plugin.getCondensablesConfig().set("POPLAR_LEAVES", 2);
                 plugin.getCondensablesConfig().set("POPLAR_LOG", 2);
                 plugin.getCondensablesConfig().set("POPLAR_PLANKS", 2);
                 plugin.getCondensablesConfig().set("POPLAR_PRESSURE_PLATE", 1);
@@ -950,6 +950,7 @@ public class CondensablesConfigUpdater {
                 plugin.getCondensablesConfig().set("RED_CONCRETE_SLAB", 2);
                 plugin.getCondensablesConfig().set("RED_CONCRETE_STAIRS", 3);
                 plugin.getCondensablesConfig().set("RED_CUSHION", 30);
+                plugin.getCondensablesConfig().set("RED_POPLAR_LEAVES", 2);
                 plugin.getCondensablesConfig().set("RED_SHRUB", 2);
                 plugin.getCondensablesConfig().set("RED_WOOL_SLAB", 10);
                 plugin.getCondensablesConfig().set("RED_WOOL_STAIRS", 30);
@@ -965,6 +966,7 @@ public class CondensablesConfigUpdater {
                 plugin.getCondensablesConfig().set("YELLOW_CONCRETE_SLAB", 2);
                 plugin.getCondensablesConfig().set("YELLOW_CONCRETE_STAIRS", 3);
                 plugin.getCondensablesConfig().set("YELLOW_CUSHION", 30);
+                plugin.getCondensablesConfig().set("YELLOW_POPLAR_LEAVES", 2);
                 plugin.getCondensablesConfig().set("YELLOW_WOOL_SLAB", 10);
                 plugin.getCondensablesConfig().set("YELLOW_WOOL_STAIRS", 30);
                 i++;
