@@ -60,7 +60,13 @@ public class TARDISGeneralInstanceKeeper {
     private final Set<Location> rechargers = new HashSet<>();
     private final List<Material> goodNether = new ArrayList<>() {
         {
-            addAll(Tag.NETHER_CARVER_REPLACEABLES.getValues());
+            addAll(Tag.BASE_STONE_NETHER.getValues());
+            addAll(Tag.BASE_STONE_OVERWORLD.getValues());
+            addAll(Tag.NYLIUM.getValues());
+            addAll(Tag.SUBSTRATE_OVERWORLD.getValues());
+            addAll(Tag.WART_BLOCKS.getValues());
+            add(Material.SOUL_SAND);
+            add(Material.SOUL_SOIL);
             add(Material.GLOWSTONE);
             add(Material.NETHER_BRICK);
             add(Material.NETHER_BRICK_FENCE);

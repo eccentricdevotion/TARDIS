@@ -271,6 +271,8 @@ public class TARDISConstants {
         Set<Material> set = new HashSet<>();
         set.add(Material.BOOKSHELF);
         set.add(Material.BROWN_MUSHROOM);
+        set.add(Material.CALCITE);
+        set.add(Material.CINNABAR);
         set.add(Material.COAL_BLOCK);
         set.add(Material.COBBLESTONE);
         set.add(Material.CRAFTING_TABLE);
@@ -288,32 +290,21 @@ public class TARDISConstants {
         set.add(Material.NETHER_BRICKS);
         set.add(Material.NOTE_BLOCK);
         set.add(Material.OBSIDIAN);
+        set.add(Material.PACKED_ICE);
+        set.add(Material.POTENT_SULFUR);
         set.add(Material.PUMPKIN);
         set.add(Material.QUARTZ_BLOCK);
         set.add(Material.REDSTONE_LAMP);
         set.add(Material.RED_MUSHROOM);
+        set.add(Material.RED_SANDSTONE);
+        set.add(Material.SANDSTONE);
+        set.add(Material.SOUL_SAND);
+        set.add(Material.SOUL_SOIL);
+        set.add(Material.SULFUR);
         set.add(Material.TNT);
+        set.addAll(Tag.BASE_STONE_NETHER.getValues());
+        set.addAll(Tag.BASE_STONE_OVERWORLD.getValues());
         set.addAll(Tag.BEACON_BASE_BLOCKS.getValues());
-        // TODO replace with ??
-        // set.addAll(Tag.ORES.getValues());
-        /*
-        #minecraft:ores​[upcoming: JE 26.3] (9 values) 
-            #minecraft:coal_ores
-            #minecraft:copper_ores
-            #minecraft:diamond_ores
-            #minecraft:emerald_ores
-            #minecraft:gold_ores
-            #minecraft:iron_ores
-            #minecraft:lapis_ores
-            #minecraft:redstone_ores
-            minecraft:nether_quartz_ore
-        */
-        // set.addAll(Tag.COAL_ORES.getValues());
-        // set.addAll(Tag.DIAMOND_ORES.getValues());
-        // set.addAll(Tag.EMERALD_ORES.getValues());
-        // set.addAll(Tag.GOLD_ORES.getValues());
-        // set.addAll(Tag.LAPIS_ORES.getValues());
-        // set.addAll(Tag.REDSTONE_ORES.getValues());
         set.addAll(Tag.ICE.getValues());
         set.addAll(Tag.IMPERMEABLE.getValues());
         set.addAll(Tag.INFINIBURN_END.getValues());
@@ -321,18 +312,23 @@ public class TARDISConstants {
         set.addAll(Tag.LOGS.getValues());
         set.addAll(Tag.MINEABLE_HOE.getValues());
         set.addAll(Tag.MINEABLE_SHOVEL.getValues());
-        set.addAll(Tag.NETHER_CARVER_REPLACEABLES.getValues());
-        set.addAll(Tag.OVERWORLD_CARVER_REPLACEABLES.getValues());
+        set.addAll(Tag.NYLIUM.getValues());
+        set.addAll(Tag.ORES.getValues());
         set.addAll(Tag.PLANKS.getValues());
+        set.addAll(Tag.SNOW.getValues());
         set.addAll(Tag.STONE_BRICKS.getValues());
+        set.addAll(Tag.SUBSTRATE_OVERWORLD.getValues());
+        set.addAll(Tag.TERRACOTTA.getValues());
+        set.addAll(Tag.WART_BLOCKS.getValues());
         set.addAll(Tag.WOOL.getValues());
+        set.remove(Material.BARRIER);
+        set.remove(Material.MOSS_CARPET);
+        set.remove(Material.PINK_PETALS);
+        set.remove(Material.SCULK_SENSOR);
+        set.remove(Material.SCULK_SHRIEKER);
+        set.remove(Material.SCULK_VEIN);
         set.remove(Material.SNOW);
         set.remove(Material.WATER);
-        set.remove(Material.MOSS_CARPET);
-        set.remove(Material.SCULK_SENSOR);
-        set.remove(Material.SCULK_VEIN);
-        set.remove(Material.SCULK_SHRIEKER);
-        set.remove(Material.PINK_PETALS);
         set.removeAll(Tag.SAND.getValues());
         return set;
     }
