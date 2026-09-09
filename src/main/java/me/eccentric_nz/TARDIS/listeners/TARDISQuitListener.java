@@ -20,7 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.arch.ArchPersister;
 import me.eccentric_nz.TARDIS.artron.AdaptiveBoxLampToggler;
 import me.eccentric_nz.TARDIS.artron.BeaconToggler;
-import me.eccentric_nz.TARDIS.artron.PresetLampToggler;
+import me.eccentric_nz.TARDIS.artron.LightToggler;
 import me.eccentric_nz.TARDIS.camera.CameraTracker;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
@@ -120,7 +120,7 @@ public class TARDISQuitListener implements Listener {
                     }
                     // if lights are on, turn them off
                     if (lights) {
-                        new PresetLampToggler(plugin).flickSwitch(id, uuid, true, tardis.getSchematic().getLights());
+                        new LightToggler(plugin).flickSwitch(id, uuid, true, tardis.getSchematic().getLights());
                     }
                     // if beacon is on turn it off
                     new BeaconToggler(plugin).flickSwitch(uuid, id, false);

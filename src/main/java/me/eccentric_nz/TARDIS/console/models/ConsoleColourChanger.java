@@ -53,7 +53,7 @@ public class ConsoleColourChanger {
                     if (uuid.equals(p) && e instanceof ItemDisplay display) {
                         // get the item stack
                         ItemStack is = display.getItemStack();
-                        if (is != null) {
+                        if (!is.isEmpty()) {
                             Key model;
                             if (ComponentUtils.isModelled(is)) {
                                 String[] key = is.getData(DataComponentTypes.ITEM_MODEL).value().split("_");

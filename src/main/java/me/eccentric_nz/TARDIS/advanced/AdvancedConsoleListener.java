@@ -103,9 +103,9 @@ public class AdvancedConsoleListener implements Listener {
         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid.toString());
         String key;
         if (rsp.resultSet()) {
-            key = (!rsp.getKey().isEmpty()) ? rsp.getKey() : plugin.getConfig().getString("preferences.key");
+            key = (!rsp.getKey().isEmpty()) ? rsp.getKey() : plugin.getConfig().getString("preferences.key", "");
         } else {
-            key = plugin.getConfig().getString("preferences.key");
+            key = plugin.getConfig().getString("preferences.key", "");
         }
         onlythese.add(Material.valueOf(key));
         ItemStack disk = event.getPlayer().getInventory().getItemInMainHand();

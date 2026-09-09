@@ -40,11 +40,11 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-public class PresetLampToggler {
+public class LightToggler {
 
     private final TARDIS plugin;
 
-    public PresetLampToggler(TARDIS plugin) {
+    public LightToggler(TARDIS plugin) {
         this.plugin = plugin;
     }
 

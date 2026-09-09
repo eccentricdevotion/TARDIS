@@ -702,14 +702,16 @@ public class RoomRunnable implements Runnable {
                     plugin.getQueryFactory().insertControl(tardis_id, Control.CONDENSER.getId(), new Location(world, startx, starty, startz).toString(), 1);
                 }
                 // set library
-                if (type.equals(Material.CHEST) && room.equals("LIBRARY")) {
+                if (type.equals(Material.CHEST) && (room.equals("KITCHEN") || room.equals("LIBRARY") || room.equals("SURGERY"))) {
                     Location pos = new Location(world, startx, starty, startz);
                     HashMap<String, Object> setl = new HashMap<>();
                     setl.put("tardis_id", tardis_id);
                     setl.put("location", pos.toString());
-                    setl.put("chest_type", "LIBRARY");
+                    setl.put("chest_type", room);
                     plugin.getQueryFactory().doInsert("vaults", setl);
-                    library = pos.clone().add(-8, -4, -8);
+                    if (room.equals("LIBRARY")) {
+                        library = pos.clone().add(-8, -4, -8);
+                    }
                 }
                 if (room.equals("CLOISTER")) {
                     // cloister red sandstone stairs, glow lichen

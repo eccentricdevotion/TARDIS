@@ -22,5 +22,7 @@ public enum SmelterChest {
     UNSORTED, // VAULT
     FUEL, // SMELTER
     SMELT, // SMELTER
-    LIBRARY
+    LIBRARY,
+    KITCHEN,
+    SURGERY
 }

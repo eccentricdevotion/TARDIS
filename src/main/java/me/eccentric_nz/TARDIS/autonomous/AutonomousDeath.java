@@ -21,7 +21,7 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
 import me.eccentric_nz.TARDIS.artron.AdaptiveBoxLampToggler;
 import me.eccentric_nz.TARDIS.artron.BeaconToggler;
-import me.eccentric_nz.TARDIS.artron.PresetLampToggler;
+import me.eccentric_nz.TARDIS.artron.LightToggler;
 import me.eccentric_nz.TARDIS.builders.exterior.BuildData;
 import me.eccentric_nz.TARDIS.customblocks.TARDISBlockDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
@@ -324,7 +324,7 @@ public class AutonomousDeath {
                                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new AdaptiveBoxLampToggler(plugin).toggleLamp(id, false, tardis.getPreset()), 1L);
                                     }
                                     // if lights are on, turn them off
-                                    new PresetLampToggler(plugin).flickSwitch(id, player.getUniqueId(), true, tardis.getSchematic().getLights());
+                                    new LightToggler(plugin).flickSwitch(id, player.getUniqueId(), true, tardis.getSchematic().getLights());
                                     // if beacon is on turn it off
                                     new BeaconToggler(plugin).flickSwitch(player.getUniqueId(), id, false);
                                     plugin.getQueryFactory().doUpdate("tardis", setp, wherep);

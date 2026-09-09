@@ -36,6 +36,7 @@ class TARDISSQLiteDatabaseUpdater {
 
     private final List<String> areaupdates = new ArrayList<>();
     private final List<String> blockupdates = new ArrayList<>();
+    private final List<String> chunksupdates = new ArrayList<>();
     private final List<String> countupdates = new ArrayList<>();
     private final List<String> destupdates = new ArrayList<>();
     private final List<String> doorupdates = new ArrayList<>();
@@ -67,6 +68,8 @@ class TARDISSQLiteDatabaseUpdater {
         areaupdates.add("direction TEXT DEFAULT ''");
         areaupdates.add("grid INTEGER DEFAULT 1");
         blockupdates.add("police_box INTEGER DEFAULT 0");
+        chunksupdates.add("uuid TEXT DEFAULT ''");
+        chunksupdates.add("ticket INTEGER DEFAULT 0");
         countupdates.add("grace INTEGER DEFAULT 0");
         destupdates.add("preset TEXT DEFAULT ''");
         destupdates.add("bind TEXT DEFAULT ''");
@@ -226,6 +229,16 @@ class TARDISSQLiteDatabaseUpdater {
                     i++;
                     String b_alter = "ALTER TABLE " + prefix + "blocks ADD " + b;
                     statement.executeUpdate(b_alter);
+                }
+            }
+            for (String c : chunksupdates) {
+                String[] csplit = c.split(" ");
+                String c_query = "SELECT sql FROM sqlite_master WHERE tbl_name = '" + prefix + "chunks' AND sql LIKE '%" + csplit[0] + "%'";
+                ResultSet rsc = statement.executeQuery(c_query);
+                if (!rsc.next()) {
+                    i++;
+                    String c_alter = "ALTER TABLE " + prefix + "chunks ADD " + c;
+                    statement.executeUpdate(c_alter);
                 }
             }
             for (String c : countupdates) {

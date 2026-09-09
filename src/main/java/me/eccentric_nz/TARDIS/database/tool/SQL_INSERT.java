@@ -53,7 +53,7 @@ public class SQL_INSERT {
 
             "INSERT INTO `%scolour` (`colour_id`, `tardis_id`, `red`, `green`, `blue`) VALUES ",
 
-            "INSERT INTO `%schunks` (`chunk_id`, `tardis_id`, `world`, `x`, `z`) VALUES ",
+            "INSERT INTO `%schunks` (`chunk_id`, `tardis_id`, `uuid`, `world`, `x`, `z`, `ticket`) VALUES ",
 
             "INSERT INTO `%scondenser` (`c_id`, `tardis_id`, `block_data`, `block_count`) VALUES ",
 

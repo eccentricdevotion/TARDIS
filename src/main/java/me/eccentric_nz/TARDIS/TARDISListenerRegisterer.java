@@ -100,6 +100,7 @@ import me.eccentric_nz.TARDIS.rooms.games.GamesListener;
 import me.eccentric_nz.TARDIS.rooms.games.connect_four.ConnectFourListener;
 import me.eccentric_nz.TARDIS.rooms.games.rockpaperscissors.StoneMagmaIceListener;
 import me.eccentric_nz.TARDIS.rooms.games.tictactoe.NoughtsAndCrossesListener;
+import me.eccentric_nz.TARDIS.rooms.kitchen.KitchenListener;
 import me.eccentric_nz.TARDIS.rooms.laundry.WashingMachineListener;
 import me.eccentric_nz.TARDIS.rooms.library.LibraryListener;
 import me.eccentric_nz.TARDIS.rooms.smelter.SmelterListener;
@@ -190,6 +191,9 @@ class TARDISListenerRegisterer {
         }
         if (plugin.getConfig().getBoolean("allow.autonomous")) {
             plugin.getPM().registerEvents(new AutonomousGUIListener(plugin), plugin);
+        }
+        if (plugin.getConfig().getBoolean("allow.hunger_and_healing")) {
+            plugin.getPM().registerEvents(new KitchenListener(plugin), plugin);
         }
         plugin.getPM().registerEvents(new FarmingMenuListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISConfigMenuListener(plugin), plugin);

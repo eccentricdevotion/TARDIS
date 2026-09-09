@@ -373,7 +373,7 @@ public class TARDISDisplayBlockListener implements Listener {
                                     return;
                                 }
                                 ItemStack itemStack = display.getItemStack();
-                                if (itemStack != null) {
+                                if (!itemStack.isEmpty()) {
                                     boolean open = !itemStack.getData(DataComponentTypes.ITEM_MODEL).value().contains("_closed");
                                     new DoorAnimator(plugin, display).animate(open);
                                     if (open) {
@@ -503,18 +503,18 @@ public class TARDISDisplayBlockListener implements Listener {
         if (breaking != null && fake != null) {
             boolean isSiege = SiegeListener.isSiegeCube(fake.getItemStack());
             ItemStack is = breaking.getItemStack();
-            if (is != null) {
+            if (!is.isEmpty()) {
                 int destroy = is.getPersistentDataContainer().get(plugin.getDestroyKey(), PersistentDataType.INTEGER);
                 if (destroy == 9) {
                     TARDISDisplayItem tdi = TARDISDisplayItemUtils.get(fake);
-                    if (player.getGameMode().equals(GameMode.SURVIVAL) && fake.getItemStack() != null) {
+                    if (player.getGameMode().equals(GameMode.SURVIVAL) && !fake.getItemStack().isEmpty()) {
                         if (tdi != null && tdi.isVariable()) {
                             // get material
                             for (Entity e : block.getWorld().getNearbyEntities(block.getLocation().add(0.5d, 0.5d, 0.5d), 0.55d, 0.55d, 0.55d, (d) -> d.getType() == EntityType.ITEM_DISPLAY)) {
                                 if (e != fake && e != breaking) {
                                     ItemDisplay vd = (ItemDisplay) e;
                                     ItemStack vis = vd.getItemStack();
-                                    if (vis != null) {
+                                    if (!vis.isEmpty()) {
                                         Material variable = vis.getType();
                                         ItemStack ret = ItemStack.of(Material.GLASS, 1);
                                         ret.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Variable Light"));

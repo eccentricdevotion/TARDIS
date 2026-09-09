@@ -63,4 +63,41 @@ public class AcidBatteryRecipe {
         plugin.getServer().addRecipe(r);
         plugin.getFigura().getShapedRecipes().put("Acid Battery", r);
     }
+
+    /*
+    TODO use PredicateChoice instead - adds flexibility if recipes change or players enchant items etc
+    NamespacedKey recipeKey = new NamespacedKey(this, "cosmic_sword");
+        ItemStack result = new ItemStack(Material.NETHERITE_SWORD);
+
+        ShapedRecipe recipe = new ShapedRecipe(recipeKey, result);
+        recipe.shape(" N ", " N ", " S ");
+
+        // 1. Define the exact styled component (e.g., Bold and Aqua)
+        Component targetedName = Component.text("Cosmic Shard")
+                .color(NamedTextColor.AQUA)
+                .decoration(TextDecoration.BOLD, true);
+
+        // 2. Set the data component on the visual display item
+        ItemStack visualExample = new ItemStack(Material.AMETHYST_SHARD);
+        visualExample.setData(DataComponentTypes.CUSTOM_NAME, targetedName);
+
+        // 3. Build the Predicate to evaluate components directly
+        RecipeChoice predicateChoice = RecipeChoice.predicateChoice(item -> {
+            if (item == null || item.getType().isAir()) return false;
+
+            // Retrieve the raw custom name component
+            Component customName = item.getData(DataComponentTypes.CUSTOM_NAME);
+            if (customName == null) return false;
+
+            // Direct comparison checks text, colors, font, and active formatting rules
+            return targetedName.equals(customName);
+
+        }, visualExample);
+
+        // 4. Complete recipe binding
+        recipe.setIngredient('N', Material.NETHERITE_INGOT);
+        recipe.setIngredient('S', predicateChoice);
+
+        getServer().addRecipe(recipe);
+     */
 }

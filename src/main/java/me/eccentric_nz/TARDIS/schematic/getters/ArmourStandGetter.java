@@ -63,7 +63,7 @@ public class ArmourStandGetter {
         // get helmet
         EntityEquipment equipment = stand.getEquipment();
         ItemStack helmet = equipment.getHelmet();
-        if (helmet != null) {
+        if (!helmet.isEmpty()) {
             JsonObject head = new JsonObject();
             if (ComponentUtils.isModelled(helmet)) {
                 head.addProperty("model", helmet.getData(DataComponentTypes.ITEM_MODEL).asString());

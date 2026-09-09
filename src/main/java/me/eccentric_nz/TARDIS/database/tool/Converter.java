@@ -154,7 +154,7 @@ public class Converter implements Runnable {
                                         sb.append(str);
                                     }
                                     case chunks -> {
-                                        str = String.format(SQL_VALUES.LIST.get(i), rs.getInt("chunk_id"), rs.getInt("tardis_id"), rs.getString("world"), rs.getInt("x"), rs.getInt("z")) + end;
+                                        str = String.format(SQL_VALUES.LIST.get(i), rs.getInt("chunk_id"), rs.getInt("tardis_id"), rs.getString("uuid"), rs.getString("world"), rs.getInt("x"), rs.getInt("z"), rs.getInt("ticket")) + end;
                                         sb.append(str);
                                     }
                                     case condenser -> {

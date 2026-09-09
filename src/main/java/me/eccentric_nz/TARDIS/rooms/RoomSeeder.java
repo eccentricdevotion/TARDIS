@@ -193,6 +193,7 @@ public class RoomSeeder implements Listener {
         where.put("world", c.getWorld().getKey().asString());
         where.put("x", c.getX());
         where.put("z", c.getZ());
+        where.put("ticket", 0);
         ResultSetChunks rsc = new ResultSetChunks(plugin, where, false);
         return rsc.resultSet();
     }

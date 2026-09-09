@@ -75,6 +75,7 @@ public class ConfigUtility {
             put("guardians", "allow");
             put("hads", "allow");
             put("handles", "allow");
+            put("hunger_and_healing", "allow");
             put("include_default_world", "travel");
             put("invisibility", "allow");
             put("keep_night", "creation");

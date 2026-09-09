@@ -1,0 +1,507 @@
+/*
+ * Copyright (C) 2026 eccentric_nz
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
+package me.eccentric_nz.TARDIS.rooms.loader;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonParser;
+import io.papermc.paper.datacomponent.DataComponentType;
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
+import io.papermc.paper.datacomponent.item.TooltipDisplay;
+import io.papermc.paper.registry.RegistryAccess;
+import io.papermc.paper.registry.RegistryKey;
+import me.eccentric_nz.TARDIS.ARS.ARS;
+import me.eccentric_nz.TARDIS.ARS.ARSSaveData;
+import me.eccentric_nz.TARDIS.ARS.GrowSlot;
+import me.eccentric_nz.TARDIS.ARS.TARDISARS;
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
+import me.eccentric_nz.TARDIS.commands.sudo.TARDISSudoTracker;
+import me.eccentric_nz.TARDIS.database.resultset.*;
+import me.eccentric_nz.TARDIS.enumeration.Desktops;
+import me.eccentric_nz.TARDIS.utility.ComponentUtils;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.InventoryView;
+import org.bukkit.inventory.ItemStack;
+
+import java.util.*;
+
+/**
+ * The architectural reconfiguration system is a component of the Doctor's TARDIS in the shape of a tree that, according
+ * to the Eleventh Doctor, "reconstructs the particles according to your needs." It is basically "a machine that makes
+ * machines," perhaps somewhat like a 3D printer. It is, according to Gregor Van Baalen's scanner, "more valuable than
+ * the total sum of any currency.
+ *
+ * @author eccentric_nz
+ */
+public class TicketMethods {
+
+    public final HashMap<UUID, Integer> scroll_start = new HashMap<>();
+    public final HashMap<UUID, Integer> selected_slot = new HashMap<>();
+    public final HashMap<UUID, ARSSaveData> save_map_data = new HashMap<>();
+    public final HashMap<UUID, TicketData> map_data = new HashMap<>();
+    public final Set<String> consoleBlocks = Desktops.getBY_MATERIALS().keySet();
+    public final HashMap<UUID, Integer> ids = new HashMap<>();
+    public final List<UUID> hasLoadedMap = new ArrayList<>();
+    protected final TARDIS plugin;
+    private final String[] levels = new String[]{"Bottom level", "Main level", "Top level"};
+
+    public TicketMethods(TARDIS plugin) {
+        this.plugin = plugin;
+    }
+
+    /**
+     * Converts the JSON data stored in the database to a 3D array.
+     *
+     * @param js the JSON from the database
+     * @return a 3D array of Strings
+     */
+    public static ItemStack[][][] getGridFromJSON(String js) {
+        ItemStack[][][] grid = new ItemStack[3][9][9];
+        JsonArray json = JsonParser.parseString(js).getAsJsonArray();
+        for (int y = 0; y < 3; y++) {
+            JsonArray jsonx = json.get(y).getAsJsonArray();
+            for (int x = 0; x < 9; x++) {
+                JsonArray jsonz = jsonx.get(x).getAsJsonArray();
+                for (int z = 0; z < 9; z++) {
+                    if (jsonz.get(z).getAsString().equals("TNT")) {
+                        grid[y][x][z] = ItemStack.of(Material.valueOf("STONE"));
+                    } else {
+                        grid[y][x][z] = ItemStack.of(Material.valueOf(jsonz.get(z).getAsString()));
+                    }
+                }
+            }
+        }
+        return grid;
+    }
+
+    /**
+     * Saves the current ARS data to the database.
+     *
+     * @param playerUUID the UUID of the player who is using the ARS GUI
+     */
+    public void saveAll(UUID playerUUID) {
+        TicketData md = map_data.get(playerUUID);
+        Gson gson = new GsonBuilder().disableHtmlEscaping().create();
+        JsonArray json = JsonParser.parseString(gson.toJson(md.getData())).getAsJsonArray();
+        HashMap<String, Object> set = new HashMap<>();
+        set.put("ars_x_east", md.getE());
+        set.put("ars_z_south", md.getS());
+        set.put("ars_y_layer", md.getY());
+        set.put("json", json.toString());
+        HashMap<String, Object> wherea = new HashMap<>();
+        wherea.put("ars_id", md.getId());
+        plugin.getQueryFactory().doUpdate("ars", set, wherea);
+    }
+
+    /**
+     * Saves the current ARS data to the database.
+     *
+     * @param playerUUID the UUID of the player who is using the ARS GUI
+     */
+    public void revert(UUID playerUUID) {
+        ARSSaveData sd = save_map_data.get(playerUUID);
+        Gson gson = new GsonBuilder().disableHtmlEscaping().create();
+        JsonArray json = JsonParser.parseString(gson.toJson(sd.getData())).getAsJsonArray();
+        HashMap<String, Object> set = new HashMap<>();
+        set.put("json", json.toString());
+        HashMap<String, Object> wherea = new HashMap<>();
+        wherea.put("ars_id", sd.getId());
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getQueryFactory().doUpdate("ars", set, wherea), 6L);
+    }
+
+    /**
+     * Gets a 5x5 2D slice from a 3D array
+     *
+     * @param layer the level to get
+     * @param x     the x position of the slice
+     * @param z     the z position of the slice
+     * @return a slice of the larger array
+     */
+    private ItemStack[][] sliceGrid(ItemStack[][] layer, int x, int z) {
+        ItemStack[][] slice = new ItemStack[5][5];
+        int indexx = 0, indexz = 0;
+        for (int xx = x; xx < (x + 5); xx++) {
+            for (int zz = z; zz < (z + 5); zz++) {
+                slice[indexx][indexz] = layer[xx][zz];
+                indexz++;
+            }
+            indexz = 0;
+            indexx++;
+        }
+        return slice;
+    }
+
+    /**
+     * Sets an ItemStack to the specified inventory slot updating the display name and setting lore if necessary.
+     *
+     * @param view       the inventory to update
+     * @param slot       the slot number to update
+     * @param material   the item (material) type to set the item stack to
+     * @param room       the room type associated with the block type
+     * @param playerUUID the player using the GUI
+     */
+    void setSlot(InventoryView view, int slot, Material material, String room, UUID playerUUID, boolean showPerms) {
+        ItemStack is = ItemStack.of(material, 1);
+        is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(room));
+        if (!room.equals("Empty slot")) {
+            ARS ars = TARDISARS.ARSFor(material.toString());
+            String config_path = ars.getConfigPath();
+            ItemLore.Builder lore = ItemLore.lore();
+            lore.addLine(Component.text("Cost: " + plugin.getRoomsConfig().getInt("rooms." + config_path + ".cost")));
+            if (showPerms) {
+                Player player = plugin.getServer().getPlayer(playerUUID);
+                if (player != null && !TARDISPermission.hasPermission(player, "tardis.room." + config_path.toLowerCase(Locale.ROOT))) {
+                    lore.addLine(Component.text(plugin.getLanguage().getString("NO_PERM_CONSOLE", "No permission!"), NamedTextColor.RED));
+                }
+            }
+            is.setData(DataComponentTypes.LORE, lore.build());
+            if (room.equals("Apiary")) {
+                DataComponentType beesComponent = RegistryAccess.registryAccess()
+                        .getRegistry(RegistryKey.DATA_COMPONENT_TYPE)
+                        .get(NamespacedKey.minecraft("bees"));
+                is.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
+                        .addHiddenComponents(beesComponent, DataComponentTypes.BLOCK_DATA)
+                        .build());
+            }
+        } else {
+            is.resetData(DataComponentTypes.LORE);
+        }
+        view.setItem(slot, is);
+    }
+
+    /**
+     * Sets an ItemStack to the specified inventory slot.
+     *
+     * @param view       the inventory to update
+     * @param slot       the slot number to update
+     * @param is         the item stack to set
+     * @param playerUUID the player using the GUI
+     * @param update     whether to update the grid display
+     */
+    public void setSlot(InventoryView view, int slot, ItemStack is, UUID playerUUID, boolean update) {
+        view.setItem(slot, is);
+        String material = is.getType().toString();
+        if (update) {
+            updateTickets(playerUUID, slot, material);
+        }
+    }
+
+    /**
+     * Get the coordinates of the clicked slot in relation to the ARS map.
+     *
+     * @param slot the slot that was clicked
+     * @param md   an instance of the TARDISARSMapData class from which to retrieve the map offset
+     * @return an array of ints
+     */
+    int[] getCoords(int slot, TicketData md) {
+        int[] coords = new int[2];
+        if (slot <= 8) {
+            coords[0] = (slot - 4) + md.getE();
+            coords[1] = md.getS();
+        }
+        if (slot > 8 && slot <= 17) {
+            coords[0] = (slot - 13) + md.getE();
+            coords[1] = md.getS() + 1;
+        }
+        if (slot > 17 && slot <= 26) {
+            coords[0] = (slot - 22) + md.getE();
+            coords[1] = md.getS() + 2;
+        }
+        if (slot > 26 && slot <= 35) {
+            coords[0] = (slot - 31) + md.getE();
+            coords[1] = md.getS() + 3;
+        }
+        if (slot > 35 && slot <= 44) {
+            coords[0] = (slot - 40) + md.getE();
+            coords[1] = md.getS() + 4;
+        }
+        return coords;
+    }
+
+    /**
+     * Saves the current map to the TARDISARSMapData instance associated with the player using the GUI.
+     *
+     * @param playerUUID the UUID of the player using the GUI
+     * @param slot       the slot that was clicked
+     * @param material   the type id of the block in the slot
+     */
+    private void updateTickets(UUID playerUUID, int slot, String material) {
+        TicketData md = map_data.get(playerUUID);
+        ItemStack[][][] grid = md.getData();
+        int yy = md.getY();
+        int[] coords = getCoords(slot, md);
+        int newx = coords[0];
+        int newz = coords[1];
+        if (material.equals("SANDSTONE")) {
+            if (yy < 2) {
+                grid[yy + 1][newx][newz] = ItemStack.of(Material.valueOf(material));
+            }
+        } else if (material.equals("MOSSY_COBBLESTONE")) {
+            if (yy > 0) {
+                grid[yy - 1][newx][newz] = ItemStack.of(Material.valueOf(material));
+            }
+        }
+        grid[yy][newx][newz] = ItemStack.of(Material.valueOf(material));
+        md.setData(grid);
+        map_data.put(playerUUID, md);
+    }
+
+    /**
+     * Sets the lore of the ItemStack in the specified slot.
+     *
+     * @param view the inventory to update
+     * @param slot the slot to update
+     * @param str  the lore to set
+     */
+    public void setLore(InventoryView view, int slot, String str) {
+        ItemStack is = view.getItem(slot);
+        if (str != null) {
+            is.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text(str)).build());
+        } else {
+            is.resetData(DataComponentTypes.LORE);
+        }
+    }
+
+    /**
+     * Switches the indicator block for the map level.
+     *
+     * @param view       the inventory to update
+     * @param slot       the slot to update
+     * @param playerUUID the UUID of the player using the GUI
+     */
+    public void switchLevel(InventoryView view, int slot, UUID playerUUID) {
+        TicketData md = map_data.get(playerUUID);
+        for (int i = 27; i < 30; i++) {
+            Material material = Material.WHITE_WOOL;
+            if (i == slot) {
+                material = Material.YELLOW_WOOL;
+                md.setY(i - 27);
+                map_data.put(playerUUID, md);
+            }
+            ItemStack is = ItemStack.of(material, 1);
+            is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(levels[i - 27]));
+            setSlot(view, i, is, playerUUID, false);
+        }
+    }
+
+    /**
+     * Closes the inventory.
+     *
+     * @param player the player using the GUI
+     */
+    public void close(Player player) {
+        UUID playerUUID = player.getUniqueId();
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+            scroll_start.remove(playerUUID);
+            selected_slot.remove(playerUUID);
+            hasLoadedMap.remove(playerUUID);
+            if (map_data.containsKey(playerUUID)) {
+                saveAll(playerUUID);
+                map_data.remove(playerUUID);
+                save_map_data.remove(playerUUID);
+                ids.remove(playerUUID);
+            }
+            player.closeInventory();
+        }, 1L);
+    }
+
+    /**
+     * Loads the map from the database ready for use in the GUI.
+     *
+     * @param view       the inventory to load the map into
+     * @param playerUUID the UUID of the player using the GUI
+     */
+    public void loadTickets(InventoryView view, UUID playerUUID, boolean check) {
+        if (check && ComponentUtils.hasLore(view.getItem(10))) {
+            setLore(view, 10, plugin.getLanguage().getString("ARS_MAP_ERROR", "Map already loaded!"));
+            return;
+        }
+        setLore(view, 10, "Loading...");
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("tardis_id", ids.get(playerUUID));
+        ResultSetARS rs = new ResultSetARS(plugin, where);
+        if (rs.resultSet()) {
+            TicketData md = new TicketData();
+            ItemStack[][][] json = getGridFromJSON(rs.getJson());
+            md.setData(json);
+            md.setE(rs.getEast());
+            md.setS(rs.getSouth());
+            md.setY(rs.getLayer());
+            md.setId(rs.getId());
+            map_data.put(playerUUID, md);
+            setMap(rs.getLayer(), rs.getEast(), rs.getSouth(), playerUUID, view);
+            saveAll(playerUUID);
+            hasLoadedMap.add(playerUUID);
+            setLore(view, 10, plugin.getLanguage().getString("ARS_MAP_LOADED", "Map LOADED"));
+            switchLevel(view, (27 + rs.getLayer()), playerUUID);
+        }
+    }
+
+    public void setMap(int ul, int ue, int us, UUID playerUUID, InventoryView view) {
+        TicketData data = map_data.get(playerUUID);
+        ItemStack[][][] grid = data.getData();
+        ItemStack[][] layer = grid[ul];
+        ItemStack[][] map = sliceGrid(layer, ue, us);
+        int indexx = 0, indexz = 0;
+        for (int i = 4; i < 9; i++) {
+            for (int j = 0; j < 5; j++) {
+                int slot = i + (j * 9);
+                Material material = map[indexx][indexz].getType();
+                String name = TARDISARS.ARSFor(map[indexx][indexz].getType().toString()).getDescriptiveName();
+                setSlot(view, slot, material, name, playerUUID, false);
+                indexz++;
+            }
+            indexz = 0;
+            indexx++;
+        }
+    }
+
+    /**
+     * Move the map to a new position.
+     *
+     * @param playerUUID the UUID of the player using the GUI
+     * @param view       the inventory to update
+     * @param slot       the slot number to update
+     */
+    public void moveMap(UUID playerUUID, InventoryView view, int slot) {
+        if (map_data.containsKey(playerUUID)) {
+            TicketData md = map_data.get(playerUUID);
+            int ue, us;
+            switch (slot) {
+                case 1 -> {
+                    ue = md.getE();
+                    us = ((md.getS() + 1) < 5) ? md.getS() + 1 : md.getS();
+                }
+                case 9 -> {
+                    ue = ((md.getE() + 1) < 5) ? md.getE() + 1 : md.getE();
+                    us = md.getS();
+                }
+                case 11 -> {
+                    ue = ((md.getE() - 1) >= 0) ? md.getE() - 1 : md.getE();
+                    us = md.getS();
+                }
+                default -> {
+                    ue = md.getE();
+                    us = ((md.getS() - 1) >= 0) ? md.getS() - 1 : md.getS();
+                }
+            }
+            setMap(md.getY(), ue, us, playerUUID, view);
+            setLore(view, slot, null);
+            md.setE(ue);
+            md.setS(us);
+            map_data.put(playerUUID, md);
+        } else {
+            setLore(view, slot, plugin.getLanguage().getString("ARS_LOAD", "You need to load the map first!"));
+        }
+    }
+
+    /**
+     * Checks whether a player has condensed the required BLOCKS to grow the room (s).
+     *
+     * @param uuid the UUID of the player to check for
+     * @param map  a HashMap where the key is the changed room slot and the value is the ARS room type
+     * @param id   the TARDIS id
+     * @return true or false
+     */
+    public boolean hasCondensables(String uuid, HashMap<GrowSlot, ARS> map, int id) {
+        boolean hasRequired = true;
+        String wall = "ORANGE_WOOL";
+        String floor = "LIGHT_GRAY_WOOL";
+        boolean hasPrefs = false;
+        ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid);
+        if (rsp.resultSet()) {
+            hasPrefs = true;
+            wall = rsp.getWall();
+            floor = rsp.getFloor();
+        }
+        HashMap<String, Integer> item_counts = new HashMap<>();
+        for (Map.Entry<GrowSlot, ARS> rooms : map.entrySet()) {
+            HashMap<String, Integer> roomBlocks = plugin.getBuildKeeper().getRoomBlockCounts().get(rooms.getValue().toString());
+            for (Map.Entry<String, Integer> entry : roomBlocks.entrySet()) {
+                String bid = entry.getKey();
+                String bkey;
+                if (hasPrefs && (bid.equals("ORANGE_WOOL") || bid.equals("LIGHT_GRAY_WOOL"))) {
+                    bkey = (bid.equals("ORANGE_WOOL")) ? wall : floor;
+                } else {
+                    bkey = bid;
+                }
+                int tmp = Math.round((entry.getValue() / 100.0F) * plugin.getConfig().getInt("growth.rooms_condenser_percent"));
+                int required = (tmp > 0) ? tmp : 1;
+                if (item_counts.containsKey(bkey)) {
+                    item_counts.put(bkey, (item_counts.get(bkey) + required));
+                } else {
+                    item_counts.put(bkey, required);
+                }
+            }
+        }
+        for (Map.Entry<String, Integer> blocks : item_counts.entrySet()) {
+            HashMap<String, Object> wherec = new HashMap<>();
+            wherec.put("tardis_id", id);
+            wherec.put("block_data", blocks.getKey());
+            ResultSetCondenser rsc = new ResultSetCondenser(plugin, wherec);
+            if (rsc.resultSet()) {
+                if (rsc.getBlock_count() < blocks.getValue()) {
+                    hasRequired = false;
+                }
+            } else {
+                hasRequired = false;
+            }
+        }
+        return hasRequired;
+    }
+
+    public int getTardisId(String uuid) {
+        int id = 0;
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("uuid", uuid);
+        ResultSetTravellers rs = new ResultSetTravellers(plugin, where, false);
+        if (rs.resultSet()) {
+            id = rs.getTardis_id();
+        }
+        return id;
+    }
+
+    boolean hasRenderer(UUID playerUUID) {
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("tardis_id", ids.get(playerUUID));
+        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+        if (rs.resultSet()) {
+            return !rs.getTardis().getRenderer().isEmpty();
+        }
+        return false;
+    }
+
+    public boolean checkSlotForConsole(InventoryView view, int slot) {
+        Material m = view.getItem(slot).getType();
+        return (consoleBlocks.contains(m.toString()));
+    }
+
+    public boolean playerIsOwner(UUID uuid, int id) {
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("tardis_id", id);
+        where.put("uuid", TARDISSudoTracker.SUDOERS.getOrDefault(uuid, uuid).toString());
+        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
+        return rs.resultSet();
+    }
+}

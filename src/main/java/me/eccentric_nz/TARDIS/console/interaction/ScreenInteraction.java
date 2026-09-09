@@ -49,10 +49,8 @@ public class ScreenInteraction {
         if (player.isSneaking()) {
             // get the text display
             TextDisplay display = getTextDisplay(interaction.getLocation(), coords, id);
-            if (display != null) {
-                display.setRotation(Location.normalizeYaw(120), -7.5f);
-                new ControlMonitor(plugin).update(id, display.getUniqueId(), coords);
-            }
+            display.setRotation(Location.normalizeYaw(120), -7.5f);
+            new ControlMonitor(plugin).update(id, display.getUniqueId(), coords);
         } else {
             ItemStack hand = player.getInventory().getItemInMainHand();
             Material material = hand.getType();

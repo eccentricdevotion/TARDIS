@@ -72,18 +72,16 @@ public class ToclafaneListener implements Listener {
                             bee.addPassenger(stand);
                         }
                         EntityEquipment ee = stand.getEquipment();
-                        if (ee != null) {
-                            ItemStack head = ee.getHelmet();
-                            player.playSound(stand.getLocation(), "toclafane", 1.0f, 1.0f);
-                            head.setData(DataComponentTypes.ITEM_MODEL, ToclafaneVariant.TOCLAFANE_ATTACK.getKey());
-                            ee.setHelmet(head);
-                            bee.setHasStung(false);
-                            bee.setHealth(bee.getAttribute(Attribute.MAX_HEALTH).getValue());
-                            bee.setAnger(500);
-                            bee.setTarget(player);
-                            bee.setSilent(true);
-                            stand.getPersistentDataContainer().set(TARDISWeepingAngels.TOCLAFANE, PersistentDataType.INTEGER, maxHealth - 1);
-                        }
+                        ItemStack head = ee.getHelmet();
+                        player.playSound(stand.getLocation(), "toclafane", 1.0f, 1.0f);
+                        head.setData(DataComponentTypes.ITEM_MODEL, ToclafaneVariant.TOCLAFANE_ATTACK.getKey());
+                        ee.setHelmet(head);
+                        bee.setHasStung(false);
+                        bee.setHealth(bee.getAttribute(Attribute.MAX_HEALTH).getValue());
+                        bee.setAnger(500);
+                        bee.setTarget(player);
+                        bee.setSilent(true);
+                        stand.getPersistentDataContainer().set(TARDISWeepingAngels.TOCLAFANE, PersistentDataType.INTEGER, maxHealth - 1);
                     } else {
                         player.playSound(stand.getLocation(), "dalek_hit", 1.0f, 1.0f);
                         health--;

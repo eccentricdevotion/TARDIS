@@ -55,7 +55,7 @@ public class SonicScanner {
                 if (TARDIS.plugin.getConfig().getBoolean("modules.weeping_angels")) {
                     if (et.equals(EntityType.SKELETON) || et.equals(EntityType.ZOMBIE) || et.equals(EntityType.ZOMBIFIED_PIGLIN)) {
                         EntityEquipment ee = ((LivingEntity) k).getEquipment();
-                        if (ee.getHelmet() != null) {
+                        if (ee != null && !ee.getHelmet().isEmpty()) {
                             switch (ee.getHelmet().getType()) {
                                 case BAKED_POTATO -> et = EntityType.EGG; // Strax
                                 case BOOK -> et = EntityType.END_CRYSTAL; // Vashta Nerada
@@ -86,7 +86,7 @@ public class SonicScanner {
                     }
                     if (et.equals(EntityType.ARMOR_STAND)) {
                         EntityEquipment ee = ((ArmorStand) k).getEquipment();
-                        if (ee.getHelmet() != null) {
+                        if (!ee.getHelmet().isEmpty()) {
                             switch (ee.getHelmet().getType()) {
                                 case YELLOW_DYE -> et = EntityType.SHULKER_BULLET; // Judoon
                                 case BONE -> et = EntityType.EVOKER_FANGS; // K9
