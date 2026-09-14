@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.utility;
 
 import com.google.common.io.MoreFiles;
 import me.eccentric_nz.TARDIS.TARDIS;
+import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -44,9 +45,13 @@ public class LegacyDataPack {
         if (tardisOldDir.exists()) {
             // delete directory and files as we now load the datapack from the TARDIS.jar file
             try {
-                MoreFiles.deleteRecursively(tardisOldDir.toPath());
+                FileUtils.deleteDirectory(tardisOldDir);
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                try {
+                    MoreFiles.deleteRecursively(tardisOldDir.toPath());
+                } catch (IOException io) {
+                    plugin.getLogger().warning("Couldn't delete old datapacks directory " + io.getMessage());
+                }
             }
         }
     }
