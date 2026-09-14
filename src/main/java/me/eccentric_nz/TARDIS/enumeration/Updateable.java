@@ -39,6 +39,7 @@ public enum Updateable {
     BUTTON(true, true, TARDISUpdateableCategory.CONTROLS, "Random Location button"),
     CHAMELEON(true, true, Tag.SIGNS.getValues(), TARDISUpdateableCategory.INTERFACES, "Chameleon Circuit"),
     CHARGING_SENSOR(false, false, Set.of(Material.REDSTONE_BLOCK), TARDISUpdateableCategory.SENSORS, "Senses if the TARDIS is recharging"),
+    CHUNK_LOADER(true, false, Set.of(Material.YELLOW_WALL_BANNER), TARDISUpdateableCategory.INTERFACES, "Keep chunks loaded system"),
     COMPUTER_MOUSE(true, false, Set.of(Material.POLISHED_BLACKSTONE_BUTTON), TARDISUpdateableCategory.OTHERS, "Gaming computer mouse"),
     CONDENSER(true, true, Set.of(Material.CHEST, Material.TRAPPED_CHEST), TARDISUpdateableCategory.OTHERS, "Artron Energy Condenser"),
     CONSOLE_LAMP_SWITCH(false, false, Set.of(Material.ITEM_FRAME), TARDISUpdateableCategory.CONTROLS, "Changes the light level of the Console Lamp"),

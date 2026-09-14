@@ -20,7 +20,7 @@ import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.ARS.ARSMethods;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPostioning;
+import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPositioning;
 import me.eccentric_nz.TARDIS.builders.interior.TIPSData;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -266,7 +266,7 @@ public class TARDISMonsterRunnable implements Runnable {
                                     int tx = 0, tz = 0;
                                     if (pos != -1) {
                                         // tips slot
-                                        TARDISInteriorPostioning tips = new TARDISInteriorPostioning(plugin);
+                                        TARDISInteriorPositioning tips = new TARDISInteriorPositioning(plugin);
                                         TIPSData coords = tips.getTIPSData(pos);
                                         tx = coords.getCentreX();
                                         tz = coords.getCentreZ();

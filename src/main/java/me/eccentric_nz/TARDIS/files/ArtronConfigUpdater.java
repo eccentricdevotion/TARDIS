@@ -53,6 +53,8 @@ public class ArtronConfigUpdater {
         integerOptions.put("artron_furnace.power_limit", 4);
         integerOptions.put("autonomous", 100);
         integerOptions.put("backdoor", 100);
+        integerOptions.put("chunk_tickets", 10);
+        integerOptions.put("ticket_interval", 2400);
         integerOptions.put("comehere", 400);
         integerOptions.put("creeper_recharge", 150);
         integerOptions.put("custard_cream", 25);

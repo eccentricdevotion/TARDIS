@@ -23,11 +23,13 @@ import me.eccentric_nz.TARDIS.artron.BeaconToggler;
 import me.eccentric_nz.TARDIS.artron.LightToggler;
 import me.eccentric_nz.TARDIS.camera.CameraTracker;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetChunkTickets;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.rooms.games.ArcadeData;
 import me.eccentric_nz.TARDIS.rooms.games.ArcadeTracker;
+import me.eccentric_nz.TARDIS.rooms.loader.Ticket;
 import org.bukkit.Chunk;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -85,12 +87,27 @@ public class TARDISQuitListener implements Listener {
         ResultSetTardis rs = new ResultSetTardis(plugin, wherep, "", false);
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
+            // remove police box chunk ticket
             if (plugin.getConfig().getBoolean("police_box.keep_chunk_force_loaded")) {
                 ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, tardis.getTardisId());
                 if (rsc.resultSet()) {
                     World w = rsc.getCurrent().location().getWorld();
                     if (w != null) {
                         Chunk chunk = w.getChunkAt(rsc.getCurrent().location());
+                        chunk.removePluginChunkTicket(plugin);
+                    }
+                }
+            }
+            // remove chunk tickets
+            if (plugin.getConfig().getBoolean("allow.chunk_tickets")) {
+                ResultSetChunkTickets rsct = new ResultSetChunkTickets(plugin);
+                World world = null;
+                if (rsct.fromId(tardis.getTardisId())) {
+                    for (Ticket t : rsct.getData()) {
+                        if (world == null) {
+                            world = t.world();
+                        }
+                        Chunk chunk = world.getChunkAt(t.x(), t.z());
                         chunk.removePluginChunkTicket(plugin);
                     }
                 }

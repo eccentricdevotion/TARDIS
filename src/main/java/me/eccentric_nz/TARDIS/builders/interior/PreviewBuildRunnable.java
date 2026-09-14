@@ -116,7 +116,7 @@ public class PreviewBuildRunnable implements Runnable {
                 d = dimensions.get("length").getAsInt() - 1;
                 div = (h + 1.0d) * w * (d + 1.0d);
                 // calculate startx, starty, startz
-                TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
+                TARDISInteriorPositioning tintpos = new TARDISInteriorPositioning(plugin);
                 TIPSData pos = tintpos.getTIPSData(tips);
                 startx = pos.getCentreX();
                 resetx = pos.getCentreX();

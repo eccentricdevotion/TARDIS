@@ -707,6 +707,9 @@ permissions:
   tardis.regenerate:
     description: Allow a player to regenerate.
     default: op
+  tardis.chunk_tickets:
+    description: Allow a player to keep chunks loaded in their TARDIS.
+    default: op
   # vortex manipulator
   vm.teleport:
     description: Allow crafting and using of a Vortex Manipulator

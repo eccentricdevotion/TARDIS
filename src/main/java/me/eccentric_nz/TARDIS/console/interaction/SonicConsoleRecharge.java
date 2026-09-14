@@ -20,7 +20,7 @@ import io.papermc.paper.persistence.PersistentDataContainerView;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetArtronLeveID;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetArtronLevelID;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import net.kyori.adventure.text.Component;
@@ -65,8 +65,8 @@ public class SonicConsoleRecharge implements Runnable {
                 cancel();
             }
             // check TARDIS has energy to recharge
-            ResultSetArtronLeveID rsa = new ResultSetArtronLeveID(plugin, id);
-            if (!rsa.resultset() || rsa.getArtronLevel() < amount) {
+            ResultSetArtronLevelID rsa = new ResultSetArtronLevelID(plugin);
+            if (!rsa.fromId(id) || rsa.getArtronLevel() < amount) {
                 TARDISSounds.playTARDISSound(interaction.getLocation(), "charge_fail");
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "DOCK_ENERGY");
                 cancel();

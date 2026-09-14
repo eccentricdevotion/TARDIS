@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.ARS;
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPostioning;
+import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPositioning;
 import me.eccentric_nz.TARDIS.builders.interior.TIPSData;
 import me.eccentric_nz.TARDIS.commands.sudo.TARDISSudoTracker;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -158,7 +158,7 @@ public class ARSMapListener extends ARSMethods implements Listener {
                 int tx = 0, tz = 0;
                 if (pos != -1) {
                     // tips slot
-                    TARDISInteriorPostioning tips = new TARDISInteriorPostioning(plugin);
+                    TARDISInteriorPositioning tips = new TARDISInteriorPositioning(plugin);
                     TIPSData coords = tips.getTIPSData(pos);
                     tx = coords.getCentreX();
                     tz = coords.getCentreZ();

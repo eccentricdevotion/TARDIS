@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.destroyers;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPostioning;
+import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPositioning;
 import me.eccentric_nz.TARDIS.builders.interior.TIPSData;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.utility.protection.TARDISProtectionRemover;
@@ -54,7 +54,7 @@ public class InteriorDestroyer {
             plugin.debug(TARDIS.plugin.getLanguage().getString("CONFIG_CREATION_WORLD"));
             return;
         }
-        TARDISInteriorPostioning tips = new TARDISInteriorPostioning(plugin);
+        TARDISInteriorPositioning tips = new TARDISInteriorPositioning(plugin);
         tips.reclaimChunks(w, id, schematic);
         // remove blocks saved to blocks table and remove the entries from the protection map
         new TARDISProtectionRemover(plugin).cleanInteriorBlocks(id);

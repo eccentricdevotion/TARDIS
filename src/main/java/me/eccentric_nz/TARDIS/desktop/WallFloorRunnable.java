@@ -21,7 +21,7 @@ import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.event.TARDISDesktopThemeEvent;
-import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPostioning;
+import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPositioning;
 import me.eccentric_nz.TARDIS.builders.interior.TIPSData;
 import me.eccentric_nz.TARDIS.customblocks.TARDISBlockDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
@@ -102,7 +102,7 @@ public class WallFloorRunnable extends DesktopThemeRunnable {
             Tardis tardis = rs.getTardis();
             int slot = tardis.getTIPS();
             if (slot != -1000001) { // default world - use TIPS
-                TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
+                TARDISInteriorPositioning tintpos = new TARDISInteriorPositioning(plugin);
                 TIPSData pos = tintpos.getTIPSData(slot);
                 startx = pos.getCentreX();
                 startz = pos.getCentreZ();

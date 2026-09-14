@@ -20,7 +20,7 @@ import com.destroystokyo.paper.MaterialTags;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPostioning;
+import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPositioning;
 import me.eccentric_nz.TARDIS.builders.interior.TIPSData;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
@@ -75,7 +75,7 @@ public class UpgradeBlockScanner {
             int startz;
             int startx;
             if (slot != -1000001) { // default world - use TIPS
-                TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
+                TARDISInteriorPositioning tintpos = new TARDISInteriorPositioning(plugin);
                 TIPSData pos = tintpos.getTIPSData(slot);
                 startx = pos.getCentreX();
                 startz = pos.getCentreZ();

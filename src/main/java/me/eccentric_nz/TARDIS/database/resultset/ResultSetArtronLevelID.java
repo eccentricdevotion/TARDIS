@@ -24,22 +24,20 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class ResultSetArtronLeveID {
+public class ResultSetArtronLevelID {
 
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
-    private final int id;
     private final String prefix;
     private int artronLevel;
 
-    public ResultSetArtronLeveID(TARDIS plugin, int id) {
+    public ResultSetArtronLevelID(TARDIS plugin) {
         this.plugin = plugin;
-        this.id = id;
         prefix = this.plugin.getPrefix();
     }
 
-    public boolean resultset() {
+    public boolean fromId(int id) {
         PreparedStatement statement = null;
         ResultSet rs = null;
         String query = "SELECT artron_level FROM " + prefix + "tardis WHERE tardis_id = ?";

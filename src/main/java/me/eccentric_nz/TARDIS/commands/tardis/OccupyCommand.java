@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPostioning;
+import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPositioning;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -60,7 +60,7 @@ public class OccupyCommand {
                 ResultSetTardisID rsid = new ResultSetTardisID(plugin);
                 // if TIPS determine tardis_id from player location
                 if (plugin.getConfig().getBoolean("creation.default_world") && !player.hasPermission("tardis.create_world")) {
-                    int slot = TARDISInteriorPostioning.getTIPSSlot(player.getLocation());
+                    int slot = TARDISInteriorPositioning.getTIPSSlot(player.getLocation());
                     if (!rsid.fromTIPSSlot(slot)) {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "OCCUPY_MUST_BE_IN");
                         return;

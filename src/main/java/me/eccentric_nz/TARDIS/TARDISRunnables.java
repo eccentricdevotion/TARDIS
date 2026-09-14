@@ -29,6 +29,7 @@ import me.eccentric_nz.TARDIS.junk.JunkReturnRunnable;
 import me.eccentric_nz.TARDIS.move.SpectaclesRunnable;
 import me.eccentric_nz.TARDIS.move.TARDISMonsterRunnable;
 import me.eccentric_nz.TARDIS.rooms.ZeroRoomRunnable;
+import me.eccentric_nz.TARDIS.rooms.loader.TicketRunnable;
 import me.eccentric_nz.TARDIS.rooms.surgery.SurgeryRunnable;
 import me.eccentric_nz.TARDIS.siegemode.SiegeRunnable;
 import me.eccentric_nz.TARDIS.utility.HumSounds;
@@ -85,6 +86,10 @@ public class TARDISRunnables {
         // starts a repeating task that heals players 1/2 a heart per cycle when they are in the Zero room.
         if (plugin.getConfig().getBoolean("allow.zero_room")) {
             plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new ZeroRoomRunnable(plugin), 20, plugin.getConfig().getLong("preferences.heal_speed"));
+        }
+        // starts a repeating task that removes Artron from TARDIS with active chunk tickets
+        if (plugin.getConfig().getBoolean("allow.chunk_tickets")) {
+            plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new TicketRunnable(plugin), 1200,plugin.getArtronConfig().getLong("ticket_interval"));
         }
         // removes unused drop chest database records from the vaults table.
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new VaultChecker(plugin), 2400);

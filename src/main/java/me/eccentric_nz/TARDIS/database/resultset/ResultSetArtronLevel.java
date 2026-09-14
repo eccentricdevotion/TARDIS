@@ -29,17 +29,15 @@ public class ResultSetArtronLevel {
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
-    private final String uuid;
     private final String prefix;
     private int artronLevel;
 
-    public ResultSetArtronLevel(TARDIS plugin, String uuid) {
+    public ResultSetArtronLevel(TARDIS plugin) {
         this.plugin = plugin;
-        this.uuid = uuid;
         prefix = this.plugin.getPrefix();
     }
 
-    public boolean resultset() {
+    public boolean fromUUID(String uuid) {
         PreparedStatement statement = null;
         ResultSet rs = null;
         String query = "SELECT artron_level FROM " + prefix + "tardis WHERE uuid = ?";

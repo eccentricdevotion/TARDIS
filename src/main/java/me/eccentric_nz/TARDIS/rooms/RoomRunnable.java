@@ -684,6 +684,9 @@ public class RoomRunnable implements Runnable {
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, ()-> ShelfSetter.stock(block, v.get("items").getAsJsonArray()),3L);
                     }
                 }
+                if (type.equals(Material.YELLOW_WALL_BANNER) && room.equals("GOLEM")) {
+                    plugin.getQueryFactory().insertControl(tardis_id, Control.CHUNK_LOADER.getId(), new Location(world, startx, starty, startz).toString(), 0);
+                }
                 if (type.equals(Material.BEEHIVE) && room.equals("APIARY")) {
                     HashMap<String, Object> seta = new HashMap<>();
                     seta.put("apiary", world.getKey().asString() + ":" + startx + ":" + (starty + 1) + ":" + startz);

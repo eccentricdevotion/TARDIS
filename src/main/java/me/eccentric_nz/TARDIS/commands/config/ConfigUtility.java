@@ -58,6 +58,7 @@ public class ConfigUtility {
             put("check_blocks_before_upgrade", "desktop");
             put("check_for_home", "creation");
             put("chemistry", "modules");
+            put("chunk_tickets", "allow");
             put("circuits", "difficulty");
             put("create_worlds", "creation");
             put("create_worlds_with_perms", "creation");

@@ -141,16 +141,16 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
                         }
                     }
                     case "artron_amount" -> {
-                        rsl = new ResultSetArtronLevel(plugin, uuid);
-                        if (rsl.resultset()) {
+                        rsl = new ResultSetArtronLevel(plugin);
+                        if (rsl.fromUUID(uuid)) {
                             result = Integer.toString(rsl.getArtronLevel());
                         } else {
                             result = "0";
                         }
                     }
                     case "artron_percent" -> {
-                        rsl = new ResultSetArtronLevel(plugin, uuid);
-                        if (rsl.resultset()) {
+                        rsl = new ResultSetArtronLevel(plugin);
+                        if (rsl.fromUUID(uuid)) {
                             result = String.format("%s%%", Math.round(rsl.getArtronLevel() * 100.0d / plugin.getArtronConfig().getDouble("full_charge")));
                         } else {
                             result = "0%";
