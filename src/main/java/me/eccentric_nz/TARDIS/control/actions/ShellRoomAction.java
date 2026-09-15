@@ -49,7 +49,7 @@ public class ShellRoomAction {
             }
             // Chameleon load GUI
             UUID playerUUID = player.getUniqueId();
-            if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(playerUUID)) {
+            if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(player)) {
                 new FloodgateShellLoaderForm(plugin, playerUUID).send();
             } else {
                 player.openInventory(new ShellPresetInventory(plugin, player, id).getInventory());

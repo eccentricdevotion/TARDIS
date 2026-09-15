@@ -225,7 +225,7 @@ public class ControlListener implements Listener {
                                         plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "Saves");
                                         return;
                                     }
-                                    if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(playerUUID)) {
+                                    if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(player)) {
                                         new FloodgateSavesForm(plugin, playerUUID, id).send();
                                     } else {
                                         new TARDISSaveSign(plugin).openGUI(player, id);

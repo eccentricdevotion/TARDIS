@@ -100,7 +100,7 @@ public class TARDISSeedBlockListener implements Listener {
             plugin.getBuildKeeper().getTrackTARDISSeed().put(l, seed);
             plugin.getMessenger().send(player, TardisModule.TARDIS, "SEED_PLACE");
             // send fake block change for bedrock players
-            if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) {
+            if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(player)) {
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.sendBlockChange(l, is.getType().createBlockData()), 3L);
             }
             // now the player has to click the block with the TARDIS key
@@ -225,7 +225,7 @@ public class TARDISSeedBlockListener implements Listener {
                         block.setBlockData(TARDISConstants.BARRIER);
                         TARDISDisplayItemUtils.set(TARDISSeedDisplayItem.GROW, block, -1);
                         // send fake block change for bedrock players
-                        if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) {
+                        if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(player)) {
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.sendBlockChange(l, Material.LIGHT_GRAY_TERRACOTTA.createBlockData()), 3L);
                         }
                     }

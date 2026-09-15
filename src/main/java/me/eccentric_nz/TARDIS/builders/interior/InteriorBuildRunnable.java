@@ -368,7 +368,7 @@ public class InteriorBuildRunnable implements Runnable {
                 // remember the location of this Disk Storage
                 String storage = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
                 plugin.getQueryFactory().insertSyncControl(dbID, 14, storage, 0);
-                if (!TARDISFloodgate.isFloodgateEnabled() || !TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) {
+                if (!TARDISFloodgate.isFloodgateEnabled() || !TARDISFloodgate.isBedrockPlayer(player)) {
                     // set block data to BARRIER
                     data = TARDISConstants.BARRIER;
                     // spawn an item display entity
@@ -383,7 +383,7 @@ public class InteriorBuildRunnable implements Runnable {
                                 case TERRACOTTA -> data = Material.ORANGE_TERRACOTTA.createBlockData();
                                 case CONCRETE -> data = Material.ORANGE_CONCRETE.createBlockData();
                                 default -> {
-                                    if (!TARDISFloodgate.isFloodgateEnabled() || !TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) {
+                                    if (!TARDISFloodgate.isFloodgateEnabled() || !TARDISFloodgate.isBedrockPlayer(player)) {
                                         data = TARDISConstants.BARRIER;
                                         // spawn an item display entity
                                         TARDISDisplayItemUtils.set(TARDISBlockDisplayItem.HEXAGON, world, x, y, z);
@@ -426,7 +426,7 @@ public class InteriorBuildRunnable implements Runnable {
                             case TERRACOTTA -> data = Material.BLUE_TERRACOTTA.createBlockData();
                             case CONCRETE -> data = Material.BLUE_CONCRETE.createBlockData();
                             default -> {
-                                if (!TARDISFloodgate.isFloodgateEnabled() || !TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) {
+                                if (!TARDISFloodgate.isFloodgateEnabled() || !TARDISFloodgate.isBedrockPlayer(player)) {
                                     data = TARDISConstants.BARRIER;
                                     // spawn an item display entity
                                     TARDISDisplayItemUtils.set(TARDISBlockDisplayItem.BLUE_BOX, world, x, y, z);
@@ -470,7 +470,7 @@ public class InteriorBuildRunnable implements Runnable {
                     schm.getPermission().equals("diner") ||
                     schm.getPermission().equals("hell_bent")
             )) {
-                if (!TARDISFloodgate.isFloodgateEnabled() || !TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) {
+                if (!TARDISFloodgate.isFloodgateEnabled() || !TARDISFloodgate.isBedrockPlayer(player)) {
                     data = TARDISConstants.BARRIER;
                     // spawn an item display entity
                     TARDISDisplayItemUtils.set(TARDISBlockDisplayItem.ROUNDEL, world, x, y, z);
@@ -481,7 +481,7 @@ public class InteriorBuildRunnable implements Runnable {
                     schm.getPermission().equals("diner") ||
                     schm.getPermission().equals("hell_bent")
             )) {
-                if (!TARDISFloodgate.isFloodgateEnabled() || !TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) {
+                if (!TARDISFloodgate.isFloodgateEnabled() || !TARDISFloodgate.isBedrockPlayer(player)) {
                     data = TARDISConstants.BARRIER;
                     // spawn an item display entity
                     TARDISDisplayItemUtils.set(TARDISBlockDisplayItem.ROUNDEL_OFFSET, world, x, y, z);
@@ -529,7 +529,7 @@ public class InteriorBuildRunnable implements Runnable {
                 plugin.getQueryFactory().insertSyncControl(dbID, 15, advanced, 0);
                 // check if player has storage record, and update the tardis_id field
                 plugin.getUtils().updateStorageId(playerUUID, dbID);
-                if (!TARDISFloodgate.isFloodgateEnabled() || !TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) {
+                if (!TARDISFloodgate.isFloodgateEnabled() || !TARDISFloodgate.isBedrockPlayer(player)) {
                     // set block data to correct BARRIER + Item Display
                     data = TARDISConstants.BARRIER;
                     // spawn an item display entity

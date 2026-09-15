@@ -51,7 +51,7 @@ public class ItemDisplaySetter {
     public static void process(JsonArray displays, Player player, Location location, int id) {
         for (int i = 0; i < displays.size(); i++) {
             // set regular blocks for bedrock players
-            if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) {
+            if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(player)) {
                 FloodgateDisplaySetter.regularBlock(displays.get(i).getAsJsonObject(), location, id);
             } else {
                 fakeBlock(displays.get(i).getAsJsonObject(), location, id);

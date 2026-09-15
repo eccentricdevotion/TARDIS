@@ -143,7 +143,7 @@ public class WallFloorRunnable extends DesktopThemeRunnable {
                 Material type = data.getMaterial();
                 if (type.equals(Material.ORANGE_WOOL)) {
                     if (wall_type == Material.ORANGE_WOOL) {
-                        if (!TARDISFloodgate.isFloodgateEnabled() || !TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) {
+                        if (!TARDISFloodgate.isFloodgateEnabled() || !TARDISFloodgate.isBedrockPlayer(player)) {
                             data = TARDISConstants.BARRIER;
                             TARDISDisplayItemUtils.set(TARDISBlockDisplayItem.HEXAGON, world, x, y, z);
                         }
@@ -157,7 +157,7 @@ public class WallFloorRunnable extends DesktopThemeRunnable {
                     TARDISBlockSetters.setBlock(world, x, y, z, type);
                 }
                 if (type.equals(Material.BLUE_WOOL)) {
-                    if (!TARDISFloodgate.isFloodgateEnabled() || !TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) {
+                    if (!TARDISFloodgate.isFloodgateEnabled() || !TARDISFloodgate.isBedrockPlayer(player)) {
                         data = TARDISConstants.BARRIER;
                         TARDISDisplayItemUtils.set(TARDISBlockDisplayItem.BLUE_BOX, world, x, y, z);
                     }

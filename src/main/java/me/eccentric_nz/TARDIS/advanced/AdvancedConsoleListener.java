@@ -91,7 +91,7 @@ public class AdvancedConsoleListener implements Listener {
             return;
         }
         event.setCancelled(true);
-        if (!TARDISFloodgate.isFloodgateEnabled() || !TARDISFloodgate.isBedrockPlayer(p.getUniqueId())) {
+        if (!TARDISFloodgate.isFloodgateEnabled() || !TARDISFloodgate.isBedrockPlayer(p)) {
             // update block if it's not a display item entity
             if (block.getType().equals(Material.JUKEBOX) || block.getType().equals(Material.MUSHROOM_STEM)) {
                 block.setType(Material.BARRIER);

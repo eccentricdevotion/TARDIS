@@ -190,7 +190,7 @@ public class TARDISJoinListener implements Listener {
             HashMap<String, Object> set = new HashMap<>();
             set.put("lastuse", now);
             set.put("monsters", 0);
-            set.put("bedrock", (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) ? 1 : 0);
+            set.put("bedrock", (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(player)) ? 1 : 0);
             if (!last_known_name.equals(player.getName())) {
                 // update the player's name WG region as it may have changed
                 if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {

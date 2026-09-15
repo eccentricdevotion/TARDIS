@@ -159,7 +159,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener {
             if (rs.resultSet()) {
                 // close this gui and load the TARDIS map
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                    if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(uuid)) {
+                    if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(player)) {
                         new FloodgateMapForm(plugin, uuid, rs.getTardis_id()).send();
                     } else {
                         // close inventory

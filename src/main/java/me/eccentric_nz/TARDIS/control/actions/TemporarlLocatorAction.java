@@ -45,7 +45,7 @@ public class TemporarlLocatorAction {
             return;
         }
         UUID playerUUID = player.getUniqueId();
-        if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(playerUUID)) {
+        if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(player)) {
             new FloodgateTemporalForm(plugin, playerUUID).send();
         } else {
             player.openInventory(new TARDISTemporalLocatorInventory(plugin).getInventory());

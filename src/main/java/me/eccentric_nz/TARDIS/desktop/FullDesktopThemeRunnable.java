@@ -726,7 +726,7 @@ public class FullDesktopThemeRunnable extends DesktopThemeRunnable {
                 if (type.equals(Material.ORANGE_WOOL)) {
                     if (wall_type == Material.ORANGE_WOOL) {
                         // set regular blocks for bedrock players
-                        if (!TARDISFloodgate.isFloodgateEnabled() || !TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) {
+                        if (!TARDISFloodgate.isFloodgateEnabled() || !TARDISFloodgate.isBedrockPlayer(player)) {
                             data = TARDISConstants.BARRIER;
                             TARDISDisplayItemUtils.set(TARDISBlockDisplayItem.HEXAGON, world, x, y, z);
                         }
@@ -735,7 +735,7 @@ public class FullDesktopThemeRunnable extends DesktopThemeRunnable {
                     }
                 }
                 if (type.equals(Material.BLUE_WOOL)) {
-                    if (!TARDISFloodgate.isFloodgateEnabled() || !TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) {
+                    if (!TARDISFloodgate.isFloodgateEnabled() || !TARDISFloodgate.isBedrockPlayer(player)) {
                         data = TARDISConstants.BARRIER;
                         TARDISDisplayItemUtils.set(TARDISBlockDisplayItem.BLUE_BOX, world, x, y, z);
                     }
@@ -759,7 +759,7 @@ public class FullDesktopThemeRunnable extends DesktopThemeRunnable {
                             tud.getSchematic().getPermission().equals("diner") ||
                             tud.getSchematic().getPermission().equals("hell_bent")
                     )) {
-                    if (!TARDISFloodgate.isFloodgateEnabled() || !TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) {
+                    if (!TARDISFloodgate.isFloodgateEnabled() || !TARDISFloodgate.isBedrockPlayer(player)) {
                         data = TARDISConstants.BARRIER;
                         TARDISDisplayItemUtils.set(TARDISBlockDisplayItem.ROUNDEL, world, x, y, z);
                     }
@@ -769,7 +769,7 @@ public class FullDesktopThemeRunnable extends DesktopThemeRunnable {
                         tud.getSchematic().getPermission().equals("diner") ||
                         tud.getSchematic().getPermission().equals("hell_bent")
                 )) {
-                    if (!TARDISFloodgate.isFloodgateEnabled() || !TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) {
+                    if (!TARDISFloodgate.isFloodgateEnabled() || !TARDISFloodgate.isBedrockPlayer(player)) {
                         data = TARDISConstants.BARRIER;
                         TARDISDisplayItemUtils.set(TARDISBlockDisplayItem.ROUNDEL_OFFSET, world, x, y, z);
                     }
