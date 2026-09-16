@@ -51,11 +51,13 @@ public class TARDISUpdateableChecker {
             Updateable.HUTCH,
             Updateable.IGLOO,
             Updateable.IISTUBIL,
+            Updateable.KITCHEN,
             Updateable.LAVA,
             Updateable.PEN,
             Updateable.SMELT,
             Updateable.STABLE,
             Updateable.STALL,
+            Updateable.SURGERY,
             Updateable.VAULT,
             Updateable.VILLAGE
     );
@@ -105,11 +107,13 @@ public class TARDISUpdateableChecker {
         boolean hasHutch = false;
         boolean hasIgloo = false;
         boolean hasIistubil = false;
+        boolean hasKitchen = false;
         boolean hasLava = false;
         boolean hasPen = false;
         boolean hasSmelt = false;
         boolean hasStable = false;
         boolean hasStall = false;
+        boolean hasSurgery = false;
         boolean hasVault = false;
         boolean hasVillage = false;
         // check ARS for room type
@@ -133,10 +137,12 @@ public class TARDISUpdateableChecker {
                                 case "PACKED_ICE" -> hasIgloo = true;
                                 case "MOSS_BLOCK" -> hasPen = true;
                                 case "WHITE_GLAZED_TERRACOTTA" -> hasIistubil = true;
+                                case "PUMPKIN" -> hasKitchen = true;
                                 case "MAGMA_BLOCK" -> hasLava = true;
                                 case "CHEST" -> hasSmelt = true;
                                 case "HAY_BLOCK" -> hasStable = true;
                                 case "NETHER_WART_BLOCK" -> hasStall = true;
+                                case "RED_CONCRETE" -> hasSurgery = true;
                                 case "DISPENSER" -> hasVault = true;
                                 case "OAK_LOG" -> hasVillage = true;
                                 default -> {
@@ -157,6 +163,14 @@ public class TARDISUpdateableChecker {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_ROOM", tardis_block);
                 return false;
             }
+        }
+        if (updateable.equals(Updateable.KITCHEN) && !hasKitchen) {
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_ROOM", tardis_block);
+            return false;
+        }
+        if (updateable.equals(Updateable.SURGERY) && !hasSurgery) {
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_ROOM", tardis_block);
+            return false;
         }
         if (updateable.equals(Updateable.FUEL) || updateable.equals(Updateable.SMELT)) {
             if (!TARDISPermission.hasPermission(player, "tardis.room.smelter")) {

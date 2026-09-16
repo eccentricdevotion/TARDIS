@@ -140,7 +140,7 @@ public class TARDISWorldGuardUtils {
             b2 = makeBlockVector(two);
         }
         // check floodgate
-        String name = (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(p.getUniqueId())) ? TARDISFloodgate.sanitisePlayerName(p.getName()) : p.getName();
+        String name = (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(p)) ? TARDISFloodgate.sanitisePlayerName(p.getName()) : p.getName();
         ProtectedCuboidRegion region = new ProtectedCuboidRegion("TARDIS_" + name, b1, b2);
         DefaultDomain owners = region.getOwners();
         owners.addPlayer(p.getName());
@@ -182,7 +182,7 @@ public class TARDISWorldGuardUtils {
         } else {
             uuid = player.getUniqueId();
             // check floodgate for region name
-            name = (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) ? TARDISFloodgate.sanitisePlayerName(player.getName()) : player.getName();
+            name = (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(player)) ? TARDISFloodgate.sanitisePlayerName(player.getName()) : player.getName();
         }
         String region_id = "TARDIS_" + name;
         ProtectedCuboidRegion region = new ProtectedCuboidRegion(region_id, b1, b2);

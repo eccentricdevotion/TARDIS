@@ -43,6 +43,8 @@ public class EnvironmentBiomes {
         put(Biome.CHERRY_GROVE.getKey().getKey(), Material.CHERRY_PLANKS);
         put(Biome.COLD_OCEAN.getKey().getKey(), Material.SALMON);
         put(Biome.CRIMSON_FOREST.getKey().getKey(), Material.CRIMSON_PLANKS);
+        // TODO add new dappled forest biome
+//        put(Biome.DAPPLED_FOREST.getKey().getKey(), Material.POPLAR_PLANKS);
         put(Biome.DARK_FOREST.getKey().getKey(), Material.DARK_OAK_PLANKS);
         put(Biome.DEEP_COLD_OCEAN.getKey().getKey(), Material.SEA_PICKLE);
         put(Biome.DEEP_DARK.getKey().getKey(), Material.SCULK);

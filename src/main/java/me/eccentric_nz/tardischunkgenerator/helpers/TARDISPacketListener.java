@@ -89,7 +89,7 @@ public class TARDISPacketListener {
                 if (TARDISHelper.colourSkies && packet instanceof ClientboundLevelChunkWithLightPacket chunkPacket) {
                     String world = player.getWorld().getKey().getKey();
                     if (world.equals("gallifrey") || world.equals("skaro")) {
-                        LevelChunk levelChunk = cloneChunk((LevelChunk) ((CraftChunk) player.getWorld().getChunkAt(chunkPacket.getX(), chunkPacket.getZ())).getHandle(ChunkStatus.BIOMES));
+                        LevelChunk levelChunk = cloneChunk((LevelChunk) ((CraftChunk) player.getWorld().getChunkAt(chunkPacket.x(), chunkPacket.z())).getHandle(ChunkStatus.BIOMES));
                         String key = (world.endsWith("gallifrey")) ? "gallifrey_badlands" : "skaro_desert";
                         // get biome from registry
                         Biome biome = CustomBiome.get(key);

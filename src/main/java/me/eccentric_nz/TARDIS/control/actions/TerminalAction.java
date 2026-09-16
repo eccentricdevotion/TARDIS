@@ -52,7 +52,7 @@ public class TerminalAction {
             return;
         }
         UUID playerUUID = player.getUniqueId();
-        if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(playerUUID)) {
+        if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(player)) {
             new FloodgateDestinationTerminalForm(plugin, playerUUID).send();
         } else {
             player.openInventory(new TARDISTerminalInventory(plugin).getInventory());

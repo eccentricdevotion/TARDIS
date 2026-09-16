@@ -164,15 +164,15 @@ public class SonicConfiguratorMenuListener extends TARDISMenuListener {
         view.setItem(slot, sub);
     }
 
-    private ConfiguredSonic getConfiguredSonic(UUID sonic_uuid, ItemLore im) {
+    private ConfiguredSonic getConfiguredSonic(UUID sonic_uuid, ItemLore lore) {
         ResultSetConfiguredSonic rscs = new ResultSetConfiguredSonic(plugin, sonic_uuid);
         if (rscs.resultSet()) {
             ConfiguredSonic configuredSonic = rscs.getConfiguredSonic();
             // check if there are any new upgrades
-            if (im != null) {
-                List<Component> lore = im.lines();
-                for (int i = 1; i < lore.size(); i++) {
-                    String upgrade = ComponentUtils.stripColour(lore.get(i));
+            if (lore != null) {
+                List<Component> lines = lore.lines();
+                for (int i = 1; i < lines.size(); i++) {
+                    String upgrade = ComponentUtils.stripColour(lines.get(i));
                     switch (upgrade) {
                         case "Bio-scanner Upgrade" -> configuredSonic.setBio(SonicConfig.ENABLED);
                         case "Diamond Upgrade" -> configuredSonic.setDiamond(SonicConfig.ENABLED);

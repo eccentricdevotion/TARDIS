@@ -48,6 +48,20 @@ public class TARDISStructure {
         netherStructures.put(Structure.FORTRESS, Material.NETHER_BRICKS);
         netherStructures.put(Structure.NETHER_FOSSIL, Material. BONE_BLOCK);
         netherStructures.put(Structure.RUINED_PORTAL_NETHER, Material.OBSIDIAN);
+        // TODO might need to add scroll buttons / separate GUIs per environment
+        overworldStructures.put(Structure.ABANDONED_CAMP_BAMBOO_JUNGLE, Material.BAMBOO_FENCE);
+        overworldStructures.put(Structure.ABANDONED_CAMP_BIRCH_FOREST, Material.BIRCH_FENCE);
+        overworldStructures.put(Structure.ABANDONED_CAMP_CHERRY_GROVE, Material.CHERRY_FENCE);
+        overworldStructures.put(Structure.ABANDONED_CAMP_DAPPLED_FOREST, Material.POPLAR_FENCE);
+        overworldStructures.put(Structure.ABANDONED_CAMP_FLOWER_FOREST, Material.OAK_FENCE);
+        overworldStructures.put(Structure.ABANDONED_CAMP_FOREST, Material.OAK_LEAVES);
+        overworldStructures.put(Structure.ABANDONED_CAMP_MEADOW, Material.BIRCH_LEAVES);
+        overworldStructures.put(Structure.ABANDONED_CAMP_PALE_GARDEN, Material.PALE_OAK_FENCE);
+        overworldStructures.put(Structure.ABANDONED_CAMP_SAVANNA, Material.ACACIA_FENCE);
+        overworldStructures.put(Structure.ABANDONED_CAMP_SPARSE_JUNGLE, Material.JUNGLE_FENCE);
+        overworldStructures.put(Structure.ABANDONED_CAMP_SWAMP, Material.OAK_LOG);
+        overworldStructures.put(Structure.ABANDONED_CAMP_TAIGA, Material.SPRUCE_FENCE);
+        overworldStructures.put(Structure.ABANDONED_CAMP_WOODED_BADLANDS, Material.SPRUCE_LEAVES);
         overworldStructures.put(Structure.ANCIENT_CITY, Material.DEEPSLATE_BRICKS);
         overworldStructures.put(Structure.DESERT_PYRAMID, Material.CHISELED_SANDSTONE);
         overworldStructures.put(Structure.IGLOO, Material.SNOW_BLOCK);

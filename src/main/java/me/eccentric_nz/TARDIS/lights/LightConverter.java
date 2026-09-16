@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.lights;
 
 import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPostioning;
+import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPositioning;
 import me.eccentric_nz.TARDIS.builders.interior.TIPSData;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.customblocks.VariableLight;
@@ -64,7 +64,7 @@ public class LightConverter {
                 int d = dimensions.get("length").getAsInt() - 1;
                 starty = schm.getStartY();
                 endy = starty + h;
-                TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
+                TARDISInteriorPositioning tintpos = new TARDISInteriorPositioning(plugin);
                 TIPSData pos = tintpos.getTIPSData(tardis.getTIPS());
                 int minx = pos.getCentreX();
                 int maxx = minx + width;

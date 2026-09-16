@@ -46,7 +46,7 @@ import net.minecraft.world.entity.animal.rabbit.Rabbit;
 import net.minecraft.world.entity.animal.sheep.Sheep;
 import net.minecraft.world.entity.animal.wolf.Wolf;
 import net.minecraft.world.entity.monster.Creeper;
-import net.minecraft.world.entity.monster.EnderMan;
+import net.minecraft.world.entity.monster.Enderman;
 import net.minecraft.world.entity.monster.cubemob.MagmaCube;
 import net.minecraft.world.entity.monster.cubemob.Slime;
 import net.minecraft.world.entity.monster.cubemob.SulfurCube;
@@ -146,11 +146,7 @@ public record TARDISDisguise(EntityType entityType, Object[] options) {
                 str = "Villager";
                 packagePath += "npc.villager.";
             }
-            case ENDERMAN -> { // special case
-                str = "EnderMan"; // camel case but no underscore...
-                packagePath += "monster.";
-            }
-            case BLAZE, CREEPER, ELDER_GUARDIAN, ENDERMITE, GHAST, GIANT, GUARDIAN, MAGMA_CUBE,
+            case BLAZE, CREEPER, ELDER_GUARDIAN, ENDERMAN, ENDERMITE, GHAST, GIANT, GUARDIAN, MAGMA_CUBE,
                  PHANTOM, RAVAGER, SHULKER, SILVERFISH, SLIME, STRIDER, VEX, WITCH, ZOGLIN -> {
                 str = CaseUtils.toCamelCase(disguise.entityType().toString(), true, '_');
                 packagePath += "monster.";
@@ -292,7 +288,7 @@ public record TARDISDisguise(EntityType entityType, Object[] options) {
                             }
                             case ENDERMAN -> {
                                 if (bool) {
-                                    EnderMan enderman = (EnderMan) entity;
+                                    Enderman enderman = (Enderman) entity;
                                     BlockState block = Blocks.PURPUR_BLOCK.defaultBlockState();
                                     enderman.setCarriedBlock(block);
                                 }

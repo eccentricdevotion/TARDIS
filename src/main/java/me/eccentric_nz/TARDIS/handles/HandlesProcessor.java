@@ -23,7 +23,7 @@ import io.papermc.paper.registry.RegistryKey;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.DamageUtility;
 import me.eccentric_nz.TARDIS.api.Parameters;
-import me.eccentric_nz.TARDIS.artron.PresetLampToggler;
+import me.eccentric_nz.TARDIS.artron.LightToggler;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.exterior.BuildData;
 import me.eccentric_nz.TARDIS.commands.handles.TeleportCommand;
@@ -193,7 +193,7 @@ public class HandlesProcessor {
                             case LIGHTS -> {
                                 boolean onoff = next.equals(HandlesBlock.ON);
                                 if ((onoff && !tardis.isLightsOn()) || (!onoff && tardis.isLightsOn())) {
-                                    new PresetLampToggler(plugin).flickSwitch(id, uuid, onoff, tardis.getSchematic().getLights());
+                                    new LightToggler(plugin).flickSwitch(id, uuid, onoff, tardis.getSchematic().getLights());
                                 }
                             }
                             case POWER -> {

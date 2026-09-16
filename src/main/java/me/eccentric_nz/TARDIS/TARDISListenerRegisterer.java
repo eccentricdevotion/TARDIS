@@ -100,8 +100,10 @@ import me.eccentric_nz.TARDIS.rooms.games.GamesListener;
 import me.eccentric_nz.TARDIS.rooms.games.connect_four.ConnectFourListener;
 import me.eccentric_nz.TARDIS.rooms.games.rockpaperscissors.StoneMagmaIceListener;
 import me.eccentric_nz.TARDIS.rooms.games.tictactoe.NoughtsAndCrossesListener;
+import me.eccentric_nz.TARDIS.rooms.kitchen.KitchenListener;
 import me.eccentric_nz.TARDIS.rooms.laundry.WashingMachineListener;
 import me.eccentric_nz.TARDIS.rooms.library.LibraryListener;
+import me.eccentric_nz.TARDIS.rooms.loader.ChunkLoaderGUIListener;
 import me.eccentric_nz.TARDIS.rooms.smelter.SmelterListener;
 import me.eccentric_nz.TARDIS.schematic.SchematicWandListener;
 import me.eccentric_nz.TARDIS.siegemode.BreedingListener;
@@ -191,6 +193,9 @@ class TARDISListenerRegisterer {
         if (plugin.getConfig().getBoolean("allow.autonomous")) {
             plugin.getPM().registerEvents(new AutonomousGUIListener(plugin), plugin);
         }
+        if (plugin.getConfig().getBoolean("allow.hunger_and_healing")) {
+            plugin.getPM().registerEvents(new KitchenListener(plugin), plugin);
+        }
         plugin.getPM().registerEvents(new FarmingMenuListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISConfigMenuListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISAnvilListener(plugin), plugin);
@@ -214,6 +219,9 @@ class TARDISListenerRegisterer {
         plugin.getPM().registerEvents(new ChameleonHelpListener(plugin), plugin);
         plugin.getPM().registerEvents(new ChameleonTemplateListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISChatListener(plugin), plugin);
+        if (plugin.getConfig().getBoolean("allow.chunk_tickets")) {
+            plugin.getPM().registerEvents(new ChunkLoaderGUIListener(plugin), plugin);
+        }
         if (plugin.getConfig().getBoolean("circuits.damage")) {
             plugin.getPM().registerEvents(new CircuitRepairListener(plugin), plugin);
         }

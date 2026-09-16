@@ -54,7 +54,7 @@ public class LazarusUtils {
             SkinUtils.SKINNED.remove(uuid);
         } else if (TARDIS.plugin.getConfig().getBoolean("modules.weeping_angels")) {
             ItemStack helmet = player.getInventory().getHelmet();
-            if (helmet != null && helmet.getPersistentDataContainer().has(TARDIS.plugin.getHeadBlockKey(), PersistentDataType.INTEGER)) {
+            if (!helmet.isEmpty() && helmet.getPersistentDataContainer().has(TARDIS.plugin.getHeadBlockKey(), PersistentDataType.INTEGER)) {
                 RemoveEquipment.set(player);
             }
         }

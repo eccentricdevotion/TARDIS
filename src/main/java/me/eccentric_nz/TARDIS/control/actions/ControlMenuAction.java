@@ -35,7 +35,7 @@ public class ControlMenuAction {
         if (!player.isSneaking()) {
             UUID playerUUID = player.getUniqueId();
             // controls GUI
-            if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(playerUUID)) {
+            if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(player)) {
                 TARDISFloodgate.sendControlForm(playerUUID);
             } else {
                 ControlInventory controls = new ControlInventory(plugin, id);

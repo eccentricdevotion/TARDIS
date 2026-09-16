@@ -85,7 +85,8 @@ public enum Control {
     ARCHITECTURAL(59, "", false, false),
     NAUTILUS(60, "nautilus", false, true),
     WASHING_MACHINE(61, "washing-machine", false, false),
-    COMPUTER_MOUSE(62, "computer-mouse", false, false);
+    COMPUTER_MOUSE(62, "computer-mouse", false, false),
+    CHUNK_LOADER(63, "chunk-loader", false, false);
 
     private static final HashMap<String, Integer> UPDATE_CONTROLS = new HashMap<>();
     private static final HashMap<Integer, Control> BY_ID = new HashMap<>();

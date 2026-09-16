@@ -24,7 +24,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.event.TARDISDesktopThemeEvent;
-import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPostioning;
+import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPositioning;
 import me.eccentric_nz.TARDIS.builders.interior.TIPSData;
 import me.eccentric_nz.TARDIS.builders.utility.FractalFence;
 import me.eccentric_nz.TARDIS.console.ConsoleBuilder;
@@ -292,7 +292,7 @@ public class FullDesktopThemeRunnable extends DesktopThemeRunnable {
                 ent.remove();
             }
             if (slot != -1000001) { // default world - use TIPS
-                TARDISInteriorPostioning tintPos = new TARDISInteriorPostioning(plugin);
+                TARDISInteriorPositioning tintPos = new TARDISInteriorPositioning(plugin);
                 TIPSData pos = tintPos.getTIPSData(slot);
                 startX = pos.getCentreX();
                 resetX = pos.getCentreX();
@@ -726,7 +726,7 @@ public class FullDesktopThemeRunnable extends DesktopThemeRunnable {
                 if (type.equals(Material.ORANGE_WOOL)) {
                     if (wall_type == Material.ORANGE_WOOL) {
                         // set regular blocks for bedrock players
-                        if (!TARDISFloodgate.isFloodgateEnabled() || !TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) {
+                        if (!TARDISFloodgate.isFloodgateEnabled() || !TARDISFloodgate.isBedrockPlayer(player)) {
                             data = TARDISConstants.BARRIER;
                             TARDISDisplayItemUtils.set(TARDISBlockDisplayItem.HEXAGON, world, x, y, z);
                         }
@@ -735,7 +735,7 @@ public class FullDesktopThemeRunnable extends DesktopThemeRunnable {
                     }
                 }
                 if (type.equals(Material.BLUE_WOOL)) {
-                    if (!TARDISFloodgate.isFloodgateEnabled() || !TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) {
+                    if (!TARDISFloodgate.isFloodgateEnabled() || !TARDISFloodgate.isBedrockPlayer(player)) {
                         data = TARDISConstants.BARRIER;
                         TARDISDisplayItemUtils.set(TARDISBlockDisplayItem.BLUE_BOX, world, x, y, z);
                     }
@@ -759,7 +759,7 @@ public class FullDesktopThemeRunnable extends DesktopThemeRunnable {
                             tud.getSchematic().getPermission().equals("diner") ||
                             tud.getSchematic().getPermission().equals("hell_bent")
                     )) {
-                    if (!TARDISFloodgate.isFloodgateEnabled() || !TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) {
+                    if (!TARDISFloodgate.isFloodgateEnabled() || !TARDISFloodgate.isBedrockPlayer(player)) {
                         data = TARDISConstants.BARRIER;
                         TARDISDisplayItemUtils.set(TARDISBlockDisplayItem.ROUNDEL, world, x, y, z);
                     }
@@ -769,7 +769,7 @@ public class FullDesktopThemeRunnable extends DesktopThemeRunnable {
                         tud.getSchematic().getPermission().equals("diner") ||
                         tud.getSchematic().getPermission().equals("hell_bent")
                 )) {
-                    if (!TARDISFloodgate.isFloodgateEnabled() || !TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) {
+                    if (!TARDISFloodgate.isFloodgateEnabled() || !TARDISFloodgate.isBedrockPlayer(player)) {
                         data = TARDISConstants.BARRIER;
                         TARDISDisplayItemUtils.set(TARDISBlockDisplayItem.ROUNDEL_OFFSET, world, x, y, z);
                     }

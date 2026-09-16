@@ -42,10 +42,9 @@ public class GlueListener implements Listener {
             Block block = event.getClickedBlock();
             if (TARDISPermission.hasPermission(player, "tardis.chemistry.glue") && block != null && block.getType().equals(Material.PISTON)) {
                 ItemStack is = event.getItem();
-                if (is != null
+                if (ComponentUtils.isModelled(is)
                         && is.getType().equals(Material.GLASS_BOTTLE)
                         && ComponentUtils.isNamed(is, "Glue")
-                        && ComponentUtils.isModelled(is)
                         && ChemistryBottle.GLUE.getKey().getKey().equals(is.getData(DataComponentTypes.ITEM_MODEL).value())) {
                     player.playSound(player.getLocation(), Sound.ENTITY_SLIME_SQUISH, 1.0f, 1.0f);
                     // switch piston to sticky piston

@@ -97,7 +97,7 @@ public class TARDISTelepathicListener implements Listener {
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> block.setBlockData(TARDISConstants.DAYLIGHT), 3L);
                     }
                 } else {
-                    if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(uuid)) {
+                    if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(player)) {
                         new FloodgateTelepathicForm(plugin, uuid, id).send();
                     } else {
                         // open the Telepathic GUI

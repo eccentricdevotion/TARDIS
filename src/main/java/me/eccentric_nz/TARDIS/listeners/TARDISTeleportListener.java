@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.listeners;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.exterior.BuilderUtility;
-import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPostioning;
+import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPositioning;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
@@ -107,7 +107,7 @@ public class TARDISTeleportListener implements Listener {
                             return;
                         }
                     } else {
-                        int slot = TARDISInteriorPostioning.getTIPSSlot(player.getLocation());
+                        int slot = TARDISInteriorPositioning.getTIPSSlot(player.getLocation());
                         if (!rsid.fromTIPSSlot(slot)) {
                             return;
                         }

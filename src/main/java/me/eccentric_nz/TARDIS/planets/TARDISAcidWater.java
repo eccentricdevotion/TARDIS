@@ -180,7 +180,7 @@ public class TARDISAcidWater implements Listener {
         ItemStack chest = inv.getChestplate();
         ItemStack pants = inv.getLeggings();
         double reduction = 0.0;
-        if (helmet != null) {
+        if (!helmet.isEmpty()) {
             switch (helmet.getType()) {
                 case TURTLE_HELMET -> reduction += 0.02;
                 case LEATHER_HELMET -> reduction += 0.04;

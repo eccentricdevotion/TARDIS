@@ -103,11 +103,11 @@ public class SkinListener implements Listener {
         if (SkinUtils.SKINNED.containsKey(uuid)) {
             Skin skin = SkinUtils.SKINNED.get(uuid);
             ItemStack is = event.getMainHandItem();
-            if (is != null && MATERIALS.contains(is.getType())) {
+            if (!is.isEmpty() && MATERIALS.contains(is.getType())) {
                 event.setCancelled(isSkinItem(skin.name(), is));
             }
             ItemStack off = event.getOffHandItem();
-            if (off != null && MATERIALS.contains(off.getType())) {
+            if (!off.isEmpty() && MATERIALS.contains(off.getType())) {
                 event.setCancelled(isSkinItem(skin.name(), off));
             }
         }

@@ -54,7 +54,7 @@ public class TARDISArmourStand extends ArmorStand {
         this.player = null;
         this.setNoGravity(false);
         this.setInvisible(true);
-        this.setInvulnerable(true);
+        this.setInvulnerableTime(Integer.MAX_VALUE);
         this.persist = true;
     }
 

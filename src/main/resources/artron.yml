@@ -26,6 +26,9 @@ siege_ticks: 1500
 # standby
 standby: 5
 standby_time: 6000
+# chunk tickets (per chunk)
+chunk_tickets: 10
+ticket_interval: 2400
 # jettison is a percentage of original room cost
 jettison: 75
 jettison_seed: TNT
