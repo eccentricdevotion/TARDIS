@@ -13,7 +13,7 @@ public class HealthHungerCommand {
     }
 
     public void set(Player player) {
-        player.setHealth(2);
+        player.setHealth(0.5);
         player.setFoodLevel(0);
         player.addPotionEffect(PotionEffectType.SLOWNESS.createEffect(5000, 1));
     }
