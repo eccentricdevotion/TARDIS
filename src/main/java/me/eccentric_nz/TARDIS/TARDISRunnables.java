@@ -29,6 +29,9 @@ import me.eccentric_nz.TARDIS.junk.JunkReturnRunnable;
 import me.eccentric_nz.TARDIS.move.SpectaclesRunnable;
 import me.eccentric_nz.TARDIS.move.TARDISMonsterRunnable;
 import me.eccentric_nz.TARDIS.rooms.ZeroRoomRunnable;
+import me.eccentric_nz.TARDIS.rooms.kitchen.KitchenRunnable;
+import me.eccentric_nz.TARDIS.rooms.loader.TicketRunnable;
+import me.eccentric_nz.TARDIS.rooms.surgery.SurgeryRunnable;
 import me.eccentric_nz.TARDIS.siegemode.SiegeRunnable;
 import me.eccentric_nz.TARDIS.utility.HumSounds;
 import me.eccentric_nz.TARDIS.utility.VaultChecker;
@@ -96,6 +99,7 @@ public class TARDISRunnables {
         }
         if (plugin.getConfig().getBoolean("allow.hunger_and_healing")) {
             plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new SurgeryRunnable(plugin), 100, 100);
+            plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new KitchenRunnable(plugin), 200, 100);
         }
         if (plugin.getConfig().getBoolean("junk.enabled") && plugin.getConfig().getLong("junk.return") > 0) {
             long delay = plugin.getConfig().getLong("junk.return") * 20;
