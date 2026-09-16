@@ -137,7 +137,7 @@ public class ResultSetChunkTickets {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);
             statement.setInt(1, id);
-            rs = statement.executeQuery(query);
+            rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
                     count = rs.getInt("count");

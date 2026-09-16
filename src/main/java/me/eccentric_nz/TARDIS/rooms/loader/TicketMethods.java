@@ -42,7 +42,7 @@ import java.util.*;
 
 public class TicketMethods {
 
-    public final HashMap<UUID, TicketData> ticket_data = new HashMap<>();
+    public final HashMap<UUID, TicketData> ticketData = new HashMap<>();
     public final HashMap<UUID, Integer> ids = new HashMap<>();
     public final List<UUID> hasLoadedMap = new ArrayList<>();
     protected final TARDIS plugin;
@@ -85,7 +85,7 @@ public class TicketMethods {
                                 Material.valueOf(jsonz.get(z).getAsString())
                         );
                         String name = TARDISARS.ARSFor(jsonz.get(z).getAsString()).getDescriptiveName();
-                        is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(name));
+                        is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(name));
                         is.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text(hasTicket ? "Loaded" : "Not loaded")).build());
                         grid[y][x][z] = is;
                     }
@@ -173,7 +173,7 @@ public class TicketMethods {
      * @param is         the item stack in the slot
      */
     public void updateTickets(UUID playerUUID, int slot, ItemStack is) {
-        TicketData td = ticket_data.get(playerUUID);
+        TicketData td = ticketData.get(playerUUID);
         int yy = td.getY();
         ItemStack[][][] grid = td.getData();
         int[] coords = getCoords(slot, td);
@@ -196,18 +196,24 @@ public class TicketMethods {
             // set type and lore for other item stacks
             ItemLore lore = ItemLore.lore().addLine(Component.text("Not loaded")).build();
             String otherOneName = ComponentUtils.stripColour(otherOne.getData(DataComponentTypes.CUSTOM_NAME));
+            if (otherOneName.equals("Empty slot")) {
+                otherOneName = "SLOT";
+            }
             TARDISARS ars1 = TARDISARS.valueOf(otherOneName.toUpperCase(Locale.ROOT));
             ItemStack one = otherOne.withType(Material.valueOf(ars1.getMaterial()));
             one.setData(DataComponentTypes.LORE, lore);
             grid[otherYs[0]][newx][newz] = one;
             String otherTwoName = ComponentUtils.stripColour(otherTwo.getData(DataComponentTypes.CUSTOM_NAME));
+            if (otherTwoName.equals("Empty slot")) {
+                otherTwoName = "SLOT";
+            }
             TARDISARS ars2 = TARDISARS.valueOf(otherTwoName.toUpperCase(Locale.ROOT));
             ItemStack two = otherTwo.withType(Material.valueOf(ars2.getMaterial()));
             one.setData(DataComponentTypes.LORE, lore);
             grid[otherYs[1]][newx][newz] = two;
         }
         td.setData(grid);
-        ticket_data.put(playerUUID, td);
+        ticketData.put(playerUUID, td);
     }
 
     private int[] getYs(int yy) {
@@ -248,13 +254,13 @@ public class TicketMethods {
      * @param playerUUID the UUID of the player using the GUI
      */
     public void switchLevel(InventoryView view, int slot, UUID playerUUID) {
-        TicketData td = ticket_data.get(playerUUID);
+        TicketData td = ticketData.get(playerUUID);
         for (int i = 27; i < 30; i++) {
             Material material = Material.WHITE_WOOL;
             if (i == slot) {
                 material = Material.YELLOW_WOOL;
                 td.setY(i - 27);
-                ticket_data.put(playerUUID, td);
+                ticketData.put(playerUUID, td);
             }
             ItemStack is = ItemStack.of(material, 1);
             is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(levels[i - 27]));
@@ -271,8 +277,8 @@ public class TicketMethods {
         UUID playerUUID = player.getUniqueId();
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             hasLoadedMap.remove(playerUUID);
-            if (ticket_data.containsKey(playerUUID)) {
-                ticket_data.remove(playerUUID);
+            if (ticketData.containsKey(playerUUID)) {
+                ticketData.remove(playerUUID);
                 ids.remove(playerUUID);
             }
             player.closeInventory();
@@ -305,7 +311,7 @@ public class TicketMethods {
             td.setS(rs.getSouth());
             td.setY(rs.getLayer());
             td.setId(rs.getId());
-            ticket_data.put(playerUUID, td);
+            ticketData.put(playerUUID, td);
             setMap(rs.getLayer(), rs.getEast(), rs.getSouth(), playerUUID, view);
             hasLoadedMap.add(playerUUID);
             setLore(view, 10, plugin.getLanguage().getString("ARS_MAP_LOADED", "Map LOADED"));
@@ -314,7 +320,7 @@ public class TicketMethods {
     }
 
     public void setMap(int ul, int ue, int us, UUID playerUUID, InventoryView view) {
-        TicketData data = ticket_data.get(playerUUID);
+        TicketData data = ticketData.get(playerUUID);
         ItemStack[][][] grid = data.getData();
         ItemStack[][] layer = grid[ul];
         ItemStack[][] map = sliceGrid(layer, ue, us);
@@ -339,8 +345,8 @@ public class TicketMethods {
      * @param slot       the slot number to update
      */
     public void moveMap(UUID playerUUID, InventoryView view, int slot) {
-        if (ticket_data.containsKey(playerUUID)) {
-            TicketData td = ticket_data.get(playerUUID);
+        if (ticketData.containsKey(playerUUID)) {
+            TicketData td = ticketData.get(playerUUID);
             int ue, us;
             switch (slot) {
                 case 1 -> {
@@ -364,7 +370,7 @@ public class TicketMethods {
             setLore(view, slot, null);
             td.setE(ue);
             td.setS(us);
-            ticket_data.put(playerUUID, td);
+            ticketData.put(playerUUID, td);
         } else {
             setLore(view, slot, plugin.getLanguage().getString("ARS_LOAD", "You need to load the map first!"));
         }
@@ -382,7 +388,7 @@ public class TicketMethods {
     }
 
     public void processTickets(UUID playerUUID, Player player) {
-        if (ticket_data.containsKey(playerUUID)) {
+        if (ticketData.containsKey(playerUUID)) {
             int id = ids.get(playerUUID);
             // get the TARDIS world
             World world = player.getWorld();
@@ -395,7 +401,7 @@ public class TicketMethods {
             int cx = (coords.getCentreX() >> 4) - 4; // chunk x coord at [0][0][0] in ARS grid
             int cz = (coords.getCentreZ() >> 4) - 4; // chunk z coord at [0][0][0] in ARS grid
             // get current tickets from grid
-            TicketData td = ticket_data.get(playerUUID);
+            TicketData td = ticketData.get(playerUUID);
             ItemStack[][][] grid = td.getData();
             // process the grid - only need to process map layer 0
             for (int x = 0; x < 9; x++) {

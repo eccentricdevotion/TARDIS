@@ -16,13 +16,10 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.UUID;
 
 public class ChunkLoaderGUIListener extends TicketMethods implements Listener {
-
-    public final HashMap<UUID, TicketData> ticketData = new HashMap<>();
 
     public ChunkLoaderGUIListener(TARDIS plugin) {
         super(plugin);
