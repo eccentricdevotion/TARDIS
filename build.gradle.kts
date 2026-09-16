@@ -12,7 +12,7 @@ plugins {
 
 group = "me.eccentric_nz"
 val buildNumber = "-b${System.getenv("BUILD_NUMBER") ?: (System.getenv("SHORT_SHA") ?: ".local")}"
-version = "7.0.4${buildNumber}"
+version = "7.1.0${buildNumber}"
 
 repositories {
     mavenCentral()
