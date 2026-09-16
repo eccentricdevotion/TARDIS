@@ -339,7 +339,7 @@ public class TARDISStaticUtils {
      * @return true if the ItemStack is a Sonic Screwdriver
      */
     public static boolean isSonic(ItemStack is) {
-        return is != null && ComponentUtils.isNamed(is, "Sonic Screwdriver");
+        return !is.isEmpty() && ComponentUtils.isNamed(is, "Sonic Screwdriver");
     }
 
     /**

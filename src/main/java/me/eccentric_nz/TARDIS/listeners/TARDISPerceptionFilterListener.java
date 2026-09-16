@@ -91,7 +91,7 @@ public class TARDISPerceptionFilterListener implements Listener {
             int slot = event.getRawSlot();
             if (slot == 6) {
                 ItemStack is = event.getCurrentItem();
-                if (is != null && ComponentUtils.isNamed(is, "Perception Filter")) {
+                if (ComponentUtils.isNamed(is, "Perception Filter")) {
                     if (event.getAction().equals(InventoryAction.PICKUP_ALL) || event.getAction().equals(InventoryAction.PLACE_ALL)) {
                         plugin.getFilter().removePerceptionFilter((Player) event.getWhoClicked());
                     }

@@ -42,7 +42,7 @@ public class ChameleonSignAction {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "Chameleon Circuit");
             return;
         }
-        if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(uuid)) {
+        if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(player)) {
             new FloodgateChameleonCircuitForm(plugin, uuid, id, tardis.getPreset()).send();
         } else {
             new ChameleonControl(plugin).openGUI(player, id, tardis.getAdaption(), tardis.getPreset(), tardis.getItemPreset());

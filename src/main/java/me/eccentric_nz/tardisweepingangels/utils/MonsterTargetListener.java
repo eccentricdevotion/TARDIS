@@ -38,7 +38,7 @@ public class MonsterTargetListener implements Listener {
 
     private static boolean isWearingMonsterHead(Player player, Material material) {
         ItemStack is = player.getInventory().getHelmet();
-        if (is != null && is.getType().equals(material)) {
+        if (!is.isEmpty() && is.getType().equals(material)) {
             return is.getPersistentDataContainer().has(TARDIS.plugin.getHeadBlockKey(), PersistentDataType.INTEGER);
         }
         return false;
@@ -230,7 +230,7 @@ public class MonsterTargetListener implements Listener {
                 // set angry head
                 EntityEquipment ee = monster.getEquipment();
                 ItemStack head = ee.getHelmet();
-                if (head != null) {
+                if (!head.isEmpty()) {
                     head.setData(DataComponentTypes.ITEM_MODEL, SmilerVariant.SMILER_ANGRY_HEAD.getKey());
                     ee.setHelmet(head);
                 }
@@ -239,7 +239,7 @@ public class MonsterTargetListener implements Listener {
                 // set smiling head
                 EntityEquipment ee = monster.getEquipment();
                 ItemStack head = ee.getHelmet();
-                if (head != null) {
+                if (!head.isEmpty()) {
                     head.setData(DataComponentTypes.ITEM_MODEL, SmilerVariant.SMILER_HEAD.getKey());
                     ee.setHelmet(head);
                 }

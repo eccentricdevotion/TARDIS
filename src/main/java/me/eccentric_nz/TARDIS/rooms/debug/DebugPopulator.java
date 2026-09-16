@@ -21,7 +21,7 @@ import io.papermc.paper.datacomponent.item.CustomModelData;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.exterior.BuilderUtility;
-import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPostioning;
+import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPositioning;
 import me.eccentric_nz.TARDIS.builders.interior.TIPSData;
 import me.eccentric_nz.TARDIS.console.ConsoleBuilder;
 import me.eccentric_nz.TARDIS.customblocks.TARDISBlockDisplayItem;
@@ -79,7 +79,7 @@ public class DebugPopulator {
 
     public void createBase(boolean clear) {
         // TIPS slot -50
-        TIPSData tipsData = new TARDISInteriorPostioning(plugin).getTIPSData(-50);
+        TIPSData tipsData = new TARDISInteriorPositioning(plugin).getTIPSData(-50);
         int x = tipsData.getCentreX();
         int z = tipsData.getCentreZ();
         plugin.debug("Debug Preview spawn => x" + x + ", y65, z" + z);

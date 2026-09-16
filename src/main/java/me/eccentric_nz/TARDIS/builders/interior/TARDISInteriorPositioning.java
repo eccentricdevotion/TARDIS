@@ -40,11 +40,11 @@ import java.util.List;
 /**
  * @author eccentric_nz
  */
-public class TARDISInteriorPostioning {
+public class TARDISInteriorPositioning {
 
     private final TARDIS plugin;
 
-    public TARDISInteriorPostioning(TARDIS plugin) {
+    public TARDISInteriorPositioning(TARDIS plugin) {
         this.plugin = plugin;
     }
 

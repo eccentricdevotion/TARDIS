@@ -29,6 +29,13 @@ public class TARDISFloodgate {
 
     private static final Pattern VALID_KEY = Pattern.compile("[a-z0-9/._-]+");
 
+    public static boolean isBedrockPlayer(Player player) {
+        if (player == null) {
+            return false;
+        }
+        return FloodgateApi.getInstance().isFloodgatePlayer(player.getUniqueId());
+    }
+
     public static boolean isBedrockPlayer(UUID uuid) {
         return FloodgateApi.getInstance().isFloodgatePlayer(uuid);
     }

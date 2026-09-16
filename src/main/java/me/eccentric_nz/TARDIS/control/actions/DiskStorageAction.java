@@ -92,7 +92,7 @@ public class DiskStorageAction {
         }
         player.openInventory(new StorageInventory(plugin, Storage.SAVE_1.getTitle(), stack).getInventory());
         // update note block if it's not BARRIER + Item Display
-        if (!TARDISFloodgate.isFloodgateEnabled() || !TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) {
+        if (!TARDISFloodgate.isFloodgateEnabled() || !TARDISFloodgate.isBedrockPlayer(player)) {
             if (block.getType().equals(Material.NOTE_BLOCK) || block.getType().equals(Material.MUSHROOM_STEM)) {
                 block.setBlockData(TARDISConstants.BARRIER, true);
                 TARDISDisplayItemUtils.set(TARDISBlockDisplayItem.DISK_STORAGE, block, id);

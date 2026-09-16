@@ -46,14 +46,14 @@ public class TARDISTravelGUI {
         }
         if (which.equals("biome")) {
             // open biomes GUI
-            if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) {
+            if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(player)) {
                 new FloodgateBiomesForm(plugin, player.getUniqueId(), id).send();
             } else {
                 player.openInventory(new TelepathicBiome(plugin, id).getInventory());
             }
         } else {
             // open Structure GUI
-            if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) {
+            if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(player)) {
                 new FloodgateStructuresForm(plugin, player.getUniqueId(), id).send();
             } else {
                 player.openInventory(new TelepathicStructure(plugin).getInventory());

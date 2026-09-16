@@ -53,7 +53,7 @@ public class SQL_CREATE {
 
             "CREATE TABLE IF NOT EXISTS %scolour (colour_id int(11) NOT NULL AUTO_INCREMENT, tardis_id int(11) DEFAULT '0', red int(3) DEFAULT '0', green int(3) DEFAULT '0', blue int(3) DEFAULT '0', PRIMARY KEY (colour_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
-            "CREATE TABLE IF NOT EXISTS %schunks (chunk_id int(11) NOT NULL AUTO_INCREMENT, tardis_id int(11) DEFAULT '0', world varchar(64) DEFAULT '0', x int(7) DEFAULT '0', z int(7) DEFAULT '0', PRIMARY KEY (chunk_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
+            "CREATE TABLE IF NOT EXISTS %schunks (chunk_id int(11) NOT NULL AUTO_INCREMENT, tardis_id int(11) DEFAULT '0', uuid varchar(48) DEFAULT '', world varchar(64) DEFAULT '0', x int(7) DEFAULT '0', z int(7) DEFAULT '0', ticket int(1) DEFAULT '0', PRIMARY KEY (chunk_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
             "CREATE TABLE IF NOT EXISTS %scondenser (c_id int(11) NOT NULL AUTO_INCREMENT, tardis_id int(11) DEFAULT '0', block_data varchar(32) DEFAULT '', block_count int(11) DEFAULT '0', PRIMARY KEY (c_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 

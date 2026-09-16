@@ -81,7 +81,7 @@ public class TARDISThemeButton {
         tud.setLevel(level);
         plugin.getTrackerKeeper().getUpgrades().put(uuid, tud);
         // open the upgrade menu
-        if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(uuid)) {
+        if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(player)) {
             new FloodgateDestinationTerminalForm(plugin, uuid).send();
         } else {
             player.openInventory(new PluginThemeInventory(plugin, player, current_console.getPermission(), level).getInventory());

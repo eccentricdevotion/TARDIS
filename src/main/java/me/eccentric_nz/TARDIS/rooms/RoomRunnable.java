@@ -684,6 +684,9 @@ public class RoomRunnable implements Runnable {
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, ()-> ShelfSetter.stock(block, v.get("items").getAsJsonArray()),3L);
                     }
                 }
+                if (type.equals(Material.YELLOW_WALL_BANNER) && room.equals("GOLEM")) {
+                    plugin.getQueryFactory().insertControl(tardis_id, Control.CHUNK_LOADER.getId(), new Location(world, startx, starty, startz).toString(), 0);
+                }
                 if (type.equals(Material.BEEHIVE) && room.equals("APIARY")) {
                     HashMap<String, Object> seta = new HashMap<>();
                     seta.put("apiary", world.getKey().asString() + ":" + startx + ":" + (starty + 1) + ":" + startz);
@@ -702,14 +705,16 @@ public class RoomRunnable implements Runnable {
                     plugin.getQueryFactory().insertControl(tardis_id, Control.CONDENSER.getId(), new Location(world, startx, starty, startz).toString(), 1);
                 }
                 // set library
-                if (type.equals(Material.CHEST) && room.equals("LIBRARY")) {
+                if (type.equals(Material.CHEST) && (room.equals("KITCHEN") || room.equals("LIBRARY") || room.equals("SURGERY"))) {
                     Location pos = new Location(world, startx, starty, startz);
                     HashMap<String, Object> setl = new HashMap<>();
                     setl.put("tardis_id", tardis_id);
                     setl.put("location", pos.toString());
-                    setl.put("chest_type", "LIBRARY");
+                    setl.put("chest_type", room);
                     plugin.getQueryFactory().doInsert("vaults", setl);
-                    library = pos.clone().add(-8, -4, -8);
+                    if (room.equals("LIBRARY")) {
+                        library = pos.clone().add(-8, -4, -8);
+                    }
                 }
                 if (room.equals("CLOISTER")) {
                     // cloister red sandstone stairs, glow lichen

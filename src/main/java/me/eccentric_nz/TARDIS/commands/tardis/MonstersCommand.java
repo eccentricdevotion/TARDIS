@@ -65,6 +65,7 @@ public class MonstersCommand {
             // get TARDIS console chunks
             HashMap<String, Object> where = new HashMap<>();
             where.put("tardis_id", id);
+            where.put("ticket", 0);
             ResultSetChunks rsc = new ResultSetChunks(plugin, where, true);
             if (rsc.resultSet()) {
                 World world = plugin.getServer().getWorld(Key.key(rsc.getWorld()));

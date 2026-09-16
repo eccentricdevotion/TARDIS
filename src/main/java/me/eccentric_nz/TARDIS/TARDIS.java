@@ -118,7 +118,7 @@ public class TARDIS extends JavaPlugin {
     private final HashMap<String, String> versions = new HashMap<>();
     private final String versionRegex = "(\\d+[.])+\\d+";
     private final Pattern versionPattern = Pattern.compile(versionRegex);
-    private final String serverStr = "26.2";
+    private final String serverStr = "26.3";
     private TARDISMessage messenger;
     private ChatGUI jsonKeeper;
     private SkinChanger skinChanger;
@@ -458,7 +458,7 @@ public class TARDIS extends JavaPlugin {
                 new TARDISStats(this).startMetrics();
             }, 200L);
         } else {
-            getLogger().log(Level.SEVERE, "This plugin requires Spigot/Paper " + minVersion + " or higher, disabling...");
+            getLogger().log(Level.SEVERE, "This plugin requires Paper " + minVersion + " or higher, disabling...");
             pm.disablePlugin(this);
         }
     }

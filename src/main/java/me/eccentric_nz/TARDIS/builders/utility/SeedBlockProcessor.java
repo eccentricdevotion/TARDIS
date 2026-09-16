@@ -25,7 +25,7 @@ import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.exterior.BuildData;
 import me.eccentric_nz.TARDIS.builders.interior.InteriorBuildRunnable;
 import me.eccentric_nz.TARDIS.builders.interior.TARDISBuildData;
-import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPostioning;
+import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPositioning;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.resultset.*;
@@ -116,7 +116,6 @@ public class SeedBlockProcessor {
                 String cw;
                 World chunkworld;
                 boolean tips = false;
-                // TODO name worlds without player name
                 if (plugin.getConfig().getBoolean("creation.create_worlds") && !plugin.getConfig().getBoolean("creation.default_world")) {
                     // create a new world to store this TARDIS
                     if (TARDISFloodgate.shouldReplacePrefix(uniqueId)) {
@@ -163,7 +162,7 @@ public class SeedBlockProcessor {
                 // get TIPs slot
                 int slot = -1000001;
                 if (tips) {
-                    slot = new TARDISInteriorPostioning(plugin).getFreeSlot();
+                    slot = new TARDISInteriorPositioning(plugin).getFreeSlot();
                     if (plugin.getConfig().getString("creation.tips_next", "HIGHEST").equalsIgnoreCase("FREE")) {
                         TARDISBuilderInstanceKeeper.getTipsSlots().add(slot);
                     }

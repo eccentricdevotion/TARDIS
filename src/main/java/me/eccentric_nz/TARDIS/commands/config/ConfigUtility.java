@@ -58,6 +58,7 @@ public class ConfigUtility {
             put("check_blocks_before_upgrade", "desktop");
             put("check_for_home", "creation");
             put("chemistry", "modules");
+            put("chunk_tickets", "allow");
             put("circuits", "difficulty");
             put("create_worlds", "creation");
             put("create_worlds_with_perms", "creation");
@@ -75,6 +76,7 @@ public class ConfigUtility {
             put("guardians", "allow");
             put("hads", "allow");
             put("handles", "allow");
+            put("hunger_and_healing", "allow");
             put("include_default_world", "travel");
             put("invisibility", "allow");
             put("keep_night", "creation");

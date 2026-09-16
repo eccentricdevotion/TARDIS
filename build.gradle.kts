@@ -12,7 +12,7 @@ plugins {
 
 group = "me.eccentric_nz"
 val buildNumber = "-b${System.getenv("BUILD_NUMBER") ?: (System.getenv("SHORT_SHA") ?: ".local")}"
-version = "7.0.4${buildNumber}"
+version = "7.1.0${buildNumber}"
 
 repositories {
     mavenCentral()
@@ -83,7 +83,7 @@ repositories {
 }
 
 dependencies {
-    paperweight.paperDevBundle("26.2.build.+")
+    paperweight.paperDevBundle("26.3.build.+")
     compileOnly("com.sk89q.worldedit:worldedit-core:7.4.4-SNAPSHOT") {
         isTransitive = false
     }

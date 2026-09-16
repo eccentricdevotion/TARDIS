@@ -81,7 +81,7 @@ public class LazarusListener implements Listener {
                     b.getRelative(BlockFace.SOUTH).setBlockData(WALL);
                     b.getRelative(BlockFace.SOUTH).getRelative(BlockFace.UP).setBlockData(WALL);
                     // open the GUI
-                    if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(uuid)) {
+                    if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(player)) {
                         new FloodgateGeneticManipulatorForm(plugin, uuid, b).send();
                     } else {
                         player.openInventory(new LazarusInventory(plugin).getInventory());

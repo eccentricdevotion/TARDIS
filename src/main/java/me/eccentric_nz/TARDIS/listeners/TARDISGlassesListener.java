@@ -54,7 +54,7 @@ public class TARDISGlassesListener implements Listener {
             Player player = (Player) event.getPlayer();
             PlayerInventory pi = player.getInventory();
             ItemStack is = pi.getHelmet();
-            if (is != null) {
+            if (!is.isEmpty()) {
                 if (is3DGlasses(is)) {
                     if (!plugin.getTrackerKeeper().getSpectacleWearers().contains(player.getUniqueId())) {
                         player.removePotionEffect(PotionEffectType.NIGHT_VISION);
@@ -78,10 +78,10 @@ public class TARDISGlassesListener implements Listener {
                 PlayerInventory pi = p.getInventory();
                 ItemStack is = pi.getHelmet();
                 boolean g = is3DGlasses(is);
-                if ((is == null || !g) && p.hasPotionEffect(PotionEffectType.NIGHT_VISION)) {
+                if ((!is.isEmpty() || !g) && p.hasPotionEffect(PotionEffectType.NIGHT_VISION)) {
                     p.removePotionEffect(PotionEffectType.NIGHT_VISION);
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new removeFromMap(uuid), 20L);
-                } else if (is != null && g) {
+                } else if (!is.isEmpty() && g) {
                     // damage the glasses so they run out
                     int d = is.getData(DataComponentTypes.DAMAGE).intValue() + 1;
                     if (d >= 56) {
@@ -101,7 +101,7 @@ public class TARDISGlassesListener implements Listener {
     }
 
     private boolean is3DGlasses(ItemStack is) {
-        return is != null && ComponentUtils.isNamed(is, "3-D Glasses");
+        return ComponentUtils.isNamed(is, "3-D Glasses");
     }
 
     class removeFromMap implements Runnable {

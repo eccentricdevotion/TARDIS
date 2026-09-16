@@ -120,8 +120,8 @@ public class TARDISGeneralPrefsListener extends TARDISMenuListener {
                 boolean bool = (ComponentUtils.stripColour(lore.getFirst()).equals(plugin.getLanguage().getString("SET_OFF", "OFF")));
                 if (bool) {
                     // check power
-                    ResultSetArtronLevel rsal = new ResultSetArtronLevel(plugin, uuid.toString());
-                    if (rsal.resultset()) {
+                    ResultSetArtronLevel rsal = new ResultSetArtronLevel(plugin);
+                    if (rsal.fromUUID(uuid.toString())) {
                         if (rsal.getArtronLevel() <= plugin.getArtronConfig().getInt("standby")) {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "POWER_LOW");
                             return;

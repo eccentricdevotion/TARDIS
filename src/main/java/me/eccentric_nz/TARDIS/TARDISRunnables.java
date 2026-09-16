@@ -29,6 +29,8 @@ import me.eccentric_nz.TARDIS.junk.JunkReturnRunnable;
 import me.eccentric_nz.TARDIS.move.SpectaclesRunnable;
 import me.eccentric_nz.TARDIS.move.TARDISMonsterRunnable;
 import me.eccentric_nz.TARDIS.rooms.ZeroRoomRunnable;
+import me.eccentric_nz.TARDIS.rooms.loader.TicketRunnable;
+import me.eccentric_nz.TARDIS.rooms.surgery.SurgeryRunnable;
 import me.eccentric_nz.TARDIS.siegemode.SiegeRunnable;
 import me.eccentric_nz.TARDIS.utility.HumSounds;
 import me.eccentric_nz.TARDIS.utility.VaultChecker;
@@ -85,6 +87,10 @@ public class TARDISRunnables {
         if (plugin.getConfig().getBoolean("allow.zero_room")) {
             plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new ZeroRoomRunnable(plugin), 20, plugin.getConfig().getLong("preferences.heal_speed"));
         }
+        // starts a repeating task that removes Artron from TARDIS with active chunk tickets
+        if (plugin.getConfig().getBoolean("allow.chunk_tickets")) {
+            plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new TicketRunnable(plugin), 1200,plugin.getArtronConfig().getLong("ticket_interval"));
+        }
         // removes unused drop chest database records from the vaults table.
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new VaultChecker(plugin), 2400);
         plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new TARDISMonsterRunnable(plugin), 2400, 2400);
@@ -93,6 +99,9 @@ public class TARDISRunnables {
         }
         if (plugin.getConfig().getInt("allow.force_field") > 0) {
             plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new ForceField(plugin), 20, 5);
+        }
+        if (plugin.getConfig().getBoolean("allow.force_fieldhunger_and_healing")) {
+            plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new SurgeryRunnable(plugin), 100, 100);
         }
         if (plugin.getConfig().getBoolean("junk.enabled") && plugin.getConfig().getLong("junk.return") > 0) {
             long delay = plugin.getConfig().getLong("junk.return") * 20;

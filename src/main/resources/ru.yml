@@ -619,7 +619,7 @@ LOST_IN_VORTEX: "TARDIS все еще в пути... вы потеряетесь
 MALFUNCTION: "Произошла неисправность и был включен аварийный стояночный тормоз! Просканируйте местоположение перед выездом!"
 MAP_COPYING: "Попытка скопировать файл карты (%s) в правильный каталог..."
 MAP_NOT_FOUND: "Не удалось найти файл карты TARDIS %s..."
-MATERIAL_NOT_VALID: "Это недопустимый материал! Попробуйте проверить https://hub.spigotmc.org/stash/projects/SPIGOT/repos/bukkit/browse/src/main/java/org/bukkit/Material.java"
+MATERIAL_NOT_VALID: "Это недопустимый материал! Попробуйте проверить https://jd.papermc.io/paper/26.2/org/bukkit/Material.html"
 MAT_MISSING: "Схема материализации отсутствует в консоли! нация будет установлена."
 MONSTER: "%s вошел в TARDIS!"
 NEXT_NOT_FOUND: "Не удалось получить 'следующий' пункт назначения TARDIS!"

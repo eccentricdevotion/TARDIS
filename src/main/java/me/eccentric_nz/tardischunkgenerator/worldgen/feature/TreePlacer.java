@@ -21,15 +21,17 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelWriter;
 import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.GrowingPlantHeadBlock;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate;
-import net.minecraft.world.level.levelgen.feature.WeepingVinesFeature;
 import org.bukkit.Bukkit;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.type.Leaves;
@@ -37,19 +39,7 @@ import org.bukkit.craftbukkit.block.data.CraftBlockData;
 
 public class TreePlacer {
 
-    private final BlockPredicate predicate = BlockPredicate.matchesBlocks(
-            Blocks.OAK_SAPLING, Blocks.SPRUCE_SAPLING, Blocks.BIRCH_SAPLING, Blocks.JUNGLE_SAPLING, Blocks.ACACIA_SAPLING,
-            Blocks.CHERRY_SAPLING, Blocks.DARK_OAK_SAPLING, Blocks.MANGROVE_PROPAGULE, Blocks.DANDELION, Blocks.TORCHFLOWER,
-            Blocks.POPPY, Blocks.BLUE_ORCHID, Blocks.ALLIUM, Blocks.AZURE_BLUET, Blocks.RED_TULIP, Blocks.ORANGE_TULIP,
-            Blocks.WHITE_TULIP, Blocks.PINK_TULIP, Blocks.OXEYE_DAISY, Blocks.CORNFLOWER, Blocks.WITHER_ROSE,
-            Blocks.LILY_OF_THE_VALLEY, Blocks.BROWN_MUSHROOM, Blocks.RED_MUSHROOM, Blocks.WHEAT, Blocks.SUGAR_CANE,
-            Blocks.ATTACHED_PUMPKIN_STEM, Blocks.ATTACHED_MELON_STEM, Blocks.PUMPKIN_STEM, Blocks.MELON_STEM, Blocks.LILY_PAD,
-            Blocks.NETHER_WART, Blocks.COCOA, Blocks.CARROTS, Blocks.POTATOES, Blocks.CHORUS_PLANT, Blocks.CHORUS_FLOWER,
-            Blocks.TORCHFLOWER_CROP, Blocks.PITCHER_CROP, Blocks.BEETROOTS, Blocks.SWEET_BERRY_BUSH, Blocks.WARPED_FUNGUS,
-            Blocks.CRIMSON_FUNGUS, Blocks.WEEPING_VINES, Blocks.WEEPING_VINES_PLANT, Blocks.TWISTING_VINES,
-            Blocks.TWISTING_VINES_PLANT, Blocks.CAVE_VINES, Blocks.CAVE_VINES_PLANT, Blocks.SPORE_BLOSSOM, Blocks.AZALEA,
-            Blocks.FLOWERING_AZALEA, Blocks.MOSS_CARPET, Blocks.PINK_PETALS, Blocks.BIG_DRIPLEAF, Blocks.BIG_DRIPLEAF_STEM,
-            Blocks.SMALL_DRIPLEAF);
+    private final BlockPredicate predicate = BlockPredicate.matchesBlocks(Blocks.OAK_SAPLING, Blocks.SPRUCE_SAPLING, Blocks.BIRCH_SAPLING, Blocks.JUNGLE_SAPLING, Blocks.ACACIA_SAPLING, Blocks.CHERRY_SAPLING, Blocks.DARK_OAK_SAPLING, Blocks.MANGROVE_PROPAGULE, Blocks.DANDELION, Blocks.TORCHFLOWER, Blocks.POPPY, Blocks.BLUE_ORCHID, Blocks.ALLIUM, Blocks.AZURE_BLUET, Blocks.RED_TULIP, Blocks.ORANGE_TULIP, Blocks.WHITE_TULIP, Blocks.PINK_TULIP, Blocks.OXEYE_DAISY, Blocks.CORNFLOWER, Blocks.WITHER_ROSE, Blocks.LILY_OF_THE_VALLEY, Blocks.BROWN_MUSHROOM, Blocks.RED_MUSHROOM, Blocks.WHEAT, Blocks.SUGAR_CANE, Blocks.ATTACHED_PUMPKIN_STEM, Blocks.ATTACHED_MELON_STEM, Blocks.PUMPKIN_STEM, Blocks.MELON_STEM, Blocks.LILY_PAD, Blocks.NETHER_WART, Blocks.COCOA, Blocks.CARROTS, Blocks.POTATOES, Blocks.CHORUS_PLANT, Blocks.CHORUS_FLOWER, Blocks.TORCHFLOWER_CROP, Blocks.PITCHER_CROP, Blocks.BEETROOTS, Blocks.SWEET_BERRY_BUSH, Blocks.WARPED_FUNGUS, Blocks.CRIMSON_FUNGUS, Blocks.WEEPING_VINES, Blocks.WEEPING_VINES_PLANT, Blocks.TWISTING_VINES, Blocks.TWISTING_VINES_PLANT, Blocks.CAVE_VINES, Blocks.CAVE_VINES_PLANT, Blocks.SPORE_BLOSSOM, Blocks.AZALEA, Blocks.FLOWERING_AZALEA, Blocks.MOSS_CARPET, Blocks.PINK_PETALS, Blocks.BIG_DRIPLEAF, Blocks.BIG_DRIPLEAF_STEM, Blocks.SMALL_DRIPLEAF);
     private final RandomSource random = RandomSource.create();
 
     public void place(TARDISTreeData data, WorldGenLevel level, BlockPos blockPos, ChunkGenerator generator) {
@@ -132,7 +122,7 @@ public class TreePlacer {
     private void placeHat(WorldGenLevel level, RandomSource random, TARDISTreeData data, BlockPos blockPos, int i, boolean b) {
         BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
         BlockData blockData = Bukkit.createBlockData(data.hat());
-        BlockState hat = ((CraftBlockData) blockData).getState();;
+        BlockState hat = ((CraftBlockData) blockData).getState();
         if (blockData instanceof Leaves leaves) {
             leaves.setPersistent(true);
             hat = ((CraftBlockData) leaves).getState();
@@ -210,14 +200,28 @@ public class TreePlacer {
         }
     }
 
-    private void tryPlaceWeepingVines(BlockPos pos, WorldGenLevel level, RandomSource random) {
-        BlockPos.MutableBlockPos down = pos.mutable().move(Direction.DOWN);
-        if (level.isEmptyBlock(down)) {
-            int i = Mth.nextInt(random, 1, 5);
+    private void tryPlaceWeepingVines(BlockPos hatBlockPos, LevelAccessor level, RandomSource random) {
+        BlockPos.MutableBlockPos placePos = hatBlockPos.mutable().move(Direction.DOWN);
+        if (level.isEmptyBlock(placePos)) {
+            int goalVineHeight = Mth.nextInt(random, 1, 5);
             if (random.nextInt(7) == 0) {
-                i *= 2;
+                goalVineHeight *= 2;
             }
-            WeepingVinesFeature.placeWeepingVinesColumn(level, random, down, i, 23, 25);
+            placeWeepingVinesColumn(level, random, placePos, goalVineHeight);
+        }
+    }
+
+    private void placeWeepingVinesColumn(LevelAccessor level, RandomSource random, BlockPos origin, int totalHeight) {
+        BlockPos.MutableBlockPos placePos = origin.mutable();
+        for (int height = 0; height <= totalHeight; height++) {
+            if (level.isEmptyBlock(placePos)) {
+                if (height == totalHeight || !level.isEmptyBlock(placePos.below())) {
+                    level.setBlock(placePos, Blocks.WEEPING_VINES.defaultBlockState().setValue(GrowingPlantHeadBlock.AGE, Mth.nextInt(random, 23, 25)), Block.UPDATE_CLIENTS);
+                    break;
+                }
+                level.setBlock(placePos, Blocks.WEEPING_VINES_PLANT.defaultBlockState(), Block.UPDATE_CLIENTS);
+            }
+            placePos.move(Direction.DOWN);
         }
     }
 

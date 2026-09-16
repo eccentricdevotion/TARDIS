@@ -54,7 +54,12 @@ public class StructureUtilities {
         return current;
     }
 
-    private static final List<Structure> VILLAGES = List.of(Structure.VILLAGE_DESERT, Structure.VILLAGE_PLAINS, Structure.VILLAGE_SAVANNA, Structure.VILLAGE_SNOWY, Structure.VILLAGE_TAIGA);
+    private static final List<Structure> VILLAGES = List.of(
+            Structure.VILLAGE_DESERT,
+            Structure.VILLAGE_PLAINS,
+            Structure.VILLAGE_SAVANNA,
+            Structure.VILLAGE_SNOWY,
+            Structure.VILLAGE_TAIGA);
 
     public static void randomVillage(TARDIS plugin, Player player, int id) {
         if (doChecks(plugin, player, id)) {

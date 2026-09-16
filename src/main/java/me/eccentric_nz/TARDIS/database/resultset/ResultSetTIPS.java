@@ -76,7 +76,7 @@ public class ResultSetTIPS {
     }
 
     /**
-     * Get the highest TIPS slot number
+     * Get the TIPS slot number for the specified tardis_id
      */
     public int getSlot(int id) {
         PreparedStatement statement = null;

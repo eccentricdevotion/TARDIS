@@ -44,7 +44,7 @@ public class TARDISInfoMenuButton {
         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, player.getUniqueId().toString());
         if (rsp.resultSet() && rsp.isInfoOn()) {
             // open TIS GUI
-            if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) {
+            if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(player)) {
                 new FloodgateIndexFileForm(plugin, player.getUniqueId()).send();
             } else {
                 ResultSetPlayerPrefs rspp = new ResultSetPlayerPrefs(plugin, player.getUniqueId().toString());

@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.destroyers;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISDestructionEvent;
-import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPostioning;
+import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPositioning;
 import me.eccentric_nz.TARDIS.builders.interior.TIPSData;
 import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -271,7 +271,7 @@ public class Exterminator {
 
     private void removeZeroRoom(int slot, boolean hasZero) {
         if (slot != -1000001 && plugin.getConfig().getBoolean("allow.zero_room") && hasZero) {
-            TARDISInteriorPostioning tips = new TARDISInteriorPostioning(plugin);
+            TARDISInteriorPositioning tips = new TARDISInteriorPositioning(plugin);
             TIPSData coords = tips.getTIPSData(slot);
             World w = plugin.getServer().getWorld(Key.key("tardis_zero_room"));
             if (w != null) {
