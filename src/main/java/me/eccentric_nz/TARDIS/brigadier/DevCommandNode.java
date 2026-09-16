@@ -503,6 +503,13 @@ public class DevCommandNode {
                                     }
                                     return Command.SINGLE_SUCCESS;
                                 })))
+                .then(Commands.literal("health")
+                        .executes(ctx -> {
+                            if (ctx.getSource().getSender() instanceof Player player) {
+                                new HealthHungerCommand(plugin).set(player);
+                            }
+                            return Command.SINGLE_SUCCESS;
+                        }))
                 .then(Commands.literal("interaction")
                         .executes(ctx -> {
                             if (ctx.getSource().getSender() instanceof Player player) {

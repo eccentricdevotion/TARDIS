@@ -100,7 +100,7 @@ public class TARDISRunnables {
         if (plugin.getConfig().getInt("allow.force_field") > 0) {
             plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new ForceField(plugin), 20, 5);
         }
-        if (plugin.getConfig().getBoolean("allow.force_fieldhunger_and_healing")) {
+        if (plugin.getConfig().getBoolean("allow.hunger_and_healing")) {
             plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new SurgeryRunnable(plugin), 100, 100);
         }
         if (plugin.getConfig().getBoolean("junk.enabled") && plugin.getConfig().getLong("junk.return") > 0) {

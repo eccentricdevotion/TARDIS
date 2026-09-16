@@ -4,6 +4,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.rooms.kitchen.ChestData;
 import me.eccentric_nz.TARDIS.rooms.kitchen.ChestUtility;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -24,6 +25,9 @@ public class SurgeryRunnable implements Runnable {
     public void run() {
         // get all players in TARDIS worlds
         for (Player player : plugin.getServer().getOnlinePlayers()) {
+            if (player.getGameMode() != GameMode.SURVIVAL) {
+                continue;
+            }
             // must be in a TARDIS
             if (!plugin.getUtils().inTARDISWorld(player)) {
                 continue;
@@ -60,7 +64,7 @@ public class SurgeryRunnable implements Runnable {
                     // remove milk bucket from chest - add one empty bucket
                     ChestUtility.removeItem(Material.MILK_BUCKET, chestData.location());
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "CLEARED");
-                } else if (player.getHealth() < 2.0) { // else is the player's health below 2?
+                } else if (player.getHealth() <= 2.0) { // else is the player's health below 2?
                     // does the surgery chest have healing potions in it?
                     HealingData healing = ChestUtility.getFirstHealingPotion(inventory);
                     if (healing != null) {

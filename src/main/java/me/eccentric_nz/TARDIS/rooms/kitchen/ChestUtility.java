@@ -44,29 +44,27 @@ public class ChestUtility {
     public static void removeItem(Material material, Location location) {
         Block block = location.getBlock();
         if (block.getState() instanceof Chest chest) {
-            int slot = chest.getInventory().first(material);
+            Inventory inventory = chest.getInventory();
+            int slot = inventory.first(material);
             if (slot != -1) {
-                ItemStack item = chest.getInventory().getItem(slot);
+                ItemStack item = inventory.getItem(slot);
+                boolean wasMilk = item.getType() == Material.MILK_BUCKET;
+                boolean wasStew = item.getType() == Material.MUSHROOM_STEW || item.getType() == Material.RABBIT_STEW || item.getType() == Material.BEETROOT_SOUP;
+                boolean wasHoney = item.getType() == Material.HONEY_BOTTLE;
                 int amount = item.getAmount() - 1;
-                if (amount > 1) {
+                if (amount > 0) {
                     item.setAmount(amount);
                 } else {
-                    item = null;
+                    inventory.setItem(slot, null);
                 }
-                chest.getInventory().setItem(slot, item);
-                // return buckets
-                if (item.getType() == Material.MILK_BUCKET) {
-                    chest.getInventory().addItem(ItemStack.of(Material.BUCKET, 1));
+                // return containers
+                if (wasMilk) {
+                    inventory.addItem(ItemStack.of(Material.BUCKET, 1));
+                } else if (wasStew) {
+                    inventory.addItem(ItemStack.of(Material.BOWL, 1));
+                } else if (wasHoney) {
+                    inventory.addItem(ItemStack.of(Material.GLASS_BOTTLE, 1));
                 }
-                // return bowls
-                if (item.getType() == Material.MUSHROOM_STEW || item.getType() == Material.RABBIT_STEW || item.getType() == Material.BEETROOT_SOUP) {
-                    chest.getInventory().addItem(ItemStack.of(Material.BOWL, 1));
-                }
-                // return bottles
-                if (item.getType() == Material.HONEY_BOTTLE) {
-                    chest.getInventory().addItem(ItemStack.of(Material.GLASS_BOTTLE, 1));
-                }
-                chest.update();
             }
         }
     }
