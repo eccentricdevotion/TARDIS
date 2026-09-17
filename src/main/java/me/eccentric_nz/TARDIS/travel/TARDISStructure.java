@@ -48,7 +48,6 @@ public class TARDISStructure {
         netherStructures.put(Structure.FORTRESS, Material.NETHER_BRICKS);
         netherStructures.put(Structure.NETHER_FOSSIL, Material. BONE_BLOCK);
         netherStructures.put(Structure.RUINED_PORTAL_NETHER, Material.OBSIDIAN);
-        // TODO might need to add scroll buttons / separate GUIs per environment
         overworldStructures.put(Structure.ABANDONED_CAMP_BAMBOO_JUNGLE, Material.BAMBOO_FENCE);
         overworldStructures.put(Structure.ABANDONED_CAMP_BIRCH_FOREST, Material.BIRCH_FENCE);
         overworldStructures.put(Structure.ABANDONED_CAMP_CHERRY_GROVE, Material.CHERRY_FENCE);

@@ -228,7 +228,7 @@ val changelogContent: String = latestCommitMessage()
 hangarPublish {
     publications.register("plugin") {
         version.set(project.version as String)
-        channel.set("Snapshot")
+        channel.set("Release")
         id.set("TARDIS")
         apiKey.set(System.getenv("HANGAR_API_TOKEN"))
         platforms {
