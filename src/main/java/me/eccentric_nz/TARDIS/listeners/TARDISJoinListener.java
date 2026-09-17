@@ -166,6 +166,20 @@ public class TARDISJoinListener implements Listener {
                     }
                 }
             }
+            // add chunk tickets for TARDIS interior
+            if (plugin.getConfig().getBoolean("allow.chunk_tickets") && player.hasPermission("tardis.chunk_tickets")) {
+                ResultSetChunkTickets rsct = new ResultSetChunkTickets(plugin);
+                World world = null;
+                if (rsct.fromId(id)) {
+                    for (Ticket t : rsct.getData()) {
+                        if (world == null) {
+                            world = t.world();
+                        }
+                        Chunk chunk = world.getChunkAt(t.x(), t.z());
+                        chunk.addPluginChunkTicket(plugin);
+                    }
+                }
+            }
             long now;
             if (TARDISPermission.hasPermission(player, "tardis.prune.bypass")) {
                 now = Long.MAX_VALUE;
