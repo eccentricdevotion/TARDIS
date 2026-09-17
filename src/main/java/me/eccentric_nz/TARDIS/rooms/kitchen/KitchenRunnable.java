@@ -41,11 +41,11 @@ public class KitchenRunnable implements Runnable {
                 if (player.getFoodLevel() < 2.0) { // else is the player's food level below 2?
                     // does the kitchen chest have edible items in it?
                     for (ItemStack item : inventory.getContents()) {
-                        if (item == null || item.isEmpty()) {
-                            continue;
-                        }
                         if (player.getFoodLevel() > 19.0) {
                             return;
+                        }
+                        if (item == null || item.isEmpty()) {
+                            continue;
                         }
                         Material material = item.getType();
                         if (material.isEdible()
