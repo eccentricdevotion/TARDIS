@@ -168,7 +168,7 @@ public class TARDISJoinListener implements Listener {
                 }
             }
             // add chunk tickets for TARDIS interior
-            if (plugin.getConfig().getBoolean("allow.chunk_tickets") && player.hasPermission("tardis.chunk_tikets")) {
+            if (plugin.getConfig().getBoolean("allow.chunk_tickets") && player.hasPermission("tardis.chunk_tickets")) {
                 ResultSetChunkTickets rsct = new ResultSetChunkTickets(plugin);
                 World world = null;
                 if (rsct.fromId(id)) {
