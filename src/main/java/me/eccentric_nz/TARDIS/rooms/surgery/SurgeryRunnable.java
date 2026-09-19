@@ -9,7 +9,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectTypeCategory;
+import org.bukkit.potion.PotionEffectType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +46,7 @@ public class SurgeryRunnable implements Runnable {
                 // is the effect a harmful one that can be reversed by drinking milk?
                 List<PotionEffect> harmful = new ArrayList<>();
                 for (PotionEffect effect : player.getActivePotionEffects()) {
-                    if (effect.getType().getCategory() == PotionEffectTypeCategory.HARMFUL) {
+                    if (effect.getType().getEffectCategory() == PotionEffectType.Category.HARMFUL) {
                         harmful.add(effect);
                     }
                 }
