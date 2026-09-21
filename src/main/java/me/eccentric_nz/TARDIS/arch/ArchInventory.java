@@ -23,6 +23,7 @@
 package me.eccentric_nz.TARDIS.arch;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.advanced.SerializeInventory;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.entity.Player;
@@ -41,8 +42,8 @@ public class ArchInventory {
     void switchInventories(Player p, int arch) {
         String uuid = p.getUniqueId().toString();
         String name = p.getName();
-        String inv = ArchSerialization.toDatabase(p.getInventory().getContents());
-        String arm = ArchSerialization.toDatabase(p.getInventory().getArmorContents());
+        String inv = SerializeInventory.itemStacksToString(p.getInventory().getContents());
+        String arm = SerializeInventory.itemStacksToString(p.getInventory().getArmorContents());
         Statement statement = null;
         PreparedStatement ps = null;
         ResultSet rsInv = null;
@@ -82,8 +83,8 @@ public class ArchInventory {
             if (rsToInv.next()) {
                 // set their inventory to the saved one
                 try {
-                    ItemStack[] i = ArchSerialization.fromDatabase(rsToInv.getString("inventory"));
-                    ItemStack[] a = ArchSerialization.fromDatabase(rsToInv.getString("armour"));
+                    ItemStack[] i = SerializeInventory.itemStacksFromString(rsToInv.getString("inventory"));
+                    ItemStack[] a = SerializeInventory.itemStacksFromString(rsToInv.getString("armour"));
                     p.getInventory().setContents(i);
                     p.getInventory().setArmorContents(a);
                 } catch (IOException ex) {

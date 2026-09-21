@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import net.kyori.adventure.text.Component;
@@ -23,10 +25,6 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.components.CustomModelDataComponent;
-
-import java.util.List;
 
 /*
 easy_shape:-B-,-F-,-B-
@@ -50,13 +48,8 @@ public class FishFingerRecipe {
 
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.COOKED_COD, 3);
-        ItemMeta im = is.getItemMeta();
-        im.displayName(ComponentUtils.toWhite("Fish Finger"));
-        im.lore(List.of(Component.text("Best eaten with custard!")));
-        CustomModelDataComponent component = im.getCustomModelDataComponent();
-        component.setStrings(List.of("fish_finger"));
-        im.setCustomModelDataComponent(component);
-        is.setItemMeta(im);
+        is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Fish Finger"));
+        is.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text("Best eaten with custard!")).build());
         NamespacedKey key = new NamespacedKey(plugin, "fish_finger");
         ShapedRecipe r = new ShapedRecipe(key, is);
         r.shape("B", "F", "B");

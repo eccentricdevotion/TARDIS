@@ -231,7 +231,7 @@ public class JunkBuilder implements Runnable {
                 HashMap<String, Object> where = new HashMap<>();
                 where.put("tardis_id", bd.getTardisID());
                 HashMap<String, Object> set = new HashMap<>();
-                set.put("world", loc.getWorld().getName());
+                set.put("world", loc.getWorld().getKey().asString());
                 set.put("x", loc.getBlockX());
                 set.put("y", sy);
                 set.put("z", loc.getBlockZ());

@@ -46,7 +46,7 @@ public class ExterminateCommand {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "EXTERMINATE_CHECK");
                 plugin.getMessenger().sendExterminate(player, plugin);
                 // open floodgate gui
-                if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) {
+                if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(player)) {
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new FloodgateExterminateForm(plugin, player.getUniqueId()).send(), 2L);
                 }
             } else {

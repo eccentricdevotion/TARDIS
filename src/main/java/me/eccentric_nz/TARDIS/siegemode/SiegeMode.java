@@ -113,20 +113,20 @@ public class SiegeMode {
                 String[] chu = tardis.getChunk().split(":");
                 if (plugin.getConfig().getInt("siege.breeding") > 0) {
                     List<SiegeArea> breeding = new ArrayList<>();
-                    plugin.getTrackerKeeper().getSiegeBreedingAreas().get(chu[0]).forEach((breeding_area) -> {
+                    plugin.getTrackerKeeper().getSiegeBreedingAreas().get(chu[1]).forEach((breeding_area) -> {
                         if (breeding_area.getId() != id) {
                             breeding.add(breeding_area);
                         }
                     });
                     if (!breeding.isEmpty()) {
-                        plugin.getTrackerKeeper().getSiegeBreedingAreas().put(chu[0], breeding);
+                        plugin.getTrackerKeeper().getSiegeBreedingAreas().put(chu[1], breeding);
                     } else {
-                        plugin.getTrackerKeeper().getSiegeBreedingAreas().remove(chu[0]);
+                        plugin.getTrackerKeeper().getSiegeBreedingAreas().remove(chu[1]);
                     }
                 }
                 if (plugin.getConfig().getInt("siege.growth") > 0) {
                     List<SiegeArea> growth = new ArrayList<>();
-                    List<SiegeArea> siegeAreas = plugin.getTrackerKeeper().getSiegeGrowthAreas().get(chu[0]);
+                    List<SiegeArea> siegeAreas = plugin.getTrackerKeeper().getSiegeGrowthAreas().get(chu[1]);
                     if (siegeAreas != null) {
                         siegeAreas.forEach((growth_area) -> {
                             if (growth_area.getId() != id) {
@@ -135,9 +135,9 @@ public class SiegeMode {
                         });
                     }
                     if (!growth.isEmpty()) {
-                        plugin.getTrackerKeeper().getSiegeGrowthAreas().put(chu[0], growth);
+                        plugin.getTrackerKeeper().getSiegeGrowthAreas().put(chu[1], growth);
                     } else {
-                        plugin.getTrackerKeeper().getSiegeGrowthAreas().remove(chu[0]);
+                        plugin.getTrackerKeeper().getSiegeGrowthAreas().remove(chu[1]);
                     }
                 }
             }
@@ -189,20 +189,20 @@ public class SiegeMode {
                 Chunk c = plugin.getLocationUtils().getTARDISChunk(id);
                 SiegeArea tsa = new SiegeArea(id, c);
                 if (plugin.getConfig().getInt("siege.breeding") > 0) {
-                    List<SiegeArea> breeding_areas = plugin.getTrackerKeeper().getSiegeBreedingAreas().get(c.getWorld().getName());
+                    List<SiegeArea> breeding_areas = plugin.getTrackerKeeper().getSiegeBreedingAreas().get(c.getWorld().getKey().getKey());
                     if (breeding_areas == null) {
                         breeding_areas = new ArrayList<>();
                     }
                     breeding_areas.add(tsa);
-                    plugin.getTrackerKeeper().getSiegeBreedingAreas().put(c.getWorld().getName(), breeding_areas);
+                    plugin.getTrackerKeeper().getSiegeBreedingAreas().put(c.getWorld().getKey().getKey(), breeding_areas);
                 }
                 if (plugin.getConfig().getInt("siege.growth") > 0) {
-                    List<SiegeArea> growth_areas = plugin.getTrackerKeeper().getSiegeGrowthAreas().get(c.getWorld().getName());
+                    List<SiegeArea> growth_areas = plugin.getTrackerKeeper().getSiegeGrowthAreas().get(c.getWorld().getKey().getKey());
                     if (growth_areas == null) {
                         growth_areas = new ArrayList<>();
                     }
                     growth_areas.add(tsa);
-                    plugin.getTrackerKeeper().getSiegeGrowthAreas().put(c.getWorld().getName(), growth_areas);
+                    plugin.getTrackerKeeper().getSiegeGrowthAreas().put(c.getWorld().getKey().getKey(), growth_areas);
                 }
             }
             if (plugin.getConfig().getBoolean("siege.texture")) {

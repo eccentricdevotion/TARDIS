@@ -75,7 +75,7 @@ class TARDISGetter {
                 + " FROM " + prefix + "tardis, " + prefix + "current WHERE "
                 + prefix + "tardis.tardis_id = " + prefix + "current.tardis_id";
         if (world != null) {
-            query += " AND " + prefix + "current.world = '" + world.getName() + "'";
+            query += " AND " + prefix + "current.world = '" + world.getKey().asString() + "'";
         } else {
             // build world list
             StringBuilder sb = new StringBuilder();
@@ -101,7 +101,7 @@ class TARDISGetter {
                     String chameleon = rs.getString("chameleon_preset");
                     String door = "Closed";
                     for (Map.Entry<Location, TARDISTeleportLocation> map : plugin.getTrackerKeeper().getPortals().entrySet()) {
-                        if (!map.getKey().getWorld().getName().contains("TARDIS") && !map.getValue().isAbandoned()) {
+                        if (!map.getKey().getWorld().getKey().getKey().contains("tardis") && !map.getValue().isAbandoned()) {
                             if (id == map.getValue().getTardisId()) {
                                 door = "Open";
                                 break;

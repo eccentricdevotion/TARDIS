@@ -1,6 +1,5 @@
 package me.eccentric_nz.TARDIS.brigadier.arguments;
 
-import com.google.common.collect.ImmutableList;
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.arguments.ArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
@@ -13,7 +12,8 @@ import io.papermc.paper.command.brigadier.MessageComponentSerializer;
 import io.papermc.paper.command.brigadier.argument.CustomArgumentType;
 import net.kyori.adventure.text.Component;
 
-import java.util.List;
+import java.util.Locale;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
 public class AdminListArgumentType implements CustomArgumentType<String, String> {
@@ -21,7 +21,7 @@ public class AdminListArgumentType implements CustomArgumentType<String, String>
     private static final SimpleCommandExceptionType ERROR_INVALID_LIST = new SimpleCommandExceptionType(
             MessageComponentSerializer.message().serialize(Component.text("Invalid listing type specified!"))
     );
-    private final List<String> LIST_SUBS = ImmutableList.of("abandoned", "portals", "save", "blueprints");
+    private final Set<String> LIST_SUBS = Set.of("abandoned", "portals", "save", "blueprints");
 
     @Override
     public String parse(StringReader reader) {
@@ -44,9 +44,9 @@ public class AdminListArgumentType implements CustomArgumentType<String, String>
 
     @Override
     public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
-        for (String d : LIST_SUBS) {
-            builder.suggest(d);
-        }
+        LIST_SUBS.stream()
+                .filter(l -> l.toLowerCase(Locale.ROOT).startsWith(builder.getRemainingLowerCase()))
+                .forEach(builder::suggest);
         return builder.buildFuture();
     }
 }

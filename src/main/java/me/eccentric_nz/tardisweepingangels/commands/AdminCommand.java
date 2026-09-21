@@ -69,7 +69,7 @@ public class AdminCommand {
         }
         String which = mon.toUpperCase(Locale.ROOT);
         Monster monster;
-        String world = w.getName();
+        String world = w.getKey().getKey();
         try {
             monster = Monster.valueOf(which);
             plugin.getMonstersConfig().set(types.get(monster) + ".worlds." + world, m);

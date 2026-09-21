@@ -114,7 +114,7 @@ class HostileDisplacement {
                         HashMap<String, Object> tid = new HashMap<>();
                         tid.put("tardis_id", id);
                         HashMap<String, Object> set = new HashMap<>();
-                        set.put("world", fl.getWorld().getName());
+                        set.put("world", fl.getWorld().getKey().asString());
                         set.put("x", fl.getBlockX());
                         set.put("y", fl.getBlockY());
                         set.put("z", fl.getBlockZ());
@@ -149,7 +149,7 @@ class HostileDisplacement {
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getPresetBuilder().buildPreset(bd), delay * 2);
                         // message time lord
                         plugin.getMessenger().sendHADS(player, plugin);
-                        String hads = fl.getWorld().getName() + ":" + fl.getBlockX() + ":" + fl.getBlockY() + ":" + fl.getBlockZ();
+                        String hads = fl.getWorld().getKey().asString() + ":" + fl.getBlockX() + ":" + fl.getBlockY() + ":" + fl.getBlockZ();
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "HADS_LOC", hads);
                         if (player != hostile) {
                             plugin.getMessenger().sendHADS(hostile, plugin);

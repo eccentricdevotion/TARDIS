@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.lazarus;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISGeneticManipulatorUndisguiseEvent;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -30,7 +31,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -75,9 +75,8 @@ public class LazarusSkinsListener extends TARDISMenuListener {
                 case 36, 44 -> {
                     LazarusUtils.pagers.add(uuid);
                     ItemStack pageButton = event.getView().getItem(slot);
-                    ItemMeta pageMeta = pageButton.getItemMeta();
                     // check the lore
-                    String which = ComponentUtils.stripColour(pageMeta.lore().getFirst());
+                    String which = ComponentUtils.stripColour(pageButton.getData(DataComponentTypes.LORE).lines().getFirst());
                     InventoryHolder ih = switch (which) {
                         case "Passive Mobs" -> new LazarusPassiveInventory(plugin);
                         case "Neutral Mobs" -> new LazarusNeutralInventory(plugin);

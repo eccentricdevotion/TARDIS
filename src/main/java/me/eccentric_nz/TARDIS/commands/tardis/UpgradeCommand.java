@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPostioning;
+import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPositioning;
 import me.eccentric_nz.TARDIS.builders.interior.TIPSData;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
@@ -77,19 +77,19 @@ public class UpgradeCommand {
         // it must be their own TARDIS
         boolean own;
         Location pl = player.getLocation();
-        String current_world = pl.getWorld().getName();
+        String current_world = pl.getWorld().getKey().getKey();
         String[] split = tardis.getChunk().split(":");
         if (plugin.getConfig().getBoolean("creation.default_world")) {
             if (plugin.getConfig().getBoolean("creation.create_worlds_with_perms") && TARDISPermission.hasPermission(player, "tardis.create_world")) {
-                own = (current_world.equals(split[0]));
+                own = (current_world.equals(split[1]));
             } else {
                 // get if player is in TIPS area for their TARDIS
-                TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
+                TARDISInteriorPositioning tintpos = new TARDISInteriorPositioning(plugin);
                 TIPSData pos = tintpos.getTIPSData(tardis.getTIPS());
                 own = (pl.getBlockX() > pos.getMinX() && pl.getBlockZ() > pos.getMinZ() && pl.getBlockX() < pos.getMaxX() && pl.getBlockZ() < pos.getMaxZ());
             }
         } else {
-            own = (current_world.equals(split[0]));
+            own = (current_world.equals(split[1]));
         }
         if (!own) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_OWNER");

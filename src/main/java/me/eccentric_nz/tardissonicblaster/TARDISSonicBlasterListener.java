@@ -54,6 +54,7 @@ public class TARDISSonicBlasterListener implements Listener {
                         double distance = TARDISSonicBlasterUtils.getDistanceToTargetBlock(target, player);
                         double angle = TARDISSonicBlasterUtils.getLineOfSightAngle(player);
                         COMPASS direction = COMPASS.valueOf(TARDISStaticUtils.getPlayersDirection(player, false));
+                        // TODO store power level in blaster item's PDC
                         ResultSetBlaster rsb = new ResultSetBlaster(plugin, uuid);
                         if (rsb.resultSet()) {
                             // get power

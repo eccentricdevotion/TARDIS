@@ -28,8 +28,8 @@ public class TISRoomInfo {
     }
 
     public void show(Player player, TARDISInfoMenu item) {
-        player.sendMessage("---");
-        player.sendMessage("[" + item.getName() + "]");
+        plugin.getMessenger().message(player, "---");
+        plugin.getMessenger().message(player, "[" + item.getName() + "]");
         plugin.getMessenger().messageWithColour(player, TARDISDescription.valueOf(item.toString()).getDesc(), "#FFAA00");
         String r = item.toString();
         plugin.getMessenger().messageWithColour(player, "Seed Block: " + plugin.getRoomsConfig().getString("rooms." + r + ".seed"), "#FFAA00");

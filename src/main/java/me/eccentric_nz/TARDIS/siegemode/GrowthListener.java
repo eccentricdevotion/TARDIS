@@ -51,7 +51,7 @@ public class GrowthListener implements Listener {
             return;
         }
         Location l = plant.getLocation();
-        String w = l.getWorld().getName();
+        String w = l.getWorld().getKey().getKey();
         if (!plugin.getTrackerKeeper().getSiegeGrowthAreas().containsKey(w)) {
             return;
         }

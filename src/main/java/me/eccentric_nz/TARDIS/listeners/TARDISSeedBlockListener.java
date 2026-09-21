@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.interior.TARDISBuildData;
@@ -43,7 +45,6 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.ArrayList;
@@ -71,27 +72,23 @@ public class TARDISSeedBlockListener implements Listener {
     public void onSeedBlockPlace(BlockPlaceEvent event) {
         Player player = event.getPlayer();
         ItemStack is = player.getInventory().getItemInMainHand();
-        if (!is.hasItemMeta()) {
+        if (!is.hasData(DataComponentTypes.CUSTOM_NAME)) {
             return;
         }
-        ItemMeta im = is.getItemMeta();
-        if (!im.hasDisplayName() || !im.hasLore()) {
-            return;
-        }
-        String dn = ComponentUtils.stripColour(im.displayName());
+        String dn = ComponentUtils.stripColour(is.getData(DataComponentTypes.CUSTOM_NAME));
         if (dn.equals("TARDIS Seed Block")) {
             Block block = event.getBlockPlaced();
-            if (im.getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.STRING)) {
-                String key = im.getPersistentDataContainer().get(plugin.getCustomBlockKey(), PersistentDataType.STRING);
+            if (is.getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.STRING)) {
+                String key = is.getPersistentDataContainer().get(plugin.getCustomBlockKey(), PersistentDataType.STRING);
                 NamespacedKey which = new NamespacedKey(plugin, key);
                 block.setBlockData(TARDISConstants.BARRIER);
                 TARDISDisplayItem tdi = TARDISDisplayItemRegistry.getByModel(which);
                 if (tdi == null) {
                     tdi = TARDISSeedDisplayItem.CUSTOM;
                 }
-                TARDISDisplayItemUtils.setSeed(tdi, block, im);
+                TARDISDisplayItemUtils.setSeed(tdi, block, is);
             }
-            List<Component> lore = im.lore();
+            List<Component> lore = new ArrayList<>(is.getData(DataComponentTypes.LORE).lines());
             Schematic schm = Desktops.getBY_NAMES().get(ComponentUtils.stripColour(lore.getFirst()));
             Material wall = Material.valueOf(TARDISStringUtils.getValuesFromWallString(ComponentUtils.stripColour(lore.get(1))));
             Material floor = Material.valueOf(TARDISStringUtils.getValuesFromWallString(ComponentUtils.stripColour(lore.get(2))));
@@ -103,11 +100,11 @@ public class TARDISSeedBlockListener implements Listener {
             plugin.getBuildKeeper().getTrackTARDISSeed().put(l, seed);
             plugin.getMessenger().send(player, TardisModule.TARDIS, "SEED_PLACE");
             // send fake block change for bedrock players
-            if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) {
+            if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(player)) {
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.sendBlockChange(l, is.getType().createBlockData()), 3L);
             }
             // now the player has to click the block with the TARDIS key
-        } else if (dn.endsWith(" Console") && im.getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.STRING)) {
+        } else if (dn.endsWith(" Console") && is.getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.STRING)) {
             // must be in TARDIS world
             if (!plugin.getUtils().inTARDISWorld(player)) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_IN_WORLD");
@@ -122,7 +119,7 @@ public class TARDISSeedBlockListener implements Listener {
                 return;
             }
             // build a console of the correct colour
-            String type = im.getPersistentDataContainer().getOrDefault(plugin.getCustomBlockKey(), PersistentDataType.STRING, "console_light_gray");
+            String type = is.getPersistentDataContainer().getOrDefault(plugin.getCustomBlockKey(), PersistentDataType.STRING, "console_light_gray");
             // get TARDIS id
             ResultSetTardisID rs = new ResultSetTardisID(plugin);
             String uuid = player.getUniqueId().toString();
@@ -130,7 +127,7 @@ public class TARDISSeedBlockListener implements Listener {
                 new ConsoleBuilder(plugin).create(event.getBlockPlaced(), type, rs.getTardisId(), uuid);
             }
         } else if (dn.endsWith("Variable Light") && is.getType() == Material.GLASS) {
-            List<Component> lore = im.lore();
+            List<Component> lore = is.getData(DataComponentTypes.LORE).lines();
             Material variable = Material.valueOf(ComponentUtils.stripColour(lore.getFirst()));
             // place the variable light
             new VariableLight(variable, event.getBlockPlaced().getLocation().add(0.5d, 0.5d, 0.5d)).set();
@@ -167,18 +164,14 @@ public class TARDISSeedBlockListener implements Listener {
                         return;
                     }
                 }
-                ItemMeta im = is.getItemMeta();
-                if (im == null) {
-                    return;
-                }
-                im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, model.getKey());
-                im.displayName(ComponentUtils.toGold("TARDIS Seed Block"));
-                List<Component> lore = new ArrayList<>();
-                lore.add(Component.text(console));
-                lore.add(Component.text("Walls: " + data.getWallType().toString()));
-                lore.add(Component.text("Floors: " + data.getFloorType().toString()));
-                im.lore(lore);
-                is.setItemMeta(im);
+                NamespacedKey finalModel = model;
+        is.editPersistentDataContainer(pdc -> pdc.set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING, finalModel.getKey()));
+                is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toGold("TARDIS Seed Block"));
+                ItemLore.Builder lore = ItemLore.lore();
+                lore.addLine(Component.text(console));
+                lore.addLine(Component.text("Walls: " + data.getWallType().toString()));
+                lore.addLine(Component.text("Floors: " + data.getFloorType().toString()));
+                is.setData(DataComponentTypes.LORE, lore.build());
                 // set the block to AIR
                 event.getBlock().setBlockData(TARDISConstants.AIR);
                 w.dropItemNaturally(l, is);
@@ -209,7 +202,7 @@ public class TARDISSeedBlockListener implements Listener {
                     key = plugin.getConfig().getString("preferences.key");
                 }
                 if (player.getInventory().getItemInMainHand().getType().equals(Material.valueOf(key))) {
-                    if (!plugin.getPlanetsConfig().getBoolean("planets." + l.getWorld().getName() + ".time_travel")) {
+                    if (!plugin.getPlanetsConfig().getBoolean("planets." + l.getWorld().getKey().getKey() + ".time_travel")) {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "WORLD_NO_TARDIS");
                         return;
                     }
@@ -232,7 +225,7 @@ public class TARDISSeedBlockListener implements Listener {
                         block.setBlockData(TARDISConstants.BARRIER);
                         TARDISDisplayItemUtils.set(TARDISSeedDisplayItem.GROW, block, -1);
                         // send fake block change for bedrock players
-                        if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) {
+                        if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(player)) {
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.sendBlockChange(l, Material.LIGHT_GRAY_TERRACOTTA.createBlockData()), 3L);
                         }
                     }

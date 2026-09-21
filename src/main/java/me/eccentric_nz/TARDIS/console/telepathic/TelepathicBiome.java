@@ -16,11 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.console.telepathic;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodels.GUIMap;
+import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
 import me.eccentric_nz.TARDIS.custommodels.GUIWallFloor;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
-import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
@@ -29,7 +29,6 @@ import org.bukkit.block.Biome;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
 
@@ -72,9 +71,7 @@ public class TelepathicBiome implements InventoryHolder {
                 Material material = EnvironmentBiomes.BIOME_BLOCKS.get(biome.getKey().getKey());
                 if (material != null) {
                     ItemStack is = ItemStack.of(material, 1);
-                    ItemMeta im = is.getItemMeta();
-                    im.displayName(Component.text(TARDISStringUtils.capitalise(biome.getKey().getKey())));
-                    is.setItemMeta(im);
+                    is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(biome.getKey().toString()));
                     stack[i] = is;
                     if (i % 9 == 7) {
                         i += 2;
@@ -86,27 +83,18 @@ public class TelepathicBiome implements InventoryHolder {
             if (environment == Environment.NORMAL) {
                 // scroll up
                 ItemStack scroll_up = ItemStack.of(GUIWallFloor.BUTTON_SCROLL_U.material(), 1);
-                ItemMeta uim = scroll_up.getItemMeta();
-                uim.displayName(Component.text(plugin.getLanguage().getString("BUTTON_SCROLL_U", "Scroll up")));
-                uim.setItemModel(GUIWallFloor.BUTTON_SCROLL_U.key());
-                scroll_up.setItemMeta(uim);
+                scroll_up.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_SCROLL_U", "Scroll up")));
+                scroll_up.setData(DataComponentTypes.ITEM_MODEL, GUIWallFloor.BUTTON_SCROLL_U.key());
                 stack[GUIWallFloor.BUTTON_SCROLL_U.slot()] = scroll_up;
                 // scroll down
                 ItemStack scroll_down = ItemStack.of(GUIWallFloor.BUTTON_SCROLL_D.material(), 1);
-                ItemMeta dim = scroll_down.getItemMeta();
-                dim.displayName(Component.text(plugin.getLanguage().getString("BUTTON_SCROLL_D", "Scroll down")));
-                dim.setItemModel(GUIWallFloor.BUTTON_SCROLL_D.key());
-                scroll_down.setItemMeta(dim);
+                scroll_down.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_SCROLL_D", "Scroll down")));
+                scroll_down.setData(DataComponentTypes.ITEM_MODEL, GUIWallFloor.BUTTON_SCROLL_D.key());
                 stack[GUIWallFloor.BUTTON_SCROLL_D.slot()] = scroll_down;
             }
         }
         // close
-        ItemStack close = ItemStack.of(GUIMap.BUTTON_CLOSE.material(), 1);
-        ItemMeta gui = close.getItemMeta();
-        gui.displayName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
-        gui.setItemModel(GUIMap.BUTTON_CLOSE.key());
-        close.setItemMeta(gui);
-        stack[53] = close;
+        stack[53] = GUIItemFactory.close();
         return stack;
     }
 }

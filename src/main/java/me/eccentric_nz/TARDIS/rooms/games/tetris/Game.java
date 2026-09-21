@@ -4,6 +4,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetGames;
 import me.eccentric_nz.TARDIS.rooms.games.*;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
+import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -42,7 +43,7 @@ public class Game implements Listener {
     public Game(TARDIS plugin, Player player, int startLevel) {
         this.plugin = plugin;
         this.player = player;
-        world = plugin.getServer().getWorld("TARDIS_Zero_Room");
+        world = plugin.getServer().getWorld(Key.key("tardis_zero_room"));
         GameLocations locations = getRoom(player);
         ArcadeTracker.PLAYERS.put(player.getUniqueId(), new ArcadeData(GameUtils.centre(player.getLocation()), player.getAllowFlight(), this, locations.id()));
         player.setFallDistance(0.0f);

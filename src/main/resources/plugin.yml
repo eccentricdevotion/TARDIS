@@ -8,8 +8,8 @@ loadbefore: [ Citizens ]
 website: http://tardis.pages.dev/
 dev-url: http://github.com/eccentricdevotion/TARDIS/
 url: http://tardis.pages.dev/
-version: 7.0.0@buildNumber@
-api-version: '1.21.11'
+version: 7.1.0@buildNumber@
+api-version: '26.3'
 libraries:
   - org.jsoup:jsoup:1.21.1
 permissions:
@@ -706,6 +706,9 @@ permissions:
     default: op
   tardis.regenerate:
     description: Allow a player to regenerate.
+    default: op
+  tardis.chunk_tickets:
+    description: Allow a player to keep chunks loaded in their TARDIS.
     default: op
   # vortex manipulator
   vm.teleport:

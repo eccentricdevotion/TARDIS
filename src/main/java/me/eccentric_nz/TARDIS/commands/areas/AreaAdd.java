@@ -27,7 +27,7 @@ public class AreaAdd {
         Location location = player.getLocation();
         HashMap<String, Object> add = new HashMap<>();
         add.put("area_id", rsaId.getArea().areaId());
-        add.put("world", location.getWorld().getName());
+        add.put("world", location.getWorld().getKey().asString());
         add.put("x", location.getBlockX());
         add.put("y", location.getBlockY());
         add.put("z", location.getBlockZ());

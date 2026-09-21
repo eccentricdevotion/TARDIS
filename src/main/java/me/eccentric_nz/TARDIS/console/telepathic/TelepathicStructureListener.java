@@ -16,18 +16,26 @@
  */
 package me.eccentric_nz.TARDIS.console.telepathic;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.registry.RegistryAccess;
+import io.papermc.paper.registry.RegistryKey;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.commands.travel.structure.StructureUtilities;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisArtron;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.generator.structure.Structure;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.HashMap;
 
 public class TelepathicStructureListener extends TARDISMenuListener {
 
@@ -48,7 +56,6 @@ public class TelepathicStructureListener extends TARDISMenuListener {
         if (slot < 0 || slot > 53) {
             ClickType click = event.getClick();
             if (click.equals(ClickType.SHIFT_RIGHT) || click.equals(ClickType.SHIFT_LEFT) || click.equals(ClickType.DOUBLE_CLICK)) {
-                plugin.debug("TelepathicStructureListener");
                 event.setCancelled(true);
             }
             return;
@@ -75,11 +82,24 @@ public class TelepathicStructureListener extends TARDISMenuListener {
                     return;
                 }
                 // get the structure
-                ItemMeta im = choice.getItemMeta();
-                String enumStr = ComponentUtils.toEnumUppercase(im.displayName());
-                player.performCommand("tardistravel structure " + enumStr);
+                String[] keyStr = ComponentUtils.stripColour(choice.getData(DataComponentTypes.CUSTOM_NAME)).split(":");
+                int id = getIdFromTravellers(player);
+                Structure type = RegistryAccess.registryAccess().getRegistry(RegistryKey.STRUCTURE).get(NamespacedKey.minecraft(keyStr[1]));
+                StructureUtilities.search(plugin, player, type, id);
                 close(player);
             }
         }
     }
+
+    private int getIdFromTravellers(Player player) {
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("uuid", player.getUniqueId().toString());
+        ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
+        if (!rst.resultSet()) {
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_IN_TARDIS");
+            return -1;
+        }
+        return rst.getTardis_id();
+    }
+
 }

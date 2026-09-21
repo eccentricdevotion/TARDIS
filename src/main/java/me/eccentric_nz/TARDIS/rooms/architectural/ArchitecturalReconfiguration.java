@@ -14,7 +14,9 @@ public class ArchitecturalReconfiguration {
     }
 
     public void open(Player player) {
+        plugin.debug("attempt opening architectural reconfiguration");
         if (TARDISPermission.hasPermission(player, "tardis.architectural.blueprint")) {
+            plugin.debug("has permission to open architectural reconfiguration");
             player.openInventory(new ArchitecturalBlueprintsInventory(plugin, player).getInventory());
         } else {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");

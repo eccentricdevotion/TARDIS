@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.desktop;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPostioning;
+import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPositioning;
 import me.eccentric_nz.TARDIS.builders.interior.TIPSData;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCondenser;
@@ -114,7 +114,7 @@ public class DesktopRepair {
                 int id = tardis.getTardisId();
                 int startx, startz;
                 if (slot != -1000001) { // default world - use TIPS
-                    TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
+                    TARDISInteriorPositioning tintpos = new TARDISInteriorPositioning(plugin);
                     TIPSData pos = tintpos.getTIPSData(slot);
                     startx = pos.getCentreX();
                     startz = pos.getCentreZ();
@@ -229,7 +229,7 @@ public class DesktopRepair {
                     }
                 }
                 if (!hasRequired) {
-                    player.sendMessage("-----------------------------");
+                    plugin.getMessenger().message(player, "-----------------------------");
                     return false;
                 }
                 CondenserData c_data = new CondenserData();

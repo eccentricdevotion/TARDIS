@@ -70,7 +70,7 @@ public class ResultSetFindHidden {
                 + prefix + "current, " + prefix + "tardis WHERE ("
                 + prefix + "tardis.hidden = 1 OR "
                 + prefix + "tardis.chameleon_preset = 'INVISIBLE') AND "
-                + prefix + "current.world = '" + location.getWorld().getName() + "' AND "
+                + prefix + "current.world = '" + location.getWorld().getKey().asString() + "' AND "
                 + prefix + "current.x < " + maxX + " AND "
                 + prefix + "current.x > " + minX + " AND "
                 + prefix + "current.z < " + maxZ + " AND "

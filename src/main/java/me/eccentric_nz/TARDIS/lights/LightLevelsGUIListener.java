@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.lights;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.utility.LightLevel;
 import me.eccentric_nz.TARDIS.control.actions.ConsoleLampAction;
@@ -32,8 +34,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -148,8 +150,7 @@ public class LightLevelsGUIListener extends TARDISMenuListener {
 
     private StateResult getNewState(InventoryView view, int slot, boolean next) {
         ItemStack is = view.getItem(slot);
-        ItemMeta im = is.getItemMeta();
-        String lore = ComponentUtils.stripColour(im.lore().getFirst());
+        String lore = ComponentUtils.stripColour(is.getData(DataComponentTypes.LORE).lines().getFirst());
         int currentStrength = TARDISNumberParsers.parseInt(lore);
         int index;
         if (slot == 16) {
@@ -172,11 +173,9 @@ public class LightLevelsGUIListener extends TARDISMenuListener {
 
     private void setState(InventoryView view, int slot, int strength) {
         ItemStack is = view.getItem(slot);
-        ItemMeta im = is.getItemMeta();
-        List<Component> lore = im.lore();
+        List<Component> lore = new ArrayList<>(is.getData(DataComponentTypes.LORE).lines());
         lore.set(0, Component.text(strength));
-        im.lore(lore);
-        is.setItemMeta(im);
+        is.setData(DataComponentTypes.LORE, ItemLore.lore(lore));
     }
 
     private void setLightLevel(int setLevel, int which, int id) {

@@ -1,6 +1,5 @@
 package me.eccentric_nz.TARDIS.brigadier.arguments;
 
-import com.google.common.collect.ImmutableList;
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.arguments.ArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
@@ -13,7 +12,8 @@ import io.papermc.paper.command.brigadier.MessageComponentSerializer;
 import io.papermc.paper.command.brigadier.argument.CustomArgumentType;
 import net.kyori.adventure.text.Component;
 
-import java.util.List;
+import java.util.Locale;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
 public class SonicArgumentType implements CustomArgumentType<String, String> {
@@ -21,7 +21,7 @@ public class SonicArgumentType implements CustomArgumentType<String, String> {
     private static final SimpleCommandExceptionType ERROR_INVALID_SONIC = new SimpleCommandExceptionType(
             MessageComponentSerializer.message().serialize(Component.text("Invalid sonic specified!"))
     );
-    private final List<String> SONICS = ImmutableList.of(
+    private final Set<String> SONICS = Set.of(
             "mark_1", "mark_2", "mark_3", "mark_4", "eighth", "ninth",
             "tenth", "eleventh", "twelfth", "thirteenth", "fourteenth",
             "fifteenth", "master", "umbrella", "sonic_probe",
@@ -49,9 +49,9 @@ public class SonicArgumentType implements CustomArgumentType<String, String> {
 
     @Override
     public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
-        for (String d : SONICS) {
-            builder.suggest(d);
-        }
+        SONICS.stream()
+                .filter(s -> s.toLowerCase(Locale.ROOT).startsWith(builder.getRemainingLowerCase()))
+                .forEach(builder::suggest);
         return builder.buildFuture();
     }
 }

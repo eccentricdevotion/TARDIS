@@ -16,18 +16,19 @@
  */
 package me.eccentric_nz.TARDIS.listeners.controls;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.control.actions.ConsoleLampAction;
 import me.eccentric_nz.TARDIS.control.actions.LightLevelAction;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetLightLevel;
+import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 /**
  * @author eccentric_nz
@@ -41,7 +42,7 @@ public class TARDISLightLevelFrameListener implements Listener {
     }
 
     @EventHandler(ignoreCancelled = true)
-    public void onLightLevelClick(PlayerInteractEntityEvent event) {
+    public void onLightLevelClick(PlayerInteractAtEntityEvent event) {
         if (event.getRightClicked() instanceof ItemFrame frame) {
             // check if it is a light level item frame
             Location location = frame.getLocation();
@@ -51,10 +52,9 @@ public class TARDISLightLevelFrameListener implements Listener {
                 int type = rs.getType();
                 int start = 0;
                 ItemStack is = frame.getItem();
-                ItemMeta im = is.getItemMeta();
-                if (im.hasItemModel()) {
+                if (ComponentUtils.isModelled(is)) {
                     // switch the switches
-                    String current = im.getItemModel().getKey();
+                    String current = is.getData(DataComponentTypes.ITEM_MODEL).value();
                     boolean isOff = current.endsWith("_off");
                     String[] split = current.replace("_off", "").split("_");
                     String num = split[split.length - 1];
@@ -68,8 +68,7 @@ public class TARDISLightLevelFrameListener implements Listener {
                         key += "_off";
                     }
                     NamespacedKey model = new NamespacedKey(plugin, key);
-                    im.setItemModel(model);
-                    is.setItemMeta(im);
+                    is.setData(DataComponentTypes.ITEM_MODEL, model);
                     frame.setItem(is);
                     if (type == 49 || type == 50) {
                         new LightLevelAction(plugin).illuminate(rs.getLevel(), rs.getControlId(), rs.isPowered(), type, rs.isPoliceBox(), rs.getTardis_id(), rs.isLightsOn());

@@ -16,17 +16,21 @@
  */
 package me.eccentric_nz.TARDIS.playerprefs;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.CustomModelData;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.console.ConsoleInteraction;
 import me.eccentric_nz.TARDIS.custommodels.GUIChameleonPresets;
+import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
 import me.eccentric_nz.TARDIS.custommodels.GUIPlayerPreferences;
-import me.eccentric_nz.TARDIS.custommodels.GUIWeather;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetConsoleLabel;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.HADS;
+import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Location;
@@ -39,8 +43,6 @@ import org.bukkit.entity.TextDisplay;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.ArrayList;
@@ -130,9 +132,9 @@ public class TARDISGeneralPrefsInventory implements InventoryHolder {
             values.add(false); // 19
         }
         if (plugin.isWorldGuardOnServer()) {
-            String chunk = tardis != null ? rst.getTardis().getChunk() : "TARDIS_TimeVortex:1";
+            String chunk = tardis != null ? rst.getTardis().getChunk() : "minecraft:tardis_timevortex:1";
             String[] split = chunk.split(":");
-            World world = plugin.getServer().getWorld(split[0]);
+            World world = plugin.getServer().getWorld(Key.key(split[1]));
             values.add(!plugin.getWorldGuardUtils().queryContainers(world, player.getName())); // lock containers - 20
         } else {
             values.add(false); // 20
@@ -150,24 +152,22 @@ public class TARDISGeneralPrefsInventory implements InventoryHolder {
         for (GUIPlayerPreferences pref : GUIPlayerPreferences.values()) {
             if (pref.getMaterial() == Material.REPEATER) {
                 ItemStack is = ItemStack.of(pref.getMaterial(), 1);
-                ItemMeta im = is.getItemMeta();
-                im.displayName(Component.text(pref.getName()));
+                is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(pref.getName()));
                 boolean v = values.get(pref.getSlot());
                 if (pref.getOffFloats() != null) {
-                    CustomModelDataComponent component = im.getCustomModelDataComponent();
-                    component.setFloats(v ? pref.getOnFloats() : pref.getOffFloats());
-                    im.setCustomModelDataComponent(component);
+                    is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                            .addFloats(v ? pref.getOnFloats() : pref.getOffFloats())
+                            .build());
                 }
                 if (pref == GUIPlayerPreferences.HADS_TYPE) {
-                    im.lore(List.of(Component.text(v ? "DISPERSAL" : "DISPLACEMENT")));
+                    is.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text(v ? "DISPERSAL" : "DISPLACEMENT")).build());
                 } else {
-                    im.lore(List.of(
+                    is.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(
                             Component.text(v
                                     ? plugin.getLanguage().getString("SET_ON", "ON")
                                     : plugin.getLanguage().getString("SET_OFF", "OFF"))
-                    ));
+                    )));
                 }
-                is.setItemMeta(im);
                 stack[pref.getSlot()] = is;
             }
         }
@@ -176,16 +176,10 @@ public class TARDISGeneralPrefsInventory implements InventoryHolder {
         }
         // back
         ItemStack back = ItemStack.of(GUIChameleonPresets.BACK.material(), 1);
-        ItemMeta but = back.getItemMeta();
-        but.displayName(Component.text("Back"));
-        back.setItemMeta(but);
+        back.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Back"));
         stack[33] = back;
         // close
-        ItemStack close = ItemStack.of(GUIWeather.CLOSE.material(), 1);
-        ItemMeta can = close.getItemMeta();
-        can.displayName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE", "Close")));
-        close.setItemMeta(can);
-        stack[35] = close;
+        stack[35] = GUIItemFactory.close();
         return stack;
     }
 

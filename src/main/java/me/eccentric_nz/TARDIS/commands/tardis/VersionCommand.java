@@ -16,12 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.commands.tardis;
 
+import io.papermc.paper.plugin.configuration.PluginMeta;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.PluginDescriptionFile;
 
 import java.util.List;
 
@@ -37,15 +37,15 @@ public class VersionCommand {
     }
 
     public void displayVersion(CommandSender sender) {
-        List<String> hooks = plugin.getDescription().getSoftDepend();
-        String tardisversion = plugin.getDescription().getVersion();
+        List<String> hooks = plugin.getPluginMeta().getPluginSoftDependencies();
+        String tardisVersion = plugin.getPluginMeta().getVersion();
         String cb = Bukkit.getVersion();
         // send server and TARDIS versions
         plugin.getMessenger().sendWithColours(sender, TardisModule.TARDIS, "Server version: ", "#FFFFFF", cb, "#55FFFF");
-        plugin.getMessenger().sendWithColours(sender, TardisModule.TARDIS, "TARDIS version: ", "#FFFFFF", tardisversion, "#55FFFF");
+        plugin.getMessenger().sendWithColours(sender, TardisModule.TARDIS, "TARDIS version: ", "#FFFFFF", tardisVersion, "#55FFFF");
         // send dependent plugin versions
         for (Plugin hook : plugin.getPM().getPlugins()) {
-            PluginDescriptionFile desc = hook.getDescription();
+            PluginMeta desc = hook.getPluginMeta();
             String name = desc.getName();
             String version = desc.getVersion();
             if (hooks.contains(name)) {

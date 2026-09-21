@@ -76,7 +76,7 @@ public class ParticleRunnable implements Runnable {
                 location.getWorld().spawnParticle(particle, location, count, speed, speed, speed, speed, options, false);
             }
             case SHRIEK -> location.getWorld().spawnParticle(particle, location, count, speed, speed, speed, speed, 1, false);
-            case SCULK_CHARGE -> location.getWorld().spawnParticle(particle, location, count, speed, speed, speed, speed, 1.0f, false);
+            case DRAGON_BREATH, SCULK_CHARGE -> location.getWorld().spawnParticle(particle, location, count, speed, speed, speed, speed, 1.0f, false);
             case ENTITY_EFFECT, TINTED_LEAVES -> {
                 // get colour from prefs
                 Color colour = data.getColour();

@@ -21,12 +21,20 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.geysermc.floodgate.api.FloodgateApi;
 
+import java.util.Locale;
 import java.util.UUID;
 import java.util.regex.Pattern;
 
 public class TARDISFloodgate {
 
     private static final Pattern VALID_KEY = Pattern.compile("[a-z0-9/._-]+");
+
+    public static boolean isBedrockPlayer(Player player) {
+        if (player == null) {
+            return false;
+        }
+        return FloodgateApi.getInstance().isFloodgatePlayer(player.getUniqueId());
+    }
 
     public static boolean isBedrockPlayer(UUID uuid) {
         return FloodgateApi.getInstance().isFloodgatePlayer(uuid);
@@ -47,7 +55,7 @@ public class TARDISFloodgate {
     }
 
     public static String getPlayerWorldName(String name) {
-        return "TARDIS_WORLD_" + name.replaceFirst(FloodgateApi.getInstance().getPlayerPrefix(), ".");
+        return "tardis_world_" + name.replaceFirst(FloodgateApi.getInstance().getPlayerPrefix(), ".").toLowerCase(Locale.ROOT);
     }
 
     public static boolean shouldReplacePrefix(String name) {

@@ -75,11 +75,11 @@ public class TARDISRideableMobListener implements Listener {
             Entity passenger = (!e.getPassengers().isEmpty()) ? e.getPassengers().getFirst() : null;
             if (passenger != null && m.equals(Material.OAK_PRESSURE_PLATE)) {
                 if (passenger instanceof Player p) {
-                    String pworld = p.getLocation().getWorld().getName();
+                    String pworld = p.getLocation().getWorld().getKey().getKey();
                     HashMap<String, Object> wherep = new HashMap<>();
                     wherep.put("uuid", p.getUniqueId().toString());
                     ResultSetTravellers rst = new ResultSetTravellers(plugin, wherep, false);
-                    if (rst.resultSet() && pworld.contains("TARDIS")) {
+                    if (rst.resultSet() && pworld.contains("tardis")) {
                         int id = rst.getTardis_id();
                         HashMap<String, Object> whered = new HashMap<>();
                         whered.put("tardis_id", id);

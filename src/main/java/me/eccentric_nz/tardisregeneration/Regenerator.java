@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.tardisregeneration;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
@@ -30,7 +31,6 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -47,15 +47,13 @@ public class Regenerator {
         player.setInvulnerable(true);
         // create the regeneration item model
         ItemStack totem = ItemStack.of(Material.TOTEM_OF_UNDYING, 1);
-        ItemMeta im = totem.getItemMeta();
         // hide player
         for (Player p : plugin.getServer().getOnlinePlayers()) {
             if (p.canSee(player)) {
                 p.hidePlayer(plugin, player);
             }
         }
-        im.setItemModel(DoctorSkins.MODELS.get(skin));
-        totem.setItemMeta(im);
+        totem.setData(DataComponentTypes.ITEM_MODEL, DoctorSkins.MODELS.get(skin));
         // get rotation
         float yaw = Location.normalizeYaw(player.getLocation().getYaw());
         // spawn a display entity

@@ -16,19 +16,25 @@
  */
 package me.eccentric_nz.tardischunkgenerator.worldgen.feature;
 
+import me.eccentric_nz.tardischunkgenerator.worldgen.caves.BiomeProfile;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelWriter;
 import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.GrowingPlantHeadBlock;
+import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate;
-import net.minecraft.world.level.levelgen.feature.WeepingVinesFeature;
 import org.bukkit.Bukkit;
+import org.bukkit.block.data.BlockData;
+import org.bukkit.block.data.type.Leaves;
 import org.bukkit.craftbukkit.block.data.CraftBlockData;
 
 public class TreePlacer {
@@ -44,26 +50,50 @@ public class TreePlacer {
             pos = blockPos;
         }
         if (pos != null) {
-            int i = Mth.nextInt(random, 4, 13);
-            if (random.nextInt(12) == 0) {
-                i *= 2;
-            }
-            if (!data.planted()) {
-                int j = generator.getGenDepth();
-                if (pos.getY() + i + 1 >= j) {
-                    return;
-                }
-            }
-            boolean flag = !data.planted() && random.nextFloat() < 0.06F;
-            level.setBlock(blockPos, Blocks.AIR.defaultBlockState(), 4);
-            this.placeStem(level, random, data, pos, i, flag);
-            this.placeHat(level, random, data, pos, i, flag);
+            grow(data, level, pos, generator);
         }
+    }
+
+    public void place(TARDISTreeData data, WorldGenLevel level, BlockPos blockPos, ChunkGenerator generator, BiomeProfile biomeProfile) {
+        BlockState base = ((CraftBlockData) Bukkit.createBlockData(biomeProfile.floor())).getState();
+        BlockState alt = ((CraftBlockData) Bukkit.createBlockData(biomeProfile.wall())).getState();
+        BlockPos pos = null;
+        BlockState under = level.getBlockState(blockPos.below());
+        if (under == base || under == alt) {
+            pos = blockPos;
+        }
+        if (pos != null) {
+            grow(data, level, pos, generator);
+        }
+    }
+
+    private void grow(TARDISTreeData data, WorldGenLevel level, BlockPos pos, ChunkGenerator generator) {
+        int i = Mth.nextInt(random, 4, 13);
+        if (random.nextInt(12) == 0) {
+            i *= 2;
+        }
+        if (!data.planted()) {
+            int j = generator.getGenDepth();
+            if (pos.getY() + i + 1 >= j) {
+                return;
+            }
+        }
+        boolean flag = !data.planted() && random.nextFloat() < 0.06F;
+        level.setBlock(pos, Blocks.AIR.defaultBlockState(), 4);
+        this.placeStem(level, random, data, pos, i, flag);
+        this.placeHat(level, random, data, pos, i, flag);
     }
 
     private void placeStem(WorldGenLevel level, RandomSource random, TARDISTreeData data, BlockPos pos, int i, boolean b) {
         BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos();
-        BlockState stem = ((CraftBlockData) Bukkit.createBlockData(data.stem())).getState();
+        BlockData blockData = Bukkit.createBlockData(data.stem());
+        BlockState stem = ((CraftBlockData) blockData).getState();
+        if (blockData instanceof Leaves leaves) {
+            leaves.setPersistent(true);
+            stem = ((CraftBlockData) leaves).getState();
+            // update the block state with the persistent property set to true
+            stem.setValue(LeavesBlock.PERSISTENT, true);
+        }
         int limit = b ? 1 : 0;
         for (int x = -limit; x <= limit; ++x) {
             for (int z = -limit; z <= limit; ++z) {
@@ -91,7 +121,14 @@ public class TreePlacer {
 
     private void placeHat(WorldGenLevel level, RandomSource random, TARDISTreeData data, BlockPos blockPos, int i, boolean b) {
         BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
-        BlockState hat = ((CraftBlockData) Bukkit.createBlockData(data.hat())).getState();
+        BlockData blockData = Bukkit.createBlockData(data.hat());
+        BlockState hat = ((CraftBlockData) blockData).getState();
+        if (blockData instanceof Leaves leaves) {
+            leaves.setPersistent(true);
+            hat = ((CraftBlockData) leaves).getState();
+            // update the block state with the persistent property set to true
+            hat.setValue(LeavesBlock.PERSISTENT, true);
+        }
         boolean isNetherWart = hat.is(Blocks.NETHER_WART_BLOCK);
         int max = Math.min(random.nextInt(1 + i / 3) + 5, i);
         int min = i - max;
@@ -134,7 +171,14 @@ public class TreePlacer {
 
     private void placeHatBlock(WorldGenLevel level, RandomSource random, TARDISTreeData data, BlockPos pos, float f, float f1, float f2) {
         BlockState decor = ((CraftBlockData) Bukkit.createBlockData(data.decor())).getState();
-        BlockState hat = ((CraftBlockData) Bukkit.createBlockData(data.hat())).getState();
+        BlockData blockData = Bukkit.createBlockData(data.hat());
+        BlockState hat = ((CraftBlockData) blockData).getState();
+        if (blockData instanceof Leaves leaves) {
+            leaves.setPersistent(true);
+            hat = ((CraftBlockData) leaves).getState();
+            // update the block state with the persistent property set to true
+            hat.setValue(LeavesBlock.PERSISTENT, true);
+        }
         if (random.nextFloat() < f) {
             this.setBlock(level, pos, decor);
         } else if (random.nextFloat() < f1) {
@@ -156,14 +200,28 @@ public class TreePlacer {
         }
     }
 
-    private void tryPlaceWeepingVines(BlockPos pos, WorldGenLevel level, RandomSource random) {
-        BlockPos.MutableBlockPos down = pos.mutable().move(Direction.DOWN);
-        if (level.isEmptyBlock(down)) {
-            int i = Mth.nextInt(random, 1, 5);
+    private void tryPlaceWeepingVines(BlockPos hatBlockPos, LevelAccessor level, RandomSource random) {
+        BlockPos.MutableBlockPos placePos = hatBlockPos.mutable().move(Direction.DOWN);
+        if (level.isEmptyBlock(placePos)) {
+            int goalVineHeight = Mth.nextInt(random, 1, 5);
             if (random.nextInt(7) == 0) {
-                i *= 2;
+                goalVineHeight *= 2;
             }
-            WeepingVinesFeature.placeWeepingVinesColumn(level, random, down, i, 23, 25);
+            placeWeepingVinesColumn(level, random, placePos, goalVineHeight);
+        }
+    }
+
+    private void placeWeepingVinesColumn(LevelAccessor level, RandomSource random, BlockPos origin, int totalHeight) {
+        BlockPos.MutableBlockPos placePos = origin.mutable();
+        for (int height = 0; height <= totalHeight; height++) {
+            if (level.isEmptyBlock(placePos)) {
+                if (height == totalHeight || !level.isEmptyBlock(placePos.below())) {
+                    level.setBlock(placePos, Blocks.WEEPING_VINES.defaultBlockState().setValue(GrowingPlantHeadBlock.AGE, Mth.nextInt(random, 23, 25)), Block.UPDATE_CLIENTS);
+                    break;
+                }
+                level.setBlock(placePos, Blocks.WEEPING_VINES_PLANT.defaultBlockState(), Block.UPDATE_CLIENTS);
+            }
+            placePos.move(Direction.DOWN);
         }
     }
 

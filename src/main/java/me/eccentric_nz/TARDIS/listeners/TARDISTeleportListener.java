@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.listeners;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.exterior.BuilderUtility;
-import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPostioning;
+import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPositioning;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
@@ -70,11 +70,11 @@ public class TARDISTeleportListener implements Listener {
     public void onTeleport(PlayerTeleportEvent event) {
         Player player = event.getPlayer();
         TeleportCause cause = event.getCause();
-        String world_to = event.getTo().getWorld().getName();
-        String world_from = event.getFrom().getWorld().getName();
+        String world_to = event.getTo().getWorld().getKey().getKey();
+        String world_from = event.getFrom().getWorld().getKey().getKey();
         if (plugin.getTrackerKeeper().getFlyingReturnLocation().containsKey(player.getUniqueId())) {
             if (plugin.getTrackerKeeper().getStillFlyingNotReturning().contains(player.getUniqueId())) {
-                if (world_to.contains("TARDIS") || world_from.contains("TARDIS") || cause == TeleportCause.UNKNOWN || cause == TeleportCause.DISMOUNT) {
+                if (world_to.contains("tardis") || world_from.contains("tardis") || cause == TeleportCause.UNKNOWN || cause == TeleportCause.DISMOUNT) {
                     return;
                 } else {
                     // teleport them back to the interior
@@ -107,7 +107,7 @@ public class TARDISTeleportListener implements Listener {
                             return;
                         }
                     } else {
-                        int slot = TARDISInteriorPostioning.getTIPSSlot(player.getLocation());
+                        int slot = TARDISInteriorPositioning.getTIPSSlot(player.getLocation());
                         if (!rsid.fromTIPSSlot(slot)) {
                             return;
                         }
@@ -155,7 +155,7 @@ public class TARDISTeleportListener implements Listener {
                 ee.setHelmet(is);
                 // update the TARDIS's current location
                 HashMap<String, Object> set = new HashMap<>();
-                set.put("world", location.getWorld().getName());
+                set.put("world", location.getWorld().getKey().asString());
                 set.put("x", location.getBlockX());
                 set.put("y", location.getBlockY());
                 set.put("z", location.getBlockZ());

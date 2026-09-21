@@ -141,16 +141,16 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
                         }
                     }
                     case "artron_amount" -> {
-                        rsl = new ResultSetArtronLevel(plugin, uuid);
-                        if (rsl.resultset()) {
+                        rsl = new ResultSetArtronLevel(plugin);
+                        if (rsl.fromUUID(uuid)) {
                             result = Integer.toString(rsl.getArtronLevel());
                         } else {
                             result = "0";
                         }
                     }
                     case "artron_percent" -> {
-                        rsl = new ResultSetArtronLevel(plugin, uuid);
-                        if (rsl.resultset()) {
+                        rsl = new ResultSetArtronLevel(plugin);
+                        if (rsl.fromUUID(uuid)) {
                             result = String.format("%s%%", Math.round(rsl.getArtronLevel() * 100.0d / plugin.getArtronConfig().getDouble("full_charge")));
                         } else {
                             result = "0%";
@@ -180,7 +180,7 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
                             rsc = new ResultSetCurrentFromId(plugin, rsti.getTardisId());
                             if (rsc.resultSet()) {
                                 Current current = rsc.getCurrent();
-                                result = "TARDIS was left at " + current.location().getWorld().getName() + " at " + "x: " + current.location().getBlockX() + " y: " + current.location().getBlockY() + " z: " + current.location().getBlockZ();
+                                result = "TARDIS was left at " + current.location().getWorld().getKey().getKey() + " at " + "x: " + current.location().getBlockX() + " y: " + current.location().getBlockY() + " z: " + current.location().getBlockZ();
                             } else {
                                 result = "";
                             }
@@ -232,7 +232,7 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
                         if (rsti.fromUUID(uuid)) {
                             rsc = new ResultSetCurrentFromId(plugin, rsti.getTardisId());
                             if (rsc.resultSet()) {
-                                result = rsc.getCurrent().location().getWorld().getName();
+                                result = rsc.getCurrent().location().getWorld().getKey().getKey();
                             } else {
                                 result = "";
                             }

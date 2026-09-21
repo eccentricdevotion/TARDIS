@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.CustomModelData;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.keys.CircuitVariant;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
@@ -25,10 +27,6 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.components.CustomModelDataComponent;
-
-import java.util.List;
 
 /*
 easy_shape:OIO,ICI,OIO
@@ -53,25 +51,18 @@ public class TARDISLocatorRecipe {
 
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.COMPASS, 1);
-        ItemMeta im = is.getItemMeta();
-        im.displayName(ComponentUtils.toWhite("TARDIS Locator"));
-        CustomModelDataComponent loc = im.getCustomModelDataComponent();
-        loc.setStrings(List.of("tardis_locator"));
-        im.setCustomModelDataComponent(loc);
-        is.setItemMeta(im);
+        is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("TARDIS Locator"));
         NamespacedKey key = new NamespacedKey(plugin, "tardis_locator");
         ShapedRecipe r = new ShapedRecipe(key, is);
         r.shape("OIO", "ICI", "OIO");
         if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             r.setIngredient('O', Material.OBSIDIAN);
             ItemStack exact = ItemStack.of(Material.GLOWSTONE_DUST, 1);
-            ItemMeta em = exact.getItemMeta();
-            em.displayName(ComponentUtils.toWhite("TARDIS Locator Circuit"));
-            CustomModelDataComponent component = em.getCustomModelDataComponent();
-            component.setFloats(CircuitVariant.LOCATOR.getFloats());
-            em.setCustomModelDataComponent(component);
-            exact.setItemMeta(em);
-            r.setIngredient('C', new RecipeChoice.ExactChoice(exact));
+            exact.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("TARDIS Locator Circuit"));
+            exact.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                    .addFloats(CircuitVariant.LOCATOR.getFloats())
+                    .build());
+            r.setIngredient('C', RecipeChoice.exactChoice(exact));
         } else {
             r.setIngredient('O', Material.GRAVEL);
             r.setIngredient('C', Material.RED_WOOL);

@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.commands.admin;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
+import me.eccentric_nz.TARDIS.planets.TARDISWorldResolver;
 import org.bukkit.command.CommandSender;
 
 import java.util.List;
@@ -43,9 +43,9 @@ public class RegionFlagCommand {
             plugin.getMessenger().message(sender, "This command only works if you are using a default world for TARDISes.");
             return;
         }
-        String world_name = plugin.getConfig().getString("creation.default_world_name");
+        String world_name = plugin.getConfig().getString("creation.default_world_name", "tardis_timevortex");
         // get all regions for the default world
-        List<String> world_regions = plugin.getWorldGuardUtils().getTARDISRegions(TARDISAliasResolver.getWorldFromAlias(world_name));
+        List<String> world_regions = plugin.getWorldGuardUtils().getTARDISRegions(TARDISWorldResolver.getFromString(world_name));
         world_regions.forEach((region_id) -> {
             if (flag.endsWith("entry")) {
                 plugin.getServer().dispatchCommand(plugin.getConsole(), "rg flag " + region_id + " exit -w " + world_name);

@@ -64,7 +64,7 @@ public class VastialPlacer {
             if (level.getBlockState(blockPos).isAir()) {
                 return;
             }
-            level.getChunk(blockPos).markPosForPostprocessing(blockPos);
+            level.getChunk(blockPos).markPosForPostProcessing(blockPos);
         }
     }
 }

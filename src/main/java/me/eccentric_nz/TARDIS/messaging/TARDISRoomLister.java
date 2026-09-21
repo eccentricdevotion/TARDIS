@@ -46,7 +46,7 @@ public class TARDISRoomLister {
         plugin.getMessenger().messageWithColour(player, "Click a room name to suggest a command", "#AAAAAA");
         plugin.getMessenger().message(player, "");
         options.forEach((key, value) -> {
-            player.sendMessage(key);
+            plugin.getMessenger().message(player, key);
             if (!value.isEmpty()) {
                 value.forEach((s) -> plugin.getMessenger().sendRoom(player, s, (TARDISPermission.hasPermission(player, "tardis.room." + s.toLowerCase(Locale.ROOT)))));
             } else {

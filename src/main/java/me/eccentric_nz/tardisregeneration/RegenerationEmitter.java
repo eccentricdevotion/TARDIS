@@ -21,10 +21,14 @@ import me.eccentric_nz.TARDIS.particles.ParticleRunnable;
 import me.eccentric_nz.TARDIS.particles.Regeneration;
 import org.bukkit.Location;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+
+import java.util.Objects;
 
 public class RegenerationEmitter extends ParticleRunnable implements Runnable {
 
@@ -55,7 +59,7 @@ public class RegenerationEmitter extends ParticleRunnable implements Runnable {
                 vehicle.remove();
             }
             // reset player scale
-            player.getAttribute(Attribute.SCALE).setBaseValue(1.0d);
+            Objects.requireNonNull(player.getAttribute(Attribute.SCALE)).setBaseValue(1.0d);
             // remove invisibility
             player.removePotionEffect(PotionEffectType.INVISIBILITY);
             // show the player again
@@ -75,7 +79,10 @@ public class RegenerationEmitter extends ParticleRunnable implements Runnable {
                 player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 1800, 1));
             }
             if (plugin.getRegenerationConfig().getBoolean("restore.health")) {
-                player.setHealth(player.getAttribute(Attribute.MAX_HEALTH).getDefaultValue());
+                AttributeInstance attributeInstance = EntityType.PLAYER.getDefaultAttributes().getAttribute(Attribute.MAX_HEALTH);
+                if (attributeInstance != null) {
+                    player.setHealth(attributeInstance.getAttribute().getDefaultValue());
+                }
             }
             if (plugin.getRegenerationConfig().getBoolean("restore.food") && player.getFoodLevel() < 20) {
                 player.setFoodLevel(20);

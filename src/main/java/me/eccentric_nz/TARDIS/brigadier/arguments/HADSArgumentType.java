@@ -13,8 +13,9 @@ import io.papermc.paper.command.brigadier.argument.CustomArgumentType;
 import me.eccentric_nz.TARDIS.enumeration.HADS;
 import net.kyori.adventure.text.Component;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Locale;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
 public class HADSArgumentType implements CustomArgumentType<String, String> {
@@ -22,7 +23,7 @@ public class HADSArgumentType implements CustomArgumentType<String, String> {
     private static final SimpleCommandExceptionType ERROR_INVALID_MODE = new SimpleCommandExceptionType(
             MessageComponentSerializer.message().serialize(Component.text("Invalid HADS mode specified!"))
     );
-    private final List<String> MODES = new ArrayList<>();
+    private final Set<String> MODES = new HashSet<>();
 
     public HADSArgumentType() {
         for (HADS h : HADS.values()) {
@@ -51,9 +52,9 @@ public class HADSArgumentType implements CustomArgumentType<String, String> {
 
     @Override
     public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
-        for (String d : MODES) {
-            builder.suggest(d);
-        }
+        MODES.stream()
+                .filter(m -> m.toLowerCase(Locale.ROOT).startsWith(builder.getRemainingLowerCase()))
+                .forEach(builder::suggest);
         return builder.buildFuture();
     }
 }

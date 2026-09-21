@@ -14,6 +14,7 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.DyeColor;
 
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
@@ -62,9 +63,9 @@ public class MonsterExtraArgumentType implements CustomArgumentType<String, Stri
 
     @Override
     public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
-        for (String d : EXTRAS) {
-            builder.suggest(d);
-        }
+        EXTRAS.stream()
+                .filter(e -> e.toLowerCase(Locale.ROOT).startsWith(builder.getRemainingLowerCase()))
+                .forEach(builder::suggest);
         return builder.buildFuture();
     }
 }

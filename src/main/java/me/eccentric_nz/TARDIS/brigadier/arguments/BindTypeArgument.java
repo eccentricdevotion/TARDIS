@@ -13,8 +13,9 @@ import io.papermc.paper.command.brigadier.argument.CustomArgumentType;
 import me.eccentric_nz.TARDIS.enumeration.Bind;
 import net.kyori.adventure.text.Component;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Locale;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
 public class BindTypeArgument implements CustomArgumentType<String, String> {
@@ -22,7 +23,7 @@ public class BindTypeArgument implements CustomArgumentType<String, String> {
     private static final SimpleCommandExceptionType ERROR_INVALID_BIND = new SimpleCommandExceptionType(
             MessageComponentSerializer.message().serialize(Component.text("Invalid bind type specified!"))
     );
-    private final List<String> BIND_SUBS = new ArrayList<>();
+    private final Set<String> BIND_SUBS = new HashSet<>();
 
     public BindTypeArgument(boolean restrict) {
         for (Bind b : Bind.values()) {
@@ -53,9 +54,9 @@ public class BindTypeArgument implements CustomArgumentType<String, String> {
 
     @Override
     public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
-        for (String b : BIND_SUBS) {
-            builder.suggest(b);
-        }
+        BIND_SUBS.stream()
+                .filter(b -> b.toLowerCase(Locale.ROOT).startsWith(builder.getRemainingLowerCase()))
+                .forEach(builder::suggest);
         return builder.buildFuture();
     }
 }

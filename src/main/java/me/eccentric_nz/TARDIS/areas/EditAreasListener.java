@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.areas;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
@@ -27,7 +28,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
 import java.util.List;
@@ -84,13 +84,12 @@ public class EditAreasListener extends TARDISMenuListener {
             }
             case 48 -> {
                 // add
-                ItemMeta meta = is.getItemMeta();
-                Object area_id = getValueFromLore(meta.lore().getFirst());
+                Object area_id = getValueFromLore(is.getData(DataComponentTypes.LORE).lines().getFirst());
                 // get player's location
                 Location location = player.getLocation();
                 HashMap<String, Object> add = new HashMap<>();
                 add.put("area_id", area_id);
-                add.put("world", location.getWorld().getName());
+                add.put("world", location.getWorld().getKey().asString());
                 add.put("x", location.getBlockX());
                 add.put("y", location.getBlockY());
                 add.put("z", location.getBlockZ());
@@ -101,8 +100,7 @@ public class EditAreasListener extends TARDISMenuListener {
                 // delete
                 if (selected.containsKey(uuid)) {
                     ItemStack map = event.getView().getItem(selected.get(uuid));
-                    ItemMeta meta = map.getItemMeta();
-                    List<Component> lore = meta.lore();
+                    List<Component> lore = map.getData(DataComponentTypes.LORE).lines();
                     removeLocation(lore);
                     close(player);
                 }

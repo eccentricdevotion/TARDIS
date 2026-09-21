@@ -31,6 +31,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.HADS;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
+import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickCallback;
 import org.bukkit.World;
@@ -133,7 +134,7 @@ public class PreferencesDialog {
                 if (plugin.isWorldGuardOnServer()) {
                     String chunk = tardis.getChunk();
                     String[] split = chunk.split(":");
-                    World world = plugin.getServer().getWorld(split[0]);
+                    World world = plugin.getServer().getWorld(Key.key(split[0],split[1]));
                     Player player = plugin.getServer().getPlayer(uuid);
                     inputs.add(DialogInput.bool("lock_containers", Component.text(TARDISStringUtils.rightPad("Lock containers", 180)), !plugin.getWorldGuardUtils().queryContainers(world, player.getName()), "1", "0")); // lock containers
                 }

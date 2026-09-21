@@ -116,7 +116,7 @@ public class PreviewBuildRunnable implements Runnable {
                 d = dimensions.get("length").getAsInt() - 1;
                 div = (h + 1.0d) * w * (d + 1.0d);
                 // calculate startx, starty, startz
-                TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
+                TARDISInteriorPositioning tintpos = new TARDISInteriorPositioning(plugin);
                 TIPSData pos = tintpos.getTIPSData(tips);
                 startx = pos.getCentreX();
                 resetx = pos.getCentreX();
@@ -283,7 +283,7 @@ public class PreviewBuildRunnable implements Runnable {
                     HashMap<String, Object> set = new HashMap<>();
                     set.put("tardis_id", tips);
                     set.put("name", schm.getPermission());
-                    set.put("world", world.getName());
+                    set.put("world", world.getKey().asString());
                     set.put("x", x + 0.5d);
                     set.put("y", y);
                     set.put("z", (z + 1));

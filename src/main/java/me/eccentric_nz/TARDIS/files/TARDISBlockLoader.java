@@ -122,7 +122,7 @@ public class TARDISBlockLoader {
                     TARDISAntiBuild tab = new TARDISAntiBuild();
                     // get region vectors
                     String[] split = rs.getString("chunk").split(":");
-                    ProtectedRegion pr = plugin.getWorldGuardUtils().getRegion(split[0], tl);
+                    ProtectedRegion pr = plugin.getWorldGuardUtils().getRegion(split[1], tl);
                     if (pr != null) {
                         Vector min = new Vector(pr.getMinimumPoint().x(), pr.getMinimumPoint().y(), pr.getMinimumPoint().z());
                         Vector max = new Vector(pr.getMaximumPoint().x(), pr.getMaximumPoint().y(), pr.getMaximumPoint().z());

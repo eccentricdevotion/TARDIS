@@ -16,6 +16,7 @@ import me.eccentric_nz.tardischemistry.product.Product;
 import net.kyori.adventure.text.Component;
 
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
@@ -59,9 +60,9 @@ public class FormulaArgumentType implements CustomArgumentType<String, String> {
 
     @Override
     public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
-        for (String h : FORMULAS) {
-            builder.suggest(h);
-        }
+        FORMULAS.stream()
+                .filter(f -> f.toLowerCase(Locale.ROOT).startsWith(builder.getRemainingLowerCase()))
+                .forEach(builder::suggest);
         return builder.buildFuture();
     }
 }

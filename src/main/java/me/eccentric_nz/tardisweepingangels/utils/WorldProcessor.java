@@ -36,10 +36,6 @@ public class WorldProcessor implements Runnable {
         config = this.plugin.getMonstersConfig();
     }
 
-    public static String sanitiseName(String name) {
-        return name.replaceAll("\\.", "_");
-    }
-
     @Override
     public void run() {
         int i = 0;
@@ -62,7 +58,7 @@ public class WorldProcessor implements Runnable {
         }
         // add new world settings
         for (World w : plugin.getServer().getWorlds()) {
-            String n = sanitiseName(w.getName());
+            String n = w.getKey().getKey();
             // set TARDIS worlds, nether and end worlds to zero by default
             int m = (config.contains("spawn_rate.default_max", true)) ? config.getInt("spawn_rate.default_max") : 0;
             if (!config.contains("angel_of_liberty.worlds." + n, true)) {

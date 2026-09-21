@@ -18,12 +18,12 @@ package me.eccentric_nz.TARDIS.commands.dev;
 
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPostioning;
+import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPositioning;
 import me.eccentric_nz.TARDIS.builders.interior.TIPSData;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
+import me.eccentric_nz.TARDIS.planets.TARDISWorldResolver;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -64,7 +64,7 @@ public class AddRegionsCommand {
             return;
         }
         // get default world name
-        String dw = plugin.getConfig().getString("creation.default_world_name");
+        String dw = plugin.getConfig().getString("creation.default_world_name", "tardis_timevortex");
         // get and load the regions.yml file for this world
         String world_folder = "worlds" + File.separator + dw + File.separator;
         File configFile = new File(wg.getDataFolder(), world_folder + "regions.yml");
@@ -89,9 +89,9 @@ public class AddRegionsCommand {
                         // check if region name exists
                         String rn = (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(uuid)) ? "TARDIS_" + TARDISFloodgate.sanitisePlayerName(tl) : "TARDIS_" + tl;
                         if (!config.contains("regions." + rn)) {
-                            TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
+                            TARDISInteriorPositioning tintpos = new TARDISInteriorPositioning(plugin);
                             TIPSData td = tintpos.getTIPSData(t);
-                            plugin.getWorldGuardUtils().addWGProtection(uuid, tl, td, TARDISAliasResolver.getWorldFromAlias(dw));
+                            plugin.getWorldGuardUtils().addWGProtection(uuid, tl, td, TARDISWorldResolver.getFromString(dw));
                         }
                     }
                 }

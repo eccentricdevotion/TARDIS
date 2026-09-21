@@ -24,7 +24,6 @@ import me.eccentric_nz.tardisweepingangels.equip.Equipper;
 import me.eccentric_nz.tardisweepingangels.nms.MonsterSpawner;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import me.eccentric_nz.tardisweepingangels.utils.WorldGuardChecker;
-import me.eccentric_nz.tardisweepingangels.utils.WorldProcessor;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -56,10 +55,10 @@ public class RacnossRunnable implements Runnable {
     public void run() {
         plugin.getServer().getWorlds().forEach((w) -> {
             // only configured worlds
-            String name = WorldProcessor.sanitiseName(w.getName());
+            String name = w.getKey().getKey();
             if (plugin.getMonstersConfig().getInt("racnoss.worlds." + name) > 0) {
                 if (w.getEnvironment() != Environment.NETHER) {
-                    plugin.debug("Tried to spawn Racnoss in non-Nether world, please remove " + w.getName() + " from the racnoss worlds configuration!");
+                    plugin.debug("Tried to spawn Racnoss in non-Nether world, please remove " + w.getKey().getKey() + " from the racnoss worlds configuration!");
                     return;
                 }
                 // get the current racnoss count

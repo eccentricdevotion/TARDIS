@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.doors;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.keys.TardisDoorVariant;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
@@ -24,7 +25,6 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 public class DoorAnimator {
 
@@ -58,9 +58,7 @@ public class DoorAnimator {
             } else {
                 model = data.animation()[frame];
             }
-            ItemMeta im = is.getItemMeta();
-            im.setItemModel(model);
-            is.setItemMeta(im);
+            is.setData(DataComponentTypes.ITEM_MODEL, model);
             display.setItemStack(is);
             frame++;
         }, 2L, data.ticks());

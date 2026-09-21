@@ -39,7 +39,7 @@ gallifrey:
     wood: STRIPPED_BIRCH_LOG
     leaves: COBWEB
     decoration: RED_WOOL
-# materials to use for gallifrey trees
+# materials to use for skaro trees
 skaro:
   # trees that grow on sand
   wood: ACACIA_LOG

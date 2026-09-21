@@ -32,6 +32,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
+import net.kyori.adventure.key.Key;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Interaction;
@@ -118,7 +119,7 @@ public class RandomiserInteraction {
     private World getWorldFromState(int state) {
         for (String w : plugin.getPlanetsConfig().getConfigurationSection("planets").getKeys(false)) {
             if (plugin.getPlanetsConfig().getInt("planets." + w + ".helmic_regulator_order") == state) {
-                return plugin.getServer().getWorld(w);
+                return plugin.getServer().getWorld(Key.key(w));
             }
         }
         return null;

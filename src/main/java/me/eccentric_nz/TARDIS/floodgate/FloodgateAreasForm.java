@@ -108,7 +108,7 @@ public class FloodgateAreasForm {
                 return;
             }
             HashMap<String, Object> set_next = new HashMap<>();
-            set_next.put("world", l.getWorld().getName());
+            set_next.put("world", l.getWorld().getKey().asString());
             set_next.put("x", l.getBlockX());
             set_next.put("y", l.getBlockY());
             set_next.put("z", l.getBlockZ());

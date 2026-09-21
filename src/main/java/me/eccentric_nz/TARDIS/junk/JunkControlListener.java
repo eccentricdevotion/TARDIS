@@ -27,7 +27,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisPreset;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.*;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
+import me.eccentric_nz.TARDIS.planets.TARDISWorldResolver;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
@@ -249,7 +249,7 @@ public class JunkControlListener implements Listener {
             if (!plugin.getPlanetsConfig().getBoolean("planets." + line1 + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
                 w = plugin.getMVHelper().getWorld(line1);
             } else {
-                w = TARDISAliasResolver.getWorldFromAlias(line1);
+                w = TARDISWorldResolver.getFromString(line1);
             }
             int x = TARDISNumberParsers.parseInt(line2);
             int z = TARDISNumberParsers.parseInt(line3);

@@ -16,8 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.schematic.actions;
 
+import com.destroystokyo.paper.profile.PlayerProfile;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemRegistry;
@@ -35,7 +37,6 @@ import org.bukkit.block.sign.SignSide;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.MainHand;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.BoundingBox;
 
@@ -47,6 +48,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 
 public class SchematicSave {
 
@@ -63,8 +65,8 @@ public class SchematicSave {
         }
         // get the world
         World w = plugin.getTrackerKeeper().getStartLocation().get(uuid).getWorld();
-        String chk_w = plugin.getTrackerKeeper().getEndLocation().get(uuid).getWorld().getName();
-        if (!w.getName().equals(chk_w)) {
+        String chk_w = plugin.getTrackerKeeper().getEndLocation().get(uuid).getWorld().getKey().getKey();
+        if (!w.getKey().getKey().equals(chk_w)) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "SCHM_WORLD");
             return;
         }
@@ -215,15 +217,12 @@ public class SchematicSave {
                                 JsonObject stack = new JsonObject();
                                 Material material = display.getItemStack().getType();
                                 NamespacedKey model = null;
-                                if (display.getItemStack().hasItemMeta()) {
-                                    ItemMeta im = display.getItemStack().getItemMeta();
-                                    if (im.hasDisplayName() && !im.hasItemModel()) {
-                                        stack.addProperty("display_name", ComponentUtils.stripColour(im.displayName()));
-                                    } else if (im.getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.STRING)) {
-                                        String key = im.getPersistentDataContainer().get(plugin.getCustomBlockKey(), PersistentDataType.STRING);
-                                        model = new NamespacedKey(plugin, key);
-                                        stack.addProperty("cmd", model.getKey());
-                                    }
+                                if (display.getItemStack().hasData(DataComponentTypes.CUSTOM_NAME) && !ComponentUtils.isModelled(display.getItemStack())) {
+                                    stack.addProperty("display_name", ComponentUtils.stripColour(display.getItemStack().getData(DataComponentTypes.CUSTOM_NAME)));
+                                } else if (display.getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.STRING)) {
+                                    String key = display.getPersistentDataContainer().get(plugin.getCustomBlockKey(), PersistentDataType.STRING);
+                                    model = new NamespacedKey(plugin, key);
+                                    stack.addProperty("cmd", model.getKey());
                                 }
                                 stack.addProperty("type", material.toString());
                                 TARDISDisplayItem tdi = TARDISDisplayItemRegistry.getByModel(model);
@@ -251,11 +250,15 @@ public class SchematicSave {
                     if (b.getType().equals(Material.PLAYER_HEAD) || b.getType().equals(Material.PLAYER_WALL_HEAD)) {
                         JsonObject head = new JsonObject();
                         Skull skull = (Skull) b.getState();
-                        if (skull.getPlayerProfile() != null) {
-                            head.addProperty("uuid", skull.getPlayerProfile().getUniqueId().toString());
-                            head.addProperty("texture", skull.getPlayerProfile().getTextures().getSkin().toString());
+                        if (skull.getProfile() != null) {
+                            CompletableFuture<PlayerProfile> futureProfile = skull.getProfile().resolve();
+                            futureProfile.thenAccept(playerProfile -> {
+                                head.addProperty("uuid", playerProfile.getId().toString());
+                                head.addProperty("name", playerProfile.getName());
+                                head.addProperty("texture", playerProfile.getTextures().getSkin().toString());
+                                obj.add("head", head);
+                            });
                         }
-                        obj.add("head", head);
                     }
                     // decorated pots
                     if (b.getType().equals(Material.DECORATED_POT)) {

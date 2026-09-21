@@ -23,7 +23,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreaLocations;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreas;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
+import me.eccentric_nz.TARDIS.planets.TARDISWorldResolver;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -105,7 +105,7 @@ public class TARDISArea {
      * existing TARDIS area
      */
     public boolean isInExistingArea(Location l) {
-        String w = l.getWorld().getName();
+        String w = l.getWorld().getKey().asString();
         HashMap<String, Object> where = new HashMap<>();
         where.put("world", w);
         ResultSetAreas rsa = new ResultSetAreas(plugin, where, true, false);
@@ -140,7 +140,7 @@ public class TARDISArea {
      * whether the location is within an existing TARDIS area
      */
     public TARDISAreaCheck isSaveInArea(Location l) {
-        String w = l.getWorld().getName();
+        String w = l.getWorld().getKey().asString();
         HashMap<String, Object> where = new HashMap<>();
         where.put("world", w);
         ResultSetAreas rsa = new ResultSetAreas(plugin, where, true, false);
@@ -182,7 +182,7 @@ public class TARDISArea {
         ResultSetAreas rsa = new ResultSetAreas(plugin, where, false, false);
         if (rsa.resultSet()) {
             Area a = rsa.getArea();
-            String lw = l.getWorld().getName();
+            String lw = l.getWorld().getKey().asString();
             // is clicked block within a defined TARDIS area?
             if (a.world().equals(lw) && (l.getBlockX() <= a.maxX() && l.getZ() <= a.maxZ() && l.getX() >= a.minX() && l.getZ() >= a.minZ())) {
                 chk = false;
@@ -200,7 +200,7 @@ public class TARDISArea {
      */
     public boolean areaCheckLocPlayer(Player p, Location l) {
         boolean chk = false;
-        String w = l.getWorld().getName();
+        String w = l.getWorld().getKey().asString();
         HashMap<String, Object> where = new HashMap<>();
         where.put("world", w);
         ResultSetAreas rsa = new ResultSetAreas(plugin, where, true, false);
@@ -261,7 +261,7 @@ public class TARDISArea {
                 }
             }
             if (chk) {
-                World w = TARDISAliasResolver.getWorldFromAlias(wStr);
+                World w = TARDISWorldResolver.getFromString(wStr);
                 if (w != null) {
                     int y = a.y();
                     if (y == 0) {
@@ -305,7 +305,7 @@ public class TARDISArea {
             Collections.shuffle(locations);
             for (Location l : locations) {
                 HashMap<String, Object> wherec = new HashMap<>();
-                wherec.put("world", l.getWorld().getName());
+                wherec.put("world", l.getWorld().getKey().asString());
                 wherec.put("x", l.getBlockX());
                 wherec.put("z", l.getBlockZ());
                 ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);

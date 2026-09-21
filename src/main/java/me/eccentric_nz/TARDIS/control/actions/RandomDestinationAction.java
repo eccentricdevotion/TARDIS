@@ -25,9 +25,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.TravelType;
-import me.eccentric_nz.TARDIS.enumeration.WorldManager;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.travel.TravelCostAndType;
 import org.bukkit.Location;
@@ -47,24 +45,19 @@ public class RandomDestinationAction {
     public static void setDestination(TARDIS plugin, Player player, int id, COMPASS direction, int cost, String comps, UUID ownerUUID, Location rand) {
         if (rand != null) {
             // double check TARDIS travel is allowed in this world
-            if (!plugin.getPlanetsConfig().getBoolean("planets." + rand.getWorld().getName() + ".time_travel")) {
+            if (!plugin.getPlanetsConfig().getBoolean("planets." + rand.getWorld().getKey().getKey() + ".time_travel")) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_WORLD_TRAVEL");
                 return;
             }
             HashMap<String, Object> set = new HashMap<>();
-            set.put("world", rand.getWorld().getName());
+            set.put("world", rand.getWorld().getKey().asString());
             set.put("x", rand.getBlockX());
             set.put("y", rand.getBlockY());
             set.put("z", rand.getBlockZ());
             set.put("direction", direction.toString());
             set.put("submarine", (plugin.getTrackerKeeper().getSubmarine().contains(id)) ? 1 : 0);
             plugin.getTrackerKeeper().getSubmarine().remove(id);
-            String worldname;
-            if (!plugin.getPlanetsConfig().getBoolean("planets." + rand.getWorld().getName() + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
-                worldname = plugin.getMVHelper().getAlias(rand.getWorld());
-            } else {
-                worldname = TARDISAliasResolver.getWorldAlias(rand.getWorld());
-            }
+            String worldname = rand.getWorld().getKey().getKey();
             String dchat = worldname + " at x: " + rand.getBlockX() + " y: " + rand.getBlockY() + " z: " + rand.getBlockZ();
             boolean isTL = true;
             if (comps != null && !comps.isEmpty()) {
@@ -121,7 +114,7 @@ public class RandomDestinationAction {
         if (repeaters[0] == 1) { // first position
             environment = "THIS";
             // check TARDIS travel is allowed in this world
-            if (!plugin.getPlanetsConfig().getBoolean("planets." + current.location().getWorld().getName() + ".time_travel")) {
+            if (!plugin.getPlanetsConfig().getBoolean("planets." + current.location().getWorld().getKey().getKey() + ".time_travel")) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_WORLD_TRAVEL");
                 return;
             }

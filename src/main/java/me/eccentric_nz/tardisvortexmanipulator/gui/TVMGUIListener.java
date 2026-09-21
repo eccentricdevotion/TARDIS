@@ -3,6 +3,8 @@
  */
 package me.eccentric_nz.tardisvortexmanipulator.gui;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.Parameters;
@@ -13,6 +15,7 @@ import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import me.eccentric_nz.tardisvortexmanipulator.TVMUtils;
 import me.eccentric_nz.tardisvortexmanipulator.database.TVMQueryFactory;
+import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -28,7 +31,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.*;
 
@@ -274,27 +276,22 @@ public class TVMGUIListener extends TARDISMenuListener {
 
     private void usePredictive(InventoryView view) {
         ItemStack is = view.getItem(6);
-        ItemMeta im = is.getItemMeta();
-        String world = ComponentUtils.stripColour(im.lore().getFirst());
+        String world = ComponentUtils.stripColour(is.getData(DataComponentTypes.LORE).lines().getFirst());
         components.set(0, world);
         ItemStack display = view.getItem(4);
-        ItemMeta dim = display.getItemMeta();
-        dim.lore(List.of(
+        display.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(
                 Component.text(world + " " + components.get(1) + " " + components.get(2) + " " + components.get(3))
-        ));
-        display.setItemMeta(dim);
+        ).build());
         // move the cursor to the end of the string
         which = 1;
     }
 
     private void setPredictive(String stub, InventoryView view) {
         ItemStack is = view.getItem(6);
-        ItemMeta im = is.getItemMeta();
         for (World w : plugin.getServer().getWorlds()) {
-            String world = w.getName();
-            if (w.getName().toLowerCase(Locale.ROOT).startsWith(stub)) {
-                im.lore(List.of(Component.text(world)));
-                is.setItemMeta(im);
+            String world = w.getKey().getKey();
+            if (world.toLowerCase(Locale.ROOT).startsWith(stub)) {
+                is.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text(world)).build());
                 break;
             }
         }
@@ -302,7 +299,6 @@ public class TVMGUIListener extends TARDISMenuListener {
 
     private void updateDisplay(InventoryView view, char s) {
         ItemStack display = view.getItem(4);
-        ItemMeta dim = display.getItemMeta();
         char[] chars = (components.get(which).isEmpty()) ? new char[1] : components.get(which).toCharArray();
         if (pos[which] >= chars.length) {
             char[] tmp = chars.clone();
@@ -327,8 +323,7 @@ public class TVMGUIListener extends TARDISMenuListener {
             default -> combined = comp;
         }
         components.set(which, comp);
-        dim.lore(List.of(Component.text(combined)));
-        display.setItemMeta(dim);
+        display.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text(combined)).build());
     }
 
     private void resetTrackers() {
@@ -346,9 +341,7 @@ public class TVMGUIListener extends TARDISMenuListener {
 
     private void saveCurrentLocation(Player player, InventoryView view) {
         ItemStack display = view.getItem(4);
-        ItemMeta dim = display.getItemMeta();
-        List<Component> lore = dim.lore();
-        String name = ComponentUtils.stripColour(lore.getFirst());
+        String name = ComponentUtils.stripColour(display.getData(DataComponentTypes.LORE).lines().getFirst());
         if (name.isEmpty()) {
             plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_NEED");
             return;
@@ -356,8 +349,8 @@ public class TVMGUIListener extends TARDISMenuListener {
         Location l = player.getLocation();
         HashMap<String, Object> set = new HashMap<>();
         set.put("uuid", player.getUniqueId().toString());
-        set.put("save_name", ComponentUtils.stripColour(lore.getFirst()));
-        set.put("world", l.getWorld().getName());
+        set.put("save_name", name);
+        set.put("world", l.getWorld().getKey().asString());
         set.put("x", l.getX());
         set.put("y", l.getY());
         set.put("z", l.getZ());
@@ -383,9 +376,7 @@ public class TVMGUIListener extends TARDISMenuListener {
         qf.alterTachyons(player.getUniqueId().toString(), -required);
         // process GUI
         ItemStack display = view.getItem(4);
-        ItemMeta dim = display.getItemMeta();
-        List<Component> lore = dim.lore();
-        String pname = ComponentUtils.stripColour(lore.getFirst()).trim();
+        String pname = ComponentUtils.stripColour(display.getData(DataComponentTypes.LORE).lines().getFirst()).trim();
         if (pname.isEmpty()) {
             plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "SCAN_ENTS");
             // scan nearby entities
@@ -420,11 +411,11 @@ public class TVMGUIListener extends TARDISMenuListener {
                         playernames.forEach((pn) -> buf.append(", ").append(pn));
                         message = " (" + buf.substring(2) + ")";
                     }
-                    player.sendMessage("    " + key + ": " + value + message);
+                    plugin.getMessenger().message(player, "    " + key + ": " + value + message);
                 });
                 scannedentities.clear();
             } else {
-                player.sendMessage("SCAN_NONE");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "SCAN_NONE");
             }
         } else {
             Player scanned = plugin.getServer().getPlayer(pname);
@@ -442,10 +433,10 @@ public class TVMGUIListener extends TARDISMenuListener {
             float hunger = (scanned.getFoodLevel() / 20F) * 100;
             int air = scanned.getRemainingAir();
             plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_LIFESIGNS", pname);
-            player.sendMessage("Has been alive for: " + TVMUtils.convertTicksToTime(scanned.getTicksLived()));
-            player.sendMessage("Health: " + String.format("%.1f", health / 2) + " hearts");
-            player.sendMessage("Hunger bar: " + String.format("%.2f", hunger) + "%");
-            player.sendMessage("Air: ~" + (air / 20) + " seconds remaining");
+            plugin.getMessenger().message(player, "Has been alive for: " + TVMUtils.convertTicksToTime(scanned.getTicksLived()));
+            plugin.getMessenger().message(player, "Health: " + String.format("%.1f", health / 2) + " hearts");
+            plugin.getMessenger().message(player, "Hunger bar: " + String.format("%.2f", hunger) + "%");
+            plugin.getMessenger().message(player, "Air: ~" + (air / 20) + " seconds remaining");
         }
     }
 
@@ -519,10 +510,8 @@ public class TVMGUIListener extends TARDISMenuListener {
 
     private void doWarp(Player player, InventoryView view) {
         ItemStack display = view.getItem(4);
-        ItemMeta dim = display.getItemMeta();
-        List<Component> lore = dim.lore();
         List<String> dest;
-        String first = ComponentUtils.stripColour(lore.getFirst()).trim();
+        String first = ComponentUtils.stripColour(display.getData(DataComponentTypes.LORE).lines().getFirst()).trim();
         if (!first.isEmpty()) {
             dest = List.of(first.split(" "));
         } else {
@@ -555,7 +544,7 @@ public class TVMGUIListener extends TARDISMenuListener {
                 required = plugin.getVortexConfig().getInt("tachyon_use.travel.world");
                 // only world specified (or incomplete setting)
                 // check world is an actual world
-                if (plugin.getServer().getWorld(dest.getFirst()) == null) {
+                if (plugin.getServer().getWorld(Key.key(dest.getFirst().toLowerCase(Locale.ROOT))) == null) {
                     close(player);
                     plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_NO_WORLD");
                     return;
@@ -577,7 +566,7 @@ public class TVMGUIListener extends TARDISMenuListener {
                     // relative location
                     w = player.getLocation().getWorld();
                 } else {
-                    w = plugin.getServer().getWorld(dest.getFirst());
+                    w = plugin.getServer().getWorld(Key.key(dest.getFirst().toLowerCase(Locale.ROOT)));
                     if (w == null) {
                         close(player);
                         plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_NO_WORLD");

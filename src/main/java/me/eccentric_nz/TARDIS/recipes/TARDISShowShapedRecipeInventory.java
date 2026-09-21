@@ -16,16 +16,21 @@
  */
 package me.eccentric_nz.TARDIS.recipes;
 
-import com.google.common.collect.Multimaps;
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
+import io.papermc.paper.datacomponent.item.TooltipDisplay;
+import io.papermc.paper.registry.RegistryAccess;
+import io.papermc.paper.registry.RegistryKey;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.*;
-import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -60,17 +65,21 @@ public class TARDISShowShapedRecipeInventory implements InventoryHolder {
                 ItemStack item = null;
                 RecipeChoice choice = ingredientMap.get(recipeShape[j].toCharArray()[k]);
                 if (choice instanceof RecipeChoice.ExactChoice exact) {
-                    item = exact.getItemStack();
+                    item = exact.getChoices().getFirst();
+                } else if (choice instanceof RecipeChoice.ItemTypeChoice i) {
+                    ItemType type = RegistryAccess.registryAccess()
+                            .getRegistry(RegistryKey.ITEM)
+                            .get(i.itemTypes().values().iterator().next());
+                    item = type.createItemStack();
                 } else if (choice instanceof RecipeChoice.MaterialChoice mat) {
-                    item = mat.getItemStack();
+                    item = ItemStack.of(mat.getChoices().getFirst());
                 }
                 if (item == null) {
                     continue;
                 }
-                ItemMeta im = item.getItemMeta();
                 if (item.getType().equals(Material.GLOWSTONE_DUST) && !str.endsWith("Tie")) {
                     String dn = getDisplayName(str, glowstoneCount);
-                    im.displayName(ComponentUtils.toWhite(dn));
+                    item.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(dn));
                     glowstoneCount++;
                 }
                 if (str.endsWith("TARDIS Remote Key")) {
@@ -81,51 +90,49 @@ public class TARDISShowShapedRecipeInventory implements InventoryHolder {
                         material = Material.GOLD_NUGGET;
                     }
                     if (item.getType().equals(material)) {
-                        im.displayName(ComponentUtils.toWhite("TARDIS Key"));
+                        item.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("TARDIS Key"));
                     }
                 }
                 if (str.equals("Acid Battery") && item.getType().equals(Material.WATER_BUCKET)) {
-                    im.displayName(ComponentUtils.toWhite("Acid Bucket"));
+                    item.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Acid Bucket"));
                 }
                 if (str.equals("Rift Manipulator") && item.getType().equals(Material.NETHER_BRICK)) {
-                    im.displayName(ComponentUtils.toWhite("Acid Battery"));
+                    item.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Acid Battery"));
                 }
                 if (str.equals("Rust Plague Sword") && item.getType().equals(Material.LAVA_BUCKET)) {
-                    im.displayName(ComponentUtils.toWhite("Rust Bucket"));
-                }
-                item.setItemMeta(im);
+                    item.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Rust Bucket"));
+                 }
                 stacks[j * 9 + k] = item;
             }
         }
         ItemStack result = recipe.getResult();
-        ItemMeta im = result.getItemMeta();
-        im.displayName(ComponentUtils.toWhite(str));
+        result.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(str));
         if (str.equals("TARDIS Invisibility Circuit")) {
             // set the second line of lore
-            List<Component> lore = im.lore();
+            List<Component> lore = new ArrayList<>(result.getData(DataComponentTypes.LORE).lines());
             Component uses = (plugin.getConfig().getString("circuits.uses.invisibility", "5").equals("0") || !plugin.getConfig().getBoolean("circuits.damage"))
                     ? Component.text("unlimited", NamedTextColor.YELLOW)
                     : Component.text(plugin.getConfig().getString("circuits.uses.invisibility", "5"), NamedTextColor.YELLOW);
             lore.set(1, uses);
-            im.lore(lore);
+            result.setData(DataComponentTypes.LORE, ItemLore.lore(lore));
         }
         if (str.equals("Blank Storage Disk") || str.equals("Save Storage Disk") || str.equals("Preset Storage Disk") || str.equals("Biome Storage Disk") || str.equals("Player Storage Disk") || str.equals("Authorised Control Disk")) {
-            im.addItemFlags(ItemFlag.values());
-            im.setAttributeModifiers(Multimaps.forMap(Map.of()));
+            result.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
+                    .addHiddenComponents(TARDISConstants.HIDE)
+                    .build());
         }
         if (str.startsWith("Door")) {
             String r = str.replace("Door ", "").toLowerCase(Locale.ROOT);
             if (r.equals("door")) {
                 r = "tardis_door";
             }
-            im.setItemModel(new NamespacedKey(plugin, r + "_closed"));
+            result.setData(DataComponentTypes.ITEM_MODEL, new NamespacedKey(plugin, r + "_closed"));
         }
         if (str.startsWith("Time Rotor")) {
             String r = str.replace("Time Rotor ", "").toLowerCase(Locale.ROOT);
-            im.setItemModel(new NamespacedKey(plugin, "time_rotor_" + r + "_off"));
+            result.setData(DataComponentTypes.ITEM_MODEL, new NamespacedKey(plugin, "time_rotor_" + r + "_off"));
         }
         result.setAmount(1);
-        result.setItemMeta(im);
         stacks[17] = result;
         return stacks;
     }

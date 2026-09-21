@@ -110,7 +110,7 @@ public class RemoveCompanionCommand {
                             if (p.equals("all")) {
                                 plugin.getWorldGuardUtils().removeAllMembersFromRegion(w, owner, player.getUniqueId());
                                 // set entry and exit flags to deny
-                                plugin.getWorldGuardUtils().setEntryExitFlags(w.getName(), player.getName(), false);
+                                plugin.getWorldGuardUtils().setEntryExitFlags(w.getKey().getKey(), player.getName(), false);
                             }
                         }
                     }

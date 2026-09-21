@@ -28,6 +28,8 @@ import me.eccentric_nz.TARDIS.artron.ArtronCondenserListener;
 import me.eccentric_nz.TARDIS.artron.ArtronFurnaceListener;
 import me.eccentric_nz.TARDIS.artron.BucketListener;
 import me.eccentric_nz.TARDIS.autonomous.AutonomousGUIListener;
+import me.eccentric_nz.TARDIS.blueprints.trader.MerchantListener;
+import me.eccentric_nz.TARDIS.blueprints.trader.TimeLordTradeListener;
 import me.eccentric_nz.TARDIS.camera.DismountListener;
 import me.eccentric_nz.TARDIS.chameleon.construct.ChameleonConstructorListener;
 import me.eccentric_nz.TARDIS.chameleon.construct.ChameleonConstructorOpenCloseListener;
@@ -98,8 +100,10 @@ import me.eccentric_nz.TARDIS.rooms.games.GamesListener;
 import me.eccentric_nz.TARDIS.rooms.games.connect_four.ConnectFourListener;
 import me.eccentric_nz.TARDIS.rooms.games.rockpaperscissors.StoneMagmaIceListener;
 import me.eccentric_nz.TARDIS.rooms.games.tictactoe.NoughtsAndCrossesListener;
+import me.eccentric_nz.TARDIS.rooms.kitchen.KitchenListener;
 import me.eccentric_nz.TARDIS.rooms.laundry.WashingMachineListener;
 import me.eccentric_nz.TARDIS.rooms.library.LibraryListener;
+import me.eccentric_nz.TARDIS.rooms.loader.ChunkLoaderGUIListener;
 import me.eccentric_nz.TARDIS.rooms.smelter.SmelterListener;
 import me.eccentric_nz.TARDIS.schematic.SchematicWandListener;
 import me.eccentric_nz.TARDIS.siegemode.BreedingListener;
@@ -135,6 +139,7 @@ import me.eccentric_nz.tardischemistry.product.GlowStickListener;
 import me.eccentric_nz.tardischemistry.product.ProductGUIListener;
 import me.eccentric_nz.tardischemistry.product.SparklerListener;
 import me.eccentric_nz.tardischemistry.reducer.ReducerGUIListener;
+import net.kyori.adventure.key.Key;
 import org.bukkit.World;
 
 /**
@@ -182,9 +187,14 @@ class TARDISListenerRegisterer {
         plugin.getPM().registerEvents(new ARSMapListener(plugin), plugin);
         if (plugin.getConfig().getBoolean("modules.blueprints")) {
             plugin.getPM().registerEvents(new ArchitecturalBlueprintsListener(plugin), plugin);
+            plugin.getPM().registerEvents(new TimeLordTradeListener(plugin), plugin);
+            plugin.getPM().registerEvents(new MerchantListener(plugin), plugin);
         }
         if (plugin.getConfig().getBoolean("allow.autonomous")) {
             plugin.getPM().registerEvents(new AutonomousGUIListener(plugin), plugin);
+        }
+        if (plugin.getConfig().getBoolean("allow.hunger_and_healing")) {
+            plugin.getPM().registerEvents(new KitchenListener(plugin), plugin);
         }
         plugin.getPM().registerEvents(new FarmingMenuListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISConfigMenuListener(plugin), plugin);
@@ -209,6 +219,9 @@ class TARDISListenerRegisterer {
         plugin.getPM().registerEvents(new ChameleonHelpListener(plugin), plugin);
         plugin.getPM().registerEvents(new ChameleonTemplateListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISChatListener(plugin), plugin);
+        if (plugin.getConfig().getBoolean("allow.chunk_tickets")) {
+            plugin.getPM().registerEvents(new ChunkLoaderGUIListener(plugin), plugin);
+        }
         if (plugin.getConfig().getBoolean("circuits.damage")) {
             plugin.getPM().registerEvents(new CircuitRepairListener(plugin), plugin);
         }
@@ -394,7 +407,7 @@ class TARDISListenerRegisterer {
                 plugin.getPM().registerEvents(new TARDISTelosSpawnListener(plugin), plugin);
             }
             // set world time to twilight
-            World telos = plugin.getServer().getWorld("telos");
+            World telos = plugin.getServer().getWorld(Key.key("telos"));
             if (telos!= null) {
                 telos.setTime(13000L);
             }

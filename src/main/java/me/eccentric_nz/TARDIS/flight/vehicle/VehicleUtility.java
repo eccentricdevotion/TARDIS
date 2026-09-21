@@ -53,7 +53,7 @@ public class VehicleUtility {
     public static TARDISArmourStand spawnStand(Location location) {
         // spawn a custom armour stand at a block location
         ServerLevel world = ((CraftWorld) location.getWorld()).getHandle();
-        TARDISArmourStand entity = new TARDISArmourStand(net.minecraft.world.entity.EntityType.ARMOR_STAND, world);
+        TARDISArmourStand entity = new TARDISArmourStand(net.minecraft.world.entity.EntityTypes.ARMOR_STAND, world);
         entity.setPosRaw(location.getX() + 0.5d, location.getY(), location.getZ() + 0.5d);
         world.addFreshEntity(entity, CreatureSpawnEvent.SpawnReason.CUSTOM);
         return entity;
@@ -84,7 +84,7 @@ public class VehicleUtility {
         Location location = old.getLocation();
         // spawn a custom armour stand at the location
         ServerLevel world = ((CraftWorld) location.getWorld()).getHandle();
-        TARDISArmourStand entity = new TARDISArmourStand(net.minecraft.world.entity.EntityType.ARMOR_STAND, world);
+        TARDISArmourStand entity = new TARDISArmourStand(net.minecraft.world.entity.EntityTypes.ARMOR_STAND, world);
         entity.setPosRaw(location.getBlockX() + 0.5d, location.getY(), location.getBlockZ() + 0.5d);
         world.addFreshEntity(entity, CreatureSpawnEvent.SpawnReason.CUSTOM);
         ArmorStand stand = (ArmorStand) entity.getBukkitEntity();

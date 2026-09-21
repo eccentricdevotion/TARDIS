@@ -21,13 +21,14 @@ import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.Flag;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
+import me.eccentric_nz.TARDIS.planets.TARDISWorldResolver;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 /**
@@ -49,14 +50,14 @@ public class TARDISRandomiserCircuit {
         Set<String> worldlist = plugin.getPlanetsConfig().getConfigurationSection("planets").getKeys(false);
         List<String> allowedWorlds = new ArrayList<>();
         worldlist.forEach((o) -> {
-            World ww = TARDISAliasResolver.getWorldFromAlias(o);
+            World ww = TARDISWorldResolver.getFromString(o);
             if (ww != null) {
                 if (plugin.getConfig().getBoolean("travel.include_default_world") || !plugin.getConfig().getBoolean("creation.default_world")) {
                     if (plugin.getPlanetsConfig().getBoolean("planets." + o + ".time_travel")) {
                         allowedWorlds.add(o);
                     }
                 } else {
-                    if (!o.equals(plugin.getConfig().getString("creation.default_world_name"))) {
+                    if (!o.equals(plugin.getConfig().getString("creation.default_world_name", "tardis_timevortex").toLowerCase(Locale.ROOT))) {
                         if (plugin.getPlanetsConfig().getBoolean("planets." + o + ".time_travel")) {
                             allowedWorlds.add(o);
                         }

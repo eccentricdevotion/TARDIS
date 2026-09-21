@@ -49,7 +49,7 @@ public class FindWithJunkAction {
                 int x = TARDISConstants.RANDOM.nextInt(16) + (chunk.getX() * 16);
                 int z = TARDISConstants.RANDOM.nextInt(16) + (chunk.getZ() * 16);
                 Sign sign = JunkControlListener.getDestinationSign(id);
-                sign.getSide(Side.FRONT).line(1, Component.text(chunk.getWorld().getName()));
+                sign.getSide(Side.FRONT).line(1, Component.text(chunk.getWorld().getKey().getKey()));
                 sign.getSide(Side.FRONT).line(2, Component.text(x));
                 sign.getSide(Side.FRONT).line(3, Component.text(z));
                 sign.update();

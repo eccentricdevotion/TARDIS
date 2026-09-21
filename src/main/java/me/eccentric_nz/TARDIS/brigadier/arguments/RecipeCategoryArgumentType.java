@@ -14,6 +14,7 @@ import me.eccentric_nz.TARDIS.enumeration.RecipeCategory;
 import net.kyori.adventure.text.Component;
 
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
@@ -53,9 +54,9 @@ public class RecipeCategoryArgumentType implements CustomArgumentType<String, St
 
     @Override
     public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
-        for (String d : CATEGORIES) {
-            builder.suggest(d);
-        }
+        CATEGORIES.stream()
+                .filter(c -> c.toLowerCase(Locale.ROOT).startsWith(builder.getRemainingLowerCase()))
+                .forEach(builder::suggest);
         return builder.buildFuture();
     }
 }

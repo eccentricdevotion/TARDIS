@@ -150,7 +150,7 @@ public class ChemistryPageBuilder extends PageBuilder {
                 } else {
                     String dashed = "";
                     try {
-                        // is it a Spigot material?
+                        // is it a Paper/Bukkit material?
                         Material material = Material.valueOf(data[i][j]);
                         ingredients.add(material.toString());
                         dashed = TARDISStringUtils.toLowercaseDashed(TARDISStringUtils.capitalise(material.toString()));
@@ -182,7 +182,7 @@ public class ChemistryPageBuilder extends PageBuilder {
             Matcher matcher = regex.matcher(s);
             if (matcher.matches()) {
                 Material mat = Material.valueOf(s);
-                String link = getLink(new RecipeChoice.MaterialChoice(mat));
+                String link = getLink(RecipeChoice.itemType(mat.asItemType()));
                 ingredientBuilder.append(prefix);
                 prefix = "<br/>";
                 ingredientBuilder.append(link);

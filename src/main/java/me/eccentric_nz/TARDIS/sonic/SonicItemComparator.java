@@ -29,8 +29,8 @@ package me.eccentric_nz.TARDIS.sonic;
  * @author pendo324
  */
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.Damageable;
 
 import java.util.Comparator;
 
@@ -50,15 +50,10 @@ class SonicItemComparator implements Comparator<ItemStack> {
             } else if (item1.getType().toString().compareTo(item2.getType().toString()) < 0) {
                 return -1;
             } else if (item1.getType().toString().compareTo(item2.getType().toString()) == 0) {
-                if (item1.getItemMeta() instanceof Damageable d1) {
-                    Damageable d2 = (Damageable) item2.getItemMeta();
-                    if (d1.getDamage() > d2.getDamage()) {
-                        return 1;
-                    } else if (d1.getDamage() < d2.getDamage()) {
-                        return -1;
-                    } else if (d1.getDamage() == d2.getDamage()) {
-                        return 0;
-                    }
+                if (item1.hasData(DataComponentTypes.DAMAGE) && item2.hasData(DataComponentTypes.DAMAGE)) {
+                    int d1 = item1.getData(DataComponentTypes.DAMAGE);
+                    int d2 = item2.getData(DataComponentTypes.DAMAGE);
+                    return Integer.compare(d1, d2);
                 }
                 if (item1.getAmount() > item2.getAmount()) {
                     return 1;

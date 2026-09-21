@@ -13,8 +13,9 @@ import io.papermc.paper.command.brigadier.argument.CustomArgumentType;
 import me.eccentric_nz.TARDIS.enumeration.Updateable;
 import net.kyori.adventure.text.Component;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Locale;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
 public class UpdateableArgumentType implements CustomArgumentType<String, String> {
@@ -22,11 +23,11 @@ public class UpdateableArgumentType implements CustomArgumentType<String, String
     private static final SimpleCommandExceptionType ERROR_INVALID_UPD = new SimpleCommandExceptionType(
             MessageComponentSerializer.message().serialize(Component.text("Invalid updateable specified!"))
     );
-    private final List<String> UPDATABLES = new ArrayList<>();
+    private final Set<String> UPDATEABLES = new HashSet<>();
 
     public UpdateableArgumentType() {
         for (Updateable u : Updateable.values()) {
-            UPDATABLES.add(u.toString());
+            UPDATEABLES.add(u.toString().toLowerCase(Locale.ROOT));
         }
     }
 
@@ -38,7 +39,7 @@ public class UpdateableArgumentType implements CustomArgumentType<String, String
     @Override
     public <S> String parse(StringReader reader, S source) throws CommandSyntaxException {
         String input = reader.readUnquotedString();
-        if (!UPDATABLES.contains(input)) {
+        if (!UPDATEABLES.contains(input)) {
             throw ERROR_INVALID_UPD.create();
         }
         return input;
@@ -51,9 +52,12 @@ public class UpdateableArgumentType implements CustomArgumentType<String, String
 
     @Override
     public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
-        for (String u : UPDATABLES) {
+        for (String u : UPDATEABLES) {
             builder.suggest(u);
         }
+        UPDATEABLES.stream()
+                .filter(u -> u.toLowerCase(Locale.ROOT).startsWith(builder.getRemainingLowerCase()))
+                .forEach(builder::suggest);
         return builder.buildFuture();
     }
 }

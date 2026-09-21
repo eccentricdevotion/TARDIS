@@ -8,6 +8,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTransmatList;
 import me.eccentric_nz.TARDIS.desktop.PreviewData;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.planets.RoomsWorld;
+import net.kyori.adventure.key.Key;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -16,7 +17,7 @@ public class TransmatUtility {
 
     public static void list(TARDIS plugin, Player player, int id) {
         Transmat transmat = null;
-        if (plugin.getPlanetsConfig().getBoolean("planets.rooms.enabled") && plugin.getServer().getWorld("rooms") != null) {
+        if (plugin.getPlanetsConfig().getBoolean("planets.rooms.enabled") && plugin.getServer().getWorld(Key.key("rooms")) != null) {
             transmat = new RoomsWorld().getTransmat(plugin);
         }
         ResultSetTransmatList rslist = new ResultSetTransmatList(plugin, id);

@@ -55,7 +55,7 @@ public class BackCommand {
             return;
         }
         HashMap<String, Object> set = new HashMap<>();
-        set.put("world", rsb.getWorld().getName());
+        set.put("world", rsb.getWorld().getKey().asString());
         set.put("x", rsb.getX());
         set.put("y", rsb.getY());
         set.put("z", rsb.getZ());

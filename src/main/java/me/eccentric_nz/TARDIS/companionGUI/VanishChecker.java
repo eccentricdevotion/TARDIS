@@ -25,6 +25,7 @@ public class VanishChecker {
         return player.canSee(other) && !isVanished(other);
     }
 
+    @SuppressWarnings("deprecation")
     private static boolean isVanished(Player player) {
         for (MetadataValue meta : player.getMetadata("vanished")) {
             if (meta.asBoolean()) {

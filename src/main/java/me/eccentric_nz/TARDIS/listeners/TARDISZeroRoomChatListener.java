@@ -21,6 +21,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.rooms.games.ArcadeTracker;
+import net.kyori.adventure.key.Key;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -57,7 +58,7 @@ public class TARDISZeroRoomChatListener implements Listener {
         if (ArcadeTracker.PLAYERS.containsKey(zero.getUniqueId())) {
             return;
         }
-        World world = plugin.getServer().getWorld("TARDIS_Zero_Room");
+        World world = plugin.getServer().getWorld(Key.key("tardis_zero_room"));
         if (plugin.getTrackerKeeper().getZeroRoomOccupants().contains(zero.getUniqueId())) {
             event.setCancelled(true);
             plugin.getMessenger().send(zero, TardisModule.TARDIS, "NOT_IN_ZERO");

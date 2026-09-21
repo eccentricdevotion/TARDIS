@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.control;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.ARS.ARSInventory;
 import me.eccentric_nz.TARDIS.ARS.ARSMapInventory;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -62,10 +64,8 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.UUID;
 
 /**
@@ -386,9 +386,7 @@ public class ControlMenuListener extends TARDISMenuListener {
                 if (!direction.isEmpty()) {
                     // update the lore
                     ItemStack d = view.getItem(40);
-                    ItemMeta im = d.getItemMeta();
-                    im.lore(List.of(Component.text(direction)));
-                    d.setItemMeta(im);
+                    d.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text(direction)).build());
                 }
             }
             case 45 -> {
@@ -433,8 +431,7 @@ public class ControlMenuListener extends TARDISMenuListener {
                 // space-time throttle
                 // update the lore
                 ItemStack spt = view.getItem(51);
-                ItemMeta im = spt.getItemMeta();
-                String currentThrottle = ComponentUtils.stripColour(im.lore().getFirst());
+                String currentThrottle = ComponentUtils.stripColour(spt.getData(DataComponentTypes.LORE).lines().getFirst());
                 int delay = SpaceTimeThrottle.valueOf(currentThrottle).getDelay() - 1;
                 if (delay < 1) {
                     delay = 4;
@@ -463,8 +460,7 @@ public class ControlMenuListener extends TARDISMenuListener {
                     }
                 }
                 String throttle = SpaceTimeThrottle.getByDelay().get(delay).toString();
-                im.lore(List.of(Component.text(throttle)));
-                spt.setItemMeta(im);
+                spt.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text(throttle)).build());
                 // update player prefs
                 HashMap<String, Object> wherer = new HashMap<>();
                 wherer.put("uuid", uuid.toString());

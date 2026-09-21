@@ -67,7 +67,7 @@ public class BuildCommand {
             TARDISAntiBuild tab = new TARDISAntiBuild();
             String[] data = tardis.getChunk().split(":");
             // get region vectors
-            ProtectedRegion pr = plugin.getWorldGuardUtils().getRegion(data[0], playerNameStr);
+            ProtectedRegion pr = plugin.getWorldGuardUtils().getRegion(data[1], playerNameStr);
             if (pr == null) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "WG_NOT_FOUND");
                 return;

@@ -23,7 +23,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.InventoryManager;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
+import me.eccentric_nz.TARDIS.planets.TARDISWorldResolver;
 import me.eccentric_nz.TARDIS.utility.TARDISMultiverseInventoriesChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.*;
@@ -68,7 +68,7 @@ public class TARDISMinecartListener implements Listener {
                 int id = 0;
                 COMPASS d = COMPASS.SOUTH;
                 Location block_loc = block.getLocation();
-                String bw = block_loc.getWorld().getName();
+                String bw = block_loc.getWorld().getKey().asString();
                 int bx = block_loc.getBlockX();
                 int by = block_loc.getBlockY();
                 int bz = block_loc.getBlockZ();
@@ -124,10 +124,10 @@ public class TARDISMinecartListener implements Listener {
                         }
                     }
                 }
-                if (data != null && data.length > 3) {
+                if (data != null && data.length > 4) {
                     boolean shouldPrevent;
                     if (plugin.getInvManager() == InventoryManager.MULTIVERSE) {
-                        shouldPrevent = (!TARDISMultiverseInventoriesChecker.checkWorldsCanShare(bw, data[0]));
+                        shouldPrevent = (!TARDISMultiverseInventoriesChecker.checkWorldsCanShare(bw, data[1]));
                     } else {
                         shouldPrevent = false;
                     }
@@ -137,10 +137,10 @@ public class TARDISMinecartListener implements Listener {
                         }
                         plugin.getTrackerKeeper().getMinecart().remove(id);
                     } else {
-                        World w = TARDISAliasResolver.getWorldFromAlias(data[0]);
-                        int x = TARDISNumberParsers.parseInt(data[1]);
-                        int y = TARDISNumberParsers.parseInt(data[2]);
-                        int z = TARDISNumberParsers.parseInt(data[3]);
+                        World w = TARDISWorldResolver.getFromString(data[1]);
+                        int x = TARDISNumberParsers.parseInt(data[2]);
+                        int y = TARDISNumberParsers.parseInt(data[3]);
+                        int z = TARDISNumberParsers.parseInt(data[4]);
                         Location in_out = new Location(w, x, y, z);
                         if (Tag.DOORS.isTagged(material)) {
                             d = getDirection(in_out);

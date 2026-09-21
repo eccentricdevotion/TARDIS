@@ -16,12 +16,18 @@
  */
 package me.eccentric_nz.TARDIS.console.telepathic;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.registry.RegistryAccess;
+import io.papermc.paper.registry.RegistryKey;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.commands.travel.BiomeCommand;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
-import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.block.Biome;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -30,7 +36,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -55,8 +60,8 @@ public class TelepathicBiomeListener extends TARDISMenuListener {
     @EventHandler
     public void onWallMenuOpen(InventoryOpenEvent event) {
         if (event.getInventory().getHolder(false) instanceof TelepathicBiome) {
-            Player p = (Player) event.getPlayer();
-            scroll.put(p.getUniqueId(), 0);
+            Player player = (Player) event.getPlayer();
+            scroll.put(player.getUniqueId(), 0);
         }
     }
 
@@ -104,9 +109,10 @@ public class TelepathicBiomeListener extends TARDISMenuListener {
                 ItemStack choice = view.getItem(slot);
                 if (choice != null) {
                     // get the biome
-                    ItemMeta im = choice.getItemMeta();
-                    String enumStr = ComponentUtils.toEnumUppercase(im.displayName());
-                    player.performCommand("tardistravel biome " + enumStr);
+                    String[] keyStr = ComponentUtils.stripColour(choice.getData(DataComponentTypes.CUSTOM_NAME)).split(":");
+                    int id = getIdFromTravellers(player);
+                    Biome biome = RegistryAccess.registryAccess().getRegistry(RegistryKey.BIOME).get(new NamespacedKey(keyStr[0], keyStr[1]));
+                    new BiomeCommand(plugin).action(player, biome, null, id);
                     close(player);
                 }
             }
@@ -145,9 +151,7 @@ public class TelepathicBiomeListener extends TARDISMenuListener {
             Material material = EnvironmentBiomes.BIOME_BLOCKS.get(biome.getKey().getKey());
             if (material != null) {
                 ItemStack is = ItemStack.of(material, 1);
-                ItemMeta im = is.getItemMeta();
-                im.displayName(Component.text(TARDISStringUtils.capitalise(biome.getKey().getKey())));
-                is.setItemMeta(im);
+                is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(biome.getKey().toString()));
                 stacks[r][c] = is;
                 c++;
                 if (c == 8) {
@@ -157,5 +161,16 @@ public class TelepathicBiomeListener extends TARDISMenuListener {
             }
         }
         return stacks;
+    }
+
+    private int getIdFromTravellers(Player player) {
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("uuid", player.getUniqueId().toString());
+        ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
+        if (!rst.resultSet()) {
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_IN_TARDIS");
+            return -1;
+        }
+        return rst.getTardis_id();
     }
 }

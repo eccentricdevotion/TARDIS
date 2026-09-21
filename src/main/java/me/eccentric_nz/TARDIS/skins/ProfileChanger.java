@@ -46,7 +46,7 @@ public class ProfileChanger {
             setGameProfile(self, profile);
             return;
         }
-        List<ServerPlayer> players = MinecraftServer.getServer().getPlayerList().players;
+        List<ServerPlayer> players = MinecraftServer.getServer().getPlayerList().getPlayers();
         // first unregister the player for all players with the old game profile
         for (ServerPlayer player : players) {
             CraftPlayer bukkitPlayer = player.getBukkitEntity();

@@ -8,6 +8,7 @@ import io.papermc.paper.command.brigadier.CommandSourceStack;
 import me.eccentric_nz.TARDIS.TARDIS;
 
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
@@ -23,9 +24,9 @@ public class HelpSuggestions {
     }
 
     public CompletableFuture<Suggestions> get(final CommandContext<CommandSourceStack> ctx, final SuggestionsBuilder builder) {
-        for (String ca : CMD_ARGS) {
-                builder.suggest(ca);
-        }
+        CMD_ARGS.stream()
+                .filter(c -> c.toLowerCase(Locale.ROOT).startsWith(builder.getRemainingLowerCase()))
+                .forEach(builder::suggest);
         return builder.buildFuture();
     }
 }

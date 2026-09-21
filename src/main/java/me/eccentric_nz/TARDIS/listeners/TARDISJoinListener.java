@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.listeners;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.arch.ArchPersister;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPostioning;
+import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPositioning;
 import me.eccentric_nz.TARDIS.camera.CameraLocation;
 import me.eccentric_nz.TARDIS.camera.CameraTracker;
 import me.eccentric_nz.TARDIS.commands.book.TARDISBook;
@@ -27,6 +27,7 @@ import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
+import me.eccentric_nz.TARDIS.rooms.loader.Ticket;
 import me.eccentric_nz.TARDIS.skins.SkinUtils;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Chunk;
@@ -144,7 +145,6 @@ public class TARDISJoinListener implements Listener {
                 player.setPlayerTime(18000, false);
             }
         }
-        // load and remember the players Police Box chunk
         HashMap<String, Object> wherep = new HashMap<>();
         wherep.put("uuid", uuid);
         ResultSetTardis rs = new ResultSetTardis(plugin, wherep, "", false);
@@ -153,6 +153,7 @@ public class TARDISJoinListener implements Listener {
             int id = tardis.getTardisId();
             String owner = tardis.getOwner();
             String last_known_name = tardis.getLastKnownName();
+            // load and add chunk ticket for the players police box
             if (plugin.getConfig().getBoolean("police_box.keep_chunk_force_loaded")) {
                 ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
                 if (rsc.resultSet()) {
@@ -166,6 +167,20 @@ public class TARDISJoinListener implements Listener {
                     }
                 }
             }
+            // add chunk tickets for TARDIS interior
+            if (plugin.getConfig().getBoolean("allow.chunk_tickets") && player.hasPermission("tardis.chunk_tickets")) {
+                ResultSetChunkTickets rsct = new ResultSetChunkTickets(plugin);
+                World world = null;
+                if (rsct.fromId(id)) {
+                    for (Ticket t : rsct.getData()) {
+                        if (world == null) {
+                            world = t.world();
+                        }
+                        Chunk chunk = world.getChunkAt(t.x(), t.z());
+                        chunk.addPluginChunkTicket(plugin);
+                    }
+                }
+            }
             long now;
             if (TARDISPermission.hasPermission(player, "tardis.prune.bypass")) {
                 now = Long.MAX_VALUE;
@@ -175,7 +190,7 @@ public class TARDISJoinListener implements Listener {
             HashMap<String, Object> set = new HashMap<>();
             set.put("lastuse", now);
             set.put("monsters", 0);
-            set.put("bedrock", (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) ? 1 : 0);
+            set.put("bedrock", (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(player)) ? 1 : 0);
             if (!last_known_name.equals(player.getName())) {
                 // update the player's name WG region as it may have changed
                 if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
@@ -199,7 +214,7 @@ public class TARDISJoinListener implements Listener {
         }
         // add to zero room occupants
         if (plugin.getConfig().getBoolean("allow.zero_room")) {
-            if (player.getLocation().getWorld().getName().equals("TARDIS_Zero_Room")) {
+            if (player.getLocation().getWorld().getKey().getKey().equals("tardis_zero_room")) {
                 plugin.getTrackerKeeper().getZeroRoomOccupants().add(player.getUniqueId());
             }
         }
@@ -220,7 +235,7 @@ public class TARDISJoinListener implements Listener {
                 ResultSetTardisID rsid = new ResultSetTardisID(plugin);
                 // if TIPS determine tardis_id from player location
                 if (plugin.getConfig().getBoolean("creation.default_world") && !player.hasPermission("tardis.create_world")) {
-                    int slot = TARDISInteriorPostioning.getTIPSSlot(player.getLocation());
+                    int slot = TARDISInteriorPositioning.getTIPSSlot(player.getLocation());
                     if (!rsid.fromTIPSSlot(slot)) {
                         return;
                     }

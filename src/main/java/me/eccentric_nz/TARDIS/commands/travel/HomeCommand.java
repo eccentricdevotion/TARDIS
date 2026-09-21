@@ -48,7 +48,7 @@ public class HomeCommand {
             return;
         }
         HashMap<String, Object> set = new HashMap<>();
-        set.put("world", rsh.getWorld().getName());
+        set.put("world", rsh.getWorld().getKey().asString());
         set.put("x", rsh.getX());
         set.put("y", rsh.getY());
         set.put("z", rsh.getZ());

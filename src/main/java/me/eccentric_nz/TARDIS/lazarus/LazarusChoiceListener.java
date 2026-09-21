@@ -16,6 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.lazarus;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.CustomModelData;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISGeneticManipulatorDisguiseEvent;
 import me.eccentric_nz.TARDIS.api.event.TARDISGeneticManipulatorUndisguiseEvent;
@@ -36,8 +39,6 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
 import java.util.List;
 import java.util.UUID;
@@ -129,15 +130,14 @@ public class LazarusChoiceListener extends TARDISMenuListener {
             // The Master Switch : ON | OFF | process
             case 17 -> {
                 ItemStack masterButton = view.getItem(slot);
-                ItemMeta masterMeta = masterButton.getItemMeta();
                 if (TARDISPermission.hasPermission(player, "tardis.themaster")) {
                     if (plugin.getTrackerKeeper().getImmortalityGate().isEmpty()) {
-                        boolean isOff = ComponentUtils.stripColour(masterMeta.lore().getFirst()).equals(plugin.getLanguage().getString("SET_OFF", "OFF"));
+                        boolean isOff = ComponentUtils.stripColour(masterButton.getData(DataComponentTypes.LORE).lines().getFirst()).equals(plugin.getLanguage().getString("SET_OFF", "OFF"));
                         Component onoff = isOff ? Component.text(plugin.getLanguage().getString("SET_ON", "ON")) : Component.text(plugin.getLanguage().getString("SET_OFF", "OFF"));
-                        masterMeta.lore(List.of(onoff));
-                        CustomModelDataComponent component = masterMeta.getCustomModelDataComponent();
-                        component.setFloats(isOff ? List.of(252f) : List.of(152f));
-                        masterMeta.setCustomModelDataComponent(component);
+                        masterButton.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(onoff).build());
+                        masterButton.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                                        .addFloats(isOff ? List.of(252f) : List.of(152f))
+                                .build());
                         // process
                         if (!isReversedPolarity(view)) {
                             plugin.getTrackerKeeper().setImmortalityGate(player.getName());
@@ -163,20 +163,19 @@ public class LazarusChoiceListener extends TARDISMenuListener {
                             }, 3600L);
                         }
                     } else {
-                        masterMeta.lore(List.of(
+                        masterButton.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(
                                 Component.text("The Master Race is already"),
                                 Component.text(" set to " + plugin.getTrackerKeeper().getImmortalityGate() + "!"),
                                 Component.text("Use the Restore button"),
                                 Component.text("and try again later.")
-                        ));
+                        )));
                     }
                 } else {
-                    masterMeta.lore(List.of(
+                    masterButton.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(
                             Component.text("You do not have permission"),
                             Component.text("to be The Master!")
-                    ));
+                    )));
                 }
-                masterButton.setItemMeta(masterMeta);
             }
             case 51 -> { // remove disguise
                 LazarusUtils.pagers.remove(uuid);
@@ -264,7 +263,7 @@ public class LazarusChoiceListener extends TARDISMenuListener {
 
     private boolean isReversedPolarity(InventoryView i) {
         ItemStack is = i.getItem(GUIGeneticManipulator.BUTTON_MASTER.slot());
-        ItemMeta im = is.getItemMeta();
-        return ComponentUtils.stripColour(im.lore().getFirst()).equals(plugin.getLanguage().getString("SET_ON", "ON"));
+        ItemLore lore = is.getData(DataComponentTypes.LORE);
+        return ComponentUtils.stripColour(lore.lines().getFirst()).equals(plugin.getLanguage().getString("SET_ON", "ON"));
     }
 }

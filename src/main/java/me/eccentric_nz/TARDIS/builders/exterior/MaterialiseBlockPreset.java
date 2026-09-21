@@ -40,7 +40,7 @@ import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.TARDIS.utility.TARDISSponge;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
-import me.eccentric_nz.tardischunkgenerator.worldgen.TARDISChunkGenerator;
+import me.eccentric_nz.tardischunkgenerator.worldgen.VoidGenerator;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
@@ -322,7 +322,7 @@ public class MaterialiseBlockPreset implements Runnable {
                                 } else if (preset.equals(ChameleonPreset.SUBMERGED)) {
                                     change = false;
                                 }
-                                if (world.getEnvironment().equals(World.Environment.NETHER) || world.getEnvironment().equals(World.Environment.THE_END) || world.getGenerator() instanceof TARDISChunkGenerator) {
+                                if (world.getEnvironment().equals(World.Environment.NETHER) || world.getEnvironment().equals(World.Environment.THE_END) || world.getGenerator() instanceof VoidGenerator) {
                                     TARDISBlockSetters.setUnderDoorBlock(world, xx, (y - 1), zz, bd.getTardisID(), false);
                                 }
                             }
@@ -817,7 +817,7 @@ public class MaterialiseBlockPreset implements Runnable {
 
     private void saveDoorLocation(World world, int xx, int y, int yy, int zz) {
         // remember the door location
-        String doorloc = world.getName() + ":" + xx + ":" + (y + yy) + ":" + zz;
+        String doorloc = world.getKey().asString() + ":" + xx + ":" + (y + yy) + ":" + zz;
         String doorStr = world.getBlockAt(xx, y + yy, zz).getLocation().toString();
         plugin.getGeneralKeeper().getProtectBlockMap().put(doorStr, bd.getTardisID());
         // should insert the door when tardis is first made, and then update location thereafter!

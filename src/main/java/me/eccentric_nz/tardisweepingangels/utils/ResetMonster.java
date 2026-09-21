@@ -22,7 +22,6 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetFollowers;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.equip.Equipper;
 import me.eccentric_nz.tardisweepingangels.equip.MonsterEquipment;
-import me.eccentric_nz.tardisweepingangels.monsters.empty_child.EmptyChildEquipment;
 import me.eccentric_nz.tardisweepingangels.monsters.headless_monks.HeadlessFlameRunnable;
 import me.eccentric_nz.tardisweepingangels.monsters.headless_monks.HeadlessMonkEquipment;
 import me.eccentric_nz.tardisweepingangels.monsters.judoon.JudoonEquipment;
@@ -132,7 +131,6 @@ public class ResetMonster {
                 new Equipper(monster, a, false).setHelmetAndInvisibility();
             }
             switch (monster) {
-                case EMPTY_CHILD -> EmptyChildEquipment.setSpeed(a);
                 case HEADLESS_MONK -> {
                     HeadlessMonkEquipment.setTasks(a);
                     // start flame runnable

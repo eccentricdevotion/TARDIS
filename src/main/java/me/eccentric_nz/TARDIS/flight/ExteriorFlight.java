@@ -102,7 +102,7 @@ public class ExteriorFlight {
                 ee.setHelmet(is);
                 // update the TARDIS's current location
                 HashMap<String, Object> set = new HashMap<>();
-                set.put("world", location.getWorld().getName());
+                set.put("world", location.getWorld().getKey().asString());
                 set.put("x", location.getBlockX());
                 set.put("y", location.getBlockY());
                 set.put("z", location.getBlockZ());

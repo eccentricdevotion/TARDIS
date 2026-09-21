@@ -16,16 +16,13 @@
  */
 package me.eccentric_nz.TARDIS.recipes.shapeless;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapelessRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.components.CustomModelDataComponent;
-
-import java.util.List;
 
 /*
 recipe:SUGAR,SLIME_BALL,PINK_DYE
@@ -43,12 +40,7 @@ public class StrawberryJellyBabyRecipe {
 
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.MELON_SLICE, 4);
-        ItemMeta im = is.getItemMeta();
-        im.displayName(ComponentUtils.toWhite("Strawberry Jelly Baby"));
-        CustomModelDataComponent component = im.getCustomModelDataComponent();
-        component.setStrings(List.of("strawberry_jelly_baby"));
-        im.setCustomModelDataComponent(component);
-        is.setItemMeta(im);
+        is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Strawberry Jelly Baby"));
         NamespacedKey key = new NamespacedKey(plugin, "strawberry_jelly_baby");
         ShapelessRecipe r = new ShapelessRecipe(key, is);
         r.addIngredient(Material.SUGAR);

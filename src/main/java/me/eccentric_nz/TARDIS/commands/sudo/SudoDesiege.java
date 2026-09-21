@@ -58,7 +58,7 @@ public class SudoDesiege {
             HashMap<String, Object> wherec = new HashMap<>();
             wherec.put("tardis_id", id);
             HashMap<String, Object> setc = new HashMap<>();
-            setc.put("world", rsh.getWorld().getName());
+            setc.put("world", rsh.getWorld().getKey().asString());
             setc.put("x", rsh.getX());
             setc.put("y", rsh.getY());
             setc.put("z", rsh.getZ());

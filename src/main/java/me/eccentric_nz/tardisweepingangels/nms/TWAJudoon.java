@@ -18,6 +18,7 @@ package me.eccentric_nz.tardisweepingangels.nms;
 
 import com.mojang.datafixers.DataFixUtils;
 import com.mojang.datafixers.types.Type;
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.custommodels.keys.JudoonVariant;
 import net.minecraft.SharedConstants;
 import net.minecraft.core.Registry;
@@ -27,17 +28,13 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.datafix.DataFixers;
 import net.minecraft.util.datafix.fixes.References;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.storage.ValueOutput;
 import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.craftbukkit.inventory.CraftItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Map;
 
@@ -49,12 +46,12 @@ public class TWAJudoon extends TWAFollower {
     private boolean guard;
 
     public TWAJudoon(Level world) {
-        super(EntityType.HUSK, world);
+        super(EntityTypes.HUSK, world);
         this.guard = false;
     }
 
     public TWAJudoon(EntityType<Entity> entityType, Level level) {
-        super(EntityType.HUSK, level);
+        super(EntityTypes.HUSK, level);
         this.guard = false;
     }
 
@@ -63,7 +60,7 @@ public class TWAJudoon extends TWAFollower {
         EntityRegistry.unfreeze();
         @SuppressWarnings("unchecked")
         Map<String, Type<?>> types = (Map<String, Type<?>>) DataFixers.getDataFixer().getSchema(DataFixUtils.makeKey(SharedConstants.getCurrentVersion().dataVersion().version())).findChoiceType(References.ENTITY).types();
-        types.put(mcKey.toString(), types.get(BuiltInRegistries.ENTITY_TYPE.getKey(EntityType.HUSK).toString()));
+        types.put(mcKey.toString(), types.get(BuiltInRegistries.ENTITY_TYPE.getKey(EntityTypes.HUSK).toString()));
         ResourceKey<EntityType<?>> resourceKey = ResourceKey.create(Registries.ENTITY_TYPE, Identifier.withDefaultNamespace(entityId));
         EntityType<?> type = EntityType.Builder.of(TWAJudoon::new, MobCategory.MONSTER).noSummon().build(resourceKey);
         entityReg.createIntrusiveHolder(type);
@@ -75,9 +72,7 @@ public class TWAJudoon extends TWAFollower {
         if (hasItemInSlot(EquipmentSlot.MAINHAND) && tickCount % 10 == 0) {
             ItemStack is = getItemBySlot(EquipmentSlot.MAINHAND);
             org.bukkit.inventory.ItemStack bukkit = CraftItemStack.asBukkitCopy(is);
-            ItemMeta im = bukkit.getItemMeta();
-            im.setItemModel(this.guard ? JudoonVariant.JUDOON_WEAPON_ACTIVE.getKey() : JudoonVariant.JUDOON_WEAPON_RESTING.getKey());
-            bukkit.setItemMeta(im);
+            bukkit.setData(DataComponentTypes.ITEM_MODEL, this.guard ? JudoonVariant.JUDOON_WEAPON_ACTIVE.getKey() : JudoonVariant.JUDOON_WEAPON_RESTING.getKey());
             setItemSlot(EquipmentSlot.MAINHAND, CraftItemStack.asNMSCopy(bukkit));
         }
         super.aiStep();

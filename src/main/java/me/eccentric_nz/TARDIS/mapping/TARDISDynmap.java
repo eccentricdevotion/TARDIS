@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.TARDISData;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.files.FileCopier;
+import net.kyori.adventure.key.Key;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.plugin.Plugin;
@@ -158,7 +159,7 @@ public class TARDISDynmap implements TARDISMapper {
                 Location loc = value.location();
                 World w = loc.getWorld();
                 if (w != null) {
-                    String world = w.getName();
+                    String world = w.getKey().getKey();
                     // get location
                     String id = world + "/" + value.owner();
                     String label = labelFormat.replace("%name%", value.owner());
@@ -208,7 +209,7 @@ public class TARDISDynmap implements TARDISMapper {
                 // only get worlds that are enabled for time travel
                 for (String planet : plugin.getPlanetsConfig().getConfigurationSection("planets").getKeys(false)) {
                     if (plugin.getPlanetsConfig().getBoolean("planets." + planet + ".time_travel")) {
-                        World world = plugin.getServer().getWorld(planet);
+                        World world = plugin.getServer().getWorld(Key.key(planet));
                         if (world != null) {
                             worldsToDo.add(world);
                         }
@@ -249,7 +250,7 @@ public class TARDISDynmap implements TARDISMapper {
                                 TARDISData data = toDo.get(tardisIndex);
                                 tardisIndex++;
                                 Location loc = data.location();
-                                String world = loc.getWorld().getName();
+                                String world = loc.getWorld().getKey().getKey();
                                 // get marker id
                                 String id = world + "/" + data.owner();
                                 String label = String.format("%s (TARDIS)", data.owner());

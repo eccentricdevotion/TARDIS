@@ -13,8 +13,9 @@ import io.papermc.paper.command.brigadier.argument.CustomArgumentType;
 import me.eccentric_nz.TARDIS.particles.ParticleEffect;
 import net.kyori.adventure.text.Component;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Locale;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
 public class ParticleEffectArgumentType implements CustomArgumentType<String, String> {
@@ -22,7 +23,7 @@ public class ParticleEffectArgumentType implements CustomArgumentType<String, St
     private static final SimpleCommandExceptionType ERROR_INVALID_EFFECT = new SimpleCommandExceptionType(
             MessageComponentSerializer.message().serialize(Component.text("Invalid particle effect specified!"))
     );
-    private final List<String> EFFECTS = new ArrayList<>();
+    private final Set<String> EFFECTS = new HashSet<>();
 
     public ParticleEffectArgumentType() {
         for (ParticleEffect e : ParticleEffect.values()) {
@@ -51,9 +52,9 @@ public class ParticleEffectArgumentType implements CustomArgumentType<String, St
 
     @Override
     public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
-        for (String d : EFFECTS) {
-            builder.suggest(d);
-        }
+        EFFECTS.stream()
+                .filter(e -> e.toLowerCase(Locale.ROOT).startsWith(builder.getRemainingLowerCase()))
+                .forEach(builder::suggest);
         return builder.buildFuture();
     }
 }

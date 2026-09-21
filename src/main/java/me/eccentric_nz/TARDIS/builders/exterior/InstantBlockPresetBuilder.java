@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.builders.exterior;
 
-import com.earth2me.essentials.Essentials;
-import com.earth2me.essentials.User;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.chameleon.construct.ConstructColumn;
@@ -34,11 +32,14 @@ import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import me.eccentric_nz.TARDIS.utility.TARDISSponge;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
-import me.eccentric_nz.tardischunkgenerator.worldgen.TARDISChunkGenerator;
+import me.eccentric_nz.tardischunkgenerator.worldgen.VoidGenerator;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
-import org.bukkit.*;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.Tag;
+import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.Sign;
@@ -216,7 +217,7 @@ public class InstantBlockPresetBuilder {
                         change = false;
                         TARDISBlockSetters.setBlockAndRemember(world, xx, y, zz, rail.getBlockData(), bd.getTardisID());
                     }
-                    if (world.getEnvironment().equals(World.Environment.NETHER) || world.getEnvironment().equals(World.Environment.THE_END) || world.getGenerator() instanceof TARDISChunkGenerator) {
+                    if (world.getEnvironment().equals(World.Environment.NETHER) || world.getEnvironment().equals(World.Environment.THE_END) || world.getGenerator() instanceof VoidGenerator) {
                         TARDISBlockSetters.setUnderDoorBlock(world, xx, (y - 1), zz, bd.getTardisID(), false);
                     }
                 }
@@ -226,7 +227,7 @@ public class InstantBlockPresetBuilder {
                 Material mat = colData[yy].getMaterial();
                 // update door location if invisible
                 if (yy == 0 && (i == 1 || i == 3 || i == 5 || i == 7) && preset.equals(ChameleonPreset.INVISIBLE) && mat.isAir()) {
-                    String invisible_door = world.getName() + ":" + xx + ":" + y + ":" + zz;
+                    String invisible_door = world.getKey().asString() + ":" + xx + ":" + y + ":" + zz;
                     processDoor(invisible_door);
                     // if tardis is in the air add under door
                     TARDISBlockSetters.setUnderDoorBlock(world, xx, (y - 1), zz, bd.getTardisID(), true);
@@ -277,9 +278,7 @@ public class InstantBlockPresetBuilder {
                                         player_name = tardis.getOwner();
                                     }
                                     if (plugin.getServer().getPluginManager().getPlugin("Essentials") != null) {
-                                        Essentials essentials = (Essentials) plugin.getServer().getPluginManager().getPlugin("Essentials");
-                                        User user = essentials.getUser(tardis.getUuid());
-                                        player_name = ChatColor.stripColor(user.getNick(false));
+                                        player_name = TARDISStaticUtils.getNick(tardis.getUuid());
                                     }
                                     String owner;
                                     if (preset.equals(ChameleonPreset.GRAVESTONE) || preset.equals(ChameleonPreset.PUNKED) || preset.equals(ChameleonPreset.ROBOT)) {
@@ -369,7 +368,7 @@ public class InstantBlockPresetBuilder {
                     }
                     if (door) {
                         // remember the door location
-                        String doorloc = world.getName() + ":" + xx + ":" + (y + yy) + ":" + zz;
+                        String doorloc = world.getKey().asString() + ":" + xx + ":" + (y + yy) + ":" + zz;
                         Block doorBlock = world.getBlockAt(xx, y + yy, zz);
                         String doorStr = doorBlock.getLocation().toString();
                         plugin.getGeneralKeeper().getProtectBlockMap().put(doorStr, bd.getTardisID());

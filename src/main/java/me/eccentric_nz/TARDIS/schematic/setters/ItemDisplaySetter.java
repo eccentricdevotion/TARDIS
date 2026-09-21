@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.schematic.setters;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemRegistry;
@@ -39,7 +40,6 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
 
@@ -51,7 +51,7 @@ public class ItemDisplaySetter {
     public static void process(JsonArray displays, Player player, Location location, int id) {
         for (int i = 0; i < displays.size(); i++) {
             // set regular blocks for bedrock players
-            if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) {
+            if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(player)) {
                 FloodgateDisplaySetter.regularBlock(displays.get(i).getAsJsonObject(), location, id);
             } else {
                 fakeBlock(displays.get(i).getAsJsonObject(), location, id);
@@ -79,7 +79,7 @@ public class ItemDisplaySetter {
             if (stack.has("door")) {
                 if (id > 0) {
                     HashMap<String, Object> setd = new HashMap<>();
-                    String doorloc = block.getWorld().getName() + ":" + l.getBlockX() + ":" + l.getBlockY() + ":" + l.getBlockZ();
+                    String doorloc = block.getWorld().getKey().asString() + ":" + l.getBlockX() + ":" + l.getBlockY() + ":" + l.getBlockZ();
                     setd.put("door_location", doorloc);
                     setd.put("door_direction", "SOUTH");
                     // check if there is an existing record
@@ -110,7 +110,7 @@ public class ItemDisplaySetter {
                         HashMap<String, Object> set = new HashMap<>();
                         set.put("tardis_id", id);
                         set.put("name", name);
-                        set.put("world", block.getWorld().getName());
+                        set.put("world", block.getWorld().getKey().asString());
                         set.put("x", l.getBlockX() + 0.5d);
                         set.put("y", l.getBlockY());
                         set.put("z", (l.getBlockZ() + 1));
@@ -124,9 +124,7 @@ public class ItemDisplaySetter {
                 ItemDisplay display = TARDISDisplayItemUtils.set(tdi, block, id);
                 if (json.has("name")) {
                     ItemStack is = display.getItemStack();
-                    ItemMeta im = is.getItemMeta();
-                    im.displayName(ComponentUtils.fromJson(json.get("name")));
-                    is.setItemMeta(im);
+                    is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.fromJson(json.get("name")));
                     display.setItemStack(is);
                 }
                 if (json.has("rotation")) {
@@ -151,12 +149,11 @@ public class ItemDisplaySetter {
         ItemDisplay display = (ItemDisplay) block.getWorld().spawnEntity(block.getLocation().clone().add(0.5d, 0.25d, 0.5d), EntityType.ITEM_DISPLAY);
         ItemStack is = ItemStack.of(material);
         if (model != null) {
-            ItemMeta im = is.getItemMeta();
-            im.displayName(model.getKey().equals("xray")
+            is.setData(DataComponentTypes.CUSTOM_NAME,
+                    model.getKey().equals("xray")
                     ? Component.text("X-ray")
                     : Component.text(TARDISStringUtils.capitalise(model.getKey()))
             );
-            is.setItemMeta(im);
             display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.GROUND);
             display.setBillboard(Display.Billboard.VERTICAL);
         }
@@ -175,9 +172,7 @@ public class ItemDisplaySetter {
             JsonObject stack = json.get("stack").getAsJsonObject();
             Material material = Material.valueOf(stack.get("type").getAsString());
             ItemStack is = ItemStack.of(material);
-            ItemMeta im = is.getItemMeta();
-            im.displayName(Component.text(stack.get("display_name").getAsString()));
-            is.setItemMeta(im);
+            is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(stack.get("display_name").getAsString()));
             display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.HEAD);
             display.setItemStack(is);
             display.setInvulnerable(true);

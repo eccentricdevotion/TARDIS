@@ -12,6 +12,7 @@ import me.eccentric_nz.tardischunkgenerator.worldgen.utils.SiluriaStructureUtili
 import me.eccentric_nz.tardischunkgenerator.worldgen.utils.SkaroStructureUtility;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.Locale;
 import java.util.concurrent.CompletableFuture;
 
@@ -22,14 +23,15 @@ public class SchematicLoadSuggestions {
         // suggest
         switch (dir) {
             case "console" -> {
-                for (String c : Desktops.getBY_PERMS().keySet()) {
-                    builder.suggest(c);
-                }
+                Desktops.getBY_PERMS().keySet().stream()
+                        .filter(d -> d.toLowerCase(Locale.ROOT).startsWith(builder.getRemainingLowerCase()))
+                        .forEach(builder::suggest);
             }
             case "room" -> {
-                for (String r : TARDIS.plugin.getRoomsConfig().getConfigurationSection("rooms").getKeys(false)) {
-                    builder.suggest(r.toLowerCase(Locale.ROOT));
-                }
+                TARDIS.plugin.getRoomsConfig().getConfigurationSection("rooms").getKeys(false).stream()
+                        .filter(r -> r.toLowerCase(Locale.ROOT).startsWith(builder.getRemainingLowerCase()))
+                        .forEach(r -> builder.suggest(r.toLowerCase(Locale.ROOT)));
+
             }
             case "structure" -> {
                 for (String g : GallifeyStructureUtility.structures) {
@@ -46,11 +48,10 @@ public class SchematicLoadSuggestions {
             default -> {
                 File userDir = new File(TARDIS.plugin.getDataFolder() + File.separator + "user_schematics");
                 if (userDir.exists()) {
-                    for (String f : userDir.list()) {
-                        if (f.endsWith(".tschm")) {
-                            builder.suggest(f.substring(0, f.length() - 6));
-                        }
-                    }
+                    Arrays.stream(userDir.list())
+                            .filter(f -> f.endsWith(".tschm"))
+                            .filter(f -> f.toLowerCase(Locale.ROOT).startsWith(builder.getRemainingLowerCase()))
+                            .forEach(f -> builder.suggest(f.substring(0, f.length() - 6)));
                 }
             }
         }

@@ -52,7 +52,7 @@ public class TARDISChunkyChecker {
     public boolean isOutsideBorder(Player p, org.bukkit.Location l) {
         boolean bool = false;
         if (chunky != null) {
-            Optional<BorderData> borderData = chunky.getBorder(l.getWorld().getName());
+            Optional<BorderData> borderData = chunky.getBorder(l.getWorld().getKey().getKey());
             if (borderData.isPresent()) {
                 Shape border = borderData.get().getBorder();
                 bool = !border.isBounding(l.getX(), l.getZ());

@@ -84,7 +84,7 @@ public class PlotListener implements Listener {
                         set.put("name", name);
                         HashMap<String, Object> where = new HashMap<>();
                         where.put("uuid", player.getUniqueId().toString());
-                        where.put("world", player.getWorld().getName());
+                        where.put("world", player.getWorld().getKey().asString());
                         String[] split = ComponentUtils.stripColour(sign.getSide(Side.FRONT).line(3)).split(", ");
                         String[] sx = split[0].split(":");
                         int dx = TARDISNumberParsers.parseInt(sx[1]);
@@ -125,7 +125,7 @@ public class PlotListener implements Listener {
                 // save plot
                 HashMap<String, Object> set = new HashMap<>();
                 set.put("uuid", player.getUniqueId().toString());
-                set.put("world", min.getWorld().getName());
+                set.put("world", min.getWorld().getKey().asString());
                 set.put("chunk_x", x);
                 set.put("chunk_z", z);
                 set.put("size", size);

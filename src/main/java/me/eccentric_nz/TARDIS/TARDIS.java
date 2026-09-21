@@ -45,7 +45,8 @@ import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.monitor.SnapshotLoader;
 import me.eccentric_nz.TARDIS.perms.TARDISContexts;
 import me.eccentric_nz.TARDIS.placeholders.TARDISPlaceholderExpansion;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
+import me.eccentric_nz.TARDIS.planets.TARDISWorldResolver;
+import me.eccentric_nz.TARDIS.planets.TradesConfigUpdater;
 import me.eccentric_nz.TARDIS.recipes.*;
 import me.eccentric_nz.TARDIS.rooms.eye.EyeLoader;
 import me.eccentric_nz.TARDIS.rotors.CustomTimeRotorLoader;
@@ -117,7 +118,7 @@ public class TARDIS extends JavaPlugin {
     private final HashMap<String, String> versions = new HashMap<>();
     private final String versionRegex = "(\\d+[.])+\\d+";
     private final Pattern versionPattern = Pattern.compile(versionRegex);
-    private final String serverStr = "1.21.11";
+    private final String serverStr = "26.3";
     private TARDISMessage messenger;
     private ChatGUI jsonKeeper;
     private SkinChanger skinChanger;
@@ -183,6 +184,7 @@ public class TARDIS extends JavaPlugin {
     private NamespacedKey loopKey;
     private NamespacedKey tardisIdKey;
     private NamespacedKey timeLordUuidKey;
+    private NamespacedKey tradesKey;
     private NamespacedKey standUuidKey;
     private NamespacedKey interactionUuidKey;
     private NamespacedKey modelUuidKey;
@@ -191,6 +193,7 @@ public class TARDIS extends JavaPlugin {
     private NamespacedKey sonicUuidKey;
     private NamespacedKey sonicChargeKey;
     private NamespacedKey microscopeKey;
+    private NamespacedKey snapshotKey;
     private PersistentDataType<byte[], UUID> persistentDataTypeUUID;
     private QueryFactory queryFactory;
     private TARDISBlockLogger blockLogger;
@@ -206,11 +209,11 @@ public class TARDIS extends JavaPlugin {
         worldGuardOnServer = false;
         invManager = InventoryManager.NONE;
         versions.put("GriefPrevention", "16.18");
-        versions.put("LibsDisguises", "11.0.6");
-        versions.put("Multiverse-Core", "5.0");
-        versions.put("Multiverse-Inventories", "5.0");
+        versions.put("LibsDisguises", "11.0.18");
+        versions.put("Multiverse-Core", "5.6.2");
+        versions.put("Multiverse-Inventories", "5.3.3");
         versions.put("Towny", "0.101");
-        versions.put("WorldGuard", "7.0.14");
+        versions.put("WorldGuard", "7.0.17");
     }
 
     public TARDISMessage getMessenger() {
@@ -240,6 +243,7 @@ public class TARDIS extends JavaPlugin {
                 PerceptionFilter.removePerceptionFilter();
                 debug("Perception Filters removed");
                 new TARDISPersister(this).save();
+                debug("Persisting data for server restart");
             }
             getServer().getScheduler().cancelTasks(this);
             debug("Cancelling all scheduled tasks");
@@ -266,6 +270,7 @@ public class TARDIS extends JavaPlugin {
         loopKey = new NamespacedKey(this, "loop");
         tardisIdKey = new NamespacedKey(this, "tardis_id");
         timeLordUuidKey = new NamespacedKey(this, "timelord_uuid");
+        tradesKey = new NamespacedKey(this, "trades");
         standUuidKey = new NamespacedKey(this, "stand_uuid");
         interactionUuidKey = new NamespacedKey(this, "interaction_uuid");
         modelUuidKey = new NamespacedKey(this, "model_uuid");
@@ -274,6 +279,7 @@ public class TARDIS extends JavaPlugin {
         sonicUuidKey = new NamespacedKey(this, "sonic_uuid");
         sonicChargeKey = new NamespacedKey(this, "sonic_charge");
         microscopeKey = new NamespacedKey(this, "microscope");
+        snapshotKey = new NamespacedKey(this, "snapshot");
         persistentDataTypeUUID = new TARDISUUIDDataType();
         console = getServer().getConsoleSender();
         ModuleDescriptor.Version serverVersion = getServerVersion(getServer().getVersion());
@@ -288,7 +294,7 @@ public class TARDIS extends JavaPlugin {
                 return;
             }
             // remove old datapack
-            new TARDISChecker(this).removeOldDataPack();
+            new LegacyDataPack(this).remove();
             messenger = new TARDISMessage();
             jsonKeeper = new ChatGUI();
             skinChanger = new SkinChanger();
@@ -318,6 +324,8 @@ public class TARDIS extends JavaPlugin {
             }
             hasVersion = true;
             worldManager = WorldManager.getWorldManager();
+            // load Multiverse
+            loadMultiverse();
             saveDefaultConfig();
             reloadConfig();
             if (!getConfig().getBoolean("conversions.custom_presets")) {
@@ -328,11 +336,15 @@ public class TARDIS extends JavaPlugin {
             // load planets config
             tardisCopier.copy("planets.yml");
             planetsConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "planets.yml"));
-            loadCustomConfigs();
             // load TARDISChunkGenerator module
             loadHelper();
-            // load Multiverse
-            loadMultiverse();
+            // load configs
+            loadCustomConfigs();
+            new TARDISConfiguration(this).checkConfig();
+            // update world keys in configs
+            if (!getConfig().getBoolean("conversions.keyed_worlds")) {
+                new WorldKeyConfigUpdater(this).convert();
+            }
             // load worldguard
             loadWorldGuard();
             // add luckperms context
@@ -341,13 +353,12 @@ public class TARDIS extends JavaPlugin {
             loadSigns();
             loadChameleonGUIs();
             // world loading happens here
-            new TARDISConfiguration(this).checkConfig();
             prefix = getConfig().getString("storage.mysql.prefix", "");
             loadDatabase();
             queryFactory = new QueryFactory(this);
             loadInventoryManager();
             new TARDISWorldConfig(this).check();
-            TARDISAliasResolver.createAliasMap();
+            TARDISWorldResolver.createAliasMap();
             utils = new TARDISUtils(this);
             locationUtils = new TARDISLocationGetters(this);
             buildKeeper.setRoomSeeds(getSeeds());
@@ -360,6 +371,7 @@ public class TARDIS extends JavaPlugin {
             new DesktopThemeLoader(this).addSchematics();
             new CustomTimeRotorLoader(this).addRotors();
             new CustomDoorLoader(this).addDoors();
+            new TradesConfigUpdater(this, tradesConfig, artronConfig, roomsConfig).checkTrades();
             loadFiles();
             disguisesOnServer = pm.isPluginEnabled("LibsDisguises");
             generalKeeper = new TARDISGeneralInstanceKeeper(this);
@@ -446,7 +458,7 @@ public class TARDIS extends JavaPlugin {
                 new TARDISStats(this).startMetrics();
             }, 200L);
         } else {
-            getLogger().log(Level.SEVERE, "This plugin requires Spigot/Paper " + minVersion + " or higher, disabling...");
+            getLogger().log(Level.SEVERE, "This plugin requires Paper " + minVersion + " or higher, disabling...");
             pm.disablePlugin(this);
         }
     }
@@ -454,6 +466,9 @@ public class TARDIS extends JavaPlugin {
     @Override
     public ChunkGenerator getDefaultWorldGenerator(String worldName, String id) {
         if (id != null) {
+            if (id.equalsIgnoreCase("cave")) {
+                return new CaveGenerator();
+            }
             if (id.equalsIgnoreCase("flat")) {
                 return new FlatGenerator(this);
             }
@@ -478,9 +493,9 @@ public class TARDIS extends JavaPlugin {
             if (id.equalsIgnoreCase("rooms")) {
                 return new RoomGenerator(this);
             }
-            return new TARDISChunkGenerator();
+            return new VoidGenerator();
         }
-        return new TARDISChunkGenerator();
+        return new VoidGenerator();
     }
 
     /**
@@ -733,7 +748,9 @@ public class TARDIS extends JavaPlugin {
      *
      * @return the lamps configuration
      */
-    public FileConfiguration getLampsConfig() { return lampsConfig; }
+    public FileConfiguration getLampsConfig() {
+        return lampsConfig;
+    }
 
     /**
      * Gets the language configuration
@@ -1157,6 +1174,15 @@ public class TARDIS extends JavaPlugin {
     }
 
     /**
+     * Gets the Time Lord trades NamespacedKey
+     *
+     * @return the Time Lord trades NamespacedKey
+     */
+    public NamespacedKey getTradesKey() {
+        return tradesKey;
+    }
+
+    /**
      * Gets the armour stand UUID NamespacedKey
      *
      * @return the armour stand UUID NamespacedKey
@@ -1226,6 +1252,15 @@ public class TARDIS extends JavaPlugin {
      */
     public NamespacedKey getMicroscopeKey() {
         return microscopeKey;
+    }
+
+    /**
+     * Gets the BOTI Snapshot NamespacedKey
+     *
+     * @return the Snapshot NamespacedKey
+     */
+    public NamespacedKey getSnapshotKey() {
+        return snapshotKey;
     }
 
     /**
@@ -1309,7 +1344,7 @@ public class TARDIS extends JavaPlugin {
         if (pm.isPluginEnabled(plg)) {
             Plugin check = pm.getPlugin(plg);
             ModuleDescriptor.Version minVersion = ModuleDescriptor.Version.parse(min);
-            String yamlVersion = check.getDescription().getVersion();
+            String yamlVersion = check.getPluginMeta().getVersion();
             Matcher matcher = versionPattern.matcher(yamlVersion);
             if (matcher.find()) {
                 String pluginVersion = matcher.group(0);
@@ -1448,7 +1483,6 @@ public class TARDIS extends JavaPlugin {
         );
         for (String f : files) {
 //            debug(f);
-            tardisCopier.copy(f);
             tardisCopier.copy(f);
         }
         new PlanetsConfigUpdater(this, planetsConfig).checkPlanetsConfig();

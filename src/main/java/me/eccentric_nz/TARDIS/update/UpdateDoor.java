@@ -41,7 +41,7 @@ public class UpdateDoor {
         HashMap<String, Object> set = new HashMap<>();
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
-        String location = block.getWorld().getName() + ":" + block.getX() + ":" + block.getY() + ":" + block.getZ();
+        String location = block.getWorld().getKey().asString() + ":" + block.getX() + ":" + block.getY() + ":" + block.getZ();
         if (updateable.equals(Updateable.DOOR) && !secondary) {
             // if portals are on, remove the current portal first
             ResultSetDoorBlocks rsdb = new ResultSetDoorBlocks(plugin, id);

@@ -50,7 +50,7 @@ public class TARDISTravelRequest {
     public boolean getRequest(Player p, Player to, Location l) {
         boolean bool = true;
         if (plugin.getConfig().getBoolean("travel.per_world_perms")) {
-            String perm = l.getWorld().getName();
+            String perm = l.getWorld().getKey().getKey();
             if (!TARDISPermission.hasPermission(p, "tardis.travel." + perm)) {
                 plugin.getMessenger().send(p, TardisModule.TARDIS, "TRAVEL_NO_PERM_WORLD", perm);
                 bool = false;

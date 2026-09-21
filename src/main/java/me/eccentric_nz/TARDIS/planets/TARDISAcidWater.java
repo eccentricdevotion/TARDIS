@@ -2,7 +2,7 @@
   This file is borrowed from ASkyBlock. (https://github.com/tastybento/acidisland)
   <p>
   ASkyBlock is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
-  License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later
+  Licence as published by the Free Software Foundation, either version 3 of the Licence, or (at your option) any later
   version.
   <p>
   ASkyBlock is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.planets;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.registry.RegistryAccess;
 import io.papermc.paper.registry.RegistryKey;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -38,7 +39,6 @@ import org.bukkit.event.player.PlayerBucketFillEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -86,7 +86,7 @@ public class TARDISAcidWater implements Listener {
             return;
         }
         // check that they are in the Skaro world
-        if (!player.getWorld().getName().equalsIgnoreCase("skaro")) {
+        if (!player.getWorld().getKey().getKey().equalsIgnoreCase("skaro")) {
             return;
         }
         // return if players are immune
@@ -137,7 +137,7 @@ public class TARDISAcidWater implements Listener {
                     if (player.isDead()) {
                         burningPlayers.remove(player);
                         cancel();
-                    } else if ((player.getLocation().getBlock().isLiquid() || player.getLocation().getBlock().getRelative(BlockFace.UP).isLiquid()) && player.getLocation().getWorld().getName().equalsIgnoreCase("skaro")) {
+                    } else if ((player.getLocation().getBlock().isLiquid() || player.getLocation().getBlock().getRelative(BlockFace.UP).isLiquid()) && player.getLocation().getWorld().getKey().getKey().equalsIgnoreCase("skaro")) {
                         // apply additional potion effects
                         if (!plugin.getPlanetsConfig().getStringList("planets.skaro.acid_potions").isEmpty()) {
                             plugin.getPlanetsConfig().getStringList("planets.skaro.acid_potions").forEach((t) -> {
@@ -170,7 +170,7 @@ public class TARDISAcidWater implements Listener {
 
     /**
      * @param player The player to get damage for
-     * @return A double between 0.0 and 0.80 that reflects how much armor the player has on. The higher the value, the
+     * @return A double between 0.0 and 0.80 that reflects how much armour the player has on. The higher the value, the
      * more protection they have.
      */
     private double getDamageReduced(Player player) {
@@ -180,7 +180,7 @@ public class TARDISAcidWater implements Listener {
         ItemStack chest = inv.getChestplate();
         ItemStack pants = inv.getLeggings();
         double reduction = 0.0;
-        if (helmet != null) {
+        if (!helmet.isEmpty()) {
             switch (helmet.getType()) {
                 case TURTLE_HELMET -> reduction += 0.02;
                 case LEATHER_HELMET -> reduction += 0.04;
@@ -237,19 +237,17 @@ public class TARDISAcidWater implements Listener {
     @EventHandler
     public void onFillAcidBucket(PlayerBucketFillEvent event) {
         Player p = event.getPlayer();
-        if (!p.getWorld().getName().equalsIgnoreCase("skaro")) {
+        if (!p.getWorld().getKey().getKey().equalsIgnoreCase("skaro")) {
             return;
         }
         Material type = event.getBlockClicked().getType();
         ItemStack bucket = event.getItemStack();
-        ItemMeta im = bucket.getItemMeta();
         if (type.equals(Material.WATER)) {
-            im.displayName(Component.text("Acid Bucket"));
+            bucket.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Acid Bucket"));
         }
         if (type.equals(Material.LAVA)) {
-            im.displayName(Component.text("Rust Bucket"));
+            bucket.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Rust Bucket"));
         }
-        bucket.setItemMeta(im);
         p.updateInventory();
     }
 

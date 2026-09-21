@@ -74,7 +74,7 @@ public class SetBooleanCommand {
                     return;
                 }
             }
-            if (first.equals("archive") || first.equals("abandon")) {
+            if (first.equals("archive") || first.equals("abandon") || first.equals("police_box.view_interior")) {
                 plugin.getConfig().set(first + ".enabled", bool);
             } else {
                 plugin.getConfig().set(first, bool);

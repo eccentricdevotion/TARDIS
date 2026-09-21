@@ -52,9 +52,9 @@ public class InterfaceArgumentType implements CustomArgumentType<String, String>
 
     @Override
     public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
-        for (String s : SECTIONS) {
-            builder.suggest(s);
-        }
+        SECTIONS.stream()
+                .filter(s -> s.toLowerCase(Locale.ROOT).startsWith(builder.getRemainingLowerCase()))
+                .forEach(builder::suggest);
         return builder.buildFuture();
     }
 }

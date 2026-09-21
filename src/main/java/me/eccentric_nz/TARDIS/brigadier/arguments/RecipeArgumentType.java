@@ -25,40 +25,40 @@ public class RecipeArgumentType  implements CustomArgumentType<String, String> {
     private static final SimpleCommandExceptionType ERROR_INVALID_RECIPE = new SimpleCommandExceptionType(
             MessageComponentSerializer.message().serialize(Component.text("Invalid recipe specified!"))
     );
-    private final Set<String> ROOT_SUBS = new HashSet<>();
+    private final Set<String> RECIPE_SUBS = new HashSet<>();
 
     public RecipeArgumentType(TARDIS plugin) {
-        ROOT_SUBS.add("seed");
-        ROOT_SUBS.add("tardis");
+        RECIPE_SUBS.add("seed");
+        RECIPE_SUBS.add("tardis");
         for (RecipeItem recipeItem : RecipeItem.values()) {
             if (recipeItem.getCategory() != RecipeCategory.UNCRAFTABLE && recipeItem.getCategory() != RecipeCategory.UNUSED && recipeItem.getCategory() != RecipeCategory.CHEMISTRY) {
-                ROOT_SUBS.add(recipeItem.toTabCompletionString());
+                RECIPE_SUBS.add(recipeItem.toTabCompletionString());
             }
         }
         for (String d : plugin.getCustomDoorsConfig().getKeys(false)) {
-            ROOT_SUBS.add("door-" + d.toLowerCase(Locale.ROOT));
+            RECIPE_SUBS.add("door-" + d.toLowerCase(Locale.ROOT));
         }
         for (String r : plugin.getCustomRotorsConfig().getKeys(false)) {
-            ROOT_SUBS.add("time-rotor-" + r.toLowerCase(Locale.ROOT));
+            RECIPE_SUBS.add("time-rotor-" + r.toLowerCase(Locale.ROOT));
         }
         for (String c : plugin.getCustomConsolesConfig().getConfigurationSection("consoles").getKeys(false)) {
-            ROOT_SUBS.add("console-" + c.toLowerCase(Locale.ROOT));
+            RECIPE_SUBS.add("console-" + c.toLowerCase(Locale.ROOT));
         }
         // remove recipes form modules that are not enabled
         if (!plugin.getConfig().getBoolean("modules.vortex_manipulator")) {
-            ROOT_SUBS.remove("vortex-manipulator");
+            RECIPE_SUBS.remove("vortex-manipulator");
         }
         if (!plugin.getConfig().getBoolean("modules.regeneration")) {
-            ROOT_SUBS.remove("elixir-of-life");
+            RECIPE_SUBS.remove("elixir-of-life");
         }
         if (!plugin.getConfig().getBoolean("modules.sonic_blaster")) {
-            ROOT_SUBS.remove("sonic-blaster");
-            ROOT_SUBS.remove("blaster-battery");
-            ROOT_SUBS.remove("landing-pad");
+            RECIPE_SUBS.remove("sonic-blaster");
+            RECIPE_SUBS.remove("blaster-battery");
+            RECIPE_SUBS.remove("landing-pad");
         }
         if (!plugin.getConfig().getBoolean("modules.weeping_angels")) {
-            ROOT_SUBS.remove("judoon-ammunition");
-            ROOT_SUBS.remove("k9");
+            RECIPE_SUBS.remove("judoon-ammunition");
+            RECIPE_SUBS.remove("k9");
         }
     }
 
@@ -70,7 +70,7 @@ public class RecipeArgumentType  implements CustomArgumentType<String, String> {
     @Override
     public <S> String parse(StringReader reader, S source) throws CommandSyntaxException {
         String input = reader.readUnquotedString();
-        if (!ROOT_SUBS.contains(input)) {
+        if (!RECIPE_SUBS.contains(input)) {
             throw ERROR_INVALID_RECIPE.create();
         }
         return input;
@@ -83,9 +83,9 @@ public class RecipeArgumentType  implements CustomArgumentType<String, String> {
 
     @Override
     public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
-        for (String d : ROOT_SUBS) {
-            builder.suggest(d);
-        }
+        RECIPE_SUBS.stream()
+                .filter(r -> r.toLowerCase(Locale.ROOT).startsWith(builder.getRemainingLowerCase()))
+                .forEach(builder::suggest);
         return builder.buildFuture();
     }
 }

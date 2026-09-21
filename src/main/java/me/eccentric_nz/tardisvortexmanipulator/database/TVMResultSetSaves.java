@@ -6,6 +6,7 @@ package me.eccentric_nz.tardisvortexmanipulator.database;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.tardisvortexmanipulator.storage.TVMSave;
+import net.kyori.adventure.key.Key;
 import org.bukkit.World;
 
 import java.sql.Connection;
@@ -61,7 +62,7 @@ public class TVMResultSetSaves {
                     tvms.setX(rs.getFloat("x"));
                     tvms.setY(rs.getFloat("y"));
                     tvms.setZ(rs.getFloat("z"));
-                    World world = plugin.getServer().getWorld(w);
+                    World world = plugin.getServer().getWorld(Key.key(w));
                     tvms.setEnv((world != null) ? world.getEnvironment().toString() : "NORMAL");
                     saves.add(tvms);
                 }

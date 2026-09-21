@@ -13,8 +13,9 @@ import io.papermc.paper.command.brigadier.argument.CustomArgumentType;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import net.kyori.adventure.text.Component;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Locale;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
 public class WallFloorArgumentType implements CustomArgumentType<String, String> {
@@ -22,10 +23,10 @@ public class WallFloorArgumentType implements CustomArgumentType<String, String>
     private static final SimpleCommandExceptionType ERROR_INVALID_MATERIAL = new SimpleCommandExceptionType(
             MessageComponentSerializer.message().serialize(Component.text("Invalid wall / floor block specified!"))
     );
-    private static final List<String> MATERIAL_SUBS = new ArrayList<>();
+    private static final Set<String> MATERIAL_SUBS = new HashSet<>();
 
     static {
-        TARDISWalls.BLOCKS.forEach((m) -> MATERIAL_SUBS.add(m.toString()));
+        TARDISWalls.BLOCKS.forEach((m) -> MATERIAL_SUBS.add(m.value()));
     }
 
     @Override
@@ -49,9 +50,9 @@ public class WallFloorArgumentType implements CustomArgumentType<String, String>
 
     @Override
     public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
-        for (String d : MATERIAL_SUBS) {
-            builder.suggest(d);
-        }
+        MATERIAL_SUBS.stream()
+                .filter(m -> m.toLowerCase(Locale.ROOT).startsWith(builder.getRemainingLowerCase()))
+                .forEach(builder::suggest);
         return builder.buildFuture();
     }
 }

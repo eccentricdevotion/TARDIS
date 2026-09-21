@@ -13,6 +13,7 @@ import io.papermc.paper.command.brigadier.argument.CustomArgumentType;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemRegistry;
 import net.kyori.adventure.text.Component;
 
+import java.util.Locale;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
@@ -44,9 +45,9 @@ public class DisplayItemArgumentType implements CustomArgumentType<String, Strin
 
     @Override
     public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
-        for (String d : TDIS) {
-            builder.suggest(d);
-        }
+        TDIS.stream()
+                .filter(t -> t.toLowerCase(Locale.ROOT).startsWith(builder.getRemainingLowerCase()))
+                .forEach(builder::suggest);
         return builder.buildFuture();
     }
 }

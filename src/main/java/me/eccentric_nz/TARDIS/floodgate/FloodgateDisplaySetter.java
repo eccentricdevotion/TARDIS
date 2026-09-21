@@ -38,7 +38,7 @@ public class FloodgateDisplaySetter {
             JsonObject stack = json.get("stack").getAsJsonObject();
             if (stack.has("door")) {
                 HashMap<String, Object> setd = new HashMap<>();
-                String doorloc = start.getWorld().getName() + ":" + px + ":" + py + ":" + pz;
+                String doorloc = start.getWorld().getKey().asString() + ":" + px + ":" + py + ":" + pz;
                 setd.put("tardis_id", id);
                 setd.put("door_type", 1);
                 setd.put("door_location", doorloc);

@@ -6,14 +6,15 @@ import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import me.eccentric_nz.TARDIS.enumeration.Desktops;
 
+import java.util.Locale;
 import java.util.concurrent.CompletableFuture;
 
 public class SeedSuggestions {
 
     public static CompletableFuture<Suggestions> get(final CommandContext<CommandSourceStack> ctx, final SuggestionsBuilder builder) {
-        for (String s : Desktops.getBY_NAMES().keySet()) {
-            builder.suggest(s);
-        }
+        Desktops.getBY_NAMES().keySet().stream()
+                .filter(d -> d.toLowerCase(Locale.ROOT).startsWith(builder.getRemainingLowerCase()))
+                .forEach(builder::suggest);
         return builder.buildFuture();
     }
 }

@@ -21,6 +21,7 @@ import io.papermc.paper.registry.RegistryKey;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
+import me.eccentric_nz.TARDIS.commands.travel.cave.CaveBiomeFinder;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.Flag;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -34,6 +35,7 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.entity.Player;
+import org.bukkit.util.BiomeSearchResult;
 import org.terraform.coregen.bukkit.TerraformGenerator;
 
 import java.util.HashMap;
@@ -48,29 +50,52 @@ public class TARDISBiomeFinder {
     }
 
     public void run(World w, String search, Player player, int id, COMPASS direction, Location current) {
+        Biome biome = null;
         Location tb;
         plugin.getMessenger().sendStatus(player, "BIOME_SEARCH");
         if (TARDIS.plugin.getServer().getPluginManager().isPluginEnabled("TerraformGenerator") && w.getGenerator() instanceof TerraformGenerator) {
             tb = new TerraBiomeLocator(w, current, search).execute();
+            set(tb, player, id, true, direction);
         } else {
             try {
-                Biome biome = RegistryAccess.registryAccess().getRegistry(RegistryKey.BIOME).get(new NamespacedKey("minecraft", search.toLowerCase(Locale.ROOT)));
+                biome = RegistryAccess.registryAccess().getRegistry(RegistryKey.BIOME).get(new NamespacedKey("minecraft", search.toLowerCase(Locale.ROOT)));
                 if (biome == null || biome.equals(Biome.THE_VOID)) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "BIOME_TRAVEL_NOT_VALID");
                     return;
                 }
-                tb = BiomeUtilities.searchBiome(w, biome, current);
+                if (BiomeUtilities.isUnderground(biome)) {
+                    BiomeSearchResult searchResult = w.locateNearestBiome(current, 6400, biome);
+                    if (searchResult != null) {
+                        plugin.debug("Found " + searchResult.getBiome().key().value() + " at " + searchResult.getLocation());
+                        CaveBiomeFinder.getSafeLocation(searchResult.getLocation(), direction)
+                                .thenAccept(optionalLoc -> {
+                                    // Note: This block runs ASYNCHRONOUSLY
+                                    if (optionalLoc.isEmpty()) {
+                                        plugin.getMessenger().send(player, TardisModule.TARDIS, "BIOME_NOT_FOUND");
+                                        return;
+                                    }
+                                    set(optionalLoc.get(), player, id, false, direction);
+                                });
+                    } else {
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "BIOME_NOT_FOUND");
+                    }
+                } else {
+                    tb = BiomeUtilities.searchBiome(w, biome, current);
+                    set(tb, player, id, true, direction);
+                }
             } catch (IllegalArgumentException iae) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "BIOME_NOT_VALID");
-                return;
             }
         }
-        if (tb == null) {
+    }
+
+    private void set(Location location, Player player, int id, boolean setHighest, COMPASS direction) {
+        if (location == null) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "BIOME_NOT_FOUND");
             return;
         }
         // found a biome
-        if (!plugin.getPluginRespect().getRespect(tb, new Parameters(player, Flag.getDefaultFlags()))) {
+        if (!plugin.getPluginRespect().getRespect(location, new Parameters(player, Flag.getDefaultFlags()))) {
             if (plugin.getConfig().getBoolean("travel.no_destination_malfunctions")) {
                 plugin.getTrackerKeeper().getMalfunction().put(id, true);
             } else {
@@ -79,30 +104,33 @@ public class TARDISBiomeFinder {
                 return;
             }
         }
-        World bw = tb.getWorld();
+        World bw = location.getWorld();
         // check location
-        while (!bw.getChunkAt(tb).isLoaded()) {
-            bw.getChunkAt(tb).load();
+        while (!bw.getChunkAt(location).isLoaded()) {
+            bw.getChunkAt(location).load();
         }
-        int highest = tb.getWorld().getHighestBlockYAt(tb);
-        if (tb.getWorld().getEnvironment().equals(World.Environment.NETHER)) {
-            highest = TARDISStaticLocationGetters.getNetherHighest(tb);
-        }
-        tb.setY(highest + 1);
-        int[] start_loc = TARDISTimeTravel.getStartLocation(tb, direction);
-        int tmp_y = tb.getBlockY();
-        for (int up = 0; up < 10; up++) {
-            int count = TARDISTimeTravel.safeLocation(start_loc[0], tmp_y + up, start_loc[2], start_loc[1], start_loc[3], tb.getWorld(), direction);
-            if (count == 0) {
-                tb.setY(tmp_y + up);
-                break;
+        if (setHighest) {
+            int highest = bw.getHighestBlockYAt(location);
+            if (bw.getEnvironment().equals(World.Environment.NETHER)
+                    || plugin.getPlanetsConfig().getBoolean("planets." + bw.getKey().getKey() + ".false_nether")) {
+                highest = TARDISStaticLocationGetters.getNetherHighest(location);
+            }
+            location.setY(highest + 1);
+            int[] start_loc = TARDISTimeTravel.getStartLocation(location, direction);
+            int tmp_y = location.getBlockY();
+            for (int up = 0; up < 10; up++) {
+                int count = TARDISTimeTravel.safeLocation(start_loc[0], tmp_y + up, start_loc[2], start_loc[1], start_loc[3], location.getWorld(), direction);
+                if (count == 0) {
+                    location.setY(tmp_y + up);
+                    break;
+                }
             }
         }
         HashMap<String, Object> set = new HashMap<>();
-        set.put("world", tb.getWorld().getName());
-        set.put("x", tb.getBlockX());
-        set.put("y", tb.getBlockY());
-        set.put("z", tb.getBlockZ());
+        set.put("world", bw.getKey().asString());
+        set.put("x", location.getBlockX());
+        set.put("y", location.getBlockY());
+        set.put("z", location.getBlockZ());
         set.put("direction", direction.toString());
         set.put("submarine", 0);
         HashMap<String, Object> tid = new HashMap<>();

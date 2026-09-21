@@ -53,7 +53,7 @@ public class ComehereAction {
         HashMap<String, Object> bset = new HashMap<>();
         if (w != null) {
             // set fast return location
-            bset.put("world", request.getCurrent().getWorld().getName());
+            bset.put("world", request.getCurrent().getWorld().getKey().asString());
             bset.put("x", request.getCurrent().getX());
             bset.put("y", request.getCurrent().getY());
             bset.put("z", request.getCurrent().getZ());
@@ -62,7 +62,7 @@ public class ComehereAction {
         } else {
             hidden = true;
             // set fast return location
-            bset.put("world", request.getDestination().getWorld().getName());
+            bset.put("world", request.getDestination().getWorld().getKey().asString());
             bset.put("x", request.getDestination().getX());
             bset.put("y", request.getDestination().getY());
             bset.put("z", request.getDestination().getZ());
@@ -72,7 +72,7 @@ public class ComehereAction {
         HashMap<String, Object> tid = new HashMap<>();
         tid.put("tardis_id", request.getId());
         HashMap<String, Object> set = new HashMap<>();
-        set.put("world", request.getDestination().getWorld().getName());
+        set.put("world", request.getDestination().getWorld().getKey().asString());
         set.put("x", request.getDestination().getBlockX());
         set.put("y", request.getDestination().getBlockY());
         set.put("z", request.getDestination().getBlockZ());

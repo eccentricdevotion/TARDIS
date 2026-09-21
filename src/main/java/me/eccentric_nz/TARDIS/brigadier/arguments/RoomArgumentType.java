@@ -14,6 +14,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import net.kyori.adventure.text.Component;
 
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
@@ -56,9 +57,9 @@ public class RoomArgumentType implements CustomArgumentType<String, String> {
 
     @Override
     public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
-        for (String d : ROOM_SUBS) {
-            builder.suggest(d);
-        }
+        ROOM_SUBS.stream()
+                .filter(r -> r.toLowerCase(Locale.ROOT).startsWith(builder.getRemainingLowerCase()))
+                .forEach(builder::suggest);
         return builder.buildFuture();
     }
 }

@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.tardisweepingangels.utils;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.keys.SmilerVariant;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
@@ -30,7 +31,6 @@ import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.event.entity.EntityTargetLivingEntityEvent;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
@@ -38,8 +38,8 @@ public class MonsterTargetListener implements Listener {
 
     private static boolean isWearingMonsterHead(Player player, Material material) {
         ItemStack is = player.getInventory().getHelmet();
-        if (is != null && is.getType().equals(material) && is.hasItemMeta()) {
-            return is.getItemMeta().getPersistentDataContainer().has(TARDIS.plugin.getHeadBlockKey(), PersistentDataType.INTEGER);
+        if (!is.isEmpty() && is.getType().equals(material)) {
+            return is.getPersistentDataContainer().has(TARDIS.plugin.getHeadBlockKey(), PersistentDataType.INTEGER);
         }
         return false;
     }
@@ -230,10 +230,8 @@ public class MonsterTargetListener implements Listener {
                 // set angry head
                 EntityEquipment ee = monster.getEquipment();
                 ItemStack head = ee.getHelmet();
-                if (head != null) {
-                    ItemMeta im = head.getItemMeta();
-                    im.setItemModel(SmilerVariant.SMILER_ANGRY_HEAD.getKey());
-                    head.setItemMeta(im);
+                if (!head.isEmpty()) {
+                    head.setData(DataComponentTypes.ITEM_MODEL, SmilerVariant.SMILER_ANGRY_HEAD.getKey());
                     ee.setHelmet(head);
                 }
             }
@@ -241,10 +239,8 @@ public class MonsterTargetListener implements Listener {
                 // set smiling head
                 EntityEquipment ee = monster.getEquipment();
                 ItemStack head = ee.getHelmet();
-                if (head != null) {
-                    ItemMeta im = head.getItemMeta();
-                    im.setItemModel(SmilerVariant.SMILER_HEAD.getKey());
-                    head.setItemMeta(im);
+                if (!head.isEmpty()) {
+                    head.setData(DataComponentTypes.ITEM_MODEL, SmilerVariant.SMILER_HEAD.getKey());
                     ee.setHelmet(head);
                 }
             }

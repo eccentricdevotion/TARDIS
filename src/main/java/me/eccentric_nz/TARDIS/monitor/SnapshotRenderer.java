@@ -85,7 +85,7 @@ public class SnapshotRenderer extends MapRenderer {
                 } else {
                     Color c = Color.gray;
                     // no block was hit, so we will assume we are looking at the distance
-                    if (!world.getName().contains("TARDIS")) {
+                    if (!world.getKey().getKey().contains("tardis")) {
                         switch (world.getEnvironment()) {
                             case NETHER -> {
                                 switch (location.getBlock().getBiome().getKey().getKey()) {
@@ -101,9 +101,9 @@ public class SnapshotRenderer extends MapRenderer {
                             default -> {
                                 // get time of day
                                 long ticks = world.getTime();
-                                if (world.getName().equals("skaro")) {
+                                if (world.getKey().getKey().equals("skaro")) {
                                     c = SkyColour.getSkaroFromTime(ticks);
-                                } else if (world.getName().equals("gallifrey")) {
+                                } else if (world.getKey().getKey().equals("gallifrey")) {
                                     c = SkyColour.getGallifreyFromTime(ticks);
                                 } else {
                                     c = SkyColour.getNormalFromTime(ticks);

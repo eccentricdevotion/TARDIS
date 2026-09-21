@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.sonic.actions;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.customblocks.LampToggler;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
@@ -28,7 +29,6 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
 
@@ -47,11 +47,11 @@ public class SonicLight {
         where.put("uuid", player.getUniqueId().toString());
         ResultSetTravellers rs = new ResultSetTravellers(plugin, where, false);
         if (rs.resultSet()) {
-            // TARDIS_TimeVortex:500:66:504
+            // tardis_timevortex:500:66:504
             int x = light.getLocation().getBlockX();
             int y = light.getLocation().getBlockY();
             int z = light.getLocation().getBlockZ();
-            String location = light.getWorld().getName() + ":" + x + ":" + y + ":" + z;
+            String location = light.getWorld().getKey().asString() + ":" + x + ":" + y + ":" + z;
             // check if already added
             HashMap<String, Object> wherel = new HashMap<>();
             wherel.put("location", location);
@@ -75,7 +75,7 @@ public class SonicLight {
         int x = light.getLocation().getBlockX();
         int y = light.getLocation().getBlockY();
         int z = light.getLocation().getBlockZ();
-        String location = light.getWorld().getName() + ":" + x + ":" + y + ":" + z;
+        String location = light.getWorld().getKey().asString() + ":" + x + ":" + y + ":" + z;
         // remove lamps record
         HashMap<String, Object> where = new HashMap<>();
         where.put("location", location);
@@ -93,7 +93,6 @@ public class SonicLight {
         // check the block is a TARDIS light block
         if (tdi != null && tdi.isLight()) {
             TARDISDisplayItem toggled = TardisLight.getToggled(tdi);
-            ItemMeta im = lamp.getItemMeta();
             ItemStack change = ItemStack.of(toggled.getMaterial(), 1);
             if (toggled.isLit()) {
                 // create light source
@@ -104,8 +103,7 @@ public class SonicLight {
                 // set light level to zero
                 LampToggler.setLightlevel(light, 0);
             }
-            im.setItemModel(toggled.getCustomModel());
-            change.setItemMeta(im);
+            lamp.setData(DataComponentTypes.ITEM_MODEL, toggled.getCustomModel());
             display.setItemStack(change);
         }
     }

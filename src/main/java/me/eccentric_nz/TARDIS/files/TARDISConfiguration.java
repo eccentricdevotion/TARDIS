@@ -58,11 +58,13 @@ public class TARDISConfiguration {
         booleanOptions.put("allow.all_blocks", false);
         booleanOptions.put("allow.animal_spawners", true);
         booleanOptions.put("allow.autonomous", true);
-        booleanOptions.put("allow.emergency_npc", true);
+        booleanOptions.put("allow.chunk_tickets", false);
         booleanOptions.put("allow.dynamic_lamps", false);
+        booleanOptions.put("allow.emergency_npc", true);
         booleanOptions.put("allow.external_gravity", false);
         booleanOptions.put("allow.guardians", false);
         booleanOptions.put("allow.hads", true);
+        booleanOptions.put("allow.hunger_and_healing", true);
         booleanOptions.put("allow.invisibility", true);
         booleanOptions.put("allow.mob_farming", true);
         booleanOptions.put("allow.perception_filter", true);
@@ -96,6 +98,7 @@ public class TARDISConfiguration {
         booleanOptions.put("conversions.custom_presets", false);
         booleanOptions.put("conversions.eyes", false);
         booleanOptions.put("conversions.icons", false);
+        booleanOptions.put("conversions.keyed_worlds", false);
         booleanOptions.put("conversions.interior_door_id", false);
         booleanOptions.put("conversions.legacy_budget", false);
         booleanOptions.put("conversions.paintings", false);
@@ -138,8 +141,8 @@ public class TARDISConfiguration {
         booleanOptions.put("police_box.load_shells", false);
         booleanOptions.put("police_box.keep_chunk_force_loaded", true);
         booleanOptions.put("police_box.use_nick", false);
-        booleanOptions.put("police_box.view_interior", false);
-        booleanOptions.put("police_box.view_interior_uses_console_size", false);
+        booleanOptions.put("police_box.view_interior.enabled", false);
+        booleanOptions.put("police_box.view_interior.use_console_size", false);
         booleanOptions.put("preferences.add_server_link", true);
         booleanOptions.put("preferences.any_key", false);
         booleanOptions.put("preferences.clean", true);
@@ -233,7 +236,7 @@ public class TARDISConfiguration {
         integerOptions.put("travel.tp_radius", 500);
         // string
         stringOptions.put("creation.area", "none");
-        stringOptions.put("creation.default_world_name", "TARDIS_TimeVortex");
+        stringOptions.put("creation.default_world_name", "tardis_timevortex");
         stringOptions.put("creation.use_clay", "WOOL");
         stringOptions.put("creation.seed_block.easy", "REDSTONE_TORCH");
         stringOptions.put("creation.seed_block.normal", "SOUL_LANTERN");
@@ -243,6 +246,7 @@ public class TARDISConfiguration {
         stringOptions.put("display.all", "&6X&7%X% &6Y&7%Y% &6Z&7%Z% &6F&7%FACING% (%FACING_XZ%) %TARGET_BLOCK%");
         stringOptions.put("police_box.default_preset", "FACTORY");
         stringOptions.put("police_box.sign_colour", "WHITE");
+        stringOptions.put("police_box.view_interior.type", "maps");
         stringOptions.put("preferences.default_key", "eleventh");
         stringOptions.put("preferences.key", "GOLD_NUGGET");
         stringOptions.put("preferences.language", "en");
@@ -291,8 +295,8 @@ public class TARDISConfiguration {
      */
     public void checkConfig() {
         int i = 0;
-        if (config.getString("creation.default_world_name").equals("tardis_time_vortex")) {
-            plugin.getConfig().set("creation.default_world_name", "TARDIS_TimeVortex");
+        if (config.getString("creation.default_world_name", "tardis_timevortex").equals("tardis_time_vortex")) {
+            plugin.getConfig().set("creation.default_world_name", "tardis_timevortex");
             i++;
         }
         if (!config.contains("rechargers")) {
@@ -465,6 +469,16 @@ public class TARDISConfiguration {
             plugin.getConfig().set("modules.blueprints", config.getBoolean("blueprints.enabled"));
             plugin.getConfig().set("blueprints.enabled", null);
             plugin.getConfig().set("blueprints", null);
+        }
+        // boti
+        if (!config.contains("police_box.view_interior.use_console_size")) {
+            boolean enabled = config.getBoolean("police_box.view_interior");
+            plugin.getConfig().set("police_box.view_interior", null);
+            plugin.getConfig().set("police_box.view_interior.enabled", enabled);
+            plugin.getConfig().set("police_box.view_interior.type", enabled ? "packets" : "maps");
+            plugin.getConfig().set("police_box.view_interior.use_console_size", config.getBoolean("police_box.view_interior_uses_console_size"));
+            plugin.getConfig().set("police_box.view_interior_uses_console_size", null);
+            i++;
         }
         // remove handles
         if (config.contains("handles")) {

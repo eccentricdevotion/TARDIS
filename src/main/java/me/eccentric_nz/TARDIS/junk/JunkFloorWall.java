@@ -48,7 +48,7 @@ public class JunkFloorWall {
         if (!TARDISWalls.BLOCKS.contains(Material.valueOf(wall_mat))) {
             String message = (wall_mat.equals("HELP")) ? "WALL_LIST" : "WALL_NOT_VALID";
             plugin.getMessenger().send(sender, TardisModule.TARDIS, message, pref);
-            TARDISWalls.BLOCKS.forEach((w) -> sender.sendMessage(w.toString()));
+            TARDISWalls.BLOCKS.forEach((w) -> plugin.getMessenger().message(sender, w.toString()));
             return;
         }
         // check if player_prefs record

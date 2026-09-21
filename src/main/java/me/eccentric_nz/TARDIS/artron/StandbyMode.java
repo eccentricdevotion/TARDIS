@@ -87,7 +87,7 @@ public class StandbyMode implements Runnable {
                     }
                     // if lights are on, turn them off
                     if (standbyData.lights()) {
-                        new PresetLampToggler(plugin).flickSwitch(id, standbyData.uuid(), true, standbyData.lightType());
+                        new LightToggler(plugin).flickSwitch(id, standbyData.uuid(), true, standbyData.lightType());
                     }
                     // if beacon is on turn it off
                     new BeaconToggler(plugin).flickSwitch(standbyData.uuid(), id, false);

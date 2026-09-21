@@ -150,7 +150,7 @@ public class MonstersConfig {
         // set angels.teleport_locations to world spawn
         if (!config.contains("angels.teleport_locations")) {
             Location location = plugin.getServer().getWorlds().getFirst().getSpawnLocation();
-            String spawn = location.getWorld().getName() + "," + location.getBlockX() + "," + location.getBlockY() + "," + location.getBlockZ();
+            String spawn = location.getWorld().getKey().asString() + "," + location.getBlockX() + "," + location.getBlockY() + "," + location.getBlockZ();
             List<String> list = List.of(spawn);
             plugin.getMonstersConfig().set("angels.teleport_locations", list);
             i++;

@@ -41,7 +41,7 @@ public class SonicAdmin {
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             HashMap<String, Object> wheredoor = new HashMap<>();
             Location loc = block.getLocation();
-            String bw = loc.getWorld().getName();
+            String bw = loc.getWorld().getKey().asString();
             int bx = loc.getBlockX();
             int by = loc.getBlockY();
             int bz = loc.getBlockZ();
@@ -71,7 +71,7 @@ public class SonicAdmin {
                     whereb.put("tardis_id", id);
                     ResultSetBackLocation rsb = new ResultSetBackLocation(plugin, whereb);
                     if (rsb.resultSet()) {
-                        plugin.getMessenger().send(player, TardisModule.TARDIS, "SCAN_LAST", rsb.getWorld().getName() + " " + rsb.getX() + ":" + rsb.getY() + ":" + rsb.getZ());
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "SCAN_LAST", rsb.getWorld().getKey().asString() + " " + rsb.getX() + ":" + rsb.getY() + ":" + rsb.getZ());
                     }
                 }
                 HashMap<String, Object> whereid = new HashMap<>();

@@ -30,7 +30,7 @@ public class AreaCreate {
         // add new area without min/max, grid = 0
         HashMap<String, Object> create = new HashMap<>();
         create.put("area_name", name);
-        create.put("world", player.getLocation().getWorld().getName());
+        create.put("world", player.getLocation().getWorld().getKey().asString());
         create.put("grid", 0);
         plugin.getQueryFactory().doInsert("areas", create);
         plugin.getMessenger().send(player, TardisModule.TARDIS, "AREA_SAVED", name);

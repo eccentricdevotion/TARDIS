@@ -26,6 +26,7 @@ import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.Desktops;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import net.kyori.adventure.key.Key;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 
@@ -66,7 +67,7 @@ public class JunkDelete {
             dd.setThrottle(SpaceTimeThrottle.JUNK);
             plugin.getPresetDestroyer().destroyPreset(dd);
             // destroy the vortex TARDIS
-            World cw = plugin.getServer().getWorld(plugin.getConfig().getString("creation.default_world_name"));
+            World cw = plugin.getServer().getWorld(Key.key(plugin.getConfig().getString("creation.default_world_name", "tardis_timevortex")));
             // give the TARDIS time to remove itself as it's not hidden
             if (cw != null) {
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {

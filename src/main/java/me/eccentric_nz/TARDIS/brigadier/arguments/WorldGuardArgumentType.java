@@ -1,6 +1,5 @@
 package me.eccentric_nz.TARDIS.brigadier.arguments;
 
-import com.google.common.collect.ImmutableList;
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.arguments.ArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
@@ -15,7 +14,8 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.protection.TARDISWorldGuardFlag;
 import net.kyori.adventure.text.Component;
 
-import java.util.List;
+import java.util.Locale;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
 public class WorldGuardArgumentType implements CustomArgumentType<String, String> {
@@ -23,13 +23,13 @@ public class WorldGuardArgumentType implements CustomArgumentType<String, String
     private static final SimpleCommandExceptionType ERROR_INVALID_OPT = new SimpleCommandExceptionType(
             MessageComponentSerializer.message().serialize(Component.text("Invalid WorldGuard option specified!"))
     );
-    private final List<String> FLAG_SUBS;
+    private final Set<String> FLAG_SUBS;
 
     public WorldGuardArgumentType(TARDIS plugin) {
         if (plugin.isWorldGuardOnServer()) {
-            FLAG_SUBS = ImmutableList.copyOf(TARDISWorldGuardFlag.getFLAG_LOOKUP().keySet());
+            FLAG_SUBS = TARDISWorldGuardFlag.getFLAG_LOOKUP().keySet();
         } else {
-            FLAG_SUBS = ImmutableList.of("none", "build", "entry");
+            FLAG_SUBS = Set.of("none", "build", "entry");
         }
     }
 
@@ -54,9 +54,9 @@ public class WorldGuardArgumentType implements CustomArgumentType<String, String
 
     @Override
     public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
-        for (String d : FLAG_SUBS) {
-            builder.suggest(d);
-        }
+        FLAG_SUBS.stream()
+                .filter(f -> f.toLowerCase(Locale.ROOT).startsWith(builder.getRemainingLowerCase()))
+                .forEach(builder::suggest);
         return builder.buildFuture();
     }
 }

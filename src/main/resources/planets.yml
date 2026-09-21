@@ -3,7 +3,7 @@ set_pack_on_join: true
 default_resource_pack: 'https://www.dropbox.com/s/utka3zxmer7f19g/Default.zip?dl=1'
 colour_skies: true
 planets:
-  TARDIS_TimeVortex:
+  tardis_timevortex:
     enabled: true
     resource_pack: default
     gamemode: SURVIVAL
@@ -20,7 +20,7 @@ planets:
     alias: TimeVortex
     icon: CRYING_OBSIDIAN
     helmic_regulator_order: -1
-  TARDIS_Zero_Room:
+  tardis_zero_room:
     enabled: false
     resource_pack: default
     gamemode: SURVIVAL

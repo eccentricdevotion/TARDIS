@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.rooms.games;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
-import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPostioning;
+import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPositioning;
 import me.eccentric_nz.TARDIS.builders.interior.TIPSData;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetGames;
 import me.eccentric_nz.TARDIS.enumeration.Advancement;
@@ -26,6 +26,7 @@ import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.rooms.CondenserData;
 import me.eccentric_nz.TARDIS.rooms.RoomBuilder;
+import net.kyori.adventure.key.Key;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -54,7 +55,7 @@ public class ArcadeRoomBuilder {
             plugin.getMessenger().send(p, TardisModule.TARDIS, "ZERO_DISABLED");
             return;
         }
-        TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
+        TARDISInteriorPositioning tintpos = new TARDISInteriorPositioning(plugin);
         int slot = tips;
         if (tips == -1) {
             slot = tintpos.getFreeSlot();
@@ -69,7 +70,7 @@ public class ArcadeRoomBuilder {
         int x = pos.getCentreX();
         int y = 16;
         int z = pos.getCentreZ();
-        World w = plugin.getServer().getWorld("TARDIS_Zero_room");
+        World w = plugin.getServer().getWorld(Key.key("minecraft", "tardis_zero_room"));
         if (w == null) {
             plugin.getMessenger().send(p, TardisModule.TARDIS, "ZERO_NOT_FOUND");
             return;

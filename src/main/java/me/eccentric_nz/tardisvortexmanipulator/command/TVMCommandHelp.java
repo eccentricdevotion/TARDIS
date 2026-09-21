@@ -48,8 +48,8 @@ public class TVMCommandHelp {
             if (arg.equalsIgnoreCase("command")) {
                 plugin.getMessenger().sendWithColour(sender, TardisModule.VORTEX_MANIPULATOR, "VM_HELP", "#55FFFF");
                 plugin.getMessenger().messageWithColour(sender, "Commands", "#55FF55");
-                sender.sendMessage("All commands must be run while holding the Vortex Manipulator in your hand.");
-                sender.sendMessage("You must have enough Tachyon energy to perform most Vortex Manipulator commands.");
+                plugin.getMessenger().message(sender, "All commands must be run while holding the Vortex Manipulator in your hand.");
+                plugin.getMessenger().message(sender, "You must have enough Tachyon energy to perform most Vortex Manipulator commands.");
                 plugin.getMessenger().messageWithColour(sender, "------------", "#55FF55");
                 plugin.getMessenger().sendWithColours(sender, "/vm", "#AAAAAA", " - perform a Vortex jump to a random location.", "#FFFFFF");
                 plugin.getMessenger().sendWithColours(sender, "/vm [world]", "#AAAAAA", " - perform a Vortex jump to a random location in the specified world.", "#FFFFFF");
@@ -73,8 +73,8 @@ public class TVMCommandHelp {
             if (arg.equalsIgnoreCase("gui")) {
                 plugin.getMessenger().sendWithColour(sender, TardisModule.VORTEX_MANIPULATOR, "VM_HELP", "#55FFFF");
                 plugin.getMessenger().messageWithColour(sender, "GUI", "#55FF55");
-                sender.sendMessage("Open the GUI by right-clicking AIR with the Vortex Manipulator.");
-                sender.sendMessage("You must have enough Tachyon energy to perform most Vortex Manipulator functions - check the Tachyon Level item.");
+                plugin.getMessenger().message(sender, "Open the GUI by right-clicking AIR with the Vortex Manipulator.");
+                plugin.getMessenger().message(sender, "You must have enough Tachyon energy to perform most Vortex Manipulator functions - check the Tachyon Level item.");
                 plugin.getMessenger().messageWithColour(sender, "------------", "#55FF55");
                 plugin.getMessenger().sendWithColours(sender, "Text entry", "#AAAAAA", " - first click the button for the text you want to change, then use the keypad to enter a character, to move the text position use the 'next' and 'prev' buttons. Use the 'display' to check what you have typed.", "#FFFFFF");
                 plugin.getMessenger().messageWithColour(sender, "------------", "#55FF55");
@@ -95,7 +95,7 @@ public class TVMCommandHelp {
             if (arg.equalsIgnoreCase("tachyon")) {
                 plugin.getMessenger().sendWithColour(sender, TardisModule.VORTEX_MANIPULATOR, "VM_HELP", "#55FFFF");
                 plugin.getMessenger().messageWithColour(sender, "Tachyon energy", "#55FF55");
-                sender.sendMessage("You must have enough Tachyon energy to perform most functions - check the Tachyon Level in the Vortex Manipulator GUI.");
+                plugin.getMessenger().message(sender, "You must have enough Tachyon energy to perform most functions - check the Tachyon Level in the Vortex Manipulator GUI.");
                 plugin.getMessenger().messageWithColour(sender, "------------", "#55FF55");
                 plugin.getMessenger().sendWithColours(sender, "Maximum charge level", "#AAAAAA", " - " + plugin.getVortexConfig().getInt("tachyon_use.max"), "#FFFFFF");
                 plugin.getMessenger().sendWithColours(sender, "Recharge", "#AAAAAA", " - " + plugin.getVortexConfig().getInt("tachyon_use.recharge"), "#FFFFFF");
@@ -111,7 +111,7 @@ public class TVMCommandHelp {
             if (arg.equalsIgnoreCase("message")) {
                 plugin.getMessenger().sendWithColour(sender, TardisModule.VORTEX_MANIPULATOR, "VM_HELP", "#55FFFF");
                 plugin.getMessenger().messageWithColour(sender, "Messaging", "#55FF55");
-                sender.sendMessage("You can only message players who have a Vortex Manipulator.");
+                plugin.getMessenger().message(sender, "You can only message players who have a Vortex Manipulator.");
                 plugin.getMessenger().messageWithColour(sender, "------------", "#55FF55");
                 plugin.getMessenger().sendWithColours(sender, "/vmm msg [player] [message]", "#AAAAAA", " - send a message to the specified player.", "#FFFFFF");
                 plugin.getMessenger().sendWithColours(sender, "/vmm list in", "#AAAAAA", " - show the most recent page of received messages.", "#FFFFFF");

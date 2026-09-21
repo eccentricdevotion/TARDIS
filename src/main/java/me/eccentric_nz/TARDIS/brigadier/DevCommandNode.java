@@ -12,7 +12,6 @@ import io.papermc.paper.command.brigadier.Commands;
 import io.papermc.paper.command.brigadier.argument.ArgumentTypes;
 import io.papermc.paper.dialog.Dialog;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.brigadier.arguments.*;
 import me.eccentric_nz.TARDIS.brigadier.suggestions.BlockSuggestions;
@@ -26,6 +25,7 @@ import me.eccentric_nz.TARDIS.monitor.MonitorSnapshot;
 import me.eccentric_nz.TARDIS.playerprefs.PreferencesDialog;
 import me.eccentric_nz.TARDIS.rooms.games.pong.GameDisplay;
 import me.eccentric_nz.TARDIS.rooms.games.rockpaperscissors.Letters;
+import me.eccentric_nz.TARDIS.rooms.kitchen.EdibleLookup;
 import me.eccentric_nz.TARDIS.utility.Pluraliser;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import me.eccentric_nz.tardisregeneration.Regenerator;
@@ -33,14 +33,12 @@ import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Chunk;
-import org.bukkit.Material;
+import org.bukkit.Registry;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
-
-import java.util.Locale;
 
 public class DevCommandNode {
 
@@ -51,22 +49,20 @@ public class DevCommandNode {
     }
 
     LiteralCommandNode<CommandSourceStack> build() {
-        LiteralArgumentBuilder<CommandSourceStack> command = Commands.literal("tardiscall")
+        LiteralArgumentBuilder<CommandSourceStack> command = Commands.literal("tardisdev")
                 .requires(ctx -> ctx.getSender() instanceof ConsoleCommandSender || TARDISPermission.hasPermission(ctx.getSender(), "tardis.admin"))
                 .executes(ctx -> {
                     new TARDISCommandHelper(plugin).getCommand("tardisdev", ctx.getSource().getSender());
                     return Command.SINGLE_SUCCESS;
                 })
+                .then(Commands.literal("edible")
+                        .executes(ctx -> {
+                            EdibleLookup.print();
+                            return Command.SINGLE_SUCCESS;
+                        }))
                 .then(Commands.literal("add_regions")
                         .executes(ctx -> {
                             new AddRegionsCommand(plugin).doCheck(ctx.getSource().getSender());
-                            return Command.SINGLE_SUCCESS;
-                        }))
-                .then(Commands.literal("advancements")
-                        .then(Commands.argument("which", StringArgumentType.word()))
-                        .executes(ctx -> {
-                            String a = StringArgumentType.getString(ctx, "which");
-                            TARDISAchievementFactory.checkAdvancement(a);
                             return Command.SINGLE_SUCCESS;
                         }))
                 .then(Commands.literal("armour")
@@ -157,7 +153,7 @@ public class DevCommandNode {
                                     if (ctx.getSource().getSender() instanceof Player player) {
                                         // get target block
                                         Block block = player.getTargetBlock(null, 8);
-                                        player.sendMessage(block.getState().toString());
+                                        plugin.getMessenger().message(player, block.getState().toString());
                                     }
                                     return Command.SINGLE_SUCCESS;
                                 })))
@@ -175,14 +171,14 @@ public class DevCommandNode {
                         .then(Commands.argument("world", ArgumentTypes.world())
                                 .executes(ctx -> {
                                     World world = ctx.getArgument("world", World.class);
-                                    DevelopmentUtility.chunky(plugin, world.getName(), "250");
+                                    DevelopmentUtility.chunky(plugin, world.getKey().getKey(), "250");
                                     return Command.SINGLE_SUCCESS;
                                 })
                                 .then(Commands.argument("radius", IntegerArgumentType.integer(1))
                                         .executes(ctx -> {
                                             World world = ctx.getArgument("world", World.class);
                                             String r = Integer.toString(IntegerArgumentType.getInteger(ctx, "radius"));
-                                            DevelopmentUtility.chunky(plugin, world.getName(), r);
+                                            DevelopmentUtility.chunky(plugin, world.getKey().getKey(), r);
                                             return Command.SINGLE_SUCCESS;
                                         }))))
                 .then(Commands.literal("circuit")
@@ -507,6 +503,13 @@ public class DevCommandNode {
                                     }
                                     return Command.SINGLE_SUCCESS;
                                 })))
+                .then(Commands.literal("health")
+                        .executes(ctx -> {
+                            if (ctx.getSource().getSender() instanceof Player player) {
+                                new HealthHungerCommand(plugin).set(player);
+                            }
+                            return Command.SINGLE_SUCCESS;
+                        }))
                 .then(Commands.literal("interaction")
                         .executes(ctx -> {
                             if (ctx.getSource().getSender() instanceof Player player) {
@@ -621,10 +624,10 @@ public class DevCommandNode {
                         }))
                 .then(Commands.literal("plurals")
                         .executes(ctx -> {
-                            for (Material m : Material.values()) {
-                                String str = m.toString().toLowerCase(Locale.ROOT).replace("_", " ");
+                            Registry.MATERIAL.stream().forEach(m -> {
+                                String str = m.getKey().getKey().replace("_", " ");
                                 plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, str + " --> " + Pluraliser.pluralise(str));
-                            }
+                            });
                             return Command.SINGLE_SUCCESS;
                         }))
                 .then(Commands.literal("pong")
@@ -803,6 +806,11 @@ public class DevCommandNode {
                             new TIPSPreviewSlotInfo(plugin).display();
                             return Command.SINGLE_SUCCESS;
                         }))
+                .then(Commands.literal("trades")
+                        .executes(ctx -> {
+                            new TradeCommand(plugin).spawn(ctx.getSource().getSender());
+                            return Command.SINGLE_SUCCESS;
+                        }))
                 .then(Commands.literal("tree")
                         .executes(ctx -> {
                             if (ctx.getSource().getSender() instanceof Player) {
@@ -844,6 +852,22 @@ public class DevCommandNode {
                             }
                             return Command.SINGLE_SUCCESS;
                         }))
+                .then(Commands.literal("has")
+                        .executes(ctx -> {
+                            if (ctx.getSource().getSender() instanceof Player player) {
+                                new HasCommand().check(player);
+                            }
+                            return Command.SINGLE_SUCCESS;
+                        }))
+                .then(Commands.literal("sprite")
+                        .then(Commands.argument("minecraft", BoolArgumentType.bool())
+                                .executes(ctx -> {
+                                    if (ctx.getSource().getSender() instanceof Player player) {
+                                        boolean b = BoolArgumentType.getBool(ctx, "minecraft");
+                                        new SpriteCommand().send(player, b);
+                                    }
+                                    return Command.SINGLE_SUCCESS;
+                                })))
                 .then(Commands.literal("update")
                         .executes(ctx -> {
                             if (ctx.getSource().getSender() instanceof Player player) {

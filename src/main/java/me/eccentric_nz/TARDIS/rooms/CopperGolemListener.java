@@ -34,7 +34,7 @@ public class CopperGolemListener implements Listener {
     @EventHandler
     public void onRedstone(BlockRedstoneEvent event) {
         Block block = event.getBlock();
-        if (!block.getWorld().getName().contains("TARDIS")) {
+        if (!block.getWorld().getKey().getKey().contains("tardis")) {
             return;
         }
         if (!(block.getState() instanceof Chest chest)) {
@@ -60,7 +60,7 @@ public class CopperGolemListener implements Listener {
                         }
                     }
                     case NONE -> {
-                        if (plugin.getPlanetsConfig().getString("planets." + block.getWorld().getName() + ".gamemode", "SURVIVAL").equalsIgnoreCase("CREATIVE")) {
+                        if (plugin.getPlanetsConfig().getString("planets." + block.getWorld().getKey().getKey() + ".gamemode", "SURVIVAL").equalsIgnoreCase("CREATIVE")) {
                             return;
                         }
                     }

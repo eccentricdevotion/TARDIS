@@ -19,10 +19,7 @@ package me.eccentric_nz.TARDIS.recipes.smithing;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.RecipeChoice;
-import org.bukkit.inventory.SmithingRecipe;
-import org.bukkit.inventory.SmithingTransformRecipe;
+import org.bukkit.inventory.*;
 
 /*
 base:BUCKET
@@ -42,11 +39,11 @@ public class CapacitorRepairRecipe {
         // result
         ItemStack result = ItemStack.of(Material.BUCKET, 1);
         // template
-        RecipeChoice template = new RecipeChoice.MaterialChoice(Material.REDSTONE);
+        RecipeChoice template = RecipeChoice.itemType(ItemType.REDSTONE);
         // base material to upgrade
-        RecipeChoice base = new RecipeChoice.MaterialChoice(Material.BUCKET);
+        RecipeChoice base = RecipeChoice.itemType(ItemType.BUCKET);
         // addition
-        RecipeChoice addition = new RecipeChoice.MaterialChoice(Material.COPPER_INGOT);
+        RecipeChoice addition = RecipeChoice.itemType(ItemType.COPPER_INGOT);
         NamespacedKey key = new NamespacedKey(plugin, "capacitor_repair");
         SmithingRecipe r = new SmithingTransformRecipe(key, result, template, base, addition);
         plugin.getServer().addRecipe(r);

@@ -18,9 +18,9 @@ package me.eccentric_nz.tardischunkgenerator.worldgen.feature;
 
 import net.minecraft.util.valueproviders.IntProvider;
 import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate;
-import net.minecraft.world.level.levelgen.feature.stateproviders.RuleBasedBlockStateProvider;
+import net.minecraft.world.level.levelgen.feature.stateproviders.SimpleStateProvider;
 
-public record TARDISGrassData(RuleBasedBlockStateProvider state, BlockPredicate target, IntProvider radius,
+public record TARDISGrassData(SimpleStateProvider state, BlockPredicate target, IntProvider radius,
                               int halfHeight) {
 
 }

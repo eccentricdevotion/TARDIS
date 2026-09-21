@@ -4,15 +4,15 @@ import java.io.ByteArrayOutputStream
 
 plugins {
     `java-library`
-    id("io.papermc.paperweight.userdev") version "2.0.0-SNAPSHOT"
-    id("com.gradleup.shadow") version "9.3.1"
+    id("io.papermc.paperweight.userdev") version "2.0.0-beta.21"
+    id("com.gradleup.shadow") version "9.6.1"
     id("java")
     id("io.papermc.hangar-publish-plugin") version "0.1.4"
 }
 
 group = "me.eccentric_nz"
 val buildNumber = "-b${System.getenv("BUILD_NUMBER") ?: (System.getenv("SHORT_SHA") ?: ".local")}"
-version = "7.0.0${buildNumber}"
+version = "7.1.0${buildNumber}"
 
 repositories {
     mavenCentral()
@@ -54,7 +54,7 @@ repositories {
     }
     maven {
         name = "blocklocker"
-        url = uri("https://repo.codemc.org/repository/maven-public/")
+        url = uri("https://repo.codemc.io/repository/maven-public/")
     }
     maven {
         name = "coreprotect"
@@ -83,29 +83,29 @@ repositories {
 }
 
 dependencies {
-    paperweight.paperDevBundle("1.21.11-R0.1-SNAPSHOT")
-    compileOnly("com.sk89q.worldedit:worldedit-core:8.0.0-SNAPSHOT") {
+    paperweight.paperDevBundle("26.3.build.+")
+    compileOnly("com.sk89q.worldedit:worldedit-core:7.4.4-SNAPSHOT") {
         isTransitive = false
     }
-    compileOnly("com.sk89q.worldedit:worldedit-bukkit:8.0.0-SNAPSHOT") {
+    compileOnly("com.sk89q.worldedit:worldedit-bukkit:7.4.4-SNAPSHOT") {
         isTransitive = false
     }
-    compileOnly("com.sk89q.worldguard:worldguard-core:7.1.0-SNAPSHOT") {
+    compileOnly("com.sk89q.worldguard:worldguard-core:7.0.18-SNAPSHOT") {
         isTransitive = false
     }
-    compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.1.0-SNAPSHOT") {
+    compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.18-SNAPSHOT") {
         isTransitive = false
     }
-    compileOnly("net.citizensnpcs:citizensapi:2.0.41-SNAPSHOT") {
+    compileOnly("net.citizensnpcs:citizensapi:2.0.43-SNAPSHOT") {
         isTransitive = false
     }
-    compileOnly("com.palmergames.bukkit.towny:towny:0.102.0.7") {
+    compileOnly("com.palmergames.bukkit.towny:towny:0.103.1.1") {
         isTransitive = false
     }
-    compileOnly("org.mvplugins.multiverse.core:multiverse-core:5.5.2") {
+    compileOnly("org.mvplugins.multiverse.core:multiverse-core:5.8.1") {
         isTransitive = false
     }
-    compileOnly("org.mvplugins.multiverse.inventories:multiverse-inventories:5.3.1") {
+    compileOnly("org.mvplugins.multiverse.inventories:multiverse-inventories:5.3.5") {
         isTransitive = false
     }
     compileOnly("dev.kitteh:factionsuuid:0.7.0") {
@@ -118,16 +118,16 @@ dependencies {
     compileOnly("com.griefcraft:lwc:2.4.2") {
         isTransitive = false
     }
-    compileOnly("com.github.retrooper:packetevents-api:2.11.2") {
+    compileOnly("com.github.retrooper:packetevents-api:2.13.0") {
         isTransitive = false
     }
-    compileOnly("me.libraryaddict.disguises:libsdisguises:11.0.14") {
+    compileOnly("me.libraryaddict.disguises:libsdisguises:26.8.13") {
         isTransitive = false
     }
-    compileOnly("net.essentialsx:EssentialsX:2.22.0-SNAPSHOT") {
+    compileOnly("net.essentialsx:EssentialsX:2.22.1-SNAPSHOT") {
         isTransitive = false
     }
-    compileOnly("me.clip:placeholderapi:2.12.2") {
+    compileOnly("me.clip:placeholderapi:2.12.3") {
         isTransitive = false
     }
     compileOnly("io.github.fabiozumbi12.RedProtect:RedProtect-Core:8.1.2") {
@@ -136,34 +136,34 @@ dependencies {
     compileOnly("io.github.fabiozumbi12.RedProtect:RedProtect-Spigot:8.1.2") {
         isTransitive = false
     }
-    compileOnly("net.coreprotect:coreprotect:23.1") {
+    compileOnly("net.coreprotect:coreprotect:24.0") {
         isTransitive = false
     }
-    compileOnly(files("libs/dynmap-api-3.8.jar"))
-    compileOnly(files("libs/DynmapCoreAPI-3.8.jar"))
-    compileOnly("de.bluecolored:bluemap-api:2.7.7")
-    compileOnly("xyz.jpenilla:squaremap-api:1.3.12") {
+    compileOnly(files("libs/dynmap-api-3.9.jar"))
+    compileOnly(files("libs/DynmapCoreAPI-3.9.jar"))
+    compileOnly("de.bluecolored:bluemap-api:2.8.0")
+    compileOnly("xyz.jpenilla:squaremap-api:1.3.15") {
         isTransitive = false
     }
     compileOnly(files("libs/VaultAPI.jar"))
     compileOnly("org.geysermc.floodgate:api:2.2.5-SNAPSHOT")
-    compileOnly("org.geysermc.geyser:api:2.9.4-SNAPSHOT")
-    compileOnly("org.jsoup:jsoup:1.22.1") {
+    compileOnly("org.geysermc.geyser:api:2.11.0-SNAPSHOT")
+    compileOnly("org.jsoup:jsoup:1.23.2") {
         isTransitive = false
     }
-    compileOnly("org.popcraft:chunky-common:1.4.57")
-    compileOnly("org.popcraft:chunky-bukkit:1.4.57")
+    compileOnly("org.popcraft:chunky-common:1.5.4")
+    compileOnly("org.popcraft:chunky-bukkit:1.5.4")
     compileOnly("org.popcraft:chunkyborder-common:1.2.33")
     compileOnly("net.luckperms:api:5.5")
     compileOnly("org.apache.commons:commons-lang3:3.20.0")
     compileOnly(files("libs/TerraformGenerator.jar"))
-    compileOnly("com.formdev:flatlaf:3.7") {
+    compileOnly("com.formdev:flatlaf:3.7.2") {
         isTransitive = false
     }
     compileOnly("org.swinglabs:swing-layout:1.0.3") {
         isTransitive = false
     }
-    testImplementation(platform("org.junit:junit-bom:6.0.3"))
+    testImplementation(platform("org.junit:junit-bom:6.1.3"))
     testImplementation("org.junit.jupiter:junit-jupiter")
 }
 
@@ -175,7 +175,7 @@ allprojects {
 tasks {
     compileJava {
         // Set the release flag
-        options.release = 21
+        options.release = 25
     }
     javadoc {
         options.encoding = Charsets.UTF_8.name() // We want UTF-8 for everything
@@ -228,7 +228,7 @@ val changelogContent: String = latestCommitMessage()
 hangarPublish {
     publications.register("plugin") {
         version.set(project.version as String)
-        channel.set("Snapshot")
+        channel.set("Release")
         id.set("TARDIS")
         apiKey.set(System.getenv("HANGAR_API_TOKEN"))
         platforms {
@@ -240,7 +240,13 @@ hangarPublish {
                     .split(",")
                     .map { it.trim() }
                 platformVersions.set(versions)
-                changelog.set(changelogContent)
+                // prevent empty changelog 400 errors
+                val safeChangelog = if (changelogContent.isNullOrBlank()) {
+                    "Development snapshot build for version ${project.version}"
+                } else {
+                    changelogContent
+                }
+                changelog.set(safeChangelog)
             }
         }
     }

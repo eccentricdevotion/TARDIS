@@ -16,11 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.rotors;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 public class TimeRotorAnimation implements Runnable {
 
@@ -39,15 +39,11 @@ public class TimeRotorAnimation implements Runnable {
     public void run() {
         ItemStack is = frame.getItem();
         if (!is.getType().isAir()) {
-            ItemMeta im = is.getItemMeta();
-            if (im != null) {
-                im.setItemModel(new NamespacedKey(TARDIS.plugin, "time_rotor_" + which + "_" + frames[i]));
-                is.setItemMeta(im);
-                frame.setItem(is, false);
-                i++;
-                if (i == frames.length) {
-                    i = 0;
-                }
+            is.setData(DataComponentTypes.ITEM_MODEL, new NamespacedKey(TARDIS.plugin, "time_rotor_" + which + "_" + frames[i]));
+            frame.setItem(is, false);
+            i++;
+            if (i == frames.length) {
+                i = 0;
             }
         }
     }

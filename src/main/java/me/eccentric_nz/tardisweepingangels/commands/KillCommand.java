@@ -58,7 +58,7 @@ public class KillCommand {
                         count++;
                     }
                 }
-                plugin.getMessenger().send(sender, TardisModule.MONSTERS, "WA_SILENT", count, "Silent Endermen", w.getName());
+                plugin.getMessenger().send(sender, TardisModule.MONSTERS, "WA_SILENT", count, "Silent Endermen", w.getKey().getKey());
             } else {
                 plugin.getMessenger().send(sender, TardisModule.MONSTERS, "WA_INVALID");
             }
@@ -178,6 +178,6 @@ public class KillCommand {
             }
             default -> { }
         }
-        plugin.getMessenger().send(sender, TardisModule.MONSTERS, "WA_REMOVED", count, what, w.getName());
+        plugin.getMessenger().send(sender, TardisModule.MONSTERS, "WA_REMOVED", count, what, w.getKey().getKey());
     }
 }

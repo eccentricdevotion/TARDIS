@@ -4,7 +4,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.Area;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreas;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
+import me.eccentric_nz.TARDIS.planets.TARDISWorldResolver;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.data.BlockData;
@@ -41,7 +41,7 @@ public class AreaYard {
         int yardMinZ = yardArea.minZ();
         int yardMaxX = yardArea.maxX();
         int yardMaxZ = yardArea.maxZ();
-        World yardWorld = TARDISAliasResolver.getWorldFromAlias(yardArea.world());
+        World yardWorld = TARDISWorldResolver.getFromString(yardArea.world());
         for (int x = yardMinX; x <= yardMaxX; x++) {
             for (int z = yardMinZ; z <= yardMaxZ; z++) {
                 int y = yardWorld.getHighestBlockYAt(x, z);

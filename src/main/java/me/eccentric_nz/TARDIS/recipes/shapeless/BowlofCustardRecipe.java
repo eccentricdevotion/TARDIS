@@ -16,16 +16,13 @@
  */
 package me.eccentric_nz.TARDIS.recipes.shapeless;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapelessRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.components.CustomModelDataComponent;
-
-import java.util.List;
 
 /*
 recipe:BOWL,MILK_BUCKET,EGG
@@ -43,12 +40,7 @@ public class BowlofCustardRecipe {
 
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.MUSHROOM_STEW, 1);
-        ItemMeta im = is.getItemMeta();
-        im.displayName(ComponentUtils.toWhite("Bowl of Custard"));
-        CustomModelDataComponent component = im.getCustomModelDataComponent();
-        component.setStrings(List.of("bowl_of_custard"));
-        im.setCustomModelDataComponent(component);
-        is.setItemMeta(im);
+        is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Bowl of Custard"));
         NamespacedKey key = new NamespacedKey(plugin, "bowl_of_custard");
         ShapelessRecipe r = new ShapelessRecipe(key, is);
         r.addIngredient(Material.BOWL);

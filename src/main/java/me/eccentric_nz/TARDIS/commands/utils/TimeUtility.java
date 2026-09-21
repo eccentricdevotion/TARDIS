@@ -18,7 +18,7 @@ public class TimeUtility {
             return;
         }
         world.setTime(ticks);
-        plugin.getMessenger().send(player, TardisModule.TARDIS, "TIME_SET", String.format("%s", ticks), world.getName());
+        plugin.getMessenger().send(player, TardisModule.TARDIS, "TIME_SET", String.format("%s", ticks), world.getKey().getKey());
     }
 
     public static void setTime(TARDIS plugin, String t, Player player) {
@@ -32,7 +32,7 @@ public class TimeUtility {
         if (time != null) {
             long ticks = time.getTicks();
             world.setTime(ticks);
-            plugin.getMessenger().send(player, TardisModule.TARDIS, "TIME_SET", String.format("%s", ticks), world.getName());
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "TIME_SET", String.format("%s", ticks), world.getKey().getKey());
         }
     }
 

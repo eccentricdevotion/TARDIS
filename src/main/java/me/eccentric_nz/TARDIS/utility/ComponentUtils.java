@@ -17,11 +17,13 @@
 package me.eccentric_nz.TARDIS.utility;
 
 import com.google.gson.JsonElement;
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.Locale;
 
@@ -41,6 +43,18 @@ public class ComponentUtils {
 
     public static boolean endsWith(Component component, String end) {
         return stripColour(component).endsWith(end);
+    }
+
+    public static boolean isNamed(ItemStack is, String name) {
+        return is != null && is.hasData(DataComponentTypes.CUSTOM_NAME) && endsWith(is.getData(DataComponentTypes.CUSTOM_NAME), name);
+    }
+
+    public static boolean isModelled(ItemStack is) {
+        return is != null && is.hasData(DataComponentTypes.ITEM_MODEL) && is.getData(DataComponentTypes.ITEM_MODEL).namespace().equals("tardis");
+    }
+
+    public static boolean hasLore(ItemStack is) {
+        return is != null && is.hasData(DataComponentTypes.LORE) && is.getData(DataComponentTypes.LORE).lines().size() > 0;
     }
 
     public static boolean startsWith(Component component, String start) {

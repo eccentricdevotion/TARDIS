@@ -10,6 +10,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.concurrent.CompletableFuture;
 
 public class SaveSuggestions {
@@ -24,9 +25,9 @@ public class SaveSuggestions {
             map.put("tardis_id", rst.getTardis_id());
             ResultSetDestinations rs = new ResultSetDestinations(TARDIS.plugin, map, true);
             if (rs.resultSet()) {
-                for (HashMap<String, String> save : rs.getData()) {
-                    builder.suggest(save.get("dest_name"));
-                }
+                rs.getData().stream()
+                        .filter(save -> save.get("dest_name").toLowerCase(Locale.ROOT).startsWith(builder.getRemainingLowerCase()))
+                        .forEach(save -> builder.suggest(save.get("dest_name")));
             }
         }
         return builder.buildFuture();

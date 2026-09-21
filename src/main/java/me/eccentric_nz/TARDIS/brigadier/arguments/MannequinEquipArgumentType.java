@@ -1,6 +1,5 @@
 package me.eccentric_nz.TARDIS.brigadier.arguments;
 
-import com.google.common.collect.ImmutableList;
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.arguments.ArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
@@ -13,7 +12,8 @@ import io.papermc.paper.command.brigadier.MessageComponentSerializer;
 import io.papermc.paper.command.brigadier.argument.CustomArgumentType;
 import net.kyori.adventure.text.Component;
 
-import java.util.List;
+import java.util.Locale;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
 public class MannequinEquipArgumentType implements CustomArgumentType<String, String> {
@@ -21,10 +21,11 @@ public class MannequinEquipArgumentType implements CustomArgumentType<String, St
     private static final SimpleCommandExceptionType ERROR_INVALID_OPT = new SimpleCommandExceptionType(
             MessageComponentSerializer.message().serialize(Component.text("Invalid mannequin equipment specified!"))
     );
-    private final List<String> OPTIONS = ImmutableList.of(
+    private final Set<String> OPTIONS = Set.of(
             "roman", "male", "female",
             "soldier_roman_static", "soldier_male_static", "soldier_female_static",
-            "venus_de_milo", "black_liberty", "marilyn_monroe", "clara_diner"
+            "venus_de_milo", "black_liberty", "marilyn_monroe", "clara_diner",
+            "balloon"
     );
 
     @Override
@@ -48,9 +49,9 @@ public class MannequinEquipArgumentType implements CustomArgumentType<String, St
 
     @Override
     public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
-        for (String d : OPTIONS) {
-            builder.suggest(d);
-        }
+        OPTIONS.stream()
+                .filter(o -> o.toLowerCase(Locale.ROOT).startsWith(builder.getRemainingLowerCase()))
+                .forEach(builder::suggest);
         return builder.buildFuture();
     }
 }

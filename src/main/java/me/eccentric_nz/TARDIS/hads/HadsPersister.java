@@ -20,7 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
+import me.eccentric_nz.TARDIS.planets.TARDISWorldResolver;
 import org.bukkit.Location;
 import org.bukkit.World;
 
@@ -57,7 +57,7 @@ public class HadsPersister {
                 Location l = map.getValue();
                 String uuid = map.getKey().toString();
                 ps.setString(1, uuid);
-                ps.setString(2, l.getWorld().getName());
+                ps.setString(2, l.getWorld().getKey().asString());
                 ps.setInt(3, l.getBlockX());
                 ps.setInt(4, l.getBlockY());
                 ps.setInt(5, l.getBlockZ());
@@ -91,7 +91,7 @@ public class HadsPersister {
             ps = connection.prepareStatement("SELECT * FROM " + prefix + "dispersed");
             rs = ps.executeQuery();
             while (rs.next()) {
-                World world = TARDISAliasResolver.getWorldFromAlias(rs.getString("world"));
+                World world = TARDISWorldResolver.getFromString(rs.getString("world"));
                 if (world != null) {
                     UUID uuid = UUID.fromString(rs.getString("uuid"));
                     Location l = new Location(world, rs.getInt("x"), rs.getInt("y"), rs.getInt("z"));

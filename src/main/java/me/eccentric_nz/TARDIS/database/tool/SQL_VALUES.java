@@ -54,7 +54,7 @@ public class SQL_VALUES {
             // colour
             "(%s, %s, %s, %s, %s)",
             // chunks
-            "(%s, %s, '%s', %s, %s)",
+            "(%s, %s, '%s', '%s', %s, %s, %s)",
             // condenser
             "(%s, %s, '%s', %s)",
             // controls

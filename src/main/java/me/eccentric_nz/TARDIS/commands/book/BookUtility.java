@@ -20,7 +20,7 @@ public class BookUtility {
         plugin.getMessenger().send(sender, TardisModule.TARDIS, "BOOK_RASS");
         if (!books.isEmpty()) {
             for (Map.Entry<String, String> entry : books.entrySet()) {
-                sender.sendMessage(b + ". [" + entry.getKey() + "] - " + entry.getValue());
+                plugin.getMessenger().message(sender, b + ". [" + entry.getKey() + "] - " + entry.getValue());
                 b++;
             }
         } else {

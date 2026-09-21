@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.lights;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.utility.LightLevel;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetLightPrefs;
@@ -32,7 +34,6 @@ import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
 import java.util.List;
@@ -143,8 +144,7 @@ public class LightSequenceGUIListener extends TARDISMenuListener {
     private void cyclePresets(InventoryView view) {
         // which sequence?
         ItemStack preset = view.getItem(36);
-        ItemMeta im = preset.getItemMeta();
-        List<Component> lore = im.lore();
+        List<Component> lore = preset.getData(DataComponentTypes.LORE).lines();
         String num = ComponentUtils.stripColour(lore.get(2));
         int next = TARDISNumberParsers.parseInt(num) + 1;
         if (next == Sequences.PRESETS.size()) {
@@ -166,8 +166,7 @@ public class LightSequenceGUIListener extends TARDISMenuListener {
             view.getItem(i).setAmount(levels.get(i - 27));
         }
         lore.set(2, Component.text(next));
-        im.lore(lore);
-        preset.setItemMeta(im);
+        preset.setData(DataComponentTypes.LORE, ItemLore.lore(lore));
     }
 
     private void save(InventoryView view, String uuid) {

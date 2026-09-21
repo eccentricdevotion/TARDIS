@@ -18,15 +18,15 @@ package me.eccentric_nz.TARDIS.commands.dev;
 
 import com.google.gson.*;
 import com.google.gson.stream.JsonReader;
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.*;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
-import org.bukkit.NamespacedKey;
+import net.kyori.adventure.key.Key;
 import org.bukkit.command.CommandSender;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.ShapelessRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.io.*;
 import java.lang.reflect.Field;
@@ -150,11 +150,11 @@ public class ResourcePackConverterCommand {
                         try (FileWriter writer = new FileWriter(file)) {
                             gson.toJson(select, writer);
                         } catch (IOException e) {
-                            sender.sendMessage("File write error for " + child.getName());
-                            sender.sendMessage(e.getMessage());
+                            plugin.getMessenger().message(sender, "File write error for " + child.getName());
+                            plugin.getMessenger().message(sender, e.getMessage());
                         }
                     } catch (FileNotFoundException e) {
-                        sender.sendMessage("File read error for " + child.getName());
+                        plugin.getMessenger().message(sender, "File read error for " + child.getName());
                     }
                 }
             }
@@ -282,7 +282,7 @@ public class ResourcePackConverterCommand {
                 }
             }
         }
-        sender.sendMessage("Pack conversion complete!");
+        plugin.getMessenger().message(sender, "Pack conversion complete!");
     }
 
     private void writeFromField(CommandSender sender, Field field) {
@@ -293,13 +293,12 @@ public class ResourcePackConverterCommand {
             String key = data.key().getKey();
             writeShortFile(sender, material, key);
         } catch (IllegalAccessException e) {
-            sender.sendMessage(field.getName());
+            plugin.getMessenger().message(sender, field.getName());
         }
     }
 
     private void writeFile(CommandSender sender, ItemStack result) {
-        ItemMeta im = result.getItemMeta();
-        String name = ComponentUtils.stripColour(im.displayName());
+        String name = ComponentUtils.stripColour(result.getData(DataComponentTypes.CUSTOM_NAME));
         String material = result.getType().toString().toLowerCase(Locale.ROOT);
         String lowercaseName = name.toLowerCase(Locale.ROOT).replace(" ", "_");
         String filename = material + "_" + lowercaseName;
@@ -364,10 +363,10 @@ public class ResourcePackConverterCommand {
         when.add("extra", extra);
         matcher.add("when", when);
         // get the model
-        NamespacedKey nsk = im.getItemModel();
+        Key nsk = result.getData(DataComponentTypes.ITEM_MODEL);
         String key;
         if (nsk != null) {
-            key = nsk.getKey() + ".json";
+            key = nsk.value() + ".json";
         } else {
             key = lowercaseName + ".json";
         }
@@ -393,8 +392,8 @@ public class ResourcePackConverterCommand {
         try (FileWriter writer = new FileWriter(file)) {
             gson.toJson(select, writer);
         } catch (IOException e) {
-            sender.sendMessage("File write error for " + filename);
-            sender.sendMessage(e.getMessage());
+            plugin.getMessenger().message(sender, "File write error for " + filename);
+            plugin.getMessenger().message(sender, e.getMessage());
         }
     }
 
@@ -470,7 +469,7 @@ public class ResourcePackConverterCommand {
         JsonObject model;
         try {
             String path = plugin.getDataFolder() + File.separator + key + ".json";
-            sender.sendMessage(path);
+            plugin.getMessenger().message(sender, path);
             File child = new File(path);
             JsonReader reader = new JsonReader(new FileReader(child));
             JsonObject root = JsonParser.parseReader(reader).getAsJsonObject();
@@ -491,8 +490,8 @@ public class ResourcePackConverterCommand {
         try (FileWriter writer = new FileWriter(file)) {
             gson.toJson(select, writer);
         } catch (IOException e) {
-            sender.sendMessage("File write error for " + filename);
-            sender.sendMessage(e.getMessage());
+            plugin.getMessenger().message(sender, "File write error for " + filename);
+            plugin.getMessenger().message(sender, e.getMessage());
         }
     }
 
@@ -525,7 +524,7 @@ public class ResourcePackConverterCommand {
         JsonObject model;
         try {
             String path = plugin.getDataFolder() + File.separator + "component" + File.separator + key + ".json";
-            sender.sendMessage(path);
+            plugin.getMessenger().message(sender, path);
             File child = new File(path);
             JsonReader reader = new JsonReader(new FileReader(child));
             JsonObject root = JsonParser.parseReader(reader).getAsJsonObject();
@@ -546,8 +545,8 @@ public class ResourcePackConverterCommand {
         try (FileWriter writer = new FileWriter(file)) {
             gson.toJson(select, writer);
         } catch (IOException e) {
-            sender.sendMessage("File write error for " + filename);
-            sender.sendMessage(e.getMessage());
+            plugin.getMessenger().message(sender, "File write error for " + filename);
+            plugin.getMessenger().message(sender, e.getMessage());
         }
     }
 

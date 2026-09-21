@@ -34,7 +34,7 @@ public class WeatherAction {
 
     public void openGUI(Player player) {
         UUID playerUUID = player.getUniqueId();
-        if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(playerUUID)) {
+        if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(player)) {
             new FloodgateWeatherForm(plugin, playerUUID).send();
         } else {
             player.openInventory(new WeatherInventory(plugin).getInventory());

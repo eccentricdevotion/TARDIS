@@ -16,22 +16,20 @@
  */
 package me.eccentric_nz.TARDIS.travel.save;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.custommodels.GUISaves;
 import me.eccentric_nz.TARDIS.database.data.Destination;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDestinationsByPlanet;
-import me.eccentric_nz.TARDIS.enumeration.WorldManager;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -53,7 +51,7 @@ public class TARDISSavesInventory implements InventoryHolder {
     public TARDISSavesInventory(TARDIS plugin, int id, String world) {
         this.plugin = plugin;
         this.id = id;
-        this.world = world;
+        this.world = "minecraft:" + world;
         this.inventory = plugin.getServer().createInventory(this, 54, Component.text("TARDIS saves", NamedTextColor.DARK_RED));
         this.inventory.setContents(getItemStack());
     }
@@ -111,21 +109,19 @@ public class TARDISSavesInventory implements InventoryHolder {
                             }
                         }
                         ItemStack is = ItemStack.of(material, 1);
-                        ItemMeta im = is.getItemMeta();
-                        im.displayName(Component.text(map.dest_name()));
-                        List<Component> lore = new ArrayList<>();
-                        String world = (!plugin.getPlanetsConfig().getBoolean("planets." + map.world() + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMVHelper().getAlias(map.world()) : TARDISAliasResolver.getWorldAlias(map.world());
-                        lore.add(Component.text(world));
-                        lore.add(Component.text("" + map.x()));
-                        lore.add(Component.text("" + map.y()));
-                        lore.add(Component.text("" + map.z()));
-                        lore.add(Component.text(map.direction()));
-                        lore.add(Component.text(map.submarine()));
+                        is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(map.dest_name()));
+                        ItemLore.Builder lore = ItemLore.lore();
+                        String world = map.world().split(":")[1];
+                        lore.addLine(Component.text(world));
+                        lore.addLine(Component.text("" + map.x()));
+                        lore.addLine(Component.text("" + map.y()));
+                        lore.addLine(Component.text("" + map.z()));
+                        lore.addLine(Component.text(map.direction()));
+                        lore.addLine(Component.text(map.submarine()));
                         if (!map.preset().isEmpty()) {
-                            lore.add(Component.text(map.preset()));
+                            lore.addLine(Component.text(map.preset()));
                         }
-                        im.lore(lore);
-                        is.setItemMeta(im);
+                        is.setData(DataComponentTypes.LORE, lore.build());
                         dests.put(slot, is);
                         i++;
                     }
@@ -137,19 +133,13 @@ public class TARDISSavesInventory implements InventoryHolder {
         }
         // add button to allow rearranging saves
         ItemStack tool = ItemStack.of(GUISaves.REARRANGE_SAVES.material(), 1);
-        ItemMeta rearrange = tool.getItemMeta();
-        rearrange.displayName(Component.text("Rearrange saves"));
-        tool.setItemMeta(rearrange);
+        tool.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Rearrange saves"));
         // add button to allow deleting saves
         ItemStack bucket = ItemStack.of(GUISaves.DELETE_SAVE.material(), 1);
-        ItemMeta delete = bucket.getItemMeta();
-        delete.displayName(Component.text("Delete save"));
-        bucket.setItemMeta(delete);
+        bucket.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Delete save"));
         // add button to go back to planets
         ItemStack planet = ItemStack.of(GUISaves.BACK_TO_PLANETS.material(), 1);
-        ItemMeta map = planet.getItemMeta();
-        map.displayName(Component.text("Back to Dimension Map"));
-        planet.setItemMeta(map);
+        planet.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Back to Dimension Map"));
         for (int m = 45; m < 54; m++) {
             switch (m) {
                 case 45 -> stack[m] = tool;

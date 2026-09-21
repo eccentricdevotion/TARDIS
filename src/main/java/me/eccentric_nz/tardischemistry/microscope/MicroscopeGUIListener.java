@@ -24,7 +24,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.HashMap;
@@ -56,9 +55,7 @@ public class MicroscopeGUIListener implements Listener {
                 if (is != null) {
                     // add slide/screen to player's inventory
                     ItemStack ss = is.clone();
-                    ItemMeta ssMeta = ss.getItemMeta();
-                    ssMeta.getPersistentDataContainer().set(plugin.getMicroscopeKey(), PersistentDataType.INTEGER, slot + 10000);
-                    ss.setItemMeta(ssMeta);
+                    ss.editPersistentDataContainer(pdc -> pdc.set(plugin.getMicroscopeKey(), PersistentDataType.INTEGER, slot + 10000));
                     HashMap<Integer, ItemStack> items = player.getInventory().addItem(ss);
                     if (!items.isEmpty()) {
                         player.getWorld().dropItem(player.getLocation(), ss);

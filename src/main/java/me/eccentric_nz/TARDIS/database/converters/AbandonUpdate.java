@@ -61,7 +61,7 @@ public class AbandonUpdate {
                 // back
                 query = "UPDATE " + prefix + "back SET world = ?, x = ?, y = ?, z = ?, direction = ?, submarine = ? WHERE tardis_id = ?";
                 ps = connection.prepareStatement(query);
-                ps.setString(1, current.location().getWorld().getName());
+                ps.setString(1, current.location().getWorld().getKey().asString());
                 ps.setInt(2, current.location().getBlockX());
                 ps.setInt(3, current.location().getBlockY());
                 ps.setInt(4, current.location().getBlockZ());
@@ -72,7 +72,7 @@ public class AbandonUpdate {
                 // home
                 query = "UPDATE " + prefix + "homes SET world = ?, x = ?, y = ?, z = ?, direction = ?, submarine = ? WHERE tardis_id = ?";
                 ps = connection.prepareStatement(query);
-                ps.setString(1, current.location().getWorld().getName());
+                ps.setString(1, current.location().getWorld().getKey().asString());
                 ps.setInt(2, current.location().getBlockX());
                 ps.setInt(3, current.location().getBlockY());
                 ps.setInt(4, current.location().getBlockZ());

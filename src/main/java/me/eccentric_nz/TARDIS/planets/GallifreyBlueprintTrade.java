@@ -16,7 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.planets;
 
-import com.google.common.collect.Multimaps;
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
+import io.papermc.paper.datacomponent.item.TooltipDisplay;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.BlueprintConsole;
@@ -25,16 +27,12 @@ import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Merchant;
 import org.bukkit.inventory.MerchantRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 public class GallifreyBlueprintTrade {
@@ -56,16 +54,28 @@ public class GallifreyBlueprintTrade {
     public MerchantRecipe getRoom() {
         // room blueprint index 0 is not a room, and the last index is the zero room which is a special case (requires config option)
         int index = plugin.getConfig().getBoolean("allow.zero_room") ? 0 : 1;
-        BlueprintRoom bpr = BlueprintRoom.values()[TARDISConstants.RANDOM.nextInt(2, BlueprintRoom.values().length - index)];
+        BlueprintRoom bpr = BlueprintRoom.values()[TARDISConstants.RANDOM.nextInt(1, BlueprintRoom.values().length - index)];
         // get the blueprint item stack
-        ItemStack ris = buildResult(bpr.getPermission(), bpr.toString());
+        ItemStack ris = buildResult(plugin, bpr.getPermission(), bpr.toString());
+        return getRoomRecipe(plugin, bpr.toString(), ris, uses);
+    }
+
+    public static MerchantRecipe getRoomRecipe(TARDIS plugin, String room, ItemStack is, int uses) {
         // single use?
-        MerchantRecipe roomRecipe = new MerchantRecipe(ris, uses);
+        MerchantRecipe roomRecipe = new MerchantRecipe(is, uses);
         // get the room material for the ingredient from the blueprint
-        Material roomMaterial = Material.valueOf(plugin.getTradesConfig().getString("rooms." + bpr + ".material"));
+        Material roomMaterial = Material.valueOf(plugin.getTradesConfig().getString("rooms." + room + ".material"));
         // determine the stack size of the ingredient
-        int roomAmount = plugin.getTradesConfig().getInt("rooms." + bpr + ".amount");
+        int roomAmount = plugin.getTradesConfig().getInt("rooms." + room + ".amount");
+        int other = 0;
+        if (roomAmount > 64) {
+            other = roomAmount - 64;
+            roomAmount = 64;
+        }
         roomRecipe.addIngredient(ItemStack.of(roomMaterial, roomAmount));
+        if (other > 0) {
+            roomRecipe.addIngredient(ItemStack.of(roomMaterial, other));
+        }
         return roomRecipe;
     }
 
@@ -73,7 +83,7 @@ public class GallifreyBlueprintTrade {
         // don't include the custom console
         BlueprintConsole bpc = BlueprintConsole.values()[TARDISConstants.RANDOM.nextInt(BlueprintConsole.values().length - 1)];
         // get the blueprint item stack
-        ItemStack cis = buildResult(bpc.getPermission(), bpc.toString());
+        ItemStack cis = buildResult(plugin, bpc.getPermission(), bpc.toString());
         // single use?
         MerchantRecipe consoleRecipe = new MerchantRecipe(cis, uses);
         // get the console material for the ingredient from the blueprint
@@ -94,22 +104,22 @@ public class GallifreyBlueprintTrade {
         return List.of(room1Recipe, room2Recipe, room3Recipe, consoleRecipe);
     }
 
-    private ItemStack buildResult(String perm, String name) {
+    public static ItemStack buildResult(TARDIS plugin, String perm, String name) {
         ItemStack is = ItemStack.of(Material.MUSIC_DISC_MELLOHI, 1);
-        ItemMeta im = is.getItemMeta();
-        PersistentDataContainer pdc = im.getPersistentDataContainer();
-        pdc.set(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID(), UUID.randomUUID());
-        pdc.set(plugin.getBlueprintKey(), PersistentDataType.STRING, perm);
-        im.displayName(ComponentUtils.toWhite("TARDIS Blueprint Disk"));
+        is.editPersistentDataContainer(pdc -> {
+            pdc.set(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID(), UUID.randomUUID());
+            pdc.set(plugin.getBlueprintKey(), PersistentDataType.STRING, perm);
+        });
+        is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("TARDIS Blueprint Disk"));
         List<Component> lore = List.of(
                 ComponentUtils.toWhite(TARDISStringUtils.capitalise(name)),
                 Component.text("Valid only for"),
                 Component.text("the trading player")
         );
-        im.lore(lore);
-        im.addItemFlags(ItemFlag.values());
-        im.setAttributeModifiers(Multimaps.forMap(Map.of()));
-        is.setItemMeta(im);
+        is.setData(DataComponentTypes.LORE, ItemLore.lore(lore));
+        is.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
+                .addHiddenComponents(TARDISConstants.HIDE)
+                .build());
         return is;
     }
 }

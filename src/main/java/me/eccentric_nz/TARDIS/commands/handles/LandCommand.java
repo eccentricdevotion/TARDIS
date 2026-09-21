@@ -80,7 +80,7 @@ public class LandCommand {
                 if (l != null) {
                     HashMap<String, Object> set_next = new HashMap<>();
                     HashMap<String, Object> where_next = new HashMap<>();
-                    set_next.put("world", l.getWorld().getName());
+                    set_next.put("world", l.getWorld().getKey().asString());
                     set_next.put("x", l.getBlockX());
                     set_next.put("y", l.getBlockY());
                     set_next.put("z", l.getBlockZ());

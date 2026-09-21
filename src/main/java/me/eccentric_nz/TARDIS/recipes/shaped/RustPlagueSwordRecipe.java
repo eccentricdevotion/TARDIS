@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import io.papermc.paper.datacomponent.item.Weapon;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
@@ -27,10 +28,6 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.components.CustomModelDataComponent;
-
-import java.util.List;
 
 /*
 easy_shape:RIR,RIR,-S-
@@ -57,13 +54,8 @@ public class RustPlagueSwordRecipe {
 
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.IRON_SWORD, 1);
-        ItemMeta im = is.getItemMeta();
-        im.displayName(ComponentUtils.toWhite("Rust Plague Sword"));
-        im.lore(List.of(Component.text("Dalek Virus Dispenser")));
-        CustomModelDataComponent component = im.getCustomModelDataComponent();
-        component.setStrings(List.of("rust_plague_sword"));
-        im.setCustomModelDataComponent(component);
-        is.setItemMeta(im);
+        is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Rust Plague Sword"));
+        is.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text("Dalek Virus Dispenser")).build());
         // set weapon component
         Weapon weapon = Weapon.weapon()
                 .itemDamagePerAttack(8)
@@ -72,16 +64,14 @@ public class RustPlagueSwordRecipe {
         NamespacedKey key = new NamespacedKey(plugin, "rust_plague_sword");
         ShapedRecipe r = new ShapedRecipe(key, is);
         ItemStack exact = ItemStack.of(Material.LAVA_BUCKET, 1);
-        ItemMeta em = exact.getItemMeta();
-        em.displayName(ComponentUtils.toWhite("Rust Bucket"));
-        exact.setItemMeta(em);
+        exact.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Rust Bucket"));
         if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             r.shape("RIR", "RIR", "DSD");
             r.setIngredient('D', Material.DIAMOND);
         } else {
             r.shape("RIR", "RIR", " S ");
         }
-        r.setIngredient('R', new RecipeChoice.ExactChoice(exact));
+        r.setIngredient('R', RecipeChoice.exactChoice(exact));
         r.setIngredient('I', Material.IRON_INGOT);
         r.setIngredient('S', Material.STICK);
         plugin.getServer().addRecipe(r);

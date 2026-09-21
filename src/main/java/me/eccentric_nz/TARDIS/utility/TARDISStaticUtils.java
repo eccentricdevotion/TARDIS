@@ -20,6 +20,7 @@ import com.earth2me.essentials.Essentials;
 import com.earth2me.essentials.User;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.customblocks.TARDISBlockDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
@@ -31,6 +32,8 @@ import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.*;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
@@ -40,10 +43,10 @@ import org.bukkit.block.sign.Side;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.HashMap;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -233,11 +236,10 @@ public class TARDISStaticUtils {
     }
 
     private static boolean isCustomDoorOpen(ItemDisplay display) {
-        ItemMeta im = display.getItemStack().getItemMeta();
-        if (im.hasItemModel()) {
-            return display.getItemStack().getItemMeta().getItemModel().getKey().endsWith("_open");
-        } else if (im.getPersistentDataContainer().has(TARDIS.plugin.getCustomBlockKey())) {
-            String str = im.getPersistentDataContainer().get(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING);
+        if (ComponentUtils.isModelled(display.getItemStack())) {
+            return display.getItemStack().getData(DataComponentTypes.ITEM_MODEL).value().endsWith("_open");
+        } else if (display.getPersistentDataContainer().has(TARDIS.plugin.getCustomBlockKey())) {
+            String str = display.getPersistentDataContainer().get(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING);
             return str.endsWith("_open");
         } else {
             return false;
@@ -273,6 +275,21 @@ public class TARDISStaticUtils {
         }
     }
 
+    private static Set<Material> OTHERS = Set.of(Material.MOVING_PISTON, Material.PUMPKIN, Material.REDSTONE_ORE, Material.REDSTONE_WIRE);
+
+    @SuppressWarnings("deprecation")
+    public static boolean isInteractable(Block block) {
+        Material type = block.getType();
+        boolean interactable = type.isInteractable();
+        if (!interactable) {
+            return false;
+        }
+        if (Tag.STAIRS.isTagged(type) || Tag.FENCES.isTagged(type)) {
+            return false;
+        }
+        return !OTHERS.contains(type);
+    }
+
     public static boolean isInfested(Material material) {
         return switch (material) {
             case INFESTED_CHISELED_STONE_BRICKS, INFESTED_COBBLESTONE, INFESTED_CRACKED_STONE_BRICKS,
@@ -287,7 +304,7 @@ public class TARDISStaticUtils {
             if (essentials != null) {
                 User user = essentials.getUser(uuid);
                 String prefix = essentials.getSettings().getNicknamePrefix();
-                return ChatColor.stripColor(user.getNick()).replace(prefix, "");
+                return PlainTextComponentSerializer.plainText().serialize(LegacyComponentSerializer.legacySection().deserialize(user.getNick())).replace(prefix, "");
             }
         }
         Player player = Bukkit.getPlayer(uuid);
@@ -305,7 +322,7 @@ public class TARDISStaticUtils {
             if (essentials != null) {
                 User user = essentials.getUser(player.getUniqueId());
                 String prefix = essentials.getSettings().getNicknamePrefix();
-                return ChatColor.stripColor(user.getNick()).replace(prefix, "");
+                return PlainTextComponentSerializer.plainText().serialize(LegacyComponentSerializer.legacySection().deserialize(user.getNick())).replace(prefix, "");
             }
         }
         return player.getName();
@@ -322,13 +339,7 @@ public class TARDISStaticUtils {
      * @return true if the ItemStack is a Sonic Screwdriver
      */
     public static boolean isSonic(ItemStack is) {
-        if (is != null && is.hasItemMeta()) {
-            ItemMeta im = is.getItemMeta();
-            if (im.hasDisplayName()) {
-                return ComponentUtils.endsWith(im.displayName(), "Sonic Screwdriver");
-            }
-        }
-        return false;
+        return !is.isEmpty() && ComponentUtils.isNamed(is, "Sonic Screwdriver");
     }
 
     /**
@@ -338,12 +349,9 @@ public class TARDISStaticUtils {
      * @return true if the ItemStack is a Sonic Screwdriver
      */
     public static boolean isKeyOrSonic(ItemStack is) {
-        if (is != null && is.hasItemMeta()) {
-            ItemMeta im = is.getItemMeta();
-            if (im.hasDisplayName()) {
-                String stripped = ComponentUtils.stripColour(im.displayName());
-                return stripped.endsWith("TARDIS Key") || stripped.endsWith("Sonic Screwdriver");
-            }
+        if (is != null && is.hasData(DataComponentTypes.CUSTOM_NAME)) {
+            String stripped = ComponentUtils.stripColour(is.getData(DataComponentTypes.CUSTOM_NAME));
+            return stripped.endsWith("TARDIS Key") || stripped.endsWith("Sonic Screwdriver");
         }
         return false;
     }

@@ -39,7 +39,7 @@ public class TARDISPistonHarvesterListener implements Listener {
         if (!event.isSticky()) {
             return;
         }
-        if (plugin.getConfig().getBoolean("preferences.nerf_pistons.only_tardis_worlds") && !event.getBlock().getWorld().getName().contains("TARDIS")) {
+        if (plugin.getConfig().getBoolean("preferences.nerf_pistons.only_tardis_worlds") && !event.getBlock().getWorld().getKey().getKey().contains("tardis")) {
             return;
         }
         for (Block b : event.getBlocks()) {
@@ -53,7 +53,7 @@ public class TARDISPistonHarvesterListener implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onHarvestPistonExtend(BlockPistonExtendEvent event) {
-        if (plugin.getConfig().getBoolean("preferences.nerf_pistons.only_tardis_worlds") && !event.getBlock().getWorld().getName().contains("TARDIS")) {
+        if (plugin.getConfig().getBoolean("preferences.nerf_pistons.only_tardis_worlds") && !event.getBlock().getWorld().getKey().getKey().contains("tardis")) {
             return;
         }
         for (Block b : event.getBlocks()) {

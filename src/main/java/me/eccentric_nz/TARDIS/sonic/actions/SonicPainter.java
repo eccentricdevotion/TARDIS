@@ -16,13 +16,13 @@
  */
 package me.eccentric_nz.TARDIS.sonic.actions;
 
-import com.destroystokyo.paper.MaterialTags;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.customblocks.Tinter;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.tardischunkgenerator.custombiome.CubicMaterial;
 import org.bukkit.Material;
+import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.BlockData;
@@ -35,7 +35,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.Arrays;
@@ -67,14 +66,13 @@ public class SonicPainter {
                 if (is == null) {
                     return;
                 }
-                ItemMeta im = is.getItemMeta();
-                if (im != null && im.getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.BYTE)) {
+                if (is.getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.BYTE)) {
                     // remove the tint
                     display.remove();
                 }
                 return;
             }
-            if (dye == null || !MaterialTags.DYES.isTagged(dye.getType())) {
+            if (dye == null || !Tag.ITEMS_DYES.isTagged(dye.getType())) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "SONIC_DYE");
                 return;
             }

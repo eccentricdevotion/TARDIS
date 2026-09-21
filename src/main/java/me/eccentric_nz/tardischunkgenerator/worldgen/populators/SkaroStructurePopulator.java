@@ -69,7 +69,7 @@ public class SkaroStructurePopulator extends BlockPopulator {
                 }
             }
             if (limitedRegion.isInRegion(xx, y, zz)) {
-                if (limitedRegion.getType(xx, y - 1, zz).equals(Material.WATER)) { // TODO should be just y (not block below)
+                if (limitedRegion.getType(xx, y - 1, zz).equals(Material.WATER)) {
                     // build an island
                     // get a spiral
                     IslandSpiral spiral = new IslandSpiral();
@@ -140,7 +140,7 @@ public class SkaroStructurePopulator extends BlockPopulator {
     public boolean isFeatureChunk(long seed, int x, int z) {
         RandomSpreadStructurePlacement spread = new RandomSpreadStructurePlacement(24, 8, RandomSpreadType.TRIANGULAR, 165745295);
         ChunkPos chunkPos = spread.getPotentialStructureChunk(seed, x, z);
-        return chunkPos.x == x && chunkPos.z == z;
+        return chunkPos.x() == x && chunkPos.z() == z;
     }
 
     private void build(LimitedRegion limitedRegion, int startX, int startY, int startZ, Random random, String which) {

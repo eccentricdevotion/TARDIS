@@ -35,7 +35,7 @@ public class TARDISMaterials {
 
     public static final Set<Material> doors = Sets.union(Sets.union(Tag.DOORS.getValues(), Tag.TRAPDOORS.getValues()), Tag.BUTTONS.getValues());
 
-    public static final List<Material> plants = List.of(Material.CACTUS, Material.DEAD_BUSH, Material.FERN, Material.SHORT_GRASS, Material.LARGE_FERN, Material.TALL_GRASS, Material.HANGING_ROOTS, Material.WARPED_ROOTS, Material.NETHER_SPROUTS, Material.CRIMSON_ROOTS);
+    public static final List<Material> plants = List.of(Material.AZALEA, Material.SMALL_DRIPLEAF, Material.BIG_DRIPLEAF, Material.BIG_DRIPLEAF_STEM, Material.CACTUS, Material.DEAD_BUSH, Material.FERN, Material.SHORT_GRASS, Material.LARGE_FERN, Material.TALL_GRASS, Material.HANGING_ROOTS, Material.WARPED_ROOTS, Material.NETHER_SPROUTS, Material.CRIMSON_ROOTS);
 
     public static final List<Material> not_glass = new ArrayList<>() {
         {
@@ -77,8 +77,6 @@ public class TARDISMaterials {
     };
 
     public static final List<Material> crops = List.of(Material.SUGAR_CANE, Material.WHEAT, Material.CARROTS, Material.BEETROOTS, Material.MELON_STEM, Material.PUMPKIN_STEM, Material.NETHER_WART, Material.POTATOES, Material.COCOA, Material.CACTUS, Material.SWEET_BERRY_BUSH, Material.PITCHER_CROP, Material.TORCHFLOWER);
-
-    public static final List<Material> fish_buckets = List.of(Material.TROPICAL_FISH_BUCKET, Material.COD_BUCKET, Material.PUFFERFISH_BUCKET, Material.SALMON_BUCKET);
 
     public static final List<Material> submarine_blocks = List.of(Material.BLUE_ICE, Material.FROSTED_ICE, Material.ICE, Material.KELP_PLANT, Material.PACKED_ICE, Material.SEA_PICKLE, Material.SEAGRASS, Material.TALL_SEAGRASS, Material.WATER);
 

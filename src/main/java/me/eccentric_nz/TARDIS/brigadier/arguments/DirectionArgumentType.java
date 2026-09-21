@@ -1,6 +1,5 @@
 package me.eccentric_nz.TARDIS.brigadier.arguments;
 
-import com.google.common.collect.ImmutableList;
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.arguments.ArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
@@ -13,7 +12,8 @@ import io.papermc.paper.command.brigadier.MessageComponentSerializer;
 import io.papermc.paper.command.brigadier.argument.CustomArgumentType;
 import net.kyori.adventure.text.Component;
 
-import java.util.List;
+import java.util.Locale;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
 public class DirectionArgumentType  implements CustomArgumentType<String, String> {
@@ -21,7 +21,7 @@ public class DirectionArgumentType  implements CustomArgumentType<String, String
     private static final SimpleCommandExceptionType ERROR_INVALID_DIR = new SimpleCommandExceptionType(
             MessageComponentSerializer.message().serialize(Component.text("Invalid direction specified!"))
     );
-    private final List<String> DIRECTIONS = ImmutableList.of("up", "north", "west", "south", "east");
+    private final Set<String> DIRECTIONS = Set.of("up", "north", "west", "south", "east");
 
     @Override
     public String parse(StringReader reader) {
@@ -44,9 +44,9 @@ public class DirectionArgumentType  implements CustomArgumentType<String, String
 
     @Override
     public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
-        for (String d : DIRECTIONS) {
-            builder.suggest(d);
-        }
+        DIRECTIONS.stream()
+                .filter(d -> d.toLowerCase(Locale.ROOT).startsWith(builder.getRemainingLowerCase()))
+                .forEach(builder::suggest);
         return builder.buildFuture();
     }
 }

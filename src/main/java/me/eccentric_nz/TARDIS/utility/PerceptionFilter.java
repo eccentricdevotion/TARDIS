@@ -48,7 +48,7 @@ public class PerceptionFilter {
             for (OfflinePlayer olp : Bukkit.getServer().getOfflinePlayers()) {
                 if (olp != null) {
                     String entry = olp.getName();
-                    if (perceptionFilter.hasEntry(entry)) {
+                    if (entry != null && perceptionFilter.hasEntry(entry)) {
                         perceptionFilter.removeEntry(entry);
                     }
                 }

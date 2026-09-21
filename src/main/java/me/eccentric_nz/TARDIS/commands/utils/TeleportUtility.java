@@ -1,6 +1,7 @@
 package me.eccentric_nz.TARDIS.commands.utils;
 
 import io.papermc.paper.math.BlockPosition;
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.tardischunkgenerator.worldgen.RoomGenerator;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -20,6 +21,9 @@ public class TeleportUtility {
             spawn = new Location(world, 8, 68, 8);
         } else {
             spawn = world.getSpawnLocation();
+        }
+        if (TARDIS.plugin.getPlanetsConfig().getBoolean("planets." + world.key().value() + ".false_nether")) {
+            spawn.setY(64);
         }
         teleport(player, spawn);
     }

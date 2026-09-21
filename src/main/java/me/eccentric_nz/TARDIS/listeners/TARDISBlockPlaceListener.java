@@ -32,7 +32,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.HashMap;
@@ -83,36 +82,32 @@ public class TARDISBlockPlaceListener implements Listener {
         }
         // convert old custom mushroom blocks
         if ((is.getType().equals(Material.BROWN_MUSHROOM_BLOCK) || is.getType().equals(Material.RED_MUSHROOM_BLOCK) || is.getType().equals(Material.MUSHROOM_STEM))) {
-            if (is.hasItemMeta()) {
-                ItemMeta im = is.getItemMeta();
-                if (im.getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.INTEGER)) {
-                    TARDISDisplayItem tdi = TARDISMushroomBlockData.getTARDISBlock(block.getBlockData());
-                    if (tdi != null) {
-                        if (tdi == TARDISChemistryDisplayItem.HEAT_BLOCK) {
-                            // remember heat block location
-                            plugin.getTrackerKeeper().getHeatBlocks().add(blockStr);
-                        }
-                        if (tdi.isLight()) {
-                            LampToggler.setLightlevel(block, tdi.isLit() ? 15 : 0);
-                            // also add interaction entity
-                            TARDISDisplayItemUtils.set(block.getLocation(), tdi.getCustomModel().getKey(), false);
-                        } else {
-                            block.setBlockData(TARDISConstants.BARRIER);
-                        }
-                        TARDISDisplayItemUtils.set(tdi, block, -1);
+            if (is.getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.INTEGER)) {
+                TARDISDisplayItem tdi = TARDISMushroomBlockData.getTARDISBlock(block.getBlockData());
+                if (tdi != null) {
+                    if (tdi == TARDISChemistryDisplayItem.HEAT_BLOCK) {
+                        // remember heat block location
+                        plugin.getTrackerKeeper().getHeatBlocks().add(blockStr);
                     }
-                    return;
+                    if (tdi.isLight()) {
+                        LampToggler.setLightlevel(block, tdi.isLit() ? 15 : 0);
+                        // also add interaction entity
+                        TARDISDisplayItemUtils.set(block.getLocation(), tdi.getCustomModel().getKey(), false);
+                    } else {
+                        block.setBlockData(TARDISConstants.BARRIER);
+                    }
+                    TARDISDisplayItemUtils.set(tdi, block, -1);
                 }
+                return;
             }
         }
         if (!TARDISPermission.hasPermission(player, "tardis.rift")) {
             return;
         }
-        if (!is.getType().equals(Material.BEACON) || !is.hasItemMeta()) {
+        if (!is.getType().equals(Material.BEACON)) {
             return;
         }
-        ItemMeta im = is.getItemMeta();
-        if (im.hasDisplayName() && ComponentUtils.endsWith(im.displayName(), "Rift Manipulator")) {
+        if (ComponentUtils.isNamed(is, "Rift Manipulator")) {
             // make sure they're not inside the TARDIS
             HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", player.getUniqueId().toString());
@@ -128,7 +123,7 @@ public class TARDISBlockPlaceListener implements Listener {
             while (plugin.getConfig().contains("rechargers." + name)) {
                 name = "rift_" + player.getName() + "_" + TARDISConstants.RANDOM.nextInt(Integer.MAX_VALUE);
             }
-            plugin.getConfig().set("rechargers." + name + ".world", l.getWorld().getName());
+            plugin.getConfig().set("rechargers." + name + ".world", l.getWorld().getKey().getKey());
             plugin.getConfig().set("rechargers." + name + ".x", l.getBlockX());
             plugin.getConfig().set("rechargers." + name + ".y", l.getBlockY());
             plugin.getConfig().set("rechargers." + name + ".z", l.getBlockZ());

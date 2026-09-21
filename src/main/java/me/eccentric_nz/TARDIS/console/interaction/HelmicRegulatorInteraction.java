@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.database.InteractionStateSaver;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.upgrades.SystemTree;
 import me.eccentric_nz.TARDIS.upgrades.SystemUpgradeChecker;
+import net.kyori.adventure.key.Key;
 import org.bukkit.World;
 import org.bukkit.entity.Interaction;
 import org.bukkit.entity.ItemDisplay;
@@ -65,7 +66,7 @@ public class HelmicRegulatorInteraction {
             if (which.equals("OFF")) {
                 next = 0;
             } else if (plugin.getConfig().getBoolean("difficulty.system_upgrades")) {
-                World world = plugin.getServer().getWorld(which);
+                World world = plugin.getServer().getWorld(Key.key(which));
                 if (world != null && (world.getEnvironment() == World.Environment.NETHER || world.getEnvironment() == World.Environment.THE_END) && !new SystemUpgradeChecker(plugin).has(player.getUniqueId().toString(), SystemTree.INTER_DIMENSIONAL_TRAVEL)) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "Inter Dimensional Travel");
                     next = 0;

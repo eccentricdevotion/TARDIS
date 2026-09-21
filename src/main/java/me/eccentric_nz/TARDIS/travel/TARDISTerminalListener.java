@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.travel;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.DamageUtility;
 import me.eccentric_nz.TARDIS.api.Parameters;
@@ -28,11 +30,13 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
+import me.eccentric_nz.TARDIS.planets.TARDISWorldResolver;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -47,7 +51,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.*;
 
@@ -139,7 +142,9 @@ public class TARDISTerminalListener implements Listener {
                 if (terminalDestination.containsKey(uuid)) {
                     HashMap<String, Object> set = new HashMap<>();
                     String[] data = terminalDestination.get(uuid).split(":");
-                    String ww = (!plugin.getPlanetsConfig().getBoolean("planets." + data[0] + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMVHelper().getWorld(data[0]).getName() : data[0];
+                    String ww = (!plugin.getPlanetsConfig().getBoolean("planets." + data[0] + ".enabled")
+                            && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ?
+                            plugin.getMVHelper().getWorld(data[0]).getKey().getKey() : data[0];
                     set.put("world", ww);
                     set.put("x", data[1]);
                     set.put("y", data[2]);
@@ -162,9 +167,7 @@ public class TARDISTerminalListener implements Listener {
                 } else {
                     // set lore
                     ItemStack is = view.getItem(49);
-                    ItemMeta im = is.getItemMeta();
-                    im.lore(List.of(Component.text("No valid destination has been set!")));
-                    is.setItemMeta(im);
+                    is.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text("No valid destination has been set!")).build());
                 }
             }
             case 52 -> close(player);
@@ -200,9 +203,7 @@ public class TARDISTerminalListener implements Listener {
             if (rsp.resultSet()) {
                 String sub = (rsp.isSubmarineOn()) ? "true" : "false";
                 ItemStack is = inv.getItem(44);
-                ItemMeta im = is.getItemMeta();
-                im.lore(List.of(Component.text(sub)));
-                is.setItemMeta(im);
+                is.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text(sub)));
             }
         }
     }
@@ -262,26 +263,18 @@ public class TARDISTerminalListener implements Listener {
             case "Z" -> ItemStack.of(Material.YELLOW_WOOL, 1);
             default -> ItemStack.of(Material.PURPLE_WOOL, 1);
         };
-        ItemMeta im = is.getItemMeta();
-        im.displayName(Component.text(row));
+        is.setData(DataComponentTypes.CUSTOM_NAME, Component.text(row));
         List<Component> lore = getLoreValue(max, new_slot, signed, uuid);
-        im.lore(lore);
-        is.setItemMeta(im);
+        is.setData(DataComponentTypes.LORE, ItemLore.lore(lore));
         view.setItem(new_slot, is);
     }
 
     private void setCurrent(InventoryView view, Player p, int slot) {
-        String current = terminalUsers.get(p.getUniqueId()).location().getWorld().getName();
-        if (!plugin.getPlanetsConfig().getBoolean("planets." + current + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
-            current = plugin.getMVHelper().getAlias(current);
-        } else {
-            current = TARDISAliasResolver.getWorldAlias(current);
-        }
+        String current = terminalUsers.get(p.getUniqueId()).location().getWorld().getKey().getKey();
         int[] slots = new int[]{36, 38, 40, 42};
         for (int i : slots) {
             List<Component> lore = null;
             ItemStack is = view.getItem(i);
-            ItemMeta im = is.getItemMeta();
             if (i == slot) {
                 switch (slot) {
                     case 38 ->
@@ -306,8 +299,9 @@ public class TARDISTerminalListener implements Listener {
                     default -> lore = List.of(Component.text(current));
                 }
             }
-            im.lore(lore);
-            is.setItemMeta(im);
+            if (lore != null) {
+                is.setData(DataComponentTypes.LORE, ItemLore.lore(lore));
+            }
         }
     }
 
@@ -316,9 +310,7 @@ public class TARDISTerminalListener implements Listener {
         if (rsp.resultSet()) {
             String bool = (rsp.isSubmarineOn()) ? "false" : "true";
             ItemStack is = view.getItem(44);
-            ItemMeta im = is.getItemMeta();
-            im.lore(List.of(Component.text(bool)));
-            is.setItemMeta(im);
+            is.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text(bool)).build());
             int tf = (rsp.isSubmarineOn()) ? 0 : 1;
             HashMap<String, Object> set = new HashMap<>();
             set.put("submarine_on", tf);
@@ -328,12 +320,17 @@ public class TARDISTerminalListener implements Listener {
         }
     }
 
-    private String getWorld(String e, String this_world, Player p) {
+    private String getWorld(String e, String current, Player p) {
         List<String> allowedWorlds = new ArrayList<>();
         String world;
         Set<String> worldlist = plugin.getPlanetsConfig().getConfigurationSection("planets").getKeys(false);
         worldlist.forEach((o) -> {
-            World ww = TARDISAliasResolver.getWorldFromAlias(o);
+            String namespace = Key.MINECRAFT_NAMESPACE;
+            if (plugin.getPlanetsConfig().contains("planets." + o + ".namespace")) {
+                namespace = plugin.getPlanetsConfig().getString("planets." + o + ".namespace", "minecraft");
+            }
+            Key worldKey = Key.key(namespace, o);
+            World ww = Bukkit.getServer().getWorld(worldKey);
             if (ww != null) {
                 String env = ww.getEnvironment().toString();
                 if (e.equalsIgnoreCase(env)) {
@@ -341,19 +338,19 @@ public class TARDISTerminalListener implements Listener {
                         if (plugin.getPlanetsConfig().getBoolean("planets." + o + ".time_travel")) {
                             allowedWorlds.add(o);
                         }
-                    } else if (!o.equals(plugin.getConfig().getString("creation.default_world_name"))) {
+                    } else if (!o.equals(plugin.getConfig().getString("creation.default_world_name", "tardis_timevortex").toLowerCase(Locale.ROOT))) {
                         if (plugin.getPlanetsConfig().getBoolean("planets." + o + ".time_travel")) {
                             allowedWorlds.add(o);
                         }
                     }
                 }
                 // remove the world the Police Box is in
-                if (this_world != null && (allowedWorlds.size() > 1 || !plugin.getPlanetsConfig().getBoolean("planets." + this_world + ".time_travel"))) {
-                    allowedWorlds.remove(this_world);
+                if (allowedWorlds.size() > 1 || !plugin.getPlanetsConfig().getBoolean("planets." + current + ".time_travel")) {
+                    allowedWorlds.remove(current);
                 }
                 // remove the world if the player doesn't have permission
                 if (allowedWorlds.size() > 1 && plugin.getConfig().getBoolean("travel.per_world_perms") && !TARDISPermission.hasPermission(p, "tardis.travel." + o)) {
-                    allowedWorlds.remove(this_world);
+                    allowedWorlds.remove(current);
                 }
             }
         });
@@ -367,9 +364,9 @@ public class TARDISTerminalListener implements Listener {
             world = allowedWorlds.get(rw);
         } else {
             // if all else fails return the current world
-            world = this_world;
+            world = current;
         }
-        return (!plugin.getPlanetsConfig().getBoolean("planets." + world + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMVHelper().getAlias(world) : TARDISAliasResolver.getWorldAlias(world);
+        return world;
     }
 
     private void checkSettings(InventoryView view, Player p) {
@@ -378,27 +375,27 @@ public class TARDISTerminalListener implements Listener {
         int slotm = getValue(34, getSlot(view, 28, 34), false, uuid) * plugin.getConfig().getInt("travel.terminal_step");
         int slotx = getValue(16, getSlot(view, 10, 16), true, uuid) * slotm;
         int slotz = getValue(25, getSlot(view, 19, 25), true, uuid) * slotm;
-        List<Component> lore = new ArrayList<>();
+        ItemLore.Builder lore = ItemLore.lore();
         COMPASS d = terminalUsers.get(uuid).direction();
         // what kind of world is it?
         Environment e;
         int[] slots = new int[]{36, 38, 40, 42};
         boolean found = false;
         for (int i : slots) {
-            if (view.getItem(i).getItemMeta().hasLore()) {
-                String world = ComponentUtils.stripColour(view.getItem(i).getItemMeta().lore().getFirst());
+            if (ComponentUtils.hasLore(view.getItem(i))) {
+                String world = ComponentUtils.stripColour(view.getItem(i).getData(DataComponentTypes.LORE).lines().getFirst());
                 if (!world.equals("No permission")) {
                     found = true;
                     World w = (!plugin.getPlanetsConfig().getBoolean("planets." + world + ".enabled")
                             && plugin.getWorldManager().equals(WorldManager.MULTIVERSE))
                             ? plugin.getMVHelper().getWorld(world)
-                            : TARDISAliasResolver.getWorldFromAlias(world);
+                            : TARDISWorldResolver.getFromString(world);
                     e = w.getEnvironment();
-                    if (plugin.getPlanetsConfig().getBoolean("planets." + w.getName() + ".false_nether")) {
+                    if (plugin.getPlanetsConfig().getBoolean("planets." + w.getKey().getKey() + ".false_nether")) {
                         e = Environment.NETHER;
                     }
                     TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
-                    if (world.equals(terminalUsers.get(uuid).location().getWorld().getName())) {
+                    if (world.equals(terminalUsers.get(uuid).location().getWorld().getKey().getKey())) {
                         // add current co-ords
                         slotx += terminalUsers.get(uuid).location().getBlockX();
                         slotz += terminalUsers.get(uuid).location().getBlockZ();
@@ -415,31 +412,31 @@ public class TARDISTerminalListener implements Listener {
                                     String save = world + ":" + slotx + ":" + endy + ":" + slotz;
                                     if (plugin.getPluginRespect().getRespect(new Location(w, slotx, endy, slotz), new Parameters(p, Flag.getNoMessageFlags()))) {
                                         terminalDestination.put(uuid, save);
-                                        lore.add(Component.text(save));
-                                        lore.add(Component.text("is a valid destination!"));
+                                        lore.addLine(Component.text(save));
+                                        lore.addLine(Component.text("is a valid destination!"));
                                     } else {
-                                        lore.add(Component.text(save));
-                                        lore.add(Component.text("is a protected location."));
-                                        lore.add(Component.text("Try again!"));
+                                        lore.addLine(Component.text(save));
+                                        lore.addLine(Component.text("is a protected location."));
+                                        lore.addLine(Component.text("Try again!"));
                                     }
                                 } else {
-                                    lore.add(Component.text(loc_str));
-                                    lore.add(Component.text("is not safe!"));
+                                    lore.addLine(Component.text(loc_str));
+                                    lore.addLine(Component.text("is not safe!"));
                                 }
                             } else {
-                                lore.add(Component.text(loc_str));
-                                lore.add(Component.text("is not safe!"));
+                                lore.addLine(Component.text(loc_str));
+                                lore.addLine(Component.text("is not safe!"));
                             }
                         }
                         case NETHER -> {
                             if (tt.safeNether(w, slotx, slotz, d, p)) {
                                 String save = world + ":" + slotx + ":" + plugin.getUtils().getHighestNetherBlock(w, slotx, slotz) + ":" + slotz;
                                 terminalDestination.put(uuid, save);
-                                lore.add(Component.text(save));
-                                lore.add(Component.text("is a valid destination!"));
+                                lore.addLine(Component.text(save));
+                                lore.addLine(Component.text("is a valid destination!"));
                             } else {
-                                lore.add(Component.text(loc_str));
-                                lore.add(Component.text("is not safe!"));
+                                lore.addLine(Component.text(loc_str));
+                                lore.addLine(Component.text("is not safe!"));
                             }
                         }
                         default -> {
@@ -452,9 +449,9 @@ public class TARDISTerminalListener implements Listener {
                             }
                             int safe;
                             // check submarine
-                            ItemMeta subim = view.getItem(44).getItemMeta();
+                            ItemStack sub = view.getItem(44);
                             loc.setY(starty);
-                            if (subim.hasLore() && ComponentUtils.stripColour(subim.lore().getFirst()).equals("true") && TARDISStaticUtils.isOceanBiome(loc.getBlock().getBiome())) {
+                            if (ComponentUtils.hasLore(sub) && ComponentUtils.stripColour(sub.getData(DataComponentTypes.LORE).lines().getFirst()).equals("true") && TARDISStaticUtils.isOceanBiome(loc.getBlock().getBiome())) {
                                 Location subloc = tt.submarine(loc.getBlock(), d);
                                 if (subloc != null) {
                                     safe = 0;
@@ -470,16 +467,16 @@ public class TARDISTerminalListener implements Listener {
                                 String save = world + ":" + slotx + ":" + starty + ":" + slotz;
                                 if (plugin.getPluginRespect().getRespect(new Location(w, slotx, starty, slotz), new Parameters(p, Flag.getNoMessageFlags()))) {
                                     terminalDestination.put(uuid, save);
-                                    lore.add(Component.text(save));
-                                    lore.add(Component.text("is a valid destination!"));
+                                    lore.addLine(Component.text(save));
+                                    lore.addLine(Component.text("is a valid destination!"));
                                 } else {
-                                    lore.add(Component.text(save));
-                                    lore.add(Component.text("is a protected location."));
-                                    lore.add(Component.text("Try again!"));
+                                    lore.addLine(Component.text(save));
+                                    lore.addLine(Component.text("is a protected location."));
+                                    lore.addLine(Component.text("Try again!"));
                                 }
                             } else {
-                                lore.add(Component.text(loc_str));
-                                lore.add(Component.text("is not safe!"));
+                                lore.addLine(Component.text(loc_str));
+                                lore.addLine(Component.text("is not safe!"));
                             }
                         }
                     }
@@ -487,12 +484,10 @@ public class TARDISTerminalListener implements Listener {
             }
         }
         if (!found) {
-            lore.add(Component.text("You need to select a world!"));
+            lore.addLine(Component.text("You need to select a world!"));
         }
         ItemStack is = view.getItem(46);
-        ItemMeta im = is.getItemMeta();
-        im.lore(lore);
-        is.setItemMeta(im);
+        is.setData(DataComponentTypes.LORE, lore.build());
     }
 
     private void close(Player p) {

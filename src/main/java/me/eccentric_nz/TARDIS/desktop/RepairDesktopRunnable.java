@@ -23,7 +23,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.event.TARDISDesktopThemeEvent;
-import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPostioning;
+import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPositioning;
 import me.eccentric_nz.TARDIS.builders.interior.TIPSData;
 import me.eccentric_nz.TARDIS.builders.utility.FractalFence;
 import me.eccentric_nz.TARDIS.console.ConsoleBuilder;
@@ -219,7 +219,7 @@ public class RepairDesktopRunnable extends DesktopThemeRunnable {
                 ent.remove();
             }
             if (slot != -1000001) { // default world - use TIPS
-                TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
+                TARDISInteriorPositioning tintpos = new TARDISInteriorPositioning(plugin);
                 TIPSData pos = tintpos.getTIPSData(slot);
                 startx = pos.getCentreX();
                 resetx = pos.getCentreX();
@@ -361,7 +361,7 @@ public class RepairDesktopRunnable extends DesktopThemeRunnable {
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> chunks.forEach((hunk) -> {
                 HashMap<String, Object> setc = new HashMap<>();
                 setc.put("tardis_id", id);
-                setc.put("world", world.getName());
+                setc.put("world", world.getKey().asString());
                 setc.put("x", hunk.getX());
                 setc.put("z", hunk.getZ());
                 plugin.getQueryFactory().doInsert("chunks", setc);
@@ -402,7 +402,7 @@ public class RepairDesktopRunnable extends DesktopThemeRunnable {
                 Material type = data.getMaterial();
                 if (type.equals(Material.BEDROCK)) {
                     // remember bedrock location to block off the beacon light
-                    String bedrocloc = world.getName() + ":" + x + ":" + y + ":" + z;
+                    String bedrocloc = world.getKey().asString() + ":" + x + ":" + y + ":" + z;
                     set.put("beacon", bedrocloc);
                     postBedrock = world.getBlockAt(x, y, z);
                 }
@@ -497,7 +497,7 @@ public class RepairDesktopRunnable extends DesktopThemeRunnable {
                     Bisected bisected = (Bisected) data;
                     if (bisected.getHalf().equals(Bisected.Half.BOTTOM)) { // iron door bottom
                         HashMap<String, Object> setd = new HashMap<>();
-                        String doorloc = world.getName() + ":" + x + ":" + y + ":" + z;
+                        String doorloc = world.getKey().asString() + ":" + x + ":" + y + ":" + z;
                         setd.put("door_location", doorloc);
                         HashMap<String, Object> whered = new HashMap<>();
                         whered.put("tardis_id", id);
@@ -536,7 +536,7 @@ public class RepairDesktopRunnable extends DesktopThemeRunnable {
                 if (type.equals(Material.LIGHT)) {
                     // remember light block locations for malfunction and light switch
                     HashMap<String, Object> setlb = new HashMap<>();
-                    String lloc = world.getName() + ":" + x + ":" + y + ":" + z;
+                    String lloc = world.getKey().asString() + ":" + x + ":" + y + ":" + z;
                     setlb.put("tardis_id", id);
                     setlb.put("location", lloc);
                     plugin.getQueryFactory().doInsert("lamps", setlb);
@@ -547,7 +547,7 @@ public class RepairDesktopRunnable extends DesktopThemeRunnable {
                      * could also be a beacon block, as the creeper sits over
                      * the beacon in the deluxe and bigger consoles.
                      */
-                    String creeploc = world.getName() + ":" + (x + 0.5) + ":" + y + ":" + (z + 0.5);
+                    String creeploc = world.getKey().asString() + ":" + (x + 0.5) + ":" + y + ":" + (z + 0.5);
                     set.put("creeper", creeploc);
                     if (type.equals(Material.COMMAND_BLOCK)) {
                         data = switch (tud.getSchematic().getPermission()) {
@@ -656,7 +656,7 @@ public class RepairDesktopRunnable extends DesktopThemeRunnable {
                 } else if (type.equals(Material.MUSHROOM_STEM)) { // mushroom stem for repeaters
                     // save repeater location
                     if (j < 6) {
-                        String repeater = world.getName() + ":" + x + ":" + y + ":" + z;
+                        String repeater = world.getKey().asString() + ":" + x + ":" + y + ":" + z;
                         data = Material.REPEATER.createBlockData();
                         Directional directional = (Directional) data;
                         switch (j) {

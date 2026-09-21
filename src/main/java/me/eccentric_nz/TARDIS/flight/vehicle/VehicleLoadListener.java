@@ -40,7 +40,7 @@ public class VehicleLoadListener implements Listener {
         for (Entity e : event.getEntities()) {
             if (e.getType() == EntityType.ARMOR_STAND) {
                 Location location = e.getLocation();
-                ResultSetCurrentWithPreset rsc = new ResultSetCurrentWithPreset(plugin, location.getWorld().getName(), location.getBlockX(), location.getBlockY(), location.getBlockZ());
+                ResultSetCurrentWithPreset rsc = new ResultSetCurrentWithPreset(plugin, location.getWorld().getKey().asString(), location.getBlockX(), location.getBlockY(), location.getBlockZ());
                 if (rsc.resultSet()) {
                     BuildData data = new BuildData(null);
                     data.setTardisID(rsc.getId());
@@ -56,7 +56,7 @@ public class VehicleLoadListener implements Listener {
         for (Entity e : event.getWorld().getEntities()) {
             if (e.getType() == EntityType.ARMOR_STAND) {
                 Location location = e.getLocation();
-                ResultSetCurrentWithPreset rsc = new ResultSetCurrentWithPreset(plugin, location.getWorld().getName(), location.getBlockX(), location.getBlockY(), location.getBlockZ());
+                ResultSetCurrentWithPreset rsc = new ResultSetCurrentWithPreset(plugin, location.getWorld().getKey().asString(), location.getBlockX(), location.getBlockY(), location.getBlockZ());
                 if (rsc.resultSet()) {
                     BuildData data = new BuildData(null);
                     data.setTardisID(rsc.getId());

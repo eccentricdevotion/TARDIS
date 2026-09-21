@@ -69,7 +69,7 @@ public class ControlListener implements Listener {
             31, 32, 33, 35, 38, 39, 40,
             41, 42, 43, 47,
             54, 55, 58, 59,
-            60, 61, 62
+            60, 61, 62, 63
     );
     private final Set<UUID> cooldown = new HashSet<>();
 
@@ -85,6 +85,7 @@ public class ControlListener implements Listener {
         validBlocks.add(Material.REPEATER);
         validBlocks.add(Material.STONE_PRESSURE_PLATE);
         validBlocks.add(Material.GRAY_SHULKER_BOX);
+        validBlocks.add(Material.YELLOW_WALL_BANNER);
         validBlocks.addAll(Tag.ALL_SIGNS.getValues());
         validBlocks.addAll(Tag.BUTTONS.getValues());
         validBlocks.addAll(Tag.WOODEN_PRESSURE_PLATES.getValues());
@@ -115,7 +116,7 @@ public class ControlListener implements Listener {
                 if (blockType.equals(Material.REPEATER)) {
                     Repeater repeater = (Repeater) block.getBlockData();
                     if (!repeater.isLocked()) {
-                        locStr = blockLocation.getWorld().getName() + ":" + blockLocation.getBlockX() + ":" + blockLocation.getBlockY() + ":" + blockLocation.getBlockZ();
+                        locStr = blockLocation.getWorld().getKey().asString() + ":" + blockLocation.getBlockX() + ":" + blockLocation.getBlockY() + ":" + blockLocation.getBlockZ();
                     }
                 }
                 HashMap<String, Object> where = new HashMap<>();
@@ -224,7 +225,7 @@ public class ControlListener implements Listener {
                                         plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "Saves");
                                         return;
                                     }
-                                    if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(playerUUID)) {
+                                    if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(player)) {
                                         new FloodgateSavesForm(plugin, playerUUID, id).send();
                                     } else {
                                         new TARDISSaveSign(plugin).openGUI(player, id);
@@ -260,6 +261,7 @@ public class ControlListener implements Listener {
                                 }
                                 case 61 -> new LaundryAction(plugin).openGUI(player);
                                 case 62 -> new GamesAction(plugin).openGUI(player);
+                                case 63 -> new ChunkLoaderAction(plugin).openGUI(player);
                                 default -> { }
                             }
                         } else if (action.equals(Action.PHYSICAL)) {

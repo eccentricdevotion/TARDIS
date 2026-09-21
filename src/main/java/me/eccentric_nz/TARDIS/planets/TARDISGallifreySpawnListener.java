@@ -42,7 +42,7 @@ public final class TARDISGallifreySpawnListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onGallifreyanSpawn(CreatureSpawnEvent event) {
-        if (!event.getLocation().getWorld().getName().endsWith("gallifrey")) {
+        if (!event.getLocation().getWorld().getKey().getKey().endsWith("gallifrey")) {
             return;
         }
         CreatureSpawnEvent.SpawnReason spawnReason = event.getSpawnReason();

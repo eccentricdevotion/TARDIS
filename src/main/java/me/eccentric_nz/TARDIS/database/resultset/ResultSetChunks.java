@@ -42,9 +42,11 @@ public class ResultSetChunks {
     private final String prefix;
     private int chunk_id;
     private int tardis_id;
+    private String uuid;
     private String world;
     private int x;
     private int z;
+    private int ticket;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet from the chunks table.

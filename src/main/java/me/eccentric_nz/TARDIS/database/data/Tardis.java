@@ -243,7 +243,7 @@ public class Tardis {
 
     /**
      * Returns a String representation of the Creeper spawn location in this TARDIS. It is in the form of {@code World
-     * name:x:y:z}
+     * namespace:dimension:x:y:z}
      *
      * @return the Creeper spawn location string
      */
@@ -253,7 +253,7 @@ public class Tardis {
 
     /**
      * Returns a String representation of the Beacon block-off block location in this TARDIS (used to turn off the
-     * beacon). It is in the form of {@code World name:x:y:z}
+     * beacon). It is in the form of {@code World namespace:dimension:x:y:z}
      *
      * @return the Beacon block-off block location string
      */
@@ -317,7 +317,7 @@ public class Tardis {
 
     /**
      * Returns a String representation of the Emergency Programme One hologram spawn location in this TARDIS. It is in
-     * the form of {@code World name:x:y:z}
+     * the form of {@code World namespace:dimension:x:y:z}
      *
      * @return the Emergency Programme One hologram spawn location string, or an empty string if the location does not
      * exist
@@ -328,7 +328,7 @@ public class Tardis {
 
     /**
      * Returns a String representation of the Rail room minecart spawn location in this TARDIS. It is in the form of
-     * {@code World name:x:y:z}
+     * {@code World namespace:dimension:x:y:z}
      *
      * @return the Rail room minecart spawn location string, or an empty string if the room does not exist
      */
@@ -338,7 +338,7 @@ public class Tardis {
 
     /**
      * Returns a String representation of the Renderer room spawn location in this TARDIS. It is in the form of {@code
-     * World name:x:y:z}
+     * World namespace:dimension:x:y:z}
      *
      * @return the Renderer room spawn location string, or an empty string if the room does not exist
      */
@@ -348,7 +348,7 @@ public class Tardis {
 
     /**
      * Returns a String representation of the Zero room transmat location in this TARDIS. It is in the form of {@code
-     * World name:x:y:z}
+     * World namespace:dimension:x:y:z}
      *
      * @return the Zero room transmat spawn location string, or an empty string if the room does not exist
      */

@@ -16,16 +16,13 @@
  */
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.components.CustomModelDataComponent;
-
-import java.util.List;
 
 /*
 easy_shape:---,WYW,---
@@ -48,12 +45,7 @@ public class CustardCreamRecipe {
 
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.COOKIE, 8);
-        ItemMeta im = is.getItemMeta();
-        im.displayName(ComponentUtils.toWhite("Custard Cream"));
-        CustomModelDataComponent component = im.getCustomModelDataComponent();
-        component.setStrings(List.of("custard_cream"));
-        im.setCustomModelDataComponent(component);
-        is.setItemMeta(im);
+        is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Custard Cream"));
         NamespacedKey key = new NamespacedKey(plugin, "custard_cream");
         ShapedRecipe r = new ShapedRecipe(key, is);
         r.shape("WYW");

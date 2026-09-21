@@ -34,6 +34,7 @@ import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.travel.TravelCostAndType;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import net.kyori.adventure.key.Key;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -81,7 +82,7 @@ public class FloodgateDestinationTerminalForm {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "TRAVEL_NO_PERM_WORLD", world);
             return;
         }
-        World w = plugin.getServer().getWorld(world);
+        World w = plugin.getServer().getWorld(Key.key(world));
         if (w != null) {
             World.Environment e = w.getEnvironment();
             // if nether or the end check if travel is enabled there

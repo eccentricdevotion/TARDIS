@@ -16,10 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.move;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.ARS.ARSMethods;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPostioning;
+import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPositioning;
 import me.eccentric_nz.TARDIS.builders.interior.TIPSData;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -80,7 +81,7 @@ public class TARDISMonsterRunnable implements Runnable {
         // get open portals
         for (Map.Entry<Location, TARDISTeleportLocation> map : plugin.getTrackerKeeper().getPortals().entrySet()) {
             // only portals in police box worlds
-            if (map.getKey().getWorld().getName().contains("TARDIS")) {
+            if (map.getKey().getWorld().getKey().getKey().contains("tardis")) {
                 continue;
             }
             if (map.getValue().isAbandoned()) {
@@ -139,8 +140,8 @@ public class TARDISMonsterRunnable implements Runnable {
                             tm.setAggressive(pigzombie.isAngry());
                             tm.setAnger(pigzombie.getAnger());
                             tm.setEquipment(pigzombie.getEquipment());
-                            if (twa && pigzombie.getEquipment().getHelmet() != null && pigzombie.getEquipment().getHelmet().hasItemMeta() && pigzombie.getEquipment().getHelmet().getItemMeta().hasDisplayName()) {
-                                String name = ComponentUtils.stripColour(pigzombie.getEquipment().getHelmet().getItemMeta().displayName());
+                            if (twa  && pigzombie.getEquipment().getHelmet().hasData(DataComponentTypes.CUSTOM_NAME)) {
+                                String name = ComponentUtils.stripColour(pigzombie.getEquipment().getHelmet().getData(DataComponentTypes.CUSTOM_NAME));
                                 if (name.equals("Ice Warrior Head") || name.equals("Strax Head")) {
                                     dn = name.substring(0, name.length() - 5);
                                 }
@@ -151,8 +152,8 @@ public class TARDISMonsterRunnable implements Runnable {
                         case SKELETON, STRAY, WITHER_SKELETON -> {
                             AbstractSkeleton skeleton = (AbstractSkeleton) e;
                             tm.setEquipment(skeleton.getEquipment());
-                            if (twa && skeleton.getEquipment().getHelmet() != null && skeleton.getEquipment().getHelmet().hasItemMeta() && skeleton.getEquipment().getHelmet().getItemMeta().hasDisplayName()) {
-                                String name = ComponentUtils.stripColour(skeleton.getEquipment().getHelmet().getItemMeta().displayName());
+                            if (twa  && skeleton.getEquipment().getHelmet().hasData(DataComponentTypes.CUSTOM_NAME)) {
+                                String name = ComponentUtils.stripColour(skeleton.getEquipment().getHelmet().getData(DataComponentTypes.CUSTOM_NAME));
                                 if (name.equals("Dalek Head") || name.equals("Silurian Head") || name.equals("Weeping Angel Head")) {
                                     dn = name.substring(0, name.length() - 5);
                                 }
@@ -169,8 +170,8 @@ public class TARDISMonsterRunnable implements Runnable {
                             Zombie zombie = (Zombie) e;
                             tm.setBaby(!zombie.isAdult());
                             tm.setEquipment(zombie.getEquipment());
-                            if (twa && zombie.getEquipment().getHelmet() != null && zombie.getEquipment().getHelmet().hasItemMeta() && zombie.getEquipment().getHelmet().getItemMeta().hasDisplayName()) {
-                                String name = ComponentUtils.stripColour(zombie.getEquipment().getHelmet().getItemMeta().displayName());
+                            if (twa  && zombie.getEquipment().getHelmet().hasData(DataComponentTypes.CUSTOM_NAME)) {
+                                String name = ComponentUtils.stripColour(zombie.getEquipment().getHelmet().getData(DataComponentTypes.CUSTOM_NAME));
                                 if (name.equals("Cyberman Head") || name.equals("Empty Child Head") || name.equals("Sontaran Head") || name.equals("Vashta Nerada Head") || name.equals("Zygon Head")) {
                                     dn = name.substring(0, name.length() - 5);
                                 }
@@ -265,7 +266,7 @@ public class TARDISMonsterRunnable implements Runnable {
                                     int tx = 0, tz = 0;
                                     if (pos != -1) {
                                         // tips slot
-                                        TARDISInteriorPostioning tips = new TARDISInteriorPostioning(plugin);
+                                        TARDISInteriorPositioning tips = new TARDISInteriorPositioning(plugin);
                                         TIPSData coords = tips.getTIPSData(pos);
                                         tx = coords.getCentreX();
                                         tz = coords.getCentreZ();

@@ -73,7 +73,7 @@ public class TVMCommandSave {
         HashMap<String, Object> set = new HashMap<>();
         set.put("uuid", uuid);
         set.put("save_name", name);
-        set.put("world", l.getWorld().getName());
+        set.put("world", l.getWorld().getKey().asString());
         set.put("x", l.getX());
         set.put("y", l.getY());
         set.put("z", l.getZ());

@@ -43,7 +43,7 @@ public class Capture {
      */
     public BlockData[][][] captureInterior(Location location, int distance, UUID rotor, ConsoleSize consoleSize) {
         // get depth of the console from ConsoleSize
-        int iy, ix, iz = (TARDIS.plugin.getConfig().getBoolean("policebox.view_interior_uses_console_size")) ? consoleSize.getCastDistance() : 16;
+        int iy, ix, iz = (TARDIS.plugin.getConfig().getBoolean("policebox.view_interior.use_console_size")) ? consoleSize.getCastDistance() : 16;
         // determine height and width from distance from door
         // 1, 4 ,9
         if (distance == 9) {

@@ -45,7 +45,7 @@ public class PlotArea implements Runnable {
         // check if an area exists
         HashMap<String, Object> where = new HashMap<>();
         where.put("area_name", "Plots");
-        where.put("world", world.getName());
+        where.put("world", world.getKey().asString());
         ResultSetAreas rsa = new ResultSetAreas(plugin, where, false, true);
         if (rsa.resultSet()) {
             return;
@@ -55,7 +55,7 @@ public class PlotArea implements Runnable {
         int y = world.getMinHeight() + 64;
         HashMap<String, Object> set = new HashMap<>();
         set.put("area_name", "Plots");
-        set.put("world", world.getName());
+        set.put("world", world.getKey().asString());
         set.put("minx", 6);
         set.put("minz", 6);
         set.put("maxx", max);
@@ -75,7 +75,7 @@ public class PlotArea implements Runnable {
         // claim the plot
         HashMap<String, Object> setp = new HashMap<>();
         setp.put("uuid", TARDISConstants.UUID_ZERO.toString());
-        setp.put("world", world.getName());
+        setp.put("world", world.getKey().asString());
         setp.put("chunk_x", 0);
         setp.put("chunk_z", 0);
         setp.put("size", size);

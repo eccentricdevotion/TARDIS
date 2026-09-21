@@ -232,7 +232,7 @@ public class DoorListener {
         boolean bool = false;
         switch (plugin.getWorldManager()) {
             case MULTIVERSE -> bool = plugin.getMVHelper().isWorldSurvival(world);
-            case NONE -> bool = plugin.getPlanetsConfig().getString("planets." + world.getName() + ".gamemode").equalsIgnoreCase("SURVIVAL");
+            case NONE -> bool = plugin.getPlanetsConfig().getString("planets." + world.getKey().getKey() + ".gamemode").equalsIgnoreCase("SURVIVAL");
         }
         return bool;
     }
@@ -247,6 +247,7 @@ public class DoorListener {
      * @param direction the direction of the police box
      * @param enter     whether the pets are entering (true) or exiting (false)
      */
+    @SuppressWarnings("deprecation")
     public void movePets(List<TARDISPet> pets, Location location, Player player, COMPASS direction, boolean enter) {
         Location pl = location.clone();
         World w = location.getWorld();

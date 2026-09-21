@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.database.resultset;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
+import me.eccentric_nz.TARDIS.planets.TARDISWorldResolver;
 import org.bukkit.Location;
 import org.bukkit.World;
 
@@ -78,7 +78,7 @@ public class ResultSetForcefield {
             if (rs.isBeforeFirst()) {
                 rs.next();
                 uuid = UUID.fromString(rs.getString("uuid"));
-                world = TARDISAliasResolver.getWorldFromAlias(rs.getString("world"));
+                world = TARDISWorldResolver.getFromString(rs.getString("world"));
                 int x = rs.getInt("x");
                 int y = rs.getInt("y");
                 int z = rs.getInt("z");

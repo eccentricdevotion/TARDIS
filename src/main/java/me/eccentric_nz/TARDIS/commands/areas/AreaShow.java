@@ -5,7 +5,7 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.data.Area;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreas;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
+import me.eccentric_nz.TARDIS.planets.TARDISWorldResolver;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -34,7 +34,7 @@ public class AreaShow {
         int miz = a.minZ();
         int max = a.maxX();
         int maz = a.maxZ();
-        World w = TARDISAliasResolver.getWorldFromAlias(a.world());
+        World w = TARDISWorldResolver.getFromString(a.world());
         Set<Block> markers = new HashSet<>();
         markers.add(w.getHighestBlockAt(mix, miz).getRelative(BlockFace.UP));
         markers.add(w.getHighestBlockAt(mix, maz).getRelative(BlockFace.UP));

@@ -18,7 +18,7 @@ public class TARDISTelosSpawnListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onCybermanSpawn(CreatureSpawnEvent event) {
-        if (!event.getLocation().getWorld().getName().equalsIgnoreCase("telos")) {
+        if (!event.getLocation().getWorld().getKey().getKey().equalsIgnoreCase("telos")) {
             return;
         }
         CreatureSpawnEvent.SpawnReason spawnReason = event.getSpawnReason();

@@ -111,8 +111,8 @@ public class PreferencesProcessor {
                         // get current setting
                         if (colon[1].equals("1b") && !plugin.getTrackerKeeper().getActiveForceFields().containsKey(player.getUniqueId())) {
                             // check power
-                            ResultSetArtronLevel rsal = new ResultSetArtronLevel(plugin, player.getUniqueId().toString());
-                            if (rsal.resultset()) {
+                            ResultSetArtronLevel rsal = new ResultSetArtronLevel(plugin);
+                            if (rsal.fromUUID(player.getUniqueId().toString())) {
                                 if (rsal.getArtronLevel() <= plugin.getArtronConfig().getInt("standby")) {
                                     plugin.getMessenger().send(player, TardisModule.TARDIS, "POWER_LOW");
                                 } else if (ForceField.addToTracker(player)) {

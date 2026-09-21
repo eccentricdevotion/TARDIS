@@ -159,7 +159,7 @@ public class InteriorBuildRunnable implements Runnable {
                 // calculate startx, starty, startz
                 if (tips > -1000001) {
                     // default world - use TIPS
-                    TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
+                    TARDISInteriorPositioning tintpos = new TARDISInteriorPositioning(plugin);
                     pos = tintpos.getTIPSData(tips);
                     startx = pos.getCentreX();
                     resetx = pos.getCentreX();
@@ -171,7 +171,7 @@ public class InteriorBuildRunnable implements Runnable {
                     while (!c.isLoaded()) {
                         c.load(true);
                     }
-                    String chun = world.getName() + ":" + c.getX() + ":" + c.getZ();
+                    String chun = world.getKey().asString() + ":" + c.getX() + ":" + c.getZ();
                     set.put("chunk", chun);
                     if (schm.getPermission().equals("junk")) {
                         set.put("creeper", cl.toString());
@@ -194,7 +194,7 @@ public class InteriorBuildRunnable implements Runnable {
                     }
                     HashMap<String, Object> setc = new HashMap<>();
                     setc.put("tardis_id", dbID);
-                    setc.put("world", world.getName());
+                    setc.put("world", world.getKey().asString());
                     setc.put("x", c.getX());
                     setc.put("z", c.getZ());
                     plugin.getQueryFactory().doInsert("chunks", setc);
@@ -368,7 +368,7 @@ public class InteriorBuildRunnable implements Runnable {
                 // remember the location of this Disk Storage
                 String storage = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
                 plugin.getQueryFactory().insertSyncControl(dbID, 14, storage, 0);
-                if (!TARDISFloodgate.isFloodgateEnabled() || !TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) {
+                if (!TARDISFloodgate.isFloodgateEnabled() || !TARDISFloodgate.isBedrockPlayer(player)) {
                     // set block data to BARRIER
                     data = TARDISConstants.BARRIER;
                     // spawn an item display entity
@@ -383,7 +383,7 @@ public class InteriorBuildRunnable implements Runnable {
                                 case TERRACOTTA -> data = Material.ORANGE_TERRACOTTA.createBlockData();
                                 case CONCRETE -> data = Material.ORANGE_CONCRETE.createBlockData();
                                 default -> {
-                                    if (!TARDISFloodgate.isFloodgateEnabled() || !TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) {
+                                    if (!TARDISFloodgate.isFloodgateEnabled() || !TARDISFloodgate.isBedrockPlayer(player)) {
                                         data = TARDISConstants.BARRIER;
                                         // spawn an item display entity
                                         TARDISDisplayItemUtils.set(TARDISBlockDisplayItem.HEXAGON, world, x, y, z);
@@ -426,7 +426,7 @@ public class InteriorBuildRunnable implements Runnable {
                             case TERRACOTTA -> data = Material.BLUE_TERRACOTTA.createBlockData();
                             case CONCRETE -> data = Material.BLUE_CONCRETE.createBlockData();
                             default -> {
-                                if (!TARDISFloodgate.isFloodgateEnabled() || !TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) {
+                                if (!TARDISFloodgate.isFloodgateEnabled() || !TARDISFloodgate.isBedrockPlayer(player)) {
                                     data = TARDISConstants.BARRIER;
                                     // spawn an item display entity
                                     TARDISDisplayItemUtils.set(TARDISBlockDisplayItem.BLUE_BOX, world, x, y, z);
@@ -470,7 +470,7 @@ public class InteriorBuildRunnable implements Runnable {
                     schm.getPermission().equals("diner") ||
                     schm.getPermission().equals("hell_bent")
             )) {
-                if (!TARDISFloodgate.isFloodgateEnabled() || !TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) {
+                if (!TARDISFloodgate.isFloodgateEnabled() || !TARDISFloodgate.isBedrockPlayer(player)) {
                     data = TARDISConstants.BARRIER;
                     // spawn an item display entity
                     TARDISDisplayItemUtils.set(TARDISBlockDisplayItem.ROUNDEL, world, x, y, z);
@@ -481,7 +481,7 @@ public class InteriorBuildRunnable implements Runnable {
                     schm.getPermission().equals("diner") ||
                     schm.getPermission().equals("hell_bent")
             )) {
-                if (!TARDISFloodgate.isFloodgateEnabled() || !TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) {
+                if (!TARDISFloodgate.isFloodgateEnabled() || !TARDISFloodgate.isBedrockPlayer(player)) {
                     data = TARDISConstants.BARRIER;
                     // spawn an item display entity
                     TARDISDisplayItemUtils.set(TARDISBlockDisplayItem.ROUNDEL_OFFSET, world, x, y, z);
@@ -504,7 +504,7 @@ public class InteriorBuildRunnable implements Runnable {
                 Bisected bisected = (Bisected) data;
                 if (bisected.getHalf().equals(Bisected.Half.BOTTOM)) { // iron door bottom
                     HashMap<String, Object> setd = new HashMap<>();
-                    String doorLocation = world.getName() + ":" + x + ":" + y + ":" + z;
+                    String doorLocation = world.getKey().asString() + ":" + x + ":" + y + ":" + z;
                     setd.put("tardis_id", dbID);
                     setd.put("door_type", 1);
                     setd.put("door_location", doorLocation);
@@ -529,7 +529,7 @@ public class InteriorBuildRunnable implements Runnable {
                 plugin.getQueryFactory().insertSyncControl(dbID, 15, advanced, 0);
                 // check if player has storage record, and update the tardis_id field
                 plugin.getUtils().updateStorageId(playerUUID, dbID);
-                if (!TARDISFloodgate.isFloodgateEnabled() || !TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) {
+                if (!TARDISFloodgate.isFloodgateEnabled() || !TARDISFloodgate.isBedrockPlayer(player)) {
                     // set block data to correct BARRIER + Item Display
                     data = TARDISConstants.BARRIER;
                     // spawn an item display entity
@@ -630,7 +630,7 @@ public class InteriorBuildRunnable implements Runnable {
             if (type.equals(Material.LIGHT)) {
                 // remember light block locations for malfunction and light switch
                 HashMap<String, Object> setlb = new HashMap<>();
-                String lightLocation = world.getName() + ":" + x + ":" + y + ":" + z;
+                String lightLocation = world.getKey().asString() + ":" + x + ":" + y + ":" + z;
                 setlb.put("tardis_id", dbID);
                 setlb.put("location", lightLocation);
                 plugin.getQueryFactory().doInsert("lamps", setlb);
@@ -641,7 +641,7 @@ public class InteriorBuildRunnable implements Runnable {
                  * could also be a beacon block, as the creeper sits
                  * over the beacon in the deluxe and bigger consoles.
                  */
-                String creeperLocation = world.getName() + ":" + (x + 0.5) + ":" + y + ":" + (z + 0.5);
+                String creeperLocation = world.getKey().asString() + ":" + (x + 0.5) + ":" + y + ":" + (z + 0.5);
                 set.put("creeper", creeperLocation);
                 if (type.equals(Material.COMMAND_BLOCK)) {
                     data = switch (schm.getPermission()) {
@@ -752,7 +752,7 @@ public class InteriorBuildRunnable implements Runnable {
             } else if (type.equals(Material.MUSHROOM_STEM)) { // mushroom stem for repeaters
                 // save repeater location
                 if (j < 6) {
-                    String repeater = world.getName() + ":" + x + ":" + y + ":" + z;
+                    String repeater = world.getKey().asString() + ":" + x + ":" + y + ":" + z;
                     data = Material.REPEATER.createBlockData();
                     Directional directional = (Directional) data;
                     switch (j) {
@@ -783,7 +783,7 @@ public class InteriorBuildRunnable implements Runnable {
                 TARDISBlockSetters.setBlock(world, x, y, z, Material.VOID_AIR);
             } else if (type.equals(Material.BEDROCK)) {
                 // remember bedrock location to block off the beacon light
-                String bedrockLocation = world.getName() + ":" + x + ":" + y + ":" + z;
+                String bedrockLocation = world.getKey().asString() + ":" + x + ":" + y + ":" + z;
                 set.put("beacon", bedrockLocation);
                 postBedrock = world.getBlockAt(x, y, z);
             } else if (type.equals(Material.BROWN_MUSHROOM) && schm.getPermission().equals("master")) {

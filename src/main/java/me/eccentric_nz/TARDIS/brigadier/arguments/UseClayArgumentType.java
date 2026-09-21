@@ -1,6 +1,5 @@
 package me.eccentric_nz.TARDIS.brigadier.arguments;
 
-import com.google.common.collect.ImmutableList;
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.arguments.ArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
@@ -13,7 +12,8 @@ import io.papermc.paper.command.brigadier.MessageComponentSerializer;
 import io.papermc.paper.command.brigadier.argument.CustomArgumentType;
 import net.kyori.adventure.text.Component;
 
-import java.util.List;
+import java.util.Locale;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
 public class UseClayArgumentType implements CustomArgumentType<String, String> {
@@ -21,7 +21,7 @@ public class UseClayArgumentType implements CustomArgumentType<String, String> {
     private static final SimpleCommandExceptionType ERROR_INVALID_OPT = new SimpleCommandExceptionType(
             MessageComponentSerializer.message().serialize(Component.text("Invalid use_clay option specified!"))
     );
-    private final List<String> USE_CLAY_SUBS = ImmutableList.of("WOOL", "TERRACOTTA", "CONCRETE");
+    private final Set<String> USE_CLAY_SUBS = Set.of("WOOL", "TERRACOTTA", "CONCRETE");
 
     @Override
     public String parse(StringReader reader) {
@@ -44,9 +44,9 @@ public class UseClayArgumentType implements CustomArgumentType<String, String> {
 
     @Override
     public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
-        for (String d : USE_CLAY_SUBS) {
-            builder.suggest(d);
-        }
+        USE_CLAY_SUBS.stream()
+                .filter(u -> u.toLowerCase(Locale.ROOT).startsWith(builder.getRemainingLowerCase()))
+                .forEach(builder::suggest);
         return builder.buildFuture();
     }
 }

@@ -16,6 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.CustomModelData;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.keys.CircuitVariant;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
@@ -26,8 +29,6 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
 import java.util.List;
 
@@ -57,34 +58,27 @@ public class StattenheimRemoteRecipe {
 
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.FLINT, 1);
-        ItemMeta im = is.getItemMeta();
-        im.displayName(ComponentUtils.toWhite("Stattenheim Remote"));
+        is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Stattenheim Remote"));
         String uses = plugin.getConfig().getString("circuits.uses.stattenheim", "15");
         if (uses.equals("0")) {
             uses = "1000";
         }
-        im.lore(List.of(
+        is.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(
                 Component.text("Right-click block"),
                 Component.text("to call TARDIS"),
                 Component.text("Uses left"),
                 Component.text(uses)
-        ));
-        CustomModelDataComponent rem = im.getCustomModelDataComponent();
-        rem.setStrings(List.of("stattenheim_remote"));
-        im.setCustomModelDataComponent(rem);
-        is.setItemMeta(im);
+        )));
         NamespacedKey key = new NamespacedKey(plugin, "stattenheim_remote");
         ShapedRecipe r = new ShapedRecipe(key, is);
         if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             r.shape("OBO", "OLO", "RRR");
             ItemStack exact = ItemStack.of(Material.GLOWSTONE_DUST, 1);
-            ItemMeta em = exact.getItemMeta();
-            em.displayName(ComponentUtils.toWhite("TARDIS Stattenheim Circuit"));
-            CustomModelDataComponent component = em.getCustomModelDataComponent();
-            component.setFloats(CircuitVariant.STATTENHEIM.getFloats());
-            em.setCustomModelDataComponent(component);
-            exact.setItemMeta(em);
-            r.setIngredient('L', new RecipeChoice.ExactChoice(exact));
+            exact.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("TARDIS Stattenheim Circuit"));
+            exact.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                    .addFloats(CircuitVariant.STATTENHEIM.getFloats())
+                    .build());
+            r.setIngredient('L', RecipeChoice.exactChoice(exact));
         } else {
             r.shape("OBO", " L ", "RRR");
             r.setIngredient('L', Material.BLUE_DYE);

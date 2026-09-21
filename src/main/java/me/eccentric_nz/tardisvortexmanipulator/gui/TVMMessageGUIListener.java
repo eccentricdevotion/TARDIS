@@ -3,6 +3,7 @@
  */
 package me.eccentric_nz.tardisvortexmanipulator.gui;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
@@ -11,16 +12,13 @@ import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.tardisvortexmanipulator.TVMUtils;
 import me.eccentric_nz.tardisvortexmanipulator.database.TVMQueryFactory;
 import me.eccentric_nz.tardisvortexmanipulator.database.TVMResultSetMessageById;
-import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * @author eccentric_nz
@@ -48,7 +46,8 @@ public class TVMMessageGUIListener extends TARDISMenuListener {
         }
         InventoryView view = event.getView();
         switch (slot) {
-            case 45 -> { }
+            case 45 -> {
+            }
             case 46 -> close(player); // close
             case 48 -> doPrev(view, player); // previous page
             case 49 -> doNext(view, player); // next page
@@ -79,9 +78,7 @@ public class TVMMessageGUIListener extends TARDISMenuListener {
     private void doRead(InventoryView view, Player player) {
         if (selectedSlot != -1) {
             ItemStack is = view.getItem(selectedSlot);
-            ItemMeta im = is.getItemMeta();
-            List<Component> lore = im.lore();
-            int message_id = TARDISNumberParsers.parseInt(ComponentUtils.stripColour(lore.get(2)));
+            int message_id = TARDISNumberParsers.parseInt(ComponentUtils.stripColour(is.getData(DataComponentTypes.LORE).lines().get(2)));
             TVMResultSetMessageById rsm = new TVMResultSetMessageById(plugin, message_id);
             if (rsm.resultSet()) {
                 close(player);
@@ -97,9 +94,7 @@ public class TVMMessageGUIListener extends TARDISMenuListener {
     private void doDelete(InventoryView view, Player player) {
         if (selectedSlot != -1) {
             ItemStack is = view.getItem(selectedSlot);
-            ItemMeta im = is.getItemMeta();
-            List<Component> lore = im.lore();
-            int message_id = TARDISNumberParsers.parseInt(ComponentUtils.stripColour(lore.get(2)));
+            int message_id = TARDISNumberParsers.parseInt(ComponentUtils.stripColour(is.getData(DataComponentTypes.LORE).lines().get(2)));
             TVMResultSetMessageById rsm = new TVMResultSetMessageById(plugin, message_id);
             if (rsm.resultSet()) {
                 close(player);

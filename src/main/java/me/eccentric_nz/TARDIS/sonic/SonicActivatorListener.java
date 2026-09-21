@@ -27,9 +27,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.InventoryView;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.ShapedRecipe;
+import org.bukkit.inventory.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -56,9 +54,25 @@ public class SonicActivatorListener extends TARDISMenuListener {
     private List<ItemStack> getStacks() {
         // get the Sonic Generator recipe
         ShapedRecipe recipe = plugin.getFigura().getShapedRecipes().get("Sonic Generator");
-        List<ItemStack> mats = new ArrayList<>(recipe.getIngredientMap().values());
+        List<RecipeChoice> mats = new ArrayList<>(recipe.getChoiceMap().values());
         mats.removeAll(Collections.singleton(null));
-        return mats;
+        List<ItemStack> choices = new ArrayList<>();
+        for (RecipeChoice choice : mats) {
+            if (choice instanceof RecipeChoice.MaterialChoice mc) {
+                choices.add(new ItemStack(mc.getChoices().getFirst()));
+            }
+            if (choice instanceof RecipeChoice.ExactChoice ec) {
+                choices.add(ec.getChoices().getFirst());
+            }
+            if (choice instanceof RecipeChoice.ItemTypeChoice ic) {
+                java.util.Collection<ItemType> items = ic.itemTypes().resolve(org.bukkit.Registry.ITEM);
+                if (!items.isEmpty()) {
+                    ItemType firstType = items.iterator().next();
+                    choices.add(firstType.createItemStack());
+                }
+            }
+        }
+        return choices;
     }
 
     @EventHandler(ignoreCancelled = true)

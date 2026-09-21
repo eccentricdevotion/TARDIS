@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.advanced;
 
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.database.data.Throticle;
@@ -30,7 +31,7 @@ import me.eccentric_nz.TARDIS.enumeration.TravelType;
 import me.eccentric_nz.TARDIS.flight.DematerialiseToVortex;
 import me.eccentric_nz.TARDIS.flight.MaterialseFromVortex;
 import me.eccentric_nz.TARDIS.flight.TARDISHandbrake;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
+import me.eccentric_nz.TARDIS.planets.TARDISWorldResolver;
 import me.eccentric_nz.TARDIS.travel.TARDISEPSRunnable;
 import me.eccentric_nz.TARDIS.travel.TravelCostAndType;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
@@ -67,10 +68,10 @@ public class AuthorisedControlDisk {
     private final String eps;
     private final String creeper;
 
-    AuthorisedControlDisk(TARDIS plugin, UUID uuid, List<Component> lore, int id, Player player, String eps, String creeper) {
+    AuthorisedControlDisk(TARDIS plugin, UUID uuid, ItemLore itemLore, int id, Player player, String eps, String creeper) {
         this.plugin = plugin;
         this.uuid = uuid;
-        this.lore = lore;
+        this.lore = itemLore != null ? itemLore.lines() : new ArrayList<>();
         this.id = id;
         this.player = player;
         this.eps = eps;
@@ -106,7 +107,7 @@ public class AuthorisedControlDisk {
                 // get save location
                 ResultSetDestinations rsd = new ResultSetDestinations(plugin, where, false);
                 if (rsd.resultSet()) {
-                    World w = TARDISAliasResolver.getWorldFromAlias(rsd.getWorld());
+                    World w = TARDISWorldResolver.getFromString(rsd.getWorld());
                     if (w != null) {
                         location = new Location(w, rsd.getX(), rsd.getY(), rsd.getZ());
                         direction = COMPASS.valueOf(rsd.getDirection());
@@ -134,7 +135,7 @@ public class AuthorisedControlDisk {
             HashMap<String, Object> wheren = new HashMap<>();
             wheren.put("tardis_id", id);
             HashMap<String, Object> setn = new HashMap<>();
-            setn.put("world", location.getWorld().getName());
+            setn.put("world", location.getWorld().getKey().asString());
             setn.put("x", location.getBlockX());
             setn.put("y", location.getBlockY());
             setn.put("z", location.getBlockZ());

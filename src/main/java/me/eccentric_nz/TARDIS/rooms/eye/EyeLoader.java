@@ -28,10 +28,6 @@ public class EyeLoader {
     }
 
     public void enable() {
-        // add custom biome
-        plugin.getMessenger().message(plugin.getConsole(), TardisModule.HELPER,"Adding custom biome for Eye of Harmony room...");
-        // TODO make sure datapack biome is loading
-//        plugin.getTardisHelper().addCustomBiome("eye");
         // start particles
         if (plugin.getConfig().getBoolean("eye_of_harmony.particles")) {
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {

@@ -22,7 +22,7 @@ import me.eccentric_nz.TARDIS.companionGUI.VanishChecker;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisCompanions;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
+import me.eccentric_nz.TARDIS.planets.TARDISWorldResolver;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -88,9 +88,9 @@ public class FloodgateAddCompanionsForm {
                 if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
                     // remove all members
                     String[] data = tardis.getChunk().split(":");
-                    plugin.getWorldGuardUtils().removeAllMembersFromRegion(TARDISAliasResolver.getWorldFromAlias(data[0]), player.getName(), player.getUniqueId());
+                    plugin.getWorldGuardUtils().removeAllMembersFromRegion(TARDISWorldResolver.getFromString(data[0]), player.getName(), player.getUniqueId());
                     // set entry and exit flags to allow
-                    plugin.getWorldGuardUtils().setEntryExitFlags(data[0], player.getName(), true);
+                    plugin.getWorldGuardUtils().setEntryExitFlags(data[1], player.getName(), true);
                 }
                 plugin.getMessenger().sendInsertedColour(player, "COMPANIONS_ADD", "everyone", plugin);
                 plugin.getMessenger().sendColouredCommand(player, "COMPANIONS_EVERYONE", "/tardis remove all", plugin);
@@ -103,7 +103,7 @@ public class FloodgateAddCompanionsForm {
                         String[] data = tardis.getChunk().split(":");
                         CompanionAddGUIListener.addToRegion(data[0], tardis.getOwner(), label);
                         // set entry and exit flags to deny
-                        plugin.getWorldGuardUtils().setEntryExitFlags(data[0], label, false);
+                        plugin.getWorldGuardUtils().setEntryExitFlags(data[1], label, false);
                     }
                     plugin.getMessenger().sendInsertedColour(player, "COMPANIONS_ADD", label, plugin);
                 }

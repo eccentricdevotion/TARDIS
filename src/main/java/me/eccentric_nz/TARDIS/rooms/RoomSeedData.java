@@ -74,8 +74,8 @@ public class RoomSeedData {
 
     public void setChunkMinMax(String s) {
         String[] data = s.split(":");
-        int x = TARDISNumberParsers.parseInt(data[1]);
-        int z = TARDISNumberParsers.parseInt(data[2]);
+        int x = TARDISNumberParsers.parseInt(data[2]);
+        int z = TARDISNumberParsers.parseInt(data[3]);
         minx = x - 4;
         maxx = x + 4;
         minz = z - 4;

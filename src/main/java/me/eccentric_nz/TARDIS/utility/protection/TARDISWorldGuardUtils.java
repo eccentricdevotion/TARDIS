@@ -38,7 +38,8 @@ import me.eccentric_nz.TARDIS.builders.interior.TIPSData;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisCompanions;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
+import me.eccentric_nz.TARDIS.planets.TARDISWorldResolver;
+import net.kyori.adventure.key.Key;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -139,7 +140,7 @@ public class TARDISWorldGuardUtils {
             b2 = makeBlockVector(two);
         }
         // check floodgate
-        String name = (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(p.getUniqueId())) ? TARDISFloodgate.sanitisePlayerName(p.getName()) : p.getName();
+        String name = (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(p)) ? TARDISFloodgate.sanitisePlayerName(p.getName()) : p.getName();
         ProtectedCuboidRegion region = new ProtectedCuboidRegion("TARDIS_" + name, b1, b2);
         DefaultDomain owners = region.getOwners();
         owners.addPlayer(p.getName());
@@ -181,7 +182,7 @@ public class TARDISWorldGuardUtils {
         } else {
             uuid = player.getUniqueId();
             // check floodgate for region name
-            name = (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) ? TARDISFloodgate.sanitisePlayerName(player.getName()) : player.getName();
+            name = (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(player)) ? TARDISFloodgate.sanitisePlayerName(player.getName()) : player.getName();
         }
         String region_id = "TARDIS_" + name;
         ProtectedCuboidRegion region = new ProtectedCuboidRegion(region_id, b1, b2);
@@ -202,7 +203,7 @@ public class TARDISWorldGuardUtils {
         if (!junk) {
             // deny exit to all
             // usage = "<id> <flag> [-w world] [-g group] [value]",
-            plugin.getServer().dispatchCommand(plugin.getConsole(), "rg flag " + region_id + " exit -w " + world.getName() + " deny");
+            plugin.getServer().dispatchCommand(plugin.getConsole(), "rg flag " + region_id + " exit -w " + world.getKey().getKey() + " deny");
         }
         try {
             rm.save();
@@ -242,7 +243,7 @@ public class TARDISWorldGuardUtils {
         rm.addRegion(region);
         // deny exit to all
         // usage = "<id> <flag> [-w world] [-g group] [value]",
-        plugin.getServer().dispatchCommand(plugin.getConsole(), "rg flag " + region_id + " exit -w " + world.getName() + " deny");
+        plugin.getServer().dispatchCommand(plugin.getConsole(), "rg flag " + region_id + " exit -w " + world.getKey().getKey() + " deny");
         try {
             rm.save();
         } catch (StorageException e) {
@@ -433,7 +434,7 @@ public class TARDISWorldGuardUtils {
      * @param name the name of the recharger to remove
      */
     public void removeRechargerRegion(String name) {
-        World w = TARDISAliasResolver.getWorldFromAlias(plugin.getConfig().getString("rechargers." + name + ".world"));
+        World w = TARDISWorldResolver.getFromString(plugin.getConfig().getString("rechargers." + name + ".world"));
         RegionManager rm = wg.getRegionContainer().get(new BukkitWorld(w));
         rm.removeRegion("tardis_recharger_" + name);
         try {
@@ -553,7 +554,7 @@ public class TARDISWorldGuardUtils {
             members.removeAll();
             // add the owner back in
             members.addPlayer(uuid);
-            plugin.getServer().dispatchCommand(plugin.getConsole(), "rg addmember TARDIS_" + owner + " " + owner + " -w " + w.getName());
+            plugin.getServer().dispatchCommand(plugin.getConsole(), "rg addmember TARDIS_" + owner + " " + owner + " -w " + w.getKey().getKey());
         }
     }
 
@@ -717,7 +718,7 @@ public class TARDISWorldGuardUtils {
      * @return the protected region
      */
     public ProtectedRegion getRegion(String world, String name) {
-        World w = TARDISAliasResolver.getWorldFromAlias(world);
+        World w = TARDISWorldResolver.getFromString(world);
         if (w == null) {
             return null;
         }
@@ -772,7 +773,7 @@ public class TARDISWorldGuardUtils {
      * @param allow whether the flag state should be set to allow or deny
      */
     public void setEntryExitFlags(String world, String owner, boolean allow) {
-        World w = TARDISAliasResolver.getWorldFromAlias(world);
+        World w = TARDISWorldResolver.getFromString(world);
         ProtectedRegion region = null;
         if (w != null) {
             RegionManager rm = wg.getRegionContainer().get(new BukkitWorld(w));
@@ -801,8 +802,8 @@ public class TARDISWorldGuardUtils {
     }
 
     public void checkEntryFlags() {
-        String world_name = plugin.getConfig().getString("creation.default_world_name");
-        World world = plugin.getServer().getWorld(world_name);
+        String world_name = plugin.getConfig().getString("creation.default_world_name", "tardis_timevortex");
+        World world = plugin.getServer().getWorld(Key.key(world_name));
         if (world != null) {
             State flag = plugin.getConfig().getBoolean("preferences.open_door_policy") ? State.ALLOW : State.DENY;
             RegionManager rm = wg.getRegionContainer().get(new BukkitWorld(world));

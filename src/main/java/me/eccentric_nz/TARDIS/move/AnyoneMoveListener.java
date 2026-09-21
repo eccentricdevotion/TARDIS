@@ -34,6 +34,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.UUID;
 
 /**
@@ -74,12 +75,12 @@ public class AnyoneMoveListener implements Listener {
             Location to = tpl.getLocation();
             boolean exit;
             if (plugin.getConfig().getBoolean("creation.create_worlds_with_perms") && TARDISPermission.hasPermission(plugin.getServer().getPlayer(uuid), "tardis.create_world")) {
-                exit = !(to.getWorld().getName().contains("TARDIS"));
+                exit = !(to.getWorld().getKey().getKey().contains("tardis"));
             } else if (plugin.getConfig().getBoolean("creation.default_world")) {
                 // check default world name
-                exit = !(to.getWorld().getName().equals(plugin.getConfig().getString("creation.default_world_name")));
+                exit = !(to.getWorld().getKey().getKey().equals(plugin.getConfig().getString("creation.default_world_name", "tardis_timevortex").toLowerCase(Locale.ROOT)));
             } else {
-                exit = !(to.getWorld().getName().contains("TARDIS"));
+                exit = !(to.getWorld().getKey().getKey().contains("tardis"));
             }
             // adjust player yaw for to
             float yaw = (exit) ? player.getLocation().getYaw() + 180.0f : player.getLocation().getYaw();
@@ -98,7 +99,7 @@ public class AnyoneMoveListener implements Listener {
             if (plugin.getConfig().getBoolean("allow.mob_farming") && TARDISPermission.hasPermission(player, "tardis.farm") && !plugin.getTrackerKeeper().getFarming().contains(uuid) && willFarm) {
                 plugin.getTrackerKeeper().getFarming().add(uuid);
                 TARDISFarmer tf = new TARDISFarmer(plugin);
-                petsAndFollowers = tf.farmAnimals(l, d, id, player, tpl.getLocation().getWorld().getName(), l.getWorld().getName());
+                petsAndFollowers = tf.farmAnimals(l, d, id, player, tpl.getLocation().getWorld().getKey().getKey(), l.getWorld().getKey().getKey());
             }
             // set travelling status
             plugin.getGeneralKeeper().getDoorListener().removeTraveller(uuid);

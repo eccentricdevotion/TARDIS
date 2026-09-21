@@ -21,8 +21,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetOccupiedScreen;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetScreen;
-import me.eccentric_nz.TARDIS.enumeration.WorldManager;
-import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.ComponentBuilder;
@@ -83,10 +81,7 @@ public class ControlMonitor implements Runnable {
         } else if (coords) {
             rss.locationAsync((hasResult, resultSetConsole) -> {
                 if (hasResult) {
-                    String worldName = (resultSetConsole.getWorld() != null) ? TARDISAliasResolver.getWorldAlias(resultSetConsole.getWorld()) : "";
-                    if (!plugin.getPlanetsConfig().getBoolean("planets." + resultSetConsole.getWorld() + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE) && !worldName.isEmpty()) {
-                        worldName = plugin.getMVHelper().getAlias(worldName);
-                    }
+                    String worldName = (resultSetConsole.getWorld() != null) ? resultSetConsole.getWorld().split(":")[1] : "";
                     builder.append(Component.text(worldName))
                             .append(Component.newline())
                             .append(Component.text(resultSetConsole.getX(), NamedTextColor.WHITE))

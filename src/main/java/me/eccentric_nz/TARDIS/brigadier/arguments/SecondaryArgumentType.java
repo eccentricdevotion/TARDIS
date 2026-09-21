@@ -14,6 +14,7 @@ import me.eccentric_nz.TARDIS.enumeration.Updateable;
 import net.kyori.adventure.text.Component;
 
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
@@ -53,9 +54,9 @@ public class SecondaryArgumentType implements CustomArgumentType<String, String>
 
     @Override
     public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
-        for (String s : SEC_SUBS) {
-            builder.suggest(s);
-        }
+        SEC_SUBS.stream()
+                .filter(s -> s.toLowerCase(Locale.ROOT).startsWith(builder.getRemainingLowerCase()))
+                .forEach(builder::suggest);
         return builder.buildFuture();
     }
 }

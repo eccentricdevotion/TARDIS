@@ -20,6 +20,7 @@ import com.destroystokyo.paper.MaterialTags;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Material;
+import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.BlockData;
@@ -62,7 +63,7 @@ public class TARDISBeaconColouringListener implements Listener {
             return;
         }
         ItemStack dye = player.getInventory().getItemInMainHand();
-        if (!MaterialTags.DYES.isTagged(dye.getType())) {
+        if (!Tag.ITEMS_DYES.isTagged(dye.getType())) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "COLOUR_DYE");
             return;
         }

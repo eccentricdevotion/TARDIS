@@ -120,7 +120,7 @@ public class BiomeHelper {
         if (w.isLoaded(pos)) {
             ChunkAccess chunk = w.getChunk(pos);
             if (chunk != null) {
-                chunk.setBiome(x >> 2, y >> 2, z >> 2, bb);
+                chunk.setNoiseBiome(x >> 2, y >> 2, z >> 2, bb);
             }
         }
     }
