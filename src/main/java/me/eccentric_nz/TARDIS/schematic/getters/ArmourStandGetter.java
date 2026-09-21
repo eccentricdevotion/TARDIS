@@ -79,7 +79,7 @@ public class ArmourStandGetter {
         }
         // get chestplate
         ItemStack chestplate = equipment.getChestplate();
-        if (chestplate != null) {
+        if (!chestplate.isEmpty()) {
             object.add("chest", ItemStackGetter.getJson(chestplate));
         }
         // get leggings

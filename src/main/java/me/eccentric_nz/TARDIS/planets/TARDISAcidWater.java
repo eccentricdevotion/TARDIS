@@ -175,10 +175,10 @@ public class TARDISAcidWater implements Listener {
      */
     private double getDamageReduced(Player player) {
         PlayerInventory inv = player.getInventory();
-        ItemStack boots = inv.getBoots();
         ItemStack helmet = inv.getHelmet();
-        ItemStack chest = inv.getChestplate();
+        ItemStack boots = inv.getBoots();
         ItemStack pants = inv.getLeggings();
+        ItemStack chest = inv.getChestplate();
         double reduction = 0.0;
         if (!helmet.isEmpty()) {
             switch (helmet.getType()) {
@@ -193,7 +193,7 @@ public class TARDISAcidWater implements Listener {
                 }
             }
         }
-        if (boots != null) {
+        if (!boots.isEmpty()) {
             switch (boots.getType()) {
                 case LEATHER_BOOTS -> reduction += 0.04;
                 case GOLDEN_BOOTS -> reduction += 0.06;
@@ -206,7 +206,7 @@ public class TARDISAcidWater implements Listener {
             }
         }
         // Pants
-        if (pants != null) {
+        if (!pants.isEmpty()) {
             switch (pants.getType()) {
                 case LEATHER_LEGGINGS -> reduction += 0.08;
                 case GOLDEN_LEGGINGS -> reduction += 0.12;
@@ -219,7 +219,7 @@ public class TARDISAcidWater implements Listener {
             }
         }
         // Chest plate
-        if (chest != null) {
+        if (!chest.isEmpty()) {
             switch (chest.getType()) {
                 case LEATHER_CHESTPLATE -> reduction += 0.12;
                 case GOLDEN_CHESTPLATE -> reduction += 0.16;
