@@ -66,7 +66,7 @@ public class TARDISPerceptionFilterListener implements Listener {
             if (ComponentUtils.isNamed(is, "Perception Filter")) {
                 if (TARDISPermission.hasPermission(player, "tardis.filter")) {
                     ItemStack chestPlate = player.getInventory().getChestplate();
-                    if (chestPlate == null) {
+                    if (chestPlate.isEmpty()) {
                         // equip the chest slot with the perception filter
                         player.getInventory().setChestplate(is);
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
