@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.utility;
 
-import com.destroystokyo.paper.MaterialTags;
 import com.google.common.collect.Sets;
 import org.bukkit.Material;
 import org.bukkit.Tag;
@@ -35,7 +34,13 @@ public class TARDISMaterials {
 
     public static final Set<Material> doors = Sets.union(Sets.union(Tag.DOORS.getValues(), Tag.TRAPDOORS.getValues()), Tag.BUTTONS.getValues());
 
-    public static final List<Material> plants = List.of(Material.AZALEA, Material.SMALL_DRIPLEAF, Material.BIG_DRIPLEAF, Material.BIG_DRIPLEAF_STEM, Material.CACTUS, Material.DEAD_BUSH, Material.FERN, Material.SHORT_GRASS, Material.LARGE_FERN, Material.TALL_GRASS, Material.HANGING_ROOTS, Material.WARPED_ROOTS, Material.NETHER_SPROUTS, Material.CRIMSON_ROOTS);
+    public static final List<Material> plants = List.of(
+            Material.AZALEA, Material.SMALL_DRIPLEAF, Material.BIG_DRIPLEAF, Material.BIG_DRIPLEAF_STEM, Material.CACTUS,
+            Material.DEAD_BUSH, Material.FERN, Material.SHORT_GRASS, Material.LARGE_FERN, Material.TALL_GRASS,
+            Material.HANGING_ROOTS, Material.WARPED_ROOTS, Material.NETHER_SPROUTS, Material.CRIMSON_ROOTS,
+            Material.WARPED_FUNGUS, Material.CRIMSON_FUNGUS, Material.SHORT_DRY_GRASS, Material.TALL_DRY_GRASS,
+            Material.BUSH, Material.WILDFLOWERS, Material.PINK_PETALS
+    );
 
     public static final List<Material> not_glass = new ArrayList<>() {
         {
@@ -58,6 +63,7 @@ public class TARDISMaterials {
 
     public static final List<Material> precious = new ArrayList<>() {
         {
+            add(Material.ANCIENT_DEBRIS);
             add(Material.BARRIER);
             add(Material.BEDROCK);
             add(Material.DIAMOND_BLOCK);
@@ -72,13 +78,20 @@ public class TARDISMaterials {
             add(Material.RAW_GOLD_BLOCK);
             add(Material.RAW_IRON_BLOCK);
             add(Material.REDSTONE_BLOCK);
-            addAll(MaterialTags.ORES.getValues());
+            addAll(Tag.ORES.getValues());
         }
     };
 
-    public static final List<Material> crops = List.of(Material.SUGAR_CANE, Material.WHEAT, Material.CARROTS, Material.BEETROOTS, Material.MELON_STEM, Material.PUMPKIN_STEM, Material.NETHER_WART, Material.POTATOES, Material.COCOA, Material.CACTUS, Material.SWEET_BERRY_BUSH, Material.PITCHER_CROP, Material.TORCHFLOWER);
+    public static final List<Material> crops = List.of(
+            Material.SUGAR_CANE, Material.WHEAT, Material.CARROTS, Material.BEETROOTS, Material.MELON_STEM,
+            Material.PUMPKIN_STEM, Material.NETHER_WART, Material.POTATOES, Material.COCOA, Material.CACTUS,
+            Material.SWEET_BERRY_BUSH, Material.PITCHER_CROP, Material.TORCHFLOWER
+    );
 
-    public static final List<Material> submarine_blocks = List.of(Material.BLUE_ICE, Material.FROSTED_ICE, Material.ICE, Material.KELP_PLANT, Material.PACKED_ICE, Material.SEA_PICKLE, Material.SEAGRASS, Material.TALL_SEAGRASS, Material.WATER);
+    public static final List<Material> submarine_blocks = List.of(
+            Material.BLUE_ICE, Material.FROSTED_ICE, Material.ICE, Material.KELP_PLANT, Material.PACKED_ICE,
+            Material.SEA_PICKLE, Material.SEAGRASS, Material.TALL_SEAGRASS, Material.WATER
+    );
 
     public static final HashMap<Material, EntityType> fishMap = new HashMap<>() {
 
@@ -90,6 +103,8 @@ public class TARDISMaterials {
             put(Material.COD_BUCKET, EntityType.COD);
             put(Material.PUFFERFISH_BUCKET, EntityType.PUFFERFISH);
             put(Material.SALMON_BUCKET, EntityType.SALMON);
+            put(Material.TADPOLE_BUCKET, EntityType.TADPOLE);
+            put(Material.AXOLOTL_BUCKET, EntityType.AXOLOTL);
         }
     };
 }

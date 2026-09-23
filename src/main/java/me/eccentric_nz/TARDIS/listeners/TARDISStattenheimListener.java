@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
-import com.destroystokyo.paper.MaterialTags;
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -82,10 +81,13 @@ public class TARDISStattenheimListener implements Listener {
         REPLACEABLE.add(Material.SNOW);
         REPLACEABLE.add(Material.MOSS_CARPET);
         REPLACEABLE.add(Material.PALE_MOSS_CARPET);
+        REPLACEABLE.add(Material.CRIMSON_FUNGUS);
+        REPLACEABLE.add(Material.WARPED_FUNGUS);
+        REPLACEABLE.add(Material.NETHER_SPROUTS);
         REPLACEABLE.addAll(Tag.WOOL_CARPETS.getValues());
         REPLACEABLE.addAll(TARDISMaterials.plants);
         REPLACEABLE.addAll(Tag.FLOWERS.getValues());
-        REPLACEABLE.addAll(MaterialTags.MUSHROOMS.getValues());
+        REPLACEABLE.addAll(Tag.ITEMS_MUSHROOMS.getValues());
         REPLACEABLE.addAll(Tag.SAPLINGS.getValues());
     }
 

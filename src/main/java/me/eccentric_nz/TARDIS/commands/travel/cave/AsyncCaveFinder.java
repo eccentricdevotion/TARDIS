@@ -1,6 +1,5 @@
 package me.eccentric_nz.TARDIS.commands.travel.cave;
 
-import com.destroystokyo.paper.MaterialTags;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import org.bukkit.*;
@@ -35,7 +34,7 @@ public class AsyncCaveFinder {
         REPLACEABLE.addAll(Tag.WOOL_CARPETS.getValues());
         REPLACEABLE.addAll(TARDISMaterials.plants);
         REPLACEABLE.addAll(Tag.FLOWERS.getValues());
-        REPLACEABLE.addAll(MaterialTags.MUSHROOMS.getValues());
+        REPLACEABLE.addAll(Tag.ITEMS_MUSHROOMS.getValues());
         REPLACEABLE.addAll(Tag.SAPLINGS.getValues());
 
     }
