@@ -56,6 +56,11 @@ public enum Time {
         for (Time time : values()) {
             BY_NAME.put(time.name, time);
         }
+        BY_NAME.put("day", DAY);
+        BY_NAME.put("morning", MORNING);
+        BY_NAME.put("noon", NOON);
+        BY_NAME.put("night", NIGHT);
+        BY_NAME.put("midnight", MIDNIGHT);
     }
 
     private final long ticks;
