@@ -75,7 +75,7 @@ public class DesktopThemeLoader {
         Desktops.getBY_NAMES().put("FIFTEENTH", new Schematic("OCHRE_FROGLIGHT", "fifteenth", "15th Doctor's Console", ConsoleSize.MASSIVE, true, TardisLight.THIRTEENTH, false, -25));
         // FUGITIVE based on Ruth TARDIS designed by DT10 - https://www.youtube.com/watch?v=aykwXVemSs8
         Desktops.getBY_NAMES().put("FUGITIVE", new Schematic("POLISHED_DEEPSLATE", "fugitive", "Ruth (The Fugitive Doctor) Clayton's Console", ConsoleSize.MEDIUM, false, TardisLight.CLASSIC, false, -26));
-        Desktops.getBY_NAMES().put("HELL_BENT", new Schematic("WHITE_GLAZED_TERRACOTTA", "hell_bent", "Clara's Console", ConsoleSize.SMALL, false, TardisLight.CLASSIC, false, -63));
+        Desktops.getBY_NAMES().put("HELL_BENT", new Schematic("CINNABAR", "hell_bent", "Clara's Console", ConsoleSize.SMALL, false, TardisLight.CLASSIC, false, -63));
         Desktops.getBY_NAMES().put("HOSPITAL", new Schematic("WHITE_CONCRETE", "hospital", "St John's Hospital Console", ConsoleSize.SMALL, false, TardisLight.CLASSIC, false, -27));
         // MASTER's schematic designed by ShadowAssociate
         Desktops.getBY_NAMES().put("MASTER", new Schematic("NETHER_BRICKS", "master", "The Master's Console", ConsoleSize.TALL, true, TardisLight.LAMP, false, -28));
