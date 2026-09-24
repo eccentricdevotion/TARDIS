@@ -58,7 +58,7 @@ consoles:
     material: POLISHED_DEEPSLATE
     amount: 36
   HELL_BENT:
-    material: WHITE_GLAZED_TERRACOTTA
+    material: CINNABAR
     amount: 19
   HOSPITAL:
     material: WHITE_CONCRETE

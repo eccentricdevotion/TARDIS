@@ -78,7 +78,7 @@ public class RecipeUtility {
             put("FACTORY", Material.YELLOW_CONCRETE_POWDER); // factory schematic designed by Razihel
             put("FIFTEENTH", Material.OCHRE_FROGLIGHT); // designed by airomis (player at thatsnotacreeper.com)
             put("FUGITIVE", Material.POLISHED_DEEPSLATE); // fugitive - based on TARDIS designed by DT10 - https://www.youtube.com/watch?v=aykwXVemSs8
-            put("HELL_BENT", Material.WHITE_GLAZED_TERRACOTTA); // hell bent
+            put("HELL_BENT", Material.CINNABAR); // hell bent
             put("HOSPITAL", Material.WHITE_CONCRETE); // hospital
             put("MASTER", Material.NETHER_BRICKS); // master schematic designed by ShadowAssociate
             put("MECHANICAL", Material.POLISHED_ANDESITE); // mechanical schematic adapted from design by Plastic Straw

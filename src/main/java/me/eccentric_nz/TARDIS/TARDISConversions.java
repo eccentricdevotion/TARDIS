@@ -119,6 +119,12 @@ public class TARDISConversions {
                 conversions++;
             }
         }
+        if (!plugin.getConfig().getBoolean("conversions.hell_bent")) {
+            if (new HellBentUpdater(plugin).convert()) {
+                plugin.getConfig().set("conversions.hell_bent", true);
+                conversions++;
+            }
+        }
         if (conversions > 0) {
             plugin.saveConfig();
         }
