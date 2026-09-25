@@ -83,7 +83,7 @@ public class WorldLoader {
 
     private boolean hasDimensionType(String world) {
         switch (world) {
-            case "caves", "gallifrey", "siluria", "skaro", "telos", "tardis_timevortex", "tardis_zero_room" -> {
+            case "caves", "consoles", "gallifrey", "siluria", "skaro", "telos", "tardis_timevortex", "tardis_zero_room" -> {
                 return true;
             }
             default -> {
