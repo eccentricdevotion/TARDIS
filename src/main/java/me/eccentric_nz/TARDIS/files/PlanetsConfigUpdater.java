@@ -228,6 +228,24 @@ public class PlanetsConfigUpdater {
             planets_config.set("planets.rooms.transmat_location.z", 2.5d);
             save++;
         }
+        if (!planets_config.contains("planets.caves")) {
+            planets_config.set("planets.rooms.enabled", false);
+            planets_config.set("planets.rooms.time_travel", true);
+            planets_config.set("planets.rooms.false_nether", true);
+            planets_config.set("planets.rooms.resource_pack", "default");
+            planets_config.set("planets.rooms.gamemode", "SURVIVAL");
+            planets_config.set("planets.rooms.world_type", "NORMAL");
+            planets_config.set("planets.rooms.environment", "NORMAL");
+            planets_config.set("planets.rooms.difficulty", "NORMAL");
+            planets_config.set("planets.rooms.generator", "TARDIS:cave");
+            planets_config.set("planets.rooms.alias", "Caves");
+            planets_config.set("planets.rooms.spawn_other_mobs", true);
+            planets_config.set("planets.rooms.gamerules", List.of());
+            planets_config.set("planets.rooms.allow_portals", true);
+            planets_config.set("planets.rooms.helmic_regulator_order", -1);
+            planets_config.set("planets.rooms.icon", "SULFUR");
+            save++;
+        }
         // convert game rules to 1.21.11+
         if (planets_config.contains("planets.tardis_timevortex.gamerules.doWardenSpawning")) {
             for (String w : worlds) {

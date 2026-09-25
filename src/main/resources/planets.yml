@@ -142,3 +142,19 @@ planets:
       x: 8.5
       y: 68.0
       z: 2.5
+  caves:
+    enabled: false
+    time_travel: true
+    false_nether: true
+    resource_pack: default
+    gamemode: SURVIVAL
+    world_type: NORMAL
+    environment: NORMAL
+    difficulty: NORMAL
+    generator: TARDIS:cave
+    alias: Caves
+    spawn_other_mobs: true
+    gamerules: [ ]
+    allow_portals: true
+    helmic_regulator_order: -1
+    icon: SULFUR
