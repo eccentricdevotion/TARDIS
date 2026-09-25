@@ -408,7 +408,7 @@ class TARDISListenerRegisterer {
             }
             // set world time to twilight
             World telos = plugin.getServer().getWorld(Key.key("telos"));
-            if (telos!= null) {
+            if (telos != null) {
                 telos.setTime(13000L);
             }
         }
@@ -460,5 +460,6 @@ class TARDISListenerRegisterer {
             plugin.getPM().registerEvents(new ShellLoaderListener(plugin), plugin);
         }
         plugin.getPM().registerEvents(new WeatherListener(plugin), plugin);
+        plugin.getPM().registerEvents(new DimensionTimeSyncListener(plugin), plugin);
     }
 }
