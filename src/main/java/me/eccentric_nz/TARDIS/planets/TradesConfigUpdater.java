@@ -9,6 +9,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.Locale;
 
 public class TradesConfigUpdater {
@@ -48,6 +49,14 @@ public class TradesConfigUpdater {
         // maximum trade is 128 blocks
         if (tradesConfig.getInt("rooms.OBSERVATORY.amount") == 197) {
             tradesConfig.set("rooms.OBSERVATORY.amount", 128);
+            i++;
+        }
+        if (!tradesConfig.contains("traders.no_spawn")) {
+            tradesConfig.set("traders.no_spawn", List.of("the_end", "the_nether"));
+            tradesConfig.setComments("traders.no_spawn", List.of("blacklist of dimensions time lord traders cannot spawn in"));
+            tradesConfig.set("traders.despawn_after", 5);
+            tradesConfig.setComments("traders.despawn_after", List.of("number of minutes after no interaction a trader will despawn"));
+            tradesConfig.setComments("traders", List.of("time lord traders"));
             i++;
         }
         if (i > 0) {

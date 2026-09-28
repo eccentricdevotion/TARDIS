@@ -26,6 +26,7 @@ public class MerchantListener implements Listener {
                 if (mannequin.getPersistentDataContainer().has(plugin.getTradesKey(), PersistentDataType.INTEGER)) {
                     int count = mannequin.getPersistentDataContainer().getOrDefault(plugin.getTradesKey(), PersistentDataType.INTEGER, 0);
                     mannequin.getPersistentDataContainer().set(plugin.getTradesKey(), PersistentDataType.INTEGER, count + 1);
+                    mannequin.getPersistentDataContainer().set(plugin.getDestroyKey(), PersistentDataType.LONG, System.currentTimeMillis());
                 }
             }
         }

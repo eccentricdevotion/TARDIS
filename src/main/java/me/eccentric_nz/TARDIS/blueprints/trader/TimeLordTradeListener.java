@@ -62,6 +62,7 @@ public class TimeLordTradeListener implements Listener {
             Player player = event.getPlayer();
             InventoryView inventoryView = menuBuilder.build(player);
             player.openInventory(inventoryView);
+            mannequin.getPersistentDataContainer().set(plugin.getDestroyKey(), PersistentDataType.LONG, System.currentTimeMillis());
         }
     }
 
@@ -70,7 +71,7 @@ public class TimeLordTradeListener implements Listener {
         // get the blueprint item stack
         ItemStack ris = GallifreyBlueprintTrade.buildResult(plugin, bpr.getPermission(), bpr.toString());
         List<Component> lines = ris.getData(DataComponentTypes.LORE).lines();
-        ris.editPersistentDataContainer(pdc->pdc.set(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID(), player.getUniqueId()));
+        ris.editPersistentDataContainer(pdc -> pdc.set(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID(), player.getUniqueId()));
         List<Component> lore = new ArrayList<>(lines);
         lore.set(2, Component.text(player.getName()));
         ris.setData(DataComponentTypes.LORE, ItemLore.lore(lore));
