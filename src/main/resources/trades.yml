@@ -290,6 +290,11 @@ rooms:
   ZERO:
     material: OAK_BUTTON
     amount: 37
-# blacklist of dimensions time lord traders cannot spawn in
-no_spawn:
-  - the_end
+# time lord traders
+traders:
+  # blacklist of dimensions time lord traders cannot spawn in
+  no_spawn:
+    - the_end
+    - the_nether
+  # number of minutes after no interaction a trader will despawn
+  despawn_after: 5

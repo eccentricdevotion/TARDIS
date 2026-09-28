@@ -89,6 +89,7 @@ public class TimeLordTraderSpawner {
             String trades = getTrades(location);
             mannequin.getPersistentDataContainer().set(plugin.getTimeLordUuidKey(), PersistentDataType.STRING, trades);
             mannequin.getPersistentDataContainer().set(plugin.getTradesKey(), PersistentDataType.INTEGER, 0);
+            mannequin.getPersistentDataContainer().set(plugin.getDestroyKey(), PersistentDataType.LONG, System.currentTimeMillis());
         }, 5L);
     }
 
