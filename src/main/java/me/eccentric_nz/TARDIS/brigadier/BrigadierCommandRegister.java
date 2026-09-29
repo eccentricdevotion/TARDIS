@@ -50,5 +50,6 @@ public class BrigadierCommandRegister {
         commands.registrar().register(new TravelCommandNode(plugin).build(), List.of("ttravel"));
         commands.registrar().register(new WorldCommandNode(plugin).build(), List.of("tworld"));
         commands.registrar().register(new QuestionCommandNode(plugin).build(), List.of("t?", "tardishelp"));
+        commands.registrar().register(new RoomCommandNode(plugin).build(), List.of("tardisroom", "troom"));
     }
 }
