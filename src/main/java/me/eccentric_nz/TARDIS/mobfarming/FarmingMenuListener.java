@@ -58,7 +58,8 @@ public class FarmingMenuListener extends TARDISMenuListener {
         rooms.put(32, "pen");
         rooms.put(33, "stable");
         rooms.put(34, "stall");
-        rooms.put(35, "village");
+        rooms.put(35, "sulphur");
+        rooms.put(45, "village");
     }
 
     @EventHandler(ignoreCancelled = true)
@@ -70,7 +71,7 @@ public class FarmingMenuListener extends TARDISMenuListener {
         int slot = event.getRawSlot();
         event.setCancelled(true);
         switch (slot) {
-            case 9, 10, 11, 12, 13, 14, 15, 16, 17, 27, 28, 29, 30, 31, 32, 33, 34, 35 ->
+            case 9, 10, 11, 12, 13, 14, 15, 16, 17, 27, 28, 29, 30, 31, 32, 33, 34, 35, 45 ->
                     toggleOption(player, event.getView(), slot); // toggle option enabled / disabled
             case 53 -> close(player);
             default -> event.setCancelled(true);
@@ -82,16 +83,17 @@ public class FarmingMenuListener extends TARDISMenuListener {
         Material material = option.getType();
         Material m = Material.LIME_WOOL;
         int onOff = -1;
+        String name = "Enabled";
         switch (material) {
             case LIME_WOOL -> {
                 // disable
-                option.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Disabled"));
+                name = "Disabled";
                 m = Material.RED_WOOL;
                 onOff = 0;
             }
             case RED_WOOL -> {
                 // enable
-                option.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Enabled"));
+                name = "Enabled";
                 onOff = 1;
                 // get item in slot above
                 ItemStack above = view.getItem(slot - 9);
@@ -105,7 +107,7 @@ public class FarmingMenuListener extends TARDISMenuListener {
             }
         }
         ItemStack sub = ItemStack.of(m);
-        sub.copyDataFrom(option, dataComponentType -> true);
+        sub.setData(DataComponentTypes.CUSTOM_NAME, Component.text(name));
         view.setItem(slot, sub);
         // update database
         plugin.getQueryFactory().updateFarmingPref(player.getUniqueId(), rooms.get(slot), onOff);

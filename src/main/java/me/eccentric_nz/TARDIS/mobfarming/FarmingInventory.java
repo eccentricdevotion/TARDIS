@@ -90,7 +90,8 @@ public class FarmingInventory implements InventoryHolder {
             stack[32] = farmPrefs.shouldFarmSniffers() ? on : off;
             stack[33] = farmPrefs.shouldFarmHorses() ? on : off;
             stack[34] = farmPrefs.shouldFarmLlamas() ? on : off;
-            stack[35] = farmPrefs.shouldFarmVillagers() ? on : off;
+            stack[35] = farmPrefs.shouldFarmSulphurCubes() ? on : off;
+            stack[45] = farmPrefs.shouldFarmVillagers() ? on : off;
         } else {
             // insert a new record
             HashMap<String, Object> set = new HashMap<>();
@@ -115,6 +116,7 @@ public class FarmingInventory implements InventoryHolder {
             stack[33] = on;
             stack[34] = on;
             stack[35] = on;
+            stack[45] = on;
         }
         // set GUI buttons
         for (GUIFarming f : GUIFarming.values()) {
