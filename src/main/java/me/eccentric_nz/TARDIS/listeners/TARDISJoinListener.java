@@ -19,14 +19,12 @@ package me.eccentric_nz.TARDIS.listeners;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.arch.ArchPersister;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPositioning;
-import me.eccentric_nz.TARDIS.camera.CameraLocation;
-import me.eccentric_nz.TARDIS.camera.CameraTracker;
 import me.eccentric_nz.TARDIS.commands.book.TARDISBook;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
+import me.eccentric_nz.TARDIS.planets.DimensionTimeSyncListener;
 import me.eccentric_nz.TARDIS.rooms.loader.Ticket;
 import me.eccentric_nz.TARDIS.skins.SkinUtils;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
@@ -34,12 +32,12 @@ import org.bukkit.Chunk;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.potion.PotionEffectType;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -212,47 +210,18 @@ public class TARDISJoinListener implements Listener {
         if (plugin.getConfig().getBoolean("allow.perception_filter")) {
             plugin.getFilter().addPlayer(player);
         }
+        World world = player.getWorld();
+        // sync time
+        DimensionTimeSyncListener.sync((CraftPlayer)  player, world);
         // add to zero room occupants
         if (plugin.getConfig().getBoolean("allow.zero_room")) {
-            if (player.getLocation().getWorld().getKey().getKey().equals("tardis_zero_room")) {
+            if (world.getKey().getKey().equals("tardis_zero_room")) {
                 plugin.getTrackerKeeper().getZeroRoomOccupants().add(player.getUniqueId());
             }
         }
         // re-skin player
         if (SkinUtils.SKINNED.containsKey(player.getUniqueId())) {
             plugin.getSkinChanger().set(player, SkinUtils.SKINNED.get(player.getUniqueId()));
-        }
-        // teleport players that rejoined after logging out while in Junk TARDIS or using external camera
-        if (plugin.getTrackerKeeper().getJunkRelog().containsKey(player.getUniqueId())) {
-            Location location = plugin.getTrackerKeeper().getJunkRelog().remove(player.getUniqueId());
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                player.teleport(location);
-                // remove invisibility
-                if (player.hasPotionEffect(PotionEffectType.INVISIBILITY)) {
-                    player.removePotionEffect(PotionEffectType.INVISIBILITY);
-                }
-                // occupy tardis
-                ResultSetTardisID rsid = new ResultSetTardisID(plugin);
-                // if TIPS determine tardis_id from player location
-                if (plugin.getConfig().getBoolean("creation.default_world") && !player.hasPermission("tardis.create_world")) {
-                    int slot = TARDISInteriorPositioning.getTIPSSlot(player.getLocation());
-                    if (!rsid.fromTIPSSlot(slot)) {
-                        return;
-                    }
-                } else if (!rsid.fromUUID(player.getUniqueId().toString())) {
-                    return;
-                }
-                int id = rsid.getTardisId();
-                HashMap<String, Object> wherei = new HashMap<>();
-                wherei.put("tardis_id", id);
-                wherei.put("uuid", player.getUniqueId().toString());
-                plugin.getQueryFactory().doInsert("travellers", wherei);
-                CameraLocation cl = CameraTracker.SPECTATING.get(player.getUniqueId());
-                if (cl != null) {
-                    CameraTracker.CAMERA_IN_USE.remove(cl.id());
-                    CameraTracker.SPECTATING.remove(player.getUniqueId());
-                }
-            }, 2L);
         }
     }
 }

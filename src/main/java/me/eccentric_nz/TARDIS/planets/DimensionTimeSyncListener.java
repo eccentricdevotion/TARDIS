@@ -42,33 +42,37 @@ public class DimensionTimeSyncListener implements Listener {
             if (!player.isOnline()) {
                 return;
             }
-            ServerPlayer nmsPlayer = ((CraftPlayer) player).getHandle();
-            ServerLevel nmsLevel = nmsPlayer.level();
-            // get game time
-            long totalGameTime = nmsLevel.getGameTime();
-            RegistryAccess registryAccess = nmsLevel.registryAccess();
-            Identifier clockLocation = Identifier.fromNamespaceAndPath("tardis", targetWorld.getName().replace("tardis_", ""));
-            var clockResourceKey = ResourceKey.create(Registries.WORLD_CLOCK, clockLocation);
-            // setup variable to capture the Holder reference context
-            AtomicReference<Holder<WorldClock>> resolvedClockHolder = new AtomicReference<>();
-            registryAccess.lookup(Registries.WORLD_CLOCK).ifPresent(lookup -> {
-                // get the world clock
-                Optional<Holder.Reference<WorldClock>> holderOpt = lookup.get(clockResourceKey);
-                holderOpt.ifPresent(worldClockReference -> {
-                    resolvedClockHolder.set(holderOpt.get());
-                    // get the ClockNetworkState
-                    long dimensionDayTime = nmsLevel.getDefaultClockTime();
-                    boolean standardCycleTicking = nmsLevel.getGameRules().get(GameRules.ADVANCE_TIME);
-                    float timelineRate = standardCycleTicking ? 1.0F : 0.0F;
-                    float partialTick = 0.0F;
-                    ClockNetworkState clockNetworkState = new ClockNetworkState(dimensionDayTime, partialTick, timelineRate);
-                    Map<Holder<WorldClock>, ClockNetworkState> clockUpdates = new HashMap<>();
-                    clockUpdates.put(resolvedClockHolder.get(), clockNetworkState);
-                    // construct and send time packet
-                    ClientboundSetTimePacket timePacket = new ClientboundSetTimePacket(totalGameTime, clockUpdates);
-                    nmsPlayer.connection.send(timePacket);
-                });
-            });
+            sync((CraftPlayer) player, targetWorld);
         }, 1L);
+    }
+
+    public static void sync(CraftPlayer player, World world) {
+        ServerPlayer nmsPlayer = player.getHandle();
+        ServerLevel nmsLevel = nmsPlayer.level();
+        // get game time
+        long totalGameTime = nmsLevel.getGameTime();
+        RegistryAccess registryAccess = nmsLevel.registryAccess();
+        Identifier clockLocation = Identifier.fromNamespaceAndPath("tardis", world.getName().replace("tardis_", ""));
+        var clockResourceKey = ResourceKey.create(Registries.WORLD_CLOCK, clockLocation);
+        // setup variable to capture the Holder reference context
+        AtomicReference<Holder<WorldClock>> resolvedClockHolder = new AtomicReference<>();
+        registryAccess.lookup(Registries.WORLD_CLOCK).ifPresent(lookup -> {
+            // get the world clock
+            Optional<Holder.Reference<WorldClock>> holderOpt = lookup.get(clockResourceKey);
+            holderOpt.ifPresent(worldClockReference -> {
+                resolvedClockHolder.set(holderOpt.get());
+                // get the ClockNetworkState
+                long dimensionDayTime = nmsLevel.getDefaultClockTime();
+                boolean standardCycleTicking = nmsLevel.getGameRules().get(GameRules.ADVANCE_TIME);
+                float timelineRate = standardCycleTicking ? 1.0F : 0.0F;
+                float partialTick = 0.0F;
+                ClockNetworkState clockNetworkState = new ClockNetworkState(dimensionDayTime, partialTick, timelineRate);
+                Map<Holder<WorldClock>, ClockNetworkState> clockUpdates = new HashMap<>();
+                clockUpdates.put(resolvedClockHolder.get(), clockNetworkState);
+                // construct and send time packet
+                ClientboundSetTimePacket timePacket = new ClientboundSetTimePacket(totalGameTime, clockUpdates);
+                nmsPlayer.connection.send(timePacket);
+            });
+        });
     }
 }
