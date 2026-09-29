@@ -178,7 +178,7 @@ public class LazarusLibsDisguises {
                     wolfWatcher.setVariant((Wolf.Variant) choice);
                     wolfWatcher.setBaby(isBaby);
                 }
-                case SLIME, MAGMA_CUBE -> {
+                case SLIME, MAGMA_CUBE, SULFUR_CUBE -> {
                     SlimeWatcher slimeWatcher = (SlimeWatcher) livingWatcher;
                     slimeWatcher.setSize((Integer) choice);
                 }

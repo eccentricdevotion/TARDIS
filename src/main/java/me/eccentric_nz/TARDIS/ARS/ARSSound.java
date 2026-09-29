@@ -25,6 +25,7 @@ public class ARSSound {
             put(Room.NAUTILUS, Sound.ENTITY_NAUTILUS_AMBIENT);
             put(Room.PEN, Sound.ENTITY_SNIFFER_IDLE);
             put(Room.POOL, Sound.ENTITY_GUARDIAN_AMBIENT);
+            put(Room.SULPHUR, Sound.ENTITY_SULFUR_CUBE_ABSORB);
             put(Room.STABLE, Sound.ENTITY_HORSE_AMBIENT);
             put(Room.STALL, Sound.ENTITY_LLAMA_AMBIENT);
             put(Room.VILLAGE, Sound.ENTITY_VILLAGER_AMBIENT);

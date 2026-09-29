@@ -89,6 +89,7 @@ public class ResultSetFarming {
                         rs.getString("pen"),
                         rs.getString("stable"),
                         rs.getString("stall"),
+                        rs.getString("sulphur"),
                         rs.getString("village")
                 );
             } else {

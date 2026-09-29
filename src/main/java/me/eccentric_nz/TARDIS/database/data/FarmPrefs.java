@@ -41,9 +41,13 @@ public class FarmPrefs {
     private final boolean pen;
     private final boolean stable;
     private final boolean stall;
+    private final boolean sulphur;
     private final boolean village;
 
-    public FarmPrefs(UUID uuid, boolean allay, boolean apiary, boolean aquarium, boolean bamboo, boolean birdcage, boolean farm, boolean geode, boolean happy, boolean hutch, boolean igloo, boolean iistubil, boolean lava, boolean mangrove, boolean nautilus, boolean pen, boolean stable, boolean stall, boolean village) {
+    public FarmPrefs(UUID uuid, boolean allay, boolean apiary, boolean aquarium, boolean bamboo, boolean birdcage,
+                     boolean farm, boolean geode, boolean happy, boolean hutch, boolean igloo, boolean iistubil,
+                     boolean lava, boolean mangrove, boolean nautilus, boolean pen, boolean stable, boolean stall,
+                     boolean sulphur, boolean village) {
         this.uuid = uuid;
         this.apiary = apiary;
         this.allay = allay;
@@ -62,6 +66,7 @@ public class FarmPrefs {
         this.pen = pen;
         this.stable = stable;
         this.stall = stall;
+        this.sulphur = sulphur;
         this.village = village;
     }
 
@@ -225,6 +230,15 @@ public class FarmPrefs {
      */
     public boolean shouldFarmLlamas() {
         return stall;
+    }
+
+    /**
+     * Returns if the player wants to farm into the Sulphur Cube room.
+     *
+     * @return true or false
+     */
+    public boolean shouldFarmSulphurCubes() {
+        return sulphur;
     }
 
     /**

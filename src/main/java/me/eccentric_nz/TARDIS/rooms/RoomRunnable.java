@@ -105,6 +105,7 @@ public class RoomRunnable implements Runnable {
     private final HashMap<Block, BlockData> eyeBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> cloisterBlocks = new HashMap<>();
     private final HashMap<Block, BlockData> lichenBlocks = new HashMap<>();
+    private final HashMap<Block, BlockData> sulphurSpikes = new HashMap<>();
     private final HashMap<Block, JsonObject> postSignBlocks = new HashMap<>();
     private final HashMap<Block, JsonObject> pots = new HashMap<>();
     private final HashMap<Block, TARDISBannerData> bannerBlocks = new HashMap<>();
@@ -164,6 +165,7 @@ public class RoomRunnable implements Runnable {
         notThese.add(Material.REDSTONE_TORCH);
         notThese.add(Material.SEAGRASS);
         notThese.add(Material.SUGAR_CANE);
+        notThese.add(Material.SULFUR_SPIKE);
         notThese.add(Material.TORCH);
         notThese.add(Material.WHEAT);
         notThese.addAll(Tag.WOODEN_SHELVES.getValues());
@@ -218,6 +220,7 @@ public class RoomRunnable implements Runnable {
                                 case REDSTONE_TORCH -> redstoneTorchBlocks.put(postBlock, postData);
                                 case COCOA -> cocoaBlocks.put(postBlock, postData);
                                 case SUGAR_CANE -> caneBlocks.add(postBlock);
+                                case SULFUR_SPIKE -> sulphurSpikes.put(postBlock, postData);
                                 case MANGROVE_PROPAGULE -> propagules.put(postBlock, postData);
                                 case SEAGRASS -> seagrass.put(postBlock, postData);
                                 case MELON_STEM -> melonBlocks.add(postBlock);
@@ -270,6 +273,10 @@ public class RoomRunnable implements Runnable {
                     // set all the ice to water
                     iceBlocks.forEach((ice) -> ice.setBlockData(TARDISConstants.WATER));
                     iceBlocks.clear();
+                }
+                if (!sulphurSpikes.isEmpty()) {
+                    sulphurSpikes.forEach((spike, data) -> spike.setBlockData(data));
+                    sulphurSpikes.clear();
                 }
                 if (!lavaBlocks.isEmpty()) {
                     if (player != null) {
@@ -687,6 +694,11 @@ public class RoomRunnable implements Runnable {
                 if (type.equals(Material.YELLOW_WALL_BANNER) && room.equals("GOLEM")) {
                     plugin.getQueryFactory().insertControl(tardis_id, Control.CHUNK_LOADER.getId(), new Location(world, startx, starty, startz).toString(), 0);
                 }
+                if (type.equals(Material.SULFUR_SPIKE) && room.equals("SULPHUR")) {
+                    // remember the spike and do at the end
+                    Block spike = world.getBlockAt(startx, starty, startz);
+                    sulphurSpikes.put(spike, data);
+                }
                 if (type.equals(Material.BEEHIVE) && room.equals("APIARY")) {
                     HashMap<String, Object> seta = new HashMap<>();
                     seta.put("apiary", world.getKey().asString() + ":" + startx + ":" + (starty + 1) + ":" + startz);
@@ -845,7 +857,9 @@ public class RoomRunnable implements Runnable {
                                 || room.equals("IGLOO") || room.equals("IISTUBIL") || room.equals("MANGROVE")
                                 || room.equals("PEN") || room.equals("STALL") || room.equals("BAMBOO")
                                 || room.equals("BIRDCAGE") || room.equals("MAZE") || room.equals("GARDEN")
-                                || room.equals("HAPPY") || room.equals("NAUTILUS") || room.equals("ARCADE"))) {
+                                || room.equals("HAPPY") || room.equals("NAUTILUS") || room.equals("ARCADE")
+                                || room.equals("SULPHUR")
+                )) {
                     HashMap<String, Object> sets = new HashMap<>();
                     sets.put(room.toLowerCase(Locale.ROOT), world.getKey().asString() + ":" + (startx + (room.equals("NAUTILUS") ? 1 : 0)) + ":" + starty + ":" + startz);
                     HashMap<String, Object> wheres = new HashMap<>();
@@ -889,6 +903,7 @@ public class RoomRunnable implements Runnable {
                         case "MANGROVE" -> data = TARDISConstants.WATER;
                         case "NAUTILUS" -> data = TARDISConstants.GLASS;
                         case "PEN" -> data = Material.MOSS_BLOCK.createBlockData();
+                        case "SULPHUR" -> data = Material.SULFUR.createBlockData();
                         case "ZERO" -> data = Material.PINK_CARPET.createBlockData();
                         case "GARDEN" -> {
                             data = Material.GRASS_BLOCK.createBlockData();

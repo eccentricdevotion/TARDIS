@@ -75,6 +75,7 @@ public enum TARDISARS implements ARS {
     STABLE("HAY_BLOCK", "Horse Stable", 1, RoomVariant.STABLE.getKey()),
     STAIRCASE("PURPLE_TERRACOTTA", "Endless Staircase", 0, RoomVariant.STAIRCASE.getKey()),
     STALL("BROWN_GLAZED_TERRACOTTA", "Llama Stall", 1, RoomVariant.STALL.getKey()),
+    SULPHUR("CHISELED_SULFUR", "Sulphur Cube Spring", 1, RoomVariant.SULPHUR.getKey()),
     SURGERY("RED_CONCRETE", "Hospital Surgery", 1, RoomVariant.SURGERY.getKey()),
     TRENZALORE("BRICKS", "Trenzalore", 1, RoomVariant.TRENZALORE.getKey()),
     VAULT("DISPENSER", "Storage Vault", 1, RoomVariant.VAULT.getKey()),

@@ -90,6 +90,7 @@ public enum Updateable {
     STABLE(false, false, true, TARDISUpdateableCategory.LOCATIONS, "Horse Stable room"),
     STALL(false, false, true, TARDISUpdateableCategory.LOCATIONS, "Llama Stall room"),
     STORAGE(true, false, Set.of(Material.MUSHROOM_STEM, Material.NOTE_BLOCK, Material.BARRIER), TARDISUpdateableCategory.INTERFACES, "Disk Storage Container"),
+    SULPHUR(false, false, true, TARDISUpdateableCategory.LOCATIONS, "Sulphur Cube room"),
     SURGERY(false, false, Set.of(Material.CHEST), TARDISUpdateableCategory.LOCATIONS, "Surgery room healing chest"),
     TELEPATHIC(true, true, Set.of(Material.DAYLIGHT_DETECTOR), TARDISUpdateableCategory.INTERFACES, "Telepathic Circuit"),
     TELEVISION(true, false, Set.of(Material.BARRIER), TARDISUpdateableCategory.INTERFACES, "TARDIS Television"),

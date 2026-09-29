@@ -23,6 +23,6 @@ package me.eccentric_nz.TARDIS.database.data;
  */
 public record Farm(int tardis_id, String allay, String apiary, String aquarium, String bamboo, String birdcage,
                    String farm, String geode, String happy, String hutch, String igloo, String iistubil, String lava,
-                   String mangrove, String nautilus, String pen, String stable, String stall, String village) {
+                   String mangrove, String nautilus, String pen, String stable, String stall, String sulphur, String village) {
 
 }

@@ -72,6 +72,7 @@ public enum BlueprintRoom {
     STABLE("tardis.room.stable", BlueprintFeature.FARM),
     STAIRCASE("tardis.room.staircase"),
     STALL("tardis.room.stall", BlueprintFeature.FARM),
+    SULPHUR("tardis.room.sulphur", BlueprintFeature.FARM),
     SURGERY("tardis.room.surgery"),
     TRENZALORE("tardis.room.trenzalore"),
     VAULT("tardis.room.vault", BlueprintFeature.VAULT),

@@ -42,7 +42,8 @@ public enum GUIFarming {
     PEN(RoomVariant.PEN.getKey(), 23, Material.MOSS_BLOCK, "Sniffer"),
     STABLE(RoomVariant.STABLE.getKey(), 24, Material.HAY_BLOCK, "Horse"),
     STALL(RoomVariant.STALL.getKey(), 25, Material.BROWN_GLAZED_TERRACOTTA, "Llama"),
-    VILLAGE(RoomVariant.VILLAGE.getKey(), 26, Material.OAK_LOG, "Villager"),
+    SULPHUR(RoomVariant.SULPHUR.getKey(), 26, Material.CHISELED_SULFUR, "Sulphur Cube"),
+    VILLAGE(RoomVariant.VILLAGE.getKey(), 36, Material.OAK_LOG, "Villager"),
     ON(null, -1, Material.LIME_WOOL, "On"),
     OFF(null, -1, Material.RED_WOOL, "Off"),
     CLOSE(GuiVariant.CLOSE.getKey(), 53, Material.BOWL, "Close");

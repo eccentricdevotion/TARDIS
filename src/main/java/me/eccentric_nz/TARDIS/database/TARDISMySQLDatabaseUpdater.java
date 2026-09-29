@@ -141,6 +141,7 @@ class TARDISMySQLDatabaseUpdater {
         farmingupdates.add("iistubil varchar(512) DEFAULT ''");
         farmingupdates.add("pen varchar(512) DEFAULT ''");
         farmingupdates.add("nautilus varchar(512) DEFAULT ''");
+        farmingupdates.add("sulphur varchar(512) DEFAULT ''");
         sonicupdates.add("arrow int(1) DEFAULT '0'");
         sonicupdates.add("knockback int(1) DEFAULT '0'");
         sonicupdates.add("brush int(1) DEFAULT '0'");
@@ -164,6 +165,7 @@ class TARDISMySQLDatabaseUpdater {
         lampsupdates.add("percentage float DEFAULT '1.0'");
         farmingprefsupdates.add("happy int(1) DEFAULT '1'");
         farmingprefsupdates.add("nautilus int(1) DEFAULT '1'");
+        farmingprefsupdates.add("sulphur int(1) DEFAULT '1'");
     }
 
     /**

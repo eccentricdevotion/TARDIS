@@ -69,6 +69,7 @@ public enum Room {
     STABLE,
     STAIRCASE,
     STALL,
+    SULPHUR,
     SURGERY,
     TRENZALORE,
     VAULT,

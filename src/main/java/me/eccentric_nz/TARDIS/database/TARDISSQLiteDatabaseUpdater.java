@@ -169,6 +169,7 @@ class TARDISSQLiteDatabaseUpdater {
         farmingupdates.add("iistubil TEXT DEFAULT ''");
         farmingupdates.add("pen TEXT DEFAULT ''");
         farmingupdates.add("nautilus TEXT DEFAULT ''");
+        farmingupdates.add("sulphur TEXT DEFAULT ''");
         sonicupdates.add("arrow INTEGER DEFAULT 0");
         sonicupdates.add("knockback INTEGER DEFAULT 0");
         sonicupdates.add("brush INTEGER DEFAULT 0");
@@ -192,7 +193,7 @@ class TARDISSQLiteDatabaseUpdater {
         lampsupdates.add("percentage REAL DEFAULT 1.0");
         farmingprefsupdates.add("happy INTEGER DEFAULT 1");
         farmingprefsupdates.add("nautilus INTEGER DEFAULT 1");
-
+        farmingprefsupdates.add("sulphur INTEGER DEFAULT 1");
     }
 
     /**

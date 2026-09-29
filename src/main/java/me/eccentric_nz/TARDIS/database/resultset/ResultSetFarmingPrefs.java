@@ -90,6 +90,7 @@ public class ResultSetFarmingPrefs {
                         rs.getBoolean("pen"),
                         rs.getBoolean("stable"),
                         rs.getBoolean("stall"),
+                        rs.getBoolean("sulphur"),
                         rs.getBoolean("village")
                 );
             } else {

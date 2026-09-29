@@ -71,6 +71,7 @@ public enum RoomVariant {
     STABLE(new NamespacedKey(TARDIS.plugin, "button_stable")),
     STAIRCASE(new NamespacedKey(TARDIS.plugin, "button_staircase")),
     STALL(new NamespacedKey(TARDIS.plugin, "button_stall")),
+    SULPHUR(new NamespacedKey(TARDIS.plugin, "button_sulphur")),
     SURGERY(new NamespacedKey(TARDIS.plugin, "button_surgery")),
     TRENZALORE(new NamespacedKey(TARDIS.plugin, "button_trenzalore")),
     VAULT(new NamespacedKey(TARDIS.plugin, "button_vault")),

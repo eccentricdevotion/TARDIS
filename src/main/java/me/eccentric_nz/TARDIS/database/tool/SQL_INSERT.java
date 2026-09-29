@@ -73,9 +73,9 @@ public class SQL_INSERT {
 
             "INSERT INTO `%seyes` (`eye_id`, `tardis_id`, `capacitors`, `damaged`, `task`) VALUES ",
 
-            "INSERT INTO `%sfarming` (`farm_id`, `tardis_id`, `allay`, `apiary`, `aquarium`, `bamboo`, `birdcage`, `farm`, `geode`, `happy`, `hutch`, `igloo`, `iistubil`, `lava`, `mangrove`, `nautilus`, `pen`, `stable`, `stall`, `village`) VALUES ",
+            "INSERT INTO `%sfarming` (`farm_id`, `tardis_id`, `allay`, `apiary`, `aquarium`, `bamboo`, `birdcage`, `farm`, `geode`, `happy`, `hutch`, `igloo`, `iistubil`, `lava`, `mangrove`, `nautilus`, `pen`, `stable`, `stall`, `sulphur`, `village`) VALUES ",
 
-            "INSERT INTO `%sfarming_prefs` (`farm_id`, `uuid`, `allay`, `apiary`, `aquarium`, `bamboo`, `birdcage`, `farm`, `geode`, `happy`, `hutch`, `igloo`, `iistubil`, `lava`, `mangrove`, `nautilus`, `pen`, `stable`, `stall`, `village`) VALUES ",
+            "INSERT INTO `%sfarming_prefs` (`farm_id`, `uuid`, `allay`, `apiary`, `aquarium`, `bamboo`, `birdcage`, `farm`, `geode`, `happy`, `hutch`, `igloo`, `iistubil`, `lava`, `mangrove`, `nautilus`, `pen`, `stable`, `stall`, `sulphur`, `village`) VALUES ",
 
             "INSERT INTO `%sflight` (`f_id`, `uuid`, `tardis_id`, `location`, `stand`, `display`) VALUES ",
 

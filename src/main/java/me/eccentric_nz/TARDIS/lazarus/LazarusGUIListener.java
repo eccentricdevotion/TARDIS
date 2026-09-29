@@ -69,7 +69,7 @@ public class LazarusGUIListener extends TARDISMenuListener {
     private final HashMap<UUID, Integer> puffers = new HashMap<>();
     private final HashMap<UUID, Integer> rabbits = new HashMap<>();
     private final HashMap<UUID, Integer> sheep = new HashMap<>();
-    private final HashMap<UUID, Integer> slimes = new HashMap<>();
+    private final HashMap<UUID, Integer> cubes = new HashMap<>();
     private final HashMap<UUID, Integer> tropics = new HashMap<>();
     private final HashMap<UUID, Integer> variants = new HashMap<>();
     private final HashMap<UUID, Integer> wolves = new HashMap<>();
@@ -438,7 +438,7 @@ public class LazarusGUIListener extends TARDISMenuListener {
         horses.remove(uuid);
         cats.remove(uuid);
         professions.remove(uuid);
-        slimes.remove(uuid);
+        cubes.remove(uuid);
         plugin.getTrackerKeeper().getGeneticManipulation().remove(uuid);
     }
 
@@ -573,14 +573,14 @@ public class LazarusGUIListener extends TARDISMenuListener {
                 t = LazarusVariants.PROFESSION_NAMES.get(o);
                 professions.put(uuid, o);
             }
-            case "SLIME", "MAGMA_CUBE" -> {
-                if (slimes.containsKey(uuid)) {
-                    o = (slimes.get(uuid) + 1 < 3) ? slimes.get(uuid) + 1 : 0;
+            case "SLIME", "MAGMA_CUBE", "SULFUR_CUBE" -> {
+                if (cubes.containsKey(uuid)) {
+                    o = (cubes.get(uuid) + 1 < 3) ? cubes.get(uuid) + 1 : 0;
                 } else {
                     o = 0;
                 }
                 t = slimeSizes.get(o).toString();
-                slimes.put(uuid, o);
+                cubes.put(uuid, o);
             }
             case "MUSHROOM_COW" -> {
                 if (moos.containsKey(uuid)) {

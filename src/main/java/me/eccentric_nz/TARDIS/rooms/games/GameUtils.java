@@ -13,7 +13,7 @@ public class GameUtils {
     /**
      * Centres a location on a block.
      *
-     * @param location a player loaction
+     * @param location a player location
      * @return the location adjusted to the centre of the block
      */
     public static Location centre(Location location) {

@@ -31,7 +31,7 @@ public class BiomeTrades {
         put(Biome.BAMBOO_JUNGLE, List.of(Room.BAMBOO, Room.BAKER, Room.SURGERY));
         put(Biome.BEACH, List.of(Room.NAUTILUS, Room.KITCHEN));
         put(Biome.CHERRY_GROVE, List.of(Room.GREENHOUSE, Room.MAZE));
-        put(Biome.DARK_FOREST, List.of(Room.EYE));
+        put(Biome.DARK_FOREST, List.of(Room.EYE, Room.SULPHUR));
         put(Biome.DESERT, List.of(Room.IISTUBIL, Room.GALLERY, Room.WORKSHOP));
         put(Biome.DRIPSTONE_CAVES, List.of(Room.GEODE, Room.SMELTER));
         put(Biome.FLOWER_FOREST, List.of(Room.GARDEN, Room.LAZARUS));

@@ -288,6 +288,12 @@ rooms:
     offset: -4
     seed: BROWN_GLAZED_TERRACOTTA
     user: false
+  SULPHUR:
+    enabled: true
+    cost: 450
+    offset: -4
+    seed: CHISELED_SULFUR
+    user: false
   SURGERY:
     enabled: true
     cost: 1400

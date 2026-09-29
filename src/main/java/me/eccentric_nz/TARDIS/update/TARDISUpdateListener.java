@@ -176,7 +176,7 @@ public class TARDISUpdateListener implements Listener {
                     set.put("beacon", blockLocStr);
                     plugin.getQueryFactory().doUpdate("tardis", set, tid);
                 }
-                case ALLAY, BAMBOO, BIRDCAGE, FARM, IGLOO, IISTUBIL, HUTCH, LAVA, PEN, STABLE, STALL, VILLAGE -> {
+                case ALLAY, BAMBOO, BIRDCAGE, FARM, IGLOO, IISTUBIL, HUTCH, LAVA, PEN, STABLE, STALL, SULPHUR, VILLAGE -> {
                     set.put(updateable.getName(), blockLocStr);
                     plugin.getQueryFactory().doUpdate("farming", set, tid);
                 }

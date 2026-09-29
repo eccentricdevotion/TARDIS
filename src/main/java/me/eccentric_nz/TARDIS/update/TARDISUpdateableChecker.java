@@ -57,6 +57,7 @@ public class TARDISUpdateableChecker {
             Updateable.SMELT,
             Updateable.STABLE,
             Updateable.STALL,
+            Updateable.SULPHUR,
             Updateable.SURGERY,
             Updateable.VAULT,
             Updateable.VILLAGE
@@ -113,6 +114,7 @@ public class TARDISUpdateableChecker {
         boolean hasSmelt = false;
         boolean hasStable = false;
         boolean hasStall = false;
+        boolean hasSulphur = false;
         boolean hasSurgery = false;
         boolean hasVault = false;
         boolean hasVillage = false;
@@ -142,6 +144,7 @@ public class TARDISUpdateableChecker {
                                 case "CHEST" -> hasSmelt = true;
                                 case "HAY_BLOCK" -> hasStable = true;
                                 case "NETHER_WART_BLOCK" -> hasStall = true;
+                                case "CHISELED_SULFUR" -> hasSulphur = true;
                                 case "RED_CONCRETE" -> hasSurgery = true;
                                 case "DISPENSER" -> hasVault = true;
                                 case "OAK_LOG" -> hasVillage = true;
@@ -187,7 +190,7 @@ public class TARDISUpdateableChecker {
                 || updateable.equals(Updateable.STALL) || updateable.equals(Updateable.VILLAGE) || updateable.equals(Updateable.IISTUBIL)
                 || updateable.equals(Updateable.HAPPY) || updateable.equals(Updateable.HAPPY_GHAST_DOCK_LEVER) || updateable.equals(Updateable.HUTCH)
                 || updateable.equals(Updateable.LAVA) || updateable.equals(Updateable.PEN) || updateable.equals(Updateable.BAMBOO)
-                || updateable.equals(Updateable.BIRDCAGE) || updateable.equals(Updateable.ALLAY)) {
+                || updateable.equals(Updateable.BIRDCAGE) || updateable.equals(Updateable.ALLAY)|| updateable.equals(Updateable.SULPHUR)) {
             if (!TARDISPermission.hasPermission(player, "tardis.farm")) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_NO_PERM", tardis_block);
                 return false;
@@ -233,6 +236,10 @@ public class TARDISUpdateableChecker {
                     return false;
                 }
                 if (updateable.equals(Updateable.BIRDCAGE) && farming.birdcage().isEmpty() && !hasBirdcage) {
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_ROOM", tardis_block);
+                    return false;
+                }
+                if (updateable.equals(Updateable.SULPHUR) && farming.sulphur().isEmpty() && !hasSulphur) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_ROOM", tardis_block);
                     return false;
                 }

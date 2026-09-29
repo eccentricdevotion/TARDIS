@@ -106,23 +106,24 @@ public class TARDISFarmer {
             List<TARDISAllay> allays = new ArrayList<>();
             List<TARDISAxolotl> axolotls = new ArrayList<>();
             List<TARDISBee> bees = new ArrayList<>();
-            List<TARDISFrog> frogs = new ArrayList<>();
-            List<TARDISHorse> camels = new ArrayList<>();
-            List<TARDISHorse> horses = new ArrayList<>();
-            List<TARDISHappyGhast> ghasts = new ArrayList<>();
-            List<TARDISLlama> llamas = new ArrayList<>();
             List<TARDISChicken> chickens = new ArrayList<>();
             List<TARDISCow> cows = new ArrayList<>();
+            List<TARDISFrog> frogs = new ArrayList<>();
+            List<TARDISHappyGhast> ghasts = new ArrayList<>();
+            List<TARDISHorse> camels = new ArrayList<>();
+            List<TARDISHorse> horses = new ArrayList<>();
+            List<TARDISLlama> llamas = new ArrayList<>();
             List<TARDISMob> polarbears = new ArrayList<>();
-            List<TARDISSheep> sheep = new ArrayList<>();
             List<TARDISMob> sniffers = new ArrayList<>();
             List<TARDISMob> striders = new ArrayList<>();
+            List<TARDISSulphurCube> sulphur_cubes = new ArrayList<>();
             List<TARDISMooshroom> mooshrooms = new ArrayList<>();
+            List<TARDISNautilus> nautili = new ArrayList<>();
             List<TARDISPanda> pandas = new ArrayList<>();
             List<TARDISParrot> parrots = new ArrayList<>();
             List<TARDISPig> pigs = new ArrayList<>();
             List<TARDISRabbit> rabbits = new ArrayList<>();
-            List<TARDISNautilus> nautili = new ArrayList<>();
+            List<TARDISSheep> sheep = new ArrayList<>();
             List<TARDISVillager> villagers = new ArrayList<>();
             TARDISFish fish = null;
             // are we doing an achievement?
@@ -152,6 +153,7 @@ public class TARDISFarmer {
                 String mangrove = farming.mangrove();
                 String nautilus = farming.nautilus();
                 String pen = farming.pen();
+                String sulphur = farming.sulphur();
                 String stable = farming.stable();
                 String stall = farming.stall();
                 String village = farming.village();
@@ -162,7 +164,7 @@ public class TARDISFarmer {
                     farmPrefs = rsfp.getData();
                 } else {
                     // if not set then default to true
-                    farmPrefs = new FarmPrefs(uuid, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true);
+                    farmPrefs = new FarmPrefs(uuid, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true);
                 }
                 int vacant = (!happy.isEmpty() && farmPrefs.shouldFarmHappyGhasts()) ? HappyGhastUtils.getFreeSlotCount(plugin, id) : 0;
                 // collate the mobs
@@ -596,6 +598,23 @@ public class TARDISFarmer {
                                 if (taf != null) {
                                     taf.doAchievement("STRIDER");
                                 }
+                            }
+                        }
+                        case SULFUR_CUBE -> {
+                            if (farmPrefs.shouldFarmSulphurCubes() && (!sulphur.isEmpty() || spawnEggs)) {
+                                SulfurCube sulfur = (SulfurCube) entity;
+                                TARDISSulphurCube tmssulphur = new TARDISSulphurCube();
+                                tmssulphur.setSwallowed(sulfur.getEquipped());
+                                tmssulphur.setAge(sulfur.getAge());
+                                tmssulphur.setSize(sulfur.getSize());
+                                tmssulphur.setWander(sulfur.canWander());
+                                tmssulphur.setName(ComponentUtils.stripColour(entity.customName()));
+                                sulphur_cubes.add(tmssulphur);
+                                entity.remove();
+                                if (taf != null) {
+                                    taf.doAchievement("SULFUR_CUBE");
+                                }
+                                farmtotal++;
                             }
                         }
                         case MOOSHROOM -> {
@@ -1351,6 +1370,37 @@ public class TARDISFarmer {
                         p.updateInventory();
                     } else {
                         plugin.getMessenger().send(p, TardisModule.TARDIS, "FARM_LAVA");
+                    }
+                }
+                if (farmPrefs.shouldFarmSulphurCubes() && !sulphur_cubes.isEmpty()) {
+                    if (!sulphur.isEmpty()) {
+                        // get location of sulphur room
+                        World world = TARDISStaticLocationGetters.getWorldFromSplitString(sulphur);
+                        Location cube = TARDISStaticLocationGetters.getSpawnLocationFromDB(sulphur);
+                        while (!world.getChunkAt(cube).isLoaded()) {
+                            world.getChunkAt(cube).load();
+                        }
+                        sulphur_cubes.forEach((s) -> {
+                            plugin.setTardisSpawn(true);
+                            SulfurCube sulfurCube = (SulfurCube) world.spawnEntity(cube, EntityType.SULFUR_CUBE);
+                            sulfurCube.setSize(s.getSize());
+                            sulfurCube.setAge(s.getAge());
+                            sulfurCube.setWander(s.canWander());
+                            sulfurCube.swallow(s.getSwallowed());
+                            String name = s.getName();
+                            if (name != null && !name.isEmpty()) {
+                                sulfurCube.customName(Component.text(name));
+                            }
+                            sulfurCube.setRemoveWhenFarAway(false);
+                        });
+                    } else if (spawnEggs) {
+                        // give spawn eggs
+                        Inventory inv = p.getInventory();
+                        ItemStack is = ItemStack.of(Material.SULFUR_CUBE_SPAWN_EGG, sulphur_cubes.size());
+                        inv.addItem(is);
+                        p.updateInventory();
+                    } else {
+                        plugin.getMessenger().send(p, TardisModule.TARDIS, "FARM_SULPHUR");
                     }
                 }
                 if (farmPrefs.shouldFarmCamels() && !camels.isEmpty()) {

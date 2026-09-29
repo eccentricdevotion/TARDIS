@@ -138,6 +138,8 @@ public class RoomsConfigUpdater {
         booleanOptions.put("rooms.STAIRCASE.user", false);
         booleanOptions.put("rooms.STALL.enabled", true);
         booleanOptions.put("rooms.STALL.user", false);
+        booleanOptions.put("rooms.SULPHUR.enabled", true);
+        booleanOptions.put("rooms.SULPHUR.user", false);
         booleanOptions.put("rooms.SURGERY.enabled", true);
         booleanOptions.put("rooms.SURGERY.user", false);
         booleanOptions.put("rooms.TRENZALORE.enabled", true);
@@ -253,6 +255,8 @@ public class RoomsConfigUpdater {
         integerOptions.put("rooms.STAIRCASE.offset", -5);
         integerOptions.put("rooms.STALL.cost", 1000);
         integerOptions.put("rooms.STALL.offset", -4);
+        integerOptions.put("rooms.SULPHUR.cost", 450);
+        integerOptions.put("rooms.SULPHUR.offset", -4);
         integerOptions.put("rooms.SURGERY.cost", 1400);
         integerOptions.put("rooms.SURGERY.offset", -4);
         integerOptions.put("rooms.TRENZALORE.cost", 775);
@@ -319,6 +323,7 @@ public class RoomsConfigUpdater {
         stringOptions.put("rooms.STABLE.seed", "HAY_BLOCK");
         stringOptions.put("rooms.STAIRCASE.seed", "PURPLE_TERRACOTTA");
         stringOptions.put("rooms.STALL.seed", "BROWN_GLAZED_TERRACOTTA");
+        stringOptions.put("rooms.SULPHUR.seed", "CHISELED_SULFUR");
         stringOptions.put("rooms.SURGERY.seed", "RED_CONCRETE");
         stringOptions.put("rooms.TRENZALORE.seed", "BRICKS");
         stringOptions.put("rooms.VAULT.seed", "DISPENSER");
