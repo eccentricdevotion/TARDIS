@@ -47,6 +47,8 @@ public enum EnchantmentShelf {
     THORNS(Enchantment.THORNS, "Thorns", 3, EnchantmentCategory.ARMOUR, new Vector(14, 3, 10), BlockFace.WEST),
     // melee weapons
     BANE_OF_ARTHROPODS(Enchantment.BANE_OF_ARTHROPODS, "Bane of Arthropods", 5, EnchantmentCategory.MELEE_WEAPONS, new Vector(14, 3, 11), BlockFace.WEST),
+//    BREACH(Enchantment.BREACH, "Breach", 4, EnchantmentCategory.ARMOUR, new Vector(14, 3, 14), BlockFace.WEST),
+//    DENSITY(Enchantment.DENSITY, "Density", 5, EnchantmentCategory.MELEE_WEAPONS, new Vector(14, 3, 14), BlockFace.WEST),
     EFFICIENCY(Enchantment.EFFICIENCY, "Efficiency", 5, EnchantmentCategory.MELEE_WEAPONS, new Vector(14, 3, 12), BlockFace.WEST),
     FIRE_ASPECT(Enchantment.FIRE_ASPECT, "Fire Aspect", 2, EnchantmentCategory.MELEE_WEAPONS, new Vector(14, 3, 13), BlockFace.WEST),
     // top

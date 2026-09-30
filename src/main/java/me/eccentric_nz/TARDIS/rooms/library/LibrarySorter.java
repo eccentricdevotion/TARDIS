@@ -48,7 +48,8 @@ public class LibrarySorter {
                 continue;
             }
             if (is.getType() == Material.ENCHANTED_BOOK) {
-                ItemEnchantments enchantments = is.getData(DataComponentTypes.ENCHANTMENTS);
+                // get the stored enchantments
+                ItemEnchantments enchantments = is.getData(DataComponentTypes.STORED_ENCHANTMENTS);
                 if (enchantments != null) {
                     // store the book on the outside shelves
                     Map.Entry<Enchantment, Integer> entry = enchantments.enchantments().entrySet().iterator().next();
@@ -56,14 +57,16 @@ public class LibrarySorter {
                     int level = entry.getValue();
                     // get the shelf based on the first enchantment
                     EnchantmentShelf shelf = EnchantmentShelf.BY_ENCHANTMENT.get(enchantment);
-                    Block block = start.clone().add(shelf.getPosition()).getBlock().getRelative(BlockFace.UP, level);
-                    if (block.getType() == Material.CHISELED_BOOKSHELF) {
-                        ChiseledBookshelf cbs = (ChiseledBookshelf) block.getState();
-                        HashMap<Integer, ItemStack> add = cbs.getInventory().addItem(is);
-                        if (!add.isEmpty()) {
-                            leftovers.add(is);
+                    if (shelf != null) {
+                        Block block = start.clone().add(shelf.getPosition()).getBlock().getRelative(BlockFace.UP, level);
+                        if (block.getType() == Material.CHISELED_BOOKSHELF) {
+                            ChiseledBookshelf cbs = (ChiseledBookshelf) block.getState();
+                            HashMap<Integer, ItemStack> add = cbs.getInventory().addItem(is);
+                            if (!add.isEmpty()) {
+                                leftovers.add(is);
+                            }
+                            inventory.remove(is);
                         }
-                        inventory.remove(is);
                     }
                 }
             } else if (isBook(is.getType())) {
@@ -86,6 +89,7 @@ public class LibrarySorter {
                     }
                     HashMap<Integer, ItemStack> add = cbs.getInventory().addItem(is);
                     if (!add.isEmpty()) {
+                        // couldn't fit on the shelves
                         leftovers.add(is);
                     }
                     inventory.remove(is);
