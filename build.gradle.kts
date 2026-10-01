@@ -1,6 +1,6 @@
 import io.papermc.hangarpublishplugin.model.Platforms
 import org.apache.tools.ant.filters.ReplaceTokens
-import java.io.ByteArrayOutputStream
+import org.gradle.api.provider.Provider
 
 plugins {
     `java-library`
@@ -174,7 +174,6 @@ allprojects {
 
 tasks {
     compileJava {
-        // Set the release flag
         options.release = 25
     }
     javadoc {
@@ -203,27 +202,26 @@ tasks.shadowJar {
 
 paperweight.reobfArtifactConfiguration = io.papermc.paperweight.userdev.ReobfArtifactConfiguration.MOJANG_PRODUCTION
 
-interface InjectedExecOps {
-    @get:Inject val execOps: ExecOperations
-}
-
 // Helper methods
-fun executeGitCommand(vararg command: String): String {
-    val injected = project.objects.newInstance<InjectedExecOps>()
-    val byteOut = ByteArrayOutputStream()
-    injected.execOps.exec {
-        commandLine = listOf("git", *command)
-        standardOutput = byteOut
-    }
-    return byteOut.toString(Charsets.UTF_8.name()).trim()
+fun executeGitCommand(vararg command: String): Provider<String> {
+    return providers.exec {
+        commandLine("git", *command)
+    }.standardOutput.asText.map { it.trim() }
 }
 
-fun latestCommitMessage(): String {
+fun latestCommitMessage(): Provider<String> {
     return executeGitCommand("log", "-1", "--pretty=%B")
 }
 
-// Use the commit description for the changelog
-val changelogContent: String = latestCommitMessage()
+// Map the changelog lazily and handle fallback logic
+// Prevents empty changelog 400 errors
+val changelogProvider: Provider<String> = latestCommitMessage().map { msg ->
+    if (msg.isNullOrBlank()) {
+        "Development snapshot build for version \${project.version}"
+    } else {
+        msg
+    }
+}
 
 hangarPublish {
     publications.register("plugin") {
@@ -240,13 +238,8 @@ hangarPublish {
                     .split(",")
                     .map { it.trim() }
                 platformVersions.set(versions)
-                // prevent empty changelog 400 errors
-                val safeChangelog = if (changelogContent.isNullOrBlank()) {
-                    "Development snapshot build for version ${project.version}"
-                } else {
-                    changelogContent
-                }
-                changelog.set(safeChangelog)
+                // Directly pass the provider to .set() so it evaluates at runtime
+                changelog.set(changelogProvider)
             }
         }
     }
