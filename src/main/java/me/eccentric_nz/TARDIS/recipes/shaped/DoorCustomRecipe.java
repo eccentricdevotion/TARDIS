@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.CustomModelData;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
@@ -41,6 +42,9 @@ public class DoorCustomRecipe {
                 ItemStack is = ItemStack.of(material);
                 String dn = TARDISStringUtils.capitalise(r);
                 is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Door " + dn));
+                is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                        .addString("Door " + dn)
+                        .build());
                 is.setData(DataComponentTypes.ITEM_MODEL, new NamespacedKey(plugin, r + "_closed"));
                 NamespacedKey key = new NamespacedKey(plugin, "door_" + r);
                 ShapedRecipe recipe = new ShapedRecipe(key, is);

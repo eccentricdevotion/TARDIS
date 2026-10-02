@@ -52,6 +52,9 @@ public class TARDISLocatorRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.COMPASS, 1);
         is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("TARDIS Locator"));
+        is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                .addString("TARDIS Locator")
+                .build());
         NamespacedKey key = new NamespacedKey(plugin, "tardis_locator");
         ShapedRecipe r = new ShapedRecipe(key, is);
         r.shape("OIO", "ICI", "OIO");

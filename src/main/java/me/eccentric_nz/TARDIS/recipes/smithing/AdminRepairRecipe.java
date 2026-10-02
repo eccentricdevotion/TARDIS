@@ -48,12 +48,15 @@ public class AdminRepairRecipe {
         // base material to upgrade
         RecipeChoice base = RecipeChoice.itemType(ItemType.BLAZE_ROD);
         // addition
-        ItemStack isa = ItemStack.of(Material.GLOWSTONE_DUST, 1);
-        isa.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Server Admin Circuit"));
-        isa.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+        ItemStack is = ItemStack.of(Material.GLOWSTONE_DUST, 1);
+        is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Server Admin Circuit"));
+        is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                .addString("Server Admin Circuit")
+                .build());
+        is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
                 .addFloats(CircuitVariant.ADMIN.getFloats())
                 .build());
-        RecipeChoice addition = RecipeChoice.exactChoice(isa);
+        RecipeChoice addition = RecipeChoice.exactChoice(is);
         NamespacedKey key = new NamespacedKey(plugin, "admin_repair");
         SmithingRecipe r = new SmithingTransformRecipe(key, result, template, base, addition);
         plugin.getServer().addRecipe(r);

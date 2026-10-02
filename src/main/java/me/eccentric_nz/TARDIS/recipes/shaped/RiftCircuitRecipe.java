@@ -49,6 +49,9 @@ public class RiftCircuitRecipe {
         ItemStack is = ItemStack.of(Material.GLOWSTONE_DUST, 1);
         is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Rift Circuit"));
         is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                .addString("Rift Circuit")
+                .build());
+        is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
                 .addFloats(CircuitVariant.RIFT.getFloats())
                 .build());
         NamespacedKey key = new NamespacedKey(plugin, "rift_circuit");

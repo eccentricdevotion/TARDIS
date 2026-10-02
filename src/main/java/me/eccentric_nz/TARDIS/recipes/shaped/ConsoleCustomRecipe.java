@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.CustomModelData;
 import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.console.models.ColourType;
@@ -69,6 +70,9 @@ public class ConsoleCustomRecipe {
                     ItemStack is = ItemStack.of(material, 1);
                     String dn = TARDISStringUtils.capitalise(console) + " Console";
                     is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(dn));
+                    is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                            .addString(dn)
+                            .build());
                     is.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text("Integration with interaction")).build());
                     String c = "console_" + console;
                     is.editPersistentDataContainer(pdc -> pdc.set(plugin.getCustomBlockKey(), PersistentDataType.STRING, c));

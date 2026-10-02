@@ -55,6 +55,9 @@ public class TARDISInputCircuitRecipe {
         ItemStack is = ItemStack.of(Material.GLOWSTONE_DUST, 1);
         is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("TARDIS Input Circuit"));
         is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                .addString("TARDIS Input Circuit")
+                .build());
+        is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
                 .addFloats(CircuitVariant.INPUT.getFloats())
                 .build());
         Component uses = (plugin.getConfig().getString("circuits.uses.input", "50").equals("0") || !plugin.getConfig().getBoolean("circuits.damage"))

@@ -59,6 +59,9 @@ public class StattenheimRemoteRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.FLINT, 1);
         is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Stattenheim Remote"));
+        is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                .addString("Stattenheim Remote")
+                .build());
         String uses = plugin.getConfig().getString("circuits.uses.stattenheim", "15");
         if (uses.equals("0")) {
             uses = "1000";

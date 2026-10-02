@@ -51,6 +51,9 @@ public class PickupArrowsRepairRecipe {
         ItemStack is = ItemStack.of(Material.GLOWSTONE_DUST, 1);
         is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Pickup Arrows Circuit"));
         is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                .addString("Pickup Arrows Circuit")
+                .build());
+        is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
                 .addFloats(CircuitVariant.PICKUP.getFloats())
                 .build());
         RecipeChoice addition = RecipeChoice.exactChoice(is);

@@ -46,6 +46,9 @@ public class TARDISSchematicWandRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.BONE, 1);
         is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("TARDIS Schematic Wand"));
+        is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                .addString("TARDIS Schematic Wand")
+                .build());
         is.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(
                 Component.text("Right-click start"),
                 Component.text("Left-click end")

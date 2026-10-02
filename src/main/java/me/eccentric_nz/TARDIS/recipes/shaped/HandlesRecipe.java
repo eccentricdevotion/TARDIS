@@ -55,6 +55,9 @@ public class HandlesRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.BIRCH_BUTTON, 1);
         is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Handles"));
+        is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                .addString("Handles")
+                .build());
         is.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(
                 Component.text("Cyberhead from the"),
                 Component.text("Maldovar Market")

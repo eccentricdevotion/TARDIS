@@ -48,6 +48,9 @@ public class TARDISArtronFurnaceRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.FURNACE, 1);
         is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("TARDIS Artron Furnace"));
+        is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                .addString("TARDIS Artron Furnace")
+                .build());
         NamespacedKey key = new NamespacedKey(plugin, "tardis_artron_furnace");
         ShapedRecipe r = new ShapedRecipe(key, is);
         r.shape("OFO", "RRR");

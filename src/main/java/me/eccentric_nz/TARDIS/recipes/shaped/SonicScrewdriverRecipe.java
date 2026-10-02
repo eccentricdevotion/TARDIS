@@ -79,6 +79,9 @@ public class SonicScrewdriverRecipe {
         ItemStack is = ItemStack.of(Material.BLAZE_ROD, 1);
         is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Sonic Screwdriver"));
         is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                .addString("Sonic Screwdriver")
+                .build());
+        is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
                 .addFloats(sonicModel)
                 .build());
         NamespacedKey key = new NamespacedKey(plugin, "sonic_screwdriver");

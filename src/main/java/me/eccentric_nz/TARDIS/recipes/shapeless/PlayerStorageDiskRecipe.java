@@ -46,6 +46,9 @@ public class PlayerStorageDiskRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.MUSIC_DISC_WAIT, 1);
         is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Player Storage Disk"));
+        is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                .addString("Player Storage Disk")
+                .build());
         is.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text("Blank")).build());
         is.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
                 .addHiddenComponents(TARDISConstants.HIDE)

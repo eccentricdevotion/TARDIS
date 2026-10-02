@@ -59,6 +59,9 @@ public class SpaceHelmetRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.GLASS, 1);
         is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("TARDIS Space Helmet"));
+        is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                .addString("TARDIS Space Helmet")
+                .build());
         is.setData(DataComponentTypes.MAX_STACK_SIZE, 1);
         is.setData(DataComponentTypes.EQUIPPABLE, Equippable.equippable(EquipmentSlot.HEAD)
                 .allowedEntities(RegistrySet.keySet(RegistryKey.ENTITY_TYPE, TypedKey.create(RegistryKey.ENTITY_TYPE, EntityType.PLAYER.getKey())))
