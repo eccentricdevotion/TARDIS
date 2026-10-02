@@ -57,6 +57,9 @@ public class TimeRotorCustomRecipe {
                 ItemStack is = ItemStack.of(Material.LIGHT_GRAY_DYE, 1);
                 String dn = TARDISStringUtils.capitalise(r);
                 is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Time Rotor " + dn));
+                is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                        .addString("Time Rotor " + dn)
+                        .build());
                 is.setData(DataComponentTypes.ITEM_MODEL, new NamespacedKey(plugin, "time_rotor_" + r + "_off"));
                 NamespacedKey key = new NamespacedKey(plugin, "time_rotor_" + r);
                 ShapedRecipe recipe = new ShapedRecipe(key, is);
