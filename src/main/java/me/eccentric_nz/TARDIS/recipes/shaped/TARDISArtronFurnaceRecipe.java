@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.CustomModelData;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import org.bukkit.Material;
