@@ -120,12 +120,12 @@ public class DevCommandNode {
                             return Command.SINGLE_SUCCESS;
                         }))
                 .then(Commands.literal("box")
-                        .then(Commands.argument("preset", new PresetArgumentType(0)))
-                        .executes(ctx -> {
-                            String preset = ctx.getArgument("preset", String.class);
-                            new BoxCommand(plugin).setPreset(ctx.getSource().getSender(), preset, "");
-                            return Command.SINGLE_SUCCESS;
-                        })
+                        .then(Commands.argument("preset", new PresetArgumentType(0))
+                                .executes(ctx -> {
+                                    String preset = ctx.getArgument("preset", String.class);
+                                    new BoxCommand(plugin).setPreset(ctx.getSource().getSender(), preset, "");
+                                    return Command.SINGLE_SUCCESS;
+                                }))
                         .then(Commands.argument("state", StringArgumentType.word())
                                 .suggests((ctx, builder) -> {
                                     builder.suggest("closed");

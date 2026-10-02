@@ -72,8 +72,7 @@ public class BoxCommand {
                                     case "stained" -> model = ChameleonVariant.BLUE_STAINED.getKey();
                                     case "glass" -> model = ChameleonVariant.BLUE_GLASS.getKey();
                                     case "camera" -> model = ChameleonVariant.BLUE_CAMERA.getKey();
-                                    default -> {
-                                    } // already assigned to ChameleonVariant.BLUE_CLOSED.getKey()
+                                    default -> { } // already assigned to ChameleonVariant.BLUE_CLOSED.getKey()
                                 }
                             }
                             case BLACK_DYE -> {
