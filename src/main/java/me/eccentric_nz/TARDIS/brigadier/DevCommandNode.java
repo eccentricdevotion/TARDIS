@@ -137,7 +137,7 @@ public class DevCommandNode {
                                         })
                                         .executes(ctx -> {
                                             String preset = ctx.getArgument("preset", String.class);
-                                            String state = StringArgumentType.getString(ctx, "preset");
+                                            String state = StringArgumentType.getString(ctx, "state");
                                             new BoxCommand(plugin).setPreset(ctx.getSource().getSender(), preset, state);
                                             return Command.SINGLE_SUCCESS;
                                         }))))
