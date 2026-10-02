@@ -57,6 +57,9 @@ public class TARDISBiomeReaderRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.BRICK, 1);
         is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("TARDIS Biome Reader"));
+        is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                .addString("TARDIS Biome Reader")
+                .build());
         NamespacedKey key = new NamespacedKey(plugin, "tardis_biome_reader");
         ShapedRecipe r = new ShapedRecipe(key, is);
         ItemStack exact = ItemStack.of(Material.GLOWSTONE_DUST, 1);

@@ -48,6 +48,9 @@ public class JammyDodgerRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.COOKIE, 8);
         is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Jammy Dodger"));
+        is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                .addString("Jammy Dodger")
+                .build());
         is.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text("Best eaten with custard!")).build());
         NamespacedKey key = new NamespacedKey(plugin, "jammy_dodger");
         ShapedRecipe r = new ShapedRecipe(key, is);

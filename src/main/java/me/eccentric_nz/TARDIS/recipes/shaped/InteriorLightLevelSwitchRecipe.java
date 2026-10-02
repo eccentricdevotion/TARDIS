@@ -53,6 +53,9 @@ public class InteriorLightLevelSwitchRecipe {
         // add interior recipe
         ItemStack is = ItemStack.of(Material.LEVER, 1);
         is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Interior Light Level Switch"));
+        is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                .addString("Interior Light Level Switch")
+                .build());
         is.setData(DataComponentTypes.ITEM_MODEL, RecipeItem.INTERIOR_LIGHT_LEVEL_SWITCH.getModel());
         NamespacedKey key = new NamespacedKey(plugin, "interior_light_level_switch");
         ShapedRecipe r = new ShapedRecipe(key, is);

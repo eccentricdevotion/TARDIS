@@ -52,6 +52,9 @@ public class TimeRotorTenthRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.LIGHT_GRAY_DYE, 1);
         is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Time Rotor Tenth"));
+        is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                .addString("Time Rotor Tenth")
+                .build());
         is.setData(DataComponentTypes.ITEM_MODEL, RecipeItem.TIME_ROTOR_TENTH.getModel());
         NamespacedKey key = new NamespacedKey(plugin, "time_rotor_tenth");
         ShapedRecipe r = new ShapedRecipe(key, is);

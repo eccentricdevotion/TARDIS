@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.CustomModelData;
 import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
@@ -53,8 +54,10 @@ public class ConsoleRusticRecipe {
 
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.WAXED_OXIDIZED_COPPER, 1);
-        String dn = "Rustic Console";
-        is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(dn));
+        is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Rustic Console"));
+        is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                .addString("Rustic Console")
+                .build());
         is.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text("Integration with interaction")).build());
         is.editPersistentDataContainer(pdc -> pdc.set(plugin.getCustomBlockKey(), PersistentDataType.STRING, "console_rustic"));
         NamespacedKey key = new NamespacedKey(plugin, "rustic_console");
@@ -72,6 +75,6 @@ public class ConsoleRusticRecipe {
         }
         r.setIngredient('B', Material.BAMBOO_BUTTON);
         plugin.getServer().addRecipe(r);
-        plugin.getFigura().getShapedRecipes().put(dn, r);
+        plugin.getFigura().getShapedRecipes().put("Rustic Console", r);
     }
 }

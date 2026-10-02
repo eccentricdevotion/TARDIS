@@ -52,6 +52,9 @@ public class RiftManipulatorRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.BEACON, 1);
         is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Rift Manipulator"));
+        is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                .addString("Rift Manipulator")
+                .build());
         NamespacedKey key = new NamespacedKey(plugin, "rift_manipulator");
         ShapedRecipe r = new ShapedRecipe(key, is);
         ItemStack rift = ItemStack.of(Material.GLOWSTONE_DUST, 1);

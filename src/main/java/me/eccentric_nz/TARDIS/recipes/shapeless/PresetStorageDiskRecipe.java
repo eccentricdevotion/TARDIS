@@ -50,6 +50,9 @@ public class PresetStorageDiskRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.MUSIC_DISC_MALL, 1);
         is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Preset Storage Disk"));
+        is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                .addString("Preset Storage Disk")
+                .build());
         is.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text("Blank")).build());
         NamespacedKey key = new NamespacedKey(plugin, "preset_storage_disk");
         ShapelessRecipe r = new ShapelessRecipe(key, is);

@@ -57,6 +57,9 @@ public class TARDISScannerCircuitRecipe {
         ItemStack is = ItemStack.of(Material.GLOWSTONE_DUST, 1);
         is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("TARDIS Scanner Circuit"));
         is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                .addString("TARDIS Scanner Circuit")
+                .build());
+        is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
                 .addFloats(CircuitVariant.SCANNER.getFloats())
                 .build());
         Component uses = (plugin.getConfig().getString("circuits.uses.scanner", "20").equals("0") || !plugin.getConfig().getBoolean("circuits.damage"))

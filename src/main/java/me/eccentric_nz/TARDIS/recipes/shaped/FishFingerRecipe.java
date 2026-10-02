@@ -49,6 +49,9 @@ public class FishFingerRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.COOKED_COD, 3);
         is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Fish Finger"));
+        is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                .addString("Fish Finger")
+                .build());
         is.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text("Best eaten with custard!")).build());
         NamespacedKey key = new NamespacedKey(plugin, "fish_finger");
         ShapedRecipe r = new ShapedRecipe(key, is);
