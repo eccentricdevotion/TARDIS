@@ -125,22 +125,22 @@ public class DevCommandNode {
                                     String preset = ctx.getArgument("preset", String.class);
                                     new BoxCommand(plugin).setPreset(ctx.getSource().getSender(), preset, "");
                                     return Command.SINGLE_SUCCESS;
-                                }))
-                        .then(Commands.argument("state", StringArgumentType.word())
-                                .suggests((ctx, builder) -> {
-                                    builder.suggest("closed");
-                                    builder.suggest("open");
-                                    builder.suggest("stained");
-                                    builder.suggest("glass");
-                                    builder.suggest("fly");
-                                    return builder.buildFuture();
                                 })
-                                .executes(ctx -> {
-                                    String preset = ctx.getArgument("preset", String.class);
-                                    String state = StringArgumentType.getString(ctx, "preset");
-                                    new BoxCommand(plugin).setPreset(ctx.getSource().getSender(), preset, state);
-                                    return Command.SINGLE_SUCCESS;
-                                })))
+                                .then(Commands.argument("state", StringArgumentType.word())
+                                        .suggests((ctx, builder) -> {
+                                            builder.suggest("closed");
+                                            builder.suggest("open");
+                                            builder.suggest("stained");
+                                            builder.suggest("glass");
+                                            builder.suggest("fly");
+                                            return builder.buildFuture();
+                                        })
+                                        .executes(ctx -> {
+                                            String preset = ctx.getArgument("preset", String.class);
+                                            String state = StringArgumentType.getString(ctx, "preset");
+                                            new BoxCommand(plugin).setPreset(ctx.getSource().getSender(), preset, state);
+                                            return Command.SINGLE_SUCCESS;
+                                        }))))
                 .then(Commands.literal("brushable")
                         .executes(ctx -> {
                             if (ctx.getSource().getSender() instanceof Player player) {
