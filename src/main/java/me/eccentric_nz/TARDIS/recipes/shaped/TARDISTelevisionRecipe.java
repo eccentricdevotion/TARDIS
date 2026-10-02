@@ -60,6 +60,9 @@ public class TARDISTelevisionRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.BROWN_STAINED_GLASS, 1);
         is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("TARDIS Television"));
+        is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                .addString("TARDIS Television")
+                .build());
         is.editPersistentDataContainer(pdc -> pdc.set(plugin.getCustomBlockKey(), PersistentDataType.STRING, RecipeItem.TARDIS_TELEVISION.getModel().getKey()));
         // exact choice
         ItemStack capacitor = ItemStack.of(Material.BUCKET, 1);

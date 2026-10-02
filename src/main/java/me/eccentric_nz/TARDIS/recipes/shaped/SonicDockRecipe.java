@@ -55,6 +55,9 @@ public class SonicDockRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.FLOWER_POT, 1);
         is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Sonic Dock"));
+        is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                .addString("Sonic Dock")
+                .build());
         is.setData(DataComponentTypes.ITEM_MODEL, RecipeItem.SONIC_DOCK.getModel());
         NamespacedKey key = new NamespacedKey(plugin, "sonic_dock");
         ShapedRecipe r = new ShapedRecipe(key, is);

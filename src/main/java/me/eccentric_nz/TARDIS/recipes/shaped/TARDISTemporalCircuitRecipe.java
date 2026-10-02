@@ -59,6 +59,9 @@ public class TARDISTemporalCircuitRecipe {
         ItemStack is = ItemStack.of(Material.GLOWSTONE_DUST, 1);
         is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("TARDIS Temporal Circuit"));
         is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                .addString("TARDIS Temporal Circuit")
+                .build());
+        is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
                 .addFloats(CircuitVariant.TEMPORAL.getFloats())
                 .build());
         Component uses = (plugin.getConfig().getString("circuits.uses.temporal", "20").equals("0") || !plugin.getConfig().getBoolean("circuits.damage"))

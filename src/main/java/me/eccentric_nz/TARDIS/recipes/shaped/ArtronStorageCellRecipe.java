@@ -54,6 +54,9 @@ public class ArtronStorageCellRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.BUCKET, 1);
         is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Artron Storage Cell"));
+        is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                .addString("Artron Storage Cell")
+                .build());
         is.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(
                 Component.text("Charge Level"),
                 Component.text("0")

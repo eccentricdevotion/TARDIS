@@ -41,6 +41,9 @@ public class GrapeJellyBabyRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.MELON_SLICE, 4);
         is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Grape Jelly Baby"));
+        is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                .addString("Grape Jelly Baby")
+                .build());
         NamespacedKey key = new NamespacedKey(plugin, "grape_jelly_baby");
         ShapelessRecipe r = new ShapelessRecipe(key, is);
         r.addIngredient(Material.SUGAR);

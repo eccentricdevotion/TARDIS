@@ -52,6 +52,9 @@ public class PaperBagRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.PAPER, 1);
         is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Paper Bag"));
+        is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                .addString("Paper Bag")
+                .build());
         is.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text("Smaller on the outside")).build());
         NamespacedKey key = new NamespacedKey(plugin, "paper_bag");
         ShapedRecipe r = new ShapedRecipe(key, is);

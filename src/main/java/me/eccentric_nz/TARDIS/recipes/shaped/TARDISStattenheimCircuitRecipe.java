@@ -59,6 +59,9 @@ public class TARDISStattenheimCircuitRecipe {
         ItemStack is = ItemStack.of(Material.GLOWSTONE_DUST, 1);
         is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("TARDIS Stattenheim Circuit"));
         is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                .addString("TARDIS Stattenheim Circuit")
+                .build());
+        is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
                 .addFloats(CircuitVariant.STATTENHEIM.getFloats())
                 .build());
         NamespacedKey key = new NamespacedKey(plugin, "tardis_stattenheim_circuit");

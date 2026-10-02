@@ -41,6 +41,9 @@ public class BowlofCustardRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.MUSHROOM_STEW, 1);
         is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Bowl of Custard"));
+        is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                .addString("Bowl of Custard")
+                .build());
         NamespacedKey key = new NamespacedKey(plugin, "bowl_of_custard");
         ShapelessRecipe r = new ShapelessRecipe(key, is);
         r.addIngredient(Material.BOWL);

@@ -48,12 +48,15 @@ public class BioscannerRepairRecipe {
         // base material to upgrade
         RecipeChoice base = RecipeChoice.itemType(ItemType.BLAZE_ROD);
         // addition
-        ItemStack isa = ItemStack.of(Material.GLOWSTONE_DUST, 1);
-        isa.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Bio-scanner Circuit"));
-        isa.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+        ItemStack is = ItemStack.of(Material.GLOWSTONE_DUST, 1);
+        is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Bio-scanner Circuit"));
+        is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                .addString("Bio-scanner Circuit")
+                .build());
+        is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
                 .addFloats(CircuitVariant.BIO.getFloats())
                 .build());
-        RecipeChoice addition = RecipeChoice.exactChoice(isa);
+        RecipeChoice addition = RecipeChoice.exactChoice(is);
         NamespacedKey key = new NamespacedKey(plugin, "bio-scanner_repair");
         SmithingRecipe r = new SmithingTransformRecipe(key, result, template, base, addition);
         plugin.getServer().addRecipe(r);

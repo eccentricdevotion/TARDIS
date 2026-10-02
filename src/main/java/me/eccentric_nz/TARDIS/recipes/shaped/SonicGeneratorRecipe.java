@@ -52,6 +52,9 @@ public class SonicGeneratorRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.FLOWER_POT, 1);
         is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Sonic Generator"));
+        is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                .addString("Sonic Generator")
+                .build());
         is.setData(DataComponentTypes.ITEM_MODEL, RecipeItem.SONIC_GENERATOR.getModel());
         NamespacedKey key = new NamespacedKey(plugin, "sonic_generator");
         ShapedRecipe r = new ShapedRecipe(key, is);

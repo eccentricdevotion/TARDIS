@@ -46,6 +46,9 @@ public class SpaceSuitLeggingsRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.CHAINMAIL_LEGGINGS, 1);
         is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("TARDIS Space Suit Leggings"));
+        is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                .addString("TARDIS Space Suit Leggings")
+                .build());
         is.setData(DataComponentTypes.MAX_STACK_SIZE, 1);
         is.setData(DataComponentTypes.EQUIPPABLE, Equippable.equippable(EquipmentSlot.LEGS)
                 .assetId(Whoniverse.SPACE_SUIT.getKey())

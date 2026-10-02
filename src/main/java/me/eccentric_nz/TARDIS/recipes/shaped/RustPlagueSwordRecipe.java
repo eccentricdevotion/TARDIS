@@ -55,6 +55,9 @@ public class RustPlagueSwordRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.IRON_SWORD, 1);
         is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Rust Plague Sword"));
+        is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                .addString("Rust Plague Sword")
+                .build());
         is.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text("Dalek Virus Dispenser")).build());
         // set weapon component
         Weapon weapon = Weapon.weapon()

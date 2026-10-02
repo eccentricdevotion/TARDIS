@@ -42,6 +42,9 @@ public class SpaceSuitChestplateRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.CHAINMAIL_CHESTPLATE, 1);
         is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("TARDIS Space Suit Chestplate"));
+        is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                .addString("TARDIS Space Suit Chestplate")
+                .build());
         is.setData(DataComponentTypes.MAX_STACK_SIZE, 1);
         is.setData(DataComponentTypes.EQUIPPABLE, Equippable.equippable(EquipmentSlot.CHEST)
                 .assetId(Whoniverse.SPACE_SUIT.getKey())

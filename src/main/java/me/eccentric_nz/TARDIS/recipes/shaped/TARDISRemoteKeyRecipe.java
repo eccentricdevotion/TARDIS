@@ -60,6 +60,9 @@ public class TARDISRemoteKeyRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.OMINOUS_TRIAL_KEY, 1);
         is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("TARDIS Remote Key"));
+        is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                .addString("TARDIS Remote Key")
+                .build());
         is.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(
                 Component.text("Deadlock & unlock"),
                 Component.text("Hide & rebuild")

@@ -62,6 +62,9 @@ public class TARDISInvisibilityCircuitRecipe {
         ItemStack is = ItemStack.of(Material.GLOWSTONE_DUST, 1);
         is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("TARDIS Invisibility Circuit"));
         is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                .addString("TARDIS Invisibility Circuit")
+                .build());
+        is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
                 .addFloats(CircuitVariant.INVISIBILITY.getFloats())
                 .build());
         Component uses = (plugin.getConfig().getString("circuits.uses.invisibility", "5").equals("0") || !plugin.getConfig().getBoolean("circuits.damage"))

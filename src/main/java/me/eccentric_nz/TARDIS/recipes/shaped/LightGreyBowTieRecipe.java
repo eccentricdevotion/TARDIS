@@ -52,6 +52,9 @@ public class LightGreyBowTieRecipe {
     public void addRecipe() {
         ItemStack is = ItemStack.of(Material.LEATHER_HELMET, 1);
         is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Light Grey Bow Tie"));
+        is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                .addString("Light Grey Bow Tie")
+                .build());
         is.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text("Bow ties are cool!")).build());
         NamespacedKey key = new NamespacedKey(plugin, "light_grey_bow_tie");
         ShapedRecipe r = new ShapedRecipe(key, is);
