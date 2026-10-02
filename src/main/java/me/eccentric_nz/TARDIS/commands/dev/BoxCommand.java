@@ -267,8 +267,8 @@ public class BoxCommand {
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                         EntityEquipment ee = as.getEquipment();
                         ee.setHelmet(is);
-                        as.setInvisible(true);
-                        as.setInvulnerable(true);
+//                        as.setInvisible(true);
+//                        as.setInvulnerable(true);
                         if (state.equals("camera")) {
                             as.addPassenger(player);
                         }

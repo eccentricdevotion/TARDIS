@@ -75,7 +75,7 @@ public class SonicScrewdriverRecipe {
     }
 
     public void addRecipe() {
-        List<Float> sonicModel = sonicModelLookup.getOrDefault(plugin.getConfig().getString("sonic.default_model").toLowerCase(Locale.ROOT), SonicVariant.ELEVENTH.getFloats());
+        List<Float> sonicModel = sonicModelLookup.getOrDefault(plugin.getConfig().getString("sonic.default_model", "eleventh").toLowerCase(Locale.ROOT), SonicVariant.ELEVENTH.getFloats());
         ItemStack is = ItemStack.of(Material.BLAZE_ROD, 1);
         is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Sonic Screwdriver"));
         is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
