@@ -52,10 +52,8 @@ public class EmeraldEnvironmentCircuitRecipe {
         ItemStack is = ItemStack.of(Material.GLOWSTONE_DUST, 1);
         is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Emerald Environment Circuit"));
         is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
-                .addString("Emerald Environment Circuit")
-                .build());
-        is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
                 .addFloats(CircuitVariant.EMERALD.getFloats())
+                .addString("Emerald Environment Circuit")
                 .build());
         NamespacedKey key = new NamespacedKey(plugin, "emerald_environment_circuit");
         ShapedRecipe r = new ShapedRecipe(key, is);

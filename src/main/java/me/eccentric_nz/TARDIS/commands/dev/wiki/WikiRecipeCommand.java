@@ -29,10 +29,13 @@ public class WikiRecipeCommand {
 
     public void write(CommandSender sender, String arg) {
         switch (arg) {
+            // items
             case "chest" -> new ChestBuilder(plugin).place(sender);
             case "boxes" -> new BoxesBuilder().place(sender);
             case "rotors" -> new RotorBuilder(plugin).place(sender);
             case "doors" -> new DoorBuilder(plugin).place(sender);
+            case "items" -> new ItemsBuilder(plugin).place(sender);
+            // pages
             case "shaped" -> new ShapedPageBuilder(plugin).compile();
             case "shapeless" -> new ShapelessPageBuilder(plugin).compile();
             case "chemistry" -> new ChemistryPageBuilder(plugin).compile();

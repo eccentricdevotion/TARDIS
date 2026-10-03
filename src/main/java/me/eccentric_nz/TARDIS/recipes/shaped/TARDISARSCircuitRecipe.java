@@ -60,10 +60,8 @@ public class TARDISARSCircuitRecipe {
         ItemStack is = ItemStack.of(Material.GLOWSTONE_DUST, 1);
         is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("TARDIS ARS Circuit"));
         is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
-                .addString("TARDIS ARS Circuit")
-                .build());
-        is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
                 .addFloats(CircuitVariant.ARS.getFloats())
+                .addString("TARDIS ARS Circuit")
                 .build());
         Component uses = (plugin.getConfig().getString("circuits.uses.ars", "20").equals("0") || !plugin.getConfig().getBoolean("circuits.damage"))
                 ? Component.text("unlimited", NamedTextColor.YELLOW)

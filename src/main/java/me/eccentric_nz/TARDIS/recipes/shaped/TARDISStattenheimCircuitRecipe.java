@@ -59,10 +59,8 @@ public class TARDISStattenheimCircuitRecipe {
         ItemStack is = ItemStack.of(Material.GLOWSTONE_DUST, 1);
         is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("TARDIS Stattenheim Circuit"));
         is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
-                .addString("TARDIS Stattenheim Circuit")
-                .build());
-        is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
                 .addFloats(CircuitVariant.STATTENHEIM.getFloats())
+                .addString("TARDIS Stattenheim Circuit")
                 .build());
         NamespacedKey key = new NamespacedKey(plugin, "tardis_stattenheim_circuit");
         ShapedRecipe r = new ShapedRecipe(key, is);
@@ -70,6 +68,7 @@ public class TARDISStattenheimCircuitRecipe {
         exact.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("TARDIS Materialisation Circuit"));
         exact.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
                 .addFloats(CircuitVariant.MATERIALISATION.getFloats())
+                .addString("TARDIS Materialisation Circuit")
                 .build());
         // set the second line of lore
         Component uses = (plugin.getConfig().getString("circuits.uses.materialisation", "50").equals("0") || !plugin.getConfig().getBoolean("circuits.damage"))

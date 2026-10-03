@@ -78,6 +78,7 @@ public class TARDISRemoteKeyRecipe {
             exact.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("TARDIS Materialisation Circuit"));
             exact.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
                     .addFloats(CircuitVariant.MATERIALISATION.getFloats())
+                    .addString("TARDIS Materialisation Circuit")
                     .build());
             // set the second line of lore
             Component uses = (plugin.getConfig().getString("circuits.uses.materialisation", "50").equals("0") || !plugin.getConfig().getBoolean("circuits.damage"))

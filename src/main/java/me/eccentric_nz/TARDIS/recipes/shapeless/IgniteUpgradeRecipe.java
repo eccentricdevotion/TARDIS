@@ -63,6 +63,7 @@ public class IgniteUpgradeRecipe {
         exact.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Ignite Circuit"));
         exact.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
                 .addFloats(CircuitVariant.IGNITE.getFloats())
+                .addString("Ignite Circuit")
                 .build());
         r.addIngredient(RecipeChoice.exactChoice(exact));
         plugin.getServer().addRecipe(r);

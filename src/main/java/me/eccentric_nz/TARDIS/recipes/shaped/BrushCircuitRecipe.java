@@ -52,10 +52,8 @@ public class BrushCircuitRecipe {
         ItemStack is = ItemStack.of(Material.GLOWSTONE_DUST, 1);
         is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Brush Circuit"));
         is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
-                .addString("Brush Circuit")
-                .build());
-        is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
                 .addFloats(CircuitVariant.BRUSH.getFloats())
+                .addString("Brush Circuit")
                 .build());
         NamespacedKey key = new NamespacedKey(plugin, "brush_circuit");
         ShapedRecipe r = new ShapedRecipe(key, is);

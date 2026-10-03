@@ -68,6 +68,7 @@ public class PerceptionFilterRecipe {
             exact.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Perception Circuit"));
             exact.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
                     .addFloats(CircuitVariant.PERCEPTION.getFloats())
+                    .addString("Perception Circuit")
                     .build());
             r.setIngredient('C', RecipeChoice.exactChoice(exact));
         } else {

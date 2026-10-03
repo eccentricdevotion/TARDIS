@@ -63,6 +63,7 @@ public class EmeraldUpgradeRecipe {
         exact.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Emerald Environment Circuit"));
         exact.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
                 .addFloats(CircuitVariant.EMERALD.getFloats())
+                .addString("Emerald Environment Circuit")
                 .build());
         r.addIngredient(RecipeChoice.exactChoice(exact));
         plugin.getServer().addRecipe(r);
