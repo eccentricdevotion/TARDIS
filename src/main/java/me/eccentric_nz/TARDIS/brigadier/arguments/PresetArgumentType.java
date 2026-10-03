@@ -38,7 +38,9 @@ public class PresetArgumentType implements CustomArgumentType<String, String> {
         for (ChameleonPreset p : ChameleonPreset.values()) {
             PRESET_SUBS.add(p.toString());
         }
-        PRESET_SUBS.addAll(TARDIS.plugin.getCustomModelConfig().getConfigurationSection("models").getKeys(false));
+        for (String s : TARDIS.plugin.getCustomModelConfig().getConfigurationSection("models").getKeys(false)) {
+            PRESET_SUBS.add(s.replace(" ", "_"));
+        }
     }
 
     @Override
