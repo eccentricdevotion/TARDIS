@@ -155,7 +155,7 @@ dependencies {
     compileOnly("org.popcraft:chunky-bukkit:1.5.4")
     compileOnly("org.popcraft:chunkyborder-common:1.2.33")
     compileOnly("net.luckperms:api:5.5")
-    compileOnly("org.apache.commons:commons-lang3:3.20.0")
+    compileOnly("org.apache.commons:commons-lang3:3.21.0")
     compileOnly(files("libs/TerraformGenerator.jar"))
     compileOnly("com.formdev:flatlaf:3.7.2") {
         isTransitive = false
