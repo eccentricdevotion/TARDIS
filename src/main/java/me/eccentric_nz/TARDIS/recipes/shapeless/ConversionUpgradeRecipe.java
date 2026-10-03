@@ -63,6 +63,7 @@ public class ConversionUpgradeRecipe {
         exact.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Conversion Circuit"));
         exact.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
                 .addFloats(CircuitVariant.CONVERSION.getFloats())
+                .addString("Conversion Circuit")
                 .build());
         r.addIngredient(RecipeChoice.exactChoice(exact));
         plugin.getServer().addRecipe(r);

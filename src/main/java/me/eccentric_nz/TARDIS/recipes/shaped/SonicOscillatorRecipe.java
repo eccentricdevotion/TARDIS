@@ -51,10 +51,8 @@ public class SonicOscillatorRecipe {
         ItemStack is = ItemStack.of(Material.GLOWSTONE_DUST, 1);
         is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Sonic Oscillator"));
         is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
-                .addString("Sonic Oscillator")
-                .build());
-        is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
                 .addFloats(CircuitVariant.SONIC.getFloats())
+                .addString("Sonic Oscillator")
                 .build());
         NamespacedKey key = new NamespacedKey(plugin, "sonic_oscillator");
         ShapedRecipe r = new ShapedRecipe(key, is);

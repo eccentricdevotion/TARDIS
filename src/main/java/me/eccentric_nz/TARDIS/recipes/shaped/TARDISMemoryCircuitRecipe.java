@@ -57,10 +57,8 @@ public class TARDISMemoryCircuitRecipe {
         ItemStack is = ItemStack.of(Material.GLOWSTONE_DUST, 1);
         is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("TARDIS Memory Circuit"));
         is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
-                .addString("TARDIS Memory Circuit")
-                .build());
-        is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
                 .addFloats(CircuitVariant.MEMORY.getFloats())
+                .addString("TARDIS Memory Circuit")
                 .build());
         Component uses = (plugin.getConfig().getString("circuits.uses.memory", "20").equals("0") || !plugin.getConfig().getBoolean("circuits.damage"))
                 ? Component.text("unlimited", NamedTextColor.YELLOW)

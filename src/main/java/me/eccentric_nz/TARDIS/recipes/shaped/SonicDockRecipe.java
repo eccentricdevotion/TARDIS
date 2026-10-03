@@ -70,6 +70,7 @@ public class SonicDockRecipe {
             exact.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Sonic Oscillator"));
             exact.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
                     .addFloats(CircuitVariant.SONIC.getFloats())
+                    .addString("Sonic Oscillator")
                     .build());
             r.setIngredient('S', RecipeChoice.exactChoice(exact));
         } else {

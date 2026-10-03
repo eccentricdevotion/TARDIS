@@ -67,6 +67,7 @@ public class FobWatchRecipe {
         exact.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("TARDIS Chameleon Circuit"));
         exact.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
                 .addFloats(CircuitVariant.CHAMELEON.getFloats())
+                .addString("TARDIS Chameleon Circuit")
                 .build());
         // set the second line of lore
         Component uses = (plugin.getConfig().getString("circuits.uses.chameleon", "25").equals("0") || !plugin.getConfig().getBoolean("circuits.damage"))

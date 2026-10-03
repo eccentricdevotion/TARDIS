@@ -61,6 +61,7 @@ public class AdminUpgradeRecipe {
         exact.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Server Admin Circuit"));
         exact.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
                 .addFloats(CircuitVariant.ADMIN.getFloats())
+                .addString("Server Admin Circuit")
                 .build());
         r.addIngredient(RecipeChoice.exactChoice(exact));
         plugin.getServer().addRecipe(r);

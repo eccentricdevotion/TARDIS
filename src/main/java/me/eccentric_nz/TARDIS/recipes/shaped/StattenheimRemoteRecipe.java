@@ -80,6 +80,7 @@ public class StattenheimRemoteRecipe {
             exact.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("TARDIS Stattenheim Circuit"));
             exact.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
                     .addFloats(CircuitVariant.STATTENHEIM.getFloats())
+                    .addString("TARDIS Stattenheim Circuit")
                     .build());
             r.setIngredient('L', RecipeChoice.exactChoice(exact));
         } else {

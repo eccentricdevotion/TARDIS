@@ -63,6 +63,7 @@ public class PainterUpgradeRecipe {
         exact.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Painter Circuit"));
         exact.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
                 .addFloats(CircuitVariant.PAINTER.getFloats())
+                .addString("Painter Circuit")
                 .build());
         r.addIngredient(RecipeChoice.exactChoice(exact));
         plugin.getServer().addRecipe(r);

@@ -21,7 +21,9 @@ public class WikiRecipeArgumentType implements CustomArgumentType<String, String
     private static final SimpleCommandExceptionType ERROR_INVALID_OPT = new SimpleCommandExceptionType(
             MessageComponentSerializer.message().serialize(Component.text("Invalid wiki recipe specified!"))
     );
-    private final Set<String> OPTIONS = Set.of("shaped", "shapeless", "chest", "chemistry", "custom");
+    private final Set<String> OPTIONS = Set.of(
+            "shaped", "shapeless", "chest", "chemistry", "custom", "boxes", "rotors", "doors", "items"
+    );
 
     @Override
     public String parse(StringReader reader) {
