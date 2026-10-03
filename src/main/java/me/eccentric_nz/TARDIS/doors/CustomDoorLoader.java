@@ -55,7 +55,7 @@ public class CustomDoorLoader {
                 Material material = Material.valueOf(plugin.getCustomDoorsConfig().getString(r + ".material"));
                 if (Tag.ITEMS_DECORATED_POT_SHERDS.isTagged(material)) {
                     int[] frames = getFrames(plugin.getCustomDoorsConfig().getString(r + ".animation_sequence", "0,1"));
-                    Door door = new Door(r.toUpperCase(Locale.ROOT), material, frames, plugin.getCustomDoorsConfig().getInt(r + ".frame_rate"), plugin.getCustomDoorsConfig().getBoolean(r + ".extra"), plugin.getCustomDoorsConfig().getString(r + ".open_sound"), plugin.getCustomDoorsConfig().getString(r + ".close_sound"), true);
+                    Door door = new Door(r, material, frames, plugin.getCustomDoorsConfig().getInt(r + ".frame_rate"), plugin.getCustomDoorsConfig().getBoolean(r + ".extra"), plugin.getCustomDoorsConfig().getString(r + ".open_sound"), plugin.getCustomDoorsConfig().getString(r + ".close_sound"), true);
                     Door.byMaterial.put(material, door);
                     Door.byName.put("DOOR_" + r.toUpperCase(Locale.ROOT), door);
                 } else {
