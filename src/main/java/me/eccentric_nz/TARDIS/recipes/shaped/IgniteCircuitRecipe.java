@@ -51,10 +51,8 @@ public class IgniteCircuitRecipe {
         ItemStack is = ItemStack.of(Material.GLOWSTONE_DUST, 1);
         is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Ignite Circuit"));
         is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
-                .addString("Ignite Circuit")
-                .build());
-        is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
                 .addFloats(CircuitVariant.IGNITE.getFloats())
+                .addString("Ignite Circuit")
                 .build());
         NamespacedKey key = new NamespacedKey(plugin, "ignite_circuit");
         ShapedRecipe r = new ShapedRecipe(key, is);

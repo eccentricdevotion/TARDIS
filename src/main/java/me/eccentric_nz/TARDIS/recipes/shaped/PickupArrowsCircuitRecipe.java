@@ -50,10 +50,8 @@ public class PickupArrowsCircuitRecipe {
         ItemStack is = ItemStack.of(Material.GLOWSTONE_DUST, 1);
         is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Pickup Arrows Circuit"));
         is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
-                .addString("Pickup Arrows Circuit")
-                .build());
-        is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
                 .addFloats(CircuitVariant.PICKUP.getFloats())
+                .addString("Pickup Arrows Circuit")
                 .build());
         NamespacedKey key = new NamespacedKey(plugin, "pickup_arrows_circuit");
         ShapedRecipe r = new ShapedRecipe(key, is);

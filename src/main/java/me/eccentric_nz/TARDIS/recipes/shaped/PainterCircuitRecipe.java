@@ -52,10 +52,8 @@ public class PainterCircuitRecipe {
         ItemStack is = ItemStack.of(Material.GLOWSTONE_DUST, 1);
         is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Painter Circuit"));
         is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
-                .addString("Painter Circuit")
-                .build());
-        is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
                 .addFloats(CircuitVariant.PAINTER.getFloats())
+                .addString("Painter Circuit")
                 .build());
         NamespacedKey key = new NamespacedKey(plugin, "painter_circuit");
         ShapedRecipe r = new ShapedRecipe(key, is);

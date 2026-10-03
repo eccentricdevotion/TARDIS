@@ -64,6 +64,7 @@ public class TARDISLocatorRecipe {
             exact.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("TARDIS Locator Circuit"));
             exact.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
                     .addFloats(CircuitVariant.LOCATOR.getFloats())
+                    .addString("TARDIS Locator Circuit")
                     .build());
             r.setIngredient('C', RecipeChoice.exactChoice(exact));
         } else {
