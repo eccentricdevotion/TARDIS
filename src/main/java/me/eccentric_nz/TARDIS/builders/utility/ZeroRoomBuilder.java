@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.builders.utility;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
-import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPostioning;
+import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPositioning;
 import me.eccentric_nz.TARDIS.builders.interior.TIPSData;
 import me.eccentric_nz.TARDIS.enumeration.Advancement;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
@@ -49,7 +49,7 @@ public class ZeroRoomBuilder {
             plugin.getMessenger().send(p, TardisModule.TARDIS, "ZERO_DISABLED");
             return;
         }
-        TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
+        TARDISInteriorPositioning tintpos = new TARDISInteriorPositioning(plugin);
         int slot = tips;
         if (tips == -1) {
             slot = tintpos.getFreeSlot();

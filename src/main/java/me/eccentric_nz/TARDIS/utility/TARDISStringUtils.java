@@ -49,6 +49,11 @@ public class TARDISStringUtils {
         return uppercaseFirst(replaced);
     }
 
+    public static String words(String s) {
+        String replaced = s.replace("_", " ");
+        return replaced.toLowerCase(Locale.ROOT);
+    }
+
     public static String uppercaseFirst(String s) {
         if (s.equalsIgnoreCase("ii") || s.equalsIgnoreCase("iii") || s.equalsIgnoreCase("iv")) {
             return s.toUpperCase(Locale.ROOT);

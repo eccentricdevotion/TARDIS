@@ -140,7 +140,7 @@ class AbandonedBuildRunnable implements Runnable {
                 d = dimensions.get("length").getAsInt() - 1;
                 div = (h + 1.0d) * w * (d + 1.0d);
                 // calculate startx, starty, startz
-                TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
+                TARDISInteriorPositioning tintpos = new TARDISInteriorPositioning(plugin);
                 int slot = tintpos.getFreeSlot();
                 pos = tintpos.getTIPSData(slot);
                 // save the slot

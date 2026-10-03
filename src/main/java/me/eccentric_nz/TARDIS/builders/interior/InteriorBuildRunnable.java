@@ -159,7 +159,7 @@ public class InteriorBuildRunnable implements Runnable {
                 // calculate startx, starty, startz
                 if (tips > -1000001) {
                     // default world - use TIPS
-                    TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
+                    TARDISInteriorPositioning tintpos = new TARDISInteriorPositioning(plugin);
                     pos = tintpos.getTIPSData(tips);
                     startx = pos.getCentreX();
                     resetx = pos.getCentreX();

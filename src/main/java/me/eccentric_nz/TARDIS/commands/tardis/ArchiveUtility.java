@@ -1,7 +1,7 @@
 package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPostioning;
+import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPositioning;
 import me.eccentric_nz.TARDIS.builders.interior.TIPSData;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
@@ -80,7 +80,7 @@ public class ArchiveUtility {
         int id = tardis.getTardisId();
         int sx, sz;
         if (slot != -1000001) { // default world - use TIPS
-            TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
+            TARDISInteriorPositioning tintpos = new TARDISInteriorPositioning(plugin);
             TIPSData pos = tintpos.getTIPSData(slot);
             sx = pos.getCentreX();
             sz = pos.getCentreZ();

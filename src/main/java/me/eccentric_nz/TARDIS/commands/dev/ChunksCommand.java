@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.commands.dev;
 
 import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPostioning;
+import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPositioning;
 import me.eccentric_nz.TARDIS.builders.interior.TIPSData;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
@@ -84,7 +84,7 @@ public class ChunksCommand {
     }
 
     private Location getLocation(Schematic schematic, Tardis tardis, World world) {
-        TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
+        TARDISInteriorPositioning tintpos = new TARDISInteriorPositioning(plugin);
         TIPSData pos = tintpos.getTIPSData(tardis.getTIPS());
         int startx = pos.getCentreX();
         int starty = schematic.getStartY();

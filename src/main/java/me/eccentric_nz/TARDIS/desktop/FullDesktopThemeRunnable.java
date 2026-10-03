@@ -24,7 +24,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.event.TARDISDesktopThemeEvent;
-import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPostioning;
+import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPositioning;
 import me.eccentric_nz.TARDIS.builders.interior.TIPSData;
 import me.eccentric_nz.TARDIS.builders.utility.FractalFence;
 import me.eccentric_nz.TARDIS.console.ConsoleBuilder;
@@ -292,7 +292,7 @@ public class FullDesktopThemeRunnable extends DesktopThemeRunnable {
                 ent.remove();
             }
             if (slot != -1000001) { // default world - use TIPS
-                TARDISInteriorPostioning tintPos = new TARDISInteriorPostioning(plugin);
+                TARDISInteriorPositioning tintPos = new TARDISInteriorPositioning(plugin);
                 TIPSData pos = tintPos.getTIPSData(slot);
                 startX = pos.getCentreX();
                 resetX = pos.getCentreX();
