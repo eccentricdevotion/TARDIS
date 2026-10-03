@@ -150,32 +150,24 @@ public class BuilderUtility {
             case BLUE_DYE -> is.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.BLUE_CLOSED.getKey());
             case PURPLE_DYE -> is.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.PURPLE_CLOSED.getKey());
             case CYAN_DYE -> is.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.CYAN_CLOSED.getKey());
-            case LIGHT_GRAY_DYE ->
-                    is.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.LIGHT_GRAY_CLOSED.getKey());
+            case LIGHT_GRAY_DYE -> is.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.LIGHT_GRAY_CLOSED.getKey());
             case GRAY_DYE -> is.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.GRAY_CLOSED.getKey());
             case PINK_DYE -> is.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.PINK_CLOSED.getKey());
             case LIME_DYE -> is.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.LIME_CLOSED.getKey());
             case YELLOW_DYE -> is.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.YELLOW_CLOSED.getKey());
-            case LIGHT_BLUE_DYE ->
-                    is.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.LIGHT_BLUE_CLOSED.getKey());
+            case LIGHT_BLUE_DYE -> is.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.LIGHT_BLUE_CLOSED.getKey());
             case MAGENTA_DYE -> is.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.MAGENTA_CLOSED.getKey());
             case ORANGE_DYE -> is.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.ORANGE_CLOSED.getKey());
             case WHITE_DYE -> is.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.WHITE_CLOSED.getKey());
-            case CYAN_STAINED_GLASS_PANE ->
-                    is.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.TENNANT_CLOSED.getKey());
-            case LEATHER_HORSE_ARMOR ->
-                    is.setData(DataComponentTypes.ITEM_MODEL, ColouredVariant.TINTED_CLOSED.getKey());
+            case CYAN_STAINED_GLASS_PANE -> is.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.TENNANT_CLOSED.getKey());
+            case LEATHER_HORSE_ARMOR -> is.setData(DataComponentTypes.ITEM_MODEL, ColouredVariant.TINTED_CLOSED.getKey());
             case WOLF_SPAWN_EGG -> is.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.BAD_WOLF_CLOSED.getKey());
             case ENDER_PEARL -> is.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.PANDORICA_CLOSED.getKey());
-            case GREEN_STAINED_GLASS_PANE ->
-                    is.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.SIDRAT_CLOSED.getKey());
-            case GRAY_STAINED_GLASS_PANE ->
-                    is.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.WEEPING_ANGEL_CLOSED.getKey());
-            case RED_STAINED_GLASS_PANE ->
-                    is.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.BATTLE_CLOSED.getKey());
+            case GREEN_STAINED_GLASS_PANE -> is.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.SIDRAT_CLOSED.getKey());
+            case GRAY_STAINED_GLASS_PANE -> is.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.WEEPING_ANGEL_CLOSED.getKey());
+            case RED_STAINED_GLASS_PANE -> is.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.BATTLE_CLOSED.getKey());
             // CUSTOM
-            default ->
-                    is.setData(DataComponentTypes.ITEM_MODEL, new NamespacedKey(plugin, getCustomModelPath(dye.toString()) + "_closed"));
+            default -> is.setData(DataComponentTypes.ITEM_MODEL, new NamespacedKey(plugin, getCustomModelPath(dye.toString()) + "_closed"));
         }
         if (bd.shouldAddSign() && bd.getPlayer() != null) {
             String pb = "";
