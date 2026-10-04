@@ -106,8 +106,10 @@ public class TARDISKeyMenuListener extends TARDISMenuListener {
                 }
                 // get display name of selected key
                 ItemStack choice = view.getItem(slot);
+                CustomModelData data = choice.getData(DataComponentTypes.CUSTOM_MODEL_DATA);
                 key.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
-                        .addFloats(choice.getData(DataComponentTypes.CUSTOM_MODEL_DATA).floats())
+                        .addFloats(data.floats())
+                        .addStrings(data.strings())
                         .build());
                 // personalise
                 key.editPersistentDataContainer(pdc -> pdc.set(TARDIS.plugin.getTimeLordUuidKey(), TARDIS.plugin.getPersistentDataTypeUUID(), player.getUniqueId()));

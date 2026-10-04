@@ -22,7 +22,9 @@ public class WikiRecipeArgumentType implements CustomArgumentType<String, String
             MessageComponentSerializer.message().serialize(Component.text("Invalid wiki recipe specified!"))
     );
     private final Set<String> OPTIONS = Set.of(
-            "shaped", "shapeless", "chest", "chemistry", "custom", "boxes", "rotors", "doors", "items"
+            "shaped", "shapeless", "chest", "chemistry", "custom",
+            "boxes", "rotors", "doors", "items", "keys", "monsters",
+            "armour"
     );
 
     @Override

@@ -32,6 +32,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Oh, yes. Harmless is just the word. That's why I like it! Doesn't kill, doesn't wound, doesn't maim. But I'll tell
@@ -94,6 +95,7 @@ public class TARDISKeyMenuInventory implements InventoryHolder {
                     KeyVariant variant = KeyVariant.valueOf(key.toString());
                     is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
                             .addFloats(variant.getFloats())
+                            .addString(variant.toString().toLowerCase(Locale.ROOT))
                             .build());
                 } catch (IllegalArgumentException ignored) {
                 }
