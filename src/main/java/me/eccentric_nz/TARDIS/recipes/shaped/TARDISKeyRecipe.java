@@ -30,7 +30,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 
 /*
@@ -48,27 +47,27 @@ lore:Enter and exit your TARDIS
 public class TARDISKeyRecipe {
 
     private final TARDIS plugin;
-    private final HashMap<String, List<Float>> cmdLookup = new HashMap<>();
+    private final HashMap<String, KeyVariant> cmdLookup = new HashMap<>();
 
     public TARDISKeyRecipe(TARDIS plugin) {
         this.plugin = plugin;
-        cmdLookup.put("first", KeyVariant.BRASS_YALE.getFloats());
-        cmdLookup.put("second", KeyVariant.BRASS_PLAIN.getFloats());
-        cmdLookup.put("third", KeyVariant.SPADE_SHAPED.getFloats());
-        cmdLookup.put("fifth", KeyVariant.SILVER_YALE.getFloats());
-        cmdLookup.put("seventh", KeyVariant.SEAL_OF_RASSILON.getFloats());
-        cmdLookup.put("ninth", KeyVariant.SILVER_VARIANT.getFloats());
-        cmdLookup.put("tenth", KeyVariant.SILVER_PLAIN.getFloats());
-        cmdLookup.put("eleventh", KeyVariant.SILVER_NEW.getFloats());
-        cmdLookup.put("rose", KeyVariant.SILVER_ERA.getFloats());
-        cmdLookup.put("sally", KeyVariant.SILVER_STRING.getFloats());
-        cmdLookup.put("perception", KeyVariant.FILTER.getFloats());
-        cmdLookup.put("susan", KeyVariant.BRASS_STRING.getFloats());
-        cmdLookup.put("gold", KeyVariant.BROMLEY_GOLD.getFloats());
+        cmdLookup.put("first", KeyVariant.BRASS_YALE);
+        cmdLookup.put("second", KeyVariant.BRASS_PLAIN);
+        cmdLookup.put("third", KeyVariant.SPADE_SHAPED);
+        cmdLookup.put("fifth", KeyVariant.SILVER_YALE);
+        cmdLookup.put("seventh", KeyVariant.SEAL_OF_RASSILON);
+        cmdLookup.put("ninth", KeyVariant.SILVER_VARIANT);
+        cmdLookup.put("tenth", KeyVariant.SILVER_PLAIN);
+        cmdLookup.put("eleventh", KeyVariant.SILVER_NEW);
+        cmdLookup.put("rose", KeyVariant.SILVER_ERA);
+        cmdLookup.put("sally", KeyVariant.SILVER_STRING);
+        cmdLookup.put("perception", KeyVariant.FILTER);
+        cmdLookup.put("susan", KeyVariant.BRASS_STRING);
+        cmdLookup.put("gold", KeyVariant.BROMLEY_GOLD);
     }
 
     public void addRecipe() {
-        List<Float> floats = cmdLookup.getOrDefault(plugin.getConfig().getString("preferences.default_key", "eleventh").toLowerCase(Locale.ROOT), KeyVariant.BRASS_YALE.getFloats());
+        KeyVariant variant = cmdLookup.getOrDefault(plugin.getConfig().getString("preferences.default_key", "eleventh").toLowerCase(Locale.ROOT), KeyVariant.BRASS_YALE);
         Material material;
         try {
             material = Material.valueOf(plugin.getConfig().getString("preferences.key"));
@@ -82,7 +81,8 @@ public class TARDISKeyRecipe {
                 .build());
         is.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text("Enter and exit your TARDIS")).build());
         is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
-                .addFloats(floats)
+                .addFloats(variant.getFloats())
+                .addString(variant.toString().toLowerCase(Locale.ROOT))
                 .build());
         NamespacedKey key = new NamespacedKey(plugin, "tardis_key");
         ShapedRecipe r = new ShapedRecipe(key, is);
