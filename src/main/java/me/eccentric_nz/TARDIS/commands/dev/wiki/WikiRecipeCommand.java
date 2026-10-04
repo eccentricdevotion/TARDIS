@@ -35,6 +35,9 @@ public class WikiRecipeCommand {
             case "rotors" -> new RotorBuilder(plugin).place(sender);
             case "doors" -> new DoorBuilder(plugin).place(sender);
             case "items" -> new ItemsBuilder(plugin).place(sender);
+            case "keys" -> new KeysBuilder(plugin).place(sender);
+            case "monsters" -> new MonstersBuilder(plugin).place(sender);
+            case "armour" -> new ArmourBuilder(plugin).place(sender);
             // pages
             case "shaped" -> new ShapedPageBuilder(plugin).compile();
             case "shapeless" -> new ShapelessPageBuilder(plugin).compile();

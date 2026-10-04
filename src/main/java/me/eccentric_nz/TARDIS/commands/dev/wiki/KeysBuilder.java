@@ -16,14 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.commands.dev.wiki;
 
-import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodels.keys.KeyVariant;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
+import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.ShapelessRecipe;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -32,12 +30,12 @@ import java.io.IOException;
 import java.util.Locale;
 import java.util.NoSuchElementException;
 
-public class ItemsBuilder {
+public class KeysBuilder {
 
     private final TARDIS plugin;
     private final File wikiDir;
 
-    public ItemsBuilder(TARDIS plugin) {
+    public KeysBuilder(TARDIS plugin) {
         this.plugin = plugin;
         this.wikiDir = new File(plugin.getDataFolder() + File.separator + "wiki");
     }
@@ -49,49 +47,34 @@ public class ItemsBuilder {
                 plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Created wiki directory.");
             }
         }
-        // make JSON files for all tardis recipe items
-        for (ShapedRecipe s : plugin.getFigura().getShapedRecipes().values()) {
-            save(s.getResult());
-        }
-        for (ShapelessRecipe s : plugin.getIncomposita().getShapelessRecipes().values()) {
-            save(s.getResult());
+        File file = new File(plugin.getDataFolder() + File.separator + "wiki" + File.separator + "gold_nugget.json");
+        // make cases for all tardis key items
+        for (KeyVariant k : KeyVariant.values()) {
+            ItemStack is = ItemStack.of(Material.GOLD_NUGGET, 1);
+            save(is, k, file);
         }
     }
 
-    public void save(ItemStack is) {
-//        if (is.getType() != Material.GLOWSTONE_DUST) {
-//            return;
-//        }
+    public void save(ItemStack is, KeyVariant k, File file) {
         try {
-            String name = is.getData(DataComponentTypes.CUSTOM_MODEL_DATA).strings().getFirst();
-            String filename = is.getType().toString().toLowerCase(Locale.ROOT) + ".json";
+            String name = k.toString().toLowerCase(Locale.ROOT);
             String template = """
-                    {
-                        "model": {
-                            "type": "minecraft:select",
-                            "property": "minecraft:custom_model_data",
-                            "index": 0,
-                            "cases": [
                                 {
                                     "when": "%s",
                                     "model": {
                                         "type": "minecraft:model",
-                                        "model": "tardis:item/tardis/%s"
+                                        "model": "tardis:item/key/%s"
                                     }
-                                }
-                            ]
-                        }
-                    }
+                                },
                     """;
-            String contents = String.format(template, name, TARDISStringUtils.toScoredLowercase(name));
-            File file = new File(plugin.getDataFolder() + File.separator + "wiki" + File.separator + filename);
+            String contents = String.format(template, name, name);
             // save to file
             try {
                 try (BufferedWriter bw = new BufferedWriter(new FileWriter(file, true))) {
                     bw.write(contents);
                 }
             } catch (IOException e) {
-                plugin.debug("Could not create and write to " + filename + "! " + e.getMessage());
+                plugin.debug("Could not create and write to key file! " + e.getMessage());
             }
         } catch (NoSuchElementException | NullPointerException e) {
             plugin.debug("No custom model string data for " + is.getType());
