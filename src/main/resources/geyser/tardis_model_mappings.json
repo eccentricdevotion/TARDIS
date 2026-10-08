@@ -1,0 +1,67 @@
+{
+  "format_version": 2,
+  "items": {
+    "minecraft:flower_pot": [
+      {
+        "bedrock_identifier": "tardis:item/sonic/sonic_dock_off",
+        "bedrock_options": {
+          "icon": "tardis.item_sonic_sonic_dock_off_icon"
+        },
+        "model": "tardis:sonic_dock_off",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/sonic/sonic_dock_on",
+        "bedrock_options": {
+          "icon": "tardis.item_sonic_sonic_dock_on_icon"
+        },
+        "model": "tardis:sonic_dock_on",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/sonic/sonic_generator",
+        "bedrock_options": {
+          "icon": "tardis.item_sonic_sonic_generator_icon"
+        },
+        "model": "tardis:sonic_generator",
+        "type": "definition"
+      }
+    ],
+    "minecraft:map": [
+      {
+        "bedrock_identifier": "tardis:item/tardis/monitor",
+        "bedrock_options": {
+          "icon": "tardis.item_tardis_monitor_icon"
+        },
+        "model": "tardis:monitor",
+        "type": "definition"
+      }
+    ],
+    "minecraft:glass": [
+      {
+        "bedrock_identifier": "tardis:item/tardis/monitor_frame_left",
+        "bedrock_options": {
+          "icon": "tardis.item_tardis_monitor_frame_left_icon"
+        },
+        "model": "tardis:monitor_frame_left",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/tardis/monitor_frame_middle",
+        "bedrock_options": {
+          "icon": "tardis.item_tardis_monitor_frame_middle_icon"
+        },
+        "model": "tardis:monitor_frame_middle",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/tardis/monitor_frame_right",
+        "bedrock_options": {
+          "icon": "tardis.item_tardis_monitor_frame_right_icon"
+        },
+        "model": "tardis:monitor_frame_right",
+        "type": "definition"
+      }
+    ]
+  }
+}

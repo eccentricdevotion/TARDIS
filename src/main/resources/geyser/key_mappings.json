@@ -1,0 +1,208 @@
+{
+  "format_version": 2,
+  "items": {
+    "minecraft:gold_nugget": [
+      {
+        "model": "minecraft:gold_nugget",
+        "definitions": [
+          {
+            "bedrock_identifier": "tardis:item/key/brass_plain",
+            "predicate": {
+              "value": "brass_plain",
+              "property": "custom_model_data",
+              "type": "match",
+              "index": 0
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_key_brass_plain"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/key/brass_string",
+            "predicate": {
+              "value": "brass_string",
+              "property": "custom_model_data",
+              "type": "match",
+              "index": 0
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_key_brass_string"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/key/brass_yale",
+            "predicate": {
+              "value": "brass_yale",
+              "property": "custom_model_data",
+              "type": "match",
+              "index": 0
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_key_brass_yale"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/key/bromley_gold",
+            "predicate": {
+              "value": "bromley_gold",
+              "property": "custom_model_data",
+              "type": "match",
+              "index": 0
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_key_bromley_gold_icon"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/key/filter",
+            "predicate": {
+              "value": "filter",
+              "property": "custom_model_data",
+              "type": "match",
+              "index": 0
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_key_filter"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/key/perception_filter",
+            "predicate": {
+              "value": "perception_filter",
+              "property": "custom_model_data",
+              "type": "match",
+              "index": 0
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_key_perception_filter"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/key/remote",
+            "predicate": {
+              "value": "remote",
+              "property": "custom_model_data",
+              "type": "match",
+              "index": 0
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_key_remote"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/key/seal_of_rassilon",
+            "predicate": {
+              "value": "seal_of_rassilon",
+              "property": "custom_model_data",
+              "type": "match",
+              "index": 0
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_key_seal_of_rassilon"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/key/silver_era",
+            "predicate": {
+              "value": "silver_era",
+              "property": "custom_model_data",
+              "type": "match",
+              "index": 0
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_key_silver_era"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/key/silver_new",
+            "predicate": {
+              "value": "silver_new",
+              "property": "custom_model_data",
+              "type": "match",
+              "index": 0
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_key_silver_new"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/key/silver_plain",
+            "predicate": {
+              "value": "silver_plain",
+              "property": "custom_model_data",
+              "type": "match",
+              "index": 0
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_key_silver_plain"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/key/silver_string",
+            "predicate": {
+              "value": "silver_string",
+              "property": "custom_model_data",
+              "type": "match",
+              "index": 0
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_key_silver_string"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/key/silver_variant",
+            "predicate": {
+              "value": "silver_variant",
+              "property": "custom_model_data",
+              "type": "match",
+              "index": 0
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_key_silver_variant"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/key/silver_yale",
+            "predicate": {
+              "value": "silver_yale",
+              "property": "custom_model_data",
+              "type": "match",
+              "index": 0
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_key_silver_yale"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/key/spade_shaped",
+            "predicate": {
+              "value": "spade_shaped",
+              "property": "custom_model_data",
+              "type": "match",
+              "index": 0
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_key_spade_shaped"
+            },
+            "type": "definition"
+          }
+        ],
+        "type": "group"
+      }
+    ]
+  }
+}

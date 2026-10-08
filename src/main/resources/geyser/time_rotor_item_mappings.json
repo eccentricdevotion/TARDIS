@@ -1,0 +1,691 @@
+{
+  "format_version": 2,
+  "items": {
+    "minecraft:light_blue_dye": [
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/engine/engine_0",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_engine_engine_0_icon"
+        },
+        "model": "tardis:time_engine_0",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/engine/engine_1",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_engine_engine_1_icon"
+        },
+        "model": "tardis:time_engine_1",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/engine/engine_10",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_engine_engine_10_icon"
+        },
+        "model": "tardis:time_engine_10",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/engine/engine_11",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_engine_engine_11_icon"
+        },
+        "model": "tardis:time_engine_11",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/engine/engine_2",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_engine_engine_2_icon"
+        },
+        "model": "tardis:time_engine_2",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/engine/engine_3",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_engine_engine_3_icon"
+        },
+        "model": "tardis:time_engine_3",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/engine/engine_4",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_engine_engine_4_icon"
+        },
+        "model": "tardis:time_engine_4",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/engine/engine_5",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_engine_engine_5_icon"
+        },
+        "model": "tardis:time_engine_5",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/engine/engine_6",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_engine_engine_6_icon"
+        },
+        "model": "tardis:time_engine_6",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/engine/engine_7",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_engine_engine_7_icon"
+        },
+        "model": "tardis:time_engine_7",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/engine/engine_8",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_engine_engine_8_icon"
+        },
+        "model": "tardis:time_engine_8",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/engine/engine_9",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_engine_engine_9_icon"
+        },
+        "model": "tardis:time_engine_9",
+        "type": "definition"
+      }
+    ],
+    "minecraft:black_dye": [
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/early/early_0",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_early_early_0_icon"
+        },
+        "model": "tardis:time_rotor_early_0",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/early/early_1",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_early_early_1_icon"
+        },
+        "model": "tardis:time_rotor_early_1",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/early/early_2",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_early_early_2_icon"
+        },
+        "model": "tardis:time_rotor_early_2",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/early/early_3",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_early_early_3_icon"
+        },
+        "model": "tardis:time_rotor_early_3",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/early/early_4",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_early_early_4_icon"
+        },
+        "model": "tardis:time_rotor_early_4",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/early/early_5",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_early_early_5_icon"
+        },
+        "model": "tardis:time_rotor_early_5",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/early/early_6",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_early_early_6_icon"
+        },
+        "model": "tardis:time_rotor_early_6",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/early/early_7",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_early_early_7_icon"
+        },
+        "model": "tardis:time_rotor_early_7",
+        "type": "definition"
+      }
+    ],
+    "minecraft:light_gray_dye": [
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/engine_off",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_engine_off_icon"
+        },
+        "model": "tardis:time_engine_off",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/engine_rotor_off",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_engine_rotor_off_icon"
+        },
+        "model": "tardis:time_rotor_engine_off",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/hospital_off",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_hospital_off_icon"
+        },
+        "model": "tardis:time_rotor_hospital_off",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/time_rotor_classic_off",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_time_rotor_classic_off_icon"
+        },
+        "model": "tardis:time_rotor_classic_off",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/time_rotor_console_off",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_time_rotor_console_off_icon"
+        },
+        "model": "tardis:time_rotor_console_off",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/time_rotor_delta_off",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_time_rotor_delta_off_icon"
+        },
+        "model": "tardis:time_rotor_delta_off",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/time_rotor_early_off",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_time_rotor_early_off_icon"
+        },
+        "model": "tardis:time_rotor_early_off",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/time_rotor_eleventh_off",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_time_rotor_eleventh_off_icon"
+        },
+        "model": "tardis:time_rotor_eleventh_off",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/time_rotor_rustic_off",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_time_rotor_rustic_off_icon"
+        },
+        "model": "tardis:time_rotor_rustic_off",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/time_rotor_tennant_off",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_time_rotor_tennant_off_icon"
+        },
+        "model": "tardis:time_rotor_tennant_off",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/time_rotor_twelfth_off",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_time_rotor_twelfth_off_icon"
+        },
+        "model": "tardis:time_rotor_twelfth_off",
+        "type": "definition"
+      }
+    ],
+    "minecraft:green_dye": [
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/rustic/rustic_0",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_rustic_rustic_0_icon"
+        },
+        "model": "tardis:time_rotor_rustic_0",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/rustic/rustic_1",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_rustic_rustic_1_icon"
+        },
+        "model": "tardis:time_rotor_rustic_1",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/rustic/rustic_2",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_rustic_rustic_2_icon"
+        },
+        "model": "tardis:time_rotor_rustic_2",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/rustic/rustic_3",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_rustic_rustic_3_icon"
+        },
+        "model": "tardis:time_rotor_rustic_3",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/rustic/rustic_4",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_rustic_rustic_4_icon"
+        },
+        "model": "tardis:time_rotor_rustic_4",
+        "type": "definition"
+      }
+    ],
+    "minecraft:yellow_dye": [
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/classic/classic_0",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_classic_classic_0_icon"
+        },
+        "model": "tardis:time_rotor_classic_0",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/classic/classic_1",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_classic_classic_1_icon"
+        },
+        "model": "tardis:time_rotor_classic_1",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/classic/classic_2",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_classic_classic_2_icon"
+        },
+        "model": "tardis:time_rotor_classic_2",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/classic/classic_3",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_classic_classic_3_icon"
+        },
+        "model": "tardis:time_rotor_classic_3",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/classic/classic_4",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_classic_classic_4_icon"
+        },
+        "model": "tardis:time_rotor_classic_4",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/classic/classic_5",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_classic_classic_5_icon"
+        },
+        "model": "tardis:time_rotor_classic_5",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/classic/classic_6",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_classic_classic_6_icon"
+        },
+        "model": "tardis:time_rotor_classic_6",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/classic/classic_7",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_classic_classic_7_icon"
+        },
+        "model": "tardis:time_rotor_classic_7",
+        "type": "definition"
+      }
+    ],
+    "minecraft:blue_dye": [
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/engine_rotor/engine_rotor_0",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_engine_rotor_engine_rotor_0_icon"
+        },
+        "model": "tardis:time_rotor_engine_0",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/engine_rotor/engine_rotor_1",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_engine_rotor_engine_rotor_1_icon"
+        },
+        "model": "tardis:time_rotor_engine_1",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/engine_rotor/engine_rotor_2",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_engine_rotor_engine_rotor_2_icon"
+        },
+        "model": "tardis:time_rotor_engine_2",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/engine_rotor/engine_rotor_3",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_engine_rotor_engine_rotor_3_icon"
+        },
+        "model": "tardis:time_rotor_engine_3",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/engine_rotor/engine_rotor_4",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_engine_rotor_engine_rotor_4_icon"
+        },
+        "model": "tardis:time_rotor_engine_4",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/engine_rotor/engine_rotor_5",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_engine_rotor_engine_rotor_5_icon"
+        },
+        "model": "tardis:time_rotor_engine_5",
+        "type": "definition"
+      }
+    ],
+    "minecraft:brown_dye": [
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/eleventh/eleventh_0",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_eleventh_eleventh_0_icon"
+        },
+        "model": "tardis:time_rotor_eleventh_0",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/eleventh/eleventh_1",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_eleventh_eleventh_1_icon"
+        },
+        "model": "tardis:time_rotor_eleventh_1",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/eleventh/eleventh_2",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_eleventh_eleventh_2_icon"
+        },
+        "model": "tardis:time_rotor_eleventh_2",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/eleventh/eleventh_3",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_eleventh_eleventh_3_icon"
+        },
+        "model": "tardis:time_rotor_eleventh_3",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/eleventh/eleventh_4",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_eleventh_eleventh_4_icon"
+        },
+        "model": "tardis:time_rotor_eleventh_4",
+        "type": "definition"
+      }
+    ],
+    "minecraft:red_dye": [
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/console/console_0",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_console_console_0_icon"
+        },
+        "model": "tardis:time_rotor_console_0",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/console/console_1",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_console_console_1_icon"
+        },
+        "model": "tardis:time_rotor_console_1",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/console/console_2",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_console_console_2_icon"
+        },
+        "model": "tardis:time_rotor_console_2",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/console/console_3",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_console_console_3_icon"
+        },
+        "model": "tardis:time_rotor_console_3",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/console/console_4",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_console_console_4_icon"
+        },
+        "model": "tardis:time_rotor_console_4",
+        "type": "definition"
+      }
+    ],
+    "minecraft:white_dye": [
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/hospital/hospital_0",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_hospital_hospital_0_icon"
+        },
+        "model": "tardis:time_rotor_hospital_0",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/hospital/hospital_1",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_hospital_hospital_1_icon"
+        },
+        "model": "tardis:time_rotor_hospital_1",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/hospital/hospital_10",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_hospital_hospital_10_icon"
+        },
+        "model": "tardis:time_rotor_hospital_10",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/hospital/hospital_11",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_hospital_hospital_11_icon"
+        },
+        "model": "tardis:time_rotor_hospital_11",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/hospital/hospital_2",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_hospital_hospital_2_icon"
+        },
+        "model": "tardis:time_rotor_hospital_2",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/hospital/hospital_3",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_hospital_hospital_3_icon"
+        },
+        "model": "tardis:time_rotor_hospital_3",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/hospital/hospital_4",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_hospital_hospital_4_icon"
+        },
+        "model": "tardis:time_rotor_hospital_4",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/hospital/hospital_5",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_hospital_hospital_5_icon"
+        },
+        "model": "tardis:time_rotor_hospital_5",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/hospital/hospital_6",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_hospital_hospital_6_icon"
+        },
+        "model": "tardis:time_rotor_hospital_6",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/hospital/hospital_7",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_hospital_hospital_7_icon"
+        },
+        "model": "tardis:time_rotor_hospital_7",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/hospital/hospital_8",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_hospital_hospital_8_icon"
+        },
+        "model": "tardis:time_rotor_hospital_8",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/hospital/hospital_9",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_hospital_hospital_9_icon"
+        },
+        "model": "tardis:time_rotor_hospital_9",
+        "type": "definition"
+      }
+    ],
+    "minecraft:orange_dye": [
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/tennant/tennant_0",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_tennant_tennant_0_icon"
+        },
+        "model": "tardis:time_rotor_tennant_0",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/tennant/tennant_1",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_tennant_tennant_1_icon"
+        },
+        "model": "tardis:time_rotor_tennant_1",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/tennant/tennant_2",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_tennant_tennant_2_icon"
+        },
+        "model": "tardis:time_rotor_tennant_2",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/tennant/tennant_3",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_tennant_tennant_3_icon"
+        },
+        "model": "tardis:time_rotor_tennant_3",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/tennant/tennant_4",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_tennant_tennant_4_icon"
+        },
+        "model": "tardis:time_rotor_tennant_4",
+        "type": "definition"
+      }
+    ],
+    "minecraft:cyan_dye": [
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/delta/delta_0",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_delta_delta_0_icon"
+        },
+        "model": "tardis:time_rotor_delta_0",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/delta/delta_1",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_delta_delta_1_icon"
+        },
+        "model": "tardis:time_rotor_delta_1",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/delta/delta_2",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_delta_delta_2_icon"
+        },
+        "model": "tardis:time_rotor_delta_2",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/delta/delta_3",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_delta_delta_3_icon"
+        },
+        "model": "tardis:time_rotor_delta_3",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/delta/delta_4",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_delta_delta_4_icon"
+        },
+        "model": "tardis:time_rotor_delta_4",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/time_rotor/delta/delta_5",
+        "bedrock_options": {
+          "icon": "tardis.item_time_rotor_delta_delta_5_icon"
+        },
+        "model": "tardis:time_rotor_delta_5",
+        "type": "definition"
+      }
+    ]
+  }
+}

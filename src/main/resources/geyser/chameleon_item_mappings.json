@@ -1,0 +1,809 @@
+{
+  "format_version": 2,
+  "items": {
+    "minecraft:light_blue_dye": [
+      {
+        "bedrock_identifier": "tardis:item/police_box/light_blue_closed",
+        "bedrock_options": {
+          "icon": "tardis.item_police_box_light_blue_closed_icon"
+        },
+        "model": "tardis:chameleon_light_blue_closed",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/police_box/light_blue_glass",
+        "bedrock_options": {
+          "icon": "tardis.item_police_box_light_blue_glass_icon"
+        },
+        "model": "tardis:chameleon_light_blue_glass",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/police_box/light_blue_open",
+        "bedrock_options": {
+          "icon": "tardis.item_police_box_light_blue_open_icon"
+        },
+        "model": "tardis:chameleon_light_blue_open",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/police_box/light_blue_stained",
+        "bedrock_options": {
+          "icon": "tardis.item_police_box_light_blue_stained_icon"
+        },
+        "model": "tardis:chameleon_light_blue_stained",
+        "type": "definition"
+      }
+    ],
+    "minecraft:black_dye": [
+      {
+        "bedrock_identifier": "tardis:item/police_box/black_closed",
+        "bedrock_options": {
+          "icon": "tardis.item_police_box_black_closed_icon"
+        },
+        "model": "tardis:chameleon_black_closed",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/police_box/black_glass",
+        "bedrock_options": {
+          "icon": "tardis.item_police_box_black_glass_icon"
+        },
+        "model": "tardis:chameleon_black_glass",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/police_box/black_open",
+        "bedrock_options": {
+          "icon": "tardis.item_police_box_black_open_icon"
+        },
+        "model": "tardis:chameleon_black_open",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/police_box/black_stained",
+        "bedrock_options": {
+          "icon": "tardis.item_police_box_black_stained_icon"
+        },
+        "model": "tardis:chameleon_black_stained",
+        "type": "definition"
+      }
+    ],
+    "minecraft:yellow_dye": [
+      {
+        "bedrock_identifier": "tardis:item/police_box/yellow_closed",
+        "bedrock_options": {
+          "icon": "tardis.item_police_box_yellow_closed_icon"
+        },
+        "model": "tardis:chameleon_yellow_closed",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/police_box/yellow_glass",
+        "bedrock_options": {
+          "icon": "tardis.item_police_box_yellow_glass_icon"
+        },
+        "model": "tardis:chameleon_yellow_glass",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/police_box/yellow_open",
+        "bedrock_options": {
+          "icon": "tardis.item_police_box_yellow_open_icon"
+        },
+        "model": "tardis:chameleon_yellow_open",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/police_box/yellow_stained",
+        "bedrock_options": {
+          "icon": "tardis.item_police_box_yellow_stained_icon"
+        },
+        "model": "tardis:chameleon_yellow_stained",
+        "type": "definition"
+      }
+    ],
+    "minecraft:lime_dye": [
+      {
+        "bedrock_identifier": "tardis:item/police_box/lime_closed",
+        "bedrock_options": {
+          "icon": "tardis.item_police_box_lime_closed_icon"
+        },
+        "model": "tardis:chameleon_lime_closed",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/police_box/lime_glass",
+        "bedrock_options": {
+          "icon": "tardis.item_police_box_lime_glass_icon"
+        },
+        "model": "tardis:chameleon_lime_glass",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/police_box/lime_open",
+        "bedrock_options": {
+          "icon": "tardis.item_police_box_lime_open_icon"
+        },
+        "model": "tardis:chameleon_lime_open",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/police_box/lime_stained",
+        "bedrock_options": {
+          "icon": "tardis.item_police_box_lime_stained_icon"
+        },
+        "model": "tardis:chameleon_lime_stained",
+        "type": "definition"
+      }
+    ],
+    "minecraft:pink_dye": [
+      {
+        "bedrock_identifier": "tardis:item/police_box/pink_closed",
+        "bedrock_options": {
+          "icon": "tardis.item_police_box_pink_closed_icon"
+        },
+        "model": "tardis:chameleon_pink_closed",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/police_box/pink_glass",
+        "bedrock_options": {
+          "icon": "tardis.item_police_box_pink_glass_icon"
+        },
+        "model": "tardis:chameleon_pink_glass",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/police_box/pink_open",
+        "bedrock_options": {
+          "icon": "tardis.item_police_box_pink_open_icon"
+        },
+        "model": "tardis:chameleon_pink_open",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/police_box/pink_stained",
+        "bedrock_options": {
+          "icon": "tardis.item_police_box_pink_stained_icon"
+        },
+        "model": "tardis:chameleon_pink_stained",
+        "type": "definition"
+      }
+    ],
+    "minecraft:light_gray_dye": [
+      {
+        "bedrock_identifier": "tardis:item/police_box/light_gray_closed",
+        "bedrock_options": {
+          "icon": "tardis.item_police_box_light_gray_closed_icon"
+        },
+        "model": "tardis:chameleon_light_gray_closed",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/police_box/light_gray_glass",
+        "bedrock_options": {
+          "icon": "tardis.item_police_box_light_gray_glass_icon"
+        },
+        "model": "tardis:chameleon_light_gray_glass",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/police_box/light_gray_open",
+        "bedrock_options": {
+          "icon": "tardis.item_police_box_light_gray_open_icon"
+        },
+        "model": "tardis:chameleon_light_gray_open",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/police_box/light_gray_stained",
+        "bedrock_options": {
+          "icon": "tardis.item_police_box_light_gray_stained_icon"
+        },
+        "model": "tardis:chameleon_light_gray_stained",
+        "type": "definition"
+      }
+    ],
+    "minecraft:green_dye": [
+      {
+        "bedrock_identifier": "tardis:item/police_box/green_closed",
+        "bedrock_options": {
+          "icon": "tardis.item_police_box_green_closed_icon"
+        },
+        "model": "tardis:chameleon_green_closed",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/police_box/green_glass",
+        "bedrock_options": {
+          "icon": "tardis.item_police_box_green_glass_icon"
+        },
+        "model": "tardis:chameleon_green_glass",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/police_box/green_open",
+        "bedrock_options": {
+          "icon": "tardis.item_police_box_green_open_icon"
+        },
+        "model": "tardis:chameleon_green_open",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/police_box/green_stained",
+        "bedrock_options": {
+          "icon": "tardis.item_police_box_green_stained_icon"
+        },
+        "model": "tardis:chameleon_green_stained",
+        "type": "definition"
+      }
+    ],
+    "minecraft:blue_dye": [
+      {
+        "bedrock_identifier": "tardis:item/police_box/blue_closed",
+        "bedrock_options": {
+          "icon": "tardis.item_police_box_blue_closed_icon"
+        },
+        "model": "tardis:chameleon_blue_closed",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/police_box/blue_glass",
+        "bedrock_options": {
+          "icon": "tardis.item_police_box_blue_glass_icon"
+        },
+        "model": "tardis:chameleon_blue_glass",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/police_box/blue_open",
+        "bedrock_options": {
+          "icon": "tardis.item_police_box_blue_open_icon"
+        },
+        "model": "tardis:chameleon_blue_open",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/police_box/blue_stained",
+        "bedrock_options": {
+          "icon": "tardis.item_police_box_blue_stained_icon"
+        },
+        "model": "tardis:chameleon_blue_stained",
+        "type": "definition"
+      }
+    ],
+    "minecraft:green_stained_glass_pane": [
+      {
+        "bedrock_identifier": "tardis:item/sidrat/sidrat_closed",
+        "bedrock_options": {
+          "icon": "tardis.item_sidrat_sidrat_closed_icon"
+        },
+        "model": "tardis:sidrat_closed",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/sidrat/sidrat_glass",
+        "bedrock_options": {
+          "icon": "tardis.item_sidrat_sidrat_glass_icon"
+        },
+        "model": "tardis:sidrat_glass",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/sidrat/sidrat_open",
+        "bedrock_options": {
+          "icon": "tardis.item_sidrat_sidrat_open_icon"
+        },
+        "model": "tardis:sidrat_open",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/sidrat/sidrat_stained",
+        "bedrock_options": {
+          "icon": "tardis.item_sidrat_sidrat_stained_icon"
+        },
+        "model": "tardis:sidrat_stained",
+        "type": "definition"
+      }
+    ],
+    "minecraft:brown_dye": [
+      {
+        "bedrock_identifier": "tardis:item/police_box/brown_closed",
+        "bedrock_options": {
+          "icon": "tardis.item_police_box_brown_closed_icon"
+        },
+        "model": "tardis:chameleon_brown_closed",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/police_box/brown_glass",
+        "bedrock_options": {
+          "icon": "tardis.item_police_box_brown_glass_icon"
+        },
+        "model": "tardis:chameleon_brown_glass",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/police_box/brown_open",
+        "bedrock_options": {
+          "icon": "tardis.item_police_box_brown_open_icon"
+        },
+        "model": "tardis:chameleon_brown_open",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/police_box/brown_stained",
+        "bedrock_options": {
+          "icon": "tardis.item_police_box_brown_stained_icon"
+        },
+        "model": "tardis:chameleon_brown_stained",
+        "type": "definition"
+      }
+    ],
+    "minecraft:red_dye": [
+      {
+        "bedrock_identifier": "tardis:item/police_box/red_closed",
+        "bedrock_options": {
+          "icon": "tardis.item_police_box_red_closed_icon"
+        },
+        "model": "tardis:chameleon_red_closed",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/police_box/red_glass",
+        "bedrock_options": {
+          "icon": "tardis.item_police_box_red_glass_icon"
+        },
+        "model": "tardis:chameleon_red_glass",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/police_box/red_open",
+        "bedrock_options": {
+          "icon": "tardis.item_police_box_red_open_icon"
+        },
+        "model": "tardis:chameleon_red_open",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/police_box/red_stained",
+        "bedrock_options": {
+          "icon": "tardis.item_police_box_red_stained_icon"
+        },
+        "model": "tardis:chameleon_red_stained",
+        "type": "definition"
+      }
+    ],
+    "minecraft:magenta_dye": [
+      {
+        "bedrock_identifier": "tardis:item/police_box/magenta_closed",
+        "bedrock_options": {
+          "icon": "tardis.item_police_box_magenta_closed_icon"
+        },
+        "model": "tardis:chameleon_magenta_closed",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/police_box/magenta_glass",
+        "bedrock_options": {
+          "icon": "tardis.item_police_box_magenta_glass_icon"
+        },
+        "model": "tardis:chameleon_magenta_glass",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/police_box/magenta_open",
+        "bedrock_options": {
+          "icon": "tardis.item_police_box_magenta_open_icon"
+        },
+        "model": "tardis:chameleon_magenta_open",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/police_box/magenta_stained",
+        "bedrock_options": {
+          "icon": "tardis.item_police_box_magenta_stained_icon"
+        },
+        "model": "tardis:chameleon_magenta_stained",
+        "type": "definition"
+      }
+    ],
+    "minecraft:purple_dye": [
+      {
+        "bedrock_identifier": "tardis:item/police_box/purple_closed",
+        "bedrock_options": {
+          "icon": "tardis.item_police_box_purple_closed_icon"
+        },
+        "model": "tardis:chameleon_purple_closed",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/police_box/purple_glass",
+        "bedrock_options": {
+          "icon": "tardis.item_police_box_purple_glass_icon"
+        },
+        "model": "tardis:chameleon_purple_glass",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/police_box/purple_open",
+        "bedrock_options": {
+          "icon": "tardis.item_police_box_purple_open_icon"
+        },
+        "model": "tardis:chameleon_purple_open",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/police_box/purple_stained",
+        "bedrock_options": {
+          "icon": "tardis.item_police_box_purple_stained_icon"
+        },
+        "model": "tardis:chameleon_purple_stained",
+        "type": "definition"
+      }
+    ],
+    "minecraft:leather_horse_armor": [
+      {
+        "bedrock_identifier": "tardis:item/police_box/tinted_closed",
+        "bedrock_options": {
+          "icon": "tardis.item_police_box_tinted_closed_icon",
+          "protection_value": 3
+        },
+        "model": "tardis:chameleon_tinted_closed",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/police_box/tinted_glass",
+        "bedrock_options": {
+          "icon": "tardis.item_police_box_tinted_glass_icon",
+          "protection_value": 3
+        },
+        "model": "tardis:chameleon_tinted_glass",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/police_box/tinted_open",
+        "bedrock_options": {
+          "icon": "tardis.item_police_box_tinted_open_icon",
+          "protection_value": 3
+        },
+        "model": "tardis:chameleon_tinted_open",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/police_box/tinted_stained",
+        "bedrock_options": {
+          "icon": "tardis.item_police_box_tinted_stained_icon",
+          "protection_value": 3
+        },
+        "model": "tardis:chameleon_tinted_stained",
+        "type": "definition"
+      }
+    ],
+    "minecraft:ender_pearl": [
+      {
+        "bedrock_identifier": "tardis:item/pandorica/pandorica_closed",
+        "bedrock_options": {
+          "icon": "tardis.item_pandorica_pandorica_closed_icon"
+        },
+        "model": "tardis:pandorica_closed",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/pandorica/pandorica_glass",
+        "bedrock_options": {
+          "icon": "tardis.item_pandorica_pandorica_glass_icon"
+        },
+        "model": "tardis:pandorica_glass",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/pandorica/pandorica_open",
+        "bedrock_options": {
+          "icon": "tardis.item_pandorica_pandorica_open_icon"
+        },
+        "model": "tardis:pandorica_open",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/pandorica/pandorica_stained",
+        "bedrock_options": {
+          "icon": "tardis.item_pandorica_pandorica_stained_icon"
+        },
+        "model": "tardis:pandorica_stained",
+        "type": "definition"
+      }
+    ],
+    "minecraft:white_dye": [
+      {
+        "bedrock_identifier": "tardis:item/police_box/white_closed",
+        "bedrock_options": {
+          "icon": "tardis.item_police_box_white_closed_icon"
+        },
+        "model": "tardis:chameleon_white_closed",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/police_box/white_glass",
+        "bedrock_options": {
+          "icon": "tardis.item_police_box_white_glass_icon"
+        },
+        "model": "tardis:chameleon_white_glass",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/police_box/white_open",
+        "bedrock_options": {
+          "icon": "tardis.item_police_box_white_open_icon"
+        },
+        "model": "tardis:chameleon_white_open",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/police_box/white_stained",
+        "bedrock_options": {
+          "icon": "tardis.item_police_box_white_stained_icon"
+        },
+        "model": "tardis:chameleon_white_stained",
+        "type": "definition"
+      }
+    ],
+    "minecraft:gray_stained_glass_pane": [
+      {
+        "bedrock_identifier": "tardis:item/weeping_angel/weeping_angel_closed",
+        "bedrock_options": {
+          "icon": "tardis.item_weeping_angel_weeping_angel_closed_icon"
+        },
+        "model": "tardis:weeping_angel_closed",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/weeping_angel/weeping_angel_glass",
+        "bedrock_options": {
+          "icon": "tardis.item_weeping_angel_weeping_angel_glass_icon"
+        },
+        "model": "tardis:weeping_angel_glass",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/weeping_angel/weeping_angel_open",
+        "bedrock_options": {
+          "icon": "tardis.item_weeping_angel_weeping_angel_open_icon"
+        },
+        "model": "tardis:weeping_angel_open",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/weeping_angel/weeping_angel_stained",
+        "bedrock_options": {
+          "icon": "tardis.item_weeping_angel_weeping_angel_stained_icon"
+        },
+        "model": "tardis:weeping_angel_stained",
+        "type": "definition"
+      }
+    ],
+    "minecraft:orange_dye": [
+      {
+        "bedrock_identifier": "tardis:item/police_box/orange_closed",
+        "bedrock_options": {
+          "icon": "tardis.item_police_box_orange_closed_icon"
+        },
+        "model": "tardis:chameleon_orange_closed",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/police_box/orange_glass",
+        "bedrock_options": {
+          "icon": "tardis.item_police_box_orange_glass_icon"
+        },
+        "model": "tardis:chameleon_orange_glass",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/police_box/orange_open",
+        "bedrock_options": {
+          "icon": "tardis.item_police_box_orange_open_icon"
+        },
+        "model": "tardis:chameleon_orange_open",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/police_box/orange_stained",
+        "bedrock_options": {
+          "icon": "tardis.item_police_box_orange_stained_icon"
+        },
+        "model": "tardis:chameleon_orange_stained",
+        "type": "definition"
+      }
+    ],
+    "minecraft:gray_dye": [
+      {
+        "bedrock_identifier": "tardis:item/police_box/gray_closed",
+        "bedrock_options": {
+          "icon": "tardis.item_police_box_gray_closed_icon"
+        },
+        "model": "tardis:chameleon_gray_closed",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/police_box/gray_glass",
+        "bedrock_options": {
+          "icon": "tardis.item_police_box_gray_glass_icon"
+        },
+        "model": "tardis:chameleon_gray_glass",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/police_box/gray_open",
+        "bedrock_options": {
+          "icon": "tardis.item_police_box_gray_open_icon"
+        },
+        "model": "tardis:chameleon_gray_open",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/police_box/gray_stained",
+        "bedrock_options": {
+          "icon": "tardis.item_police_box_gray_stained_icon"
+        },
+        "model": "tardis:chameleon_gray_stained",
+        "type": "definition"
+      }
+    ],
+    "minecraft:red_stained_glass_pane": [
+      {
+        "bedrock_identifier": "tardis:item/battle/battle_closed",
+        "bedrock_options": {
+          "icon": "tardis.item_battle_battle_closed_icon"
+        },
+        "model": "tardis:battle_tardis_closed",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/battle/battle_glass",
+        "bedrock_options": {
+          "icon": "tardis.item_battle_battle_glass_icon"
+        },
+        "model": "tardis:battle_tardis_glass",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/battle/battle_open",
+        "bedrock_options": {
+          "icon": "tardis.item_battle_battle_open_icon"
+        },
+        "model": "tardis:battle_tardis_open",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/battle/battle_stained",
+        "bedrock_options": {
+          "icon": "tardis.item_battle_battle_stained_icon"
+        },
+        "model": "tardis:battle_tardis_stained",
+        "type": "definition"
+      }
+    ],
+    "minecraft:cyan_stained_glass_pane": [
+      {
+        "bedrock_identifier": "tardis:item/police_box/tennant_closed",
+        "bedrock_options": {
+          "icon": "tardis.item_police_box_tennant_closed_icon"
+        },
+        "model": "tardis:chameleon_tennant_closed",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/police_box/tennant_glass",
+        "bedrock_options": {
+          "icon": "tardis.item_police_box_tennant_glass_icon"
+        },
+        "model": "tardis:chameleon_tennant_glass",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/police_box/tennant_open",
+        "bedrock_options": {
+          "icon": "tardis.item_police_box_tennant_open_icon"
+        },
+        "model": "tardis:chameleon_tennant_open",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/police_box/tennant_stained",
+        "bedrock_options": {
+          "icon": "tardis.item_police_box_tennant_stained_icon"
+        },
+        "model": "tardis:chameleon_tennant_stained",
+        "type": "definition"
+      }
+    ],
+    "minecraft:cyan_dye": [
+      {
+        "bedrock_identifier": "tardis:item/police_box/cyan_closed",
+        "bedrock_options": {
+          "icon": "tardis.item_police_box_cyan_closed_icon"
+        },
+        "model": "tardis:chameleon_cyan_closed",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/police_box/cyan_glass",
+        "bedrock_options": {
+          "icon": "tardis.item_police_box_cyan_glass_icon"
+        },
+        "model": "tardis:chameleon_cyan_glass",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/police_box/cyan_open",
+        "bedrock_options": {
+          "icon": "tardis.item_police_box_cyan_open_icon"
+        },
+        "model": "tardis:chameleon_cyan_open",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/police_box/cyan_stained",
+        "bedrock_options": {
+          "icon": "tardis.item_police_box_cyan_stained_icon"
+        },
+        "model": "tardis:chameleon_cyan_stained",
+        "type": "definition"
+      }
+    ],
+    "minecraft:clay_ball": [
+      {
+        "bedrock_identifier": "tardis:item/type_40/type_40_closed",
+        "bedrock_options": {
+          "icon": "tardis.item_type_40_type_40_closed_icon"
+        },
+        "model": "tardis:type_40_closed",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/type_40/type_40_glass",
+        "bedrock_options": {
+          "icon": "tardis.item_type_40_type_40_glass_icon"
+        },
+        "model": "tardis:type_40_glass",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/type_40/type_40_open",
+        "bedrock_options": {
+          "icon": "tardis.item_type_40_type_40_open_icon"
+        },
+        "model": "tardis:type_40_open",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/type_40/type_40_stained",
+        "bedrock_options": {
+          "icon": "tardis.item_type_40_type_40_stained_icon"
+        },
+        "model": "tardis:type_40_stained",
+        "type": "definition"
+      }
+    ],
+    "minecraft:wolf_spawn_egg": [
+      {
+        "bedrock_identifier": "tardis:item/police_box/bad_wolf_closed",
+        "bedrock_options": {
+          "icon": "tardis.item_police_box_bad_wolf_closed_icon"
+        },
+        "model": "tardis:bad_wolf_closed",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/police_box/bad_wolf_open",
+        "bedrock_options": {
+          "icon": "tardis.item_police_box_bad_wolf_open_icon"
+        },
+        "model": "tardis:bad_wolf_open",
+        "type": "definition"
+      }
+    ]
+  }
+}

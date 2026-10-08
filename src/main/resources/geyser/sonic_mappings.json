@@ -1,0 +1,545 @@
+{
+  "format_version": 2,
+  "items": {
+    "minecraft:blaze_rod": [
+      {
+        "model": "minecraft:blaze_rod",
+        "definitions": [
+          {
+            "bedrock_identifier": "tardis:item/sonic/eighth",
+            "display_name": "Sonic Screwdriver",
+            "predicate": {
+              "type": "range_dispatch",
+              "property": "custom_model_data",
+              "threshold": 108,
+              "index": 0
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_sonic_eighth_icon"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/sonic/eighth_on",
+            "display_name": "Sonic Screwdriver",
+            "predicate": {
+              "type": "range_dispatch",
+              "property": "custom_model_data",
+              "threshold": 208,
+              "index": 0
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_sonic_eighth_on_icon"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/sonic/eleventh",
+            "display_name": "Sonic Screwdriver",
+            "predicate": {
+              "type": "range_dispatch",
+              "property": "custom_model_data",
+              "threshold": 111,
+              "index": 0
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_sonic_eleventh_icon"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/sonic/eleventh_open",
+            "display_name": "Sonic Screwdriver",
+            "predicate": {
+              "type": "range_dispatch",
+              "property": "custom_model_data",
+              "threshold": 211,
+              "index": 0
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_sonic_eleventh_open_icon"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/sonic/fifteenth",
+            "display_name": "Sonic Screwdriver",
+            "predicate": {
+              "type": "range_dispatch",
+              "property": "custom_model_data",
+              "threshold": 115,
+              "index": 0
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_sonic_fifteenth_icon"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/sonic/fifteenth_on",
+            "display_name": "Sonic Screwdriver",
+            "predicate": {
+              "type": "range_dispatch",
+              "property": "custom_model_data",
+              "threshold": 215,
+              "index": 0
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_sonic_fifteenth_on_icon"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/sonic/fourteenth",
+            "display_name": "Sonic Screwdriver",
+            "predicate": {
+              "type": "range_dispatch",
+              "property": "custom_model_data",
+              "threshold": 114,
+              "index": 0
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_sonic_fourteenth_icon"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/sonic/fourteenth_open",
+            "display_name": "Sonic Screwdriver",
+            "predicate": {
+              "type": "range_dispatch",
+              "property": "custom_model_data",
+              "threshold": 214,
+              "index": 0
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_sonic_fourteenth_open_icon"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/sonic/mark1",
+            "display_name": "Sonic Screwdriver",
+            "predicate": {
+              "type": "range_dispatch",
+              "property": "custom_model_data",
+              "threshold": 101,
+              "index": 0
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_sonic_mark1_icon"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/sonic/mark1_on",
+            "display_name": "Sonic Screwdriver",
+            "predicate": {
+              "type": "range_dispatch",
+              "property": "custom_model_data",
+              "threshold": 201,
+              "index": 0
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_sonic_mark1_on_icon"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/sonic/mark2",
+            "display_name": "Sonic Screwdriver",
+            "predicate": {
+              "type": "range_dispatch",
+              "property": "custom_model_data",
+              "threshold": 102,
+              "index": 0
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_sonic_mark2_icon"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/sonic/mark2_on",
+            "display_name": "Sonic Screwdriver",
+            "predicate": {
+              "type": "range_dispatch",
+              "property": "custom_model_data",
+              "threshold": 202,
+              "index": 0
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_sonic_mark2_on_icon"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/sonic/mark3",
+            "display_name": "Sonic Screwdriver",
+            "predicate": {
+              "type": "range_dispatch",
+              "property": "custom_model_data",
+              "threshold": 103,
+              "index": 0
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_sonic_mark3_icon"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/sonic/mark3_on",
+            "display_name": "Sonic Screwdriver",
+            "predicate": {
+              "type": "range_dispatch",
+              "property": "custom_model_data",
+              "threshold": 203,
+              "index": 0
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_sonic_mark3_on_icon"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/sonic/mark4",
+            "display_name": "Sonic Screwdriver",
+            "predicate": {
+              "type": "range_dispatch",
+              "property": "custom_model_data",
+              "threshold": 104,
+              "index": 0
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_sonic_mark4_icon"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/sonic/mark4_on",
+            "display_name": "Sonic Screwdriver",
+            "predicate": {
+              "type": "range_dispatch",
+              "property": "custom_model_data",
+              "threshold": 204,
+              "index": 0
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_sonic_mark4_on_icon"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/sonic/master",
+            "display_name": "Sonic Screwdriver",
+            "predicate": {
+              "type": "range_dispatch",
+              "property": "custom_model_data",
+              "threshold": 121,
+              "index": 0
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_sonic_master_icon"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/sonic/master_on",
+            "display_name": "Sonic Screwdriver",
+            "predicate": {
+              "type": "range_dispatch",
+              "property": "custom_model_data",
+              "threshold": 221,
+              "index": 0
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_sonic_master_on_icon"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/sonic/ninth",
+            "display_name": "Sonic Screwdriver",
+            "predicate": {
+              "type": "range_dispatch",
+              "property": "custom_model_data",
+              "threshold": 109,
+              "index": 0
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_sonic_ninth_icon"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/sonic/ninth_open",
+            "display_name": "Sonic Screwdriver",
+            "predicate": {
+              "type": "range_dispatch",
+              "property": "custom_model_data",
+              "threshold": 209,
+              "index": 0
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_sonic_ninth_open_icon"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/sonic/rani",
+            "display_name": "Sonic Screwdriver",
+            "predicate": {
+              "type": "range_dispatch",
+              "property": "custom_model_data",
+              "threshold": 126,
+              "index": 0
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_sonic_rani_icon"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/sonic/rani_on",
+            "display_name": "Sonic Screwdriver",
+            "predicate": {
+              "type": "range_dispatch",
+              "property": "custom_model_data",
+              "threshold": 226,
+              "index": 0
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_sonic_rani_on_icon"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/sonic/river_song",
+            "display_name": "Sonic Screwdriver",
+            "predicate": {
+              "type": "range_dispatch",
+              "property": "custom_model_data",
+              "threshold": 124,
+              "index": 0
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_sonic_river_song_icon"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/sonic/river_song_on",
+            "display_name": "Sonic Screwdriver",
+            "predicate": {
+              "type": "range_dispatch",
+              "property": "custom_model_data",
+              "threshold": 224,
+              "index": 0
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_sonic_river_song_on_icon"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/sonic/sarah_jane",
+            "display_name": "Sonic Lipstick",
+            "predicate": {
+              "type": "range_dispatch",
+              "property": "custom_model_data",
+              "threshold": 122,
+              "index": 0
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_sonic_sarah_jane_icon"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/sonic/sarah_jane_on",
+            "display_name": "Sonic Lipstick",
+            "predicate": {
+              "type": "range_dispatch",
+              "property": "custom_model_data",
+              "threshold": 222,
+              "index": 0
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_sonic_sarah_jane_on_icon"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/sonic/sonic_probe",
+            "display_name": "Sonic Probe",
+            "predicate": {
+              "type": "range_dispatch",
+              "property": "custom_model_data",
+              "threshold": 123,
+              "index": 0
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_sonic_sonic_probe_icon"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/sonic/sonic_probe_on",
+            "display_name": "Sonic Probe",
+            "predicate": {
+              "type": "range_dispatch",
+              "property": "custom_model_data",
+              "threshold": 223,
+              "index": 0
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_sonic_sonic_probe_on_icon"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/sonic/tenth",
+            "display_name": "Sonic Screwdriver",
+            "predicate": {
+              "type": "range_dispatch",
+              "property": "custom_model_data",
+              "threshold": 110,
+              "index": 0
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_sonic_tenth_icon"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/sonic/tenth_open",
+            "display_name": "Sonic Screwdriver",
+            "predicate": {
+              "type": "range_dispatch",
+              "property": "custom_model_data",
+              "threshold": 210,
+              "index": 0
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_sonic_tenth_open_icon"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/sonic/thirteenth",
+            "display_name": "Sonic Screwdriver",
+            "predicate": {
+              "type": "range_dispatch",
+              "property": "custom_model_data",
+              "threshold": 113,
+              "index": 0
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_sonic_thirteenth_icon"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/sonic/thirteenth_on",
+            "display_name": "Sonic Screwdriver",
+            "predicate": {
+              "type": "range_dispatch",
+              "property": "custom_model_data",
+              "threshold": 213,
+              "index": 0
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_sonic_thirteenth_on_icon"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/sonic/twelfth",
+            "display_name": "Sonic Screwdriver",
+            "predicate": {
+              "type": "range_dispatch",
+              "property": "custom_model_data",
+              "threshold": 112,
+              "index": 0
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_sonic_twelfth_icon"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/sonic/twelfth_on",
+            "display_name": "Sonic Screwdriver",
+            "predicate": {
+              "type": "range_dispatch",
+              "property": "custom_model_data",
+              "threshold": 212,
+              "index": 0
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_sonic_twelfth_on_icon"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/sonic/umbrella",
+            "display_name": "Sonic Umbrella",
+            "predicate": {
+              "type": "range_dispatch",
+              "property": "custom_model_data",
+              "threshold": 125,
+              "index": 0
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_sonic_umbrella_icon"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/sonic/umbrella_on",
+            "display_name": "Sonic Umbrella",
+            "predicate": {
+              "type": "range_dispatch",
+              "property": "custom_model_data",
+              "threshold": 225,
+              "index": 0
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_sonic_umbrella_on_icon"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/sonic/war",
+            "display_name": "Sonic Screwdriver",
+            "predicate": {
+              "type": "range_dispatch",
+              "property": "custom_model_data",
+              "threshold": 120,
+              "index": 0
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_sonic_war_icon"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/sonic/war_on",
+            "display_name": "Sonic Screwdriver",
+            "predicate": {
+              "type": "range_dispatch",
+              "property": "custom_model_data",
+              "threshold": 220,
+              "index": 0
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_sonic_war_on_icon"
+            },
+            "type": "definition"
+          }
+        ],
+        "type": "group"
+      }
+    ]
+  }
+}

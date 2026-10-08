@@ -1,0 +1,351 @@
+{
+  "format_version": 2,
+  "items": {
+    "minecraft:glowstone_dust": [
+      {
+        "model": "minecraft:glowstone_dust",
+        "definitions": [
+          {
+            "bedrock_identifier": "tardis:item/tardis/bio_scanner_circuit",
+            "predicate": {
+              "value": "Bio-scanner Circuit",
+              "property": "custom_model_data",
+              "type": "match",
+              "index": 0
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_tardis_bio_scanner_circuit_icon"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/tardis/brush_circuit",
+            "predicate": {
+              "value": "Brush Circuit",
+              "property": "custom_model_data",
+              "type": "match",
+              "index": 0
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_tardis_brush_circuit_icon"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/tardis/conversion_circuit",
+            "predicate": {
+              "value": "Conversion Circuit",
+              "property": "custom_model_data",
+              "type": "match",
+              "index": 0
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_tardis_conversion_circuit_icon"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/tardis/diamond_disruptor_circuit",
+            "predicate": {
+              "value": "Diamond Disruptor Circuit",
+              "property": "custom_model_data",
+              "type": "match",
+              "index": 0
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_tardis_diamond_disruptor_circuit_icon"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/tardis/emerald_environment_circuit",
+            "predicate": {
+              "value": "Emerald Environment Circuit",
+              "property": "custom_model_data",
+              "type": "match",
+              "index": 0
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_tardis_emerald_environment_circuit_icon"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/tardis/ignite_circuit",
+            "predicate": {
+              "value": "Ignite Circuit",
+              "property": "custom_model_data",
+              "type": "match",
+              "index": 0
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_tardis_ignite_circuit_icon"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/tardis/knockback_circuit",
+            "predicate": {
+              "value": "Knockback Circuit",
+              "property": "custom_model_data",
+              "type": "match",
+              "index": 0
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_tardis_knockback_circuit_icon"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/tardis/painter_circuit",
+            "predicate": {
+              "value": "Painter Circuit",
+              "property": "custom_model_data",
+              "type": "match",
+              "index": 0
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_tardis_painter_circuit_icon"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/tardis/perception_circuit",
+            "predicate": {
+              "value": "Perception Circuit",
+              "property": "custom_model_data",
+              "type": "match",
+              "index": 0
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_tardis_perception_circuit_icon"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/tardis/pickup_arrows_circuit",
+            "predicate": {
+              "value": "Pickup Arrows Circuit",
+              "property": "custom_model_data",
+              "type": "match",
+              "index": 0
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_tardis_pickup_arrows_circuit_icon"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/tardis/redstone_activator_circuit",
+            "predicate": {
+              "value": "Redstone Activator Circuit",
+              "property": "custom_model_data",
+              "type": "match",
+              "index": 0
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_tardis_redstone_activator_circuit_icon"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/tardis/rift_circuit",
+            "predicate": {
+              "value": "Rift Circuit",
+              "property": "custom_model_data",
+              "type": "match",
+              "index": 0
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_tardis_rift_circuit_icon"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/tardis/server_admin_circuit",
+            "predicate": {
+              "value": "Server Admin Circuit",
+              "property": "custom_model_data",
+              "type": "match",
+              "index": 0
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_tardis_server_admin_circuit_icon"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/tardis/sonic_oscillator",
+            "predicate": {
+              "value": "Sonic Oscillator",
+              "property": "custom_model_data",
+              "type": "match",
+              "index": 0
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_tardis_sonic_oscillator_icon"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/tardis/tardis_ars_circuit",
+            "predicate": {
+              "value": "TARDIS ARS Circuit",
+              "property": "custom_model_data",
+              "type": "match",
+              "index": 0
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_tardis_tardis_ars_circuit_icon"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/tardis/tardis_chameleon_circuit",
+            "predicate": {
+              "value": "TARDIS Chameleon Circuit",
+              "property": "custom_model_data",
+              "type": "match",
+              "index": 0
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_tardis_tardis_chameleon_circuit_icon"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/tardis/tardis_input_circuit",
+            "predicate": {
+              "value": "TARDIS Input Circuit",
+              "property": "custom_model_data",
+              "type": "match",
+              "index": 0
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_tardis_tardis_input_circuit_icon"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/tardis/tardis_invisibility_circuit",
+            "predicate": {
+              "value": "TARDIS Invisibility Circuit",
+              "property": "custom_model_data",
+              "type": "match",
+              "index": 0
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_tardis_tardis_invisibility_circuit_icon"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/tardis/tardis_locator_circuit",
+            "predicate": {
+              "value": "TARDIS Locator Circuit",
+              "property": "custom_model_data",
+              "type": "match",
+              "index": 0
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_tardis_tardis_locator_circuit_icon"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/tardis/tardis_materialisation_circuit",
+            "predicate": {
+              "value": "TARDIS Materialisation Circuit",
+              "property": "custom_model_data",
+              "type": "match",
+              "index": 0
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_tardis_tardis_materialisation_circuit_icon"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/tardis/tardis_memory_circuit",
+            "predicate": {
+              "value": "TARDIS Memory Circuit",
+              "property": "custom_model_data",
+              "type": "match",
+              "index": 0
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_tardis_tardis_memory_circuit_icon"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/tardis/tardis_randomiser_circuit",
+            "predicate": {
+              "value": "TARDIS Randomiser Circuit",
+              "property": "custom_model_data",
+              "type": "match",
+              "index": 0
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_tardis_tardis_randomiser_circuit_icon"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/tardis/tardis_scanner_circuit",
+            "predicate": {
+              "value": "TARDIS Scanner Circuit",
+              "property": "custom_model_data",
+              "type": "match",
+              "index": 0
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_tardis_tardis_scanner_circuit_icon"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/tardis/tardis_stattenheim_circuit",
+            "predicate": {
+              "value": "TARDIS Stattenheim Circuit",
+              "property": "custom_model_data",
+              "type": "match",
+              "index": 0
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_tardis_tardis_stattenheim_circuit_icon"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/tardis/tardis_telepathic_circuit",
+            "predicate": {
+              "value": "TARDIS Telepathic Circuit",
+              "property": "custom_model_data",
+              "type": "match",
+              "index": 0
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_tardis_tardis_telepathic_circuit_icon"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/tardis/tardis_temporal_circuit",
+            "predicate": {
+              "value": "TARDIS Temporal Circuit",
+              "property": "custom_model_data",
+              "type": "match",
+              "index": 0
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_tardis_tardis_temporal_circuit_icon"
+            },
+            "type": "definition"
+          }
+        ],
+        "type": "group"
+      }
+    ]
+  }
+}

@@ -1,0 +1,305 @@
+{
+  "format_version": 2,
+  "items": {
+    "minecraft:cherry_door": [
+      {
+        "bedrock_identifier": "tardis:item/doors/classic_door_0",
+        "bedrock_options": {
+          "icon": "tardis.item_doors_classic_door_0_icon"
+        },
+        "model": "tardis:classic_door_0",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/doors/classic_door_1",
+        "bedrock_options": {
+          "icon": "tardis.item_doors_classic_door_1_icon"
+        },
+        "model": "tardis:classic_door_1",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/doors/classic_door_2",
+        "bedrock_options": {
+          "icon": "tardis.item_doors_classic_door_2_icon"
+        },
+        "model": "tardis:classic_door_2",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/doors/classic_door_3",
+        "bedrock_options": {
+          "icon": "tardis.item_doors_classic_door_3_icon"
+        },
+        "model": "tardis:classic_door_3",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/doors/classic_door_4",
+        "bedrock_options": {
+          "icon": "tardis.item_doors_classic_door_4_icon"
+        },
+        "model": "tardis:classic_door_4",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/doors/classic_door_closed",
+        "bedrock_options": {
+          "icon": "tardis.item_doors_classic_door_closed_icon"
+        },
+        "model": "tardis:classic_door_closed",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/doors/classic_door_open",
+        "bedrock_options": {
+          "icon": "tardis.item_doors_classic_door_open_icon"
+        },
+        "model": "tardis:classic_door_open",
+        "type": "definition"
+      }
+    ],
+    "minecraft:iron_door": [
+      {
+        "bedrock_identifier": "tardis:item/doors/tardis_door_0",
+        "bedrock_options": {
+          "icon": "tardis.item_doors_tardis_door_0_icon"
+        },
+        "model": "tardis:tardis_door_0",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/doors/tardis_door_1",
+        "bedrock_options": {
+          "icon": "tardis.item_doors_tardis_door_1_icon"
+        },
+        "model": "tardis:tardis_door_1",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/doors/tardis_door_2",
+        "bedrock_options": {
+          "icon": "tardis.item_doors_tardis_door_2_icon"
+        },
+        "model": "tardis:tardis_door_2",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/doors/tardis_door_closed",
+        "bedrock_options": {
+          "icon": "tardis.item_doors_tardis_door_closed_icon"
+        },
+        "model": "tardis:tardis_door_closed",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/doors/tardis_door_extra",
+        "bedrock_options": {
+          "icon": "tardis.item_doors_tardis_door_extra_icon"
+        },
+        "model": "tardis:tardis_door_extra",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/doors/tardis_door_open",
+        "bedrock_options": {
+          "icon": "tardis.item_doors_tardis_door_open_icon"
+        },
+        "model": "tardis:tardis_door_open",
+        "type": "definition"
+      }
+    ],
+    "minecraft:angler_pottery_sherd": [
+      {
+        "bedrock_identifier": "tardis:item/doors/centred_0",
+        "bedrock_options": {
+          "icon": "tardis.item_doors_centred_0_icon"
+        },
+        "model": "tardis:centred_0",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/doors/centred_1",
+        "bedrock_options": {
+          "icon": "tardis.item_doors_centred_1_icon"
+        },
+        "model": "tardis:centred_1",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/doors/centred_2",
+        "bedrock_options": {
+          "icon": "tardis.item_doors_centred_2_icon"
+        },
+        "model": "tardis:centred_2",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/doors/centred_closed",
+        "bedrock_options": {
+          "icon": "tardis.item_doors_centred_closed_icon"
+        },
+        "model": "tardis:centred_closed",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/doors/centred_open",
+        "bedrock_options": {
+          "icon": "tardis.item_doors_centred_open_icon"
+        },
+        "model": "tardis:centred_open",
+        "type": "definition"
+      }
+    ],
+    "minecraft:crimson_door": [
+      {
+        "bedrock_identifier": "tardis:item/doors/diner_0",
+        "bedrock_options": {
+          "icon": "tardis.item_doors_diner_0_icon"
+        },
+        "model": "tardis:diner_door_0",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/doors/diner_1",
+        "bedrock_options": {
+          "icon": "tardis.item_doors_diner_1_icon"
+        },
+        "model": "tardis:diner_door_1",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/doors/diner_2",
+        "bedrock_options": {
+          "icon": "tardis.item_doors_diner_2_icon"
+        },
+        "model": "tardis:diner_door_2",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/doors/diner_closed",
+        "bedrock_options": {
+          "icon": "tardis.item_doors_diner_closed_icon"
+        },
+        "model": "tardis:diner_door_closed",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/doors/diner_extra",
+        "bedrock_options": {
+          "icon": "tardis.item_doors_diner_extra_icon"
+        },
+        "model": "tardis:diner_door_extra",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/doors/diner_open",
+        "bedrock_options": {
+          "icon": "tardis.item_doors_diner_open_icon"
+        },
+        "model": "tardis:diner_door_open",
+        "type": "definition"
+      }
+    ],
+    "minecraft:pale_oak_door": [
+      {
+        "bedrock_identifier": "tardis:item/doors/sidrat_0",
+        "bedrock_options": {
+          "icon": "tardis.item_doors_sidrat_0_icon"
+        },
+        "model": "tardis:sidrat_door_0",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/doors/sidrat_1",
+        "bedrock_options": {
+          "icon": "tardis.item_doors_sidrat_1_icon"
+        },
+        "model": "tardis:sidrat_door_1",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/doors/sidrat_2",
+        "bedrock_options": {
+          "icon": "tardis.item_doors_sidrat_2_icon"
+        },
+        "model": "tardis:sidrat_door_2",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/doors/sidrat_closed",
+        "bedrock_options": {
+          "icon": "tardis.item_doors_sidrat_closed_icon"
+        },
+        "model": "tardis:sidrat_door_closed",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/doors/sidrat_open",
+        "bedrock_options": {
+          "icon": "tardis.item_doors_sidrat_open_icon"
+        },
+        "model": "tardis:sidrat_door_open",
+        "type": "definition"
+      }
+    ],
+    "minecraft:birch_door": [
+      {
+        "bedrock_identifier": "tardis:item/doors/bone_door_0",
+        "bedrock_options": {
+          "icon": "tardis.item_doors_bone_door_0_icon"
+        },
+        "model": "tardis:bone_door_0",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/doors/bone_door_1",
+        "bedrock_options": {
+          "icon": "tardis.item_doors_bone_door_1_icon"
+        },
+        "model": "tardis:bone_door_1",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/doors/bone_door_2",
+        "bedrock_options": {
+          "icon": "tardis.item_doors_bone_door_2_icon"
+        },
+        "model": "tardis:bone_door_2",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/doors/bone_door_3",
+        "bedrock_options": {
+          "icon": "tardis.item_doors_bone_door_3_icon"
+        },
+        "model": "tardis:bone_door_3",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/doors/bone_door_4",
+        "bedrock_options": {
+          "icon": "tardis.item_doors_bone_door_4_icon"
+        },
+        "model": "tardis:bone_door_4",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/doors/bone_door_closed",
+        "bedrock_options": {
+          "icon": "tardis.item_doors_bone_door_closed_icon"
+        },
+        "model": "tardis:bone_door_closed",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/doors/bone_door_open",
+        "bedrock_options": {
+          "icon": "tardis.item_doors_bone_door_open_icon"
+        },
+        "model": "tardis:bone_door_open",
+        "type": "definition"
+      }
+    ]
+  }
+}

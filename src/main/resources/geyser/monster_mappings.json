@@ -1,0 +1,2618 @@
+{
+  "format_version": 2,
+  "items": {
+    "minecraft:yellow_dye": [
+      {
+        "bedrock_identifier": "tardis:item/monster/judoon/judoon_head",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_judoon_judoon_head_icon"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "head",
+            "allowed_entities": [
+              "minecraft:husk",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:judoon_head",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/judoon_chestplate",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_chestplate"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "chest",
+            "asset_id": "tardis:judoon",
+            "allowed_entities": [
+              "minecraft:husk",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/judoon_chestplate",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/judoon_leggings",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_leggings"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "legs",
+            "asset_id": "tardis:judoon",
+            "allowed_entities": [
+              "minecraft:husk",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/judoon_leggings",
+        "type": "definition"
+      }
+    ],
+    "minecraft:slime_ball": [
+      {
+        "bedrock_identifier": "tardis:item/monster/dalek/dalek_head",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_dalek_dalek_head_icon"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "head",
+            "allowed_entities": [
+              "minecraft:skeleton",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:dalek_head",
+        "type": "definition"
+      }
+    ],
+    "minecraft:gunpowder": [
+      {
+        "bedrock_identifier": "tardis:item/monster/toclafane/toclafane",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_toclafane_toclafane_icon"
+        },
+        "model": "tardis:toclafane",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/toclafane/toclafane_attack",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_toclafane_toclafane_attack_icon"
+        },
+        "model": "tardis:toclafane_attack",
+        "type": "definition"
+      }
+    ],
+    "minecraft:snowball": [
+      {
+        "bedrock_identifier": "tardis:item/monster/ice_warrior/ice_warrior_head",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_ice_warrior_ice_warrior_head_icon"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "head",
+            "allowed_entities": [
+              "minecraft:zombified_piglin",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:ice_warrior_head",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/ice_warrior_chestplate",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_chestplate"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "chest",
+            "asset_id": "tardis:ice_warrior",
+            "allowed_entities": [
+              "minecraft:zombified_piglin",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/ice_warrior_chestplate",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/ice_warrior_leggings",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_leggings"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "legs",
+            "asset_id": "tardis:ice_warrior",
+            "allowed_entities": [
+              "minecraft:zombified_piglin",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/ice_warrior_leggings",
+        "type": "definition"
+      }
+    ],
+    "minecraft:painting": [
+      {
+        "bedrock_identifier": "tardis:item/monster/zygon/zygon_head",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_zygon_zygon_head_icon"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "head",
+            "allowed_entities": [
+              "minecraft:zombie",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:zygon_head",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/zygon_chestplate",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_chestplate"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "chest",
+            "asset_id": "tardis:zygon",
+            "allowed_entities": [
+              "minecraft:zombie",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/zygon_chestplate",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/zygon_leggings",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_leggings"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "legs",
+            "asset_id": "tardis:zygon",
+            "allowed_entities": [
+              "minecraft:zombie",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/zygon_leggings",
+        "type": "definition"
+      }
+    ],
+    "minecraft:bone_meal": [
+      {
+        "bedrock_identifier": "tardis:item/monster/sycorax/sycorax_head",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_sycorax_sycorax_head_icon"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "head",
+            "allowed_entities": [
+              "minecraft:zombie",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:sycorax_head",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/sycorax_chestplate",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_chestplate"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "chest",
+            "asset_id": "tardis:sycorax",
+            "allowed_entities": [
+              "minecraft:zombie",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/sycorax_chestplate",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/sycorax_leggings",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_leggings"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "legs",
+            "asset_id": "tardis:sycorax",
+            "allowed_entities": [
+              "minecraft:zombie",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/sycorax_leggings",
+        "type": "definition"
+      }
+    ],
+    "minecraft:wheat": [
+      {
+        "bedrock_identifier": "tardis:item/monster/scarecrow/scarecrow_head",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_scarecrow_scarecrow_head_icon"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "head",
+            "allowed_entities": [
+              "minecraft:zombie",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:scarecrow_head",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/scarecrow_chestplate",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_chestplate"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "chest",
+            "asset_id": "tardis:scarecrow",
+            "allowed_entities": [
+              "minecraft:zombie",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/scarecrow_chestplate",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/scarecrow_leggings",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_leggings"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "legs",
+            "asset_id": "tardis:scarecrow",
+            "allowed_entities": [
+              "minecraft:zombie",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/scarecrow_leggings",
+        "type": "definition"
+      }
+    ],
+    "minecraft:book": [
+      {
+        "bedrock_identifier": "tardis:item/monster/vashta_nerada/vashta_nerada_head",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_vashta_nerada_vashta_nerada_head_icon"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "head",
+            "allowed_entities": [
+              "minecraft:zombie",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:vashta_nerada_head",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/vashta_nerada_chestplate",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_chestplate"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "chest",
+            "asset_id": "tardis:vashta_nerada",
+            "allowed_entities": [
+              "minecraft:zombie",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/vashta_nerada_chestplate",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/vashta_nerada_leggings",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_leggings"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "legs",
+            "asset_id": "tardis:vashta_nerada",
+            "allowed_entities": [
+              "minecraft:zombie",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/vashta_nerada_leggings",
+        "type": "definition"
+      }
+    ],
+    "minecraft:baked_potato": [
+      {
+        "bedrock_identifier": "tardis:item/monster/strax/strax_head",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_strax_strax_head_icon"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "head",
+            "allowed_entities": [
+              "minecraft:zombified_piglin",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:strax_head",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/strax_chestplate",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_chestplate"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "chest",
+            "asset_id": "tardis:strax",
+            "allowed_entities": [
+              "minecraft:zombified_piglin",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/strax_chestplate",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/strax_leggings",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_leggings"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "legs",
+            "asset_id": "tardis:strax",
+            "allowed_entities": [
+              "minecraft:zombified_piglin",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/strax_leggings",
+        "type": "definition"
+      }
+    ],
+    "minecraft:end_stone": [
+      {
+        "bedrock_identifier": "tardis:item/monster/silent/silent_head",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_silent_silent_head_icon"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "head",
+            "allowed_entities": [
+              "minecraft:skeleton",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:silent_head",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/silence_chestplate",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_chestplate"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "chest",
+            "asset_id": "tardis:silence",
+            "allowed_entities": [
+              "minecraft:skeleton",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/silence_chestplate",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/silence_leggings",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_leggings"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "legs",
+            "asset_id": "tardis:silence",
+            "allowed_entities": [
+              "minecraft:skeleton",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/silence_leggings",
+        "type": "definition"
+      }
+    ],
+    "minecraft:netherite_scrap": [
+      {
+        "bedrock_identifier": "tardis:item/monster/mire/the_mire_head",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_mire_the_mire_head_icon"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "head",
+            "allowed_entities": [
+              "minecraft:skeleton",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:the_mire_head",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/mire_chestplate",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_chestplate"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "chest",
+            "asset_id": "tardis:mire",
+            "allowed_entities": [
+              "minecraft:skeleton",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/mire_chestplate",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/mire_leggings",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_leggings"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "legs",
+            "asset_id": "tardis:mire",
+            "allowed_entities": [
+              "minecraft:skeleton",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/mire_leggings",
+        "type": "definition"
+      }
+    ],
+    "minecraft:rotten_flesh": [
+      {
+        "bedrock_identifier": "tardis:item/monster/ood/ood_head",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_ood_ood_head_icon"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "head",
+            "allowed_entities": [
+              "minecraft:husk",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:ood_head",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/ood/ood_redeye_head",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_ood_ood_redeye_head_icon"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "head",
+            "allowed_entities": [
+              "minecraft:husk",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:ood_redeye_head",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/ood_black_chestplate",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_chestplate"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "chest",
+            "asset_id": "tardis:ood_black",
+            "allowed_entities": [
+              "minecraft:husk",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/ood_black_chestplate",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/ood_black_leggings",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_leggings"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "legs",
+            "asset_id": "tardis:ood_black",
+            "allowed_entities": [
+              "minecraft:husk",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/ood_black_leggings",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/ood_blue_chestplate",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_chestplate"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "chest",
+            "asset_id": "tardis:ood_blue",
+            "allowed_entities": [
+              "minecraft:husk",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/ood_blue_chestplate",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/ood_blue_leggings",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_leggings"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "legs",
+            "asset_id": "tardis:ood_blue",
+            "allowed_entities": [
+              "minecraft:husk",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/ood_blue_leggings",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/ood_brown_chestplate",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_chestplate"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "chest",
+            "asset_id": "tardis:ood_brown",
+            "allowed_entities": [
+              "minecraft:husk",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/ood_brown_chestplate",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/ood_brown_leggings",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_leggings"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "legs",
+            "asset_id": "tardis:ood_brown",
+            "allowed_entities": [
+              "minecraft:husk",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/ood_brown_leggings",
+        "type": "definition"
+      }
+    ],
+    "minecraft:potato": [
+      {
+        "bedrock_identifier": "tardis:item/monster/sontaran/sontaran_head",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_sontaran_sontaran_head_icon"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "head",
+            "allowed_entities": [
+              "minecraft:zombie",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:sontaran_head",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/sontaran_chestplate",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_chestplate"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "chest",
+            "asset_id": "tardis:sontaran",
+            "allowed_entities": [
+              "minecraft:zombie",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/sontaran_chestplate",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/sontaran_leggings",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_leggings"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "legs",
+            "asset_id": "tardis:sontaran",
+            "allowed_entities": [
+              "minecraft:zombie",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/sontaran_leggings",
+        "type": "definition"
+      }
+    ],
+    "minecraft:gold_ingot": [
+      {
+        "bedrock_identifier": "tardis:item/monster/heavenly_host/heavenly_host_head",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_heavenly_host_heavenly_host_head_icon"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "head",
+            "allowed_entities": [
+              "minecraft:zombie",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:heavenly_host_head",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/omega/omega_head",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_omega_omega_head_icon"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "head",
+            "allowed_entities": [
+              "minecraft:skeleton",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:omega_head",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/heavenly_host_chestplate",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_chestplate"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "chest",
+            "asset_id": "tardis:heavenly_host",
+            "allowed_entities": [
+              "minecraft:zombie",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/heavenly_host_chestplate",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/heavenly_host_leggings",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_leggings"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "legs",
+            "asset_id": "tardis:heavenly_host",
+            "allowed_entities": [
+              "minecraft:zombie",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/heavenly_host_leggings",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/omega_chestplate",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_chestplate"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "chest",
+            "asset_id": "tardis:omega",
+            "allowed_entities": [
+              "minecraft:skeleton",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/omega_chestplate",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/omega_leggings",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_leggings"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "legs",
+            "asset_id": "tardis:omega",
+            "allowed_entities": [
+              "minecraft:skeleton",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/omega_leggings",
+        "type": "definition"
+      }
+    ],
+    "minecraft:host_armor_trim_smithing_template": [
+      {
+        "bedrock_identifier": "tardis:item/monster/clockwork_droid/clockwork_droid_female_head",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_clockwork_droid_clockwork_droid_female_head_icon"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "head",
+            "allowed_entities": [
+              "minecraft:zombie",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:clockwork_droid_female_head",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/clockwork_droid/clockwork_droid_head",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_clockwork_droid_clockwork_droid_head_icon"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "head",
+            "allowed_entities": [
+              "minecraft:zombie",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:clockwork_droid_head",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/clockwork_droid_chestplate",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_chestplate"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "chest",
+            "asset_id": "tardis:clockwork_droid",
+            "allowed_entities": [
+              "minecraft:zombie",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/clockwork_droid_chestplate",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/clockwork_droid_leggings",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_leggings"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "legs",
+            "asset_id": "tardis:clockwork_droid",
+            "allowed_entities": [
+              "minecraft:zombie",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/clockwork_droid_leggings",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/clockwork_droid_female_chestplate",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_chestplate"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "chest",
+            "asset_id": "tardis:clockwork_droid_female",
+            "allowed_entities": [
+              "minecraft:zombie",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/clockwork_droid_female_chestplate",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/clockwork_droid_female_leggings",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_leggings"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "legs",
+            "asset_id": "tardis:clockwork_droid_female",
+            "allowed_entities": [
+              "minecraft:zombie",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/clockwork_droid_female_leggings",
+        "type": "definition"
+      }
+    ],
+    "minecraft:fire_charge": [
+      {
+        "bedrock_identifier": "tardis:item/monster/the_beast/the_beast_head",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_the_beast_the_beast_head_icon"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "head",
+            "allowed_entities": [
+              "minecraft:zombie",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:the_beast_head",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/the_beast_chestplate",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_chestplate"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "chest",
+            "asset_id": "tardis:the_beast",
+            "allowed_entities": [
+              "minecraft:zombie",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/the_beast_chestplate",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/the_beast_leggings",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_leggings"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "legs",
+            "asset_id": "tardis:the_beast",
+            "allowed_entities": [
+              "minecraft:zombie",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/the_beast_leggings",
+        "type": "definition"
+      }
+    ],
+    "minecraft:bone": [
+      {
+        "bedrock_identifier": "tardis:item/monster/k9/k9",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_k9_k9_icon"
+        },
+        "model": "tardis:k9",
+        "type": "definition"
+      }
+    ],
+    "minecraft:red_candle": [
+      {
+        "bedrock_identifier": "tardis:item/monster/headless_monk/headless_monk_head",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_headless_monk_headless_monk_head_icon"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "head",
+            "allowed_entities": [
+              "minecraft:skeleton",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:headless_monk_head",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/headless_monk_chestplate",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_chestplate"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "chest",
+            "asset_id": "tardis:headless_monk",
+            "allowed_entities": [
+              "minecraft:skeleton",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/headless_monk_chestplate",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/headless_monk_leggings",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_leggings"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "legs",
+            "asset_id": "tardis:headless_monk",
+            "allowed_entities": [
+              "minecraft:skeleton",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/headless_monk_leggings",
+        "type": "definition"
+      }
+    ],
+    "minecraft:oxidized_copper_grate": [
+      {
+        "bedrock_identifier": "tardis:item/monster/angel_of_liberty/angel_of_liberty_head",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_angel_of_liberty_angel_of_liberty_head_icon"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "head",
+            "allowed_entities": [
+              "minecraft:zombie",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:angel_of_liberty_head",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/angel_of_liberty_chestplate",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_chestplate"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "chest",
+            "asset_id": "tardis:angel_of_liberty",
+            "allowed_entities": [
+              "minecraft:zombie",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/angel_of_liberty_chestplate",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/angel_of_liberty_leggings",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_leggings"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "legs",
+            "asset_id": "tardis:angel_of_liberty",
+            "allowed_entities": [
+              "minecraft:zombie",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/angel_of_liberty_leggings",
+        "type": "definition"
+      }
+    ],
+    "minecraft:crimson_button": [
+      {
+        "bedrock_identifier": "tardis:item/monster/davros/davros",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_davros_davros_icon"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "head",
+            "allowed_entities": [
+              "minecraft:zombified_piglin",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:davros",
+        "type": "definition"
+      }
+    ],
+    "minecraft:mangrove_propagule": [
+      {
+        "bedrock_identifier": "tardis:item/monster/dalek_sec/dalek_sec_head",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_dalek_sec_dalek_sec_head_icon"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "head",
+            "allowed_entities": [
+              "minecraft:zombified_piglin",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:dalek_sec_head",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/dalek_sec_chestplate",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_chestplate"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "chest",
+            "asset_id": "tardis:dalek_sec",
+            "allowed_entities": [
+              "minecraft:zombified_piglin",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/dalek_sec_chestplate",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/dalek_sec_leggings",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_leggings"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "legs",
+            "asset_id": "tardis:dalek_sec",
+            "allowed_entities": [
+              "minecraft:zombified_piglin",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/dalek_sec_leggings",
+        "type": "definition"
+      }
+    ],
+    "minecraft:beef": [
+      {
+        "bedrock_identifier": "tardis:item/monster/nimon/nimon_head",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_nimon_nimon_head_icon"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "head",
+            "allowed_entities": [
+              "minecraft:zombie",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:nimon_head",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/nimon_chestplate",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_chestplate"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "chest",
+            "asset_id": "tardis:nimon",
+            "allowed_entities": [
+              "minecraft:zombie",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/nimon_chestplate",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/nimon_leggings",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_leggings"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "legs",
+            "asset_id": "tardis:nimon",
+            "allowed_entities": [
+              "minecraft:zombie",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/nimon_leggings",
+        "type": "definition"
+      }
+    ],
+    "minecraft:dune_armor_trim_smithing_template": [
+      {
+        "bedrock_identifier": "tardis:item/monster/sutekh/sutekh_head",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_sutekh_sutekh_head_icon"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "head",
+            "allowed_entities": [
+              "minecraft:stray",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:sutekh_head",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/sutekh_chestplate",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_chestplate"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "chest",
+            "asset_id": "tardis:sutekh",
+            "allowed_entities": [
+              "minecraft:stray",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/sutekh_chestplate",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/sutekh_leggings",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_leggings"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "legs",
+            "asset_id": "tardis:sutekh",
+            "allowed_entities": [
+              "minecraft:stray",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/sutekh_leggings",
+        "type": "definition"
+      }
+    ],
+    "minecraft:spider_eye": [
+      {
+        "bedrock_identifier": "tardis:item/monster/racnoss/racnoss_head",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_racnoss_racnoss_head_icon"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "head",
+            "allowed_entities": [
+              "minecraft:piglin_brute",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:racnoss_head",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/racnoss_chestplate",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_chestplate"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "chest",
+            "asset_id": "tardis:racnoss",
+            "allowed_entities": [
+              "minecraft:piglin_brute",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/racnoss_chestplate",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/racnoss_leggings",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_leggings"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "legs",
+            "asset_id": "tardis:racnoss",
+            "allowed_entities": [
+              "minecraft:piglin_brute",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/racnoss_leggings",
+        "type": "definition"
+      }
+    ],
+    "minecraft:turtle_egg": [
+      {
+        "bedrock_identifier": "tardis:item/monster/slitheen/slitheen_head",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_slitheen_slitheen_head_icon"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "head",
+            "allowed_entities": [
+              "minecraft:zombie",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:slitheen_head",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/slitheen_chestplate",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_chestplate"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "chest",
+            "asset_id": "tardis:slitheen",
+            "allowed_entities": [
+              "minecraft:zombie",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/slitheen_chestplate",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/slitheen_leggings",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_leggings"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "legs",
+            "asset_id": "tardis:slitheen",
+            "allowed_entities": [
+              "minecraft:zombie",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/slitheen_leggings",
+        "type": "definition"
+      }
+    ],
+    "minecraft:kelp": [
+      {
+        "bedrock_identifier": "tardis:item/monster/sea_devil/sea_devil_head",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_sea_devil_sea_devil_head_icon"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "head",
+            "allowed_entities": [
+              "minecraft:drowned",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:sea_devil_head",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/sea_devil_chestplate",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_chestplate"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "chest",
+            "asset_id": "tardis:sea_devil",
+            "allowed_entities": [
+              "minecraft:drowned",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/sea_devil_chestplate",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/sea_devil_leggings",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_leggings"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "legs",
+            "asset_id": "tardis:sea_devil",
+            "allowed_entities": [
+              "minecraft:drowned",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/sea_devil_leggings",
+        "type": "definition"
+      }
+    ],
+    "minecraft:red_stained_glass_pane": [
+      {
+        "bedrock_identifier": "tardis:item/monster/smiler/smiler_head",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_smiler_smiler_head_icon"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "head",
+            "allowed_entities": [
+              "minecraft:zombie",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:smiler_head",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/smiler_chestplate",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_chestplate"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "chest",
+            "asset_id": "tardis:smiler",
+            "allowed_entities": [
+              "minecraft:zombie",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/smiler_chestplate",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/smiler_leggings",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_leggings"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "legs",
+            "asset_id": "tardis:smiler",
+            "allowed_entities": [
+              "minecraft:zombie",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/smiler_leggings",
+        "type": "definition"
+      }
+    ],
+    "minecraft:brick": [
+      {
+        "bedrock_identifier": "tardis:item/monster/weeping_angel/weeping_angel_player_head",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_weeping_angel_weeping_angel_player_head_icon"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "head",
+            "allowed_entities": [
+              "minecraft:skeleton",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:weeping_angel_player_head",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/weeping_angel_chestplate",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_chestplate"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "chest",
+            "asset_id": "tardis:weeping_angel",
+            "allowed_entities": [
+              "minecraft:skeleton",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/weeping_angel_chestplate",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/weeping_angel_leggings",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_leggings"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "legs",
+            "asset_id": "tardis:weeping_angel",
+            "allowed_entities": [
+              "minecraft:skeleton",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/weeping_angel_leggings",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/weeping_angel/weeping_angel_head",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_weeping_angel_weeping_angel_head_icon"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "head",
+            "allowed_entities": [
+              "minecraft:skeleton",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:weeping_angel_head",
+        "type": "definition"
+      }
+    ],
+    "minecraft:charcoal": [
+      {
+        "bedrock_identifier": "tardis:item/monster/ossified/ossified_head",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_ossified_ossified_head_icon"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "head",
+            "allowed_entities": [
+              "minecraft:zombie",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:ossified_head",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/ossified_chestplate",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_chestplate"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "chest",
+            "asset_id": "tardis:ossified",
+            "allowed_entities": [
+              "minecraft:zombie",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/ossified_chestplate",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/ossified_leggings",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_leggings"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "legs",
+            "asset_id": "tardis:ossified",
+            "allowed_entities": [
+              "minecraft:zombie",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/ossified_leggings",
+        "type": "definition"
+      }
+    ],
+    "minecraft:pufferfish": [
+      {
+        "bedrock_identifier": "tardis:item/monster/hath/hath_head",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_hath_hath_head_icon"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "head",
+            "allowed_entities": [
+              "minecraft:zombified_piglin",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:hath_head",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/hath_chestplate",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_chestplate"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "chest",
+            "asset_id": "tardis:hath",
+            "allowed_entities": [
+              "minecraft:zombified_piglin",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/hath_chestplate",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/hath_leggings",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_leggings"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "legs",
+            "asset_id": "tardis:hath",
+            "allowed_entities": [
+              "minecraft:zombified_piglin",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/hath_leggings",
+        "type": "definition"
+      }
+    ],
+    "minecraft:feather": [
+      {
+        "bedrock_identifier": "tardis:item/monster/silurian/silurian_head",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_silurian_silurian_head_icon"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "head",
+            "allowed_entities": [
+              "minecraft:skeleton",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:silurian_head",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/silurian_chestplate",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_chestplate"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "chest",
+            "asset_id": "tardis:silurian",
+            "allowed_entities": [
+              "minecraft:skeleton",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/silurian_chestplate",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/silurian_leggings",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_leggings"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "legs",
+            "asset_id": "tardis:silurian",
+            "allowed_entities": [
+              "minecraft:skeleton",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/silurian_leggings",
+        "type": "definition"
+      }
+    ],
+    "minecraft:sugar": [
+      {
+        "bedrock_identifier": "tardis:item/monster/empty_child/empty_child_head",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_empty_child_empty_child_head_icon"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "head",
+            "camera_overlay": "tardis:item/monster/empty_child/empty_child_overlay",
+            "allowed_entities": [
+              "minecraft:zombie",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:empty_child_head",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/empty_child_chestplate",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_chestplate"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "chest",
+            "asset_id": "tardis:empty_child",
+            "allowed_entities": [
+              "minecraft:zombie",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/empty_child_chestplate",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/empty_child_leggings",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_leggings"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "legs",
+            "asset_id": "tardis:empty_child",
+            "allowed_entities": [
+              "minecraft:zombie",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/empty_child_leggings",
+        "type": "definition"
+      }
+    ],
+    "minecraft:brown_wool": [
+      {
+        "bedrock_identifier": "tardis:item/monster/cyberman/cybershade_head",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_cyberman_cybershade_head_icon"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "head",
+            "allowed_entities": [
+              "minecraft:zombie",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:cybershade_head",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/cybershade_chestplate",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_chestplate"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "chest",
+            "asset_id": "tardis:cybershade",
+            "allowed_entities": [
+              "minecraft:zombie",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/cybershade_chestplate",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/cybershade_leggings",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_leggings"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "legs",
+            "asset_id": "tardis:cybershade",
+            "allowed_entities": [
+              "minecraft:zombie",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/cybershade_leggings",
+        "type": "definition"
+      }
+    ],
+    "minecraft:iron_ingot": [
+      {
+        "bedrock_identifier": "tardis:item/monster/cyberman/black_cyberman_head",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_cyberman_black_cyberman_head_icon"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "head",
+            "allowed_entities": [
+              "minecraft:zombie",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:black_cyberman_head",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/cyberman/cyber_lord_head",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_cyberman_cyber_lord_head_icon"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "head",
+            "allowed_entities": [
+              "minecraft:zombie",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:cyber_lord_head",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/cyberman/cyberman_earthshock_head",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_cyberman_cyberman_earthshock_head_icon"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "head",
+            "allowed_entities": [
+              "minecraft:zombie",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:cyberman_earthshock_head",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/cyberman/cyberman_head",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_cyberman_cyberman_head_icon"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "head",
+            "allowed_entities": [
+              "minecraft:zombie",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:cyberman_head",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/cyberman/cyberman_invasion_head",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_cyberman_cyberman_invasion_head_icon"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "head",
+            "allowed_entities": [
+              "minecraft:zombie",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:cyberman_invasion_head",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/cyberman/cyberman_moonbase_head",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_cyberman_cyberman_moonbase_head_icon"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "head",
+            "allowed_entities": [
+              "minecraft:zombie",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:cyberman_moonbase_head",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/cyberman/cyberman_rise_head",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_cyberman_cyberman_rise_head_icon"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "head",
+            "allowed_entities": [
+              "minecraft:zombie",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:cyberman_rise_head",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/cyberman/cyberman_tenth_planet_head",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_cyberman_cyberman_tenth_planet_head_icon"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "head",
+            "allowed_entities": [
+              "minecraft:zombie",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:cyberman_tenth_planet_head",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/cyberman/wood_cyberman_head",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_cyberman_wood_cyberman_head_icon"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "head",
+            "allowed_entities": [
+              "minecraft:zombie",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:wood_cyberman_head",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/cyberman_chestplate",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_chestplate"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "chest",
+            "asset_id": "tardis:cyberman",
+            "allowed_entities": [
+              "minecraft:zombie",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/cyberman_chestplate",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/cyberman_leggings",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_leggings"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "legs",
+            "asset_id": "tardis:cyberman",
+            "allowed_entities": [
+              "minecraft:zombie",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/cyberman_leggings",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/cyber_lord_chestplate",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_chestplate"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "chest",
+            "asset_id": "tardis:cyber_lord",
+            "allowed_entities": [
+              "minecraft:zombie",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/cyber_lord_chestplate",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/cyber_lord_leggings",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_leggings"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "legs",
+            "asset_id": "tardis:cyber_lord",
+            "allowed_entities": [
+              "minecraft:zombie",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/cyber_lord_leggings",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/cyberman_rise_chestplate",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_chestplate"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "chest",
+            "asset_id": "tardis:cyberman_rise",
+            "allowed_entities": [
+              "minecraft:zombie",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/cyberman_rise_chestplate",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/cyberman_rise_leggings",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_leggings"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "legs",
+            "asset_id": "tardis:cyberman_rise",
+            "allowed_entities": [
+              "minecraft:zombie",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/cyberman_rise_leggings",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/black_cyberman_chestplate",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_chestplate"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "chest",
+            "asset_id": "tardis:black_cyberman",
+            "allowed_entities": [
+              "minecraft:zombie",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/black_cyberman_chestplate",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/black_cyberman_leggings",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_leggings"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "legs",
+            "asset_id": "tardis:black_cyberman",
+            "allowed_entities": [
+              "minecraft:zombie",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/black_cyberman_leggings",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/cyberman_earthshock_chestplate",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_chestplate"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "chest",
+            "asset_id": "tardis:cyberman_earthshock",
+            "allowed_entities": [
+              "minecraft:zombie",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/cyberman_earthshock_chestplate",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/cyberman_earthshock_leggings",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_leggings"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "legs",
+            "asset_id": "tardis:cyberman_earthshock",
+            "allowed_entities": [
+              "minecraft:zombie",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/cyberman_earthshock_leggings",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/cyberman_invasion_chestplate",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_chestplate"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "chest",
+            "asset_id": "tardis:cyberman_invasion",
+            "allowed_entities": [
+              "minecraft:zombie",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/cyberman_invasion_chestplate",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/cyberman_invasion_leggings",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_leggings"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "legs",
+            "asset_id": "tardis:cyberman_invasion",
+            "allowed_entities": [
+              "minecraft:zombie",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/cyberman_invasion_leggings",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/cyberman_moonbase_chestplate",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_chestplate"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "chest",
+            "asset_id": "tardis:cyberman_moonbase",
+            "allowed_entities": [
+              "minecraft:zombie",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/cyberman_moonbase_chestplate",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/cyberman_moonbase_leggings",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_leggings"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "legs",
+            "asset_id": "tardis:cyberman_moonbase",
+            "allowed_entities": [
+              "minecraft:zombie",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/cyberman_moonbase_leggings",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/cyberman_tenth_planet_chestplate",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_chestplate"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "chest",
+            "asset_id": "tardis:cyberman_tenth_planet",
+            "allowed_entities": [
+              "minecraft:zombie",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/cyberman_tenth_planet_chestplate",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/cyberman_tenth_planet_leggings",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_leggings"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "legs",
+            "asset_id": "tardis:cyberman_tenth_planet",
+            "allowed_entities": [
+              "minecraft:zombie",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/cyberman_tenth_planet_leggings",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/wood_cyberman_chestplate",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_chestplate"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "chest",
+            "asset_id": "tardis:wood_cyberman",
+            "allowed_entities": [
+              "minecraft:zombie",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/wood_cyberman_chestplate",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/wood_cyberman_leggings",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_leggings"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "legs",
+            "asset_id": "tardis:wood_cyberman",
+            "allowed_entities": [
+              "minecraft:zombie",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/wood_cyberman_leggings",
+        "type": "definition"
+      }
+    ],
+    "minecraft:cod": [
+      {
+        "bedrock_identifier": "tardis:item/monster/vampires/saturnynian_monster_head",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_vampires_saturnynian_monster_head_icon"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "head",
+            "allowed_entities": [
+              "minecraft:drowned",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:saturnynian_monster_head",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/vampires/vampire_of_venice_head",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_vampires_vampire_of_venice_head_icon"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "head",
+            "allowed_entities": [
+              "minecraft:drowned",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:vampire_of_venice_head",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/saturnynian_chestplate",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_chestplate"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "chest",
+            "asset_id": "tardis:saturnynian",
+            "allowed_entities": [
+              "minecraft:drowned",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/saturnynian_chestplate",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/saturnynian_leggings",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_leggings"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "legs",
+            "asset_id": "tardis:saturnynian",
+            "allowed_entities": [
+              "minecraft:drowned",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/saturnynian_leggings",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/vampire_of_venice_chestplate",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_chestplate"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "chest",
+            "asset_id": "tardis:vampire_of_venice",
+            "allowed_entities": [
+              "minecraft:drowned",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/vampire_of_venice_chestplate",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/vampire_of_venice_leggings",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_monster_leggings"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "legs",
+            "asset_id": "tardis:vampire_of_venice",
+            "allowed_entities": [
+              "minecraft:drowned",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:item/monster/vampire_of_venice_leggings",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/vampires/saturnynian_head",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_vampires_saturnynian_head_icon"
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "head",
+            "allowed_entities": [
+              "minecraft:drowned",
+              "minecraft:player"
+            ],
+            "damage_on_hurt": false
+          }
+        },
+        "model": "tardis:saturnynian_head",
+        "type": "definition"
+      }
+    ]
+  }
+}

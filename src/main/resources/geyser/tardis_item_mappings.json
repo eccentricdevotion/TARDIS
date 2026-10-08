@@ -1,0 +1,1240 @@
+{
+  "format_version": 2,
+  "items": {
+    "minecraft:chainmail_chestplate": [
+      {
+        "bedrock_identifier": "tardis:item/tardis/tardis_space_suit_chestplate",
+        "predicate": {
+          "value": "TARDIS Space Suit Chestplate",
+          "property": "custom_model_data",
+          "type": "match"
+        },
+        "bedrock_options": {
+          "icon": "tardis.item_tardis_space_suit_chestplate",
+          "tags": [
+            "minecraft:is_armor",
+            "minecraft:trimmable_armors"
+          ]
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "chest",
+            "asset_id": "tardis:space_suit"
+          }
+        },
+        "model": "minecraft:chainmail_chestplate",
+        "type": "definition"
+      }
+    ],
+    "minecraft:brown_concrete": [
+      {
+        "bedrock_identifier": "tardis:item/tardis/brown_console",
+        "predicate": {
+          "value": "Brown Console",
+          "property": "custom_model_data",
+          "type": "match"
+        },
+        "bedrock_options": {
+          "icon": "tardis.item_tardis_brown_console_icon"
+        },
+        "model": "minecraft:brown_concrete",
+        "type": "definition"
+      }
+    ],
+    "minecraft:music_disc_mall": [
+      {
+        "bedrock_identifier": "tardis:item/tardis/preset_storage_disk",
+        "predicate": {
+          "value": "Preset Storage Disk",
+          "property": "custom_model_data",
+          "type": "match"
+        },
+        "bedrock_options": {
+          "icon": "tardis.item_tardis_preset_storage_disk_icon"
+        },
+        "model": "minecraft:music_disc_mall",
+        "type": "definition"
+      }
+    ],
+    "minecraft:clock": [
+      {
+        "bedrock_identifier": "tardis:item/tardis/fob_watch",
+        "predicate": {
+          "value": "Fob Watch",
+          "property": "custom_model_data",
+          "type": "match"
+        },
+        "bedrock_options": {
+          "icon": "tardis.item_tardis_fob_watch"
+        },
+        "model": "minecraft:clock",
+        "type": "definition"
+      }
+    ],
+    "minecraft:melon_slice": [
+      {
+        "model": "minecraft:melon_slice",
+        "definitions": [
+          {
+            "bedrock_identifier": "tardis:item/tardis/apple_jelly_baby",
+            "predicate": {
+              "value": "Apple Jelly Baby",
+              "property": "custom_model_data",
+              "type": "match"
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_tardis_apple_jelly_baby_icon"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/tardis/blueberry_jelly_baby",
+            "predicate": {
+              "value": "Blueberry Jelly Baby",
+              "property": "custom_model_data",
+              "type": "match"
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_tardis_blueberry_jelly_baby_icon"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/tardis/bubblegum_jelly_baby",
+            "predicate": {
+              "value": "Bubblegum Jelly Baby",
+              "property": "custom_model_data",
+              "type": "match"
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_tardis_bubblegum_jelly_baby_icon"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/tardis/cappuccino_jelly_baby",
+            "predicate": {
+              "value": "Cappuccino Jelly Baby",
+              "property": "custom_model_data",
+              "type": "match"
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_tardis_cappuccino_jelly_baby_icon"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/tardis/earl_grey_jelly_baby",
+            "predicate": {
+              "value": "Earl Grey Jelly Baby",
+              "property": "custom_model_data",
+              "type": "match"
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_tardis_earl_grey_jelly_baby_icon"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/tardis/grape_jelly_baby",
+            "predicate": {
+              "value": "Grape Jelly Baby",
+              "property": "custom_model_data",
+              "type": "match"
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_tardis_grape_jelly_baby_icon"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/tardis/island_punch_jelly_baby",
+            "predicate": {
+              "value": "Island Punch Jelly Baby",
+              "property": "custom_model_data",
+              "type": "match"
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_tardis_island_punch_jelly_baby_icon"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/tardis/lemon_jelly_baby",
+            "predicate": {
+              "value": "Lemon Jelly Baby",
+              "property": "custom_model_data",
+              "type": "match"
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_tardis_lemon_jelly_baby_icon"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/tardis/licorice_jelly_baby",
+            "predicate": {
+              "value": "Licorice Jelly Baby",
+              "property": "custom_model_data",
+              "type": "match"
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_tardis_licorice_jelly_baby_icon"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/tardis/lime_jelly_baby",
+            "predicate": {
+              "value": "Lime Jelly Baby",
+              "property": "custom_model_data",
+              "type": "match"
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_tardis_lime_jelly_baby_icon"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/tardis/orange_jelly_baby",
+            "predicate": {
+              "value": "Orange Jelly Baby",
+              "property": "custom_model_data",
+              "type": "match"
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_tardis_orange_jelly_baby_icon"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/tardis/raspberry_jelly_baby",
+            "predicate": {
+              "value": "Raspberry Jelly Baby",
+              "property": "custom_model_data",
+              "type": "match"
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_tardis_raspberry_jelly_baby_icon"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/tardis/strawberry_jelly_baby",
+            "predicate": {
+              "value": "Strawberry Jelly Baby",
+              "property": "custom_model_data",
+              "type": "match"
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_tardis_strawberry_jelly_baby_icon"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/tardis/vanilla_jelly_baby",
+            "predicate": {
+              "value": "Vanilla Jelly Baby",
+              "property": "custom_model_data",
+              "type": "match"
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_tardis_vanilla_jelly_baby_icon"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/tardis/vodka_jelly_baby",
+            "predicate": {
+              "value": "Vodka Jelly Baby",
+              "property": "custom_model_data",
+              "type": "match"
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_tardis_vodka_jelly_baby_icon"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/tardis/watermelon_jelly_baby",
+            "predicate": {
+              "value": "Watermelon Jelly Baby",
+              "property": "custom_model_data",
+              "type": "match"
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_tardis_watermelon_jelly_baby_icon"
+            },
+            "type": "definition"
+          }
+        ],
+        "type": "group"
+      }
+    ],
+    "minecraft:bucket": [
+      {
+        "model": "minecraft:bucket",
+        "definitions": [
+          {
+            "bedrock_identifier": "tardis:item/tardis/artron_capacitor",
+            "predicate": {
+              "value": "Artron Capacitor",
+              "property": "custom_model_data",
+              "type": "match"
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_tardis_artron_capacitor_icon"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/tardis/artron_storage_cell",
+            "predicate": {
+              "value": "Artron Storage Cell",
+              "property": "custom_model_data",
+              "type": "match"
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_tardis_artron_storage_cell_icon"
+            },
+            "type": "definition"
+          }
+        ],
+        "type": "group"
+      }
+    ],
+    "minecraft:blue_concrete": [
+      {
+        "bedrock_identifier": "tardis:item/tardis/blue_console",
+        "predicate": {
+          "value": "Blue Console",
+          "property": "custom_model_data",
+          "type": "match"
+        },
+        "bedrock_options": {
+          "icon": "tardis.item_tardis_blue_console_icon"
+        },
+        "model": "minecraft:blue_concrete",
+        "type": "definition"
+      }
+    ],
+    "minecraft:magenta_concrete": [
+      {
+        "bedrock_identifier": "tardis:item/tardis/magenta_console",
+        "predicate": {
+          "value": "Magenta Console",
+          "property": "custom_model_data",
+          "type": "match"
+        },
+        "bedrock_options": {
+          "icon": "tardis.item_tardis_magenta_console_icon"
+        },
+        "model": "minecraft:magenta_concrete",
+        "type": "definition"
+      }
+    ],
+    "minecraft:cooked_cod": [
+      {
+        "bedrock_identifier": "tardis:item/tardis/fish_finger",
+        "predicate": {
+          "value": "Fish Finger",
+          "property": "custom_model_data",
+          "type": "match"
+        },
+        "bedrock_options": {
+          "icon": "tardis.item_tardis_fish_finger_icon"
+        },
+        "model": "minecraft:cooked_cod",
+        "type": "definition"
+      }
+    ],
+    "minecraft:orange_concrete": [
+      {
+        "bedrock_identifier": "tardis:item/tardis/orange_console",
+        "predicate": {
+          "value": "Orange Console",
+          "property": "custom_model_data",
+          "type": "match"
+        },
+        "bedrock_options": {
+          "icon": "tardis.item_tardis_orange_console_icon"
+        },
+        "model": "minecraft:orange_concrete",
+        "type": "definition"
+      }
+    ],
+    "minecraft:paper": [
+      {
+        "bedrock_identifier": "tardis:item/tardis/paper_bag",
+        "predicate": {
+          "value": "Paper Bag",
+          "property": "custom_model_data",
+          "type": "match"
+        },
+        "bedrock_options": {
+          "icon": "tardis.item_food_paper_bag"
+        },
+        "model": "minecraft:paper",
+        "type": "definition"
+      }
+    ],
+    "minecraft:black_concrete": [
+      {
+        "bedrock_identifier": "tardis:item/tardis/black_console",
+        "predicate": {
+          "value": "Black Console",
+          "property": "custom_model_data",
+          "type": "match"
+        },
+        "bedrock_options": {
+          "icon": "tardis.item_tardis_black_console_icon"
+        },
+        "model": "minecraft:black_concrete",
+        "type": "definition"
+      }
+    ],
+    "minecraft:light_blue_concrete": [
+      {
+        "bedrock_identifier": "tardis:item/tardis/light_blue_console",
+        "predicate": {
+          "value": "Light Blue Console",
+          "property": "custom_model_data",
+          "type": "match"
+        },
+        "bedrock_options": {
+          "icon": "tardis.item_tardis_light_blue_console_icon"
+        },
+        "model": "minecraft:light_blue_concrete",
+        "type": "definition"
+      }
+    ],
+    "minecraft:mushroom_stew": [
+      {
+        "bedrock_identifier": "tardis:item/tardis/bowl_of_custard",
+        "predicate": {
+          "value": "Bowl of Custard",
+          "property": "custom_model_data",
+          "type": "match"
+        },
+        "bedrock_options": {
+          "icon": "tardis.item_tardis_bowl_of_custard_icon"
+        },
+        "model": "minecraft:mushroom_stew",
+        "type": "definition"
+      }
+    ],
+    "minecraft:gray_shulker_box": [
+      {
+        "bedrock_identifier": "tardis:item/tardis/artron_capacitor_storage",
+        "predicate": {
+          "value": "Artron Capacitor Storage",
+          "property": "custom_model_data",
+          "type": "match"
+        },
+        "bedrock_options": {
+          "icon": "tardis.item_tardis_artron_capacitor_storage_icon"
+        },
+        "model": "minecraft:gray_shulker_box",
+        "type": "definition"
+      }
+    ],
+    "minecraft:flint": [
+      {
+        "bedrock_identifier": "tardis:item/tardis/stattenheim_remote",
+        "predicate": {
+          "value": "Stattenheim Remote",
+          "property": "custom_model_data",
+          "type": "match"
+        },
+        "bedrock_options": {
+          "icon": "tardis.item_tardis_stattenheim_remote_icon"
+        },
+        "model": "minecraft:flint",
+        "type": "definition"
+      }
+    ],
+    "minecraft:light_gray_concrete": [
+      {
+        "bedrock_identifier": "tardis:item/tardis/light_gray_console",
+        "predicate": {
+          "value": "Light Gray Console",
+          "property": "custom_model_data",
+          "type": "match"
+        },
+        "bedrock_options": {
+          "icon": "tardis.item_tardis_light_gray_console_icon"
+        },
+        "model": "minecraft:light_gray_concrete",
+        "type": "definition"
+      }
+    ],
+    "minecraft:ominous_trial_key": [
+      {
+        "model": "minecraft:ominous_trial_key",
+        "definitions": [
+          {
+            "bedrock_identifier": "tardis:item/tardis/perception_filter",
+            "predicate": {
+              "value": "Perception Filter",
+              "property": "custom_model_data",
+              "type": "match"
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_key_perception_filter"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/tardis/tardis_remote_key",
+            "predicate": {
+              "value": "TARDIS Remote Key",
+              "property": "custom_model_data",
+              "type": "match"
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_key_remote"
+            },
+            "type": "definition"
+          }
+        ],
+        "type": "group"
+      }
+    ],
+    "minecraft:nether_brick": [
+      {
+        "bedrock_identifier": "tardis:item/tardis/acid_battery",
+        "predicate": {
+          "value": "Acid Battery",
+          "property": "custom_model_data",
+          "type": "match"
+        },
+        "bedrock_options": {
+          "icon": "tardis.item_tardis_acid_battery_icon"
+        },
+        "model": "minecraft:nether_brick",
+        "type": "definition"
+      }
+    ],
+    "minecraft:gray_concrete": [
+      {
+        "bedrock_identifier": "tardis:item/tardis/gray_console",
+        "predicate": {
+          "value": "Gray Console",
+          "property": "custom_model_data",
+          "type": "match"
+        },
+        "bedrock_options": {
+          "icon": "tardis.item_tardis_gray_console_icon"
+        },
+        "model": "minecraft:gray_concrete",
+        "type": "definition"
+      }
+    ],
+    "minecraft:pink_concrete": [
+      {
+        "bedrock_identifier": "tardis:item/tardis/pink_console",
+        "predicate": {
+          "value": "Pink Console",
+          "property": "custom_model_data",
+          "type": "match"
+        },
+        "bedrock_options": {
+          "icon": "tardis.item_tardis_pink_console_icon"
+        },
+        "model": "minecraft:pink_concrete",
+        "type": "definition"
+      }
+    ],
+    "minecraft:compass": [
+      {
+        "bedrock_identifier": "tardis:item/tardis/tardis_locator",
+        "predicate": {
+          "value": "TARDIS Locator",
+          "property": "custom_model_data",
+          "type": "match"
+        },
+        "bedrock_options": {
+          "icon": "tardis.item_tardis_tardis_locator_icon"
+        },
+        "model": "minecraft:compass",
+        "type": "definition"
+      }
+    ],
+    "minecraft:chainmail_leggings": [
+      {
+        "bedrock_identifier": "tardis:item/tardis/tardis_space_suit_leggings",
+        "predicate": {
+          "value": "TARDIS Space Suit Leggings",
+          "property": "custom_model_data",
+          "type": "match"
+        },
+        "bedrock_options": {
+          "icon": "tardis.item_tardis_space_suit_leggings",
+          "tags": [
+            "minecraft:is_armor",
+            "minecraft:trimmable_armors"
+          ]
+        },
+        "components": {
+          "minecraft:equippable": {
+            "slot": "legs",
+            "asset_id": "tardis:space_suit",
+            "allowed_entities": "minecraft:player"
+          }
+        },
+        "model": "minecraft:chainmail_leggings",
+        "type": "definition"
+      }
+    ],
+    "minecraft:white_concrete": [
+      {
+        "bedrock_identifier": "tardis:item/tardis/white_console",
+        "predicate": {
+          "value": "White Console",
+          "property": "custom_model_data",
+          "type": "match"
+        },
+        "bedrock_options": {
+          "icon": "tardis.item_tardis_white_console_icon"
+        },
+        "model": "minecraft:white_concrete",
+        "type": "definition"
+      }
+    ],
+    "minecraft:purple_concrete": [
+      {
+        "bedrock_identifier": "tardis:item/tardis/purple_console",
+        "predicate": {
+          "value": "Purple Console",
+          "property": "custom_model_data",
+          "type": "match"
+        },
+        "bedrock_options": {
+          "icon": "tardis.item_tardis_purple_console_icon"
+        },
+        "model": "minecraft:purple_concrete",
+        "type": "definition"
+      }
+    ],
+    "minecraft:music_disc_chirp": [
+      {
+        "bedrock_identifier": "tardis:item/tardis/save_storage_disk",
+        "predicate": {
+          "value": "Save Storage Disk",
+          "property": "custom_model_data",
+          "type": "match"
+        },
+        "bedrock_options": {
+          "icon": "tardis.item_tardis_save_storage_disk_icon"
+        },
+        "model": "minecraft:music_disc_chirp",
+        "type": "definition"
+      }
+    ],
+    "minecraft:yellow_concrete": [
+      {
+        "bedrock_identifier": "tardis:item/tardis/yellow_console",
+        "predicate": {
+          "value": "Yellow Console",
+          "property": "custom_model_data",
+          "type": "match"
+        },
+        "bedrock_options": {
+          "icon": "tardis.item_tardis_yellow_console_icon"
+        },
+        "model": "minecraft:yellow_concrete",
+        "type": "definition"
+      }
+    ],
+    "minecraft:brick": [
+      {
+        "bedrock_identifier": "tardis:item/tardis/tardis_biome_reader",
+        "predicate": {
+          "value": "TARDIS Biome Reader",
+          "property": "custom_model_data",
+          "type": "match"
+        },
+        "bedrock_options": {
+          "icon": "tardis.item_tardis_tardis_biome_reader_icon"
+        },
+        "model": "minecraft:brick",
+        "type": "definition"
+      }
+    ],
+    "minecraft:iron_sword": [
+      {
+        "bedrock_identifier": "tardis:item/tardis/rust_plague_sword",
+        "predicate": {
+          "value": "Rust Plague Sword",
+          "property": "custom_model_data",
+          "type": "match"
+        },
+        "bedrock_options": {
+          "icon": "tardis.item_tardis_rust_plague_sword_icon"
+        },
+        "model": "minecraft:iron_sword",
+        "type": "definition"
+      }
+    ],
+    "minecraft:cyan_concrete": [
+      {
+        "bedrock_identifier": "tardis:item/tardis/cyan_console",
+        "predicate": {
+          "value": "Cyan Console",
+          "property": "custom_model_data",
+          "type": "match"
+        },
+        "bedrock_options": {
+          "icon": "tardis.item_tardis_cyan_console_icon"
+        },
+        "model": "minecraft:cyan_concrete",
+        "type": "definition"
+      }
+    ],
+    "minecraft:music_disc_cat": [
+      {
+        "bedrock_identifier": "tardis:item/tardis/biome_storage_disk",
+        "predicate": {
+          "value": "Biome Storage Disk",
+          "property": "custom_model_data",
+          "type": "match"
+        },
+        "bedrock_options": {
+          "icon": "tardis.item_tardis_biome_storage_disk_icon"
+        },
+        "model": "minecraft:music_disc_cat",
+        "type": "definition"
+      }
+    ],
+    "minecraft:music_disc_strad": [
+      {
+        "bedrock_identifier": "tardis:item/tardis/blank_storage_disk",
+        "predicate": {
+          "value": "Blank Storage Disk",
+          "property": "custom_model_data",
+          "type": "match"
+        },
+        "bedrock_options": {
+          "icon": "tardis.item_tardis_blank_storage_disk_icon"
+        },
+        "model": "minecraft:music_disc_strad",
+        "type": "definition"
+      }
+    ],
+    "minecraft:brown_stained_glass": [
+      {
+        "bedrock_identifier": "tardis:item/tardis/tardis_television",
+        "predicate": {
+          "value": "TARDIS Television",
+          "property": "custom_model_data",
+          "type": "match"
+        },
+        "bedrock_options": {
+          "icon": "tardis.item_tardis_tardis_television_icon"
+        },
+        "model": "minecraft:brown_stained_glass",
+        "type": "definition"
+      }
+    ],
+    "minecraft:birch_button": [
+      {
+        "bedrock_identifier": "tardis:item/tardis/handles_on",
+        "predicate": {
+          "value": "Handles",
+          "property": "custom_model_data",
+          "type": "match"
+        },
+        "bedrock_options": {
+          "icon": "tardis.item_tardis_handles_on_icon"
+        },
+        "model": "minecraft:birch_button",
+        "type": "definition"
+      }
+    ],
+    "minecraft:green_concrete": [
+      {
+        "bedrock_identifier": "tardis:item/tardis/green_console",
+        "predicate": {
+          "value": "Green Console",
+          "property": "custom_model_data",
+          "type": "match"
+        },
+        "bedrock_options": {
+          "icon": "tardis.item_tardis_green_console_icon"
+        },
+        "model": "minecraft:green_concrete",
+        "type": "definition"
+      }
+    ],
+    "minecraft:music_disc_wait": [
+      {
+        "bedrock_identifier": "tardis:item/tardis/player_storage_disk",
+        "predicate": {
+          "value": "Player Storage Disk",
+          "property": "custom_model_data",
+          "type": "match"
+        },
+        "bedrock_options": {
+          "icon": "tardis.item_tardis_player_storage_disk_icon"
+        },
+        "model": "minecraft:music_disc_wait",
+        "type": "definition"
+      }
+    ],
+    "minecraft:leather_helmet": [
+      {
+        "model": "minecraft:leather_helmet",
+        "definitions": [
+          {
+            "bedrock_identifier": "tardis:item/tardis/3_d_glasses",
+            "predicate": {
+              "value": "3-D Glasses",
+              "property": "custom_model_data",
+              "type": "match"
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_tardis_3_d_glasses_icon",
+              "tags": [
+                "minecraft:is_armor",
+                "minecraft:trimmable_armors"
+              ]
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/tardis/black_bow_tie",
+            "predicate": {
+              "value": "Black Bow Tie",
+              "property": "custom_model_data",
+              "type": "match"
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_tardis_black_bow_tie_icon",
+              "tags": [
+                "minecraft:is_armor",
+                "minecraft:trimmable_armors"
+              ]
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/tardis/blue_bow_tie",
+            "predicate": {
+              "value": "Blue Bow Tie",
+              "property": "custom_model_data",
+              "type": "match"
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_tardis_blue_bow_tie_icon",
+              "tags": [
+                "minecraft:is_armor",
+                "minecraft:trimmable_armors"
+              ]
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/tardis/brown_bow_tie",
+            "predicate": {
+              "value": "Brown Bow Tie",
+              "property": "custom_model_data",
+              "type": "match"
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_tardis_brown_bow_tie_icon",
+              "tags": [
+                "minecraft:is_armor",
+                "minecraft:trimmable_armors"
+              ]
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/tardis/cyan_bow_tie",
+            "predicate": {
+              "value": "Cyan Bow Tie",
+              "property": "custom_model_data",
+              "type": "match"
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_tardis_cyan_bow_tie_icon",
+              "tags": [
+                "minecraft:is_armor",
+                "minecraft:trimmable_armors"
+              ]
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/tardis/green_bow_tie",
+            "predicate": {
+              "value": "Green Bow Tie",
+              "property": "custom_model_data",
+              "type": "match"
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_tardis_green_bow_tie_icon",
+              "tags": [
+                "minecraft:is_armor",
+                "minecraft:trimmable_armors"
+              ]
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/tardis/grey_bow_tie",
+            "predicate": {
+              "value": "Grey Bow Tie",
+              "property": "custom_model_data",
+              "type": "match"
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_tardis_grey_bow_tie_icon",
+              "tags": [
+                "minecraft:is_armor",
+                "minecraft:trimmable_armors"
+              ]
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/tardis/light_blue_bow_tie",
+            "predicate": {
+              "value": "Light Blue Bow Tie",
+              "property": "custom_model_data",
+              "type": "match"
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_tardis_light_blue_bow_tie_icon",
+              "tags": [
+                "minecraft:is_armor",
+                "minecraft:trimmable_armors"
+              ]
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/tardis/light_grey_bow_tie",
+            "predicate": {
+              "value": "Light Grey Bow Tie",
+              "property": "custom_model_data",
+              "type": "match"
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_tardis_light_grey_bow_tie_icon",
+              "tags": [
+                "minecraft:is_armor",
+                "minecraft:trimmable_armors"
+              ]
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/tardis/lime_bow_tie",
+            "predicate": {
+              "value": "Lime Bow Tie",
+              "property": "custom_model_data",
+              "type": "match"
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_tardis_lime_bow_tie_icon",
+              "tags": [
+                "minecraft:is_armor",
+                "minecraft:trimmable_armors"
+              ]
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/tardis/magenta_bow_tie",
+            "predicate": {
+              "value": "Magenta Bow Tie",
+              "property": "custom_model_data",
+              "type": "match"
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_tardis_magenta_bow_tie_icon",
+              "tags": [
+                "minecraft:is_armor",
+                "minecraft:trimmable_armors"
+              ]
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/tardis/orange_bow_tie",
+            "predicate": {
+              "value": "Orange Bow Tie",
+              "property": "custom_model_data",
+              "type": "match"
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_tardis_orange_bow_tie_icon",
+              "tags": [
+                "minecraft:is_armor",
+                "minecraft:trimmable_armors"
+              ]
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/tardis/pink_bow_tie",
+            "predicate": {
+              "value": "Pink Bow Tie",
+              "property": "custom_model_data",
+              "type": "match"
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_tardis_pink_bow_tie_icon",
+              "tags": [
+                "minecraft:is_armor",
+                "minecraft:trimmable_armors"
+              ]
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/tardis/purple_bow_tie",
+            "predicate": {
+              "value": "Purple Bow Tie",
+              "property": "custom_model_data",
+              "type": "match"
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_tardis_purple_bow_tie_icon",
+              "tags": [
+                "minecraft:is_armor",
+                "minecraft:trimmable_armors"
+              ]
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/tardis/red_bow_tie",
+            "predicate": {
+              "value": "Red Bow Tie",
+              "property": "custom_model_data",
+              "type": "match"
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_tardis_red_bow_tie_icon",
+              "tags": [
+                "minecraft:is_armor",
+                "minecraft:trimmable_armors"
+              ]
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/tardis/tardis_communicator",
+            "predicate": {
+              "value": "TARDIS Communicator",
+              "property": "custom_model_data",
+              "type": "match"
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_tardis_tardis_communicator_icon",
+              "tags": [
+                "minecraft:is_armor",
+                "minecraft:trimmable_armors"
+              ]
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/tardis/white_bow_tie",
+            "predicate": {
+              "value": "White Bow Tie",
+              "property": "custom_model_data",
+              "type": "match"
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_tardis_white_bow_tie_icon",
+              "tags": [
+                "minecraft:is_armor",
+                "minecraft:trimmable_armors"
+              ]
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/tardis/yellow_bow_tie",
+            "predicate": {
+              "value": "Yellow Bow Tie",
+              "property": "custom_model_data",
+              "type": "match"
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_tardis_yellow_bow_tie_icon",
+              "tags": [
+                "minecraft:is_armor",
+                "minecraft:trimmable_armors"
+              ]
+            },
+            "type": "definition"
+          }
+        ],
+        "type": "group"
+      }
+    ],
+    "minecraft:music_disc_far": [
+      {
+        "bedrock_identifier": "tardis:item/tardis/authorised_control_disk",
+        "predicate": {
+          "value": "Authorised Control Disk",
+          "property": "custom_model_data",
+          "type": "match"
+        },
+        "bedrock_options": {
+          "icon": "tardis.item_tardis_authorised_control_disk_icon"
+        },
+        "model": "minecraft:music_disc_far",
+        "type": "definition"
+      }
+    ],
+    "minecraft:furnace": [
+      {
+        "bedrock_identifier": "tardis:item/tardis/tardis_artron_furnace",
+        "predicate": {
+          "value": "TARDIS Artron Furnace",
+          "property": "custom_model_data",
+          "type": "match"
+        },
+        "bedrock_options": {
+          "icon": "tardis.item_tardis_tardis_artron_furnace_icon"
+        },
+        "model": "minecraft:furnace",
+        "type": "definition"
+      }
+    ],
+    "minecraft:cookie": [
+      {
+        "model": "minecraft:cookie",
+        "definitions": [
+          {
+            "bedrock_identifier": "tardis:item/tardis/custard_cream",
+            "predicate": {
+              "value": "Custard Cream",
+              "property": "custom_model_data",
+              "type": "match"
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_tardis_custard_cream_icon"
+            },
+            "type": "definition"
+          },
+          {
+            "bedrock_identifier": "tardis:item/tardis/jammy_dodger",
+            "predicate": {
+              "value": "Jammy Dodger",
+              "property": "custom_model_data",
+              "type": "match"
+            },
+            "bedrock_options": {
+              "icon": "tardis.item_tardis_jammy_dodger_icon"
+            },
+            "type": "definition"
+          }
+        ],
+        "type": "group"
+      }
+    ],
+    "minecraft:netherite_block": [
+      {
+        "bedrock_identifier": "tardis:item/tardis/netherite_console",
+        "predicate": {
+          "value": "Netherite Console",
+          "property": "custom_model_data",
+          "type": "match"
+        },
+        "bedrock_options": {
+          "icon": "tardis.item_tardis_netherite_console_icon"
+        },
+        "model": "minecraft:netherite_block",
+        "type": "definition"
+      }
+    ],
+    "minecraft:red_concrete": [
+      {
+        "bedrock_identifier": "tardis:item/tardis/red_console",
+        "predicate": {
+          "value": "Red Console",
+          "property": "custom_model_data",
+          "type": "match"
+        },
+        "bedrock_options": {
+          "icon": "tardis.item_tardis_red_console_icon"
+        },
+        "model": "minecraft:red_concrete",
+        "type": "definition"
+      }
+    ],
+    "minecraft:lime_concrete": [
+      {
+        "bedrock_identifier": "tardis:item/tardis/lime_console",
+        "predicate": {
+          "value": "Lime Console",
+          "property": "custom_model_data",
+          "type": "match"
+        },
+        "bedrock_options": {
+          "icon": "tardis.item_tardis_lime_console_icon"
+        },
+        "model": "minecraft:lime_concrete",
+        "type": "definition"
+      }
+    ],
+    "minecraft:glass": [
+      {
+        "bedrock_identifier": "tardis:item/tardis/tardis_space_helmet",
+        "predicate": {
+          "value": "TARDIS Space Helmet",
+          "property": "custom_model_data",
+          "type": "match"
+        },
+        "bedrock_options": {
+          "icon": "tardis.item_tardis_tardis_space_helmet_icon"
+        },
+        "components": {
+          "minecraft:max_stack_size": 1,
+          "minecraft:equippable": {
+            "slot": "head",
+            "allowed_entities": "minecraft:player"
+          }
+        },
+        "model": "minecraft:glass",
+        "type": "definition"
+      }
+    ],
+    "minecraft:waxed_oxidized_copper": [
+      {
+        "bedrock_identifier": "tardis:item/tardis/rustic_console",
+        "predicate": {
+          "value": "Rustic Console",
+          "property": "custom_model_data",
+          "type": "match"
+        },
+        "bedrock_options": {
+          "icon": "tardis.item_tardis_rustic_console_icon"
+        },
+        "model": "minecraft:waxed_oxidized_copper",
+        "type": "definition"
+      }
+    ],
+    "minecraft:bone": [
+      {
+        "bedrock_identifier": "tardis:item/tardis/tardis_schematic_wand",
+        "predicate": {
+          "value": "TARDIS Schematic Wand",
+          "property": "custom_model_data",
+          "type": "match"
+        },
+        "bedrock_options": {
+          "icon": "tardis.item_tardis_tardis_schematic_wand_icon"
+        },
+        "model": "minecraft:bone",
+        "type": "definition"
+      }
+    ]
+  }
+}
