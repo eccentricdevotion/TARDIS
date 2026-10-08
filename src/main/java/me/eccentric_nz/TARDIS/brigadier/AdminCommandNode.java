@@ -21,6 +21,7 @@ import me.eccentric_nz.TARDIS.commands.admin.*;
 import me.eccentric_nz.TARDIS.commands.dev.AddRegionsCommand;
 import me.eccentric_nz.TARDIS.database.tool.Converter;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.geyser.GeyserMappings;
 import me.eccentric_nz.TARDIS.maze.MazeBuilder;
 import me.eccentric_nz.TARDIS.maze.MazeGenerator;
 import me.eccentric_nz.TARDIS.utility.update.UpdateTARDISPlugins;
@@ -228,6 +229,16 @@ public class AdminCommandNode {
                                     return Command.SINGLE_SUCCESS;
                                 }))
                 )
+                .then(Commands.literal("install_geyser")
+                        .executes(ctx -> {
+                            if (!plugin.getServer().getPluginManager().isPluginEnabled("Geyser-Spigot")) {
+                                plugin.getMessenger().send(ctx.getSource().getSender(), TardisModule.TARDIS, "GEYSER_ENABLED");
+                                return Command.SINGLE_SUCCESS;
+                            }
+                            new GeyserMappings(plugin).install(ctx.getSource().getSender());
+                            return Command.SINGLE_SUCCESS;
+                        })
+                )
                 .then(Commands.literal("list")
                         .then(Commands.literal("blueprints")
                                 .then(Commands.argument("blueprint", new BlueprintTypeArgumentType())
@@ -279,6 +290,7 @@ public class AdminCommandNode {
                         .executes(ctx -> {
                             if (!plugin.getServer().getPluginManager().isPluginEnabled("Multiverse-Core")) {
                                 plugin.getMessenger().send(ctx.getSource().getSender(), TardisModule.TARDIS, "MULTIVERSE_ENABLED");
+                                return Command.SINGLE_SUCCESS;
                             }
                             plugin.getMVHelper().importWorlds(ctx.getSource().getSender());
                             return Command.SINGLE_SUCCESS;

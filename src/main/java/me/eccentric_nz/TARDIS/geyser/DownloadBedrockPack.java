@@ -1,0 +1,104 @@
+/*
+ * Copyright (C) 2024 eccentric_nz
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
+package me.eccentric_nz.TARDIS.geyser;
+
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import org.bukkit.command.CommandSender;
+import org.bukkit.scheduler.BukkitRunnable;
+
+import java.io.File;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URL;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
+import java.time.Duration;
+import java.util.concurrent.atomic.AtomicBoolean;
+
+public class DownloadBedrockPack {
+
+    private final TARDIS plugin;
+    private final AtomicBoolean updateInProgress = new AtomicBoolean(false);
+
+    public DownloadBedrockPack(TARDIS plugin) {
+        this.plugin = plugin;
+    }
+
+    public void fetchFromGitHub(CommandSender sender) {
+        if (updateInProgress.get()) {
+            plugin.getMessenger().sendWithColour(sender, TardisModule.TARDIS, "A pack download is already in progress!", "#FF5555");
+            return;
+        }
+        plugin.getMessenger().sendWithColour(sender, TardisModule.TARDIS, "Downloading TARDISBedrockResourcePack...", "#55FFFF");
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                try {
+                    // get the browser_download_url
+                    URI uri = URI.create("https://api.github.com/repos/eccentricdevotion/TARDISBedrockResourcePack/releases/latest");
+                    // Create a client, request and response
+                    HttpClient client = HttpClient.newBuilder()
+                            .version(HttpClient.Version.HTTP_2)
+                            .connectTimeout(Duration.ofSeconds(10))
+                            .build();
+                    HttpRequest request = HttpRequest.newBuilder()
+                            .GET()
+                            .uri(uri)
+                            .header("User-Agent", "TARDISPlugin")
+                            .build();
+                    HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+                    JsonObject root = JsonParser.parseString(response.body()).getAsJsonObject();
+                    JsonObject assets = root.get("assets").getAsJsonArray().get(0).getAsJsonObject();
+                    String browser_download_url = assets.get("browser_download_url").getAsString();
+                    File dest = new File("plugins" + File.separator + "Geyser-Spigot" + File.separator + "packs" + File.separator + "TARDISBedrockResourcePack.mcpack");
+                    // connect to TARDISBedrockResourcePack GitHub
+                    URL url = URI.create(browser_download_url).toURL();
+                    // create a connection
+                    HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                    con.setRequestProperty("User-Agent", "eccentric_nz/TARDISBedrockResourcePack");
+                    // get the input stream
+                    try (InputStream input = con.getInputStream()) {
+                        Files.copy(input, dest.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                    }
+                    new BukkitRunnable() {
+                        @Override
+                        public void run() {
+                            plugin.getMessenger().sendWithColour(sender, TardisModule.TARDIS, "Download success! Restart the server to finish the installation.", "#55FFFF");
+                        }
+                    }.runTask(plugin);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    new BukkitRunnable() {
+                        @Override
+                        public void run() {
+                            plugin.getMessenger().sendWithColour(sender, TardisModule.TARDIS, "Download failed, " + ex.getMessage(), "#FF5555");
+                        }
+                    }.runTask(plugin);
+                } finally {
+                    updateInProgress.set(false);
+                }
+            }
+        }.runTaskAsynchronously(plugin);
+    }
+}
