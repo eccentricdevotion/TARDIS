@@ -22,6 +22,11 @@
       },
       {
         "bedrock_identifier": "tardis:item/monster/judoon_chestplate",
+        "predicate": {
+          "value": "judoon_chestplate",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_chestplate"
         },
@@ -36,11 +41,16 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/judoon_chestplate",
+        "model": "tardis:monster_chestplate",
         "type": "definition"
       },
       {
         "bedrock_identifier": "tardis:item/monster/judoon_leggings",
+        "predicate": {
+          "value": "judoon_leggings",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_leggings"
         },
@@ -55,7 +65,7 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/judoon_leggings",
+        "model": "tardis:monster_leggings",
         "type": "definition"
       }
     ],
@@ -76,6 +86,142 @@
           }
         },
         "model": "tardis:dalek_head",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/dalek/dalek_black",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_dalek_dalek_black_icon"
+        },
+        "model": "tardis:dalek_black",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/dalek/dalek_blue",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_dalek_dalek_blue_icon"
+        },
+        "model": "tardis:dalek_blue",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/dalek/dalek_brass",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_dalek_dalek_brass_icon"
+        },
+        "model": "tardis:dalek_brass",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/dalek/dalek_brown",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_dalek_dalek_brown_icon"
+        },
+        "model": "tardis:dalek_brown",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/dalek/dalek_cyan",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_dalek_dalek_cyan_icon"
+        },
+        "model": "tardis:dalek_cyan",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/dalek/dalek_gray",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_dalek_dalek_gray_icon"
+        },
+        "model": "tardis:dalek_gray",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/dalek/dalek_green",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_dalek_dalek_green_icon"
+        },
+        "model": "tardis:dalek_green",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/dalek/dalek_light_blue",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_dalek_dalek_light_blue_icon"
+        },
+        "model": "tardis:dalek_light_blue",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/dalek/dalek_light_gray",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_dalek_dalek_light_gray_icon"
+        },
+        "model": "tardis:dalek_light_gray",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/dalek/dalek_lime",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_dalek_dalek_lime_icon"
+        },
+        "model": "tardis:dalek_lime",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/dalek/dalek_magenta",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_dalek_dalek_magenta_icon"
+        },
+        "model": "tardis:dalek_magenta",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/dalek/dalek_orange",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_dalek_dalek_orange_icon"
+        },
+        "model": "tardis:dalek_orange",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/dalek/dalek_pink",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_dalek_dalek_pink_icon"
+        },
+        "model": "tardis:dalek_pink",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/dalek/dalek_purple",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_dalek_dalek_purple_icon"
+        },
+        "model": "tardis:dalek_purple",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/dalek/dalek_red",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_dalek_dalek_red_icon"
+        },
+        "model": "tardis:dalek_red",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/dalek/dalek_white",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_dalek_dalek_white_icon"
+        },
+        "model": "tardis:dalek_white",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/dalek/dalek_yellow",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_dalek_dalek_yellow_icon"
+        },
+        "model": "tardis:dalek_yellow",
         "type": "definition"
       }
     ],
@@ -118,6 +264,11 @@
       },
       {
         "bedrock_identifier": "tardis:item/monster/ice_warrior_chestplate",
+        "predicate": {
+          "value": "ice_warrior_chestplate",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_chestplate"
         },
@@ -132,11 +283,16 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/ice_warrior_chestplate",
+        "model": "tardis:monster_chestplate",
         "type": "definition"
       },
       {
         "bedrock_identifier": "tardis:item/monster/ice_warrior_leggings",
+        "predicate": {
+          "value": "ice_warrior_leggings",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_leggings"
         },
@@ -151,7 +307,7 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/ice_warrior_leggings",
+        "model": "tardis:monster_leggings",
         "type": "definition"
       }
     ],
@@ -176,6 +332,11 @@
       },
       {
         "bedrock_identifier": "tardis:item/monster/zygon_chestplate",
+        "predicate": {
+          "value": "zygon_chestplate",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_chestplate"
         },
@@ -190,11 +351,16 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/zygon_chestplate",
+        "model": "tardis:monster_chestplate",
         "type": "definition"
       },
       {
         "bedrock_identifier": "tardis:item/monster/zygon_leggings",
+        "predicate": {
+          "value": "zygon_leggings",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_leggings"
         },
@@ -209,7 +375,7 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/zygon_leggings",
+        "model": "tardis:monster_leggings",
         "type": "definition"
       }
     ],
@@ -234,6 +400,11 @@
       },
       {
         "bedrock_identifier": "tardis:item/monster/sycorax_chestplate",
+        "predicate": {
+          "value": "sycorax_chestplate",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_chestplate"
         },
@@ -248,11 +419,16 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/sycorax_chestplate",
+        "model": "tardis:monster_chestplate",
         "type": "definition"
       },
       {
         "bedrock_identifier": "tardis:item/monster/sycorax_leggings",
+        "predicate": {
+          "value": "sycorax_leggings",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_leggings"
         },
@@ -267,7 +443,7 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/sycorax_leggings",
+        "model": "tardis:monster_leggings",
         "type": "definition"
       }
     ],
@@ -292,6 +468,11 @@
       },
       {
         "bedrock_identifier": "tardis:item/monster/scarecrow_chestplate",
+        "predicate": {
+          "value": "scarecrow_chestplate",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_chestplate"
         },
@@ -306,11 +487,16 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/scarecrow_chestplate",
+        "model": "tardis:monster_chestplate",
         "type": "definition"
       },
       {
         "bedrock_identifier": "tardis:item/monster/scarecrow_leggings",
+        "predicate": {
+          "value": "scarecrow_leggings",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_leggings"
         },
@@ -325,7 +511,7 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/scarecrow_leggings",
+        "model": "tardis:monster_leggings",
         "type": "definition"
       }
     ],
@@ -350,6 +536,11 @@
       },
       {
         "bedrock_identifier": "tardis:item/monster/vashta_nerada_chestplate",
+        "predicate": {
+          "value": "vashta_nerada_chestplate",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_chestplate"
         },
@@ -364,11 +555,16 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/vashta_nerada_chestplate",
+        "model": "tardis:monster_chestplate",
         "type": "definition"
       },
       {
         "bedrock_identifier": "tardis:item/monster/vashta_nerada_leggings",
+        "predicate": {
+          "value": "vashta_nerada_leggings",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_leggings"
         },
@@ -383,7 +579,7 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/vashta_nerada_leggings",
+        "model": "tardis:monster_leggings",
         "type": "definition"
       }
     ],
@@ -408,6 +604,11 @@
       },
       {
         "bedrock_identifier": "tardis:item/monster/strax_chestplate",
+        "predicate": {
+          "value": "strax_chestplate",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_chestplate"
         },
@@ -422,11 +623,16 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/strax_chestplate",
+        "model": "tardis:monster_chestplate",
         "type": "definition"
       },
       {
         "bedrock_identifier": "tardis:item/monster/strax_leggings",
+        "predicate": {
+          "value": "strax_leggings",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_leggings"
         },
@@ -441,7 +647,7 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/strax_leggings",
+        "model": "tardis:monster_leggings",
         "type": "definition"
       }
     ],
@@ -466,6 +672,11 @@
       },
       {
         "bedrock_identifier": "tardis:item/monster/silence_chestplate",
+        "predicate": {
+          "value": "silence_chestplate",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_chestplate"
         },
@@ -480,11 +691,16 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/silence_chestplate",
+        "model": "tardis:monster_chestplate",
         "type": "definition"
       },
       {
         "bedrock_identifier": "tardis:item/monster/silence_leggings",
+        "predicate": {
+          "value": "silence_leggings",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_leggings"
         },
@@ -499,7 +715,7 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/silence_leggings",
+        "model": "tardis:monster_leggings",
         "type": "definition"
       }
     ],
@@ -524,6 +740,11 @@
       },
       {
         "bedrock_identifier": "tardis:item/monster/mire_chestplate",
+        "predicate": {
+          "value": "mire_chestplate",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_chestplate"
         },
@@ -538,11 +759,16 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/mire_chestplate",
+        "model": "tardis:monster_chestplate",
         "type": "definition"
       },
       {
         "bedrock_identifier": "tardis:item/monster/mire_leggings",
+        "predicate": {
+          "value": "mire_leggings",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_leggings"
         },
@@ -557,7 +783,7 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/mire_leggings",
+        "model": "tardis:monster_leggings",
         "type": "definition"
       }
     ],
@@ -600,6 +826,11 @@
       },
       {
         "bedrock_identifier": "tardis:item/monster/ood_black_chestplate",
+        "predicate": {
+          "value": "ood_black_chestplate",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_chestplate"
         },
@@ -614,11 +845,16 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/ood_black_chestplate",
+        "model": "tardis:monster_chestplate",
         "type": "definition"
       },
       {
         "bedrock_identifier": "tardis:item/monster/ood_black_leggings",
+        "predicate": {
+          "value": "ood_black_leggings",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_leggings"
         },
@@ -633,11 +869,16 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/ood_black_leggings",
+        "model": "tardis:monster_leggings",
         "type": "definition"
       },
       {
         "bedrock_identifier": "tardis:item/monster/ood_blue_chestplate",
+        "predicate": {
+          "value": "ood_blue_chestplate",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_chestplate"
         },
@@ -652,11 +893,16 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/ood_blue_chestplate",
+        "model": "tardis:monster_chestplate",
         "type": "definition"
       },
       {
         "bedrock_identifier": "tardis:item/monster/ood_blue_leggings",
+        "predicate": {
+          "value": "ood_blue_leggings",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_leggings"
         },
@@ -671,11 +917,16 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/ood_blue_leggings",
+        "model": "tardis:monster_leggings",
         "type": "definition"
       },
       {
         "bedrock_identifier": "tardis:item/monster/ood_brown_chestplate",
+        "predicate": {
+          "value": "ood_brown_chestplate",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_chestplate"
         },
@@ -690,11 +941,16 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/ood_brown_chestplate",
+        "model": "tardis:monster_chestplate",
         "type": "definition"
       },
       {
         "bedrock_identifier": "tardis:item/monster/ood_brown_leggings",
+        "predicate": {
+          "value": "ood_brown_leggings",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_leggings"
         },
@@ -709,7 +965,7 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/ood_brown_leggings",
+        "model": "tardis:monster_leggings",
         "type": "definition"
       }
     ],
@@ -734,6 +990,11 @@
       },
       {
         "bedrock_identifier": "tardis:item/monster/sontaran_chestplate",
+        "predicate": {
+          "value": "sontaran_chestplate",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_chestplate"
         },
@@ -748,11 +1009,16 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/sontaran_chestplate",
+        "model": "tardis:monster_chestplate",
         "type": "definition"
       },
       {
         "bedrock_identifier": "tardis:item/monster/sontaran_leggings",
+        "predicate": {
+          "value": "sontaran_leggings",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_leggings"
         },
@@ -767,7 +1033,7 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/sontaran_leggings",
+        "model": "tardis:monster_leggings",
         "type": "definition"
       }
     ],
@@ -810,6 +1076,11 @@
       },
       {
         "bedrock_identifier": "tardis:item/monster/heavenly_host_chestplate",
+        "predicate": {
+          "value": "heavenly_host_chestplate",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_chestplate"
         },
@@ -824,11 +1095,16 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/heavenly_host_chestplate",
+        "model": "tardis:monster_chestplate",
         "type": "definition"
       },
       {
         "bedrock_identifier": "tardis:item/monster/heavenly_host_leggings",
+        "predicate": {
+          "value": "heavenly_host_leggings",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_leggings"
         },
@@ -843,11 +1119,16 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/heavenly_host_leggings",
+        "model": "tardis:monster_leggings",
         "type": "definition"
       },
       {
         "bedrock_identifier": "tardis:item/monster/omega_chestplate",
+        "predicate": {
+          "value": "omega_chestplate",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_chestplate"
         },
@@ -862,11 +1143,16 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/omega_chestplate",
+        "model": "tardis:monster_chestplate",
         "type": "definition"
       },
       {
         "bedrock_identifier": "tardis:item/monster/omega_leggings",
+        "predicate": {
+          "value": "omega_leggings",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_leggings"
         },
@@ -881,7 +1167,7 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/omega_leggings",
+        "model": "tardis:monster_leggings",
         "type": "definition"
       }
     ],
@@ -924,6 +1210,11 @@
       },
       {
         "bedrock_identifier": "tardis:item/monster/clockwork_droid_chestplate",
+        "predicate": {
+          "value": "clockwork_droid_chestplate",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_chestplate"
         },
@@ -938,11 +1229,16 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/clockwork_droid_chestplate",
+        "model": "tardis:monster_chestplate",
         "type": "definition"
       },
       {
         "bedrock_identifier": "tardis:item/monster/clockwork_droid_leggings",
+        "predicate": {
+          "value": "clockwork_droid_leggings",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_leggings"
         },
@@ -957,11 +1253,16 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/clockwork_droid_leggings",
+        "model": "tardis:monster_leggings",
         "type": "definition"
       },
       {
         "bedrock_identifier": "tardis:item/monster/clockwork_droid_female_chestplate",
+        "predicate": {
+          "value": "clockwork_droid_female_chestplate",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_chestplate"
         },
@@ -976,11 +1277,16 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/clockwork_droid_female_chestplate",
+        "model": "tardis:monster_chestplate",
         "type": "definition"
       },
       {
         "bedrock_identifier": "tardis:item/monster/clockwork_droid_female_leggings",
+        "predicate": {
+          "value": "clockwork_droid_female_leggings",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_leggings"
         },
@@ -995,7 +1301,7 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/clockwork_droid_female_leggings",
+        "model": "tardis:monster_leggings",
         "type": "definition"
       }
     ],
@@ -1020,6 +1326,11 @@
       },
       {
         "bedrock_identifier": "tardis:item/monster/the_beast_chestplate",
+        "predicate": {
+          "value": "the_beast_chestplate",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_chestplate"
         },
@@ -1034,11 +1345,16 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/the_beast_chestplate",
+        "model": "tardis:monster_chestplate",
         "type": "definition"
       },
       {
         "bedrock_identifier": "tardis:item/monster/the_beast_leggings",
+        "predicate": {
+          "value": "the_beast_leggings",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_leggings"
         },
@@ -1053,7 +1369,7 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/the_beast_leggings",
+        "model": "tardis:monster_leggings",
         "type": "definition"
       }
     ],
@@ -1088,6 +1404,11 @@
       },
       {
         "bedrock_identifier": "tardis:item/monster/headless_monk_chestplate",
+        "predicate": {
+          "value": "headless_monk_chestplate",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_chestplate"
         },
@@ -1102,11 +1423,16 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/headless_monk_chestplate",
+        "model": "tardis:monster_chestplate",
         "type": "definition"
       },
       {
         "bedrock_identifier": "tardis:item/monster/headless_monk_leggings",
+        "predicate": {
+          "value": "headless_monk_leggings",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_leggings"
         },
@@ -1121,7 +1447,7 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/headless_monk_leggings",
+        "model": "tardis:monster_leggings",
         "type": "definition"
       }
     ],
@@ -1146,6 +1472,11 @@
       },
       {
         "bedrock_identifier": "tardis:item/monster/angel_of_liberty_chestplate",
+        "predicate": {
+          "value": "angel_of_liberty_chestplate",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_chestplate"
         },
@@ -1160,11 +1491,16 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/angel_of_liberty_chestplate",
+        "model": "tardis:monster_chestplate",
         "type": "definition"
       },
       {
         "bedrock_identifier": "tardis:item/monster/angel_of_liberty_leggings",
+        "predicate": {
+          "value": "angel_of_liberty_leggings",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_leggings"
         },
@@ -1179,7 +1515,7 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/angel_of_liberty_leggings",
+        "model": "tardis:monster_leggings",
         "type": "definition"
       }
     ],
@@ -1224,6 +1560,11 @@
       },
       {
         "bedrock_identifier": "tardis:item/monster/dalek_sec_chestplate",
+        "predicate": {
+          "value": "dalek_sec_chestplate",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_chestplate"
         },
@@ -1238,11 +1579,16 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/dalek_sec_chestplate",
+        "model": "tardis:monster_chestplate",
         "type": "definition"
       },
       {
         "bedrock_identifier": "tardis:item/monster/dalek_sec_leggings",
+        "predicate": {
+          "value": "dalek_sec_leggings",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_leggings"
         },
@@ -1257,7 +1603,7 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/dalek_sec_leggings",
+        "model": "tardis:monster_leggings",
         "type": "definition"
       }
     ],
@@ -1282,6 +1628,11 @@
       },
       {
         "bedrock_identifier": "tardis:item/monster/nimon_chestplate",
+        "predicate": {
+          "value": "nimon_chestplate",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_chestplate"
         },
@@ -1296,11 +1647,16 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/nimon_chestplate",
+        "model": "tardis:monster_chestplate",
         "type": "definition"
       },
       {
         "bedrock_identifier": "tardis:item/monster/nimon_leggings",
+        "predicate": {
+          "value": "nimon_leggings",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_leggings"
         },
@@ -1315,7 +1671,7 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/nimon_leggings",
+        "model": "tardis:monster_leggings",
         "type": "definition"
       }
     ],
@@ -1340,6 +1696,11 @@
       },
       {
         "bedrock_identifier": "tardis:item/monster/sutekh_chestplate",
+        "predicate": {
+          "value": "sutekh_chestplate",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_chestplate"
         },
@@ -1354,11 +1715,16 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/sutekh_chestplate",
+        "model": "tardis:monster_chestplate",
         "type": "definition"
       },
       {
         "bedrock_identifier": "tardis:item/monster/sutekh_leggings",
+        "predicate": {
+          "value": "sutekh_leggings",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_leggings"
         },
@@ -1373,7 +1739,7 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/sutekh_leggings",
+        "model": "tardis:monster_leggings",
         "type": "definition"
       }
     ],
@@ -1398,6 +1764,11 @@
       },
       {
         "bedrock_identifier": "tardis:item/monster/racnoss_chestplate",
+        "predicate": {
+          "value": "racnoss_chestplate",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_chestplate"
         },
@@ -1412,11 +1783,16 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/racnoss_chestplate",
+        "model": "tardis:monster_chestplate",
         "type": "definition"
       },
       {
         "bedrock_identifier": "tardis:item/monster/racnoss_leggings",
+        "predicate": {
+          "value": "racnoss_leggings",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_leggings"
         },
@@ -1431,7 +1807,7 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/racnoss_leggings",
+        "model": "tardis:monster_leggings",
         "type": "definition"
       }
     ],
@@ -1456,6 +1832,11 @@
       },
       {
         "bedrock_identifier": "tardis:item/monster/slitheen_chestplate",
+        "predicate": {
+          "value": "slitheen_chestplate",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_chestplate"
         },
@@ -1470,11 +1851,16 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/slitheen_chestplate",
+        "model": "tardis:monster_chestplate",
         "type": "definition"
       },
       {
         "bedrock_identifier": "tardis:item/monster/slitheen_leggings",
+        "predicate": {
+          "value": "slitheen_leggings",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_leggings"
         },
@@ -1489,7 +1875,7 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/slitheen_leggings",
+        "model": "tardis:monster_leggings",
         "type": "definition"
       }
     ],
@@ -1514,6 +1900,11 @@
       },
       {
         "bedrock_identifier": "tardis:item/monster/sea_devil_chestplate",
+        "predicate": {
+          "value": "sea_devil_chestplate",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_chestplate"
         },
@@ -1528,11 +1919,16 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/sea_devil_chestplate",
+        "model": "tardis:monster_chestplate",
         "type": "definition"
       },
       {
         "bedrock_identifier": "tardis:item/monster/sea_devil_leggings",
+        "predicate": {
+          "value": "sea_devil_leggings",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_leggings"
         },
@@ -1547,7 +1943,7 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/sea_devil_leggings",
+        "model": "tardis:monster_leggings",
         "type": "definition"
       }
     ],
@@ -1572,6 +1968,11 @@
       },
       {
         "bedrock_identifier": "tardis:item/monster/smiler_chestplate",
+        "predicate": {
+          "value": "smiler_chestplate",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_chestplate"
         },
@@ -1586,11 +1987,16 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/smiler_chestplate",
+        "model": "tardis:monster_chestplate",
         "type": "definition"
       },
       {
         "bedrock_identifier": "tardis:item/monster/smiler_leggings",
+        "predicate": {
+          "value": "smiler_leggings",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_leggings"
         },
@@ -1605,7 +2011,7 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/smiler_leggings",
+        "model": "tardis:monster_leggings",
         "type": "definition"
       }
     ],
@@ -1630,6 +2036,11 @@
       },
       {
         "bedrock_identifier": "tardis:item/monster/weeping_angel_chestplate",
+        "predicate": {
+          "value": "weeping_angel_chestplate",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_chestplate"
         },
@@ -1644,11 +2055,16 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/weeping_angel_chestplate",
+        "model": "tardis:monster_chestplate",
         "type": "definition"
       },
       {
         "bedrock_identifier": "tardis:item/monster/weeping_angel_leggings",
+        "predicate": {
+          "value": "weeping_angel_leggings",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_leggings"
         },
@@ -1663,7 +2079,7 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/weeping_angel_leggings",
+        "model": "tardis:monster_leggings",
         "type": "definition"
       },
       {
@@ -1706,6 +2122,11 @@
       },
       {
         "bedrock_identifier": "tardis:item/monster/ossified_chestplate",
+        "predicate": {
+          "value": "ossified_chestplate",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_chestplate"
         },
@@ -1720,11 +2141,16 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/ossified_chestplate",
+        "model": "tardis:monster_chestplate",
         "type": "definition"
       },
       {
         "bedrock_identifier": "tardis:item/monster/ossified_leggings",
+        "predicate": {
+          "value": "ossified_leggings",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_leggings"
         },
@@ -1739,7 +2165,7 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/ossified_leggings",
+        "model": "tardis:monster_leggings",
         "type": "definition"
       }
     ],
@@ -1764,6 +2190,11 @@
       },
       {
         "bedrock_identifier": "tardis:item/monster/hath_chestplate",
+        "predicate": {
+          "value": "hath_chestplate",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_chestplate"
         },
@@ -1778,11 +2209,16 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/hath_chestplate",
+        "model": "tardis:monster_chestplate",
         "type": "definition"
       },
       {
         "bedrock_identifier": "tardis:item/monster/hath_leggings",
+        "predicate": {
+          "value": "hath_leggings",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_leggings"
         },
@@ -1797,7 +2233,7 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/hath_leggings",
+        "model": "tardis:monster_leggings",
         "type": "definition"
       }
     ],
@@ -1822,6 +2258,11 @@
       },
       {
         "bedrock_identifier": "tardis:item/monster/silurian_chestplate",
+        "predicate": {
+          "value": "silurian_chestplate",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_chestplate"
         },
@@ -1836,11 +2277,16 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/silurian_chestplate",
+        "model": "tardis:monster_chestplate",
         "type": "definition"
       },
       {
         "bedrock_identifier": "tardis:item/monster/silurian_leggings",
+        "predicate": {
+          "value": "silurian_leggings",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_leggings"
         },
@@ -1855,7 +2301,7 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/silurian_leggings",
+        "model": "tardis:monster_leggings",
         "type": "definition"
       }
     ],
@@ -1881,6 +2327,11 @@
       },
       {
         "bedrock_identifier": "tardis:item/monster/empty_child_chestplate",
+        "predicate": {
+          "value": "empty_child_chestplate",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_chestplate"
         },
@@ -1895,11 +2346,16 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/empty_child_chestplate",
+        "model": "tardis:monster_chestplate",
         "type": "definition"
       },
       {
         "bedrock_identifier": "tardis:item/monster/empty_child_leggings",
+        "predicate": {
+          "value": "empty_child_leggings",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_leggings"
         },
@@ -1914,7 +2370,7 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/empty_child_leggings",
+        "model": "tardis:monster_leggings",
         "type": "definition"
       }
     ],
@@ -1939,6 +2395,11 @@
       },
       {
         "bedrock_identifier": "tardis:item/monster/cybershade_chestplate",
+        "predicate": {
+          "value": "cybershade_chestplate",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_chestplate"
         },
@@ -1953,11 +2414,16 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/cybershade_chestplate",
+        "model": "tardis:monster_chestplate",
         "type": "definition"
       },
       {
         "bedrock_identifier": "tardis:item/monster/cybershade_leggings",
+        "predicate": {
+          "value": "cybershade_leggings",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_leggings"
         },
@@ -1972,7 +2438,7 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/cybershade_leggings",
+        "model": "tardis:monster_leggings",
         "type": "definition"
       }
     ],
@@ -2141,6 +2607,11 @@
       },
       {
         "bedrock_identifier": "tardis:item/monster/cyberman_chestplate",
+        "predicate": {
+          "value": "cyberman_chestplate",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_chestplate"
         },
@@ -2155,11 +2626,16 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/cyberman_chestplate",
+        "model": "tardis:monster_chestplate",
         "type": "definition"
       },
       {
         "bedrock_identifier": "tardis:item/monster/cyberman_leggings",
+        "predicate": {
+          "value": "cyberman_leggings",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_leggings"
         },
@@ -2174,11 +2650,16 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/cyberman_leggings",
+        "model": "tardis:monster_leggings",
         "type": "definition"
       },
       {
         "bedrock_identifier": "tardis:item/monster/cyber_lord_chestplate",
+        "predicate": {
+          "value": "cyber_lord_chestplate",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_chestplate"
         },
@@ -2193,11 +2674,16 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/cyber_lord_chestplate",
+        "model": "tardis:monster_chestplate",
         "type": "definition"
       },
       {
         "bedrock_identifier": "tardis:item/monster/cyber_lord_leggings",
+        "predicate": {
+          "value": "cyber_lord_leggings",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_leggings"
         },
@@ -2212,11 +2698,16 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/cyber_lord_leggings",
+        "model": "tardis:monster_leggings",
         "type": "definition"
       },
       {
         "bedrock_identifier": "tardis:item/monster/cyberman_rise_chestplate",
+        "predicate": {
+          "value": "cyberman_rise_chestplate",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_chestplate"
         },
@@ -2231,11 +2722,16 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/cyberman_rise_chestplate",
+        "model": "tardis:monster_chestplate",
         "type": "definition"
       },
       {
         "bedrock_identifier": "tardis:item/monster/cyberman_rise_leggings",
+        "predicate": {
+          "value": "cyberman_rise_leggings",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_leggings"
         },
@@ -2250,11 +2746,16 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/cyberman_rise_leggings",
+        "model": "tardis:monster_leggings",
         "type": "definition"
       },
       {
         "bedrock_identifier": "tardis:item/monster/black_cyberman_chestplate",
+        "predicate": {
+          "value": "black_cyberman_chestplate",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_chestplate"
         },
@@ -2269,11 +2770,16 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/black_cyberman_chestplate",
+        "model": "tardis:monster_chestplate",
         "type": "definition"
       },
       {
         "bedrock_identifier": "tardis:item/monster/black_cyberman_leggings",
+        "predicate": {
+          "value": "black_cyberman_leggings",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_leggings"
         },
@@ -2288,11 +2794,16 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/black_cyberman_leggings",
+        "model": "tardis:monster_leggings",
         "type": "definition"
       },
       {
         "bedrock_identifier": "tardis:item/monster/cyberman_earthshock_chestplate",
+        "predicate": {
+          "value": "cyberman_earthshock_chestplate",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_chestplate"
         },
@@ -2307,11 +2818,16 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/cyberman_earthshock_chestplate",
+        "model": "tardis:monster_chestplate",
         "type": "definition"
       },
       {
         "bedrock_identifier": "tardis:item/monster/cyberman_earthshock_leggings",
+        "predicate": {
+          "value": "cyberman_earthshock_leggings",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_leggings"
         },
@@ -2326,11 +2842,16 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/cyberman_earthshock_leggings",
+        "model": "tardis:monster_leggings",
         "type": "definition"
       },
       {
         "bedrock_identifier": "tardis:item/monster/cyberman_invasion_chestplate",
+        "predicate": {
+          "value": "cyberman_invasion_chestplate",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_chestplate"
         },
@@ -2345,11 +2866,16 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/cyberman_invasion_chestplate",
+        "model": "tardis:monster_chestplate",
         "type": "definition"
       },
       {
         "bedrock_identifier": "tardis:item/monster/cyberman_invasion_leggings",
+        "predicate": {
+          "value": "cyberman_invasion_leggings",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_leggings"
         },
@@ -2364,11 +2890,16 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/cyberman_invasion_leggings",
+        "model": "tardis:monster_leggings",
         "type": "definition"
       },
       {
         "bedrock_identifier": "tardis:item/monster/cyberman_moonbase_chestplate",
+        "predicate": {
+          "value": "cyberman_moonbase_chestplate",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_chestplate"
         },
@@ -2383,11 +2914,16 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/cyberman_moonbase_chestplate",
+        "model": "tardis:monster_chestplate",
         "type": "definition"
       },
       {
         "bedrock_identifier": "tardis:item/monster/cyberman_moonbase_leggings",
+        "predicate": {
+          "value": "cyberman_moonbase_leggings",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_leggings"
         },
@@ -2402,11 +2938,16 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/cyberman_moonbase_leggings",
+        "model": "tardis:monster_leggings",
         "type": "definition"
       },
       {
         "bedrock_identifier": "tardis:item/monster/cyberman_tenth_planet_chestplate",
+        "predicate": {
+          "value": "cyberman_tenth_planet_chestplate",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_chestplate"
         },
@@ -2421,11 +2962,16 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/cyberman_tenth_planet_chestplate",
+        "model": "tardis:monster_chestplate",
         "type": "definition"
       },
       {
         "bedrock_identifier": "tardis:item/monster/cyberman_tenth_planet_leggings",
+        "predicate": {
+          "value": "cyberman_tenth_planet_leggings",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_leggings"
         },
@@ -2440,11 +2986,16 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/cyberman_tenth_planet_leggings",
+        "model": "tardis:monster_leggings",
         "type": "definition"
       },
       {
         "bedrock_identifier": "tardis:item/monster/wood_cyberman_chestplate",
+        "predicate": {
+          "value": "wood_cyberman_chestplate",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_chestplate"
         },
@@ -2459,11 +3010,16 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/wood_cyberman_chestplate",
+        "model": "tardis:monster_chestplate",
         "type": "definition"
       },
       {
         "bedrock_identifier": "tardis:item/monster/wood_cyberman_leggings",
+        "predicate": {
+          "value": "wood_cyberman_leggings",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_leggings"
         },
@@ -2478,7 +3034,7 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/wood_cyberman_leggings",
+        "model": "tardis:monster_leggings",
         "type": "definition"
       }
     ],
@@ -2521,6 +3077,11 @@
       },
       {
         "bedrock_identifier": "tardis:item/monster/saturnynian_chestplate",
+        "predicate": {
+          "value": "saturnynian_chestplate",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_chestplate"
         },
@@ -2535,11 +3096,16 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/saturnynian_chestplate",
+        "model": "tardis:monster_chestplate",
         "type": "definition"
       },
       {
         "bedrock_identifier": "tardis:item/monster/saturnynian_leggings",
+        "predicate": {
+          "value": "saturnynian_leggings",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_leggings"
         },
@@ -2554,11 +3120,16 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/saturnynian_leggings",
+        "model": "tardis:monster_leggings",
         "type": "definition"
       },
       {
         "bedrock_identifier": "tardis:item/monster/vampire_of_venice_chestplate",
+        "predicate": {
+          "value": "vampire_of_venice_chestplate",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_chestplate"
         },
@@ -2573,11 +3144,16 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/vampire_of_venice_chestplate",
+        "model": "tardis:monster_chestplate",
         "type": "definition"
       },
       {
         "bedrock_identifier": "tardis:item/monster/vampire_of_venice_leggings",
+        "predicate": {
+          "value": "vampire_of_venice_leggings",
+          "property": "custom_model_data",
+          "type": "match"
+        },
         "bedrock_options": {
           "icon": "tardis.item_monster_monster_leggings"
         },
@@ -2592,7 +3168,7 @@
             "damage_on_hurt": false
           }
         },
-        "model": "tardis:item/monster/vampire_of_venice_leggings",
+        "model": "tardis:monster_leggings",
         "type": "definition"
       },
       {

@@ -16,6 +16,7 @@ public class GeyserMappings {
             "chameleon_item_mappings.json",
             "door_mappings.json",
             "monster_mappings.json",
+            "monster_item_mappings.json",
             "tardis_item_mappings.json",
             "time_rotor_item_mappings.json",
             "circuit_mappings.json",

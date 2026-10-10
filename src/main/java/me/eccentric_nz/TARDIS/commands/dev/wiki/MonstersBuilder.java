@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.commands.dev.wiki;
 
 import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.CustomModelData;
 import io.papermc.paper.datacomponent.item.Equippable;
 import io.papermc.paper.registry.RegistryKey;
 import io.papermc.paper.registry.TypedKey;
@@ -104,6 +105,14 @@ public class MonstersBuilder {
                 ItemStack body = ItemStack.of(monster.getMaterial());
                 body.setData(DataComponentTypes.ITEM_MODEL, ArmourVariant.CHESTPLATE.getKey());
                 body.setData(DataComponentTypes.CUSTOM_NAME, Component.text(monster.getName() + " Chestplate"));
+                if (armour != null) {
+                    body.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                            .addString(armour.value() + "_chestplate")
+                            .build()
+                    );
+                } else {
+                    plugin.debug("Armour variant " + monster.getName() + " has no armour");
+                }
                 Equippable.Builder bodyBuilder = Equippable.equippable(EquipmentSlot.CHEST);
                 bodyBuilder.damageOnHurt(false);
                 bodyBuilder.allowedEntities(RegistrySet.keySet(RegistryKey.ENTITY_TYPE,
@@ -118,6 +127,12 @@ public class MonstersBuilder {
                 ItemStack legs = ItemStack.of(monster.getMaterial());
                 legs.setData(DataComponentTypes.ITEM_MODEL, ArmourVariant.LEGGINGS.getKey());
                 legs.setData(DataComponentTypes.CUSTOM_NAME, Component.text(monster.getName() + " Leggings"));
+                if (armour != null) {
+                    legs.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                            .addString(armour.value() + "_leggings")
+                            .build()
+                    );
+                }
                 Equippable.Builder legsBuilder = Equippable.equippable(EquipmentSlot.LEGS);
                 legsBuilder.damageOnHurt(false);
                 legsBuilder.allowedEntities(RegistrySet.keySet(RegistryKey.ENTITY_TYPE,
@@ -160,6 +175,10 @@ public class MonstersBuilder {
             ItemStack body = ItemStack.of(material);
             body.setData(DataComponentTypes.ITEM_MODEL, ArmourVariant.CHESTPLATE.getKey());
             body.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Cyberman Chestplate"));
+            body.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                    .addString(armour.value() + "_chestplate")
+                    .build()
+            );
             Equippable.Builder bodyBuilder = Equippable.equippable(EquipmentSlot.CHEST);
             bodyBuilder.damageOnHurt(false);
             bodyBuilder.allowedEntities(RegistrySet.keySet(RegistryKey.ENTITY_TYPE,
@@ -174,6 +193,10 @@ public class MonstersBuilder {
             ItemStack legs = ItemStack.of(material);
             legs.setData(DataComponentTypes.ITEM_MODEL, ArmourVariant.LEGGINGS.getKey());
             legs.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Cyberman Leggings"));
+            body.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                    .addString(armour.value() + "_leggings")
+                    .build()
+            );
             Equippable.Builder legsBuilder = Equippable.equippable(EquipmentSlot.LEGS);
             legsBuilder.damageOnHurt(false);
             legsBuilder.allowedEntities(RegistrySet.keySet(RegistryKey.ENTITY_TYPE,
@@ -224,6 +247,10 @@ public class MonstersBuilder {
         ItemStack body = ItemStack.of(material);
         body.setData(DataComponentTypes.ITEM_MODEL, ArmourVariant.CHESTPLATE.getKey());
         body.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Clockwork Droid Chestplate"));
+        body.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                .addString(armour.value() + "_chestplate")
+                .build()
+        );
         Equippable.Builder bodyBuilder = Equippable.equippable(EquipmentSlot.CHEST);
         bodyBuilder.damageOnHurt(false);
         bodyBuilder.allowedEntities(RegistrySet.keySet(RegistryKey.ENTITY_TYPE,
@@ -245,6 +272,10 @@ public class MonstersBuilder {
         ItemStack legs = ItemStack.of(material);
         legs.setData(DataComponentTypes.ITEM_MODEL, ArmourVariant.LEGGINGS.getKey());
         legs.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Clockwork Droid Leggings"));
+        legs.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                .addString(armour.value() + "_leggings")
+                .build()
+        );
         Equippable.Builder legsBuilder = Equippable.equippable(EquipmentSlot.LEGS);
         legsBuilder.damageOnHurt(false);
         legsBuilder.allowedEntities(RegistrySet.keySet(RegistryKey.ENTITY_TYPE,
@@ -287,6 +318,10 @@ public class MonstersBuilder {
         ItemStack blueBody = ItemStack.of(material);
         blueBody.setData(DataComponentTypes.ITEM_MODEL, ArmourVariant.CHESTPLATE.getKey());
         blueBody.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Ood Chestplate"));
+        body.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                .addString(ArmourVariant.OOD_BLUE.getKey().value() + "_chestplate")
+                .build()
+        );
         Equippable.Builder blueBodyBuilder = Equippable.equippable(EquipmentSlot.CHEST);
         blueBodyBuilder.damageOnHurt(false);
         blueBodyBuilder.allowedEntities(RegistrySet.keySet(RegistryKey.ENTITY_TYPE,
@@ -308,6 +343,10 @@ public class MonstersBuilder {
         ItemStack blueLegs = ItemStack.of(material);
         blueLegs.setData(DataComponentTypes.ITEM_MODEL, ArmourVariant.LEGGINGS.getKey());
         blueLegs.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Ood Leggings"));
+        legs.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                .addString(ArmourVariant.OOD_BLUE.getKey().value() + "_leggings")
+                .build()
+        );
         Equippable.Builder blueLegsBuilder = Equippable.equippable(EquipmentSlot.LEGS);
         blueLegsBuilder.damageOnHurt(false);
         blueLegsBuilder.allowedEntities(RegistrySet.keySet(RegistryKey.ENTITY_TYPE,
@@ -329,6 +368,10 @@ public class MonstersBuilder {
         ItemStack brownBody = ItemStack.of(material);
         brownBody.setData(DataComponentTypes.ITEM_MODEL, ArmourVariant.CHESTPLATE.getKey());
         brownBody.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Ood Chestplate"));
+        body.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                .addString(ArmourVariant.OOD_BROWN.getKey().value() + "_chestplate")
+                .build()
+        );
         Equippable.Builder brownBodyBuilder = Equippable.equippable(EquipmentSlot.CHEST);
         brownBodyBuilder.damageOnHurt(false);
         brownBodyBuilder.allowedEntities(RegistrySet.keySet(RegistryKey.ENTITY_TYPE,
@@ -349,6 +392,10 @@ public class MonstersBuilder {
         ItemStack brownLegs = ItemStack.of(material);
         brownLegs.setData(DataComponentTypes.ITEM_MODEL, ArmourVariant.LEGGINGS.getKey());
         brownLegs.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Ood Leggings"));
+        legs.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                .addString(ArmourVariant.OOD_BROWN.getKey().value() + "_leggings")
+                .build()
+        );
         Equippable.Builder brownLegsBuilder = Equippable.equippable(EquipmentSlot.LEGS);
         brownLegsBuilder.damageOnHurt(false);
         brownLegsBuilder.allowedEntities(RegistrySet.keySet(RegistryKey.ENTITY_TYPE,
@@ -404,5 +451,102 @@ public class MonstersBuilder {
         satHead.setData(DataComponentTypes.EQUIPPABLE, satEquippable.build());
         satHead.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Saturnynian Head"));
         chest.getBlockInventory().addItem(satHead);
+        // monster weapons and hands etc
+        ItemStack hand;
+        ItemStack offhand;
+        // ANGEL_OF_LIBERTY torch
+        hand = ItemStack.of(Material.TORCH);
+        hand.setData(DataComponentTypes.ITEM_MODEL, Features.ANGEL_OF_LIBERTY_TORCH.getKey());
+        chest.getBlockInventory().addItem(hand.clone());
+        // CLOCKWORK_DROID keys
+        hand = ItemStack.of(Material.GOLD_NUGGET);
+        hand.setData(DataComponentTypes.ITEM_MODEL, DroidVariant.CLOCKWORK_DROID_KEY.getKey());
+        chest.getBlockInventory().addItem(hand.clone());
+        offhand = ItemStack.of(Material.GOLD_NUGGET);
+        offhand.setData(DataComponentTypes.ITEM_MODEL, DroidVariant.CLOCKWORK_DROID_FEMALE_KEY.getKey());
+        chest.getBlockInventory().addItem(offhand.clone());
+        // CYBERMAN weapon
+        hand = ItemStack.of(Material.IRON_NUGGET);
+        hand.setData(DataComponentTypes.ITEM_MODEL, CybermanVariant.CYBER_WEAPON.getKey());
+        chest.getBlockInventory().addItem(hand.clone());
+        // WOOD_CYBERMAN weapon
+        hand = ItemStack.of(Material.SPRUCE_BUTTON);
+        hand.setData(DataComponentTypes.ITEM_MODEL, CybermanVariant.WOOD_CYBER_WEAPON.getKey());
+        chest.getBlockInventory().addItem(hand.clone());
+        // CYBERMAN_INVASION arms
+        hand = ItemStack.of(Material.IRON_NUGGET);
+        hand.setData(DataComponentTypes.ITEM_MODEL, CybermanVariant.CYBERMAN_INVASION_ARM.getKey());
+        chest.getBlockInventory().addItem(hand.clone());
+        offhand = ItemStack.of(Material.IRON_NUGGET);
+        offhand.setData(DataComponentTypes.ITEM_MODEL, CybermanVariant.CYBERMAN_INVASION_ARM.getKey());
+        chest.getBlockInventory().addItem(offhand.clone());
+        // CYBER_LORD, CYBERMAN_RISE, CYBERMAN_MOONBASE arms
+        hand = ItemStack.of(Material.IRON_NUGGET);
+        hand.setData(DataComponentTypes.ITEM_MODEL, CybermanVariant.CYBERMAN_RISE_ARM.getKey());
+        chest.getBlockInventory().addItem(hand.clone());
+        offhand = ItemStack.of(Material.IRON_NUGGET);
+        offhand.setData(DataComponentTypes.ITEM_MODEL, CybermanVariant.CYBERMAN_RISE_ARM.getKey());
+        chest.getBlockInventory().addItem(offhand.clone());
+        // HATH weapon
+        hand = ItemStack.of(Monster.HATH.getMaterial());
+        hand.setData(DataComponentTypes.ITEM_MODEL, HathVariant.HATH_WEAPON.getKey());
+        chest.getBlockInventory().addItem(hand.clone());
+        // HEADLESS_MONK sword
+        hand = ItemStack.of(Material.GOLDEN_SWORD);
+        hand.setData(DataComponentTypes.ITEM_MODEL, MonkVariant.HEADLESS_MONK_SWORD.getKey());
+        chest.getBlockInventory().addItem(hand.clone());
+        // ICE_WARRIOR dagger
+        hand = ItemStack.of(Material.IRON_SWORD);
+        hand.setData(DataComponentTypes.ITEM_MODEL, IceWarriorVariant.ICE_WARRIOR_DAGGER.getKey());
+        chest.getBlockInventory().addItem(hand.clone());
+        // JUDOON weapon
+        hand = ItemStack.of(Material.END_ROD);
+        hand.setData(DataComponentTypes.ITEM_MODEL, JudoonVariant.JUDOON_WEAPON_RESTING.getKey());
+        chest.getBlockInventory().addItem(hand.clone());
+        // MIRE both hands/arms
+        hand = ItemStack.of(Material.NETHERITE_SCRAP);
+        hand.setData(DataComponentTypes.ITEM_MODEL, MireVariant.MIRE_RIGHT_ARM.getKey());
+        chest.getBlockInventory().addItem(hand.clone());
+        offhand = ItemStack.of(Material.NETHERITE_SCRAP);
+        offhand.setData(DataComponentTypes.ITEM_MODEL, MireVariant.MIRE_LEFT_ARM.getKey());
+        chest.getBlockInventory().addItem(offhand.clone());
+        // SEA_DEVIL invisible trident
+        hand = ItemStack.of(Material.TRIDENT, 1);
+        hand.setData(DataComponentTypes.ITEM_MODEL, DalekVariant.DALEK_BOW.getKey());
+        chest.getBlockInventory().addItem(hand.clone());
+        chestNum++;
+        chest = (Chest) location.getBlock().getRelative(BlockFace.EAST, chestNum).getState();
+        // SILENT both hands
+        hand = ItemStack.of(Material.END_STONE_BRICK_SLAB);
+        hand.setData(DataComponentTypes.ITEM_MODEL, SilentVariant.SILENCE_HAND.getKey());
+        chest.getBlockInventory().addItem(hand.clone());
+        offhand = ItemStack.of(Material.END_STONE_BRICK_SLAB);
+        offhand.setData(DataComponentTypes.ITEM_MODEL, SilentVariant.SILENCE_OFFHAND.getKey());
+        chest.getBlockInventory().addItem(offhand.clone());
+        // SILURIAN gun
+        hand = ItemStack.of(Material.BOW, 1);
+        hand.setData(DataComponentTypes.ITEM_MODEL, SilurianVariant.SILURIAN_GUN.getKey());
+        chest.getBlockInventory().addItem(hand.clone());
+        // SLITHEEN both hands
+        hand = ItemStack.of(Material.TURTLE_EGG);
+        hand.setData(DataComponentTypes.ITEM_MODEL, SlitheenVariant.SLITHEEN_CLAW_RIGHT.getKey());
+        chest.getBlockInventory().addItem(hand.clone());
+        offhand = ItemStack.of(Material.TURTLE_EGG);
+        offhand.setData(DataComponentTypes.ITEM_MODEL, SlitheenVariant.SLITHEEN_CLAW_LEFT.getKey());
+        chest.getBlockInventory().addItem(offhand.clone());
+        // SONTARAN weapon
+        hand = ItemStack.of(Material.END_ROD);
+        hand.setData(DataComponentTypes.ITEM_MODEL, SontaranVariant.SONTARAN_WEAPON.getKey());
+        chest.getBlockInventory().addItem(hand.clone());
+        // dalek variants
+        for (DalekVariant variant : DalekVariant.values()) {
+            if (variant.getKey().getKey().contains("bow") || variant.getKey().getKey().contains("head")
+                    || variant.getKey().getKey().contains("button") || variant.getKey().getKey().contains("overlay")) {
+                continue;
+            }
+            ItemStack dalek = ItemStack.of(Material.SLIME_BALL);
+            dalek.setData(DataComponentTypes.ITEM_MODEL, variant.getKey());
+            chest.getBlockInventory().addItem(dalek);
+        }
     }
 }

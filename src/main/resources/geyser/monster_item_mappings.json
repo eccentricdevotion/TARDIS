@@ -1,0 +1,191 @@
+{
+  "format_version": 2,
+  "items": {
+    "minecraft:torch": [
+      {
+        "bedrock_identifier": "tardis:item/lazarus/angel_of_liberty_torch",
+        "bedrock_options": {
+          "icon": "tardis.item_lazarus_angel_of_liberty_torch_icon"
+        },
+        "model": "tardis:angel_of_liberty_torch",
+        "type": "definition"
+      }
+    ],
+    "minecraft:iron_sword": [
+      {
+        "bedrock_identifier": "tardis:item/monster/ice_warrior/ice_dagger",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_ice_warrior_ice_dagger_icon"
+        },
+        "model": "tardis:ice_warrior_dagger",
+        "type": "definition"
+      }
+    ],
+    "minecraft:golden_sword": [
+      {
+        "bedrock_identifier": "tardis:item/monster/headless_monk/headless_monk_sword",
+        "bedrock_options": {
+          "icon": "tardis.headless_monk_sword_icon"
+        },
+        "model": "tardis:headless_monk_sword",
+        "type": "definition"
+      }
+    ],
+    "minecraft:end_rod": [
+      {
+        "bedrock_identifier": "tardis:item/monster/judoon/judoon_weapon_resting",
+        "bedrock_options": {
+          "icon": "tardis.judoon_weapon_resting_icon"
+        },
+        "model": "tardis:judoon_weapon_resting",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/sontaran/sontaran_weapon",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_sontaran_sontaran_weapon_icon"
+        },
+        "model": "tardis:sontaran_weapon",
+        "type": "definition"
+      }
+    ],
+    "minecraft:pufferfish": [
+      {
+        "bedrock_identifier": "tardis:item/monster/hath/hath_weapon",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_hath_hath_weapon_icon"
+        },
+        "model": "tardis:hath_weapon",
+        "type": "definition"
+      }
+    ],
+    "minecraft:iron_nugget": [
+      {
+        "bedrock_identifier": "tardis:item/lazarus/cyber_weapon",
+        "bedrock_options": {
+          "icon": "tardis.item_lazarus_cyber_weapon_icon"
+        },
+        "model": "tardis:cyber_weapon",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/lazarus/cyberman_invasion_arm",
+        "bedrock_options": {
+          "icon": "tardis.item_lazarus_cyberman_invasion_arm_icon"
+        },
+        "model": "tardis:cyberman_invasion_arm",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/lazarus/cyberman_rise_arm",
+        "bedrock_options": {
+          "icon": "tardis.item_lazarus_cyberman_rise_arm_icon"
+        },
+        "model": "tardis:cyberman_rise_arm",
+        "type": "definition"
+      }
+    ],
+    "minecraft:netherite_scrap": [
+      {
+        "bedrock_identifier": "tardis:item/lazarus/mire_left_arm",
+        "bedrock_options": {
+          "icon": "tardis.item_lazarus_mire_left_arm_icon"
+        },
+        "model": "tardis:mire_left_arm",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/lazarus/mire_right_arm",
+        "bedrock_options": {
+          "icon": "tardis.item_lazarus_mire_right_arm_icon"
+        },
+        "model": "tardis:mire_right_arm",
+        "type": "definition"
+      }
+    ],
+    "minecraft:gold_nugget": [
+      {
+        "bedrock_identifier": "tardis:item/monster/clockwork_droid/clockwork_droid_female_key",
+        "bedrock_options": {
+          "icon": "tardis.clockwork_droid_female_key_icon"
+        },
+        "model": "tardis:clockwork_droid_female_key",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/clockwork_droid/clockwork_droid_key",
+        "bedrock_options": {
+          "icon": "tardis.clockwork_droid_key_icon"
+        },
+        "model": "tardis:clockwork_droid_key",
+        "type": "definition"
+      }
+    ],
+    "minecraft:spruce_button": [
+      {
+        "bedrock_identifier": "tardis:item/lazarus/wood_cyber_weapon",
+        "bedrock_options": {
+          "icon": "tardis.item_lazarus_wood_cyber_weapon_icon"
+        },
+        "model": "tardis:wood_cyber_weapon",
+        "type": "definition"
+      }
+    ],
+    "minecraft:end_stone_brick_slab": [
+      {
+        "bedrock_identifier": "tardis:item/monster/silent/silent_hand_left",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_silent_silent_hand_left_icon"
+        },
+        "model": "tardis:silent_offhand",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/monster/silent/silent_hand_right",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_silent_silent_hand_right_icon"
+        },
+        "model": "tardis:silent_hand",
+        "type": "definition"
+      }
+    ],
+    "minecraft:turtle_egg": [
+      {
+        "bedrock_identifier": "tardis:item/lazarus/slitheen_claw_left",
+        "bedrock_options": {
+          "icon": "tardis.item_lazarus_slitheen_claw_left_icon"
+        },
+        "model": "tardis:slitheen_claw_left",
+        "type": "definition"
+      },
+      {
+        "bedrock_identifier": "tardis:item/lazarus/slitheen_claw_right",
+        "bedrock_options": {
+          "icon": "tardis.item_lazarus_slitheen_claw_right_icon"
+        },
+        "model": "tardis:slitheen_claw_right",
+        "type": "definition"
+      }
+    ],
+    "minecraft:bow": [
+      {
+        "bedrock_identifier": "tardis:item/monster/silurian/silurian_bow",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_silurian_silurian_bow_icon"
+        },
+        "model": "tardis:silurian_bow",
+        "type": "definition"
+      }
+    ],
+    "minecraft:trident": [
+      {
+        "bedrock_identifier": "tardis:item/monster/dalek/dalek_bow",
+        "bedrock_options": {
+          "icon": "tardis.item_monster_dalek_brass_front"
+        },
+        "model": "tardis:dalek_bow",
+        "type": "definition"
+      }
+    ]
+  }
+}

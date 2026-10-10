@@ -17,6 +17,7 @@
 package me.eccentric_nz.tardisweepingangels.equip;
 
 import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.CustomModelData;
 import io.papermc.paper.datacomponent.item.Equippable;
 import io.papermc.paper.registry.RegistryKey;
 import io.papermc.paper.registry.TypedKey;
@@ -75,6 +76,10 @@ public class ArmourEquipper {
         ItemStack body = ItemStack.of(monster.getMaterial());
         body.setData(DataComponentTypes.ITEM_MODEL, ArmourVariant.CHESTPLATE.getKey());
         body.setData(DataComponentTypes.CUSTOM_NAME, Component.text(monster.getName() + " Chestplate"));
+        body.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                .addString(armour.value() + "_chestplate")
+                .build()
+        );
         Equippable.Builder bodyBuilder = Equippable.equippable(EquipmentSlot.CHEST);
         bodyBuilder.damageOnHurt(false);
         bodyBuilder.allowedEntities(RegistrySet.keySet(RegistryKey.ENTITY_TYPE,
@@ -89,6 +94,10 @@ public class ArmourEquipper {
         ItemStack legs = ItemStack.of(monster.getMaterial());
         legs.setData(DataComponentTypes.ITEM_MODEL, ArmourVariant.LEGGINGS.getKey());
         legs.setData(DataComponentTypes.CUSTOM_NAME, Component.text(monster.getName() + " Leggings"));
+        legs.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                .addString(armour.value() + "_leggings")
+                .build()
+        );
         Equippable.Builder legsBuilder = Equippable.equippable(EquipmentSlot.LEGS);
         legsBuilder.damageOnHurt(false);
         legsBuilder.allowedEntities(RegistrySet.keySet(RegistryKey.ENTITY_TYPE,
