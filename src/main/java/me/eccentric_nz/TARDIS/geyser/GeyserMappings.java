@@ -48,10 +48,10 @@ public class GeyserMappings {
         if (!mappings.exists()) {
             // copy files to folder
             for (String jm : jsonMappings) {
-                FileCopier.copy(mappings + File.separator + jm, plugin.getResource("geyser" + jm), true);
+                FileCopier.copy(geyser.getDataFolder() + File.separator + "custom_mappings" + File.separator + jm, plugin.getResource("geyser/" + jm), true);
             }
         }
-        plugin.getMessenger().message(sender, TardisModule.TARDIS, "GEYSER_MAPPINGS");
+        plugin.getMessenger().send(sender, TardisModule.TARDIS, "GEYSER_MAPPINGS");
         // check if TARDISBedrockResourcePack is installed
         File pack = new File(geyser.getDataFolder() + File.separator + "packs" + File.separator + "TARDISBedrockResourcePack.mcpack");
         if (!pack.exists()) {
