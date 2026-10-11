@@ -14,6 +14,9 @@ import io.papermc.paper.text.Filtered;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.brigadier.arguments.*;
 import me.eccentric_nz.TARDIS.commands.preferences.*;
+import me.eccentric_nz.TARDIS.floodgate.FloodgateKeyForm;
+import me.eccentric_nz.TARDIS.floodgate.FloodgateSonicForm;
+import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
 import me.eccentric_nz.TARDIS.playerprefs.TARDISKeyMenuInventory;
 import me.eccentric_nz.TARDIS.playerprefs.TARDISSonicMenuInventory;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
@@ -38,13 +41,21 @@ public class PreferencesCommandNode {
                 .then(Commands.literal("sonic")
                         .executes(ctx -> {
                             Player player = (Player) ctx.getSource().getSender();
-                            player.openInventory(new TARDISSonicMenuInventory(plugin).getInventory());
+                            if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(player)) {
+                                new FloodgateSonicForm(plugin, player.getUniqueId()).send();
+                            } else {
+                                player.openInventory(new TARDISSonicMenuInventory(plugin).getInventory());
+                            }
                             return Command.SINGLE_SUCCESS;
                         }))
                 .then(Commands.literal("key_menu")
                         .executes(ctx -> {
                             Player player = (Player) ctx.getSource().getSender();
-                            player.openInventory(new TARDISKeyMenuInventory(plugin).getInventory());
+                            if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(player)) {
+                                new FloodgateKeyForm(plugin, player.getUniqueId()).send();
+                            } else {
+                                player.openInventory(new TARDISKeyMenuInventory(plugin).getInventory());
+                            }
                             return Command.SINGLE_SUCCESS;
                         }))
                 .then(Commands.literal("console_labels")
