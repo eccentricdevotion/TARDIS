@@ -8,6 +8,7 @@ import org.bukkit.plugin.Plugin;
 
 import java.io.File;
 import java.util.List;
+import java.util.Locale;
 
 public class GeyserMappings {
 
@@ -49,6 +50,16 @@ public class GeyserMappings {
             // copy files to folder
             for (String jm : jsonMappings) {
                 FileCopier.copy(geyser.getDataFolder() + File.separator + "custom_mappings" + File.separator + jm, plugin.getResource("geyser/" + jm), true);
+            }
+            String key = plugin.getConfig().getString("preferences.key", "gold_nugget");
+            if (!key.equals("GOLD_NUGGET")) {
+                // edit key_mappings.json to use the configured key material
+                File keyFile = new File(geyser.getDataFolder() + File.separator + "custom_mappings" + File.separator + "key_mappings.json");
+                if (!keyFile.exists()) {
+                    return;
+                }
+                // edit the file
+                KeyMappingEditor.updateType(plugin, keyFile.toPath(), key.toLowerCase(Locale.ROOT), sender);
             }
         }
         plugin.getMessenger().send(sender, TardisModule.TARDIS, "GEYSER_MAPPINGS");
