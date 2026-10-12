@@ -132,9 +132,14 @@ public class BuilderUtility {
                 return Material.RED_STAINED_GLASS_PANE;
             }
             default -> {
-                String split = preset.toString().replace("POLICE_BOX_", "");
-                String dye = split + "_DYE";
-                return Material.valueOf(dye);
+                String pb = preset.toString();
+                if (pb.contains("POLICE_BOX")) {
+                    String split = pb.replace("POLICE_BOX_", "");
+                    String dye = split + "_DYE";
+                    return Material.valueOf(dye);
+                } else {
+                    return Material.BLUE_DYE;
+                }
             }
         }
     }
