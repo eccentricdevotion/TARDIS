@@ -762,6 +762,13 @@ public class DevCommandNode {
                                     }
                                     return Command.SINGLE_SUCCESS;
                                 })))
+                .then(Commands.literal("slime")
+                        .executes(ctx -> {
+                            if (ctx.getSource().getSender() instanceof Player player) {
+                                DevelopmentUtility.spawnSlime(plugin, player);
+                            }
+                            return Command.SINGLE_SUCCESS;
+                        }))
                 .then(Commands.literal("stats")
                         .executes(ctx -> {
                             DevelopmentUtility.listStats(plugin);

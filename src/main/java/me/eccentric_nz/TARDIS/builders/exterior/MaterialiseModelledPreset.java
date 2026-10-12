@@ -30,6 +30,8 @@ import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.flight.FlightEnd;
 import me.eccentric_nz.TARDIS.flight.vehicle.TARDISArmourStand;
 import me.eccentric_nz.TARDIS.flight.vehicle.VehicleUtility;
+import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
+import me.eccentric_nz.TARDIS.geyser.GeyserUtility;
 import me.eccentric_nz.TARDIS.particles.Emitter;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
@@ -293,6 +295,11 @@ public class MaterialiseModelledPreset implements Runnable {
             }
             // add an interaction entity
             TARDISDisplayItemUtils.setInteraction(stand, bd.getTardisID());
+            // if TARDIS owner is a bedrock player
+            if (bd.getPlayer() != null && TARDISFloodgate.isBedrockPlayer(bd.getPlayer().getUniqueId())) {
+                // add an invisible slime
+                GeyserUtility.setSlime(plugin, stand.getLocation(), bd.getTardisID(), stand.getUniqueId());
+            }
             // message travellers in tardis
             if (loops > 3) {
                 new FlightEnd(plugin).process(bd.getTardisID(), bd.getPlayer().getPlayer(), bd.isMalfunction(), bd.isRebuild());

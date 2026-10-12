@@ -11,16 +11,21 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.bStats.ARSRoomCounts;
 import me.eccentric_nz.TARDIS.blueprints.BlueprintRoom;
 import me.eccentric_nz.TARDIS.customblocks.TARDISBlockDisplayItem;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
+import me.eccentric_nz.TARDIS.custommodels.keys.ChameleonVariant;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetGames;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.flight.vehicle.VehicleUtility;
 import me.eccentric_nz.TARDIS.move.TARDISTeleportLocation;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import me.eccentric_nz.tardisweepingangels.equip.MonsterArmour;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import net.kyori.adventure.text.Component;
 import org.bukkit.*;
+import org.bukkit.block.BlockFace;
 import org.bukkit.block.BrushableBlock;
+import org.bukkit.block.data.Levelled;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.EquipmentSlot;
@@ -215,5 +220,32 @@ public class DevelopmentUtility {
         plugin.getServer().dispatchCommand(plugin.getConsole(), "chunky spawn");
         plugin.getServer().dispatchCommand(plugin.getConsole(), "chunky start");
         plugin.getServer().dispatchCommand(plugin.getConsole(), "chunky confirm");
+    }
+
+    public static void spawnSlime(TARDIS plugin, Player player) {
+        Location l = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 16).getRelative(BlockFace.UP).getLocation();
+        l.getWorld().spawn(l.clone().add(0.5, 2, 0.5), Slime.class, (slime) -> {
+            slime.setSize(2);
+            slime.setAI(false);
+            slime.setGravity(false);
+            slime.setSilent(true);
+            slime.setGlowing(true);
+            slime.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 1, false, false));
+            slime.setInvulnerable(true);
+            slime.setCollidable(false);
+        });
+        // spawn police box
+        ArmorStand stand = (ArmorStand) VehicleUtility.spawnStand(l).getBukkitEntity();
+        EntityEquipment ee = stand.getEquipment();
+        ItemStack is = ItemStack.of(Material.BLUE_DYE);
+        is.setData(DataComponentTypes.ITEM_MODEL, ChameleonVariant.BLUE_CLOSED.getKey());
+        ee.setHelmet(is, true);
+        // set a light block
+        Levelled levelled = TARDISConstants.LIGHT;
+        // set light level from exterior lamp control
+        levelled.setLevel(15);
+        l.getBlock().getRelative(BlockFace.UP, 2).setBlockData(levelled);
+        // add an interaction entity
+        TARDISDisplayItemUtils.setInteraction(stand, -111);
     }
 }

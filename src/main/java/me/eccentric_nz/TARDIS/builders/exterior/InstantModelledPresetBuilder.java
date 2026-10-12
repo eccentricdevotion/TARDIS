@@ -22,6 +22,8 @@ import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.flight.vehicle.TARDISArmourStand;
 import me.eccentric_nz.TARDIS.flight.vehicle.VehicleUtility;
+import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
+import me.eccentric_nz.TARDIS.geyser.GeyserUtility;
 import me.eccentric_nz.TARDIS.move.DoorListener;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
@@ -119,5 +121,10 @@ public class InstantModelledPresetBuilder {
         block.getRelative(BlockFace.UP, 2).setBlockData(levelled);
         // add an interaction entity
         TARDISDisplayItemUtils.setInteraction(stand, bd.getTardisID());
+        // if TARDIS owner is a bedrock player
+        if (bd.getPlayer() != null && TARDISFloodgate.isBedrockPlayer(bd.getPlayer().getUniqueId())) {
+            // add an invisible slime
+            GeyserUtility.setSlime(plugin, spawn, bd.getTardisID(), stand.getUniqueId());
+        }
     }
 }

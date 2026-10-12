@@ -28,6 +28,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetParticlePrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
+import me.eccentric_nz.TARDIS.geyser.GeyserUtility;
 import me.eccentric_nz.TARDIS.particles.Emitter;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Material;
@@ -162,6 +163,8 @@ public class DematerialiseModelledPreset implements Runnable {
                 if (interaction != null) {
                     interaction.remove();
                 }
+                // remove slime interaction
+                GeyserUtility.removeSlime(plugin, dd.getLocation());
                 boolean found = false;
                 for (Entity e : world.getNearbyEntities(dd.getLocation(), 1.0d, 1.0d, 1.0d)) {
                     if (e instanceof ArmorStand a) {

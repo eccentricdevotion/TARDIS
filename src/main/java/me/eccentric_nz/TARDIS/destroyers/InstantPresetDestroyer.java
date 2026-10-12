@@ -32,6 +32,7 @@ import me.eccentric_nz.TARDIS.doors.outer.OuterDoor;
 import me.eccentric_nz.TARDIS.doors.outer.OuterMinecraftDoorCloser;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
+import me.eccentric_nz.TARDIS.geyser.GeyserUtility;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import me.eccentric_nz.TARDIS.utility.TARDISSponge;
 import org.bukkit.Chunk;
@@ -103,6 +104,8 @@ public class InstantPresetDestroyer {
         if (interaction != null) {
             interaction.remove();
         }
+        // remove slime interaction
+        GeyserUtility.removeSlime(plugin, dd.getLocation());
         World w = l.getWorld();
         // make sure chunk is loaded
         Chunk chunk = w.getChunkAt(l);

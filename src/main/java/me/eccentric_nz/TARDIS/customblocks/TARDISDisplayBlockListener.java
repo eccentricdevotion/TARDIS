@@ -37,6 +37,7 @@ import me.eccentric_nz.TARDIS.doors.outer.*;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.Updateable;
+import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
 import me.eccentric_nz.TARDIS.siegemode.SiegeListener;
 import me.eccentric_nz.TARDIS.sonic.actions.SonicLight;
 import me.eccentric_nz.TARDIS.update.UpdateDoor;
@@ -265,7 +266,8 @@ public class TARDISDisplayBlockListener implements Listener {
         if (event.getHand() == EquipmentSlot.OFF_HAND) {
             return;
         }
-        if (event.getRightClicked() instanceof Interaction interaction) {
+        Entity entity = event.getRightClicked();
+        if (entity instanceof Interaction interaction) {
             // is this a modelled police box interaction door?
             if (interaction.getPersistentDataContainer().has(plugin.getStandUuidKey(), plugin.getPersistentDataTypeUUID())) {
                 Player player = event.getPlayer();
@@ -277,7 +279,7 @@ public class TARDISDisplayBlockListener implements Listener {
                 if (stand == null) {
                     return;
                 }
-                if (stand.getEquipment() == null) {
+                if (stand.getEquipment().getHelmet().isEmpty()) {
                     return;
                 }
                 int id = interaction.getPersistentDataContainer().get(plugin.getTardisIdKey(), PersistentDataType.INTEGER);
@@ -449,6 +451,22 @@ public class TARDISDisplayBlockListener implements Listener {
                         plugin.getTrackerKeeper().getUpdatePlayers().remove(player.getUniqueId());
                     }
                 }
+            }
+        } else if (plugin.getPM().isPluginEnabled("Geyser-Spigot")
+                && TARDISFloodgate.isBedrockPlayer(event.getPlayer())
+                && entity instanceof Slime slime) {
+            // check slime is a chameleon interaction slime
+            if (!slime.getPersistentDataContainer().has(plugin.getStandUuidKey(), plugin.getPersistentDataTypeUUID())) {
+                return;
+            }
+            // get the armour stand
+            UUID uuid = slime.getPersistentDataContainer().get(plugin.getStandUuidKey(), plugin.getPersistentDataTypeUUID());
+            ArmorStand stand = (ArmorStand) plugin.getServer().getEntity(uuid);
+            if (stand != null) {
+                plugin.debug("Slime interaction");
+                int id = slime.getPersistentDataContainer().get(plugin.getTardisIdKey(), PersistentDataType.INTEGER);
+                // toggle the door
+                new OuterDisplayDoorAction(plugin).processClick(id, event.getPlayer(), stand);
             }
         }
     }
