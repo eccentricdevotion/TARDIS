@@ -1,6 +1,5 @@
 import io.papermc.hangarpublishplugin.model.Platforms
 import org.apache.tools.ant.filters.ReplaceTokens
-import org.gradle.api.provider.Provider
 
 plugins {
     `java-library`
@@ -12,7 +11,7 @@ plugins {
 
 group = "me.eccentric_nz"
 val buildNumber = "-b${System.getenv("BUILD_NUMBER") ?: (System.getenv("SHORT_SHA") ?: ".local")}"
-version = "7.1.1${buildNumber}"
+version = "7.1.2${buildNumber}"
 
 repositories {
     mavenCentral()
