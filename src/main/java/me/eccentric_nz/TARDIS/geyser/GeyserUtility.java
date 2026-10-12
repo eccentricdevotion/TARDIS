@@ -19,10 +19,11 @@ public class GeyserUtility {
             slime.setAI(false);
             slime.setGravity(false);
             slime.setSilent(true);
-            slime.setGlowing(true);
             slime.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 1, false, false));
             slime.setInvulnerable(true);
             slime.setCollidable(false);
+            slime.setPersistent(true);
+            slime.setRemoveWhenFarAway(false);
             slime.getPersistentDataContainer().set(plugin.getTardisIdKey(), PersistentDataType.INTEGER, id);
             slime.getPersistentDataContainer().set(plugin.getStandUuidKey(), plugin.getPersistentDataTypeUUID(), uuid);
         });
