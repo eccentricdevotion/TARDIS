@@ -30,6 +30,7 @@ import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -187,6 +188,8 @@ public class TARDISInteriorPositioning {
                                 for (int col = 0; col < 16; col++) {
                                     for (int row = 0; row < 16; row++) {
                                         w.getBlockAt(slot.getX() + row, slot.getY() + y, slot.getZ() + col).setBlockData(TARDISConstants.AIR);
+                                        // reset the biome, in case there was an eye_of_harmony biome
+                                        w.setBiome(slot.getX() + row, slot.getY() + y, slot.getZ() + col, Biome.THE_VOID);
                                     }
                                 }
                             }

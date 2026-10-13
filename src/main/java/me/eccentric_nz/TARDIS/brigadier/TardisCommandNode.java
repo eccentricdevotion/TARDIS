@@ -32,6 +32,7 @@ import me.eccentric_nz.TARDIS.enumeration.Updateable;
 import me.eccentric_nz.TARDIS.travel.ComehereAction;
 import me.eccentric_nz.TARDIS.travel.ComehereRequest;
 import me.eccentric_nz.TARDIS.update.TARDISUpdateBlocks;
+import me.eccentric_nz.TARDIS.utility.VoidUpdate;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.type.Door;
 import org.bukkit.entity.Player;
@@ -889,6 +890,14 @@ public class TardisCommandNode {
                                             door.setHinge(Door.Hinge.LEFT);
                                         }
                                         block.setBlockData(door);
+                                    }
+                                    return Command.SINGLE_SUCCESS;
+                                }))
+                        .then(Commands.literal("void")
+                                .executes(ctx -> {
+                                    Pair<Player, Integer> c = TardisUtility.check(plugin, ctx.getSource().getSender(), TardisCommand.update);
+                                    if (c != null) {
+                                        new VoidUpdate(plugin, c.getSecond());
                                     }
                                     return Command.SINGLE_SUCCESS;
                                 }))
