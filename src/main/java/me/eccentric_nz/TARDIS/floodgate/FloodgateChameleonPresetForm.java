@@ -56,7 +56,9 @@ public class FloodgateChameleonPresetForm {
         SimpleForm.Builder builder = SimpleForm.builder();
         builder.title("TARDIS Chameleon Circuit");
         for (ChameleonPreset preset : ChameleonPreset.values()) {
-            if (TARDISPermission.hasPermission(player, "tardis.preset." + preset.toString().toLowerCase(Locale.ROOT))) {
+            if ((preset.isBlockPreset() || preset.usesArmourStand())
+                    && preset != ChameleonPreset.ITEM && preset != ChameleonPreset.COLOURED
+                    && TARDISPermission.hasPermission(player, "tardis.preset." + preset.toString().toLowerCase(Locale.ROOT))) {
                 String path = String.format("textures/%s.png", FloodgateTextures.lookup.get(preset.getGuiDisplay().toString()));
                 builder.button(preset.toString(), FormImage.Type.PATH, path);
             }

@@ -71,5 +71,26 @@ public class FloodgateTextures {
         lookup.put("WHITE_WOOL", "blocks/wool_colored_white");
         lookup.put("YELLOW_CONCRETE", "blocks/concrete_yellow");
         lookup.put("YELLOW_WOOL", "blocks/wool_colored_yellow");
+        lookup.put("BLUE_CONCRETE_POWDER", "blocks/concrete_powder_blue");
+        lookup.put("WHITE_CONCRETE_POWDER", "blocks/concrete_powder_white");
+        lookup.put("ORANGE_CONCRETE_POWDER", "blocks/concrete_powder_orange");
+        lookup.put("MAGENTA_CONCRETE_POWDER", "blocks/concrete_powder_magenta");
+        lookup.put("LIGHT_BLUE_CONCRETE_POWDER", "blocks/concrete_powder_light_blue");
+        lookup.put("YELLOW_CONCRETE_POWDER", "blocks/concrete_powder_yellow");
+        lookup.put("LIME_CONCRETE_POWDER", "blocks/concrete_powder_lime");
+        lookup.put("PINK_CONCRETE_POWDER", "blocks/concrete_powder_pink");
+        lookup.put("GRAY_CONCRETE_POWDER", "blocks/concrete_powder_gray");
+        lookup.put("LIGHT_GRAY_CONCRETE_POWDER", "blocks/concrete_powder_silver");
+        lookup.put("CYAN_CONCRETE_POWDER", "blocks/concrete_powder_cyan");
+        lookup.put("PURPLE_CONCRETE_POWDER", "blocks/concrete_powder_purple");
+        lookup.put("BROWN_CONCRETE_POWDER", "blocks/concrete_powder_brown");
+        lookup.put("GREEN_CONCRETE_POWDER", "blocks/concrete_powder_green");
+        lookup.put("RED_CONCRETE_POWDER", "blocks/concrete_powder_red");
+        lookup.put("BLACK_CONCRETE_POWDER", "blocks/concrete_powder_black");
+        lookup.put("CYAN_CONCRETE", "blocks/concrete_cyan");
+        lookup.put("GRAY_CONCRETE", "blocks/concrete_gray");
+        lookup.put("BLACK_CONCRETE", "blocks/concrete_black");
+        lookup.put("GREEN_CONCRETE", "blocks/concrete_green");
+        lookup.put("RED_CONCRETE", "blocks/concrete_red");
     }
 }
