@@ -277,7 +277,7 @@ public class TARDISFarmer {
                                 farmtotal++;
                             }
                         }
-                        case DONKEY, MULE, HORSE -> {
+                        case DONKEY, MULE, HORSE, SKELETON_HORSE, ZOMBIE_HORSE -> {
                             if (farmPrefs.shouldFarmHorses() && (!stable.isEmpty() || spawnEggs)) {
                                 AbstractHorse horse = (AbstractHorse) entity;
                                 // if the horse has a passenger, eject them!
