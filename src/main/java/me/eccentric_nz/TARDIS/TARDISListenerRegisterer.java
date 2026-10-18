@@ -461,5 +461,6 @@ class TARDISListenerRegisterer {
         }
         plugin.getPM().registerEvents(new WeatherListener(plugin), plugin);
         plugin.getPM().registerEvents(new DimensionTimeSyncListener(plugin), plugin);
+        plugin.getPM().registerEvents(new RespawnListener(plugin), plugin);
     }
 }
