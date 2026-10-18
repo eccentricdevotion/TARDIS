@@ -17,10 +17,12 @@
 package me.eccentric_nz.TARDIS.commands.tardis;
 
 import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.CustomModelData;
 import io.papermc.paper.datacomponent.item.ItemLore;
 import io.papermc.paper.datacomponent.item.TooltipDisplay;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.custommodels.keys.CircuitVariant;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
@@ -65,6 +67,23 @@ public class ItemCommand {
                 if (!recipeItem.equals(RecipeItem.NOT_FOUND)) {
                     inHand.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(stripped));
                     inHand.resetData(DataComponentTypes.ITEM_MODEL);
+                    // add the correct floats and strings to circuits
+                    if (stripped.contains("Circuit")) {
+                        // lookup circuit
+                        String ENUM = stripped.replace(" Circuit", "").replace("TARDIS ", "").toUpperCase(Locale.ROOT);
+                        if (ENUM.equals("RANDOMISER")) {
+                            ENUM = "RANDOM";
+                        }
+                        try {
+                            CircuitVariant variant = CircuitVariant.valueOf(ENUM);
+                            inHand.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                                    .addFloats(variant.getFloats())
+                                    .addString(stripped)
+                                    .build());
+                        } catch (IllegalArgumentException e) {
+                            plugin.debug("Invalid Circuit Variant: " + ENUM);
+                        }
+                    }
                     player.updateInventory();
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "ITEM_UPDATED");
                 }
@@ -84,6 +103,23 @@ public class ItemCommand {
                         if (!recipeItem.equals(RecipeItem.NOT_FOUND)) {
                             is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(stripped));
                             is.resetData(DataComponentTypes.ITEM_MODEL);
+                            // add the correct floats and strings to circuits
+                            if (stripped.contains("Circuit")) {
+                                // lookup circuit
+                                String ENUM = stripped.replace(" Circuit", "").replace("TARDIS ", "").toUpperCase(Locale.ROOT);
+                                if (ENUM.equals("RANDOMISER")) {
+                                    ENUM = "RANDOM";
+                                }
+                                try {
+                                    CircuitVariant variant = CircuitVariant.valueOf(ENUM);
+                                    is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                                            .addFloats(variant.getFloats())
+                                            .addString(stripped)
+                                            .build());
+                                } catch (IllegalArgumentException e) {
+                                    plugin.debug("Invalid Circuit Variant: " + ENUM);
+                                }
+                            }
                             i++;
                         }
                     }

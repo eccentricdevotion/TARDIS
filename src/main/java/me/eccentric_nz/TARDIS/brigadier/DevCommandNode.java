@@ -185,7 +185,12 @@ public class DevCommandNode {
                         .executes(ctx -> {
                             new CircuitCommand(plugin).give(ctx.getSource().getSender());
                             return Command.SINGLE_SUCCESS;
-                        }))
+                        })
+                        .then(Commands.literal("all")
+                                .executes(ctx -> {
+                                    new CircuitCommand(plugin).all(ctx.getSource().getSender());
+                                    return Command.SINGLE_SUCCESS;
+                                })))
                 .then(Commands.literal("component")
                         .then(Commands.literal("ars")
                                 .executes(ctx -> {

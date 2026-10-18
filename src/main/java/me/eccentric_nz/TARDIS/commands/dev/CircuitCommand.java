@@ -17,10 +17,14 @@
 package me.eccentric_nz.TARDIS.commands.dev;
 
 import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.CustomModelData;
 import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.custommodels.keys.CircuitVariant;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
+import me.eccentric_nz.TARDIS.enumeration.GlowstoneCircuit;
+import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
@@ -30,6 +34,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class CircuitCommand {
@@ -58,6 +63,42 @@ public class CircuitCommand {
             lore.set(1, uses);
             result.setData(DataComponentTypes.LORE, ItemLore.lore(lore));
             player.getInventory().addItem(result);
+        }
+    }
+
+    public void all(CommandSender sender) {
+        for (CircuitVariant circuit : CircuitVariant.values()) {
+            ItemStack is = ItemStack.of(Material.GLOWSTONE_DUST);
+            try {
+                String c = circuit.toString();
+                if (c.contains("DAMAGED")) {
+                    c = circuit.toString().replace("_DAMAGED", "");
+                }
+                GlowstoneCircuit gc = GlowstoneCircuit.valueOf(c);
+                is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                        .addFloats(circuit.getFloats())
+                        .addString(gc.getDisplayName())
+                        .build());
+                is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(gc.getDisplayName()));
+                if (gc.getDisplayName().contains("TARDIS")) {
+                    Component uses = (plugin.getConfig().getString("circuits.uses.chameleon", "25").equals("0") || !plugin.getConfig().getBoolean("circuits.damage"))
+                            ? Component.text("unlimited", NamedTextColor.YELLOW)
+                            : Component.text(plugin.getConfig().getString("circuits.uses.chameleon", "25"), NamedTextColor.YELLOW);
+                    is.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(
+                            Component.text("Uses left"),
+                            uses
+                    )));
+                }
+                Player player = (Player) sender;
+                HashMap<Integer, ItemStack> items = player.getInventory().addItem(is);
+                if (!items.isEmpty()) {
+                    for (ItemStack item : items.values()) {
+                        player.getWorld().dropItemNaturally(player.getLocation(), item);
+                    }
+                }
+            } catch (IllegalArgumentException e) {
+                plugin.debug("Invalid GlowstoneCircuit " + circuit);
+            }
         }
     }
 }
