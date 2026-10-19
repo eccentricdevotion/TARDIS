@@ -67,3 +67,6 @@ dependencies:
     Vault:
       load: BEFORE
       required: false
+    voicechat:
+      load: BEFORE
+      required: false

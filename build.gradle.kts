@@ -79,6 +79,10 @@ repositories {
         name = "sonatype"
         url = uri("https://oss.sonatype.org/content/groups/public/")
     }
+    maven {
+        name = "voicechat"
+        url = uri("https://maven.maxhenkel.de/repository/public/")
+    }
 }
 
 dependencies {
@@ -156,6 +160,8 @@ dependencies {
     compileOnly("net.luckperms:api:5.5")
     compileOnly("org.apache.commons:commons-lang3:3.21.0")
     compileOnly(files("libs/TerraformGenerator.jar"))
+    compileOnly("de.maxhenkel.voicechat:voicechat-api:2.6.24")
+    compileOnly("com.alphacephei:vosk:0.3.45")
     compileOnly("com.formdev:flatlaf:3.7.2") {
         isTransitive = false
     }
