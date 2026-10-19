@@ -43,7 +43,7 @@ public class CleanEntitiesCommand {
             int interactions = 0;
             for (Entity entity : world.getEntities()) {
                 if (entity instanceof ArmorStand stand) {
-                    if (stand.isInvisible() && stand.isInvulnerable()) {
+                    if (stand.isInvisible() && stand.isMarkedInvulnerable()) {
                         // check it has no TARDIS record
                         HashMap<String, Object> where = new HashMap<>();
                         where.put("world", world.getKey().asString());

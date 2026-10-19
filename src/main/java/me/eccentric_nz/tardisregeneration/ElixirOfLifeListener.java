@@ -81,7 +81,7 @@ public class ElixirOfLifeListener implements Listener {
     @EventHandler
     public void onPlayerDismount(EntityDismountEvent event) {
         if (event.getEntity() instanceof Player player) {
-            if (player.hasPotionEffect(PotionEffectType.INVISIBILITY) && player.isInvulnerable()) {
+            if (player.hasPotionEffect(PotionEffectType.INVISIBILITY) && player.isMarkedInvulnerable()) {
                 event.setCancelled(true);
             }
         }
