@@ -23,6 +23,7 @@ import io.papermc.paper.datacomponent.item.TooltipDisplay;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.custommodels.keys.CircuitVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.KeyVariant;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
@@ -35,6 +36,7 @@ import org.bukkit.inventory.ItemStack;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 public class ItemCommand {
 
@@ -84,6 +86,19 @@ public class ItemCommand {
                             plugin.debug("Invalid Circuit Variant: " + ENUM);
                         }
                     }
+                    if (stripped.contains("TARDIS Key")) {
+                        // lookup key
+                        CustomModelData cmd = inHand.getData(DataComponentTypes.CUSTOM_MODEL_DATA);
+                        List<Float> floats = cmd.floats();
+                        for (KeyVariant key : KeyVariant.values()) {
+                            if (key.getFloats() != null && Objects.equals(key.getFloats().getFirst(), floats.getFirst())) {
+                                inHand.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                                        .addFloats(key.getFloats())
+                                        .addString(key.toString().toLowerCase(Locale.ROOT))
+                                        .build());
+                            }
+                        }
+                    }
                     player.updateInventory();
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "ITEM_UPDATED");
                 }
@@ -103,7 +118,7 @@ public class ItemCommand {
                         if (!recipeItem.equals(RecipeItem.NOT_FOUND)) {
                             is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite(stripped));
                             is.resetData(DataComponentTypes.ITEM_MODEL);
-                            // add the correct floats and strings to circuits
+                            // add the correct floats and strings to circuits and keys
                             if (stripped.contains("Circuit")) {
                                 // lookup circuit
                                 String ENUM = stripped.replace(" Circuit", "").replace("TARDIS ", "").toUpperCase(Locale.ROOT);
@@ -118,6 +133,19 @@ public class ItemCommand {
                                             .build());
                                 } catch (IllegalArgumentException e) {
                                     plugin.debug("Invalid Circuit Variant: " + ENUM);
+                                }
+                            }
+                            if (stripped.contains("TARDIS Key")) {
+                                // lookup key
+                                CustomModelData cmd = is.getData(DataComponentTypes.CUSTOM_MODEL_DATA);
+                                List<Float> floats = cmd.floats();
+                                for (KeyVariant key : KeyVariant.values()) {
+                                    if (key.getFloats() != null && Objects.equals(key.getFloats().getFirst(), floats.getFirst())) {
+                                        is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                                                .addFloats(key.getFloats())
+                                                .addString(key.toString().toLowerCase(Locale.ROOT))
+                                                .build());
+                                    }
                                 }
                             }
                             i++;
