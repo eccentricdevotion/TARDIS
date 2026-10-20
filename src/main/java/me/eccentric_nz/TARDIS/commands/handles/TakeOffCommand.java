@@ -23,9 +23,9 @@ import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.flight.TARDISTakeoff;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
-import org.bukkit.block.data.Openable;
 import org.bukkit.entity.Player;
 
 import java.util.Collections;
@@ -104,8 +104,8 @@ public class TakeOffCommand {
         where.put("door_type", 1);
         ResultSetDoors rs = new ResultSetDoors(plugin, where, false);
         if (rs.resultSet()) {
-            Openable door = (Openable) TARDISStaticLocationGetters.getLocationFromDB(rs.getDoor_location()).getBlock().getBlockData();
-            return door.isOpen();
+            Block block = TARDISStaticLocationGetters.getLocationFromDB(rs.getDoor_location()).getBlock();
+            return TARDISStaticUtils.isDoorOpen(block);
         }
         return false;
     }
