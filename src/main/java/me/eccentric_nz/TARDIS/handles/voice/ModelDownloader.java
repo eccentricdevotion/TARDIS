@@ -17,16 +17,23 @@ import java.util.zip.ZipInputStream;
 
 public class ModelDownloader {
 
+    private final TARDIS plugin;
+
+    public ModelDownloader(TARDIS plugin) {
+        this.plugin = plugin;
+    }
+
     public CompletableFuture<Boolean> get() {
-        File voiceDir = new File(TARDIS.plugin.getDataFolder(), "voice_chat");
+        File voiceDir = new File(plugin.getDataFolder(), "voice_chat");
         if (!voiceDir.exists()) {
             boolean result = voiceDir.mkdirs();
             if (result && voiceDir.setWritable(true) && voiceDir.setExecutable(true)) {
-                TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.HANDLES, "Created voice_chat directory.");
+                plugin.getMessenger().handlesMessage(plugin.getConsole(), "Created voice_chat directory.");
             }
         }
         File targetModelDir = new File(voiceDir, "vosk-model");
         if (targetModelDir.exists() && targetModelDir.isDirectory()) {
+            plugin.getMessenger().handlesMessage(plugin.getConsole(), "Found Vosk model connecting to voice chat...");
             return CompletableFuture.completedFuture(true);
         }
         CompletableFuture<Boolean> future = new CompletableFuture<>();
@@ -43,7 +50,7 @@ public class ModelDownloader {
                     try (InputStream input = con.getInputStream()) {
                         Files.copy(input, dest.toPath(), StandardCopyOption.REPLACE_EXISTING);
                     }
-                    TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.HANDLES, "Vosk zip download complete. Extracting model archive...");
+                    plugin.getMessenger().handlesMessage(plugin.getConsole(), "Vosk zip download complete. Extracting model archive...");
                     try {
                         // 1. Unzip the file while on the background thread
                         unzip(dest, targetModelDir);
@@ -51,17 +58,17 @@ public class ModelDownloader {
                         if (dest.exists()) {
                             dest.delete();
                         }
-                        TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.HANDLES, "Extraction complete.");
-                        Bukkit.getScheduler().runTask(TARDIS.plugin, () -> future.complete(true));
+                        plugin.getMessenger().handlesMessage(plugin.getConsole(), "Extraction complete.");
+                        Bukkit.getScheduler().runTask(plugin, () -> future.complete(true));
                     } catch (Exception e) {
-                        TARDIS.plugin.getLogger().severe("An error occurred while expanding or initializing the voice model: " + e.getMessage());
+                        plugin.getMessenger().message(plugin.getConsole(), TardisModule.SEVERE, "An error occurred while expanding or initializing the voice model: " + e.getMessage());
                     }
                 } catch (Exception e) {
-                    TARDIS.plugin.getLogger().severe("Failed to initialize Vosk Model: " + e.getMessage());
-                    Bukkit.getScheduler().runTask(TARDIS.plugin, () -> future.complete(false));
+                    plugin.getMessenger().message(plugin.getConsole(), TardisModule.SEVERE, "Failed to initialize Vosk Model: " + e.getMessage());
+                    Bukkit.getScheduler().runTask(plugin, () -> future.complete(false));
                 }
             }
-        }.runTaskAsynchronously(TARDIS.plugin);
+        }.runTaskAsynchronously(plugin);
         return future;
     }
 

@@ -58,6 +58,10 @@ public class TARDISMessage {
         cs.sendMessage(AdventureComponents.getModule(module).append(component));
     }
 
+    public void handlesMessage(CommandSender sender, String message) {
+        Bukkit.getScheduler().scheduleSyncDelayedTask(TARDIS.plugin, () -> message(sender, TardisModule.HANDLES, message), 2L);
+    }
+
     public void handlesMessage(Player p, String message) {
         Bukkit.getScheduler().scheduleSyncDelayedTask(TARDIS.plugin, () -> message(p, TardisModule.HANDLES, message), 2L);
     }

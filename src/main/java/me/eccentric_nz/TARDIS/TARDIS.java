@@ -38,9 +38,7 @@ import me.eccentric_nz.TARDIS.files.*;
 import me.eccentric_nz.TARDIS.flight.vehicle.VehicleLoader;
 import me.eccentric_nz.TARDIS.handles.HandlesConfigUpdater;
 import me.eccentric_nz.TARDIS.handles.voice.KeywordEngine;
-import me.eccentric_nz.TARDIS.handles.voice.ModelDownloader;
 import me.eccentric_nz.TARDIS.handles.voice.VoiceChatListener;
-import me.eccentric_nz.TARDIS.handles.voice.VoskLoader;
 import me.eccentric_nz.TARDIS.handles.wiki.HandlesWikiServerLink;
 import me.eccentric_nz.TARDIS.mapping.TARDISBlueMap;
 import me.eccentric_nz.TARDIS.mapping.TARDISDynmap;
@@ -421,22 +419,13 @@ public class TARDIS extends JavaPlugin {
                 tardisMapper.enable();
             }
             if (pm.isPluginEnabled("voicechat")) {
-                new VoskLoader();
-                new ModelDownloader().get().thenAccept(success -> {
-                    // runs only after the file is either verified or downloaded + unzipped
-                    if (!success) {
-                        getMessenger().message(getConsole(), TardisModule.HANDLES, "Voice processing disabled because the Vosk model failed to load.");
-                        return;
-                    }
-                    // only do the following if the model is present
-                    BukkitVoicechatService service = getServer().getServicesManager().load(BukkitVoicechatService.class);
-                    if (service != null) {
-                        service.registerPlugin(new VoiceChatListener());
-                        KeywordEngine.init();
-                        voiceChatEnabled = true;
-                        getMessenger().message(getConsole(), TardisModule.HANDLES, "Successfully connected TARDIS to Simple Voice Chat!");
-                    }
-                });
+                BukkitVoicechatService service = getServer().getServicesManager().load(BukkitVoicechatService.class);
+                if (service != null) {
+                    service.registerPlugin(new VoiceChatListener(this));
+                    getMessenger().handlesMessage(getConsole(), "Successfully connected TARDIS to Simple Voice Chat!");
+                } else {
+                    getMessenger().handlesMessage(getConsole(), "Failed to get Voice Chat Service!");
+                }
             }
             // modules
             new TARDISModuleLoader(this).enable();
@@ -1747,5 +1736,10 @@ public class TARDIS extends JavaPlugin {
 
     public boolean isVoiceChatEnabled() {
         return voiceChatEnabled;
+    }
+
+    public void setVoiceChatEnabled() {
+        voiceChatEnabled = true;
+        getMessenger().handlesMessage(plugin.getConsole(), "Successfully connected TARDIS to Simple Voice Chat!");
     }
 }

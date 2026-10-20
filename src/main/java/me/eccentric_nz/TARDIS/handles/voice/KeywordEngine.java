@@ -1,7 +1,6 @@
 package me.eccentric_nz.TARDIS.handles.voice;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.handles.HandlesPattern;
 import me.eccentric_nz.TARDIS.handles.HandlesRequest;
 import org.bukkit.Bukkit;
@@ -10,7 +9,6 @@ import org.vosk.Model;
 import org.vosk.Recognizer;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
@@ -25,43 +23,67 @@ public class KeywordEngine {
     private static final ConcurrentHashMap<UUID, Recognizer> recognizers = new ConcurrentHashMap<>();
     private static final Pattern prefix = HandlesPattern.getPattern("prefix", false);
 
-    public static void init() {
+    public static void init(TARDIS plugin) {
         voicePool = Executors.newSingleThreadExecutor(r -> {
             Thread t = new Thread(r, "TARDIS-Voice-Worker");
             t.setDaemon(true);
             return t;
         });
-        File voiceDir = new File(TARDIS.plugin.getDataFolder(), "voice_chat");
+        File voiceDir = new File(plugin.getDataFolder(), "voice_chat");
         File targetModelDir = new File(voiceDir, "vosk-model");
         try {
-            model = new Model(targetModelDir.getAbsolutePath());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            model = new Model(targetModelDir.getPath());
+            VoiceChatListener.setModelReady();
+            plugin.getMessenger().handlesMessage(plugin.getConsole(), "got to here!");
+        } catch (Throwable t) {
+            plugin.getMessenger().handlesMessage(plugin.getConsole(), "Could not set Vosk model from path!");
+//            plugin.getMessenger().handlesMessage(plugin.getConsole(), "!!! NATIVE ENGAGE FAILURE !!!");
+//            plugin.getMessenger().handlesMessage(plugin.getConsole(), t.getClass().getName() + ": " + t.getMessage());
+//            t.printStackTrace();
         }
-        TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.HANDLES, "Voice processing system successfully initialized!");
+        plugin.getMessenger().handlesMessage(plugin.getConsole(), "Voice processing system successfully initialized!");
     }
 
-    public static void processAudioAsync(UUID playerUUID, byte[] pcm16kAudio) {
+    public static void processAudioAsync(UUID playerUUID, short[] decodedStereoPcm) {
         if (model == null || voicePool.isShutdown()) {
             return;
         }
         voicePool.submit(() -> {
             try {
-                try (Recognizer recognizer = recognizers.computeIfAbsent(playerUUID, uuid -> {
+                Recognizer recognizer = recognizers.computeIfAbsent(playerUUID, uuid -> {
                     try {
-                        // configured to expect a 16000Hz downsampled target audio
+                        TARDIS.plugin.getMessenger().handlesMessage(TARDIS.plugin.getConsole(), "Creating new Recognizer for: " + uuid);
                         return new Recognizer(model, 16000.0f);
                     } catch (Exception e) {
+                        TARDIS.plugin.getMessenger().handlesMessage(TARDIS.plugin.getConsole(), "Failed to create recognizer: " + e.getMessage());
                         return null;
                     }
-                })) {
-                    if (recognizer == null) {
-                        return;
+                });
+                if (recognizer == null) {
+                    return;
+                }
+                // dynamically calculate exact bounds to avoid remainder truncation crashes
+                int stereoSamples = decodedStereoPcm.length;
+                int monoSamples = stereoSamples / 2;
+                int downsampledSamples = monoSamples / 3; // 48000Hz -> 16000Hz
+                // allocate an exact isolated byte width (2 bytes per 16-bit sample)
+                byte[] voskBytes = new byte[downsampledSamples * 2];
+                // single-pass downsampling and bit-packing loop
+                for (int i = 0; i < downsampledSamples; i++) {
+                    // i * 6 skips across both channels (Stereo -> Mono) and 3 time steps (48k -> 16k)
+                    int sourceIndex = i * 6;
+                    // Safeguard array bounds
+                    if (sourceIndex >= stereoSamples) {
+                        break;
                     }
-                    // acceptWaveForm pushes chunk data to the parser pipeline
-                    if (recognizer.acceptWaveForm(pcm16kAudio, pcm16kAudio.length)) {
-                        handleJsonResult(playerUUID, recognizer.getResult());
-                    }
+                    short sample = decodedStereoPcm[sourceIndex];
+                    // safe Little-Endian bit-packing
+                    voskBytes[i * 2] = (byte) (sample & 0xFF);
+                    voskBytes[i * 2 + 1] = (byte) ((sample >> 8) & 0xFF);
+                }
+                // acceptWaveForm pushes chunk data to the parser pipeline
+                if (recognizer.acceptWaveForm(voskBytes, voskBytes.length)) {
+                    handleJsonResult(playerUUID, recognizer.getResult());
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -70,6 +92,7 @@ public class KeywordEngine {
     }
 
     private static void handleJsonResult(UUID playerUUID, String json) {
+        TARDIS.plugin.debug("Handling JSON result");
         // make sure we have a "text" token
         if (!json.contains("\"text\" :")) {
             return;
@@ -84,6 +107,7 @@ public class KeywordEngine {
     }
 
     private static void routeSpeech(UUID playerUUID, String transcript) {
+        TARDIS.plugin.debug("Routing speech");
         Matcher prefixMatcher = prefix.matcher(transcript);
         // verify the voice chat begins with the prefix (e.g. "hey handles")
         if (!prefixMatcher.find()) {

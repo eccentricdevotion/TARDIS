@@ -1,11 +1,14 @@
 package me.eccentric_nz.TARDIS.handles.voice;
 
+import de.maxhenkel.voicechat.api.VoicechatApi;
 import de.maxhenkel.voicechat.api.VoicechatPlugin;
 import de.maxhenkel.voicechat.api.VoicechatServerApi;
 import de.maxhenkel.voicechat.api.events.EventRegistration;
 import de.maxhenkel.voicechat.api.events.MicrophonePacketEvent;
 import de.maxhenkel.voicechat.api.opus.OpusDecoder;
 import de.maxhenkel.voicechat.api.packets.MicrophonePacket;
+import me.eccentric_nz.TARDIS.TARDIS;
+
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -13,10 +16,32 @@ public class VoiceChatListener implements VoicechatPlugin {
 
     // cache decoders per player to protect CPU/RAM and maintain Opus state tracking
     private static final ConcurrentHashMap<UUID, OpusDecoder> playerDecoders = new ConcurrentHashMap<>();
+    private static boolean modelReady = false;
+    private final TARDIS plugin;
+
+    public VoiceChatListener(TARDIS plugin) {
+        this.plugin = plugin;
+    }
 
     @Override
     public String getPluginId() {
         return "tardis";
+    }
+
+    @Override
+    public void initialize(VoicechatApi api) {
+        new ModelDownloader(plugin).get().thenAccept(success -> {
+            // runs only after the file is either verified or downloaded + unzipped
+            if (!success) {
+                plugin.getMessenger().handlesMessage(plugin.getConsole(), "Voice processing disabled because the Vosk model failed to load.");
+            } else {
+                // only do the following if the model is present
+                KeywordEngine.init(plugin);
+                modelReady = true;
+                plugin.setVoiceChatEnabled();
+                plugin.getMessenger().handlesMessage(plugin.getConsole(), "Vosk model loaded successfully.");
+            }
+        });
     }
 
     @Override
@@ -25,6 +50,9 @@ public class VoiceChatListener implements VoicechatPlugin {
     }
 
     private void onPlayerAudio(MicrophonePacketEvent event) {
+        if (!modelReady) {
+            return;
+        }
         if (!(event.getPacket() instanceof MicrophonePacket microphonePacket)) {
             return;
         }
@@ -46,32 +74,8 @@ public class VoiceChatListener implements VoicechatPlugin {
         if (pcm48kShorts == null || pcm48kShorts.length == 0) {
             return;
         }
-        // convert short[] down to a 16kHz byte[] stream for Vosk
-        byte[] pcm16kBytes = downsample48ShortsTo16kBytes(pcm48kShorts);
         // process the audio
-        KeywordEngine.processAudioAsync(playerUUID, pcm16kBytes);
-    }
-
-    /**
-     * Simultaneously downsamples 48kHz audio to 16kHz (3:1) and converts 16-bit
-     * shorts directly into small linear PCM bytes required by Vosk.
-     */
-    private byte[] downsample48ShortsTo16kBytes(short[] src) {
-        // Every 3 short samples become 1 short sample (2 bytes)
-        int destSamples = src.length / 3;
-        byte[] destBytes = new byte[destSamples * 2];
-        int byteIndex = 0;
-
-        for (int i = 0; i < src.length; i += 3) {
-            if (byteIndex + 1 < destBytes.length) {
-                short sample = src[i];
-                // Extract Little-Endian bytes out of the 16-bit audio short
-                destBytes[byteIndex] = (byte) (sample & 0xFF);
-                destBytes[byteIndex + 1] = (byte) ((sample >> 8) & 0xFF);
-                byteIndex += 2;
-            }
-        }
-        return destBytes;
+        KeywordEngine.processAudioAsync(playerUUID, pcm48kShorts);
     }
 
     /**
@@ -83,5 +87,9 @@ public class VoiceChatListener implements VoicechatPlugin {
         if (decoder != null && !decoder.isClosed()) {
             decoder.close(); // Crucial step to stop native heap memory leaks!
         }
+    }
+
+    public static void setModelReady() {
+        modelReady = true;
     }
 }
