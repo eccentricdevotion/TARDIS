@@ -64,7 +64,7 @@ public class KeywordEngine {
         plugin.getMessenger().handlesMessage(plugin.getConsole(), "Voice processing system successfully initialized!");
     }
 
-    public static void processAudioAsync(UUID playerUUID, short[] decodedStereoPcm) {
+    public static void processAudioAsync(UUID playerUUID, short[] incomingAudio) {
         if (model == null || voicePool.isShutdown()) {
             return;
         }
@@ -74,7 +74,7 @@ public class KeywordEngine {
                 Recognizer recognizer = recognizers.computeIfAbsent(playerUUID, uuid -> {
                     try {
                         TARDIS.plugin.getMessenger().handlesMessage(TARDIS.plugin.getConsole(), "Creating new Recognizer for: " + uuid);
-                        return new Recognizer(model, 16000.0f);
+                        return new Recognizer(model, 48000.0f);
                     } catch (Exception e) {
                         TARDIS.plugin.getMessenger().handlesMessage(TARDIS.plugin.getConsole(), "Failed to create recognizer: " + e.getMessage());
                         return null;
@@ -83,22 +83,21 @@ public class KeywordEngine {
                 if (recognizer == null) {
                     return;
                 }
-                // dynamically calculate exact bounds to avoid remainder truncation crashes
-                int stereoSamples = decodedStereoPcm.length;
-                int monoSamples = stereoSamples / 2;
-                int downsampledSamples = monoSamples / 3; // 48000Hz -> 16000Hz
-                // allocate an exact isolated byte width (2 bytes per 16-bit sample)
-                byte[] voskBytes = new byte[downsampledSamples * 2];
-                // single-pass downsampling and bit-packing loop
-                for (int i = 0; i < downsampledSamples; i++) {
-                    // i * 6 skips across both channels (Stereo -> Mono) and 3 time steps (48k -> 16k)
-                    int sourceIndex = i * 6;
-                    // Safeguard array bounds
-                    if (sourceIndex >= stereoSamples) {
+                // detect channels
+                boolean isStereo = incomingAudio.length > 1000;
+                int stepStride = isStereo ? 2 : 1; // Stereo strips right channel. Mono processes every sample.
+                int targetLength = incomingAudio.length / stepStride;
+                if (targetLength <= 0) {
+                    return;
+                }
+                byte[] voskBytes = new byte[targetLength * 2];
+                for (int i = 0; i < targetLength; i++) {
+                    int sourceIndex = i * stepStride;
+                    if (sourceIndex >= incomingAudio.length) {
                         break;
                     }
-                    short sample = decodedStereoPcm[sourceIndex];
-                    // safe Little-Endian bit-packing
+                    short sample = incomingAudio[sourceIndex];
+                    // Little-Endian bit-packing
                     voskBytes[i * 2] = (byte) (sample & 0xFF);
                     voskBytes[i * 2 + 1] = (byte) ((sample >> 8) & 0xFF);
                 }
@@ -128,7 +127,7 @@ public class KeywordEngine {
     }
 
     private static void routeSpeech(UUID playerUUID, String transcript) {
-        TARDIS.plugin.debug("Routing speech");
+        TARDIS.plugin.debug("Routing speech for transcript: " + transcript);
         Matcher prefixMatcher = prefix.matcher(transcript);
         // verify the voice chat begins with the prefix (e.g. "hey handles")
         if (!prefixMatcher.find()) {
