@@ -21,6 +21,7 @@ public class KeywordEngine {
     private static Model model;
     private static ExecutorService voicePool;
     private static final ConcurrentHashMap<UUID, Recognizer> recognizers = new ConcurrentHashMap<>();
+    private static final ConcurrentHashMap<UUID, Long> lastSpeechTimestamps = new ConcurrentHashMap<>();
     private static final Pattern prefix = HandlesPattern.getPattern("prefix", false);
 
     public static void init(TARDIS plugin) {
@@ -37,10 +38,29 @@ public class KeywordEngine {
             plugin.getMessenger().handlesMessage(plugin.getConsole(), "got to here!");
         } catch (Throwable t) {
             plugin.getMessenger().handlesMessage(plugin.getConsole(), "Could not set Vosk model from path!");
-//            plugin.getMessenger().handlesMessage(plugin.getConsole(), "!!! NATIVE ENGAGE FAILURE !!!");
-//            plugin.getMessenger().handlesMessage(plugin.getConsole(), t.getClass().getName() + ": " + t.getMessage());
-//            t.printStackTrace();
+            plugin.getMessenger().handlesMessage(plugin.getConsole(), "!!! NATIVE ENGAGE FAILURE !!!");
+            plugin.getMessenger().handlesMessage(plugin.getConsole(), t.getClass().getName() + ": " + t.getMessage());
+            t.printStackTrace();
         }
+        // start task to check if speech is finished
+        Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, () -> {
+            long now = System.currentTimeMillis();
+            lastSpeechTimestamps.forEach((playerUUID, lastActive) -> {
+                if (now - lastActive > 800) { // 800 milliseconds of no packets = sentence finished
+                    // player has been silent for longer than the threshold, so stop tracking until they talk again
+                    lastSpeechTimestamps.remove(playerUUID);
+                    Recognizer recognizer = recognizers.get(playerUUID);
+                    if (recognizer != null) {
+                        // force Vosk to compile whatever it heard into a final string payload
+                        String json = recognizer.getResult();
+                        // Route this straight into your command processing logic!
+                        if (json != null && !json.isEmpty()) {
+                            handleJsonResult(playerUUID, json);
+                        }
+                    }
+                }
+            });
+        }, 10L, 10L);
         plugin.getMessenger().handlesMessage(plugin.getConsole(), "Voice processing system successfully initialized!");
     }
 
@@ -48,6 +68,7 @@ public class KeywordEngine {
         if (model == null || voicePool.isShutdown()) {
             return;
         }
+        lastSpeechTimestamps.put(playerUUID, System.currentTimeMillis());
         voicePool.submit(() -> {
             try {
                 Recognizer recognizer = recognizers.computeIfAbsent(playerUUID, uuid -> {
