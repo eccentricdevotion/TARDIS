@@ -20,7 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.entity.Player;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 /**
@@ -39,7 +39,7 @@ public class TimeCommand {
         long minecraftTime = player.getWorld().getTime();
         String daynight = TARDISStaticUtils.getTime(minecraftTime);
         // get current server time (in a nice format)
-        LocalDate date = LocalDate.now();
+        LocalDateTime date = LocalDateTime.now();
         String formatted = date.format(formatter);
         // send message to player with current time
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
