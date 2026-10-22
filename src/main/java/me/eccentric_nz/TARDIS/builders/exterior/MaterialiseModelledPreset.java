@@ -296,7 +296,7 @@ public class MaterialiseModelledPreset implements Runnable {
             // add an interaction entity
             TARDISDisplayItemUtils.setInteraction(stand, bd.getTardisID());
             // if TARDIS owner is a bedrock player
-            if (bd.getPlayer() != null && TARDISFloodgate.isBedrockPlayer(bd.getPlayer().getUniqueId())) {
+            if (bd.getPlayer() != null && TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(bd.getPlayer().getUniqueId())) {
                 // add an invisible slime
                 GeyserUtility.setSlime(plugin, stand.getLocation(), bd.getTardisID(), stand.getUniqueId());
             }
