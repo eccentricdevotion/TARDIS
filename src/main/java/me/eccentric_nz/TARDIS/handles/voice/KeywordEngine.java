@@ -38,7 +38,6 @@ public class KeywordEngine {
         try {
             model = new Model(targetModelDir.getPath());
             VoiceChatListener.setModelReady();
-            plugin.getMessenger().handlesMessage(plugin.getConsole(), "got to here!");
         } catch (Throwable t) {
             plugin.getMessenger().handlesMessage(plugin.getConsole(), "Could not set Vosk model from path!");
             plugin.getMessenger().handlesMessage(plugin.getConsole(), "!!! NATIVE ENGAGE FAILURE !!!");
