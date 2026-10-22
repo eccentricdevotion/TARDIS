@@ -23,11 +23,8 @@ public class KeywordEngine {
     private static final ConcurrentHashMap<UUID, Recognizer> recognizers = new ConcurrentHashMap<>();
     private static final ConcurrentHashMap<UUID, Long> lastSpeechTimestamps = new ConcurrentHashMap<>();
     private static final Pattern prefix = HandlesPattern.getPattern("prefix", false);
-    private static String grammar;
 
     public static void init(TARDIS plugin) {
-        Grammar g = new Grammar(plugin);
-        grammar = g.getJSON();
         voicePool = Executors.newSingleThreadExecutor(r -> {
             Thread t = new Thread(r, "TARDIS-Voice-Worker");
             t.setDaemon(true);
@@ -76,7 +73,7 @@ public class KeywordEngine {
                 Recognizer recognizer = recognizers.computeIfAbsent(playerUUID, uuid -> {
                     try {
                         TARDIS.plugin.getMessenger().handlesMessage(TARDIS.plugin.getConsole(), "Creating new Recognizer for: " + uuid);
-                        return new Recognizer(model, 48000.0f, grammar);
+                        return new Recognizer(model, 48000.0f, Grammar.getJSON(playerUUID));
                     } catch (Exception e) {
                         TARDIS.plugin.getMessenger().handlesMessage(TARDIS.plugin.getConsole(), "Failed to create recognizer: " + e.getMessage());
                         return null;

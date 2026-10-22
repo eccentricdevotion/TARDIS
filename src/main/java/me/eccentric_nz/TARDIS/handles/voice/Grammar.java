@@ -1,24 +1,22 @@
 package me.eccentric_nz.TARDIS.handles.voice;
 
 import com.google.gson.Gson;
+import io.papermc.paper.registry.RegistryAccess;
+import io.papermc.paper.registry.RegistryKey;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreas;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetDestinationNames;
+import org.bukkit.block.Biome;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class Grammar {
 
-    private final TARDIS plugin;
-    private String json;
-
-    public Grammar(TARDIS plugin) {
-        this.plugin = plugin;
-        makeJSON();
-    }
-
-    private void makeJSON() {
+    public static String getJSON(UUID uuid) {
         List<String> words = new ArrayList<>();
-        for (String k : plugin.getHandlesConfig().getConfigurationSection("core-commands").getKeys(true)) {
+        for (String k : TARDIS.plugin.getHandlesConfig().getConfigurationSection("core-commands").getKeys(true)) {
             if (k.contains(".")) {
                 // split it, and only use the second half
                 String[] split = k.split("\\.");
@@ -61,6 +59,7 @@ public class Grammar {
         words.add("give");
         words.add("go");
         words.add("good");
+        words.add("handbrake");
         words.add("handles");
         words.add("have");
         words.add("he");
@@ -101,6 +100,7 @@ public class Grammar {
         words.add("our");
         words.add("out");
         words.add("over");
+        words.add("park");
         words.add("people");
         words.add("place");
         words.add("point");
@@ -146,10 +146,21 @@ public class Grammar {
         words.add("year");
         words.add("you");
         words.add("your");
-        json = new Gson().toJson(words);
-    }
-
-    public String getJSON() {
-        return json;
+        // add biome names
+        for (Biome biome : RegistryAccess.registryAccess().getRegistry(RegistryKey.BIOME)) {
+            String b = biome.key().value();
+            words.add(b.replace("_", " "));
+        }
+        // add players save names
+        ResultSetDestinationNames rsd = new ResultSetDestinationNames(TARDIS.plugin);
+        if (rsd.fromUUID(uuid.toString())) {
+            words.addAll(rsd.getNames());
+        }
+        // add tardis areas
+        ResultSetAreas rsa = new ResultSetAreas(TARDIS.plugin, null, true, true);
+        if (rsa.resultSet()) {
+            words.addAll(rsa.getNames());
+        }
+        return new Gson().toJson(words);
     }
 }
