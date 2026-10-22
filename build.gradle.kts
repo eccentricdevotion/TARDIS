@@ -11,7 +11,7 @@ plugins {
 
 group = "me.eccentric_nz"
 val buildNumber = "-b${System.getenv("BUILD_NUMBER") ?: (System.getenv("SHORT_SHA") ?: ".local")}"
-version = "7.1.2${buildNumber}"
+version = "7.1.3${buildNumber}"
 
 repositories {
     mavenCentral()
@@ -78,6 +78,10 @@ repositories {
     maven {
         name = "sonatype"
         url = uri("https://oss.sonatype.org/content/groups/public/")
+    }
+    maven {
+        name = "voicechat"
+        url = uri("https://maven.maxhenkel.de/repository/public/")
     }
 }
 
@@ -156,6 +160,8 @@ dependencies {
     compileOnly("net.luckperms:api:5.5")
     compileOnly("org.apache.commons:commons-lang3:3.21.0")
     compileOnly(files("libs/TerraformGenerator.jar"))
+    compileOnly("de.maxhenkel.voicechat:voicechat-api:2.6.24")
+    compileOnly("com.alphacephei:vosk:0.3.45")
     compileOnly("com.formdev:flatlaf:3.7.2") {
         isTransitive = false
     }

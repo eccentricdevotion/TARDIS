@@ -27,6 +27,8 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetChunkTickets;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
+import me.eccentric_nz.TARDIS.handles.voice.KeywordEngine;
+import me.eccentric_nz.TARDIS.handles.voice.VoiceChatListener;
 import me.eccentric_nz.TARDIS.rooms.games.ArcadeData;
 import me.eccentric_nz.TARDIS.rooms.games.ArcadeTracker;
 import me.eccentric_nz.TARDIS.rooms.loader.Ticket;
@@ -57,6 +59,10 @@ public class TARDISQuitListener implements Listener {
     public void onPlayerQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
         UUID uuid = player.getUniqueId();
+        if (plugin.isVoiceChatEnabled()) {
+            KeywordEngine.removePlayer(uuid);
+            VoiceChatListener.clearPlayerDecoder(uuid);
+        }
         // remove camera viewers
         if (CameraTracker.SPECTATING.containsKey(uuid)) {
             // set their location back to the TARDIS interior

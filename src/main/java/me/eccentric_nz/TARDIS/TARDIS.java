@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS;
 
+import de.maxhenkel.voicechat.api.BukkitVoicechatService;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import me.eccentric_nz.TARDIS.api.TARDII;
 import me.eccentric_nz.TARDIS.artron.ArtronCondensables;
@@ -36,6 +37,8 @@ import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.files.*;
 import me.eccentric_nz.TARDIS.flight.vehicle.VehicleLoader;
 import me.eccentric_nz.TARDIS.handles.HandlesConfigUpdater;
+import me.eccentric_nz.TARDIS.handles.voice.KeywordEngine;
+import me.eccentric_nz.TARDIS.handles.voice.VoiceChatListener;
 import me.eccentric_nz.TARDIS.handles.wiki.HandlesWikiServerLink;
 import me.eccentric_nz.TARDIS.mapping.TARDISBlueMap;
 import me.eccentric_nz.TARDIS.mapping.TARDISDynmap;
@@ -169,6 +172,7 @@ public class TARDIS extends JavaPlugin {
     private boolean tardisSpawn = false;
     private boolean worldGuardOnServer;
     private boolean disguisesOnServer;
+    private boolean voiceChatEnabled;
     private InventoryManager invManager;
     private PluginManager pm;
     private TARDISGeneralInstanceKeeper generalKeeper;
@@ -236,6 +240,9 @@ public class TARDIS extends JavaPlugin {
             }
             for (int id : getTrackerKeeper().getMaterialising()) {
                 getTrackerKeeper().getDestinationVortex().put(id, -2);
+            }
+            if (voiceChatEnabled) {
+                KeywordEngine.shutdown();
             }
             // only try to persist data if the plugin was enabled properly
             boolean hasDatabase = TARDISDatabaseConnection.getINSTANCE().connection != null;
@@ -410,6 +417,15 @@ public class TARDIS extends JavaPlugin {
                     tardisMapper = new TARDISBlueMap(this);
                 }
                 tardisMapper.enable();
+            }
+            if (pm.isPluginEnabled("voicechat")) {
+                BukkitVoicechatService service = getServer().getServicesManager().load(BukkitVoicechatService.class);
+                if (service != null) {
+                    service.registerPlugin(new VoiceChatListener(this));
+                    getMessenger().handlesMessage(getConsole(), "Successfully connected TARDIS to Simple Voice Chat!");
+                } else {
+                    getMessenger().handlesMessage(getConsole(), "Failed to get Voice Chat Service!");
+                }
             }
             // modules
             new TARDISModuleLoader(this).enable();
@@ -1716,5 +1732,14 @@ public class TARDIS extends JavaPlugin {
 
     public String getServerStr() {
         return serverStr;
+    }
+
+    public boolean isVoiceChatEnabled() {
+        return voiceChatEnabled;
+    }
+
+    public void setVoiceChatEnabled() {
+        voiceChatEnabled = true;
+        getMessenger().handlesMessage(plugin.getConsole(), "Successfully connected TARDIS to Simple Voice Chat!");
     }
 }

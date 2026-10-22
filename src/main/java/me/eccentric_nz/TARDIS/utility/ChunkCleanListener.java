@@ -102,7 +102,7 @@ public class ChunkCleanListener implements Listener {
             int i = 0;
             int j = 0;
             if (entity instanceof ArmorStand stand) {
-                if (stand.isInvisible() && stand.isInvulnerable()) {
+                if (stand.isInvisible() && stand.isMarkedInvulnerable()) {
                     // check it has no TARDIS record
                     if (checkLocation(stand)) {
                         continue;
