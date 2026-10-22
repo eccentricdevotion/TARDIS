@@ -92,7 +92,6 @@ public class HandlesRequest {
     }
 
     public void process(UUID uuid, String chat) {
-        plugin.debug("Handles processing -> " + chat);
         // check if player is inside / outside TARDIS
         Player player = plugin.getServer().getPlayer(uuid);
         if (player == null || !player.isOnline()) {

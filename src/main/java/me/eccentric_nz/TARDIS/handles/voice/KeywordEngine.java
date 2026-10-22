@@ -114,7 +114,6 @@ public class KeywordEngine {
     }
 
     private static void handleJsonResult(UUID playerUUID, String json) {
-        TARDIS.plugin.debug("Handling JSON result");
         // make sure we have a "text" token
         if (!json.contains("\"text\" :")) {
             return;
@@ -129,7 +128,6 @@ public class KeywordEngine {
     }
 
     private static void routeSpeech(UUID playerUUID, String transcript) {
-        TARDIS.plugin.debug("Routing speech for transcript: " + transcript);
         Matcher prefixMatcher = prefix.matcher(transcript);
         // verify the voice chat begins with the prefix (e.g. "hey handles")
         if (!prefixMatcher.find()) {
