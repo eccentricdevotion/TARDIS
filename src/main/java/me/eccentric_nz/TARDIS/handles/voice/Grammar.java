@@ -103,6 +103,7 @@ public class Grammar {
         words.add("park");
         words.add("people");
         words.add("place");
+        words.add("please");
         words.add("point");
         words.add("remind");
         words.add("save");
