@@ -93,10 +93,10 @@ dependencies {
     compileOnly("com.sk89q.worldedit:worldedit-bukkit:7.4.6-SNAPSHOT") {
         isTransitive = false
     }
-    compileOnly("com.sk89q.worldguard:worldguard-core:7.0.20-SNAPSHOT") {
+    compileOnly("com.sk89q.worldguard:worldguard-core:7.0.21-SNAPSHOT") {
         isTransitive = false
     }
-    compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.20-SNAPSHOT") {
+    compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.21-SNAPSHOT") {
         isTransitive = false
     }
     compileOnly("net.citizensnpcs:citizensapi:2.0.44-SNAPSHOT") {
