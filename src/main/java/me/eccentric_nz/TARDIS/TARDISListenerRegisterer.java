@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS;
 
 import me.eccentric_nz.TARDIS.ARS.ARSListener;
 import me.eccentric_nz.TARDIS.ARS.ARSMapListener;
+import me.eccentric_nz.TARDIS.ARS.RoomWallFloorMenuListener;
 import me.eccentric_nz.TARDIS.ARS.relocator.RoomRelocatorListener;
 import me.eccentric_nz.TARDIS.advanced.*;
 import me.eccentric_nz.TARDIS.arch.*;
@@ -360,6 +361,8 @@ class TARDISListenerRegisterer {
         plugin.getPM().registerEvents(new WallMenuListener(plugin), plugin);
         // howto
         plugin.getPM().registerEvents(new WallFloorMenuListener(plugin), plugin);
+        // ARS wall floor selector
+        plugin.getPM().registerEvents(new RoomWallFloorMenuListener(plugin), plugin);
         plugin.getPM().registerEvents(new RecipeMenuListener(plugin), plugin);
         plugin.getPM().registerEvents(new SeedMenuListener(plugin), plugin);
         if (plugin.getConfig().getBoolean("allow.zero_room")) {

@@ -104,6 +104,10 @@ public class ARSInventory implements InventoryHolder {
         ItemStack pad_down = ItemStack.of(GUIArs.BUTTON_DOWN.material(), 1);
         pad_down.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_DOWN", "Down")));
         is[GUIArs.BUTTON_DOWN.slot()] = pad_down;
+        // wall floor menu
+        ItemStack wall_floor = ItemStack.of(GUIArs.BUTTON_WALL_FLOOR.material(), 1);
+        wall_floor.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_WALL_FLOOR", "Wall & floor blocks")));
+        is[GUIArs.BUTTON_WALL_FLOOR.slot()] = wall_floor;
         // level bottom
         ItemStack level_bot = ItemStack.of(GUIArs.BUTTON_LEVEL_B.material(), 1);
         level_bot.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_LEVEL_B", "Bottom level")));

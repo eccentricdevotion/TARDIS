@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.commands.sudo.TARDISSudoTracker;
 import me.eccentric_nz.TARDIS.custommodels.keys.RoomVariant;
+import me.eccentric_nz.TARDIS.desktop.WallsInventory;
 import me.eccentric_nz.TARDIS.enumeration.Room;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
@@ -102,6 +103,9 @@ public class ARSListener extends ARSMethods implements Listener {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "ARS_ACTIVE");
                 }
             }
+            // open wall & floor block menu
+            case 21 -> plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () ->
+                    player.openInventory(new WallsInventory(plugin, "Room Wall Menu").getInventory()), 2L);
             case 27, 28, 29 -> {
                 // switch level
                 if (map_data.containsKey(playerUUID)) {

@@ -29,6 +29,7 @@ public record GUIArs() {
     public static final GUIData BUTTON_DOWN = new GUIData(Wool.DOWN.getKey(), 19, Material.CYAN_WOOL);
     public static final GUIData BUTTON_LEFT = new GUIData(Wool.LEFT.getKey(), 9, Material.CYAN_WOOL);
     public static final GUIData BUTTON_RIGHT = new GUIData(Wool.RIGHT.getKey(), 11, Material.CYAN_WOOL);
+    public static final GUIData BUTTON_WALL_FLOOR = new GUIData(Wool.WALL_FLOOR.getKey(), 21, Material.BROWN_WOOL);
     public static final GUIData BUTTON_MAP = new GUIData(GuiVariant.LOAD_MAP.getKey(), 10, Material.MAP);
     public static final GUIData BUTTON_RELOCATE = new GUIData(Wool.RELOCATOR.getKey(), 3, Material.PURPLE_WOOL);
     public static final GUIData BUTTON_RECON = new GUIData(Wool.RECONFIGURE.getKey(), 12, Material.PINK_WOOL);

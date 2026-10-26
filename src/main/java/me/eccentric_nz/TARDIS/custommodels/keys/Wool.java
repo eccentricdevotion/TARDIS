@@ -28,6 +28,7 @@ public enum Wool {
     DOWN(new NamespacedKey(TARDIS.plugin, "button_down")),
     LEFT(new NamespacedKey(TARDIS.plugin, "button_left")),
     RIGHT(new NamespacedKey(TARDIS.plugin, "button_right")),
+    WALL_FLOOR(new NamespacedKey(TARDIS.plugin, "button_wall_floor")),
     NOT_UPGRADED(new NamespacedKey(TARDIS.plugin, "sonic_not_upgraded")),
     PLACE(new NamespacedKey(TARDIS.plugin, "sonic_place")),
     WAITING(new NamespacedKey(TARDIS.plugin, "sonic_waiting")),

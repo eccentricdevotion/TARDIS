@@ -26,6 +26,7 @@ import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -37,6 +38,7 @@ import java.util.UUID;
 public class WallMenuListener extends WallListener {
 
     private final TARDIS plugin;
+    private final Set<String> titles = Set.of("TARDIS Wall Menu", "TARDIS Floor Menu");
 
     public WallMenuListener(TARDIS plugin) {
         super(plugin);
@@ -58,6 +60,9 @@ public class WallMenuListener extends WallListener {
         if (!(holder instanceof WallsInventory walls)) {
             return;
         }
+        if (!titles.contains(walls.getTitle())) {
+            return;
+        }
         boolean isWall = (walls.getTitle().equals("TARDIS Wall Menu"));
         Player player = (Player) event.getWhoClicked();
         UUID uuid = player.getUniqueId();
@@ -65,7 +70,6 @@ public class WallMenuListener extends WallListener {
         if (slot < 0 || slot > 53) {
             ClickType click = event.getClick();
             if (click.equals(ClickType.SHIFT_RIGHT) || click.equals(ClickType.SHIFT_LEFT) || click.equals(ClickType.DOUBLE_CLICK)) {
-                plugin.debug("TARDISWallMenuListener");
                 event.setCancelled(true);
             }
             return;
