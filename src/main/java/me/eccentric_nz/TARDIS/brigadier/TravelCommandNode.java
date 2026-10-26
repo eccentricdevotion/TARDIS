@@ -271,10 +271,7 @@ public class TravelCommandNode {
                 .then(Commands.literal("costs")
                         .executes(ctx -> {
                             Player player = (Player) ctx.getSource().getSender();
-                            int id = TravelUtilities.getId(plugin, player);
-                            if (id > 0) {
-                                new StopCommand(plugin).action(player, id);
-                            }
+                            new CostsCommand(plugin).show(player);
                             return Command.SINGLE_SUCCESS;
                         }))
                 .then(Commands.literal("stop")

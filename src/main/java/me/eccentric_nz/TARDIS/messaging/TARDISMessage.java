@@ -51,7 +51,7 @@ public class TARDISMessage {
     }
 
     public void message(CommandSender cs, String message) {
-            cs.sendMessage(Component.text(message));
+        cs.sendMessage(Component.text(message));
     }
 
     public void message(CommandSender cs, TardisModule module, Component component) {
@@ -120,6 +120,11 @@ public class TARDISMessage {
     public void messageWithColour(CommandSender cs, String message, String hex) {
         TextColor colour = TextColor.fromHexString(hex);
         TextComponent textComponent = Component.text(message, colour);
+        cs.sendMessage(textComponent);
+    }
+
+    public void messageWithNamedColour(CommandSender cs, String part, String other, NamedTextColor colour) {
+        TextComponent textComponent = Component.text(part).append(Component.text(other, colour));
         cs.sendMessage(textComponent);
     }
 
