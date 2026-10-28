@@ -67,6 +67,7 @@ public class StopCommand {
         }
         // is player flying?
         UUID uuid = player.getUniqueId();
+        plugin.getTrackerKeeper().getFlight().remove(uuid);
         if (plugin.getTrackerKeeper().getFlyingReturnLocation().containsKey(uuid)) {
             plugin.getTrackerKeeper().getStillFlyingNotReturning().remove(uuid);
             // land TARDIS
