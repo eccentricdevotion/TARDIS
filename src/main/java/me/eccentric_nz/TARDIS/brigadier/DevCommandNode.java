@@ -60,6 +60,13 @@ public class DevCommandNode {
                             EdibleLookup.print();
                             return Command.SINGLE_SUCCESS;
                         }))
+                .then(Commands.literal("fade")
+                        .executes(ctx -> {
+                            if (ctx.getSource().getSender() instanceof Player player) {
+                                new Fade(plugin).build(player);
+                            }
+                            return Command.SINGLE_SUCCESS;
+                        }))
                 .then(Commands.literal("add_regions")
                         .executes(ctx -> {
                             new AddRegionsCommand(plugin).doCheck(ctx.getSource().getSender());
