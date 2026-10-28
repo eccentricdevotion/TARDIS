@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.commands.dev.*;
 import me.eccentric_nz.TARDIS.commands.dev.lists.*;
 import me.eccentric_nz.TARDIS.commands.dev.wiki.WikiRecipeCommand;
 import me.eccentric_nz.TARDIS.commands.tardis.update.UpdateBlocksCommand;
+import me.eccentric_nz.TARDIS.discovery.Corner;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.monitor.MonitorSnapshot;
 import me.eccentric_nz.TARDIS.playerprefs.PreferencesDialog;
@@ -66,7 +67,14 @@ public class DevCommandNode {
                                 new Fade(plugin).build(player);
                             }
                             return Command.SINGLE_SUCCESS;
-                        }))
+                        })
+                        .then(Commands.literal("save")
+                                .executes(ctx -> {
+                                    if (ctx.getSource().getSender() instanceof Player player) {
+                                        new Corner().save(plugin, player);
+                                    }
+                                    return Command.SINGLE_SUCCESS;
+                                })))
                 .then(Commands.literal("add_regions")
                         .executes(ctx -> {
                             new AddRegionsCommand(plugin).doCheck(ctx.getSource().getSender());
