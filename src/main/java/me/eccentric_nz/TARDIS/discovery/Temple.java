@@ -1,30 +1,26 @@
-package me.eccentric_nz.TARDIS.commands.dev;
+package me.eccentric_nz.TARDIS.discovery;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.discovery.Mutator;
-import me.eccentric_nz.TARDIS.discovery.Parts;
-import me.eccentric_nz.TARDIS.discovery.Placer;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.BlockData;
-import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Fade {
+public class Temple {
 
     private final TARDIS plugin;
 
-    public Fade(TARDIS plugin) {
+    public Temple(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public void build(Player player) {
+    public void build(Location location) {
         // async task to populate box with block fade
         plugin.getServer().getScheduler().runTaskAsynchronously(plugin, () -> {
             Parts parts = new Parts(plugin);
@@ -35,7 +31,6 @@ public class Fade {
             Material[][][] NW = new Mutator(TARDISConstants.RANDOM.nextLong(), 10).addBlends(parts.getNorthWest());
             // switch back to the main thread
             plugin.getServer().getScheduler().runTask(plugin, () -> {
-                Location location = player.getLocation().add(0, 3, 0);
                 Location start = location.clone().add(parts.getSePos().x(), parts.getSePos().y(), parts.getSePos().z());
                 place(start, SE);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {

@@ -21,6 +21,7 @@ import me.eccentric_nz.TARDIS.commands.dev.lists.*;
 import me.eccentric_nz.TARDIS.commands.dev.wiki.WikiRecipeCommand;
 import me.eccentric_nz.TARDIS.commands.tardis.update.UpdateBlocksCommand;
 import me.eccentric_nz.TARDIS.discovery.Corner;
+import me.eccentric_nz.TARDIS.discovery.Temple;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.monitor.MonitorSnapshot;
 import me.eccentric_nz.TARDIS.playerprefs.PreferencesDialog;
@@ -64,7 +65,7 @@ public class DevCommandNode {
                 .then(Commands.literal("fade")
                         .executes(ctx -> {
                             if (ctx.getSource().getSender() instanceof Player player) {
-                                new Fade(plugin).build(player);
+                                new Temple(plugin).build(player.getLocation().add(0, 3, 0));
                             }
                             return Command.SINGLE_SUCCESS;
                         })
