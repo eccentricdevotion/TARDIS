@@ -140,6 +140,7 @@ public class TARDISJoinListener implements Listener {
                 plugin.getQueryFactory().doDelete("travellers", delete);
             } else if (plugin.getConfig().getBoolean("creation.keep_night")) {
                 // set the player's time to midnight
+                // TODO check we should still be doing this
                 player.setPlayerTime(18000, false);
             }
         }

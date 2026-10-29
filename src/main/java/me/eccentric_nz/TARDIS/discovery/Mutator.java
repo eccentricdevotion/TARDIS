@@ -95,8 +95,8 @@ public class Mutator {
                     if (current == Material.AIR) {
                         continue;
                     }
-                    // keep seed blocks unchanged
-                    if (current == Material.MUDDY_MANGROVE_ROOTS || current == Material.TUFF_WALL) {
+                    // keep seed blocks / walls / clay unchanged
+                    if (current == Material.MUDDY_MANGROVE_ROOTS || current == Material.TUFF_WALL || current == Material.CLAY) {
                         continue;
                     }
                     int distance = distanceField[x][y][z];

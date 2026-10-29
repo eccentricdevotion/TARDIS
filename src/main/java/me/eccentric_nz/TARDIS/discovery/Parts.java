@@ -7,9 +7,9 @@ public class Parts {
 
     private final TARDIS plugin;
     private Material[][][] southWest; // not rotated
-    private Material[][][] northWest; // 90 CW
-    private Material[][][] northEast; // 180 CW
-    private Material[][][] southEast; // 270 CW
+    private Material[][][] southEast; // 90 CCW
+    private Material[][][] northEast; // 180 CCW
+    private Material[][][] northWest; // 270 CCW
     private final BlockPos swPos = new BlockPos(-32, 0, 0);
     private final BlockPos sePos = new BlockPos(0, 0, 0);
     private final BlockPos nePos = new BlockPos(0, 0, -32);
@@ -22,25 +22,25 @@ public class Parts {
     public void getCorners() {
         southWest = new Corner().load(plugin);
         Rotator rotator = new Rotator();
-        northWest = rotator.clockwise90(southWest);
-        northEast = rotator.clockwise90(northWest);
-        southEast = rotator.clockwise90(northEast);
+        southEast = rotator.counterClockwise90(southWest);
+        northEast = rotator.counterClockwise90(southEast);
+        northWest = rotator.counterClockwise90(northEast);
     }
 
     public Material[][][] getSouthWest() {
         return southWest;
     }
 
-    public Material[][][] getNorthWest() {
-        return northWest;
+    public Material[][][] getSouthEast() {
+        return southEast;
     }
 
     public Material[][][] getNorthEast() {
         return northEast;
     }
 
-    public Material[][][] getSouthEast() {
-        return southEast;
+    public Material[][][] getNorthWest() {
+        return northWest;
     }
 
     public BlockPos getSwPos() {

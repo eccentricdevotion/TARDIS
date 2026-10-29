@@ -4,6 +4,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.discovery.Mutator;
 import me.eccentric_nz.TARDIS.discovery.Parts;
+import me.eccentric_nz.TARDIS.discovery.Placer;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -11,6 +12,9 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Player;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Fade {
 
@@ -26,21 +30,21 @@ public class Fade {
             Parts parts = new Parts(plugin);
             parts.getCorners();
             Material[][][] SW = new Mutator(TARDISConstants.RANDOM.nextLong(), 10).addBlends(parts.getSouthWest());
-            Material[][][] NW = new Mutator(TARDISConstants.RANDOM.nextLong(), 10).addBlends(parts.getNorthWest());
-            Material[][][] NE = new Mutator(TARDISConstants.RANDOM.nextLong(), 10).addBlends(parts.getNorthEast());
             Material[][][] SE = new Mutator(TARDISConstants.RANDOM.nextLong(), 10).addBlends(parts.getSouthEast());
+            Material[][][] NE = new Mutator(TARDISConstants.RANDOM.nextLong(), 10).addBlends(parts.getNorthEast());
+            Material[][][] NW = new Mutator(TARDISConstants.RANDOM.nextLong(), 10).addBlends(parts.getNorthWest());
             // switch back to the main thread
             plugin.getServer().getScheduler().runTask(plugin, () -> {
                 Location location = player.getLocation().add(0, 3, 0);
                 Location start = location.clone().add(parts.getSePos().x(), parts.getSePos().y(), parts.getSePos().z());
-                place(start, NW);
+                place(start, SE);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     Location right = location.clone().add(parts.getSwPos().x(), parts.getSwPos().y(), parts.getSwPos().z());
                     place(right, SW);
                 }, 5L);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     Location across = location.clone().add(parts.getNwPos().x(), parts.getNwPos().y(), parts.getNwPos().z());
-                    place(across, SE);
+                    place(across, NW);
                 }, 10L);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     Location down = location.clone().add(parts.getNePos().x(), parts.getNePos().y(), parts.getNePos().z());
@@ -51,6 +55,8 @@ public class Fade {
     }
 
     private void place(Location location, Material[][][] materials) {
+        Placer placer = new Placer(plugin);
+        List<Block> tuffBlocks = new ArrayList<>();
         World world = location.getWorld();
         int x = location.getBlockX();
         int y = location.getBlockY();
@@ -61,24 +67,29 @@ public class Fade {
         for (int i = 0; i < h; i++) {
             for (int j = 0; j < r; j++) {
                 for (int k = 0; k < w; k++) {
-                    BlockData data = materials[i][j][k].createBlockData();
+                    Material material = materials[i][j][k];
+                    BlockData data = material.createBlockData();
+                    Block block = world.getBlockAt(x + j, y + i, z + k);
                     world.setBlockData(x + j, y + i, z + k, data);
-                    if (i > 22 && i < 25 && materials[i][j][k] != Material.AIR) {
-                        Block below = world.getBlockAt(x + j, y + i, z + k).getRelative(BlockFace.DOWN);
-                        if (below.getType() == Material.AIR && TARDISConstants.RANDOM.nextInt(100) < 7) {
-                            makeVines(below);
+                    if (i > 22 && i < 25 && material != Material.AIR) {
+                        Block below = block.getRelative(BlockFace.DOWN);
+                        if (below.getType() == Material.AIR && TARDISConstants.RANDOM.nextInt(100) < 5) {
+                            placer.makeVines(below);
                         }
+                    }
+                    if (material == Material.CLAY) {
+                        placer.makeWaterFeature(block);
+                    }
+                    if (i < 24 && material == Material.TUFF) {
+                        tuffBlocks.add(block);
                     }
                 }
             }
         }
-    }
-
-    private void makeVines(Block below) {
-        int r = TARDISConstants.RANDOM.nextInt(10);
-        for (int i = 0; i < r; i++) {
-            below.getRelative(BlockFace.DOWN, i).setType(Material.CAVE_VINES);
+        for (Block block : tuffBlocks) {
+            placer.makeGlowLichen(block);
+            placer.makeMossCarpets(block);
+            placer.makeHeads(block);
         }
-        below.getRelative(BlockFace.DOWN, r).setType(Material.LIGHT);
     }
 }

@@ -4,7 +4,7 @@ import org.bukkit.Material;
 
 public class Rotator {
 
-    public Material[][][] clockwise90(Material[][][] original) {
+    public Material[][][] counterClockwise90(Material[][][] original) {
         int yLength = original.length;
         int xLength = original[0].length;
         int zLength = original[0][0].length;
