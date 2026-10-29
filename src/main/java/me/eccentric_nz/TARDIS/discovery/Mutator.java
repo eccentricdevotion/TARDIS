@@ -1,6 +1,5 @@
 package me.eccentric_nz.TARDIS.discovery;
 
-import net.minecraft.core.BlockPos;
 import org.bukkit.Material;
 import org.bukkit.util.noise.SimplexOctaveGenerator;
 
@@ -16,7 +15,6 @@ public class Mutator {
             Material.MUDDY_MANGROVE_ROOTS, Material.GREEN_TERRACOTTA,
             Material.MOSS_BLOCK, Material.MOSSY_COBBLESTONE,
             Material.COBBLESTONE
-            //, Material.TUFF
     };
 
     public Mutator(long seed, int radius) {
@@ -62,11 +60,11 @@ public class Mutator {
         };
         while (!queue.isEmpty()) {
             BlockPos current = queue.poll();
-            int currentDistance = distance[current.getX()][current.getY()][current.getZ()];
+            int currentDistance = distance[current.x()][current.y()][current.z()];
             for (int[] dir : directions) {
-                int nx = current.getX() + dir[0];
-                int ny = current.getY() + dir[1];
-                int nz = current.getZ() + dir[2];
+                int nx = current.x() + dir[0];
+                int ny = current.y() + dir[1];
+                int nz = current.z() + dir[2];
                 if (nx < 0 || ny < 0 || nz < 0 || nx >= sizeX || ny >= sizeY || nz >= sizeZ) {
                     continue;
                 }
@@ -98,7 +96,7 @@ public class Mutator {
                         continue;
                     }
                     // keep seed blocks unchanged
-                    if (current == Material.MUDDY_MANGROVE_ROOTS) {
+                    if (current == Material.MUDDY_MANGROVE_ROOTS || current == Material.TUFF_WALL) {
                         continue;
                     }
                     int distance = distanceField[x][y][z];
