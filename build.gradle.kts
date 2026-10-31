@@ -87,10 +87,10 @@ repositories {
 
 dependencies {
     paperweight.paperDevBundle("26.3.build.+")
-    compileOnly("com.sk89q.worldedit:worldedit-core:7.4.6-SNAPSHOT") {
+    compileOnly("com.sk89q.worldedit:worldedit-core:7.4.7-SNAPSHOT") {
         isTransitive = false
     }
-    compileOnly("com.sk89q.worldedit:worldedit-bukkit:7.4.6-SNAPSHOT") {
+    compileOnly("com.sk89q.worldedit:worldedit-bukkit:7.4.7-SNAPSHOT") {
         isTransitive = false
     }
     compileOnly("com.sk89q.worldguard:worldguard-core:7.0.21-SNAPSHOT") {
