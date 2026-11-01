@@ -12,17 +12,15 @@ import org.bukkit.block.data.Rotatable;
 public class Placer {
 
     private final TARDIS plugin;
-    public final BlockData vines = Material.CAVE_VINES_PLANT.createBlockData();
-    public final BlockData glow = Material.CAVE_VINES_PLANT.createBlockData("[berries=true]");
 
     public Placer(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    public void makeWaterFeature(Block block) {
+    public void makeWaterFeature(Block block, StructureVariant variant) {
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-            block.setType(WaterFeature.floor.next());
-            BlockData[] data = WaterFeature.column.next();
+            block.setType(variant.floor().next());
+            BlockData[] data = variant.column().next();
             int i = 1;
             for (BlockData b : data) {
                 block.getRelative(BlockFace.UP, i).setBlockData(b);
@@ -31,17 +29,17 @@ public class Placer {
         }, 20L);
     }
 
-    public void makeVines(Block below) {
+    public void makeVines(Block below, StructureVariant variant) {
         int r = TARDISConstants.RANDOM.nextInt(10);
         if (r < 1) {
-            // set a spore blossom
-            below.setType(Material.SPORE_BLOSSOM);
+            // set decor
+            below.setType(variant.decor());
         } else {
-            below.setType(Material.CAVE_VINES);
+            below.setBlockData(variant.hanging());
             for (int i = 0; i < r; i++) {
-                below.getRelative(BlockFace.DOWN, i).setBlockData(TARDISConstants.RANDOM.nextInt(4) == 1 ? vines : glow);
+                below.getRelative(BlockFace.DOWN, i).setBlockData(TARDISConstants.RANDOM.nextInt(4) == 1 ? variant.hanging() : variant.hanging_light());
             }
-            below.getRelative(BlockFace.DOWN, r).setType(Material.CAVE_VINES);
+            below.getRelative(BlockFace.DOWN, r).setBlockData(variant.hanging_end());
         }
     }
 
@@ -67,19 +65,19 @@ public class Placer {
         }
     }
 
-    public void makeMossCarpets(Block tuff) {
-        Block above = tuff.getRelative(BlockFace.UP);
+    public void makeMossCarpets(Block base, StructureVariant variant) {
+        Block above = base.getRelative(BlockFace.UP);
         // check if the space above is air and passes a random chance threshold
         if (above.getType() == Material.AIR && TARDISConstants.RANDOM.nextInt(100) < 5) {
-            above.setType(Material.MOSS_CARPET);
+            above.setBlockData(variant.carpet());
         }
     }
 
-    public void makeHeads(Block tuff) {
-        Block above = tuff.getRelative(BlockFace.UP);
+    public void makeHeads(Block base, StructureVariant variant) {
+        Block above = base.getRelative(BlockFace.UP);
         // check if the space above is air and passes a random chance threshold
         if (above.getType() == Material.AIR && TARDISConstants.RANDOM.nextInt(100) < 1) {
-            above.setType(Material.TUFF_WALL);
+            above.setType(variant.wall());
             Block head = above.getRelative(BlockFace.UP);
             Rotatable rotatable = (Rotatable) Material.SKELETON_SKULL.createBlockData();
             rotatable.setRotation(BlockFace.values()[TARDISConstants.RANDOM.nextInt(6,18)]);

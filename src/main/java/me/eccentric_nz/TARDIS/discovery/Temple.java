@@ -23,35 +23,37 @@ public class Temple {
     public void build(Location location) {
         // async task to populate box with block fade
         plugin.getServer().getScheduler().runTaskAsynchronously(plugin, () -> {
-            Parts parts = new Parts(plugin);
+            Parts parts = new Parts(plugin, location);
             parts.getCorners();
-            Material[][][] SW = new Mutator(TARDISConstants.RANDOM.nextLong(), 10).addBlends(parts.getSouthWest());
-            Material[][][] SE = new Mutator(TARDISConstants.RANDOM.nextLong(), 10).addBlends(parts.getSouthEast());
-            Material[][][] NE = new Mutator(TARDISConstants.RANDOM.nextLong(), 10).addBlends(parts.getNorthEast());
-            Material[][][] NW = new Mutator(TARDISConstants.RANDOM.nextLong(), 10).addBlends(parts.getNorthWest());
+            Mutator mutator = new Mutator(TARDISConstants.RANDOM.nextLong(), 10, location);
+            StructureVariant variant = mutator.getVariant();
+            Material[][][] SW = mutator.addBlends(parts.getSouthWest());
+            Material[][][] SE = new Mutator(TARDISConstants.RANDOM.nextLong(), 10, location).addBlends(parts.getSouthEast());
+            Material[][][] NE = new Mutator(TARDISConstants.RANDOM.nextLong(), 10, location).addBlends(parts.getNorthEast());
+            Material[][][] NW = new Mutator(TARDISConstants.RANDOM.nextLong(), 10, location).addBlends(parts.getNorthWest());
             // switch back to the main thread
             plugin.getServer().getScheduler().runTask(plugin, () -> {
                 Location start = location.clone().add(parts.getSePos().x(), parts.getSePos().y(), parts.getSePos().z());
-                place(start, SE);
+                place(start, SE, variant);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     Location right = location.clone().add(parts.getSwPos().x(), parts.getSwPos().y(), parts.getSwPos().z());
-                    place(right, SW);
+                    place(right, SW, variant);
                 }, 5L);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     Location across = location.clone().add(parts.getNwPos().x(), parts.getNwPos().y(), parts.getNwPos().z());
-                    place(across, NW);
+                    place(across, NW, variant);
                 }, 10L);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     Location down = location.clone().add(parts.getNePos().x(), parts.getNePos().y(), parts.getNePos().z());
-                    place(down, NE);
+                    place(down, NE, variant);
                 }, 15L);
             });
         });
     }
 
-    private void place(Location location, Material[][][] materials) {
+    private void place(Location location, Material[][][] materials, StructureVariant variant) {
         Placer placer = new Placer(plugin);
-        List<Block> tuffBlocks = new ArrayList<>();
+        List<Block> baseBlocks = new ArrayList<>();
         World world = location.getWorld();
         int x = location.getBlockX();
         int y = location.getBlockY();
@@ -69,22 +71,22 @@ public class Temple {
                     if (i > 22 && i < 25 && material != Material.AIR) {
                         Block below = block.getRelative(BlockFace.DOWN);
                         if (below.getType() == Material.AIR && TARDISConstants.RANDOM.nextInt(100) < 5) {
-                            placer.makeVines(below);
+                            placer.makeVines(below, variant);
                         }
                     }
                     if (material == Material.CLAY) {
-                        placer.makeWaterFeature(block);
+                        placer.makeWaterFeature(block, variant);
                     }
-                    if (i < 24 && material == Material.TUFF) {
-                        tuffBlocks.add(block);
+                    if (i < 24 && material == variant.base()) {
+                        baseBlocks.add(block);
                     }
                 }
             }
         }
-        for (Block block : tuffBlocks) {
+        for (Block block : baseBlocks) {
             placer.makeGlowLichen(block);
-            placer.makeMossCarpets(block);
-            placer.makeHeads(block);
+            placer.makeMossCarpets(block, variant);
+            placer.makeHeads(block, variant);
         }
     }
 }
