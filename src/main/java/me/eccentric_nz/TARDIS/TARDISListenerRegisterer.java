@@ -52,6 +52,9 @@ import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayBlockListener;
 import me.eccentric_nz.TARDIS.desktop.ArchiveMenuListener;
 import me.eccentric_nz.TARDIS.desktop.DesktopThemeMenuListener;
 import me.eccentric_nz.TARDIS.desktop.WallMenuListener;
+import me.eccentric_nz.TARDIS.discovery.StructureChunkListener;
+import me.eccentric_nz.TARDIS.discovery.StructureManager;
+import me.eccentric_nz.TARDIS.discovery.StructureRegistry;
 import me.eccentric_nz.TARDIS.display.TARDISDisplayListener;
 import me.eccentric_nz.TARDIS.enumeration.InventoryManager;
 import me.eccentric_nz.TARDIS.flight.FlightGamemodeListener;
@@ -461,6 +464,9 @@ class TARDISListenerRegisterer {
         }
         if (plugin.getConfig().getBoolean("police_box.load_shells")) {
             plugin.getPM().registerEvents(new ShellLoaderListener(plugin), plugin);
+        }
+        if (plugin.getConfig().getBoolean("creation.discovery.enabled")) {
+            plugin.getPM().registerEvents(new StructureChunkListener(plugin, new StructureManager(plugin, new StructureRegistry(plugin))), plugin);
         }
         plugin.getPM().registerEvents(new WeatherListener(plugin), plugin);
         plugin.getPM().registerEvents(new DimensionTimeSyncListener(plugin), plugin);
