@@ -126,14 +126,14 @@ public enum ChameleonPreset {
     public final static List<Material> NOT_THESE = List.of(Material.BARRIER, Material.BEDROCK, Material.ENDER_CHEST, Material.IRON_INGOT, Material.FIRE);
     private final static Map<Material, ChameleonPreset> BY_MATERIAL = Maps.newHashMap();
     private final static Map<Integer, ChameleonPreset> BY_SLOT = Maps.newHashMap();
-    private final static Map<Integer, ChameleonPreset> IF_BY_SLOT = Maps.newHashMap();
+    private final static Map<Integer, ChameleonPreset> STAND_BY_SLOT = Maps.newHashMap();
 
     static {
         for (ChameleonPreset preset : values()) {
             if (!NOT_THESE.contains(preset.getCraftMaterial())) {
                 BY_MATERIAL.put(preset.getCraftMaterial(), preset);
                 if (preset.usesArmourStand()) {
-                    IF_BY_SLOT.put(preset.getSlot(), preset);
+                    STAND_BY_SLOT.put(preset.getSlot(), preset);
                 } else {
                     BY_SLOT.put(preset.getSlot(), preset);
                 }
@@ -199,7 +199,7 @@ public enum ChameleonPreset {
     }
 
     public static ChameleonPreset getItemFramePresetBySlot(int slot) {
-        return IF_BY_SLOT.get(slot);
+        return STAND_BY_SLOT.get(slot);
     }
 
     public static ChameleonPreset getPresetBySlot(int slot) {
