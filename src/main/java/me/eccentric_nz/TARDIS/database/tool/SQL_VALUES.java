@@ -105,6 +105,8 @@ public class SQL_VALUES {
             "('%s')",
             // next
             "(%s, %s, '%s', %s, %s, %s, '%s', %s)",
+            // occupied_chunks
+            "('%s', %s, '%s')",
             // paper_bag
             "(%s, '%s', '%s', %s, '%s', %s, '%s', %s, '%s', %s)",
             // particle_prefs
@@ -135,6 +137,8 @@ public class SQL_VALUES {
             "(%s, '%s', %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, '%s', '%s', %s)",
             // storage
             "(%s, %s, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')",
+            // structures
+            "('%s', '%s', '%s', %s, %s, %s)",
             // system_upgrades
             "(%s, %s, '%s', %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
             // t_count

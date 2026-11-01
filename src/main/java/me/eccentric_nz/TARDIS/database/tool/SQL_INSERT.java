@@ -105,6 +105,8 @@ public class SQL_INSERT {
 
             "INSERT INTO `%snext` (`next_id`, `tardis_id`, `world`, `x`, `y`, `z`, `direction`, `submarine`) VALUES ",
 
+            "INSERT INTO `%soccupied_chunks` (`world`, `chunk_key`, `structure_id`) VALUES ",
+
             "INSERT INTO `%spaper_bag` (`paper_bag_id`, `uuid`, `flavour_1`, `amount_1`, `flavour_2`, `amount_2`, `flavour_3`, `amount_3`, `flavour_4`, `amount_4`) VALUES ",
 
             "INSERT INTO `%sparticle_prefs` (`pp_id`, `uuid`, `effect`, `shape`, `density`, `speed`, `colour`, `block`, `particles_on`) VALUES ",
@@ -134,6 +136,8 @@ public class SQL_INSERT {
             "INSERT INTO `%ssonic` (`sonic_id`, `uuid`, `activated`, `model`, `bio`, `diamond`, `emerald`, `redstone`, `painter`, `ignite`, `arrow`, `knockback`, `brush`, `conversion`, `sonic_uuid`, `last_scanned`, `scan_type`) VALUES ",
 
             "INSERT INTO `%sstorage` (`storage_id`, `tardis_id`, `uuid`, `owner`, `saves_one`, `saves_two`, `areas`, `presets_one`, `presets_two`, `biomes_one`, `biomes_two`, `players`, `circuits`, `console`, `versions`) VALUES ",
+
+            "INSERT INTO `%sstructures` (`structure_id`, `structure_type`, `origin_chunk_x`, `origin_chunk_z`, `y`) VALUES ",
 
             "INSERT INTO `%ssystem_upgrades` (`sys_id`, `tardis_id`, `uuid`, `architecture`, `chameleon`, `rooms`, `desktop`, `feature`, `saves`, `monitor`, `force_field`, `tools`, `locator`, `telepathic`, `stattenheim_remote`, `navigation`, `distance_1`, `distance_2`, `distance_3`, `inter_dimension`, `throttle`, `faster`, `rapid`, `warp`, `flight`) VALUES ",
 
