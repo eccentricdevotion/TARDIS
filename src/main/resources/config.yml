@@ -46,6 +46,15 @@ creation:
     easy: REDSTONE_TORCH
     normal: SOUL_LANTERN
     hard: DRAGON_BREATH
+  discovery:
+    enabled: true
+    existing_chunks: false
+    excluded_worlds:
+      - the_end
+      - the_nether
+      - tardis_timevortex
+      - tardis_zero_room
+      - caves
 # outer TARDIS
 # https://tardis.pages.dev/configuration/preset
 police_box:

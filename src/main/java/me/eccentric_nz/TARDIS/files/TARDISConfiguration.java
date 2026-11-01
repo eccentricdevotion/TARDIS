@@ -111,6 +111,8 @@ public class TARDISConfiguration {
         booleanOptions.put("creation.create_worlds", false);
         booleanOptions.put("creation.create_worlds_with_perms", false);
         booleanOptions.put("creation.default_world", true);
+        booleanOptions.put("creation.discovery.enabled", true);
+        booleanOptions.put("creation.discovery.existing_chunks", false);
         booleanOptions.put("creation.enable_legacy", true);
         booleanOptions.put("creation.keep_night", true);
         booleanOptions.put("creation.seed_block.crafting", true);
@@ -479,6 +481,12 @@ public class TARDISConfiguration {
             plugin.getConfig().set("police_box.view_interior.type", enabled ? "packets" : "maps");
             plugin.getConfig().set("police_box.view_interior.use_console_size", config.getBoolean("police_box.view_interior_uses_console_size"));
             plugin.getConfig().set("police_box.view_interior_uses_console_size", null);
+            i++;
+        }
+        // discovery
+        if (!config.contains("creation.discovery.excluded_worlds")) {
+            List<String> worlds = List.of("the_end", "the_nether", "tardis_timevortex", "tardis_zero_room", "caves");
+            plugin.getConfig().set("creation.discovery.excluded_worlds", worlds);
             i++;
         }
         // remove handles
