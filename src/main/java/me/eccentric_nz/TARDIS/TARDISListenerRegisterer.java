@@ -55,6 +55,7 @@ import me.eccentric_nz.TARDIS.desktop.WallMenuListener;
 import me.eccentric_nz.TARDIS.discovery.StructureChunkListener;
 import me.eccentric_nz.TARDIS.discovery.StructureManager;
 import me.eccentric_nz.TARDIS.discovery.StructureRegistry;
+import me.eccentric_nz.TARDIS.discovery.VillagerListener;
 import me.eccentric_nz.TARDIS.display.TARDISDisplayListener;
 import me.eccentric_nz.TARDIS.enumeration.InventoryManager;
 import me.eccentric_nz.TARDIS.flight.FlightGamemodeListener;
@@ -467,6 +468,7 @@ class TARDISListenerRegisterer {
         }
         if (plugin.getConfig().getBoolean("creation.discovery.enabled")) {
             plugin.getPM().registerEvents(new StructureChunkListener(plugin, new StructureManager(plugin, new StructureRegistry(plugin))), plugin);
+            plugin.getPM().registerEvents(new VillagerListener(plugin), plugin);
         }
         plugin.getPM().registerEvents(new WeatherListener(plugin), plugin);
         plugin.getPM().registerEvents(new DimensionTimeSyncListener(plugin), plugin);

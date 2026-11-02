@@ -4,10 +4,12 @@ import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.BlueprintRoom;
+import me.eccentric_nz.TARDIS.discovery.LocatorMap;
 import me.eccentric_nz.TARDIS.planets.GallifreyBlueprintTrade;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
+import org.bukkit.Location;
 import org.bukkit.entity.Mannequin;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -42,15 +44,23 @@ public class TimeLordTradeListener implements Listener {
                 TARDISSounds.playTARDISSound(mannequin.getLocation(), "tardis_takeoff_fast");
                 return;
             }
-            // get the recipes
+            // get the stored recipes
             String t = mannequin.getPersistentDataContainer().get(plugin.getTimeLordUuidKey(), PersistentDataType.STRING);
             if (t == null) {
                 return;
             }
-            // get recipes
+            // convert to merchant recipes
             List<MerchantRecipe> recipes = new ArrayList<>();
             for (String r : t.split(",")) {
                 recipes.add(getRoom(r, event.getPlayer()));
+            }
+            // if enabled add a TARDIS map trade
+            if (plugin.getConfig().getBoolean("creation.discovery.enabled")) {
+                LocatorMap lm = new LocatorMap(plugin);
+                Location location = lm.getLocation(event.getPlayer().getWorld());
+                if (location != null) {
+                    recipes.add(lm.fromMap(lm.create(location)));
+                }
             }
             // create a merchant
             Merchant merchant = plugin.getServer().createMerchant();
