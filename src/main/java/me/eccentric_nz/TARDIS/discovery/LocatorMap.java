@@ -25,9 +25,11 @@ import java.util.List;
 public class LocatorMap {
 
     private final TARDIS plugin;
+    private final int cost;
 
     public LocatorMap(TARDIS plugin) {
         this.plugin = plugin;
+        this.cost = plugin.getConfig().getInt("creation.discovery.map_cost");
     }
 
     /**
@@ -78,7 +80,7 @@ public class LocatorMap {
     
     public MerchantRecipe fromMap(ItemStack is) {
         MerchantRecipe recipe = new MerchantRecipe(is, 1);
-        recipe.setIngredients(List.of(ItemStack.of(Material.COMPASS), ItemStack.of(Material.LAPIS_LAZULI, 1)));
+        recipe.setIngredients(List.of(ItemStack.of(Material.COMPASS), ItemStack.of(Material.LAPIS_LAZULI, cost)));
         return recipe;
     }
 }

@@ -281,7 +281,7 @@ public class TARDISConfiguration {
         comments.put("creation.discovery.existing_chunks", List.of("whether temples will generate in existing chunks"));
         comments.put("creation.discovery.excluded_worlds", List.of("worlds not to spawn temples in"));
         comments.put("creation.discovery.spacing", List.of("how far apart temples generate", "spacing has to be larger than separation", "defaults (34, 8) are similar to trail ruins"));
-        comments.put("creation.discovery.emap_cost", List.of("number of lapis lazuli villager / time lord trader requires (+ 1 compass)"));
+        comments.put("creation.discovery.map_cost", List.of("number of lapis lazuli villager / time lord trader requires (+ 1 compass)"));
         comments.put("desktop", List.of("desktop theme", "https://tardis.pages.dev/desktop-theme#config-options"));
         comments.put("display", List.of("HUD display", "https://tardis.pages.dev/display"));
         comments.put("eye_of_harmony", List.of("eye of harmony preferences", "https://tardis.pages.dev/eye-of-harmony"));
