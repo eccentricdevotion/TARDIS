@@ -98,12 +98,12 @@ public class RoomWallFloorMenuListener extends WallListener {
             }
             case 26 -> {
                 // default wall
-                String wall = getWallFloor(uuid, true);
+                String wall = "ORANGE_WOOL";
                 setWallFloorBlock(player, uuid, wall, isWall);
             }
             case 35 -> {
                 // default floor
-                String floor = getWallFloor(uuid, false);
+                String floor = "LIGHT_GRAY_WOOL";
                 setWallFloorBlock(player, uuid, floor, isWall);
             }
             case 53 -> close(player, true); // close
