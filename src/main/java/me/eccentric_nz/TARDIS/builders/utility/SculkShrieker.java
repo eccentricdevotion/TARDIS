@@ -18,8 +18,8 @@ package me.eccentric_nz.TARDIS.builders.utility;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetShrieker;
+import me.eccentric_nz.TARDIS.helpers.Shrieker;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
-import me.eccentric_nz.tardischunkgenerator.helpers.Shrieker;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;

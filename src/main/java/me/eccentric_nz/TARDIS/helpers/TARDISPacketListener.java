@@ -14,14 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.tardischunkgenerator.helpers;
+package me.eccentric_nz.TARDIS.helpers;
 
 import io.netty.channel.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.lazarus.disguise.TARDISDisguiseTracker;
 import me.eccentric_nz.TARDIS.lazarus.disguise.TARDISDisguiser;
-import me.eccentric_nz.tardischunkgenerator.TARDISHelper;
 import me.eccentric_nz.tardischunkgenerator.custombiome.BiomeHelper;
 import me.eccentric_nz.tardischunkgenerator.custombiome.CustomBiome;
 import net.minecraft.core.Registry;

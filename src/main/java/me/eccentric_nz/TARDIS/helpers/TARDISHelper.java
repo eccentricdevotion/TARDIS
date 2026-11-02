@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.tardischunkgenerator;
+package me.eccentric_nz.TARDIS.helpers;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -22,12 +22,8 @@ import me.eccentric_nz.TARDIS.lazarus.disguise.TARDISArmourStandDisguiser;
 import me.eccentric_nz.TARDIS.lazarus.disguise.TARDISDisguiseListener;
 import me.eccentric_nz.TARDIS.lazarus.disguise.TARDISDisguiser;
 import me.eccentric_nz.TARDIS.lazarus.disguise.TARDISPlayerDisguiser;
+import me.eccentric_nz.TARDIS.logging.TARDISLogFilter;
 import me.eccentric_nz.TARDIS.skins.ChameleonArchDisguiser;
-import me.eccentric_nz.tardischunkgenerator.helpers.GetBlockColours;
-import me.eccentric_nz.tardischunkgenerator.helpers.TARDISItemFrameFaker;
-import me.eccentric_nz.tardischunkgenerator.helpers.TARDISMapUpdater;
-import me.eccentric_nz.tardischunkgenerator.helpers.TARDISPlanetData;
-import me.eccentric_nz.tardischunkgenerator.logging.TARDISLogFilter;
 import me.eccentric_nz.tardischunkgenerator.worldgen.feature.CustomTree;
 import me.eccentric_nz.tardischunkgenerator.worldgen.feature.TARDISTree;
 import net.minecraft.core.BlockPos;
