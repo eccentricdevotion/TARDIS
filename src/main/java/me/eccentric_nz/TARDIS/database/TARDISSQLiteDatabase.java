@@ -287,7 +287,7 @@ public class TARDISSQLiteDatabase {
             statement.executeUpdate(queryStorage);
 
             // Table structure for table 'structures'
-            String queryStructure = "CREATE TABLE IF NOT EXISTS " + prefix + "structures (structure_id TEXT PRIMARY KEY NOT NULL, type TEXT DEFAULT '', world TEXT COLLATE NOCASE DEFAULT '', origin_chunk_x INTEGER DEFAULT 0, origin_chunk_z INTEGER DEFAULT 0, y INTEGER DEFAULT 0)";
+            String queryStructure = "CREATE TABLE IF NOT EXISTS " + prefix + "structures (structure_id TEXT PRIMARY KEY NOT NULL, structure_type TEXT DEFAULT '', world TEXT COLLATE NOCASE DEFAULT '', origin_chunk_x INTEGER DEFAULT 0, origin_chunk_z INTEGER DEFAULT 0, y INTEGER DEFAULT 0)";
             statement.executeUpdate(queryStructure);
 
             // Table structure for table 'system_upgrades'

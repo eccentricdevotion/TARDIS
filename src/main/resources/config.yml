@@ -62,7 +62,7 @@ creation:
     # defaults (34, 8) are similar to trail ruins
     spacing: 34
     separation: 8
-    # number of lapis lazuli villager / time lord trader requires (+ 1 compass)
+    # number of lapis lazuli villager / travelling time lord requires (+ 1 compass)
     map_cost: 3
 # outer TARDIS
 # https://tardis.pages.dev/configuration/preset
