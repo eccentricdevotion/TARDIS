@@ -50,7 +50,7 @@ public class StructureRegistry {
         PreparedStatement ps2 = null;
         try {
             connection.setAutoCommit(false);
-            ps1 = connection.prepareStatement("INSERT INTO " + prefix + "structures (structure_id, structure_type, world, origin_chunk_x, origin_chunk_z, y) VALUES (?, ?, ?, ?, ?)");
+            ps1 = connection.prepareStatement("INSERT INTO " + prefix + "structures (structure_id, structure_type, world, origin_chunk_x, origin_chunk_z, y) VALUES (?, ?, ?, ?, ?, ?)");
             ps1.setString(1, structure.id().toString());
             ps1.setString(2, structure.type());
             ps1.setString(3, structure.world());
