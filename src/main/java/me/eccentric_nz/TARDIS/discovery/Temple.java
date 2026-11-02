@@ -12,7 +12,7 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.block.data.BlockData;
+import org.bukkit.block.BlockState;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,9 +83,10 @@ public class Temple {
             for (int j = 0; j < r; j++) {
                 for (int k = 0; k < w; k++) {
                     Material material = materials[i][j][k];
-                    BlockData data = material.createBlockData();
                     Block block = world.getBlockAt(x + j, y + i, z + k);
-                    world.setBlockData(x + j, y + i, z + k, data);
+                    BlockState state = block.getState();
+                    state.setType(material);
+                    state.update(true, false);
                     if (i > 22 && i < 25 && material != Material.AIR) {
                         Block below = block.getRelative(BlockFace.DOWN);
                         if (below.getType() == Material.AIR && TARDISConstants.RANDOM.nextInt(100) < 5) {

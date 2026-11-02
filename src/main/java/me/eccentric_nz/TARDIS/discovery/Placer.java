@@ -6,6 +6,7 @@ import me.eccentric_nz.TARDIS.utility.WeightedChoice;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.BlockState;
 import org.bukkit.block.BrushableBlock;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.MultipleFacing;
@@ -37,11 +38,17 @@ public class Placer {
             // set decor
             below.setType(variant.decor());
         } else {
-            below.setBlockData(variant.hanging());
+            BlockState state = below.getState();
+            state.setBlockData(variant.hanging());
+            state.update(true, false);
             for (int i = 0; i < r; i++) {
-                below.getRelative(BlockFace.DOWN, i).setBlockData(TARDISConstants.RANDOM.nextInt(4) == 1 ? variant.hanging() : variant.hanging_light());
+                BlockState relative = below.getRelative(BlockFace.DOWN, i).getState();
+                relative.setBlockData(TARDISConstants.RANDOM.nextInt(4) == 1 ? variant.hanging() : variant.hanging_light());
+                relative.update(true, false);
             }
-            below.getRelative(BlockFace.DOWN, r).setBlockData(variant.hanging_end());
+            BlockState end = below.getRelative(BlockFace.DOWN, r).getState();
+            end.setBlockData(variant.hanging_end());
+            end.update(true, false);
         }
     }
 
@@ -55,14 +62,16 @@ public class Placer {
         };
         for (BlockFace face : faces) {
             Block targetBlock = tuff.getRelative(face);
+            BlockState state = targetBlock.getState();
             // only place if the target space is air and passes a random chance threshold
-            if (targetBlock.getType() == Material.AIR && TARDISConstants.RANDOM.nextInt(100) < 2) {
-                targetBlock.setType(Material.GLOW_LICHEN);
+            if (state.getType() == Material.AIR && TARDISConstants.RANDOM.nextInt(100) < 2) {
+                state.setType(Material.GLOW_LICHEN);
                 // configure the lichen to attach properly to the specific face of the tuff block
-                if (targetBlock.getBlockData() instanceof MultipleFacing lichen) {
+                if (state.getBlockData() instanceof MultipleFacing lichen) {
                     lichen.setFace(face.getOppositeFace(), true);
-                    targetBlock.setBlockData(lichen);
+                    state.setBlockData(lichen);
                 }
+                state.update(true, false);
             }
         }
     }
