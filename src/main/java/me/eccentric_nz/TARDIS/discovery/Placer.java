@@ -88,13 +88,13 @@ public class Placer {
     }
 
     private final WeightedChoice<String> items = new WeightedChoice<String>()
-            .add(30, "TARDIS Key")
-            .add(3, "Stattenheim Remote")
-            .add(6, "Artron Capacitor")
-            .add(3, "Artron Storage Cell")
-            .add(3, "Sonic Screwdriver")
-            .add(3, "3-D Glasses")
-            .add(3, "Red Bow Tie");
+            .add(25, "TARDIS Key")
+            .add(10, "Stattenheim Remote")
+            .add(10, "Artron Capacitor")
+            .add(10, "Artron Storage Cell")
+            .add(10, "Sonic Screwdriver")
+            .add(5, "3-D Glasses")
+            .add(5, "Red Bow Tie");
 
     public void addBrushable(Block base, StructureVariant variant) {
         Block above = base.getRelative(BlockFace.UP);
