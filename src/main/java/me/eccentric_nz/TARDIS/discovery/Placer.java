@@ -102,10 +102,11 @@ public class Placer {
         if (above.getType() == Material.AIR && TARDISConstants.RANDOM.nextInt(100) < 1) {
             base.setType(variant.base() == Material.END_STONE ? Material.SUSPICIOUS_SAND : Material.SUSPICIOUS_GRAVEL);
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                BrushableBlock brushable = (BrushableBlock) base.getState();
-                brushable.setItem(plugin.getFigura().getShapedRecipes().get(items.next()).getResult());
-                brushable.update(true);
-            }, 2L);
+                if (base.getState() instanceof BrushableBlock brushable) {
+                    brushable.setItem(plugin.getFigura().getShapedRecipes().get(items.next()).getResult());
+                    brushable.update(true);
+                }
+            }, 5L);
         }
     }
 }

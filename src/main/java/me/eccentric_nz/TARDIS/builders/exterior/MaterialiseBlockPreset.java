@@ -788,7 +788,7 @@ public class MaterialiseBlockPreset implements Runnable {
                                 plugin.getTrackerKeeper().getHasTravelled().add(s);
                             }
                         });
-                    } else if (plugin.getTrackerKeeper().getJunkPlayers().containsKey(bd.getPlayer().getUniqueId())) {
+                    } else if (bd.getPlayer() != null && plugin.getTrackerKeeper().getJunkPlayers().containsKey(bd.getPlayer().getUniqueId())) {
                         plugin.getMessenger().send(bd.getPlayer().getPlayer(), TardisModule.TARDIS, "JUNK_HANDBRAKE_LEFT_CLICK");
                     }
                     // restore beacon up block if present

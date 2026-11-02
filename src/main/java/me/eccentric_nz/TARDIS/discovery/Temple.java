@@ -76,11 +76,11 @@ public class Temple {
                     if (i > 22 && i < 25 && material != Material.AIR) {
                         Block below = block.getRelative(BlockFace.DOWN);
                         if (below.getType() == Material.AIR && TARDISConstants.RANDOM.nextInt(100) < 5) {
-                            placer.makeVine(below, variant);
+                            placer.addVines(below, variant);
                         }
                     }
                     if (material == Material.CLAY) {
-                        placer.makeWaterFeature(block, variant);
+                        placer.addWaterFeature(block, variant);
                     }
                     if (i < 24 && material == variant.base()) {
                         baseBlocks.add(block);
@@ -89,9 +89,9 @@ public class Temple {
             }
         }
         for (Block block : baseBlocks) {
-            placer.makeGlowLichen(block);
-            placer.makeMossCarpet(block, variant);
-            placer.makeHead(block, variant);
+            placer.addGlowLichen(block);
+            placer.addMossCarpet(block, variant);
+            placer.addHead(block, variant);
             // add suspicious gravel with TARDIS key and other TARDIS items
             placer.addBrushable(block, variant);
         }

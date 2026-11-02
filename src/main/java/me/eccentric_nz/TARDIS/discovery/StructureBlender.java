@@ -22,10 +22,9 @@ public class StructureBlender {
      */
     public static void blendStructureOutwards(World world, int minX, int maxX, int minY, int maxY, int minZ, int maxZ) {
         SimplexNoiseGenerator noiseGen = new SimplexNoiseGenerator(TARDISConstants.RANDOM.nextLong());
-        double frequency = 0.1; // slightly broader frequency so noise changes aren't too tight
+        double frequency = 0.1;
         int maxExtension = 4;
-        int modifiedCount = 0;
-        // process West Face (X = minX, extending towards negative X)
+        // west face (X = minX, towards negative X)
         for (int z = minZ; z <= maxZ; z++) {
             for (int y = minY; y <= maxY; y++) {
                 int extension = calculateExtension(noiseGen, y, z, frequency, maxExtension);
@@ -41,12 +40,11 @@ public class StructureBlender {
                     Block targetBlock = world.getBlockAt(minX - d, y, z);
                     if (isReplaceable(targetBlock.getType())) {
                         targetBlock.setBlockData(blockData, false);
-                        modifiedCount++;
                     }
                 }
             }
         }
-        // process East Face (X = maxX, extending towards positive X)
+        // east face (X = maxX, towards positive X)
         for (int z = minZ; z <= maxZ; z++) {
             for (int y = minY; y <= maxY; y++) {
                 int extension = calculateExtension(noiseGen, y, z, frequency, maxExtension);
@@ -62,12 +60,11 @@ public class StructureBlender {
                     Block targetBlock = world.getBlockAt(maxX + d, y, z);
                     if (isReplaceable(targetBlock.getType())) {
                         targetBlock.setBlockData(blockData, false);
-                        modifiedCount++;
                     }
                 }
             }
         }
-        // process North Face (Z = minZ, extending towards negative Z)
+        // north face (Z = minZ, towards negative Z)
         for (int x = minX; x <= maxX; x++) {
             for (int y = minY; y <= maxY; y++) {
                 int extension = calculateExtension(noiseGen, x, y, frequency, maxExtension);
@@ -83,12 +80,11 @@ public class StructureBlender {
                     Block targetBlock = world.getBlockAt(x, y, minZ - d);
                     if (isReplaceable(targetBlock.getType())) {
                         targetBlock.setBlockData(blockData, false);
-                        modifiedCount++;
                     }
                 }
             }
         }
-        // process South Face (Z = maxZ, extending towards positive Z)
+        // south face (Z = maxZ, towards positive Z)
         for (int x = minX; x <= maxX; x++) {
             for (int y = minY; y <= maxY; y++) {
                 int extension = calculateExtension(noiseGen, x, y, frequency, maxExtension);
@@ -104,7 +100,6 @@ public class StructureBlender {
                     Block targetBlock = world.getBlockAt(x, y, maxZ + d);
                     if (isReplaceable(targetBlock.getType())) {
                         targetBlock.setBlockData(blockData, false);
-                        modifiedCount++;
                     }
                 }
             }
@@ -112,9 +107,8 @@ public class StructureBlender {
     }
 
     private static int calculateExtension(SimplexNoiseGenerator noiseGen, double xOrZ, double y, double frequency, int maxExtension) {
-        double noise = noiseGen.noise(xOrZ * frequency, y * frequency); // Returns [-1, 1]
-        double normalized = (noise + 1.0) / 2.0; // Maps to [0, 1]
-        // Using Math.round instead of floor ensures we get a good spread up to maxExtension
+        double noise = noiseGen.noise(xOrZ * frequency, y * frequency); // returns [-1, 1]
+        double normalized = (noise + 1.0) / 2.0; // maps to [0, 1]
         return (int) Math.round(normalized * maxExtension);
     }
 
