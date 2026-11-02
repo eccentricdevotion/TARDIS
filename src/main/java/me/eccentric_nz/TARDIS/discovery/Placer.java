@@ -2,9 +2,11 @@ package me.eccentric_nz.TARDIS.discovery;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.utility.WeightedChoice;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.BrushableBlock;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.MultipleFacing;
 import org.bukkit.block.data.Rotatable;
@@ -17,7 +19,7 @@ public class Placer {
         this.plugin = plugin;
     }
 
-    public void makeWaterFeature(Block block, StructureVariant variant) {
+    public void addWaterFeature(Block block, StructureVariant variant) {
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             block.setType(variant.floor().next());
             BlockData[] data = variant.column().next();
@@ -29,7 +31,7 @@ public class Placer {
         }, 20L);
     }
 
-    public void makeVines(Block below, StructureVariant variant) {
+    public void addVines(Block below, StructureVariant variant) {
         int r = TARDISConstants.RANDOM.nextInt(10);
         if (r < 1) {
             // set decor
@@ -43,7 +45,7 @@ public class Placer {
         }
     }
 
-    public void makeGlowLichen(Block tuff) {
+    public void addGlowLichen(Block tuff) {
         BlockFace[] faces = {
                 BlockFace.UP,
                 BlockFace.NORTH,
@@ -65,7 +67,7 @@ public class Placer {
         }
     }
 
-    public void makeMossCarpets(Block base, StructureVariant variant) {
+    public void addMossCarpet(Block base, StructureVariant variant) {
         Block above = base.getRelative(BlockFace.UP);
         // check if the space above is air and passes a random chance threshold
         if (above.getType() == Material.AIR && TARDISConstants.RANDOM.nextInt(100) < 5) {
@@ -73,15 +75,37 @@ public class Placer {
         }
     }
 
-    public void makeHeads(Block base, StructureVariant variant) {
+    public void addHead(Block base, StructureVariant variant) {
         Block above = base.getRelative(BlockFace.UP);
         // check if the space above is air and passes a random chance threshold
         if (above.getType() == Material.AIR && TARDISConstants.RANDOM.nextInt(100) < 1) {
             above.setType(variant.wall());
             Block head = above.getRelative(BlockFace.UP);
             Rotatable rotatable = (Rotatable) Material.SKELETON_SKULL.createBlockData();
-            rotatable.setRotation(BlockFace.values()[TARDISConstants.RANDOM.nextInt(6,18)]);
+            rotatable.setRotation(BlockFace.values()[TARDISConstants.RANDOM.nextInt(6, 18)]);
             head.setBlockData(rotatable);
+        }
+    }
+
+    private final WeightedChoice<String> items = new WeightedChoice<String>()
+            .add(30, "TARDIS Key")
+            .add(3, "Stattenheim Remote")
+            .add(6, "Artron Capacitor")
+            .add(3, "Artron Storage Cell")
+            .add(3, "Sonic Screwdriver")
+            .add(3, "3-D Glasses")
+            .add(3, "Red Bow Tie");
+
+    public void addBrushable(Block base, StructureVariant variant) {
+        Block above = base.getRelative(BlockFace.UP);
+        // check if the space above is air and passes a random chance threshold
+        if (above.getType() == Material.AIR && TARDISConstants.RANDOM.nextInt(100) < 1) {
+            base.setType(variant.base() == Material.END_STONE ? Material.SUSPICIOUS_SAND : Material.SUSPICIOUS_GRAVEL);
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                BrushableBlock brushable = (BrushableBlock) base.getState();
+                brushable.setItem(plugin.getFigura().getShapedRecipes().get(items.next()).getResult());
+                brushable.update(true);
+            }, 2L);
         }
     }
 }
