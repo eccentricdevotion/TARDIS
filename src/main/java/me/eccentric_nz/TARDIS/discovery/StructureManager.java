@@ -64,7 +64,7 @@ public class StructureManager {
         return CompletableFuture.allOf(futures);
     }
 
-    private Set<Long> computeFootprint(int originChunkX, int originChunkZ, int widthBlocks, int lengthBlocks) {
+    public static Set<Long> computeFootprint(int originChunkX, int originChunkZ, int widthBlocks, int lengthBlocks) {
         int widthChunks = (widthBlocks + 15) >> 4;
         int lengthChunks = (lengthBlocks + 15) >> 4;
         Set<Long> chunks = new HashSet<>();
