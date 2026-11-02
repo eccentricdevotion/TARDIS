@@ -52,6 +52,19 @@ public class Temple {
                     Location down = location.clone().add(parts.getNePos().x(), parts.getNePos().y(), parts.getNePos().z());
                     place(down, NE, variant);
                 }, 15L);
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                    // blend into environment
+                    Location bounds = location.clone().add(parts.getNwPos().x(), parts.getNwPos().y(), parts.getNwPos().z());
+                    StructureBlender.blendStructureOutwards(location.getWorld(), bounds.blockX(), bounds.blockX() + 63, bounds.blockY(), bounds.blockY() + 25, bounds.blockZ(), bounds.blockZ() + 63);
+                    // spawn an abandoned TARDIS
+                    Location spawn = location.clone().add(0.5d, 4, 0.5d);
+                    // get a random interior schematic
+                    List<Schematic> schematics = new ArrayList<>(Desktops.getBY_NAMES().values());
+                    Schematic s = schematics.get(TARDISConstants.RANDOM.nextInt(schematics.size()));
+                    // get a random exterior preset - must have a door
+                    COMPASS direction = COMPASS.values()[TARDISConstants.RANDOM.nextInt(COMPASS.values().length)].forPreset();
+                    new AbandonedBuilder(plugin).spawn(spawn, s, ChameleonPreset.FACTORY, "", direction, null);
+                }, 30L);
             });
         });
     }
@@ -95,15 +108,5 @@ public class Temple {
             // add suspicious gravel with TARDIS key and other TARDIS items
             placer.addBrushable(block, variant);
         }
-        // blend into environment
-        StructureBlender.blendStructureOutwards(world, x, x + (r - 1), y, y + (h - 1), z, z + (w - 1));
-        // spawn an abandoned TARDIS
-        Location spawn = location.clone().add(0.5d, 4, 0.5d);
-        // get a random interior schematic
-        List<Schematic> schematics = new ArrayList<>(Desktops.getBY_NAMES().values());
-        Schematic s = schematics.get(TARDISConstants.RANDOM.nextInt(schematics.size()));
-        // get a random exterior preset - must have a door
-        COMPASS direction = COMPASS.values()[TARDISConstants.RANDOM.nextInt(COMPASS.values().length)].forPreset();
-        new AbandonedBuilder(plugin).spawn(spawn, s, ChameleonPreset.FACTORY, "", direction, null);
     }
 }
