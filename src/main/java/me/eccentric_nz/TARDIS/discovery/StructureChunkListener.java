@@ -16,11 +16,15 @@ public class StructureChunkListener implements Listener {
     private final TARDIS plugin;
     private final StructureManager manager;
     private final List<String> excludedWorlds;
+    private final int spacing;
+    private final int separation;
 
     public StructureChunkListener(TARDIS plugin, StructureManager manager) {
         this.plugin = plugin;
         this.manager = manager;
         excludedWorlds = plugin.getConfig().getStringList("creation.discovery.excluded_worlds");
+        spacing = plugin.getConfig().getInt("creation.discovery.spacing");
+        separation = plugin.getConfig().getInt("creation.discovery.separation");
     }
 
     @EventHandler
@@ -40,7 +44,7 @@ public class StructureChunkListener implements Listener {
     }
 
     private boolean isFeatureChunk(long seed, int x, int z) {
-        RandomSpreadStructurePlacement spread = new RandomSpreadStructurePlacement(32, 8, RandomSpreadType.TRIANGULAR, 987654321);
+        RandomSpreadStructurePlacement spread = new RandomSpreadStructurePlacement(spacing, separation, RandomSpreadType.TRIANGULAR, 987654321);
         ChunkPos chunkPos = spread.getPotentialStructureChunk(seed, x, z);
         return chunkPos.x() == x && chunkPos.z() == z;
     }

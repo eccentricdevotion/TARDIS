@@ -48,13 +48,22 @@ creation:
     hard: DRAGON_BREATH
   discovery:
     enabled: true
+    # whether temples will generate in existing chunks
     existing_chunks: false
+    # worlds not to spawn temples in
     excluded_worlds:
       - the_end
       - the_nether
       - tardis_timevortex
       - tardis_zero_room
       - caves
+    # how far apart temples generate
+    # spacing has to be larger than separation
+    # defaults (34, 8) are similar to trail ruins
+    spacing: 34
+    separation: 8
+    # number of lapis lazuli villager / time lord trader requires (+ 1 compass)
+    map_cost: 3
 # outer TARDIS
 # https://tardis.pages.dev/configuration/preset
 police_box:
