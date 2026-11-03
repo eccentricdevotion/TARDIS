@@ -198,7 +198,7 @@ public class TARDISConfiguration {
         integerOptions.put("circuits.uses.stattenheim", 15);
         integerOptions.put("creation.border_radius", 256);
         integerOptions.put("creation.count", 0);
-        integerOptions.put("creation.discovery.spacing", 32);
+        integerOptions.put("creation.discovery.spacing", 34);
         integerOptions.put("creation.discovery.separation", 8);
         integerOptions.put("creation.discovery.map_cost", 3);
         integerOptions.put("creation.inventory_group", 0);
