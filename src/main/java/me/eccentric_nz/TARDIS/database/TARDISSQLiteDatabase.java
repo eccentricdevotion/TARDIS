@@ -211,6 +211,10 @@ public class TARDISSQLiteDatabase {
             String queryNext = "CREATE TABLE IF NOT EXISTS " + prefix + "next (next_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, world TEXT COLLATE NOCASE DEFAULT '', x INTEGER, y INTEGER, z INTEGER, direction TEXT DEFAULT '', submarine INTEGER DEFAULT 0)";
             statement.executeUpdate(queryNext);
 
+            // Table structure for table 'occupied_chunks'
+            String queryOccupiedChunks = "CREATE TABLE IF NOT EXISTS " + prefix + "occupied_chunks (world TEXT COLLATE NOCASE DEFAULT '', chunk_key INTEGER, structure_id TEXT NOT NULL, PRIMARY KEY (world, chunk_key))";
+            statement.executeUpdate(queryOccupiedChunks);
+
             // Table structure for table 'paper_bag'
             String queryPaperBag = "CREATE TABLE IF NOT EXISTS " + prefix + "paper_bag (paper_bag_id INTEGER PRIMARY KEY NOT NULL, uuid TEXT DEFAULT '', flavour_1 TEXT DEFAULT '', amount_1 INTEGER, flavour_2 TEXT DEFAULT '', amount_2 INTEGER, flavour_3 TEXT DEFAULT '', amount_3 INTEGER, flavour_4 TEXT DEFAULT '', amount_4 INTEGER)";
             statement.executeUpdate(queryPaperBag);
@@ -281,6 +285,10 @@ public class TARDISSQLiteDatabase {
             // Table structure for table 'storage'
             String queryStorage = "CREATE TABLE IF NOT EXISTS " + prefix + "storage (storage_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, uuid TEXT DEFAULT '', owner TEXT DEFAULT '', saves_one TEXT DEFAULT '', saves_two TEXT DEFAULT '', areas TEXT DEFAULT '', presets_one TEXT DEFAULT '', presets_two TEXT DEFAULT '', biomes_one TEXT DEFAULT '', biomes_two TEXT DEFAULT '', players TEXT DEFAULT '', circuits TEXT DEFAULT '', console TEXT DEFAULT '', versions TEXT DEFAULT '0,0,0,0,0,0,0,0,0')";
             statement.executeUpdate(queryStorage);
+
+            // Table structure for table 'structures'
+            String queryStructure = "CREATE TABLE IF NOT EXISTS " + prefix + "structures (structure_id TEXT PRIMARY KEY NOT NULL, structure_type TEXT DEFAULT '', world TEXT COLLATE NOCASE DEFAULT '', origin_chunk_x INTEGER DEFAULT 0, origin_chunk_z INTEGER DEFAULT 0, y INTEGER DEFAULT 0)";
+            statement.executeUpdate(queryStructure);
 
             // Table structure for table 'system_upgrades'
             String querySystem = "CREATE TABLE IF NOT EXISTS " + prefix + "system_upgrades (sys_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, uuid TEXT DEFAULT '', architecture INTEGER DEFAULT 0, chameleon INTEGER DEFAULT 0, rooms INTEGER DEFAULT 0, desktop INTEGER DEFAULT 0, feature INTEGER DEFAULT 0, saves INTEGER DEFAULT 0, monitor INTEGER DEFAULT 0, force_field INTEGER DEFAULT 0, tools INTEGER DEFAULT 0, locator INTEGER DEFAULT 0, telepathic INTEGER DEFAULT 0, stattenheim_remote INTEGER DEFAULT 0, navigation INTEGER DEFAULT 0, distance_1 INTEGER DEFAULT 0, distance_2 INTEGER DEFAULT 0, distance_3 INTEGER DEFAULT 0, inter_dimension INTEGER DEFAULT 0, throttle INTEGER DEFAULT 0, faster INTEGER DEFAULT 0, rapid INTEGER DEFAULT 0, warp INTEGER DEFAULT 0, flight INTEGER DEFAULT 0)";

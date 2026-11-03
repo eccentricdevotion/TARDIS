@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.lazarus.disguise;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.tardischunkgenerator.helpers.TARDISPacketListener;
+import me.eccentric_nz.TARDIS.helpers.TARDISPacketListener;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.Player;

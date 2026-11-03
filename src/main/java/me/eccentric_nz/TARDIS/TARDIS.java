@@ -38,6 +38,7 @@ import me.eccentric_nz.TARDIS.flight.vehicle.VehicleLoader;
 import me.eccentric_nz.TARDIS.handles.HandlesConfigUpdater;
 import me.eccentric_nz.TARDIS.handles.voice.Voice;
 import me.eccentric_nz.TARDIS.handles.wiki.HandlesWikiServerLink;
+import me.eccentric_nz.TARDIS.helpers.TARDISHelper;
 import me.eccentric_nz.TARDIS.mapping.TARDISBlueMap;
 import me.eccentric_nz.TARDIS.mapping.TARDISDynmap;
 import me.eccentric_nz.TARDIS.mapping.TARDISMapper;
@@ -59,7 +60,6 @@ import me.eccentric_nz.TARDIS.utility.*;
 import me.eccentric_nz.TARDIS.utility.logging.TARDISBlockLogger;
 import me.eccentric_nz.TARDIS.utility.protection.TARDISWorldGuardUtils;
 import me.eccentric_nz.TARDIS.utility.update.TARDISUpdateChecker;
-import me.eccentric_nz.tardischunkgenerator.TARDISHelper;
 import me.eccentric_nz.tardischunkgenerator.worldgen.*;
 import me.eccentric_nz.tardisregeneration.TARDISRegenerationUpdater;
 import me.eccentric_nz.tardisshop.ShopSettings;
@@ -91,9 +91,6 @@ import java.util.*;
 import java.util.logging.Level;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-//import me.eccentric_nz.TARDIS.handles.voice.KeywordEngine;
-//import me.eccentric_nz.TARDIS.handles.voice.VoiceChatListener;
 
 /**
  * The main class where everything is enabled and disabled.

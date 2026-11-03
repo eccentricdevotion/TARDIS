@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.commands.dev.*;
 import me.eccentric_nz.TARDIS.commands.dev.lists.*;
 import me.eccentric_nz.TARDIS.commands.dev.wiki.WikiRecipeCommand;
 import me.eccentric_nz.TARDIS.commands.tardis.update.UpdateBlocksCommand;
+import me.eccentric_nz.TARDIS.discovery.*;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.monitor.MonitorSnapshot;
 import me.eccentric_nz.TARDIS.playerprefs.PreferencesDialog;
@@ -39,6 +40,9 @@ import org.bukkit.block.Block;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.Set;
+import java.util.UUID;
 
 public class DevCommandNode {
 
@@ -60,6 +64,26 @@ public class DevCommandNode {
                             EdibleLookup.print();
                             return Command.SINGLE_SUCCESS;
                         }))
+                .then(Commands.literal("fade")
+                        .executes(ctx -> {
+                            if (ctx.getSource().getSender() instanceof Player player) {
+                                new Temple(plugin).build(player.getLocation().add(0, 3, 0));
+                                // add temple to database
+                                Chunk chunk = player.getLocation().getChunk();
+                                int y = player.getLocation().getBlockY() + 3;
+                                Set<Long> occupied = StructureManager.computeFootprint(chunk.getX(), chunk.getZ(), 64, 64);
+                                StructureData structure = new StructureData(UUID.randomUUID(), "Temple", chunk.getWorld().getKey().asString(), chunk.getX(), chunk.getZ(), y, occupied);
+                                new StructureRegistry(plugin).register(structure);
+                            }
+                            return Command.SINGLE_SUCCESS;
+                        })
+                        .then(Commands.literal("save")
+                                .executes(ctx -> {
+                                    if (ctx.getSource().getSender() instanceof Player player) {
+                                        new Corner().save(plugin, player);
+                                    }
+                                    return Command.SINGLE_SUCCESS;
+                                })))
                 .then(Commands.literal("add_regions")
                         .executes(ctx -> {
                             new AddRegionsCommand(plugin).doCheck(ctx.getSource().getSender());

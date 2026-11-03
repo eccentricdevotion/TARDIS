@@ -111,6 +111,8 @@ public class TARDISConfiguration {
         booleanOptions.put("creation.create_worlds", false);
         booleanOptions.put("creation.create_worlds_with_perms", false);
         booleanOptions.put("creation.default_world", true);
+        booleanOptions.put("creation.discovery.enabled", true);
+        booleanOptions.put("creation.discovery.existing_chunks", false);
         booleanOptions.put("creation.enable_legacy", true);
         booleanOptions.put("creation.keep_night", true);
         booleanOptions.put("creation.seed_block.crafting", true);
@@ -196,6 +198,9 @@ public class TARDISConfiguration {
         integerOptions.put("circuits.uses.stattenheim", 15);
         integerOptions.put("creation.border_radius", 256);
         integerOptions.put("creation.count", 0);
+        integerOptions.put("creation.discovery.spacing", 34);
+        integerOptions.put("creation.discovery.separation", 8);
+        integerOptions.put("creation.discovery.map_cost", 3);
         integerOptions.put("creation.inventory_group", 0);
         integerOptions.put("creation.tips_limit", 400);
         integerOptions.put("desktop.block_change_percent", 25);
@@ -273,6 +278,10 @@ public class TARDISConfiguration {
         comments.put("archive", List.of("console archives", "https://tardis.pages.dev/archive#config-options"));
         comments.put("circuits", List.of("circuits", "https://tardis.pages.dev/circuit-use#configuration-options"));
         comments.put("creation", List.of("inner TARDIS", "https://tardis.pages.dev/configuration/creation"));
+        comments.put("creation.discovery.existing_chunks", List.of("whether temples will generate in existing chunks"));
+        comments.put("creation.discovery.excluded_worlds", List.of("worlds not to spawn temples in"));
+        comments.put("creation.discovery.spacing", List.of("how far apart temples generate", "spacing has to be larger than separation", "defaults (34, 8) are similar to trail ruins"));
+        comments.put("creation.discovery.map_cost", List.of("number of lapis lazuli villager / time lord trader requires (+ 1 compass)"));
         comments.put("desktop", List.of("desktop theme", "https://tardis.pages.dev/desktop-theme#config-options"));
         comments.put("display", List.of("HUD display", "https://tardis.pages.dev/display"));
         comments.put("eye_of_harmony", List.of("eye of harmony preferences", "https://tardis.pages.dev/eye-of-harmony"));
@@ -479,6 +488,12 @@ public class TARDISConfiguration {
             plugin.getConfig().set("police_box.view_interior.type", enabled ? "packets" : "maps");
             plugin.getConfig().set("police_box.view_interior.use_console_size", config.getBoolean("police_box.view_interior_uses_console_size"));
             plugin.getConfig().set("police_box.view_interior_uses_console_size", null);
+            i++;
+        }
+        // discovery
+        if (!config.contains("creation.discovery.excluded_worlds")) {
+            List<String> worlds = List.of("the_end", "the_nether", "tardis_timevortex", "tardis_zero_room", "caves");
+            plugin.getConfig().set("creation.discovery.excluded_worlds", worlds);
             i++;
         }
         // remove handles

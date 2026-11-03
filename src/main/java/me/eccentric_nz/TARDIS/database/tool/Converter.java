@@ -253,6 +253,10 @@ public class Converter implements Runnable {
                                         str = String.format(SQL_VALUES.LIST.get(i), rs.getInt("next_id"), rs.getInt("tardis_id"), rs.getString("world"), rs.getInt("x"), rs.getInt("y"), rs.getInt("z"), rs.getString("direction"), rs.getInt("submarine")) + end;
                                         sb.append(str);
                                     }
+                                    case occupied_chunks -> {
+                                        str = String.format(SQL_VALUES.LIST.get(i), rs.getString("world"), rs.getInt("chunk_key"), rs.getString("structure_id")) + end;
+                                        sb.append(str);
+                                    }
                                     case paper_bag -> {
                                         str = String.format(SQL_VALUES.LIST.get(i), rs.getInt("paper_bag_id"), rs.getString("uuid"), rs.getString("flavour_1"), rs.getInt("amount_1"), rs.getString("flavour_2"), rs.getInt("amount_2"), rs.getString("flavour_3"), rs.getInt("amount_3"), rs.getString("flavour_4"), rs.getInt("amount_4")) + end;
                                         sb.append(str);
@@ -311,6 +315,10 @@ public class Converter implements Runnable {
                                     }
                                     case storage -> {
                                         str = String.format(SQL_VALUES.LIST.get(i), rs.getInt("storage_id"), rs.getInt("tardis_id"), rs.getString("uuid"), rs.getString("owner"), rs.getString("saves_one"), rs.getString("saves_two"), rs.getString("areas"), rs.getString("presets_one"), rs.getString("presets_two"), rs.getString("biomes_one"), rs.getString("biomes_two"), rs.getString("players"), rs.getString("circuits"), rs.getString("console"), rs.getString("versions")) + end;
+                                        sb.append(str);
+                                    }
+                                    case structures -> {
+                                        str = String.format(SQL_VALUES.LIST.get(i), rs.getString("structure_id"), rs.getString("structure_type"), rs.getString("world"), rs.getInt("origin_chunk_x"), rs.getInt("origin_chunk_z"), rs.getInt("y")) + end;
                                         sb.append(str);
                                     }
                                     case system_upgrades -> {
