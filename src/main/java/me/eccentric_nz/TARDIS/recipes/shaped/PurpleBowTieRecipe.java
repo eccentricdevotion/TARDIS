@@ -18,13 +18,19 @@ package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.CustomModelData;
+import io.papermc.paper.datacomponent.item.Equippable;
 import io.papermc.paper.datacomponent.item.ItemLore;
+import io.papermc.paper.registry.RegistryKey;
+import io.papermc.paper.registry.TypedKey;
+import io.papermc.paper.registry.set.RegistrySet;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.entity.EntityType;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 
@@ -37,7 +43,7 @@ hard_ingredients.S:STRING
 hard_ingredients.T:GLOWSTONE_DUST
 hard_ingredients.L:LEATHER
 hard_ingredients.W:PURPLE_WOOL
-result:LEATHER_HELMET
+result:PURPLE_WOOL_SLAB
 amount:1
 lore:Bow ties are cool!
 */
@@ -51,12 +57,18 @@ public class PurpleBowTieRecipe {
     }
 
     public void addRecipe() {
-        ItemStack is = ItemStack.of(Material.LEATHER_HELMET, 1);
+        ItemStack is = ItemStack.of(Material.PURPLE_WOOL_SLAB, 1);
         is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Purple Bow Tie"));
         is.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
                 .addString("Purple Bow Tie")
                 .build());
         is.setData(DataComponentTypes.LORE, ItemLore.lore().addLine(Component.text("Bow ties are cool!")).build());
+        Equippable.Builder equippable = Equippable.equippable(EquipmentSlot.HEAD);
+        equippable.damageOnHurt(false);
+        equippable.allowedEntities(RegistrySet.keySet(RegistryKey.ENTITY_TYPE,
+                TypedKey.create(RegistryKey.ENTITY_TYPE, EntityType.PLAYER.getKey())
+        ));
+        is.setData(DataComponentTypes.EQUIPPABLE, equippable.build());
         NamespacedKey key = new NamespacedKey(plugin, "purple_bow_tie");
         ShapedRecipe r = new ShapedRecipe(key, is);
         if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
