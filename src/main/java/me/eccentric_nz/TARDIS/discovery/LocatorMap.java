@@ -45,12 +45,25 @@ public class LocatorMap {
         return null;
     }
 
+    /**
+     * Gets the closest (unclaimed) temple location to the player from the database.
+     *
+     * @param world  The world to get the location from.
+     * @param chunkX The players current x chunk coordinate
+     * @param chunkZ The players current z chunk coordinate
+     * @return the closest location or null if none was found.
+     */
+    public Location getLocation(World world, int chunkX, int chunkZ) {
+        ResultSetLocator rsl = new ResultSetLocator(plugin);
+        return rsl.getClosestStructureLocation(world, chunkX, chunkZ);
+    }
+
     public ItemStack create(Location location) {
         ServerLevel level = ((CraftWorld) location.getWorld()).getHandle();
         net.minecraft.world.item.ItemStack map = MapItem.create(
                 level,
-                location.getBlockX() - 256,
-                location.getBlockZ() - 256,
+                location.getBlockX() - 128,
+                location.getBlockZ() - 128,
                 (byte) 2,   // scale
                 true,
                 true
@@ -77,7 +90,7 @@ public class LocatorMap {
                 .build());
         return item;
     }
-    
+
     public MerchantRecipe fromMap(ItemStack is) {
         MerchantRecipe recipe = new MerchantRecipe(is, 1);
         recipe.setIngredients(List.of(ItemStack.of(Material.COMPASS), ItemStack.of(Material.LAPIS_LAZULI, cost)));

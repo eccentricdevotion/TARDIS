@@ -1,6 +1,7 @@
 package me.eccentric_nz.TARDIS.discovery;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.entity.AbstractVillager;
 import org.bukkit.entity.Villager;
@@ -38,7 +39,8 @@ public class VillagerListener implements Listener {
         }
         List<MerchantRecipe> recipes = new ArrayList<>(villager.getRecipes());
         LocatorMap lm = new LocatorMap(plugin);
-        Location location = lm.getLocation(villager.getWorld());
+        Chunk chunk = villager.getLocation().getChunk();
+        Location location = lm.getLocation(villager.getWorld(), chunk.getX(), chunk.getZ());
         if (location != null) {
             recipes.add(lm.fromMap(lm.create(location)));
         }
@@ -58,7 +60,8 @@ public class VillagerListener implements Listener {
             return;
         }
         LocatorMap lm = new LocatorMap(plugin);
-        Location location = lm.getLocation(trader.getWorld());
+        Chunk chunk = trader.getLocation().getChunk();
+        Location location = lm.getLocation(trader.getWorld(), chunk.getX(), chunk.getZ());
         if (location != null) {
             event.setRecipe(lm.fromMap(lm.create(location)));
         }
@@ -76,7 +79,8 @@ public class VillagerListener implements Listener {
         }
         List<MerchantRecipe> recipes = new ArrayList<>(trader.getRecipes());
         LocatorMap lm = new LocatorMap(plugin);
-        Location location = lm.getLocation(trader.getWorld());
+        Chunk chunk = trader.getLocation().getChunk();
+        Location location = lm.getLocation(trader.getWorld(), chunk.getX(), chunk.getZ());
         if (location != null) {
             recipes.add(lm.fromMap(lm.create(location)));
         }

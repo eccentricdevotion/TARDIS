@@ -103,4 +103,33 @@ public class ResultSetLocator {
         Collections.shuffle(locations);
         return locations;
     }
+
+    public Location getClosestStructureLocation(World world, int playerChunkX, int playerChunkZ) {
+        String sql = """
+        SELECT chunkX, chunkZ, ((chunkX - ?) * (chunkX - ?) + (chunkZ - ?) * (chunkZ - ?)) AS distance
+        FROM coords
+        WHERE world = ?
+        AND claimed = 0
+        ORDER BY distance ASC
+        LIMIT 1
+        """;
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, playerChunkX);
+            statement.setInt(2, playerChunkX);
+            statement.setInt(3, playerChunkZ);
+            statement.setInt(4, playerChunkZ);
+            statement.setString(5, world.getKey().asString());
+            try (ResultSet rs = statement.executeQuery()) {
+                if (rs.next()) {
+                    return new Location(
+                            world,
+                            rs.getInt("origin_chunk_x") << 4,
+                            rs.getInt("y") + 4,
+                            rs.getInt("origin_chunk_z") << 4);
+                }
+            }
+        } catch (SQLException ignored) {
+        }
+        return null;
+    }
 }
