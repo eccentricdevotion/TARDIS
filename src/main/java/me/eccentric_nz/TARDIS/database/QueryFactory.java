@@ -19,8 +19,10 @@ package me.eccentric_nz.TARDIS.database;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.tool.Table;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import java.sql.*;
@@ -413,6 +415,22 @@ public class QueryFactory {
                     ps.setString(1, uuid.toString());
                     ps.setInt(2, id);
                     ps.executeUpdate();
+                    // get the exterior location
+                    ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
+                    if (rsc.resultSet()) {
+                        Location current = rsc.getCurrent().location();
+                        String world = current.getWorld().getKey().asString();
+                        // add one block as we subtracted one from the chunk location when spawning
+                        int chunkX = current.getBlockX() + 1 >> 4;
+                        int chunkZ = current.getBlockZ() + 1 >> 4;
+                        // update the claimed column in the structures table (if a record matches)
+                        query = "UPDATE " + prefix + "structures SET claimed = 1 WHERE world = ? AND origin_chunk_x = ? AND origin_chunk_z = ?";
+                        ps = connection.prepareStatement(query);
+                        ps.setString(1, world);
+                        ps.setInt(2, chunkX);
+                        ps.setInt(3, chunkZ);
+                        ps.executeUpdate();
+                    }
                 }
                 return bool;
             } catch (SQLException e) {
