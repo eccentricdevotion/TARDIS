@@ -671,7 +671,7 @@ public class ArtronCondensables {
             condensables.put("ORANGE_WALL_BANNER", 120);
             condensables.put("ORANGE_WOOL", 20);
             condensables.put("OXEYE_DAISY", 2);
-            condensables.put("PACKED_ICE", 100);
+            condensables.put("PACKED_ICE", 18);
             condensables.put("PAINTING", 25);
             condensables.put("PAPER", 10);
             condensables.put("PEONY", 2);
@@ -857,9 +857,9 @@ public class ArtronCondensables {
             condensables.put("STICKY_PISTON", 110);
             condensables.put("STONE", 30);
             condensables.put("STONE_AXE", 3);
-            condensables.put("STONE_BRICK_SLAB", 2);
-            condensables.put("STONE_BRICK_STAIRS", 40);
-            condensables.put("STONE_BRICK_WALL", 2);
+            condensables.put("STONE_BRICK_SLAB", 4);
+            condensables.put("STONE_BRICK_STAIRS", 6);
+            condensables.put("STONE_BRICK_WALL", 4);
             condensables.put("STONE_BRICKS", 4);
             condensables.put("STONE_BUTTON", 16);
             condensables.put("STONE_HOE", 3);
@@ -1498,6 +1498,32 @@ public class ArtronCondensables {
             condensables.put("YELLOW_POPLAR_LEAVES", 2);
             condensables.put("YELLOW_WOOL_SLAB", 10);
             condensables.put("YELLOW_WOOL_STAIRS", 30);
+            /*
+            // 26.4
+            condensables.put("CALCITE_PILLAR", 4);
+            condensables.put("CALCITE_SLAB", 2);
+            condensables.put("CALCITE_STAIRS", 3);
+            condensables.put("CALCITE_WALL", 2);
+            condensables.put("CHISELED_PACKED_ICE", 18);
+            condensables.put("CHISELED_SOULSHALE", 200);
+            condensables.put("ICE_BALL", 2);
+            condensables.put("ICE_CRYSTAL", 2);
+            condensables.put("ICICLE", 2);
+            condensables.put("PACKED_ICE_BRICK_SLAB", 8);
+            condensables.put("PACKED_ICE_BRICK_STAIRS", 28);
+            condensables.put("PACKED_ICE_BRICK_WALL", 18);
+            condensables.put("PACKED_ICE_BRICKS", 18);
+            condensables.put("POLISHED_CALCITE_BRICK_SLAB", 2);
+            condensables.put("POLISHED_CALCITE_BRICK_STAIRS", 4);
+            condensables.put("POLISHED_CALCITE_BRICK_WALL", 2);
+            condensables.put("POLISHED_CALCITE_SLAB", 2);
+            condensables.put("POLISHED_CALCITE_STAIRS", 3);
+            condensables.put("POLISHED_CALCITE_WALL", 2);
+            condensables.put("SNOW_BRICK_SLAB", 4);
+            condensables.put("SNOW_BRICK_STAIRS", 6);
+            condensables.put("SNOW_BRICK_WALL", 4);
+            condensables.put("SNOW_BRICKS", 4);
+            */
         } else {
             Set<String> items = plugin.getCondensablesConfig().getKeys(false);
             items.forEach((item) -> condensables.put(item, plugin.getCondensablesConfig().getInt(item)));
