@@ -318,7 +318,7 @@ public class Converter implements Runnable {
                                         sb.append(str);
                                     }
                                     case structures -> {
-                                        str = String.format(SQL_VALUES.LIST.get(i), rs.getString("structure_id"), rs.getString("structure_type"), rs.getString("world"), rs.getInt("origin_chunk_x"), rs.getInt("origin_chunk_z"), rs.getInt("y")) + end;
+                                        str = String.format(SQL_VALUES.LIST.get(i), rs.getString("structure_id"), rs.getString("structure_type"), rs.getString("world"), rs.getInt("origin_chunk_x"), rs.getInt("origin_chunk_z"), rs.getInt("y"), rs.getInt("claimed")) + end;
                                         sb.append(str);
                                     }
                                     case system_upgrades -> {

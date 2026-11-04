@@ -137,7 +137,7 @@ public class SQL_INSERT {
 
             "INSERT INTO `%sstorage` (`storage_id`, `tardis_id`, `uuid`, `owner`, `saves_one`, `saves_two`, `areas`, `presets_one`, `presets_two`, `biomes_one`, `biomes_two`, `players`, `circuits`, `console`, `versions`) VALUES ",
 
-            "INSERT INTO `%sstructures` (`structure_id`, `structure_type`, `origin_chunk_x`, `origin_chunk_z`, `y`) VALUES ",
+            "INSERT INTO `%sstructures` (`structure_id`, `structure_type`, `origin_chunk_x`, `origin_chunk_z`, `y`, `claimed`) VALUES ",
 
             "INSERT INTO `%ssystem_upgrades` (`sys_id`, `tardis_id`, `uuid`, `architecture`, `chameleon`, `rooms`, `desktop`, `feature`, `saves`, `monitor`, `force_field`, `tools`, `locator`, `telepathic`, `stattenheim_remote`, `navigation`, `distance_1`, `distance_2`, `distance_3`, `inter_dimension`, `throttle`, `faster`, `rapid`, `warp`, `flight`) VALUES ",
 

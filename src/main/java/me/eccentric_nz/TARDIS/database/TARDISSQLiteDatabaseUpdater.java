@@ -497,8 +497,16 @@ class TARDISSQLiteDatabaseUpdater {
             ResultSet rsversion = statement.executeQuery(version_query);
             if (!rsversion.next()) {
                 i++;
-                String happy_alter = "ALTER TABLE " + prefix + "storage ADD versions TEXT DEFAULT '0,0,0,0,0,0,0,0,0'";
-                statement.executeUpdate(happy_alter);
+                String version_alter = "ALTER TABLE " + prefix + "storage ADD versions TEXT DEFAULT '0,0,0,0,0,0,0,0,0'";
+                statement.executeUpdate(version_alter);
+            }
+            // add claimed to 'structures'
+            String claimed_query = "SELECT sql FROM sqlite_master WHERE tbl_name = '" + prefix + "structures' AND sql LIKE '%claimed%'";
+            ResultSet rsclaimed = statement.executeQuery(claimed_query);
+            if (!rsclaimed.next()) {
+                i++;
+                String claimed_alter = "ALTER TABLE " + prefix + "structures ADD claimed INTEGER DEFAULT 0, tardis_id INTEGER DEFAULT 0";
+                statement.executeUpdate(claimed_alter);
             }
             // add y to archive
             String y_query = "SELECT sql FROM sqlite_master WHERE tbl_name = '" + prefix + "archive' AND sql LIKE '%y INTEGER%'";
