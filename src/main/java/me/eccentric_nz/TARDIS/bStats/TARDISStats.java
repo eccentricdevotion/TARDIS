@@ -39,7 +39,7 @@ public class TARDISStats {
         // how often each type of travel is used (saves, biome, cave, village, etc.)
         metrics.addCustomChart(new Metrics.AdvancedPie("travel_types", () -> new TravelTypes(plugin).getMap()));
         // TIPS or create_worlds
-        metrics.addCustomChart(new Metrics.SimplePie("using_tips", () -> !plugin.getConfig().getBoolean("creation.create_worlds", false) ? "true" : "false"));
+        metrics.addCustomChart(new Metrics.SimplePie("using_tips", () -> Boolean.toString(!plugin.getConfig().getBoolean("creation.create_worlds", false))));
         // End / Nether travel enabled
         metrics.addCustomChart(new Metrics.SimplePie("end_travel", () -> plugin.getConfig().getString("travel.the_end", "true")));
         metrics.addCustomChart(new Metrics.SimplePie("nether_travel", () -> plugin.getConfig().getString("travel.nether", "true")));
