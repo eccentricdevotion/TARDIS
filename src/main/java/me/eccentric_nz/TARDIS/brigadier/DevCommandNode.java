@@ -64,6 +64,13 @@ public class DevCommandNode {
                             EdibleLookup.print();
                             return Command.SINGLE_SUCCESS;
                         }))
+                .then(Commands.literal("map")
+                        .executes(ctx -> {
+                            if (ctx.getSource().getSender() instanceof Player player) {
+                                new MapCoords().getHeldMapBounds(player);
+                            }
+                            return Command.SINGLE_SUCCESS;
+                        }))
                 .then(Commands.literal("fade")
                         .executes(ctx -> {
                             if (ctx.getSource().getSender() instanceof Player player) {
