@@ -505,7 +505,7 @@ class TARDISSQLiteDatabaseUpdater {
             ResultSet rsclaimed = statement.executeQuery(claimed_query);
             if (!rsclaimed.next()) {
                 i++;
-                String claimed_alter = "ALTER TABLE " + prefix + "structures ADD claimed INTEGER DEFAULT 0, tardis_id INTEGER DEFAULT 0";
+                String claimed_alter = "ALTER TABLE " + prefix + "structures ADD claimed INTEGER DEFAULT 0";
                 statement.executeUpdate(claimed_alter);
             }
             // add y to archive
