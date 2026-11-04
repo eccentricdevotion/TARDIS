@@ -41,6 +41,7 @@ GitHub continuously integrated builds (updated when changes are pushed to this r
 ![bStats Players](https://img.shields.io/bstats/players/11698?style=for-the-badge)
 
 ![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/eccentricdevotion/TARDIS/total?style=for-the-badge&label=GitHub%20downloads&logo=github)
+![26.3 downloads](https://img.shields.io/github/downloads/eccentricdevotion/TARDIS/26.3/total?style=for-the-badge)
 ![26.2 downloads](https://img.shields.io/github/downloads/eccentricdevotion/TARDIS/26.2/total?style=for-the-badge)
 ![26.1.2 downloads](https://img.shields.io/github/downloads/eccentricdevotion/TARDIS/26.1/total?style=for-the-badge)
 ![1.21.11 downloads](https://img.shields.io/github/downloads/eccentricdevotion/TARDIS/1.21.11/total?style=for-the-badge)
