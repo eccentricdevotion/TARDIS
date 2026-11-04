@@ -138,7 +138,7 @@ public class SQL_VALUES {
             // storage
             "(%s, %s, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')",
             // structures
-            "('%s', '%s', '%s', %s, %s, %s)",
+            "('%s', '%s', '%s', %s, %s, %s, %s)",
             // system_upgrades
             "(%s, %s, '%s', %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
             // t_count

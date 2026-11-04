@@ -431,6 +431,14 @@ class TARDISMySQLDatabaseUpdater {
                 String happy_alter = "ALTER TABLE " + prefix + "storage ADD versions varchar(24) DEFAULT '0,0,0,0,0,0,0,0,0'";
                 statement.executeUpdate(happy_alter);
             }
+            // add claimed to 'structures'
+            String claimed_query = "SHOW COLUMNS FROM " + prefix + "structures LIKE 'claimed'";
+            ResultSet rsclaimed = statement.executeQuery(claimed_query);
+            if (!rsclaimed.next()) {
+                i++;
+                String claimed_alter = "ALTER TABLE " + prefix + "structures ADD claimed int(1) DEFAULT '0'";
+                statement.executeUpdate(claimed_alter);
+            }
             // add y to archive
             String y_query = "SHOW COLUMNS FROM " + prefix + "archive LIKE 'y'";
             ResultSet rsy = statement.executeQuery(y_query);
