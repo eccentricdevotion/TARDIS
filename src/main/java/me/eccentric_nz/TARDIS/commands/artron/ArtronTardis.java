@@ -23,7 +23,7 @@ public class ArtronTardis {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "CELL_NO_TRANSFER");
                 return;
             }
-            ArtronUtility.chargeCell(plugin, is, player, amount, "player_prefs");
+            ArtronUtility.chargeCell(plugin, is, player, amount, "tardis");
         }
     }
 }
