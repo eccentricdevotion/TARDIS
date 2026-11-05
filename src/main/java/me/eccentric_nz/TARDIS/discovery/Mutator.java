@@ -1,5 +1,6 @@
 package me.eccentric_nz.TARDIS.discovery;
 
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.WeightedChoice;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -15,35 +16,6 @@ public class Mutator {
 
     private final long seed;
     private final int radius;
-
-    private final Material[] tuffGradient = new Material[]{
-            Material.MUDDY_MANGROVE_ROOTS,
-            Material.GREEN_TERRACOTTA,
-            Material.MOSS_BLOCK,
-            Material.MOSSY_COBBLESTONE,
-            Material.COBBLESTONE
-    };
-    private final Material[] cobbleGradient = new Material[]{
-            Material.WARPED_HYPHAE,
-            Material.PURPLE_TERRACOTTA,
-            Material.BLACKSTONE,
-            Material.MUD,
-            Material.COBBLED_DEEPSLATE
-    };
-    private final Material[] netherGradient = new Material[]{
-            Material.CRIMSON_HYPHAE,
-            Material.NETHER_WART_BLOCK,
-            Material.NETHERRACK,
-            Material.CINNABAR,
-            Material.DRIPSTONE_BLOCK
-    };
-    private final Material[] endStoneGradient = new Material[]{
-            Material.CRYING_OBSIDIAN,
-            Material.PURPLE_TERRACOTTA,
-            Material.BROWN_MUSHROOM_BLOCK,
-            Material.SULFUR,
-            Material.POTENT_SULFUR
-    };
     private final StructureVariant variant;
 
     public Mutator(long seed, int radius, Location location) {
@@ -66,7 +38,7 @@ public class Mutator {
         BlockData carpet;
         switch (environment) {
             case NETHER -> {
-                gradient = netherGradient;
+                gradient = TARDIS.plugin.getBuildKeeper().getFade().getGradients().get(Material.DEAD_HORN_CORAL_BLOCK);
                 base = Material.DEAD_HORN_CORAL_BLOCK;
                 seed = Material.CRIMSON_HYPHAE;
                 wall = Material.MUD_BRICK_WALL;
@@ -79,7 +51,7 @@ public class Mutator {
                 carpet = Material.WARPED_ROOTS.createBlockData();
             }
             case THE_END -> {
-                gradient = endStoneGradient;
+                gradient = TARDIS.plugin.getBuildKeeper().getFade().getGradients().get(Material.END_STONE);
                 base = Material.END_STONE;
                 seed = Material.CRYING_OBSIDIAN;
                 wall = Material.END_STONE_BRICK_WALL;
@@ -93,7 +65,7 @@ public class Mutator {
             }
             default -> {
                 if (y < -10) {
-                    gradient = cobbleGradient;
+                    gradient = TARDIS.plugin.getBuildKeeper().getFade().getGradients().get(Material.COBBLESTONE);
                     base = Material.COBBLESTONE;
                     seed = Material.WARPED_HYPHAE;
                     wall = Material.COBBLESTONE_WALL;
@@ -105,7 +77,7 @@ public class Mutator {
                     decor = Material.SPORE_BLOSSOM;
                     carpet = Material.SCULK_VEIN.createBlockData("[down=true,up=false,east=false,north=false,south=false,west=false]");
                 } else {
-                    gradient = tuffGradient;
+                    gradient = TARDIS.plugin.getBuildKeeper().getFade().getGradients().get(Material.TUFF);
                     base = Material.TUFF;
                     seed = Material.MUDDY_MANGROVE_ROOTS;
                     wall = Material.TUFF_WALL;
