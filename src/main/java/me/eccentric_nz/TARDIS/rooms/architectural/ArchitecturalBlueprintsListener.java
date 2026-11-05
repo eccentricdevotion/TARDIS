@@ -129,15 +129,15 @@ public class ArchitecturalBlueprintsListener extends TARDISMenuListener {
                     UUID receiver = UUID.fromString(ComponentUtils.stripColour(head.getData(DataComponentTypes.LORE).lines().getFirst()));
                     // check receiving player doesn't have this permission already
                     if (!TARDISPermission.hasPermission(receiver, perm)) {
-                        // give a Blueprint disk to the player
-                        ItemStack gift = room.clone();
-                        gift.editPersistentDataContainer(pdc -> pdc.set(TARDIS.plugin.getTimeLordUuidKey(), TARDIS.plugin.getPersistentDataTypeUUID(), receiver));
-                        List<Component> lore = new ArrayList<>(gift.getData(DataComponentTypes.LORE).lines());
-                        lore.add(Component.text("Valid only for"));
-                        lore.add(Component.text(player.getName()));
-                        gift.setData(DataComponentTypes.LORE, ItemLore.lore(lore));
                         Player recipient = plugin.getServer().getPlayer(receiver);
+                        // give a Blueprint disk to the player
                         if (recipient != null && recipient.isOnline()) {
+                            ItemStack gift = room.clone();
+                            gift.editPersistentDataContainer(pdc -> pdc.set(TARDIS.plugin.getTimeLordUuidKey(), TARDIS.plugin.getPersistentDataTypeUUID(), receiver));
+                            List<Component> lore = new ArrayList<>(gift.getData(DataComponentTypes.LORE).lines());
+                            lore.add(Component.text("Valid only for"));
+                            lore.add(Component.text(recipient.getName()));
+                            gift.setData(DataComponentTypes.LORE, ItemLore.lore(lore));
                             recipient.give(gift);
                             String r = ComponentUtils.stripColour(gift.getData(DataComponentTypes.CUSTOM_NAME));
                             plugin.getMessenger().send(recipient, TardisModule.TARDIS, "GIVE_ITEM", player.getName(), "a " + r + " Blueprint Disk");
