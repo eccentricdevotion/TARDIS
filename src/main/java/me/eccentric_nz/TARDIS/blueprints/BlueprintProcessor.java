@@ -34,7 +34,7 @@ public class BlueprintProcessor {
         if (pdc.has(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID())) {
             // check disk UUID is same as player UUID
             UUID diskUuid = pdc.get(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID());
-            if (!diskUuid.equals(player.getUniqueId())) {
+            if (!player.getUniqueId().equals(diskUuid)) {
                 return;
             }
             if (pdc.has(plugin.getBlueprintKey(), PersistentDataType.STRING)) {
