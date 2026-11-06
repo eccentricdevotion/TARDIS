@@ -21,7 +21,7 @@ public class Mutator {
     public Mutator(long seed, int radius, Location location) {
         this.seed = seed;
         this.radius = radius;
-        variant = getVariant(location.getWorld().getEnvironment(), location.getBlockY());
+        variant = location != null ? getVariant(location.getWorld().getEnvironment(), location.getBlockY()) : null;
     }
 
     private StructureVariant getVariant(World.Environment environment, int y) {
@@ -94,10 +94,6 @@ public class Mutator {
         return new StructureVariant(gradient, base, seed, wall, floor, column, hanging, light, end, decor, carpet);
     }
 
-    public Material[][][] addBlends(Material[][][] array) {
-        return applyGradient(array, variant.gradient(), radius, seed);
-    }
-
     private int[][][] buildDistanceField(Material[][][] array) {
         int sizeX = array.length;
         int sizeY = array[0].length;
@@ -154,7 +150,7 @@ public class Mutator {
         return distance;
     }
 
-    public Material[][][] applyGradient(Material[][][] array, Material[] gradientBlocks, int blendRadius, long seed) {
+    public Material[][][] applyGradient(Material[][][] array, Material[] gradientBlocks) {
         int[][][] distanceField = buildDistanceField(array);
         SimplexOctaveGenerator noise = new SimplexOctaveGenerator(new Random(seed), 4);
         noise.setScale(0.15);
@@ -177,10 +173,10 @@ public class Mutator {
                         continue;
                     }
                     // outside influence radius - keep original block
-                    if (distance >= blendRadius) {
+                    if (distance >= radius) {
                         continue;
                     }
-                    double gradient = (double) distance / blendRadius;
+                    double gradient = (double) distance / radius;
                     // distort boundary with noise
                     gradient += noise.noise(x, y, z, 0.5, 0.5) * noiseStrength;
                     gradient = Math.clamp(gradient, 0.0, 1.0);

@@ -32,10 +32,10 @@ public class Temple {
             parts.getCorners();
             Mutator mutator = new Mutator(TARDISConstants.RANDOM.nextLong(), 10, location);
             StructureVariant variant = mutator.getVariant();
-            Material[][][] SW = mutator.addBlends(parts.getSouthWest());
-            Material[][][] SE = new Mutator(TARDISConstants.RANDOM.nextLong(), 10, location).addBlends(parts.getSouthEast());
-            Material[][][] NE = new Mutator(TARDISConstants.RANDOM.nextLong(), 10, location).addBlends(parts.getNorthEast());
-            Material[][][] NW = new Mutator(TARDISConstants.RANDOM.nextLong(), 10, location).addBlends(parts.getNorthWest());
+            Material[][][] SW = mutator.applyGradient(parts.getSouthWest(), variant.gradient());
+            Material[][][] SE = new Mutator(TARDISConstants.RANDOM.nextLong(), 10, location).applyGradient(parts.getSouthEast(), variant.gradient());
+            Material[][][] NE = new Mutator(TARDISConstants.RANDOM.nextLong(), 10, location).applyGradient(parts.getNorthEast(), variant.gradient());
+            Material[][][] NW = new Mutator(TARDISConstants.RANDOM.nextLong(), 10, location).applyGradient(parts.getNorthWest(), variant.gradient());
             // switch back to the main thread
             plugin.getServer().getScheduler().runTask(plugin, () -> {
                 Location start = location.clone().add(parts.getSePos().x(), parts.getSePos().y(), parts.getSePos().z());
@@ -90,7 +90,7 @@ public class Temple {
                     if (i > 22 && i < 25 && material != Material.AIR) {
                         Block below = block.getRelative(BlockFace.DOWN);
                         if (below.getType() == Material.AIR && TARDISConstants.RANDOM.nextInt(100) < 5) {
-                            placer.addVines(below, variant);
+                            placer.addVines(below, variant, 10);
                         }
                     }
                     if (material == Material.CLAY) {
@@ -104,7 +104,7 @@ public class Temple {
         }
         for (Block block : baseBlocks) {
             placer.addGlowLichen(block);
-            placer.addMossCarpet(block, variant);
+            placer.addCarpet(block, variant);
             placer.addHead(block, variant);
             // add suspicious gravel with TARDIS key and other TARDIS items
             placer.addBrushable(block, variant);
