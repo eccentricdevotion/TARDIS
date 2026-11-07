@@ -151,7 +151,7 @@ dependencies {
     compileOnly(files("libs/VaultAPI.jar"))
     compileOnly("org.geysermc.floodgate:api:2.2.5-SNAPSHOT")
     compileOnly("org.geysermc.geyser:api:2.11.0-SNAPSHOT")
-    compileOnly("org.jsoup:jsoup:1.23.2") {
+    compileOnly("org.jsoup:jsoup:1.24.1") {
         isTransitive = false
     }
     compileOnly("org.popcraft:chunky-common:1.5.4")
