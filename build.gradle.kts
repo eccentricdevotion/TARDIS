@@ -93,7 +93,7 @@ dependencies {
     compileOnly("com.sk89q.worldedit:worldedit-bukkit:7.4.7-SNAPSHOT") {
         isTransitive = false
     }
-    compileOnly("com.sk89q.worldguard:worldguard-core:7.0.21-SNAPSHOT") {
+    compileOnly("com.sk89q.worldguard:worldguard-core:7.0.22-SNAPSHOT") {
         isTransitive = false
     }
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.22-SNAPSHOT") {
