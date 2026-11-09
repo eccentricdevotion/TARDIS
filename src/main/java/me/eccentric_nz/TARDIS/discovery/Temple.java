@@ -90,7 +90,7 @@ public class Temple {
                     if (i > 22 && i < 25 && material != Material.AIR) {
                         Block below = block.getRelative(BlockFace.DOWN);
                         if (below.getType() == Material.AIR && TARDISConstants.RANDOM.nextInt(100) < 5) {
-                            placer.addVines(below, variant, 10);
+                            placer.addHangingLights(below, variant, 10);
                         }
                     }
                     if (material == Material.CLAY) {

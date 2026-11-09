@@ -2,6 +2,8 @@ package me.eccentric_nz.TARDIS.artron.costs;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonPrimitive;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
 import me.eccentric_nz.TARDIS.enumeration.Desktops;
@@ -10,6 +12,8 @@ import me.eccentric_nz.TARDIS.schematic.SchematicGZip;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.block.data.BlockData;
 
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 public class Processor {
@@ -37,7 +41,20 @@ public class Processor {
             }
             HashMap<String, Integer> blockTypes = new HashMap<>();
             // get JSON
-            JsonObject obj = SchematicGZip.getObject(plugin, "consoles", fileName, false);
+            JsonObject obj = null;
+            boolean fade = fileName.equals("fade");
+            if (fade) {
+                try {
+                    InputStream stream = plugin.getResource("corner.json");
+                    if (stream != null) {
+                        String s = new String(stream.readAllBytes(), StandardCharsets.UTF_8);
+                        obj = JsonParser.parseString(s).getAsJsonObject();
+                    }
+                } catch (Exception ignored) {
+                }
+            } else {
+                obj = SchematicGZip.getObject(plugin, "consoles", fileName, false);
+            }
             if (obj == null) {
                 plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "The supplied file [" + fileName + ".tschm] is not a TARDIS JSON schematic!");
             } else {
@@ -54,8 +71,14 @@ public class Processor {
                     for (int row = 0; row < w; row++) {
                         JsonArray r = floor.get(row).getAsJsonArray();
                         for (int col = 0; col < l; col++) {
-                            JsonObject c = r.get(col).getAsJsonObject();
-                            String bid = getMaterialAsString(c.get("data").getAsString());
+                            String bid;
+                            if (fade) {
+                                JsonPrimitive c = r.get(col).getAsJsonPrimitive();
+                                bid = c.getAsString();
+                            } else {
+                                JsonObject c = r.get(col).getAsJsonObject();
+                                bid = getMaterialAsString(c.get("data").getAsString());
+                            }
                             if (plugin.getBuildKeeper().getIgnoreBlocks().contains(bid)) {
                                 continue;
                             }

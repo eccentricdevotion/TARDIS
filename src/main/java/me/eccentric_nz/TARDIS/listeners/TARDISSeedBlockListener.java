@@ -27,6 +27,7 @@ import me.eccentric_nz.TARDIS.customblocks.*;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetInteractionCheck;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
+import me.eccentric_nz.TARDIS.discovery.StructureVariant;
 import me.eccentric_nz.TARDIS.enumeration.Desktops;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -96,6 +97,11 @@ public class TARDISSeedBlockListener implements Listener {
             seed.setSchematic(schm);
             seed.setWallType(wall);
             seed.setFloorType(floor);
+            if (lore.size() > 4) {
+                String line = TARDISStringUtils.getValuesFromWallString(ComponentUtils.stripColour(lore.get(4)));
+                StructureVariant variant = plugin.getBuildKeeper().getFadeVariants().getLookup().get(line);
+                seed.setVariant(variant);
+            }
             Location l = block.getLocation();
             plugin.getBuildKeeper().getTrackTARDISSeed().put(l, seed);
             plugin.getMessenger().send(player, TardisModule.TARDIS, "SEED_PLACE");
@@ -165,7 +171,7 @@ public class TARDISSeedBlockListener implements Listener {
                     }
                 }
                 NamespacedKey finalModel = model;
-        is.editPersistentDataContainer(pdc -> pdc.set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING, finalModel.getKey()));
+                is.editPersistentDataContainer(pdc -> pdc.set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING, finalModel.getKey()));
                 is.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toGold("TARDIS Seed Block"));
                 ItemLore.Builder lore = ItemLore.lore();
                 lore.addLine(Component.text(console));

@@ -19,7 +19,11 @@ public final class VoskLoader implements PluginLoader {
         ).build());
         // fetch the core Vosk components
         resolver.addDependency(new Dependency(
-                new DefaultArtifact("com.alphacephei:vosk:0.3.38"), null
+                new DefaultArtifact("com.alphacephei:vosk:0.3.45"), null
+        ));
+        // add jsoup
+        resolver.addDependency(new Dependency(
+                new DefaultArtifact("org.jsoup:jsoup:1.24.1"), null
         ));
         classpathBuilder.addLibrary(resolver);
     }

@@ -68,6 +68,13 @@ public class TARDISCraftListener implements Listener {
                     lore.add(Component.text("Chameleon: FACTORY"));
                     is.setData(DataComponentTypes.LORE, ItemLore.lore(lore));
                     ci.setResult(is);
+                    if (is.getType() == Material.ORANGE_POPLAR_LEAVES) {
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                            // send a message about further configuration
+                            Player player = (Player) event.getViewers().getFirst();
+                            plugin.getMessenger().sendColouredCommand(player, "FADE_CONFIG", "/tardis fade", plugin);
+                        }, 60L);
+                    }
                 } else if (is.getType().equals(Material.GLOWSTONE_DUST)) {
                     if (DiskCircuit.getCircuitNames().contains(dn)) {
                         // which circuit is it?

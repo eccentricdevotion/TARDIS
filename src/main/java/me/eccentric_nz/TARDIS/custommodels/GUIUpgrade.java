@@ -27,5 +27,9 @@ public record GUIUpgrade() {
     public static final GUIData REPAIR_CONSOLE = new GUIData(GuiVariant.REPAIR_CONSOLE.getKey(), 47, Material.BOWL);
     public static final GUIData CLEAN = new GUIData(GuiVariant.CLEAN.getKey(), 48, Material.BOWL);
     public static final GUIData CONSOLE_ROTOR = new GUIData(GuiVariant.CONSOLE.getKey(), 49, Material.BOWL);
+    // TODO make model definitions for these additions
+    public static final GUIData BUILTIN = new GUIData(GuiVariant.BUILTIN.getKey(), 50, Material.BOWL);
+    public static final GUIData CUSTOM = new GUIData(GuiVariant.CUSTOM.getKey(), 51, Material.BOWL);
+    public static final GUIData FADE = new GUIData(GuiVariant.FADE.getKey(), 52, Material.BOWL);
     public static final GUIData CLOSE = new GUIData(GuiVariant.CLOSE.getKey(), 53, Material.BOWL);
 }

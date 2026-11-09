@@ -29,6 +29,9 @@ import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.TardisCommand;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.Updateable;
+import me.eccentric_nz.TARDIS.floodgate.FloodgateFadesForm;
+import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
+import me.eccentric_nz.TARDIS.schematic.FadesDialog;
 import me.eccentric_nz.TARDIS.travel.ComehereAction;
 import me.eccentric_nz.TARDIS.travel.ComehereRequest;
 import me.eccentric_nz.TARDIS.update.TARDISUpdateBlocks;
@@ -388,6 +391,21 @@ public class TardisCommandNode {
                                     }
                                     return Command.SINGLE_SUCCESS;
                                 })))
+                .then(Commands.literal("fade")
+                        .executes(ctx -> {
+                            // open a dialog / form about further configuration
+                            if (ctx.getSource().getSender() instanceof Player player) {
+                                if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(player)) {
+                                    // send form
+                                    new FloodgateFadesForm(plugin, player.getUniqueId()).send();
+                                } else {
+                                    // open dialog
+                                    player.showDialog(new FadesDialog(plugin).create());
+                                }
+                            }
+                            return Command.SINGLE_SUCCESS;
+                        })
+                )
                 .then(Commands.literal("find")
                         .executes(ctx -> {
                             Pair<Player, Integer> c = TardisUtility.check(plugin, ctx.getSource().getSender(), TardisCommand.find);

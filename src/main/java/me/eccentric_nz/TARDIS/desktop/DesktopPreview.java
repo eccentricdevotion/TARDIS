@@ -58,6 +58,10 @@ public class DesktopPreview {
     }
 
     private boolean hasPreview(Schematic schematic) {
+        // TODO remove check after fade console is previewed correctly
+        if (schematic.getPermission().equals("fade")) {
+            return true;
+        }
         ResultSetTransmat rst = new ResultSetTransmat(plugin, schematic.getPreview(), schematic.getPermission());
         return rst.resultSet();
     }

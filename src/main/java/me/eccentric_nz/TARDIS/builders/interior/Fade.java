@@ -15,10 +15,7 @@ import me.eccentric_nz.TARDIS.discovery.Placer;
 import me.eccentric_nz.TARDIS.discovery.StructureVariant;
 import me.eccentric_nz.TARDIS.enumeration.UseClay;
 import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.BlockState;
@@ -45,7 +42,6 @@ public class Fade {
     private final Player player;
     private UseClay use_clay;
     private int counter = 0;
-    private double div = 1.0d;
     private BossBar bb;
     private final List<BlockData> bars = new ArrayList<>();
     private final HashMap<String, Object> set = new HashMap<>();
@@ -62,6 +58,9 @@ public class Fade {
         } catch (IllegalArgumentException e) {
             use_clay = UseClay.WOOL;
         }
+        Chunk c = location.getChunk();
+        String chunk = location.getWorld().getKey().asString() + ":" + c.getX() + ":" + c.getZ();
+        set.put("chunk", chunk);
         where.put("tardis_id", id);
     }
 
@@ -127,7 +126,7 @@ public class Fade {
         int h = materials.length;
         int r = materials[0].length;
         int w = materials[0][0].length;
-        div = (h + 1.0d) * w * (d + 1.0d);
+        double div = (h + 1.0d) * w * (d + 1.0d);
         for (int i = 0; i < h; i++) {
             for (int j = 0; j < r; j++) {
                 for (int k = 0; k < w; k++) {
@@ -140,11 +139,11 @@ public class Fade {
                     } else {
                         state.setType(material);
                     }
-                    // TODO check roof height
-                    if (i > 22 && i < 25 && material != Material.AIR) {
+                    // add hanging lights
+                    if (i > 12 && i < 15 && material != Material.AIR) {
                         Block below = block.getRelative(BlockFace.DOWN);
                         if (below.getType() == Material.AIR && TARDISConstants.RANDOM.nextInt(100) < 4) {
-                            placer.addVines(below, variant, 5);
+                            placer.addHangingLights(below, variant, 5);
                         }
                     }
                     if (material == Material.CLAY) {
@@ -230,7 +229,6 @@ public class Fade {
                                 }
                             }
                         }
-                        // TODO make SEED block
                         String control = "ORANGE_POPLAR_LEAVES";
                         empty[1][4][4] = control;
                         empty[1][4][5] = control;
@@ -262,7 +260,7 @@ public class Fade {
                         plugin.getQueryFactory().insertSyncControl(dbID, 22, controlLocation, 0);
                         ((Sign) state).setWaxed(true);
                     }
-                    if (material == Material.MUSHROOM_STEM) { // mushroom stem for repeaters
+                    if (material == Material.RED_MUSHROOM_BLOCK) { // red mushroom block for repeaters
                         // save repeater location
                         String repeater = world.getKey().asString() + ":" + (x + j) + ":" + (y + i) + ":" + (z + k);
                         BlockData data = Material.REPEATER.createBlockData();

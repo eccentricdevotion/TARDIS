@@ -21,7 +21,6 @@ import io.papermc.paper.datacomponent.item.ItemLore;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.custommodels.GUIChameleonConstructor;
-import me.eccentric_nz.TARDIS.custommodels.GUIChameleonPresets;
 import me.eccentric_nz.TARDIS.custommodels.GUIItemFactory;
 import me.eccentric_nz.TARDIS.custommodels.GUIUpgrade;
 import me.eccentric_nz.TARDIS.enumeration.Desktops;
@@ -113,9 +112,13 @@ public class PluginThemeInventory extends DesktopThemeInventory {
         console.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Customise Console"));
         stack[GUIUpgrade.CONSOLE_ROTOR.slot()] = console;
         // custom consoles page
-        ItemStack custom = ItemStack.of(GUIChameleonPresets.GO_TO_PAGE_2.material(), 1);
-        custom.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_PAGE_2", "Go to page 2")));
-        stack[51] = custom;
+        ItemStack custom = ItemStack.of(GUIUpgrade.CUSTOM.material(), 1);
+        custom.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_CUSTOM", "Go to custom desktops")));
+        stack[GUIUpgrade.CUSTOM.slot()] = custom;
+        // fade consoles page
+        ItemStack fade = ItemStack.of(GUIUpgrade.FADE.material(), 1);
+        fade.setData(DataComponentTypes.CUSTOM_NAME, Component.text(plugin.getLanguage().getString("BUTTON_FADE", "Go to fade desktops")));
+        stack[GUIUpgrade.FADE.slot()] = fade;
         // close
         stack[GUIUpgrade.CLOSE.slot()] = GUIItemFactory.close();
 

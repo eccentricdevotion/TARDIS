@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.builders.interior;
 
+import me.eccentric_nz.TARDIS.discovery.StructureVariant;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import org.bukkit.Material;
 
@@ -27,6 +28,7 @@ public class TARDISBuildData {
     private Schematic schematic;
     private Material wallType;
     private Material floorType;
+    private StructureVariant variant;
 
     public Schematic getSchematic() {
         return schematic;
@@ -50,5 +52,23 @@ public class TARDISBuildData {
 
     public void setFloorType(Material floorType) {
         this.floorType = floorType;
+    }
+
+    /**
+     * Sets the StructureVariant for the Fade schematic.
+     *
+     * @param variant the player's chosen Fade variant.
+     */
+    public void setVariant(StructureVariant variant) {
+        this.variant = variant;
+    }
+
+    /**
+     * Gets the StructureVariant associated with the Fade schematic.
+     *
+     * @return the Fade variant.
+     */
+    public StructureVariant getVariant() {
+        return variant;
     }
 }

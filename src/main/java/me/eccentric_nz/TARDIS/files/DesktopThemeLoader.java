@@ -61,7 +61,7 @@ public class DesktopThemeLoader {
         Desktops.getBY_NAMES().put("DELTA", new Schematic("CRYING_OBSIDIAN", "delta", "Nether Delta Console", ConsoleSize.MEDIUM, false, TardisLight.LAMP, false, -19));
         // DELUXE schematic designed by Lord_Rahl and killeratnight at mcnovus.net
         Desktops.getBY_NAMES().put("DELUXE", new Schematic("DIAMOND_BLOCK", "deluxe", "Supersized Deluxe Console", ConsoleSize.TALL, true, TardisLight.TENTH, false, -20));
-        Desktops.getBY_NAMES().put("DINER", new Schematic("STRIPPED_CRIMSON_HYPHAE", "diner", "Clara's diner", ConsoleSize.WIDE, false, TardisLight.CLASSIC, false, -62));
+        Desktops.getBY_NAMES().put("DINER", new Schematic("STRIPPED_CRIMSON_HYPHAE", "diner", "Clara's Diner", ConsoleSize.WIDE, false, TardisLight.CLASSIC, false, -62));
         Desktops.getBY_NAMES().put("DIVISION", new Schematic("PINK_GLAZED_TERRACOTTA", "division", "The Division Interuniverse Console", ConsoleSize.MEDIUM, false, TardisLight.LANTERN, false, -21));
         // EIGHTH based on a design by DT10 - https://www.youtube.com/watch?v=dMZ-yqHJDLo
         Desktops.getBY_NAMES().put("EIGHTH", new Schematic("CHISELED_STONE_BRICKS", "eighth", "8th Doctor's Console", ConsoleSize.MASSIVE, false, TardisLight.LANTERN, 65, false, -61));
@@ -71,6 +71,7 @@ public class DesktopThemeLoader {
         Desktops.getBY_NAMES().put("ENDER", new Schematic("PURPUR_BLOCK", "ender", "Ender Console", ConsoleSize.SMALL, true, TardisLight.LANTERN, false, -23));
         // FACTORY designed by Razihel
         Desktops.getBY_NAMES().put("FACTORY", new Schematic("YELLOW_CONCRETE_POWDER", "factory", "Factory Console (1st Doctor)", ConsoleSize.MEDIUM, false, TardisLight.CLASSIC, 65, false, -24));
+        Desktops.getBY_NAMES().put("FADE", new Schematic("ORANGE_POPLAR_LEAVES", "fade", "A procedurally generated gradient console", ConsoleSize.MEDIUM, false, TardisLight.CLASSIC, 63, false, -64));
         // FIFTEENTH schematic designed by airomis (player at thatsnotacreeper.com)
         Desktops.getBY_NAMES().put("FIFTEENTH", new Schematic("OCHRE_FROGLIGHT", "fifteenth", "15th Doctor's Console", ConsoleSize.MASSIVE, true, TardisLight.THIRTEENTH, false, -25));
         // FUGITIVE based on Ruth TARDIS designed by DT10 - https://www.youtube.com/watch?v=aykwXVemSs8

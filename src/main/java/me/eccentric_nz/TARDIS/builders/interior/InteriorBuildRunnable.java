@@ -167,7 +167,7 @@ public class InteriorBuildRunnable implements Runnable {
                     resetz = pos.getCentreZ();
                     // get the correct chunk for ARS
                     Location cl = new Location(world, startx, starty, startz);
-                    Chunk c = world.getChunkAt(cl);
+                    Chunk c = cl.getChunk();
                     while (!c.isLoaded()) {
                         c.load(true);
                     }

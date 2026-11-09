@@ -18,12 +18,12 @@ import me.eccentric_nz.TARDIS.brigadier.suggestions.BlockSuggestions;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import me.eccentric_nz.TARDIS.commands.dev.*;
 import me.eccentric_nz.TARDIS.commands.dev.lists.*;
+import me.eccentric_nz.TARDIS.commands.dev.wiki.ChoiceDialog;
 import me.eccentric_nz.TARDIS.commands.dev.wiki.WikiRecipeCommand;
 import me.eccentric_nz.TARDIS.commands.tardis.update.UpdateBlocksCommand;
 import me.eccentric_nz.TARDIS.discovery.*;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.monitor.MonitorSnapshot;
-import me.eccentric_nz.TARDIS.playerprefs.PreferencesDialog;
 import me.eccentric_nz.TARDIS.rooms.games.pong.GameDisplay;
 import me.eccentric_nz.TARDIS.rooms.games.rockpaperscissors.Letters;
 import me.eccentric_nz.TARDIS.rooms.kitchen.EdibleLookup;
@@ -277,7 +277,8 @@ public class DevCommandNode {
                 .then(Commands.literal("dialog")
                         .executes(ctx -> {
                             if (ctx.getSource().getSender() instanceof Player player) {
-                                Dialog dialog = new PreferencesDialog(plugin, player.getUniqueId()).create();
+//                                Dialog dialog = new PreferencesDialog(plugin, player.getUniqueId()).create();
+                                Dialog dialog = new ChoiceDialog().create();
                                 Audience.audience(player).showDialog(dialog);
                             }
                             return Command.SINGLE_SUCCESS;

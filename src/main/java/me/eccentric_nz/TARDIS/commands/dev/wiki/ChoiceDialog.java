@@ -21,11 +21,15 @@ import io.papermc.paper.registry.data.dialog.ActionButton;
 import io.papermc.paper.registry.data.dialog.DialogBase;
 import io.papermc.paper.registry.data.dialog.action.DialogAction;
 import io.papermc.paper.registry.data.dialog.type.DialogType;
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.handles.wiki.SearchDialog;
 import me.eccentric_nz.TARDIS.info.dialog.CategoryDialog;
+import me.eccentric_nz.TARDIS.playerprefs.PreferencesDialog;
+import me.eccentric_nz.TARDIS.schematic.FadesDialog;
 import me.eccentric_nz.TARDIS.travel.dialog.TerminalDialog;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
+import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +38,9 @@ public class ChoiceDialog {
 
     public Dialog create() {
         DialogBase dialogData = DialogBase.create(Component.text("Dialogs"), null, true, true, DialogBase.DialogAfterAction.CLOSE, List.of(), List.of());
+        DialogAction fadeAction = DialogAction.staticAction(ClickEvent.callback(
+                audience -> audience.showDialog(new FadesDialog(TARDIS.plugin).create())
+        ));
         DialogAction terminalAction = DialogAction.staticAction(ClickEvent.callback(
                 audience -> audience.showDialog(new TerminalDialog().create())
         ));
@@ -46,15 +53,22 @@ public class ChoiceDialog {
         DialogAction bitmapAction = DialogAction.staticAction(ClickEvent.callback(
                 audience -> audience.showDialog(new BitmapDialog().create())
         ));
+        DialogAction prefsAction = DialogAction.staticAction(ClickEvent.callback(
+                audience -> audience.showDialog(new PreferencesDialog(TARDIS.plugin, ((Player) audience).getUniqueId()).create())
+        ));
+        ActionButton fadeButton = ActionButton.create(Component.text("Fades"), null, 150, fadeAction);
         ActionButton terminalButton = ActionButton.create(Component.text("Terminal"), null, 150, terminalAction);
         ActionButton infoButton = ActionButton.create(Component.text("TIS"), null, 150, infoAction);
         ActionButton wikiButton = ActionButton.create(Component.text("Wiki"), null, 150, wikiAction);
         ActionButton bitmapButton = ActionButton.create(Component.text("Bitmap"), null, 150, bitmapAction);
+        ActionButton prefsButton = ActionButton.create(Component.text("Preferences"), null, 150, prefsAction);
         List<ActionButton> actions = new ArrayList<>();
+        actions.add(fadeButton);
         actions.add(terminalButton);
         actions.add(infoButton);
         actions.add(wikiButton);
         actions.add(bitmapButton);
+        actions.add(prefsButton);
         return Dialog.create(builder -> builder.empty()
                 .base(dialogData)
                 .type(DialogType.multiAction(actions, null, 1))

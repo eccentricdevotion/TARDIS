@@ -32,7 +32,7 @@ public class Placer {
         }, 20L);
     }
 
-    public void addVines(Block below, StructureVariant variant, int length) {
+    public void addHangingLights(Block below, StructureVariant variant, int length) {
         int r = TARDISConstants.RANDOM.nextInt(length);
         if (r < 1) {
             // set decor
