@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.desktop;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.interior.PreviewBuildRunnable;
+import me.eccentric_nz.TARDIS.builders.interior.PreviewFade;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTransmat;
 import me.eccentric_nz.TARDIS.enumeration.Desktops;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
@@ -45,9 +46,13 @@ public class DesktopPreview {
                 if (schematic.getPreview() < 0 && !hasPreview(schematic)) {
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                         plugin.getMessenger().send(plugin.getConsole(), TardisModule.TARDIS, "PREVIEW_SCHM", schematic.getPermission());
-                        PreviewBuildRunnable builder = new PreviewBuildRunnable(plugin, schematic, world);
-                        int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, builder, 1L, 3L);
-                        builder.setTask(task);
+                        if (schematic.getPermission().equals("fade")) {
+                            new PreviewFade(plugin, plugin.getBuildKeeper().getFadeVariants().getLookup().get("SMOOTH_SANDSTONE"), world).build();
+                        } else {
+                            PreviewBuildRunnable builder = new PreviewBuildRunnable(plugin, schematic, world);
+                            int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, builder, 1L, 3L);
+                            builder.setTask(task);
+                        }
                     }, delay);
                     delay += 1200;
                 }
@@ -58,10 +63,6 @@ public class DesktopPreview {
     }
 
     private boolean hasPreview(Schematic schematic) {
-        // TODO remove check after fade console is previewed correctly
-        if (schematic.getPermission().equals("fade")) {
-            return true;
-        }
         ResultSetTransmat rst = new ResultSetTransmat(plugin, schematic.getPreview(), schematic.getPermission());
         return rst.resultSet();
     }

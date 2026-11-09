@@ -116,19 +116,18 @@ public class PreviewBuildRunnable implements Runnable {
                 d = dimensions.get("length").getAsInt() - 1;
                 div = (h + 1.0d) * w * (d + 1.0d);
                 // calculate startx, starty, startz
-                TARDISInteriorPositioning tintpos = new TARDISInteriorPositioning(plugin);
-                TIPSData pos = tintpos.getTIPSData(tips);
+                TARDISInteriorPositioning tintPos = new TARDISInteriorPositioning(plugin);
+                TIPSData pos = tintPos.getTIPSData(tips);
                 startx = pos.getCentreX();
                 resetx = pos.getCentreX();
                 startz = pos.getCentreZ();
                 resetz = pos.getCentreZ();
                 // get the correct chunk for ARS
-                Location cl = new Location(world, startx, starty, startz);
-                Chunk c = world.getChunkAt(cl);
+                location = new Location(world, startx, starty, startz);
+                Chunk c = world.getChunkAt(location);
                 while (!c.isLoaded()) {
                     c.load(true);
                 }
-                location = new Location(world, startx, starty, startz);
                 // get input array
                 arr = obj.get("input").getAsJsonArray();
                 running = true;
