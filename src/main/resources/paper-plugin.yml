@@ -7,7 +7,7 @@ bootstrapper: me.eccentric_nz.TARDIS.Bootstrap
 loader: me.eccentric_nz.TARDIS.handles.voice.VoskLoader
 dependencies:
   server:
-    Blocklocker:
+    BlockLocker:
       load: BEFORE
       required: false
     BlueMap:

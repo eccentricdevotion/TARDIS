@@ -10,9 +10,6 @@ dev-url: http://github.com/eccentricdevotion/TARDIS/
 url: http://tardis.pages.dev/
 version: 7.1.4@buildNumber@
 api-version: '26.3'
-libraries:
-  - org.jsoup:jsoup:1.21.1
-  - com.alphacephei:vosk:0.3.45
 permissions:
   tardis.admin:
     description: Allow players access to the TARDIS admin commands.
