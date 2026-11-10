@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.builders.interior;
 
 import me.eccentric_nz.TARDIS.discovery.StructureVariant;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import org.bukkit.Material;
 
@@ -28,6 +29,7 @@ public class TARDISBuildData {
     private Schematic schematic;
     private Material wallType;
     private Material floorType;
+    private ChameleonPreset preset;
     private StructureVariant variant;
 
     public Schematic getSchematic() {
@@ -52,6 +54,14 @@ public class TARDISBuildData {
 
     public void setFloorType(Material floorType) {
         this.floorType = floorType;
+    }
+
+    public ChameleonPreset getPreset() {
+        return preset;
+    }
+
+    public void setPreset(ChameleonPreset preset) {
+        this.preset = preset;
     }
 
     /**

@@ -28,6 +28,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetInteractionCheck;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.discovery.StructureVariant;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.Desktops;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -97,6 +98,11 @@ public class TARDISSeedBlockListener implements Listener {
             seed.setSchematic(schm);
             seed.setWallType(wall);
             seed.setFloorType(floor);
+            if (lore.size() > 3) {
+                String line = TARDISStringUtils.getValuesFromWallString(ComponentUtils.stripColour(lore.get(3)));
+                ChameleonPreset preset = ChameleonPreset.valueOf(line);
+                seed.setPreset(preset);
+            }
             if (lore.size() > 4) {
                 String line = TARDISStringUtils.getValuesFromWallString(ComponentUtils.stripColour(lore.get(4)));
                 StructureVariant variant = plugin.getBuildKeeper().getFadeVariants().getLookup().get(line);
@@ -177,6 +183,12 @@ public class TARDISSeedBlockListener implements Listener {
                 lore.addLine(Component.text(console));
                 lore.addLine(Component.text("Walls: " + data.getWallType().toString()));
                 lore.addLine(Component.text("Floors: " + data.getFloorType().toString()));
+                if (data.getPreset() != null) {
+                    lore.addLine(Component.text("Chameleon: " + data.getPreset().toString()));
+                }
+                if (data.getVariant() != null) {
+                    lore.addLine(Component.text("Gradient: " + data.getVariant().base().toString()));
+                }
                 is.setData(DataComponentTypes.LORE, lore.build());
                 // set the block to AIR
                 event.getBlock().setBlockData(TARDISConstants.AIR);
