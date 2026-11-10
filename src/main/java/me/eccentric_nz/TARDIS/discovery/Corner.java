@@ -27,8 +27,6 @@ import org.bukkit.entity.Player;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.UUID;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class Corner {
 
@@ -107,7 +105,6 @@ public class Corner {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "SCHM_MULTIPLE");
             return;
         }
-        Pattern pattern = Pattern.compile("\\[.*?\\]");
         // create JSON arrays for block data
         JsonArray levels = new JsonArray();
         // loop through the blocks inside this cube

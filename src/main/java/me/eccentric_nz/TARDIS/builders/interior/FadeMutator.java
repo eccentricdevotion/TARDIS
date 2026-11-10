@@ -1,14 +1,9 @@
 package me.eccentric_nz.TARDIS.builders.interior;
 
-import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.discovery.BlockPos;
 import me.eccentric_nz.TARDIS.discovery.StructureVariant;
-import me.eccentric_nz.TARDIS.discovery.WaterFeature;
-import me.eccentric_nz.TARDIS.utility.WeightedChoice;
-import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.World;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.util.noise.SimplexOctaveGenerator;
 
