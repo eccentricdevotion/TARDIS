@@ -13,7 +13,6 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.BlockState;
-import org.bukkit.block.Sign;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Directional;
 
@@ -169,8 +168,7 @@ public class PreviewFade {
                         state.setBlockData(Material.OAK_BUTTON.createBlockData("[facing=west,face=floor]"));
                     }
                     if (material == Material.OAK_WALL_SIGN) {
-                        state.setBlockData(Material.OAK_SIGN.createBlockData("[facing=north]"));
-                        ((Sign) state).setWaxed(true);
+                        state.setBlockData(Material.OAK_WALL_SIGN.createBlockData("[facing=north]"));
                     }
                     if (material == Material.RED_MUSHROOM_BLOCK) { // red mushroom block for repeaters
                         BlockData data = Material.REPEATER.createBlockData();

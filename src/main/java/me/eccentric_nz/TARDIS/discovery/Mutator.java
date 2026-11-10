@@ -11,6 +11,7 @@ import org.bukkit.util.noise.SimplexOctaveGenerator;
 import java.util.ArrayDeque;
 import java.util.Queue;
 import java.util.Random;
+import java.util.Set;
 
 public class Mutator {
 
@@ -100,6 +101,13 @@ public class Mutator {
         return new StructureVariant(gradient, base, seed, wall, floor, column, hanging, light, end, decor, carpet);
     }
 
+    private final Set<Material> notThese = Set.of(Material.AIR, Material.CLAY, Material.JUKEBOX, Material.NOTE_BLOCK,
+            Material.COMMAND_BLOCK, Material.CRAFTING_TABLE, Material.CHEST, Material.IRON_BARS, Material.REPEATER,
+            Material.REDSTONE_WALL_TORCH, Material.REDSTONE_WIRE, Material.STICKY_PISTON, Material.PISTON_HEAD,
+            Material.SMOOTH_QUARTZ_SLAB, Material.SMOOTH_QUARTZ_STAIRS, Material.OAK_WALL_SIGN, Material.OAK_BUTTON,
+            Material.STONE_BUTTON, Material.RED_MUSHROOM_BLOCK, Material.LEVER, Material.IRON_DOOR, Material.BLACK_WOOL,
+            Material.STONE_PRESSURE_PLATE, Material.STONE_SLAB, Material.BLUE_WOOL);
+
     private int[][][] buildDistanceField(Material[][][] array) {
         int sizeX = array.length;
         int sizeY = array[0].length;
@@ -166,11 +174,11 @@ public class Mutator {
                 for (int z = 0; z < array[x][y].length; z++) {
                     Material current = array[x][y][z];
                     // never modify air
-                    if (current == Material.AIR) {
+                    if (notThese.contains(current)) {
                         continue;
                     }
                     // keep seed blocks / walls / clay unchanged
-                    if (current == variant.seed() || current == variant.wall() || current == Material.CLAY) {
+                    if (current == variant.seed() || current == variant.wall()) {
                         continue;
                     }
                     int distance = distanceField[x][y][z];
