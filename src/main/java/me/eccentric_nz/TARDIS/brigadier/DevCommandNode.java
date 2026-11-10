@@ -87,10 +87,19 @@ public class DevCommandNode {
                         .then(Commands.literal("save")
                                 .executes(ctx -> {
                                     if (ctx.getSource().getSender() instanceof Player player) {
-                                        new Corner().save(plugin, player);
+                                        new Corner().save(plugin, player, false);
                                     }
                                     return Command.SINGLE_SUCCESS;
-                                })))
+                                })
+                                .then(Commands.argument("bd", BoolArgumentType.bool())
+                                        .executes(ctx -> {
+                                            if (ctx.getSource().getSender() instanceof Player player) {
+                                                boolean bd = BoolArgumentType.getBool(ctx, "bd");
+                                                new Corner().save(plugin, player, bd);
+                                            }
+                                            return Command.SINGLE_SUCCESS;
+                                        })
+                                )))
                 .then(Commands.literal("add_regions")
                         .executes(ctx -> {
                             new AddRegionsCommand(plugin).doCheck(ctx.getSource().getSender());

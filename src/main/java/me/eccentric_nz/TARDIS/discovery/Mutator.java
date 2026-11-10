@@ -25,12 +25,6 @@ public class Mutator {
         variant = location != null ? getVariant(location.getWorld().getEnvironment(), location.getBlockY()) : null;
     }
 
-    public Mutator(long seed, int radius, StructureVariant variant) {
-        this.seed = seed;
-        this.radius = radius;
-        this.variant = variant;
-    }
-
     private StructureVariant getVariant(World.Environment environment, int y) {
         Material[] gradient;
         Material base;
@@ -101,12 +95,7 @@ public class Mutator {
         return new StructureVariant(gradient, base, seed, wall, floor, column, hanging, light, end, decor, carpet);
     }
 
-    private final Set<Material> notThese = Set.of(Material.AIR, Material.CLAY, Material.JUKEBOX, Material.NOTE_BLOCK,
-            Material.COMMAND_BLOCK, Material.CRAFTING_TABLE, Material.CHEST, Material.IRON_BARS, Material.REPEATER,
-            Material.REDSTONE_WALL_TORCH, Material.REDSTONE_WIRE, Material.STICKY_PISTON, Material.PISTON_HEAD,
-            Material.SMOOTH_QUARTZ_SLAB, Material.SMOOTH_QUARTZ_STAIRS, Material.OAK_WALL_SIGN, Material.OAK_BUTTON,
-            Material.STONE_BUTTON, Material.RED_MUSHROOM_BLOCK, Material.LEVER, Material.IRON_DOOR, Material.BLACK_WOOL,
-            Material.STONE_PRESSURE_PLATE, Material.STONE_SLAB, Material.BLUE_WOOL);
+    private final Set<Material> notThese = Set.of(Material.AIR, Material.CLAY);
 
     private int[][][] buildDistanceField(Material[][][] array) {
         int sizeX = array.length;

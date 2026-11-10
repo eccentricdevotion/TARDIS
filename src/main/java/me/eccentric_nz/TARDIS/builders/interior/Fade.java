@@ -10,7 +10,6 @@ import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.customblocks.TARDISBlockDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAchievements;
-import me.eccentric_nz.TARDIS.discovery.Mutator;
 import me.eccentric_nz.TARDIS.discovery.Placer;
 import me.eccentric_nz.TARDIS.discovery.StructureVariant;
 import me.eccentric_nz.TARDIS.enumeration.UseClay;
@@ -30,8 +29,6 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class Fade {
 
@@ -68,8 +65,8 @@ public class Fade {
         // async task to populate box with block fade
         plugin.getServer().getScheduler().runTaskAsynchronously(plugin, () -> {
             String[][][] template = new Template().load(plugin);
-            Material[][][] base = setBaseBlocks(template, variant);
-            Material[][][] fade = new Mutator(TARDISConstants.RANDOM.nextLong(), 7, variant).applyGradient(base, variant.gradient());
+            BlockData[][][] base = setBaseBlocks(template, variant);
+            BlockData[][][] fade = new FadeMutator(TARDISConstants.RANDOM.nextLong(), 7, variant).applyGradient(base, variant.gradient());
             // switch back to the main thread
             plugin.getServer().getScheduler().runTask(plugin, () -> {
                 place(location, fade, variant);
@@ -82,38 +79,33 @@ public class Fade {
         });
     }
 
-    public Material[][][] setBaseBlocks(String[][][] array, StructureVariant variant) {
-        Material[][][] materials = new Material[array.length][array[0].length][array[0][0].length];
-        Pattern pattern = Pattern.compile("\\[.*?\\]");
+    public BlockData[][][] setBaseBlocks(String[][][] array, StructureVariant variant) {
+        BlockData[][][] data = new BlockData[array.length][array[0].length][array[0][0].length];
+        BlockData base = variant.base().createBlockData();
+        BlockData wall = variant.wall().createBlockData();
+        BlockData seed = variant.seed().createBlockData();
         for (int i = 0; i < array.length; i++) {
             for (int j = 0; j < array[i].length; j++) {
                 for (int k = 0; k < array[i][j].length; k++) {
                     counter++;
-                    String material = array[i][j][k];
-                    if (material.contains("IRON_BARS")) {
-                        materials[i][j][k] = Material.IRON_BARS;
-                        // add BlockData to bars list
-                        Matcher matcher = pattern.matcher(material);
-                        if (matcher.find()) {
-                            bars.add(Material.IRON_BARS.createBlockData(matcher.group()));
-                        }
-                    } else if (material.equals("TUFF")) {
-                        materials[i][j][k] = variant.base();
-                    } else if (material.equals("TUFF_WALL")) {
-                        materials[i][j][k] = variant.wall();
-                    } else if (material.equals("MUDDY_MANGROVE_ROOTS")) {
-                        materials[i][j][k] = variant.seed();
+                    String s = array[i][j][k];
+                    if (s.contains("tuff")) {
+                        data[i][j][k] = base;
+                    } else if (s.contains("tuff_wall")) {
+                        data[i][j][k] = wall;
+                    } else if (s.contains("muddy_mangrove_roots")) {
+                        data[i][j][k] = seed;
                     } else {
-                        materials[i][j][k] = Material.getMaterial(material);
+                        data[i][j][k] = Bukkit.createBlockData(s);
                     }
                 }
             }
         }
-        return materials;
+        return data;
     }
 
-    private void place(Location location, Material[][][] materials, StructureVariant variant) {
-        int b = 0;
+    private void place(Location location, BlockData[][][] materials, StructureVariant variant) {
+        BlockData base = variant.base().createBlockData();
         int d = 0;
         int p = 0;
         String playerUUID = player.getUniqueId().toString();
@@ -130,28 +122,22 @@ public class Fade {
         for (int i = 0; i < h; i++) {
             for (int j = 0; j < r; j++) {
                 for (int k = 0; k < w; k++) {
-                    Material material = materials[i][j][k];
+                    BlockData data = materials[i][j][k];
                     Block block = world.getBlockAt(x + j, y + i, z + k);
                     BlockState state = block.getState();
-                    if (material == Material.IRON_BARS) {
-                        state.setBlockData(bars.get(b));
-                        b++;
-                    } else {
-                        state.setType(material);
-                    }
+                    state.setBlockData(data);
                     // add hanging lights
-                    if (i > 12 && i < 15 && material != Material.AIR) {
+                    if (i > 12 && i < 15 && data.equals(TARDISConstants.AIR)) {
                         Block below = block.getRelative(BlockFace.DOWN);
                         if (below.getType() == Material.AIR && TARDISConstants.RANDOM.nextInt(100) < 4) {
                             placer.addHangingLights(below, variant, 5);
                         }
                     }
-                    if (material == Material.CLAY) {
+                    if (data.getMaterial() == Material.CLAY) {
                         placer.addWaterFeature(block, variant);
                     }
                     // process TARDIS special blocks
-                    // TODO Pistons?
-                    if (material == Material.BLUE_WOOL) {
+                    if (data == Material.BLUE_WOOL.createBlockData()) {
                         switch (use_clay) {
                             case TERRACOTTA -> state.setType(Material.BLUE_TERRACOTTA);
                             case CONCRETE -> state.setType(Material.BLUE_CONCRETE);
@@ -164,7 +150,7 @@ public class Fade {
                             }
                         }
                     }
-                    if (material == Material.NOTE_BLOCK) {
+                    if (data.getMaterial() == Material.NOTE_BLOCK) {
                         // remember the location of this Disk Storage
                         String storage = block.getLocation().toString();
                         plugin.getQueryFactory().insertSyncControl(dbID, 14, storage, 0);
@@ -175,14 +161,13 @@ public class Fade {
                             TARDISDisplayItemUtils.set(TARDISBlockDisplayItem.DISK_STORAGE, world, x + j, y + i, z + k);
                         }
                     }
-                    if (material == Material.CHEST) {
+                    if (data.getMaterial() == Material.CHEST) {
                         // remember the location of the condenser chest
                         String condenser = block.getLocation().toString();
                         plugin.getQueryFactory().insertSyncControl(dbID, 34, condenser, 0);
                     }
-                    if (material == Material.IRON_DOOR) {
+                    if (data.getMaterial() == Material.IRON_DOOR) {
                         if (d == 0) { // iron door bottom
-                            state.setBlockData(Material.IRON_DOOR.createBlockData("[facing=north,half=lower,hinge=left]"));
                             HashMap<String, Object> setd = new HashMap<>();
                             String doorLocation = world.getKey().asString() + ":" + (x + j) + ":" + (y + i) + ":" + (z + k);
                             setd.put("tardis_id", dbID);
@@ -195,17 +180,14 @@ public class Fade {
                                 world.setSpawnLocation(x + j, y + i, (z + k + 1));
                             }
                             d++;
-                        } else {
-                            state.setBlockData(Material.IRON_DOOR.createBlockData("[facing=north,half=upper,hinge=left]"));
                         }
                     }
-                    if (material == Material.STONE_BUTTON) { // random button
-                        state.setBlockData(Material.STONE_BUTTON.createBlockData("[facing=south,face=floor]"));
+                    if (data.getMaterial() == Material.STONE_BUTTON) { // random button
                         // remember the location of this button
                         String button = block.getLocation().toString();
                         plugin.getQueryFactory().insertSyncControl(dbID, 1, button, 0);
                     }
-                    if (material == Material.JUKEBOX) {
+                    if (data.getMaterial() == Material.JUKEBOX) {
                         // remember the location of this Advanced Console
                         String advanced = block.getLocation().toString();
                         plugin.getQueryFactory().insertSyncControl(dbID, 15, advanced, 0);
@@ -218,8 +200,7 @@ public class Fade {
                             TARDISDisplayItemUtils.set(TARDISBlockDisplayItem.ADVANCED_CONSOLE, world, x + j, y + i, z + k);
                         }
                     }
-                    if (material == Material.LEVER) {
-                        state.setBlockData(Material.LEVER.createBlockData("[facing=south,face=floor]"));
+                    if (data.getMaterial() == Material.LEVER) {
                         // create default json for ARS
                         String[][][] empty = new String[3][9][9];
                         for (int ars_y = 0; ars_y < 3; ars_y++) {
@@ -242,55 +223,54 @@ public class Fade {
                         seta.put("json", json.toString());
                         plugin.getQueryFactory().doInsert("ars", seta);
                     }
-                    if (material == Material.COMMAND_BLOCK) {
+                    if (data.getMaterial() == Material.COMMAND_BLOCK) {
                         // command block - remember it to spawn the creeper on
                         String creeperLocation = world.getKey().asString() + ":" + (x + j + 0.5) + ":" + (y + i) + ":" + (z + k + 0.5);
                         set.put("creeper", creeperLocation);
                         state.setType(variant.base());
                     }
-                    if (material == Material.OAK_BUTTON) {
-                        state.setBlockData(Material.OAK_BUTTON.createBlockData("[facing=west,face=floor]"));
+                    if (data.getMaterial() == Material.OAK_BUTTON) {
                         // wood button - remember it for the Artron Energy Capacitor
                         String woodButtonLocation = block.getLocation().toString();
                         plugin.getQueryFactory().insertSyncControl(dbID, 6, woodButtonLocation, 0);
                     }
-                    if (material == Material.OAK_WALL_SIGN) {
-                        state.setBlockData(Material.OAK_SIGN.createBlockData("[facing=north]"));
+                    if (data.getMaterial() == Material.OAK_WALL_SIGN) {
                         String controlLocation = block.getLocation().toString();
                         plugin.getQueryFactory().insertSyncControl(dbID, 22, controlLocation, 0);
                         ((Sign) state).setWaxed(true);
                     }
-                    if (material == Material.RED_MUSHROOM_BLOCK) { // red mushroom block for repeaters
+                    if (data.getMaterial() == Material.RED_MUSHROOM_BLOCK) { // red mushroom block for repeaters
                         // save repeater location
-                        String repeater = world.getKey().asString() + ":" + (x + j) + ":" + (y + i) + ":" + (z + k);
-                        BlockData data = Material.REPEATER.createBlockData();
-                        Directional directional = (Directional) data;
+                        String rl = world.getKey().asString() + ":" + (x + j) + ":" + (y + i) + ":" + (z + k);
+                        BlockData repeater = Material.REPEATER.createBlockData();
+                        Directional directional = (Directional) repeater;
+                        // TODO sort the correct order to set the repeaters
                         switch (p) {
                             case 1 -> {
                                 directional.setFacing(BlockFace.WEST);
                                 state.setBlockData(directional);
-                                plugin.getQueryFactory().insertSyncControl(dbID, 3, repeater, 0);
+                                plugin.getQueryFactory().insertSyncControl(dbID, 3, rl, 0);
                             }
                             case 2 -> {
                                 directional.setFacing(BlockFace.NORTH);
                                 state.setBlockData(directional);
-                                plugin.getQueryFactory().insertSyncControl(dbID, 2, repeater, 0);
+                                plugin.getQueryFactory().insertSyncControl(dbID, 2, rl, 0);
                             }
                             case 3 -> {
                                 directional.setFacing(BlockFace.SOUTH);
                                 state.setBlockData(directional);
-                                plugin.getQueryFactory().insertSyncControl(dbID, 5, repeater, 0);
+                                plugin.getQueryFactory().insertSyncControl(dbID, 5, rl, 0);
                             }
                             default -> { // 0
                                 directional.setFacing(BlockFace.EAST);
                                 state.setBlockData(directional);
-                                plugin.getQueryFactory().insertSyncControl(dbID, 4, repeater, 0);
+                                plugin.getQueryFactory().insertSyncControl(dbID, 4, rl, 0);
                             }
                         }
                         p++;
                     }
                     state.update(true, false);
-                    if (i < 24 && material == variant.base()) {
+                    if (i < 24 && data.equals(base)) {
                         baseBlocks.add(block);
                     }
                     double progress = counter / div;
