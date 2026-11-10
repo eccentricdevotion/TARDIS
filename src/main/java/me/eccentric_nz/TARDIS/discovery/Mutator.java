@@ -24,6 +24,12 @@ public class Mutator {
         variant = location != null ? getVariant(location.getWorld().getEnvironment(), location.getBlockY()) : null;
     }
 
+    public Mutator(long seed, int radius, StructureVariant variant) {
+        this.seed = seed;
+        this.radius = radius;
+        this.variant = variant;
+    }
+
     private StructureVariant getVariant(World.Environment environment, int y) {
         Material[] gradient;
         Material base;

@@ -69,7 +69,7 @@ public class Fade {
         plugin.getServer().getScheduler().runTaskAsynchronously(plugin, () -> {
             String[][][] template = new Template().load(plugin);
             Material[][][] base = setBaseBlocks(template, variant);
-            Material[][][] fade = new Mutator(TARDISConstants.RANDOM.nextLong(), 7, null).applyGradient(base, variant.gradient());
+            Material[][][] fade = new Mutator(TARDISConstants.RANDOM.nextLong(), 7, variant).applyGradient(base, variant.gradient());
             // switch back to the main thread
             plugin.getServer().getScheduler().runTask(plugin, () -> {
                 place(location, fade, variant);

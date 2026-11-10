@@ -7,7 +7,6 @@ import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.discovery.Mutator;
 import me.eccentric_nz.TARDIS.discovery.Placer;
 import me.eccentric_nz.TARDIS.discovery.StructureVariant;
-import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -17,7 +16,6 @@ import org.bukkit.block.BlockState;
 import org.bukkit.block.Sign;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Directional;
-import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,7 +27,7 @@ public class PreviewFade {
 
     private final TARDIS plugin;
     private final StructureVariant variant;
-    private Location location;
+    private final Location location;
     private final List<BlockData> bars = new ArrayList<>();
 
 
@@ -48,7 +46,7 @@ public class PreviewFade {
         plugin.getServer().getScheduler().runTaskAsynchronously(plugin, () -> {
             String[][][] template = new Template().load(plugin);
             Material[][][] base = setBaseBlocks(template, variant);
-            Material[][][] fade = new Mutator(TARDISConstants.RANDOM.nextLong(), 7, null).applyGradient(base, variant.gradient());
+            Material[][][] fade = new Mutator(TARDISConstants.RANDOM.nextLong(), 7, variant).applyGradient(base, variant.gradient());
             // switch back to the main thread
             plugin.getServer().getScheduler().runTask(plugin, () -> {
                 place(location, fade, variant);

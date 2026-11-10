@@ -17,9 +17,11 @@
 package me.eccentric_nz.TARDIS.desktop;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.interior.PreviewBuildRunnable;
 import me.eccentric_nz.TARDIS.builders.interior.PreviewFade;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTransmat;
+import me.eccentric_nz.TARDIS.discovery.StructureVariant;
 import me.eccentric_nz.TARDIS.enumeration.Desktops;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -47,7 +49,9 @@ public class DesktopPreview {
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                         plugin.getMessenger().send(plugin.getConsole(), TardisModule.TARDIS, "PREVIEW_SCHM", schematic.getPermission());
                         if (schematic.getPermission().equals("fade")) {
-                            new PreviewFade(plugin, plugin.getBuildKeeper().getFadeVariants().getLookup().get("SMOOTH_SANDSTONE"), world).build();
+                            StructureVariant[] structureVariants = plugin.getBuildKeeper().getFadeVariants().getLookup().values().toArray(new StructureVariant[0]);
+                            StructureVariant variant = structureVariants[TARDISConstants.RANDOM.nextInt(structureVariants.length)];
+                            new PreviewFade(plugin, variant, world).build();
                         } else {
                             PreviewBuildRunnable builder = new PreviewBuildRunnable(plugin, schematic, world);
                             int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, builder, 1L, 3L);
