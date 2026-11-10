@@ -16,17 +16,21 @@
  */
 package me.eccentric_nz.TARDIS.desktop;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.console.CustomiseConsoleInventory;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCount;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTransmat;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.discovery.StructureVariant;
 import me.eccentric_nz.TARDIS.enumeration.Desktops;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.schematic.archive.ArchiveUpdate;
+import me.eccentric_nz.TARDIS.utility.ComponentUtils;
+import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -167,6 +171,10 @@ public class DesktopThemeMenuListener extends TARDISMenuListener {
                         tud.setSchematic(schematic);
                         plugin.getTrackerKeeper().getUpgrades().put(uuid, tud);
                         if (schematic.getPermission().equals("fade")) {
+                            // get the selected variant
+                            StructureVariant variant = variantFromSlot(choice);
+                            tud.setVariant(variant);
+                            plugin.getTrackerKeeper().getUpgrades().put(uuid, tud);
                             // just build the fade desktop
                             new DesktopThemeProcessor(plugin, uuid).changeDesktop();
                             // close the GUI
@@ -184,6 +192,11 @@ public class DesktopThemeMenuListener extends TARDISMenuListener {
         }
     }
 
+    private StructureVariant variantFromSlot(ItemStack choice) {
+        String v = ComponentUtils.stripColour(choice.getData(DataComponentTypes.CUSTOM_NAME));
+        return plugin.getBuildKeeper().getFadeVariants().getLookup().get(TARDISStringUtils.toEnumUppercase(v));
+    }
+
     /**
      * Closes the inventory.
      *
@@ -198,24 +211,24 @@ public class DesktopThemeMenuListener extends TARDISMenuListener {
     /**
      * Closes the inventory and opens the Wall block selector menu.
      *
-     * @param p the player using the GUI
+     * @param player the player using the GUI
      */
-    private void wall(Player p) {
+    private void wall(Player player) {
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-            p.closeInventory();
-            p.openInventory(new WallsInventory(plugin, "TARDIS Wall Menu").getInventory());
+            player.closeInventory();
+            player.openInventory(new WallsInventory(plugin, "TARDIS Wall Menu").getInventory());
         }, 1L);
     }
 
     /**
      * Closes the inventory and opens the archive consoles menu.
      *
-     * @param p the player using the GUI
+     * @param player the player using the GUI
      */
-    private void archive(Player p) {
+    private void archive(Player player) {
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-            p.closeInventory();
-            p.openInventory(new ArchiveInventory(plugin, p).getInventory());
+            player.closeInventory();
+            player.openInventory(new ArchiveInventory(plugin, player).getInventory());
         }, 1L);
     }
 
@@ -224,12 +237,12 @@ public class DesktopThemeMenuListener extends TARDISMenuListener {
      * missing blocks - unless the /tardisadmin repair [player] [amount] command has been run, assigning the player a
      * 'free' repair(s).
      */
-    private void repair(Player p) {
+    private void repair(Player player) {
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-            p.closeInventory();
-            String uuid = p.getUniqueId().toString();
+            player.closeInventory();
+            String uuid = player.getUniqueId().toString();
             boolean repair;
-            DesktopRepair tr = new DesktopRepair(plugin, p);
+            DesktopRepair tr = new DesktopRepair(plugin, player);
             // is it a free repair?
             ResultSetCount rsc = new ResultSetCount(plugin, uuid);
             if (rsc.resultSet() && rsc.getRepair() > 0) {
@@ -254,10 +267,10 @@ public class DesktopThemeMenuListener extends TARDISMenuListener {
      * Initiates a TARDIS clean. Removes any blocks that are not part of the original console schematic (missing blocks
      * will not be restored).
      */
-    private void clean(Player p) {
+    private void clean(Player player) {
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-            p.closeInventory();
-            new DesktopRepair(plugin, p).restore(true);
+            player.closeInventory();
+            new DesktopRepair(plugin, player).restore(true);
         }, 1L);
     }
 }
