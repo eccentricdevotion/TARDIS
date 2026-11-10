@@ -63,7 +63,10 @@ public class DesktopThemeMenuListener extends TARDISMenuListener {
 
     @EventHandler(ignoreCancelled = true)
     public void onThemeMenuClick(InventoryClickEvent event) {
-        if (!(event.getInventory().getHolder(false) instanceof PluginThemeInventory) && !(event.getInventory().getHolder(false) instanceof CustomThemeInventory)) {
+        if (!(event.getInventory().getHolder(false) instanceof PluginThemeInventory)
+                && !(event.getInventory().getHolder(false) instanceof CustomThemeInventory)
+                && !(event.getInventory().getHolder(false) instanceof FadeThemeInventory)
+        ) {
             return;
         }
         Player player = (Player) event.getWhoClicked();
@@ -127,7 +130,7 @@ public class DesktopThemeMenuListener extends TARDISMenuListener {
                     return;
                 }
                 Schematic schematic;
-                if (choice.getType() == Material.GRAY_BUNDLE) {
+                if (choice.getType() == Material.LIGHT_GRAY_BUNDLE) {
                     schematic = Desktops.schematicFor(Material.ORANGE_POPLAR_LEAVES);
                 } else {
                     // get material of selected console
