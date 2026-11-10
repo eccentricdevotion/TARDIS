@@ -166,10 +166,17 @@ public class DesktopThemeMenuListener extends TARDISMenuListener {
                     if (tud.getLevel() >= needed) {
                         tud.setSchematic(schematic);
                         plugin.getTrackerKeeper().getUpgrades().put(uuid, tud);
-                        // open the wall block GUI
-                        wall(player);
-                        if (tud.getPrevious().getPermission().equals("archive")) {
-                            new ArchiveUpdate(plugin, uuid.toString(), "ª°º").setInUse();
+                        if (schematic.getPermission().equals("fade")) {
+                            // just build the fade desktop
+                            new DesktopThemeProcessor(plugin, uuid).changeDesktop();
+                            // close the GUI
+                            close(player);
+                        } else {
+                            // open the wall block GUI
+                            wall(player);
+                            if (tud.getPrevious().getPermission().equals("archive")) {
+                                new ArchiveUpdate(plugin, uuid.toString(), "ª°º").setInUse();
+                            }
                         }
                     }
                 }

@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.desktop;
 
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import me.eccentric_nz.TARDIS.ARS.ARSMethods;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
@@ -32,6 +33,8 @@ import me.eccentric_nz.TARDIS.schematic.archive.ArchiveReset;
 import me.eccentric_nz.TARDIS.schematic.archive.ResultSetArchiveByUse;
 import org.bukkit.entity.Player;
 
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.UUID;
@@ -100,7 +103,20 @@ public class DesktopThemeProcessor {
             }
         } else {
             // get JSON
-            JsonObject obj = SchematicGZip.getObject(plugin, "consoles", tud.getSchematic().getPermission(), tud.getSchematic().isCustom());
+            JsonObject obj = null;
+            if (tud.getSchematic().getPermission().equals("fade")) {
+                try {
+                    // get JSON
+                    InputStream stream = plugin.getResource("fade.json");
+                    if (stream != null) {
+                        String s = new String(stream.readAllBytes(), StandardCharsets.UTF_8);
+                        obj = JsonParser.parseString(s).getAsJsonObject();
+                    }
+                } catch (Exception ignored) {
+                }
+            } else {
+                obj = SchematicGZip.getObject(plugin, "consoles", tud.getSchematic().getPermission(), tud.getSchematic().isCustom());
+            }
             if (obj == null) {
                 return;
             }
@@ -134,7 +150,20 @@ public class DesktopThemeProcessor {
             }
         } else {
             // get JSON
-            JsonObject obj = SchematicGZip.getObject(plugin, "consoles", tud.getPrevious().getPermission(), tud.getPrevious().isCustom());
+            JsonObject obj = null;
+            if (tud.getSchematic().getPermission().equals("fade")) {
+                try {
+                    // get JSON
+                    InputStream stream = plugin.getResource("fade.json");
+                    if (stream != null) {
+                        String s = new String(stream.readAllBytes(), StandardCharsets.UTF_8);
+                        obj = JsonParser.parseString(s).getAsJsonObject();
+                    }
+                } catch (Exception ignored) {
+                }
+            } else {
+                obj = SchematicGZip.getObject(plugin, "consoles", tud.getSchematic().getPermission(), tud.getSchematic().isCustom());
+            }
             if (obj == null) {
                 return;
             }
@@ -214,6 +243,7 @@ public class DesktopThemeProcessor {
                 // remove lava and water
                 new Delavafier(plugin, uuid).swap();
             }
+            // TODO fade
             ttr = new FullDesktopThemeRunnable(plugin, uuid, tud);
         }
         plugin.getQueryFactory().alterEnergyLevel("tardis", -amount, wherea, plugin.getServer().getPlayer(uuid));
