@@ -102,25 +102,11 @@ public class BlockPresetListener extends TARDISMenuListener {
                 // do nothing
             }
             // go to custom presets
-            case 48 -> plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () ->
-                    player.openInventory(new CustomPresetInventory(plugin, player).getInventory()), 2L);
-//            case 48 -> {
-//                // custom
-//                set.put("chameleon_preset", "CUSTOM");
-//                if (hasSign) {
-//                    updateChameleonSign(rsf.getData(), "CUSTOM", player);
-//                }
-//                if (hasFrame) {
-//                    new TARDISChameleonFrame().updateChameleonFrame(ChameleonPreset.CUSTOM, rsf.getLocation());
-//                }
-//                plugin.getMessenger().sendInsertedColour(player, "CHAM_SET", "Server's Custom", plugin);
-//            }
+            case 48 -> plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.openInventory(new CustomPresetInventory(plugin, player).getInventory()), 2L);
             // return to Chameleon Circuit GUI
-            case 51 -> plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () ->
-                    player.openInventory(new ChameleonInventory(plugin, tardis.getAdaption(), tardis.getPreset(), tardis.getItemPreset()).getInventory()), 2L);
+            case 51 -> plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.openInventory(new ChameleonInventory(plugin, tardis.getAdaption(), tardis.getPreset(), tardis.getItemPreset()).getInventory()), 2L);
             // go to page two (coloured police boxes)
-            case 52 -> plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () ->
-                    player.openInventory(new ModelledPresetInventory(plugin, player).getInventory()), 2L);
+            case 52 -> plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.openInventory(new ModelledPresetInventory(plugin, player).getInventory()), 2L);
             case 53 -> close(player);
             default -> {
                 ChameleonPreset selected = ChameleonPreset.getPresetBySlot(slot);
@@ -133,7 +119,6 @@ public class BlockPresetListener extends TARDISMenuListener {
                 }
                 plugin.getMessenger().sendInsertedColour(player, "CHAM_SET", selected.getDisplayName(), plugin);
             }
-
         }
         if (!set.isEmpty()) {
             set.put("adapti_on", 0);

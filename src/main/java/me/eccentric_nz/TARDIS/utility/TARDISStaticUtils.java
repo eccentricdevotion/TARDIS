@@ -257,7 +257,7 @@ public class TARDISStaticUtils {
     public static void setSign(String loc, int line, String text, Player p) {
         if (!loc.isEmpty()) {
             // get sign block so we can update it
-            Location l = TARDISStaticLocationGetters.getLocationFromDB(loc);
+            Location l = TARDISStaticLocationGetters.getLocationFromBukkitString(loc);
             if (l != null) {
                 Chunk chunk = l.getChunk();
                 while (!chunk.isLoaded()) {
@@ -275,7 +275,7 @@ public class TARDISStaticUtils {
         }
     }
 
-    private static Set<Material> OTHERS = Set.of(Material.MOVING_PISTON, Material.PUMPKIN, Material.REDSTONE_ORE, Material.REDSTONE_WIRE);
+    private static final Set<Material> OTHERS = Set.of(Material.MOVING_PISTON, Material.PUMPKIN, Material.REDSTONE_ORE, Material.REDSTONE_WIRE);
 
     @SuppressWarnings("deprecation")
     public static boolean isInteractable(Block block) {
