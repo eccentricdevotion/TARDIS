@@ -71,8 +71,7 @@ public class DesktopThemeLoader {
         Desktops.getBY_NAMES().put("ENDER", new Schematic("PURPUR_BLOCK", "ender", "Ender Console", ConsoleSize.SMALL, true, TardisLight.LANTERN, false, -23));
         // FACTORY designed by Razihel
         Desktops.getBY_NAMES().put("FACTORY", new Schematic("YELLOW_CONCRETE_POWDER", "factory", "Factory Console (1st Doctor)", ConsoleSize.MEDIUM, false, TardisLight.CLASSIC, 65, false, -24));
-        // TODO check fade startY
-        Desktops.getBY_NAMES().put("FADE", new Schematic("ORANGE_POPLAR_LEAVES", "fade", "A procedurally generated gradient console", ConsoleSize.MEDIUM, false, TardisLight.CLASSIC, 63, false, -64));
+        Desktops.getBY_NAMES().put("FADE", new Schematic("ORANGE_POPLAR_LEAVES", "fade", "A procedurally generated gradient console", ConsoleSize.MEDIUM, false, TardisLight.CLASSIC, false, -64));
         // FIFTEENTH schematic designed by airomis (player at thatsnotacreeper.com)
         Desktops.getBY_NAMES().put("FIFTEENTH", new Schematic("OCHRE_FROGLIGHT", "fifteenth", "15th Doctor's Console", ConsoleSize.MASSIVE, true, TardisLight.THIRTEENTH, false, -25));
         // FUGITIVE based on Ruth TARDIS designed by DT10 - https://www.youtube.com/watch?v=aykwXVemSs8

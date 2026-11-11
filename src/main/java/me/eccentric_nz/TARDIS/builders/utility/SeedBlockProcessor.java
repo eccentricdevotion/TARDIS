@@ -245,7 +245,7 @@ public class SeedBlockProcessor {
                 if (chunkworld != null) {
                     plugin.getPM().callEvent(new TARDISCreationEvent(player, lastInsertId, location));
                     if (schm.getPermission().equals("fade")) {
-                        new Fade(plugin, seed.getVariant(), location, lastInsertId, player).build();
+                        new Fade(plugin, seed.getVariant(), location, lastInsertId, player).build(true);
                     } else {
                         InteriorBuildRunnable builder = new InteriorBuildRunnable(plugin, schm, chunkworld, lastInsertId, player, wall_type, floor_type, slot);
                         int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, builder, 1L, 3L);

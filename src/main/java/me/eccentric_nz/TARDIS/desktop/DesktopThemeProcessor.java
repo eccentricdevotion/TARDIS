@@ -217,12 +217,13 @@ public class DesktopThemeProcessor {
         if (tud.getPrevious().equals(tud.getSchematic()) && archive_next == null) {
             if (tud.getSchematic().getPermission().equals("fade")) {
                 // abort - you can't change the wall and floor in the fade console
-                plugin.debug("Aborting wall and floor change as it's a FADE desktop!");
-                return;
+                plugin.debug("Running fade change!");
+                ttr = new FadeThemeRunnable(plugin, uuid, tud);
+            } else {
+                // reduce the cost of the theme change
+                amount = Math.round((plugin.getArtronConfig().getInt("just_wall_floor") / 100F) * amount);
+                ttr = new WallFloorRunnable(plugin, uuid, tud);
             }
-            // reduce the cost of the theme change
-            amount = Math.round((plugin.getArtronConfig().getInt("just_wall_floor") / 100F) * amount);
-            ttr = new WallFloorRunnable(plugin, uuid, tud);
         } else {
             // check for master
             if (hasLava) {

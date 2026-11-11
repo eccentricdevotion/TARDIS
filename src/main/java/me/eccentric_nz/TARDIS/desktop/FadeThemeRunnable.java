@@ -241,10 +241,10 @@ public class FadeThemeRunnable extends DesktopThemeRunnable {
                 startX = gsl[0];
                 startZ = gsl[2];
             }
+            world = TARDISStaticLocationGetters.getWorldFromSplitString(tardis.getChunk());
             startY = tud.getSchematic().getStartY();
             location = new Location(world, startX, startY, startZ);
             downgrade = (height < previousHeight || width < previousWidth);
-            world = TARDISStaticLocationGetters.getWorldFromSplitString(tardis.getChunk());
             if (tud.getPrevious().getPermission().equals("cave")) {
                 // remove water source block
                 Block water = world.getBlockAt(startX + 1, startY + 9, startZ + 10);
@@ -297,8 +297,7 @@ public class FadeThemeRunnable extends DesktopThemeRunnable {
             loop++;
         } else if (loop == 1) {
             // build
-            new Fade(plugin, tud.getVariant(), location, id, player).build();
-
+            new Fade(plugin, tud.getVariant(), location, id, player).build(false);
             // remove items
             chunks.forEach((chink) -> {
                 // remove dropped items

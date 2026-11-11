@@ -14,7 +14,10 @@ import me.eccentric_nz.TARDIS.discovery.Placer;
 import me.eccentric_nz.TARDIS.discovery.StructureVariant;
 import me.eccentric_nz.TARDIS.enumeration.UseClay;
 import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.BlockState;
@@ -55,13 +58,10 @@ public class Fade {
         } catch (IllegalArgumentException e) {
             use_clay = UseClay.WOOL;
         }
-        Chunk c = location.getChunk();
-        String chunk = location.getWorld().getKey().asString() + ":" + c.getX() + ":" + c.getZ();
-        set.put("chunk", chunk);
         where.put("tardis_id", id);
     }
 
-    public void build() {
+    public void build(boolean bossbar) {
         // async task to populate box with block fade
         plugin.getServer().getScheduler().runTaskAsynchronously(plugin, () -> {
             String[][][] template = new Template().load(plugin);
@@ -69,12 +69,15 @@ public class Fade {
             BlockData[][][] fade = new FadeMutator(TARDISConstants.RANDOM.nextLong(), 7, variant).applyGradient(base, variant.gradient());
             // switch back to the main thread
             plugin.getServer().getScheduler().runTask(plugin, () -> {
-                place(location, fade, variant);
-                // start progress bar
-                bb = Bukkit.createBossBar(TARDISConstants.GROWTH_STATES.getFirst(), BarColor.WHITE, BarStyle.SOLID, TARDISConstants.EMPTY_ARRAY);
-                bb.setProgress(0);
-                bb.addPlayer(player);
-                bb.setVisible(true);
+                if (bossbar) {
+                    // start progress bar
+                    bb = Bukkit.createBossBar(TARDISConstants.GROWTH_STATES.getFirst(), BarColor.WHITE, BarStyle.SOLID, TARDISConstants.EMPTY_ARRAY);
+                    bb.setProgress(0);
+                    bb.addPlayer(player);
+                    bb.setVisible(true);
+                }
+                // place blocks
+                place(location, fade, variant, bossbar);
             });
         });
     }
@@ -104,7 +107,7 @@ public class Fade {
         return data;
     }
 
-    private void place(Location location, BlockData[][][] materials, StructureVariant variant) {
+    private void place(Location location, BlockData[][][] materials, StructureVariant variant, boolean bossbar) {
         BlockData base = variant.base().createBlockData();
         int d = 0;
         int p = 0;
@@ -237,7 +240,13 @@ public class Fade {
                     if (data.getMaterial() == Material.OAK_WALL_SIGN) {
                         String controlLocation = block.getLocation().toString();
                         plugin.getQueryFactory().insertSyncControl(dbID, 22, controlLocation, 0);
-                        ((Sign) state).setWaxed(true);
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                            BlockState newState = block.getState();
+                            if (newState instanceof Sign sign) {
+                                sign.setWaxed(true);
+                                sign.update(true, false);
+                            }
+                        }, 5L);
                     }
                     if (data.getMaterial() == Material.RED_MUSHROOM_BLOCK) { // red mushroom block for repeaters
                         // save repeater location
@@ -272,18 +281,22 @@ public class Fade {
                     if (i < 13 && data.getMaterial() == variant.base()) {
                         baseBlocks.add(block);
                     }
-                    double progress = counter / div;
-                    if (progress > 1.0) {
-                        progress = 1.0;
+                    if (bossbar) {
+                        double progress = counter / div;
+                        if (progress > 1.0) {
+                            progress = 1.0;
+                        }
+                        bb.setProgress(progress);
                     }
-                    bb.setProgress(progress);
                 }
             }
-            // set progress bar title
-            if (i == h - 1) {
-                bb.setTitle(TARDISConstants.GROWTH_STATES.get(31));
-            } else {
-                bb.setTitle(TARDISConstants.GROWTH_STATES.get(i));
+            if (bossbar) {
+                // set progress bar title
+                if (i == h - 1) {
+                    bb.setTitle(TARDISConstants.GROWTH_STATES.get(31));
+                } else {
+                    bb.setTitle(TARDISConstants.GROWTH_STATES.get(i));
+                }
             }
         }
         for (Block block : baseBlocks) {
@@ -313,8 +326,10 @@ public class Fade {
                 }
             }
         }
-        bb.setProgress(1);
-        bb.setVisible(false);
-        bb.removeAll();
+        if (bossbar) {
+            bb.setProgress(1);
+            bb.setVisible(false);
+            bb.removeAll();
+        }
     }
 }
