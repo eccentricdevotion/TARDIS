@@ -43,12 +43,16 @@ public class Placer {
             state.update(true, false);
             for (int i = 0; i < r; i++) {
                 BlockState relative = below.getRelative(BlockFace.DOWN, i).getState();
-                relative.setBlockData(TARDISConstants.RANDOM.nextInt(4) == 1 ? variant.hanging() : variant.hanging_light());
-                relative.update(true, false);
+                if (relative.getType().isAir()) {
+                    relative.setBlockData(TARDISConstants.RANDOM.nextInt(4) == 1 ? variant.hanging() : variant.hanging_light());
+                    relative.update(true, false);
+                }
             }
             BlockState end = below.getRelative(BlockFace.DOWN, r).getState();
-            end.setBlockData(variant.hanging_end());
-            end.update(true, false);
+            if (end.getType().isAir()) {
+                end.setBlockData(variant.hanging_end());
+                end.update(true, false);
+            }
         }
     }
 

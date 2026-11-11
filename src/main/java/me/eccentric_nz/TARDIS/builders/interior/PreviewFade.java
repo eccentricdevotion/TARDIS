@@ -57,10 +57,10 @@ public class PreviewFade {
             for (int j = 0; j < array[i].length; j++) {
                 for (int k = 0; k < array[i][j].length; k++) {
                     String material = array[i][j][k];
-                    if (material.contains("tuff")) {
-                        data[i][j][k] = variant.base().createBlockData();
-                    } else if (material.contains("tuff_wall")) {
+                    if (material.contains("tuff_wall")) {
                         data[i][j][k] = variant.wall().createBlockData();
+                    } else if (material.contains("tuff")) {
+                        data[i][j][k] = variant.base().createBlockData();
                     } else if (material.contains("muddy_mangrove_roots")) {
                         data[i][j][k] = variant.seed().createBlockData();
                     } else {
@@ -93,9 +93,9 @@ public class PreviewFade {
                     BlockState state = block.getState();
                     state.setBlockData(data);
                     // add hanging lights
-                    if (i > 12 && i < 15 && !data.equals(TARDISConstants.AIR)) {
+                    if (i > 12 && i < 15 && !data.getMaterial().isAir()) {
                         Block below = block.getRelative(BlockFace.DOWN);
-                        if (below.getType() == Material.AIR && TARDISConstants.RANDOM.nextInt(100) < 4) {
+                        if (below.getType().isAir() && TARDISConstants.RANDOM.nextInt(100) < 4) {
                             placer.addHangingLights(below, variant, 5);
                         }
                     }
@@ -141,29 +141,28 @@ public class PreviewFade {
                     if (data.getMaterial() == Material.RED_MUSHROOM_BLOCK) { // red mushroom block for repeaters
                         BlockData repeater = Material.REPEATER.createBlockData();
                         Directional directional = (Directional) repeater;
-                        // TODO sort the correct order to set the repeaters
                         switch (p) {
                             case 1 -> {
-                                directional.setFacing(BlockFace.WEST);
-                                state.setBlockData(directional);
-                            }
-                            case 2 -> {
                                 directional.setFacing(BlockFace.NORTH);
                                 state.setBlockData(directional);
                             }
-                            case 3 -> {
+                            case 2 -> {
                                 directional.setFacing(BlockFace.SOUTH);
                                 state.setBlockData(directional);
                             }
-                            default -> { // 0
+                            case 3 -> {
                                 directional.setFacing(BlockFace.EAST);
+                                state.setBlockData(directional);
+                            }
+                            default -> { // 0
+                                directional.setFacing(BlockFace.WEST);
                                 state.setBlockData(directional);
                             }
                         }
                         p++;
                     }
                     state.update(true, false);
-                    if (i < 24 && data.getMaterial() == variant.base()) {
+                    if (i < 13 && data.getMaterial() == variant.base()) {
                         baseBlocks.add(block);
                     }
                 }

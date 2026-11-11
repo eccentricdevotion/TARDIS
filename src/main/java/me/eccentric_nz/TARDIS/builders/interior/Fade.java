@@ -89,10 +89,10 @@ public class Fade {
                 for (int k = 0; k < array[i][j].length; k++) {
                     counter++;
                     String s = array[i][j][k];
-                    if (s.contains("tuff")) {
-                        data[i][j][k] = base;
-                    } else if (s.contains("tuff_wall")) {
+                    if (s.contains("tuff_wall")) {
                         data[i][j][k] = wall;
+                    } else if (s.contains("tuff")) {
+                        data[i][j][k] = base;
                     } else if (s.contains("muddy_mangrove_roots")) {
                         data[i][j][k] = seed;
                     } else {
@@ -127,9 +127,9 @@ public class Fade {
                     BlockState state = block.getState();
                     state.setBlockData(data);
                     // add hanging lights
-                    if (i > 12 && i < 15 && data.equals(TARDISConstants.AIR)) {
+                    if (i > 12 && i < 15 && !data.getMaterial().isAir()) {
                         Block below = block.getRelative(BlockFace.DOWN);
-                        if (below.getType() == Material.AIR && TARDISConstants.RANDOM.nextInt(100) < 4) {
+                        if (below.getType().isAir() && TARDISConstants.RANDOM.nextInt(100) < 4) {
                             placer.addHangingLights(below, variant, 5);
                         }
                     }
@@ -244,33 +244,32 @@ public class Fade {
                         String rl = world.getKey().asString() + ":" + (x + j) + ":" + (y + i) + ":" + (z + k);
                         BlockData repeater = Material.REPEATER.createBlockData();
                         Directional directional = (Directional) repeater;
-                        // TODO sort the correct order to set the repeaters
                         switch (p) {
                             case 1 -> {
-                                directional.setFacing(BlockFace.WEST);
-                                state.setBlockData(directional);
-                                plugin.getQueryFactory().insertSyncControl(dbID, 3, rl, 0);
-                            }
-                            case 2 -> {
                                 directional.setFacing(BlockFace.NORTH);
                                 state.setBlockData(directional);
                                 plugin.getQueryFactory().insertSyncControl(dbID, 2, rl, 0);
                             }
-                            case 3 -> {
+                            case 2 -> {
                                 directional.setFacing(BlockFace.SOUTH);
                                 state.setBlockData(directional);
                                 plugin.getQueryFactory().insertSyncControl(dbID, 5, rl, 0);
                             }
-                            default -> { // 0
+                            case 3 -> {
                                 directional.setFacing(BlockFace.EAST);
                                 state.setBlockData(directional);
                                 plugin.getQueryFactory().insertSyncControl(dbID, 4, rl, 0);
+                            }
+                            default -> { // 0
+                                directional.setFacing(BlockFace.WEST);
+                                state.setBlockData(directional);
+                                plugin.getQueryFactory().insertSyncControl(dbID, 3, rl, 0);
                             }
                         }
                         p++;
                     }
                     state.update(true, false);
-                    if (i < 24 && data.equals(base)) {
+                    if (i < 13 && data.getMaterial() == variant.base()) {
                         baseBlocks.add(block);
                     }
                     double progress = counter / div;

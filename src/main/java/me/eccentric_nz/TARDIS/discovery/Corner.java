@@ -118,7 +118,8 @@ public class Corner {
                     String data = b.getBlockData().getAsString();
                     // ignore light/sponge blocks
                     if (type.equals("LIGHT") || type.equals("SPONGE")) {
-                        type = (bd) ? "minecraft:air" : "AIR";
+                        type = "AIR";
+                        data = "minecraft:air";
                     }
                     JsonPrimitive material = new JsonPrimitive(bd ? data : type);
                     columns.add(material);

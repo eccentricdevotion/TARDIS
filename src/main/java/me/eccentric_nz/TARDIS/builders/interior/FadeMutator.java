@@ -32,7 +32,7 @@ public class FadeMutator {
             Material.STONE_PRESSURE_PLATE, Material.STONE_SLAB, Material.BLUE_WOOL);
 
     private int[][][] buildDistanceField(BlockData[][][] array) {
-        BlockData seed = variant.seed().createBlockData();
+        Material seed = variant.seed();
         int sizeX = array.length;
         int sizeY = array[0].length;
         int sizeZ = array[0][0].length;
@@ -49,7 +49,7 @@ public class FadeMutator {
         for (int x = 0; x < sizeX; x++) {
             for (int y = 0; y < sizeY; y++) {
                 for (int z = 0; z < sizeZ; z++) {
-                    if (array[x][y][z].equals(seed)) {
+                    if (array[x][y][z].getMaterial() == seed) {
                         distance[x][y][z] = 0;
                         queue.add(new BlockPos(x, y, z));
                     }
@@ -97,11 +97,11 @@ public class FadeMutator {
             for (int y = 0; y < array[x].length; y++) {
                 for (int z = 0; z < array[x][y].length; z++) {
                     Material current = array[x][y][z].getMaterial();
-                    // never modify air
+                    // never modify air / clay / other TARDIS special blocks
                     if (notThese.contains(current)) {
                         continue;
                     }
-                    // keep seed blocks / walls / clay unchanged
+                    // keep seed blocks / walls unchanged
                     if (current == variant.seed() || current == variant.wall()) {
                         continue;
                     }
