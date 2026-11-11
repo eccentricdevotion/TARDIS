@@ -108,7 +108,6 @@ public class Fade {
     }
 
     private void place(Location location, BlockData[][][] materials, StructureVariant variant, boolean bossbar) {
-        BlockData base = variant.base().createBlockData();
         int d = 0;
         int p = 0;
         String playerUUID = player.getUniqueId().toString();
@@ -173,11 +172,18 @@ public class Fade {
                         if (d == 0) { // iron door bottom
                             HashMap<String, Object> setd = new HashMap<>();
                             String doorLocation = world.getKey().asString() + ":" + (x + j) + ":" + (y + i) + ":" + (z + k);
-                            setd.put("tardis_id", dbID);
-                            setd.put("door_type", 1);
                             setd.put("door_location", doorLocation);
-                            setd.put("door_direction", "SOUTH");
-                            plugin.getQueryFactory().doInsert("doors", setd);
+                            if (bossbar) {
+                                setd.put("tardis_id", dbID);
+                                setd.put("door_type", 1);
+                                setd.put("door_direction", "SOUTH");
+                                plugin.getQueryFactory().doInsert("doors", setd);
+                            } else {
+                                HashMap<String, Object> whered = new HashMap<>();
+                                whered.put("tardis_id", dbID);
+                                whered.put("door_type", 1);
+                                plugin.getQueryFactory().doSyncUpdate("doors", setd, whered);
+                            }
                             // if create_worlds is true, set the world spawn
                             if (plugin.getConfig().getBoolean("creation.create_worlds")) {
                                 world.setSpawnLocation(x + j, y + i, (z + k + 1));
@@ -203,8 +209,8 @@ public class Fade {
                             TARDISDisplayItemUtils.set(TARDISBlockDisplayItem.ADVANCED_CONSOLE, world, x + j, y + i, z + k);
                         }
                     }
-                    if (data.getMaterial() == Material.LEVER) {
-                        // create default json for ARS
+                    // create default json for ARS only if this is a new TARDIS
+                    if (data.getMaterial() == Material.LEVER && bossbar) {
                         String[][][] empty = new String[3][9][9];
                         for (int ars_y = 0; ars_y < 3; ars_y++) {
                             for (int ars_x = 0; ars_x < 9; ars_x++) {
@@ -306,8 +312,8 @@ public class Fade {
         }
         // finished processing - update tardis table!
         plugin.getQueryFactory().doUpdate("tardis", set, where);
-        // give kit?
-        if (plugin.getKitsConfig().getBoolean("give.create.enabled")) {
+        // give kit? only if new TARDIS
+        if (plugin.getKitsConfig().getBoolean("give.create.enabled") && bossbar) {
             if (TARDISPermission.hasPermission(player, "tardis.kit.create")) {
                 // check if they have the tardis kit
                 HashMap<String, Object> wherek = new HashMap<>();

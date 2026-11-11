@@ -126,16 +126,21 @@ public class FadeThemeRunnable extends DesktopThemeRunnable {
             // get previous schematic dimensions
             int previousWidth;
             if (archive_prev == null) {
-                // get JSON
-                JsonObject prevObj = SchematicGZip.getObject(plugin, "consoles", tud.getPrevious().getPermission(), tud.getPrevious().isCustom());
-                if (prevObj == null) {
-                    // cancel task
-                    plugin.getServer().getScheduler().cancelTask(taskID);
-                    return;
+                if (tud.getPrevious().getPermission().equals("fade")) {
+                    previousHeight = 16;
+                    previousWidth = 32;
+                } else {
+                    // get JSON
+                    JsonObject prevObj = SchematicGZip.getObject(plugin, "consoles", tud.getPrevious().getPermission(), tud.getPrevious().isCustom());
+                    if (prevObj == null) {
+                        // cancel task
+                        plugin.getServer().getScheduler().cancelTask(taskID);
+                        return;
+                    }
+                    JsonObject prevDimensions = prevObj.get("dimensions").getAsJsonObject();
+                    previousHeight = prevDimensions.get("height").getAsInt();
+                    previousWidth = prevDimensions.get("width").getAsInt();
                 }
-                JsonObject prevDimensions = prevObj.get("dimensions").getAsJsonObject();
-                previousHeight = prevDimensions.get("height").getAsInt();
-                previousWidth = prevDimensions.get("width").getAsInt();
                 size_prev = tud.getPrevious().getConsoleSize();
             } else {
                 JsonObject dimensions = archive_prev.getJSON().get("dimensions").getAsJsonObject();
