@@ -50,8 +50,13 @@ public class LanguageConfigUpdater {
         String en_path = plugin.getDataFolder() + File.separator + "language" + File.separator + "en.yml";
         File en_file = new File(en_path);
         FileConfiguration en = YamlConfiguration.loadConfiguration(en_file);
-        // loop through the keys and set values that are missing
         int i = 0;
+        // fix spelling in LAMP_SET_USAGE
+        if (en.getString("LAMP_SET_USAGE").contains("Inconnect")) {
+            plugin.getLanguage().set("LAMP_SET_USAGE", "Incorrect Usage: /tardis lamp set x y z [materialOn | _] [materialOff | _]");
+            i++;
+        }
+        // loop through the keys and set values that are missing
         for (String key : en.getKeys(false)) {
             if (!plugin.getLanguage().contains(key)) {
                 plugin.getLanguage().set(key, en.getString(key));
