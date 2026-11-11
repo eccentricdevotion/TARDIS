@@ -106,20 +106,6 @@ public class FadeThemeInventory extends DesktopThemeInventory {
             archive.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Archive Consoles"));
             stack[GUIUpgrade.ARCHIVE_CONSOLES.slot()] = archive;
         }
-//        if (plugin.getConfig().getBoolean("allow.repair")) {
-//            // repair
-//            if (TARDISPermission.hasPermission(player, "tardis.repair")) {
-//                ItemStack repair = ItemStack.of(GUIUpgrade.REPAIR_CONSOLE.material(), 1);
-//                repair.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Repair Console"));
-//                stack[GUIUpgrade.REPAIR_CONSOLE.slot()] = repair;
-//            }
-//            // clean
-//            if (TARDISPermission.hasPermission(player, "tardis.repair")) {
-//                ItemStack clean = ItemStack.of(GUIUpgrade.CLEAN.material(), 1);
-//                clean.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Clean"));
-//                stack[GUIUpgrade.CLEAN.slot()] = clean;
-//            }
-//        }
         // customise console
         ItemStack console = ItemStack.of(GUIUpgrade.CONSOLE_ROTOR.material(), 1);
         console.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Customise Console"));
