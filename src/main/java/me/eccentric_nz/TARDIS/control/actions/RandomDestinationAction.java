@@ -126,12 +126,16 @@ public class RandomDestinationAction {
             environment = "NORMAL";
             if (!plugin.getConfig().getBoolean("travel.nether")) {  // nether travel enabled
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "ANCIENT", "Nether");
+                return;
             } else if (!TARDISPermission.hasPermission(player, "tardis.nether")) {    // nether permission
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERM_TRAVEL", "Nether");
+                return;
             } else if (plugin.getConfig().getBoolean("travel.allow_nether_after_visit") && !new ResultSetTravelledTo(plugin).resultSet(player.getUniqueId().toString(), "NETHER")) { // check if they need to visit nether first
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "TRAVEL_NOT_VISITED", "Nether");
+                return;
             } else if (level < nether_min) {    // check if they have enough artron to travel to the nether
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_ENOUGH_TRAVEL_ENERGY", String.format("%d", nether_min), "Nether");
+                return;
             } else {    // player can go to the nether! yay
                 environment = "NETHER";
             }
@@ -140,12 +144,16 @@ public class RandomDestinationAction {
             environment = "NORMAL";
             if (!plugin.getConfig().getBoolean("travel.the_end")) {  // end travel enabled
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "ANCIENT", "End");
+                return;
             } else if (!TARDISPermission.hasPermission(player, "tardis.end")) {    // end permission
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERM_TRAVEL", "End");
+                return;
             } else if (plugin.getConfig().getBoolean("travel.allow_end_after_visit") && !new ResultSetTravelledTo(plugin).resultSet(player.getUniqueId().toString(), "THE_END")) { // check if they need to visit the end first
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "TRAVEL_NOT_VISITED", "End");
+                return;
             } else if (level < the_end_min) {    // check if they have enough artron to travel to the end
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_ENOUGH_TRAVEL_ENERGY", String.format("%d", the_end_min), "End");
+                return;
             } else {    // player can go to the end! yay
                 environment = "THE_END";
             }
