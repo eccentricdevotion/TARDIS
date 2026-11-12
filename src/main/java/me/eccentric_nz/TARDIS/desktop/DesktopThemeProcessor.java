@@ -216,8 +216,7 @@ public class DesktopThemeProcessor {
         boolean hasLava = tud.getPrevious().getPermission().equals("master") || tud.getPrevious().getPermission().equals("delta");
         if (tud.getPrevious().equals(tud.getSchematic()) && archive_next == null) {
             if (tud.getSchematic().getPermission().equals("fade")) {
-                // abort - you can't change the wall and floor in the fade console
-                plugin.debug("Running fade change!");
+                // change the base and gradient blocks in the fade console
                 ttr = new FadeThemeRunnable(plugin, uuid, tud);
             } else {
                 // reduce the cost of the theme change

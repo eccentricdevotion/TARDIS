@@ -54,6 +54,7 @@ public class UpgradeBlockScanner {
     }
 
     public BlockScannerData check() {
+        // TODO if FADE desktop do alternate check
         // get JSON
         JsonObject obj = SchematicGZip.getObject(plugin, "consoles", tud.getPrevious().getPermission(), tud.getPrevious().isCustom());
         if (obj == null) {
@@ -165,15 +166,7 @@ public class UpgradeBlockScanner {
                                 }
                                 case LIGHT_GRAY_WOOL -> {
                                     if (!tud.getSchematic().getPermission().equals("eleventh")) {
-                                        if (floor_type == Material.LAPIS_BLOCK) { // if using the default Lapis Block - then use Light Grey Wool / Terracotta
-                                            type = switch (use_clay) {
-                                                case TERRACOTTA -> Material.LIGHT_GRAY_TERRACOTTA;
-                                                case CONCRETE -> Material.LIGHT_GRAY_CONCRETE;
-                                                default -> Material.LIGHT_GRAY_WOOL;
-                                            };
-                                        } else {
-                                            type = floor_type;
-                                        }
+                                        type = floor_type;
                                     } else {
                                         String[] tsplit = type.toString().split("_");
                                         String m;
@@ -185,6 +178,7 @@ public class UpgradeBlockScanner {
                                         type = Material.getMaterial(m);
                                     }
                                 }
+                                // TODO this would only be a barrier for non-Bedrock players
                                 case BLUE_WOOL -> type = Material.BARRIER;
                                 default -> {
                                     String[] tsplit = type.toString().split("_");
