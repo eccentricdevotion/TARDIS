@@ -157,7 +157,7 @@ public class DesktopThemeProcessor {
         // if configured check whether there are still any blocks left
         if (plugin.getConfig().getBoolean("desktop.check_blocks_before_upgrade")) {
             UpgradeBlockScanner scanner = new UpgradeBlockScanner(plugin, tud, uuid);
-            BlockScannerData check = scanner.check();
+            BlockScannerData check = tud.getPrevious().getPermission().equals("fade") ? scanner.fadeCheck() : scanner.check();
             if (check == null) {
                 return;
             } else if (!check.allow()) {

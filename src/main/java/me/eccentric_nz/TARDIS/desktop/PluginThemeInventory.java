@@ -93,7 +93,7 @@ public class PluginThemeInventory extends DesktopThemeInventory {
             archive.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Archive Consoles"));
             stack[GUIUpgrade.ARCHIVE_CONSOLES.slot()] = archive;
         }
-        if (plugin.getConfig().getBoolean("allow.repair")) {
+        if (plugin.getConfig().getBoolean("allow.repair") && !current_console.equals("fade")) {
             // repair
             if (TARDISPermission.hasPermission(player, "tardis.repair")) {
                 ItemStack repair = ItemStack.of(GUIUpgrade.REPAIR_CONSOLE.material(), 1);
