@@ -52,7 +52,7 @@ public class LightConverter {
             Tardis tardis = rs.getTardis();
             // get the world
             World w = player.getWorld();
-            int starty, endy;
+            int sy, endy;
             Schematic schm = tardis.getSchematic();
             // get JSON
             JsonObject obj = SchematicGZip.getObject(plugin, "consoles", schm.getPermission(), schm.isCustom());
@@ -62,8 +62,8 @@ public class LightConverter {
                 int h = dimensions.get("height").getAsInt();
                 int width = dimensions.get("width").getAsInt();
                 int d = dimensions.get("length").getAsInt() - 1;
-                starty = schm.getStartY();
-                endy = starty + h;
+                sy = schm.getStartY();
+                endy = sy + h;
                 TARDISInteriorPositioning tintpos = new TARDISInteriorPositioning(plugin);
                 TIPSData pos = tintpos.getTIPSData(tardis.getTIPS());
                 int minx = pos.getCentreX();
@@ -71,7 +71,7 @@ public class LightConverter {
                 int minz = pos.getCentreZ();
                 int maxz = minz + d;
                 // loop through the blocks inside this cube
-                for (int l = starty; l <= endy; l++) {
+                for (int l = sy; l <= endy; l++) {
                     for (int r = minx; r <= maxx; r++) {
                         for (int c = minz; c <= maxz; c++) {
                             Block b = w.getBlockAt(r, l, c);

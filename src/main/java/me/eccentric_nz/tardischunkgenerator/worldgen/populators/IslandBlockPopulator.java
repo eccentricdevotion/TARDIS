@@ -47,9 +47,9 @@ public class IslandBlockPopulator extends BlockPopulator {
             // create a blob
             boolean[][] blob = WaterCircle.makeBlob();
             // set starting values
-            int starty = 95;
-            int startx = x * 16;
-            int startz = z * 16;
+            int sy = 95;
+            int sx = x * 16;
+            int sz = z * 16;
             // get tree position
             Pair<Integer, Integer> treePos = spiral.getTreePosition();
             int treeX = treePos.getFirst();
@@ -65,13 +65,13 @@ public class IslandBlockPopulator extends BlockPopulator {
                         double n = island[r][c];
                         int top = (n > 0) ? (int) (n * 6) : 0;
                         if (r == treeX && c == treeZ) {
-                            treeY = starty + top + 1;
+                            treeY = sy + top + 1;
                         }
                         int bottom = -6 - (int) (n * 40);
                         for (int h = top; h >= bottom; h--) {
-                            int wx = startx + r;
-                            int wy = starty + h;
-                            int wz = startz + c;
+                            int wx = sx + r;
+                            int wy = sy + h;
+                            int wz = sz + c;
                             if (limitedRegion.isInRegion(wx, wy, wz)) {
                                 Material material;
                                 if (h == top) {
@@ -92,12 +92,12 @@ public class IslandBlockPopulator extends BlockPopulator {
                 }
             }
             // try to add a tree
-            if (limitedRegion.isInRegion(startx + treeX, treeY, startx + treeZ)) {
-                Location location = new Location(null, startx + treeX, treeY, startx + treeZ);
+            if (limitedRegion.isInRegion(sx + treeX, treeY, sx + treeZ)) {
+                Location location = new Location(null, sx + treeX, treeY, sx + treeZ);
                 // always set a dirt block under the tree location
                 limitedRegion.setType(location.clone().add(0, -1, 0), Material.DIRT);
                 if (!limitedRegion.generateTree(location, random, TreeType.TREE)) {
-                    limitedRegion.setType(startx + treeX, treeY, startx + treeZ, Material.OAK_SAPLING);
+                    limitedRegion.setType(sx + treeX, treeY, sx + treeZ, Material.OAK_SAPLING);
                 }
             }
         }

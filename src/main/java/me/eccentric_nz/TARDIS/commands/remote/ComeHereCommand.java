@@ -47,11 +47,11 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-public class ComehereCommand {
+public class ComeHereCommand {
 
     private final TARDIS plugin;
 
-    public ComehereCommand(TARDIS plugin) {
+    public ComeHereCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
@@ -70,8 +70,8 @@ public class ComehereCommand {
         }
         Material m = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getType();
         if (m != Material.SNOW) {
-            int yplusone = eyeLocation.getBlockY();
-            eyeLocation.setY(yplusone + 1);
+            int yPlusOne = eyeLocation.getBlockY();
+            eyeLocation.setY(yPlusOne + 1);
         }
         // check the world is not excluded
         String world = eyeLocation.getWorld().getKey().getKey();
@@ -124,7 +124,7 @@ public class ComehereCommand {
             }
         } else {
             int[] start_loc = TARDISTimeTravel.getStartLocation(eyeLocation, player_d);
-            // safeLocation(int startx, int starty, int startz, int resetx, int resetz, World w, COMPASS player_d)
+            // safeLocation(int sx, int sy, int sz, int rx, int rz, World w, COMPASS player_d)
             count = TARDISTimeTravel.safeLocation(start_loc[0], eyeLocation.getBlockY(), start_loc[2], start_loc[1], start_loc[3], eyeLocation.getWorld(), player_d);
         }
         Block under = eyeLocation.getBlock().getRelative(BlockFace.DOWN);

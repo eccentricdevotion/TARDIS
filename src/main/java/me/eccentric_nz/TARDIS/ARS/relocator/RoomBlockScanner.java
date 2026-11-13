@@ -64,10 +64,10 @@ public class RoomBlockScanner {
         int w = dimensions.get("width").getAsInt();
         int l = dimensions.get("length").getAsInt();
         float v = h * w * l;
-        // calculate startx, starty, startz
-        int starty = jettison.getY();
-        int startx = jettison.getX();
-        int startz = jettison.getZ();
+        // calculate sx, sy, sz
+        int sy = jettison.getY();
+        int sx = jettison.getX();
+        int sz = jettison.getZ();
         World world = jettison.getChunk().getWorld();
         Material wall_type;
         Material floor_type;
@@ -88,9 +88,9 @@ public class RoomBlockScanner {
                 JsonArray r = (JsonArray) floor.get(row);
                 for (int col = 0; col < l; col++) {
                     JsonObject c = r.get(col).getAsJsonObject();
-                    int x = startx + row;
-                    int y = starty + level;
-                    int z = startz + col;
+                    int x = sx + row;
+                    int y = sy + level;
+                    int z = sz + col;
                     BlockData data = plugin.getServer().createBlockData(c.get("data").getAsString());
                     Material type = data.getMaterial();
                     Block b = world.getBlockAt(x, y, z);

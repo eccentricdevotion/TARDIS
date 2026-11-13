@@ -442,30 +442,30 @@ public class TARDISTerminalListener implements Listener {
                         default -> {
                             Location loc = new Location(w, slotx, 0, slotz);
                             int[] start = TARDISTimeTravel.getStartLocation(loc, d);
-                            int starty = TARDISStaticLocationGetters.getHighestYin3x3(w, slotx, slotz);
+                            int sy = TARDISStaticLocationGetters.getHighestYin3x3(w, slotx, slotz);
                             // allow room for under door block
-                            if (starty <= 0) {
-                                starty = 1;
+                            if (sy <= 0) {
+                                sy = 1;
                             }
                             int safe;
                             // check submarine
                             ItemStack sub = view.getItem(44);
-                            loc.setY(starty);
+                            loc.setY(sy);
                             if (ComponentUtils.hasLore(sub) && ComponentUtils.stripColour(sub.getData(DataComponentTypes.LORE).lines().getFirst()).equals("true") && TARDISStaticUtils.isOceanBiome(loc.getBlock().getBiome())) {
                                 Location subloc = tt.submarine(loc.getBlock(), d);
                                 if (subloc != null) {
                                     safe = 0;
-                                    starty = subloc.getBlockY();
+                                    sy = subloc.getBlockY();
                                     terminalSub.put(uuid, true);
                                 } else {
                                     safe = 1;
                                 }
                             } else {
-                                safe = TARDISTimeTravel.safeLocation(start[0], starty, start[2], start[1], start[3], w, d);
+                                safe = TARDISTimeTravel.safeLocation(start[0], sy, start[2], start[1], start[3], w, d);
                             }
                             if (safe == 0) {
-                                String save = world + ":" + slotx + ":" + starty + ":" + slotz;
-                                if (plugin.getPluginRespect().getRespect(new Location(w, slotx, starty, slotz), new Parameters(p, Flag.getNoMessageFlags()))) {
+                                String save = world + ":" + slotx + ":" + sy + ":" + slotz;
+                                if (plugin.getPluginRespect().getRespect(new Location(w, slotx, sy, slotz), new Parameters(p, Flag.getNoMessageFlags()))) {
                                     terminalDestination.put(uuid, save);
                                     lore.addLine(Component.text(save));
                                     lore.addLine(Component.text("is a valid destination!"));

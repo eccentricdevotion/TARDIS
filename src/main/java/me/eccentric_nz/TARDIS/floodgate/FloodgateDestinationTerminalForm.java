@@ -144,27 +144,27 @@ public class FloodgateDestinationTerminalForm {
                         default -> {
                             Location loc = new Location(w, x, 0, z);
                             int[] start = TARDISTimeTravel.getStartLocation(loc, current.direction());
-                            int starty = TARDISStaticLocationGetters.getHighestYin3x3(w, x, z);
+                            int sy = TARDISStaticLocationGetters.getHighestYin3x3(w, x, z);
                             // allow room for under door block
-                            if (starty <= 0) {
-                                starty = 1;
+                            if (sy <= 0) {
+                                sy = 1;
                             }
                             int safe;
                             // check submarine
-                            loc.setY(starty);
+                            loc.setY(sy);
                             if (response.asToggle(4) && TARDISStaticUtils.isOceanBiome(loc.getBlock().getBiome())) {
                                 Location subloc = tt.submarine(loc.getBlock(), current.direction());
                                 if (subloc != null) {
                                     safe = 0;
-                                    starty = subloc.getBlockY();
+                                    sy = subloc.getBlockY();
                                 } else {
                                     safe = 1;
                                 }
                             } else {
-                                safe = TARDISTimeTravel.safeLocation(start[0], starty, start[2], start[1], start[3], w, current.direction());
+                                safe = TARDISTimeTravel.safeLocation(start[0], sy, start[2], start[1], start[3], w, current.direction());
                             }
                             if (safe == 0) {
-                                Location over = new Location(w, x, starty, z);
+                                Location over = new Location(w, x, sy, z);
                                 if (plugin.getPluginRespect().getRespect(over, new Parameters(player, Flag.getNoMessageFlags()))) {
                                     location = over;
                                     plugin.getMessenger().sendStatus(player, "LOC_SET");

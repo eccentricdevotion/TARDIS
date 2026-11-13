@@ -65,12 +65,12 @@ public class UpgradeBlockScanner {
         int w = dimensions.get("width").getAsInt();
         int l = dimensions.get("length").getAsInt();
         float v = h * w * l;
-        // calculate startx, starty, startz
+        // calculate sx, sy, sz
         CheckData start = getStart();
         if (start != null) {
-            int startx = start.x();
-            int startz = start.z();
-            int starty = tud.getPrevious().getStartY();
+            int sx = start.x();
+            int sz = start.z();
+            int sy = tud.getPrevious().getStartY();
             World world = start.world();
             Material wall_type = start.wall();
             Material floor_type = start.floor();
@@ -83,9 +83,9 @@ public class UpgradeBlockScanner {
                     JsonArray r = (JsonArray) floor.get(row);
                     for (int col = 0; col < l; col++) {
                         JsonObject c = r.get(col).getAsJsonObject();
-                        int x = startx + row;
-                        int y = starty + level;
-                        int z = startz + col;
+                        int x = sx + row;
+                        int y = sy + level;
+                        int z = sz + col;
                         BlockData data = plugin.getServer().createBlockData(c.get("data").getAsString());
                         Material type = data.getMaterial();
                         if (type.equals(Material.ORANGE_WOOL)) {
@@ -194,12 +194,12 @@ public class UpgradeBlockScanner {
         int w = arr[0].length;
         int l = arr[0][0].length;
         float v = h * w * l;
-        // calculate startx, starty, startz
+        // calculate sx, sy, sz
         CheckData start = getStart();
         if (start != null) {
-            int startx = start.x();
-            int starty = tud.getPrevious().getStartY();
-            int startz = start.z();
+            int sx = start.x();
+            int sy = tud.getPrevious().getStartY();
+            int sz = start.z();
             World world = start.world();
             Material wall_type = start.wall();
             Material floor_type = start.floor();
@@ -207,9 +207,9 @@ public class UpgradeBlockScanner {
             for (int level = 0; level < h; level++) {
                 for (int row = 0; row < w; row++) {
                     for (int col = 0; col < l; col++) {
-                        int x = startx + row;
-                        int y = starty + level;
-                        int z = startz + col;
+                        int x = sx + row;
+                        int y = sy + level;
+                        int z = sz + col;
                         BlockData data = plugin.getServer().createBlockData(arr[level][row][col]);
                         Material type = data.getMaterial();
                         if (type.isAir()) {

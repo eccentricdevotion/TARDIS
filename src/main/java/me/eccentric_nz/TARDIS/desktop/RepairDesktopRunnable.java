@@ -91,7 +91,7 @@ public class RepairDesktopRunnable extends DesktopThemeRunnable {
     private final List<Block> postLightBlocks = new ArrayList<>();
     private final boolean clean;
     private boolean running;
-    private int id, slot, c, h, w, level = 0, row = 0, startx, starty, startz, resetx, resetz, j = 2;
+    private int id, slot, c, h, w, level = 0, row = 0, sx, sy, sz, rx, rz, j = 2;
     private World world;
     private List<Chunk> chunks;
     private Block postBedrock;
@@ -151,7 +151,7 @@ public class RepairDesktopRunnable extends DesktopThemeRunnable {
             h = dimensions.get("height").getAsInt();
             w = dimensions.get("width").getAsInt();
             c = dimensions.get("length").getAsInt();
-            // calculate startx, starty, startz
+            // calculate sx, sy, sz
             HashMap<String, Object> wheret = new HashMap<>();
             wheret.put("uuid", uuid.toString());
             ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false);
@@ -221,22 +221,22 @@ public class RepairDesktopRunnable extends DesktopThemeRunnable {
             if (slot != -1000001) { // default world - use TIPS
                 TARDISInteriorPositioning tintpos = new TARDISInteriorPositioning(plugin);
                 TIPSData pos = tintpos.getTIPSData(slot);
-                startx = pos.getCentreX();
-                resetx = pos.getCentreX();
-                startz = pos.getCentreZ();
-                resetz = pos.getCentreZ();
+                sx = pos.getCentreX();
+                rx = pos.getCentreX();
+                sz = pos.getCentreZ();
+                rz = pos.getCentreZ();
             } else {
                 int[] gsl = plugin.getLocationUtils().getStartLocation(tardis.getTardisId());
-                startx = gsl[0];
-                resetx = gsl[1];
-                startz = gsl[2];
-                resetz = gsl[3];
+                sx = gsl[0];
+                rx = gsl[1];
+                sz = gsl[2];
+                rz = gsl[3];
             }
-            starty = tud.getSchematic().getStartY();
+            sy = tud.getSchematic().getStartY();
             world = TARDISStaticLocationGetters.getWorldFromSplitString(tardis.getChunk());
             own_world = plugin.getConfig().getBoolean("creation.create_worlds");
-            wg1 = new Location(world, startx, starty, startz);
-            wg2 = new Location(world, startx + (w - 1), starty + (h - 1), startz + (c - 1));
+            wg1 = new Location(world, sx, sy, sz);
+            wg2 = new Location(world, sx + (w - 1), sy + (h - 1), sz + (c - 1));
             // wall/floor block prefs
             String[] wall = tud.getWall().split(":");
             String[] floor = tud.getFloor().split(":");
@@ -257,7 +257,7 @@ public class RepairDesktopRunnable extends DesktopThemeRunnable {
             plugin.getQueryFactory().doDelete("lamps", wherel);
             chunks.forEach((c) -> {
                 // remove any display items lamps
-                TARDISDisplayItemUtils.removeEntitiesInChunk(c, starty, starty + h);
+                TARDISDisplayItemUtils.removeEntitiesInChunk(c, sy, sy + h);
             });
             plugin.getPM().callEvent(new TARDISDesktopThemeEvent(player, tardis, tud));
         }
@@ -322,17 +322,17 @@ public class RepairDesktopRunnable extends DesktopThemeRunnable {
             // mannequins
             if (obj.has("mannequins")) {
                 JsonArray mannequins = obj.get("mannequins").getAsJsonArray();
-                MannequinSetter.setMannequins(mannequins, world, resetx, starty, resetz);
+                MannequinSetter.setMannequins(mannequins, world, rx, sy, rz);
             }
             // armour stands
             if (obj.has("armour_stands")) {
                 JsonArray stands = obj.get("armour_stands").getAsJsonArray();
-                ArmourStandSetter.setStands(stands, world, resetx, starty, resetz);
+                ArmourStandSetter.setStands(stands, world, rx, sy, rz);
             }
             // paintings
             if (obj.has("paintings")) {
                 JsonArray paintings = (JsonArray) obj.get("paintings");
-                PaintingSetter.setArt(paintings, world, resetx, starty, resetz);
+                PaintingSetter.setArt(paintings, world, rx, sy, rz);
             }
             if (obj.has("item_frames")) {
                 JsonArray frames = obj.get("item_frames").getAsJsonArray();
@@ -349,7 +349,7 @@ public class RepairDesktopRunnable extends DesktopThemeRunnable {
             }
             if (tud.getSchematic().getPermission().equals("coral") && tud.getPrevious().getConsoleSize().equals(ConsoleSize.TALL)) {
                 // clean up space above coral console
-                int tidy = starty + h;
+                int tidy = sy + h;
                 int plus = 32 - h;
                 chunks.forEach((chk) -> setAir(chk.getBlock(0, 64, 0).getX(), tidy, chk.getBlock(0, 64, 0).getZ(), chk.getWorld(), plus));
             }
@@ -395,9 +395,9 @@ public class RepairDesktopRunnable extends DesktopThemeRunnable {
             // place a row of blocks
             for (int col = 0; col < c; col++) {
                 JsonObject bb = r.get(col).getAsJsonObject();
-                int x = startx + row;
-                int y = starty + level;
-                int z = startz + col;
+                int x = sx + row;
+                int y = sy + level;
+                int z = sz + col;
                 BlockData data = plugin.getServer().createBlockData(bb.get("data").getAsString());
                 Material type = data.getMaterial();
                 if (type.equals(Material.BEDROCK)) {

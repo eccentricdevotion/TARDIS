@@ -112,18 +112,18 @@ public class DesktopRepair {
                 Tardis tardis = rs.getTardis();
                 int slot = tardis.getTIPS();
                 int id = tardis.getTardisId();
-                int startx, startz;
+                int sx, sz;
                 if (slot != -1000001) { // default world - use TIPS
                     TARDISInteriorPositioning tintpos = new TARDISInteriorPositioning(plugin);
                     TIPSData pos = tintpos.getTIPSData(slot);
-                    startx = pos.getCentreX();
-                    startz = pos.getCentreZ();
+                    sx = pos.getCentreX();
+                    sz = pos.getCentreZ();
                 } else {
                     int[] gsl = plugin.getLocationUtils().getStartLocation(tardis.getTardisId());
-                    startx = gsl[0];
-                    startz = gsl[2];
+                    sx = gsl[0];
+                    sz = gsl[2];
                 }
-                int starty = tardis.getSchematic().getStartY();
+                int sy = tardis.getSchematic().getStartY();
                 World world = TARDISStaticLocationGetters.getWorldFromSplitString(tardis.getChunk());
                 String wall = "ORANGE_WOOL";
                 String floor = "LIGHT_GRAY_WOOL";
@@ -142,9 +142,9 @@ public class DesktopRepair {
                     for (int row = 0; row < w; row++) {
                         JsonArray r = (JsonArray) plane.get(row);
                         for (int col = 0; col < l; col++) {
-                            int x = startx + row;
-                            int y = starty + level;
-                            int z = startz + col;
+                            int x = sx + row;
+                            int y = sy + level;
+                            int z = sz + col;
                             JsonObject c = r.get(col).getAsJsonObject();
                             BlockData data = plugin.getServer().createBlockData(c.get("data").getAsString());
                             String bid = data.getMaterial().toString();

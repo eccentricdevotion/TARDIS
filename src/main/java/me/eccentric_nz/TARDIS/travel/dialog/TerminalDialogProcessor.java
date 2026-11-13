@@ -233,30 +233,30 @@ public class TerminalDialogProcessor {
             default -> {
                 Location loc = new Location(world, blockX, 0, blockZ);
                 int[] start = TARDISTimeTravel.getStartLocation(loc, d);
-                int starty = TARDISStaticLocationGetters.getHighestYin3x3(world, blockX, blockZ);
+                int sy = TARDISStaticLocationGetters.getHighestYin3x3(world, blockX, blockZ);
                 // allow room for under door block
-                if (starty <= 0) {
-                    starty = 1;
+                if (sy <= 0) {
+                    sy = 1;
                 }
                 int safe;
                 // check submarine
-                loc.setY(starty);
+                loc.setY(sy);
                 if (submarine && TARDISStaticUtils.isOceanBiome(loc.getBlock().getBiome())) {
                     Location subloc = tt.submarine(loc.getBlock(), d);
                     if (subloc != null) {
                         safe = 0;
-                        starty = subloc.getBlockY();
+                        sy = subloc.getBlockY();
                     } else {
                         safe = 1;
                     }
                 } else {
-                    safe = TARDISTimeTravel.safeLocation(start[0], starty, start[2], start[1], start[3], world, d);
+                    safe = TARDISTimeTravel.safeLocation(start[0], sy, start[2], start[1], start[3], world, d);
                 }
                 if (safe == 0) {
-                    String save = world.getKey().asString() + ":" + blockX + ":" + starty + ":" + blockZ;
-                    if (plugin.getPluginRespect().getRespect(new Location(world, blockX, starty, blockZ), new Parameters(p, Flag.getNoMessageFlags()))) {
+                    String save = world.getKey().asString() + ":" + blockX + ":" + sy + ":" + blockZ;
+                    if (plugin.getPluginRespect().getRespect(new Location(world, blockX, sy, blockZ), new Parameters(p, Flag.getNoMessageFlags()))) {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "DEST_SET_TERMINAL", save);
-                        return new Pair<>(true, starty);
+                        return new Pair<>(true, sy);
                     } else {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "DEST_PROTECTED", save);
                         return new Pair<>(false, -1);

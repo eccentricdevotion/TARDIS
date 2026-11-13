@@ -46,33 +46,33 @@ class Delavafier {
     }
 
     void swap() {
-        // calculate startx, starty, startz
+        // calculate sx, sy, sz
         HashMap<String, Object> wheret = new HashMap<>();
         wheret.put("uuid", uuid.toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false);
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
             int slot = tardis.getTIPS();
-            int startx;
-            int startz;
+            int sx;
+            int sz;
             if (slot != -1000001) { // default world - use TIPS
                 TARDISInteriorPositioning tintpos = new TARDISInteriorPositioning(plugin);
                 TIPSData pos = tintpos.getTIPSData(slot);
-                startx = pos.getCentreX();
-                startz = pos.getCentreZ();
+                sx = pos.getCentreX();
+                sz = pos.getCentreZ();
             } else {
                 int[] gsl = plugin.getLocationUtils().getStartLocation(tardis.getTardisId());
-                startx = gsl[0];
-                startz = gsl[2];
+                sx = gsl[0];
+                sz = gsl[2];
             }
             World world = TARDISStaticLocationGetters.getWorldFromSplitString(tardis.getChunk());
             for (int level = 2; level < 6; level++) {
                 for (int row = 0; row < 32; row++) {
                     for (int col = 0; col < 32; col++) {
-                        int x = startx + row;
-                        int starty = 64;
-                        int y = starty + level;
-                        int z = startz + col;
+                        int x = sx + row;
+                        int sy = 64;
+                        int y = sy + level;
+                        int z = sz + col;
                         Block b = world.getBlockAt(x, y, z);
                         Material type = b.getType();
                         if (type.equals(Material.LAVA)) {

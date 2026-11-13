@@ -16,7 +16,7 @@ import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.brigadier.arguments.UpdateableArgumentType;
 import me.eccentric_nz.TARDIS.commands.preferences.IsomorphicCommand;
 import me.eccentric_nz.TARDIS.commands.remote.BackCommand;
-import me.eccentric_nz.TARDIS.commands.remote.ComehereCommand;
+import me.eccentric_nz.TARDIS.commands.remote.ComeHereCommand;
 import me.eccentric_nz.TARDIS.commands.remote.HideCommand;
 import me.eccentric_nz.TARDIS.commands.remote.RebuildCommand;
 import me.eccentric_nz.TARDIS.commands.sudo.*;
@@ -121,7 +121,7 @@ public class SudoCommandNode {
                                             plugin.getMessenger().send(ctx.getSource().getSender(), TardisModule.TARDIS, "PLAYER_NO_TARDIS");
                                             return Command.SINGLE_SUCCESS;
                                         }
-                                        new ComehereCommand(plugin).doRemoteComeHere((Player) ctx.getSource().getSender(), profile.getId());
+                                        new ComeHereCommand(plugin).doRemoteComeHere((Player) ctx.getSource().getSender(), profile.getId());
                                     }
                                     return Command.SINGLE_SUCCESS;
                                 }))

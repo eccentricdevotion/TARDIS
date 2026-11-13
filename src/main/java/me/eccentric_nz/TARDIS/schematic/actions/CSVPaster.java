@@ -83,12 +83,12 @@ public class CSVPaster {
 
     public void buildLegacy(String[][][] s, Location location) {
         World world = location.getWorld();
-        int startx = location.getBlockX();
-        int resetx = location.getBlockX();
-        int startz = location.getBlockZ();
-        int resetz = location.getBlockZ();
+        int sx = location.getBlockX();
+        int rx = location.getBlockX();
+        int sz = location.getBlockZ();
+        int rz = location.getBlockZ();
         int level;
-        int starty = location.getBlockY();
+        int sy = location.getBlockY();
         Material material;
         for (level = 0; level < 8; level++) {
             for (int row = 0; row < 11; row++) {
@@ -101,16 +101,16 @@ public class CSVPaster {
                             material = ID_LOOKUP.get(tmp);
                         }
                         BlockData id = material.createBlockData();
-                        TARDISBlockSetters.setBlock(world, startx, starty, startz, id);
+                        TARDISBlockSetters.setBlock(world, sx, sy, sz, id);
                     }
-                    startx += 1;
+                    sx += 1;
                 }
 
-                startx = resetx;
-                startz += 1;
+                sx = rx;
+                sz += 1;
             }
-            startz = resetz;
-            starty++;
+            sz = rz;
+            sy++;
         }
     }
 }

@@ -33,48 +33,48 @@ public class CaveFinder {
 
     public static Location searchSpawnPoint(Location playerLocation, boolean checkSlimeChunk) {
         World w = playerLocation.getWorld();
-        int startx = playerLocation.getBlockX();
-        int starty = playerLocation.getBlockY();
-        int startz = playerLocation.getBlockZ();
+        int sx = playerLocation.getBlockX();
+        int sy = playerLocation.getBlockY();
+        int sz = playerLocation.getBlockZ();
         if (TARDISCaveFinder.worldCheck(w)) {
-            int plusx = startx + 24;
-            int plusz = startz + 24;
-            int minusx = startx - 24;
-            int minusz = startz - 24;
+            int plusx = sx + 24;
+            int plusz = sz + 24;
+            int minusx = sx - 24;
+            int minusz = sz - 24;
             int step = 4;
             // search in a random direction
             Collections.shuffle(directions);
                     for (int i = 0; i < 4; i++) {
                         switch (directions.get(i)) {
                             case EAST -> {
-                                for (int east = plusx; east > startx; east -= step) {
-                                    Check chk = isThereRoom(w, east, startz, starty, checkSlimeChunk);
+                                for (int east = plusx; east > sx; east -= step) {
+                                    Check chk = isThereRoom(w, east, sz, sy, checkSlimeChunk);
                                     if (chk.isSafe()) {
-                                        return new Location(w, east, chk.getY(), startz);
+                                        return new Location(w, east, chk.getY(), sz);
                                     }
                                 }
                             }
                             case SOUTH -> {
-                                for (int south = plusz; south > startz; south -= step) {
-                                    Check chk = isThereRoom(w, startx, south, starty, checkSlimeChunk);
+                                for (int south = plusz; south > sz; south -= step) {
+                                    Check chk = isThereRoom(w, sx, south, sy, checkSlimeChunk);
                                     if (chk.isSafe()) {
-                                        return new Location(w, startx, chk.getY(), south);
+                                        return new Location(w, sx, chk.getY(), south);
                                     }
                                 }
                             }
                             case WEST -> {
-                                for (int west = minusx; west < startx; west += step) {
-                                    Check chk = isThereRoom(w, west, startz, starty, checkSlimeChunk);
+                                for (int west = minusx; west < sx; west += step) {
+                                    Check chk = isThereRoom(w, west, sz, sy, checkSlimeChunk);
                                     if (chk.isSafe()) {
-                                        return new Location(w, west, chk.getY(), startz);
+                                        return new Location(w, west, chk.getY(), sz);
                                     }
                                 }
                             }
                             default -> { // NORTH
-                                for (int north = minusz; north < startz; north += step) {
-                                    Check chk = isThereRoom(w, startx, north, starty, checkSlimeChunk);
+                                for (int north = minusz; north < sz; north += step) {
+                                    Check chk = isThereRoom(w, sx, north, sy, checkSlimeChunk);
                                     if (chk.isSafe()) {
-                                        return new Location(w, startx, chk.getY(), north);
+                                        return new Location(w, sx, chk.getY(), north);
                                     }
                                 }
                             }

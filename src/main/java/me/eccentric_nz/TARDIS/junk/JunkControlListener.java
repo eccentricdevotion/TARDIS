@@ -311,26 +311,26 @@ public class JunkControlListener implements Listener {
     }
 
     private int getActualHighestY(Location l) {
-        int startx = l.getBlockX() - 3, resetx = startx, starty = l.getBlockY(), startz = l.getBlockZ() - 2, resetz = startz, level, row, col;
+        int sx = l.getBlockX() - 3, rx = sx, sy = l.getBlockY(), sz = l.getBlockZ() - 2, rz = sz, level, row, col;
         for (level = 0; level < 5; level++) {
             boolean found = false;
             for (row = 0; row < 6; row++) {
                 for (col = 0; col < 6; col++) {
-                    Material mat = l.getWorld().getBlockAt(startx, starty, startz).getType();
+                    Material mat = l.getWorld().getBlockAt(sx, sy, sz).getType();
                     if (!TARDISConstants.GOOD_MATERIALS.contains(mat)) {
                         found = true;
                     }
-                    startx += 1;
+                    sx += 1;
                 }
-                startx = resetx;
-                startz += 1;
+                sx = rx;
+                sz += 1;
             }
             if (!found) {
-                return starty;
+                return sy;
             }
-            startz = resetz;
-            starty += 1;
+            sz = rz;
+            sy += 1;
         }
-        return starty;
+        return sy;
     }
 }

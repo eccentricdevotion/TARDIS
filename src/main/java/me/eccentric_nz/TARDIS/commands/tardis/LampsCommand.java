@@ -97,7 +97,7 @@ public class LampsCommand {
             int cz = TARDISNumberParsers.parseInt(tc[3]);
             World world = TARDISWorldResolver.getFromString(tc[1]);
             Chunk startChunk = world.getChunkAt(cx, cz);
-            int starty, endy;
+            int sy, endy;
             Schematic schm = tardis.getSchematic();
             // get JSON
             JsonObject obj = SchematicGZip.getObject(plugin, "consoles", schm.getPermission(), schm.isCustom());
@@ -105,8 +105,8 @@ public class LampsCommand {
                 // get dimensions
                 JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
                 int h = dimensions.get("height").getAsInt();
-                starty = schm.getStartY();
-                endy = starty + h;
+                sy = schm.getStartY();
+                endy = sy + h;
                 String w = world.getKey().asString();
                 // loop through the chunks
                 for (Chunk chunk : ChunkUtils.getConsoleChunks(startChunk, tardis.getSchematic())) {
@@ -115,7 +115,7 @@ public class LampsCommand {
                     int bz = chunk.getZ() << 4;
                     for (int xx = bx; xx < bx + 16; xx++) {
                         for (int zz = bz; zz < bz + 16; zz++) {
-                            for (int yy = starty; yy < endy; yy++) {
+                            for (int yy = sy; yy < endy; yy++) {
                                 Material mat = world.getBlockAt(xx, yy, zz).getType();
                                 if (mat.equals(Material.LIGHT)) {
                                     String lamp = w + ":" + xx + ":" + yy + ":" + zz;

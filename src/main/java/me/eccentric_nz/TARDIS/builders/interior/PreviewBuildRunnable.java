@@ -112,7 +112,7 @@ public class PreviewBuildRunnable implements Runnable {
                 h = dimensions.get("height").getAsInt() - 1;
                 w = dimensions.get("width").getAsInt();
                 d = dimensions.get("length").getAsInt() - 1;
-                // calculate startx, starty, startz
+                // calculate sx, sy, sz
                 TARDISInteriorPositioning tintPos = new TARDISInteriorPositioning(plugin);
                 TIPSData pos = tintPos.getTIPSData(tips);
                 startX = pos.getCentreX();

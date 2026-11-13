@@ -18,7 +18,7 @@ import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.brigadier.arguments.AreasArgumentType;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import me.eccentric_nz.TARDIS.commands.remote.BackCommand;
-import me.eccentric_nz.TARDIS.commands.remote.ComehereCommand;
+import me.eccentric_nz.TARDIS.commands.remote.ComeHereCommand;
 import me.eccentric_nz.TARDIS.commands.remote.RemoteUtility;
 import me.eccentric_nz.TARDIS.commands.tardis.HideCommand;
 import me.eccentric_nz.TARDIS.commands.tardis.RebuildCommand;
@@ -111,7 +111,7 @@ public class RemoteCommandNode {
                                         return Command.SINGLE_SUCCESS;
                                     }
                                     if (ctx.getSource().getSender() instanceof Player player && ctx.getSource().getSender().hasPermission("tardis.admin")) {
-                                        new ComehereCommand(plugin).doRemoteComeHere(player, required.getSecond().getUniqueId());
+                                        new ComeHereCommand(plugin).doRemoteComeHere(player, required.getSecond().getUniqueId());
                                     } else {
                                         plugin.getMessenger().send(ctx.getSource().getSender(), TardisModule.TARDIS, "NO_PERMS");
                                     }

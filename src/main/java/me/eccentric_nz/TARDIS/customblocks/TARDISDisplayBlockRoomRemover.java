@@ -37,7 +37,7 @@ public class TARDISDisplayBlockRoomRemover implements Runnable {
 
     private final TARDIS plugin;
     private final Player owner;
-    private final int startx, starty, startz;
+    private final int sx, sy, sz;
     private final int c = 16;
     private final int h = 16;
     private final int w = 16;
@@ -51,9 +51,9 @@ public class TARDISDisplayBlockRoomRemover implements Runnable {
     public TARDISDisplayBlockRoomRemover(TARDIS plugin, Player owner, GrowSlot slot, BlockData blockData) {
         this.plugin = plugin;
         this.owner = owner;
-        this.startx = slot.getX();
-        this.starty = slot.getY();
-        this.startz = slot.getZ();
+        this.sx = slot.getX();
+        this.sy = slot.getY();
+        this.sz = slot.getZ();
         this.blockData = blockData;
     }
 
@@ -78,9 +78,9 @@ public class TARDISDisplayBlockRoomRemover implements Runnable {
         } else {
             // check a row of blocks
             for (int col = 0; col < c; col++) {
-                int x = startx + row;
-                int y = starty + level;
-                int z = startz + col;
+                int x = sx + row;
+                int y = sy + level;
+                int z = sz + col;
                 Block block = world.getBlockAt(x, y, z);
                 if (block.getType() == Material.BARRIER) {
                     ItemDisplay display = TARDISDisplayItemUtils.getFromBoundingBox(block);
