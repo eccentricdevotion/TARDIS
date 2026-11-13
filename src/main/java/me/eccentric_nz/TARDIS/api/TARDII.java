@@ -34,6 +34,7 @@ import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.desktop.UpgradeData;
 import me.eccentric_nz.TARDIS.desktop.WallFloorRunnable;
+import me.eccentric_nz.TARDIS.discovery.StructureVariant;
 import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.flight.TARDISTakeoff;
 import me.eccentric_nz.TARDIS.move.TARDISTeleportLocation;
@@ -763,8 +764,14 @@ public class TARDII implements TardisAPI {
         if (!TARDIS.plugin.getConfig().getBoolean("creation.default_world")) {
             throw new TARDISException("TARDIS must be configured to create TARDISes in a default world");
         }
-        Schematic schm = Desktops.getBY_NAMES().get(type.toUpperCase(Locale.ROOT));
-        new AbandonedBuilder(TARDIS.plugin).spawn(location, schm, preset, "", direction, null);
+        Schematic schematic = Desktops.getBY_NAMES().get(type.toUpperCase(Locale.ROOT));
+        // get fade variant
+        StructureVariant variant = null;
+        if (schematic.getPermission().equals("fade")) {
+            StructureVariant[] structureVariants = TARDIS.plugin.getBuildKeeper().getFadeVariants().getLookup().values().toArray(new StructureVariant[0]);
+            variant = structureVariants[TARDISConstants.RANDOM.nextInt(structureVariants.length)];
+        }
+        new AbandonedBuilder(TARDIS.plugin).spawn(location, schematic, variant, preset, "", direction, null);
     }
 
     @Override

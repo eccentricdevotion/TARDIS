@@ -17,7 +17,9 @@
 package me.eccentric_nz.TARDIS.commands.admin;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.interior.AbandonedBuilder;
+import me.eccentric_nz.TARDIS.discovery.StructureVariant;
 import me.eccentric_nz.TARDIS.enumeration.*;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -37,7 +39,7 @@ public class CreateAbandonedCommand {
         this.plugin = plugin;
     }
 
-    public void spawn(CommandSender sender, String schm, String p, String dir, World world, int x, int y, int z) {
+    public void spawn(CommandSender sender, String s, String p, String dir, World world, int x, int y, int z) {
         if (!plugin.getConfig().getBoolean("abandon.enabled")) {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "ABANDONED_DISABLED");
             return;
@@ -46,11 +48,11 @@ public class CreateAbandonedCommand {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "ABANDONED_SPAWN");
             return;
         }
-        if (!Desktops.getBY_NAMES().containsKey(schm)) {
+        if (!Desktops.getBY_NAMES().containsKey(s)) {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "TOO_FEW_ARGS");
             return;
         }
-        Schematic s = Desktops.getBY_NAMES().get(schm);
+        Schematic schematic = Desktops.getBY_NAMES().get(s);
         ChameleonPreset preset;
         if (plugin.getCustomModelConfig().getConfigurationSection("models").getKeys(false).contains(p)) {
             preset = ChameleonPreset.ITEM;
@@ -70,6 +72,12 @@ public class CreateAbandonedCommand {
             return;
         }
         Location l = new Location(world, x, y, z);
-        new AbandonedBuilder(plugin).spawn(l, s, preset, schm, d, (sender instanceof Player) ? (Player) sender : null);
+        // get fade variant
+        StructureVariant variant = null;
+        if (schematic.getPermission().equals("fade")) {
+            StructureVariant[] structureVariants = TARDIS.plugin.getBuildKeeper().getFadeVariants().getLookup().values().toArray(new StructureVariant[0]);
+            variant = structureVariants[TARDISConstants.RANDOM.nextInt(structureVariants.length)];
+        }
+        new AbandonedBuilder(plugin).spawn(l, schematic, variant, preset, s, d, (sender instanceof Player) ? (Player) sender : null);
     }
 }

@@ -81,8 +81,6 @@ public class PreviewBuildRunnable implements Runnable {
     private Location location;
     private boolean running = false;
     private Location ender = null;
-    private int counter = 0;
-    private double div = 1.0d;
 
     /**
      * Builds the inside of the TARDIS.
@@ -114,7 +112,6 @@ public class PreviewBuildRunnable implements Runnable {
                 h = dimensions.get("height").getAsInt() - 1;
                 w = dimensions.get("width").getAsInt();
                 d = dimensions.get("length").getAsInt() - 1;
-                div = (h + 1.0d) * w * (d + 1.0d);
                 // calculate startx, starty, startz
                 TARDISInteriorPositioning tintPos = new TARDISInteriorPositioning(plugin);
                 TIPSData pos = tintPos.getTIPSData(tips);
@@ -208,7 +205,6 @@ public class PreviewBuildRunnable implements Runnable {
         JsonArray r = (JsonArray) floor.get(row);
         // paste a column
         for (int col = 0; col <= d; col++) {
-            counter++;
             JsonObject c = r.get(col).getAsJsonObject();
             int x = startX + row;
             int y = startY + level;

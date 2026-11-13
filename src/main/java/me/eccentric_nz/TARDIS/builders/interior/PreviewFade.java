@@ -6,7 +6,6 @@ import me.eccentric_nz.TARDIS.customblocks.TARDISBlockDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.discovery.Placer;
 import me.eccentric_nz.TARDIS.discovery.StructureVariant;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -42,34 +41,13 @@ public class PreviewFade {
         // async task to populate box with block fade
         plugin.getServer().getScheduler().runTaskAsynchronously(plugin, () -> {
             String[][][] template = new Template().load(plugin);
-            BlockData[][][] base = setBaseBlocks(template, variant);
+            BlockData[][][] base = BaseBlocks.set(template, variant);
             BlockData[][][] fade = new FadeMutator(TARDISConstants.RANDOM.nextLong(), 7, variant).applyGradient(base, variant.gradient());
             // switch back to the main thread
             plugin.getServer().getScheduler().runTask(plugin, () -> {
                 place(location, fade, variant);
             });
         });
-    }
-
-    public BlockData[][][] setBaseBlocks(String[][][] array, StructureVariant variant) {
-        BlockData[][][] data = new BlockData[array.length][array[0].length][array[0][0].length];
-        for (int i = 0; i < array.length; i++) {
-            for (int j = 0; j < array[i].length; j++) {
-                for (int k = 0; k < array[i][j].length; k++) {
-                    String material = array[i][j][k];
-                    if (material.contains("tuff_wall")) {
-                        data[i][j][k] = variant.wall().createBlockData();
-                    } else if (material.contains("tuff")) {
-                        data[i][j][k] = variant.base().createBlockData();
-                    } else if (material.contains("muddy_mangrove_roots")) {
-                        data[i][j][k] = variant.seed().createBlockData();
-                    } else {
-                        data[i][j][k] = Bukkit.createBlockData(material);
-                    }
-                }
-            }
-        }
-        return data;
     }
 
     private void place(Location location, BlockData[][][] materials, StructureVariant variant) {

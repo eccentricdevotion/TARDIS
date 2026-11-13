@@ -61,9 +61,15 @@ public class Temple {
                     // get a random interior schematic
                     List<Schematic> schematics = new ArrayList<>(Desktops.getBY_NAMES().values());
                     Schematic s = schematics.get(TARDISConstants.RANDOM.nextInt(schematics.size()));
+                    // get fade variant
+                    StructureVariant v = null;
+                    if (s.getPermission().equals("fade")) {
+                        StructureVariant[] structureVariants = plugin.getBuildKeeper().getFadeVariants().getLookup().values().toArray(new StructureVariant[0]);
+                        v = structureVariants[TARDISConstants.RANDOM.nextInt(structureVariants.length)];
+                    }
                     // get a random exterior preset - must have a door
                     COMPASS direction = COMPASS.values()[TARDISConstants.RANDOM.nextInt(COMPASS.values().length)].forPreset();
-                    new AbandonedBuilder(plugin).spawn(spawn, s, ChameleonPreset.FACTORY, "", direction, null);
+                    new AbandonedBuilder(plugin).spawn(spawn, s, v, ChameleonPreset.FACTORY, "", direction, null);
                 }, 30L);
             });
         });

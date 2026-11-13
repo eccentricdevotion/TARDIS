@@ -43,7 +43,6 @@ public class Fade {
     private UseClay use_clay;
     private int counter = 0;
     private BossBar bb;
-    private final List<BlockData> bars = new ArrayList<>();
     private final HashMap<String, Object> set = new HashMap<>();
     private final HashMap<String, Object> where = new HashMap<>();
 
@@ -65,7 +64,7 @@ public class Fade {
         // async task to populate box with block fade
         plugin.getServer().getScheduler().runTaskAsynchronously(plugin, () -> {
             String[][][] template = new Template().load(plugin);
-            BlockData[][][] base = setBaseBlocks(template, variant);
+            BlockData[][][] base = BaseBlocks.set(template, variant);
             BlockData[][][] fade = new FadeMutator(TARDISConstants.RANDOM.nextLong(), 7, variant).applyGradient(base, variant.gradient());
             // switch back to the main thread
             plugin.getServer().getScheduler().runTask(plugin, () -> {
@@ -80,31 +79,6 @@ public class Fade {
                 place(location, fade, variant, bossbar);
             });
         });
-    }
-
-    public BlockData[][][] setBaseBlocks(String[][][] array, StructureVariant variant) {
-        BlockData[][][] data = new BlockData[array.length][array[0].length][array[0][0].length];
-        BlockData base = variant.base().createBlockData();
-        BlockData wall = variant.wall().createBlockData();
-        BlockData seed = variant.seed().createBlockData();
-        for (int i = 0; i < array.length; i++) {
-            for (int j = 0; j < array[i].length; j++) {
-                for (int k = 0; k < array[i][j].length; k++) {
-                    counter++;
-                    String s = array[i][j][k];
-                    if (s.contains("tuff_wall")) {
-                        data[i][j][k] = wall;
-                    } else if (s.contains("tuff")) {
-                        data[i][j][k] = base;
-                    } else if (s.contains("muddy_mangrove_roots")) {
-                        data[i][j][k] = seed;
-                    } else {
-                        data[i][j][k] = Bukkit.createBlockData(s);
-                    }
-                }
-            }
-        }
-        return data;
     }
 
     private void place(Location location, BlockData[][][] materials, StructureVariant variant, boolean bossbar) {
@@ -124,6 +98,7 @@ public class Fade {
         for (int i = 0; i < h; i++) {
             for (int j = 0; j < r; j++) {
                 for (int k = 0; k < w; k++) {
+                    counter++;
                     BlockData data = materials[i][j][k];
                     Block block = world.getBlockAt(x + j, y + i, z + k);
                     BlockState state = block.getState();
