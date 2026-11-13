@@ -218,6 +218,7 @@ public enum TARDISInfoMenu {
     ELEVENTH("TIS|TARDIS Types|Eleventh", "TYPES", "l"),
     ENDER("TIS|TARDIS Types|Ender", "TYPES", "d"),
     FACTORY("TIS|TARDIS Types|Factory", "TYPES", "y"),
+    FADE("TIS|TARDIS Types|Fade Variant", "TYPES", "V"),
     FIFTEENTH("TIS|TARDIS Types|Fifteenth*", "TYPES", "*"),
     FUGITIVE("TIS|TARDIS Types|Fugitive", "TYPES", "u"),
     HELL_BENT("TIS|TARDIS Types|Hell Bent>", "TYPES", ">"),

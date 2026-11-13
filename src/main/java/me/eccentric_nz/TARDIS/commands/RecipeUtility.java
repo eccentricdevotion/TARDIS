@@ -76,6 +76,7 @@ public class RecipeUtility {
             put("ELEVENTH", Material.EMERALD_BLOCK); // eleventh
             put("ENDER", Material.PURPUR_BLOCK); // ender schematic designed by ToppanaFIN (player at thatsnotacreeper.com)
             put("FACTORY", Material.YELLOW_CONCRETE_POWDER); // factory schematic designed by Razihel
+            put("FADE", Material.ORANGE_POPLAR_LEAVES); // fade
             put("FIFTEENTH", Material.OCHRE_FROGLIGHT); // designed by airomis (player at thatsnotacreeper.com)
             put("FUGITIVE", Material.POLISHED_DEEPSLATE); // fugitive - based on TARDIS designed by DT10 - https://www.youtube.com/watch?v=aykwXVemSs8
             put("HELL_BENT", Material.CINNABAR); // hell bent

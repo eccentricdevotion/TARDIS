@@ -63,6 +63,7 @@ public class FloodgateDesktopThemeForm {
         blocks.put("ELEVENTH", "emerald");
         blocks.put("ENDER", "purpur");
         blocks.put("FACTORY", "yellow_concrete_powder");
+        blocks.put("FADE", "orange_poplar_leaves");
         blocks.put("FIFTEENTH", "ochre_froglight");
         blocks.put("FUGITIVE", "polished_deepslate");
         blocks.put("HELL_BENT", "white_glazed");
