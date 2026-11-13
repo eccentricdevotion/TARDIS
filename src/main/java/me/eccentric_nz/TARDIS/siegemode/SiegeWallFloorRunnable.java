@@ -56,9 +56,9 @@ class SiegeWallFloorRunnable implements Runnable {
     private int h;
     private int w;
     private int c;
-    private int startx;
-    private int starty;
-    private int startz;
+    private int sx;
+    private int sy;
+    private int sz;
     private World world;
     private Material wall_type;
     private Material floor_type;
@@ -111,7 +111,7 @@ class SiegeWallFloorRunnable implements Runnable {
             h = dimensions.get("height").getAsInt();
             w = dimensions.get("width").getAsInt();
             c = dimensions.get("length").getAsInt();
-            // calculate startx, starty, startz
+            // calculate sx, sy, sz
             HashMap<String, Object> wheret = new HashMap<>();
             wheret.put("uuid", uuid.toString());
             ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false);
@@ -128,14 +128,14 @@ class SiegeWallFloorRunnable implements Runnable {
             if (slot != -1000001) { // default world - use TIPS
                 TARDISInteriorPositioning tintpos = new TARDISInteriorPositioning(plugin);
                 TIPSData pos = tintpos.getTIPSData(slot);
-                startx = pos.getCentreX();
-                startz = pos.getCentreZ();
+                sx = pos.getCentreX();
+                sz = pos.getCentreZ();
             } else {
                 int[] gsl = plugin.getLocationUtils().getStartLocation(id);
-                startx = gsl[0];
-                startz = gsl[2];
+                sx = gsl[0];
+                sz = gsl[2];
             }
-            starty = tud.getSchematic().getStartY();
+            sy = tud.getSchematic().getStartY();
             world = TARDISStaticLocationGetters.getWorldFromSplitString(tardis.getChunk());
             // wall/floor block prefs
             wall_type = Material.valueOf(tud.getWall());
@@ -156,9 +156,9 @@ class SiegeWallFloorRunnable implements Runnable {
         } else {
             // place a row of blocks
             for (int col = 0; col < c; col++) {
-                int x = startx + row;
-                int y = starty + level;
-                int z = startz + col;
+                int x = sx + row;
+                int y = sy + level;
+                int z = sz + col;
                 Block bb = world.getBlockAt(x, y, z);
                 Material compare_type = bb.getType();
                 Material to_wall_type = (toSiege) ? wall_type : siege_wall_type;

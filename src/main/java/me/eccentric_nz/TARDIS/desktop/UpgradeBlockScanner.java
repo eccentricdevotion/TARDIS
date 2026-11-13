@@ -22,6 +22,7 @@ import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPositioning;
 import me.eccentric_nz.TARDIS.builders.interior.TIPSData;
+import me.eccentric_nz.TARDIS.builders.interior.Template;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
@@ -31,7 +32,6 @@ import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.World;
-import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
 
 import java.util.HashMap;
@@ -65,38 +65,15 @@ public class UpgradeBlockScanner {
         int w = dimensions.get("width").getAsInt();
         int l = dimensions.get("length").getAsInt();
         float v = h * w * l;
-        // calculate startx, starty, startz
-        HashMap<String, Object> wheret = new HashMap<>();
-        wheret.put("uuid", uuid.toString());
-        ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false);
-        if (rs.resultSet()) {
-            Tardis tardis = rs.getTardis();
-            int slot = tardis.getTIPS();
-            int startz;
-            int startx;
-            if (slot != -1000001) { // default world - use TIPS
-                TARDISInteriorPositioning tintpos = new TARDISInteriorPositioning(plugin);
-                TIPSData pos = tintpos.getTIPSData(slot);
-                startx = pos.getCentreX();
-                startz = pos.getCentreZ();
-            } else {
-                int[] gsl = plugin.getLocationUtils().getStartLocation(tardis.getTardisId());
-                startx = gsl[0];
-                startz = gsl[2];
-            }
-            int starty = tud.getPrevious().getStartY();
-            World world = TARDISStaticLocationGetters.getWorldFromSplitString(tardis.getChunk());
-            Material wall_type;
-            Material floor_type;
-            // get wall/floor block prefs from database...
-            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid.toString());
-            if (rsp.resultSet()) {
-                wall_type = Material.getMaterial(rsp.getWall());
-                floor_type = Material.getMaterial(rsp.getFloor());
-            } else {
-                wall_type = Material.ORANGE_WOOL;
-                floor_type = Material.LIGHT_GRAY_WOOL;
-            }
+        // calculate sx, sy, sz
+        CheckData start = getStart();
+        if (start != null) {
+            int sx = start.x();
+            int sz = start.z();
+            int sy = tud.getPrevious().getStartY();
+            World world = start.world();
+            Material wall_type = start.wall();
+            Material floor_type = start.floor();
             String beacon = "";
             // get input array
             JsonArray arr = obj.get("input").getAsJsonArray();
@@ -106,12 +83,11 @@ public class UpgradeBlockScanner {
                     JsonArray r = (JsonArray) floor.get(row);
                     for (int col = 0; col < l; col++) {
                         JsonObject c = r.get(col).getAsJsonObject();
-                        int x = startx + row;
-                        int y = starty + level;
-                        int z = startz + col;
+                        int x = sx + row;
+                        int y = sy + level;
+                        int z = sz + col;
                         BlockData data = plugin.getServer().createBlockData(c.get("data").getAsString());
                         Material type = data.getMaterial();
-                        Block b = world.getBlockAt(x, y, z);
                         if (type.equals(Material.ORANGE_WOOL)) {
                             type = wall_type;
                         }
@@ -165,15 +141,7 @@ public class UpgradeBlockScanner {
                                 }
                                 case LIGHT_GRAY_WOOL -> {
                                     if (!tud.getSchematic().getPermission().equals("eleventh")) {
-                                        if (floor_type == Material.LAPIS_BLOCK) { // if using the default Lapis Block - then use Light Grey Wool / Terracotta
-                                            type = switch (use_clay) {
-                                                case TERRACOTTA -> Material.LIGHT_GRAY_TERRACOTTA;
-                                                case CONCRETE -> Material.LIGHT_GRAY_CONCRETE;
-                                                default -> Material.LIGHT_GRAY_WOOL;
-                                            };
-                                        } else {
-                                            type = floor_type;
-                                        }
+                                        type = floor_type;
                                     } else {
                                         String[] tsplit = type.toString().split("_");
                                         String m;
@@ -201,7 +169,7 @@ public class UpgradeBlockScanner {
                         if (type.isAir()) {
                             v--;
                         }
-                        Material material = b.getType();
+                        Material material = world.getBlockAt(x, y, z).getType();
                         if (!material.equals(Material.BARRIER) && !material.equals(type) && !(material.isAir() && type.isAir())) {
                             count++;
                         }
@@ -215,5 +183,85 @@ public class UpgradeBlockScanner {
         } else {
             return null;
         }
+    }
+
+    public BlockScannerData fadeCheck() {
+        // FADE desktop do alternate check
+        // get JSON
+        String[][][] arr = new Template().load(plugin);
+        // get dimensions
+        int h = arr.length;
+        int w = arr[0].length;
+        int l = arr[0][0].length;
+        float v = h * w * l;
+        // calculate sx, sy, sz
+        CheckData start = getStart();
+        if (start != null) {
+            int sx = start.x();
+            int sy = tud.getPrevious().getStartY();
+            int sz = start.z();
+            World world = start.world();
+            Material wall_type = start.wall();
+            Material floor_type = start.floor();
+            // get input array
+            for (int level = 0; level < h; level++) {
+                for (int row = 0; row < w; row++) {
+                    for (int col = 0; col < l; col++) {
+                        int x = sx + row;
+                        int y = sy + level;
+                        int z = sz + col;
+                        BlockData data = plugin.getServer().createBlockData(arr[level][row][col]);
+                        Material type = data.getMaterial();
+                        if (type.isAir()) {
+                            v--;
+                        } else if (world.getBlockAt(x, y, z).getType().isAir()) {
+                            count++;
+                        }
+                    }
+                }
+            }
+            int changed = (int) ((count / v) * 100);
+            // should return false if changed is higher than config
+            boolean allow = changed < plugin.getConfig().getInt("desktop.block_change_percent");
+            return new BlockScannerData(changed, count, v, allow, "");
+        } else {
+            return null;
+        }
+    }
+
+    private CheckData getStart() {
+        int x, z;
+        World world;
+        Material w;
+        Material f;
+        HashMap<String, Object> wheret = new HashMap<>();
+        wheret.put("uuid", uuid.toString());
+        ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false);
+        if (rs.resultSet()) {
+            Tardis tardis = rs.getTardis();
+            world = TARDISStaticLocationGetters.getWorldFromSplitString(tardis.getChunk());
+            int slot = tardis.getTIPS();
+            if (slot != -1000001) { // default world - use TIPS
+                TARDISInteriorPositioning tintpos = new TARDISInteriorPositioning(plugin);
+                TIPSData pos = tintpos.getTIPSData(slot);
+                x = pos.getCentreX();
+                z = pos.getCentreZ();
+            } else {
+                int[] gsl = plugin.getLocationUtils().getStartLocation(tardis.getTardisId());
+                x = gsl[0];
+                z = gsl[2];
+            }
+            // get wall/floor block prefs from database...
+            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid.toString());
+            if (rsp.resultSet()) {
+                w = Material.getMaterial(rsp.getWall());
+                f = Material.getMaterial(rsp.getFloor());
+            } else {
+                w = Material.ORANGE_WOOL;
+                f = Material.LIGHT_GRAY_WOOL;
+            }
+            return new CheckData(x, z, world, w, f);
+        }
+        return null;
     }
 }

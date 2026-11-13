@@ -51,6 +51,9 @@ consoles:
   FACTORY:
     material: YELLOW_CONCRETE_POWDER
     amount: 37
+  FADE:
+    material: ORANGE_POPLAR_LEAVES
+    amount: 39
   FIFTEENTH:
     material: OCHRE_FROGLIGHT
     amount: 85

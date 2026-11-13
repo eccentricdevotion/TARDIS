@@ -185,16 +185,21 @@ public class FullDesktopThemeRunnable extends DesktopThemeRunnable {
             // get previous schematic dimensions
             int previousWidth;
             if (archive_prev == null) {
-                // get JSON
-                JsonObject prevObj = SchematicGZip.getObject(plugin, "consoles", tud.getPrevious().getPermission(), tud.getPrevious().isCustom());
-                if (prevObj == null) {
-                    // cancel task
-                    plugin.getServer().getScheduler().cancelTask(taskID);
-                    return;
+                if (tud.getPrevious().getPermission().equals("fade")) {
+                    previousHeight = 16;
+                    previousWidth = 32;
+                } else {
+                    // get JSON
+                    JsonObject prevObj = SchematicGZip.getObject(plugin, "consoles", tud.getPrevious().getPermission(), tud.getPrevious().isCustom());
+                    if (prevObj == null) {
+                        // cancel task
+                        plugin.getServer().getScheduler().cancelTask(taskID);
+                        return;
+                    }
+                    JsonObject prevDimensions = prevObj.get("dimensions").getAsJsonObject();
+                    previousHeight = prevDimensions.get("height").getAsInt();
+                    previousWidth = prevDimensions.get("width").getAsInt();
                 }
-                JsonObject prevDimensions = prevObj.get("dimensions").getAsJsonObject();
-                previousHeight = prevDimensions.get("height").getAsInt();
-                previousWidth = prevDimensions.get("width").getAsInt();
                 size_prev = tud.getPrevious().getConsoleSize();
             } else {
                 JsonObject dimensions = archive_prev.getJSON().get("dimensions").getAsJsonObject();
@@ -696,9 +701,9 @@ public class FullDesktopThemeRunnable extends DesktopThemeRunnable {
                 }
                 if (type.equals(Material.LIGHT_GRAY_CONCRETE) && (
                         tud.getSchematic().getPermission().equals("bone") ||
-                        tud.getSchematic().getPermission().equals("rustic") ||
-                        tud.getSchematic().getPermission().equals("diner") ||
-                        tud.getSchematic().getPermission().equals("hell_bent")
+                                tud.getSchematic().getPermission().equals("rustic") ||
+                                tud.getSchematic().getPermission().equals("diner") ||
+                                tud.getSchematic().getPermission().equals("hell_bent")
                 )) {
                     // get the block
                     Block block = new Location(world, x, y, z).getBlock();
@@ -755,10 +760,10 @@ public class FullDesktopThemeRunnable extends DesktopThemeRunnable {
                     postLightBlocks.add(world.getBlockAt(x, y - 1, z));
                 }
                 if (type.equals(Material.WHITE_STAINED_GLASS) && (
-                            tud.getSchematic().getPermission().equals("war") ||
-                            tud.getSchematic().getPermission().equals("diner") ||
-                            tud.getSchematic().getPermission().equals("hell_bent")
-                    )) {
+                        tud.getSchematic().getPermission().equals("war") ||
+                                tud.getSchematic().getPermission().equals("diner") ||
+                                tud.getSchematic().getPermission().equals("hell_bent")
+                )) {
                     if (!TARDISFloodgate.isFloodgateEnabled() || !TARDISFloodgate.isBedrockPlayer(player)) {
                         data = TARDISConstants.BARRIER;
                         TARDISDisplayItemUtils.set(TARDISBlockDisplayItem.ROUNDEL, world, x, y, z);
@@ -766,8 +771,8 @@ public class FullDesktopThemeRunnable extends DesktopThemeRunnable {
                 }
                 if (type.equals(Material.WHITE_TERRACOTTA) && (
                         tud.getSchematic().getPermission().equals("war") ||
-                        tud.getSchematic().getPermission().equals("diner") ||
-                        tud.getSchematic().getPermission().equals("hell_bent")
+                                tud.getSchematic().getPermission().equals("diner") ||
+                                tud.getSchematic().getPermission().equals("hell_bent")
                 )) {
                     if (!TARDISFloodgate.isFloodgateEnabled() || !TARDISFloodgate.isBedrockPlayer(player)) {
                         data = TARDISConstants.BARRIER;
@@ -869,9 +874,9 @@ public class FullDesktopThemeRunnable extends DesktopThemeRunnable {
                 }
                 if (type.equals(Material.COMMAND_BLOCK) || ((
                         tud.getSchematic().getPermission().equals("bigger") ||
-                        tud.getSchematic().getPermission().equals("coral") ||
-                        tud.getSchematic().getPermission().equals("deluxe") ||
-                        tud.getSchematic().getPermission().equals("twelfth"))
+                                tud.getSchematic().getPermission().equals("coral") ||
+                                tud.getSchematic().getPermission().equals("deluxe") ||
+                                tud.getSchematic().getPermission().equals("twelfth"))
                         && type.equals(Material.BEACON))
                 ) {
                     /*
@@ -1115,7 +1120,8 @@ public class FullDesktopThemeRunnable extends DesktopThemeRunnable {
                         list.add(new JettisonSlot(chunk, 2, 6, 5));
                         list.add(new JettisonSlot(chunk, 2, 6, 6));
                     }
-                    default -> { } // same size do nothing
+                    default -> {
+                    } // same size do nothing
                 }
             }
             case TALL -> {
@@ -1138,7 +1144,8 @@ public class FullDesktopThemeRunnable extends DesktopThemeRunnable {
                         list.add(new JettisonSlot(chunk, 2, 5, 4));
                         list.add(new JettisonSlot(chunk, 2, 5, 5));
                     }
-                    default -> { } // same size or bigger do nothing
+                    default -> {
+                    } // same size or bigger do nothing
                 }
             }
             case WIDE -> {
@@ -1162,7 +1169,8 @@ public class FullDesktopThemeRunnable extends DesktopThemeRunnable {
                         list.add(new JettisonSlot(chunk, 1, 6, 5));
                         list.add(new JettisonSlot(chunk, 1, 6, 6));
                     }
-                    default -> { } // same size or bigger do nothing
+                    default -> {
+                    } // same size or bigger do nothing
                 }
             }
             case MEDIUM -> {
@@ -1173,7 +1181,8 @@ public class FullDesktopThemeRunnable extends DesktopThemeRunnable {
                     list.add(new JettisonSlot(chunk, 1, 5, 5));
                 }
             }
-            default -> { } // same size or bigger do nothing
+            default -> {
+            } // same size or bigger do nothing
         }
         return list;
     }

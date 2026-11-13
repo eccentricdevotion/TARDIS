@@ -7,6 +7,15 @@ import org.bukkit.block.data.BlockData;
 
 public class WaterFeature {
 
+    public static WeightedChoice<Material> getFadeFloor(Material one, Material two, Material three) {
+        return new WeightedChoice<Material>()
+                .add(60, Material.CLAY)
+                .add(10, Material.PODZOL)
+                .add(10, one)
+                .add(10, two)
+                .add(10, three);
+    }
+
     public static final WeightedChoice<Material> tuffFloor = new WeightedChoice<Material>()
             .add(60, Material.CLAY)
             .add(10, Material.MOSSY_COBBLESTONE)

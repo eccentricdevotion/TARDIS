@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.desktop;
 
+import me.eccentric_nz.TARDIS.discovery.StructureVariant;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 
 /**
@@ -29,6 +30,7 @@ public class UpgradeData {
     private String floor;
     private String siegeWall;
     private String siegeFloor;
+    private StructureVariant variant;
     private int level;
 
     /**
@@ -97,6 +99,14 @@ public class UpgradeData {
 
     public void setSiegeFloor(String siegeFloor) {
         this.siegeFloor = siegeFloor;
+    }
+
+    public StructureVariant getVariant() {
+        return variant;
+    }
+
+    public void setVariant(StructureVariant variant) {
+        this.variant = variant;
     }
 
     public int getLevel() {

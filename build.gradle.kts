@@ -11,7 +11,7 @@ plugins {
 
 group = "me.eccentric_nz"
 val buildNumber = "-b${System.getenv("BUILD_NUMBER") ?: (System.getenv("SHORT_SHA") ?: ".local")}"
-version = "7.1.4${buildNumber}"
+version = "7.1.5${buildNumber}"
 
 repositories {
     mavenCentral()
@@ -93,10 +93,10 @@ dependencies {
     compileOnly("com.sk89q.worldedit:worldedit-bukkit:7.4.7-SNAPSHOT") {
         isTransitive = false
     }
-    compileOnly("com.sk89q.worldguard:worldguard-core:7.0.21-SNAPSHOT") {
+    compileOnly("com.sk89q.worldguard:worldguard-core:7.0.22-SNAPSHOT") {
         isTransitive = false
     }
-    compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.21-SNAPSHOT") {
+    compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.22-SNAPSHOT") {
         isTransitive = false
     }
     compileOnly("net.citizensnpcs:citizensapi:2.0.44-SNAPSHOT") {
@@ -145,12 +145,12 @@ dependencies {
     compileOnly(files("libs/VaultAPI.jar"))
     compileOnly("org.geysermc.floodgate:api:2.2.5-SNAPSHOT")
     compileOnly("org.geysermc.geyser:api:2.11.0-SNAPSHOT")
-    compileOnly("org.jsoup:jsoup:1.23.2") {
+    compileOnly("org.jsoup:jsoup:1.24.1") {
         isTransitive = false
     }
-    compileOnly("org.popcraft:chunky-common:1.5.4")
+    compileOnly("org.popcraft:chunky-common:1.5.66")
     compileOnly("org.popcraft:chunky-bukkit:1.5.4")
-    compileOnly("org.popcraft:chunkyborder-common:1.2.33")
+    compileOnly("org.popcraft:chunkyborder-common:1.2.75")
     compileOnly("net.luckperms:api:5.5")
     compileOnly("org.apache.commons:commons-lang3:3.21.0")
     compileOnly(files("libs/TerraformGenerator.jar"))

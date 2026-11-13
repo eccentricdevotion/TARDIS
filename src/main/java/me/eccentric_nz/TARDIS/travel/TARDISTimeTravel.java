@@ -69,16 +69,16 @@ public class TARDISTimeTravel {
      * Checks if a random location is safe for the TARDIS Police Box to land at. The Police Box requires a clear 4 x 3 x
      * 4 (d x w x h) area.
      *
-     * @param startx a starting position in the x direction.
-     * @param starty a starting position in the y direction.
-     * @param startz a starting position in the z direction.
-     * @param resetx a copy of the starting x position to return to.
-     * @param resetz a copy of the starting z position to return to.
+     * @param startX a starting position in the x direction.
+     * @param startY a starting position in the y direction.
+     * @param startZ a starting position in the z direction.
+     * @param resetX a copy of the starting x position to return to.
+     * @param resetZ a copy of the starting z position to return to.
      * @param w      the world the location check will take place in.
      * @param d      the direction the Police Box is facing.
      * @return the number of unsafe blocks
      */
-    public static int safeLocation(int startx, int starty, int startz, int resetx, int resetz, World w, COMPASS d) {
+    public static int safeLocation(int startX, int startY, int startZ, int resetX, int resetZ, World w, COMPASS d) {
         int level, row, col, rowCount, colCount, count = 0;
         switch (d) {
             case EAST, WEST -> {
@@ -93,7 +93,7 @@ public class TARDISTimeTravel {
         for (level = 0; level < 4; level++) {
             for (row = 0; row < rowCount; row++) {
                 for (col = 0; col < colCount; col++) {
-                    Block block = w.getBlockAt(startx, starty, startz);
+                    Block block = w.getBlockAt(startX, startY, startZ);
                     if (level == 0) {
                         // check for item frame
                         for (Entity e : w.getNearbyEntities(block.getLocation(), 1.5d, 1.5d, 1.5d)) {
@@ -125,13 +125,13 @@ public class TARDISTimeTravel {
                             count++;
                         }
                     }
-                    startx += 1;
+                    startX += 1;
                 }
-                startx = resetx;
-                startz += 1;
+                startX = resetX;
+                startZ += 1;
             }
-            startz = resetz;
-            starty += 1;
+            startZ = resetZ;
+            startY += 1;
         }
         return count;
     }
@@ -140,16 +140,16 @@ public class TARDISTimeTravel {
      * Checks if a random location is safe for the TARDIS Police Box to land at. The Police Box requires a clear 4 x 3 x
      * 4 (d x w x h) area.
      *
-     * @param startx a starting position in the x direction.
-     * @param starty a starting position in the y direction.
-     * @param startz a starting position in the z direction.
-     * @param resetx a copy of the starting x position to return to.
-     * @param resetz a copy of the starting z position to return to.
+     * @param startX a starting position in the x direction.
+     * @param startY a starting position in the y direction.
+     * @param startZ a starting position in the z direction.
+     * @param resetX a copy of the starting x position to return to.
+     * @param resetZ a copy of the starting z position to return to.
      * @param w      the world the location check will take place in.
      * @param d      the direction the Police Box is facing.
      * @return the number of unsafe blocks
      */
-    public static int safeSiegeLocation(int startx, int starty, int startz, int resetx, int resetz, World w, COMPASS d) {
+    public static int safeSiegeLocation(int startX, int startY, int startZ, int resetX, int resetZ, World w, COMPASS d) {
         int level, row, col, rowCount, colCount, count = 0;
         switch (d) {
             case EAST, WEST -> {
@@ -164,7 +164,7 @@ public class TARDISTimeTravel {
         for (level = 0; level < 4; level++) {
             for (row = 0; row < rowCount; row++) {
                 for (col = 0; col < colCount; col++) {
-                    Block block = w.getBlockAt(startx, starty, startz);
+                    Block block = w.getBlockAt(startX, startY, startZ);
                     if (level == 0) {
                         // check for item frame
                         for (Entity e : w.getNearbyEntities(block.getLocation(), 1.5d, 1.5d, 1.5d)) {
@@ -192,13 +192,13 @@ public class TARDISTimeTravel {
                             count++;
                         }
                     }
-                    startx += 1;
+                    startX += 1;
                 }
-                startx = resetx;
-                startz += 1;
+                startX = resetX;
+                startZ += 1;
             }
-            startz = resetz;
-            starty += 1;
+            startZ = resetZ;
+            startY += 1;
         }
         return count;
     }
@@ -298,7 +298,7 @@ public class TARDISTimeTravel {
     }
 
     public Location getDestination(World randworld, int rx, int rz, int ry, COMPASS d, String e, Location current, Player p) {
-        int startx, starty, startz, resetx, resetz;
+        int startX, startY, startZ, resetX, resetZ;
         int count;
         // get max_radius from config
         int max = plugin.getConfig().getInt("travel.tp_radius");
@@ -340,12 +340,12 @@ public class TARDISTimeTravel {
                             }
                             // get start location for checking there is enough space
                             int[] gsl = getStartLocation(chunk_loc, d);
-                            startx = gsl[0];
-                            resetx = gsl[1];
-                            starty = chunk_loc.getBlockY() + 1;
-                            startz = gsl[2];
-                            resetz = gsl[3];
-                            count = safeLocation(startx, starty, startz, resetx, resetz, randworld, d);
+                            startX = gsl[0];
+                            resetX = gsl[1];
+                            startY = chunk_loc.getBlockY() + 1;
+                            startZ = gsl[2];
+                            resetZ = gsl[3];
+                            count = safeLocation(startX, startY, startZ, resetX, resetZ, randworld, d);
                         } else {
                             count = 1;
                         }
@@ -424,12 +424,12 @@ public class TARDISTimeTravel {
                                         }
                                         // get start location for checking there is enough space
                                         int[] gsl = getStartLocation(chunk_loc, d);
-                                        startx = gsl[0];
-                                        resetx = gsl[1];
-                                        starty = chunk_loc.getBlockY() + 1;
-                                        startz = gsl[2];
-                                        resetz = gsl[3];
-                                        count = safeLocation(startx, starty, startz, resetx, resetz, randworld, d);
+                                        startX = gsl[0];
+                                        resetX = gsl[1];
+                                        startY = chunk_loc.getBlockY() + 1;
+                                        startZ = gsl[2];
+                                        resetZ = gsl[3];
+                                        count = safeLocation(startX, startY, startZ, resetX, resetZ, randworld, d);
                                     } else {
                                         count = 1;
                                     }
@@ -465,7 +465,7 @@ public class TARDISTimeTravel {
      */
     public void testSafeLocation(Location location, COMPASS direction, Player player) {
         World w = location.getWorld();
-        int starty = location.getBlockY();
+        int startY = location.getBlockY();
         int sx, sz;
         switch (direction) {
             case EAST -> {
@@ -493,14 +493,14 @@ public class TARDISTimeTravel {
             }
         }
         Set<Block> markers = new HashSet<>();
-        markers.add(w.getBlockAt(sx, starty, sz));
-        markers.add(w.getBlockAt(sx, starty, sz + row));
-        markers.add(w.getBlockAt(sx + col, starty, sz));
-        markers.add(w.getBlockAt(sx + col, starty, sz + row));
-        markers.add(w.getBlockAt(sx, starty + 3, sz));
-        markers.add(w.getBlockAt(sx + col, starty + 3, sz));
-        markers.add(w.getBlockAt(sx, starty + 3, sz + row));
-        markers.add(w.getBlockAt(sx + col, starty + 3, sz + row));
+        markers.add(w.getBlockAt(sx, startY, sz));
+        markers.add(w.getBlockAt(sx, startY, sz + row));
+        markers.add(w.getBlockAt(sx + col, startY, sz));
+        markers.add(w.getBlockAt(sx + col, startY, sz + row));
+        markers.add(w.getBlockAt(sx, startY + 3, sz));
+        markers.add(w.getBlockAt(sx + col, startY + 3, sz));
+        markers.add(w.getBlockAt(sx, startY + 3, sz + row));
+        markers.add(w.getBlockAt(sx + col, startY + 3, sz + row));
         for (Block block : markers) {
             player.sendBlockChange(block.getLocation(), TARDISConstants.SNOW_BLOCK);
         }
@@ -523,7 +523,7 @@ public class TARDISTimeTravel {
      */
     public boolean safeNether(World nether, int wherex, int wherez, COMPASS d, Player p) {
         boolean safe = false;
-        int startx, starty, startz, resetx, resetz, count;
+        int startX, startY, startZ, resetX, resetZ, count;
         int wherey = 100;
         Block startBlock = nether.getBlockAt(wherex, wherey, wherez);
         while (!startBlock.getType().isAir()) {
@@ -541,12 +541,12 @@ public class TARDISTimeTravel {
             if (plugin.getPluginRespect().getRespect(netherLocation, new Parameters(p, Flag.getNoMessageFlags()))) {
                 // get start location for checking there is enough space
                 int[] gsl = getStartLocation(netherLocation, d);
-                startx = gsl[0];
-                resetx = gsl[1];
-                starty = netherLocation.getBlockY();
-                startz = gsl[2];
-                resetz = gsl[3];
-                count = safeLocation(startx, starty, startz, resetx, resetz, nether, d);
+                startX = gsl[0];
+                resetX = gsl[1];
+                startY = netherLocation.getBlockY();
+                startZ = gsl[2];
+                resetZ = gsl[3];
+                count = safeLocation(startX, startY, startZ, resetX, resetZ, nether, d);
             } else {
                 count = 1;
             }
@@ -629,7 +629,7 @@ public class TARDISTimeTravel {
     public boolean isSafeSubmarine(Location l, COMPASS d) {
         int[] s = getStartLocation(l, d);
         int level, row, col, rowcount, colcount, count = 0;
-        int starty = l.getBlockY();
+        int startY = l.getBlockY();
         switch (d) {
             case EAST, WEST -> {
                 rowcount = 3;
@@ -643,7 +643,7 @@ public class TARDISTimeTravel {
         for (level = 0; level < 4; level++) {
             for (row = 0; row < rowcount; row++) {
                 for (col = 0; col < colcount; col++) {
-                    Material mat = l.getWorld().getBlockAt(s[0], starty, s[2]).getType();
+                    Material mat = l.getWorld().getBlockAt(s[0], startY, s[2]).getType();
                     if (!TARDISConstants.GOOD_WATER.contains(mat)) {
                         count++;
                     }
@@ -653,7 +653,7 @@ public class TARDISTimeTravel {
                 s[2] += 1;
             }
             s[2] = s[3];
-            starty += 1;
+            startY += 1;
         }
         return (count == 0);
     }

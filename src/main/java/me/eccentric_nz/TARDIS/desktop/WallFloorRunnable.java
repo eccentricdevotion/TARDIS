@@ -58,9 +58,9 @@ public class WallFloorRunnable extends DesktopThemeRunnable {
     private int h;
     private int w;
     private int c;
-    private int startx;
-    private int starty;
-    private int startz;
+    private int sx;
+    private int sy;
+    private int sz;
     private World world;
     private JsonArray arr;
     private Material wall_type;
@@ -88,7 +88,7 @@ public class WallFloorRunnable extends DesktopThemeRunnable {
             h = dimensions.get("height").getAsInt();
             w = dimensions.get("width").getAsInt();
             c = dimensions.get("length").getAsInt();
-            // calculate startx, starty, startz
+            // calculate sx, sy, sz
             HashMap<String, Object> wheret = new HashMap<>();
             wheret.put("uuid", uuid.toString());
             ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false);
@@ -104,14 +104,14 @@ public class WallFloorRunnable extends DesktopThemeRunnable {
             if (slot != -1000001) { // default world - use TIPS
                 TARDISInteriorPositioning tintpos = new TARDISInteriorPositioning(plugin);
                 TIPSData pos = tintpos.getTIPSData(slot);
-                startx = pos.getCentreX();
-                startz = pos.getCentreZ();
+                sx = pos.getCentreX();
+                sz = pos.getCentreZ();
             } else {
                 int[] gsl = plugin.getLocationUtils().getStartLocation(tardis.getTardisId());
-                startx = gsl[0];
-                startz = gsl[2];
+                sx = gsl[0];
+                sz = gsl[2];
             }
-            starty = tud.getSchematic().getStartY();
+            sy = tud.getSchematic().getStartY();
             world = TARDISStaticLocationGetters.getWorldFromSplitString(tardis.getChunk());
             // wall/floor block prefs
             wall_type = Material.valueOf(tud.getWall());
@@ -136,9 +136,9 @@ public class WallFloorRunnable extends DesktopThemeRunnable {
             // place a row of blocks
             for (int col = 0; col < c; col++) {
                 JsonObject bb = r.get(col).getAsJsonObject();
-                int x = startx + row;
-                int y = starty + level;
-                int z = startz + col;
+                int x = sx + row;
+                int y = sy + level;
+                int z = sz + col;
                 BlockData data = plugin.getServer().createBlockData(bb.get("data").getAsString());
                 Material type = data.getMaterial();
                 if (type.equals(Material.ORANGE_WOOL)) {

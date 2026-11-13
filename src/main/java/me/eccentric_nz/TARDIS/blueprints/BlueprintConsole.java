@@ -34,6 +34,7 @@ public enum BlueprintConsole {
     ELEVENTH("tardis.eleventh"),
     ENDER("tardis.ender"),
     FACTORY("tardis.factory"),
+    FADE("tardis.fade"),
     FIFTEENTH("tardis.fifteenth"),
     FUGITIVE("tardis.fugitive"),
     HELL_BENT("tardis.hell_bent"),

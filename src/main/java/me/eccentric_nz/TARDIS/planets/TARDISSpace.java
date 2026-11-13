@@ -82,7 +82,7 @@ public class TARDISSpace {
     }
 
     public void createDefaultWorld(String name) {
-        World world = WorldCreator.name(name).type(WorldType.FLAT).environment(World.Environment.NORMAL).generator("TARDIS:void").generateStructures(false).createWorld();
+        WorldCreator.name(name).type(WorldType.FLAT).environment(World.Environment.NORMAL).generator("TARDIS:void").generateStructures(false).createWorld();
         // add world to config, but disabled by default
         plugin.getPlanetsConfig().set("planets." + name + ".enabled", true);
         plugin.getPlanetsConfig().set("planets." + name + ".time_travel", false);

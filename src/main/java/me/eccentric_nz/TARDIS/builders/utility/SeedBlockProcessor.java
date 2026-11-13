@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.api.event.TARDISCreationEvent;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.exterior.BuildData;
+import me.eccentric_nz.TARDIS.builders.interior.Fade;
 import me.eccentric_nz.TARDIS.builders.interior.InteriorBuildRunnable;
 import me.eccentric_nz.TARDIS.builders.interior.TARDISBuildData;
 import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPositioning;
@@ -243,9 +244,13 @@ public class SeedBlockProcessor {
                 // police box needs to use chameleon id/data
                 if (chunkworld != null) {
                     plugin.getPM().callEvent(new TARDISCreationEvent(player, lastInsertId, location));
-                    InteriorBuildRunnable builder = new InteriorBuildRunnable(plugin, schm, chunkworld, lastInsertId, player, wall_type, floor_type, slot);
-                    int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, builder, 1L, 3L);
-                    builder.setTask(task);
+                    if (schm.getPermission().equals("fade")) {
+                        new Fade(plugin, seed.getVariant(), location, lastInsertId, player).build(true);
+                    } else {
+                        InteriorBuildRunnable builder = new InteriorBuildRunnable(plugin, schm, chunkworld, lastInsertId, player, wall_type, floor_type, slot);
+                        int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, builder, 1L, 3L);
+                        builder.setTask(task);
+                    }
                     // delay building exterior
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                         plugin.getPresetBuilder().buildPreset(bd);

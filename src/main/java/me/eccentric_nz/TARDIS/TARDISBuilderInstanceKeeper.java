@@ -17,7 +17,9 @@
 package me.eccentric_nz.TARDIS;
 
 import com.google.common.collect.Sets;
+import me.eccentric_nz.TARDIS.builders.interior.FadeVariants;
 import me.eccentric_nz.TARDIS.builders.interior.TARDISBuildData;
+import me.eccentric_nz.TARDIS.schematic.Gradient;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Tag;
@@ -33,6 +35,8 @@ import java.util.*;
  */
 public class TARDISBuilderInstanceKeeper {
 
+    private final Gradient fade = new Gradient();
+    private final FadeVariants fadeVariants = new FadeVariants();
     private static final HashMap<String, String> BLOCK_CONVERSION = initBlockConversion();
     private static final Set<String> IGNORE_BLOCKS = Sets.newHashSet("AIR", "CAVE_AIR", "VOID_AIR", "BEDROCK", "CAKE", "COMMAND_BLOCK", "REPEATING_COMMAND_BLOCK", "CHAIN_COMMAND_BLOCK", "GOLD_ORE", "MUSHROOM_STEM", "ICE", "LAVA", "SPAWNER", "INFESTED_CHISELED_STONE_BRICKS", "INFESTED_COBBLESTONE", "INFESTED_DEEPSLATE", "INFESTED_CRACKED_STONE_BRICKS", "INFESTED_MOSSY_STONE_BRICKS", "INFESTED_STONE", "INFESTED_STONE_BRICKS", "PISTON_HEAD", "SPONGE", "WATER", "JUKEBOX", "NOTE_BLOCK");
     private static final Set<Material> PRECIOUS = new HashSet<>();
@@ -48,10 +52,8 @@ public class TARDISBuilderInstanceKeeper {
         PRECIOUS.add(Material.EMERALD_BLOCK);
         PRECIOUS.add(Material.GOLD_BLOCK);
         PRECIOUS.add(Material.IRON_BLOCK);
-//        PRECIOUS.add(Material.COPPER_BLOCK);
         PRECIOUS.add(Material.RAW_GOLD_BLOCK);
         PRECIOUS.add(Material.RAW_IRON_BLOCK);
-//        PRECIOUS.add(Material.RAW_COPPER_BLOCK);
         PRECIOUS.add(Material.LIGHT);
         PRECIOUS.add(Material.NETHERITE_BLOCK);
         PRECIOUS.add(Material.REDSTONE_BLOCK);
@@ -221,5 +223,29 @@ public class TARDISBuilderInstanceKeeper {
      */
     public HashMap<UUID, Integer> getRoomProgress() {
         return roomProgress;
+    }
+
+    /**
+     * Get the Fade schematic gradient class.
+     *
+     * @return A Gradient
+     */
+    public Gradient getFade() {
+        if (fade.getGradients().isEmpty()) {
+            fade.init();
+        }
+        return fade;
+    }
+
+    /**
+     * Get the Fade schematic variant class.
+     *
+     * @return A Fade Variant.
+     */
+    public FadeVariants getFadeVariants() {
+        if (fadeVariants.getLookup().isEmpty()) {
+            fadeVariants.init();
+        }
+        return fadeVariants;
     }
 }

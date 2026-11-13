@@ -54,7 +54,7 @@ public class TARDISRandomNether extends TARDISRandomLocation {
             int x = war.getMinX() + randX;
             // get the z coord
             int z = war.getMinZ() + randZ;
-            int startx, starty, startz, resetx, resetz, count;
+            int sx, sy, sz, rx, rz, count;
             int wherey = 100;
             Block startBlock = war.getWorld().getBlockAt(x, wherey, z);
             while (!startBlock.getChunk().isLoaded()) {
@@ -77,12 +77,12 @@ public class TARDISRandomNether extends TARDISRandomLocation {
                     if (plugin.getPluginRespect().getRespect(dest, param)) {
                         // get start location for checking there is enough space
                         int[] gsl = TARDISTimeTravel.getStartLocation(dest, param.getCompass());
-                        startx = gsl[0];
-                        resetx = gsl[1];
-                        starty = dest.getBlockY();
-                        startz = gsl[2];
-                        resetz = gsl[3];
-                        count = TARDISTimeTravel.safeLocation(startx, starty, startz, resetx, resetz, war.getWorld(), param.getCompass());
+                        sx = gsl[0];
+                        rx = gsl[1];
+                        sy = dest.getBlockY();
+                        sz = gsl[2];
+                        rz = gsl[3];
+                        count = TARDISTimeTravel.safeLocation(sx, sy, sz, rx, rz, war.getWorld(), param.getCompass());
                     } else {
                         count = 1;
                     }

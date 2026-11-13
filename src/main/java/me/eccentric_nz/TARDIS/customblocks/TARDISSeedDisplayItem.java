@@ -23,6 +23,7 @@ public enum TARDISSeedDisplayItem implements TARDISDisplayItem {
     ELEVENTH(SeedBlock.ELEVENTH.getKey(), Material.EMERALD_BLOCK),
     ENDER(SeedBlock.ENDER.getKey(), Material.PURPUR_BLOCK),
     FACTORY(SeedBlock.FACTORY.getKey(), Material.GRAY_CONCRETE),
+    FADE(SeedBlock.FADE.getKey(), Material.ORANGE_POPLAR_LEAVES),
     FIFTEENTH(SeedBlock.FIFTEENTH.getKey(), Material.OCHRE_FROGLIGHT),
     FUGITIVE(SeedBlock.FUGITIVE.getKey(), Material.POLISHED_DEEPSLATE),
     HELL_BENT(SeedBlock.HELL_BENT.getKey(), Material.CINNABAR),

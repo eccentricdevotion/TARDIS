@@ -1,5 +1,6 @@
 package me.eccentric_nz.TARDIS.discovery;
 
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.WeightedChoice;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -10,46 +11,18 @@ import org.bukkit.util.noise.SimplexOctaveGenerator;
 import java.util.ArrayDeque;
 import java.util.Queue;
 import java.util.Random;
+import java.util.Set;
 
 public class Mutator {
 
     private final long seed;
     private final int radius;
-
-    private final Material[] tuffGradient = new Material[]{
-            Material.MUDDY_MANGROVE_ROOTS,
-            Material.GREEN_TERRACOTTA,
-            Material.MOSS_BLOCK,
-            Material.MOSSY_COBBLESTONE,
-            Material.COBBLESTONE
-    };
-    private final Material[] cobbleGradient = new Material[]{
-            Material.WARPED_HYPHAE,
-            Material.PURPLE_TERRACOTTA,
-            Material.BLACKSTONE,
-            Material.MUD,
-            Material.COBBLED_DEEPSLATE
-    };
-    private final Material[] netherGradient = new Material[]{
-            Material.CRIMSON_HYPHAE,
-            Material.NETHER_WART_BLOCK,
-            Material.NETHERRACK,
-            Material.CINNABAR,
-            Material.DRIPSTONE_BLOCK
-    };
-    private final Material[] endStoneGradient = new Material[]{
-            Material.CRYING_OBSIDIAN,
-            Material.PURPLE_TERRACOTTA,
-            Material.BROWN_MUSHROOM_BLOCK,
-            Material.SULFUR,
-            Material.POTENT_SULFUR
-    };
     private final StructureVariant variant;
 
     public Mutator(long seed, int radius, Location location) {
         this.seed = seed;
         this.radius = radius;
-        variant = getVariant(location.getWorld().getEnvironment(), location.getBlockY());
+        variant = location != null ? getVariant(location.getWorld().getEnvironment(), location.getBlockY()) : null;
     }
 
     private StructureVariant getVariant(World.Environment environment, int y) {
@@ -66,7 +39,7 @@ public class Mutator {
         BlockData carpet;
         switch (environment) {
             case NETHER -> {
-                gradient = netherGradient;
+                gradient = TARDIS.plugin.getBuildKeeper().getFade().getGradients().get(Material.DEAD_HORN_CORAL_BLOCK);
                 base = Material.DEAD_HORN_CORAL_BLOCK;
                 seed = Material.CRIMSON_HYPHAE;
                 wall = Material.MUD_BRICK_WALL;
@@ -79,7 +52,7 @@ public class Mutator {
                 carpet = Material.WARPED_ROOTS.createBlockData();
             }
             case THE_END -> {
-                gradient = endStoneGradient;
+                gradient = TARDIS.plugin.getBuildKeeper().getFade().getGradients().get(Material.END_STONE);
                 base = Material.END_STONE;
                 seed = Material.CRYING_OBSIDIAN;
                 wall = Material.END_STONE_BRICK_WALL;
@@ -93,7 +66,7 @@ public class Mutator {
             }
             default -> {
                 if (y < -10) {
-                    gradient = cobbleGradient;
+                    gradient = TARDIS.plugin.getBuildKeeper().getFade().getGradients().get(Material.COBBLESTONE);
                     base = Material.COBBLESTONE;
                     seed = Material.WARPED_HYPHAE;
                     wall = Material.COBBLESTONE_WALL;
@@ -105,7 +78,7 @@ public class Mutator {
                     decor = Material.SPORE_BLOSSOM;
                     carpet = Material.SCULK_VEIN.createBlockData("[down=true,up=false,east=false,north=false,south=false,west=false]");
                 } else {
-                    gradient = tuffGradient;
+                    gradient = TARDIS.plugin.getBuildKeeper().getFade().getGradients().get(Material.TUFF);
                     base = Material.TUFF;
                     seed = Material.MUDDY_MANGROVE_ROOTS;
                     wall = Material.TUFF_WALL;
@@ -122,9 +95,7 @@ public class Mutator {
         return new StructureVariant(gradient, base, seed, wall, floor, column, hanging, light, end, decor, carpet);
     }
 
-    public Material[][][] addBlends(Material[][][] array) {
-        return applyGradient(array, variant.gradient(), radius, seed);
-    }
+    private final Set<Material> notThese = Set.of(Material.AIR, Material.CLAY);
 
     private int[][][] buildDistanceField(Material[][][] array) {
         int sizeX = array.length;
@@ -182,7 +153,7 @@ public class Mutator {
         return distance;
     }
 
-    public Material[][][] applyGradient(Material[][][] array, Material[] gradientBlocks, int blendRadius, long seed) {
+    public Material[][][] applyGradient(Material[][][] array, Material[] gradientBlocks) {
         int[][][] distanceField = buildDistanceField(array);
         SimplexOctaveGenerator noise = new SimplexOctaveGenerator(new Random(seed), 4);
         noise.setScale(0.15);
@@ -192,11 +163,11 @@ public class Mutator {
                 for (int z = 0; z < array[x][y].length; z++) {
                     Material current = array[x][y][z];
                     // never modify air
-                    if (current == Material.AIR) {
+                    if (notThese.contains(current)) {
                         continue;
                     }
                     // keep seed blocks / walls / clay unchanged
-                    if (current == variant.seed() || current == variant.wall() || current == Material.CLAY) {
+                    if (current == variant.seed() || current == variant.wall()) {
                         continue;
                     }
                     int distance = distanceField[x][y][z];
@@ -205,10 +176,10 @@ public class Mutator {
                         continue;
                     }
                     // outside influence radius - keep original block
-                    if (distance >= blendRadius) {
+                    if (distance >= radius) {
                         continue;
                     }
-                    double gradient = (double) distance / blendRadius;
+                    double gradient = (double) distance / radius;
                     // distort boundary with noise
                     gradient += noise.noise(x, y, z, 0.5, 0.5) * noiseStrength;
                     gradient = Math.clamp(gradient, 0.0, 1.0);

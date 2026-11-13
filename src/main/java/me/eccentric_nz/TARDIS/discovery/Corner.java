@@ -48,7 +48,7 @@ public class Corner {
         return null;
     }
 
-    public void save(TARDIS plugin, Player player) {
+    public void save(TARDIS plugin, Player player, boolean bd) {
         UUID uuid = player.getUniqueId();
         // check they have selected start and end blocks
         if (!plugin.getTrackerKeeper().getStartLocation().containsKey(uuid)) {
@@ -115,11 +115,13 @@ public class Corner {
                 for (int c = minz; c <= maxz; c++) {
                     Block b = w.getBlockAt(r, l, c);
                     String type = b.getType().toString();
-                    // ignore light blocks
-                    if (type.equals("LIGHT")) {
+                    String data = b.getBlockData().getAsString();
+                    // ignore light/sponge blocks
+                    if (type.equals("LIGHT") || type.equals("SPONGE")) {
                         type = "AIR";
+                        data = "minecraft:air";
                     }
-                    JsonPrimitive material = new JsonPrimitive(type);
+                    JsonPrimitive material = new JsonPrimitive(bd ? data : type);
                     columns.add(material);
                 }
                 rows.add(columns);

@@ -38,6 +38,7 @@ public enum SeedBlock {
     ELEVENTH(new NamespacedKey(TARDIS.plugin, "seed_eleventh")),
     ENDER(new NamespacedKey(TARDIS.plugin, "seed_ender")),
     FACTORY(new NamespacedKey(TARDIS.plugin, "seed_factory")),
+    FADE(new NamespacedKey(TARDIS.plugin, "seed_fade")),
     FIFTEENTH(new NamespacedKey(TARDIS.plugin, "seed_fifteenth")),
     FUGITIVE(new NamespacedKey(TARDIS.plugin, "seed_fugitive")),
     HELL_BENT(new NamespacedKey(TARDIS.plugin, "seed_hell_bent")),

@@ -51,7 +51,7 @@ import java.util.*;
 public class PreviewBuildRunnable implements Runnable {
 
     private final TARDIS plugin;
-    private final Schematic schm;
+    private final Schematic schematic;
     private final World world;
     private final int tips;
     private final HashMap<Block, BlockData> postBedBlocks = new HashMap<>();
@@ -75,60 +75,56 @@ public class PreviewBuildRunnable implements Runnable {
     private final List<Block> postLightBlocks = new ArrayList<>();
     private final HashMap<Block, TARDISBannerData> postBannerBlocks = new HashMap<>();
     private Block postBedrock = null;
-    private int task, level = 0, row = 0, startx, starty, startz, resetx, resetz, h, w, d, j = 2;
+    private int task, level = 0, row = 0, startX, startY, startZ, resetX, resetZ, h, w, d, j = 2;
     private JsonArray arr;
     private JsonObject obj;
     private Location location;
     private boolean running = false;
     private Location ender = null;
-    private int counter = 0;
-    private double div = 1.0d;
 
     /**
      * Builds the inside of the TARDIS.
      *
      * @param plugin an instance of the main TARDIS plugin class
-     * @param schm   the name of the schematic file to use can be ANCIENT, ARS, BIGGER, BONE, BUDGET, CAVE, COPPER,
+     * @param schematic   the name of the schematic file to use can be ANCIENT, ARS, BIGGER, BONE, BUDGET, CAVE, COPPER,
      *               CORAL, CURSED, CUSTOM, DELTA, DELUXE, DINER, DIVISION, EIGHTH, ELEVENTH, ENDER, FACTORY, FIFTEENTH, 
      *               FUGITIVE, HELL_BENT, HOSPITAL, MASTER, MECHANICAL, ORIGINAL, PLANK, PYRAMID, REDSTONE, ROTOR,
      *               RUSTIC, SIDRAT, STEAMPUNK, THIRTEENTH, TOM, TWELFTH, WAR, WEATHERED, WOOD, LEGACY_BIGGER,
      *               LEGACY_DELUXE, LEGACY_ELEVENTH, LEGACY_REDSTONE or a CUSTOM name.
      * @param world  the world where the TARDIS is to be built.
      */
-    public PreviewBuildRunnable(TARDIS plugin, Schematic schm, World world) {
+    public PreviewBuildRunnable(TARDIS plugin, Schematic schematic, World world) {
         this.plugin = plugin;
-        this.schm = schm;
+        this.schematic = schematic;
         this.world = world;
-        this.tips = schm.getPreview();
+        this.tips = schematic.getPreview();
     }
 
     @Override
     public void run() {
         if (!running) {
-            starty = schm.getStartY();
+            startY = schematic.getStartY();
             // get JSON
-            obj = SchematicGZip.getObject(plugin, "consoles", schm.getPermission(), schm.isCustom());
+            obj = SchematicGZip.getObject(plugin, "consoles", schematic.getPermission(), schematic.isCustom());
             if (obj != null) {
                 // get dimensions
                 JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
                 h = dimensions.get("height").getAsInt() - 1;
                 w = dimensions.get("width").getAsInt();
                 d = dimensions.get("length").getAsInt() - 1;
-                div = (h + 1.0d) * w * (d + 1.0d);
-                // calculate startx, starty, startz
-                TARDISInteriorPositioning tintpos = new TARDISInteriorPositioning(plugin);
-                TIPSData pos = tintpos.getTIPSData(tips);
-                startx = pos.getCentreX();
-                resetx = pos.getCentreX();
-                startz = pos.getCentreZ();
-                resetz = pos.getCentreZ();
+                // calculate sx, sy, sz
+                TARDISInteriorPositioning tintPos = new TARDISInteriorPositioning(plugin);
+                TIPSData pos = tintPos.getTIPSData(tips);
+                startX = pos.getCentreX();
+                resetX = pos.getCentreX();
+                startZ = pos.getCentreZ();
+                resetZ = pos.getCentreZ();
                 // get the correct chunk for ARS
-                Location cl = new Location(world, startx, starty, startz);
-                Chunk c = world.getChunkAt(cl);
+                location = new Location(world, startX, startY, startZ);
+                Chunk c = world.getChunkAt(location);
                 while (!c.isLoaded()) {
                     c.load(true);
                 }
-                location = new Location(world, startx, starty, startz);
                 // get input array
                 arr = obj.get("input").getAsJsonArray();
                 running = true;
@@ -164,7 +160,7 @@ public class PreviewBuildRunnable implements Runnable {
                     block.setBlockData(levelled);
                 }
             });
-            if (schm.getPermission().equals("cave")) {
+            if (schematic.getPermission().equals("cave")) {
                 iceBlocks.forEach((ice) -> ice.setBlockData(TARDISConstants.WATER));
                 iceBlocks.clear();
             }
@@ -180,17 +176,17 @@ public class PreviewBuildRunnable implements Runnable {
             // mannequins
             if (obj.has("mannequins")) {
                 JsonArray mannequins = obj.get("mannequins").getAsJsonArray();
-                MannequinSetter.setMannequins(mannequins, world, resetx, starty, resetz);
+                MannequinSetter.setMannequins(mannequins, world, resetX, startY, resetZ);
             }
             // armour stands
             if (obj.has("armour_stands")) {
                 JsonArray stands = obj.get("armour_stands").getAsJsonArray();
-                ArmourStandSetter.setStands(stands, world, resetx, starty, resetz);
+                ArmourStandSetter.setStands(stands, world, resetX, startY, resetZ);
             }
             // paintings
             if (obj.has("paintings")) {
                 JsonArray paintings = (JsonArray) obj.get("paintings");
-                PaintingSetter.setArt(paintings, world, resetx, starty, resetz);
+                PaintingSetter.setArt(paintings, world, resetX, startY, resetZ);
             }
             if (obj.has("item_frames")) {
                 JsonArray frames = obj.get("item_frames").getAsJsonArray();
@@ -209,22 +205,21 @@ public class PreviewBuildRunnable implements Runnable {
         JsonArray r = (JsonArray) floor.get(row);
         // paste a column
         for (int col = 0; col <= d; col++) {
-            counter++;
             JsonObject c = r.get(col).getAsJsonObject();
-            int x = startx + row;
-            int y = starty + level;
-            int z = startz + col;
+            int x = startX + row;
+            int y = startY + level;
+            int z = startZ + col;
             BlockData data = plugin.getServer().createBlockData(c.get("data").getAsString());
             Material type = data.getMaterial();
             if (type.equals(Material.LIGHT_GRAY_CONCRETE) && (
-                    schm.getPermission().equals("bone") ||
-                    schm.getPermission().equals("rustic") ||
-                    schm.getPermission().equals("diner") ||
-                    schm.getPermission().equals("hell_bent")
+                    schematic.getPermission().equals("bone") ||
+                    schematic.getPermission().equals("rustic") ||
+                    schematic.getPermission().equals("diner") ||
+                    schematic.getPermission().equals("hell_bent")
             )) {
                 // get the block
                 Block block = new Location(world, x, y, z).getBlock();
-                String ct = switch (schm.getPermission()) {
+                String ct = switch (schematic.getPermission()) {
                     case "bone" -> "console_light_gray";
                     case "rustic" -> "console_rustic";
                     default -> "console_white";
@@ -248,29 +243,29 @@ public class PreviewBuildRunnable implements Runnable {
                 // spawn an item display entity
                 TARDISDisplayItemUtils.set(TARDISBlockDisplayItem.BLUE_BOX, world, x, y, z);
             }
-            if ((type.equals(Material.WARPED_FENCE) || type.equals(Material.CRIMSON_FENCE)) && schm.getPermission().equals("delta")) {
+            if ((type.equals(Material.WARPED_FENCE) || type.equals(Material.CRIMSON_FENCE)) && schematic.getPermission().equals("delta")) {
                 fractalBlocks.add(world.getBlockAt(x, y, z));
             }
-            if (level == 0 && type.equals(Material.PINK_STAINED_GLASS) && schm.getPermission().equals("division")) {
+            if (level == 0 && type.equals(Material.PINK_STAINED_GLASS) && schematic.getPermission().equals("division")) {
                 postLightBlocks.add(world.getBlockAt(x, y - 1, z));
             }
-            if (type.equals(Material.DEEPSLATE_REDSTONE_ORE) && (schm.getPermission().equals("division") || schm.getPermission().equals("hospital"))) {
+            if (type.equals(Material.DEEPSLATE_REDSTONE_ORE) && (schematic.getPermission().equals("division") || schematic.getPermission().equals("hospital"))) {
                 // replace with gray concrete
-                data = schm.getPermission().equals("division") ? Material.GRAY_CONCRETE.createBlockData() : Material.LIGHT_GRAY_CONCRETE.createBlockData();
+                data = schematic.getPermission().equals("division") ? Material.GRAY_CONCRETE.createBlockData() : Material.LIGHT_GRAY_CONCRETE.createBlockData();
             }
             if (type.equals(Material.WHITE_STAINED_GLASS) && (
-                    schm.getPermission().equals("war") ||
-                    schm.getPermission().equals("diner") ||
-                    schm.getPermission().equals("hell_bent")
+                    schematic.getPermission().equals("war") ||
+                    schematic.getPermission().equals("diner") ||
+                    schematic.getPermission().equals("hell_bent")
             )) {
                 data = TARDISConstants.BARRIER;
                 // spawn an item display entity
                 TARDISDisplayItemUtils.set(TARDISBlockDisplayItem.ROUNDEL, world, x, y, z);
             }
             if (type.equals(Material.WHITE_TERRACOTTA) && (
-                    schm.getPermission().equals("war") ||
-                    schm.getPermission().equals("diner") ||
-                    schm.getPermission().equals("hell_bent")
+                    schematic.getPermission().equals("war") ||
+                    schematic.getPermission().equals("diner") ||
+                    schematic.getPermission().equals("hell_bent")
             )) {
                 data = TARDISConstants.BARRIER;
                 // spawn an item display entity
@@ -282,7 +277,7 @@ public class PreviewBuildRunnable implements Runnable {
                     // remember spawn location for this console preview
                     HashMap<String, Object> set = new HashMap<>();
                     set.put("tardis_id", tips);
-                    set.put("name", schm.getPermission());
+                    set.put("name", schematic.getPermission());
                     set.put("world", world.getKey().asString());
                     set.put("x", x + 0.5d);
                     set.put("y", y);
@@ -290,7 +285,7 @@ public class PreviewBuildRunnable implements Runnable {
                     plugin.getQueryFactory().doInsert("transmats", set);
                 }
             }
-            if (type.equals(Material.CAKE) && schm.getPermission().equals("sidrat")) {
+            if (type.equals(Material.CAKE) && schematic.getPermission().equals("sidrat")) {
                 // set block data to correct LEVER
                 BlockData blockData = Material.LEVER.createBlockData();
                 Switch lever = (Switch) blockData;
@@ -299,16 +294,16 @@ public class PreviewBuildRunnable implements Runnable {
                 data = lever;
             }
             if (type.equals(Material.JUKEBOX)
-                    && (!(schm.getPermission().equals("eighth") && world.getBlockAt(x, y, z).getRelative(BlockFace.DOWN).getType() == Material.ANDESITE))
-                    && (!(schm.getPermission().equals("diner") && world.getBlockAt(x, y, z).getRelative(BlockFace.DOWN).getType() == Material.WHITE_CONCRETE))) {
+                    && (!(schematic.getPermission().equals("eighth") && world.getBlockAt(x, y, z).getRelative(BlockFace.DOWN).getType() == Material.ANDESITE))
+                    && (!(schematic.getPermission().equals("diner") && world.getBlockAt(x, y, z).getRelative(BlockFace.DOWN).getType() == Material.WHITE_CONCRETE))) {
                 // set block data to correct BARRIER + Item Display
                 data = TARDISConstants.BARRIER;
                 // spawn an item display entity
                 TARDISDisplayItemUtils.set(TARDISBlockDisplayItem.ADVANCED_CONSOLE, world, x, y, z);
             }
-            if (type.equals(Material.COMMAND_BLOCK) || ((schm.getPermission().equals("bigger") || schm.getPermission().equals("coral") || schm.getPermission().equals("deluxe") || schm.getPermission().equals("twelfth")) && type.equals(Material.BEACON))) {
+            if (type.equals(Material.COMMAND_BLOCK) || ((schematic.getPermission().equals("bigger") || schematic.getPermission().equals("coral") || schematic.getPermission().equals("deluxe") || schematic.getPermission().equals("twelfth")) && type.equals(Material.BEACON))) {
                 if (type.equals(Material.COMMAND_BLOCK)) {
-                    data = switch (schm.getPermission()) {
+                    data = switch (schematic.getPermission()) {
                         case "ender" -> Material.END_STONE_BRICKS.createBlockData();
                         case "delta", "cursed" -> Material.BLACKSTONE.createBlockData();
                         case "ancient", "bone", "fugitive" -> Material.GRAY_WOOL.createBlockData();
@@ -318,15 +313,15 @@ public class PreviewBuildRunnable implements Runnable {
                     };
                 }
             }
-            if (type.equals(Material.BEACON) && schm.getPermission().equals("ender")) {
+            if (type.equals(Material.BEACON) && schematic.getPermission().equals("ender")) {
                 /*
                  * get the ender crystal location
                  */
                 ender = world.getBlockAt(x, y, z).getLocation().add(0.5d, 4d, 0.5d);
             }
-            if (type.equals(Material.PALE_OAK_FENCE) && schm.getPermission().equals("sidrat")) {
+            if (type.equals(Material.PALE_OAK_FENCE) && schematic.getPermission().equals("sidrat")) {
                 sidratFenceBlocks.put(world.getBlockAt(x, y, z), data);
-            } else if (type.equals(Material.ICE) && schm.getPermission().equals("cave")) {
+            } else if (type.equals(Material.ICE) && schematic.getPermission().equals("cave")) {
                 iceBlocks.add(world.getBlockAt(x, y, z));
             } else if (Tag.BEDS.isTagged(type)) {
                 postBedBlocks.put(world.getBlockAt(x, y, z), data);
@@ -415,12 +410,12 @@ public class PreviewBuildRunnable implements Runnable {
             } else if (type.equals(Material.BEDROCK)) {
                 // remember bedrock location to block off the beacon light
                 postBedrock = world.getBlockAt(x, y, z);
-            } else if (type.equals(Material.BROWN_MUSHROOM) && schm.getPermission().equals("master")) {
+            } else if (type.equals(Material.BROWN_MUSHROOM) && schematic.getPermission().equals("master")) {
                 // spawn locations for two villagers
                 TARDISBlockSetters.setBlock(world, x, y, z, Material.VOID_AIR);
                 plugin.setTardisSpawn(true);
                 world.spawnEntity(new Location(world, x + 0.5, y + 0.25, z + 0.5), EntityType.VILLAGER);
-            } else if (type.equals(Material.BLACK_CARPET) && schm.getPermission().equals("master")) {
+            } else if (type.equals(Material.BLACK_CARPET) && schematic.getPermission().equals("master")) {
                 postCarpetBlocks.put(world.getBlockAt(x, y, z), data);
             } else {
                 TARDISBlockSetters.setBlock(world, x, y, z, data);

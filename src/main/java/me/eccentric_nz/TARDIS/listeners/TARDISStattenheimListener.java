@@ -238,7 +238,7 @@ public class TARDISStattenheimListener implements Listener {
                         }
                     } else {
                         int[] start_loc = TARDISTimeTravel.getStartLocation(remoteLocation, player_d);
-                        // safeLocation(int startx, int starty, int startz, int resetx, int resetz, World w, COMPASS player_d)
+                        // safeLocation(int sx, int sy, int sz, int rx, int rz, World w, COMPASS player_d)
                         count = TARDISTimeTravel.safeLocation(start_loc[0], remoteLocation.getBlockY(), start_loc[2], start_loc[1], start_loc[3], remoteLocation.getWorld(), player_d);
                     }
                     Block under = remoteLocation.getBlock().getRelative(BlockFace.DOWN);

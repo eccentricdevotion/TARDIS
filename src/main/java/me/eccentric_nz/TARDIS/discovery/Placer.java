@@ -32,8 +32,8 @@ public class Placer {
         }, 20L);
     }
 
-    public void addVines(Block below, StructureVariant variant) {
-        int r = TARDISConstants.RANDOM.nextInt(10);
+    public void addHangingLights(Block below, StructureVariant variant, int length) {
+        int r = TARDISConstants.RANDOM.nextInt(length);
         if (r < 1) {
             // set decor
             below.setType(variant.decor());
@@ -43,12 +43,16 @@ public class Placer {
             state.update(true, false);
             for (int i = 0; i < r; i++) {
                 BlockState relative = below.getRelative(BlockFace.DOWN, i).getState();
-                relative.setBlockData(TARDISConstants.RANDOM.nextInt(4) == 1 ? variant.hanging() : variant.hanging_light());
-                relative.update(true, false);
+                if (relative.getType().isAir()) {
+                    relative.setBlockData(TARDISConstants.RANDOM.nextInt(4) == 1 ? variant.hanging() : variant.hanging_light());
+                    relative.update(true, false);
+                }
             }
             BlockState end = below.getRelative(BlockFace.DOWN, r).getState();
-            end.setBlockData(variant.hanging_end());
-            end.update(true, false);
+            if (end.getType().isAir()) {
+                end.setBlockData(variant.hanging_end());
+                end.update(true, false);
+            }
         }
     }
 
@@ -76,7 +80,7 @@ public class Placer {
         }
     }
 
-    public void addMossCarpet(Block base, StructureVariant variant) {
+    public void addCarpet(Block base, StructureVariant variant) {
         Block above = base.getRelative(BlockFace.UP);
         // check if the space above is air and passes a random chance threshold
         if (above.getType() == Material.AIR && TARDISConstants.RANDOM.nextInt(100) < 5) {

@@ -89,49 +89,49 @@ public class TARDISCaveFinder {
 
     private Location find(Location location, COMPASS direction) {
         World w = location.getWorld();
-        int startx = location.getBlockX();
-        int startz = location.getBlockZ();
+        int sx = location.getBlockX();
+        int sz = location.getBlockZ();
         // assume all non-nether/non-end world environments are NORMAL
         boolean hoth = (w.getGenerator() != null && w.getGenerator().getClass().getName().contains("hothgenerator"));
         if (!w.getEnvironment().equals(World.Environment.NETHER) && !w.getEnvironment().equals(World.Environment.THE_END) && !hoth) {
             if (worldCheck(w)) {
-                int plusx = startx + 16;
-                int plusz = startz + 16;
-                int minusx = startx - 16;
-                int minusz = startz - 16;
+                int plusx = sx + 16;
+                int plusz = sz + 16;
+                int minusx = sx - 16;
+                int minusz = sz - 16;
                 // search in a random direction
                 Collections.shuffle(directions);
                 for (int i = 0; i < 4; i++) {
                     switch (directions.get(i)) {
                         case EAST -> {
-                            for (int east = startx; east < plusx; east += 4) {
-                                Check chk = isThereRoom(w, east, startz, direction);
+                            for (int east = sx; east < plusx; east += 4) {
+                                Check chk = isThereRoom(w, east, sz, direction);
                                 if (chk.isSafe()) {
-                                    return new Location(w, east, chk.getY(), startz);
+                                    return new Location(w, east, chk.getY(), sz);
                                 }
                             }
                         }
                         case SOUTH -> {
-                            for (int south = startz; south < plusz; south += 4) {
-                                Check chk = isThereRoom(w, startx, south, direction);
+                            for (int south = sz; south < plusz; south += 4) {
+                                Check chk = isThereRoom(w, sx, south, direction);
                                 if (chk.isSafe()) {
-                                    return new Location(w, startx, chk.getY(), south);
+                                    return new Location(w, sx, chk.getY(), south);
                                 }
                             }
                         }
                         case WEST -> {
-                            for (int west = startx; west > minusx; west -= 4) {
-                                Check chk = isThereRoom(w, west, startz, direction);
+                            for (int west = sx; west > minusx; west -= 4) {
+                                Check chk = isThereRoom(w, west, sz, direction);
                                 if (chk.isSafe()) {
-                                    return new Location(w, west, chk.getY(), startz);
+                                    return new Location(w, west, chk.getY(), sz);
                                 }
                             }
                         }
                         default -> { // NORTH
-                            for (int north = startz; north > minusz; north -= 4) {
-                                Check chk = isThereRoom(w, startx, north, direction);
+                            for (int north = sz; north > minusz; north -= 4) {
+                                Check chk = isThereRoom(w, sx, north, direction);
                                 if (chk.isSafe()) {
-                                    return new Location(w, startx, chk.getY(), north);
+                                    return new Location(w, sx, chk.getY(), north);
                                 }
                             }
                         }

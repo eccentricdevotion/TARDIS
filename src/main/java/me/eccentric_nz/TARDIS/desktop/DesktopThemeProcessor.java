@@ -55,16 +55,16 @@ public class DesktopThemeProcessor {
         UpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(uuid);
         Player player = plugin.getServer().getPlayer(uuid);
         if (plugin.getHandlesConfig().getBoolean("enabled") && TARDISPermission.hasPermission(player, "tardis.handles")) {
-            HashMap<String, Object> wheret = new HashMap<>();
-            wheret.put("uuid", uuid.toString());
-            ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false);
+            HashMap<String, Object> whereT = new HashMap<>();
+            whereT.put("uuid", uuid.toString());
+            ResultSetTardis rs = new ResultSetTardis(plugin, whereT, "", false);
             rs.resultSet();
             Tardis tardis = rs.getTardis();
             // check if the player has a Handles placed
-            HashMap<String, Object> whereh = new HashMap<>();
-            whereh.put("type", 26);
-            whereh.put("tardis_id", tardis.getTardisId());
-            ResultSetControls rsc = new ResultSetControls(plugin, whereh, false);
+            HashMap<String, Object> whereH = new HashMap<>();
+            whereH.put("type", 26);
+            whereH.put("tardis_id", tardis.getTardisId());
+            ResultSetControls rsc = new ResultSetControls(plugin, whereH, false);
             if (rsc.resultSet()) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "UPGRADE_REMOVE_HANDLES");
                 return;
@@ -99,15 +99,20 @@ public class DesktopThemeProcessor {
                 return;
             }
         } else {
-            // get JSON
-            JsonObject obj = SchematicGZip.getObject(plugin, "consoles", tud.getSchematic().getPermission(), tud.getSchematic().isCustom());
-            if (obj == null) {
-                return;
+            if (tud.getSchematic().getPermission().equals("fade")) {
+                nextHeight = 16;
+                nextWidth = 32;
+            } else {
+                // get JSON
+                JsonObject obj = SchematicGZip.getObject(plugin, "consoles", tud.getSchematic().getPermission(), tud.getSchematic().isCustom());
+                if (obj == null) {
+                    return;
+                }
+                // get dimensions
+                JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
+                nextHeight = dimensions.get("height").getAsInt();
+                nextWidth = dimensions.get("width").getAsInt();
             }
-            // get dimensions
-            JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
-            nextHeight = dimensions.get("height").getAsInt();
-            nextWidth = dimensions.get("width").getAsInt();
             size_next = tud.getSchematic().getConsoleSize();
         }
         ConsoleSize size_prev;
@@ -133,21 +138,26 @@ public class DesktopThemeProcessor {
                 return;
             }
         } else {
-            // get JSON
-            JsonObject obj = SchematicGZip.getObject(plugin, "consoles", tud.getPrevious().getPermission(), tud.getPrevious().isCustom());
-            if (obj == null) {
-                return;
+            if (tud.getSchematic().getPermission().equals("fade")) {
+                previousHeight = 16;
+                previousWidth = 32;
+            } else {
+                // get JSON
+                JsonObject obj = SchematicGZip.getObject(plugin, "consoles", tud.getSchematic().getPermission(), tud.getSchematic().isCustom());
+                if (obj == null) {
+                    return;
+                }
+                // get dimensions
+                JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
+                previousHeight = dimensions.get("height").getAsInt();
+                previousWidth = dimensions.get("width").getAsInt();
             }
-            // get dimensions
-            JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
-            previousHeight = dimensions.get("height").getAsInt();
-            previousWidth = dimensions.get("width").getAsInt();
             size_prev = tud.getPrevious().getConsoleSize();
         }
         // if configured check whether there are still any blocks left
         if (plugin.getConfig().getBoolean("desktop.check_blocks_before_upgrade")) {
             UpgradeBlockScanner scanner = new UpgradeBlockScanner(plugin, tud, uuid);
-            BlockScannerData check = scanner.check();
+            BlockScannerData check = tud.getPrevious().getPermission().equals("fade") ? scanner.fadeCheck() : scanner.check();
             if (check == null) {
                 return;
             } else if (!check.allow()) {
@@ -184,39 +194,48 @@ public class DesktopThemeProcessor {
             }
         }
         // update player prefs
-        HashMap<String, Object> setp = new HashMap<>();
-        setp.put("wall", tud.getWall());
-        setp.put("floor", tud.getFloor());
-        setp.put("lights", tud.getSchematic().getLights().toString());
-        HashMap<String, Object> wherep = new HashMap<>();
-        wherep.put("uuid", uuid.toString());
-        plugin.getQueryFactory().doUpdate("player_prefs", setp, wherep);
+        HashMap<String, Object> setP = new HashMap<>();
+        setP.put("wall", tud.getWall());
+        setP.put("floor", tud.getFloor());
+        setP.put("lights", tud.getSchematic().getLights().toString());
+        HashMap<String, Object> whereP = new HashMap<>();
+        whereP.put("uuid", uuid.toString());
+        plugin.getQueryFactory().doUpdate("player_prefs", setP, whereP);
         // update TARDIS
         HashMap<String, Object> sett = new HashMap<>();
         sett.put("size", tud.getSchematic().getPermission().toUpperCase(Locale.ROOT));
-        HashMap<String, Object> wheret = new HashMap<>();
-        wheret.put("uuid", uuid.toString());
-        plugin.getQueryFactory().doUpdate("tardis", sett, wheret);
+        HashMap<String, Object> whereT = new HashMap<>();
+        whereT.put("uuid", uuid.toString());
+        plugin.getQueryFactory().doUpdate("tardis", sett, whereT);
         // take the Artron Energy
-        HashMap<String, Object> wherea = new HashMap<>();
-        wherea.put("uuid", uuid.toString());
+        HashMap<String, Object> whereA = new HashMap<>();
+        whereA.put("uuid", uuid.toString());
         String config_path = (archive_next != null) ? "upgrades.archive." + archive_next.getConsoleSize().getConfigPath() : "upgrades." + tud.getSchematic().getPermission().toLowerCase(Locale.ROOT);
         int amount = plugin.getArtronConfig().getInt(config_path);
         DesktopThemeRunnable ttr;
         boolean hasLava = tud.getPrevious().getPermission().equals("master") || tud.getPrevious().getPermission().equals("delta");
         if (tud.getPrevious().equals(tud.getSchematic()) && archive_next == null) {
-            // reduce the cost of the theme change
-            amount = Math.round((plugin.getArtronConfig().getInt("just_wall_floor") / 100F) * amount);
-            ttr = new WallFloorRunnable(plugin, uuid, tud);
+            if (tud.getSchematic().getPermission().equals("fade")) {
+                // change the base and gradient blocks in the fade console
+                ttr = new FadeThemeRunnable(plugin, uuid, tud);
+            } else {
+                // reduce the cost of the theme change
+                amount = Math.round((plugin.getArtronConfig().getInt("just_wall_floor") / 100F) * amount);
+                ttr = new WallFloorRunnable(plugin, uuid, tud);
+            }
         } else {
             // check for master
             if (hasLava) {
                 // remove lava and water
                 new Delavafier(plugin, uuid).swap();
             }
-            ttr = new FullDesktopThemeRunnable(plugin, uuid, tud);
+            if (tud.getSchematic().getPermission().equals("fade")) {
+                ttr = new FadeThemeRunnable(plugin, uuid, tud);
+            } else {
+                ttr = new FullDesktopThemeRunnable(plugin, uuid, tud);
+            }
         }
-        plugin.getQueryFactory().alterEnergyLevel("tardis", -amount, wherea, plugin.getServer().getPlayer(uuid));
+        plugin.getQueryFactory().alterEnergyLevel("tardis", -amount, whereA, plugin.getServer().getPlayer(uuid));
         // start the rebuild
         long initial_delay = (hasLava) ? 45L : 5L;
         long delay = Math.round(20 / plugin.getConfig().getDouble("growth.room_speed"));

@@ -86,9 +86,9 @@ public class ChunksCommand {
     private Location getLocation(Schematic schematic, Tardis tardis, World world) {
         TARDISInteriorPositioning tintpos = new TARDISInteriorPositioning(plugin);
         TIPSData pos = tintpos.getTIPSData(tardis.getTIPS());
-        int startx = pos.getCentreX();
-        int starty = schematic.getStartY();
-        int startz = pos.getCentreZ();
-        return new Location(world, startx, starty, startz);
+        int sx = pos.getCentreX();
+        int sy = schematic.getStartY();
+        int sz = pos.getCentreZ();
+        return new Location(world, sx, sy, sz);
     }
 }

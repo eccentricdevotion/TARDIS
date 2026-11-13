@@ -72,7 +72,7 @@ public class CondensablesConfigUpdater {
             // 1.14
             list.put("ACACIA_SIGN", 2);
             list.put("ANDESITE_SLAB", 2);
-            list.put("ANDESITE_STAIRS", 2);
+            list.put("ANDESITE_STAIRS", 3);
             list.put("ANDESITE_WALL", 2);
             list.put("BAMBOO", 2);
             list.put("BARREL", 16);
@@ -91,13 +91,13 @@ public class CondensablesConfigUpdater {
             list.put("CUT_SANDSTONE_SLAB", 3);
             list.put("DARK_OAK_SIGN", 2);
             list.put("DIORITE_SLAB", 2);
-            list.put("DIORITE_STAIRS", 2);
+            list.put("DIORITE_STAIRS", 3);
             list.put("DIORITE_WALL", 2);
             list.put("END_STONE_BRICK_SLAB", 21);
             list.put("END_STONE_BRICK_WALL", 21);
             list.put("FLETCHING_TABLE", 12);
             list.put("GRANITE_SLAB", 2);
-            list.put("GRANITE_STAIRS", 2);
+            list.put("GRANITE_STAIRS", 3);
             list.put("GRANITE_WALL", 2);
             list.put("GRINDSTONE", 30);
             list.put("HONEYCOMB_BLOCK", 80);
@@ -108,9 +108,9 @@ public class CondensablesConfigUpdater {
             list.put("LILY_OF_THE_VALLEY", 2);
             list.put("LOOM", 14);
             list.put("MOSSY_COBBLESTONE_SLAB", 2);
-            list.put("MOSSY_COBBLESTONE_STAIRS", 2);
+            list.put("MOSSY_COBBLESTONE_STAIRS", 3);
             list.put("MOSSY_STONE_BRICK_SLAB", 2);
-            list.put("MOSSY_STONE_BRICK_STAIRS", 2);
+            list.put("MOSSY_STONE_BRICK_STAIRS", 3);
             list.put("MOSSY_STONE_BRICK_WALL", 2);
             list.put("MUSIC_DISC_CAT", 100);
             list.put("NETHER_BRICK_WALL", 2);
@@ -121,7 +121,7 @@ public class CondensablesConfigUpdater {
             list.put("POLISHED_DIORITE_STAIRS", 1);
             list.put("POLISHED_GRANITE_SLAB", 1);
             list.put("POLISHED_GRANITE_STAIRS", 1);
-            list.put("PRISMARINE_STAIRS", 2);
+            list.put("PRISMARINE_STAIRS", 3);
             list.put("PRISMARINE_WALL", 2);
             list.put("RED_NETHER_BRICK_SLAB", 12);
             list.put("RED_NETHER_BRICK_STAIRS", 12);
@@ -247,7 +247,7 @@ public class CondensablesConfigUpdater {
             list.put("CHISELED_DEEPSLATE", 3);
             list.put("COBBLED_DEEPSLATE", 2);
             list.put("COBBLED_DEEPSLATE_SLAB", 2);
-            list.put("COBBLED_DEEPSLATE_STAIRS", 2);
+            list.put("COBBLED_DEEPSLATE_STAIRS", 3);
             list.put("COBBLED_DEEPSLATE_WALL", 2);
             list.put("COPPER_BLOCK", 180);
             list.put("COPPER_INGOT", 20);
@@ -259,11 +259,11 @@ public class CondensablesConfigUpdater {
             list.put("CYAN_CANDLE", 35);
             list.put("DEEPSLATE", 2);
             list.put("DEEPSLATE_BRICK_SLAB", 2);
-            list.put("DEEPSLATE_BRICK_STAIRS", 2);
+            list.put("DEEPSLATE_BRICK_STAIRS", 3);
             list.put("DEEPSLATE_BRICK_WALL", 2);
             list.put("DEEPSLATE_BRICKS", 4);
             list.put("DEEPSLATE_TILE_SLAB", 2);
-            list.put("DEEPSLATE_TILE_STAIRS", 2);
+            list.put("DEEPSLATE_TILE_STAIRS", 3);
             list.put("DEEPSLATE_TILE_WALL", 2);
             list.put("DEEPSLATE_TILES", 2);
             list.put("DRIPSTONE_BLOCK", 2);
@@ -296,7 +296,7 @@ public class CondensablesConfigUpdater {
             list.put("POINTED_DRIPSTONE", 2);
             list.put("POLISHED_DEEPSLATE", 2);
             list.put("POLISHED_DEEPSLATE_SLAB", 2);
-            list.put("POLISHED_DEEPSLATE_STAIRS", 2);
+            list.put("POLISHED_DEEPSLATE_STAIRS", 3);
             list.put("POLISHED_DEEPSLATE_WALL", 2);
             list.put("PURPLE_CANDLE", 35);
             list.put("RAW_COPPER", 20);
@@ -628,14 +628,14 @@ public class CondensablesConfigUpdater {
                 plugin.getCondensablesConfig().set("OXIDIZED_COPPER_TRAPDOOR", 60);
                 plugin.getCondensablesConfig().set("POLISHED_TUFF", 2);
                 plugin.getCondensablesConfig().set("POLISHED_TUFF_SLAB", 2);
-                plugin.getCondensablesConfig().set("POLISHED_TUFF_STAIRS", 2);
+                plugin.getCondensablesConfig().set("POLISHED_TUFF_STAIRS", 3);
                 plugin.getCondensablesConfig().set("POLISHED_TUFF_WALL", 2);
                 plugin.getCondensablesConfig().set("TUFF_BRICKS", 4);
                 plugin.getCondensablesConfig().set("TUFF_BRICK_SLAB", 2);
-                plugin.getCondensablesConfig().set("TUFF_BRICK_STAIRS", 2);
+                plugin.getCondensablesConfig().set("TUFF_BRICK_STAIRS", 3);
                 plugin.getCondensablesConfig().set("TUFF_BRICK_WALL", 2);
                 plugin.getCondensablesConfig().set("TUFF_SLAB", 2);
-                plugin.getCondensablesConfig().set("TUFF_STAIRS", 2);
+                plugin.getCondensablesConfig().set("TUFF_STAIRS", 3);
                 plugin.getCondensablesConfig().set("TUFF_WALL", 2);
                 plugin.getCondensablesConfig().set("WAXED_CHISELED_COPPER", 2);
                 plugin.getCondensablesConfig().set("WAXED_COPPER_BULB", 720);
@@ -696,7 +696,7 @@ public class CondensablesConfigUpdater {
                 plugin.getCondensablesConfig().set("RESIN_BRICK", 4);
                 plugin.getCondensablesConfig().set("RESIN_BRICKS", 20);
                 plugin.getCondensablesConfig().set("RESIN_BRICK_SLAB", 2);
-                plugin.getCondensablesConfig().set("RESIN_BRICK_STAIRS", 2);
+                plugin.getCondensablesConfig().set("RESIN_BRICK_STAIRS", 3);
                 plugin.getCondensablesConfig().set("RESIN_BRICK_WALL", 2);
                 plugin.getCondensablesConfig().set("RESIN_CLUMP", 2);
                 plugin.getCondensablesConfig().set("STRIPPED_PALE_OAK_LOG", 2);
@@ -836,30 +836,30 @@ public class CondensablesConfigUpdater {
                 plugin.getCondensablesConfig().set("CINNABAR", 1);
                 plugin.getCondensablesConfig().set("CINNABAR_BRICKS", 4);
                 plugin.getCondensablesConfig().set("CINNABAR_BRICK_SLAB", 2);
-                plugin.getCondensablesConfig().set("CINNABAR_BRICK_STAIRS", 2);
+                plugin.getCondensablesConfig().set("CINNABAR_BRICK_STAIRS", 3);
                 plugin.getCondensablesConfig().set("CINNABAR_BRICK_WALL", 2);
                 plugin.getCondensablesConfig().set("CINNABAR_SLAB", 2);
-                plugin.getCondensablesConfig().set("CINNABAR_STAIRS", 2);
+                plugin.getCondensablesConfig().set("CINNABAR_STAIRS", 3);
                 plugin.getCondensablesConfig().set("CINNABAR_WALL", 2);
                 plugin.getCondensablesConfig().set("MUSIC_DISC_BOUNCE", 100);
                 plugin.getCondensablesConfig().set("POLISHED_CINNABAR", 2);
                 plugin.getCondensablesConfig().set("POLISHED_CINNABAR_SLAB", 2);
-                plugin.getCondensablesConfig().set("POLISHED_CINNABAR_STAIRS", 2);
+                plugin.getCondensablesConfig().set("POLISHED_CINNABAR_STAIRS", 3);
                 plugin.getCondensablesConfig().set("POLISHED_CINNABAR_WALL", 2);
                 plugin.getCondensablesConfig().set("POLISHED_SULFUR", 2);
                 plugin.getCondensablesConfig().set("POLISHED_SULFUR_SLAB", 2);
-                plugin.getCondensablesConfig().set("POLISHED_SULFUR_STAIRS", 2);
+                plugin.getCondensablesConfig().set("POLISHED_SULFUR_STAIRS", 3);
                 plugin.getCondensablesConfig().set("POLISHED_SULFUR_WALL", 2);
                 plugin.getCondensablesConfig().set("POTENT_SULFUR", 2);
                 plugin.getCondensablesConfig().set("SULFUR", 1);
                 plugin.getCondensablesConfig().set("SULFUR_BRICKS", 4);
                 plugin.getCondensablesConfig().set("SULFUR_BRICK_SLAB", 2);
-                plugin.getCondensablesConfig().set("SULFUR_BRICK_STAIRS", 2);
+                plugin.getCondensablesConfig().set("SULFUR_BRICK_STAIRS", 3);
                 plugin.getCondensablesConfig().set("SULFUR_BRICK_WALL", 2);
                 plugin.getCondensablesConfig().set("SULFUR_CUBE_BUCKET", 40);
                 plugin.getCondensablesConfig().set("SULFUR_SLAB", 2);
                 plugin.getCondensablesConfig().set("SULFUR_SPIKE", 1);
-                plugin.getCondensablesConfig().set("SULFUR_STAIRS", 2);
+                plugin.getCondensablesConfig().set("SULFUR_STAIRS", 3);
                 plugin.getCondensablesConfig().set("SULFUR_WALL", 2);
             }
             // 26.3
@@ -939,7 +939,7 @@ public class CondensablesConfigUpdater {
                 plugin.getCondensablesConfig().set("POPLAR_SHELF", 2);
                 plugin.getCondensablesConfig().set("POPLAR_SIGN", 2);
                 plugin.getCondensablesConfig().set("POPLAR_SLAB", 2);
-                plugin.getCondensablesConfig().set("POPLAR_STAIRS", 2);
+                plugin.getCondensablesConfig().set("POPLAR_STAIRS", 3);
                 plugin.getCondensablesConfig().set("POPLAR_TRAPDOOR", 6);
                 plugin.getCondensablesConfig().set("POPLAR_WOOD", 2);
                 plugin.getCondensablesConfig().set("PURPLE_CONCRETE_SLAB", 2);
@@ -971,6 +971,41 @@ public class CondensablesConfigUpdater {
                 plugin.getCondensablesConfig().set("YELLOW_WOOL_STAIRS", 30);
                 i++;
             }
+            /*
+            // 26.4
+            if (!plugin.getCondensablesConfig().contains("CALCITE_PILLAR")) {
+                plugin.getCondensablesConfig().set("CALCITE_PILLAR", 4);
+                plugin.getCondensablesConfig().set("CALCITE_SLAB", 2);
+                plugin.getCondensablesConfig().set("CALCITE_STAIRS", 3);
+                plugin.getCondensablesConfig().set("CALCITE_WALL", 2);
+                plugin.getCondensablesConfig().set("CHISELED_PACKED_ICE", 18);
+                plugin.getCondensablesConfig().set("CHISELED_SOULSHALE", 200);
+                plugin.getCondensablesConfig().set("ICE_BALL", 2);
+                plugin.getCondensablesConfig().set("ICE_CRYSTAL", 2);
+                plugin.getCondensablesConfig().set("ICICLE", 2);
+                plugin.getCondensablesConfig().set("PACKED_ICE", 18);
+                plugin.getCondensablesConfig().set("PACKED_ICE_BRICK_SLAB", 8);
+                plugin.getCondensablesConfig().set("PACKED_ICE_BRICK_STAIRS", 28);
+                plugin.getCondensablesConfig().set("PACKED_ICE_BRICK_WALL", 18);
+                plugin.getCondensablesConfig().set("PACKED_ICE_BRICKS", 18);
+                plugin.getCondensablesConfig().set("POLISHED_CALCITE_BRICK_SLAB", 2);
+                plugin.getCondensablesConfig().set("POLISHED_CALCITE_BRICK_STAIRS", 4);
+                plugin.getCondensablesConfig().set("POLISHED_CALCITE_BRICK_WALL", 2);
+                plugin.getCondensablesConfig().set("POLISHED_CALCITE_SLAB", 2);
+                plugin.getCondensablesConfig().set("POLISHED_CALCITE_STAIRS", 3);
+                plugin.getCondensablesConfig().set("POLISHED_CALCITE_WALL", 2);
+                plugin.getCondensablesConfig().set("SNOW_BRICK_SLAB", 4);
+                plugin.getCondensablesConfig().set("SNOW_BRICK_STAIRS", 6);
+                plugin.getCondensablesConfig().set("SNOW_BRICK_WALL", 4);
+                plugin.getCondensablesConfig().set("SNOW_BRICKS", 4);
+                // fix OP stone bricks while were at it
+                plugin.getCondensablesConfig().set("STONE_BRICKS", 4);
+                plugin.getCondensablesConfig().set("STONE_BRICK_SLAB", 4);
+                plugin.getCondensablesConfig().set("STONE_BRICK_STAIRS", 6);
+                plugin.getCondensablesConfig().set("STONE_BRICK_WALL", 4);
+                i++;
+            }
+             */
             if (i > 0) {
                 try {
                     String listPath = plugin.getDataFolder() + File.separator + "condensables.yml";

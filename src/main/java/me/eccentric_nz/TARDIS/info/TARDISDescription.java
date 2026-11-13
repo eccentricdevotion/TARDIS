@@ -157,6 +157,7 @@ public enum TARDISDescription {
     DELUXE("Luxury in a box - console design by killeratnight & L0rd Rahl."),
     EIGHTH("The 8th Doctor's TARDIS - based on design by DT10."),
     ELEVENTH("It's smaller on the outside... - console design by killeratnight & L0rd Rahl."),
+    FADE("A procedurally generated gradient block interior with 12 variants."),
     TWELFTH("The 12th Doctor's TARDIS - console design by killeratnight."),
     THIRTEENTH("The 13th Doctor's TARDIS - console design by Razihel."),
     FIFTEENTH("The 14/15th Doctor's TARDIS - console design by airomis"),

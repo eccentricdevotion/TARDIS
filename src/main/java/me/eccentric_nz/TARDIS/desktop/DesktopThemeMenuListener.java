@@ -20,18 +20,20 @@ import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.console.CustomiseConsoleInventory;
-import me.eccentric_nz.TARDIS.custommodels.GUIChameleonPresets;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCount;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTransmat;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.discovery.StructureVariant;
 import me.eccentric_nz.TARDIS.enumeration.Desktops;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.schematic.archive.ArchiveUpdate;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
+import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -61,7 +63,10 @@ public class DesktopThemeMenuListener extends TARDISMenuListener {
 
     @EventHandler(ignoreCancelled = true)
     public void onThemeMenuClick(InventoryClickEvent event) {
-        if (!(event.getInventory().getHolder(false) instanceof PluginThemeInventory) && !(event.getInventory().getHolder(false) instanceof CustomThemeInventory)) {
+        if (!(event.getInventory().getHolder(false) instanceof PluginThemeInventory)
+                && !(event.getInventory().getHolder(false) instanceof CustomThemeInventory)
+                && !(event.getInventory().getHolder(false) instanceof FadeThemeInventory)
+        ) {
             return;
         }
         Player player = (Player) event.getWhoClicked();
@@ -101,29 +106,37 @@ public class DesktopThemeMenuListener extends TARDISMenuListener {
                 InventoryHolder customise = new CustomiseConsoleInventory(plugin);
                 player.openInventory(customise.getInventory());
             }
+            case 50 -> {
+                // get player upgrade data
+                UpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(player.getUniqueId());
+                // switch page
+                player.openInventory(new PluginThemeInventory(plugin, player, tud.getPrevious().getPermission(), tud.getLevel()).getInventory());
+            }
             case 51 -> {
                 // get player upgrade data
                 UpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(player.getUniqueId());
-                InventoryHolder consoles;
                 // switch page
-                if (GUIChameleonPresets.GO_TO_PAGE_2.name().equals(ComponentUtils.stripColour(choice.getData(DataComponentTypes.CUSTOM_NAME)))) {
-                    // page 2
-                    consoles = new CustomThemeInventory(plugin, player, tud.getPrevious().getPermission(), tud.getLevel());
-                } else {
-                    // page 1
-                    consoles = new PluginThemeInventory(plugin, player, tud.getPrevious().getPermission(), tud.getLevel());
-                }
-                player.openInventory(consoles.getInventory());
+                player.openInventory(new CustomThemeInventory(plugin, player, tud.getPrevious().getPermission(), tud.getLevel()).getInventory());
+            }
+            case 52 -> {
+                // get player upgrade data
+                UpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(player.getUniqueId());
+                // switch page
+                player.openInventory(new FadeThemeInventory(plugin, player, tud.getPrevious().getPermission(), tud.getLevel()).getInventory());
             }
             case 53 -> close(player); // close
             default -> {
                 if (choice == null) {
                     return;
                 }
-                // get material of selected console
-                String perm = Desktops.schematicFor(choice.getType()).getPermission();
-                // remember the upgrade choice
-                Schematic schematic = Desktops.schematicFor(perm);
+                Schematic schematic;
+                if (choice.getType() == Material.LIGHT_GRAY_BUNDLE) {
+                    schematic = Desktops.schematicFor(Material.ORANGE_POPLAR_LEAVES);
+                } else {
+                    // get material of selected console
+                    // remember the upgrade choice
+                    schematic = Desktops.schematicFor(choice.getType());
+                }
                 UUID uuid = player.getUniqueId();
                 if (click.equals(ClickType.SHIFT_LEFT) && plugin.getConfig().getBoolean("desktop.previews")) {
                     // get the transmat location
@@ -151,24 +164,40 @@ public class DesktopThemeMenuListener extends TARDISMenuListener {
                         close(player);
                     }
                 } else {
-                    if (!TARDISPermission.hasPermission(player, "tardis." + perm)) {
+                    if (!TARDISPermission.hasPermission(player, "tardis." + schematic.getPermission())) {
                         return;
                     }
                     UpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(uuid);
-                    int upgrade = plugin.getArtronConfig().getInt("upgrades." + perm);
+                    int upgrade = plugin.getArtronConfig().getInt("upgrades." + schematic.getPermission());
                     int needed = (tud.getPrevious().getPermission().equals(schematic.getPermission())) ? upgrade / 2 : upgrade;
                     if (tud.getLevel() >= needed) {
                         tud.setSchematic(schematic);
                         plugin.getTrackerKeeper().getUpgrades().put(uuid, tud);
-                        // open the wall block GUI
-                        wall(player);
-                        if (tud.getPrevious().getPermission().equals("archive")) {
-                            new ArchiveUpdate(plugin, uuid.toString(), "ª°º").setInUse();
+                        if (schematic.getPermission().equals("fade")) {
+                            // get the selected variant
+                            StructureVariant variant = variantFromSlot(choice);
+                            tud.setVariant(variant);
+                            plugin.getTrackerKeeper().getUpgrades().put(uuid, tud);
+                            // just build the fade desktop
+                            new DesktopThemeProcessor(plugin, uuid).changeDesktop();
+                            // close the GUI
+                            close(player);
+                        } else {
+                            // open the wall block GUI
+                            wall(player);
+                            if (tud.getPrevious().getPermission().equals("archive")) {
+                                new ArchiveUpdate(plugin, uuid.toString(), "ª°º").setInUse();
+                            }
                         }
                     }
                 }
             }
         }
+    }
+
+    private StructureVariant variantFromSlot(ItemStack choice) {
+        String v = ComponentUtils.stripColour(choice.getData(DataComponentTypes.CUSTOM_NAME));
+        return plugin.getBuildKeeper().getFadeVariants().getLookup().get(TARDISStringUtils.toEnumUppercase(v));
     }
 
     /**
@@ -185,24 +214,24 @@ public class DesktopThemeMenuListener extends TARDISMenuListener {
     /**
      * Closes the inventory and opens the Wall block selector menu.
      *
-     * @param p the player using the GUI
+     * @param player the player using the GUI
      */
-    private void wall(Player p) {
+    private void wall(Player player) {
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-            p.closeInventory();
-            p.openInventory(new WallsInventory(plugin, "TARDIS Wall Menu").getInventory());
+            player.closeInventory();
+            player.openInventory(new WallsInventory(plugin, "TARDIS Wall Menu").getInventory());
         }, 1L);
     }
 
     /**
      * Closes the inventory and opens the archive consoles menu.
      *
-     * @param p the player using the GUI
+     * @param player the player using the GUI
      */
-    private void archive(Player p) {
+    private void archive(Player player) {
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-            p.closeInventory();
-            p.openInventory(new ArchiveInventory(plugin, p).getInventory());
+            player.closeInventory();
+            player.openInventory(new ArchiveInventory(plugin, player).getInventory());
         }, 1L);
     }
 
@@ -211,12 +240,12 @@ public class DesktopThemeMenuListener extends TARDISMenuListener {
      * missing blocks - unless the /tardisadmin repair [player] [amount] command has been run, assigning the player a
      * 'free' repair(s).
      */
-    private void repair(Player p) {
+    private void repair(Player player) {
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-            p.closeInventory();
-            String uuid = p.getUniqueId().toString();
+            player.closeInventory();
+            String uuid = player.getUniqueId().toString();
             boolean repair;
-            DesktopRepair tr = new DesktopRepair(plugin, p);
+            DesktopRepair tr = new DesktopRepair(plugin, player);
             // is it a free repair?
             ResultSetCount rsc = new ResultSetCount(plugin, uuid);
             if (rsc.resultSet() && rsc.getRepair() > 0) {
@@ -241,10 +270,10 @@ public class DesktopThemeMenuListener extends TARDISMenuListener {
      * Initiates a TARDIS clean. Removes any blocks that are not part of the original console schematic (missing blocks
      * will not be restored).
      */
-    private void clean(Player p) {
+    private void clean(Player player) {
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-            p.closeInventory();
-            new DesktopRepair(plugin, p).restore(true);
+            player.closeInventory();
+            new DesktopRepair(plugin, player).restore(true);
         }, 1L);
     }
 }

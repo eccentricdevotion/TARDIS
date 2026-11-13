@@ -92,7 +92,7 @@ public class InteriorBuildRunnable implements Runnable {
     private final HashMap<String, Object> where = new HashMap<>();
     private Block postBedrock = null;
     private Location postOod = null;
-    private int task, level = 0, row = 0, startx, starty, startz, resetx, resetz, h, w, d, j = 2;
+    private int task, level = 0, row = 0, sx, sy, sz, rx, rz, h, w, d, j = 2;
     private JsonArray arr;
     private JsonObject obj;
     private Location wg1;
@@ -145,7 +145,7 @@ public class InteriorBuildRunnable implements Runnable {
                 task = -1;
                 return;
             }
-            starty = schm.getStartY();
+            sy = schm.getStartY();
             // get JSON
             obj = SchematicGZip.getObject(plugin, "consoles", schm.getPermission(), schm.isCustom());
             if (obj != null) {
@@ -156,18 +156,18 @@ public class InteriorBuildRunnable implements Runnable {
                 d = dimensions.get("length").getAsInt() - 1;
                 div = (h + 1.0d) * w * (d + 1.0d);
                 playerUUID = player.getUniqueId().toString();
-                // calculate startx, starty, startz
+                // calculate sx, sy, sz
                 if (tips > -1000001) {
                     // default world - use TIPS
                     TARDISInteriorPositioning tintpos = new TARDISInteriorPositioning(plugin);
                     pos = tintpos.getTIPSData(tips);
-                    startx = pos.getCentreX();
-                    resetx = pos.getCentreX();
-                    startz = pos.getCentreZ();
-                    resetz = pos.getCentreZ();
+                    sx = pos.getCentreX();
+                    rx = pos.getCentreX();
+                    sz = pos.getCentreZ();
+                    rz = pos.getCentreZ();
                     // get the correct chunk for ARS
-                    Location cl = new Location(world, startx, starty, startz);
-                    Chunk c = world.getChunkAt(cl);
+                    Location cl = new Location(world, sx, sy, sz);
+                    Chunk c = cl.getChunk();
                     while (!c.isLoaded()) {
                         c.load(true);
                     }
@@ -178,13 +178,13 @@ public class InteriorBuildRunnable implements Runnable {
                     }
                 } else {
                     int[] gsl = plugin.getLocationUtils().getStartLocation(dbID);
-                    startx = gsl[0];
-                    resetx = gsl[1];
-                    startz = gsl[2];
-                    resetz = gsl[3];
+                    sx = gsl[0];
+                    rx = gsl[1];
+                    sz = gsl[2];
+                    rz = gsl[3];
                 }
-                wg1 = new Location(world, startx, starty, startz);
-                wg2 = new Location(world, startx + (w - 1), starty + (h - 1), startz + (d - 1));
+                wg1 = new Location(world, sx, sy, sz);
+                wg2 = new Location(world, sx + (w - 1), sy + (h - 1), sz + (d - 1));
                 // get list of used chunks
                 chunkList = ChunkUtils.getConsoleChunks(world, wg1.getChunk().getX(), wg1.getChunk().getZ(), w, d);
                 // update chunks list in DB
@@ -274,17 +274,17 @@ public class InteriorBuildRunnable implements Runnable {
             // mannequins
             if (obj.has("mannequins")) {
                 JsonArray mannequins = obj.get("mannequins").getAsJsonArray();
-                MannequinSetter.setMannequins(mannequins, world, resetx, starty, resetz);
+                MannequinSetter.setMannequins(mannequins, world, rx, sy, rz);
             }
             // armour stands
             if (obj.has("armour_stands")) {
                 JsonArray stands = obj.get("armour_stands").getAsJsonArray();
-                ArmourStandSetter.setStands(stands, world, resetx, starty, resetz);
+                ArmourStandSetter.setStands(stands, world, rx, sy, rz);
             }
             // paintings
             if (obj.has("paintings")) {
                 JsonArray paintings = (JsonArray) obj.get("paintings");
-                PaintingSetter.setArt(paintings, world, resetx, starty, resetz);
+                PaintingSetter.setArt(paintings, world, rx, sy, rz);
             }
             // item frames
             if (obj.has("item_frames")) {
@@ -338,9 +338,9 @@ public class InteriorBuildRunnable implements Runnable {
         for (int col = 0; col <= d; col++) {
             counter++;
             JsonObject c = r.get(col).getAsJsonObject();
-            int x = startx + row;
-            int y = starty + level;
-            int z = startz + col;
+            int x = sx + row;
+            int y = sy + level;
+            int z = sz + col;
             BlockData data = plugin.getServer().createBlockData(c.get("data").getAsString());
             Material type = data.getMaterial();
             if (type.equals(Material.LIGHT_GRAY_CONCRETE) && (

@@ -103,12 +103,12 @@ public class TARDISRandomOverworld extends TARDISRandomLocation {
                 }
                 // get start location for checking there is enough space
                 int[] gsl = TARDISTimeTravel.getStartLocation(overworld, d);
-                int startx = gsl[0];
-                int resetx = gsl[1];
-                int starty = overworld.getBlockY() + 1;
-                int startz = gsl[2];
-                int resetz = gsl[3];
-                count = TARDISTimeTravel.safeLocation(startx, starty, startz, resetx, resetz, world, d);
+                int sx = gsl[0];
+                int rx = gsl[1];
+                int sy = overworld.getBlockY() + 1;
+                int sz = gsl[2];
+                int rz = gsl[3];
+                count = TARDISTimeTravel.safeLocation(sx, sy, sz, rx, rz, world, d);
             } else {
                 count = 1;
             }
@@ -133,7 +133,7 @@ public class TARDISRandomOverworld extends TARDISRandomLocation {
         for (int n = 0; n < 5; n++) {
             int[] s = TARDISTimeTravel.getStartLocation(loc, d);
             int level, row, col, rowcount, colcount;
-            int starty = loc.getBlockY();
+            int sy = loc.getBlockY();
             switch (d) {
                 case EAST, WEST -> {
                     rowcount = 3;
@@ -144,7 +144,7 @@ public class TARDISRandomOverworld extends TARDISRandomLocation {
                     colcount = 3;
                 }
             }
-            for (level = starty; level < starty + 4; level++) {
+            for (level = sy; level < sy + 4; level++) {
                 for (row = s[0]; row < s[0] + rowcount; row++) {
                     for (col = s[2]; col < s[2] + colcount; col++) {
                         Material mat = loc.getWorld().getBlockAt(row, level, col).getType();

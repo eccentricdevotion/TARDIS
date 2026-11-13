@@ -75,7 +75,7 @@ public class ArchiveUtility {
                 c = 15;
             }
         }
-        // calculate startx, starty, startz
+        // calculate sx, sy, sz
         int slot = tardis.getTIPS();
         int id = tardis.getTardisId();
         int sx, sz;

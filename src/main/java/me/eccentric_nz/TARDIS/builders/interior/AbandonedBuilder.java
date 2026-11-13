@@ -21,6 +21,7 @@ import me.eccentric_nz.TARDIS.api.event.TARDISCreationEvent;
 import me.eccentric_nz.TARDIS.builders.exterior.BuildData;
 import me.eccentric_nz.TARDIS.builders.exterior.MaterialiseBlockPreset;
 import me.eccentric_nz.TARDIS.builders.exterior.MaterialiseModelledPreset;
+import me.eccentric_nz.TARDIS.discovery.StructureVariant;
 import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.planets.TARDISWorldResolver;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
@@ -46,7 +47,7 @@ public class AbandonedBuilder {
         this.plugin = plugin;
     }
 
-    public void spawn(Location l, Schematic schm, ChameleonPreset preset, String item, COMPASS d, Player player) {
+    public void spawn(Location l, Schematic schematic, StructureVariant variant, ChameleonPreset preset, String item, COMPASS d, Player player) {
         Chunk chunk = l.getChunk();
         // get this chunk's co-ords
         String cw = plugin.getConfig().getString("creation.default_world_name", "tardis_timevortex");
@@ -54,12 +55,12 @@ public class AbandonedBuilder {
         int cx = chunk.getX();
         int cz = chunk.getZ();
         // save data to database (tardis table)
-        String chun = "minecraft:" + cw + ":" + cx + ":" + cz;
+        String c = "minecraft:" + cw + ":" + cx + ":" + cz;
         HashMap<String, Object> set = new HashMap<>();
         set.put("uuid", UUID.randomUUID().toString());
         set.put("owner", "");
-        set.put("chunk", chun);
-        set.put("size", schm.getPermission().toUpperCase(Locale.ROOT));
+        set.put("chunk", c);
+        set.put("size", schematic.getPermission().toUpperCase(Locale.ROOT));
         set.put("abandoned", 1);
         set.put("powered_on", 0);
         set.put("lastuse", Long.MAX_VALUE);
@@ -72,14 +73,14 @@ public class AbandonedBuilder {
         }
         int lastInsertId = plugin.getQueryFactory().doSyncInsert("tardis", set);
         // populate home, current, next and back tables
-        HashMap<String, Object> setlocs = new HashMap<>();
-        setlocs.put("tardis_id", lastInsertId);
-        setlocs.put("world", l.getWorld().getKey().asString());
-        setlocs.put("x", l.getBlockX());
-        setlocs.put("y", l.getBlockY());
-        setlocs.put("z", l.getBlockZ());
-        setlocs.put("direction", d.toString());
-        plugin.getQueryFactory().insertLocations(setlocs);
+        HashMap<String, Object> locations = new HashMap<>();
+        locations.put("tardis_id", lastInsertId);
+        locations.put("world", l.getWorld().getKey().asString());
+        locations.put("x", l.getBlockX());
+        locations.put("y", l.getBlockY());
+        locations.put("z", l.getBlockZ());
+        locations.put("direction", d.toString());
+        plugin.getQueryFactory().insertLocations(locations);
         // turn the block stack into a TARDIS
         BuildData bd = new BuildData(null);
         bd.setDirection(d);
@@ -92,9 +93,16 @@ public class AbandonedBuilder {
         bd.setPlayer(player);
         bd.setThrottle(SpaceTimeThrottle.REBUILD);
         plugin.getPM().callEvent(new TARDISCreationEvent(null, lastInsertId, l));
-        AbandonedBuildRunnable builder = new AbandonedBuildRunnable(plugin, schm, chunkworld, lastInsertId, player);
-        int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, builder, 1L, 3L);
-        builder.setTask(task);
+        if (schematic.getPermission().equals("fade")) {
+            // determine variant
+            AbandonedFadeBuildRunnable builder = new AbandonedFadeBuildRunnable(plugin, variant, chunkworld, lastInsertId, player);
+            int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, builder, 1L, 3L);
+            builder.setTask(task);
+        } else {
+            AbandonedBuildRunnable builder = new AbandonedBuildRunnable(plugin, schematic, chunkworld, lastInsertId, player);
+            int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, builder, 1L, 3L);
+            builder.setTask(task);
+        }
         // delay building exterior
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             plugin.getTrackerKeeper().getMaterialising().add(bd.getTardisID());
@@ -109,6 +117,6 @@ public class AbandonedBuilder {
                 runnable.setTask(taskID);
             }
             TARDISSounds.playTARDISSound(bd.getLocation(), "tardis_land_fast");
-        }, schm.getConsoleSize().getDelay());
+        }, schematic.getConsoleSize().getDelay());
     }
 }
