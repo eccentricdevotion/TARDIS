@@ -149,7 +149,7 @@ dependencies {
         isTransitive = false
     }
     compileOnly("org.popcraft:chunky-common:1.5.66")
-    compileOnly("org.popcraft:chunky-bukkit:1.5.4")
+    compileOnly("org.popcraft:chunky-bukkit:1.5.66")
     compileOnly("org.popcraft:chunkyborder-common:1.2.75")
     compileOnly("net.luckperms:api:5.5")
     compileOnly("org.apache.commons:commons-lang3:3.21.0")
