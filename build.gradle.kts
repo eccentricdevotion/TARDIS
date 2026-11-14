@@ -156,7 +156,7 @@ dependencies {
     compileOnly(files("libs/TerraformGenerator.jar"))
     compileOnly("de.maxhenkel.voicechat:voicechat-api:2.6.24")
     compileOnly("com.alphacephei:vosk:0.3.45")
-    compileOnly("com.formdev:flatlaf:3.7.2") {
+    compileOnly("com.formdev:flatlaf:3.8") {
         isTransitive = false
     }
     compileOnly("org.swinglabs:swing-layout:1.0.3") {
