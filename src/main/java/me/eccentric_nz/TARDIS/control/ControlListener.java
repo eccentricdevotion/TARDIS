@@ -246,7 +246,7 @@ public class ControlListener implements Listener {
                                     new EyeOfHarmonyAction(plugin).openGUI(id, player);
                                 }
                                 case 55 -> new TelevisionAction(plugin).openGUI(player);
-                                case 58 -> new HappyGhastRelease(plugin).undock(block, id, player);
+                                case 58 -> new HappyGhastRelease(plugin).undock(block, id);
                                 case 59 -> {
                                     if (plugin.getConfig().getBoolean("modules.blueprints")) {
                                         new ArchitecturalReconfiguration(plugin).open(player);

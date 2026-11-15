@@ -43,7 +43,7 @@ public class HappyGhastRelease {
         this.plugin = plugin;
     }
 
-    public void undock(Block block, int id, Player player) {
+    public void undock(Block block, int id) {
         // only if unpowering the lever
         if (block.getBlockData() instanceof Switch lever && !lever.isPowered()) {
             return;
@@ -136,7 +136,7 @@ public class HappyGhastRelease {
                     leashable.setLeashHolder(skies);
                 }
                 skies.setMemory(MemoryKey.HOME, happy.getHome());
-                skies.setRemoveWhenFarAway(false);
+                skies.setPersistenceRequired(true);
             }
         }
     }

@@ -57,7 +57,7 @@ public class ArtronInitAction {
             Entity e = w.spawnEntity(cl.add(0.0d, 1.0d, 0.0d), EntityType.CREEPER);
             Creeper c = (Creeper) e;
             c.setPowered(true);
-            c.setRemoveWhenFarAway(false);
+            c.setPersistenceRequired(true);
             if (tardis.getSchematic().hasBeacon()) {
                 String beacon = tardis.getBeacon();
                 Block bl = TARDISStaticLocationGetters.getLocationFromDB(beacon).getBlock();

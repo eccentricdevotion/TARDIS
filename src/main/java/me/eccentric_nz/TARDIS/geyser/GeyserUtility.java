@@ -23,7 +23,7 @@ public class GeyserUtility {
             slime.setInvulnerable(true);
             slime.setCollidable(false);
             slime.setPersistent(true);
-            slime.setRemoveWhenFarAway(false);
+            slime.setPersistenceRequired(true);
             slime.getPersistentDataContainer().set(plugin.getTardisIdKey(), PersistentDataType.INTEGER, id);
             slime.getPersistentDataContainer().set(plugin.getStandUuidKey(), plugin.getPersistentDataTypeUUID(), uuid);
         });

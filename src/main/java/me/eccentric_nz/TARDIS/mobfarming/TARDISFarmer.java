@@ -729,7 +729,7 @@ public class TARDISFarmer {
                             if (name != null && !name.isEmpty()) {
                                 a.customName(Component.text(name));
                             }
-                            a.setRemoveWhenFarAway(false);
+                            a.setPersistenceRequired(true);
                         });
                     } else if (spawnEggs) {
                         // give spawn eggs
@@ -763,7 +763,7 @@ public class TARDISFarmer {
                             if (name != null && !name.isEmpty()) {
                                 bee.customName(Component.text(name));
                             }
-                            bee.setRemoveWhenFarAway(false);
+                            bee.setPersistenceRequired(true);
                         });
                     } else if (spawnEggs) {
                         // give spawn eggs
@@ -822,7 +822,7 @@ public class TARDISFarmer {
                             if (name != null && !name.isEmpty()) {
                                 panda.customName(Component.text(name));
                             }
-                            panda.setRemoveWhenFarAway(false);
+                            panda.setPersistenceRequired(true);
                         });
                     } else if (spawnEggs) {
                         // give spawn eggs
@@ -855,7 +855,7 @@ public class TARDISFarmer {
                                 if (name != null && !name.isEmpty()) {
                                     chicken.customName(Component.text(name));
                                 }
-                                chicken.setRemoveWhenFarAway(false);
+                                chicken.setPersistenceRequired(true);
                             });
                         }
                         if (!cows.isEmpty()) {
@@ -875,7 +875,7 @@ public class TARDISFarmer {
                                 if (name != null && !name.isEmpty()) {
                                     cow.customName(Component.text(name));
                                 }
-                                cow.setRemoveWhenFarAway(false);
+                                cow.setPersistenceRequired(true);
                             });
                         }
                         if (!pigs.isEmpty()) {
@@ -896,7 +896,7 @@ public class TARDISFarmer {
                                     pig.customName(Component.text(name));
                                 }
                                 pig.setSaddle(e.isSaddled());
-                                pig.setRemoveWhenFarAway(false);
+                                pig.setPersistenceRequired(true);
                             });
                         }
                         if (!sheep.isEmpty()) {
@@ -916,7 +916,7 @@ public class TARDISFarmer {
                                 if (name != null && !name.isEmpty()) {
                                     ewe.customName(Component.text(name));
                                 }
-                                ewe.setRemoveWhenFarAway(false);
+                                ewe.setPersistenceRequired(true);
                             });
                         }
                         if (!mooshrooms.isEmpty()) {
@@ -936,7 +936,7 @@ public class TARDISFarmer {
                                 if (name != null && !name.isEmpty()) {
                                     fungi.customName(Component.text(name));
                                 }
-                                fungi.setRemoveWhenFarAway(false);
+                                fungi.setPersistenceRequired(true);
                             });
                         }
                     } else if (spawnEggs) {
@@ -987,7 +987,7 @@ public class TARDISFarmer {
                             if (name != null && !name.isEmpty()) {
                                 axolotl.customName(Component.text(name));
                             }
-                            axolotl.setRemoveWhenFarAway(false);
+                            axolotl.setPersistenceRequired(true);
                         });
                     } else if (spawnEggs) {
                         // give spawn eggs
@@ -1046,7 +1046,7 @@ public class TARDISFarmer {
                                 p.updateInventory();
                             }
                             equine.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(e.getSpeed());
-                            equine.setRemoveWhenFarAway(false);
+                            equine.setPersistenceRequired(true);
                         });
                     } else if (spawnEggs) {
                         Inventory inv = p.getInventory();
@@ -1092,7 +1092,7 @@ public class TARDISFarmer {
                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> leashable.setLeashHolder(skies), 2L);
                                 }
                                 skies.setMemory(MemoryKey.HOME, hg.getHome());
-                                skies.setRemoveWhenFarAway(false);
+                                skies.setPersistenceRequired(true);
                             } else {
                                 // leash an extra
                                 int slot = HappyGhastUtils.nextFreeSlot(plugin, id);
@@ -1161,7 +1161,7 @@ public class TARDISFarmer {
                                 p.updateInventory();
                             }
                             cria.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(ll.getSpeed());
-                            cria.setRemoveWhenFarAway(false);
+                            cria.setPersistenceRequired(true);
                         });
                     } else if (spawnEggs) {
                         Inventory inv = p.getInventory();
@@ -1197,7 +1197,7 @@ public class TARDISFarmer {
                             }
                             shellfish.getInventory().setSaddle(n.getSaddle());
                             shellfish.getInventory().setArmor(n.getArmour());
-                            shellfish.setRemoveWhenFarAway(false);
+                            shellfish.setPersistenceRequired(true);
                         });
                     } else if (spawnEggs) {
                         // give spawn eggs
@@ -1230,7 +1230,7 @@ public class TARDISFarmer {
                                 bunny.customName(Component.text(name));
                             }
                             bunny.setRabbitType(e.getBunnyType());
-                            bunny.setRemoveWhenFarAway(false);
+                            bunny.setPersistenceRequired(true);
                         });
                     } else if (spawnEggs) {
                         Inventory inv = p.getInventory();
@@ -1268,7 +1268,7 @@ public class TARDISFarmer {
                             if (name != null && !name.isEmpty()) {
                                 npc.customName(Component.text(name));
                             }
-                            npc.setRemoveWhenFarAway(false);
+                            npc.setPersistenceRequired(true);
                         });
                     } else if (spawnEggs) {
                         Inventory inv = p.getInventory();
@@ -1299,7 +1299,7 @@ public class TARDISFarmer {
                             if (name != null && !name.isEmpty()) {
                                 polar.customName(Component.text(name));
                             }
-                            polar.setRemoveWhenFarAway(false);
+                            polar.setPersistenceRequired(true);
                         });
                     } else if (spawnEggs) {
                         Inventory inv = p.getInventory();
@@ -1330,7 +1330,7 @@ public class TARDISFarmer {
                             if (name != null && !name.isEmpty()) {
                                 let.customName(Component.text(name));
                             }
-                            let.setRemoveWhenFarAway(false);
+                            let.setPersistenceRequired(true);
                         });
                     } else if (spawnEggs) {
                         Inventory inv = p.getInventory();
@@ -1361,7 +1361,7 @@ public class TARDISFarmer {
                             if (name != null && !name.isEmpty()) {
                                 der.customName(Component.text(name));
                             }
-                            der.setRemoveWhenFarAway(false);
+                            der.setPersistenceRequired(true);
                         });
                     } else if (spawnEggs) {
                         Inventory inv = p.getInventory();
@@ -1391,7 +1391,7 @@ public class TARDISFarmer {
                             if (name != null && !name.isEmpty()) {
                                 sulfurCube.customName(Component.text(name));
                             }
-                            sulfurCube.setRemoveWhenFarAway(false);
+                            sulfurCube.setPersistenceRequired(true);
                         });
                     } else if (spawnEggs) {
                         // give spawn eggs
@@ -1425,7 +1425,7 @@ public class TARDISFarmer {
                             }
                             hump.setDomestication(e.getDomesticity());
                             hump.getInventory().setContents(e.getHorseinventory());
-                            hump.setRemoveWhenFarAway(false);
+                            hump.setPersistenceRequired(true);
                         });
                     } else if (spawnEggs) {
                         Inventory inv = p.getInventory();
@@ -1458,7 +1458,7 @@ public class TARDISFarmer {
                                 parrot.customName(Component.text(name));
                             }
                             parrot.setSitting(false); // let them fly in the cage
-                            parrot.setRemoveWhenFarAway(false);
+                            parrot.setPersistenceRequired(true);
                         });
                     } else if (spawnEggs) {
                         // give spawn eggs
@@ -1488,7 +1488,7 @@ public class TARDISFarmer {
                             if (name != null && !name.isEmpty()) {
                                 frog.customName(Component.text(name));
                             }
-                            frog.setRemoveWhenFarAway(false);
+                            frog.setPersistenceRequired(true);
                         });
                     } else if (spawnEggs) {
                         // give spawn eggs

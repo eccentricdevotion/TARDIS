@@ -37,7 +37,7 @@ public class K9Equipment {
         head.setData(DataComponentTypes.ITEM_MODEL, K9Variant.K9.getKey());
         entity.getEquipment().setHelmet(head);
         if (entity instanceof Husk) {
-            new FollowerEquipper().setOptionsAndInvisibilty(player, entity, Monster.K9);
+            new FollowerEquipper().setOptionsAndInvisibility(player, entity, Monster.K9);
         } else if (disguise) {
             PotionEffect potionEffect = new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 1, true, false);
             entity.addPotionEffect(potionEffect);

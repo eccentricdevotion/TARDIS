@@ -282,7 +282,7 @@ public class TARDISRideableMobListener implements Listener {
                                 inv.setContents(tmlla.getHorseinventory());
                                 inv.setDecor(tmlla.getDecor());
                                 llama.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(tmlla.getSpeed());
-                                llama.setRemoveWhenFarAway(false);
+                                llama.setPersistenceRequired(true);
                             } else if (tmpig != null) {
                                 ent = world.spawnEntity(l, EntityType.PIG);
                                 Pig pig = (Pig) ent;
@@ -296,7 +296,7 @@ public class TARDISRideableMobListener implements Listener {
                                     pig.customName(Component.text(name));
                                 }
                                 pig.setSaddle(true);
-                                pig.setRemoveWhenFarAway(false);
+                                pig.setPersistenceRequired(true);
                             } else if (tmcamel != null) {
                                 ent = world.spawnEntity(l, EntityType.CAMEL);
                                 Camel humped = (Camel) ent;
@@ -326,7 +326,7 @@ public class TARDISRideableMobListener implements Listener {
                                 if (!name.isEmpty()) {
                                     strider.customName(Component.text(name));
                                 }
-                                strider.setRemoveWhenFarAway(false);
+                                strider.setPersistenceRequired(true);
                             }
                             // teleport player and remove from travellers table
                             plugin.getGeneralKeeper().getDoorListener().movePlayer(p, l, true, p.getWorld(), false, 0, true, false);

@@ -50,7 +50,6 @@ public class Equipper {
     }
 
     public void setHelmetAndInvisibility() {
-//        le.setRemoveWhenFarAway(false);
         // set persistent
         le.setPersistent(true);
         // set custom armour!

@@ -36,6 +36,7 @@ import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Ageable;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Mob;
 import org.bukkit.generator.BlockPopulator;
 import org.bukkit.generator.LimitedRegion;
 import org.bukkit.generator.WorldInfo;
@@ -48,7 +49,9 @@ import java.util.Random;
 public class SkaroStructurePopulator extends BlockPopulator {
 
     private final TARDIS plugin;
-    private final List<EntityType> animals = List.of(EntityType.SHEEP, EntityType.COW, EntityType.PIG, EntityType.CHICKEN, EntityType.HORSE, EntityType.GOAT);
+    private final List<EntityType> animals = List.of(
+            EntityType.SHEEP, EntityType.COW, EntityType.PIG, EntityType.CHICKEN, EntityType.HORSE, EntityType.GOAT
+    );
 
     public SkaroStructurePopulator(TARDIS plugin) {
         this.plugin = plugin;
@@ -210,7 +213,7 @@ public class SkaroStructurePopulator extends BlockPopulator {
                                 EntityType entityType = animals.get(random.nextInt(animals.size()));
                                 for (int i = 0; i < random.nextInt(3) + 1; i++) {
                                     LivingEntity le = (LivingEntity) limitedRegion.spawnEntity(new Location(null, x, y + 1, z), entityType);
-                                    le.setRemoveWhenFarAway(false);
+                                    ((Mob) le).setPersistenceRequired(true);
                                     le.setPersistent(true);
                                     // if more than one, make a baby
                                     if (i > 0) {

@@ -71,7 +71,8 @@ public class ArtronCreeperChecker {
                         }
                         Creeper c = (Creeper) e;
                         c.setPowered(true);
-                        c.setRemoveWhenFarAway(false);
+                        c.setPersistenceRequired(true);
+                        // TODO use c.setPersistenceRequired(true) instead
                     }
                 }
             }

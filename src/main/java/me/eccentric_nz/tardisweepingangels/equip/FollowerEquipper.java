@@ -22,6 +22,7 @@ import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Mob;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -29,7 +30,7 @@ import java.util.UUID;
 
 public class FollowerEquipper {
 
-    public void setOptionsAndInvisibilty(OfflinePlayer player, LivingEntity entity, Monster monster) {
+    public void setOptionsAndInvisibility(OfflinePlayer player, LivingEntity entity, Monster monster) {
         UUID uuid;
         if (player != null) {
             uuid = player.getUniqueId();
@@ -50,7 +51,7 @@ public class FollowerEquipper {
         entity.setSilent(true);
         entity.setCollidable(true);
         // don't remove when far away
-        entity.setRemoveWhenFarAway(false);
+        ((Mob) entity).setPersistenceRequired(true);
         entity.setPersistent(true);
         // don't pick up items
         entity.setCanPickupItems(false);

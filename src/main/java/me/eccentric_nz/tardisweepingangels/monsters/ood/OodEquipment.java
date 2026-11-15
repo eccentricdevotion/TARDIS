@@ -29,7 +29,7 @@ public class OodEquipment {
     public static void set(OfflinePlayer player, LivingEntity entity, boolean disguise) {
         new ArmourEquipper().dress(entity, Monster.OOD);
         if (!disguise) {
-            new FollowerEquipper().setOptionsAndInvisibilty(player, entity, Monster.OOD);
+            new FollowerEquipper().setOptionsAndInvisibility(player, entity, Monster.OOD);
         } else {
             PotionEffect potionEffect = new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 1, true, false);
             entity.addPotionEffect(potionEffect);

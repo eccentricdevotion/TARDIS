@@ -38,7 +38,7 @@ public class JudoonEquipment {
             ItemStack hand = ItemStack.of(Material.END_ROD);
             hand.setData(DataComponentTypes.ITEM_MODEL, JudoonVariant.JUDOON_WEAPON_RESTING.getKey());
             entity.getEquipment().setItemInMainHand(hand);
-            new FollowerEquipper().setOptionsAndInvisibilty(player, entity, Monster.JUDOON);
+            new FollowerEquipper().setOptionsAndInvisibility(player, entity, Monster.JUDOON);
             // set entity scale
             entity.getAttribute(Attribute.SCALE).setBaseValue(1.25d);
         } else {
