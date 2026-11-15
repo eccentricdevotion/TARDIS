@@ -117,6 +117,6 @@ public class TimeRotor {
         ItemStack is = itemFrame.getItem();
         Material material = is.getType();
         Rotor rotor = Rotor.getByMaterial(material);
-        return rotor.offModel();
+        return rotor != null ? rotor.offModel() : RotorVariant.TIME_ROTOR_EARLY_OFF.getKey();
     }
 }
