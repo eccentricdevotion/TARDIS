@@ -7,15 +7,16 @@ locations. It adds a Whovian twist to the typical `/set_home` and `/home` comman
 
 **As a player, you can:**
 
-- Create a TARDIS that is bigger on the inside &mdash; _choose from 30+ different consoles!_
+- Create or discover a TARDIS that is bigger on the inside &mdash; _choose from 40+ different consoles, plus you can create your own custom schematics._
 - Time travel to random locations, saved destinations, structures, caves, biomes and players.
 - Use the Chameleon Circuit to change the TARDIS exterior &mdash; _over 90+ presets, plus you can make your own._
-- Grow rooms in your TARDIS &mdash; _there are 40+ to choose from and you can create your own._
+- Grow rooms in your TARDIS &mdash; _there are 50+ to choose from and you can create your own._
 - Take companions with you when you time travel.
 - Collect Artron Energy to power your TARDIS.
 - Use a sonic screwdriver, vortex manipulator, and many other Doctor Who related items.
 - Interact with _20+ custom monsters_ such as Weeping Angels, Cybermen, Sontarans and Sea Devils.
-- Visit the planets Gallifrey, Skaro and Siluria and find custom structures to raid.
+- Visit the planets Gallifrey, Skaro, Siluria, and Telos and find custom structures to raid.
+- Custom world generators for plots, flat, water and cave dimensions.
 - _And so much more..._
 
 Plugin documentation can be found here:
@@ -23,7 +24,7 @@ Plugin documentation can be found here:
 
 [![Static Badge](https://img.shields.io/badge/Join_the_TARDIS_community-Discord-blue?style=for-the-badge&logo=discord)](https://discord.gg/sfuPVHh)
 
-GitHub continuously integrated builds (updated when changes are pushed to this repositiory) can be found on the [Releases](https://github.com/eccentricdevotion/TARDIS/releases) page.
+GitHub continuously integrated builds (updated when changes are pushed to this repository) can be found on the [Releases](https://github.com/eccentricdevotion/TARDIS/releases) page.
 
 ![GitHub last commit](https://img.shields.io/github/last-commit/eccentricdevotion/TARDIS?style=for-the-badge)  
 
