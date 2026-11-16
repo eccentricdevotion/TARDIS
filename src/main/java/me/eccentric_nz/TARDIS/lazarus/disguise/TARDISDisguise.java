@@ -119,6 +119,8 @@ public record TARDISDisguise(EntityType entityType, Object[] options) {
                 packagePath += "npc.wanderingtrader.";
             }
             case DROWNED, HUSK, ZOMBIE, ZOMBIE_VILLAGER, ZOMBIFIED_PIGLIN -> {
+                // TODO frostbite
+//            case DROWNED, FROSTBITE, HUSK, ZOMBIE, ZOMBIE_VILLAGER, ZOMBIFIED_PIGLIN -> {
                 str = CaseUtils.toCamelCase(disguise.entityType().toString(), true, '_');
                 packagePath += "monster.zombie.";
             }
@@ -270,7 +272,7 @@ public record TARDISDisguise(EntityType entityType, Object[] options) {
                     }
                     if (o instanceof Boolean bool) {
                         // tamed fox, wolf, cat / decorated llama, chest carrying mule or donkey / trusting ocelot
-                        // rainbow sheep / saddled pig / block carrying enderman / powered creeper / hanging bat / blazing blaze
+                        // rainbow sheep / saddled pig / block carrying enderman / powered creeper / hanging bat / burning blaze
                         switch (disguise.entityType()) {
                             case FOX, WOLF, CAT -> {
                                 TamableAnimal tameable = (TamableAnimal) entity;

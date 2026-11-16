@@ -54,6 +54,8 @@ class LazarusHostileInventory extends LazarusItems implements InventoryHolder, L
         hostile.add(Material.ELDER_GUARDIAN_SPAWN_EGG);
         hostile.add(Material.ENDERMITE_SPAWN_EGG);
         hostile.add(Material.EVOKER_SPAWN_EGG);
+        // TODO frostbite
+//        hostile.add(Material.FROSTBITE_SPAWN_EGG);
         hostile.add(Material.GHAST_SPAWN_EGG);
         hostile.add(Material.GUARDIAN_SPAWN_EGG);
         hostile.add(Material.HOGLIN_SPAWN_EGG);

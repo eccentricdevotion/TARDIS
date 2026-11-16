@@ -202,6 +202,7 @@ public class LazarusLibsDisguises {
                     AgeableWatcher ageableWatcher = (AgeableWatcher) livingWatcher;
                     ageableWatcher.setBaby(isBaby);
                 }
+                // TODO add other zombie variants e.g. DROWNED, FROSTBITE, HUSK
                 case ZOMBIE -> {
                     ZombieWatcher zombieWatcher = (ZombieWatcher) livingWatcher;
                     zombieWatcher.setBaby(isBaby);
@@ -237,8 +238,7 @@ public class LazarusLibsDisguises {
                     FoxWatcher foxWatcher = (FoxWatcher) livingWatcher;
                     foxWatcher.setType((Fox.Type) choice);
                 }
-                default -> {
-                }
+                default -> { }
             }
             DisguiseAPI.disguiseToAll(player, mobDisguise);
         }
