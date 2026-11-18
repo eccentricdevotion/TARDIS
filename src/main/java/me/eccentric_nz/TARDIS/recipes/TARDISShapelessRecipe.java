@@ -45,6 +45,7 @@ public class TARDISShapelessRecipe {
         new BrushUpgradeRecipe(plugin).addRecipe();
         new BubblegumJellyBabyRecipe(plugin).addRecipe();
         new CappuccinoJellyBabyRecipe(plugin).addRecipe();
+        new CharmUpgradeRecipe(plugin).addRecipe();
         new ConversionUpgradeRecipe(plugin).addRecipe();
         new DiamondUpgradeRecipe(plugin).addRecipe();
         new EarlGreyJellyBabyRecipe(plugin).addRecipe();

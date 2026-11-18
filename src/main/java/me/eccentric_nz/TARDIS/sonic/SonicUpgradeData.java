@@ -37,7 +37,8 @@ public class SonicUpgradeData {
             "Pickup Arrows Upgrade",
             "Knockback Upgrade",
             "Brush Upgrade",
-            "Conversion Upgrade");
+            "Conversion Upgrade",
+            "Charm Upgrade");
 
     static {
         upgrades.put("Admin Upgrade", "admin");
@@ -51,6 +52,7 @@ public class SonicUpgradeData {
         upgrades.put("Knockback Upgrade", "knockback");
         upgrades.put("Brush Upgrade", "brush");
         upgrades.put("Conversion Upgrade", "conversion");
+        upgrades.put("Charm Upgrade", "charm");
         customModelData.put(CircuitVariant.ADMIN.getKey(), "Admin Upgrade");
         customModelData.put(CircuitVariant.BIO.getKey(), "Bio-scanner Upgrade");
         customModelData.put(CircuitVariant.REDSTONE.getKey(), "Redstone Upgrade");
@@ -62,8 +64,10 @@ public class SonicUpgradeData {
         customModelData.put(CircuitVariant.KNOCKBACK.getKey(), "Knockback Upgrade");
         customModelData.put(CircuitVariant.BRUSH.getKey(), "Brush Upgrade");
         customModelData.put(CircuitVariant.CONVERSION.getKey(), "Conversion Upgrade");
+        customModelData.put(CircuitVariant.CHARM.getKey(), "Charm Upgrade");
         displayNames.put("Bio-scanner Circuit", "Bio-scanner Upgrade");
         displayNames.put("Brush Circuit", "Brush Upgrade");
+        displayNames.put("Charm Circuit", "Charm Upgrade");
         displayNames.put("Conversion Circuit", "Conversion Upgrade");
         displayNames.put("Diamond Disruptor Circuit", "Diamond Upgrade");
         displayNames.put("Emerald Environment Circuit", "Emerald Upgrade");

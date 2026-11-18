@@ -310,7 +310,7 @@ public class Converter implements Runnable {
                                         sb.append(str);
                                     }
                                     case sonic -> {
-                                        str = String.format(SQL_VALUES.LIST.get(i), rs.getInt("sonic_id"), rs.getString("uuid"), rs.getInt("activated"), rs.getInt("model"), rs.getInt("bio"), rs.getInt("diamond"), rs.getInt("emerald"), rs.getInt("redstone"), rs.getInt("painter"), rs.getInt("ignite"), rs.getInt("arrow"), rs.getInt("knockback"), rs.getInt("brush"), rs.getInt("conversion"), rs.getString("sonic_uuid"), rs.getString("last_scanned"), rs.getInt("scan_type")) + end;
+                                        str = String.format(SQL_VALUES.LIST.get(i), rs.getInt("sonic_id"), rs.getString("uuid"), rs.getInt("activated"), rs.getInt("model"), rs.getInt("bio"), rs.getInt("diamond"), rs.getInt("emerald"), rs.getInt("redstone"), rs.getInt("painter"), rs.getInt("ignite"), rs.getInt("arrow"), rs.getInt("knockback"), rs.getInt("brush"), rs.getInt("conversion"), rs.getInt("charm"), rs.getString("sonic_uuid"), rs.getString("last_scanned"), rs.getInt("scan_type")) + end;
                                         sb.append(str);
                                     }
                                     case storage -> {

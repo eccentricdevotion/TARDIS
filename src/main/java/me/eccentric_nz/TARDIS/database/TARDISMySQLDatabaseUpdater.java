@@ -146,7 +146,8 @@ class TARDISMySQLDatabaseUpdater {
         sonicupdates.add("knockback int(1) DEFAULT '0'");
         sonicupdates.add("brush int(1) DEFAULT '0'");
         sonicupdates.add("conversion int(1) DEFAULT '0'");
-        sonicupdates.add("model int(11) DEFAULT '10000011'");
+        sonicupdates.add("charm int(1) DEFAULT '0'");
+        sonicupdates.add("model int(11) DEFAULT '111'");
         sonicupdates.add("sonic_uuid varchar(48) DEFAULT ''");
         sonicupdates.add("last_scanned varchar(512) DEFAULT ''");
         sonicupdates.add("scan_type int(1) DEFAULT '0'");

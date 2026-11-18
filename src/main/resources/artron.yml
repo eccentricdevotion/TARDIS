@@ -115,6 +115,7 @@ sonic_generator:
   knockback: 10
   brush: 10
   conversion: 10
+  charm: 10
 # other charges
 shell: 500
 custard_cream: 25

@@ -133,7 +133,7 @@ public class SQL_INSERT {
 
             "INSERT INTO `%sskins` (`skin_id`, `uuid`, `skin`) VALUES ",
 
-            "INSERT INTO `%ssonic` (`sonic_id`, `uuid`, `activated`, `model`, `bio`, `diamond`, `emerald`, `redstone`, `painter`, `ignite`, `arrow`, `knockback`, `brush`, `conversion`, `sonic_uuid`, `last_scanned`, `scan_type`) VALUES ",
+            "INSERT INTO `%ssonic` (`sonic_id`, `uuid`, `activated`, `model`, `bio`, `diamond`, `emerald`, `redstone`, `painter`, `ignite`, `arrow`, `knockback`, `brush`, `conversion`, `charm`, `sonic_uuid`, `last_scanned`, `scan_type`) VALUES ",
 
             "INSERT INTO `%sstorage` (`storage_id`, `tardis_id`, `uuid`, `owner`, `saves_one`, `saves_two`, `areas`, `presets_one`, `presets_two`, `biomes_one`, `biomes_two`, `players`, `circuits`, `console`, `versions`) VALUES ",
 

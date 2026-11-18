@@ -163,6 +163,10 @@ class SonicGeneratorInventory implements InventoryHolder {
             upgrades.add(Component.text("Conversion Upgrade"));
             artron += (int) (plugin.getArtronConfig().getDouble("sonic_generator.conversion") * full);
         }
+        if (data.hasCharm()) {
+            upgrades.add(Component.text("Charm Upgrade"));
+            artron += (int) (plugin.getArtronConfig().getDouble("sonic_generator.charm") * full);
+        }
         // cost
         ItemStack cost = ItemStack.of(Material.BOWL, 1);
         cost.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Artron cost"));
