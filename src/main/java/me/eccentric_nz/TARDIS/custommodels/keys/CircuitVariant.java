@@ -28,6 +28,8 @@ public enum CircuitVariant {
     BIO(new NamespacedKey(TARDIS.plugin, "bio"), List.of(101.0f)),
     BRUSH(new NamespacedKey(TARDIS.plugin, "brush"), List.of(102.0f)),
     CHAMELEON(new NamespacedKey(TARDIS.plugin, "chameleon"), List.of(116.0f)),
+    // TODO resource pack files
+    CHARM(new NamespacedKey(TARDIS.plugin, "charm"), List.of(131.0f)),
     CONVERSION(new NamespacedKey(TARDIS.plugin, "conversion"), List.of(103.0f)),
     DIAMOND(new NamespacedKey(TARDIS.plugin, "circuit_diamond"), List.of(104.0f)),
     EMERALD(new NamespacedKey(TARDIS.plugin, "circuit_emerald"), List.of(105.0f)),

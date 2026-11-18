@@ -103,7 +103,7 @@ public class ResultSetSonic {
                             case "eighth", "10000008" -> SonicVariant.EIGHTH.getFloats();
                             case "ninth", "10000009" -> SonicVariant.NINTH.getFloats();
                             case "tenth", "10000010" -> SonicVariant.TENTH.getFloats();
-                            case "eleventh", "10000011" -> SonicVariant.ELEVENTH.getFloats();
+                            case "eleventh", "10000011", "111" -> SonicVariant.ELEVENTH.getFloats();
                             case "twelfth", "10000012" -> SonicVariant.TWELFTH.getFloats();
                             case "thirteenth", "10000013" -> SonicVariant.THIRTEENTH.getFloats();
                             case "fourteenth", "10000014" -> SonicVariant.FOURTEENTH.getFloats();
@@ -125,7 +125,8 @@ public class ResultSetSonic {
                         rs.getBoolean("arrow"),
                         rs.getBoolean("knockback"),
                         rs.getBoolean("brush"),
-                        rs.getBoolean("conversion")
+                        rs.getBoolean("conversion"),
+                        rs.getBoolean("charm")
                 );
             } else {
                 return false;

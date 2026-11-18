@@ -74,7 +74,7 @@ public class SonicConfiguratorMenuListener extends TARDISMenuListener {
                 loadSonic(view.getItem(45), player, view);
                 setOptions(player, view);
             }, 1L);
-            case 9, 10, 11, 12, 13, 14, 15, 16, 17, 27 -> toggleOption(view, slot); // toggle option enabled / disabled
+            case 9, 10, 11, 12, 13, 14, 15, 16, 17, 27, 28 -> toggleOption(view, slot); // toggle option enabled / disabled
             case 52 -> saveConfiguredSonic(player, view); // save selected options
             case 53 -> close(player);
             default -> event.setCancelled(true);
@@ -141,6 +141,10 @@ public class SonicConfiguratorMenuListener extends TARDISMenuListener {
         conversion.setData(DataComponentTypes.CUSTOM_NAME, Component.text(configuredSonic.getConversion().getName()));
         ItemStack consub = ItemStack.of(configuredSonic.getConversion().getMaterial());
         view.setItem(27, consub);
+        ItemStack charm = view.getItem(28);
+        charm.setData(DataComponentTypes.CUSTOM_NAME, Component.text(configuredSonic.getCharm().getName()));
+        ItemStack charmsub = ItemStack.of(configuredSonic.getCharm().getMaterial());
+        view.setItem(28, charmsub);
     }
 
     private void toggleOption(InventoryView view, int slot) {
@@ -184,8 +188,8 @@ public class SonicConfiguratorMenuListener extends TARDISMenuListener {
                         case "Knockback Upgrade" -> configuredSonic.setKnockback(SonicConfig.ENABLED);
                         case "Brush Upgrade" -> configuredSonic.setBrush(SonicConfig.ENABLED);
                         case "Conversion Upgrade" -> configuredSonic.setConversion(SonicConfig.ENABLED);
-                        default -> {
-                        }
+                        case "Charm Upgrade" -> configuredSonic.setCharm(SonicConfig.ENABLED);
+                        default -> { }
                     }
                 }
             }
@@ -251,7 +255,12 @@ public class SonicConfiguratorMenuListener extends TARDISMenuListener {
         if (con == 1) {
             upgrades.add(Component.text("Conversion Upgrade"));
         }
-        configuredSonic.setBrush(SonicConfig.values()[bru]);
+        configuredSonic.setBrush(SonicConfig.values()[con]);
+        int cha = getSonicConfig(28, view);
+        if (cha == 1) {
+            upgrades.add(Component.text("Charm Upgrade"));
+        }
+        configuredSonic.setCharm(SonicConfig.values()[cha]);
         sonics.put(player.getUniqueId(), configuredSonic);
         // prepare data for database insertion
         HashMap<String, Object> set = new HashMap<>();
@@ -264,6 +273,8 @@ public class SonicConfiguratorMenuListener extends TARDISMenuListener {
         set.put("arrow", arr);
         set.put("knockback", kno);
         set.put("brush", bru);
+        set.put("conversion", con);
+        set.put("charm", cha);
         HashMap<String, Object> where = new HashMap<>();
         where.put("sonic_id", configuredSonic.getSonic_id());
         plugin.getQueryFactory().doUpdate("sonic", set, where);
@@ -304,6 +315,7 @@ public class SonicConfiguratorMenuListener extends TARDISMenuListener {
             int knockback = lore != null && lore.lines().contains(Component.text("Knockback Upgrade")) ? 1 : 0;
             int brush = lore != null && lore.lines().contains(Component.text("Brush Upgrade")) ? 1 : 0;
             int conversion = lore != null && lore.lines().contains(Component.text("Conversion Upgrade")) ? 1 : 0;
+            int charm = lore != null && lore.lines().contains(Component.text("Charm Upgrade")) ? 1 : 0;
             // create a new UUID
             UUID sonic_uuid = UUID.randomUUID();
             // set the UUID to the sonic
@@ -321,11 +333,12 @@ public class SonicConfiguratorMenuListener extends TARDISMenuListener {
             set.put("knockback", knockback);
             set.put("brush", brush);
             set.put("conversion", conversion);
+            set.put("conversion", charm);
             set.put("sonic_uuid", sonic_uuid.toString());
             // insert into database
             int id = plugin.getQueryFactory().doSyncInsert("sonic", set);
             // create the configured sonic
-            return new ConfiguredSonic(id, uuid, bio, diamond, emerald, redstone, painter, ignite, arrow, knockback, brush, conversion, sonic_uuid);
+            return new ConfiguredSonic(id, uuid, bio, diamond, emerald, redstone, painter, ignite, arrow, knockback, brush, conversion, charm, sonic_uuid);
         }
         return null;
     }

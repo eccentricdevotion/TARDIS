@@ -37,8 +37,9 @@ public class Sonic {
     private final boolean knockback;
     private final boolean brush;
     private final boolean conversion;
+    private final boolean charm;
 
-    public Sonic(UUID uuid, boolean activated, List<Float> model, boolean bio, boolean diamond, boolean emerald, boolean redstone, boolean painter, boolean ignite, boolean arrow, boolean knockback, boolean brush, boolean conversion) {
+    public Sonic(UUID uuid, boolean activated, List<Float> model, boolean bio, boolean diamond, boolean emerald, boolean redstone, boolean painter, boolean ignite, boolean arrow, boolean knockback, boolean brush, boolean conversion, boolean charm) {
         this.uuid = uuid;
         this.activated = activated;
         this.model = model;
@@ -52,6 +53,7 @@ public class Sonic {
         this.knockback = knockback;
         this.brush = brush;
         this.conversion = conversion;
+        this.charm = charm;
     }
 
     public boolean isActivated() {
@@ -100,5 +102,9 @@ public class Sonic {
 
     public boolean hasConversion() {
         return conversion;
+    }
+
+    public boolean hasCharm() {
+        return charm;
     }
 }

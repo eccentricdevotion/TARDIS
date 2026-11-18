@@ -80,6 +80,7 @@ public class ArtronConfigUpdater {
         integerOptions.put("sonic_generator.standard", 10);
         integerOptions.put("sonic_generator.bio", 10);
         integerOptions.put("sonic_generator.brush", 10);
+        integerOptions.put("sonic_generator.charm", 10);
         integerOptions.put("sonic_generator.conversion", 10);
         integerOptions.put("sonic_generator.diamond", 10);
         integerOptions.put("sonic_generator.emerald", 10);

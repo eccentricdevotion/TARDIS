@@ -30,6 +30,7 @@ public enum RecipeItem {
     BIO_SCANNER_CIRCUIT(CircuitVariant.BIO.getKey(), RecipeCategory.SONIC_CIRCUITS),
     BLANK_STORAGE_DISK(DiskVariant.BLANK_DISK.getKey(), RecipeCategory.STORAGE_DISKS),
     BRUSH_CIRCUIT(CircuitVariant.BRUSH.getKey(), RecipeCategory.SONIC_CIRCUITS),
+    CHARM_CIRCUIT(CircuitVariant.CHARM.getKey(), RecipeCategory.SONIC_CIRCUITS),
     CONSOLE_LAMP(null, RecipeCategory.CUSTOM_BLOCKS),
     CONSOLE_LAMP_SWITCH(ModelledControl.CONSOLE_LAMP_0.getKey(), RecipeCategory.MISC),
     CONVERSION_CIRCUIT(CircuitVariant.CONVERSION.getKey(), RecipeCategory.SONIC_CIRCUITS),
@@ -196,6 +197,7 @@ public enum RecipeItem {
     PICKUP_ARROWS_UPGRADE(CircuitVariant.PICKUP.getKey(), RecipeCategory.SONIC_UPGRADES),
     KNOCKBACK_UPGRADE(CircuitVariant.KNOCKBACK.getKey(), RecipeCategory.SONIC_UPGRADES),
     CONVERSION_UPGRADE(CircuitVariant.CONVERSION.getKey(), RecipeCategory.SONIC_UPGRADES),
+    CHARM_UPGRADE(CircuitVariant.CHARM.getKey(), RecipeCategory.SONIC_UPGRADES),
     // planet items
     ACID_BUCKET(Whoniverse.ACID_BUCKET.getKey(), RecipeCategory.UNCRAFTABLE),
     RUST_BUCKET(Whoniverse.RUST_BUCKET.getKey(), RecipeCategory.UNCRAFTABLE),

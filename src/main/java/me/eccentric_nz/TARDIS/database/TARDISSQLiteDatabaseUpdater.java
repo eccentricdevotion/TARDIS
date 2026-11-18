@@ -174,7 +174,8 @@ class TARDISSQLiteDatabaseUpdater {
         sonicupdates.add("knockback INTEGER DEFAULT 0");
         sonicupdates.add("brush INTEGER DEFAULT 0");
         sonicupdates.add("conversion INTEGER DEFAULT 0");
-        sonicupdates.add("model INTEGER DEFAULT 10000011");
+        sonicupdates.add("charm INTEGER DEFAULT 0");
+        sonicupdates.add("model INTEGER DEFAULT 111");
         sonicupdates.add("sonic_uuid TEXT DEFAULT ''");
         sonicupdates.add("last_scanned TEXT DEFAULT ''");
         sonicupdates.add("scan_type INTEGER DEFAULT 0");

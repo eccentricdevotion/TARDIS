@@ -31,6 +31,7 @@ public enum GlowstoneCircuit {
     BIO("Bio-scanner Circuit", CircuitVariant.BIO.getKey()),
     BRUSH("Brush Circuit", CircuitVariant.BRUSH.getKey()),
     CHAMELEON("TARDIS Chameleon Circuit", CircuitVariant.CHAMELEON.getKey()),
+    CHARM("TARDIS Charm Circuit", CircuitVariant.CHARM.getKey()),
     CIRCUITS("Circuits", CircuitVariant.GALLIFREY.getKey()),
     CONVERSION("Conversion Circuit", CircuitVariant.CONVERSION.getKey()),
     DIAMOND("Diamond Disruptor Circuit", CircuitVariant.DIAMOND.getKey()),

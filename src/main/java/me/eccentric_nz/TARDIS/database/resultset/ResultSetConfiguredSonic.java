@@ -82,6 +82,7 @@ public class ResultSetConfiguredSonic {
                         rs.getInt("knockback"),
                         rs.getInt("brush"),
                         rs.getInt("conversion"),
+                        rs.getInt("charm"),
                         UUID.fromString(rs.getString("sonic_uuid"))
                 );
             } else {

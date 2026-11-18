@@ -36,6 +36,7 @@ public enum GUISonicConfigurator {
     KNOCKBACK_UPGRADE(CircuitVariant.KNOCKBACK.getKey(), 7, Material.BOWL, ""),
     BRUSH_UPGRADE(CircuitVariant.BRUSH.getKey(), 8, Material.BOWL, ""),
     CONVERSION_UPGRADE(CircuitVariant.CONVERSION.getKey(), 18, Material.BOWL, ""),
+    CHARM_UPGRADE(CircuitVariant.CHARM.getKey(), 19, Material.BOWL, ""),
     INSTRUCTIONS_1_OF_2(GuiVariant.INFO.getKey(), 50, Material.BOOK, "Place your sonic screwdriver~in the bottom left slot.~Click on the upgrades you~want to enable/disable."),
     INSTRUCTIONS_2_OF_2(GuiVariant.INFO.getKey(), 51, Material.BOOK, "Click the 'Save' button~to apply your selections.~Click 'Close' to exit~without saving."),
     NOT_UPGRADED(Wool.NOT_UPGRADED.getKey(), -1, Material.GRAY_WOOL, ""),

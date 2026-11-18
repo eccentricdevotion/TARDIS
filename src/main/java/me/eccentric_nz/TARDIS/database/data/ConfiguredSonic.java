@@ -38,8 +38,9 @@ public class ConfiguredSonic {
     private SonicConfig knockback;
     private SonicConfig brush;
     private SonicConfig conversion;
+    private SonicConfig charm;
 
-    public ConfiguredSonic(int sonic_id, UUID uuid, int bio, int diamond, int emerald, int redstone, int painter, int ignite, int arrow, int knockback, int brush, int conversion, UUID sonic_uuid) {
+    public ConfiguredSonic(int sonic_id, UUID uuid, int bio, int diamond, int emerald, int redstone, int painter, int ignite, int arrow, int knockback, int brush, int conversion, int charm, UUID sonic_uuid) {
         this.sonic_id = sonic_id;
         this.uuid = uuid;
         this.bio = SonicConfig.values()[bio];
@@ -52,6 +53,7 @@ public class ConfiguredSonic {
         this.knockback = SonicConfig.values()[knockback];
         this.brush = SonicConfig.values()[brush];
         this.conversion = SonicConfig.values()[conversion];
+        this.charm = SonicConfig.values()[charm];
         this.sonic_uuid = sonic_uuid;
     }
 
@@ -141,6 +143,14 @@ public class ConfiguredSonic {
 
     public void setConversion(SonicConfig conversion) {
         this.conversion = conversion;
+    }
+
+    public SonicConfig getCharm() {
+        return charm;
+    }
+
+    public void setCharm(SonicConfig charm) {
+        this.charm = charm;
     }
 
     public UUID getSonic_uuid() {

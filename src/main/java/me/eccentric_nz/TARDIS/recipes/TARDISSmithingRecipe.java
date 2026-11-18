@@ -31,6 +31,7 @@ public class TARDISSmithingRecipe {
         new AdminRepairRecipe(plugin).addRecipe();
         new BioscannerRepairRecipe(plugin).addRecipe();
         new BrushRepairRecipe(plugin).addRecipe();
+        new CharmRepairRecipe(plugin).addRecipe();
         new ConversionRepairRecipe(plugin).addRecipe();
         new DiamondRepairRecipe(plugin).addRecipe();
         new EmeraldRepairRecipe(plugin).addRecipe();

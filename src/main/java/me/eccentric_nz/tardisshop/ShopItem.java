@@ -48,6 +48,7 @@ public enum ShopItem {
     BUDGET_SEED("Budget Seed", Material.IRON_BLOCK, SeedBlock.BUDGET.getKey(), ShopItemRecipe.SEED),
     CAPPUCCINO_JELLY_BABY("Cappuccino Jelly Baby", Material.MELON_SLICE, JellyBabyVariant.JELLY_BABY_BROWN.getKey(), ShopItemRecipe.SHAPELESS),
     CAVE_SEED("Cave Seed", Material.DRIPSTONE_BLOCK, SeedBlock.CAVE.getKey(), ShopItemRecipe.SEED),
+    CHARM_CIRCUIT("Charm Circuit", Material.GLOWSTONE_DUST, CircuitVariant.CHARM.getKey(), ShopItemRecipe.SHAPED, CircuitVariant.CHARM.getFloats()),
     CONSOLE_LAMP_SWITCH("Console Lamp Switch", Material.LEVER, ModelledControl.CONSOLE_LAMP_0.getKey(), ShopItemRecipe.SHAPED),
     CONVERSION_CIRCUIT("Conversion Circuit", Material.GLOWSTONE_DUST, CircuitVariant.CONVERSION.getKey(), ShopItemRecipe.SHAPED, CircuitVariant.CONVERSION.getFloats()),
     COPPER_SEED("Copper Seed", Material.COPPER_BLOCK, SeedBlock.COPPER.getKey(), ShopItemRecipe.SEED),
