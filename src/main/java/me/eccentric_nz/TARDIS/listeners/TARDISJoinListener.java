@@ -213,7 +213,7 @@ public class TARDISJoinListener implements Listener {
         }
         World world = player.getWorld();
         // sync time
-        DimensionTimeSyncListener.sync((CraftPlayer)  player, world);
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, ()-> DimensionTimeSyncListener.sync((CraftPlayer)  player, world), 10L);
         // add to zero room occupants
         if (plugin.getConfig().getBoolean("allow.zero_room")) {
             if (world.getKey().getKey().equals("tardis_zero_room")) {
