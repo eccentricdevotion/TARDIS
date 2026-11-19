@@ -67,7 +67,6 @@ public class TraderRunnable implements Runnable {
                 despawnTrader(entity);
             }
         }
-
         new TimeLordTraderSpawner(plugin).spawn(world);
     }
 
