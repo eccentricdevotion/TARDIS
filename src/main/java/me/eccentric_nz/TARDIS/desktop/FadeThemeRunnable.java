@@ -41,6 +41,7 @@ import me.eccentric_nz.TARDIS.schematic.SchematicGZip;
 import me.eccentric_nz.TARDIS.schematic.archive.ArchiveReset;
 import me.eccentric_nz.TARDIS.schematic.archive.ResultSetArchiveByUse;
 import me.eccentric_nz.TARDIS.schematic.setters.ItemFrameSetter;
+import me.eccentric_nz.TARDIS.sensor.SensorTracker;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import me.eccentric_nz.TARDIS.utility.protection.TARDISProtectionRemover;
 import org.bukkit.Chunk;
@@ -265,6 +266,8 @@ public class FadeThemeRunnable extends DesktopThemeRunnable {
             wg2 = new Location(world, startX + (width - 1), startY + (height - 1), startZ + (length - 1));
             // clear existing precious blocks and remove the entries from the protection map
             new TARDISProtectionRemover(plugin).cleanInteriorBlocks(id);
+            // remove all sensor blocks
+            SensorTracker.removeAllSensors(plugin, id);
             player = plugin.getServer().getPlayer(uuid);
             // remove upgrade data
             plugin.getTrackerKeeper().getUpgrades().remove(uuid);

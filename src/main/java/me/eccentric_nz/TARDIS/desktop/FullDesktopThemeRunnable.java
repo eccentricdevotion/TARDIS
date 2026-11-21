@@ -46,6 +46,7 @@ import me.eccentric_nz.TARDIS.schematic.SchematicGZip;
 import me.eccentric_nz.TARDIS.schematic.archive.ArchiveReset;
 import me.eccentric_nz.TARDIS.schematic.archive.ResultSetArchiveByUse;
 import me.eccentric_nz.TARDIS.schematic.setters.*;
+import me.eccentric_nz.TARDIS.sensor.SensorTracker;
 import me.eccentric_nz.TARDIS.utility.TARDISBannerData;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
@@ -340,6 +341,8 @@ public class FullDesktopThemeRunnable extends DesktopThemeRunnable {
             arr = obj.get("input").getAsJsonArray();
             // clear existing precious blocks and remove the entries from the protection map
             new TARDISProtectionRemover(plugin).cleanInteriorBlocks(id);
+            // remove all sensor blocks
+            SensorTracker.removeAllSensors(plugin, id);
             // set running
             running = true;
             player = plugin.getServer().getPlayer(uuid);
