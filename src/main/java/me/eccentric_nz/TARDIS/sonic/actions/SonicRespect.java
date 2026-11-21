@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.utility.protection.TARDISLWCChecker;
 import me.eccentric_nz.TARDIS.utility.protection.TARDISTownyChecker;
 import nl.rutgerkok.blocklocker.BlockLockerAPIv2;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
 public class SonicRespect {
@@ -34,7 +35,7 @@ public class SonicRespect {
      * @param block  the block to check
      * @return true if the player has permission to alter the block, otherwise false
      */
-    public static boolean checkBlockRespect(TARDIS plugin, Player player, Block block) {
+    public static boolean checkBlock(TARDIS plugin, Player player, Block block) {
         // WorldGuard is probably on server + possibly another protection plugin
         if (plugin.isWorldGuardOnServer() && !plugin.getWorldGuardUtils().canBuild(player, block.getLocation())) {
             return false;
@@ -55,6 +56,22 @@ public class SonicRespect {
             // BlockLocker
             if (plugin.getPM().isPluginEnabled("BlockLocker")) {
                 return !BlockLockerAPIv2.isProtected(block);
+            }
+        }
+        return true;
+    }
+
+    public static boolean checkMob(TARDIS plugin, Player player, Entity entity) {
+        if (plugin.isWorldGuardOnServer() && !plugin.getWorldGuardUtils().canBuild(player, entity.getLocation())) {
+            return false;
+        } else {
+            // Towny
+            if (plugin.getPM().isPluginEnabled("Towny")) {
+                return new TARDISTownyChecker(plugin).checkTowny(player, entity.getLocation());
+            }
+            // GriefPrevention
+            if (plugin.getPM().isPluginEnabled("GriefPrevention")) {
+                return !(new TARDISGriefPreventionChecker(plugin).isInClaim(player, entity.getLocation()));
             }
         }
         return true;

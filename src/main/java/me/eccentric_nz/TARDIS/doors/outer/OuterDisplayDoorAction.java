@@ -200,7 +200,7 @@ public class OuterDisplayDoorAction extends DoorListener {
                                             return;
                                         }
                                         long now = System.currentTimeMillis();
-                                        SonicSound.playSonicSound(plugin, player, now, 600L, "sonic_short");
+                                        SonicSound.playSonicSound(plugin, player, now, 600L, "sonic_short", 1.0f);
                                         ItemStack sub = ItemStack.of(colour.getType());
                                         sub.copyDataFrom(colour, dataComponentType -> true);
                                         ee.setHelmet(sub, true);

@@ -47,9 +47,9 @@ public class SonicStandard {
         Block targetBlock = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getLocation().getBlock();
         Material blockType = targetBlock.getType();
         if (distance.contains(blockType)) {
-            SonicSound.playSonicSound(plugin, player, now, 600L, "sonic_short");
+            SonicSound.playSonicSound(plugin, player, now, 600L, "sonic_short", 1.0f);
             // not protected doors - WorldGuard / GriefPrevention  / Towny
-            if (SonicRespect.checkBlockRespect(plugin, player, targetBlock)) {
+            if (SonicRespect.checkBlock(plugin, player, targetBlock)) {
                 if (Tag.DOORS.isTagged(blockType)) {
                     Block lowerdoor;
                     Bisected bisected = (Bisected) targetBlock.getBlockData();
@@ -105,7 +105,7 @@ public class SonicStandard {
                 }
             }
         } else {
-            SonicSound.playSonicSound(plugin, player, now, 3050L, "sonic_screwdriver");
+            SonicSound.playSonicSound(plugin, player, now, 3050L, "sonic_screwdriver", 1.0f);
         }
     }
 

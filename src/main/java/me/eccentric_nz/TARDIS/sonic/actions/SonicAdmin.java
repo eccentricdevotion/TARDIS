@@ -37,7 +37,7 @@ import java.util.UUID;
 public class SonicAdmin {
 
     public static void displayInfo(TARDIS plugin, Player player, Block block) {
-        SonicSound.playSonicSound(plugin, player, System.currentTimeMillis(), 600L, "sonic_short");
+        SonicSound.playSonicSound(plugin, player, System.currentTimeMillis(), 600L, "sonic_short", 1.0f);
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             HashMap<String, Object> wheredoor = new HashMap<>();
             Location loc = block.getLocation();

@@ -285,6 +285,7 @@ sonic:
   charge_level: 1000
   charge_interval: 60
   usage: 10
+  tempt_range: 10
 # don't touch
 conversions:
   adv_root: true

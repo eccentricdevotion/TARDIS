@@ -230,6 +230,7 @@ public class TARDISConfiguration {
         integerOptions.put("sonic.conversion_radius", 1);
         integerOptions.put("sonic.freeze_cooldown", 60);
         integerOptions.put("sonic.usage", 10);
+        integerOptions.put("sonic.tempt_range", 10);
         integerOptions.put("travel.grace_period", 10);
         integerOptions.put("travel.manual_flight_delay", 60);
         integerOptions.put("travel.max_distance", 29999983);

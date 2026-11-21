@@ -64,7 +64,7 @@ public class SonicEntityListener implements Listener {
             if (ComponentUtils.isNamed(is, "Sonic Screwdriver")) {
                 List<Component> lore = is.lore();
                 if (ent instanceof Player scanned) {
-                    SonicSound.playSonicSound(plugin, player, now, 3050L, "sonic_screwdriver");
+                    SonicSound.playSonicSound(plugin, player, now, 3050L, "sonic_screwdriver", 1.0f);
                     if (TARDISPermission.hasPermission(player, "tardis.sonic.admin") && lore != null && lore.contains(Component.text("Admin Upgrade")) && player.isSneaking()) {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "SONIC_INV");
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.openInventory(new SonicViewPlayerInventory(plugin, scanned).getInventory()), 40L);

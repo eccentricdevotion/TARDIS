@@ -44,8 +44,8 @@ public class SonicRedstone {
 
     public static void togglePoweredState(TARDIS plugin, Player player, Block block) {
         // not protected blocks - WorldGuard / GriefPrevention / Towny
-        if (SonicRespect.checkBlockRespect(plugin, player, block)) {
-            SonicSound.playSonicSound(plugin, player, System.currentTimeMillis(), 600L, "sonic_short");
+        if (SonicRespect.checkBlock(plugin, player, block)) {
+            SonicSound.playSonicSound(plugin, player, System.currentTimeMillis(), 600L, "sonic_short", 1.0f);
             Material blockType = block.getType();
             // do redstone activation
             switch (blockType) {

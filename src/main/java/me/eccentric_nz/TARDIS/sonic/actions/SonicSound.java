@@ -36,7 +36,7 @@ public class SonicSound {
 
     private static final HashMap<UUID, Long> timeout = new HashMap<>();
 
-    public static void playSonicSound(TARDIS plugin, Player player, long now, long cooldown, String sound) {
+    public static void playSonicSound(TARDIS plugin, Player player, long now, long cooldown, String sound, float pitch) {
         if ((!timeout.containsKey(player.getUniqueId()) || timeout.get(player.getUniqueId()) < now)) {
             ItemStack sonic = player.getInventory().getItemInMainHand();
             // change model to 'on/open', then after scheduled time change back to 'off/closed' model
@@ -53,7 +53,11 @@ public class SonicSound {
                     .addFloats(screwdriver.getActive())
                     .build());
             timeout.put(player.getUniqueId(), now + cooldown);
-            TARDISSounds.playTARDISSound(player.getLocation(), sound);
+            if (pitch != 1.0f) {
+                TARDISSounds.playPitchedTARDISSound(player.getLocation(), sound, pitch);
+            } else {
+                TARDISSounds.playTARDISSound(player.getLocation(), sound);
+            }
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                 ItemStack is = player.getInventory().getItemInMainHand();
                 if (ComponentUtils.isNamed(is, "Sonic Screwdriver")) {

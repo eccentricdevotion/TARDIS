@@ -68,17 +68,13 @@ public class TARDISTownyChecker {
         if (towny != null) {
             boolean bool = false;
             switch (tr) {
-                case wilderness ->
-                    // allow if wilderness, deny if a claimed town
+                case wilderness -> // allow if wilderness, deny if a claimed town
                         bool = TownyAPI.getInstance().isWilderness(l.getBlock().getLocation());
-                case town ->
-                    // allow wilderness and the player's own town
+                case town -> // allow wilderness and the player's own town
                         bool = playerIsResident(p, l).canTravel();
-                case nation ->
-                    // allow wilderness, the player's own town and any town in the player's nation
+                case nation -> // allow wilderness, the player's own town and any town in the player's nation
                         bool = playerIsCompatriot(p, l);
-                default -> {
-                }
+                default -> { }
             }
             return bool;
         }

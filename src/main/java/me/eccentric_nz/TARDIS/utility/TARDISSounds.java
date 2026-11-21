@@ -76,6 +76,17 @@ public class TARDISSounds {
     }
 
     /**
+     * Plays a TARDIS sound for the player and surrounding players at the current location.
+     *
+     * @param l     The location
+     * @param s     The sound to play
+     * @param pitch The pitch at which to play the sound
+     */
+    public static void playPitchedTARDISSound(Location l, String s, float pitch) {
+        l.getWorld().playSound(l, s, VOLUME, pitch);
+    }
+
+    /**
      * Plays a TARDIS sound for the specified player.
      *
      * @param p The player

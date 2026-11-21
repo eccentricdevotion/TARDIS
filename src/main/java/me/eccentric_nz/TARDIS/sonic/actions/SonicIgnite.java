@@ -29,7 +29,7 @@ import org.bukkit.event.block.BlockIgniteEvent;
 public class SonicIgnite {
 
     public static void ignite(TARDIS plugin, Block b, Player p) {
-        if (SonicRespect.checkBlockRespect(plugin, p, b)) {
+        if (SonicRespect.checkBlock(plugin, p, b)) {
             if (b.getBlockData() instanceof Lightable lightable) {
                 if (!lightable.isLit()) {
                     lightable.setLit(true);

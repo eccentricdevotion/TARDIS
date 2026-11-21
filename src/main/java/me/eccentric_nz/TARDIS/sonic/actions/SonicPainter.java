@@ -48,9 +48,9 @@ public class SonicPainter {
             return;
         }
         // not protected blocks - WorldGuard / GriefPrevention / Towny
-        if (SonicRespect.checkBlockRespect(plugin, player, b)) {
+        if (SonicRespect.checkBlock(plugin, player, b)) {
             long now = System.currentTimeMillis();
-            SonicSound.playSonicSound(plugin, player, now, 600L, "sonic_short");
+            SonicSound.playSonicSound(plugin, player, now, 600L, "sonic_short", 1.0f);
             // check for dye in slot
             PlayerInventory inv = player.getInventory();
             ItemStack dye = inv.getItem(8);

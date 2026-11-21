@@ -154,10 +154,19 @@ public class SonicListener implements Listener {
                 UUID uuid = player.getUniqueId();
                 // rebuild Police Box if dispersed by HADS
                 if (plugin.getTrackerKeeper().getDispersed().containsKey(uuid)) {
-                    SonicSound.playSonicSound(plugin, player, now, 3050L, "sonic_screwdriver");
+                    SonicSound.playSonicSound(plugin, player, now, 3050L, "sonic_screwdriver", 1.0f);
                     SonicDispersed.assemble(plugin, player);
-                } else if (lore != null && (lore.contains(Component.text("Bio-scanner Upgrade")) || lore.contains(Component.text("Knockback Upgrade")))) {
-                    SonicSound.playSonicSound(plugin, player, now, 3050L, "sonic_screwdriver");
+                } else if (lore.contains(Component.text("Charm Upgrade"))) {
+                    // get offhand item
+                    Material offhand = player.getInventory().getItemInOffHand().getType();
+                    if (SonicResonator.resonators.contains(offhand)) {
+                        SonicResonator resonator = SonicResonator.lookup.get(offhand);
+                        Set<EntityType> mobs = resonator.getMobs();
+                        SonicSound.playSonicSound(plugin, player, now, 3050L, "sonic_screwdriver", resonator.getPitch());
+                        SonicTempt.tempt(plugin, player, mobs);
+                    }
+                } else if (lore.contains(Component.text("Bio-scanner Upgrade")) || lore.contains(Component.text("Knockback Upgrade"))) {
+                    SonicSound.playSonicSound(plugin, player, now, 3050L, "sonic_screwdriver", 1.0f);
                     if (TARDISPermission.hasPermission(player, "tardis.sonic.freeze")) {
                         // freeze target player
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
@@ -218,7 +227,7 @@ public class SonicListener implements Listener {
                 }
                 if (TARDISPermission.hasPermission(player, "tardis.sonic.arrow") && lore != null && lore.contains(Component.text("Pickup Arrows Upgrade"))) {
                     if (!TARDISStaticUtils.isInteractable(block)) {
-                        SonicSound.playSonicSound(plugin, player, now, 600L, "sonic_short");
+                        SonicSound.playSonicSound(plugin, player, now, 600L, "sonic_short", 1.0f);
                     }
                     // scan area around block for an arrow
                     for (Entity e : block.getWorld().getNearbyEntities(block.getLocation(), 2, 2, 2)) {
@@ -237,16 +246,16 @@ public class SonicListener implements Listener {
                 if (converts.contains(block.getType()) && TARDISPermission.hasPermission(player, "tardis.sonic.conversion") && lore != null && lore.contains(Component.text("Conversion Upgrade"))) {
                     // convert to water added block i.e. CONCRETE_POWDER -> CONCRETE
                     SonicBlockConverter.transform(plugin, block, player);
-                    SonicSound.playSonicSound(plugin, player, now, 600L, "sonic_short");
+                    SonicSound.playSonicSound(plugin, player, now, 600L, "sonic_short", 1.0f);
                     return;
                 }
                 if (suspicious.contains(block.getType()) && TARDISPermission.hasPermission(player, "tardis.sonic.brush") && lore != null && lore.contains(Component.text("Brush Upgrade"))) {
-                    SonicSound.playSonicSound(plugin, player, now, 600L, "sonic_short");
+                    SonicSound.playSonicSound(plugin, player, now, 600L, "sonic_short", 1.0f);
                     SonicBrush.dust(plugin, block, player);
                     return;
                 }
                 if (TARDISPermission.hasPermission(player, "tardis.sonic.emerald") && lore != null && lore.contains(Component.text("Emerald Upgrade")) && !TARDISStaticUtils.isInteractable(block)) {
-                    SonicSound.playSonicSound(plugin, player, now, 3050L, "sonic_screwdriver");
+                    SonicSound.playSonicSound(plugin, player, now, 3050L, "sonic_screwdriver", 1.0f);
                     // scan environment
                     Location scanned = block.getLocation();
                     SonicScanner.scan(plugin, scanned, player);
@@ -260,7 +269,7 @@ public class SonicListener implements Listener {
                 Block block = event.getClickedBlock();
                 if (!player.isSneaking()) {
                     if ((block.getType().isBurnable() || ignite.contains(block.getType())) && TARDISPermission.hasPermission(player, "tardis.sonic.ignite") && lore != null && lore.contains(Component.text("Ignite Upgrade"))) {
-                        SonicSound.playSonicSound(plugin, player, now, 3050L, "sonic_short");
+                        SonicSound.playSonicSound(plugin, player, now, 3050L, "sonic_short", 1.0f);
                         // ignite block
                         event.setCancelled(true);
                         SonicIgnite.ignite(plugin, block, player);

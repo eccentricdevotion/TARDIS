@@ -56,7 +56,7 @@ public class SonicBlockConverter {
         for (int x = block.getX() - r; x <= block.getX() + r; x++) {
             for (int z = block.getZ() - r; z <= block.getZ() + r; z++) {
                 Block b = block.getWorld().getBlockAt(x, block.getY(), z);
-                if (SonicRespect.checkBlockRespect(plugin, player, b)) {
+                if (SonicRespect.checkBlock(plugin, player, b)) {
                     Material from = b.getType();
                     if (convertable.containsKey(from)) {
                         Material to = convertable.get(from);

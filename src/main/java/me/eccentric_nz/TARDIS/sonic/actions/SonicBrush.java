@@ -35,7 +35,7 @@ import java.util.UUID;
 public class SonicBrush {
 
     public static void dust(TARDIS plugin, Block b, Player p) {
-        if (SonicRespect.checkBlockRespect(plugin, p, b)) {
+        if (SonicRespect.checkBlock(plugin, p, b)) {
             if (b.getBlockData() instanceof Brushable brushable) {
                 Material material = brushable.getMaterial();
                 boolean isSand = (material == Material.SUSPICIOUS_SAND);
