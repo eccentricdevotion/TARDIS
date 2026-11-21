@@ -62,7 +62,6 @@ public class SonicConfiguratorMenuListener extends TARDISMenuListener {
         if (slot < 0 || slot > 53) {
             ClickType click = event.getClick();
             if (click.equals(ClickType.SHIFT_RIGHT) || click.equals(ClickType.SHIFT_LEFT) || click.equals(ClickType.DOUBLE_CLICK)) {
-                plugin.debug("TARDISSonicConfiguratorMenuListener");
                 event.setCancelled(true);
             }
             return;
@@ -71,9 +70,9 @@ public class SonicConfiguratorMenuListener extends TARDISMenuListener {
         switch (slot) {
             // load configured sonic
             case 45 -> plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                loadSonic(view.getItem(45), player, view);
+                loadSonic(player, view);
                 setOptions(player, view);
-            }, 1L);
+            }, 2L);
             case 9, 10, 11, 12, 13, 14, 15, 16, 17, 27, 28 -> toggleOption(view, slot); // toggle option enabled / disabled
             case 52 -> saveConfiguredSonic(player, view); // save selected options
             case 53 -> close(player);
@@ -81,8 +80,9 @@ public class SonicConfiguratorMenuListener extends TARDISMenuListener {
         }
     }
 
-    private void loadSonic(ItemStack sonic, Player player, InventoryView view) {
-        if (!TARDISStaticUtils.isSonic(sonic)) {
+    private void loadSonic(Player player, InventoryView view) {
+        ItemStack sonic = view.getItem(45);
+        if (sonic == null || !TARDISStaticUtils.isSonic(sonic)) {
             return;
         }
         ConfiguredSonic configuredSonic;
@@ -101,71 +101,60 @@ public class SonicConfiguratorMenuListener extends TARDISMenuListener {
         if (configuredSonic == null) {
             return;
         }
-        ItemStack bio = view.getItem(9);
+        ItemStack bio = ItemStack.of(configuredSonic.getBio().getMaterial());
         bio.setData(DataComponentTypes.CUSTOM_NAME, Component.text(configuredSonic.getBio().getName()));
-        ItemStack biosub = ItemStack.of(configuredSonic.getBio().getMaterial());
-        view.setItem(9, biosub);
-        ItemStack diamond = view.getItem(10);
+        view.setItem(9, bio);
+        ItemStack diamond = ItemStack.of(configuredSonic.getDiamond().getMaterial());
         diamond.setData(DataComponentTypes.CUSTOM_NAME, Component.text(configuredSonic.getDiamond().getName()));
-        ItemStack diasub = ItemStack.of(configuredSonic.getDiamond().getMaterial());
-        view.setItem(10, diasub);
-        ItemStack emerald = view.getItem(11);
+        view.setItem(10, diamond);
+        ItemStack emerald = ItemStack.of(configuredSonic.getEmerald().getMaterial());
         emerald.setData(DataComponentTypes.CUSTOM_NAME, Component.text(configuredSonic.getEmerald().getName()));
-        ItemStack emesub = ItemStack.of(configuredSonic.getEmerald().getMaterial());
-        view.setItem(11, emesub);
-        ItemStack redstone = view.getItem(12);
+        view.setItem(11, emerald);
+        ItemStack redstone = ItemStack.of(configuredSonic.getRedstone().getMaterial());
         redstone.setData(DataComponentTypes.CUSTOM_NAME, Component.text(configuredSonic.getRedstone().getName()));
-        ItemStack redsub = ItemStack.of(configuredSonic.getRedstone().getMaterial());
-        view.setItem(12, redsub);
-        ItemStack painter = view.getItem(13);
+        view.setItem(12, redstone);
+        ItemStack painter = ItemStack.of(configuredSonic.getPainter().getMaterial());
         painter.setData(DataComponentTypes.CUSTOM_NAME, Component.text(configuredSonic.getPainter().getName()));
-        ItemStack paisub = ItemStack.of(configuredSonic.getPainter().getMaterial());
-        view.setItem(13, paisub);
-        ItemStack ignite = view.getItem(14);
+        view.setItem(13, painter);
+        ItemStack ignite = ItemStack.of(configuredSonic.getIgnite().getMaterial());
         ignite.setData(DataComponentTypes.CUSTOM_NAME, Component.text(configuredSonic.getIgnite().getName()));
-        ItemStack ignsub = ItemStack.of(configuredSonic.getIgnite().getMaterial());
-        view.setItem(14, ignsub);
-        ItemStack arr = view.getItem(15);
-        arr.setData(DataComponentTypes.CUSTOM_NAME, Component.text(configuredSonic.getArrow().getName()));
-        ItemStack arrsub = ItemStack.of(configuredSonic.getArrow().getMaterial());
-        view.setItem(15, arrsub);
-        ItemStack knockback = view.getItem(16);
+        view.setItem(14, ignite);
+        ItemStack arrow = ItemStack.of(configuredSonic.getArrow().getMaterial());
+        arrow.setData(DataComponentTypes.CUSTOM_NAME, Component.text(configuredSonic.getArrow().getName()));
+        view.setItem(15, arrow);
+        ItemStack knockback = ItemStack.of(configuredSonic.getKnockback().getMaterial());
         knockback.setData(DataComponentTypes.CUSTOM_NAME, Component.text(configuredSonic.getKnockback().getName()));
-        ItemStack knocksub = ItemStack.of(configuredSonic.getKnockback().getMaterial());
-        view.setItem(16, knocksub);
-        ItemStack brush = view.getItem(17);
+        view.setItem(16, knockback);
+        ItemStack brush = ItemStack.of(configuredSonic.getBrush().getMaterial());
         brush.setData(DataComponentTypes.CUSTOM_NAME, Component.text(configuredSonic.getBrush().getName()));
-        ItemStack brusub = ItemStack.of(configuredSonic.getBrush().getMaterial());
-        view.setItem(17, brusub);
-        ItemStack conversion = view.getItem(27);
+        view.setItem(17, brush);
+        ItemStack conversion = ItemStack.of(configuredSonic.getConversion().getMaterial());
         conversion.setData(DataComponentTypes.CUSTOM_NAME, Component.text(configuredSonic.getConversion().getName()));
-        ItemStack consub = ItemStack.of(configuredSonic.getConversion().getMaterial());
-        view.setItem(27, consub);
-        ItemStack charm = view.getItem(28);
+        view.setItem(27, conversion);
+        ItemStack charm = ItemStack.of(configuredSonic.getCharm().getMaterial());
         charm.setData(DataComponentTypes.CUSTOM_NAME, Component.text(configuredSonic.getCharm().getName()));
-        ItemStack charmsub = ItemStack.of(configuredSonic.getCharm().getMaterial());
-        view.setItem(28, charmsub);
+        view.setItem(28, charm);
     }
 
     private void toggleOption(InventoryView view, int slot) {
         ItemStack option = view.getItem(slot);
         Material cmd = option.getType();
-        Material m = Material.LIME_WOOL;
         switch (cmd) {
+            // disable
             case LIME_WOOL -> {
-                // disable
-                option.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Disabled"));
-                m = Material.RED_WOOL;
+                ItemStack disabled = ItemStack.of(Material.RED_WOOL);
+                disabled.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Disabled"));
+                view.setItem(slot, disabled);
             }
+            // enable
             case RED_WOOL -> {
-                // enable
-                option.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Enabled"));
+                ItemStack enabled = ItemStack.of(Material.LIME_WOOL);
+                enabled.setData(DataComponentTypes.CUSTOM_NAME, Component.text("Enabled"));
+                view.setItem(slot, enabled);
             }
-            default -> m = Material.RED_WOOL; // not upgraded, do nothing
+            // not upgraded, do nothing
+            default -> { }
         }
-        ItemStack sub = ItemStack.of(m);
-        sub.copyDataFrom(option, dataComponentType -> true);
-        view.setItem(slot, sub);
     }
 
     private ConfiguredSonic getConfiguredSonic(UUID sonic_uuid, ItemLore lore) {
@@ -319,7 +308,7 @@ public class SonicConfiguratorMenuListener extends TARDISMenuListener {
             // create a new UUID
             UUID sonic_uuid = UUID.randomUUID();
             // set the UUID to the sonic
-            is.editPersistentDataContainer(pdc ->pdc.set(plugin.getSonicUuidKey(), plugin.getPersistentDataTypeUUID(), sonic_uuid));
+            is.editPersistentDataContainer(pdc -> pdc.set(plugin.getSonicUuidKey(), plugin.getPersistentDataTypeUUID(), sonic_uuid));
             // prepare data for database insertion
             HashMap<String, Object> set = new HashMap<>();
             set.put("uuid", uuid.toString());
@@ -333,7 +322,7 @@ public class SonicConfiguratorMenuListener extends TARDISMenuListener {
             set.put("knockback", knockback);
             set.put("brush", brush);
             set.put("conversion", conversion);
-            set.put("conversion", charm);
+            set.put("charm", charm);
             set.put("sonic_uuid", sonic_uuid.toString());
             // insert into database
             int id = plugin.getQueryFactory().doSyncInsert("sonic", set);

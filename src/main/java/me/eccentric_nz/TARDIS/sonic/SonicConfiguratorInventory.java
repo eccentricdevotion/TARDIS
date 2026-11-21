@@ -68,6 +68,7 @@ public class SonicConfiguratorInventory implements InventoryHolder {
             stack[i] = wool;
         }
         stack[27] = wool;
+        stack[28] = wool;
         ItemStack place = ItemStack.of(GUISonicConfigurator.PLACE_SONIC.getMaterial(), 1);
         place.setData(DataComponentTypes.CUSTOM_NAME, Component.text(GUISonicConfigurator.PLACE_SONIC.getName()));
         stack[36] = place;

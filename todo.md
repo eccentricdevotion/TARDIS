@@ -17,7 +17,6 @@
 
 ## Wiki Documentation
 
-* Sonic Charm upgrade
 * Make all images tabbed?
 * Vanilla/TARDIS screenshots for TabbedImage views
 * ?
