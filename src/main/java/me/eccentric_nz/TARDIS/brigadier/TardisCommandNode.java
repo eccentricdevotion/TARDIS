@@ -943,7 +943,11 @@ public class TardisCommandNode {
                                     if (c != null) {
                                         String what = ctx.getArgument("what", String.class);
                                         Updateable updateable = Updateable.valueOf(what.toUpperCase());
-                                        if (updateable.equals(Updateable.ROTOR) || updateable.equals(Updateable.MONITOR) || updateable.equals(Updateable.MONITOR_FRAME) || updateable.equals(Updateable.SONIC_DOCK)) {
+                                        if (updateable.equals(Updateable.ROTOR)
+                                            || updateable.equals(Updateable.MONITOR) || updateable.equals(Updateable.MONITOR_FRAME)
+                                            || updateable.equals(Updateable.SONIC_DOCK) || updateable.equals(Updateable.CHARGING_SENSOR)
+                                            || updateable.equals(Updateable.FLIGHT_SENSOR) || updateable.equals(Updateable.HANDBRAKE_SENSOR)
+                                            || updateable.equals(Updateable.MALFUNCTION_SENSOR) || updateable.equals(Updateable.POWER_SENSOR)) {
                                             TardisUtility.unlock(plugin, c.getFirst(), updateable, c.getSecond());
                                         }
                                     }

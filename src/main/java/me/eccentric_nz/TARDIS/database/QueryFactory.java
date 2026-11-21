@@ -246,6 +246,17 @@ public class QueryFactory {
      * Inserts or updates data in a database table. This method executes the SQL in a separate thread.
      *
      * @param id       the TARDIS id.
+     * @param type     the type of sensor to remove.
+     */
+    public void removeSensor(int id, String type) {
+        TARDISSQLRemoveSensor sensor = new TARDISSQLRemoveSensor(plugin, id, type);
+        plugin.getServer().getScheduler().runTaskAsynchronously(plugin, sensor);
+    }
+
+    /**
+     * Inserts or updates data in a database table. This method executes the SQL in a separate thread.
+     *
+     * @param id       the TARDIS id.
      * @param preset the custom preset name
      */
     public void upsertCustomPreset(int id, String preset) {

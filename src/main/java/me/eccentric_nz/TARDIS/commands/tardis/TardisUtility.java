@@ -16,6 +16,7 @@ import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.Updateable;
 import me.eccentric_nz.TARDIS.monitor.MonitorUtils;
 import me.eccentric_nz.TARDIS.rotors.TimeRotor;
+import me.eccentric_nz.TARDIS.sensor.SensorTracker;
 import me.eccentric_nz.TARDIS.sonic.SonicDock;
 import me.eccentric_nz.TARDIS.update.TARDISUpdateableChecker;
 import me.eccentric_nz.TARDIS.upgrades.SystemTree;
@@ -132,6 +133,10 @@ public class TardisUtility {
                 glass.setData(DataComponentTypes.CUSTOM_NAME, ComponentUtils.toWhite("Monitor Frame"));
             }
             case SONIC_DOCK -> itemFrame = SonicDock.getItemFrame(tardis.getTardisId());
+            case CHARGING_SENSOR, FLIGHT_SENSOR, HANDBRAKE_SENSOR, MALFUNCTION_SENSOR, POWER_SENSOR -> {
+                SensorTracker.removeSensorRecord(plugin, updateable, tardis.getTardisId(), player);
+                return;
+            }
         }
         if (itemFrame != null) {
             TimeRotor.unlockItemFrame(itemFrame);

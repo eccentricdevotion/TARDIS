@@ -155,7 +155,7 @@ public class Exterminator {
             String chunkLoc = tardis.getChunk();
             int tips = tardis.getTIPS();
             boolean hasZero = (!tardis.getZero().isEmpty());
-            Schematic schm = tardis.getSchematic();
+            Schematic schematic = tardis.getSchematic();
             // check the sign location
             ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
             if (!rsc.resultSet()) {
@@ -184,7 +184,7 @@ public class Exterminator {
                 return;
             }
             if (!cw.getKey().getKey().contains("tardis_world_")) {
-                plugin.getInteriorDestroyer().destroyInner(schm, id, cw, tips);
+                plugin.getInteriorDestroyer().destroyInner(schematic, id, cw, tips);
             }
             cleanHashMaps(id);
             cleanWorlds(cw, owner);

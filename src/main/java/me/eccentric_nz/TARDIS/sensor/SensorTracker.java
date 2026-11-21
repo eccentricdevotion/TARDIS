@@ -20,15 +20,17 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.artron.ArtronLevels;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCharging;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetSensors;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.enumeration.Updateable;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
 public class SensorTracker {
-
-    // TODO add methods to remove sensors - when changing desktop, we should remove sensor records as well
 
     public static final Set<Integer> isCharging = new HashSet<>();
 
@@ -53,5 +55,23 @@ public class SensorTracker {
                 new ArtronLevels(plugin).recharge(id);
             }
         }
+    }
+
+    public static void removeSensorRecord(TARDIS plugin, Updateable sensor, int id, Player player) {
+        String type = switch (sensor) {
+            case CHARGING_SENSOR -> "charging";
+            case FLIGHT_SENSOR -> "flight";
+            case HANDBRAKE_SENSOR -> "handbrake";
+            case MALFUNCTION_SENSOR -> "malfunction";
+            default -> "power";
+        };
+        plugin.getQueryFactory().removeSensor(id, type);
+        plugin.getMessenger().send(player, TardisModule.TARDIS, "SENSOR_REMOVED");
+    }
+
+    public static void removeAllSensors(TARDIS plugin, int id) {
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("tardis_id", id);
+        plugin.getQueryFactory().doDelete("sensors", where);
     }
 }
