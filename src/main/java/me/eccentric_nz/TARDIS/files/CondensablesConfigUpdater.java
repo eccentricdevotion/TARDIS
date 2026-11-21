@@ -972,7 +972,7 @@ public class CondensablesConfigUpdater {
                 i++;
             }
             /*
-            // 26.4
+            // TODO 26.4
             if (!plugin.getCondensablesConfig().contains("CALCITE_PILLAR")) {
                 plugin.getCondensablesConfig().set("CALCITE_PILLAR", 4);
                 plugin.getCondensablesConfig().set("CALCITE_SLAB", 2);

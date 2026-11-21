@@ -156,7 +156,7 @@ public class SonicListener implements Listener {
                 if (plugin.getTrackerKeeper().getDispersed().containsKey(uuid)) {
                     SonicSound.playSonicSound(plugin, player, now, 3050L, "sonic_screwdriver", 1.0f);
                     SonicDispersed.assemble(plugin, player);
-                } else if (lore.contains(Component.text("Charm Upgrade"))) {
+                } else if (lore.contains(Component.text("Charm Upgrade")) && TARDISPermission.hasPermission(player, "tardis.sonic.charm")) {
                     // get offhand item
                     Material offhand = player.getInventory().getItemInOffHand().getType();
                     if (SonicResonator.resonators.contains(offhand)) {

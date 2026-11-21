@@ -1499,7 +1499,7 @@ public class ArtronCondensables {
             condensables.put("YELLOW_WOOL_SLAB", 10);
             condensables.put("YELLOW_WOOL_STAIRS", 30);
             /*
-            // 26.4
+            // TODO 26.4
             condensables.put("CALCITE_PILLAR", 4);
             condensables.put("CALCITE_SLAB", 2);
             condensables.put("CALCITE_STAIRS", 3);

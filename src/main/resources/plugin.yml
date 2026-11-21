@@ -581,6 +581,9 @@ permissions:
   tardis.sonic.conversion:
     description: Allows a player to use the block conversion function of the sonic screwdriver.
     default: op
+  tardis.sonic.charm:
+    description: Allows a player to use the mob tempting function of the sonic screwdriver.
+    default: op
   tardis.store:
     description: Allows the Artron Energy to be stored in an Artron Storage Cell.
     default: op
