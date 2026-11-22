@@ -78,6 +78,7 @@ public class SonicGeneratorMenuListener extends TARDISMenuListener {
         map.put("Knockback Upgrade", (int) (plugin.getArtronConfig().getDouble("sonic_generator.knockback") * full));
         map.put("Brush Upgrade", (int) (plugin.getArtronConfig().getDouble("sonic_generator.brush") * full));
         map.put("Conversion Upgrade", (int) (plugin.getArtronConfig().getDouble("sonic_generator.conversion") * full));
+        map.put("Charm Upgrade", (int) (plugin.getArtronConfig().getDouble("sonic_generator.charm") * full));
         return map;
     }
 
@@ -93,6 +94,7 @@ public class SonicGeneratorMenuListener extends TARDISMenuListener {
         map.put("Knockback Upgrade", "knockback");
         map.put("Brush Upgrade", "brush");
         map.put("Conversion Upgrade", "conversion");
+        map.put("Charm Upgrade", "charm");
         return map;
     }
 
@@ -109,7 +111,6 @@ public class SonicGeneratorMenuListener extends TARDISMenuListener {
         if (slot < 0 || slot > 53) {
             ClickType click = event.getClick();
             if (click.equals(ClickType.SHIFT_RIGHT) || click.equals(ClickType.SHIFT_LEFT) || click.equals(ClickType.DOUBLE_CLICK)) {
-                plugin.debug("TARDISSonicGeneratorMenuListener");
                 event.setCancelled(true);
             }
             return;
@@ -132,7 +133,7 @@ public class SonicGeneratorMenuListener extends TARDISMenuListener {
                     setCost(view, costs.get("Standard Sonic"));
                 }
             }
-            case 26, 27, 28, 29, 30, 31, 32, 33, 34, 35 -> {
+            case 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36 -> {
                 ItemStack upgrade = view.getItem(slot);
                 Component upgrade_name = upgrade.getData(DataComponentTypes.CUSTOM_NAME);
                 sonic = view.getItem(49);
@@ -159,7 +160,7 @@ public class SonicGeneratorMenuListener extends TARDISMenuListener {
                     view.setItem(49, sonic);
                 }
             }
-            case 36 -> {
+            case 37 -> {
                 // reset to standard
                 sonic = view.getItem(49);
                 if (sonic == null) {
@@ -195,8 +196,7 @@ public class SonicGeneratorMenuListener extends TARDISMenuListener {
                 }
             }
             case 53 -> close(p); // close
-            default -> {
-            }
+            default -> { }
         }
     }
 
