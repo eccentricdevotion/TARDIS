@@ -11,6 +11,7 @@ import org.bukkit.Tag;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.BlockState;
 import org.bukkit.block.Container;
 import org.bukkit.block.data.type.Chest;
 import org.bukkit.inventory.Inventory;
@@ -140,15 +141,25 @@ public class VaultDrop {
                 ItemStack[] stacks = Arrays.stream(holder.getInventory().getContents())
                         .filter(Objects::nonNull)
                         .toArray(ItemStack[]::new);
-                Container c = (Container) leftover.getState();
-                HashMap<Integer, ItemStack> cannotFit = c.getInventory().addItem(stacks);
-                holder.getInventory().clear();
-                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                    ItemStack[] remainingItems = cannotFit.values().toArray(new ItemStack[0]);
-                    if (remainingItems.length > 0) {
-                        holder.getInventory().addItem(remainingItems);
-                    }
-                }, 2L);
+                BlockState state = leftover.getState();
+                if (state instanceof Container c) {
+                    HashMap<Integer, ItemStack> cannotFit = c.getInventory().addItem(stacks);
+                    holder.getInventory().clear();
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                        ItemStack[] remainingItems = cannotFit.values().toArray(new ItemStack[0]);
+                        if (remainingItems.length > 0) {
+                            holder.getInventory().addItem(remainingItems);
+                        }
+                    }, 2L);
+                }
+                // TODO test leftover behaviour
+//                else {
+//                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+//                        for (ItemStack i : stacks) {
+//                            leftover.getWorld().dropItem(leftover.getLocation(), i);
+//                        }
+//                    }, 2L);
+//                }
             }
         }
     }
