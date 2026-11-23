@@ -31,7 +31,7 @@ public class TradesConfigUpdater {
         for (BlueprintConsole bpc : BlueprintConsole.values()) {
             if (bpc != BlueprintConsole.CUSTOM && !tradesConfig.contains("consoles." + bpc)) {
                 tradesConfig.set("consoles." + bpc + ".material", Desktops.getBY_NAMES().get(bpc.toString()).getSeed());
-                tradesConfig.set("consoles." + bpc + ".amount", artronConfig.getInt("upgrades." + bpc.toString().toLowerCase(Locale.ROOT)) / 250);
+                tradesConfig.set("consoles." + bpc + ".amount", artronConfig.getInt("upgrades." + bpc.toString().toLowerCase(Locale.ROOT), 10000) / 250);
                 i++;
             }
         }

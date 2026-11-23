@@ -90,7 +90,7 @@ public class GallifreyBlueprintTrade {
         String perm = bpc.getPermission().split("\\.")[1];
         Material consoleMaterial = Material.valueOf(plugin.getTradesConfig().getString("consoles." + perm.toUpperCase() + ".material"));
         // determine the stack size of the ingredient
-        int consoleAmount = plugin.getTradesConfig().getInt("consoles." + perm.toUpperCase() + ".amount");
+        int consoleAmount = plugin.getTradesConfig().getInt("consoles." + perm.toUpperCase() + ".amount", 36);
         // add the ingredient
         consoleRecipe.addIngredient(ItemStack.of(consoleMaterial, consoleAmount));
         return consoleRecipe;
