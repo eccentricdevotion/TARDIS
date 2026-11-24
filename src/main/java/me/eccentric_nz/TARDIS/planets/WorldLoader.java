@@ -38,10 +38,15 @@ public class WorldLoader {
             String g = plugin.getPlanetsConfig().getString("planets." + world + ".generator");
             World w = hasDimensionType(world) ? TARDISDimensionLoader.loadWorld(plugin, world) : CustomDimensionLoader.loadWorld(plugin, world);
             if (w != null) {
+                if (world.equals("tardis_timevortex")) {
+                    // set the world time to day, so that villagers are active
+                    // if "creation.keep_night" is enabled in the config player's time will be set to night when they enter the TARDIS
+                    w.setTime(6500);
+                }
                 if (g != null && g.equals("TARDIS:plot")) {
                     // load the plot listener
                     plugin.getPM().registerEvents(new PlotListener(plugin), plugin);
-                    // add worldguard protection
+                    // add WorldGuard protection
                     if (plugin.isWorldGuardOnServer()) {
                         plugin.getWorldGuardUtils().addPlotWorldProtection(w);
                     }

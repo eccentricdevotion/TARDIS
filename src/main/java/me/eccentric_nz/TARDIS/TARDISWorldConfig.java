@@ -34,7 +34,7 @@ public class TARDISWorldConfig {
     }
 
     public void check() {
-        // check chunk generator
+        // check config settings for world creation and abandoning TARDISes
         if (plugin.getConfig().getBoolean("creation.create_worlds")) {
             if (plugin.getConfig().getBoolean("abandon.enabled")) {
                 plugin.getConfig().set("abandon.enabled", false);

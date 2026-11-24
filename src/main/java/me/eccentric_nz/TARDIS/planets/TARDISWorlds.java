@@ -45,6 +45,7 @@ public class TARDISWorlds {
         String defWorld = plugin.getConfig().getString("creation.default_world_name", "tardis_timevortex");
         worlds.forEach((w) -> {
             String worldName = w.getKey().getKey();
+            // add world to planets.yml if it is not there
             if (!plugin.getPlanetsConfig().contains("planets." + worldName) && !worldName.equals(defWorld)) {
                 TARDISPlanetData data = plugin.getTardisHelper().getLevelData(w.getKey().getKey());
                 plugin.getPlanetsConfig().set("planets." + worldName + ".enabled", false);
