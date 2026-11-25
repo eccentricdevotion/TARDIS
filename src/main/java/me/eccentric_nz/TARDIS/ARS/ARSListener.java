@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.custommodels.keys.RoomVariant;
 import me.eccentric_nz.TARDIS.desktop.WallsInventory;
 import me.eccentric_nz.TARDIS.enumeration.Room;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.files.DesktopThemeLoader;
 import me.eccentric_nz.TARDIS.utility.ComponentUtils;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import net.kyori.adventure.text.Component;
@@ -267,13 +268,14 @@ public class ARSListener extends ARSMethods implements Listener {
             }
         }
         custom_names.forEach((c) -> {
-            room_materials.add(Material.valueOf(plugin.getRoomsConfig().getString("rooms." + c + ".seed")));
+            String seed = plugin.getRoomsConfig().getString("rooms." + c + ".seed");
+            room_materials.add(Material.valueOf(seed));
             String uc = TARDISStringUtils.uppercaseFirst(c);
             room_names.add(uc);
             TARDISARS.addNewARS(new ARS() {
                 @Override
                 public String getMaterial() {
-                    return plugin.getRoomsConfig().getString("rooms." + c + ".seed");
+                    return seed;
                 }
 
                 @Override
@@ -305,13 +307,17 @@ public class ARSListener extends ARSMethods implements Listener {
      * @return a list of enabled custom room names
      */
     private List<String> getCustomRoomNames() {
-        List<String> crooms = new ArrayList<>();
+        List<String> customRooms = new ArrayList<>();
         Set<String> names = plugin.getRoomsConfig().getConfigurationSection("rooms").getKeys(false);
         names.forEach((cr) -> {
             if (plugin.getRoomsConfig().getBoolean("rooms." + cr + ".user") && plugin.getRoomsConfig().getBoolean("rooms." + cr + ".enabled")) {
-                crooms.add(cr);
+                if (DesktopThemeLoader.pluginSeeds.contains(plugin.getRoomsConfig().getString("rooms." + cr + ".seed"))) {
+                    plugin.debug("Custom seed block material for " + cr + " is already in use!");
+                } else {
+                    customRooms.add(cr);
+                }
             }
         });
-        return crooms;
+        return customRooms;
     }
 }

@@ -29,6 +29,7 @@ import org.bukkit.Material;
 import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
+import java.util.Set;
 
 /**
  * @author eccentric_nz
@@ -37,6 +38,27 @@ public class DesktopThemeLoader {
 
     private final TARDIS plugin;
     private boolean save = false;
+    // all console and room seed blocks
+    public static final Set<String> pluginSeeds = Set.of(
+            "ACACIA_LOG", "AMETHYST_BLOCK", "BAMBOO", "BEE_NEST", "BIRCH_LOG", "BLACK_CONCRETE", "BLACKSTONE",
+            "BLAST_FURNACE", "BOOKSHELF", "BRICKS", "BROWN_GLAZED_TERRACOTTA", "CHERRY_LEAVES", "CHEST",
+            "CHISELED_QUARTZ_BLOCK", "CHISELED_STONE_BRICKS", "CHISELED_SULFUR", "CINNABAR", "CLAY", "COAL_BLOCK",
+            "COBBLESTONE", "COPPER_BULB", "CRYING_OBSIDIAN", "CYAN_GLAZED_TERRACOTTA", "DARK_OAK_PLANKS",
+            "DEAD_BRAIN_CORAL_BLOCK", "DEAD_HORN_CORAL_BLOCK", "DIAMOND_BLOCK", "DIRT", "DISPENSER", "DRIPSTONE_BLOCK",
+            "EMERALD_BLOCK", "ENCHANTING_TABLE", "END_STONE", "FURNACE", "GLASS", "GLOWSTONE", "GOLD_BLOCK",
+            "GRASS_BLOCK", "GRAVEL", "GREEN_CONCRETE", "HAY_BLOCK", "HONEYCOMB_BLOCK", "HOPPER", "HORN_CORAL_BLOCK",
+            "IRON_BLOCK", "LAPIS_BLOCK", "LIGHT_BLUE_CONCRETE", "LIME_GLAZED_TERRACOTTA", "LODESTONE", "MAGMA_BLOCK",
+            "MELON", "MOSS_BLOCK", "MOSSY_COBBLESTONE", "MUDDY_MANGROVE_ROOTS", "NETHER_BRICKS", "NETHER_WART_BLOCK",
+            "OAK_LEAVES", "OAK_LOG", "OAK_PLANKS", "OCHRE_FROGLIGHT", "ORANGE_GLAZED_TERRACOTTA",
+            "ORANGE_POPLAR_LEAVES", "PACKED_ICE", "PACKED_MUD", "PALE_MOSS_BLOCK", "PINK_GLAZED_TERRACOTTA",
+            "POLISHED_ANDESITE", "POLISHED_BLACKSTONE_BRICKS", "POLISHED_DEEPSLATE", "PRISMARINE", "PUMPKIN",
+            "PURPLE_TERRACOTTA", "PURPUR_BLOCK", "QUARTZ_BLOCK", "RED_CONCRETE", "RED_GLAZED_TERRACOTTA",
+            "RED_NETHER_BRICKS", "REDSTONE_BLOCK", "SANDSTONE_STAIRS", "SANDSTONE", "SCULK", "SHROOMLIGHT",
+            "SNOW_BLOCK", "STONE_BRICK_STAIRS", "STONE", "STRIPPED_CRIMSON_HYPHAE", "STRIPPED_OAK_LOG",
+            "STRUCTURE_BLOCK", "TERRACOTTA", "TNT", "TUBE_CORAL_BLOCK", "TUFF", "VERDANT_FROGLIGHT", "WARPED_PLANKS",
+            "WAXED_COPPER_GRATE", "WAXED_OXIDIZED_CUT_COPPER", "WEATHERED_COPPER", "WHITE_CONCRETE",
+            "WHITE_GLAZED_TERRACOTTA", "WHITE_TERRACOTTA", "YELLOW_CONCRETE_POWDER", "YELLOW_GLAZED_TERRACOTTA"
+    );
 
     public DesktopThemeLoader(TARDIS plugin) {
         this.plugin = plugin;
@@ -129,6 +151,10 @@ public class DesktopThemeLoader {
                 }
                 // check seed material
                 String seed = plugin.getCustomDesktopsConfig().getString(desktop + ".seed").toUpperCase(Locale.ROOT);
+                if (pluginSeeds.contains(seed)) {
+                    plugin.debug("Custom seed block material for " + desktop + " is already in use!");
+                    continue;
+                }
                 try {
                     Material.valueOf(seed);
                 } catch (IllegalArgumentException e) {
@@ -166,8 +192,8 @@ public class DesktopThemeLoader {
         }
         // reload lookup maps
         Desktops.loadLookups();
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, ()->{
-        // set desktop upgrade costs
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+            // set desktop upgrade costs
             new UpgradeCostSetter(plugin).calculate();
         }, 40L);
         if (save) {
