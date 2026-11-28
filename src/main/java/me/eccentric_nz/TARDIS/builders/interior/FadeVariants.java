@@ -168,6 +168,22 @@ public class FadeVariants {
                 Material.HANGING_ROOTS,
                 Material.BROWN_CARPET.createBlockData()
         ));
+        /*
+        lookup.put("CINNABAR", new StructureVariant(
+                TARDIS.plugin.getBuildKeeper().getFade().getGradients().get(Material.SNOW_BLOCK),
+                Material.SNOW_BLOCK,
+                Material.LIGHT_BLUE_GLAZED_TERRACOTTA,
+                Material.SNOW_BRICK_WALL,
+                WaterFeature.getFadeFloor(Material.SNOW_BLOCK, Material.PACKED_ICE_BRICKS, Material.SNOW_BRICKS),
+                WaterFeature.iceColumn,
+                Material.WAXED_WEATHERED_COPPER_CHAIN.createBlockData(),
+                Material.WAXED_WEATHERED_COPPER_CHAIN.createBlockData(),
+                Material.WAXED_WEATHERED_COPPER_LANTERN.createBlockData("[hanging=true]"),
+                // TODO may need BlockData here?
+                Material.ICICLE,
+                Material.LIGHT_BLUE_CARPET.createBlockData()
+        ));
+         */
     }
 
     public HashMap<String, StructureVariant> getLookup() {

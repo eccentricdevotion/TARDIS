@@ -21,6 +21,7 @@ public class Gradient {
         gradients.put(Material.COBBLESTONE, cobblestone);
         gradients.put(Material.DEAD_HORN_CORAL_BLOCK, deadHornCoralBlock);
         gradients.put(Material.END_STONE, endStone);
+//        gradients.put(Material.SNOW_BLOCK, snowBlock);
     }
 
     private final Material[] tuff = new Material[]{
@@ -107,7 +108,15 @@ public class Gradient {
             Material.SOUL_SAND,
             Material.DRIPSTONE_BLOCK
     };
-
+    /*
+    private final Material[] snowBlock = new Material[]{
+            Material.LIGHT_BLUE_GLAZED_TERRACOTTA,
+            Material.LIGHT_BLUE_WOOL,
+            Material.BLUE_ICE,
+            Material.PACKED_ICE,
+            Material.SNOW_BRICKS
+    };
+*/
     public HashMap<Material, Material[]> getGradients() {
         return gradients;
     }

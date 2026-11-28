@@ -72,4 +72,16 @@ public class WaterFeature {
             .add(1, new BlockData[]{Material.END_STONE.createBlockData(), Material.END_STONE.createBlockData(), Material.ENDER_CHEST.createBlockData()})
             .add(3, new BlockData[]{Material.END_STONE.createBlockData(), Material.END_STONE.createBlockData(), Material.END_ROD.createBlockData()})
             .add(3, new BlockData[]{Material.END_STONE.createBlockData(), Material.BEDROCK.createBlockData()});
+    /*
+    public static final WeightedChoice<BlockData[]> iceColumn = new WeightedChoice<BlockData[]>()
+            .add(76, new BlockData[]{TARDISConstants.WATER, TARDISConstants.WATER})
+            .add(5, new BlockData[]{Material.BLUE_ICE.createBlockData(), Material.BLUE_ICE.createBlockData(), Material.ICE_CRYSTAL.createBlockData()})
+            .add(1, new BlockData[]{Material.BLUE_ICE.createBlockData(), Material.BLUE_ICE.createBlockData(), Material.ICICLE.createBlockData()})
+            .add(1, new BlockData[]{Material.CALCITE_PILLAR.createBlockData(), Material.CALCITE_PILLAR.createBlockData(), Material.ENDER_CHEST.createBlockData()})
+            .add(3, new BlockData[]{Material.WHITE_WOOL.createBlockData(), Material.WHITE_WOOL.createBlockData(), Material.END_ROD.createBlockData()})
+            .add(3, new BlockData[]{Material.WHITE_WOOL.createBlockData(), Material.WHITE_WOOL.createBlockData()})            .add(3, new BlockData[]{Material.SEA_PICKLE.createBlockData("[waterlogged=true,pickles=1]"), TARDISConstants.WATER})
+            .add(3, new BlockData[]{Material.SEA_PICKLE.createBlockData("[waterlogged=true,pickles=2]"), TARDISConstants.WATER})
+            .add(3, new BlockData[]{Material.SEA_PICKLE.createBlockData("[waterlogged=true,pickles=3]"), TARDISConstants.WATER})
+            .add(3, new BlockData[]{Material.SEA_PICKLE.createBlockData("[waterlogged=true,pickles=4]"), TARDISConstants.WATER});
+     */
 }
